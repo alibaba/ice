@@ -3,6 +3,7 @@
 ## 0.1.2
 
 - [feat] support add block cmd
+- [rework] `iceworks init -t <npmName>` -> `iceworks init <npmName>`
 
 ## 0.1.1
 

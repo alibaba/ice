@@ -7,8 +7,8 @@ const checkEmpty = require('../lib/checkEmpty');
 const downloadNpm = require('../lib/downloadNpm');
 const packageConfig = require('../package.json');
 
-module.exports = (...args) => {
-  return init(...args).catch((err) => {
+module.exports = (options) => {
+  return init(options).catch((err) => {
     log.error('init error');
     console.error(err);
     process.exit(1);
@@ -21,15 +21,15 @@ async function init(options = {}) {
   const go = await checkEmpty(cwd);
   if (!go) process.exit(1);
 
-  let { template } = options;
-  if (!options.template) {
-    template = await selectTemplate();
+  let { npmName } = options;
+  if (!options.npmName) {
+    npmName = await selectTemplate();
   }
 
   goldlog('version', { version: packageConfig.version });
-  goldlog('init', { template });
+  goldlog('init', { npmName });
 
-  await downloadNpm({ npmName: template, destDir: cwd });
+  await downloadNpm({ npmName, destDir: cwd });
 
   try {
     await formatProject(cwd);

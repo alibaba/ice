@@ -25,55 +25,36 @@ module.exports = (options) => {
 };
 
 async function addBlock(options = {}) {
-  const { template, destDir, tempDir } = options;
+  const { npmName, destDir, tempDir } = options;
   let { name: blockDirName } = options;
 
-  if (!template) {
-    // add EmptyBlock
-    const blockDirPath = path.resolve(destDir, blockDirName || 'EmptyBlock');
-    const blockTemplatePath = path.resolve(__dirname, '../template/EmptyBlock');
-
-    return checkDirExist(blockDirPath)
-      .then(() => {
-        return fse.mkdirp(blockDirPath);
-      })
-      .then(() => {
-        return fse.copy(blockTemplatePath, blockDirPath, {
-          overwrite: false,
-          errorOnExist: true,
-        });
-      })
-      .then(() => {
-        return blockDirPath;
-      });
-  }
-
   // download npm block
-  let blockDirPath;
-  return downloadNpm({
-    npmName: template,
-    destDir: tempDir,
-  })
-    .then(() => {
-      log.info('start create block directory……');
+  if (!blockDirName) {
+    // @icedesign/example-block | example-block
+    const name = npmName.split('/')[1] || npmName.split('/')[0];
+    blockDirName = camelCase(name, { pascalCase: true });
+  }
+  const blockDirPath = path.resolve(destDir, blockDirName);
 
-      if (!blockDirName) {
-        // eslint-disable-next-line import/no-dynamic-require
-        const blockPkg = require(path.join(tempDir, 'package.json'));
-        const npmName = blockPkg.name;
-        // @icedesign/example-block | example-block
-        const name = npmName.split('/')[1] || npmName.split('/')[0];
-        blockDirName = camelCase(name, { pascalCase: true });
+  return fse.pathExists(blockDirPath)
+    .then((exists) => {
+      if (exists) {
+        return Promise.reject(new Error(`${blockDirPath} already exists, you can use cli -n option to custom block directory name`));
       }
-      blockDirPath = path.resolve(destDir, blockDirName);
-
-      return checkDirExist(blockDirPath);
+      return Promise.resolve();
     })
     .then(() => {
+      return downloadNpm({
+        npmName,
+        destDir: tempDir,
+      });
+    })
+    .then(() => {
+      log.info('create block directory……');
       return fse.mkdirp(blockDirPath);
     })
     .then(() => {
-      log.info('start copy block src files to dest blockDir');
+      log.info('copy block src files to dest blockDir');
       return fse.copy(path.join(tempDir, 'src'), blockDirPath, {
         overwrite: false,
         errorOnExist: true,
@@ -81,15 +62,5 @@ async function addBlock(options = {}) {
     })
     .then(() => {
       return blockDirPath;
-    });
-}
-
-async function checkDirExist(dirPath) {
-  return fse.pathExists(dirPath)
-    .then((exists) => {
-      if (exists) {
-        return Promise.reject(new Error(`${dirPath} already exists, you can use cli -n option to custom block directory name`));
-      }
-      return Promise.resolve();
     });
 }
