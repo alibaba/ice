@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const path = require('path');
 const chalk = require('chalk');
 const validateName = require('validate-npm-package-name');
+const boxenLog = require('../../utils/boxen-log');
 
 const logger = require('../../utils/logger');
 const generate = require('../../utils/generate');
@@ -14,14 +15,14 @@ const meta = require('./meta');
  */
 module.exports = async function addScaffold(cwd, opt = {}) {
   const {
-    scope,
+    npmPrefix,
     templatePath: src,
     standalone,
   } = opt;
 
-  const questions = defaultQuestion(scope);
+  const questions = defaultQuestion(npmPrefix);
   const { name } = await inquirer.prompt(questions);
-  const npmName = generateNpmNameByPrefix(name, scope);
+  const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = standalone ? cwd : path.join(cwd, 'scaffolds', name);
 
   try {
@@ -39,7 +40,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
   }
 };
 
-function defaultQuestion(scope) {
+function defaultQuestion(npmPrefix) {
   return [
     {
       type: 'input',
@@ -50,7 +51,7 @@ function defaultQuestion(scope) {
         if (!value) {
           return 'scaffold name cannot be empty';
         }
-        const name = generateNpmNameByPrefix(value, scope);
+        const name = generateNpmNameByPrefix(value, npmPrefix);
         if (!validateName(name).validForNewPackages) {
           return `this scaffold name(${name}) has already exist. please retry`;
         }
@@ -61,30 +62,23 @@ function defaultQuestion(scope) {
 }
 
 /**
- * 区块下载完成后的引导提示信息
+ * 脚手架下载完成后的引导提示信息
  * @param {string} scaffoldName 脚手架模板名称
  * @param {string} scaffoldPath 脚手架模板路径
+ * @param {string} standalone   独立脚手架模式
  */
 function completedMessage(scaffoldName, scaffoldPath, standalone) {
-  console.log();
-  console.log(`Success! Created ${scaffoldName} at ${scaffoldPath}`);
-  console.log(
-    `Inside ${scaffoldName} directory, you can run several commands:`
-  );
-  console.log();
-  console.log('  Starts the development server.');
-  if (!standalone) {
-    console.log(chalk.cyan(`    cd scaffolds/${scaffoldName}`));
-  }
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
-  console.log();
-  console.log(
-    '  When the development is complete, you need to run npm publish'
-  );
-  console.log(
-    '  Contains screenshots and build, equivalent to npm run build && npm run screenshoy'
-  );
-  console.log(chalk.cyan('    npm publish'));
-  console.log();
+  boxenLog(`
+    Success! Created ${scaffoldName} at ${scaffoldPath}
+    Inside ${scaffoldName} directory, you can run several commands:
+    
+      Starts the development server.
+    ${!standalone ? chalk.cyan(`    cd scaffolds/${scaffoldName}`) : ''}
+    ${chalk.cyan('    npm install')}
+    ${chalk.cyan('    npm start')}
+    
+      When the development is complete, you need to run npm publish
+      Contains screenshots and build, equivalent to npm run build && npm run screenshoy
+    ${chalk.cyan('    npm publish')}  
+  `);
 }

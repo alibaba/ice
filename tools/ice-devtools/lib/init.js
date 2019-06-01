@@ -15,16 +15,13 @@ module.exports = async function init(cwd) {
 
     const options = Object.assign({
       cwd,
-      type: process.env.TYPE, // --type --template
-      template: process.env.TEMPLATE,
+      type: process.env.TYPE, // --type
+      template: process.env.TEMPLATE, // --template
     });
 
     // 获取用户参数
     const answers = await initAsk(options);
-
-    add(cwd, {
-      ...answers,
-    });
+    add(cwd, { ...answers });
   } catch (error) {
     logger.fatal(error);
   }
@@ -44,13 +41,12 @@ async function initAsk(options = {}) {
         message: 'please select the material type',
         name: 'type',
         default: types[0],
-        require: true,
         choices: types,
       },
     ]);
     type = result.type;
   } else {
-    console.log(`you assign the type ${chalk.red(type)} by --type`);
+    console.log(`you assign the type ${chalk.cyan(type)} by --type`);
   }
 
   // 获取模板
@@ -81,7 +77,7 @@ async function initAsk(options = {}) {
       ]));
     template = result.template;
   } else {
-    console.log(`you assign the template ${chalk.red(template)} by --template`);
+    console.log(`you assign the template ${chalk.cyan(template)} by --template`);
   }
 
   const isInnerNet = await checkAliInternal();

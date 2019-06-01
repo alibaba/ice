@@ -7,10 +7,13 @@ const fse = require('fs-extra');
 const uppercamelcase = require('uppercamelcase');
 const generate = require('../../utils/generate');
 const pkgJSON = require('../../utils/pkg-json');
+const boxenLog = require('../../utils/boxen-log');
+
+const { generateNpmNameByPrefix } = require('../../utils/npm');
 
 const initTemplatePath = path.join(__dirname, '../../template/init');
 
-// 缓存目录 用于之后的自定义模板、seg add默认模板来源
+// 缓存目录 用于之后的自定义模板、idev add默认模板来源
 const appTemplatePath = (appPath, ...subFiles) => path.join(appPath, '.template', ...subFiles);
 
 /**
@@ -23,10 +26,12 @@ module.exports = async function addMaterial(cwd, opt = {}) {
 
   const questions = defaultQuestion({ cwd, forInnerNet, npmPrefix });
   const { name, description } = await inquirer.prompt(questions);
+  const npmName = generateNpmNameByPrefix(name, npmPrefix);
 
   // init material project
   await generate({
-    name,
+    name: npmName,
+    npmName,
     version: '1.0.0',
     description,
     src: initTemplatePath,
@@ -107,33 +112,32 @@ async function generateMaterialsDemo(appPath) {
  * @param {string} appName
  */
 function completedMessage(appPath, appName) {
-  console.log();
-  console.log(`Success! Created ${appName} at ${appPath}`);
-  console.log('Inside that directory, you can run several commands:');
-  console.log();
-  console.log('  Install dependencies');
-  console.log(chalk.cyan('    npm install'));
-  console.log();
-  console.log('  Starts the block development server.');
-  console.log(chalk.cyan('    cd blocks/ExampleBlock'));
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
-  console.log();
-  console.log('  Starts the scaffold development server.');
-  console.log(chalk.cyan('    cd scaffolds/ExampleScaffold'));
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
-  console.log();
-  console.log('  Generate materials json.');
-  console.log(chalk.cyan('    npm run generate'));
-  console.log();
-  console.log(
-    '  You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.'
-  );
-  console.log('  You will see your materials in Iceworks');
-  console.log();
-  console.log('  We suggest that you can sync the materials json to fusion or unpkg by run: ');
-  console.log(`${chalk.cyan('    npm run sync')}  or  ${chalk.cyan('npm run sync-unpkg')}`);
-  console.log();
-  console.log('Happy hacking!');
+  boxenLog(`
+    Success! Created ${appName} at ${appPath}
+    Inside that directory, you can run several commands:
+    
+      Install dependencies
+    ${chalk.cyan('    npm install')}
+    
+      Starts the block development server.
+    ${chalk.cyan('    cd blocks/ExampleBlock')}
+    ${chalk.cyan('    npm install')}
+    ${chalk.cyan('    npm start')}
+    
+      Starts the scaffold development server.
+    ${chalk.cyan('    cd scaffolds/ExampleScaffold')}  
+    ${chalk.cyan('    npm install')}  
+    ${chalk.cyan('    npm start')}
+    
+      Generate materials json.
+    ${chalk.cyan('    npm run generate')}
+    
+      You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.
+      You will see your materials in Iceworks
+      
+      We suggest that you can sync the materials json to fusion or unpkg by run: 
+    ${chalk.cyan('    npm run sync')}  or  ${chalk.cyan('npm run sync-unpkg')}
+      
+    Happy hacking!
+  `);
 }

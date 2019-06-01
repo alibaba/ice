@@ -7,6 +7,7 @@ const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
 const optionsAttachToEnv = require('../utils/options-attach-to-env');
 const goldlog = require('../utils/goldlog');
+const boxenLog = require('../utils/boxen-log');
 
 const cwd = process.cwd();
 
@@ -15,7 +16,6 @@ goldlog('version', {
   version: packageJson.version,
 });
 
-// 提醒用户安装最新版本 https://github.com/yeoman/update-notifier
 updateNotifier({
   pkg: packageJson,
   updateCheckInterval: 1000 * 60 * 60, // 1 h
@@ -23,29 +23,8 @@ updateNotifier({
 
 exec();
 
-/**
- * check node version
- * @param {string} wanted
- * @param {string} id
- */
-function checkNodeVersion(wanted, id) {
-  if (!semver.satisfies(process.version, wanted)) {
-    console.log(
-      chalk.red(
-        `You are using Node ${
-          process.version
-        }, but this version of ${
-          id
-        } requires Node ${
-          wanted
-        }.\nPlease upgrade your Node version.`
-      )
-    );
-    process.exit(1);
-  }
-}
-
 function exec() {
+  welcome();
   const requiredVersion = packageJson.engines.node;
   checkNodeVersion(requiredVersion, packageJson.name);
 
@@ -86,4 +65,30 @@ function exec() {
     console.log(`  ${chalk.red(`Unknown command ${chalk.yellow(cmd)}.`)}`);
     console.log();
   });
+}
+
+function welcome() {
+  boxenLog(`${chalk.green('Welcome to use Alibaba ice-devtools')}`);
+}
+
+/**
+ * check node version
+ * @param {string} wanted
+ * @param {string} id
+ */
+function checkNodeVersion(wanted, id) {
+  if (!semver.satisfies(process.version, wanted)) {
+    console.log(
+      chalk.red(
+        `You are using Node ${
+          process.version
+        }, but this version of ${
+          id
+        } requires Node ${
+          wanted
+        }.\nPlease upgrade your Node version.`
+      )
+    );
+    process.exit(1);
+  }
 }
