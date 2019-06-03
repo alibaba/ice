@@ -68,7 +68,7 @@ function exec() {
 }
 
 function welcome() {
-  boxenLog(`${chalk.green('Welcome to use Alibaba ice-devtools')}`);
+  boxenLog(`${chalk.green('Welcome to use ice-devtools')}`);
 }
 
 /**

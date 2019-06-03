@@ -97,6 +97,7 @@ async function generateMaterialsDemo(appPath) {
       dest: path.join(appPath, `${type}s/Example${uppercamelcase(type)}`),
       name: `example-${type}`,
       npmName: `${pkg.name}-example-${type}`,
+      adaptor: false, // TODO
       version: '1.0.0',
       title: `demo ${type}`,
       description: '示例',
