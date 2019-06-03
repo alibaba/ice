@@ -1,11 +1,11 @@
 const { app, BrowserWindow } = require('electron');
-const is = require('electron-is');
 const address = require('address');
 const execa = require('execa');
 const path = require('path');
 const detectPort = require('detect-port');
+// const is = require('electron-is');
 
-const isProduction = is.production();
+const isProduction = true; // is.production();
 const ip = address.ip();
 const serverDir = path.join(__dirname, 'server');
 
@@ -19,13 +19,17 @@ function createWindow() {
     mainWindow = null;
   });
 
-  mainWindow.loadFile('start_loading.html');
-
-  const url = true ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
+  const url = isProduction ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
 
   if (!serverProcess) {
     (async () => {
+      mainWindow.loadFile('start_loading.html');
       setPort = await detectPort(setPort);
+      try {
+        await execa('npm', ['stop'], { cwd: serverDir });
+      } catch (error) {
+        console.warn(error);
+      }
       serverProcess = execa('npm', ['start'], {
         cwd: serverDir,
         env: {
@@ -34,15 +38,12 @@ function createWindow() {
       });
 
       serverProcess.stdout.on('data', (buffer) => {
-        if (!isProduction) {
-          console.log(buffer.toString());
-        }
+        console.log(buffer.toString());
       });
 
       serverProcess.on('error', (buffer) => {
-        if (!isProduction) {
-          console.error(buffer.toString());
-        }
+        console.error(buffer.toString());
+        mainWindow.loadFile('error.html');
       });
 
       serverProcess.on('exit', (code) => {
@@ -61,12 +62,6 @@ function createWindow() {
 
 app.on('ready', createWindow);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
 app.on('before-quit', (event) => {
   if (serverProcess) {
     event.preventDefault();
@@ -78,15 +73,12 @@ app.on('before-quit', (event) => {
     });
 
     stopProcess.stdout.on('data', (buffer) => {
-      if (!isProduction) {
-        console.log(buffer.toString());
-      }
+      console.log(buffer.toString());
     });
 
     stopProcess.on('error', (buffer) => {
-      if (!isProduction) {
-        console.error(buffer.toString());
-      }
+      console.error(buffer.toString());
+      app.quit();
     });
 
     stopProcess.on('exit', (code) => {
@@ -94,8 +86,16 @@ app.on('before-quit', (event) => {
         serverProcess.kill();
         serverProcess = null;
         app.quit();
+      } else {
+        app.quit();
       }
     });
+  }
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
   }
 });
 
