@@ -31,7 +31,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "ice-plugin-fusion": "^0.1.4",
-    "ice-plugin-moment-locale": "^0.1.0",
+    "ice-plugin-moment-locales": "^0.1.0",
     "ice-scripts": "^2.0.0"
   },
   "scripts": {
