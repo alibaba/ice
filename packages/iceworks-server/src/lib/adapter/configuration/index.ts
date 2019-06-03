@@ -1,16 +1,64 @@
 import * as EventEmitter from 'events';
-import { ICLIConf } from '../../../interface';
+import * as path from 'path';
+import * as fs from 'fs-extra';
+import * as parser from '@babel/parser';
+import traverse from '@babel/traverse';
+import generate from '@babel/generator';
+import { ICLIConf, IProject, IConfigurationModule, IConfParam } from '../../../interface';
 import { CLI_CONF } from './const';
 
-export default class Configuration extends EventEmitter {
-  public readonly path: string;
+export default class Configuration extends EventEmitter implements IConfigurationModule {
+  public project: IProject;
 
-  constructor(options) {
+  constructor(project: IProject) {
     super();
-    this.path = options.path;
+    this.project = project;
   }
 
   async getCLIConf(): Promise<ICLIConf[]> {
+    const confPath = getConfPath(this.project.path);
+    const userConf = require(confPath);
+
+    CLI_CONF.map((item) => {
+      if (Object.keys(userConf).includes(item.name)) {
+        if (item.componentName === "Switch") {
+          item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
+        } else {
+          item.componentProps.placeholder = userConf[item.name].toString();
+        }
+        return item;
+      }
+    })
+
     return CLI_CONF;
   }
+
+  async setCLIConf(args: IConfParam) {
+    const confkeys = Object.keys(args.options);
+    const confPath = getConfPath(this.project.path);
+    const userConf = fs.readFileSync(confPath, 'utf8');
+    const ast = parser.parse(userConf, { sourceType: 'module' });
+    const visitor = {
+      Identifier(path) {
+        if (confkeys.includes(path.node.name)) {
+          path.container.value.value = args.options[path.node.name];
+        }
+      },
+    };
+
+    traverse(ast, visitor);
+
+    const newUserConf = generate(ast).code;
+    try {
+      await fs.writeFile(confPath, newUserConf);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+}
+
+function getConfPath(projectPath: string) {
+  return  path.join(projectPath, 'ice.config.js');
 }

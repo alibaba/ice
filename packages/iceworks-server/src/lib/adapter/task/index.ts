@@ -11,7 +11,6 @@ import * as ipc from './ipc';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 import { ITaskModule, ITaskParam, IProject } from '../../../interface';
 
-
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
@@ -234,10 +233,10 @@ async function setBuildConf(projectPath: string, args: ITaskParam) {
 
   traverse(ast, visitor);
 
-  const output = generate(ast);
+  const newUserConf = generate(ast).code;
 
   try {
-    await fs.writeFile(confPath, output.code, 'utf-8')
+    await fs.writeFile(confPath, newUserConf);
     return true;
   } catch (error) {
     console.log(error);

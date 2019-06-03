@@ -26,6 +26,7 @@ export default (app: Application) => {
     ['project.dependency.bulkCreate', project.dependency.bulkCreate],
     ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.getCLIConf', project.configuration.getCLIConf],
+    ['project.configuration.setCLIConf', project.configuration.setCLIConf],
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
   ];

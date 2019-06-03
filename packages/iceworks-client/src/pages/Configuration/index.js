@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import logger from '@utils/logger';
 import Card from '@components/Card';
 import DynamicForm from '@components/DynamicForm';
 import configurationStores from './stores';
@@ -15,21 +16,27 @@ const formItemLayout = {
 };
 
 const Configuration = () => {
-  const configuration = configurationStores.useStore('configuration');
+  const conf = configurationStores.useStore('configuration');
 
   const onChange = (values) => {
-    // eslint-disable-next-line no-console
-    console.log(values);
+    const params = {};
+    Object.keys(values).forEach(key => {
+      if (values[key] !== undefined) {
+        params[key] = values[key];
+      }
+    });
+    logger.info(params);
+    conf.setCLIConf(params);
   };
 
   useEffect(() => {
-    configuration.getCLIConf();
+    conf.getCLIConf();
   }, []);
 
   return (
     <Card title="自定义配置" contentHeight="100%">
       <DynamicForm
-        config={configuration.dataSource.cli}
+        config={conf.dataSource.cli}
         formItemLayout={formItemLayout}
         onChange={onChange}
       />

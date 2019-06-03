@@ -11,34 +11,34 @@ const CLI_CONF = [
     },
   },
   {
-    label: '基础路径',
-    name: 'publicPath',
+    label: '构建路径',
+    name: 'outputDir',
     description: '修改构建后的文件目录',
     link: 'https://ice.work/docs/cli/config/config#outputDir',
     componentName: 'Input',
     componentProps: {
-      placeholder: 'https://cdn.example.com/assets/',
+      placeholder: 'dist',
     },
   },
   {
-    label: '构建目录',
+    label: '基础路径',
     name: 'publicPath',
     description:
-      '配置 webpack 的 output.publicPath 属性。 仅在运行 build 时生效',
+      '该配置为项目中的所有资源指定一个基础路径。 仅在运行 build 时生效',
     link: 'https://ice.work/docs/cli/config/config#publicPath',
     componentName: 'Input',
     componentProps: {
-      placeholder: '/dist',
+      placeholder: '/',
     },
   },
   {
-    label: '开发资源路径',
+    label: '资源路径',
     name: 'devPublicPath',
     description: '同 publicPath 仅在运行 ice-scripts dev 时生效',
     link: 'https://ice.work/docs/cli/config/config#devPublicPath',
     componentName: 'Input',
     componentProps: {
-      placeholder: 'http://127.0.0.1/',
+      placeholder: 'http://127.0.0.1',
     },
   },
   {
@@ -49,9 +49,10 @@ const CLI_CONF = [
     link: 'https://ice.work/docs/cli/config/config#injectBabel',
     componentName: 'Select',
     componentProps: {
+      placeholder: 'polyfill',
       dataSource: [
-        { label: 'option1', value: 'option1' },
-        { label: 'option2', value: 'option2' },
+        { label: 'runtime', value: 'runtime' },
+        { label: 'polyfill', value: 'polyfill' },
       ],
     },
   },
@@ -61,7 +62,9 @@ const CLI_CONF = [
     description: '如果希望构建后的资源带 hash 版本，可以开启该选项',
     link: 'https://ice.work/docs/cli/config/config#hash',
     componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      defaultChecked: false
+    },
   },
   {
     label: '资源压缩',
@@ -69,7 +72,19 @@ const CLI_CONF = [
     description: '构建后的资源将进行压缩，如果不希望资源被压缩可以关闭该选项',
     link: 'https://ice.work/docs/cli/config/config#minify',
     componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      defaultChecked: false
+    },
+  },
+  {
+    label: '代码分离',
+    name: 'vendor',
+    description: '配置是否生成 vendor，如果希望禁用可以关闭该选项',
+    link: 'https://ice.work/docs/cli/config/config#vendor',
+    componentName: 'Switch',
+    componentProps: {
+      defaultChecked: false
+    },
   },
 ];
 
