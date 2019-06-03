@@ -7,6 +7,8 @@ import qs from 'querystringify';
 import { FormattedMessage } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
+import useModal from '@hooks/useModal';
+import useDependency from '@hooks/useDependency';
 import CreateProjectModal from '@components/CreateProjectModal';
 import SubMenu from './components/SubMenu';
 import ScaffoldPanel from './components/ScaffoldPanel';
@@ -21,13 +23,20 @@ const Material = ({ history, location }) => {
     setCreateProjectModal,
     onCreateProject,
   } = useProject();
-  const material = stores.useStore('material');
+  const {
+    on: onInstallModal,
+    setModal: setInstallModal,
+  } = useModal();
+  const {
+    bulkCreate,
+  } = useDependency();
+  const [material] = stores.useStores(['material']);
   const { dataSource } = material;
   const currCategory = (qs.parse(location.search) || {}).category;
 
   const [type, setType] = useState('scaffolds');
-  const [visible, setVisible] = useState(false);
   const [scaffold, setScaffold] = useState({});
+  const [component, setComponent] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -59,12 +68,10 @@ const Material = ({ history, location }) => {
     // TODO: coding...
   }
 
-  async function openModal() {
-    setVisible(true);
-  }
-
-  async function closeModal() {
-    setVisible(false);
+  async function createDependency() {
+    await bulkCreate([component.source].map(({ npm, version }) =>
+      ({ package: npm, version })));
+    setInstallModal(false);
   }
 
   const tabs = [
@@ -75,9 +82,9 @@ const Material = ({ history, location }) => {
         <ScaffoldPanel
           dataSource={dataSource.current.scaffolds}
           current={currCategory}
-          onDownload={(scaffoldSource) => {
-            setScaffold(scaffoldSource);
-            setCreateProjectModal(true);
+          onDownload={(scaffoldData) => {
+            setScaffold(scaffoldData);
+            setInstallModal(true);
           }}
         />
       ),
@@ -89,7 +96,6 @@ const Material = ({ history, location }) => {
         <BlockPanel
           dataSource={dataSource.current.blocks}
           current={currCategory}
-          onInstall={openModal}
         />
       ),
     },
@@ -100,7 +106,10 @@ const Material = ({ history, location }) => {
         <ComponentPanel
           dataSource={dataSource.current.components}
           current={currCategory}
-          onInstall={openModal}
+          onInstall={(componentData) => {
+            setComponent(componentData);
+            setInstallModal(true);
+          }}
         />
       ),
     },
@@ -135,11 +144,10 @@ const Material = ({ history, location }) => {
           </Tab>
         </Card>
         <InstallModal
-          closeable
-          visible={visible}
-          type={type}
-          onCancel={closeModal}
-          onClose={closeModal}
+          on={onInstallModal}
+          onCancel={() => setInstallModal(false)}
+          onOk={createDependency}
+          component={component}
         />
       </div>
     </div>

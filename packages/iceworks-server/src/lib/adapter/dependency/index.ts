@@ -11,6 +11,7 @@ import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IBase
 const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (dependencies: ICreateDependencyParam[], adapterModule: IBaseModule, isDev?: boolean): Promise<void> => {
+  console.log('dependencies', dependencies);
   adapterModule.emit('install.data', '开始安装依赖');
 
   const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(

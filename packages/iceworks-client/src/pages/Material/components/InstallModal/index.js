@@ -1,23 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dialog } from '@alifd/next';
+import Modal from '@components/Modal';
+import styles from './index.module.scss';
 
-const InstallModal = ({ type, ...other }) => {
+const InstallModal = ({
+  on, onCancel, onOk, component,
+}) => {
+  const { source = {} } = component;
   return (
-    <Dialog {...other}>
-      <div>
-        install something
+    <Modal
+      title="组件下载"
+      visible={on}
+      onCancel={onCancel}
+      onOk={onOk}
+    >
+      <div className={styles.wrapper}>
+        <div className={styles.item}>
+          组件包名：{source.npm}
+        </div>
+        <div className={styles.item}>
+          组件版本：{source.version}
+        </div>
       </div>
-    </Dialog>
+    </Modal>
   );
 };
 
-InstallModal.defaultProps = {
-  type: 'scaffold',
-};
-
 InstallModal.propTypes = {
-  type: PropTypes.string,
+  on: PropTypes.bool.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onOk: PropTypes.func.isRequired,
+  component: PropTypes.object.isRequired,
 };
 
 export default InstallModal;

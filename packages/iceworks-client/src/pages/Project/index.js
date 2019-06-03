@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import logger from '@utils/logger';
+import stores from '@stores';
 import useProject from '@hooks/useProject';
 import ErrorBoundary from '@components/ErrorBoundary';
 import CreateProjectModal from '@components/CreateProjectModal';
@@ -32,11 +33,11 @@ const panels = {
 };
 
 const Project = ({ history }) => {
-  const [pages, dependencies, layouts] = projectStores.useStores([
+  const [pages, layouts] = projectStores.useStores([
     'pages',
-    'dependencies',
     'layouts',
   ]);
+  const [dependencies] = stores.useStores(['dependencies']);
   const panelStores = {
     Page: pages,
     Dependency: dependencies,
