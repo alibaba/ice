@@ -40,7 +40,6 @@ module.exports = async function createProject(
     utils.createInterpreter('FILE_CREATED', extractedFiles, interpreter);
 
     pkgJSON.title = projectName;
-    pkgJSON.version = '1.0.0'; // 初始化项目到 1.0.0
 
     delete pkgJSON.homepage;
 
