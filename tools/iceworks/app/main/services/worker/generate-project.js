@@ -52,7 +52,7 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      generateAbcJsonFile(needCreateDefflow, targetPath, projectName);
+      generateAbcJsonFile(needCreateDefflow, targetPath, scaffold);
     })
     .then(() => {
       updateScaffoldConfig(isCustomScaffold, layoutConfig);
@@ -115,17 +115,29 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
  * 内网环境，生成 abc.json 文件，用于云构建
  * @param {Boolean} needCreateDefflow
  * @param {String}  destDir
- * @param {String}  projectName
+ * @param {String}  scaffold
  */
-function generateAbcJsonFile(needCreateDefflow, destDir, projectName) {
+function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
+  console.log(scaffold);
   if (needCreateDefflow) {
     logger.debug('内网用户，创建 abc.json');
+
+    let devDependencies;
+    if (scaffold.devDependencies) {
+      devDependencies = scaffold.devDependencies;
+    } else {
+      const pkgPath = path.join(destDir, 'package.json');
+      const pkgContent = require(pkgPath);
+      devDependencies = pkgContent.devDependencies;
+    }
+
     const abcJson = path.join(destDir, 'abc.json');
+    const latestVersion = /^\^2\./.test(devDependencies.devDependencies['ice-scripts']);
     return new Promise((resolve) => {
       const abcContext = {
-        name: projectName,
-        type: 'iceworks',
-        builder: '@ali/builder-iceworks',
+        name: scaffold.name,
+        type: latestVersion ? 'ice-scripts' : 'iceworks',
+        builder: latestVersion ? '@ali/builder-ice-scripts' : '@ali/builder-iceworks',
       };
 
       if (pathExists.sync(abcJson)) {
