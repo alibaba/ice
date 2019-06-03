@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Message } from '@alifd/next';
-import stores from '@stores';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import logger from '@utils/logger';
-import useModal from '@hooks/useModal';
-import mockData from '@src/mock';
+import useProject from '@hooks/useProject';
 import ErrorBoundary from '@components/ErrorBoundary';
+import CreateProjectModal from '@components/CreateProjectModal';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
-import CreateProjectModal from './components/CreateProjectModal';
 import Guide from './components/Guide';
 import projectStores from './stores';
 import styles from './index.module.scss';
@@ -33,18 +31,7 @@ const panels = {
   DEF,
 };
 
-const Project = () => {
-  const { on: onOpenProjectModal, setModal: setOpenProjectModal } = useModal();
-  const {
-    on: onDeleteProjectModal,
-    toggleModal: toggleDeleteProjectModal,
-  } = useModal();
-  const {
-    on: onCreateProjectModal,
-    toggleModal: toggleCreateProjectModal,
-  } = useModal();
-  const [deleteProjectPath, setDeleteProjectPath] = useState('');
-  const [projects, project] = stores.useStores(['projects', 'project']);
+const Project = ({ history }) => {
   const [pages, dependencies, layouts] = projectStores.useStores([
     'pages',
     'dependencies',
@@ -55,90 +42,30 @@ const Project = () => {
     Dependency: dependencies,
     Layout: layouts,
   };
+  const {
+    projects,
+    project,
+    deleteProjectPath,
 
-  async function refreshProject() {
-    let newProject;
-    try {
-      newProject = await project.refresh();
-    } catch (err) {
-      // error handle
-    }
+    refreshProjects,
+    addProject,
+    deleteProject,
 
-    if (newProject) {
-      newProject.dataSource.panels.forEach((name) => {
-        const panelStore = panelStores[name];
-        if (panelStore) {
-          panelStore.refresh();
-        }
-      });
-    }
-  }
+    onSwitchProject,
+    onDeleteProject,
+    onOpenProject,
+    onCreateProject,
 
-  async function refreshProjects() {
-    let error;
-    try {
-      await projects.refresh();
-    } catch (err) {
-      error = err;
-    }
-
-    if (!error) {
-      await refreshProject();
-    }
-  }
-
-  async function addProject(path) {
-    await projects.add(path);
-    await refreshProjects();
-    setOpenProjectModal(false);
-  }
-
-  async function deleteProject(params) {
-    await projects.delete({ ...params, projectPath: deleteProjectPath });
-    await refreshProjects();
-    toggleDeleteProjectModal();
-  }
-
-  async function createProject(data) {
-    await projects.create(data);
-    await refreshProjects();
-    toggleCreateProjectModal();
-  }
-
-  async function onSwitchProject(path) {
-    await project.reset(path);
-    await refreshProject();
-  }
-
-  async function onDeleteProject(path) {
-    setDeleteProjectPath(path);
-    toggleDeleteProjectModal();
-  }
-
-  async function onOpenProject() {
-    setOpenProjectModal(true);
-  }
+    onOpenProjectModal,
+    setOpenProjectModal,
+    onDeleteProjectModal,
+    setDeleteProjectModal,
+    onCreateProjectModal,
+    setCreateProjectModal,
+  } = useProject({ panelStores });
 
   async function onOpenCreateProject() {
-    toggleCreateProjectModal();
-  }
-
-  async function onCreateProject(values) {
-    const data = { scaffold: mockData.scaffold, ...values };
-    try {
-      await createProject(data);
-    } catch (error) {
-      if (error.code === 'LEGAL_PROJECT') {
-        addProject(values.path);
-      } else {
-        Message.show({
-          align: 'tr tr',
-          type: 'error',
-          title: '创建项目失败',
-          content: error.message,
-        });
-      }
-    }
+    history.push('/material');
   }
 
   useEffect(() => {
@@ -171,13 +98,13 @@ const Project = () => {
       />
       <DeleteProjectModal
         on={onDeleteProjectModal}
-        onCancel={toggleDeleteProjectModal}
+        onCancel={() => setDeleteProjectModal(false)}
         onOk={deleteProject}
         project={projectPreDelete}
       />
       <CreateProjectModal
         on={onCreateProjectModal}
-        onCancel={toggleCreateProjectModal}
+        onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProject}
       />
       {projects.dataSource.length && project.dataSource.panels.length ? (
@@ -199,6 +126,10 @@ const Project = () => {
       )}
     </div>
   );
+};
+
+Project.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default Project;

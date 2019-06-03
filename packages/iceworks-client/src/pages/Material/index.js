@@ -6,6 +6,8 @@ import Card from '@components/Card';
 import qs from 'querystringify';
 import { FormattedMessage } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
+import useProject from '@hooks/useProject';
+import CreateProjectModal from '@components/CreateProjectModal';
 import SubMenu from './components/SubMenu';
 import ScaffoldPanel from './components/ScaffoldPanel';
 import BlockPanel from './components/BlockPanel';
@@ -14,12 +16,18 @@ import InstallModal from './components/InstallModal';
 import styles from './index.module.scss';
 
 const Material = ({ history, location }) => {
+  const {
+    onCreateProjectModal,
+    setCreateProjectModal,
+    onCreateProject,
+  } = useProject();
   const material = stores.useStore('material');
   const { dataSource } = material;
   const currCategory = (qs.parse(location.search) || {}).category;
 
   const [type, setType] = useState('scaffolds');
   const [visible, setVisible] = useState(false);
+  const [scaffold, setScaffold] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -67,7 +75,10 @@ const Material = ({ history, location }) => {
         <ScaffoldPanel
           dataSource={dataSource.current.scaffolds}
           current={currCategory}
-          onDownload={openModal}
+          onDownload={(scaffoldSource) => {
+            setScaffold(scaffoldSource);
+            setCreateProjectModal(true);
+          }}
         />
       ),
     },
@@ -97,6 +108,15 @@ const Material = ({ history, location }) => {
 
   return (
     <div className={styles.materialPage}>
+      <CreateProjectModal
+        on={onCreateProjectModal}
+        onCancel={() => setCreateProjectModal(false)}
+        onOk={async (values) => {
+          await onCreateProject({ scaffold, ...values });
+          history.push('/project');
+        }}
+      />
+
       {/* render material submenu */}
       <SubMenu
         data={dataSource.resource}
