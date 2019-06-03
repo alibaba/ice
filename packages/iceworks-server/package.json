@@ -7,6 +7,9 @@
     "data/"
   ],
   "dependencies": {
+    "@babel/generator": "^7.4.4",
+    "@babel/parser": "^7.4.5",
+    "@babel/traverse": "^7.4.5",
     "camelcase": "^5.3.1",
     "chalk": "^2.4.2",
     "conf": "^4.0.1",
@@ -25,8 +28,8 @@
     "lodash.clone": "^4.5.0",
     "midway": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "node-ipc": "^9.1.1",
     "mv": "^2.1.1",
+    "node-ipc": "^9.1.1",
     "npm-run-path": "^3.1.0",
     "path-exists": "^4.0.0",
     "prettier": "^1.17.1",

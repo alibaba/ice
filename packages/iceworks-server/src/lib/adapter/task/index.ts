@@ -1,15 +1,16 @@
 import * as EventEmitter from 'events';
 import * as execa from 'execa';
+import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
-import * as fs from 'fs';
-import * as util from 'util';
 import * as path from 'path';
+import * as parser from '@babel/parser';
+import traverse from '@babel/traverse';
+import generate from '@babel/generator';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 import { ITaskModule, ITaskParam, IProject } from '../../../interface';
 
-const writeFileAsync = util.promisify(fs.writeFile);
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
@@ -191,7 +192,7 @@ async function setDevConf(projectPath: string, args: ITaskParam) {
   pkg.content.scripts.start = newDevScriptContent;
 
   try {
-    await writeFileAsync(pkg.path, `${JSON.stringify(pkg.content, null, 2)}\n`, 'utf-8');
+    await fs.writeFile(pkg.path, `${JSON.stringify(pkg.content, null, 2)}\n`, 'utf-8');
     return true;
   } catch (error) {
     console.log(error)
@@ -200,7 +201,7 @@ async function setDevConf(projectPath: string, args: ITaskParam) {
 }
 
 /**
- * set build configuration
+ * get build configuration
  * merge the user configuration to return to the new configuration
  * @param projectPath
  * @param args
@@ -219,7 +220,29 @@ async function getBuildConf(projectPath: string) {
  * @param args
  */
 async function setBuildConf(projectPath: string, args: ITaskParam) {
-  return false;
+  const confkeys = Object.keys(args.options);
+  const confPath = path.join(projectPath, 'ice.config.js');
+  const userConf = fs.readFileSync(confPath, 'utf8');
+  const ast = parser.parse(userConf, { sourceType: 'module' });
+  const visitor = {
+    Identifier(path) {
+      if (confkeys.includes(path.node.name)) {
+        path.container.value.value = args.options[path.node.name];
+      }
+    },
+  };
+
+  traverse(ast, visitor);
+
+  const output = generate(ast);
+
+  try {
+    await fs.writeFile(confPath, output.code, 'utf-8')
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }
 
 /**
