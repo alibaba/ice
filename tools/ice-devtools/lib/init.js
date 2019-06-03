@@ -15,6 +15,7 @@ const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const pkgJSON = require('../utils/pkg-json');
+const checkEmpty = require('../utils/check-empty');
 const add = require('./add');
 
 const isLocalPath = localPath.isLocalPath;
@@ -25,9 +26,8 @@ module.exports = async function init(cwd) {
     const template = process.env.TEMPLATE;
 
     // 检查当前目录是否为空
-    if (fs.readdirSync(cwd).length) {
-      logger.fatal('Workdir %s is not empty.', cwd);
-    }
+    const go = await checkEmpty(cwd);
+    if (!go) process.exit(1);
 
     const options = Object.assign({
       cwd,
