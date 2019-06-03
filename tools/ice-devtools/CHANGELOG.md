@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.4.0
+
 ## 2.3.2
 
 - [feat] init component support fusion component adaptor
