@@ -1,9 +1,9 @@
 {
   "name": "iceworks",
   "version": "3.0.0",
-  "main": "main.js",
+  "main": "main/index.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron main",
     "dist": "gulp dist"
   },
   "devDependencies": {
@@ -22,16 +22,5 @@
   "author": {
     "name": "Alibaba Group Holding Limited",
     "url": "http://alibaba.github.io/ice"
-  },
-  "build": {
-    "appId": "com.alibaba-inc.ice",
-    "mac": {
-      "category": "iceworks.app.category.type",
-      "icon": "build/icons/mac/icon.icns"
-    },
-    "win": {
-      "icon": "build/icons/win/icon.ico",
-      "artifactName": "${productName}-setup-${version}.${ext}"
-    }
   }
 }

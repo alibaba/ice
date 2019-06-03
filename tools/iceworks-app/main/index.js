@@ -5,13 +5,20 @@ const path = require('path');
 const detectPort = require('detect-port');
 // const is = require('electron-is');
 
-const isProduction = true; // is.production();
-const ip = address.ip();
-const serverDir = path.join(__dirname, 'server');
-
 let mainWindow;
 let serverProcess;
 let setPort = '7001';
+
+const isProduction = true; // is.production();
+const ip = address.ip();
+const serverDir = path.join(__dirname, '..', 'server');
+const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
+const stopLoadingHTML = path.join(__dirname, '..', 'renderer', 'stop_loading.html');
+const errorLoadingHTML = path.join(__dirname, '..', 'renderer', 'error.html');
+
+function getServerUrl() {
+  return isProduction ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow();
@@ -19,17 +26,17 @@ function createWindow() {
     mainWindow = null;
   });
 
-  const url = isProduction ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
-
-  if (!serverProcess) {
+  if (isProduction && !serverProcess) {
     (async () => {
-      mainWindow.loadFile('start_loading.html');
-      setPort = await detectPort(setPort);
+      mainWindow.loadFile(startLoadingHTML);
+
       try {
         await execa('npm', ['stop'], { cwd: serverDir });
       } catch (error) {
         console.warn(error);
       }
+
+      setPort = await detectPort(setPort);
       serverProcess = execa('npm', ['start'], {
         cwd: serverDir,
         env: {
@@ -43,20 +50,20 @@ function createWindow() {
 
       serverProcess.on('error', (buffer) => {
         console.error(buffer.toString());
-        mainWindow.loadFile('error.html');
+        mainWindow.loadFile(errorLoadingHTML);
       });
 
       serverProcess.on('exit', (code) => {
         if (code === 0) {
-          mainWindow.loadURL(url);
+          mainWindow.loadURL(getServerUrl());
         } else {
           serverProcess = null;
-          mainWindow.loadFile('error.html');
+          mainWindow.loadFile(errorLoadingHTML);
         }
       });
     })();
   } else {
-    mainWindow.loadURL(url);
+    mainWindow.loadURL(getServerUrl());
   }
 }
 
@@ -66,11 +73,9 @@ app.on('before-quit', (event) => {
   if (serverProcess) {
     event.preventDefault();
 
-    mainWindow.loadFile('stop_loading.html');
+    mainWindow.loadFile(stopLoadingHTML);
 
-    const stopProcess = execa('npm', ['stop'], {
-      cwd: serverDir,
-    });
+    const stopProcess = execa('npm', ['stop'], { cwd: serverDir });
 
     stopProcess.stdout.on('data', (buffer) => {
       console.log(buffer.toString());
