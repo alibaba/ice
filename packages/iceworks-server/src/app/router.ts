@@ -2,7 +2,8 @@ import { Application } from 'midway';
 
 export default (app: Application) => {
   const { controller } = app.io;
-  const { project } = controller;
+
+  const { project, material } = controller;
   const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
@@ -25,6 +26,8 @@ export default (app: Application) => {
     ['project.dependency.bulkCreate', project.dependency.bulkCreate],
     ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.getCLIConf', project.configuration.getCLIConf],
+    ['material.index.resource', material.index.resource],
+    ['material.index.getOne', material.index.getOne],
   ];
 
   routers.forEach(([eventName, handle]) => {

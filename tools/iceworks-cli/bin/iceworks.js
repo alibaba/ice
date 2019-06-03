@@ -3,6 +3,7 @@
 /* eslint quotes:0, prefer-template:0 */
 const chalk = require('chalk');
 const program = require('commander');
+const pkgData = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
 async function check() {
@@ -12,7 +13,9 @@ async function check() {
 // check node version and iceworks version
 check();
 
-program.version(require('../package').version).usage('<command> [options]');
+console.log('iceworks cli', pkgData.version);
+
+program.version(pkgData.version).usage('<command> [options]');
 
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
@@ -22,14 +25,37 @@ program.arguments('<command>').action((cmd) => {
 });
 
 program
-  .command('init')
+  .command('init [npmName]')
   .description('init project by template')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks init');
+    console.log('  $ iceworks init @icedesign/lite-scaffold');
+  })
+  .action((npmName, cmd) => {
+    const options = cleanArgs(cmd);
+    options.npmName = npmName;
+    require('../command/init')(options);
+  });
+
+program
+  .command('add <npmName>')
+  .description('add block to current directory')
   .option(
-    '-t, --template <template>',
-    'Specify the npm package name for the template'
+    '-n, --name <name>',
+    'Specify the block directory name like CustomBlock'
   )
-  .action((cmd) => {
-    require('../command/init')(cleanArgs(cmd));
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks add @icedesign/user-landing-block');
+    console.log('  $ iceworks add @icedesign/user-landing-block -n CustomBlock');
+  })
+  .action((npmName, cmd) => {
+    const options = cleanArgs(cmd);
+    options.npmName = npmName;
+    require('../command/addBlock')(options);
   });
 
 // add some useful info on help
