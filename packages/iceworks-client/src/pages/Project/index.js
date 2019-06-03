@@ -72,12 +72,18 @@ const Project = ({ history, location }) => {
     setCreateProjectModal,
   } = useProject({ panelStores });
 
+  const isCreatedProject = location.state && location.state.createdProject;
+
   async function onOpenCreateProject() {
     history.push('/material');
   }
 
   useEffect(() => {
     logger.info('Project page loaded.');
+
+    if (isCreatedProject) {
+      setResetModal(true);
+    }
 
     refreshProjects();
   }, []);
@@ -117,8 +123,18 @@ const Project = ({ history, location }) => {
         titleId="iceworks.project.create.init.title"
         contentId="iceworks.project.create.init.content"
         on={onResetModal}
-        onCancel={() => { setResetModal(false); }}
-        onOk={reset}
+        onCancel={() => {
+          setResetModal(false);
+          if (isCreatedProject) {
+            history.replace({ createdProject: false });
+          }
+        }}
+        onOk={async () => {
+          await reset();
+          if (isCreatedProject) {
+            history.replace({ createdProject: false });
+          }
+        }}
       />
       {projects.dataSource.length && project.dataSource.panels.length ? (
         <div className={styles.main}>
