@@ -109,6 +109,7 @@ const Task = ({ history, intl }) => {
       className={styles.taskCard}
     >
       <TaskBar
+        type={type}
         loading={status === 'working'}
         onStart={onStart}
         onStop={onStop}
