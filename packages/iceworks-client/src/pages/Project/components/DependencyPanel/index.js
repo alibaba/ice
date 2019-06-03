@@ -2,7 +2,6 @@ import React from 'react';
 import { Icon, Tab } from '@alifd/next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Modal from '@components/Modal';
 import DependencyIncompatibleModal from '@components/DependencyIncompatibleModal';
 import ResetDependencyModal from '@components/ResetDependencyModal';
 import { FormattedMessage } from 'react-intl';
