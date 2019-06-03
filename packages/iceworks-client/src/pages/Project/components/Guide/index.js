@@ -16,11 +16,13 @@ const Guide = ({
         scaffolds.length ?
           <div className={styles.scaffolds}>
             {
-              scaffolds.map((scaffold) =>
-                <div className={styles.item}>
-                  <ScaffoldCard dataSource={scaffold} onDownload={createProject} />
-                </div>
-              )
+              scaffolds.map((scaffold) => {
+                return (
+                  <div className={styles.item}>
+                    <ScaffoldCard dataSource={scaffold} onDownload={createProject} />
+                  </div>
+                );
+              })
             }
           </div> : null
       }
