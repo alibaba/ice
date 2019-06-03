@@ -122,7 +122,7 @@ const Project = ({ history }) => {
       ) : (
         <Guide
           onOpenProject={onOpenProject}
-          onCreateProject={onCreateProject}
+          onCreateProject={onOpenCreateProject}
         />
       )}
     </div>
