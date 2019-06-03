@@ -7,7 +7,7 @@
 
 ## options
 
-- `locale`：类型 `String | Array`，需要加载的多语言包
+- `locales`：类型 `String | Array`，需要加载的多语言包
 
 ## 用法
 
