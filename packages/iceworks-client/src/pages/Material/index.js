@@ -84,7 +84,7 @@ const Material = ({ history, location }) => {
           current={currCategory}
           onDownload={(scaffoldData) => {
             setScaffold(scaffoldData);
-            setInstallModal(true);
+            setCreateProjectModal(true);
           }}
         />
       ),
