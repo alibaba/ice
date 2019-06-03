@@ -121,8 +121,18 @@ function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
   console.log(scaffold);
   if (needCreateDefflow) {
     logger.debug('内网用户，创建 abc.json');
+
+    let devDependencies;
+    if (scaffold.devDependencies) {
+      devDependencies = scaffold.devDependencies;
+    } else {
+      const pkgPath = path.join(destDir, 'package.json');
+      const pkgContent = require(pkgPath);
+      devDependencies = pkgContent.devDependencies;
+    }
+
     const abcJson = path.join(destDir, 'abc.json');
-    const latestVersion = /^\^2\./.test(scaffold.devDependencies['ice-scripts']);
+    const latestVersion = /^\^2\./.test(devDependencies.devDependencies['ice-scripts']);
     return new Promise((resolve) => {
       const abcContext = {
         name: scaffold.name,
