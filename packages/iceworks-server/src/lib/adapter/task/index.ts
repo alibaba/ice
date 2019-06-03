@@ -4,6 +4,7 @@ import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
 import * as parser from '@babel/parser';
+import * as prettier from 'prettier';
 import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import chalk from 'chalk';
@@ -234,9 +235,14 @@ async function setBuildConf(projectPath: string, args: ITaskParam) {
   traverse(ast, visitor);
 
   const newUserConf = generate(ast).code;
+  const formatNewUserConf = prettier.format(newUserConf, {
+    parser: 'babel',
+    singleQuote: true,
+    trailingComma: 'all',
+  });
 
   try {
-    await fs.writeFile(confPath, newUserConf);
+    await fs.writeFile(confPath, formatNewUserConf);
     return true;
   } catch (error) {
     console.log(error);

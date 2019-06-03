@@ -1,6 +1,7 @@
 import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as prettier from 'prettier';
 import * as parser from '@babel/parser';
 import traverse from '@babel/traverse';
 import generate from '@babel/generator';
@@ -49,8 +50,14 @@ export default class Configuration extends EventEmitter implements IConfiguratio
     traverse(ast, visitor);
 
     const newUserConf = generate(ast).code;
+    const formatNewUserConf= prettier.format(newUserConf, {
+      parser: 'babel',
+      singleQuote: true,
+      trailingComma: 'all',
+    });
+
     try {
-      await fs.writeFile(confPath, newUserConf);
+      await fs.writeFile(confPath, formatNewUserConf);
       return true;
     } catch (error) {
       console.log(error);
