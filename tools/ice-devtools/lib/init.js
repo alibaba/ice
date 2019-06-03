@@ -38,8 +38,10 @@ module.exports = async function init(cwd) {
     const answers = await initAsk(options);
 
     if (options.type === 'material') {
+      // init material included component&block&scaffold
       run(answers, options);
     } else {
+      // init single component/block/scaffold
       add(cwd, {
         template,
         ...answers,
@@ -159,7 +161,7 @@ async function run(opt, argsOpt) {
   const { template, name, description } = opt;
   const { cwd: dest } = argsOpt;
 
-  // init material project
+  // generate material rootDir files like package.json .gitignore
   await generate({
     name,
     version: '1.0.0',
