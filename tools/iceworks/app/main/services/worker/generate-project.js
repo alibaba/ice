@@ -115,17 +115,18 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
  * 内网环境，生成 abc.json 文件，用于云构建
  * @param {Boolean} needCreateDefflow
  * @param {String}  destDir
- * @param {String}  projectName
+ * @param {String}  scaffold
  */
-function generateAbcJsonFile(needCreateDefflow, destDir, projectName) {
+function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
   if (needCreateDefflow) {
     logger.debug('内网用户，创建 abc.json');
     const abcJson = path.join(destDir, 'abc.json');
+    const latestVersion = /^\^2\./.test(scaffold.devDependencies['ice-scripts']);
     return new Promise((resolve) => {
       const abcContext = {
-        name: projectName,
-        type: 'iceworks',
-        builder: '@ali/builder-iceworks',
+        name: scaffold.name,
+        type: latestVersion ? 'ice-scripts' : 'iceworks',
+        builder: latestVersion ? '@ali/builder-ice-scripts' : '@ali/builder-iceworks',
       };
 
       if (pathExists.sync(abcJson)) {
