@@ -47,7 +47,7 @@ const Project = ({ history }) => {
     material,
     projects,
     project,
-    deleteProjectPath,
+    projectPreDelete,
 
     refreshProjects,
     addProject,
@@ -75,11 +75,6 @@ const Project = ({ history }) => {
 
     refreshProjects();
   }, []);
-
-  const projectPreDelete =
-    projects.dataSource.find(({ path }) => {
-      return path === deleteProjectPath;
-    }) || {};
 
   return (
     <div className={styles.page}>

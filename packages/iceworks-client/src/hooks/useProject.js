@@ -108,12 +108,17 @@ function useProject({ panelStores } = {}) {
     }
   }
 
+  const projectPreDelete =
+    projects.dataSource.find(({ path }) => {
+      return path === deleteProjectPath;
+    }) || {};
+
   return {
     // state
     material,
     projects,
     project,
-    deleteProjectPath,
+    projectPreDelete,
 
     // actions
     refreshProjects,
