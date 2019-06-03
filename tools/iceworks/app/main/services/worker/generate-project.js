@@ -52,7 +52,7 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      generateAbcJsonFile(needCreateDefflow, targetPath, projectName);
+      generateAbcJsonFile(needCreateDefflow, targetPath, scaffold);
     })
     .then(() => {
       updateScaffoldConfig(isCustomScaffold, layoutConfig);
@@ -118,6 +118,7 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
  * @param {String}  scaffold
  */
 function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
+  console.log(scaffold);
   if (needCreateDefflow) {
     logger.debug('内网用户，创建 abc.json');
     const abcJson = path.join(destDir, 'abc.json');
