@@ -44,6 +44,7 @@ const Project = ({ history }) => {
     Layout: layouts,
   };
   const {
+    material,
     projects,
     project,
     deleteProjectPath,
@@ -123,6 +124,10 @@ const Project = ({ history }) => {
         <Guide
           onOpenProject={onOpenProject}
           onCreateProject={onOpenCreateProject}
+          scaffolds={material.dataSource.recommendScaffolds}
+          createProject={(scaffoldData) => {
+            setCreateProjectModal(true, scaffoldData);
+          }}
         />
       )}
     </div>

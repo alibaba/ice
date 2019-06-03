@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { Message } from '@alifd/next';
 
 function useProject({ panelStores } = {}) {
-  const [projects, project] = stores.useStores(['projects', 'project']);
+  const [projects, project, material] = stores.useStores(['projects', 'project', 'material']);
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
+  const [scaffold, setScaffold] = useState({});
 
   const {
     on: onCreateProjectModal,
@@ -41,10 +42,15 @@ function useProject({ panelStores } = {}) {
 
   async function refreshProjects() {
     let error;
+    let newProjects;
     try {
-      await projects.refresh();
+      newProjects = await projects.refresh();
     } catch (err) {
       error = err;
+    }
+
+    if (!newProjects.length) {
+      await material.getRecommendScaffolds();
     }
 
     if (!error) {
@@ -87,7 +93,7 @@ function useProject({ panelStores } = {}) {
 
   async function onCreateProject(values) {
     try {
-      await createProject(values);
+      await createProject({ scaffold, ...values });
     } catch (error) {
       if (error.code === 'LEGAL_PROJECT') {
         await addProject(values.path);
@@ -104,6 +110,7 @@ function useProject({ panelStores } = {}) {
 
   return {
     // state
+    material,
     projects,
     project,
     deleteProjectPath,
@@ -116,7 +123,10 @@ function useProject({ panelStores } = {}) {
 
     // modal
     onCreateProjectModal,
-    setCreateProjectModal,
+    setCreateProjectModal: (value, scaffoldData) => {
+      setScaffold(scaffoldData);
+      setCreateProjectModal(value);
+    },
     onOpenProjectModal,
     setOpenProjectModal,
     onDeleteProjectModal,

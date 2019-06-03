@@ -35,7 +35,6 @@ const Material = ({ history, location }) => {
   const currCategory = (qs.parse(location.search) || {}).category;
 
   const [type, setType] = useState('scaffolds');
-  const [scaffold, setScaffold] = useState({});
   const [component, setComponent] = useState({});
 
   useEffect(() => {
@@ -83,8 +82,7 @@ const Material = ({ history, location }) => {
           dataSource={dataSource.current.scaffolds}
           current={currCategory}
           onDownload={(scaffoldData) => {
-            setScaffold(scaffoldData);
-            setCreateProjectModal(true);
+            setCreateProjectModal(true, scaffoldData);
           }}
         />
       ),
@@ -121,7 +119,7 @@ const Material = ({ history, location }) => {
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
         onOk={async (values) => {
-          await onCreateProject({ scaffold, ...values });
+          await onCreateProject(values);
           history.push('/project');
         }}
       />
