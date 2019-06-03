@@ -120,10 +120,9 @@ const Material = ({ history, location }) => {
         onCancel={() => setCreateProjectModal(false)}
         onOk={async (values) => {
           await onCreateProject(values);
-          history.push('/project');
+          history.push('/project', { createdProject: true });
         }}
       />
-
       {/* render material submenu */}
       <SubMenu
         data={dataSource.resource}

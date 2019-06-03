@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import DependencyIncompatibleModal from '@components/DependencyIncompatibleModal';
+import ResetDependencyModal from '@components/ResetDependencyModal';
 import { FormattedMessage } from 'react-intl';
 import useDependency, { STATUS_RESETING } from '@hooks/useDependency';
 import CreateDependencyModal from './CreateDependencyModal';
@@ -132,16 +133,11 @@ const DependencyPanel = () => {
           onCancel={() => setCreateModal(false)}
           onOk={bulkCreate}
         />
-        <Modal
-          title={<FormattedMessage id="iceworks.project.panel.dependency.main.reset.title" />}
-          visible={onResetModal}
+        <ResetDependencyModal
+          on={onResetModal}
           onCancel={() => setResetModal(false)}
           onOk={reset}
-        >
-          <div className={styles.confirmContent}>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.reset.content" />
-          </div>
-        </Modal>
+        />
         <DependencyIncompatibleModal
           incompatibleDependencyText={incompatibleDependencyText}
           projectDependencyText={projectDependencyText}

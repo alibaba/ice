@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import logger from '@utils/logger';
-import stores from '@stores';
 import useProject from '@hooks/useProject';
+import useDependency from '@hooks/useDependency';
 import ErrorBoundary from '@components/ErrorBoundary';
 import CreateProjectModal from '@components/CreateProjectModal';
+import ResetDependencyModal from '@components/ResetDependencyModal';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
@@ -32,12 +33,17 @@ const panels = {
   DEF,
 };
 
-const Project = ({ history }) => {
+const Project = ({ history, location }) => {
   const [pages, layouts] = projectStores.useStores([
     'pages',
     'layouts',
   ]);
-  const [dependencies] = stores.useStores(['dependencies']);
+  const {
+    dependencies,
+    reset,
+    onResetModal,
+    setResetModal,
+  } = useDependency();
   const panelStores = {
     Page: pages,
     Dependency: dependencies,
@@ -102,7 +108,17 @@ const Project = ({ history }) => {
       <CreateProjectModal
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
-        onOk={onCreateProject}
+        onOk={async (values) => {
+          await onCreateProject(values);
+          setResetModal(true);
+        }}
+      />
+      <ResetDependencyModal
+        titleId="iceworks.project.create.init.title"
+        contentId="iceworks.project.create.init.content"
+        on={onResetModal}
+        onCancel={() => { setResetModal(false); }}
+        onOk={reset}
       />
       {projects.dataSource.length && project.dataSource.panels.length ? (
         <div className={styles.main}>
@@ -131,6 +147,7 @@ const Project = ({ history }) => {
 
 Project.propTypes = {
   history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default Project;

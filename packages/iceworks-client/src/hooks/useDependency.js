@@ -39,6 +39,8 @@ function useDependency() {
       return;
     }
 
+    console.log('setResetModal');
+
     setResetModal(true);
   }
 

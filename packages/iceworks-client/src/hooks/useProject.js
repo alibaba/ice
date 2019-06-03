@@ -104,6 +104,7 @@ function useProject({ panelStores } = {}) {
           title: '创建项目失败',
           content: error.message,
         });
+        throw error;
       }
     }
   }
