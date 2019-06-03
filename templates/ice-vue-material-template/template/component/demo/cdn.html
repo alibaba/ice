@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://img.alicdn.com/tps/TB1kBU7NpXXXXXLXXXXXXXXXXXX-160-160.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://img.alicdn.com/tps/TB1kBU7NpXXXXXLXXXXXXXXXXXX-160-160.png">
+    <link rel="stylesheet" href="../build/index.css">
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.min.js"></script>
+    <script src="../build/index.umd.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ICE Component</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="app">
+      <h3>请先执行 yarn && yarn build</h3>
+      <example-component :text='text'/>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          text: 'CDN Example'
+        },
+        methods: {}
+      })
+    </script>
+  </body>
+</html>
+

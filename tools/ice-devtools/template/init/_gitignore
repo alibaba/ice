@@ -8,5 +8,6 @@ package-lock.json
 blocks/**/lib/
 layouts/**/lib/
 blocks/**/build/
+components/**/build/
 .eslintcache
 databases
