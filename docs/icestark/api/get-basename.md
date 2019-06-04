@@ -1,6 +1,6 @@
 ---
 title: getBasename
-order: 9
+order: 10
 ---
 
 配置子应用 `React Router` 中的 `basename` 参数的方法，此方法根据 `AppRoute` 中的 `basename` 或者 `path` 配置生成最终结果。
