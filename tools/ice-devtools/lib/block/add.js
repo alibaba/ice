@@ -6,6 +6,7 @@ const validateName = require('validate-npm-package-name');
 const logger = require('../../utils/logger');
 const generate = require('../../utils/generate');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
+const boxenLog = require('../../utils/boxen-log');
 const meta = require('./meta');
 
 /**
@@ -63,25 +64,20 @@ function defaultQuestion(npmPrefix) {
  * 区块下载完成后的提示信息
  * @param {string} blockName 区块名称
  * @param {string} blockPath 区块路径
+ * @param {boolean} standalone
  */
 function completedMessage(blockName, blockPath, standalone) {
-  console.log();
-  console.log(`Success! Created ${blockName} at ${blockPath}`);
-  console.log(`Inside ${blockName} directory, you can run several commands:`);
-  console.log();
-  console.log('  Starts the development server.');
-  if (!standalone) {
-    console.log(chalk.cyan(`    cd blocks/${blockName}`));
-  }
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
-  console.log();
-  console.log(
-    '  When the development is complete, you need to run npm publish'
-  );
-  console.log(
-    '  Contains screenshots and build, equivalent to npm run build && npm run screenshoy'
-  );
-  console.log(chalk.cyan('    npm publish'));
-  console.log();
+  boxenLog(`
+    Success! Created ${blockName} at ${blockPath}
+    Inside ${blockName} directory, you can run several commands:
+    
+      Starts the development server.
+    ${!standalone ? chalk.cyan(`    cd blocks/${blockName}`) : ''}
+    ${chalk.cyan('    npm install')}
+    ${chalk.cyan('    npm start')}
+    
+      When the development is complete, you need to run npm publish
+      Contains screenshots and build, equivalent to npm run build && npm run screenshoy
+    ${chalk.cyan('    npm publish')}
+  `);
 }

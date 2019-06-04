@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const validateName = require('validate-npm-package-name');
 
 const logger = require('../../utils/logger');
+const boxenLog = require('../../utils/boxen-log');
 const generate = require('../../utils/generate');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const meta = require('./meta');
@@ -47,7 +48,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
   }
 };
 
-function defaultQuestion(prefix) {
+function defaultQuestion(npmPrefix) {
   return [
     {
       type: 'confirm',
@@ -63,7 +64,7 @@ function defaultQuestion(prefix) {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleComponent.';
         }
-        const npmName = generateNpmNameByPrefix(value, prefix);
+        const npmName = generateNpmNameByPrefix(value, npmPrefix);
         if (!validateName(npmName).validForNewPackages) {
           return `this component name(${npmName}) has already exist. please retry`;
         }
@@ -77,22 +78,19 @@ function defaultQuestion(prefix) {
  * 下载完成后的提示信息
  * @param {string} name 组件名称
  * @param {string} filepath 组件路径
+ * @param {boolean} standalone
  */
 function completedMessage(name, filepath, standalone) {
-  console.log();
-  console.log(`Success! Created ${name} at ${filepath}`);
-  console.log(`Inside ${name} directory, you can run several commands:`);
-  console.log();
-  console.log('  Starts the development server.');
-  if (!standalone) {
-    console.log(chalk.cyan(`    cd components/${name}`));
-  }
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
-  console.log();
-  console.log(
-    '  When the development is complete, you need to run npm publish'
-  );
-  console.log(chalk.cyan('    npm publish'));
-  console.log();
+  boxenLog(`
+    Success! Created ${name} at ${filepath}
+    Inside ${name} directory, you can run several commands:
+    
+      Starts the development server.
+    ${!standalone ? chalk.cyan(`    cd components/${name}`) : ''}
+    ${chalk.cyan('    npm install')}
+    ${chalk.cyan('    npm start')}
+    
+      When the development is complete, you need to run npm publish
+    ${chalk.cyan('    npm publish')}
+  `);
 }
