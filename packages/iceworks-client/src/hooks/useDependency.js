@@ -39,8 +39,6 @@ function useDependency() {
       return;
     }
 
-    console.log('setResetModal');
-
     setResetModal(true);
   }
 
@@ -58,7 +56,7 @@ function useDependency() {
       setCreateModal(false);
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
-        setCreateValues({ setDependcies: value, incompatibleDependencies: error.info });
+        setCreateValues({ setDependencies: value, incompatibleDependencies: error.info });
         setIncompatibleModal(true);
       }
     }
