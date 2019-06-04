@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Message } from '@alifd/next';
 import stores from '@stores';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -12,11 +13,25 @@ const GlobalBar = () => {
     setTerminalVisible(!terminalVisible);
   }
 
+  async function handleFolder() {
+    const projectPath = project.dataSource.path;
+    if (projectPath) {
+      project.openFolder(projectPath);
+    } else {
+      Message.show({
+        type: 'error',
+        align: 'tr tr',
+        title: '提示',
+        content: '项目不存在',
+      });
+    }
+  }
+
   return (
     <div className={styles.container}>
       {terminalVisible ? (
         <div className={styles.globalTerminal}>
-          <XtermTerminal name={project.dataSource.name} id="globalTerminal" />
+          <XtermTerminal id="globalTerminal" name={project.dataSource.name} />
         </div>
       ) : null}
 
@@ -32,7 +47,7 @@ const GlobalBar = () => {
         </div>
 
         <div className={styles.rightContent}>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={handleFolder}>
             <Icon type="folderopen" className={styles.icon} />
             文件夹
           </div>

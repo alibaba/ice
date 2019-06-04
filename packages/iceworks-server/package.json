@@ -28,6 +28,7 @@
     "mv": "^2.1.1",
     "node-ipc": "^9.1.1",
     "npm-run-path": "^3.1.0",
+    "open": "^6.3.0",
     "path-exists": "^4.0.0",
     "prettier": "^1.17.1",
     "request": "^2.88.0",

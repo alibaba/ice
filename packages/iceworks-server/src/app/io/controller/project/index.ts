@@ -1,3 +1,5 @@
+import * as open from 'open';
+
 export default (app) => {
   const { Controller } = app;
 
@@ -39,6 +41,15 @@ export default (app) => {
       const { path } = args;
 
       return await projectManager.setCurrent(path);
+    }
+
+    async openFolder(ctx) {
+      const { args: { path } } = ctx;
+      try {
+        await open(path);
+      } catch (error) {
+        console.log(error)
+      }
     }
   };
 };
