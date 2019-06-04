@@ -53,16 +53,17 @@ module.exports = async function add(cwd, options = {}) {
  * @param {*} options
  */
 async function addForStandaloneProject(cwd, options) {
-  const { type, template } = options;
+  const { type, template, scope, forInnerNet } = options;
+  const npmPrefix = scope ? `${scope}/` : '';
 
-  const npmPrefix = options.scope ? `${options.scope}/` : '';
-
-  const templatePath = await getTemplatePath(type, cwd, template);
+  const templatePath = type === 'material'
+    ? await getMaterialTemplatePath(cwd, template) : await getTemplatePath(type, cwd, template);
 
   /* eslint-disable-next-line import/no-dynamic-require */
   require(`./${type}/add`)(cwd, {
     npmPrefix,
     templatePath,
+    forInnerNet,
     standalone: true,
   });
 }
@@ -118,11 +119,31 @@ async function getTemplatePath(templateType, cwd, template) {
   }
 
   // form npm package
-  const templateName = template || '@icedesign/ice-react-material-template'; // 老项目新增物料 & 组件独立创建链路 会使用 `@icedesign/ice-react-material-template`
-  const tmp = await downloadTemplate(templateName);
-  const templatePath = path.join(tmp, `template/${templateType}`);
+  const tmp = await downloadTemplate(template);
 
-  return templatePath;
+  return path.join(tmp, `template/${templateType}`);
+}
+
+/**
+ * 获取模板路径 material
+ * @param cwd
+ * @param template
+ * @returns {Promise<string>}
+ */
+async function getMaterialTemplatePath(cwd, template) {
+  let templatePath;
+  // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
+  if (isLocalPath(template)) {
+    if (!existsSync(template)) {
+      logger.fatal('Local template "%s" not found.', template);
+    } else {
+      templatePath = template;
+    }
+  } else {
+    templatePath = await downloadTemplate(template);
+  }
+
+  return path.join(templatePath, 'template');
 }
 
 /**
