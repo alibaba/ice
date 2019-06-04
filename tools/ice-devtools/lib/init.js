@@ -1,17 +1,16 @@
-const fs = require('fs');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { checkAliInternal } = require('ice-npm-utils');
 
 const logger = require('../utils/logger');
+const checkEmpty = require('../utils/check-empty');
 const add = require('./add');
 
 module.exports = async function init(cwd) {
   try {
-    // 检查当前目录是否为空
-    if (fs.readdirSync(cwd).length) {
-      logger.fatal('Workdir %s is not empty.', cwd);
-    }
+    // check current directory empty
+    const go = await checkEmpty(cwd);
+    if (!go) process.exit(1);
 
     const options = Object.assign({
       cwd,
@@ -19,7 +18,7 @@ module.exports = async function init(cwd) {
       template: process.env.TEMPLATE, // --template
     });
 
-    // 获取用户参数
+    // get user answers
     const answers = await initAsk(options);
     add(cwd, { ...answers });
   } catch (error) {
@@ -27,13 +26,12 @@ module.exports = async function init(cwd) {
   }
 };
 
-/**
- * 初始询问
- */
+
 async function initAsk(options = {}) {
-  // 获取物料类型
   const types = ['material', 'scaffold', 'component', 'block'];
   let type = options.type;
+
+  // confirm init type
   if (!type || !types.includes(type)) {
     const result = await inquirer.prompt([
       {
@@ -49,7 +47,7 @@ async function initAsk(options = {}) {
     console.log(`you assign the type ${chalk.cyan(type)} by --type`);
   }
 
-  // 获取模板
+  // select template
   let template = options.template;
   if (!template) {
     const result = await (
