@@ -1,4 +1,6 @@
-import * as open from 'open';
+import * as openFolder from 'open';
+import * as openEditor from 'open-editor';
+import storage from '../../../../lib/storage';
 
 export default (app) => {
   const { Controller } = app;
@@ -46,9 +48,21 @@ export default (app) => {
     async openFolder(ctx) {
       const { args: { path } } = ctx;
       try {
-        await open(path);
+        await openFolder(path);
       } catch (error) {
         console.log(error)
+      }
+    }
+
+    async openEditor(ctx) {
+      const { args: { path } } = ctx;
+      const editor = storage.get('editor');
+      try {
+        await openEditor([path], {
+          editor: editor || 'vscode'
+        });
+      } catch (error) {
+        console.log(error);
       }
     }
   };

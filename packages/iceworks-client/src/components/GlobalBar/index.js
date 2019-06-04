@@ -8,21 +8,34 @@ import styles from './index.module.scss';
 const GlobalBar = () => {
   const project = stores.useStore('project');
   const [terminalVisible, setTerminalVisible] = useState(false);
+  const projectPath = project.dataSource.path;
 
   function handleTerminal() {
     setTerminalVisible(!terminalVisible);
   }
 
   async function handleFolder() {
-    const projectPath = project.dataSource.path;
     if (projectPath) {
-      project.openFolder(projectPath);
+      await project.openFolder(projectPath);
     } else {
       Message.show({
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: '项目不存在',
+        content: '打开文件夹失败',
+      });
+    }
+  }
+
+  async function handleEditor() {
+    if (projectPath) {
+      await project.openEditor(projectPath);
+    } else {
+      Message.show({
+        type: 'error',
+        align: 'tr tr',
+        title: '提示',
+        content: '打开编辑器失败',
       });
     }
   }
@@ -51,7 +64,7 @@ const GlobalBar = () => {
             <Icon type="folderopen" className={styles.icon} />
             文件夹
           </div>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={handleEditor}>
             <Icon type="code" className={styles.icon} />
             编辑器
           </div>

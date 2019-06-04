@@ -16,6 +16,10 @@ export default {
   },
 
   async openFolder(path) {
-    await await socket.emit('project.index.openFolder', { path })
+    await socket.emit('project.index.openFolder', { path });
+  },
+
+  async openEditor(path) {
+    await socket.emit('project.index.openEditor', { path });
   },
 };

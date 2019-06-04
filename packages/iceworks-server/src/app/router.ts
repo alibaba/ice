@@ -14,6 +14,7 @@ export default (app: Application) => {
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
     ['project.index.openFolder', project.index.openFolder],
+    ['project.index.openEditor', project.index.openEditor],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],
