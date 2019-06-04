@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
 const InstallModal = ({
@@ -9,17 +10,17 @@ const InstallModal = ({
   const { source = {} } = component;
   return (
     <Modal
-      title="组件下载"
+      title={<FormattedMessage id="iceworks.material.install.component.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={onOk}
     >
       <div className={styles.wrapper}>
         <div className={styles.item}>
-          组件包名：{source.npm}
+          <FormattedMessage id="iceworks.material.install.component.pacakgeName" />{source.npm}
         </div>
         <div className={styles.item}>
-          组件版本：{source.version}
+          <FormattedMessage id="iceworks.material.install.component.packageVersion" />{source.version}
         </div>
       </div>
     </Modal>

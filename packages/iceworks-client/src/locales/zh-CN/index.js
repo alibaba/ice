@@ -101,5 +101,8 @@ export default {
   'iceworks.material.download': '使用该模版',
   'iceworks.material.doc': '文档',
   'iceworks.material.install': '安装',
+  'iceworks.material.install.component.title': '组件下载',
+  'iceworks.material.install.component.pacakgeName': '组件包名：',
+  'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
 };
