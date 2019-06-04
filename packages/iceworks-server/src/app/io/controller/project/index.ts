@@ -1,3 +1,6 @@
+import storage from '../../../lib/storage';
+import scanDirectory from '../../../lib/scanDirectory';
+
 export default (app) => {
   const { Controller } = app;
 
@@ -39,6 +42,11 @@ export default (app) => {
       const { path } = args;
 
       return await projectManager.setCurrent(path);
+    }
+
+    async getWorkDirectory() {
+      const workDirectory = storage.get('workDirectory');
+      const directories = await scanDirectory(workDirectory);
     }
   };
 };

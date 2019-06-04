@@ -37,7 +37,8 @@
     "semver": "^6.0.0",
     "tar": "^4.4.8",
     "trash": "^5.2.0",
-    "uppercamelcase": "^3.0.0"
+    "uppercamelcase": "^3.0.0",
+    "user-home": "^2.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",

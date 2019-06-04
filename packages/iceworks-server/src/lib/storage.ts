@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
+import * as getUserHome from 'user-home';
 
 // @TODO
 const defaultCwd = path.join(__dirname, '../../data');
@@ -67,6 +68,10 @@ class Store {
 }
 
 const schema = {
+  workDirectory: {
+    type: 'string',
+    default: getUserHome(),
+  },
   project: {
     type: 'string',
     default: {},

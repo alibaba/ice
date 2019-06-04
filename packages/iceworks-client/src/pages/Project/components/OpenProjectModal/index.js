@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
-import { Input } from '@alifd/next';
+import styles from './index.module.scss';
 
 // TODO
 const OpenProjectModal = ({ on, onCancel, onOk }) => {
@@ -14,16 +14,9 @@ const OpenProjectModal = ({ on, onCancel, onOk }) => {
       onCancel={onCancel}
       onOk={() => onOk(path)}
     >
-      <span>
-        项目路径：
-        <Input
-          value={path}
-          onChange={(value) => {
-            setPath(value);
-          }}
-          placeholder="/"
-        />
-      </span>
+      <div className={styles.wrap}>
+        test
+      </div>
     </Modal>
   );
 };

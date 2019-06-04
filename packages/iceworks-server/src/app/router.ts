@@ -13,6 +13,7 @@ export default (app: Application) => {
     ['project.index.add', project.index.add],
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
+    ['project.index.workDirectory', project.index.getWorkDirectory],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],
