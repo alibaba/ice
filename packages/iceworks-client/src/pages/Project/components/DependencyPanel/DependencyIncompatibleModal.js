@@ -13,12 +13,10 @@ const DependencyIncompatibleModal = ({
       onCancel={onCancel}
       onOk={onOk}
     >
-      <div>
-        <FormattedMessage
-          id="iceworks.project.panel.dependency.main.incompatible.content"
-          values={{ incompatibleDependencyText, projectDependencyText }}
-        />
-      </div>
+      <FormattedMessage
+        id="iceworks.project.panel.dependency.main.incompatible.content"
+        values={{ incompatibleDependencyText, projectDependencyText }}
+      />
     </Modal>
   );
 };

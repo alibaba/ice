@@ -49,7 +49,7 @@ function useProject({ panelStores } = {}) {
       error = err;
     }
 
-    if (!newProjects.length) {
+    if (!newProjects) {
       await material.getRecommendScaffolds();
     }
 

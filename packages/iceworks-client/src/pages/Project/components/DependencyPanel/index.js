@@ -2,11 +2,11 @@ import React from 'react';
 import { Icon, Tab } from '@alifd/next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import DependencyIncompatibleModal from '@components/DependencyIncompatibleModal';
 import ResetDependencyModal from '@components/ResetDependencyModal';
 import { FormattedMessage } from 'react-intl';
 import useDependency, { STATUS_RESETING } from '@hooks/useDependency';
 import CreateDependencyModal from './CreateDependencyModal';
+import DependencyIncompatibleModal from './DependencyIncompatibleModal';
 import Panel from '../Panel';
 import styles from './index.module.scss';
 
