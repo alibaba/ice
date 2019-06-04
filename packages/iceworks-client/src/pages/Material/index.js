@@ -17,7 +17,8 @@ import ComponentPanel from './components/ComponentPanel';
 import InstallModal from './components/InstallModal';
 import styles from './index.module.scss';
 
-const Material = ({ history, location }) => {
+const Material = ({ history }) => {
+  const { location } = history;
   const {
     onCreateProjectModal,
     setCreateProjectModal,
@@ -155,7 +156,6 @@ const Material = ({ history, location }) => {
 
 Material.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 };
 
 export default Material;

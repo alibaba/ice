@@ -33,7 +33,8 @@ const panels = {
   DEF,
 };
 
-const Project = ({ history, location }) => {
+const Project = ({ history }) => {
+  const { location } = history;
   const [pages, layouts] = projectStores.useStores([
     'pages',
     'layouts',
@@ -168,7 +169,6 @@ const Project = ({ history, location }) => {
 
 Project.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 };
 
 export default Project;
