@@ -21,7 +21,7 @@ const Material = ({ history, location }) => {
   const {
     onCreateProjectModal,
     setCreateProjectModal,
-    onCreateProject,
+    onCreateProject: onOriginCreateProject,
   } = useProject();
   const {
     on: onInstallModal,
@@ -67,10 +67,15 @@ const Material = ({ history, location }) => {
     // TODO: coding...
   }
 
-  async function createDependency() {
+  async function onCreateDependency() {
     await bulkCreate([component.source].map(({ npm, version }) =>
       ({ package: npm, version })));
     setInstallModal(false);
+  }
+
+  async function onCreateProject(values) {
+    await onOriginCreateProject(values);
+    history.push('/project', { createdProject: true });
   }
 
   const tabs = [
@@ -118,10 +123,7 @@ const Material = ({ history, location }) => {
       <CreateProjectModal
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
-        onOk={async (values) => {
-          await onCreateProject(values);
-          history.push('/project', { createdProject: true });
-        }}
+        onOk={onCreateProject}
       />
       {/* render material submenu */}
       <SubMenu
@@ -143,7 +145,7 @@ const Material = ({ history, location }) => {
         <InstallModal
           on={onInstallModal}
           onCancel={() => setInstallModal(false)}
-          onOk={createDependency}
+          onOk={onCreateDependency}
           component={component}
         />
       </div>

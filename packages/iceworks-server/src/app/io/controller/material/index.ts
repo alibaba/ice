@@ -18,7 +18,8 @@ export default (app) => {
       const { args, logger } = ctx;
 
       logger.info(`get material by url, url: ${args.url}`);
-      return formatData(await request(args.url));
+      const data = await request(args.url);
+      return formatData(data);
     }
 
     async getRecommendScaffolds() {

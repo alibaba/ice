@@ -38,6 +38,7 @@ const Project = ({ history, location }) => {
     'pages',
     'layouts',
   ]);
+
   const {
     dependenciesStore,
     reset,
@@ -78,6 +79,25 @@ const Project = ({ history, location }) => {
     history.push('/material');
   }
 
+  function onResetModalCancel() {
+    setResetModal(false);
+    if (isCreatedProject) {
+      history.replace({ createdProject: false });
+    }
+  }
+
+  async function onResetModalOk() {
+    await reset();
+    if (isCreatedProject) {
+      history.replace({ createdProject: false });
+    }
+  }
+
+  async function onCreateProjectModalOk(values) {
+    await onCreateProject(values);
+    setResetModal(true);
+  }
+
   useEffect(() => {
     logger.info('Project page loaded.');
 
@@ -114,27 +134,14 @@ const Project = ({ history, location }) => {
       <CreateProjectModal
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
-        onOk={async (values) => {
-          await onCreateProject(values);
-          setResetModal(true);
-        }}
+        onOk={onCreateProjectModalOk}
       />
       <ResetDependencyModal
         titleId="iceworks.project.create.init.title"
         contentId="iceworks.project.create.init.content"
         on={onResetModal}
-        onCancel={() => {
-          setResetModal(false);
-          if (isCreatedProject) {
-            history.replace({ createdProject: false });
-          }
-        }}
-        onOk={async () => {
-          await reset();
-          if (isCreatedProject) {
-            history.replace({ createdProject: false });
-          }
-        }}
+        onCancel={onResetModalCancel}
+        onOk={onResetModalOk}
       />
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
@@ -152,9 +159,7 @@ const Project = ({ history, location }) => {
           onOpenProject={onOpenProject}
           onCreateProject={onOpenCreateProject}
           scaffolds={material.recommendScaffolds}
-          createProject={(scaffoldData) => {
-            setCreateProjectModal(true, scaffoldData);
-          }}
+          createProject={(scaffoldData) => setCreateProjectModal(true, scaffoldData)}
         />
       )}
     </div>

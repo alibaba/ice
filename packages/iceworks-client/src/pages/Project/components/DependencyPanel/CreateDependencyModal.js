@@ -12,9 +12,11 @@ const CreateDependencyModal = ({
 
   function onChange(text) {
     const newValue = text.split(/\s+/).filter((dep) => !!dep.trim()).map((dep) => {
-      const indexSplit = dep.lastIndexOf('@');
-      const packageName = indexSplit > -1 ? dep.slice(0, indexSplit) : dep;
-      const version = indexSplit ? dep.slice(indexSplit + 1) : '';
+      const splitIndex = dep.lastIndexOf('@');
+
+      // @alifd/next || @aliff/next@1.0.0 || react || react@16.0.0
+      const packageName = splitIndex ? dep.slice(0, splitIndex) : dep;
+      const version = splitIndex ? dep.slice(splitIndex + 1) : '';
       return {
         package: packageName,
         version: version || 'latest',
