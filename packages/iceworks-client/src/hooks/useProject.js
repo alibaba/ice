@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Message } from '@alifd/next';
 
 function useProject({ panelStores } = {}) {
-  const [projects, project, material] = stores.useStores(['projects', 'project', 'material']);
+  const [projectsStore, projectStore, materialStore] = stores.useStores(['projects', 'project', 'material']);
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [scaffold, setScaffold] = useState({});
 
@@ -25,7 +25,7 @@ function useProject({ panelStores } = {}) {
   async function refreshProject() {
     let newProject;
     try {
-      newProject = await project.refresh();
+      newProject = await projectStore.refresh();
     } catch (err) {
       // error handle
     }
@@ -44,13 +44,13 @@ function useProject({ panelStores } = {}) {
     let error;
     let newProjects;
     try {
-      newProjects = await projects.refresh();
+      newProjects = await projectsStore.refresh();
     } catch (err) {
       error = err;
     }
 
     if (!newProjects) {
-      await material.getRecommendScaffolds();
+      await materialStore.getRecommendScaffolds();
     }
 
     if (!error) {
@@ -59,26 +59,26 @@ function useProject({ panelStores } = {}) {
   }
 
   async function addProject(path) {
-    await projects.add(path);
+    await projectsStore.add(path);
     await refreshProjects();
     setOpenProjectModal(false);
   }
 
   async function deleteProject(params) {
-    await projects.delete({ ...params, projectPath: deleteProjectPath });
+    await projectsStore.delete({ ...params, projectPath: deleteProjectPath });
     await refreshProjects();
     setDeleteProjectModal(false);
   }
 
   async function createProject(data) {
-    await projects.create(data);
+    await projectsStore.create(data);
     await refreshProjects();
     setCreateProjectModal(false);
   }
 
   // event handle
   async function onSwitchProject(path) {
-    await project.reset(path);
+    await projectStore.reset(path);
     await refreshProject();
   }
 
@@ -110,18 +110,18 @@ function useProject({ panelStores } = {}) {
   }
 
   const projectPreDelete =
-    projects.dataSource.find(({ path }) => {
+    projectsStore.dataSource.find(({ path }) => {
       return path === deleteProjectPath;
     }) || {};
 
   return {
     // state
-    material,
-    projects,
-    project,
+    material: materialStore.dataSource,
+    projects: projectsStore.dataSource,
+    project: projectStore.dataSource,
     projectPreDelete,
 
-    // actions
+    // method
     refreshProjects,
     createProject,
     addProject,

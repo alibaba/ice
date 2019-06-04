@@ -39,14 +39,14 @@ const Project = ({ history, location }) => {
     'layouts',
   ]);
   const {
-    dependencies,
+    dependenciesStore,
     reset,
     onResetModal,
     setResetModal,
   } = useDependency();
   const panelStores = {
     Page: pages,
-    Dependency: dependencies,
+    Dependency: dependenciesStore,
     Layout: layouts,
   };
   const {
@@ -90,10 +90,10 @@ const Project = ({ history, location }) => {
 
   return (
     <div className={styles.page}>
-      {projects.dataSource.length ? (
+      {projects.length ? (
         <SubMenu
-          projects={projects.dataSource}
-          project={project.dataSource}
+          projects={projects}
+          project={project}
           onSwitchProject={onSwitchProject}
           onDeleteProject={onDeleteProject}
           onOpenProject={onOpenProject}
@@ -136,9 +136,9 @@ const Project = ({ history, location }) => {
           }
         }}
       />
-      {projects.dataSource.length && project.dataSource.panels.length ? (
+      {projects.length && project.panels.length ? (
         <div className={styles.main}>
-          {project.dataSource.panels.map((name, index) => {
+          {project.panels.map((name, index) => {
             const Panel = panels[name];
             return Panel ? (
               <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
@@ -151,7 +151,7 @@ const Project = ({ history, location }) => {
         <Guide
           onOpenProject={onOpenProject}
           onCreateProject={onOpenCreateProject}
-          scaffolds={material.dataSource.recommendScaffolds}
+          scaffolds={material.recommendScaffolds}
           createProject={(scaffoldData) => {
             setCreateProjectModal(true, scaffoldData);
           }}

@@ -23,8 +23,8 @@ function useDependency() {
     setModal: setIncompatibleModal,
   } = useModal();
   const [createValues, setCreateValues] = useState({});
-  const dependencies = stores.useStore('dependencies');
-  const { dataSource } = dependencies;
+  const dependenciesStore = stores.useStore('dependencies');
+  const { dataSource } = dependenciesStore;
 
   async function onCreate() {
     if (dataSource.status === STATUS_RESETING) {
@@ -43,28 +43,28 @@ function useDependency() {
   }
 
   async function refresh() {
-    await dependencies.refresh();
+    await dependenciesStore.refresh();
   }
 
   async function upgrade(packageName, isDev) {
-    dependencies.upgrade({ package: packageName, isDev });
+    dependenciesStore.upgrade({ package: packageName, isDev });
   }
 
-  async function bulkCreate(value, force) {
+  async function bulkCreate(values, force) {
     try {
-      await dependencies.bulkCreate(value, force);
+      await dependenciesStore.bulkCreate(values, force);
       setCreateModal(false);
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
-        setCreateValues({ setDependencies: value, incompatibleDependencies: error.info });
+        setCreateValues({ setDependencies: values, incompatibleDependencies: error.info });
         setIncompatibleModal(true);
       }
     }
   }
 
   async function reset() {
-    await dependencies.setStatus(STATUS_RESETING);
-    await dependencies.reset();
+    await dependenciesStore.setStatus(STATUS_RESETING);
+    await dependenciesStore.reset();
 
     setResetModal(false);
   }
@@ -80,7 +80,7 @@ function useDependency() {
         type: 'success',
         content: '项目依赖安装成功',
       });
-      dependencies.refresh();
+      dependenciesStore.refresh();
     } else {
       Message.error({
         align: 'tr tr',
@@ -103,7 +103,7 @@ function useDependency() {
         title: '项目依赖更新成功',
         content: '依赖列表已经刷新',
       });
-      dependencies.refresh();
+      dependenciesStore.refresh();
     } else {
       Message.error({
         align: 'tr tr',
@@ -126,7 +126,7 @@ function useDependency() {
         title: '项目依赖安装成功',
         content: '依赖列表已经刷新',
       });
-      dependencies.refresh();
+      dependenciesStore.refresh();
     } else {
       Message.show({
         align: 'tr tr',
@@ -140,7 +140,7 @@ function useDependency() {
   const { setDependencies, incompatibleDependencies = [] } = createValues;
   const incompatibleDependencyText = incompatibleDependencies.map(({ pacakge: packageName, version }) => `${packageName}@${version}`).join(',');
   const projectDependencyText = incompatibleDependencies.map(({ pacakge: packageName }) => {
-    const { specifyVersion } = dependencies.dataSource.dependencies
+    const { specifyVersion } = dependenciesStore.dataSource.dependencies
       .find(({ package: projectPackage }) => projectPackage === packageName);
     return `${packageName}@${specifyVersion}`;
   }).join(',');
@@ -164,8 +164,10 @@ function useDependency() {
     refresh,
     reset,
 
+    // store
+    dependenciesStore,
+
     // state
-    dependencies,
     setDependencies,
     incompatibleDependencyText,
     projectDependencyText,

@@ -67,13 +67,13 @@ const DependencyPanel = () => {
     refresh,
     reset,
 
-    dependencies,
+    dependenciesStore,
     incompatibleDependencyText,
     projectDependencyText,
     setDependencies,
   } = useDependency();
 
-  const { dataSource } = dependencies;
+  const { dataSource } = dependenciesStore;
 
   return (
     <Panel
