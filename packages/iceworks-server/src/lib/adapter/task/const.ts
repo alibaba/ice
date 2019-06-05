@@ -41,12 +41,12 @@ const DEV_CONF = [
   },
   {
     label: '开启热更新',
-    name: 'disabledReload',
+    name: 'disabled-reload',
     description: '',
     link: '',
     componentName: 'Switch',
     componentProps: {
-      defaultChecked: true
+      defaultChecked: false
     },
   },
 ];
