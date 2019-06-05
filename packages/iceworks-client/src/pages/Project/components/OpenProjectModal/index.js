@@ -6,35 +6,51 @@ import Modal from '@components/Modal';
 import socket from '@src/socket';
 import styles from './index.module.scss';
 
-// TODO
 const OpenProjectModal = ({ on, onCancel, onOk }) => {
-  const [path, setPath] = useState('');
-  const [work, setWork] = useState({});
+  const [workFolder, setWorkFolder] = useState({});
+  const { path: workPath, directories = [] } = workFolder;
+
+  async function onSetWork(setPath) {
+    setWorkFolder(await socket.emit('project.index.setWorkFolder', { path: setPath }));
+  }
+
+  async function onSetParentAsWork() {
+    await onSetWork('..');
+  }
 
   useEffect(() => {
     (async () => {
-      setWork(await socket.emit('project.index.workDirectory'));
+      setWorkFolder(await socket.emit('project.index.workFolder'));
     })();
   }, []);
-
-  const { workDirectory, directories = [] } = work;
 
   return (
     <Modal
       title="打开项目"
       visible={on}
       onCancel={onCancel}
-      onOk={() => onOk(path)}
+      onOk={() => onOk(workPath)}
     >
       <div className={styles.wrap}>
         <div className={styles.bar}>
-          <NextIcon type="arrow-left" size="xs" className={styles.icon} />
-          <div className={styles.text}>{workDirectory}</div>
+          <NextIcon
+            type="arrow-left"
+            size="xs"
+            className={styles.icon}
+            onClick={onSetParentAsWork}
+          />
+          <div className={styles.text}>{workPath}</div>
         </div>
         <div className={styles.list}>
           {directories.map((directory) => {
             return (
-              <div className={styles.item} key={directory}>
+              <div
+                className={styles.item}
+                key={directory}
+                onClick={async () => {
+                  await onSetWork(directory);
+                }}
+              >
                 <Icon type="folderopen" size="large" />
                 <span>{directory}</span>
               </div>

@@ -1,6 +1,7 @@
 
 import * as openFolder from 'open';
 import * as openEditor from 'open-editor';
+import * as path from 'path';
 import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
 
@@ -47,11 +48,26 @@ export default (app) => {
       return await projectManager.setCurrent(path);
     }
 
-    async getWorkDirectory() {
-      const workDirectory = storage.get('workDirectory');
-      const directories = await scanDirectory(workDirectory);
+    async getWorkFolder() {
+      const workFolder = storage.get('workFolder');
+      const directories = await scanDirectory(workFolder);
       return {
-        workDirectory,
+        path: workFolder,
+        directories,
+      };
+    }
+
+    async setWorkFolder(ctx) {
+      const { args } = ctx;
+      const { path: setPath } = args;
+
+      const workFolder = storage.get('workFolder');
+      const newWorkFolder = path.join(workFolder, setPath);
+      storage.set('workFolder', newWorkFolder);
+
+      const directories = await scanDirectory(newWorkFolder);
+      return {
+        path: newWorkFolder,
         directories,
       };
     }

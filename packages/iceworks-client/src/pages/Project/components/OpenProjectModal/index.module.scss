@@ -1,7 +1,7 @@
 @import '../../../../variables.scss';
 
 .wrap {
-  width: 400px;
+  width: 460px;
 
   .bar {
     display: flex;
@@ -9,6 +9,7 @@
 
     .icon {
       cursor: pointer;
+      color: $brand-color-primary;
     }
 
     .text {
@@ -18,7 +19,8 @@
   }
 
   .list {
-    height: 460px;
+    height: 400px;
+    padding: 0 14px;
     overflow-y: auto;
     margin-top: 12px;
 

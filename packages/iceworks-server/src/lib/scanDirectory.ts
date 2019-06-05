@@ -26,7 +26,7 @@ export default async (directoryPath: string): Promise<string[]> => {
 
     if (isDirectory) {
       try {
-        await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
+        await accessAsync(targetPath, fs.constants.R_OK);
         targetFiles.push(filename);
       } catch (error) {
         // ...

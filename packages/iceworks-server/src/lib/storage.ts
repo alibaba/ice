@@ -68,7 +68,7 @@ class Store {
 }
 
 const schema = {
-  workDirectory: {
+  workFolder: {
     type: 'string',
     default: userHome,
   },
