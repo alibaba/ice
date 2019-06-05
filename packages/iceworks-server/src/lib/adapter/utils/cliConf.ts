@@ -6,9 +6,9 @@ import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 
 /**
- * desctiption
- * @param path
- * @param keys
+ * merge default conf returns new conf
+ * @param path the cli path, eg: ice.config.js
+ * @param defaultConf
  */
 function getCLIConf(path: string, defaultConf) {
   const code = fsExtra.readFileSync(path, 'utf8');
@@ -32,10 +32,9 @@ function getCLIConf(path: string, defaultConf) {
 }
 
 /**
- * descrption
- * @param path
- * @param conf
- * @param keys
+ * set new conf
+ * @param path the cli path, eg: ice.config.js
+ * @param conf the current conf
  */
 function setCLIConf(path: string, conf: object, ) {
   const confKeys = Object.keys(conf);
@@ -62,7 +61,7 @@ function setCLIConf(path: string, conf: object, ) {
 }
 
 /**
- * merge user conf and default conf
+ * merge default conf and user conf
  * @param defaultConf
  * @param userConf
  */
