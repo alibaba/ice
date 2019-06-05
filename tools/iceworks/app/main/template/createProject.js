@@ -20,13 +20,15 @@ module.exports = async function createProject(
   if (err) {
     throw err;
   }
-  [err, extractedFiles] = await to(utils.extractTarball(
-    tarballURL,
-    destDir,
-    scaffold.source,
-    progressFunc,
-    afterCreateRequest
-  ));
+  [err, extractedFiles] = await to(
+    utils.extractTarball(
+      tarballURL,
+      destDir,
+      scaffold.source,
+      progressFunc,
+      afterCreateRequest
+    )
+  );
   if (err) {
     throw err;
   }
@@ -41,7 +43,15 @@ module.exports = async function createProject(
 
     pkgJSON.title = projectName;
 
+    delete pkgJSON.files;
+    delete pkgJSON.publishConfig;
+    if (pkgJSON.buildConfig) {
+      delete pkgJSON.buildConfig.output;
+      delete pkgJSON.buildConfig.localization;
+    }
     delete pkgJSON.homepage;
+    delete pkgJSON.scripts.screenshot;
+    delete pkgJSON.scripts.prepublishOnly;
 
     fs.writeFileSync(
       pkgJSONPath,
