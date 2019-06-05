@@ -6,6 +6,10 @@ import Card from '@components/Card';
 import qs from 'querystringify';
 import { FormattedMessage } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
+import useProject from '@hooks/useProject';
+import useModal from '@hooks/useModal';
+import useDependency from '@hooks/useDependency';
+import CreateProjectModal from '@components/CreateProjectModal';
 import SubMenu from './components/SubMenu';
 import ScaffoldPanel from './components/ScaffoldPanel';
 import BlockPanel from './components/BlockPanel';
@@ -13,13 +17,26 @@ import ComponentPanel from './components/ComponentPanel';
 import InstallModal from './components/InstallModal';
 import styles from './index.module.scss';
 
-const Material = ({ history, location }) => {
-  const material = stores.useStore('material');
+const Material = ({ history }) => {
+  const { location } = history;
+  const {
+    onCreateProjectModal,
+    setCreateProjectModal,
+    onCreateProject: onOriginCreateProject,
+  } = useProject();
+  const {
+    on: onInstallModal,
+    setModal: setInstallModal,
+  } = useModal();
+  const {
+    bulkCreate,
+  } = useDependency();
+  const [material] = stores.useStores(['material']);
   const { dataSource } = material;
   const currCategory = (qs.parse(location.search) || {}).category;
 
   const [type, setType] = useState('scaffolds');
-  const [visible, setVisible] = useState(false);
+  const [component, setComponent] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -51,12 +68,15 @@ const Material = ({ history, location }) => {
     // TODO: coding...
   }
 
-  async function openModal() {
-    setVisible(true);
+  async function onCreateDependency() {
+    await bulkCreate([component.source].map(({ npm, version }) =>
+      ({ package: npm, version })));
+    setInstallModal(false);
   }
 
-  async function closeModal() {
-    setVisible(false);
+  async function onCreateProject(values) {
+    await onOriginCreateProject(values);
+    history.push('/project', { createdProject: true });
   }
 
   const tabs = [
@@ -67,7 +87,9 @@ const Material = ({ history, location }) => {
         <ScaffoldPanel
           dataSource={dataSource.current.scaffolds}
           current={currCategory}
-          onDownload={openModal}
+          onDownload={(scaffoldData) => {
+            setCreateProjectModal(true, scaffoldData);
+          }}
         />
       ),
     },
@@ -78,7 +100,6 @@ const Material = ({ history, location }) => {
         <BlockPanel
           dataSource={dataSource.current.blocks}
           current={currCategory}
-          onInstall={openModal}
         />
       ),
     },
@@ -89,7 +110,10 @@ const Material = ({ history, location }) => {
         <ComponentPanel
           dataSource={dataSource.current.components}
           current={currCategory}
-          onInstall={openModal}
+          onInstall={(componentData) => {
+            setComponent(componentData);
+            setInstallModal(true);
+          }}
         />
       ),
     },
@@ -97,6 +121,11 @@ const Material = ({ history, location }) => {
 
   return (
     <div className={styles.materialPage}>
+      <CreateProjectModal
+        on={onCreateProjectModal}
+        onCancel={() => setCreateProjectModal(false)}
+        onOk={onCreateProject}
+      />
       {/* render material submenu */}
       <SubMenu
         data={dataSource.resource}
@@ -115,11 +144,10 @@ const Material = ({ history, location }) => {
           </Tab>
         </Card>
         <InstallModal
-          closeable
-          visible={visible}
-          type={type}
-          onCancel={closeModal}
-          onClose={closeModal}
+          on={onInstallModal}
+          onCancel={() => setInstallModal(false)}
+          onOk={onCreateDependency}
+          component={component}
         />
       </div>
     </div>
@@ -128,7 +156,6 @@ const Material = ({ history, location }) => {
 
 Material.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 };
 
 export default Material;
