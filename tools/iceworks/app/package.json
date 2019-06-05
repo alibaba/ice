@@ -26,7 +26,6 @@
     "app-path": "^2.2.0",
     "app-root-path": "^2.0.1",
     "await-to-js": "^2.1.1",
-    "axios": "^0.18.0",
     "babel-generator": "^6.26.1",
     "babel-traverse": "^6.26.0",
     "babel-types": "^6.26.0",
