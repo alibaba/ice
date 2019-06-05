@@ -21,7 +21,7 @@ const appTemplatePath = (appPath, ...subFiles) => path.join(appPath, '.template'
  * @param{Object} opt 参数
  */
 module.exports = async function addMaterial(cwd, opt = {}) {
-  const { templatePath, npmPrefix, forInnerNet } = opt;
+  const { template, templatePath, npmPrefix, forInnerNet } = opt;
   const dest = cwd;
 
   const questions = defaultQuestion({ cwd, forInnerNet, npmPrefix });
@@ -30,6 +30,7 @@ module.exports = async function addMaterial(cwd, opt = {}) {
 
   // init material project
   await generate({
+    template,
     name: npmName,
     npmName,
     version: '1.0.0',
@@ -90,7 +91,7 @@ async function generateMaterialsDemo(appPath) {
 
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
-    // 生成blocks\components\scaffolds文件夹 以及示例demo
+    // 生成 blocks\components\scaffolds 文件夹 以及示例demo
     /* eslint-disable-next-line no-await-in-loop */
     await generate({
       src: appTemplatePath(appPath, type),
@@ -116,29 +117,29 @@ function completedMessage(appPath, appName) {
   boxenLog(`
     Success! Created ${appName} at ${appPath}
     Inside that directory, you can run several commands:
-    
+
       Install dependencies
     ${chalk.cyan('    npm install')}
-    
+
       Starts the block development server.
     ${chalk.cyan('    cd blocks/ExampleBlock')}
     ${chalk.cyan('    npm install')}
     ${chalk.cyan('    npm start')}
-    
+
       Starts the scaffold development server.
-    ${chalk.cyan('    cd scaffolds/ExampleScaffold')}  
-    ${chalk.cyan('    npm install')}  
+    ${chalk.cyan('    cd scaffolds/ExampleScaffold')}
+    ${chalk.cyan('    npm install')}
     ${chalk.cyan('    npm start')}
-    
+
       Generate materials json.
     ${chalk.cyan('    npm run generate')}
-    
+
       You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.
       You will see your materials in Iceworks
-      
-      We suggest that you can sync the materials json to fusion or unpkg by run: 
+
+      We suggest that you can sync the materials json to fusion or unpkg by run:
     ${chalk.cyan('    npm run sync')}  or  ${chalk.cyan('npm run sync-unpkg')}
-      
+
     Happy hacking!
   `);
 }

@@ -25,59 +25,13 @@ const MATERIAL_TEMPLATE_QUESION = [
 module.exports = async function add(cwd, options = {}) {
   debug('cwd: %s', cwd);
 
-  if (options.type) {
-    addForStandaloneProject(cwd, {
-      ...options,
-    });
-    return;
-  }
-
   const pkg = pkgJSON.getPkgJSON(cwd);
 
-  if (!pkg) {
+  if (!pkg || !pkg.materialConfig) {
     logger.fatal(message.invalid);
   }
-
-  if (pkg.materialConfig) {
-    addForMaterialProject(cwd, {
-      pkg,
-    });
-  } else {
-    logger.fatal(message.invalid);
-  }
-};
-
-/**
- * 创建一个独立的组件/区块
- * @param {*} cwd
- * @param {*} options
- */
-async function addForStandaloneProject(cwd, options) {
-  const { type, template, scope, forInnerNet } = options;
-  const npmPrefix = scope ? `${scope}/` : '';
-
-  const templatePath = type === 'material'
-    ? await getMaterialTemplatePath(cwd, template) : await getTemplatePath(type, cwd, template);
-
-  /* eslint-disable-next-line import/no-dynamic-require */
-  require(`./${type}/add`)(cwd, {
-    npmPrefix,
-    templatePath,
-    forInnerNet,
-    standalone: true,
-  });
-}
-
-/**
- * 在物料仓库中新增一个组件/区块
- */
-async function addForMaterialProject(cwd, options) {
-  const {
-    pkg,
-  } = options;
 
   const npmPrefix = `${pkg.name}-`;
-
   // block、scaffold、etc...
   const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
   debug('ans: %j', type);
@@ -89,7 +43,7 @@ async function addForMaterialProject(cwd, options) {
     npmPrefix,
     templatePath,
   });
-}
+};
 
 /**
  * 获取模板路径
@@ -124,27 +78,6 @@ async function getTemplatePath(templateType, cwd, template) {
   return path.join(tmp, `template/${templateType}`);
 }
 
-/**
- * 获取模板路径 material
- * @param cwd
- * @param template
- * @returns {Promise<string>}
- */
-async function getMaterialTemplatePath(cwd, template) {
-  let templatePath;
-  // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
-  if (isLocalPath(template)) {
-    if (!existsSync(template)) {
-      logger.fatal('Local template "%s" not found.', template);
-    } else {
-      templatePath = template;
-    }
-  } else {
-    templatePath = await downloadTemplate(template);
-  }
-
-  return path.join(templatePath, 'template');
-}
 
 /**
  * 下载模板

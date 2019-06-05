@@ -5,9 +5,9 @@
   "author": "",
   "scripts": {
     "deploy": "npm run generate && npm run sync",
-    "generate": "ice-devtools generate",
-    "sync": "ice-devtools sync",
-    "sync-unpkg": "ice-devtools sync-unpkg",
+    "generate": "idev generate",
+    "sync": "idev sync",
+    "sync-unpkg": "idev sync-unpkg",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
@@ -21,5 +21,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1"
   },
-  "materialConfig": {}
+  "materialConfig": {
+    "template": "<%= template %>"
+  }
 }
