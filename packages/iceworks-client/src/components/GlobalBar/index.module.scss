@@ -1,12 +1,41 @@
 @import '../../variables.scss';
 
-.globalBar {
-  display: flex;
-  align-items: center;
-  flex: auto 0 0;
-  height: 40px;
-  padding: 0 20px;
-  background: $black;
-  color: #fff;
-  box-shadow: $shadow-up;
+.container {
+  position: relative;
+  .globalTerminal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    height: 300px;
+    overflow: hidden;
+    box-shadow: 0 -2px 10px rgba(163, 177, 191, 0.35);
+  }
+
+  .globalBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: auto 0 0;
+    height: 40px;
+    padding: 0 20px;
+    background: $black;
+    color: #fff;
+    box-shadow: $shadow-up;
+
+    .leftContent,
+    .rightContent {
+      display: flex;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+      cursor: pointer;
+      .icon {
+        margin-right: 5px;
+      }
+    }
+  }
 }

@@ -1,3 +1,6 @@
+
+import * as openFolder from 'open';
+import * as openEditor from 'open-editor';
 import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
 
@@ -51,6 +54,19 @@ export default (app) => {
         workDirectory,
         directories,
       };
+    }
+
+    async openFolder(ctx) {
+      const { args: { path } } = ctx;
+      return await openFolder(path);
+    }
+
+    async openEditor(ctx) {
+      const { args: { path } } = ctx;
+      const editor = storage.get('editor');
+      return await openEditor([path], {
+        editor: editor
+      });
     }
   };
 };

@@ -80,6 +80,10 @@ const schema = {
     type: 'array',
     default: [],
   },
+  editor: {
+    type: 'string',
+    default: 'vscode',
+  },
   material: {
     type: 'array',
     default: [

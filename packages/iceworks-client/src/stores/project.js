@@ -14,4 +14,12 @@ export default {
   async reset(path) {
     this.dataSource = await socket.emit('project.index.setCurrent', { path });
   },
+
+  async openFolder(path) {
+    await socket.emit('project.index.openFolder', { path });
+  },
+
+  async openEditor(path) {
+    await socket.emit('project.index.openEditor', { path });
+  },
 };
