@@ -1,14 +1,10 @@
 import * as EventEmitter from 'events';
 import * as execa from 'execa';
-import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
-import * as parser from '@babel/parser';
-import * as prettier from 'prettier';
-import traverse from '@babel/traverse';
-import generate from '@babel/generator';
 import chalk from 'chalk';
 import * as ipc from './ipc';
+import { getCLIConf, setCLIConf, mergeCLIConf } from '../utils/cliConf';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 import { ITaskModule, ITaskParam, IProject } from '../../../interface';
 
@@ -19,13 +15,18 @@ const TASK_STATUS_STOP = 'stop';
 export default class Task extends EventEmitter implements ITaskModule {
   public project: IProject;
 
-  public status: string = '';
+  public status: string;
 
-  private process: object = {};
+  public cliConfFilename: string = 'ice.config.js';
+
+  public cliConfPath: string;
+
+  private process: object;
 
   constructor(project: IProject) {
     super();
     this.project = project;
+    this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 
   /**
@@ -118,13 +119,11 @@ export default class Task extends EventEmitter implements ITaskModule {
    * @param args
    */
   async getConf(args: ITaskParam) {
-    const { command } = args;
-    const projectPath = this.project.path;
-    switch (command) {
+    switch (args.command) {
       case 'dev':
-        return getDevConf(projectPath)
+        return this.getDevConf()
       case 'build':
-       return getBuildConf(projectPath)
+       return getCLIConf(this.cliConfPath, BUILD_CONF)
       case 'lint':
         return LINT_CONF
       default:
@@ -137,134 +136,55 @@ export default class Task extends EventEmitter implements ITaskModule {
    * @param args
    */
   async setConf(args: ITaskParam) {
-    const { command } = args;
-    const projectPath = this.project.path;
-    switch (command) {
+    switch (args.command) {
       case 'dev':
-        return setDevConf(projectPath, args);
+        return this.setDevConf(args);
       case 'build':
-        return setBuildConf(projectPath, args);
+        return setCLIConf(this.cliConfPath, args.options)
       default:
         return false;
     }
   }
-}
 
-/**
- * get dev configuration
- * merge the user configuration to return to the new configuration
- * @param projectPath
- */
-function getDevConf(projectPath: string) {
-  const pkgContent = getPkg(projectPath).content;
-  const devScriptContent = pkgContent.scripts.start;
-  const devScriptArray = devScriptContent.split(' ');
-
-  // read the start command parameter from package.json
-  const userConf = {};
-  devScriptArray.forEach(item => {
-    if (item.indexOf('--') !== -1) {
-     const key = item.match(/--(\S*)=/)[1];
-     const value = item.match(/=(\S*)$/)[1];
-     userConf[key] = value
-   }
- })
-
-  return mergeConf(DEV_CONF, userConf)
-}
-
-/**
- * set dev configuration
- * @param args
- */
-async function setDevConf(projectPath: string, args: ITaskParam) {
-  const pkg = getPkg(projectPath);
-  const devScriptContent = pkg.content.scripts.start;
-  const devScriptArray = devScriptContent.split(' ');
-  const cli = devScriptArray[0];
-  const command = devScriptArray[1];
-
-  let newDevScriptContent =  `${cli} ${command}`;
-  Object.keys(args.options).forEach((key) => {
-    newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`
-  });
-
-  pkg.content.scripts.start = newDevScriptContent;
-
-  await fs.writeFile(pkg.path, `${JSON.stringify(pkg.content, null, 2)}\n`, 'utf-8');
-}
-
-/**
- * get build configuration
- * merge the user configuration to return to the new configuration
- * @param projectPath
- * @param args
- */
-async function getBuildConf(projectPath: string) {
-  const confPath = path.join(projectPath, 'ice.config.js');
-  const userConfig = require(confPath);
-
-  return mergeConf(BUILD_CONF, userConfig)
-}
-
-
-/**
- * set build configuration
- * @param projectPath
- * @param args
- */
-async function setBuildConf(projectPath: string, args: ITaskParam) {
-  const confkeys = Object.keys(args.options);
-  const confPath = path.join(projectPath, 'ice.config.js');
-  const userConf = fs.readFileSync(confPath, 'utf8');
-  const ast = parser.parse(userConf, { sourceType: 'module' });
-  const visitor = {
-    Identifier(path) {
-      if (confkeys.includes(path.node.name)) {
-        path.container.value.value = args.options[path.node.name];
-      }
-    },
-  };
-
-  traverse(ast, visitor);
-
-  const newUserConf = generate(ast).code;
-  const formatNewUserConf = prettier.format(newUserConf, {
-    parser: 'babel',
-    singleQuote: true,
-    trailingComma: 'all',
-  });
-
-  await fs.writeFile(confPath, formatNewUserConf);
-}
-
-/**
- * get the package information of the current project
- * @param projectPath Current project path
- */
-function getPkg(projectPath: string) {
-  const pkgPath = path.join(projectPath, 'package.json')
-  const pkgContent = require(pkgPath);
-  return {
-    path: pkgPath,
-    content: pkgContent
-  };
-}
-
-/**
- * merge user conf and default conf
- * @param defaultConfread default config in ice.config.js
- * @param userConf user config in ice.config.js
- */
-function mergeConf(defaultConf: any, userConf: any) {
- return defaultConf.map((item) => {
-    if (Object.keys(userConf).includes(item.name)) {
-      if (item.componentName === "Switch") {
-        item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
-      } else {
-        item.componentProps.placeholder = userConf[item.name].toString();
-      }
+  /**
+  * get dev configuration
+  * merge the user configuration to return to the new configuration
+  * @param projectPath
+  */
+  private getDevConf() {
+   const pkgContent = this.project.getPackageJSON();
+   const devScriptContent = pkgContent.scripts.start;
+   const devScriptArray = devScriptContent.split(' ');
+   const userConf = {};
+   devScriptArray.forEach(item => {
+     if (item.indexOf('--') !== -1) {
+      const key = item.match(/--(\S*)=/)[1];
+      const value = item.match(/=(\S*)$/)[1];
+      userConf[key] = value
     }
-    return item;
   })
+
+   return mergeCLIConf(DEV_CONF, userConf)
+ }
+
+  /**
+   * set dev configuration
+   * @param args
+   */
+  private setDevConf(args: ITaskParam) {
+    const pkgContent = this.project.getPackageJSON();
+    const devScriptContent = pkgContent.scripts.start;
+    const devScriptArray = devScriptContent.split(' ');
+    const cli = devScriptArray[0];
+    const command = devScriptArray[1];
+
+    let newDevScriptContent =  `${cli} ${command}`;
+    Object.keys(args.options).forEach((key) => {
+      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`
+    });
+
+    pkgContent.scripts.start = newDevScriptContent;
+
+    this.project.setPackageJSON(pkgContent);
+  }
 }
