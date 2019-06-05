@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import Modal from '@components/Modal';
 import { Input, Select, Switch, Form, Field } from '@alifd/next';
 import createUid from '../../../../utils/createUid';
@@ -68,33 +69,33 @@ const CreateNavigationModal = ({
 
   return (
     <Modal
-      title="添加导航"
+      title={<FormattedMessage id={`iceworks.project.panel.navigation.${action}.title`} />}
       visible={on}
       onCancel={onCancel}
       onOk={onSubmit}
       style={{ width: 600 }}
     >
       <Form {...formItemLayout} onChange={onChange} field={field} value={formData}>
-        <FormItem label="导航类型" required>
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.type" />} required>
           <Select size="small" name="linkType" placeholder="请选择导航类型" disabled={action !== 'create'}>
             <option value="linkGroup">导航组</option>
             <option value="link">普通导航</option>
             <option value="externalLink">外链</option>
           </Select>
         </FormItem>
-        <FormItem label="名称" required>
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.name" />} required>
           <Input size="small" name="name" placeholder="请输入名称" />
         </FormItem>
         {linkType !== 'linkGroup' && (
-          <FormItem label="路径">
+          <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.path" />}>
             <Input size="small" name="path" placeholder="请输入路径" />
           </FormItem>
         )}
-        <FormItem label="图标">
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.icon" />}>
           <Input size="small" name="icon" placeholder="请输入图标(icon type)" />
         </FormItem>
         {linkType === 'externalLink' && (
-          <FormItem label="是否打开新窗口">
+          <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.newwindow" />}>
             <Switch size="small" name="newWindow" />
           </FormItem>
         )}

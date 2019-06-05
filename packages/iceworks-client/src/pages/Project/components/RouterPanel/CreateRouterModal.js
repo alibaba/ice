@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import Modal from '@components/Modal';
 import { Input, Select, Form, Field } from '@alifd/next';
 
@@ -75,14 +76,14 @@ const CreateRouterModal = ({
 
   return (
     <Modal
-      title="添加路由"
+      title={<FormattedMessage id={`iceworks.project.panel.router.${modalData.action}.title`} />}
       visible={on}
       onCancel={onCancel}
       onOk={onSubmit}
       style={{ width: 600 }}
     >
       <Form {...formItemLayout} onChange={onChange} field={field} value={formData}>
-        <FormItem label="路径" required>
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.path" />} required>
           <Input
             name="path"
             placeholder="请填写路径"
@@ -95,7 +96,7 @@ const CreateRouterModal = ({
             })}
           />
         </FormItem>
-        <FormItem label="页面" required message="页面必选">
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.page" />} required message="页面必选">
           <Select
             size="small"
             name="component"
@@ -109,7 +110,7 @@ const CreateRouterModal = ({
             className={styles.selectBox}
           />
         </FormItem>
-        <FormItem label="布局">
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.layout" />}>
           <Select
             size="small"
             name="layout"

@@ -4,6 +4,6 @@ import Configuration from './configuration';
 import Layout from './layout';
 import Navigation from './navigation';
 import Router from './router';
-import Dev from './dev';
+import Task from './task';
 
-export { Page, Dependency, Configuration, Dev, Layout, Navigation, Router };
+export { Page, Dependency, Configuration, Task, Layout, Navigation, Router };

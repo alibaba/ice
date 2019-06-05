@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@icedesign/base';
 
-import ExtraButton from '../ExtraButton/';
+import ExtraButton from '../ExtraButton';
 import Icon from '../Icon';
 import terms from '../../terms';
 
@@ -13,14 +13,14 @@ class ProjectTerminal extends Component {
     id: PropTypes.string,
     style: PropTypes.object,
     closeLogs: PropTypes.func,
-    shwoClose: PropTypes.bool
+    shwoClose: PropTypes.bool,
   };
 
   static defaultProps = {
     id: 'terminal',
     style: {},
     closeLogs: () => {},
-    shwoClose: true
+    shwoClose: true,
   };
 
   constructor(props) {
@@ -69,7 +69,7 @@ class ProjectTerminal extends Component {
   setTerminalSize() {
     const { id } = this.props;
     const container = document.getElementById(id);
-    if(!container){
+    if (!container) {
       return null;
     }
     const { width, height } = container.getBoundingClientRect();
@@ -84,15 +84,15 @@ class ProjectTerminal extends Component {
     return (
       <div
         className="project-terminal-wrapper"
-        style={{ 
+        style={{
           zIndex: this.props.visible ? '0' : '-1',
-          ...style
+          ...style,
         }}
       >
         <div className="buttons">
           <ExtraButton
             onClick={this.clearLogs}
-            tipText={'清空当前日志'}
+            tipText="清空当前日志"
             style={{ color: '#eee', marginRight: 10 }}
           >
             <Icon type="clear" size="small" />
@@ -100,7 +100,8 @@ class ProjectTerminal extends Component {
           {
             shwoClose && (
               <Button
-                type="dark" shape="ghost"
+                type="dark"
+                shape="ghost"
                 onClick={closeLogs}
               >
                 返回工作台

@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
+import { FormattedMessage } from 'react-intl';
 
 const DeletePageModal = ({
   on, onCancel, onOk, page,
 }) => {
   return (
     <Modal
-      title="删除页面"
+      title={<FormattedMessage id="iceworks.project.panel.page.delete.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={() => onOk()}
     >
-      <div>
-        确定移除页面 &quot;{page.name}&quot; ？
-      </div>
+      <FormattedMessage id="iceworks.project.panel.page.delete.content" values={{ name: page.name }} />
     </Modal>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
+import { FormattedMessage } from 'react-intl';
 
 import styles from './DeleteNavigationModal.module.scss';
 
@@ -18,14 +19,18 @@ const DeleteNavigationModal = ({
 
   return (
     <Modal
-      title="删除导航"
+      title={<FormattedMessage id="iceworks.project.panel.navigation.delete.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={() => onOk()}
     >
       <div>
-        <span>确定移除{linkName} &quot;{name}&quot; ？</span>
-        {children && children.length > 0 && <span className={styles.tips}>导航组下还有导航，删除请谨慎！！！</span>}
+        <FormattedMessage id="iceworks.project.panel.navigation.delete.content" values={{ name, linkName }} />
+        {children && children.length > 0 && (
+          <span className={styles.tips}>
+            <FormattedMessage id="iceworks.project.panel.navigation.delete.subcontent" />
+          </span>
+        )}
       </div>
     </Modal>
   );

@@ -13,11 +13,11 @@ import CreatePageModal from './CreatePageModal';
 const PagePanel = () => {
   const [deleteName, setDeleteName] = useState('');
   const {
-    on: onDeleteModel,
+    on: onDeleteModal,
     toggleModal: toggleDeleteModal,
   } = useModal();
   const {
-    on: onCreateModel,
+    on: onCreateModal,
     toggleModal: toggleCreateModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
@@ -85,13 +85,13 @@ const PagePanel = () => {
     >
       <div className={styles.main}>
         <DeletePageModal
-          on={onDeleteModel}
+          on={onDeleteModal}
           onCancel={toggleDeleteModal}
           onOk={deletePage}
           page={pagePreDelete}
         />
         <CreatePageModal
-          on={onCreateModel}
+          on={onCreateModal}
           onCancel={toggleCreateModal}
           onOk={createPage}
         />

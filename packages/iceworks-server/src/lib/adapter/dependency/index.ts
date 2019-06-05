@@ -11,6 +11,7 @@ import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IBase
 const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (dependencies: ICreateDependencyParam[], adapterModule: IBaseModule, isDev?: boolean): Promise<void> => {
+  console.log('dependencies', dependencies);
   adapterModule.emit('install.data', '开始安装依赖');
 
   const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
@@ -81,7 +82,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     return (await install([dependency], this, idDev))[0];
   }
 
-  public async creates(dependencies: ICreateDependencyParam[], idDev?: boolean): Promise<void> {
+  public async bulkCreate(dependencies: ICreateDependencyParam[], idDev?: boolean): Promise<void> {
     return await install(dependencies, this, idDev);
   }
 

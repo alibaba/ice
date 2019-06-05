@@ -68,8 +68,10 @@ module.exports = (_options, afterCreateRequest) => {
         action: isCustomScaffold
           ? 'custom-generator-project'
           : (nodeFramework || 'generator-project'),
-        scaffold: scaffold.name || 'custom-react-template',
-        group: isAlibaba ? 'alibaba' : 'outer',
+        data: {
+          scaffold: scaffold.name || 'custom-react-template',
+          group: isAlibaba ? 'alibaba' : 'outer',
+        },
       });
       return Promise.resolve();
     });

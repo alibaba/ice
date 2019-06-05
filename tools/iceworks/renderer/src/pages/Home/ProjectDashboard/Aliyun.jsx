@@ -9,9 +9,9 @@ import pathExists from 'path-exists';
 import React, { Component } from 'react';
 
 import BrowserLink from '../../../components/BrowserLink';
-import DashboardCard from '../../../components/DashboardCard/';
+import DashboardCard from '../../../components/DashboardCard';
 import dialog from '../../../components/dialog';
-import ExtraButton from '../../../components/ExtraButton/';
+import ExtraButton from '../../../components/ExtraButton';
 import Icon from '../../../components/Icon';
 import PluginHoc from './PluginHoc';
 import services from '../../../services';
@@ -172,15 +172,14 @@ class Aliyun extends Component {
     if (!this.state.accessKeyId || !this.state.accessKeySecret) {
       Feedback.toast.error('请先输入 accessKeyId、accessKeySecret');
       return false;
-    } else {
-      return {
-        region: this.state.region,
-        endpoint: regionMap[this.state.region].endpoint,
-        accessKeyId: this.state.accessKeyId,
-        accessKeySecret: this.state.accessKeySecret,
-        time: '200s',
-      };
     }
+    return {
+      region: this.state.region,
+      endpoint: regionMap[this.state.region].endpoint,
+      accessKeyId: this.state.accessKeyId,
+      accessKeySecret: this.state.accessKeySecret,
+      time: '200s',
+    };
   }
 
   handleClear = () => {
@@ -222,12 +221,12 @@ class Aliyun extends Component {
         this.saveAliossData
       );
     })
-    .catch((err = {}) => {
-      dialog.alert({
-        title: 'Bucket 列表刷新失败',
-        content: err.message,
+      .catch((err = {}) => {
+        dialog.alert({
+          title: 'Bucket 列表刷新失败',
+          content: err.message,
+        });
       });
-    });
   };
 
   handleUploadOss = () => {
@@ -242,57 +241,63 @@ class Aliyun extends Component {
       const assets = this.recursiveReaddirSync(buildDir, buildDir);
       if (assets.length === 0) {
         Feedback.toast.error('当前构建结果为空');
+      } else if (!this.state.selectedBucket) {
+        Feedback.toast.error('未选择 bucket');
       } else {
-        if (!this.state.selectedBucket) {
-          Feedback.toast.error('未选择 bucket');
-        } else {
-          this.setState({ isUploading: true });
-          dialog.confirm(
-            {
-              title: '上传到阿里云 OSS',
-              content: (
-                <div>
-                  <div>是否将构建结果上传到:</div>
-                  <div style={{ paddingLeft: '2em' }}>
-                    区域: {regionMap[this.state.region].name}
-                    {' - '}
-                    {this.state.region}
-                  </div>
-                  <div style={{ paddingLeft: '2em' }}>
-                    终端: {regionMap[this.state.region].endpoint}
-                  </div>
-                  <div style={{ paddingLeft: '2em' }}>
-                    存储空间: {this.state.selectedBucket}
-                  </div>
-                  <div style={{ paddingLeft: '2em' }}>
-                    存储路径: {this.state.bucketDirectory || '/'}
-                  </div>
+        this.setState({ isUploading: true });
+        dialog.confirm(
+          {
+            title: '上传到阿里云 OSS',
+            content: (
+              <div>
+                <div>是否将构建结果上传到:</div>
+                <div style={{ paddingLeft: '2em' }}>
+                    区域:
+                  {' '}
+                  {regionMap[this.state.region].name}
+                  {' - '}
+                  {this.state.region}
                 </div>
-              ),
-            },
-            (ok) => {
-              if (ok) {
-                const ossConfig = this.getOssConfig();
-                if (!ossConfig) {
-                  return;
-                }
-                alioss.upload2oss(
-                  ossConfig, 
-                  this.state.selectedBucket,
-                  this.state.bucketDirectory,
-                  assets
-                ).then((uploadResult) => {
-                  this.renderUploadResult(uploadResult);
-                }).catch((e) => {
-                  dialog.alert({ title: '上传失败', content: e.message });
-                  this.setState({ isUploading: false });
-                });
-              } else {
-                this.setState({ isUploading: false });
+                <div style={{ paddingLeft: '2em' }}>
+                    终端:
+                  {' '}
+                  {regionMap[this.state.region].endpoint}
+                </div>
+                <div style={{ paddingLeft: '2em' }}>
+                    存储空间:
+                  {' '}
+                  {this.state.selectedBucket}
+                </div>
+                <div style={{ paddingLeft: '2em' }}>
+                    存储路径:
+                  {' '}
+                  {this.state.bucketDirectory || '/'}
+                </div>
+              </div>
+            ),
+          },
+          (ok) => {
+            if (ok) {
+              const ossConfig = this.getOssConfig();
+              if (!ossConfig) {
+                return;
               }
+              alioss.upload2oss(
+                ossConfig,
+                this.state.selectedBucket,
+                this.state.bucketDirectory,
+                assets
+              ).then((uploadResult) => {
+                this.renderUploadResult(uploadResult);
+              }).catch((e) => {
+                dialog.alert({ title: '上传失败', content: e.message });
+                this.setState({ isUploading: false });
+              });
+            } else {
+              this.setState({ isUploading: false });
             }
-          );
-        }
+          }
+        );
       }
     } else {
       Feedback.toast.error('暂无构建结果');
@@ -300,12 +305,12 @@ class Aliyun extends Component {
   };
 
   recursiveReaddirSync = (dirPath, rootDir) => {
-    var stats;
-    var list = [];
-    var files = fs.readdirSync(dirPath).filter(junk.not);
+    let stats;
+    let list = [];
+    const files = fs.readdirSync(dirPath).filter(junk.not);
 
     files.forEach((file) => {
-      let fullPath = path.join(dirPath, file);
+      const fullPath = path.join(dirPath, file);
       stats = fs.lstatSync(fullPath);
       if (stats.isDirectory()) {
         list = list.concat(this.recursiveReaddirSync(fullPath, rootDir));
@@ -364,8 +369,10 @@ class Aliyun extends Component {
             上传结果
             <span style={{ fontSize: 12, paddingLeft: 10, color: '#666' }}>
               成功：(
-              {successCount}) 失败：(
-              {faildCount})
+              {successCount}
+) 失败：(
+              {faildCount}
+)
             </span>
           </div>
         ),
@@ -397,8 +404,8 @@ class Aliyun extends Component {
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'topRight'}
-              tipText={'清空数据'}
+              placement="topRight"
+              tipText="清空数据"
               onClick={this.handleClear}
             >
               <Icon type="clear" style={{ fontSize: 18 }} />
@@ -472,8 +479,8 @@ class Aliyun extends Component {
               />
               <ExtraButton
                 style={{ color: '#3080FE', marginLeft: 10 }}
-                placement={'top'}
-                tipText={'刷新 bukcet 列表'}
+                placement="top"
+                tipText="刷新 bukcet 列表"
                 onClick={this.handleRefeshBucket}
               >
                 <Icon type="reload" />

@@ -23,11 +23,13 @@ export default class BlockRenameForm extends Component {
       <div className="project-config-form">
         <div className="project-config-form-item">
           <h3 style={{ margin: 0 }}>
-            <span style={{ color: 'red' }}>*</span> 区块名：
+            <span style={{ color: 'red' }}>*</span>
+            {' '}
+区块名：
           </h3>
           <Input
             ref="name"
-            placeholder={'字母数字中下划线组合 (必填)'}
+            placeholder="字母数字中下划线组合 (必填)"
             value={this.props.customBlocks.renameBlockName}
             onChange={this.changeBlockName}
           />
@@ -38,7 +40,7 @@ export default class BlockRenameForm extends Component {
         <div className="project-config-form-item">
           <h3 style={{ margin: 0 }}>区块别名：</h3>
           <Input
-            placeholder={'可输入中文 (选填)'}
+            placeholder="可输入中文 (选填)"
             value={this.props.customBlocks.renameBlockAlias}
             onChange={this.changeBlockAlias}
           />

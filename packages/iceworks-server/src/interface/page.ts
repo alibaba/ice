@@ -123,7 +123,7 @@ export interface IPageModule extends IBaseModule {
    *
    * @param pages 页面配置信息
    */
-  creates(pages: ICreatePageParam[]): Promise<IPage[]>;
+  bulkCreate(pages: ICreatePageParam[]): Promise<IPage[]>;
 
   /**
    * 删除项目内的页面

@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <ul id="nav">
+      <li v-for="item in headerMenuConfig" :key="item.path">
+        <router-link :to="item.path">{{item.name}}</router-link>
+      </li>
+    </ul>
     <router-view/>
   </div>
 </template>
@@ -27,3 +28,14 @@
   }
 }
 </style>
+
+<script>
+// @ is an alias to /src
+import { headerMenuConfig } from '@/menuConfig';
+
+export default {
+  data: () => {
+    return { headerMenuConfig }
+  }
+};
+</script>

@@ -43,7 +43,7 @@ export interface IMockModule extends IBaseModule {
    *
    * @param mocks 数据模拟配置
    */
-  creates(mocks: IMock[]): Promise<IMock[]>;
+  bulkCreate(mocks: IMock[]): Promise<IMock[]>;
 
   /**
    * 删除数据模拟

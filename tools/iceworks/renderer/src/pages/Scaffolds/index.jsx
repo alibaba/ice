@@ -31,7 +31,6 @@ class Scaffolds extends Component {
 
   componentDidMount() {
     this.props.materials.refresh();
-
   }
 
   renderScaffoldsTabPanel = () => {
@@ -61,7 +60,7 @@ class Scaffolds extends Component {
             activeKey={this.props.materials.tabScaffoldActiveKey}
             onChange={this.props.handleTabChange}
             contentStyle={{ padding: 0 }}
-            tabBarExtraContent={
+            tabBarExtraContent={(
               <div
                 style={{
                   height: 48,
@@ -79,7 +78,7 @@ class Scaffolds extends Component {
                   刷新列表
                 </Button>
               </div>
-            }
+)}
           >
             {this.renderScaffoldsTabPanel()}
             <TabPane tab="自定义模板" key="custom-scaffold">

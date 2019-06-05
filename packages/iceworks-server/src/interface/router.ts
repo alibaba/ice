@@ -40,7 +40,7 @@ export interface IRouterModule extends IBaseModule {
    *
    * @param routers 多个路由配置
    */
-  creates(routers: IRouter[]): Promise<IRouter[]>;
+  bulkCreate(routers: IRouter[]): Promise<IRouter[]>;
 
   /**
    * 删除路由

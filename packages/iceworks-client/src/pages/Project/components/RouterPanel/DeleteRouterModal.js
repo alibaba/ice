@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
+import { FormattedMessage } from 'react-intl';
 
 const DeleteRouterModal = ({
   on, onCancel, onOk, router,
@@ -9,13 +10,13 @@ const DeleteRouterModal = ({
 
   return (
     <Modal
-      title="删除导航"
+      title={<FormattedMessage id="iceworks.project.panel.router.delete.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={() => onOk()}
     >
       <div>
-        <span>确定移除路由 &quot;{path}&quot; ？</span>
+        <FormattedMessage id="iceworks.project.panel.router.delete.content" values={{ name: path }} />
       </div>
     </Modal>
   );

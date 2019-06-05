@@ -59,7 +59,7 @@ export interface IDependencyModule extends IBaseModule {
    *
    * @param dependencies 依赖列表
    */
-  creates(dependencies: ICreateDependencyParam[]): Promise<void>;
+  bulkCreate(dependencies: ICreateDependencyParam[]): Promise<void>;
 
   /**
    * 升级项目中的某个依赖

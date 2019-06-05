@@ -9,7 +9,7 @@ const CHANNEL_DATA = 'session:data';
 const CHANNEL_EXIT = 'session:exit';
 const CHANNEL_NEWLINE = 'session:newline';
 
-class Sessions extends EventEmitter {
+class Manager extends EventEmitter {
   /**
    * 新建一个 session
    * @param {object} options Session 对象参数
@@ -62,4 +62,4 @@ class Sessions extends EventEmitter {
   }
 }
 
-module.exports = new Sessions();
+module.exports = new Manager();

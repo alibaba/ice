@@ -1,3 +1,7 @@
+import * as openFolder from 'open';
+import * as openEditor from 'open-editor';
+import storage from '../../../../lib/storage';
+
 export default (app) => {
   const { Controller } = app;
 
@@ -39,6 +43,20 @@ export default (app) => {
       const { path } = args;
 
       return await projectManager.setCurrent(path);
+    }
+
+    async openFolder(ctx) {
+      const { args: { path } } = ctx;
+      return await openFolder(path);
+    }
+
+    async openEditor(ctx) {
+      const { args: { path } } = ctx;
+      const editor = storage.get('editor');
+      return await openEditor([path], {
+        editor: editor
+      });
+
     }
   };
 };
