@@ -5,6 +5,11 @@ export default {
   dataSource: {
     resource: [],
     current: {},
+    recommendScaffolds: [],
+  },
+
+  async getRecommendScaffolds() {
+    this.dataSource.recommendScaffolds = await socket.emit('material.index.recommendScaffolds');
   },
 
   async getResource() {

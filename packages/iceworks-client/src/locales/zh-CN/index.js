@@ -28,6 +28,8 @@ export default {
 
   // project
   'iceworks.project.title': '项目管理',
+  'iceworks.project.create.init.title': '初始化项目',
+  'iceworks.project.create.init.content': '当前项目依赖尚未安装，安装过程可能需要几分钟，是否立即安装？',
   'iceworks.project.submenu.opts.openProject': '打开项目',
   'iceworks.project.submenu.opts.createProject': '创建项目',
 
@@ -99,5 +101,8 @@ export default {
   'iceworks.material.download': '使用该模版',
   'iceworks.material.doc': '文档',
   'iceworks.material.install': '安装',
+  'iceworks.material.install.component.title': '组件下载',
+  'iceworks.material.install.component.pacakgeName': '组件包名：',
+  'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
 };

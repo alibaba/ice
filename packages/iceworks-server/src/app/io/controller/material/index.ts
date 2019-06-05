@@ -3,6 +3,11 @@ import storage from '../../../../lib/storage';
 
 const isArray = Array.isArray;
 
+const RECOMMEND_SCAFFOLDS = [
+  'ice-design-pro',
+  'ice-design-lite',
+];
+
 export default (app) => {
   return class MaterialController extends app.Controller {
     async resource() {
@@ -13,14 +18,14 @@ export default (app) => {
       const { args, logger } = ctx;
 
       logger.info(`get material by url, url: ${args.url}`);
+      const data = await request(args.url);
+      return formatData(data);
+    }
 
-      try {
-        const data = await request(args.url);
-        return formatData(data);
-      } catch (error) {
-        logger.error('request error', error);
-        return {}
-      }
+    async getRecommendScaffolds() {
+      const material = storage.get('material')[0];
+      const { scaffolds = [] } = await request(material.source);
+      return scaffolds.filter(({ name }) => RECOMMEND_SCAFFOLDS.includes(name));
     }
   };
 };

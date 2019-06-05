@@ -7,6 +7,20 @@
   align-items: center;
   flex-direction: column;
 
+  .scaffolds {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+
+    .item {
+      margin-right: 36px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
   .text {
     color: $text-color-secondary;
     font-size: $font-size-md;
