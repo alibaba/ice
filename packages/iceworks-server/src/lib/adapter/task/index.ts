@@ -17,9 +17,9 @@ export default class Task extends EventEmitter implements ITaskModule {
 
   public status: string;
 
-  public cliConfFilename: string = 'ice.config.js';
+  public readonly cliConfPath: string;
 
-  public cliConfPath: string;
+  private cliConfFilename: string = 'ice.config.js';
 
   private process: object;
 

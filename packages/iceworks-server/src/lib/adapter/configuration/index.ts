@@ -7,9 +7,9 @@ import { CLI_CONF } from './const';
 export default class Configuration extends EventEmitter implements IConfigurationModule {
   public project: IProject;
 
-  public cliConfFilename: string = 'ice.config.js';
+  public readonly cliConfPath: string;
 
-  public cliConfPath: string;
+  private cliConfFilename: string = 'ice.config.js';
 
   constructor(project: IProject) {
     super();
