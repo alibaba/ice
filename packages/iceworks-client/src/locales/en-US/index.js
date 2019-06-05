@@ -28,6 +28,8 @@ export default {
 
   // project
   'iceworks.project.title': 'Project',
+  'iceworks.project.create.init.title': 'Initialization Project',
+  'iceworks.project.create.init.content': 'The dependencies of the current project have not been installed yet. The installation process may take several minutes. Do you want to install it immediately?',
   'iceworks.project.submenu.opts.openProject': 'Open',
   'iceworks.project.submenu.opts.createProject': 'Create',
 
@@ -78,5 +80,8 @@ export default {
   'iceworks.material.download': 'Download',
   'iceworks.material.doc': 'Docs',
   'iceworks.material.install': 'Install',
+  'iceworks.material.install.component.title': 'Install Component',
+  'iceworks.material.install.component.pacakgeName': 'Component Name: ',
+  'iceworks.material.install.component.packageVersion': 'Component Version: ',
   'iceworks.material.noDesc': 'No Description',
 };

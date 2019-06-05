@@ -29,6 +29,7 @@ export default (app: Application) => {
     ['project.configuration.settings', project.configuration.settings],
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
+    ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
   ];
 
   routers.forEach(([eventName, handle]) => {
