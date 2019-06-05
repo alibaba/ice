@@ -26,8 +26,29 @@ module.exports = async function init(cwd) {
     });
 
     // get user answers
-    const answers = await initAsk(options);
-    add(cwd, { ...answers });
+    const { type, template, scope, forInnerNet } = await initAsk(options);
+    const npmPrefix = scope ? `${scope}/` : '';
+    const templatePath = await getTemplatePath(type, template);
+
+    if (type === 'material') {
+      // init material project
+      /* eslint-disable-next-line import/no-dynamic-require */
+      require('./material/init')(cwd, {
+        npmPrefix,
+        template,
+        templatePath,
+        forInnerNet,
+        standalone: true,
+      });
+    } else {
+      // init single component/block/scaffold project
+      /* eslint-disable-next-line import/no-dynamic-require */
+      require(`./${type}/add`)(cwd, {
+        npmPrefix,
+        templatePath,
+        forInnerNet,
+        standalone: true,
+      });
     }
   } catch (error) {
     logger.fatal(error);
