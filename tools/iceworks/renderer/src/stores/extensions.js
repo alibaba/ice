@@ -40,20 +40,6 @@ class Extensions {
         },
       },
       {
-        name: 'proxies',
-        cover: require('../static/prories@3x.png'), // 1x1 的封面图
-        title: '代理配置',
-        description:
-          '自定义代理规则，支持多种规则并存、规则切换，设置代理后重启应用，项目中的 GET、POST 请求命中规则时则被代理到对应的地址。代理地址注意需要支持 CORS 跨域请求哦。',
-        author: 'ICE TEAM',
-        version: '1.0.0',
-        extra: 'cli 需 ice-scripts',
-        conditions: {
-          libraryType: 'react',
-          applicationType: 'ice',
-        },
-      },
-      {
         name: 'todo',
         cover: require('../static/todo@3x.png'), // 1x1 的封面图
         title: 'TODO',
@@ -110,6 +96,25 @@ class Extensions {
         author: 'ICE TEAM',
         version: '1.0.0',
       }, gitConfig);
+    }
+
+    const { devDependencies } = projects.currentProject.pkgData;
+    const latestVersion = /^\^2\./.test(devDependencies['ice-scripts']);
+    if (!latestVersion) {
+      this.list.push({
+        name: 'proxies',
+        cover: require('../static/prories@3x.png'), // 1x1 的封面图
+        title: '代理配置',
+        description:
+          '自定义代理规则，支持多种规则并存、规则切换，设置代理后重启应用，项目中的 GET、POST 请求命中规则时则被代理到对应的地址。代理地址注意需要支持 CORS 跨域请求哦。',
+        author: 'ICE TEAM',
+        version: '1.0.0',
+        extra: 'cli 需 ice-scripts',
+        conditions: {
+          libraryType: 'react',
+          applicationType: 'ice',
+        },
+      });
     }
 
     const checked = {};
