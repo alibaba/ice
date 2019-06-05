@@ -47,7 +47,7 @@ export interface ITaskParam {
   /**
    * 参数对象
    */
-  options?: object
+  options: object
 }
 
 export interface ITaskModule extends IBaseModule {

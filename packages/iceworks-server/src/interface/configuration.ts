@@ -36,12 +36,12 @@ export interface IConfParam {
   /**
    * 配置类型
    */
-  type?: string,
+  type: string,
 
   /**
    * 参数对象
    */
-  options?: object
+  options: object
 }
 
 export interface IConfigurationModule extends IBaseModule {

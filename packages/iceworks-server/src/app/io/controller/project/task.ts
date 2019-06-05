@@ -53,8 +53,7 @@ export default (app) => {
       const { args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      const response = await project.task.setConf(args);
-      return { success: response };
+      return await project.task.setConf(args);
     }
   };
 };
