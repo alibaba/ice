@@ -47,7 +47,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "address": "^1.0.3",
     "autoprefixer": "^9.1.5",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "babel-loader": "^8.0.4",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
