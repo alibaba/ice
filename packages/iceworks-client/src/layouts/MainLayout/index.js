@@ -15,15 +15,15 @@ const MainLayout = () => {
 
   useEffect(() => {
     project.refresh();
+
+    socket.on('connect', () => {
+      setConnect(true);
+    });
+
+    socket.on('disconnect', () => {
+      setConnect(false);
+    });
   }, []);
-
-  socket.on('connect', () => {
-    setConnect(true);
-  });
-
-  socket.on('disconnect', () => {
-    setConnect(false);
-  });
 
   return (
     <div className={styles.container}>
