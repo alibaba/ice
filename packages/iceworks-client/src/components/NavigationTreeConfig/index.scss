@@ -1,0 +1,80 @@
+@import '../../variables.scss';
+
+/*
+ * 修改 tree 的样式，需要定义内部样式
+ */
+.navbar-config-panel-tree {
+  .next-tree-node-handle {
+    background-color: white;
+    &:hover {
+      background-color: white;
+    }
+  }
+
+  .next-tree-switcher-noline {
+    margin-right: 0;
+    margin-left: 8px;
+
+    .next-tree-switcher-icon {
+      &:before {
+        content: '';
+        border-width: 7px 6px;
+        border-color: #C7C7C7 transparent transparent transparent;
+        border-style: solid;
+        position: relative;
+        top: 3px;
+        left: 4px;
+      }
+    }
+  }
+
+  .next-tree-switcher-noline-close {
+    .next-tree-switcher-icon {
+      transform: none;
+
+      &:before {
+        content: '';
+        border-width: 6px 7px;
+        border-color: transparent transparent transparent #C7C7C7;
+        border-style: solid;
+        position: relative;
+        top: -1px;
+        left: 8px;
+      }
+    }
+  }
+
+  .next-tree-node {
+    margin-top: 0;
+    
+    .next-tree-node-handle {
+      cursor: move;
+    }
+    li {
+      margin-left: 16px;
+    }
+  }
+
+  /* 为了增加右边功能 */
+  .next-tree-node-inner {
+    position: relative;
+
+    .navbar-config-tree-node-click {
+      .navbar-config-tree-set-icon {
+        display: block;
+      }
+    }
+
+    .navbar-config-tree-set-icon {
+      color: $brand-color-primary;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .next-tree-child-tree {
+    margin: 0;
+  }
+}

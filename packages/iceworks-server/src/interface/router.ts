@@ -10,9 +10,16 @@ export interface IRouter {
   path: string;
 
   /**
-   * 页面名
+   * 组件名
    */
-  pageName: string;
+  component?: string;
+
+  /**
+   * layout 名
+   */
+  layout?: string;
+
+  children?: IRouter[];
 }
 
 export interface IRouterModule extends IBaseModule {

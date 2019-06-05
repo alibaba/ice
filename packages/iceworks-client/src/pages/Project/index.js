@@ -16,6 +16,8 @@ import styles from './index.module.scss';
 import Page from './components/PagePanel';
 import Dependency from './components/DependencyPanel';
 import Layout from './components/LayoutPanel';
+import Navigation from './components/NavigationPanel';
+import Router from './components/RouterPanel';
 import Todo from './components/TodoPanel';
 import Git from './components/GitPanel';
 import OSS from './components/OSSPanel';
@@ -25,6 +27,8 @@ const panels = {
   Page,
   Dependency,
   Layout,
+  Navigation,
+  Router,
   Todo,
   Git,
   OSS,
@@ -46,15 +50,19 @@ const Project = () => {
   } = useModal();
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [projects, project] = stores.useStores(['projects', 'project']);
-  const [pages, dependencies, layouts] = projectStores.useStores([
+  const [pages, dependencies, layouts, navigations, routers] = projectStores.useStores([
     'pages',
     'dependencies',
     'layouts',
+    'navigations',
+    'routers',
   ]);
   const panelStores = {
     Page: pages,
     Dependency: dependencies,
     Layout: layouts,
+    Navigation: navigations,
+    Router: routers,
   };
 
   async function refreshProject() {

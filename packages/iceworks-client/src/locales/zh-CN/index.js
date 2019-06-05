@@ -30,6 +30,8 @@ export default {
   'iceworks.project.panel.page.title': '页面管理',
   'iceworks.project.panel.dependency.title': '依赖管理',
   'iceworks.project.panel.layout.title': '布局列表',
+  'iceworks.project.panel.navigation.title': '导航管理',
+  'iceworks.project.panel.router.title': '路由管理',
   'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.def.title': 'DEF 发布',
   'iceworks.project.panel.git.title': 'Git',

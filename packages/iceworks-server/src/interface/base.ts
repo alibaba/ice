@@ -89,6 +89,47 @@ export interface IProjectLayout {
 }
 
 /**
+ * 项目的导航
+ */
+export interface IProjectNavigation {
+  id: string;
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 路径
+   */
+  path: string;
+
+  /**
+   * 图标
+   */
+  icon?: string;
+
+  /**
+   * 是否隐藏
+   */
+  hide?: boolean;
+
+  /**
+   * 是否是外链
+   */
+  external?: boolean;
+
+  /**
+   * 是否新开页面
+   */
+  openPage?: boolean;
+
+  /**
+   * 截图 URL
+   */
+  children?: IProjectNavigation[];
+}
+
+/**
  * TODO 物料的模板信息
  */
 export interface IMaterialScaffold {

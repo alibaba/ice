@@ -30,6 +30,8 @@ export default {
   'iceworks.project.panel.page.title': 'Page',
   'iceworks.project.panel.dependency.title': 'Dependency',
   'iceworks.project.panel.layout.title': 'Layout',
+  'iceworks.project.panel.navigation.title': 'Navigation',
+  'iceworks.project.panel.router.title': 'router',
   'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.def.title': 'DEF',
   'iceworks.project.panel.git.title': 'Git',
