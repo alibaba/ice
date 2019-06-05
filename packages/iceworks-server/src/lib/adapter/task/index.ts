@@ -191,13 +191,7 @@ async function setDevConf(projectPath: string, args: ITaskParam) {
 
   pkg.content.scripts.start = newDevScriptContent;
 
-  try {
-    await fs.writeFile(pkg.path, `${JSON.stringify(pkg.content, null, 2)}\n`, 'utf-8');
-    return true;
-  } catch (error) {
-    console.log(error)
-    return false;
-  }
+  await fs.writeFile(pkg.path, `${JSON.stringify(pkg.content, null, 2)}\n`, 'utf-8');
 }
 
 /**
@@ -241,13 +235,7 @@ async function setBuildConf(projectPath: string, args: ITaskParam) {
     trailingComma: 'all',
   });
 
-  try {
-    await fs.writeFile(confPath, formatNewUserConf);
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+  await fs.writeFile(confPath, formatNewUserConf);
 }
 
 /**

@@ -56,13 +56,7 @@ export default class Configuration extends EventEmitter implements IConfiguratio
       trailingComma: 'all',
     });
 
-    try {
-      await fs.writeFile(confPath, formatNewUserConf);
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
+    await fs.writeFile(confPath, formatNewUserConf);
   }
 }
 
