@@ -1,4 +1,4 @@
-function removeSchame(url) {
+function removeSchema(url) {
   return url.replace(/https?:\/\//, '//');
 }
 
@@ -8,7 +8,7 @@ function removeSchame(url) {
  * @param {string} source2 物料源地址2
  */
 const equalSource = (source1, source2) => {
-  return removeSchame(source1) === removeSchame(source2);
+  return removeSchema(source1) === removeSchema(source2);
 };
 
 export default equalSource;
