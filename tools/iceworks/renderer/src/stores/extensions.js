@@ -98,10 +98,8 @@ class Extensions {
       }, gitConfig);
     }
 
-    const { devDependencies, scaffoldConfig } = projects.currentProject.pkgData;
-    console.log(projects.currentProject);
-    const latestVersion = /^\^2\./.test(devDependencies['ice-scripts']);
-    if ((scaffoldConfig.builder === 'ice-scripts') && !latestVersion) {
+    const { devDependencies } = projects.currentProject.pkgData;
+    if (/^\^1\./.test(devDependencies['ice-scripts'])) {
       this.list.push({
         name: 'proxies',
         cover: require('../static/prories@3x.png'), // 1x1 的封面图
@@ -110,7 +108,7 @@ class Extensions {
           '自定义代理规则，支持多种规则并存、规则切换，设置代理后重启应用，项目中的 GET、POST 请求命中规则时则被代理到对应的地址。代理地址注意需要支持 CORS 跨域请求哦。',
         author: 'ICE TEAM',
         version: '1.0.0',
-        extra: 'cli 需 ice-scripts',
+        extra: '开发构建工具需要使用 ice-scripts@1.x 版本',
         conditions: {
           libraryType: 'react',
           applicationType: 'ice',
