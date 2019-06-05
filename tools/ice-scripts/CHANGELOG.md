@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.0.3
+
 ## 2.0.2
 
 - [fix] 修复 copy 插件未使用自定义 output 问题
