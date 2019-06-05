@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.10.2
+
 ## 1.10.1
 
 - [fix] 组件&区块 build 指定 publicPath #1849
