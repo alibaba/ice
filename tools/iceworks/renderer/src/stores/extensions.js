@@ -98,9 +98,10 @@ class Extensions {
       }, gitConfig);
     }
 
-    const { devDependencies } = projects.currentProject.pkgData;
+    const { devDependencies, scaffoldConfig } = projects.currentProject.pkgData;
+    console.log(projects.currentProject);
     const latestVersion = /^\^2\./.test(devDependencies['ice-scripts']);
-    if (!latestVersion) {
+    if ((scaffoldConfig.builder === 'ice-scripts') && !latestVersion) {
       this.list.push({
         name: 'proxies',
         cover: require('../static/prories@3x.png'), // 1x1 的封面图
