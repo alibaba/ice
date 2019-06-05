@@ -36,19 +36,19 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
 
   async function onNameChange(value) {
     setName(value);
-    setPath(await socket.emit('help.index.getPath', [workFolder, value]));
+    setPath(await socket.emit('home.help.getPath', [workFolder, value]));
   }
 
   async function onPathChange(value) {
     setSelectModal(false);
 
     setWorkFolder(value);
-    setPath(name ? await socket.emit('help.index.getPath', [value, name]) : value);
+    setPath(name ? await socket.emit('home.help.getPath', [value, name]) : value);
   }
 
   useEffect(() => {
     (async () => {
-      const { path: workPath } = await socket.emit('project.index.workFolder');
+      const { path: workPath } = await socket.emit('home.index.workFolder');
       setWorkFolder(workPath);
       setPath(workPath);
     })();

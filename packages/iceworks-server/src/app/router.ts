@@ -3,7 +3,7 @@ import { Application } from 'midway';
 export default (app: Application) => {
   const { controller } = app.io;
 
-  const { project, material, help } = controller;
+  const { project, material, home } = controller;
   const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
@@ -13,8 +13,6 @@ export default (app: Application) => {
     ['project.index.add', project.index.add],
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
-    ['project.index.workFolder', project.index.getWorkFolder],
-    ['project.index.setWorkFolder', project.index.setWorkFolder],
     ['project.index.openFolder', project.index.openFolder],
     ['project.index.openEditor', project.index.openEditor],
     ['project.page.list', project.page.list],
@@ -32,7 +30,9 @@ export default (app: Application) => {
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
-    ['help.index.getPath', help.index.getPath],
+    ['home.help.getPath', home.help.getPath],
+    ['home.index.workFolder', home.index.getWorkFolder],
+    ['home.index.setWorkFolder', home.index.setWorkFolder],
   ];
 
   routers.forEach(([eventName, handle]) => {
