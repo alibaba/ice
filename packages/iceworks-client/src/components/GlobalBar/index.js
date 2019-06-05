@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Message } from '@alifd/next';
-import stores from '@stores';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
 import styles from './index.module.scss';
 
-const GlobalBar = () => {
-  const project = stores.useStore('project');
+const GlobalBar = ({ project }) => {
   const [terminalVisible, setTerminalVisible] = useState(false);
   const projectPath = project.dataSource.path;
 
@@ -15,32 +14,32 @@ const GlobalBar = () => {
   }
 
   async function handleFolder() {
-    if (projectPath) {
+    try {
       await project.openFolder(projectPath);
-    } else {
+    } catch (error) {
       Message.show({
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: '打开文件夹失败',
+        content: error.message,
       });
     }
   }
 
   async function handleEditor() {
-    if (projectPath) {
+    try {
       await project.openEditor(projectPath);
-    } else {
+    } catch (error) {
       Message.show({
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: '打开编辑器失败',
+        content: error.message,
       });
     }
   }
 
-  return (
+  return project.dataSource.name ? (
     <div className={styles.container}>
       {terminalVisible ? (
         <div className={styles.globalTerminal}>
@@ -75,7 +74,11 @@ const GlobalBar = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
+};
+
+GlobalBar.propTypes = {
+  project: PropTypes.object.isRequired,
 };
 
 export default GlobalBar;

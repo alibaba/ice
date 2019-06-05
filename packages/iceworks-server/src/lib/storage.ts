@@ -75,6 +75,10 @@ const schema = {
     type: 'array',
     default: [],
   },
+  editor: {
+    type: 'string',
+    default: 'vscode',
+  }
 };
 
 export default new Store({ schema });

@@ -47,23 +47,16 @@ export default (app) => {
 
     async openFolder(ctx) {
       const { args: { path } } = ctx;
-      try {
-        await openFolder(path);
-      } catch (error) {
-        console.log(error)
-      }
+      return await openFolder(path);
     }
 
     async openEditor(ctx) {
       const { args: { path } } = ctx;
       const editor = storage.get('editor');
-      try {
-        await openEditor([path], {
-          editor: editor || 'vscode'
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      return await openEditor([path], {
+        editor: editor
+      });
+
     }
   };
 };
