@@ -15,8 +15,7 @@ function getCLIConf(path: string, defaultConf) {
   const code = fsExtra.readFileSync(path, 'utf8');
   const ast = parser.parse(code, { sourceType: 'module' });
 
-  const defaultConfKeys = [];
-  defaultConf.forEach(item => defaultConfKeys.push(item.name));
+  const defaultConfKeys = defaultConf.map(item => defaultConfKeys.push(item.name));
 
   const userConf = {};
   const visitor = {
