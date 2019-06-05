@@ -4,6 +4,7 @@ import * as prettier from 'prettier';
 import * as parser from '@babel/parser';
 import traverse from '@babel/traverse';
 import generate from '@babel/generator';
+import * as t from '@babel/types';
 
 /**
  * merge default conf returns new conf
@@ -38,17 +39,33 @@ function getCLIConf(path: string, defaultConf) {
  */
 function setCLIConf(path: string, conf: object, ) {
   const confKeys = Object.keys(conf);
-  const confContent = fsExtra.readFileSync(path, 'utf8');
-  const ast = parser.parse(confContent, { sourceType: 'module' });
+  const useConfContent = fsExtra.readFileSync(path, 'utf8');
+  const ast = parser.parse(useConfContent, { sourceType: 'module' });
+
+  let flag = false;
+  let properties = []
+
   const visitor = {
-    Identifier(path) {
-      if(confKeys.includes(path.node.name)) {
-        path.container.value.value = conf[path.node.name];
+    ObjectExpression({ node }) {
+      if (!flag) {
+        properties = node.properties;
+        flag = true;
       }
     }
   }
 
   traverse(ast, visitor);
+
+  confKeys.forEach(key => {
+    const node = properties.find((prop) => prop.key.name === key)
+
+    if (node) {
+      node.value.value = conf[key];
+    } else {
+      const value = (typeof conf[key] === 'boolean') ? t.booleanLiteral(conf[key]) : t.identifier(conf[key]);
+      properties.push(t.objectProperty(t.identifier(key), value));
+    }
+  });
 
   const newCLIConf = generate(ast).code;
   const formatNewCLIConf = prettier.format(newCLIConf, {
