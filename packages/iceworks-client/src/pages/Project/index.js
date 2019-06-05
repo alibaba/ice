@@ -5,7 +5,8 @@ import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
 import ErrorBoundary from '@components/ErrorBoundary';
 import CreateProjectModal from '@components/CreateProjectModal';
-import ResetDependencyModal from '@components/ResetDependencyModal';
+import Modal from '@components/Modal';
+import { FormattedMessage } from 'react-intl';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
@@ -137,13 +138,14 @@ const Project = ({ history }) => {
         onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProjectModalOk}
       />
-      <ResetDependencyModal
-        titleId="iceworks.project.create.init.title"
-        contentId="iceworks.project.create.init.content"
-        on={onResetModal}
+      <Modal
+        title={<FormattedMessage id="iceworks.project.create.init.title" />}
+        visible={onResetModal}
         onCancel={onResetModalCancel}
         onOk={onResetModalOk}
-      />
+      >
+        <FormattedMessage id="iceworks.project.create.init.content" />
+      </Modal>
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
           {project.panels.map((name, index) => {

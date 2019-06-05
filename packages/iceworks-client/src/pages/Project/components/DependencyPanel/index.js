@@ -2,11 +2,10 @@ import React from 'react';
 import { Icon, Tab } from '@alifd/next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import ResetDependencyModal from '@components/ResetDependencyModal';
+import Modal from '@components/Modal';
 import { FormattedMessage } from 'react-intl';
 import useDependency, { STATUS_RESETING } from '@hooks/useDependency';
 import CreateDependencyModal from './CreateDependencyModal';
-import DependencyIncompatibleModal from './DependencyIncompatibleModal';
 import Panel from '../Panel';
 import styles from './index.module.scss';
 
@@ -132,20 +131,27 @@ const DependencyPanel = () => {
           onCancel={() => setCreateModal(false)}
           onOk={bulkCreate}
         />
-        <ResetDependencyModal
-          on={onResetModal}
+        <Modal
+          title={<FormattedMessage id="iceworks.project.panel.dependency.main.reset.title" />}
+          visible={onResetModal}
           onCancel={() => setResetModal(false)}
           onOk={reset}
-        />
-        <DependencyIncompatibleModal
-          incompatibleDependencyText={incompatibleDependencyText}
-          projectDependencyText={projectDependencyText}
-          on={onIncompatibleModal}
+        >
+          <FormattedMessage id="iceworks.project.panel.dependency.main.reset.content" />
+        </Modal>
+        <Modal
+          title={<FormattedMessage id="iceworks.project.panel.dependency.main.incompatible.title" />}
+          visible={onIncompatibleModal}
           onCancel={() => setIncompatibleModal(false)}
           onOk={async () => {
             await bulkCreate(setDependencies, true);
           }}
-        />
+        >
+          <FormattedMessage
+            id="iceworks.project.panel.dependency.main.incompatible.content"
+            values={{ incompatibleDependencyText, projectDependencyText }}
+          />
+        </Modal>
         <Tab size="small" contentStyle={{ padding: '10px 0 0' }}>
           {
             [['dependencies', dataSource.dependencies], ['devDependencies', dataSource.devDependencies, true]].map(([key, deps, isDev]) => {
