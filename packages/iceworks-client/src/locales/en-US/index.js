@@ -53,6 +53,33 @@ export default {
   'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.oss.title': 'OSS',
 
+  // project navigation
+  'iceworks.project.panel.navigation.title': 'Navigation',
+  'iceworks.project.panel.navigation.create.title': 'Create Navigation',
+  'iceworks.project.panel.navigation.delete.title': 'Delete Navigation',
+  'iceworks.project.panel.navigation.delete.content': 'Are you sure delete navigation \'{name}\' ？',
+  'iceworks.project.panel.navigation.delete.subcontent': 'Navigation under the navigation group, please be careful to delete!!!',
+  'iceworks.project.panel.navigation.edit.title': 'Edit Navigation',
+  'iceworks.project.panel.navigation.form.type': 'type',
+  'iceworks.project.panel.navigation.form.type.placeholder': 'please select type',
+  'iceworks.project.panel.navigation.form.name': 'name',
+  'iceworks.project.panel.navigation.form.name.placeholder': 'please enter name',
+  'iceworks.project.panel.navigation.form.icon': 'icon',
+  'iceworks.project.panel.navigation.form.icon.placeholder': 'please enter icon',
+  'iceworks.project.panel.navigation.form.path': 'path',
+  'iceworks.project.panel.navigation.form.path.placeholder': 'please enter path',
+  'iceworks.project.panel.navigation.form.newwindow': 'open new window',
+
+  // project router
+  'iceworks.project.panel.router.title': 'router',
+  'iceworks.project.panel.router.create.title': 'Create Router',
+  'iceworks.project.panel.router.delete.title': 'Delete Router',
+  'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',
+  'iceworks.project.panel.router.edit.title': 'Edit Router',
+  'iceworks.project.panel.router.form.path': 'path',
+  'iceworks.project.panel.router.form.page': 'page',
+  'iceworks.project.panel.router.form.layout': 'layout',
+
   // task
   'iceworks.task.title': 'Task',
   'iceworks.task.dev.title': 'dev',

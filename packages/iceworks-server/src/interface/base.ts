@@ -89,6 +89,29 @@ export interface IProjectLayout {
 }
 
 /**
+ * 项目的导航
+ */
+export interface IProjectNavigation {
+  id: string;
+
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 路径
+   */
+  path: string;
+
+  /**
+   * 图标
+   */
+  icon?: string;
+  children?: IProjectNavigation[];
+}
+
+/**
  * 物料的模板信息
  */
 export interface IMaterialScaffold {

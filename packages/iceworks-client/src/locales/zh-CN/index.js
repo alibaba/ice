@@ -74,6 +74,33 @@ export default {
   'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.oss.title': 'OSS',
 
+  // project navigation
+  'iceworks.project.panel.navigation.create.title': '创建导航',
+  'iceworks.project.panel.navigation.delete.title': '删除导航',
+  'iceworks.project.panel.navigation.delete.content': '确定移除导航 \'{name}\' ？',
+  'iceworks.project.panel.navigation.delete.subcontent': '导航组下还有导航，删除请谨慎！！！',
+  'iceworks.project.panel.navigation.edit.title': '编辑导航',
+  'iceworks.project.panel.navigation.title': '导航管理',
+  'iceworks.project.panel.navigation.form.type': '类型',
+  'iceworks.project.panel.navigation.form.type.placeholder': '请选择类型',
+  'iceworks.project.panel.navigation.form.name': '名称',
+  'iceworks.project.panel.navigation.form.name.placeholder': '请输入名称',
+  'iceworks.project.panel.navigation.form.icon': '图标',
+  'iceworks.project.panel.navigation.form.icon.placeholder': '请输入图标',
+  'iceworks.project.panel.navigation.form.path': '路径',
+  'iceworks.project.panel.navigation.form.path.placeholder': '请输入与路径',
+  'iceworks.project.panel.navigation.form.newwindow': '是否打开新窗口',
+
+  // project router
+  'iceworks.project.panel.router.create.title': '创建路由',
+  'iceworks.project.panel.router.delete.title': '删除路由',
+  'iceworks.project.panel.router.delete.content': '确定移除路由 \'{name}\' ？',
+  'iceworks.project.panel.router.edit.title': '编辑路由',
+  'iceworks.project.panel.router.title': '路由管理',
+  'iceworks.project.panel.router.form.path': '路径',
+  'iceworks.project.panel.router.form.page': '页面',
+  'iceworks.project.panel.router.form.layout': '布局',
+
   // task
   'iceworks.task.title': '工程管理',
   'iceworks.task.dev.title': '启动服务',
