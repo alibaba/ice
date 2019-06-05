@@ -1,5 +1,5 @@
-import storage from '../../../lib/storage';
-import scanDirectory from '../../../lib/scanDirectory';
+import storage from '../../../../lib/storage';
+import scanDirectory from '../../../../lib/scanDirectory';
 
 export default (app) => {
   const { Controller } = app;
@@ -47,6 +47,10 @@ export default (app) => {
     async getWorkDirectory() {
       const workDirectory = storage.get('workDirectory');
       const directories = await scanDirectory(workDirectory);
+      return {
+        workDirectory,
+        directories,
+      };
     }
   };
 };

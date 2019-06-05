@@ -2,8 +2,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
-import junk from 'junk';
+import * as junk from 'junk';
 const readdirAsync = util.promisify(fs.readdir);
+const lstatAsync = util.promisify(fs.lstat);
+const accessAsync = util.promisify(fs.access);
 
 /**
  * Given a directory, scan the directory below
@@ -15,8 +17,21 @@ export default async (directoryPath: string): Promise<string[]> => {
     return [];
   }
 
-  return (await readdirAsync(directoryPath)).filter((file: string) => {
-    const stats = fs.lstatSync(path.join(directoryPath, file));
-    return junk.not(file) && stats.isDirectory();
-  });
+  const files = await readdirAsync(directoryPath);
+  let targetFiles = [];
+  await Promise.all(files.map(async (filename: string) => {
+    const targetPath = path.join(directoryPath, filename);
+    const stats = await lstatAsync(targetPath);
+    const isDirectory = stats.isDirectory() && junk.not(filename);
+
+    if (isDirectory) {
+      try {
+        await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
+        targetFiles.push(filename);
+      } catch (error) {
+        // ...
+      }
+    }
+  }));
+  return targetFiles;
 };
