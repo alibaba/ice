@@ -5,6 +5,14 @@ order: 3
 
 本文介绍使用 ice-scripts@1.0 的项目如何迁移到 2.0 版本。
 
+## 为什么要做 2.x
+
+主要为了解决 1.x 存在的问题：
+
+- 工程配置散落在 package.json 和 .webpackrc.js 里，对于项目长期维护不友好，2.x 统一到 `ice.config.js`
+- 原先的方式对于 webpack 自定义能力较弱，很多自定义需求需要硬编码在 ice-scripts 里，2.x 基于 `webpack-chain` 解决这个问题
+- 面向业务的定制需求不易于扩展，2.x 支持插件机制
+
 ## 工具迁移
 
 安装 `ice-migrate`：
@@ -160,26 +168,9 @@ module.exports = {
 
 #### css 中的网络资源本地化
 
-```json
-{
-  "buildConfig": {
-    "localization": true
-  }
-}
-```
+#### 代理配置
 
-变更为：
-
-```js
-// ice.config.js
-module.exports = {
-  plugins: [
-    'ice-plugin-css-assets-local',
-  ]
-}
-```
-
-更多细节，参考[插件配置](/docs/cli/plugin-list/local.md)
+原先的代理配置位于 `package.json` 里的 proxyConfig 字段，需要将其迁移到 `ice.config.js` proxy 字段。
 
 ### 命令行参数迁移
 
