@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import cx from 'classnames';
+import socket from '@src/socket';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Input, Button } from '@alifd/next';
 import Modal from '@components/Modal';
+import Icon from '@components/Icon';
+import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
+import useModal from '@hooks/useModal';
 import styles from './index.module.scss';
 
 const FormItem = Form.Item;
@@ -15,11 +20,39 @@ const formItemLayout = {
 };
 
 const CreateProjectModal = ({ on, onCancel, onOk }) => {
-  const onSave = (values, errors) => {
+  const {
+    on: onSelectModal,
+    setModal: setSelectModal,
+  } = useModal();
+  const [path, setPath] = useState('');
+  const [name, setName] = useState('');
+  const [workFolder, setWorkFolder] = useState('');
+
+  function onSave(values, errors) {
     if (!errors) {
       onOk(values);
     }
-  };
+  }
+
+  async function onNameChange(value) {
+    setName(value);
+    setPath(await socket.emit('help.index.getPath', [workFolder, value]));
+  }
+
+  async function onPathChange(value) {
+    setSelectModal(false);
+
+    setWorkFolder(value);
+    setPath(name ? await socket.emit('help.index.getPath', [value, name]) : value);
+  }
+
+  useEffect(() => {
+    (async () => {
+      const { path: workPath } = await socket.emit('project.index.workFolder');
+      setWorkFolder(workPath);
+      setPath(workPath);
+    })();
+  }, []);
 
   return (
     <Modal
@@ -29,6 +62,11 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
       onOk={onSave}
       footer={false}
     >
+      <SelectWorkFolderModal
+        on={onSelectModal}
+        onCancel={() => setSelectModal(false)}
+        onOk={onPathChange}
+      />
       <Form
         size="small"
         labelAlign="top"
@@ -39,11 +77,22 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
           required
           size="medium"
           label="路径："
+          className={styles.item}
         >
           <Input
-            className={styles.input}
+            className={cx({
+              [styles.input]: true,
+              [styles.pathInput]: true,
+            })}
             name="path"
-            placeholder=""
+            value={path}
+            disabled
+          />
+          <Icon
+            type="folderopen"
+            size="large"
+            className={styles.icon}
+            onClick={() => setSelectModal(true)}
           />
         </FormItem>
         <FormItem
@@ -54,11 +103,14 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
           pattern={/^[a-z]([-_a-z0-9]*)$/i}
           patternMessage="请输入字母与数字组合，字母开头"
           patternTrigger="onChange"
+          className={styles.item}
         >
           <Input
             className={styles.input}
             name="name"
             placeholder="请输入目录名，字母与数字组合，字母开头"
+            value={name}
+            onChange={onNameChange}
           />
         </FormItem>
         <div className={styles.opts}>

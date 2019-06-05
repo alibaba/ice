@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Icon as NextIcon } from '@alifd/next';
-import Icon from '@components/Icon';
 import PropTypes from 'prop-types';
-import Modal from '@components/Modal';
 import socket from '@src/socket';
+import Icon from '@components/Icon';
+import Modal from '@components/Modal';
 import styles from './index.module.scss';
 
-const OpenProjectModal = ({ on, onCancel, onOk }) => {
+const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
   const [workFolder, setWorkFolder] = useState({});
   const { path: workPath, directories = [] } = workFolder;
 
@@ -62,10 +62,10 @@ const OpenProjectModal = ({ on, onCancel, onOk }) => {
   );
 };
 
-OpenProjectModal.propTypes = {
+SelectWorkFolderModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default OpenProjectModal;
+export default SelectWorkFolderModal;
