@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 const ConnectBar = ({ connect }) => {
   return !connect ? (
     <div className={styles.connectBar}>
-      <Icon type="server" size="small" style={{ marginRight: '5px' }} />
+      <Icon type="server" size="small" className={styles.icon} />
       <FormattedMessage id="iceworks.global.disconnect" />
     </div>
   ) : null;
