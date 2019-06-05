@@ -34,7 +34,7 @@ const MainLayout = () => {
           <SubRoutes routes={routerConfig} />
         </div>
       </div>
-      <GlobalBar />
+      <GlobalBar project={project} />
     </div>
   );
 };

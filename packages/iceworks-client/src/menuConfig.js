@@ -13,7 +13,7 @@ const menuConfig = [
       {
         name: 'iceworks.menu.task.dev',
         path: '/task/dev',
-        icon: 'server',
+        icon: 'dev',
         desc: 'iceworks.menu.task.dev.desc',
       },
       {
