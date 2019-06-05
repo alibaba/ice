@@ -56,7 +56,7 @@ function setCLIConf(path: string, conf: object, ) {
   traverse(ast, visitor);
 
   confKeys.forEach(key => {
-    const node = properties.find((prop) => prop.key.name === key)
+    const node = properties.find((property) => property.key.name === key)
 
     if (node) {
       node.value.value = conf[key];
