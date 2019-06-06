@@ -15,10 +15,17 @@ export default class Git extends EventEmitter implements IGitModule {
 
   public async getStatus() {
     const isRepository = await this.gitTools.checkIsRepo();
+    const localBranches = await this.gitTools.branchLocal();
+
     const originRemotes = await this.gitTools.getRemotes(true);
     const originRemote = originRemotes[0];
     const remoteUrl = originRemote && originRemote.refs ? originRemote.refs.push : '';
-    return { isRepository, remoteUrl };
+
+    return { 
+      isRepository,
+      remoteUrl,
+      currentBranch: localBranches.current 
+    };
   }
 
   public async init(remoteUrl: string) {
@@ -32,5 +39,9 @@ export default class Git extends EventEmitter implements IGitModule {
       await this.gitTools.removeRemote('origin');
     }
     await this.gitTools.addRemote('origin', remoteUrl);
+  }
+
+  public async checkoutLocalBranch(name: string) {
+    await this.gitTools.checkoutLocalBranch(name);
   }
 }

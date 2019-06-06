@@ -18,4 +18,8 @@ export default {
   async setRemote(remoteUrl) {
     await socket.emit('project.git.setRemote', { remoteUrl });
   },
+
+  async checkoutLocalBranch(name) {
+    await socket.emit('project.git.checkoutLocalBranch', { name });
+  },
 };

@@ -21,24 +21,22 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl }) {
 
   return (
     <Form>
+      <FormItem
+        required
+        size="medium"
+        label="仓库地址："
+        className={styles.item}
+      >
+        <Input
+          name="remoteUrl"
+          value={remoteUrl}
+          onChange={onChange}
+        />
+      </FormItem>
       <div>
-        <FormItem
-          required
-          size="medium"
-          label="仓库地址："
-          className={styles.item}
-        >
-          <Input
-            name="remoteUrl"
-            value={remoteUrl}
-            onChange={onChange}
-          />
-        </FormItem>
-        <div>
-          <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
-            <FormattedMessage id="iceworks.global.button.yes" />
-          </FormSubmit>
-        </div>
+        <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
+          <FormattedMessage id="iceworks.global.button.yes" />
+        </FormSubmit>
       </div>
     </Form>
   );

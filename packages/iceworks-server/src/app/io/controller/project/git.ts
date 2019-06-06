@@ -17,5 +17,11 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.git.setRemote(remoteUrl);
     }
+    async checkoutLocalBranch({ args }) {
+      const { name } = args;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.checkoutLocalBranch(name);
+    }
   };
 };

@@ -6,6 +6,7 @@ import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
 import Panel from '../Panel';
 import GitRemote from './GitRemote';
+import CreateBranchModal from './CreateBranchModal';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
@@ -14,16 +15,21 @@ const GitPanel = () => {
     on: onEditModal,
     setModal: setEditModal,
   } = useModal();
+  const {
+    on: onCreateModal,
+    setModal: setCreateModal,
+  } = useModal();
   const gitStore = stores.useStore('git');
   const { dataSource } = gitStore;
-  const { isRepository, remoteUrl } = dataSource;
+  const { isRepository, remoteUrl, currentBranch } = dataSource;
 
   async function onInit(setRemoteUrl) {
     await gitStore.init(setRemoteUrl);
     await gitStore.refresh();
   }
 
-  async function onCreate() {
+  async function onOpenCreate() {
+    setCreateModal(true);
   }
 
   async function onRefresh() {
@@ -39,15 +45,24 @@ const GitPanel = () => {
     setEditModal(false);
   }
 
+  async function onCreate(name) {
+    await gitStore.checkoutLocalBranch(name);
+    await gitStore.refresh();
+    setCreateModal(false);
+  }
+
   return (
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.git.title" /></h3>
+          <h3>
+            <FormattedMessage id="iceworks.project.panel.git.title" />
+            {currentBranch ? <span className={styles.branch}>({currentBranch})</span> : null}
+          </h3>
           {
             isRepository ?
               <div className={styles.icons}>
-                <NextIcon className={styles.icon} type="add" size="small" onClick={onCreate} />
+                <NextIcon className={styles.icon} type="add" size="small" onClick={onOpenCreate} />
                 <Icon className={styles.icon} type="edit" size="small" onClick={onOpenEdit} />
                 <NextIcon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
               </div> :
@@ -71,6 +86,11 @@ const GitPanel = () => {
                 <GitRemote onOk={onEdit} remoteUrl={remoteUrl} />
               </div>
             </Modal>
+            <CreateBranchModal
+              on={onCreateModal}
+              onCancel={() => setCreateModal(false)}
+              onOk={onCreate}
+            />
           </div> :
           <GitRemote onOk={onInit} />
       }
