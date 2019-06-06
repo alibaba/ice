@@ -10,13 +10,14 @@ import XtermTerminal from '@components/XtermTerminal';
 import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
+import logger from '@utils/logger';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
 import styles from './index.module.scss';
 
-function showMessage(message) {
+function showMessage(message, type) {
   Message.show({
-    type: 'error',
+    type: type || 'error',
     title: 'Message',
     content: message || 'Plase try again',
     align: 'tr tr',
@@ -56,10 +57,43 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      await task.getSetting(type);
+      await task.getConf(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
+    }
+  }
+
+  async function onConfirm(values) {
+    if (Object.entries(values).length === 0) {
+      return;
+    }
+
+    const params = {};
+    Object.keys(values).forEach(key => {
+      // eslint-disable-next-line valid-typeof
+      if (typeof values[key] !== undefined) {
+        params[key] = values[key];
+      }
+    });
+
+    logger.info(params);
+
+    try {
+      await task.setConf(type, params);
+      Message.show({
+        type: 'success',
+        title: '提示',
+        content: '配置修改成功',
+        align: 'tr tr',
+      });
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '提示',
+        content: error.message,
+        align: 'tr tr',
+      });
     }
   }
 
@@ -91,6 +125,7 @@ const Task = ({ history, intl }) => {
       className={styles.taskCard}
     >
       <TaskBar
+        type={type}
         loading={status === 'working'}
         onStart={onStart}
         onStop={onStop}
@@ -101,7 +136,12 @@ const Task = ({ history, intl }) => {
         <XtermTerminal id={id} name={project.dataSource.name} />
       </div>
 
-      <TaskModal on={on} data={data.setting || []} toggleModal={toggleModal} />
+      <TaskModal
+        on={on}
+        data={data.conf || []}
+        toggleModal={toggleModal}
+        onConfirm={onConfirm}
+      />
     </Card>
   );
 };
