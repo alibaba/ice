@@ -20,6 +20,37 @@ export default (app) => {
       logger.info(`get material by url, url: ${url}`);
       const data = await request(url);
 
+      // update material metadata.
+      const allMaterials = storage.get('material');
+      let currentIdx = -1;
+      const currentItem = allMaterials.find((item, idx) => {
+        if (item.source === url) {
+          currentIdx = idx;
+          return true
+        }
+        return false;
+      });
+
+      const {
+        description = currentItem.description,
+        homepage = currentItem.homepage,
+        logo = currentItem.logo,
+      } = data;
+
+      if (currentIdx > -1) {
+        const newMaterials = updateArrayItem(
+          allMaterials,
+          {
+            ...currentItem,
+            description,
+            homepage,
+            logo,
+          },
+          currentIdx
+        );
+        storage.set('material', newMaterials);
+      }
+
       return formatMaterialData(data);
     }
 
@@ -144,3 +175,11 @@ const request = async (uri: string, options = {}) => {
 
   return await rp(options);
 };
+
+const updateArrayItem = (array, item, itemIdx) => {
+  return [
+    ...array.slice(0, itemIdx),
+    item,
+    ...array.slice(itemIdx + 1)
+  ];
+}
