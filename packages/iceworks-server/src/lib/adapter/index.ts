@@ -3,5 +3,6 @@ import Dependency from './dependency';
 import Configuration from './configuration';
 import Task from './task';
 import Layout from './layout';
+import Git from './git';
 
-export { Page, Dependency, Configuration, Task, Layout };
+export { Page, Dependency, Configuration, Task, Layout, Git };
