@@ -3,7 +3,7 @@ import { Application } from 'midway';
 export default (app: Application) => {
   const { controller } = app.io;
 
-  const { project, material } = controller;
+  const { project, material, home } = controller;
   const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
@@ -13,8 +13,6 @@ export default (app: Application) => {
     ['project.index.add', project.index.add],
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
-    ['project.index.openFolder', project.index.openFolder],
-    ['project.index.openEditor', project.index.openEditor],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],
@@ -22,14 +20,21 @@ export default (app: Application) => {
     ['project.dependency.list', project.dependency.list],
     ['project.task.start', project.task.start],
     ['project.task.stop', project.task.stop],
-    ['project.task.getSetting', project.task.getSetting],
+    ['project.task.getConf', project.task.getConf],
+    ['project.task.setConf', project.task.setConf],
     ['project.dependency.reset', project.dependency.reset],
     ['project.dependency.bulkCreate', project.dependency.bulkCreate],
     ['project.dependency.upgrade', project.dependency.upgrade],
-    ['project.configuration.settings', project.configuration.settings],
+    ['project.configuration.getCLIConf', project.configuration.getCLIConf],
+    ['project.configuration.setCLIConf', project.configuration.setCLIConf],
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
+    ['home.setting.workFolder', home.setting.getWorkFolder],
+    ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.system.getPath', home.system.getPath],
+    ['home.system.openFolder', home.system.openFolder],
+    ['home.system.openEditor', home.system.openEditor],
   ];
 
   routers.forEach(([eventName, handle]) => {

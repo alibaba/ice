@@ -15,6 +15,11 @@ export interface IProject {
   readonly path: string;
 
   /**
+   * 项目的 package 路径
+   */
+  readonly packagePath: string;
+
+  /**
    * 项目的支持的面板
    */
   readonly panels: string[];
@@ -23,6 +28,11 @@ export interface IProject {
    * 获取项目的 package.json 信息
    */
   getPackageJSON(): any;
+
+  /**
+   * 设置项目的 package.json 信息
+   */
+  setPackageJSON(content): any;
 
 
   /**

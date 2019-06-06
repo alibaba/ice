@@ -1,8 +1,10 @@
 import * as EventEmitter from 'events';
 import * as execa from 'execa';
 import * as detectPort from 'detect-port';
+import * as path from 'path';
 import chalk from 'chalk';
 import * as ipc from './ipc';
+import { getCLIConf, setCLIConf, mergeCLIConf } from '../utils/cliConf';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 import { ITaskModule, ITaskParam, IProject } from '../../../interface';
 
@@ -13,13 +15,18 @@ const TASK_STATUS_STOP = 'stop';
 export default class Task extends EventEmitter implements ITaskModule {
   public project: IProject;
 
-  public status: string = '';
+  public status: string;
 
-  private process: object = {};
+  public readonly cliConfPath: string;
+
+  private cliConfFilename: string = 'ice.config.js';
+
+  private process: object;
 
   constructor(project: IProject) {
     super();
     this.project = project;
+    this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 
   /**
@@ -111,19 +118,73 @@ export default class Task extends EventEmitter implements ITaskModule {
    * get the conf of the current task
    * @param args
    */
-  async getSetting(args) {
-    const { command } = args;
-
-    if (command === 'dev') {
-      return DEV_CONF;
+  async getConf(args: ITaskParam) {
+    switch (args.command) {
+      case 'dev':
+        return this.getDevConf()
+      case 'build':
+       return getCLIConf(this.cliConfPath, BUILD_CONF)
+      case 'lint':
+        return LINT_CONF
+      default:
+        return [];
     }
+  }
 
-    if (command === 'build') {
-      return BUILD_CONF;
+  /**
+   * set the conf of the current task
+   * @param args
+   */
+  async setConf(args: ITaskParam) {
+    switch (args.command) {
+      case 'dev':
+        return this.setDevConf(args);
+      case 'build':
+        return setCLIConf(this.cliConfPath, args.options)
+      default:
+        return false;
     }
+  }
 
-    if (command === 'lint') {
-      return LINT_CONF;
+  /**
+  * get dev configuration
+  * merge the user configuration to return to the new configuration
+  * @param projectPath
+  */
+  private getDevConf() {
+   const pkgContent = this.project.getPackageJSON();
+   const devScriptContent = pkgContent.scripts.start;
+   const devScriptArray = devScriptContent.split(' ');
+   const userConf = {};
+   devScriptArray.forEach(item => {
+     if (item.indexOf('--') !== -1) {
+      const key = item.match(/--(\S*)=/)[1];
+      const value = item.match(/=(\S*)$/)[1];
+      userConf[key] = value
     }
+  })
+
+   return mergeCLIConf(DEV_CONF, userConf)
+ }
+
+  /**
+   * set dev configuration
+   * @param args
+   */
+  private setDevConf(args: ITaskParam) {
+    const pkgContent = this.project.getPackageJSON();
+    const devScriptContent = pkgContent.scripts.start;
+    const devScriptArray = devScriptContent.split(' ');
+    const cli = devScriptArray[0];
+    const command = devScriptArray[1];
+
+    let newDevScriptContent =  `${cli} ${command}`;
+    Object.keys(args.options).forEach((key) => {
+      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`
+    });
+
+    pkgContent.scripts.start = newDevScriptContent;
+
+    this.project.setPackageJSON(pkgContent);
   }
 }
