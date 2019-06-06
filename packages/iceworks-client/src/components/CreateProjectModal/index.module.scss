@@ -1,9 +1,24 @@
 .form {
   width: 320px;
-  
-  .input {
-    height: 24px;
-    line-height: 24px;
+
+  .item {
+    position: relative;
+
+    .input {
+      height: 24px;
+      line-height: 24px;
+    }
+
+    .pathInput {
+      cursor: pointer!important;
+    }
+
+    .icon {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      cursor: pointer;
+    }
   }
 
   .opts {
