@@ -20,13 +20,15 @@ module.exports = async function createProject(
   if (err) {
     throw err;
   }
-  [err, extractedFiles] = await to(utils.extractTarball(
-    tarballURL,
-    destDir,
-    scaffold.source,
-    progressFunc,
-    afterCreateRequest
-  ));
+  [err, extractedFiles] = await to(
+    utils.extractTarball(
+      tarballURL,
+      destDir,
+      scaffold.source,
+      progressFunc,
+      afterCreateRequest
+    )
+  );
   if (err) {
     throw err;
   }
@@ -40,9 +42,16 @@ module.exports = async function createProject(
     utils.createInterpreter('FILE_CREATED', extractedFiles, interpreter);
 
     pkgJSON.title = projectName;
-    pkgJSON.version = '1.0.0'; // 初始化项目到 1.0.0
 
+    delete pkgJSON.files;
+    delete pkgJSON.publishConfig;
+    if (pkgJSON.buildConfig) {
+      delete pkgJSON.buildConfig.output;
+      delete pkgJSON.buildConfig.localization;
+    }
     delete pkgJSON.homepage;
+    delete pkgJSON.scripts.screenshot;
+    delete pkgJSON.scripts.prepublishOnly;
 
     fs.writeFileSync(
       pkgJSONPath,

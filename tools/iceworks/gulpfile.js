@@ -465,7 +465,6 @@ gulp.task('oss', async () => {
     const macDist = [
       `${productName}-${version}.dmg`,
       `${productName}-${version}-mac.zip`,
-      `${channel}-mac.json`,
       `${channel}-mac.yml`,
     ];
 
