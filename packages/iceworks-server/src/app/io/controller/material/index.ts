@@ -15,11 +15,12 @@ export default (app) => {
     }
 
     async getOne(ctx) {
-      const { args, logger } = ctx;
+      const { args: { url }, logger } = ctx;
 
-      logger.info(`get material by url, url: ${args.url}`);
-      const data = await request(args.url);
-      return formatData(data);
+      logger.info(`get material by url, url: ${url}`);
+      const data = await request(url);
+
+      return formatMaterialData(data);
     }
 
     async getRecommendScaffolds() {
@@ -27,10 +28,43 @@ export default (app) => {
       const { scaffolds = [] } = await request(material.source);
       return scaffolds.filter(({ name }) => RECOMMEND_SCAFFOLDS.includes(name));
     }
+
+    async add(ctx) {
+      const { args: { url }, logger } = ctx;
+      const allMaterials = storage.get('material');
+      const existed = allMaterials.some(m => m.source === url);
+
+
+      if (existed) {
+        logger.info(`current material has existed, source URL: ${url}`);
+        throw Error('current material has existed.');
+      }
+
+      const data = await request(url);
+      const {
+        name,
+        description = '',
+        homepage = '',
+        logo = '',
+        source = url,
+      } = data;
+
+      // material's name is required
+      if (!name) {
+        logger.info(`material's name is required, source URL: ${url}`);
+        throw Error('material\'s name is required.');
+      }
+
+      storage.add('material', {
+        official: false, name, description, homepage, logo, source
+      });
+      const materialData = formatMaterialData(data);
+      return { resource: storage.get('material'), current: materialData };
+    }
   };
 };
 
-function formatData(data) {
+function formatMaterialData(data) {
   const { blocks = [], scaffolds = [], components = [] } = data;
   return {
     blocks: { categories: generateCates(blocks), materials: formatMaterialsByCatrgory(blocks) },

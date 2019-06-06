@@ -4,7 +4,8 @@ import logger from '@utils/logger';
 export default {
   dataSource: {
     resource: [],
-    current: {},
+    currentMaterial: {},
+    currentSource: '',
     recommendScaffolds: [],
   },
 
@@ -18,7 +19,11 @@ export default {
     this.dataSource.resource = data;
   },
 
-  async getCurrent(url) {
+  async setCurrentSource(url) {
+    this.dataSource.currentSource = url;
+  },
+
+  async getCurrentMaterial(url) {
     const firstResource = this.dataSource.resource[0] || {};
     const sourceUrl = url || firstResource.source;
 
@@ -26,7 +31,17 @@ export default {
       const data = await socket.emit('material.index.getOne', { url: sourceUrl });
       logger.info('Material Data:', data);
 
-      this.dataSource.current = data;
+      this.dataSource.currentMaterial = data;
+    }
+  },
+
+  async addMaterial(url) {
+    if (url) {
+      const data = await socket.emit('material.index.add', { url });
+      logger.info('new resource Data:', data);
+      this.dataSource.resource = data.resource;
+      this.dataSource.currentSource = url;
+      this.dataSource.currentMaterial = data.current;
     }
   },
 };

@@ -105,4 +105,5 @@ export default {
   'iceworks.material.install.component.pacakgeName': '组件包名：',
   'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
+  'iceworks.material.sourceUrl': '物料源地址',
 };

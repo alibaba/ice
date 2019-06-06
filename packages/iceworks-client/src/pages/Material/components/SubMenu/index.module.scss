@@ -30,6 +30,18 @@
     }
   }
 
+  .avatar {
+    flex: 0 0 30px;
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+    background: #5584FF;
+    color: #fff;
+    font-size: 14px;
+  }
+
   .icon {
     flex: 0 0 20px;
     color: $text-color-primary;

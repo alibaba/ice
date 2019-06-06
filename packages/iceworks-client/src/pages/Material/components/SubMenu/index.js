@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import SubMenu from '@components/SubMenu';
@@ -9,33 +9,34 @@ import logger from '@utils/logger';
 import styles from './index.module.scss';
 
 const MaterialSubMenu = ({
-  data, onChange, onAddMaterial,
+  data, onChange, onAddMaterial, current,
 }) => {
-  const [state, setState] = useState({
-    current: 0,
-  });
-
-  function handleChange(index, item) {
+  function handleChange(source, item) {
     logger.debug(item);
-    setState({ current: index });
-
-    onChange(item.source);
+    onChange(source);
   }
 
   return (
     <SubMenu title="iceworks.material.title">
       <div className={styles.itemWrapper}>
-        {data.map((item, index) => {
+        {data.map((item) => {
+          const { source, logo, name } = item;
           return (
             <div
-              className={cx(styles.subMenuItem, { [styles.active]: state.current === index })}
-              key={index}
-              onClick={() => handleChange(index, item)}
+              className={cx(styles.subMenuItem, { [styles.active]: current === source })}
+              key={source}
+              onClick={() => handleChange(source, item)}
             >
-              <div className={styles.logo}><img src={item.logo} alt={item.name} /></div>
+              <div className={styles.logo}>
+                {
+                  logo
+                    ? <img src={logo} alt={name} />
+                    : <div className={styles.avatar}>{name.slice(0, 1)}</div>
+                }
+              </div>
               <div className={styles.info}>
                 <h5 className={styles.name}>
-                  {item.name}
+                  {name}
                 </h5>
               </div>
             </div>
@@ -53,11 +54,13 @@ const MaterialSubMenu = ({
 };
 
 MaterialSubMenu.defaultProps = {
+  current: '',
   onChange: f => f,
   onAddMaterial: f => f,
 };
 
 MaterialSubMenu.propTypes = {
+  current: PropTypes.string,
   data: PropTypes.array.isRequired,
   onChange: PropTypes.func,
   onAddMaterial: PropTypes.func,

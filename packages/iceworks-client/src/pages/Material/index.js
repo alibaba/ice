@@ -7,6 +7,7 @@ import qs from 'querystringify';
 import { FormattedMessage } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
+import useMaterial from '@hooks/useMaterial';
 import useModal from '@hooks/useModal';
 import useDependency from '@hooks/useDependency';
 import CreateProjectModal from '@components/CreateProjectModal';
@@ -15,6 +16,7 @@ import ScaffoldPanel from './components/ScaffoldPanel';
 import BlockPanel from './components/BlockPanel';
 import ComponentPanel from './components/ComponentPanel';
 import InstallModal from './components/InstallModal';
+import AddMaterialModal from './components/AddMaterialModal';
 import styles from './index.module.scss';
 
 const Material = ({ history }) => {
@@ -24,6 +26,12 @@ const Material = ({ history }) => {
     setCreateProjectModal,
     onCreateProject: onOriginCreateProject,
   } = useProject();
+  const {
+    onOpenMaterialModal,
+    setMaterialModal,
+    addMaterial,
+    addMaterialLoading,
+  } = useMaterial();
   const {
     on: onInstallModal,
     setModal: setInstallModal,
@@ -37,11 +45,18 @@ const Material = ({ history }) => {
 
   const [type, setType] = useState('scaffolds');
   const [component, setComponent] = useState({});
+  // const [currentMenu, setCurrentMenu] = useState('');
+
+  async function setCurrent(source) {
+    await material.setCurrentSource(source);
+    await material.getCurrentMaterial(source);
+  }
 
   useEffect(() => {
     async function fetchData() {
       await material.getResource();
-      await material.getCurrent();
+      const defaultActiveMaterial = dataSource.resource[0].source;
+      await setCurrent(defaultActiveMaterial);
     }
     fetchData();
   }, []);
@@ -61,11 +76,7 @@ const Material = ({ history }) => {
 
   async function handleMenuChange(url) {
     await handleTabChange();
-    await material.getCurrent(url);
-  }
-
-  async function addMaterial() {
-    // TODO: coding...
+    await setCurrent(url);
   }
 
   async function onCreateDependency() {
@@ -85,7 +96,7 @@ const Material = ({ history }) => {
       key: 'scaffolds',
       content: (
         <ScaffoldPanel
-          dataSource={dataSource.current.scaffolds}
+          dataSource={dataSource.currentMaterial.scaffolds}
           current={currCategory}
           onDownload={(scaffoldData) => {
             setCreateProjectModal(true, scaffoldData);
@@ -98,7 +109,7 @@ const Material = ({ history }) => {
       key: 'blocks',
       content: (
         <BlockPanel
-          dataSource={dataSource.current.blocks}
+          dataSource={dataSource.currentMaterial.blocks}
           current={currCategory}
         />
       ),
@@ -108,7 +119,7 @@ const Material = ({ history }) => {
       key: 'components',
       content: (
         <ComponentPanel
-          dataSource={dataSource.current.components}
+          dataSource={dataSource.currentMaterial.components}
           current={currCategory}
           onInstall={(componentData) => {
             setComponent(componentData);
@@ -128,9 +139,10 @@ const Material = ({ history }) => {
       />
       {/* render material submenu */}
       <SubMenu
+        current={dataSource.currentSource}
         data={dataSource.resource}
         onChange={handleMenuChange}
-        onAddMaterial={addMaterial}
+        onAddMaterial={() => setMaterialModal(true)}
       />
 
       <div className={styles.main}>
@@ -148,6 +160,12 @@ const Material = ({ history }) => {
           onCancel={() => setInstallModal(false)}
           onOk={onCreateDependency}
           component={component}
+        />
+        <AddMaterialModal
+          on={onOpenMaterialModal}
+          onCancel={() => setMaterialModal(false)}
+          onSave={addMaterial}
+          loading={addMaterialLoading}
         />
       </div>
     </div>
