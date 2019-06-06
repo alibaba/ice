@@ -13,6 +13,8 @@ export default (app: Application) => {
     ['project.index.add', project.index.add],
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
+    ['project.git.status', project.git.status],
+    ['project.git.init', project.git.init],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],

@@ -42,6 +42,7 @@
     "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
+    "simple-git": "^1.113.0",
     "tar": "^4.4.8",
     "trash": "^5.2.0",
     "uppercamelcase": "^3.0.0",
