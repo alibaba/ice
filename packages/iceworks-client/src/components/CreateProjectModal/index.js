@@ -24,9 +24,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
     on: onSelectModal,
     setModal: setSelectModal,
   } = useModal();
-  const [path, setPath] = useState('');
-  const [name, setName] = useState('');
-  const [workFolder, setWorkFolder] = useState('');
+  const [data, setData] = useState({ name: '', path: '', workFolder: '' });
 
   function onSave(values, errors) {
     if (!errors) {
@@ -35,22 +33,31 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
   }
 
   async function onNameChange(value) {
-    setName(value);
-    setPath(await socket.emit('home.help.getPath', [workFolder, value]));
+    setData({
+      ...data,
+      name: value,
+      path: await socket.emit('home.help.getPath', [data.workFolder, value]),
+    });
   }
 
   async function onPathChange(value) {
     setSelectModal(false);
 
-    setWorkFolder(value);
-    setPath(name ? await socket.emit('home.help.getPath', [value, name]) : value);
+    setData({
+      ...data,
+      workFolder: value,
+      path: data.name ? await socket.emit('home.help.getPath', [value, data.name]) : value,
+    });
   }
 
   useEffect(() => {
     (async () => {
-      const { path: workPath } = await socket.emit('home.index.workFolder');
-      setWorkFolder(workPath);
-      setPath(workPath);
+      const { path: workFolder } = await socket.emit('home.index.workFolder');
+      setData({
+        ...data,
+        path: workFolder,
+        workFolder,
+      });
     })();
   }, []);
 
@@ -85,7 +92,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
               [styles.pathInput]: true,
             })}
             name="path"
-            value={path}
+            value={data.path}
             disabled
           />
           <Icon
@@ -109,7 +116,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
             className={styles.input}
             name="name"
             placeholder="请输入目录名，字母与数字组合，字母开头"
-            value={name}
+            value={data.name}
             onChange={onNameChange}
           />
         </FormItem>
