@@ -15,6 +15,7 @@ export default (app: Application) => {
     ['project.index.setCurrent', project.index.setCurrent],
     ['project.git.status', project.git.status],
     ['project.git.init', project.git.init],
+    ['project.git.setRemote', project.git.setRemote],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],

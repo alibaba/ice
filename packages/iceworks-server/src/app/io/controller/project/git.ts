@@ -11,5 +11,11 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.git.init(remoteUrl);
     }
+    async setRemote({ args }) {
+      const { remoteUrl } = args;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.setRemote(remoteUrl);
+    }
   };
 };

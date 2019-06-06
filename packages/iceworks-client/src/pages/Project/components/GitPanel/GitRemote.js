@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Input, Form } from '@alifd/next';
-import styles from './GitInit.module.scss';
+import styles from './GitRemote.module.scss';
 
 const FormItem = Form.Item;
 const FormSubmit = Form.Submit;
 
-function GitInit({ onOk }) {
+function GitRemote({ onOk, remoteUrl: initRemoteUrl }) {
+  const [remoteUrl, setRemoteUrl] = useState(initRemoteUrl);
   async function onSave(values, errors) {
     if (!errors) {
-      await onOk(values.remoteUrl);
+      await onOk(remoteUrl);
     }
+  }
+
+  async function onChange(value) {
+    setRemoteUrl(value);
   }
 
   return (
     <Form>
-      <div>关联仓库</div>
       <div>
         <FormItem
           required
@@ -26,6 +30,8 @@ function GitInit({ onOk }) {
         >
           <Input
             name="remoteUrl"
+            value={remoteUrl}
+            onChange={onChange}
           />
         </FormItem>
         <div>
@@ -38,8 +44,13 @@ function GitInit({ onOk }) {
   );
 }
 
-GitInit.propTypes = {
-  onOk: PropTypes.func.isRequired,
+GitRemote.defaultProps = {
+  remoteUrl: '',
 };
 
-export default GitInit;
+GitRemote.propTypes = {
+  onOk: PropTypes.func.isRequired,
+  remoteUrl: PropTypes.string,
+};
+
+export default GitRemote;

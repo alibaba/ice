@@ -4,6 +4,7 @@ import socket from '@src/socket';
 export default {
   dataSource: {
     isRepository: false,
+    remoteUrl: '',
   },
 
   async refresh() {
@@ -12,5 +13,9 @@ export default {
 
   async init(remoteUrl) {
     await socket.emit('project.git.init', { remoteUrl });
+  },
+
+  async setRemote(remoteUrl) {
+    await socket.emit('project.git.setRemote', { remoteUrl });
   },
 };

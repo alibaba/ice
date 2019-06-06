@@ -15,11 +15,22 @@ export default class Git extends EventEmitter implements IGitModule {
 
   public async getStatus() {
     const isRepository = await this.gitTools.checkIsRepo();
-    return { isRepository };
+    const originRemotes = await this.gitTools.getRemotes(true);
+    const originRemote = originRemotes[0];
+    const remoteUrl = originRemote && originRemote.refs ? originRemote.refs.push : '';
+    return { isRepository, remoteUrl };
   }
 
   public async init(remoteUrl: string) {
     await this.gitTools.init();
+    await this.gitTools.addRemote('origin', remoteUrl);
+  }
+
+  public async setRemote(remoteUrl: string) {
+    const originRemotes = await this.gitTools.getRemotes(true);
+    if (originRemotes.length > 0) {
+      await this.gitTools.removeRemote('origin');
+    }
     await this.gitTools.addRemote('origin', remoteUrl);
   }
 }
