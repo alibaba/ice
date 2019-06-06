@@ -80,6 +80,11 @@ test('getNpmLatestSemverVersion', () => {
   });
 });
 
+test('getNpmInfo success', () => {
+  return getNpmInfo('koa').then((data) => {
+    expect(data.name).toBe('koa');
+  });
+});
 
 test('getNpmInfo 404 error case', () => {
   return getNpmInfo('not-exis-npm-error').catch((err) => {

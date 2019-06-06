@@ -95,7 +95,7 @@ function getNpmInfo(npm) {
   log.verbose('getNpmInfo start', url);
 
   return request.get(url).then((response) => {
-    log.verbose('getNpmInfo success', url);
+    log.verbose('getNpmInfo success');
 
     let body;
     try {
