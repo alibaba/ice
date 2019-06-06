@@ -209,11 +209,12 @@ function checkAliInternal() {
   return request({
     url: 'https://ice.alibaba-inc.com/check.node',
     timeout: 3 * 1000,
+    resolveWithFullResponse: true,
   }).catch((err) => {
     log.verbose('checkAliInternal error: ', err);
     return false;
   }).then((response) => {
-    return response.status === 200 && /success/.test(response.data);
+    return response.statusCode === 200 && /success/.test(response.body);
   });
 }
 

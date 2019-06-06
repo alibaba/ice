@@ -111,6 +111,7 @@ test('getNpmClient', () => {
 
 test('checkAliInternal', () => {
   return checkAliInternal().then((internal) => {
+    console.log('checkAliInternal', internal);
     expect(internal).toBeBoolean();
   });
 });
