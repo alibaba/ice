@@ -44,6 +44,7 @@ function setCLIConf(path: string, conf: object, ) {
   let flag = false;
   let properties = []
 
+  // find object properties via ast
   const visitor = {
     ObjectExpression({ node }) {
       if (!flag) {
@@ -53,27 +54,34 @@ function setCLIConf(path: string, conf: object, ) {
     }
   }
 
+  // traverse ast
   traverse(ast, visitor);
 
+  // compare user conf and project conf
+  // modify the object if the conf exist
+  // add a new object if the conf does not exist
   confKeys.forEach(key => {
     const node = properties.find((property) => property.key.name === key)
 
     if (node) {
       node.value.value = conf[key];
     } else {
+      // distinguish between string and boolean
+      // eg: { hash: true,  entry: 'src/index' }
       const value = (typeof conf[key] === 'boolean') ? t.booleanLiteral(conf[key]) : t.identifier(conf[key]);
       properties.push(t.objectProperty(t.identifier(key), value));
     }
   });
 
-  const newCLIConf = generate(ast).code;
-  const formatNewCLIConf = prettier.format(newCLIConf, {
+  // generate and write new conf
+  const newUserConf = generate(ast).code;
+  const formatNewUserConf = prettier.format(newUserConf, {
     parser: 'babel',
     singleQuote: true,
     trailingComma: 'all',
   });
 
-  fsExtra.writeFileSync(path, formatNewCLIConf);
+  fsExtra.writeFileSync(path, formatNewUserConf);
 }
 
 /**
