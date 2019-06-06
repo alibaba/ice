@@ -11,7 +11,7 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
   const { path: workPath, directories = [] } = workFolder;
 
   async function onSetWork(setPath) {
-    setWorkFolder(await socket.emit('home.index.setWorkFolder', { path: setPath }));
+    setWorkFolder(await socket.emit('home.setting.setWorkFolder', { path: setPath }));
   }
 
   async function onSetParentAsWork() {
@@ -20,7 +20,7 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
 
   useEffect(() => {
     (async () => {
-      setWorkFolder(await socket.emit('home.index.workFolder'));
+      setWorkFolder(await socket.emit('home.setting.workFolder'));
     })();
   }, []);
 

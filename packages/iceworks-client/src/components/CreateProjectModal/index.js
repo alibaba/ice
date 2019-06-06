@@ -52,7 +52,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
 
   useEffect(() => {
     (async () => {
-      const { path: workFolder } = await socket.emit('home.index.workFolder');
+      const { path: workFolder } = await socket.emit('home.setting.workFolder');
       setData({
         ...data,
         path: workFolder,
