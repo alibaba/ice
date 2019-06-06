@@ -42,7 +42,8 @@
     font-size: 14px;
   }
 
-  .icon {
+  .del {
+    display: none;
     flex: 0 0 20px;
     color: $text-color-primary;
   }
@@ -92,4 +93,10 @@
       margin-bottom: 0;
     }
   }
+}
+
+.separator {
+  font-size: 16px;
+  margin: 10;
+  padding: 10px 15px;
 }

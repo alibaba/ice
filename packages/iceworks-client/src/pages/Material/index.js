@@ -45,7 +45,6 @@ const Material = ({ history }) => {
 
   const [type, setType] = useState('scaffolds');
   const [component, setComponent] = useState({});
-  // const [currentMenu, setCurrentMenu] = useState('');
 
   async function setCurrent(source) {
     await material.setCurrentSource(source);
@@ -55,7 +54,8 @@ const Material = ({ history }) => {
   useEffect(() => {
     async function fetchData() {
       await material.getResource();
-      const defaultActiveMaterial = dataSource.resource[0].source;
+      const firstResource = dataSource.resource.official[0] || {};
+      const defaultActiveMaterial = firstResource.source;
       await setCurrent(defaultActiveMaterial);
     }
     fetchData();
@@ -88,6 +88,14 @@ const Material = ({ history }) => {
   async function onCreateProject(values) {
     await onOriginCreateProject(values);
     history.push('/project', { createdProject: true });
+  }
+
+  async function handleDeleteMaterial(url) {
+    await material.deleteMaterial(url);
+    await handleTabChange();
+    const firstResource = dataSource.resource.official[0] || {};
+    const defaultActiveMaterial = firstResource.source;
+    await setCurrent(defaultActiveMaterial);
   }
 
   const tabs = [
@@ -143,6 +151,7 @@ const Material = ({ history }) => {
         data={dataSource.resource}
         onChange={handleMenuChange}
         onAddMaterial={() => setMaterialModal(true)}
+        onDelete={handleDeleteMaterial}
       />
 
       <div className={styles.main}>

@@ -61,6 +61,15 @@ export default (app) => {
       const materialData = formatMaterialData(data);
       return { resource: storage.get('material'), current: materialData };
     }
+
+    async delete(ctx) {
+      const { args: { url }, logger } = ctx;
+      logger.info(`delete material, source URL: ${url}`);
+
+      storage.remove('material', (item) => item.source !== url);
+
+      return storage.get('material');
+    }
   };
 };
 

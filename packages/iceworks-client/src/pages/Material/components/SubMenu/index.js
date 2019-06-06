@@ -1,45 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import SubMenu from '@components/SubMenu';
 import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import { Button } from '@alifd/next';
-import logger from '@utils/logger';
+import SubMenuItem from './SubMenuItem';
 import styles from './index.module.scss';
 
 const MaterialSubMenu = ({
-  data, onChange, onAddMaterial, current,
+  data, onChange, onAddMaterial, current, onDelete,
 }) => {
-  function handleChange(source, item) {
-    logger.debug(item);
-    onChange(source);
-  }
+  const { official, custom } = data;
 
   return (
     <SubMenu title="iceworks.material.title">
       <div className={styles.itemWrapper}>
-        {data.map((item) => {
-          const { source, logo, name } = item;
+        <div className={styles.separator}>官方物料</div>
+        {official.map((item) => {
           return (
-            <div
-              className={cx(styles.subMenuItem, { [styles.active]: current === source })}
-              key={source}
-              onClick={() => handleChange(source, item)}
-            >
-              <div className={styles.logo}>
-                {
-                  logo
-                    ? <img src={logo} alt={name} />
-                    : <div className={styles.avatar}>{name.slice(0, 1)}</div>
-                }
-              </div>
-              <div className={styles.info}>
-                <h5 className={styles.name}>
-                  {name}
-                </h5>
-              </div>
-            </div>
+            <SubMenuItem
+              key={`official-${item.source}`}
+              current={current}
+              material={item}
+              onChange={onChange}
+              enableDelete={false}
+            />
+          );
+        })}
+        <div className={styles.separator}>自定义物料</div>
+        {custom.map((item) => {
+          return (
+            <SubMenuItem
+              key={`custom-${item.source}`}
+              current={current}
+              material={item}
+              onChange={onChange}
+              enableDelete
+              onDelete={onDelete}
+            />
           );
         })}
       </div>
@@ -56,13 +54,15 @@ const MaterialSubMenu = ({
 MaterialSubMenu.defaultProps = {
   current: '',
   onChange: f => f,
+  onDelete: f => f,
   onAddMaterial: f => f,
 };
 
 MaterialSubMenu.propTypes = {
   current: PropTypes.string,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
   onChange: PropTypes.func,
+  onDelete: PropTypes.func,
   onAddMaterial: PropTypes.func,
 };
 

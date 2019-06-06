@@ -1,9 +1,28 @@
 import socket from '@src/socket';
 import logger from '@utils/logger';
 
+function formatResource(data) {
+  const official = [];
+  const custom = [];
+
+  if (Array.isArray(data)) {
+    data.forEach(item => {
+      if (item.official) {
+        official.push(item);
+      } else {
+        custom.push(item);
+      }
+    });
+  }
+  return { official, custom };
+}
+
 export default {
   dataSource: {
-    resource: [],
+    resource: {
+      official: [],
+      custom: [],
+    },
     currentMaterial: {},
     currentSource: '',
     recommendScaffolds: [],
@@ -16,7 +35,8 @@ export default {
   async getResource() {
     const data = await socket.emit('material.index.resource');
     logger.info('resource Data:', data);
-    this.dataSource.resource = data;
+
+    this.dataSource.resource = formatResource(data);
   },
 
   async setCurrentSource(url) {
@@ -39,9 +59,17 @@ export default {
     if (url) {
       const data = await socket.emit('material.index.add', { url });
       logger.info('new resource Data:', data);
-      this.dataSource.resource = data.resource;
+      this.dataSource.resource = formatResource(data.resource);
       this.dataSource.currentSource = url;
       this.dataSource.currentMaterial = data.current;
+    }
+  },
+
+  async deleteMaterial(url) {
+    if (url) {
+      const data = await socket.emit('material.index.delete', { url });
+      logger.info('new resource Data:', data);
+      this.dataSource.resource = formatResource(data);
     }
   },
 };

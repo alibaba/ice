@@ -51,10 +51,10 @@ class Store {
     }
   }
 
-  remove(key: string, value: string): void {
+  remove(key: string, filter: (v: any) => boolean): void {
     const values = this.store.get(key) || [];
     if (Array.isArray(values)) {
-      this.store.set(key, values.filter((v) => v !== value));
+      this.store.set(key, values.filter(filter));
     }
   }
 

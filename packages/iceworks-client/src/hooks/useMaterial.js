@@ -19,6 +19,7 @@ function useMaterial(visible = false) {
     setLoading(true);
     try {
       await materialStore.addMaterial(url);
+      setMaterialModal(false);
     } catch (err) {
       Message.show({
         align: 'tr tr',

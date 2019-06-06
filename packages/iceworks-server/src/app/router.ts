@@ -33,6 +33,7 @@ export default (app: Application) => {
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['material.index.add', material.index.add],
+    ['material.index.delete', material.index.delete],
   ];
 
   routers.forEach(([eventName, handle]) => {
