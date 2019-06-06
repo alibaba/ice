@@ -132,7 +132,7 @@ function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
     }
 
     const abcJson = path.join(destDir, 'abc.json');
-    const latestVersion = /^\^2\./.test(devDependencies.devDependencies['ice-scripts']);
+    const latestVersion = /^\^2\./.test(devDependencies['ice-scripts']);
     return new Promise((resolve) => {
       const abcContext = {
         name: scaffold.name,
