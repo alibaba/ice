@@ -36,7 +36,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
     setData({
       ...data,
       name: value,
-      path: await socket.emit('home.help.getPath', [data.workFolder, value]),
+      path: await socket.emit('home.system.getPath', [data.workFolder, value]),
     });
   }
 
@@ -46,7 +46,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
     setData({
       ...data,
       workFolder: value,
-      path: data.name ? await socket.emit('home.help.getPath', [value, data.name]) : value,
+      path: data.name ? await socket.emit('home.system.getPath', [value, data.name]) : value,
     });
   }
 
