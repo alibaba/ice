@@ -95,7 +95,6 @@ class PagesCard extends Component {
       const pagesDirectory = path.join(currentProject.clientSrcPath, 'pages');
       const pages = await recursivePages(pagesDirectory, pagesDirectory);
       this.setState({ pages });
-      this.loading = false;
     } else {
       this.setState({ pages: [] });
     }
