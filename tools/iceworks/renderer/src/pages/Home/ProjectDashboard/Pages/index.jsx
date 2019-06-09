@@ -136,20 +136,19 @@ class PagesCard extends Component {
     Dialog.confirm({
       title: '删除页面',
       content: `确定删除页面 ${name} 吗？`,
-      onOk: () => {
-        scaffolder.removePage({
-          clientSrcPath: currentProject.clientSrcPath,
-          pageFolderName: name,
-        })
-          .then(() => {
-            logger.debug('删除页面成功');
-            Notification.success({ message: `删除页面 ${name} 成功` });
-            this.serachPages();
-          })
-          .catch((error) => {
-            logger.debug('删除页面失败', error);
-            dialog.notice({ title: '删除页面失败', error });
+      onOk: async () => {
+        try {
+          await scaffolder.removePage({
+            clientSrcPath: currentProject.clientSrcPath,
+            pageFolderName: name,
           });
+          logger.debug('删除页面成功');
+          Notification.success({ message: `删除页面 ${name} 成功` });
+          this.serachPages();
+        } catch (error) {
+          logger.debug('删除页面失败', error);
+          dialog.notice({ title: '删除页面失败', error });
+        }
       },
     });
   };
