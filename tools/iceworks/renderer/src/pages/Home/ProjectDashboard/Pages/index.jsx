@@ -13,7 +13,7 @@ import orderBy from 'lodash.orderby';
 import { Dialog } from '@icedesign/base';
 import Uri from 'vscode-uri';
 
-import { readdirSync } from '../../../../lib/file-system';
+import { lstatAsync, readdir } from '../../../../lib/file-system';
 import DashboardCard from '../../../../components/DashboardCard';
 import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
@@ -33,27 +33,29 @@ function formatDate(date) {
   return dayjs(date).format('YYYY-MM-DD hh:mm');
 }
 
-function recursivePagesSync(dirPath, rootDir) {
-  const list = [];
-  let stats;
-  const files = readdirSync(dirPath);
-  files.forEach((file) => {
-    const fullPath = path.join(dirPath, file);
-    stats = fs.lstatSync(fullPath);
-    if (stats.isDirectory()) {
+async function recursivePages(dirPath, rootDir) {
+  const files = await readdir(dirPath);
+  const metas = await Promise.all(files
+    .map((file) => path.join(dirPath, file))
+    .map(async (fullPath) => ({
+      stats: await lstatAsync(fullPath),
+      fullPath,
+    }))
+  );
+
+  return metas
+    .filter(({ stats }) => stats.isDirectory())
+    .map(({ stats, fullPath }) => {
       const { atime, birthtime, ctime, mtime } = stats;
-      list.push({
+      return {
         name: path.relative(rootDir, fullPath),
         fullPath,
         atime: formatDate(atime),
         birthtime: formatDate(birthtime),
         ctime: formatDate(ctime),
         mtime: formatDate(mtime),
-      });
-    }
-  });
-
-  return list;
+      };
+    });
 }
 
 @inject('projects', 'newpage', 'pageBlockPicker')
@@ -85,18 +87,19 @@ class PagesCard extends Component {
     this.props.newpage.removeListener('generate-page-success', this.serachPages);
   }
 
-  serachPages = () => {
+  serachPages = async () => {
     const { projects } = this.props;
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
       const pagesDirectory = path.join(currentProject.clientSrcPath, 'pages');
-      const pages = recursivePagesSync(pagesDirectory, pagesDirectory);
+      const pages = await recursivePages(pagesDirectory, pagesDirectory);
       this.setState({ pages });
+      this.loading = false;
     } else {
       this.setState({ pages: [] });
     }
-  };
+  }
 
   handleCreatePage = () => {
     const { projects } = this.props;
