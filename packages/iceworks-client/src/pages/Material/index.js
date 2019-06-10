@@ -92,10 +92,19 @@ const Material = ({ history }) => {
 
   async function handleDeleteMaterial(url) {
     await material.deleteMaterial(url);
-    await handleTabChange();
-    const firstResource = dataSource.resource.official[0] || {};
-    const defaultActiveMaterial = firstResource.source;
-    await setCurrent(defaultActiveMaterial);
+
+    // if delete current item, go back to first item
+    if (dataSource.currentSource === url) {
+      const firstResource = dataSource.resource.official[0] || {};
+      const defaultActiveMaterial = firstResource.source;
+      await handleTabChange();
+      await setCurrent(defaultActiveMaterial);
+    }
+  }
+
+  async function handleAddMaterial(...args) {
+    await addMaterial(...args);
+    await handleTabChange(); // focus scaffolds tab
   }
 
   const tabs = [
@@ -173,7 +182,7 @@ const Material = ({ history }) => {
         <AddMaterialModal
           on={onOpenMaterialModal}
           onCancel={() => setMaterialModal(false)}
-          onSave={addMaterial}
+          onSave={handleAddMaterial}
           loading={addMaterialLoading}
         />
       </div>

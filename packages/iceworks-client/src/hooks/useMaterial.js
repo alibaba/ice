@@ -11,7 +11,6 @@ function useMaterial(visible = false) {
     setLoading,
   } = useModal(visible);
 
-
   async function addMaterial({ url }, error) {
     if (loading) return;
     if (error && error.url) return;

@@ -37,6 +37,7 @@ export default (app) => {
         logo = currentItem.logo,
       } = data;
 
+      // if the material has existed, update metadata
       if (currentIdx > -1) {
         const newMaterials = updateArrayItem(
           allMaterials,
@@ -64,7 +65,6 @@ export default (app) => {
       const { args: { url }, logger } = ctx;
       const allMaterials = storage.get('material');
       const existed = allMaterials.some(m => m.source === url);
-
 
       if (existed) {
         logger.info(`current material has existed, source URL: ${url}`);
