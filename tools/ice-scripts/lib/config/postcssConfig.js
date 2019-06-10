@@ -3,7 +3,8 @@ const autoprefixer = require('autoprefixer');
 module.exports = {
   plugins: [
     autoprefixer({
-      browsers: [
+      // rename browserslist to overrideBrowserslist
+      overrideBrowserslist: [
         'last 2 versions',
         'Firefox ESR',
         '> 1%',
