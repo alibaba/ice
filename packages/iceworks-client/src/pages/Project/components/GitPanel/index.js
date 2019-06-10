@@ -7,6 +7,7 @@ import useModal from '@hooks/useModal';
 import Panel from '../Panel';
 import GitRemote from './GitRemote';
 import CreateBranchModal from './CreateBranchModal';
+import SwtichBranchModal from './SwtichBranchModal';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
@@ -19,12 +20,20 @@ const GitPanel = () => {
     on: onCreateModal,
     setModal: setCreateModal,
   } = useModal();
+  const {
+    on: onSwtichModal,
+    setModal: setSwitchModal,
+  } = useModal();
   const gitStore = stores.useStore('git');
   const { dataSource } = gitStore;
-  const { isRepository, remoteUrl, currentBranch } = dataSource;
+  const { isRepository, remoteUrl, currentBranch, localBranches, originBranches } = dataSource;
 
   async function onInit(setRemoteUrl) {
     await gitStore.init(setRemoteUrl);
+    await gitStore.refresh();
+  }
+
+  async function onRefresh() {
     await gitStore.refresh();
   }
 
@@ -32,8 +41,10 @@ const GitPanel = () => {
     setCreateModal(true);
   }
 
-  async function onRefresh() {
+  async function onCreate(name) {
+    await gitStore.checkoutLocalBranch(name);
     await gitStore.refresh();
+    setCreateModal(false);
   }
 
   async function onOpenEdit() {
@@ -45,10 +56,33 @@ const GitPanel = () => {
     setEditModal(false);
   }
 
-  async function onCreate(name) {
-    await gitStore.checkoutLocalBranch(name);
+  async function onOpenSwitch() {
+    await gitStore.getBranches();
+    setSwitchModal(true);
+  }
+
+  async function onSwtich(data) {
+    await gitStore.switchBranch(data);
     await gitStore.refresh();
-    setCreateModal(false);
+    setSwitchModal(false);
+  }
+
+  const locals = localBranches.map((value) => ({ label: value, value }));
+  const origins = originBranches.map((value) => ({ label: value, value }));
+  const checkoutBranches = [];
+  if (locals.length > 0) {
+    checkoutBranches.push({
+      label: 'local',
+      value: 'local',
+      children: locals,
+    });
+  }
+  if (origin.length > 0) {
+    checkoutBranches.push({
+      label: 'origin',
+      value: 'origin',
+      children: origins,
+    });
   }
 
   return (
@@ -63,6 +97,7 @@ const GitPanel = () => {
             isRepository ?
               <div className={styles.icons}>
                 <NextIcon className={styles.icon} type="add" size="small" onClick={onOpenCreate} />
+                <Icon className={styles.icon} type="git" size="small" onClick={onOpenSwitch} />
                 <Icon className={styles.icon} type="edit" size="small" onClick={onOpenEdit} />
                 <NextIcon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
               </div> :
@@ -90,6 +125,12 @@ const GitPanel = () => {
               on={onCreateModal}
               onCancel={() => setCreateModal(false)}
               onOk={onCreate}
+            />
+            <SwtichBranchModal
+              on={onSwtichModal}
+              onCancel={() => setSwitchModal(false)}
+              onOk={onSwtich}
+              dataSource={checkoutBranches}
             />
           </div> :
           <GitRemote onOk={onInit} />

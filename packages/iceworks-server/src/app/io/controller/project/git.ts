@@ -23,5 +23,15 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.git.checkoutLocalBranch(name);
     }
+    async switchBranch({ args }) {
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.switchBranch(args);
+    }
+    async getBranches() {
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.getBranches();
+    }
   };
 };

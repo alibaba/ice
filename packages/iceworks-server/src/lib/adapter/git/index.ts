@@ -13,9 +13,18 @@ export default class Git extends EventEmitter implements IGitModule {
     this.gitTools = gitPromie(this.project.path);
   }
 
+  private async getOriginBranches() {
+    return await this.gitTools.branch(['--remotes', '--list', '-v']);
+  }
+
+  private async getLocalBranches() {
+    return await this.gitTools.branchLocal();
+  }
+
   public async getStatus() {
     const isRepository = await this.gitTools.checkIsRepo();
-    const localBranches = await this.gitTools.branchLocal();
+    const localBranches = await this.getLocalBranches();
+    const originBranches = await this.getOriginBranches();
 
     const originRemotes = await this.gitTools.getRemotes(true);
     const originRemote = originRemotes[0];
@@ -24,7 +33,9 @@ export default class Git extends EventEmitter implements IGitModule {
     return { 
       isRepository,
       remoteUrl,
-      currentBranch: localBranches.current 
+      currentBranch: localBranches.current,
+      localBranches: localBranches.all,
+      originBranches: originBranches.all,
     };
   }
 
@@ -43,5 +54,21 @@ export default class Git extends EventEmitter implements IGitModule {
 
   public async checkoutLocalBranch(name: string) {
     await this.gitTools.checkoutLocalBranch(name);
+  }
+
+  public async switchBranch(data: {originBranch: string; checkoutBranch: string;}) {
+    const { originBranch, checkoutBranch } = data;
+
+    await this.gitTools.checkoutBranch(checkoutBranch, originBranch);
+  }
+
+  public async getBranches() {
+    await this.gitTools.fetch();
+    const originBranches = await this.gitTools.branch(['--remotes', '--list', '-v']);
+    const localBranches = await this.gitTools.branchLocal();
+    return {
+      localBranches: localBranches.all,
+      originBranches: originBranches.all
+    };
   }
 }

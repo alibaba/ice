@@ -17,6 +17,8 @@ export default (app: Application) => {
     ['project.git.init', project.git.init],
     ['project.git.setRemote', project.git.setRemote],
     ['project.git.checkoutLocalBranch', project.git.checkoutLocalBranch],
+    ['project.git.switchBranch', project.git.switchBranch],
+    ['project.git.branches', project.git.getBranches],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],

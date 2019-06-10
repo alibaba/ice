@@ -5,6 +5,8 @@ export default {
   dataSource: {
     isRepository: false,
     remoteUrl: '',
+    localBranches: [],
+    originBranches: [],
   },
 
   async refresh() {
@@ -21,5 +23,15 @@ export default {
 
   async checkoutLocalBranch(name) {
     await socket.emit('project.git.checkoutLocalBranch', { name });
+  },
+
+  async switchBranch(data) {
+    await socket.emit('project.git.switchBranch', data);
+  },
+
+  async getBranches() {
+    const { localBranches, originBranches } = await socket.emit('project.git.branches');
+    this.dataSource.localBranches = localBranches;
+    this.dataSource.originBranches = originBranches;
   },
 };
