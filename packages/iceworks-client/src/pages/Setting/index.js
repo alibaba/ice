@@ -1,38 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SubMenu from '@components/SubMenu';
-import SubMenuItem from '@components/SubMenuItem';
-import SubRoutes from '@components/SubRoutes';
-import { getMenuData } from '@utils/getMenuData';
-import styles from './index.module.scss';
+import { lazy } from 'react';
 
-const Setting = ({ routes }) => {
-  const menuData = getMenuData() || {};
-  const subMenuData = menuData.children || [];
+const SubMenu = lazy(() => import('./components/SubMenu'));
+const General = lazy(() => import('./components/General'));
+const Panel = lazy(() => import('./components/Panel'));
+const Advanced = lazy(() => import('./components/Advanced'));
 
-  return (
-    <div className={styles.settingPage}>
-      {/* render setting submenu */}
-      <SubMenu title="iceworks.setting.title">
-        {subMenuData.map((dataSource, key) => (
-          <SubMenuItem dataSource={dataSource} key={key} />
-        ))}
-      </SubMenu>
-
-      {/* render setting sub-routes */}
-      <main className={styles.main}>
-        <SubRoutes routes={routes} />
-      </main>
-    </div>
-  );
+export {
+  SubMenu,
+  General,
+  Panel,
+  Advanced,
 };
-
-Setting.defaultProps = {
-  routes: [],
-};
-
-Setting.propTypes = {
-  routes: PropTypes.array,
-};
-
-export default Setting;

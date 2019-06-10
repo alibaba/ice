@@ -1,14 +1,11 @@
 import { lazy } from 'react';
+import * as Setting from './pages/Setting';
 
 const Project = lazy(() => import('./pages/Project'));
 const Tasks = lazy(() => import('./pages/Tasks'));
 const Task = lazy(() => import('./pages/Task'));
 const Configuration = lazy(() => import('./pages/Configuration'));
 const Material = lazy(() => import('./pages/Material'));
-const Setting = lazy(() => import('./pages/Setting'));
-const SettingGeneral = lazy(() => import('./pages/SettingGeneral'));
-const SettingPanel = lazy(() => import('./pages/SettingPanel'));
-const SettingAdvanced = lazy(() => import('./pages/SettingAdvanced'));
 
 // Then our route config
 const routerConfig = [
@@ -46,20 +43,20 @@ const routerConfig = [
   },
   {
     path: '/setting',
-    component: Setting,
+    component: Setting.SubMenu,
     routes: [
       {
         from: '/setting',
         path: '/setting/general',
-        component: SettingGeneral,
+        component: Setting.General,
       },
       {
         path: '/setting/panel',
-        component: SettingPanel,
+        component: Setting.Panel,
       },
       {
         path: '/setting/advanced',
-        component: SettingAdvanced,
+        component: Setting.Advanced,
       },
     ],
   },
