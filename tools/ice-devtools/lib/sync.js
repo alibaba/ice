@@ -155,7 +155,7 @@ module.exports = async function sync(cwd) {
     }
 
     const db = await getDB(cwd);
-    const token = await tokenUtil.tokenPrepare();
+    const token = await tokenUtil.tokenPrepare(isInnerNet);
     const site = await siteUtil.getSite(cwd, token);
 
     const datas = dbReshape(db);
