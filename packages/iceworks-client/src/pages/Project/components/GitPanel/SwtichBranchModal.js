@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, CascaderSelect } from '@alifd/next';
+import { injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import styles from './SwtichBranchModal.module.scss';
 
 const originData = {};
 
-function SwtichBranchModal({ onOk, on, onCancel, dataSource }) {
+function SwtichBranchModal({ onOk, on, onCancel, dataSource, intl }) {
   const [data, setData] = useState(originData);
   const { originBranch, checkoutBranch } = data;
 
@@ -36,7 +37,7 @@ function SwtichBranchModal({ onOk, on, onCancel, dataSource }) {
 
   return (
     <Modal
-      title="切换分支"
+      title={intl.formatMessage({ id: 'iceworks.project.panel.git.switch.title' })}
       visible={on}
       onCancel={onClose}
       onOk={onSave}
@@ -44,15 +45,15 @@ function SwtichBranchModal({ onOk, on, onCancel, dataSource }) {
       <div className={styles.wrap}>
         <span>Checkout</span>
         <CascaderSelect
-          placeholder="选择分支"
+          placeholder={intl.formatMessage({ id: 'iceworks.project.panel.git.switch.select' })}
           onChange={onOriginChange}
           dataSource={dataSource}
           displayRender={(label) => label[1]}
         />
         <span>As</span>
         <Input
+          placeholder={intl.formatMessage({ id: 'iceworks.project.panel.git.switch.input' })}
           onChange={onCheckoutChange}
-          placeholder="请输入本地分支名称"
           value={checkoutBranch}
           disabled={!originBranch}
         />
@@ -70,6 +71,7 @@ SwtichBranchModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
   dataSource: PropTypes.array,
+  intl: PropTypes.object.isRequired,
 };
 
-export default SwtichBranchModal;
+export default injectIntl(SwtichBranchModal);

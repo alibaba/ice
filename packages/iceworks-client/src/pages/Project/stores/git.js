@@ -18,7 +18,6 @@ export default {
       this.dataSource = await socket.emit('project.git.status');
     } catch (error) {
       this.dataSource = defaultDataSource;
-      throw error;
     }
   },
 

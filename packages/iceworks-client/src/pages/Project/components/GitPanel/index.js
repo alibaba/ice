@@ -155,14 +155,18 @@ const GitPanel = () => {
               onOk={onCommit}
             />
             <Modal
-              title="修改仓库地址"
+              title={<FormattedMessage id="iceworks.project.panel.git.edit.title" />}
               visible={onEditModal}
               onCancel={() => setEditModal(false)}
               onOk={onEdit}
               footer={false}
             >
               <div className={styles.editModal}>
-                <GitRemote onOk={onEdit} remoteUrl={remoteUrl} />
+                <GitRemote
+                  onOk={onEdit}
+                  remoteUrl={remoteUrl}
+                  submitMessage={<FormattedMessage id="iceworks.global.button.yes" />}
+                />
               </div>
             </Modal>
             <CreateBranchModal
@@ -177,7 +181,10 @@ const GitPanel = () => {
               dataSource={checkoutBranches}
             />
           </div> :
-          <GitRemote onOk={onInit} />
+          <GitRemote
+            onOk={onInit}
+            submitMessage={<FormattedMessage id="iceworks.project.panel.git.addRemote" />}
+          />
       }
     </Panel>
   );

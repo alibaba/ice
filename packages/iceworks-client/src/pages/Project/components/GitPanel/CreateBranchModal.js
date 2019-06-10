@@ -17,7 +17,7 @@ function CreateBranchModal({ onOk, on, onCancel }) {
 
   return (
     <Modal
-      title="新建分支"
+      title={<FormattedMessage id="iceworks.project.panel.git.createBranch.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={onOk}
@@ -27,7 +27,7 @@ function CreateBranchModal({ onOk, on, onCancel }) {
         <FormItem
           required
           size="medium"
-          label="新分支名："
+          label={<FormattedMessage id="iceworks.project.panel.git.createBranch.branch.label" />}
           className={styles.item}
         >
           <Input

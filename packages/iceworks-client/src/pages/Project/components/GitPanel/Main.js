@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Input, Button, Checkbox } from '@alifd/next';
 import styles from './Main.module.scss';
 
@@ -45,34 +46,34 @@ function Main({ dataSource, onOk }) {
   }
 
   const statusMap = {
-    conflicted: ['#FA7070', '冲突'],
-    not_added: ['#2ECA9C', '未添加'],
-    modified: ['#FCDA52', '已变更'],
-    created: ['#5485F7', '新创建'],
-    deleted: ['#999999', '已删除'],
-    renamed: ['#FA7070', '重命名'],
+    conflicted: ['#FA7070', <FormattedMessage id="iceworks.project.panel.git.main.status.conflicted" />],
+    not_added: ['#2ECA9C', <FormattedMessage id="iceworks.project.panel.git.main.status.not_added" />],
+    modified: ['#FCDA52', <FormattedMessage id="iceworks.project.panel.git.main.status.modified" />],
+    created: ['#5485F7', <FormattedMessage id="iceworks.project.panel.git.main.status.created" />],
+    deleted: ['#999999', <FormattedMessage id="iceworks.project.panel.git.main.status.deleted" />],
+    renamed: ['#FA7070', <FormattedMessage id="iceworks.project.panel.git.main.status.renamed" />],
   };
 
   let btnText = '';
   if (dataSource.length === 0) {
-    btnText = '提交';
+    btnText = <FormattedMessage id="iceworks.global.button.submit" />;
   } else if (files.length === 0) {
-    btnText = '选择文件提交';
+    btnText = <FormattedMessage id="iceworks.project.panel.git.main.submit.file" />;
   } else if (message) {
-    btnText = '提交';
+    btnText = <FormattedMessage id="iceworks.global.button.submit" />;
   } else {
-    btnText = '输入信息提交';
+    btnText = <FormattedMessage id="iceworks.project.panel.git.main.submit.message" />;
   }
 
   return (
     <div className={styles.wrap}>
       <div className={styles.head}>
         <span className={styles.tip}>
-          变更文件
+          <FormattedMessage id="iceworks.project.panel.git.main.tip.unstagedFiles" />
           <span>({dataSource.length})</span>
         </span>
         <Button className={styles.btn} onClick={onSelectAll}>
-          全选
+          <FormattedMessage id="iceworks.global.button.selectAll" />
         </Button>
       </div>
       <div className={styles.content}>
@@ -112,7 +113,7 @@ function Main({ dataSource, onOk }) {
         </Button>
       </div>
       <div className={styles.tips}>
-        变更信息不会实时刷新，提交前请先通过右上角的按钮更新状态
+        <FormattedMessage id="iceworks.project.panel.git.main.tip.refresh" />
       </div>
     </div>
   );

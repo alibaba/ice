@@ -7,7 +7,7 @@ import styles from './GitRemote.module.scss';
 const FormItem = Form.Item;
 const FormSubmit = Form.Submit;
 
-function GitRemote({ onOk, remoteUrl: initRemoteUrl }) {
+function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
   const [remoteUrl, setRemoteUrl] = useState(initRemoteUrl);
   async function onSave(values, errors) {
     if (!errors) {
@@ -24,7 +24,7 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl }) {
       <FormItem
         required
         size="medium"
-        label="仓库地址："
+        label={<FormattedMessage id="iceworks.project.panel.git.remote.url.label" />}
         className={styles.item}
       >
         <Input
@@ -33,11 +33,9 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl }) {
           onChange={onChange}
         />
       </FormItem>
-      <div>
-        <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
-          <FormattedMessage id="iceworks.global.button.yes" />
-        </FormSubmit>
-      </div>
+      <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
+        {submitMessage}
+      </FormSubmit>
     </Form>
   );
 }
@@ -49,6 +47,7 @@ GitRemote.defaultProps = {
 GitRemote.propTypes = {
   onOk: PropTypes.func.isRequired,
   remoteUrl: PropTypes.string,
+  submitMessage: PropTypes.element.isRequired,
 };
 
 export default GitRemote;
