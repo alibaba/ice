@@ -8,6 +8,7 @@ export default {
     currentBranch: '',
     localBranches: [],
     originBranches: [],
+    unstagedFiles: [],
   },
 
   async refresh() {
@@ -42,5 +43,9 @@ export default {
 
   async push() {
     await socket.emit('project.git.push', this.dataSource.currentBranch);
+  },
+
+  async addAndCommit(data) {
+    await socket.emit('project.git.addAndCommit', data);
   },
 };

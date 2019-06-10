@@ -6,6 +6,7 @@ import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
 import Panel from '../Panel';
 import GitRemote from './GitRemote';
+import Main from './Main';
 import CreateBranchModal from './CreateBranchModal';
 import SwtichBranchModal from './SwtichBranchModal';
 import stores from '../../stores';
@@ -26,7 +27,14 @@ const GitPanel = () => {
   } = useModal();
   const gitStore = stores.useStore('git');
   const { dataSource } = gitStore;
-  const { isRepository, remoteUrl, currentBranch, localBranches, originBranches } = dataSource;
+  const {
+    isRepository,
+    remoteUrl,
+    currentBranch,
+    localBranches,
+    originBranches,
+    unstagedFiles,
+  } = dataSource;
 
   async function onInit(setRemoteUrl) {
     await gitStore.init(setRemoteUrl);
@@ -78,6 +86,24 @@ const GitPanel = () => {
   }
 
   async function onPush() {
+    await gitStore.push();
+    Message.show({
+      type: 'success',
+      title: 'Push',
+      content: '推送当前分支本地代码成功',
+      align: 'tr tr',
+    });
+  }
+
+  async function onCommit(data) {
+    await gitStore.addAndCommit(data);
+    await gitStore.refresh();
+    Message.show({
+      type: 'success',
+      title: 'Commit',
+      content: '提交成功',
+      align: 'tr tr',
+    });
   }
 
   const locals = localBranches.map((value) => ({ label: value, value }));
@@ -124,7 +150,10 @@ const GitPanel = () => {
       {
         isRepository ?
           <div className={styles.wrap}>
-            是一个仓库
+            <Main
+              dataSource={unstagedFiles}
+              onOk={onCommit}
+            />
             <Modal
               title="修改仓库地址"
               visible={onEditModal}

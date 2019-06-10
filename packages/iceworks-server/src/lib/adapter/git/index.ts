@@ -21,6 +21,24 @@ export default class Git extends EventEmitter implements IGitModule {
     return await this.gitTools.branchLocal();
   }
 
+  private async getUnstagedFiles() {
+    const gitStatus = await this.gitTools.status();
+    const types = ['conflicted', 'not_added', 'modified', 'created', 'deleted', 'renamed'];
+    let unstagedFiles = [];
+    if (gitStatus && gitStatus.files && gitStatus.files.length > 0) {
+      types.forEach((type) => {
+        const statusFiles = gitStatus[type];
+        if (statusFiles) {
+          unstagedFiles = unstagedFiles.concat(statusFiles.map((file) => ({
+            type,
+            file,
+          })));
+        }
+      });
+    }
+    return unstagedFiles;
+  }
+
   public async getStatus() {
     const isRepository = await this.gitTools.checkIsRepo();
     const localBranches = await this.getLocalBranches();
@@ -36,6 +54,7 @@ export default class Git extends EventEmitter implements IGitModule {
       currentBranch: localBranches.current,
       localBranches: localBranches.all,
       originBranches: originBranches.all,
+      unstagedFiles: await this.getUnstagedFiles(),
     };
   }
 
@@ -78,5 +97,11 @@ export default class Git extends EventEmitter implements IGitModule {
 
   public async push(branch: string) {
     await this.gitTools.push('origin', branch);
+  }
+
+  public async addAndCommit(data: {message: string, files: string[]}) {
+    const {message, files} = data;
+    await this.gitTools.add(files);
+    await this.gitTools.commit(message);
   }
 }

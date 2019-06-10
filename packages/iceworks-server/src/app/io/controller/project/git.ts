@@ -45,5 +45,10 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.git.push(branch);
     }
+    async addAndCommit({ args }) {
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.addAndCommit(args);
+    }
   };
 };
