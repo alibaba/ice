@@ -32,6 +32,6 @@ ice-scripts 提供了丰富的功能帮助我们开发 React 项目：完善的�
 
 ### create-react-app
 
-create-react-app(CRA) 提供了基于 React 项目的一套最佳工程配置实践，目前是 React 社区的主流方案，但是 CRA 推崇的最佳实践在很多业务场景下未必试用，此时如果要基于 CRA 自定义工程能力就必须通过 `npm run eject` 这种非常繁琐的方式，同时官方并不推荐这种方式。
+create-react-app(CRA) 提供了基于 React 项目的一套最佳工程配置实践，目前是 React 社区的主流方案，但是 CRA 推崇的最佳实践在很多业务场景下未必适用，此时如果要基于 CRA 自定义工程能力就必须通过 `npm run eject` 这种非常繁琐的方式，同时官方并不推荐这种方式。
 
 ice-scripts 在默认的一套最佳实践之上，通过约定配置文件 `ice.config.js` 以及 `webpack-chain` 的能力，满足不同项目工程的定制和复用需求，在易用性与灵活性上找到平衡点。

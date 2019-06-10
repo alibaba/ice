@@ -1,6 +1,6 @@
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 
-module.exports = ({ context, log, chainWebpack }, options) => {
+module.exports = ({ context, log, chainWebpack }, options = {}) => {
   const { command } = context;
 
   // it is increase dev build time

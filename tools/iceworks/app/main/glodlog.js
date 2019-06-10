@@ -33,7 +33,8 @@ module.exports = {
     request({
       method: 'POST',
       url: 'http://gm.mmstat.com/iceteam.iceworks.log',
-      data: {
+      json: true,
+      body: {
         cache: Math.random(),
         gmkey: 'CLK',
         gokey: encodeURIComponent(gokey),
