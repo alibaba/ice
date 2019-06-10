@@ -53,14 +53,25 @@ function Main({ dataSource, onOk }) {
     renamed: ['#FA7070', '重命名'],
   };
 
+  let btnText = '';
+  if (dataSource.length === 0) {
+    btnText = '提交';
+  } else if (files.length === 0) {
+    btnText = '选择文件提交';
+  } else if (message) {
+    btnText = '提交';
+  } else {
+    btnText = '输入信息提交';
+  }
+
   return (
     <div className={styles.wrap}>
       <div className={styles.head}>
-        <span>
+        <span className={styles.tip}>
           变更文件
           <span>({dataSource.length})</span>
         </span>
-        <Button onClick={onSelectAll}>
+        <Button className={styles.btn} onClick={onSelectAll}>
           全选
         </Button>
       </div>
@@ -74,7 +85,7 @@ function Main({ dataSource, onOk }) {
             return (
               <div key={index} className={styles.item}>
                 <Checkbox value={file}>
-                  <span style={{ backgroundColor: color }}>
+                  <span className={styles.label} style={{ backgroundColor: color }}>
                     {text}
                   </span>
                   <span>{file}</span>
@@ -89,16 +100,15 @@ function Main({ dataSource, onOk }) {
           onChange={onMessageChange}
           value={message}
           placeholder="提交信息"
+          className={styles.input}
         />
         <Button
           type="primary"
           disabled={files.length === 0 || !message}
           onClick={onSubmit}
+          className={styles.button}
         >
-          { dataSource.length === 0 && '提交' }
-          { dataSource.length !== 0 && files.length === 0 && '选择文件提交' }
-          { files.length !== 0 && !message && '输入信息提交' }
-          { files.length !== 0 && message && '提交' }
+          { btnText }
         </Button>
       </div>
       <div className={styles.tips}>
