@@ -53,12 +53,6 @@ const menuConfig = [
         desc: '通用的操作设置',
       },
       {
-        name: 'iceworks.menu.setting.material',
-        path: '/setting/material',
-        icon: 'material',
-        desc: '添加/开启/关闭自定义物料',
-      },
-      {
         name: 'iceworks.menu.setting.panel',
         path: '/setting/panel',
         icon: 'panel1',
