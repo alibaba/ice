@@ -48,6 +48,7 @@ module.exports = class Context {
     const builtInPlugins = [
       '../plugins/userConfig',
       '../plugins/cliOptions',
+      '../plugins/devWatcher',
     ];
     // eslint-disable-next-line import/no-dynamic-require
     return builtInPlugins.map((pluginPath) => require(pluginPath))

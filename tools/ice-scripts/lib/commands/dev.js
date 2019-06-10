@@ -194,6 +194,7 @@ module.exports = async function (context, subprocess) {
       console.error(err);
       process.exit(500);
     } else {
+      applyHook('afterDevServer', devServer);
       send({
         action: 'update_project',
         message: 'server_success',
