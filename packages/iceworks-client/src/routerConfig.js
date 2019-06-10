@@ -43,7 +43,7 @@ const routerConfig = [
   },
   {
     path: '/setting',
-    component: Setting.SubMenu,
+    component: Setting.Main,
     routes: [
       {
         from: '/setting',

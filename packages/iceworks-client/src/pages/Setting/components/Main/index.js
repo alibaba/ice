@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
 import SubRoutes from '@components/SubRoutes';
+import Card from '@components/Card';
 import { getMenuData } from '@utils/getMenuData';
 import styles from './index.module.scss';
 
-const SettingSubMenu = ({ routes }) => {
+const Main = ({ routes }) => {
   const menuData = getMenuData() || {};
   const subMenuData = menuData.children || [];
 
   return (
-    <div className={styles.settingSubMenu}>
+    <div className={styles.wrap}>
       {/* render setting submenu */}
       <SubMenu title="iceworks.setting.title">
         {subMenuData.map((dataSource, key) => (
@@ -21,18 +22,20 @@ const SettingSubMenu = ({ routes }) => {
 
       {/* render setting sub-routes */}
       <main className={styles.main}>
-        <SubRoutes routes={routes} />
+        <Card title="通用设置" className={styles.settingCard} contentHeight="100%">
+          <SubRoutes routes={routes} />
+        </Card>
       </main>
     </div>
   );
 };
 
-SettingSubMenu.defaultProps = {
+Main.defaultProps = {
   routes: [],
 };
 
-SettingSubMenu.propTypes = {
+Main.propTypes = {
   routes: PropTypes.array,
 };
 
-export default SettingSubMenu;
+export default Main;

@@ -1,12 +1,12 @@
 import { lazy } from 'react';
 
-const SubMenu = lazy(() => import('./components/SubMenu'));
+const Main = lazy(() => import('./components/Main'));
 const General = lazy(() => import('./components/General'));
 const Panel = lazy(() => import('./components/Panel'));
 const Advanced = lazy(() => import('./components/Advanced'));
 
 export {
-  SubMenu,
+  Main,
   General,
   Panel,
   Advanced,
