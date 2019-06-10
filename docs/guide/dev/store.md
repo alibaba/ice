@@ -10,7 +10,7 @@ order: 3
 ## 安装
 
 ```bash
-$ npm i icestore --save
+$ npm i @ice/store --save
 ```
 
 ## 快速上手
@@ -37,8 +37,8 @@ export default {
 
 ```js
 // src/stores/index.js
+import Icestore from '@ice/store';
 import todos from './todos';
-import Icestore from 'icestore';
 
 const icestore = new Icestore();
 icestore.registerStore('todos', todos);
