@@ -22,8 +22,8 @@ order: 3
 
 在 `ice.config.js` 中配置 `proxy` 字段：
 
-  ```js
-  // ice.config.js
+```js
+// ice.config.js
 module.exports = {
   proxy: {
     '/**': {
@@ -32,7 +32,7 @@ module.exports = {
     }
   }
 }
-  ```
+```
 
 完整的配置项请参考 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)。
 

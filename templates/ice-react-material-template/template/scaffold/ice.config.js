@@ -5,7 +5,7 @@ module.exports = {
     ['ice-plugin-fusion', {
       themePackage: '@icedesign/theme',
     }],
-    ['ice-plugin-moment-locale', {
+    ['ice-plugin-moment-locales', {
       locales: ['zh-cn'],
     }],
   ],

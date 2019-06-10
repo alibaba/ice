@@ -1,8 +1,12 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] 修复 copy 插件未使用自定义 output 问题
+
 ## 2.0.1
 
-- [fix] 修复多entry下html入口问题
+- [fix] 修复多 entry 下 html 入口问题
 
 ## 2.0.0
 
