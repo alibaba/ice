@@ -12,6 +12,7 @@ import styles from './index.module.scss';
 let editIndex = -1;
 let deleteIndex = -1;
 let action = 'create';
+let deleteParent = null;
 
 const RouterPanel = () => {
   const {
@@ -38,47 +39,123 @@ const RouterPanel = () => {
     onRefresh();
   }
 
-  function onOpenEditModal(data, index) {
+  function onOpenEditModal({
+    data,
+    index,
+    parent,
+  }) {
     editIndex = index;
     action = 'edit';
     setModalData({
       formData: data,
       action,
       editIndex,
+      parent,
     });
     toggleCreateModal();
   }
 
-  function onOpenCreateModal() {
+  function onOpenCreateModal(parent) {
     action = 'create';
     setModalData({
       formData: {},
       action,
       editIndex: -1,
+      parent,
     });
     toggleCreateModal();
   }
 
-  async function onCreate(value) {
+  async function onCreate({ formData: value, parent }) {
     toggleCreateModal();
     if (action === 'create') {
-      dataSource.push(value);
-    } else {
-      Object.assign(dataSource[editIndex], value);
+      if (parent) {
+        parent.routes.push(value);
+      } else {
+        dataSource.push(value);
+      }
+    } else if (action === 'edit') {
+      if (parent) {
+        Object.assign(parent.routes[editIndex], value);
+      } else {
+        Object.assign(dataSource[editIndex], value);
+      }
     }
     await onChangeData(dataSource);
   }
 
-  async function onOpenDeleteModal(index) {
+  async function onOpenDeleteModal({
+    index,
+    parent,
+    current,
+  }) {
     deleteIndex = index;
-    setDeleteRouter(dataSource[index]);
+    deleteParent = parent;
+    setDeleteRouter(current);
     toggleDeleteModal();
   }
 
   async function onDeleteRouter() {
-    dataSource.splice(deleteIndex, 1);
+    if (deleteParent) {
+      deleteParent.routes.splice(deleteIndex, 1);
+    } else {
+      dataSource.splice(deleteIndex, 1);
+    }
     await onChangeData(dataSource);
     toggleDeleteModal();
+  }
+
+  function renderCol(item, index, parent) {
+    const { path, component, routes } = item;
+    return [
+      (
+        <li className={styles.item} key={index}>
+          <strong
+            className={styles.itemCol}
+            style={{
+              textIndent: parent ? '20px' : 0,
+            }}
+          >{path}
+          </strong>
+          <span className={styles.itemCol}>{component}</span>
+          <span>
+            {Array.isArray(routes) && (
+              <Icon
+                type="add"
+                title="创建"
+                size="xs"
+                className={styles.icon}
+                onClick={() => onOpenCreateModal(item)}
+              />
+            )}
+            <Icon
+              type="edit"
+              title="编辑"
+              size="xs"
+              className={styles.icon}
+              onClick={() => onOpenEditModal({
+                data: item,
+                index,
+                parent,
+              })}
+            />
+            <Icon
+              className={styles.icon}
+              type="ashbin"
+              size="xs"
+              onClick={() => onOpenDeleteModal({
+                index,
+                parent,
+                current: item,
+              })}
+            />
+          </span>
+        </li>
+      ),
+      routes && (
+        routes.map((route, routeIndex) => renderCol(route, routeIndex, item))
+      ),
+    ];
   }
 
   return (
@@ -88,7 +165,7 @@ const RouterPanel = () => {
           <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
           <div className={styles.icons}>
             <Icon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="add" size="small" onClick={onOpenCreateModal} />
+            <Icon className={styles.icon} type="add" size="small" onClick={() => onOpenCreateModal()} />
           </div>
         </div>
       }
@@ -111,29 +188,7 @@ const RouterPanel = () => {
           <div>
             <ul>
               {dataSource.map((item, index) => {
-                const { path, component, layout } = item;
-                return (
-                  <li className={styles.item} key={path}>
-                    <strong className={styles.itemCol}>{path}</strong>
-                    <span className={styles.itemCol}>{component}</span>
-                    <span className={styles.itemCol}>{layout}</span>
-                    <span>
-                      <Icon
-                        type="edit"
-                        title="编辑"
-                        size="xs"
-                        className={styles.icon}
-                        onClick={() => onOpenEditModal(item, index)}
-                      />
-                      <Icon
-                        className={styles.icon}
-                        type="ashbin"
-                        size="xs"
-                        onClick={() => onOpenDeleteModal(index)}
-                      />
-                    </span>
-                  </li>
-                );
+                return renderCol(item, index);
               })}
             </ul>
           </div>

@@ -98,7 +98,8 @@ export default {
   'iceworks.project.panel.router.edit.title': '编辑路由',
   'iceworks.project.panel.router.title': '路由管理',
   'iceworks.project.panel.router.form.path': '路径',
-  'iceworks.project.panel.router.form.page': '页面',
+  'iceworks.project.panel.router.form.component': '组件',
+  'iceworks.project.panel.router.form.exact': '是否精确匹配',
   'iceworks.project.panel.router.form.layout': '布局',
 
   // task

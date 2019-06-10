@@ -19,7 +19,7 @@ export interface IRouter {
    */
   layout?: string;
 
-  children?: IRouter[];
+  routes?: IRouter[];
 }
 
 export interface IRouterModule extends IBaseModule {

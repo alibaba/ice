@@ -77,7 +77,8 @@ export default {
   'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',
   'iceworks.project.panel.router.edit.title': 'Edit Router',
   'iceworks.project.panel.router.form.path': 'path',
-  'iceworks.project.panel.router.form.page': 'page',
+  'iceworks.project.panel.router.form.component': 'component',
+  'iceworks.project.panel.router.form.exact': 'exact',
   'iceworks.project.panel.router.form.layout': 'layout',
 
   // task

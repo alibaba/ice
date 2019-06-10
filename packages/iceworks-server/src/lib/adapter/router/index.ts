@@ -12,6 +12,8 @@ const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
+const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
+
 export default class Router extends EventEmitter {
   public readonly projectPath: string;
 
@@ -33,33 +35,46 @@ export default class Router extends EventEmitter {
 
     try {
       traverse(fileAST, {
-        VariableDeclarator({ node }) {
+        VariableDeclarator: ({ node }) => {
           if (
             t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
             && t.isArrayExpression(node.init)
           ) {
-            node.init.elements.forEach((element) => {
-              // { path: '/home', component: Home, Layout: BasicLayout }
-              const { properties } = element;
-              const item = {};
-              properties.forEach((property) => {
-                const { key, value } = property;
-
-                // component & layout is react Component
-                if (['component', 'layout'].indexOf(key.name) > -1) {
-                  item[key.name] = value.name;
-                } else {
-                  item[key.name] = value.value;
-                }
-              });
-              config.push(item);
-            });
+            config = this.parseRoute(node.init.elements);
           }
         }
       });
     } catch (error) {
       console.log(error);
     }
+    return config;
+  }
+
+  parseRoute(elements) {
+    const config = [];
+    elements.forEach((element) => {
+      // { path: '/home', component: Home, routes: [] }
+      const { properties } = element;
+      const item: any = {};
+      properties.forEach((property) => {
+        const { key, value } = property;
+        const { name: keyName } = key;
+
+        // component is react Component
+        if (keyName === 'component') {
+          item[keyName] = value.name;
+        } else if (keyName === 'routes') {
+          // routes is array
+          item.routes = this.parseRoute(value.elements);
+        } else if (ROUTE_PROP_WHITELIST.indexOf(keyName) > -1) {
+          item[keyName] = value.value;
+        }
+      });
+      if (Object.keys(item).length > 0) {
+        config.push(item);
+      }
+    });
+
     return config;
   }
 
@@ -85,7 +100,7 @@ export default class Router extends EventEmitter {
      */
     traverse(dataAST, {
       ObjectProperty({ node }) {
-        if (['component', 'layout'].indexOf(node.key.value) > -1) {
+        if (['component'].indexOf(node.key.value) > -1) {
           node.value = t.identifier(node.value.value);
         }
       }
@@ -120,6 +135,9 @@ export default class Router extends EventEmitter {
    */
   private sortData(data: IRouter[]): IRouter[] {
     return data.sort((a, b) => {
+      if (a.routes) {
+        a.routes = this.sortData(a.routes);
+      }
       if (a.path.indexOf(b.path) === 0) {
         return -1;
       }
@@ -159,9 +177,30 @@ export default class Router extends EventEmitter {
             } else {
               pageImportDeclarations.push(item);
             }
-            pageImportDeclarations.push(item);
-            const fieldName = type === LAYOUT_DIRECTORY ? 'layout' : 'component';
-            const findRouter = data.find(item => item[fieldName] === name);
+            let findRouter = null;
+
+            if (type === LAYOUT_DIRECTORY) {
+              // layout only first layer
+              findRouter = data.find(item => item.routes && item.component === name);
+            } else {
+              findRouter = data.find(item => {
+                let pageItem = null;
+
+                if (!item.routes && item.component === name) {
+                  pageItem = item;
+                }
+
+                if (item.routes) {
+                  item.routes.forEach((route) => {
+                    if (route.component === name) {
+                      pageItem = route;
+                    }
+                  });
+                }
+
+                return pageItem;
+              });
+            }
             if (!findRouter) {
               needRemove = true;
             }
@@ -177,21 +216,37 @@ export default class Router extends EventEmitter {
       fileAST.program.body.splice(index, 1);
     });
 
+    const existImport = this.existImport;
+    function setNewComponent(type, component) {
+      let componentExist;
+      const isLayout = type === 'layout';
+
+      if (isLayout) {
+        componentExist = existImport(layoutImportDeclarations, component);
+      } else {
+        componentExist = existImport(pageImportDeclarations, component);
+      }
+
+      if (!componentExist && isLayout && newLayouts.indexOf(component) > -1) {
+        newLayouts.push(component);
+      }
+
+      if (!componentExist && !isLayout && newPages.indexOf(component) === -1) {
+        newPages.push(component);
+      }
+    }
+
     /**
      * add import if there is no layout or component in the ImportDeclarations 
      */
     const newPages = [];
     const newLayouts = [];
-    data.forEach(({ component, layout }) => {
-      const layoutExist = this.existImport(layoutImportDeclarations, layout);
-      const pageExist = this.existImport(pageImportDeclarations, component);
-
-      if (!layoutExist && newLayouts.indexOf(layout) > -1) {
-        newLayouts.push(layout);
-      }
-      
-      if (!pageExist && newPages.indexOf(component) === -1) {
-        newPages.push(component);
+    data.forEach(({ component, routes }) => {
+      if (routes) {
+        setNewComponent('layout', component);
+        routes.forEach((route) => setNewComponent('page', route.component));
+      } else {
+        setNewComponent('page', component);
       }
     });
 

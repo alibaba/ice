@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Modal from '@components/Modal';
-import { Input, Select, Form, Field } from '@alifd/next';
+import { Input, Select, Form, Field, Switch } from '@alifd/next';
 
 import useWhenValueChanges from '../../../../hooks/useWhenValueChanges';
 import stores from '../../stores';
@@ -26,10 +26,23 @@ const CreateRouterModal = ({
   on, onCancel, onOk, modalData,
 }) => {
   const [formData, setFormData] = useState({});
+  const { parent } = modalData;
 
   useWhenValueChanges(modalData, () => {
     if (modalData && modalData.formData) {
-      setFormData(modalData.formData);
+      const formValue = {
+        ...modalData.formData,
+      };
+      const { component, routes } = formValue;
+      if (component) {
+        // layout component
+        if (routes) {
+          formValue.component = `layout&${component}`;
+        } else {
+          formValue.component = `page&${component}`;
+        }
+      }
+      setFormData(formValue);
     }
   });
 
@@ -39,6 +52,35 @@ const CreateRouterModal = ({
   const { dataSource: routers } = routersStore;
   const { dataSource: pages } = pagesStore;
   const { dataSource: layouts } = layoutsStore;
+  let dataSource = [];
+
+  const pageSelects = pages.map((page) => {
+    return {
+      label: page.name,
+      value: `page&${page.name}`,
+    };
+  });
+
+  const layoutSelects = layouts.map((layout) => {
+    return {
+      label: layout.name,
+      value: `layout&${layout.name}`,
+    };
+  });
+
+  if (modalData.action === 'create') {
+    dataSource = [{
+      label: '页面(普通组件)',
+      children: pageSelects,
+    }, {
+      label: '布局(只有布局才能配置子路由)',
+      children: layoutSelects,
+    }];
+  } else if (formData.routes) {
+    dataSource = layoutSelects;
+  } else {
+    dataSource = pageSelects;
+  }
 
   function onChange(value) {
     setFormData(value);
@@ -47,7 +89,19 @@ const CreateRouterModal = ({
   function onSubmit() {
     field.validate((errors, values) => {
       if (!errors) {
-        onOk(values);
+        const formValue = values;
+        const { component } = formValue;
+        if (component) {
+          const [type, componentValue] = component.split(/&(.+)/);
+          if (type === 'layout') {
+            formValue.routes = formValue.routes || [];
+          }
+          formValue.component = componentValue;
+        }
+        onOk({
+          formData: formValue,
+          parent,
+        });
       }
     });
   }
@@ -86,6 +140,7 @@ const CreateRouterModal = ({
         <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.path" />} required>
           <Input
             name="path"
+            // addonTextBefore={(parent && parent.path !== '/') ? parent.path : ''}
             placeholder="请填写路径"
             {...init('path', {
               rules: [{
@@ -96,32 +151,19 @@ const CreateRouterModal = ({
             })}
           />
         </FormItem>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.page" />} required message="页面必选">
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.component" />}>
           <Select
             size="small"
             name="component"
-            placeholder="请选择页面"
-            dataSource={pages.map((page) => {
-              return {
-                label: page.name,
-                value: page.name,
-              };
-            })}
+            placeholder="请选择组件"
+            dataSource={dataSource}
             className={styles.selectBox}
           />
         </FormItem>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.layout" />}>
-          <Select
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.exact" />}>
+          <Switch
             size="small"
-            name="layout"
-            placeholder="请选择布局"
-            dataSource={layouts.map((layout) => {
-              return {
-                label: layout.name,
-                value: layout.name,
-              };
-            })}
-            className={styles.selectBox}
+            name="exact"
           />
         </FormItem>
       </Form>
