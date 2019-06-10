@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Icon as NextIcon } from '@alifd/next';
+import { Icon as NextIcon, Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
@@ -67,6 +67,19 @@ const GitPanel = () => {
     setSwitchModal(false);
   }
 
+  async function onPull() {
+    await gitStore.pull();
+    Message.show({
+      type: 'success',
+      title: 'Pull',
+      content: '拉取当前分支最新代码成功',
+      align: 'tr tr',
+    });
+  }
+
+  async function onPush() {
+  }
+
   const locals = localBranches.map((value) => ({ label: value, value }));
   const origins = originBranches.map((value) => ({ label: value, value }));
   const checkoutBranches = [];
@@ -98,6 +111,8 @@ const GitPanel = () => {
               <div className={styles.icons}>
                 <NextIcon className={styles.icon} type="add" size="small" onClick={onOpenCreate} />
                 <Icon className={styles.icon} type="git" size="small" onClick={onOpenSwitch} />
+                <Icon className={styles.icon} type="down-arrow" size="small" onClick={onPull} />
+                <Icon className={styles.icon} type="up-arrow" size="small" onClick={onPush} />
                 <Icon className={styles.icon} type="edit" size="small" onClick={onOpenEdit} />
                 <NextIcon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
               </div> :

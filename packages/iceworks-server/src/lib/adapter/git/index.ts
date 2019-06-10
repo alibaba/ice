@@ -71,4 +71,12 @@ export default class Git extends EventEmitter implements IGitModule {
       originBranches: originBranches.all
     };
   }
+
+  public async pull(branch: string) {
+    await this.gitTools.pull('origin', branch);
+  }
+
+  public async push(branch: string) {
+    await this.gitTools.push('origin', branch);
+  }
 }

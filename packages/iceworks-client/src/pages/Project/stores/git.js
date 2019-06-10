@@ -5,6 +5,7 @@ export default {
   dataSource: {
     isRepository: false,
     remoteUrl: '',
+    currentBranch: '',
     localBranches: [],
     originBranches: [],
   },
@@ -33,5 +34,13 @@ export default {
     const { localBranches, originBranches } = await socket.emit('project.git.branches');
     this.dataSource.localBranches = localBranches;
     this.dataSource.originBranches = originBranches;
+  },
+
+  async pull() {
+    await socket.emit('project.git.pull', this.dataSource.currentBranch);
+  },
+
+  async push() {
+    await socket.emit('project.git.push', this.dataSource.currentBranch);
   },
 };

@@ -33,5 +33,17 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.git.getBranches();
     }
+    async pull({ args }) {
+      const { branch } = args;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.pull(branch);
+    }
+    async push({ args }) {
+      const { branch } = args;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.git.push(branch);
+    }
   };
 };
