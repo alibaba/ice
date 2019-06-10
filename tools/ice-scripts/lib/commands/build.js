@@ -31,7 +31,8 @@ module.exports = async function (context) {
   fse.emptyDirSync(webpackConfig.output.path);
   webpack(webpackConfig, (error, stats) => {
     if (error) {
-      throw error;
+      log.error(error);
+      process.exit(1);
     } else {
       console.log(
         stats.toString({
@@ -43,7 +44,8 @@ module.exports = async function (context) {
         })
       );
       if (stats.hasErrors()) {
-        throw new Error('webpack compiled failed.');
+        log.error('webpack compiled failed.');
+        process.exit(1);
       } else {
         log.info('ICE build finished');
       }
