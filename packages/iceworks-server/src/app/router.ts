@@ -22,6 +22,8 @@ export default (app: Application) => {
     ['project.git.pull', project.git.pull],
     ['project.git.push', project.git.push],
     ['project.git.addAndCommit', project.git.addAndCommit],
+    ['project.git.getLog', project.git.getLog],
+    ['project.def.push', project.def.push],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
     ['project.page.create', project.page.create],

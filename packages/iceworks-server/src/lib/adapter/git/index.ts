@@ -104,4 +104,8 @@ export default class Git extends EventEmitter implements IGitModule {
     await this.gitTools.add(files);
     await this.gitTools.commit(message);
   }
+
+  public async getLog(branches: string[]) {
+    return await this.gitTools.log(branches);
+  }
 }
