@@ -1,0 +1,9 @@
+.row {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  .label {
+    text-align: right;
+    padding-right: 20px;
+  }
+}

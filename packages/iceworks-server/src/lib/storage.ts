@@ -84,6 +84,10 @@ const schema = {
     type: 'string',
     default: 'vscode',
   },
+  locale: {
+    type: 'string',
+    default: 'zh-CN',
+  },
   material: {
     type: 'array',
     default: [

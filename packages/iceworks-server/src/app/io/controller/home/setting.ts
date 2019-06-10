@@ -30,5 +30,13 @@ export default (app) => {
         directories,
       };
     }
+
+    async setLocale(ctx) {
+      storage.set('locale', ctx.args.locale);
+    }
+
+    async getLocale() {
+      return storage.get('locale');
+    }
   };
 };

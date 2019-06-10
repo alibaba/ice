@@ -27,11 +27,16 @@ export default (app: Application) => {
     ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.getCLIConf', project.configuration.getCLIConf],
     ['project.configuration.setCLIConf', project.configuration.setCLIConf],
+
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
+
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.setting.setLocale', home.setting.setLocale],
+    ['home.setting.getLocale', home.setting.getLocale],
+
     ['home.system.getPath', home.system.getPath],
     ['home.system.openFolder', home.system.openFolder],
     ['home.system.openEditor', home.system.openEditor],
