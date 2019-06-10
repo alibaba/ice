@@ -11,17 +11,17 @@ function Main({ dataSource, onOk }) {
   const [data, setData] = useState(originData);
   const { message = '', files = [] } = data;
 
-  function onCommitChange(value) {
+  function onMessageChange(value) {
     setData({
       ...data,
       message: value,
     });
   }
 
-  function onFilesChange(setSelectedFiles) {
+  function onFilesChange(selectedFiles) {
     setData({
       ...data,
-      files: setSelectedFiles,
+      files: selectedFiles,
     });
   }
 
@@ -55,42 +55,38 @@ function Main({ dataSource, onOk }) {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.topContainer}>
-        <div className={styles.filesTitle}>
-          <span>
-            变更文件
-            <span>
-              ({dataSource.length})
-            </span>
-          </span>
-          <Button onClick={onSelectAll}>
-            全选
-          </Button>
-        </div>
-        <div className={styles.filesContent}>
-          <CheckboxGroup value={files} onChange={onFilesChange}>
-            { dataSource.map((item, index) => {
-              const { type, file } = item;
-              const status = statusMap[type];
-              const [color, text] = status;
-
-              return (
-                <div key={index} className={styles.fileItem}>
-                  <Checkbox value={file}>
-                    <span style={{ backgroundColor: color }}>
-                      {text}
-                    </span>
-                    <span>{file}</span>
-                  </Checkbox>
-                </div>
-              );
-            }) }
-          </CheckboxGroup>
-        </div>
+      <div className={styles.head}>
+        <span>
+          变更文件
+          <span>({dataSource.length})</span>
+        </span>
+        <Button onClick={onSelectAll}>
+          全选
+        </Button>
       </div>
-      <div className={styles.bottomContainer}>
+      <div className={styles.content}>
+        <CheckboxGroup value={files} onChange={onFilesChange}>
+          { dataSource.map((item, index) => {
+            const { type, file } = item;
+            const status = statusMap[type];
+            const [color, text] = status;
+
+            return (
+              <div key={index} className={styles.item}>
+                <Checkbox value={file}>
+                  <span style={{ backgroundColor: color }}>
+                    {text}
+                  </span>
+                  <span>{file}</span>
+                </Checkbox>
+              </div>
+            );
+          }) }
+        </CheckboxGroup>
+      </div>
+      <div className={styles.opts}>
         <Input
-          onChange={onCommitChange}
+          onChange={onMessageChange}
           value={message}
           placeholder="提交信息"
         />
@@ -105,7 +101,7 @@ function Main({ dataSource, onOk }) {
           { files.length !== 0 && message && '提交' }
         </Button>
       </div>
-      <div className={styles.bottomTips}>
+      <div className={styles.tips}>
         变更信息不会实时刷新，提交前请先通过右上角的按钮更新状态
       </div>
     </div>
