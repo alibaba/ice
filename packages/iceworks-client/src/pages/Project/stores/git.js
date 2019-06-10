@@ -1,18 +1,25 @@
 import socket from '@src/socket';
-// import logger from '@utils/logger';
+
+const defaultDataSource = {
+  isRepository: false,
+  remoteUrl: '',
+  currentBranch: '',
+  localBranches: [],
+  originBranches: [],
+  unstagedFiles: [],
+};
 
 export default {
-  dataSource: {
-    isRepository: false,
-    remoteUrl: '',
-    currentBranch: '',
-    localBranches: [],
-    originBranches: [],
-    unstagedFiles: [],
-  },
+  dataSource: defaultDataSource,
 
+  // TODO Unified handling of errors
   async refresh() {
-    this.dataSource = await socket.emit('project.git.status');
+    try {
+      this.dataSource = await socket.emit('project.git.status');
+    } catch (error) {
+      this.dataSource = defaultDataSource;
+      throw error;
+    }
   },
 
   async init(remoteUrl) {
