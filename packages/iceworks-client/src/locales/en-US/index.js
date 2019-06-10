@@ -19,12 +19,21 @@ export default {
   'iceworks.menu.task.configuration.desc': 'custom project configuration',
   'iceworks.menu.material': 'Material',
   'iceworks.menu.setting': 'Setting',
+  'iceworks.menu.setting.general': 'General',
+  'iceworks.menu.setting.general.desc': 'Set the theme and language',
+  'iceworks.menu.setting.panel': 'Panel',
+  'iceworks.menu.setting.panel.desc': 'Set the display of the project panel',
+  'iceworks.menu.setting.advanced': 'Advanced',
+  'iceworks.menu.setting.advanced.desc': 'Set editor and npm source',
 
   // setting
-  'iceworks.menu.setting.general': 'General',
-  'iceworks.menu.setting.material': 'Material',
-  'iceworks.menu.setting.panel': 'Panel',
-  'iceworks.menu.setting.advanced': 'Advanced',
+  'iceworks.setting.general.title': 'General',
+  'iceworks.setting.general.language.title': 'Language',
+  'iceworks.setting.general.language.zh': 'Chinese',
+  'iceworks.setting.general.language.en': 'English',
+  'iceworks.setting.general.theme.title': 'Theme',
+  'iceworks.setting.general.theme.dark': 'Dark',
+  'iceworks.setting.general.theme.light': 'Light',
 
   // project
   'iceworks.project.title': 'Project',

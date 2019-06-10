@@ -18,13 +18,22 @@ export default {
   'iceworks.menu.task.configuration': 'configuration',
   'iceworks.menu.task.configuration.desc': '自定义项目配置',
   'iceworks.menu.material': '物料',
-
-  // setting
   'iceworks.menu.setting': '设置',
   'iceworks.menu.setting.general': '通用设置',
-  'iceworks.menu.setting.material': '物料设置',
+  'iceworks.menu.setting.general.desc': '设置主题和语言',
   'iceworks.menu.setting.panel': '面板设置',
+  'iceworks.menu.setting.panel.desc': '项目面板的展示',
   'iceworks.menu.setting.advanced': '高级设置',
+  'iceworks.menu.setting.advanced.desc': '设置编辑器和 npm 源',
+
+  // setting
+  'iceworks.setting.general.title': '通用设置',
+  'iceworks.setting.general.language.title': '语言',
+  'iceworks.setting.general.language.zh': '中文',
+  'iceworks.setting.general.language.en': '英文',
+  'iceworks.setting.general.theme.title': '主题',
+  'iceworks.setting.general.theme.dark': '深色',
+  'iceworks.setting.general.theme.light': '浅色',
 
   // project
   'iceworks.project.title': '项目管理',
