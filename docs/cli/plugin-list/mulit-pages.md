@@ -30,7 +30,7 @@ module.exports = {
     ['ice-plugin-multi-pages', {
       // customize entry name
       // BasicCharts => basic_charts
-      getEntryName: (pageName) => _.snakeCase(pageName);
+      getEntryName: (pageName) => _.snakeCase(pageName)
     }]
   ]
 }
