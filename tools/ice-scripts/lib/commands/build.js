@@ -29,10 +29,11 @@ module.exports = async function (context) {
 
   // empty output path
   fse.emptyDirSync(webpackConfig.output.path);
-  webpack(webpackConfig, (error, stats) => {
-    if (error) {
-      throw error;
-    } else {
+  return new Promise((resolve, reject) => {
+    webpack(webpackConfig, (error, stats) => {
+      if (error) {
+        return reject(error);
+      }
       console.log(
         stats.toString({
           colors: true,
@@ -43,12 +44,11 @@ module.exports = async function (context) {
         })
       );
       if (stats.hasErrors()) {
-        throw new Error('webpack compiled failed.');
-      } else {
-        log.info('ICE build finished');
+        return reject(new Error('webpack compiled failed.'));
       }
-    }
-
-    applyHook('afterBuild', stats);
+      log.info('ICE build finished');
+      applyHook('afterBuild', stats);
+      resolve();
+    });
   });
 };
