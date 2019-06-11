@@ -10,12 +10,16 @@ program
 
 validationSassAvailable();
 
-checkUpdater().then(() => {
+checkUpdater().then(async () => {
   process.env.NODE_ENV = 'production';
   const cliOptions = getCliOptions(program);
-
-  new Context({
-    command: 'build',
-    args: cliOptions,
-  }).run();
+  try {
+    await new Context({
+      command: 'build',
+      args: cliOptions,
+    }).run();
+  } catch (e) {
+    console.log(e);
+    process.exit(1);
+  }
 });

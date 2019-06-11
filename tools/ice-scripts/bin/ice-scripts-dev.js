@@ -54,7 +54,7 @@ checkUpdater()
       }
     });
   })
-  .then((port) => {
+  .then(async (port) => {
     if (port == null) {
       // We have not found a port.
       process.exit(500);
@@ -64,9 +64,13 @@ checkUpdater()
 
     const cliOptions = getCliOptions(program);
     cliOptions.port = parseInt(port, 10);
-
-    new Context({
-      command: 'dev',
-      args: cliOptions,
-    }).run();
+    try {
+      await new Context({
+        command: 'dev',
+        args: cliOptions,
+      }).run();
+    } catch (e) {
+      console.log(e);
+      process.exit(1);
+    }
   });
