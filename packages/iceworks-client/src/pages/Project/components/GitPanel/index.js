@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Icon as NextIcon, Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
@@ -12,7 +12,7 @@ import SwtichBranchModal from './SwtichBranchModal';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const GitPanel = () => {
+const GitPanel = ({ intl }) => {
   const {
     on: onEditModal,
     setModal: setEditModal,
@@ -135,12 +135,48 @@ const GitPanel = () => {
           {
             isRepository ?
               <div className={styles.icons}>
-                <NextIcon className={styles.icon} type="add" size="small" onClick={onOpenCreate} />
-                <Icon className={styles.icon} type="git" size="small" onClick={onOpenSwitch} />
-                <Icon className={styles.icon} type="down-arrow" size="small" onClick={onPull} />
-                <Icon className={styles.icon} type="up-arrow" size="small" onClick={onPush} />
-                <Icon className={styles.icon} type="edit" size="small" onClick={onOpenEdit} />
-                <NextIcon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
+                <NextIcon
+                  className={styles.icon}
+                  type="refresh"
+                  size="small"
+                  onClick={onRefresh}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' })}
+                />
+                <NextIcon
+                  className={styles.icon}
+                  type="add"
+                  size="small"
+                  onClick={onOpenCreate}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="git"
+                  size="small"
+                  onClick={onOpenSwitch}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="down-arrow"
+                  size="small"
+                  onClick={onPull}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.pull' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="up-arrow"
+                  size="small"
+                  onClick={onPush}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.push' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="edit"
+                  size="small"
+                  onClick={onOpenEdit}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.edit' })}
+                />
               </div> :
               null
           }
@@ -155,7 +191,7 @@ const GitPanel = () => {
               onOk={onCommit}
             />
             <Modal
-              title={<FormattedMessage id="iceworks.project.panel.git.edit.title" />}
+              title={intl.formatMessage({ id: 'iceworks.project.panel.git.edit.title' })}
               visible={onEditModal}
               onCancel={() => setEditModal(false)}
               onOk={onEdit}
@@ -190,4 +226,4 @@ const GitPanel = () => {
   );
 };
 
-export default GitPanel;
+export default injectIntl(GitPanel);
