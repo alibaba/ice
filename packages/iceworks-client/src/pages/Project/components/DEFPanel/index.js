@@ -31,7 +31,7 @@ const DEFPanel = () => {
       commitId: lastCommit.latest.hash,
       branch: currentBranch,
       repository: remoteUrl,
-      empId: '073769',
+      empId: '73769',
     });
   }
 
