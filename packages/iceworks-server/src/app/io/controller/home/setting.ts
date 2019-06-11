@@ -38,5 +38,13 @@ export default (app) => {
     async getLocale() {
       return storage.get('locale');
     }
+
+    async setTheme(ctx) {
+      storage.set('theme', ctx.args.theme);
+    }
+
+    async getTheme(ctx) {
+      return storage.get('theme');
+    }
   };
 };

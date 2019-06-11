@@ -8,7 +8,7 @@ export default (app) => {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
 
-      logger.info('start task');
+      logger.info('start task:', args);
       await project.task.start(args);
 
       const { command } = args;

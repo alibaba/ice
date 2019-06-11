@@ -88,6 +88,10 @@ const schema = {
     type: 'string',
     default: 'zh-CN',
   },
+  theme: {
+    type: 'string',
+    default: 'dark',
+  },
   material: {
     type: 'array',
     default: [

@@ -9,6 +9,7 @@
     "@alifd/next": "^1.13.13",
     "@alifd/theme-2": "^0.0.22",
     "@alifd/theme-3": "^0.1.0",
+    "@alifd/theme-iceworks-dark": "^0.1.0",
     "@icedesign/dynamic-icon": "^0.1.8",
     "@icedesign/notification": "^1.0.5",
     "alife-logger": "^1.5.1",
@@ -50,7 +51,7 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "buildConfig": {
-    "theme": "@alifd/theme-2",
+    "theme": "@alifd/theme-iceworks-dark",
     "entry": "src/index.js",
     "localization": false
   },

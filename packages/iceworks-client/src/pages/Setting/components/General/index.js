@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Grid, Radio } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { LocalContext, localeInfos } from '@components/Locale';
+import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
 import styles from './index.module.scss';
 
@@ -16,12 +17,13 @@ const LOCALE_MAP = {
 
 const General = ({ intl }) => {
   const { locale, setLocale } = useContext(LocalContext);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   // language options
   const languageOptions = Object.keys(localeInfos).map(key => {
     return {
       value: key,
-      label: intl.formatMessage({ id: LOCALE_MAP[localeInfos[key].label]}),
+      label: intl.formatMessage({ id: LOCALE_MAP[localeInfos[key].label] }),
     };
   });
 
@@ -43,8 +45,9 @@ const General = ({ intl }) => {
     setLocale(currentLocale);
   }
 
-  function onThemeChange(value) {
-    console.log(value);
+  async function onThemeChange(currentTheme) {
+    await socket.emit('home.setting.setTheme', { theme: currentTheme });
+    setTheme(currentTheme);
   }
 
   return [
@@ -56,6 +59,7 @@ const General = ({ intl }) => {
         <RadioGroup
           dataSource={languageOptions}
           shape="button"
+          defaultValue={locale}
           value={locale}
           onChange={onLocaleChange}
         />
@@ -69,7 +73,7 @@ const General = ({ intl }) => {
         <RadioGroup
           dataSource={themeOptions}
           shape="button"
-          value={locale}
+          value={theme}
           onChange={onThemeChange}
         />
       </Col>
