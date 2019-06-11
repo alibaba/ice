@@ -4,23 +4,37 @@ import { FormattedMessage } from 'react-intl';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import logger from '@utils/logger';
+import stores from '@src/stores';
 import Panel from '../Panel';
-import stores from '../../stores';
+import projectStores from '../../stores';
 import styles from './index.module.scss';
 
 const DEFPanel = () => {
-  const gitStore = stores.useStore('git');
+  const gitStore = projectStores.useStore('git');
+  const userStore = stores.useStore('user');
+
   const { dataSource } = gitStore;
   const {
     isRepository,
     currentBranch,
     remoteUrl,
   } = dataSource;
+  const { dataSource: user } = userStore;
+  const { isLogin, workId } = user;
 
   async function onPush(target) {
+    if (!isLogin) {
+      Message.show({
+        align: 'tr tr',
+        type: 'error',
+        content: '请先登录！',
+      });
+      return;
+    }
+
     const lastCommit = await socket.emit('project.git.getLog', [currentBranch]);
     if (!lastCommit) {
-      Message.error({
+      Message.show({
         align: 'tr tr',
         type: 'error',
         title: '发布失败',
@@ -38,7 +52,7 @@ const DEFPanel = () => {
       commitId: lastCommit.latest.hash,
       branch: currentBranch,
       repository: remoteUrl,
-      empId: '73769',
+      empId: workId,
     });
   }
 

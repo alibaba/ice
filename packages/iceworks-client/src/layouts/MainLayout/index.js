@@ -10,11 +10,12 @@ import socket from '../../socket';
 import styles from './index.module.scss';
 
 const MainLayout = () => {
-  const project = stores.useStore('project');
+  const [project, user] = stores.useStores(['project', 'user']);
   const [connect, setConnect] = useState(false);
 
   useEffect(() => {
     project.refresh();
+    user.refresh();
 
     socket.on('connect', () => {
       setConnect(true);
@@ -25,11 +26,19 @@ const MainLayout = () => {
     });
   }, []);
 
+  async function onLogin(data) {
+    await user.login(data);
+  }
+
   return (
     <div className={styles.container}>
       <ConnectBar connect={connect} />
       <div className={styles.content}>
-        <NavigationBar menuData={menuConfig} />
+        <NavigationBar
+          menuData={menuConfig}
+          user={user.dataSource}
+          onLogin={onLogin}
+        />
         <div className={styles.main}>
           <SubRoutes routes={routerConfig} />
         </div>

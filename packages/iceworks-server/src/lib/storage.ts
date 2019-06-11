@@ -72,9 +72,18 @@ const schema = {
     type: 'string',
     default: userHome,
   },
+  user: {
+    type: 'object',
+    default: {
+      workId: '',
+      name: '请登录',
+      avatarUrl: 'https://img.alicdn.com/tfs/TB1hjBJXLxj_uVjSZFqXXaboFXa-147-150.jpg',
+      isLogin: false,
+    },
+  },
   project: {
     type: 'string',
-    default: {},
+    default: '',
   },
   projects: {
     type: 'array',

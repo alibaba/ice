@@ -43,6 +43,8 @@ export default (app: Application) => {
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.setting.setUser', home.setting.setUser],
+    ['home.setting.getUser', home.setting.getUser],
     ['home.system.getPath', home.system.getPath],
     ['home.system.openFolder', home.system.openFolder],
     ['home.system.openEditor', home.system.openEditor],

@@ -6,7 +6,7 @@ import Icon from '@components/Icon';
 import User from '@components/User';
 import styles from './index.module.scss';
 
-const NavigationBar = ({ menuData }) => {
+const NavigationBar = ({ menuData, user, onLogin }) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.list}>
@@ -31,7 +31,7 @@ const NavigationBar = ({ menuData }) => {
         })}
       </div>
       <div className={styles.user}>
-        <User />
+        <User {...user} onLogin={onLogin} />
       </div>
     </div>
   );
@@ -39,10 +39,13 @@ const NavigationBar = ({ menuData }) => {
 
 NavigationBar.defaultProps = {
   menuData: [],
+  user: {},
 };
 
 NavigationBar.propTypes = {
   menuData: PropTypes.array,
+  user: PropTypes.object,
+  onLogin: PropTypes.func.isRequired,
 };
 
 export default NavigationBar;
