@@ -15,7 +15,7 @@ order: 11
 
 ```js
 import React from 'react';
-import { appHistory } from 'icestark';
+import { appHistory } from '@ice/stark';
 
 export default class SelfLink extends React.Component {
   render() {

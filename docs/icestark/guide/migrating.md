@@ -8,7 +8,7 @@ icestark 完全面向 react 设计，因此已有 react 应用的迁移成本很
 ## 安装 icestark
 
 ```bash
-$ npm i icestark --save
+$ npm i @ice/stark --save
 ```
 
 ## 在框架应用中使用
@@ -20,7 +20,7 @@ $ npm i icestark --save
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppRouter, AppRoute } from 'icestark';
+import { AppRouter, AppRoute } from '@ice/stark';
 
 class App extends React.Component {
   // ...
@@ -52,7 +52,7 @@ icestark 对子应用的代码侵入性极少，只有三方面：
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getMountNode } from 'icestark';
+import { getMountNode } from '@ice/stark';
 import App from './App';
 
 ReactDOM.render(<App />, getMountNode());
@@ -64,7 +64,7 @@ ReactDOM.render(<App />, getMountNode());
 
 ```js
 import React from 'react';
-import { AppLink } from 'icestark';
+import { AppLink } from '@ice/stark';
 
 class App extends React.Component {
   // ...
@@ -85,7 +85,7 @@ class App extends React.Component {
 ```js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { renderNotFound } from 'icestark';
+import { renderNotFound } from '@ice/stark';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 

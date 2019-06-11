@@ -11,7 +11,7 @@ order: 9
 ```js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { renderNotFound } from 'icestark';
+import { renderNotFound } from '@ice/stark';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 

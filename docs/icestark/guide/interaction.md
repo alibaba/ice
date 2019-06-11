@@ -17,7 +17,7 @@ icestark 将应用进行了拆分（框架应用和子应用），拆分之后�
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { AppLink } from 'icestark';
+import { AppLink } from '@ice/stark';
 
 class App extends React.Component {
   render() {
@@ -38,7 +38,7 @@ class App extends React.Component {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppRouter, AppRoute } from 'icestark';
+import { AppRouter, AppRoute } from '@ice/stark';
 
 class App extends React.Component {
   state = {
@@ -103,7 +103,7 @@ class App extends React.Component {
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { AppRouter, AppRoute } from 'icestark';
+import { AppRouter, AppRoute } from '@ice/stark';
 
 class App extends React.Component {
   state = {
