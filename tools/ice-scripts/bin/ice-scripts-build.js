@@ -10,7 +10,8 @@ program
 
 validationSassAvailable();
 
-checkUpdater().then(async () => {
+(async () => {
+  await checkUpdater();
   process.env.NODE_ENV = 'production';
   const cliOptions = getCliOptions(program);
   try {
@@ -22,4 +23,4 @@ checkUpdater().then(async () => {
     console.log(e);
     process.exit(1);
   }
-});
+})();
