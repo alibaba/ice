@@ -3,7 +3,6 @@
 
 const program = require('commander');
 const init = require('../lib/init');
-const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');
 
 program
@@ -12,18 +11,16 @@ program
   .option('-s, --scaffold <scaffold>', '模板 npm 包名')
   .parse(process.argv);
 
-checkUpdater().then(() => {
-  cliInstance.initByProgram(program);
+cliInstance.initByProgram(program);
 
-  // ice init component/block
-  const type = program.args[0] || 'project';
-  cliInstance.set('type', type);
+// ice init component/block
+const type = program.args[0] || 'project';
+cliInstance.set('type', type);
 
-  // 兼容 --scaffold
-  const scaffold = cliInstance.get('scaffold');
-  if (scaffold) {
-    cliInstance.set('template', scaffold);
-  }
+// 兼容 --scaffold
+const scaffold = cliInstance.get('scaffold');
+if (scaffold) {
+  cliInstance.set('template', scaffold);
+}
 
-  init(cliInstance.get());
-});
+init(cliInstance.get());
