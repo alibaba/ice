@@ -20,6 +20,7 @@ import AddMaterialModal from './components/AddMaterialModal';
 import styles from './index.module.scss';
 
 const Material = ({ history }) => {
+  const [material] = stores.useStores(['material']);
   const { location } = history;
   const {
     onCreateProjectModal,
@@ -31,7 +32,7 @@ const Material = ({ history }) => {
     setMaterialModal,
     addMaterial,
     addMaterialLoading,
-  } = useMaterial();
+  } = useMaterial(false, material.addMaterial);
   const {
     on: onInstallModal,
     setModal: setInstallModal,
@@ -39,7 +40,6 @@ const Material = ({ history }) => {
   const {
     bulkCreate,
   } = useDependency();
-  const [material] = stores.useStores(['material']);
   const { dataSource } = material;
   const currCategory = (qs.parse(location.search) || {}).category;
 
@@ -51,13 +51,14 @@ const Material = ({ history }) => {
     await material.getCurrentMaterial(source);
   }
 
+  async function fetchData() {
+    await material.getResource();
+    const firstResource = dataSource.resource.official[0] || {};
+    const defaultActiveMaterial = firstResource.source;
+    await setCurrent(defaultActiveMaterial);
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      await material.getResource();
-      const firstResource = dataSource.resource.official[0] || {};
-      const defaultActiveMaterial = firstResource.source;
-      await setCurrent(defaultActiveMaterial);
-    }
     fetchData();
   }, []);
 
@@ -93,7 +94,7 @@ const Material = ({ history }) => {
   async function handleDeleteMaterial(url) {
     await material.deleteMaterial(url);
 
-    // if delete current item, go back to first item
+    // if deleted current item, go back to first item
     if (dataSource.currentSource === url) {
       const firstResource = dataSource.resource.official[0] || {};
       const defaultActiveMaterial = firstResource.source;
@@ -102,9 +103,11 @@ const Material = ({ history }) => {
     }
   }
 
-  async function handleAddMaterial(...args) {
-    await addMaterial(...args);
-    await handleTabChange(); // focus scaffolds tab
+  async function handleAddMaterial({ url }, error) {
+    if (error && error.url) return;
+
+    await addMaterial(url);
+    await handleTabChange(); // auto focus scaffolds tab
   }
 
   const tabs = [

@@ -1,9 +1,7 @@
-import stores from '@stores';
 import useModal from '@hooks/useModal';
 import { Message } from '@alifd/next';
 
-function useMaterial(visible = false) {
-  const [materialStore] = stores.useStores(['material']);
+function useMaterial(visible = false, onAddMaterial) {
   const {
     on: onOpenMaterialModal,
     setModal: setMaterialModal,
@@ -11,13 +9,12 @@ function useMaterial(visible = false) {
     setLoading,
   } = useModal(visible);
 
-  async function addMaterial({ url }, error) {
+  async function addMaterial(url) {
     if (loading) return;
-    if (error && error.url) return;
 
     setLoading(true);
     try {
-      await materialStore.addMaterial(url);
+      await onAddMaterial(url);
       setMaterialModal(false);
     } catch (err) {
       Message.show({

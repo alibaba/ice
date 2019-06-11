@@ -46,30 +46,23 @@ export default {
   async getCurrentMaterial(url) {
     const firstResource = this.dataSource.resource[0] || {};
     const sourceUrl = url || firstResource.source;
+    const data = await socket.emit('material.index.getOne', { url: sourceUrl });
+    logger.info('Material Data:', data);
 
-    if (sourceUrl) {
-      const data = await socket.emit('material.index.getOne', { url: sourceUrl });
-      logger.info('Material Data:', data);
-
-      this.dataSource.currentMaterial = data;
-    }
+    this.dataSource.currentMaterial = data;
   },
 
   async addMaterial(url) {
-    if (url) {
-      const data = await socket.emit('material.index.add', { url });
-      logger.info('new resource Data:', data);
-      this.dataSource.resource = formatResource(data.resource);
-      this.dataSource.currentSource = url;
-      this.dataSource.currentMaterial = data.current;
-    }
+    const data = await socket.emit('material.index.add', { url });
+    logger.info('new resource Data:', data);
+    this.dataSource.resource = formatResource(data.resource);
+    this.dataSource.currentSource = url;
+    this.dataSource.currentMaterial = data.current;
   },
 
   async deleteMaterial(url) {
-    if (url) {
-      const data = await socket.emit('material.index.delete', { url });
-      logger.info('new resource Data:', data);
-      this.dataSource.resource = formatResource(data);
-    }
+    const data = await socket.emit('material.index.delete', { url });
+    logger.info('new resource Data:', data);
+    this.dataSource.resource = formatResource(data);
   },
 };
