@@ -25,7 +25,8 @@
   }
   .main {
     padding: 12px;
-    background-color: $white;
+    // background: $white;
+    background: $brand-color-secondary;
     display: flex;
     flex: 1;
     overflow: hidden;

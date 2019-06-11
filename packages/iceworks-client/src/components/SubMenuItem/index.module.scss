@@ -1,6 +1,9 @@
 @import '../../variables.scss';
 
 .item {
+  &:hover {
+    background: $background-color-base;
+  }
   .link {
     display: flex;
     align-items: center;
@@ -14,9 +17,6 @@
     color: $text-color-primary;
   }
 
-  .image {
-  }
-
   .info {
     margin-left: 10px;
     .name {
@@ -27,5 +27,11 @@
       margin: 0;
       color: $text-color-primary;
     }
+  }
+}
+
+:global {
+  .selected {
+    background: $background-color-light;
   }
 }

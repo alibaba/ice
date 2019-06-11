@@ -3,6 +3,8 @@
 .navBar {
   background: $brand-color-secondary;
   box-shadow: $shadow-right;
+  position: relative;
+  z-index: 9;
 
   .navItem {
     display: flex;
