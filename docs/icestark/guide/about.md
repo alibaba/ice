@@ -16,7 +16,7 @@ order: 0
 
 随着集团中台化战略的推进，我们针对大型中后台系统，提出了一套基于 icestark 的工作台解决方案。对比传统方案，优势如图所示
 
-![工作台方案](https://img.alicdn.com/tfs/TB1GLzvaW1s3KVjSZFAXXX_ZXXa-1049-530.png)
+![工作台方案](https://img.alicdn.com/tfs/TB1UDAycfWG3KVjSZFPXXXaiXXa-1049-530.png)
 
 ## 应用架构
 
