@@ -1,5 +1,5 @@
 import * as EventEmitter from 'events';
-import * as Client from '@ali/def-pub-client';
+import Client from './client';
 import { IProject, IDEFModule } from '../../../interface';
 
 const isDev = process.env.NODE_ENV === 'local';
