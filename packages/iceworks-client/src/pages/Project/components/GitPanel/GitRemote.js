@@ -19,6 +19,20 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
     setRemoteUrl(value);
   }
 
+  async function remoteUrlValidator(rule, value) {
+    if (!value) {
+      throw new Error('不能为空');
+    }
+
+    if (/^http.+.git$/.test(value)) {
+      throw new Error('请使用 SSH 协议地址，即以 git@ 开头的地址');
+    }
+
+    if (!(/^git@.+.git$/.test(value))) {
+      throw new Error('请输入正确的 git 仓库地址');
+    }
+  }
+
   return (
     <Form>
       <FormItem
@@ -26,6 +40,7 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
         size="medium"
         label={<FormattedMessage id="iceworks.project.panel.git.remote.url.label" />}
         className={styles.item}
+        validator={remoteUrlValidator}
       >
         <Input
           name="remoteUrl"
