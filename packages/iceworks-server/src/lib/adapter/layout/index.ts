@@ -1,7 +1,7 @@
 import * as EventEmitter from 'events';
 import * as path from 'path';
 import { IProjectLayout, IProject } from '../../../interface';
-import scanDirectory from '../scanDirectory';
+import scanDirectory from '../../scanDirectory';
 
 const DEFAULT_IMAGE = 'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976-974.png';
 

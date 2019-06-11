@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
+import socket from '@src/socket';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project }) => {
@@ -15,7 +16,7 @@ const GlobalBar = ({ project }) => {
 
   async function handleFolder() {
     try {
-      await project.openFolder(projectPath);
+      await socket.emit('home.system.openFolder', { path: projectPath });
     } catch (error) {
       Message.show({
         type: 'error',
@@ -28,7 +29,7 @@ const GlobalBar = ({ project }) => {
 
   async function handleEditor() {
     try {
-      await project.openEditor(projectPath);
+      await socket.emit('home.system.openEditor', { path: projectPath });
     } catch (error) {
       Message.show({
         type: 'error',
