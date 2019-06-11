@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, Icon } from '@alifd/next';
-import cn from 'classnames';
+import cx from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 
 import traverse from '../../utils/traverse';
@@ -71,7 +71,7 @@ const NavigationTreeConfig = ({
             key={item[primaryKey]}
             label={(
               <span
-                className={cn({
+                className={cx({
                   'navbar-config-tree-node-click': selectedKey === item[primaryKey],
                 })}
               >
@@ -95,7 +95,7 @@ const NavigationTreeConfig = ({
           key={item[primaryKey]}
           label={(
             <span
-              className={cn({
+              className={cx({
                 'navbar-config-tree-node-click': selectedKey === item[primaryKey],
               })}
             >
