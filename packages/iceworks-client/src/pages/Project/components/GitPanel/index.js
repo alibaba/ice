@@ -77,23 +77,41 @@ const GitPanel = ({ intl }) => {
   }
 
   async function onPull() {
-    await gitStore.pull();
-    Message.show({
-      type: 'success',
-      title: 'Pull',
-      content: '拉取当前分支最新代码成功',
-      align: 'tr tr',
-    });
+    try {
+      await gitStore.pull();
+      Message.show({
+        type: 'success',
+        title: 'Pull',
+        content: '拉取当前分支最新代码成功',
+        align: 'tr tr',
+      });
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '拉取最新代码失败！',
+        content: error.message,
+        align: 'tr tr',
+      });
+    }
   }
 
   async function onPush() {
-    await gitStore.push();
-    Message.show({
-      type: 'success',
-      title: 'Push',
-      content: '推送当前分支本地代码成功',
-      align: 'tr tr',
-    });
+    try {
+      await gitStore.push();
+      Message.show({
+        type: 'success',
+        title: 'Push',
+        content: '推送当前分支本地代码成功',
+        align: 'tr tr',
+      });
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '推送本地代码失败！',
+        content: error.message,
+        align: 'tr tr',
+      });
+    }
   }
 
   async function onCommit(data) {
