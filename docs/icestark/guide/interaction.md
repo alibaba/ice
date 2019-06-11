@@ -62,7 +62,7 @@ class App extends React.Component {
       <div>
         <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange} >
-          <AppRoute path={['/', '/home', '/info']} title="this is A" url="xxx">
+          <AppRoute path={['/', '/home', '/info']} basename="/" title="this is A" url="xxx">
         </AppRouter>
         {showFooter ? <div className="footer">this is common footer</div> : null}
       </div>
@@ -144,8 +144,8 @@ class App extends React.Component {
       <div>
         <div className="header">you have {messageCount} message!</div>
         <AppRouter>
-          <AppRoute path={['/', '/home', '/about']} title="this is A" url="xxx">
-          <AppRoute path="/B"  title="this is B" url="xxx" />
+          <AppRoute path={['/', '/home', '/about']} basename="/" title="this is A" url="xxx">
+          <AppRoute path="/B" basename="/B"  title="this is B" url="xxx" />
         </AppRouter>
       </div>
     );

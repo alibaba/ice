@@ -29,8 +29,8 @@ class App extends React.Component {
       <div>
         <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange}>
-          <AppRoute path={['/', '/home', '/about']} title="A应用" url="xxx">
-          <AppRoute path="/user" title="B应用" url="xxx" />
+          <AppRoute path={['/', '/home', '/about']} basename="/" title="A应用" url="xxx">
+          <AppRoute path="/user" basename="/user" title="B应用" url="xxx" />
         </AppRouter>
         <div className="footer">this is common footer</div>
       </div>
@@ -80,19 +80,19 @@ class App extends React.Component {
 
 - icestark 需要跨应用跳转的情况下使用 `AppLink`，标识该跳转可能意味着需要重新加载静态资源
 
-### 子应用内触发渲染全局 404
+### Router 注入 basename、渲染全局 404
 
 ```js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { renderNotFound } from '@ice/stark';
+import { renderNotFound, getBasename } from '@ice/stark';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 
 export default class App extends React.Component {
   render() {
     return (
-      <Router basename="/user">
+      <Router basename={getBasename()}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/about" component={AboutPage} />
