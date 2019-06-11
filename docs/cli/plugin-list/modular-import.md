@@ -17,41 +17,21 @@ Install:
 $ npm i --save-dev ice-plugin-modular-import
 ```
 
-Options:
-
-参考 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import)
-
 Usage:
 
 ```js
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-plugin-modular-import', {
-      'libraryName': '@material-ui/core',
-      'libraryDirectory': 'components',
-      'camel2DashComponentName': false,
-    }]
-  ]
-}
-```
-
-配置多个组件：
-
-```js
-// ice.config.js
-module.exports = {
-  plugins: [
-    ['ice-plugin-modular-import', {
-      'libraryName': '@material-ui/core',
-      'libraryDirectory': 'components',
-      'camel2DashComponentName': false,
-    }],
-    ['ice-plugin-modular-import', {
+    ['ice-plugin-modular-import', [{
       'libraryName': 'lodash',
       'libraryDirectory': '',
       'camel2DashComponentName': false,
-    }]
+    }, {
+      'libraryName': '@material-ui/core',
+      'libraryDirectory': 'components',
+      'camel2DashComponentName': false,
+    }]]
   ]
 }
 ```
