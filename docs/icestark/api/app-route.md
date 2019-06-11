@@ -47,3 +47,9 @@ order: 6
 - 参考 `React Router`，选填
 - 类型 `boolean`
 - 默认值：`false`
+
+## rootId
+
+- 子应用默认加载的 DOM 节点的 id，选填
+- 类型 `string`
+- 默认值：`icestarkNode`
