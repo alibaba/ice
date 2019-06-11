@@ -76,6 +76,12 @@ export default {
 
   // project git
   'iceworks.project.panel.git.title': 'Git',
+  'iceworks.project.panel.git.button.add': '新建分支',
+  'iceworks.project.panel.git.button.switch': '切换分支',
+  'iceworks.project.panel.git.button.pull': '拉取远程代码',
+  'iceworks.project.panel.git.button.push': '发布本地代码',
+  'iceworks.project.panel.git.button.edit': '修改仓库地址',
+  'iceworks.project.panel.git.button.refresh': '刷新',
   'iceworks.project.panel.git.addRemote': '关联仓库',
   'iceworks.project.panel.git.remote.url.label': '仓库地址：',
   'iceworks.project.panel.git.edit.title': '修改仓库地址',

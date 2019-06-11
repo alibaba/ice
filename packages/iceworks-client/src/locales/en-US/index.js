@@ -55,6 +55,12 @@ export default {
 
   // project git
   'iceworks.project.panel.git.title': 'Git',
+  'iceworks.project.panel.git.button.add': 'New Branch',
+  'iceworks.project.panel.git.button.switch': 'Checkout Branch',
+  'iceworks.project.panel.git.button.pull': 'Pull',
+  'iceworks.project.panel.git.button.push': 'Push',
+  'iceworks.project.panel.git.button.edit': 'Edit Repository',
+  'iceworks.project.panel.git.button.refresh': 'Refresh',
   'iceworks.project.panel.git.addRemote': 'Add Remote',
   'iceworks.project.panel.git.remote.url.label': 'Repository: ',
   'iceworks.project.panel.git.edit.title': 'Edit Repository',

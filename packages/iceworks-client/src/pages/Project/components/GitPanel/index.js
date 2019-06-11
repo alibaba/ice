@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Icon as NextIcon, Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
@@ -12,7 +13,7 @@ import SwtichBranchModal from './SwtichBranchModal';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const GitPanel = () => {
+const GitPanel = ({ intl }) => {
   const {
     on: onEditModal,
     setModal: setEditModal,
@@ -76,23 +77,41 @@ const GitPanel = () => {
   }
 
   async function onPull() {
-    await gitStore.pull();
-    Message.show({
-      type: 'success',
-      title: 'Pull',
-      content: '拉取当前分支最新代码成功',
-      align: 'tr tr',
-    });
+    try {
+      await gitStore.pull();
+      Message.show({
+        type: 'success',
+        title: 'Pull',
+        content: '拉取当前分支最新代码成功',
+        align: 'tr tr',
+      });
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '拉取最新代码失败！',
+        content: error.message,
+        align: 'tr tr',
+      });
+    }
   }
 
   async function onPush() {
-    await gitStore.push();
-    Message.show({
-      type: 'success',
-      title: 'Push',
-      content: '推送当前分支本地代码成功',
-      align: 'tr tr',
-    });
+    try {
+      await gitStore.push();
+      Message.show({
+        type: 'success',
+        title: 'Push',
+        content: '推送当前分支本地代码成功',
+        align: 'tr tr',
+      });
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '推送本地代码失败！',
+        content: error.message,
+        align: 'tr tr',
+      });
+    }
   }
 
   async function onCommit(data) {
@@ -135,12 +154,48 @@ const GitPanel = () => {
           {
             isRepository ?
               <div className={styles.icons}>
-                <NextIcon className={styles.icon} type="add" size="small" onClick={onOpenCreate} />
-                <Icon className={styles.icon} type="git" size="small" onClick={onOpenSwitch} />
-                <Icon className={styles.icon} type="down-arrow" size="small" onClick={onPull} />
-                <Icon className={styles.icon} type="up-arrow" size="small" onClick={onPush} />
-                <Icon className={styles.icon} type="edit" size="small" onClick={onOpenEdit} />
-                <NextIcon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
+                <NextIcon
+                  className={styles.icon}
+                  type="refresh"
+                  size="small"
+                  onClick={onRefresh}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' })}
+                />
+                <NextIcon
+                  className={styles.icon}
+                  type="add"
+                  size="small"
+                  onClick={onOpenCreate}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="git"
+                  size="small"
+                  onClick={onOpenSwitch}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="down-arrow"
+                  size="small"
+                  onClick={onPull}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.pull' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="up-arrow"
+                  size="small"
+                  onClick={onPush}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.push' })}
+                />
+                <Icon
+                  className={styles.icon}
+                  type="edit"
+                  size="small"
+                  onClick={onOpenEdit}
+                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.edit' })}
+                />
               </div> :
               null
           }
@@ -155,7 +210,7 @@ const GitPanel = () => {
               onOk={onCommit}
             />
             <Modal
-              title={<FormattedMessage id="iceworks.project.panel.git.edit.title" />}
+              title={intl.formatMessage({ id: 'iceworks.project.panel.git.edit.title' })}
               visible={onEditModal}
               onCancel={() => setEditModal(false)}
               onOk={onEdit}
@@ -190,4 +245,8 @@ const GitPanel = () => {
   );
 };
 
-export default GitPanel;
+GitPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(GitPanel);
