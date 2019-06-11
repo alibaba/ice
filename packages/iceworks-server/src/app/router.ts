@@ -38,6 +38,8 @@ export default (app: Application) => {
     ['home.setting.getLocale', home.setting.getLocale],
     ['home.setting.setTheme', home.setting.setTheme],
     ['home.setting.getTheme', home.setting.getTheme],
+    ['home.setting.setEditor', home.setting.setEditor],
+    ['home.setting.getEditor', home.setting.getEditor],
 
     ['home.system.getPath', home.system.getPath],
     ['home.system.openFolder', home.system.openFolder],

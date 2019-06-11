@@ -43,8 +43,16 @@ export default (app) => {
       storage.set('theme', ctx.args.theme);
     }
 
-    async getTheme(ctx) {
+    async getTheme() {
       return storage.get('theme');
+    }
+
+    async setEditor(ctx) {
+      storage.set('editor', ctx.args.editor);
+    }
+
+    async getEditor() {
+      return storage.get('editor');
     }
   };
 };

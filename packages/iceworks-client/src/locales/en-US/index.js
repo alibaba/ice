@@ -34,6 +34,7 @@ export default {
   'iceworks.setting.general.theme.title': 'Theme',
   'iceworks.setting.general.theme.dark': 'Dark',
   'iceworks.setting.general.theme.light': 'Light',
+  'iceworks.setting.general.editor.title': 'Editor',
 
   // project
   'iceworks.project.title': 'Project',

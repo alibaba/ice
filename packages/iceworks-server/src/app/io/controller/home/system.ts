@@ -19,8 +19,9 @@ export default (app) => {
     }
 
     async openEditor(ctx) {
-      const { args: { path } } = ctx;
+      const { args: { path }, logger } = ctx;
       const editor = storage.get('editor');
+      logger.info('editor:', editor);
       return await openEditor([path], {
         editor: editor
       });
