@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Icon as NextIcon, Message } from '@alifd/next';
 import Icon from '@components/Icon';
@@ -224,6 +225,10 @@ const GitPanel = ({ intl }) => {
       }
     </Panel>
   );
+};
+
+GitPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
 };
 
 export default injectIntl(GitPanel);
