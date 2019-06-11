@@ -3,6 +3,7 @@
 ## 1.10.2
 
 - [chore] remove check-updater
+- [chore] add upgrade message
 
 ## 1.10.1
 
