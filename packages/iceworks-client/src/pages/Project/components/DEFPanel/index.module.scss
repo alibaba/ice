@@ -1,0 +1,17 @@
+.wrap {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+  .main {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    .tips {
+      margin-bottom: 24px;
+    }
+  }
+}
