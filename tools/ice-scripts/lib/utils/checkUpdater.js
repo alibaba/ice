@@ -4,7 +4,7 @@ const log = require('./log');
 
 module.exports = function () {
   const tag = 'latest';
-  const updateMessage = `你可以执行 npm install -g ice-scripts@${tag} 来安装此版本\n`;
+  const updateMessage = `你可以执行 npm install ice-scripts@${tag} --save-dev 来安装此版本\n`;
 
   // 提醒用户安装最新版本
   return updater({

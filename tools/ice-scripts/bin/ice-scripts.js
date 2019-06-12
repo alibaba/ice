@@ -1,8 +1,5 @@
 #!/usr/bin/env node
-
-
 const program = require('commander');
-
 const packageInfo = require('../package.json');
 
 console.log(packageInfo.name, packageInfo.version);
