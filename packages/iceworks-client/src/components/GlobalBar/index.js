@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
+import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
+import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project }) => {
   const [terminalVisible, setTerminalVisible] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
   const projectPath = project.dataSource.path;
 
   function handleTerminal() {
@@ -40,6 +43,14 @@ const GlobalBar = ({ project }) => {
     }
   }
 
+  async function handleTheme() {
+    const currentTheme = theme === THEMES.dark ? THEMES.light : THEMES.dark;
+    await socket.emit('home.setting.setTheme', { theme: currentTheme });
+    setTheme(currentTheme);
+    // eslint-disable-next-line
+    window.__changeTheme__(currentTheme);
+  }
+
   return project.dataSource.name ? (
     <div className={styles.container}>
       {terminalVisible ? (
@@ -68,7 +79,7 @@ const GlobalBar = ({ project }) => {
             <Icon type="code" className={styles.icon} />
             编辑器
           </div>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={handleTheme}>
             <Icon type="zhuti" className={styles.icon} size="small" />
             主题
           </div>

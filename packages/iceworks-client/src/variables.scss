@@ -11,6 +11,11 @@
 // Both use the same variables
 // There are some major variables below, all sass variables could be found in design tokens
 
+// Note：define variables
+// $brand-color-primary: $color-brand1-9;
+// It can also be：
+// $brand-color-primary: var(--color-brand1-9);
+
 // default color
 $white: $color-white;
 $black: $color-black;

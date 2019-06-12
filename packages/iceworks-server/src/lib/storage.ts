@@ -90,7 +90,7 @@ const schema = {
   },
   theme: {
     type: 'string',
-    default: 'dark',
+    default: '@alifd/theme-iceworks-dark',
   },
   material: {
     type: 'array',

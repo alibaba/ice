@@ -5,6 +5,7 @@ import { Grid, Radio } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { LocalContext, localeInfos } from '@components/Locale';
 import { ThemeContext } from '@components/ThemeProvider';
+import { THEMES } from '@src/appConfig';
 import socket from '@src/socket';
 import styles from './index.module.scss';
 
@@ -34,11 +35,11 @@ const General = ({ intl }) => {
   const themeOptions = [
     {
       label: intl.formatMessage({ id: 'iceworks.setting.general.theme.light' }),
-      value: 'light',
+      value: THEMES.light,
     },
     {
       label: intl.formatMessage({ id: 'iceworks.setting.general.theme.dark' }),
-      value: 'dark',
+      value: THEMES.dark,
     },
   ];
 
@@ -71,6 +72,8 @@ const General = ({ intl }) => {
   async function onThemeChange(currentTheme) {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
+    // eslint-disable-next-line
+    window.__changeTheme__(currentTheme);
   }
 
   async function getEditor() {
@@ -128,7 +131,6 @@ const General = ({ intl }) => {
       </Col>
       <Col span="22">
         <RadioGroup
-          // itemDirection="ver"
           dataSource={editorOptions}
           value={editor}
           onChange={onEditorChange}

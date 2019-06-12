@@ -15,11 +15,10 @@ import './variables.scss';
 
 const history = createBrowserHistory();
 const DEFAULT_LOCALE = 'zh-CN';
-const DEFAULT_THEME = 'dark';
 
 const App = () => {
   const [locale, setLocale] = useState(DEFAULT_LOCALE);
-  const [theme, setTheme] = useState(DEFAULT_THEME);
+  const [theme, setTheme] = useState('');
 
   async function getLocale() {
     const currentLocale = await socket.emit('home.setting.getLocale');
@@ -29,8 +28,10 @@ const App = () => {
 
   async function getTheme() {
     const currentTheme = await socket.emit('home.setting.getTheme');
-    logger.info('App theme:', theme);
+    logger.info('App theme:', currentTheme);
     setTheme(currentTheme);
+    // eslint-disable-next-line
+    window.__changeTheme__(currentTheme);
   }
 
   useEffect(() => {
