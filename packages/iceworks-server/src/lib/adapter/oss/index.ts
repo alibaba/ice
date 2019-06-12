@@ -65,6 +65,7 @@ export default class OSS extends EventEmitter implements IOSSModule {
         return {
           success: false,
           path: fileRelativePath,
+          message: error.message,
         };
       }
     }));

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Input, Select } from '@alifd/next';
+import { Button, Form, Input, Select, Message } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
@@ -47,7 +47,17 @@ const OSSPanel = ({ intl }) => {
   }
 
   async function onSubmit() {
-    setResults(await socket.emit('project.oss.upload'));
+    try {
+      const result = await socket.emit('project.oss.upload');
+      setResults(result);
+    } catch (error) {
+      Message.show({
+        align: 'tr tr',
+        type: 'error',
+        title: '上传失败',
+        content: error.message,
+      });
+    }
   }
 
   function onCancel() {
@@ -183,7 +193,7 @@ const OSSPanel = ({ intl }) => {
                 </tr>
               </thead>
               <tbody>
-                {results.map(({ path, success, url }) => {
+                {results.map(({ path, success, url, message }) => {
                   return (
                     <tr key={path}>
                       <td className={styles.td}>
@@ -193,9 +203,13 @@ const OSSPanel = ({ intl }) => {
                       </td>
                       <td className={styles.td}>{path}</td>
                       <td className={styles.td}>
-                        <a href={url} target="_blank" rel="noopener noreferrer">
-                          {url}
-                        </a>
+                        {
+                          success ?
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                              {url}
+                            </a> :
+                            message
+                        }
                       </td>
                     </tr>
                   );
