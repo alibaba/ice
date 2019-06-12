@@ -8,7 +8,7 @@ module.exports = async ({ chainWebpack }, pluginOptions = []) => {
           pluginOptions.forEach((item = {}) => {
             options.plugins.push(
               [
-                'babel-plugin-import',
+                require.resolve('babel-plugin-import'),
                 item,
                 item.libraryName,
               ]
