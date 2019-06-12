@@ -7,6 +7,7 @@ process.env.NODE_ENV = 'development';
 const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const { collectDetail } = require('@alifd/fusion-collector');
 const webpack = require('webpack');
 const webpackDevMock = require('webpack-dev-mock');
 const WebpackDevServer = require('webpack-dev-server');
@@ -19,7 +20,7 @@ const log = require('../utils/log');
 const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
 module.exports = async function (context, subprocess) {
-  const { applyHook, commandArgs, rootDir, webpackConfig } = context;
+  const { applyHook, commandArgs, rootDir, webpackConfig, pkg } = context;
 
   goldlog('version', {
     version: pkgData.version,
@@ -40,6 +41,20 @@ module.exports = async function (context, subprocess) {
   const installedDeps = checkDepsInstalled(rootDir);
   if (!installedDeps) {
     return Promise.reject(new Error('项目依赖未安装，请先安装依赖。'));
+  }
+
+  if (!pkg.componentConfig && !pkg.blockConfig) {
+    // only collect project
+    try {
+      collectDetail({
+        rootDir,
+        kit: 'ice-scripts',
+        kitVersion: pkgData.version,
+        cmd_type: 'build',
+      });
+    } catch (err) {
+      log.warn('collectDetail error', err);
+    }
   }
 
   const HOST = commandArgs.host || '0.0.0.0';
