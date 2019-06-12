@@ -9,7 +9,7 @@ icestark 将应用进行了拆分（框架应用和子应用），拆分之后�
 
 这类数据交换的场景很多，这里简单通过一些场景的实现方案进行说明。
 
-- 通过共享的 `location` 实现当子应用 A/home -> A/info 时，框架应用隐藏公共的 `footer`
+- 通过共享的 `location` 实现当子应用 A/info -> A/home 时，框架应用隐藏公共的 `footer`
 
 ```js
 // 子应用 A 中的代码
@@ -25,7 +25,7 @@ class App extends React.Component {
     return (
       <div>
         <Link to="/A/home">
-          此处跳往 B 应用的 home页面，通知框架应用隐藏 Common Footer
+          跳往 home 页面
         </Link>
       </div>
     );
@@ -48,7 +48,7 @@ class App extends React.Component {
   onRouteChange = (pathname) => {
     const { showFooter } = this.state;
 
-    // 通过监听 pathname，判断是否为 /B/home，控制 footer 的显示隐藏
+    // 通过监听 pathname，判断是否为 /A/home，控制 footer 的显示隐藏
     if (showFooter && pathname === '/A/home') {
       this.setState({ showFooter: false });
     } else if (!showFooter && pathname !== '/A/home') {
