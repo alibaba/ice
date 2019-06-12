@@ -7,7 +7,7 @@ import menuConfig from '@src/menuConfig';
 import routerConfig from '@src/routerConfig';
 import stores from '@stores';
 import socket from '../../socket';
-import { isAliInternal } from '../../appConfig';
+import appConfig from '../../appConfig';
 import styles from './index.module.scss';
 
 const MainLayout = () => {
@@ -17,7 +17,7 @@ const MainLayout = () => {
   useEffect(() => {
     project.refresh();
 
-    if (isAliInternal) {
+    if (appConfig.isAliInternal) {
       user.refresh();
     }
 
