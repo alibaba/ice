@@ -34,13 +34,12 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
     if (themeConfig) {
       log.info('自定义 Fusion 组件主题变量：', themeConfig);
     }
-    const themeFile = themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
 
     let replaceVars = {};
     let defaultScssVars = {};
+    let defaultTheme = '';
     if (Array.isArray(themePackage)) {
       const themesCssVars = {};
-      let defaultTheme = '';
       // get scss variables and generate css variables
       themePackage.forEach(({ name, ...themeData }) => {
         const themePath = path.join(rootDir, 'node_modules', `${name}/variables.js`);
@@ -57,6 +56,9 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
           defaultTheme = name;
         }
       });
+
+      defaultTheme = defaultTheme || (themePackage[0] && themePackage[0].name);
+
       try {
         const tempDir = path.join(rootDir, './node_modules');
         const jsPath = path.join(tempDir, 'change-theme.js');
@@ -73,19 +75,22 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
       }
     }
 
+    const themeFile = typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
+
     ['scss', 'scss-module'].forEach((rule) => {
       config.module
         .rule(rule)
         .use('ice-skin-loader')
         .loader(require.resolve('ice-skin-loader'))
         .options({
-          themeFile: typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
+          themeFile,
           themeConfig: Object.assign(defaultScssVars, replaceVars, themeConfig || {}),
         });
     });
 
     // check icons.scss
-    const iconScssPath = themePackage && path.join(rootDir, 'node_modules', `${themePackage}/icons.scss`);
+    const iconPackage = defaultTheme || themePackage;
+    const iconScssPath = iconPackage && path.join(rootDir, 'node_modules', `${iconPackage}/icons.scss`);
     if (iconScssPath && fs.existsSync(iconScssPath)) {
       const appendStylePluginOption = {
         type: 'sass',
