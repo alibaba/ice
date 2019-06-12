@@ -7,15 +7,15 @@ const getThemeCode = require('./getThemeCode');
 
 module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
   plugionOptions = plugionOptions || {};
-  const { themePackage, themeConfig, themePackages } = plugionOptions;
+  const { themePackage, themeConfig } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir } = context;
 
   chainWebpack((config) => {
     // 1. 支持主题能力
     if (themePackage) {
-      if (themePackages) {
-        log.warn('已启用 themePackages 多主题功能，themePackge 设置将失效');
+      if (Array.isArray(themePackage)) {
+        log.info('已启用 themePackage 多主题功能');
       } else {
         log.info('使用 Fusion 组件主题包：', themePackage);
       }
@@ -25,11 +25,12 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
     }
 
     let replaceVars = {};
-    if (themePackages) {
+    let defaultScssVars = {};
+    if (Array.isArray(themePackage)) {
       const themesCssVars = {};
       let defaultTheme = '';
       // get scss variables and generate css variables
-      themePackages.forEach(({ name, ...themeData }) => {
+      themePackage.forEach(({ name, ...themeData }) => {
         const themePath = path.join(rootDir, 'node_modules', `${name}/variables.js`);
         let themeVars = {};
         try {
@@ -38,6 +39,7 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
           log.error(`can not find ${themePath}`);
         }
         replaceVars = themeVars.scssVars;
+        defaultScssVars = themeVars.originTheme;
         themesCssVars[name] = themeVars.cssVars;
         if (themeData.default) {
           defaultTheme = name;
@@ -53,9 +55,9 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
         entryNames.forEach((name) => {
           config.entry(name).add(jsPath);
         });
-      } catch (e) {
+      } catch (err) {
         log.error('fail to add theme.js to entry');
-        log.error(e);
+        log.error(err);
       }
     }
 
@@ -65,8 +67,8 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
         .use('ice-skin-loader')
         .loader(require.resolve('ice-skin-loader'))
         .options({
-          themeFile: !themePackages && themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
-          themeConfig: Object.assign(replaceVars, themeConfig || {}),
+          themeFile: typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
+          themeConfig: Object.assign(defaultScssVars, replaceVars, themeConfig || {}),
         });
     });
 

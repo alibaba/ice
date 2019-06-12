@@ -10,7 +10,14 @@ module.exports = (themeFile, themeConfig) => {
   const originTheme = {};
   // 过滤颜色相关内容
   Object.keys(themeVars).forEach((themeKey) => {
-    originTheme[themeKey.slice(1)] = themeVars[themeKey];
+    let themeValue = themeVars[themeKey];
+    // in case of "$icon-xxs": "$s-2"
+    if (/^\$(\w|-)+$/.test(themeValue)) {
+      themeValue = themeVars[themeValue] || '';
+    }
+    if (themeValue) {
+      originTheme[themeKey.slice(1)] = themeValue;
+    }
     // color-white color-black 会用于计算透明度
     if (!/\$color-/.test(themeKey) || ['$color-white', '$color-black'].indexOf(themeKey) > -1) {
       delete themeVars[themeKey];
