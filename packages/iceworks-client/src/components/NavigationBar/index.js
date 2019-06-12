@@ -30,16 +30,20 @@ const NavigationBar = ({ menuData, user, onLogin }) => {
           );
         })}
       </div>
-      <div className={styles.user}>
-        <User {...user} onLogin={onLogin} />
-      </div>
+      {
+        user ?
+          <div className={styles.user}>
+            <User {...user} onLogin={onLogin} />
+          </div> :
+          null
+      }
     </div>
   );
 };
 
 NavigationBar.defaultProps = {
   menuData: [],
-  user: {},
+  user: null,
 };
 
 NavigationBar.propTypes = {

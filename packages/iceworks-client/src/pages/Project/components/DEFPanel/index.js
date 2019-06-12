@@ -20,7 +20,7 @@ const DEFPanel = () => {
     remoteUrl,
   } = dataSource;
   const { dataSource: user } = userStore;
-  const { isLogin, workId } = user;
+  const { isLogin, workId } = user || {};
 
   async function onPush(target) {
     const lastCommit = await socket.emit('project.git.getLog', [currentBranch]);

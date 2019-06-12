@@ -1,8 +1,7 @@
 import socket from '@src/socket';
 
 export default {
-  dataSource: {
-  },
+  dataSource: null,
 
   async refresh() {
     this.dataSource = await socket.emit('home.setting.getUser');
