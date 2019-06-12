@@ -9,8 +9,10 @@ const themesData = {
   ${themesDataStr}
 };
 // Append Style fn
+let style;
 function appendStyle(styles) {
-  const style = document.createElement('style');
+  if (style) style.remove();
+  style = document.createElement('style');
   style.type = 'text/css';
 
   if (style.styleSheet) {
