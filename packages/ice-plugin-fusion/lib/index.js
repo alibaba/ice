@@ -1,12 +1,24 @@
+const fs = require('fs');
 const path = require('path');
 const WebpackPluginImport = require('webpack-plugin-import');
-const CheckIceComponentsDepsPlugin = require('./checkIceComponentsDepPlugin');
+const CheckIceComponentsDepsPlugin = require('./webpackPlugins/checkIceComponentsDepPlugin');
+const AppendStyleWebpackPlugin = require('./webpackPlugins/appendStyleWebpackPlugin');
+
+function normalizeEntry(entry, preparedChunks) {
+  const preparedName = preparedChunks
+    .filter((module) => {
+      return typeof module.name !== 'undefined';
+    })
+    .map((module) => module.name);
+
+  return Object.keys(entry).concat(preparedName);
+}
 
 module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
   plugionOptions = plugionOptions || {};
   const { themePackage, themeConfig } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
-  const { rootDir } = context;
+  const { rootDir, pkg } = context;
 
   chainWebpack((config) => {
     // 1. 支持主题能力
@@ -16,17 +28,46 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
     if (themeConfig) {
       log.info('自定义 Fusion 组件主题变量：', themeConfig);
     }
-
+    const themeFile = themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
     ['scss', 'scss-module'].forEach((rule) => {
       config.module
         .rule(rule)
         .use('ice-skin-loader')
         .loader(require.resolve('ice-skin-loader'))
         .options({
-          themeFile: themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
+          themeFile,
           themeConfig: themeConfig || {},
         });
     });
+
+    // check icons.scss
+    const iconScssPath = themePackage && path.join(rootDir, 'node_modules', `${themePackage}/icons.scss`);
+    if (iconScssPath && fs.existsSync(iconScssPath)) {
+      const appendStylePluginOption = {
+        type: 'sass',
+        srcFile: iconScssPath,
+        variableFile: themeFile,
+        compileThemeIcon: true,
+        themeNextVersion: (/^@alif(e|d)\/theme-/.test(themePackage) || themePackage === '@icedesign/theme') ? '1.x' : '0.x',
+        pkg,
+        distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
+          const entriesAndPreparedChunkNames = normalizeEntry(
+            compilerEntry,
+            compilationPreparedChunks
+          );
+          // 仅对 css 的 chunk 做 处理
+          if (entriesAndPreparedChunkNames.length && /\.css$/.test(chunkName)) {
+            // css/index.css -> index css/index.[hash].css -> index
+            const assetsFromEntry = path.basename(chunkName, path.extname(chunkName)).split('.')[0];
+            if (entriesAndPreparedChunkNames.indexOf(assetsFromEntry) !== -1) {
+              return true;
+            }
+          }
+          return false;
+        },
+      };
+      config.plugin('AppendStyleWebpackPlugin').use(AppendStyleWebpackPlugin, [appendStylePluginOption]);
+    }
 
     // 2. 组件（包含业务组件）按需加载&样式自动引入
     // babel-plugin-import: 基础组件
