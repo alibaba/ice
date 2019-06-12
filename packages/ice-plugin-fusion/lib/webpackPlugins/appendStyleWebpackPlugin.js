@@ -118,7 +118,6 @@ module.exports = class AppendStylePlugin {
   }
 
   wrapFile(compilation, fileName, content) {
-    console.log(fileName, content);
     // 默认按照底部添加的来
     if (this.appendPosition === 'header') {
       compilation.assets[fileName] = new ConcatSource(
