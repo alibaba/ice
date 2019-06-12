@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -48,7 +48,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "address": "^1.0.3",
     "autoprefixer": "^9.1.5",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-import": "^1.9.1",
     "camelcase": "^5.3.1",
@@ -85,7 +85,6 @@
     "mkdirp": "^0.5.1",
     "node-ipc": "^9.1.1",
     "node-sass": "^4.9.0",
-    "npm-updater": "^3.0.3",
     "npmlog": "^4.1.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "ora": "^3.2.0",

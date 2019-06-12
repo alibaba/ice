@@ -11,6 +11,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
+const { collectDetail } = require('@alifd/fusion-collector');
 
 const paths = require('./config/paths');
 const getBuildConfig = require('./config/getBuildConfig');
@@ -21,14 +22,14 @@ const getCertificate = require('./config/getCertificate');
 const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
 const goldlog = require('./utils/goldlog');
-const pkgData = require('../package.json');
 const projectPkgData = require('./config/packageJson');
 const log = require('./utils/log');
 const checkDepsInstalled = require('./utils/checkDepsInstalled');
+const iceScriptsPkg = require('../package.json');
 
 module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
-    version: pkgData.version,
+    version: iceScriptsPkg.version,
   });
   goldlog('dev', cliOptions);
   log.verbose('dev cliOptions', cliOptions);
@@ -46,6 +47,19 @@ module.exports = async function (cliOptions, subprocess) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
     return;
+  }
+
+  if (projectPkgData.type === 'project') {
+    try {
+      collectDetail({
+        rootDir: process.cwd(),
+        kit: 'ice-scripts',
+        kitVersion: iceScriptsPkg.version,
+        cmd_type: 'dev',
+      });
+    } catch (err) {
+      log.warn('collectDetail error', err);
+    }
   }
 
   const HOST = cliOptions.host || '0.0.0.0';

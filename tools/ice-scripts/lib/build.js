@@ -1,4 +1,3 @@
-// TODO: 感觉不太合适
 process.env.NODE_ENV = 'production';
 
 const gulp = require('gulp');
@@ -66,9 +65,10 @@ module.exports = async function (options) {
 
     try {
       collectDetail({
-        rootDir: cwd, // 项目根地址
-        basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
-        kit: 'ice-scripts', // 统计的来源
+        rootDir: cwd,
+        kit: 'ice-scripts',
+        kitVersion: iceScriptsPkgData.version,
+        cmd_type: 'build',
       });
     } catch (err) {
       log.warn('collectDetail error', err);
