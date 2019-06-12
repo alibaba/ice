@@ -53,6 +53,7 @@
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.4.1",
+    "chokidar": "^3.0.0",
     "commander": "^2.18.0",
     "copy-webpack-plugin": "^5.0.2",
     "css-hot-loader": "^1.4.2",
