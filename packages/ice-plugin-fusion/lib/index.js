@@ -1,20 +1,62 @@
+const fs = require('fs');
 const path = require('path');
 const WebpackPluginImport = require('webpack-plugin-import');
 const CheckIceComponentsDepsPlugin = require('./checkIceComponentsDepPlugin');
+const getThemeVars = require('./getThemeVars');
+const getThemeCode = require('./getThemeCode');
 
 module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
   plugionOptions = plugionOptions || {};
-  const { themePackage, themeConfig } = plugionOptions;
+  const { themePackage, themeConfig, themePackages } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir } = context;
 
   chainWebpack((config) => {
     // 1. 支持主题能力
     if (themePackage) {
-      log.info('使用 Fusion 组件主题包：', themePackage);
+      if (themePackages) {
+        log.warn('已启用 themePackages 多主题功能，themePackge 设置将失效');
+      } else {
+        log.info('使用 Fusion 组件主题包：', themePackage);
+      }
     }
     if (themeConfig) {
       log.info('自定义 Fusion 组件主题变量：', themeConfig);
+    }
+
+    let replaceVars = {};
+    if (themePackages) {
+      const themesCssVars = {};
+      let defaultTheme = '';
+      // get scss variables and generate css variables
+      themePackages.forEach(({ name, ...themeData }) => {
+        const themePath = path.join(rootDir, 'node_modules', `${name}/variables.js`);
+        let themeVars = {};
+        try {
+          themeVars = getThemeVars(themePath, themeData.themeConfig || {});
+        } catch (e) {
+          log.error(`can not find ${themePath}`);
+        }
+        replaceVars = themeVars.scssVars;
+        themesCssVars[name] = themeVars.cssVars;
+        if (themeData.default) {
+          defaultTheme = name;
+        }
+      });
+      try {
+        const tempDir = path.join(rootDir, './node_modules');
+        const jsPath = path.join(tempDir, 'change-theme.js');
+        fs.writeFileSync(jsPath, getThemeCode(themesCssVars, defaultTheme));
+
+        // add theme.js to entry
+        const entryNames = Object.keys(config.entryPoints.entries());
+        entryNames.forEach((name) => {
+          config.entry(name).add(jsPath);
+        });
+      } catch (e) {
+        log.error('fail to add theme.js to entry');
+        log.error(e);
+      }
     }
 
     ['scss', 'scss-module'].forEach((rule) => {
@@ -23,8 +65,8 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
         .use('ice-skin-loader')
         .loader(require.resolve('ice-skin-loader'))
         .options({
-          themeFile: themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
-          themeConfig: themeConfig || {},
+          themeFile: !themePackages && themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
+          themeConfig: Object.assign(replaceVars, themeConfig || {}),
         });
     });
 
