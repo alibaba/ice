@@ -4,6 +4,7 @@
 
 - [chore] remove check-updater
 - [chore] add upgrade message
+- [chore] optimize collector
 
 ## 1.10.1
 
