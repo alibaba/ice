@@ -50,7 +50,7 @@ module.exports = async function (context, subprocess) {
         rootDir,
         kit: 'ice-scripts',
         kitVersion: pkgData.version,
-        cmd_type: 'build',
+        cmd_type: 'dev',
       });
     } catch (err) {
       log.warn('collectDetail error', err);
