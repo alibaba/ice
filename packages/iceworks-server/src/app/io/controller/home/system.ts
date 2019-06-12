@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as openFolder from 'open';
-import * as openEditor from 'open-editor';
+import * as launchEditor from 'launch-editor';
 import storage from '../../../../lib/storage';
 
 export default (app) => {
@@ -18,13 +18,11 @@ export default (app) => {
       return await openFolder(path);
     }
 
-    async openEditor(ctx) {
+    openEditor(ctx) {
       const { args: { path }, logger } = ctx;
       const editor = storage.get('editor');
-      logger.info('editor:', editor);
-      return await openEditor([path], {
-        editor: editor
-      });
+      logger.info('open editor:', path, editor);
+      launchEditor(path, editor)
     }
   };
 };

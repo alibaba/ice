@@ -43,14 +43,15 @@ const General = ({ intl }) => {
   ];
 
   // editor options
+  // ref: https://github.com/yyx990803/launch-editor/tree/master/packages/launch-editor/editor-info
   const editorOptions = [
     {
       label: 'Visual Studio Code',
-      value: 'vscode',
+      value: 'code',
     },
     {
       label: 'Sublime Text',
-      value: 'sublime',
+      value: 'subl',
     },
     {
       label: 'Atom',
@@ -59,14 +60,6 @@ const General = ({ intl }) => {
     {
       label: 'WebStorm',
       value: 'webstorm',
-    },
-    {
-      label: 'IntelliJ IDEA',
-      value: 'intellij',
-    },
-    {
-      label: 'Vim',
-      value: 'vim',
     },
   ];
 

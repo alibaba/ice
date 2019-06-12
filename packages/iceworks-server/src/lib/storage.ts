@@ -82,7 +82,7 @@ const schema = {
   },
   editor: {
     type: 'string',
-    default: 'vscode',
+    default: 'code',
   },
   locale: {
     type: 'string',
