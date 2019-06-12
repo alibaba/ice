@@ -4,6 +4,7 @@ const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const getCliOptions = require('../lib/utils/getCliOptions');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const Context = require('../lib/core/Context');
+const log = require('../lib/utils/log');
 
 program
   .parse(process.argv);
@@ -19,8 +20,9 @@ validationSassAvailable();
       command: 'build',
       args: cliOptions,
     }).run();
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    log.error(err.message);
+    console.error(err);
     process.exit(1);
   }
 })();

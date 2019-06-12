@@ -7,6 +7,7 @@ const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const getCliOptions = require('../lib/utils/getCliOptions');
 const Context = require('../lib/core/Context');
+const log = require('../lib/utils/log');
 
 program
   .option('-p, --port <port>', '服务端口号')
@@ -43,6 +44,7 @@ const defaultPort = parseInt(DEFAULT_PORT, 10);
   if (newPort === null) {
     process.exit(500);
   }
+
   process.env.NODE_ENV = 'development';
   const cliOptions = getCliOptions(program);
   cliOptions.port = parseInt(newPort, 10);
@@ -51,8 +53,9 @@ const defaultPort = parseInt(DEFAULT_PORT, 10);
       command: 'dev',
       args: cliOptions,
     }).run();
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    log.error(err.message);
+    console.error(err);
     process.exit(1);
   }
 })();
