@@ -28,12 +28,14 @@ function appendStyle(styles) {
 function changeTheme(currentTheme) {
   // Get current theme
   const theme = themesData[currentTheme];
-
-  // Declare the style element
-  const styles = \`:root \${theme}\`;
-
-  // Function call
-  appendStyle(styles);
+  if (theme) {
+    // Declare the style element
+    const styles = \`:root \${theme}\`;
+    // Function call
+    appendStyle(styles);
+  } else {
+    console.warn(\`can not find theme: \${currentTheme}\`);
+  }
 }
 ${defaultTheme ? `changeTheme('${defaultTheme}');` : ''}
 window.__changeTheme__ = changeTheme;`;
