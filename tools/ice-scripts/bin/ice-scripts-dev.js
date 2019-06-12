@@ -18,7 +18,8 @@ function restartProcess(scriptPath) {
 // node will crash because of compile multi times of webpack
 const devChild = restartProcess(require.resolve('./child-process-dev.js'));
 devChild.on('exit', (code) => {
-  if (code === 1) {
+  // code maybe null
+  if (code && code !== 0) {
     process.exit(code);
   }
 });
