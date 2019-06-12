@@ -5,7 +5,7 @@ let server = null;
 let watcher = null;
 
 module.exports = ({ onHook, log, context }) => {
-  const { command, applyHook, rootDir } = context;
+  const { command, rootDir } = context;
   // watch ice.config.js in dev mode
   if (command === 'dev') {
     // setup watch
@@ -16,14 +16,22 @@ module.exports = ({ onHook, log, context }) => {
         ignoreInitial: true,
       });
 
+      const onUserChange = () => {
+        console.log('\n');
+        log.info('ice.config.js has been changed');
+        if (!server) {
+          log.error('dev server is not ready');
+        } else {
+          server.close();
+          server = null;
+          log.info('restart dev server');
+          process.send({ type: 'RESTART_DEV' });
+        }
+      };
+
       watcher.on('change', () => {
         // apply hook when user config is changed
-        applyHook('userConfigChange');
-      });
-
-      watcher.on('add', () => {
-        // apply hook when config file is added
-        applyHook('userConfigChange');
+        onUserChange();
       });
 
       watcher.on('error', (error) => {
@@ -34,19 +42,6 @@ module.exports = ({ onHook, log, context }) => {
 
     onHook('afterDevServer', (devServer) => {
       server = devServer;
-    });
-
-    onHook('userConfigChange', () => {
-      console.log('\n');
-      log.info('ice.config.js has been changed');
-      if (!server) {
-        log.error('dev server is not ready');
-      } else {
-        server.close();
-        server = null;
-        log.info('restart dev server');
-        process.send({ type: 'RESTART_DEV' });
-      }
     });
   }
 };
