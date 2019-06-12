@@ -29,7 +29,7 @@ const DEFPanel = () => {
         align: 'tr tr',
         type: 'error',
         title: '发布失败',
-        content: '请先进行 Git 发布',
+        content: '请先提交 Git 发布',
       });
       return;
     }

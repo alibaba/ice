@@ -1,8 +1,12 @@
+/** eslint camelcase:0 */
+
 import * as EventEmitter from 'events';
 import Client from './client';
 import { IProject, IDEFModule } from '../../../interface';
 
 const isDev = process.env.NODE_ENV === 'local';
+
+// DEF Token for iceworks client
 const token = isDev
   ? 'f87bf958ad0ecb310b86b1536746b5209799902b1f556850f1a29f26a2375f28'
   : '72d7d45ac4495e9fb0047a96579a9af886e5c869f8ae148b68957c543d49ada1';
@@ -21,14 +25,11 @@ export default class DEF extends EventEmitter implements IDEFModule {
     const client = new Client.Client();
     client.run({
       hideBuildMessage: true,
-      // eslint-disable-next-line
       client_token: token,
-      // eslint-disable-next-line
       client_emp_id: empId,
       target,
       repo: repository,
       branch,
-      // eslint-disable-next-line
       commit_id: commitId,
       env,
     });

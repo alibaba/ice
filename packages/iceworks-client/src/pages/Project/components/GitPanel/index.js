@@ -128,14 +128,14 @@ const GitPanel = ({ intl }) => {
   const locals = localBranches.map((value) => ({ label: value, value }));
   const origins = originBranches.map((value) => ({ label: value, value }));
   const checkoutBranches = [];
-  if (locals.length > 0) {
+  if (locals.length) {
     checkoutBranches.push({
       label: 'local',
       value: 'local',
       children: locals,
     });
   }
-  if (origin.length > 0) {
+  if (origin.length) {
     checkoutBranches.push({
       label: 'origin',
       value: 'origin',

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Input, Form } from '@alifd/next';
-import styles from './GitRemote.module.scss';
 
 const FormItem = Form.Item;
 const FormSubmit = Form.Submit;
