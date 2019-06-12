@@ -41,6 +41,8 @@ export default (app: Application) => {
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
+    ['material.index.add', material.index.add],
+    ['material.index.delete', material.index.delete],
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
     ['home.setting.setUser', home.setting.setUser],
