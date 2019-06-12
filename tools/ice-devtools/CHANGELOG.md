@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.3
+
+- [refactor] 移除 zlib 依赖，使用 node 内置 zlib
+
 ## 2.3.2
 
 - [feat] init component support fusion component adaptor

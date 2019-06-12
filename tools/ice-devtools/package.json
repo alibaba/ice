@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -62,8 +62,7 @@
     "typescript": "^3.3.3333",
     "uppercamelcase": "^3.0.0",
     "user-home": "^2.0.0",
-    "validate-npm-package-name": "^3.0.0",
-    "zlib": "^1.0.5"
+    "validate-npm-package-name": "^3.0.0"
   },
   "engines": {
     "node": ">=8.0.0"
