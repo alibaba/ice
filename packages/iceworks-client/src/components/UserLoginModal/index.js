@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { Message } from '@alifd/next';
 import logger from '@utils/logger';
+import appConfig from '@src/appConfig';
 import styles from './index.module.scss';
 
-const LOGIN_SITE = 'https://ice.alibaba-inc.com';
+const LOGIN_SITE = appConfig.isDev ? 'http://11.164.50.243' : 'https://ice.alibaba-inc.com';
 
 function UserLoginModal({ on, onCancel, onOk }) {
   async function onMessage(message) {
