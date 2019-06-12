@@ -454,6 +454,15 @@
       font-size: .8rem;
       border: 1px solid #e9e9e9;
     }
+    
+    .package-info span {
+      font-weight: bold;
+      margin-left: 15px;
+    }
+
+    .package-info span:first-child {
+      margin-left: 0;
+    }
   </style>
 </head>
 
@@ -467,6 +476,13 @@
         {{{ htmlWebpackPlugin.options.meta.chinese }}}
       {{/if}}
     </h1>
+    <div class="package-info">
+      <span>packageName:</span> {{{ htmlWebpackPlugin.options.pkg.name }}}
+      <span>version:</span> {{{ htmlWebpackPlugin.options.pkg.version }}}
+      {{#if htmlWebpackPlugin.options.pkg.author}}
+      <span>author:</span> {{{ htmlWebpackPlugin.options.pkg.author }}}
+      {{/if}}
+    </div>
     <div class="markdown">
       {{{ htmlWebpackPlugin.options.readme }}}
     </div>

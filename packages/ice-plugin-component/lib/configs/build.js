@@ -3,7 +3,7 @@ const setAssetsPath = require('../utils/setAssetsPath');
 const getReadme = require('../utils/getReadme');
 const formatPathForWin = require('../utils/formatPathForWin');
 
-module.exports = (config, { demos, markdownParser, rootDir }) => {
+module.exports = (config, { demos, markdownParser, rootDir, pkg }) => {
   const entry = {
     index: generateEntryJs({
       template: 'index.js.hbs',
@@ -34,6 +34,7 @@ module.exports = (config, { demos, markdownParser, rootDir }) => {
     filename: 'index.html',
     ...readme,
     demos,
+    pkg,
   }]);
 
   // modify entry
