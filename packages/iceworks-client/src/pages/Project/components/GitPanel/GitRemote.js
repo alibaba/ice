@@ -38,7 +38,6 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
         required
         size="medium"
         label={<FormattedMessage id="iceworks.project.panel.git.remote.url.label" />}
-        className={styles.item}
         validator={remoteUrlValidator}
       >
         <Input
@@ -47,7 +46,7 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
           onChange={onChange}
         />
       </FormItem>
-      <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
+      <FormSubmit onClick={onSave} validate type="primary">
         {submitMessage}
       </FormSubmit>
     </Form>
