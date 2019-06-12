@@ -35,7 +35,7 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
         let themeVars = {};
         try {
           themeVars = getThemeVars(themePath, themeData.themeConfig || {});
-        } catch (e) {
+        } catch (err) {
           log.error(`can not find ${themePath}`);
         }
         replaceVars = themeVars.scssVars;
