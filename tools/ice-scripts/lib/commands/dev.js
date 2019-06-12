@@ -39,7 +39,7 @@ module.exports = async function (context, subprocess) {
 
   const installedDeps = checkDepsInstalled(rootDir);
   if (!installedDeps) {
-    return Promise.reject(new Error('项目依赖未安装，请先安装依赖。'))
+    return Promise.reject(new Error('项目依赖未安装，请先安装依赖。'));
   }
 
   const HOST = commandArgs.host || '0.0.0.0';
