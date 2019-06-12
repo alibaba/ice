@@ -14,3 +14,4 @@ export * from './task';
 export * from './configuration';
 export * from './git';
 export * from './def';
+export * from './oss';
