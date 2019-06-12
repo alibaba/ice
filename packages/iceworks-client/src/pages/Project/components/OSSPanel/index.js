@@ -90,6 +90,8 @@ const OSSPanel = ({ intl }) => {
             <a
               className={styles.help}
               href="https://help.aliyun.com/document_detail/31837.html"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon type="help" />
             </a>
@@ -106,6 +108,8 @@ const OSSPanel = ({ intl }) => {
             <a
               className={styles.help}
               href="https://help.aliyun.com/knowledge_detail/38738.html"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon type="help" />
             </a>
@@ -189,7 +193,7 @@ const OSSPanel = ({ intl }) => {
                       </td>
                       <td className={styles.td}>{path}</td>
                       <td className={styles.td}>
-                        <a href={url}>
+                        <a href={url} target="_blank" rel="noopener noreferrer">
                           {url}
                         </a>
                       </td>
