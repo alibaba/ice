@@ -27,23 +27,68 @@
 }
 
 .wrap {
-  .item {
+  display: flex;
+  justify-content: center;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+
+    .item {
+      display: flex;
+      flex-direction: row;
+      margin-top: 12px;
+      align-items: center;
+  
+      .label {
+        width: 80px;
+      }
+  
+      .field {
+        width: 200px;
+        margin-left: 6px;
+      }
+  
+      .help {
+        color: $brand-color-secondary;
+        margin-left: 10px;
+      }
+  
+      .reload {
+        cursor: pointer;
+        margin-left: 6px;
+      }
+    }
+  }
+}
+
+.modal {
+  .title {
+    margin-bottom: 12px;
     display: flex;
     flex-direction: row;
-    margin-top: 12px;
-    align-items: center;
 
-    .label {
-      width: 80px;
+    > div {
+      margin-right: 6px;
     }
+  }
 
-    .help {
-      color: #3080FE;
-      margin-left: 10px;
+  .td {
+    padding: 3px;
+    word-break: break-all;
+
+    &.frist {
+      width: 40px;
     }
+  }
 
-    .reload {
-      cursor: pointer;
+  .status {
+    color: $white;
+    padding: 3px 4px;
+    background-color: $error-color;
+
+    &.success {
+      background-color: $success-color;
     }
   }
 }

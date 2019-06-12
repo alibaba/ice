@@ -36,8 +36,6 @@ export default class OSS extends EventEmitter implements IOSSModule {
       throw new Error('当前构建结果为空，请先构建');
     }
 
-    console.log('files:::', files);
-
     const { bucket, directory, region } = params;
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
     await aliOSS.setBucket(bucket);
