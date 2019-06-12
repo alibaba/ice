@@ -4,18 +4,25 @@ const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const getCliOptions = require('../lib/utils/getCliOptions');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const Context = require('../lib/core/Context');
+const log = require('../lib/utils/log');
 
 program
   .parse(process.argv);
 
 validationSassAvailable();
 
-checkUpdater().then(() => {
+(async () => {
+  await checkUpdater();
   process.env.NODE_ENV = 'production';
   const cliOptions = getCliOptions(program);
-
-  new Context({
-    command: 'build',
-    args: cliOptions,
-  }).run();
-});
+  try {
+    await new Context({
+      command: 'build',
+      args: cliOptions,
+    }).run();
+  } catch (err) {
+    log.error(err.message);
+    console.error(err);
+    process.exit(1);
+  }
+})();

@@ -27,7 +27,7 @@ module.exports = async ({ chainWebpack, log }, pluginOptions) => {
         .tap((options) => {
           options.plugins.push(
             [
-              'babel-plugin-import',
+              require.resolve('babel-plugin-import'),
               {
                 libraryName: 'antd',
                 libraryDirectory: 'es',

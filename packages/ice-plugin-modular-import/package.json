@@ -1,7 +1,7 @@
 {
-  "name": "ice-plugin-antd",
-  "version": "0.1.4",
-  "description": "ice-scripts plugin for antd",
+  "name": "ice-plugin-modular-import",
+  "version": "0.1.0",
+  "description": "ice-scripts plugin for babel-plugin-import",
   "main": "index.js",
   "scripts": {},
   "author": "",
