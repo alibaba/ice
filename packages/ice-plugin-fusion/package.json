@@ -11,6 +11,10 @@
     "find-root": "^1.1.0",
     "ice-skin-loader": "^0.3.0-0",
     "semver": "^6.1.0",
-    "webpack-plugin-import": "^0.2.5"
+    "webpack-plugin-import": "^0.2.5",
+    "webpack-sources": "^1.3.0"
+  },
+  "peerDependencies": {
+    "node-sass": "^4.9.0"
   }
 }
