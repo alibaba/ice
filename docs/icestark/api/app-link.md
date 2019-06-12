@@ -16,3 +16,21 @@ order: 7
 - 表示当前跳转需要弹窗确认，message为提示文案内容，选填
 - 类型：`string`
 - 默认值：`-`
+- 代码示例：
+
+```js
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { AppLink } from '@ice/stark';
+
+export default class SelfLink extends React.Component {
+  render() {
+    return (
+      <div>
+        <AppLink to="/user/home">仓库间跳转使用 AppLink 跳转到 B 仓库的 UserHome 页面</AppLink>
+        <Link to="/about">跳转到 A 仓库的 About 页面</Link>
+      </div>
+    );
+  }
+}
+```

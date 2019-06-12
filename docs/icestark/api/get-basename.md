@@ -7,4 +7,5 @@ order: 10
 
 - 类型：`function`
 - 默认返回值：`/`
-- 使用规则：`basename || (Array.isArray(path) ? path[0] : path)) || "/"` 。
+- 使用规则：`basename || (Array.isArray(path) ? path[0] : path)) || "/"`
+- 代码示例参考 ![renderNotFound](/docs/icestark/api/render-not-found)

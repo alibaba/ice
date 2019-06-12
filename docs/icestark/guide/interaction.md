@@ -157,4 +157,4 @@ class App extends React.Component {
 
 子应用之间需要数据交换的场景也很多。大部分情况下，各个子应用同时渲染在线的情况很少（除非多个 icestark 嵌套的情况）。因此针对大部分场景，不同子应用之间的通信有两种方式，一种是通过公共数据存放途径比如 `location`、`Cookie`、`LocalStorage`、`window` 等。另一种是通过框架应用作为媒介，将共享数据存放在框架应用中。数据流转如下图所示。
 
-![数据流转](https://img.alicdn.com/tfs/TB1EjaRX.CF3KVjSZJnXXbnHFXa-890-344.png)
+![数据流转](https://img.alicdn.com/tfs/TB1Os52cBOD3KVjSZFFXXcn9pXa-1206-558.jpg)

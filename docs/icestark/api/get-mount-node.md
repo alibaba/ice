@@ -8,3 +8,17 @@ order: 8
 - 类型：`function`
 - 默认返回节点：`<div id="ice-container"></div>`
 - 使用规则：方法支持传参，传参代表默认渲染的 DOM 节点。支持 `string | HTMLElement | function`， `string` 表示默认 DOM 节点的 `id`，`function` 支持函数返回值作为默认 DOM 节点。
+- 代码示例：
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import { getMountNode } from 'icestark';
+
+import '@alifd/next/reset.scss';
+
+import App from './App';
+
+ReactDOM.render(<App />, getMountNode());
+```

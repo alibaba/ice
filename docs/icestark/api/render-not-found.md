@@ -11,14 +11,14 @@ order: 9
 ```js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { renderNotFound } from '@ice/stark';
+import { renderNotFound, getBasename } from '@ice/stark';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 
 export default class App extends React.Component {
   render() {
     return (
-      <Router basename="/user">
+      <Router basename={getBasename()}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/about" component={AboutPage} />
