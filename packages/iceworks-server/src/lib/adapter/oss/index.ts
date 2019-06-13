@@ -1,5 +1,5 @@
 import * as EventEmitter from 'events';
-import { IProject, IOSSModule } from '../../../interface';
+import { IProject, IOSSModule, IUploadParams, IUploadResult, IGetBucketsParams, IGetBucketsResult } from '../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
@@ -17,7 +17,7 @@ export default class OSS extends EventEmitter implements IOSSModule {
     this.project = project;
   }
 
-  async getBuckets(params: {region: string; accessKeyId: string; accessKeySecret: string;}) {
+  async getBuckets(params: IGetBucketsParams): Promise<IGetBucketsResult[]> {
     const { region } = params;
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
     
@@ -25,7 +25,7 @@ export default class OSS extends EventEmitter implements IOSSModule {
     return buckets;
   }
 
-  async upload(params: {region: string; accessKeyId: string; accessKeySecret: string; bucket: string; directory: string;}) {
+  async upload(params: IUploadParams): Promise<IUploadResult[]> {
     const buildPath = path.join(this.project.path, this.buildDir)
     if (!await pathExists(buildPath)) {
       throw new Error(`构建目录 ${this.buildDir} 不存在`);
@@ -40,34 +40,37 @@ export default class OSS extends EventEmitter implements IOSSModule {
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
     await aliOSS.setBucket(bucket);
 
-    return Promise.all(files.map(async (file) => {
+    return await Promise.all(files.map(async (file) => {
       const fileRelativePath = path.relative(buildPath, file);
       const storeFilepath = path.join(directory, fileRelativePath)
         .replace(/\\/g, '/')
         .replace(/^\//, '');
 
+      let result: IUploadResult;
       try {
         const data = await aliOSS.put(storeFilepath, file);
         if (data && data.res && data.res.status === 200) {
-          return {
+          result = {
             success: true,
             url: data.url,
             path: fileRelativePath,
           };
         } else {
-          return {
+          result = {
             success: false,
             url: data.url,
             path: fileRelativePath,
           };
         }
       } catch (error) {
-        return {
+        result = {
           success: false,
           path: fileRelativePath,
           message: error.message,
         };
       }
+
+      return result;
     }));
   }
 }
