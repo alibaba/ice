@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Icon, Message } from '@alifd/next';
+import { Message } from '@alifd/next';
+import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import { FormattedMessage } from 'react-intl';
@@ -77,8 +78,8 @@ const PagePanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="add" size="small" onClick={onCreate} />
+            <Icon className={styles.icon} title="刷新" type="reload" size="small" onClick={onRefresh} />
+            <Icon className={styles.icon} title="添加页面" type="plus" size="small" onClick={onCreate} />
           </div>
         </div>
       }
@@ -104,7 +105,7 @@ const PagePanel = () => {
                     <li className={styles.item} key={name}>
                       <strong>{name}</strong>
                       <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
-                      <Icon className={styles.icon} type="ashbin" size="xs" onClick={() => onDelete(name)} />
+                      <Icon className={styles.icon} type="trash" size="xs" onClick={() => onDelete(name)} />
                     </li>
                   );
                 })}

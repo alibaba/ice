@@ -4,6 +4,8 @@ export default {
   'iceworks.global.disconnect': 'Disconnect',
   'iceworks.global.button.yes': 'Yes',
   'iceworks.global.button.no': 'No',
+  'iceworks.global.button.submit': 'Submit',
+  'iceworks.global.button.selectAll': 'Select All',
   'iceworks.global.fallback.title': 'Loading',
 
   // menu
@@ -50,7 +52,33 @@ export default {
 
   'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.def.title': 'DEF',
+
+  // project git
   'iceworks.project.panel.git.title': 'Git',
+  'iceworks.project.panel.git.button.add': 'New Branch',
+  'iceworks.project.panel.git.button.switch': 'Checkout Branch',
+  'iceworks.project.panel.git.button.pull': 'Pull',
+  'iceworks.project.panel.git.button.push': 'Push',
+  'iceworks.project.panel.git.button.edit': 'Edit Repository',
+  'iceworks.project.panel.git.button.refresh': 'Refresh',
+  'iceworks.project.panel.git.addRemote': 'Add Remote',
+  'iceworks.project.panel.git.remote.url.label': 'Repository: ',
+  'iceworks.project.panel.git.edit.title': 'Edit Repository',
+  'iceworks.project.panel.git.createBranch.title': 'New Branch',
+  'iceworks.project.panel.git.createBranch.branch.label': 'Name: ',
+  'iceworks.project.panel.git.main.status.conflicted': 'conflicted',
+  'iceworks.project.panel.git.main.status.not_added': 'not added',
+  'iceworks.project.panel.git.main.status.modified': 'modified',
+  'iceworks.project.panel.git.main.status.created': 'created',
+  'iceworks.project.panel.git.main.status.deleted': 'deleted',
+  'iceworks.project.panel.git.main.status.renamed': 'renamed',
+  'iceworks.project.panel.git.main.submit.file': 'Select files',
+  'iceworks.project.panel.git.main.submit.message': 'Input Message',
+  'iceworks.project.panel.git.main.tip.unstageFiles': 'Unstaged Files',
+  'iceworks.project.panel.git.main.tip.refresh': 'Change information will not be refreshed in real time. Please update the status through the button in the upper right corner before submitting it.',
+  'iceworks.project.panel.git.switch.title': 'Checkout Branch',
+  'iceworks.project.panel.git.switch.select': 'Select Branch',
+  'iceworks.project.panel.git.switch.input': 'Input Local Branch',
   'iceworks.project.panel.oss.title': 'OSS',
 
   // task
