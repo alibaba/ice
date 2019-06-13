@@ -63,7 +63,7 @@ ice-devtools 下载物料模版后，会遍历模版文件，按 ejs 语法重�
 ice-devtools 根据用户输入，提供了以下变量供物料模版开发者使用：
 
 - `title`：用户输入的 title，一般用于 README 标题
-- `className`：upper camel case 模式的组件名，eg：ProfileCard
+- `className`：首字母大写的驼峰式组件名，eg：ProfileCard
 - `name`：kebab case 模式的组件名称，eg：profile-card
 - `npmName`：scope + 物料名 + 组件名，eg：custom-material-profile-card
 - `description`：用户输入的描述
