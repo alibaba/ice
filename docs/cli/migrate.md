@@ -217,3 +217,9 @@ module.exports = {
 ### .webpackrc.js 迁移
 
 ice-scripts@2.0 版本通过 `webpack-chain` 形式管理自定义 webpack 配置，因此原先在 `.webpackrc.js` 里有新增 webpack loader/plugin 的情况则需要切换到 webpack-chain 的写法，具体请参考[自定义 webpack 配置](/docs/cli/config/custom-webpack.md)。
+
+### 云构建迁移
+
+> 仅阿里内部同学需要关心
+
+参考[文档](https://yuque.antfin-inc.com/ice/rdy99p/angwyx)
