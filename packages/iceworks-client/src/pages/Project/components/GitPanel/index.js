@@ -34,7 +34,7 @@ const GitPanel = ({ intl }) => {
     currentBranch,
     localBranches,
     originBranches,
-    unstagedFiles,
+    unstageFiles,
   } = dataSource;
 
   async function onInit(setRemoteUrl) {
@@ -206,7 +206,7 @@ const GitPanel = ({ intl }) => {
         isRepository ?
           <div className={styles.wrap}>
             <Main
-              dataSource={unstagedFiles}
+              dataSource={unstageFiles}
               onOk={onCommit}
             />
             <Modal

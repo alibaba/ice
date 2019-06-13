@@ -6,7 +6,7 @@ const defaultDataSource = {
   currentBranch: '',
   localBranches: [],
   originBranches: [],
-  unstagedFiles: [],
+  unstageFiles: [],
 };
 
 export default {

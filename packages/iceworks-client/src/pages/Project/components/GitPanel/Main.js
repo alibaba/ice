@@ -71,7 +71,7 @@ function Main({ dataSource, onOk }) {
     <div className={styles.wrap}>
       <div className={styles.head}>
         <span className={styles.tip}>
-          <FormattedMessage id="iceworks.project.panel.git.main.tip.unstagedFiles" />
+          <FormattedMessage id="iceworks.project.panel.git.main.tip.unstageFiles" />
           <span>({dataSource.length})</span>
         </span>
         <Button className={styles.btn} onClick={onSelectAll}>
