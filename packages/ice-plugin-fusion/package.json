@@ -16,5 +16,8 @@
   },
   "peerDependencies": {
     "node-sass": "^4.9.0"
+  },
+  "devDependencies": {
+    "node-sass": "^4.12.0"
   }
 }
