@@ -94,4 +94,5 @@ export default {
   'iceworks.material.install.component.pacakgeName': 'Component Name: ',
   'iceworks.material.install.component.packageVersion': 'Component Version: ',
   'iceworks.material.noDesc': 'No Description',
+  'iceworks.material.sourceUrl': 'Source URL',
 };

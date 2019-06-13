@@ -7,6 +7,7 @@ import qs from 'querystringify';
 import { FormattedMessage } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
+import useMaterial from '@hooks/useMaterial';
 import useModal from '@hooks/useModal';
 import useDependency from '@hooks/useDependency';
 import CreateProjectModal from '@components/CreateProjectModal';
@@ -15,9 +16,11 @@ import ScaffoldPanel from './components/ScaffoldPanel';
 import BlockPanel from './components/BlockPanel';
 import ComponentPanel from './components/ComponentPanel';
 import InstallModal from './components/InstallModal';
+import AddMaterialModal from './components/AddMaterialModal';
 import styles from './index.module.scss';
 
 const Material = ({ history }) => {
+  const [material] = stores.useStores(['material']);
   const { location } = history;
   const {
     onCreateProjectModal,
@@ -25,24 +28,37 @@ const Material = ({ history }) => {
     onCreateProject: onOriginCreateProject,
   } = useProject();
   const {
+    onOpenMaterialModal,
+    setMaterialModal,
+    addMaterial,
+    addMaterialLoading,
+  } = useMaterial(false, material.addMaterial);
+  const {
     on: onInstallModal,
     setModal: setInstallModal,
   } = useModal();
   const {
     bulkCreate,
   } = useDependency();
-  const [material] = stores.useStores(['material']);
   const { dataSource } = material;
   const currCategory = (qs.parse(location.search) || {}).category;
 
   const [type, setType] = useState('scaffolds');
   const [component, setComponent] = useState({});
 
+  async function setCurrent(source) {
+    await material.setCurrentSource(source);
+    await material.getCurrentMaterial(source);
+  }
+
+  async function fetchData() {
+    await material.getResource();
+    const firstResource = dataSource.resource.official[0] || {};
+    const defaultActiveMaterial = firstResource.source;
+    await setCurrent(defaultActiveMaterial);
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      await material.getResource();
-      await material.getCurrent();
-    }
     fetchData();
   }, []);
 
@@ -61,11 +77,7 @@ const Material = ({ history }) => {
 
   async function handleMenuChange(url) {
     await handleTabChange();
-    await material.getCurrent(url);
-  }
-
-  async function addMaterial() {
-    // TODO: coding...
+    await setCurrent(url);
   }
 
   async function onCreateDependency() {
@@ -79,13 +91,32 @@ const Material = ({ history }) => {
     history.push('/project', { createdProject: true });
   }
 
+  async function handleDeleteMaterial(url) {
+    await material.deleteMaterial(url);
+
+    // if deleted current item, go back to first item
+    if (dataSource.currentSource === url) {
+      const firstResource = dataSource.resource.official[0] || {};
+      const defaultActiveMaterial = firstResource.source;
+      await handleTabChange();
+      await setCurrent(defaultActiveMaterial);
+    }
+  }
+
+  async function handleAddMaterial({ url }, error) {
+    if (error && error.url) return;
+
+    await addMaterial(url);
+    await handleTabChange(); // auto focus scaffolds tab
+  }
+
   const tabs = [
     {
       tab: 'iceworks.material.scaffold',
       key: 'scaffolds',
       content: (
         <ScaffoldPanel
-          dataSource={dataSource.current.scaffolds}
+          dataSource={dataSource.currentMaterial.scaffolds}
           current={currCategory}
           onDownload={(scaffoldData) => {
             setCreateProjectModal(true, scaffoldData);
@@ -98,7 +129,7 @@ const Material = ({ history }) => {
       key: 'blocks',
       content: (
         <BlockPanel
-          dataSource={dataSource.current.blocks}
+          dataSource={dataSource.currentMaterial.blocks}
           current={currCategory}
         />
       ),
@@ -108,7 +139,7 @@ const Material = ({ history }) => {
       key: 'components',
       content: (
         <ComponentPanel
-          dataSource={dataSource.current.components}
+          dataSource={dataSource.currentMaterial.components}
           current={currCategory}
           onInstall={(componentData) => {
             setComponent(componentData);
@@ -128,9 +159,11 @@ const Material = ({ history }) => {
       />
       {/* render material submenu */}
       <SubMenu
+        current={dataSource.currentSource}
         data={dataSource.resource}
         onChange={handleMenuChange}
-        onAddMaterial={addMaterial}
+        onAddMaterial={() => setMaterialModal(true)}
+        onDelete={handleDeleteMaterial}
       />
 
       <div className={styles.main}>
@@ -148,6 +181,12 @@ const Material = ({ history }) => {
           onCancel={() => setInstallModal(false)}
           onOk={onCreateDependency}
           component={component}
+        />
+        <AddMaterialModal
+          on={onOpenMaterialModal}
+          onCancel={() => setMaterialModal(false)}
+          onSave={handleAddMaterial}
+          loading={addMaterialLoading}
         />
       </div>
     </div>

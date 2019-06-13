@@ -30,16 +30,31 @@
     }
   }
 
-  .icon {
+  .avatar {
+    flex: 0 0 30px;
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+    background: #5584FF;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .del {
+    display: none;
     flex: 0 0 20px;
     color: $text-color-primary;
   }
 
   .info {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     width: 0;
     margin-left: 10px;
-    .name {
+    .name, .description {
       margin: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -80,4 +95,10 @@
       margin-bottom: 0;
     }
   }
+}
+
+.separator {
+  font-size: 16px;
+  margin: 10;
+  padding: 10px 15px;
 }
