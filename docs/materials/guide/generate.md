@@ -17,7 +17,7 @@ ice-devtools 会遍历所有物料，批量查询每个物料的 npm 信息，�
 
 以 ice 官方 React 物料为例（地址：[materials.json](https://ice.alicdn.com/assets/react-materials.json)），`materials.json` 包含以下字段：
 
-- type: 指定物料类型，来源自 `package.json` 中的 `materialConfig`，例如： react、vue、angular、bootstrap 等
+- type：指定物料类型，来源自 `package.json` 中的 `materialConfig`，例如： react、vue、angular、bootstrap 等
 - name：物料名称，来源自 `package.json` 中的 `name`
 - components：包含所有组件信息的数组
 - blocks：包含所有区块信息的数组
