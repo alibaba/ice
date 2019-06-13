@@ -5,6 +5,7 @@ import { Grid, Radio } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { LocalContext, localeInfos } from '@components/Locale';
 import { ThemeContext } from '@components/ThemeProvider';
+import Card from '@components/Card';
 import { THEMES } from '@src/appConfig';
 import socket from '@src/socket';
 import styles from './index.module.scss';
@@ -92,52 +93,52 @@ const General = ({ intl }) => {
     })();
   }, []);
 
-  return [
-    // set language
-    <Row className={styles.row} key="language">
-      <Col span="2" className={styles.label}>
-        <FormattedMessage id="iceworks.setting.general.language.title" />
-      </Col>
-      <Col span="22">
-        <RadioGroup
-          dataSource={languageOptions}
-          shape="button"
-          defaultValue={locale}
-          value={locale}
-          onChange={onLocaleChange}
-        />
-      </Col>
-    </Row>,
+  return (
 
-    // set theme
-    <Row className={styles.row} key="theme">
-      <Col span="2" className={styles.label}>
-        <FormattedMessage id="iceworks.setting.general.theme.title" />
-      </Col>
-      <Col span="22">
-        <RadioGroup
-          dataSource={themeOptions}
-          shape="button"
-          value={theme}
-          onChange={onThemeChange}
-        />
-      </Col>
-    </Row>,
+    <Card title={intl.formatMessage({ id: 'iceworks.setting.general.title' })} contentHeight="100%">
+      <Row className={styles.row} key="language">
+        <Col span="2" className={styles.label}>
+          <FormattedMessage id="iceworks.setting.general.language.title" />
+        </Col>
+        <Col span="22">
+          <RadioGroup
+            dataSource={languageOptions}
+            shape="button"
+            defaultValue={locale}
+            value={locale}
+            onChange={onLocaleChange}
+          />
+        </Col>
+      </Row>
 
-    // set editor
-    <Row className={styles.row} style={{ alignItems: 'flex-start' }} key="editor">
-      <Col span="2" className={styles.label}>
-        <FormattedMessage id="iceworks.setting.general.editor.title" />
-      </Col>
-      <Col span="22">
-        <RadioGroup
-          dataSource={editorOptions}
-          value={editor}
-          onChange={onEditorChange}
-        />
-      </Col>
-    </Row>,
-  ];
+      <Row className={styles.row} key="theme">
+        <Col span="2" className={styles.label}>
+          <FormattedMessage id="iceworks.setting.general.theme.title" />
+        </Col>
+        <Col span="22">
+          <RadioGroup
+            dataSource={themeOptions}
+            shape="button"
+            value={theme}
+            onChange={onThemeChange}
+          />
+        </Col>
+      </Row>
+
+      <Row className={styles.row} style={{ alignItems: 'flex-start' }} key="editor">
+        <Col span="2" className={styles.label}>
+          <FormattedMessage id="iceworks.setting.general.editor.title" />
+        </Col>
+        <Col span="22">
+          <RadioGroup
+            dataSource={editorOptions}
+            value={editor}
+            onChange={onEditorChange}
+          />
+        </Col>
+      </Row>
+    </Card>
+  );
 };
 
 

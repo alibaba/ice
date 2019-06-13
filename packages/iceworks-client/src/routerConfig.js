@@ -54,10 +54,6 @@ const routerConfig = [
         path: '/setting/panel',
         component: Setting.Panel,
       },
-      {
-        path: '/setting/advanced',
-        component: Setting.Advanced,
-      },
     ],
   },
 ];

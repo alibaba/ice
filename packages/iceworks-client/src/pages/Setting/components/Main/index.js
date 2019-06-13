@@ -22,9 +22,7 @@ const Main = ({ routes }) => {
 
       {/* render setting sub-routes */}
       <main className={styles.main}>
-        <Card title="通用设置" contentHeight="100%">
-          <SubRoutes routes={routes} />
-        </Card>
+        <SubRoutes routes={routes} />
       </main>
     </div>
   );

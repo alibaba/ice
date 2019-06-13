@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Message } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
 import { ThemeContext } from '@components/ThemeProvider';
@@ -62,26 +63,26 @@ const GlobalBar = ({ project }) => {
       <div className={styles.globalBar}>
         <div className={styles.leftContent}>
           <div className={styles.item}>
-            当前项目名称：{project.dataSource.name}
+            <FormattedMessage id="iceowrks.global.bar.project" />：{project.dataSource.name}
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />
-            终端
+            <FormattedMessage id="iceowrks.global.bar.terminal" />
           </div>
         </div>
 
         <div className={styles.rightContent}>
           <div className={styles.item} onClick={handleFolder}>
             <Icon type="folderopen" className={styles.icon} />
-            文件夹
+            <FormattedMessage id="iceowrks.global.bar.folder" />
           </div>
           <div className={styles.item} onClick={handleEditor}>
             <Icon type="code" className={styles.icon} />
-            编辑器
+            <FormattedMessage id="iceowrks.global.bar.editor" />
           </div>
           <div className={styles.item} onClick={handleTheme}>
             <Icon type="zhuti" className={styles.icon} size="small" />
-            主题
+            <FormattedMessage id="iceowrks.global.bar.theme" />
           </div>
         </div>
       </div>

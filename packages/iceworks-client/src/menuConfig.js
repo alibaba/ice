@@ -49,7 +49,7 @@ const menuConfig = [
       {
         name: 'iceworks.menu.setting.general',
         path: '/setting/general',
-        icon: 'basic-settings',
+        icon: 'gaojishezhi',
         desc: 'iceworks.menu.setting.general.desc',
       },
       {
@@ -57,12 +57,6 @@ const menuConfig = [
         path: '/setting/panel',
         icon: 'panel1',
         desc: 'iceworks.menu.setting.panel.desc',
-      },
-      {
-        name: 'iceworks.menu.setting.advanced',
-        path: '/setting/advanced',
-        icon: 'gaojishezhi',
-        desc: 'iceworks.menu.setting.advanced.desc',
       },
     ],
   },

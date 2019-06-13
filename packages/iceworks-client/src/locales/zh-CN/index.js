@@ -27,6 +27,7 @@ export default {
   'iceworks.menu.setting.advanced.desc': '设置编辑器和 npm 源',
 
   // setting
+  'iceworks.setting.title': '设置',
   'iceworks.setting.general.title': '通用设置',
   'iceworks.setting.general.language.title': '语言',
   'iceworks.setting.general.language.zh': '中文',
@@ -74,7 +75,6 @@ export default {
   'iceworks.project.panel.dependency.create.title': '添加依赖',
   'iceworks.project.panel.dependency.create.placeholder': '请输入 npm 包名以及版本号，例如：lodash@latest。按回车输入多个依赖。',
 
-
   // project layout
   'iceworks.project.panel.layout.title': '布局列表',
   'iceworks.project.panel.layout.none': '暂无布局',
@@ -96,9 +96,6 @@ export default {
   'iceworks.task.lint.title': '检查语法',
   'iceworks.task.lint.desc': '检查代码规范并进行修复',
 
-  // setting
-  'iceworks.setting.title': '设置',
-
   // material
   'iceworks.material.title': '物料管理',
   'iceworks.material.scaffold': '模版',
@@ -116,4 +113,11 @@ export default {
   'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
   'iceworks.material.sourceUrl': '物料源地址',
+
+  // global bar
+  'iceowrks.global.bar.project': '当前项目名称',
+  'iceowrks.global.bar.terminal': '终端',
+  'iceowrks.global.bar.folder': '文件夹',
+  'iceowrks.global.bar.editor': '编辑器',
+  'iceowrks.global.bar.theme': '主题',
 };

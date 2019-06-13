@@ -27,7 +27,7 @@ export default {
   'iceworks.menu.setting.advanced.desc': 'Set editor and npm source',
 
   // setting
-  'iceworks.setting.general.title': 'General',
+  'iceworks.setting.general.title': 'General Setting',
   'iceworks.setting.general.language.title': 'Language',
   'iceworks.setting.general.language.zh': 'Chinese',
   'iceworks.setting.general.language.en': 'English',
@@ -35,6 +35,7 @@ export default {
   'iceworks.setting.general.theme.dark': 'Dark',
   'iceworks.setting.general.theme.light': 'Light',
   'iceworks.setting.general.editor.title': 'Editor',
+  'iceworks.setting.title': 'Setting',
 
   // project
   'iceworks.project.title': 'Project',
@@ -75,9 +76,6 @@ export default {
   'iceworks.task.lint.title': 'lint',
   'iceworks.task.lint.desc': 'Lints and fixes files',
 
-  // setting
-  'iceworks.setting.title': 'Setting',
-
   // material
   'iceworks.material.title': 'Material',
   'iceworks.material.scaffold': 'Scaffold',
@@ -95,4 +93,11 @@ export default {
   'iceworks.material.install.component.packageVersion': 'Component Version: ',
   'iceworks.material.noDesc': 'No Description',
   'iceworks.material.sourceUrl': 'Source URL',
+
+  // global bar
+  'iceowrks.global.bar.project': 'Project Name',
+  'iceowrks.global.bar.terminal': 'Terminal',
+  'iceowrks.global.bar.folder': 'Folder',
+  'iceowrks.global.bar.editor': 'Editor',
+  'iceowrks.global.bar.theme': 'Theme',
 };
