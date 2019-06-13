@@ -1,9 +1,16 @@
 export default (app) => {
   return class ConfigurationController extends app.Controller {
-    async settings() {
+    async getCLIConf() {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.configuration.getAll();
+      return await project.configuration.getCLIConf();
+    }
+
+    async setCLIConf(ctx) {
+      const { args } = ctx;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.configuration.setCLIConf(args);
     }
   };
 };
