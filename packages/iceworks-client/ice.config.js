@@ -18,25 +18,17 @@ module.exports = {
 
   plugins: [
     ['ice-plugin-fusion', {
-      // themePackage: '@alifd/theme-iceworks-dark',
-      // themeConfig: {
-      //   'sub-menu-bg': '#434557',
-      //   'next-card-bg': '#434557',
-      //   'next-card-border-color': '#333646',
-      // },
       themePackage: [{
         name: '@alifd/theme-iceworks-dark',
         themeConfig: {
           'sub-menu-bg': '#434557',
-          'next-card-bg': '#434557',
-          'next-card-border-color': '#333646',
+          'global-bar-bg': '#333646',
         },
       }, {
         name: '@alifd/theme-2',
         themeConfig: {
           'sub-menu-bg': '#fff',
-          'next-card-bg': '#fff',
-          'next-card-border-color': '#eee',
+          'global-bar-bg': '#5584FF',
         },
       }],
     }],
