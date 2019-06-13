@@ -2,7 +2,7 @@
 
 import * as EventEmitter from 'events';
 import Client from './client';
-import { IProject, IDEFModule } from '../../../interface';
+import { IProject, IDEFModule, IDEFPushParams } from '../../../interface';
 
 const isDev = process.env.NODE_ENV === 'local';
 
@@ -20,7 +20,7 @@ export default class DEF extends EventEmitter implements IDEFModule {
     this.project = project;
   }
 
-  async push(params: { target: string; commitId: string; branch: string; repository: string; empId: string; }) {
+  async push(params: IDEFPushParams): Promise<void> {
     const { target, commitId, branch, repository, empId } = params;
     const client = new Client.Client();
     client.run({

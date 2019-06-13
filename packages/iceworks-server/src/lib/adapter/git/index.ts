@@ -1,5 +1,5 @@
 import * as EventEmitter from 'events';
-import { IProject, IGitModule } from '../../../interface';
+import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../interface';
 import * as gitPromie from 'simple-git/promise';
 
 export default class Git extends EventEmitter implements IGitModule {
@@ -13,15 +13,15 @@ export default class Git extends EventEmitter implements IGitModule {
     this.gitTools = gitPromie(this.project.path);
   }
 
-  private async getOriginBranches() {
+  private async getOriginBranches(): Promise<{all: string[]}> {
     return await this.gitTools.branch(['--remotes', '--list', '-v']);
   }
 
-  private async getLocalBranches() {
+  private async getLocalBranches(): Promise<{current: string; all: string[]}> {
     return await this.gitTools.branchLocal();
   }
 
-  private async getUnstagedFiles() {
+  private async getUnstagedFiles(): Promise<IUnstagedFile[]> {
     const gitStatus = await this.gitTools.status();
     const types = ['conflicted', 'not_added', 'modified', 'created', 'deleted', 'renamed'];
     let unstagedFiles = [];
@@ -39,7 +39,7 @@ export default class Git extends EventEmitter implements IGitModule {
     return unstagedFiles;
   }
 
-  public async getStatus() {
+  public async getStatus(): Promise<IGitGetStatus> {
     const isRepository = await this.gitTools.checkIsRepo();
     const localBranches = await this.getLocalBranches();
     const originBranches = await this.getOriginBranches();
@@ -58,12 +58,12 @@ export default class Git extends EventEmitter implements IGitModule {
     };
   }
 
-  public async init(remoteUrl: string) {
+  public async init(remoteUrl: string): Promise<void> {
     await this.gitTools.init();
     await this.gitTools.addRemote('origin', remoteUrl);
   }
 
-  public async setRemote(remoteUrl: string) {
+  public async setRemote(remoteUrl: string): Promise<void> {
     const originRemotes = await this.gitTools.getRemotes(true);
     if (originRemotes.length > 0) {
       await this.gitTools.removeRemote('origin');
@@ -71,17 +71,17 @@ export default class Git extends EventEmitter implements IGitModule {
     await this.gitTools.addRemote('origin', remoteUrl);
   }
 
-  public async checkoutLocalBranch(name: string) {
+  public async checkoutLocalBranch(name: string): Promise<void> {
     await this.gitTools.checkoutLocalBranch(name);
   }
 
-  public async switchBranch(data: {originBranch: string; checkoutBranch: string;}) {
-    const { originBranch, checkoutBranch } = data;
+  public async switchBranch(params: IGitSwitchBranchParams): Promise<void> {
+    const { originBranch, checkoutBranch } = params;
 
     await this.gitTools.checkoutBranch(checkoutBranch, originBranch);
   }
 
-  public async getBranches() {
+  public async getBranches(): Promise<IGitBranchs> {
     await this.gitTools.fetch();
     const originBranches = await this.gitTools.branch(['--remotes', '--list', '-v']);
     const localBranches = await this.gitTools.branchLocal();
@@ -91,21 +91,21 @@ export default class Git extends EventEmitter implements IGitModule {
     };
   }
 
-  public async pull(branch: string) {
+  public async pull(branch: string): Promise<void> {
     await this.gitTools.pull('origin', branch);
   }
 
-  public async push(branch: string) {
+  public async push(branch: string): Promise<void> {
     await this.gitTools.push('origin', branch);
   }
 
-  public async addAndCommit(data: {message: string, files: string[]}) {
-    const {message, files} = data;
+  public async addAndCommit(params: IGitAddAndCommitParams): Promise<void> {
+    const {message, files} = params;
     await this.gitTools.add(files);
     await this.gitTools.commit(message);
   }
 
-  public async getLog(branches: string[]) {
+  public async getLog(branches: string[]): Promise<IGitGetLog> {
     return await this.gitTools.log(branches);
   }
 }
