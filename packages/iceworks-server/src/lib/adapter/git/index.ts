@@ -24,19 +24,19 @@ export default class Git extends EventEmitter implements IGitModule {
   private async getUnstagedFiles(): Promise<IUnstagedFile[]> {
     const gitStatus = await this.gitTools.status();
     const types = ['conflicted', 'not_added', 'modified', 'created', 'deleted', 'renamed'];
-    let unstagedFiles = [];
+    let unstageFiles = [];
     if (gitStatus && gitStatus.files && gitStatus.files.length > 0) {
       types.forEach((type) => {
         const statusFiles = gitStatus[type];
         if (statusFiles) {
-          unstagedFiles = unstagedFiles.concat(statusFiles.map((file) => ({
+          unstageFiles = unstageFiles.concat(statusFiles.map((file) => ({
             type,
             file,
           })));
         }
       });
     }
-    return unstagedFiles;
+    return unstageFiles;
   }
 
   public async getStatus(): Promise<IGitGetStatus> {
@@ -54,7 +54,7 @@ export default class Git extends EventEmitter implements IGitModule {
       currentBranch: localBranches.current,
       localBranches: localBranches.all,
       originBranches: originBranches.all,
-      unstagedFiles: await this.getUnstagedFiles(),
+      unstageFiles: await this.getUnstagedFiles(),
     };
   }
 

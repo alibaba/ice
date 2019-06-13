@@ -14,7 +14,7 @@ export interface IGitGetStatus extends IGitBranchs {
   isRepository: string;
   remoteUrl: string;
   currentBranch: string;
-  unstagedFiles: IUnstagedFile[];
+  unstageFiles: IUnstagedFile[];
 }
 
 export interface IGitSwitchBranchParams {
