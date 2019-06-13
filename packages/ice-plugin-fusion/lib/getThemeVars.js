@@ -1,3 +1,4 @@
+/* eslint no-useless-escape:0 */
 const fs = require('fs');
 
 module.exports = (themeFile, themeConfig) => {
