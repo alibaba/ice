@@ -1,16 +1,16 @@
 import { IBaseModule } from './base';
 
-export interface IGetBucketsParams {
+export interface IOSSGetBucketsParams {
   region: string;
   accessKeyId: string;
   accessKeySecret: string;
 }
 
-export interface IGetBucketsResult {
+export interface IOSSBucket {
   name: string;
 }
 
-export interface IUploadParams {
+export interface IOSSUploadParams {
   region: string;
   accessKeyId: string;
   accessKeySecret: string;
@@ -26,6 +26,6 @@ export interface IUploadResult {
 }
 
 export interface IOSSModule extends IBaseModule {
-  getBuckets(params: IGetBucketsParams): Promise<IGetBucketsResult[]>;
-  upload(params: IUploadParams): Promise<IUploadResult[]>;
+  getBuckets(params: IOSSGetBucketsParams): Promise<IOSSBucket[]>;
+  upload(params: IOSSUploadParams): Promise<IUploadResult[]>;
 }

@@ -1,5 +1,5 @@
 import * as EventEmitter from 'events';
-import { IProject, IOSSModule, IUploadParams, IUploadResult, IGetBucketsParams, IGetBucketsResult } from '../../../interface';
+import { IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
@@ -17,7 +17,7 @@ export default class OSS extends EventEmitter implements IOSSModule {
     this.project = project;
   }
 
-  async getBuckets(params: IGetBucketsParams): Promise<IGetBucketsResult[]> {
+  async getBuckets(params: IOSSGetBucketsParams): Promise<IOSSBucket[]> {
     const { region } = params;
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
     
@@ -25,7 +25,7 @@ export default class OSS extends EventEmitter implements IOSSModule {
     return buckets;
   }
 
-  async upload(params: IUploadParams): Promise<IUploadResult[]> {
+  async upload(params: IOSSUploadParams): Promise<IUploadResult[]> {
     const buildPath = path.join(this.project.path, this.buildDir)
     if (!await pathExists(buildPath)) {
       throw new Error(`构建目录 ${this.buildDir} 不存在`);
