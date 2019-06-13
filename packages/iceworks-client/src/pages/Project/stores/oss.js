@@ -1,6 +1,6 @@
 import socket from '@src/socket';
 
-const originDataSource = {
+const defaultDataSource = {
   region: '',
   accessKeyId: '',
   accessKeySecret: '',
@@ -8,7 +8,7 @@ const originDataSource = {
   directory: '',
 };
 export default {
-  dataSource: originDataSource,
+  dataSource: defaultDataSource,
   async refresh() {
     this.dataSource = await socket.emit('project.oss.config');
   },
@@ -16,6 +16,6 @@ export default {
     this.dataSource = await socket.emit('project.oss.setConfig', config);
   },
   async clearConfig() {
-    this.dataSource = await socket.emit('project.oss.setConfig', originDataSource);
+    this.dataSource = await socket.emit('project.oss.setConfig', defaultDataSource);
   },
 };
