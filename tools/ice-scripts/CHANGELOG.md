@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0
+
+- [feat] watch ice.config.js changed and restart dev
+- [feat] hash option support string
+- [fix] build error exit code
+- [chore] add collect
+
 ## 2.0.2
 
 - [fix] 修复 copy 插件未使用自定义 output 问题

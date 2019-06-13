@@ -1,21 +1,81 @@
+const fs = require('fs');
 const path = require('path');
 const WebpackPluginImport = require('webpack-plugin-import');
-const CheckIceComponentsDepsPlugin = require('./checkIceComponentsDepPlugin');
+const CheckIceComponentsDepsPlugin = require('./webpackPlugins/checkIceComponentsDepPlugin');
+const AppendStyleWebpackPlugin = require('./webpackPlugins/appendStyleWebpackPlugin');
+const getThemeVars = require('./getThemeVars');
+const getThemeCode = require('./getThemeCode');
+
+function normalizeEntry(entry, preparedChunks) {
+  const preparedName = preparedChunks
+    .filter((module) => {
+      return typeof module.name !== 'undefined';
+    })
+    .map((module) => module.name);
+
+  return Object.keys(entry).concat(preparedName);
+}
 
 module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
   plugionOptions = plugionOptions || {};
   const { themePackage, themeConfig } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
-  const { rootDir } = context;
+  const { rootDir, pkg } = context;
 
   chainWebpack((config) => {
     // 1. 支持主题能力
     if (themePackage) {
-      log.info('使用 Fusion 组件主题包：', themePackage);
+      if (Array.isArray(themePackage)) {
+        log.info('已启用 themePackage 多主题功能');
+      } else {
+        log.info('使用 Fusion 组件主题包：', themePackage);
+      }
     }
     if (themeConfig) {
       log.info('自定义 Fusion 组件主题变量：', themeConfig);
     }
+
+    let replaceVars = {};
+    let defaultScssVars = {};
+    let defaultTheme = '';
+    if (Array.isArray(themePackage)) {
+      const themesCssVars = {};
+      // get scss variables and generate css variables
+      themePackage.forEach(({ name, ...themeData }) => {
+        const themePath = path.join(rootDir, 'node_modules', `${name}/variables.scss`);
+        let themeVars = {};
+        try {
+          themeVars = getThemeVars(themePath, themeData.themeConfig || {});
+        } catch (err) {
+          log.error('get theme variables err:', err);
+        }
+        replaceVars = themeVars.scssVars;
+        defaultScssVars = themeVars.originTheme;
+        themesCssVars[name] = themeVars.cssVars;
+        if (themeData.default) {
+          defaultTheme = name;
+        }
+      });
+
+      defaultTheme = defaultTheme || (themePackage[0] && themePackage[0].name);
+
+      try {
+        const tempDir = path.join(rootDir, './node_modules');
+        const jsPath = path.join(tempDir, 'change-theme.js');
+        fs.writeFileSync(jsPath, getThemeCode(themesCssVars, defaultTheme));
+
+        // add theme.js to entry
+        const entryNames = Object.keys(config.entryPoints.entries());
+        entryNames.forEach((name) => {
+          config.entry(name).add(jsPath);
+        });
+      } catch (err) {
+        log.error('fail to add theme.js to entry');
+        log.error(err);
+      }
+    }
+
+    const themeFile = typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
 
     ['scss', 'scss-module'].forEach((rule) => {
       config.module
@@ -23,10 +83,40 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
         .use('ice-skin-loader')
         .loader(require.resolve('ice-skin-loader'))
         .options({
-          themeFile: themePackage && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`),
-          themeConfig: themeConfig || {},
+          themeFile,
+          themeConfig: Object.assign({}, defaultScssVars, replaceVars, themeConfig || {}),
         });
     });
+
+    // check icons.scss
+    const iconPackage = defaultTheme || themePackage;
+    const iconScssPath = iconPackage && path.join(rootDir, 'node_modules', `${iconPackage}/icons.scss`);
+    if (iconScssPath && fs.existsSync(iconScssPath)) {
+      const appendStylePluginOption = {
+        type: 'sass',
+        srcFile: iconScssPath,
+        variableFile: themeFile,
+        compileThemeIcon: true,
+        themeNextVersion: (/^@alif(e|d)\/theme-/.test(themePackage) || themePackage === '@icedesign/theme') ? '1.x' : '0.x',
+        pkg,
+        distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
+          const entriesAndPreparedChunkNames = normalizeEntry(
+            compilerEntry,
+            compilationPreparedChunks
+          );
+          // 仅对 css 的 chunk 做 处理
+          if (entriesAndPreparedChunkNames.length && /\.css$/.test(chunkName)) {
+            // css/index.css -> index css/index.[hash].css -> index
+            const assetsFromEntry = path.basename(chunkName, path.extname(chunkName)).split('.')[0];
+            if (entriesAndPreparedChunkNames.indexOf(assetsFromEntry) !== -1) {
+              return true;
+            }
+          }
+          return false;
+        },
+      };
+      config.plugin('AppendStyleWebpackPlugin').use(AppendStyleWebpackPlugin, [appendStylePluginOption]);
+    }
 
     // 2. 组件（包含业务组件）按需加载&样式自动引入
     // babel-plugin-import: 基础组件

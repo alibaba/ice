@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -23,6 +23,7 @@
     "npm": ">=3.0.0"
   },
   "dependencies": {
+    "@alifd/fusion-collector": "^1.2.4",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-decorators": "^7.1.2",
@@ -47,16 +48,16 @@
     "@babel/preset-typescript": "^7.3.3",
     "address": "^1.0.3",
     "autoprefixer": "^9.1.5",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "babel-loader": "^8.0.4",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.4.1",
+    "chokidar": "^3.0.0",
     "commander": "^2.18.0",
     "copy-webpack-plugin": "^5.0.2",
     "css-hot-loader": "^1.4.2",
     "css-loader": "^1.0.1",
-    "deep-assign": "^2.0.0",
     "deepmerge": "^2.1.1",
     "detect-port": "^1.2.3",
     "extract-css-assets-webpack-plugin": "^0.2.5",
@@ -66,6 +67,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.11",
+    "lodash.clonedeep": "^4.5.0",
     "mini-css-extract-plugin": "^0.4.4",
     "mkcert": "^1.2.0",
     "node-ipc": "^9.1.1",

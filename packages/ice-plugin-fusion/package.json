@@ -1,6 +1,6 @@
 {
   "name": "ice-plugin-fusion",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "ice-scripts plugin for fusion",
   "main": "lib/index.js",
   "scripts": {},
@@ -11,6 +11,13 @@
     "find-root": "^1.1.0",
     "ice-skin-loader": "^0.3.0-0",
     "semver": "^6.1.0",
-    "webpack-plugin-import": "^0.2.5"
+    "webpack-plugin-import": "^0.2.5",
+    "webpack-sources": "^1.3.0"
+  },
+  "peerDependencies": {
+    "node-sass": "^4.9.0"
+  },
+  "devDependencies": {
+    "node-sass": "^4.12.0"
   }
 }

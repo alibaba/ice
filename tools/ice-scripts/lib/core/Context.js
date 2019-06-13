@@ -48,6 +48,7 @@ module.exports = class Context {
     const builtInPlugins = [
       '../plugins/userConfig',
       '../plugins/cliOptions',
+      '../plugins/devWatcher',
     ];
     // eslint-disable-next-line import/no-dynamic-require
     return builtInPlugins.map((pluginPath) => require(pluginPath))
@@ -117,8 +118,7 @@ module.exports = class Context {
         fn(config);
       } catch (err) {
         log.error(`Fail to exec plugin chainWebpack ${pluginName}`);
-        console.error(err);
-        process.exit(1);
+        throw (err);
       }
     });
 
@@ -130,8 +130,7 @@ module.exports = class Context {
         });
       } catch (err) {
         log.error('Fail to exec userConfig.chainWebpack');
-        console.error(err);
-        process.exit(1);
+        throw (err);
       }
     }
     // add polyfill/hotdev before origin entry
@@ -150,12 +149,9 @@ module.exports = class Context {
     await this.runPlugins();
     // get final config before run command
     this.webpackConfig = this.getWebpackConfig();
-    try {
-      // load command and run
-      // eslint-disable-next-line import/no-dynamic-require
-      require(`../commands/${this.command}`)(this);
-    } catch (e) {
-      throw e;
-    }
+    // load command and run
+    // eslint-disable-next-line import/no-dynamic-require
+    const command = require(`../commands/${this.command}`);
+    await command(this);
   }
 };
