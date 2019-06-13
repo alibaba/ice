@@ -54,16 +54,18 @@ function Main({ dataSource, onOk }) {
     renamed: ['#FA7070', <FormattedMessage id="iceworks.project.panel.git.main.status.renamed" />],
   };
 
-  let btnText = '';
+  let btnId = '';
   if (dataSource.length === 0) {
-    btnText = <FormattedMessage id="iceworks.global.button.submit" />;
+    btnId = 'iceworks.global.button.submit';
   } else if (files.length === 0) {
-    btnText = <FormattedMessage id="iceworks.project.panel.git.main.submit.file" />;
+    btnId = 'iceworks.project.panel.git.main.submit.file';
   } else if (message) {
-    btnText = <FormattedMessage id="iceworks.global.button.submit" />;
+    btnId = 'iceworks.global.button.submit';
   } else {
-    btnText = <FormattedMessage id="iceworks.project.panel.git.main.submit.message" />;
+    btnId = 'iceworks.project.panel.git.main.submit.message';
   }
+
+  const btnElement = <FormattedMessage id={btnId} />;
 
   return (
     <div className={styles.wrap}>
@@ -109,7 +111,7 @@ function Main({ dataSource, onOk }) {
           onClick={onSubmit}
           className={styles.button}
         >
-          { btnText }
+          { btnElement }
         </Button>
       </div>
       <div className={styles.tips}>

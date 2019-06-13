@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Input, Form } from '@alifd/next';
-import styles from './GitRemote.module.scss';
 
 const FormItem = Form.Item;
 const FormSubmit = Form.Submit;
@@ -39,7 +38,6 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
         required
         size="medium"
         label={<FormattedMessage id="iceworks.project.panel.git.remote.url.label" />}
-        className={styles.item}
         validator={remoteUrlValidator}
       >
         <Input
@@ -48,7 +46,7 @@ function GitRemote({ onOk, remoteUrl: initRemoteUrl, submitMessage }) {
           onChange={onChange}
         />
       </FormItem>
-      <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
+      <FormSubmit onClick={onSave} validate type="primary">
         {submitMessage}
       </FormSubmit>
     </Form>
