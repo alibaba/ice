@@ -26,7 +26,7 @@ const GlobalBar = ({ project }) => {
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: error.message
+        content: error.message,
       });
     }
   }
@@ -39,7 +39,7 @@ const GlobalBar = ({ project }) => {
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: error.message
+        content: error.message,
       });
     }
   }
@@ -97,23 +97,25 @@ const GlobalBar = ({ project }) => {
             triggerType="click"
           >
             <div className={styles.feedback}>
-              <h4 style={{ margin: '0 0 10px' }}>感谢使用</h4>
+              <h4 style={{ margin: '0 0 10px' }}>
+                <FormattedMessage id="iceowrks.global.bar.feedback.title" />
+              </h4>
               <div className={styles.links}>
                 <a
-                  style={{ display: 'block', marginBottom: '5px' }}
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://img.alicdn.com/tfs/TB1q_oaQgTqK1RjSZPhXXXfOFXa-993-1280.png"
+                  style={{ display: 'block', marginBottom: '5px' }}
                 >
-                  加入钉钉群
+                  <FormattedMessage id="iceowrks.global.bar.feedback.join" />
                 </a>
                 <a
-                  style={{ display: 'block' }}
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://github.com/alibaba/ice/issues/new"
+                  style={{ display: 'block' }}
                 >
-                  提交 bug 和反馈建议
+                  <FormattedMessage id="iceowrks.global.bar.feedback.submit" />
                 </a>
               </div>
             </div>
@@ -125,7 +127,7 @@ const GlobalBar = ({ project }) => {
 };
 
 GlobalBar.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
 };
 
 export default GlobalBar;

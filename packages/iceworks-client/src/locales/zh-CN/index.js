@@ -121,4 +121,7 @@ export default {
   'iceowrks.global.bar.editor': '编辑器',
   'iceowrks.global.bar.theme': '主题',
   'iceowrks.global.bar.feedback': '反馈',
+  'iceowrks.global.bar.feedback.title': '你的体验如何',
+  'iceowrks.global.bar.feedback.join': '加入钉钉',
+  'iceowrks.global.bar.feedback.submit': '反馈建议或提交 bug',
 };
