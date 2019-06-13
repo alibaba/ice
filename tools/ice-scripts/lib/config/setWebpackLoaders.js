@@ -107,7 +107,7 @@ module.exports = (chainConfig, mode = 'development') => {
       .end()
     .use('babel-loader')
       .loader(BABEL_LOADER)
-      .options(Object.assign(deepClone(babelConfig), { cacheDirectory: true }));
+      .options(Object.assign({}, deepClone(babelConfig), { cacheDirectory: true }));
 
   // tsx loader
   chainConfig.module.rule('tsx')
@@ -117,7 +117,7 @@ module.exports = (chainConfig, mode = 'development') => {
       .end()
     .use('babel-loader')
       .loader(BABEL_LOADER)
-      .options(Object.assign(deepClone(babelConfig), { cacheDirectory: true }))
+      .options(Object.assign({}, deepClone(babelConfig), { cacheDirectory: true }))
       .end()
     .use('ts-loader')
       .loader(TYPESCRIPT_LOADER)
