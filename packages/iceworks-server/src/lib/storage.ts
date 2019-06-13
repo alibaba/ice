@@ -112,6 +112,10 @@ const schema = {
       }
     ],
   },
+  oss: {
+    type: 'array',
+    default: [],
+  },
 };
 
 export default new Store({ schema });
