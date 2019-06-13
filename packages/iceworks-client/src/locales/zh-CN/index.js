@@ -120,4 +120,5 @@ export default {
   'iceowrks.global.bar.folder': '文件夹',
   'iceowrks.global.bar.editor': '编辑器',
   'iceowrks.global.bar.theme': '主题',
+  'iceowrks.global.bar.feedback': '反馈',
 };

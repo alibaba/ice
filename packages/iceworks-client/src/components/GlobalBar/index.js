@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
 import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -26,7 +26,7 @@ const GlobalBar = ({ project }) => {
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: error.message,
+        content: error.message
       });
     }
   }
@@ -39,7 +39,7 @@ const GlobalBar = ({ project }) => {
         type: 'error',
         align: 'tr tr',
         title: '提示',
-        content: error.message,
+        content: error.message
       });
     }
   }
@@ -63,7 +63,8 @@ const GlobalBar = ({ project }) => {
       <div className={styles.globalBar}>
         <div className={styles.leftContent}>
           <div className={styles.item}>
-            <FormattedMessage id="iceowrks.global.bar.project" />：{project.dataSource.name}
+            <FormattedMessage id="iceowrks.global.bar.project" />：
+            {project.dataSource.name}
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />
@@ -84,6 +85,39 @@ const GlobalBar = ({ project }) => {
             <Icon type="zhuti" className={styles.icon} size="small" />
             <FormattedMessage id="iceowrks.global.bar.theme" />
           </div>
+          <Balloon
+            align="tl"
+            closable={false}
+            trigger={
+              <div className={styles.item}>
+                <Icon type="face" className={styles.icon} size="small" />
+                <FormattedMessage id="iceowrks.global.bar.feedback" />
+              </div>
+            }
+            triggerType="click"
+          >
+            <div className={styles.feedback}>
+              <h4 style={{ margin: '0 0 10px' }}>感谢使用</h4>
+              <div className={styles.links}>
+                <a
+                  style={{ display: 'block', marginBottom: '5px' }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://img.alicdn.com/tfs/TB1q_oaQgTqK1RjSZPhXXXfOFXa-993-1280.png"
+                >
+                  加入钉钉群
+                </a>
+                <a
+                  style={{ display: 'block' }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://github.com/alibaba/ice/issues/new"
+                >
+                  提交 bug 和反馈建议
+                </a>
+              </div>
+            </div>
+          </Balloon>
         </div>
       </div>
     </div>
@@ -91,7 +125,7 @@ const GlobalBar = ({ project }) => {
 };
 
 GlobalBar.propTypes = {
-  project: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired
 };
 
 export default GlobalBar;

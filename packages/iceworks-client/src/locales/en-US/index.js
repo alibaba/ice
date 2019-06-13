@@ -100,4 +100,5 @@ export default {
   'iceowrks.global.bar.folder': 'Folder',
   'iceowrks.global.bar.editor': 'Editor',
   'iceowrks.global.bar.theme': 'Theme',
+  'iceowrks.global.bar.feedback': 'Feedback',
 };
