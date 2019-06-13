@@ -42,12 +42,12 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
       const themesCssVars = {};
       // get scss variables and generate css variables
       themePackage.forEach(({ name, ...themeData }) => {
-        const themePath = path.join(rootDir, 'node_modules', `${name}/variables.js`);
+        const themePath = path.join(rootDir, 'node_modules', `${name}/variables.scss`);
         let themeVars = {};
         try {
           themeVars = getThemeVars(themePath, themeData.themeConfig || {});
         } catch (err) {
-          log.error(`can not find ${themePath}`);
+          log.error('get theme variables err:', err);
         }
         replaceVars = themeVars.scssVars;
         defaultScssVars = themeVars.originTheme;
@@ -84,7 +84,7 @@ module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
         .loader(require.resolve('ice-skin-loader'))
         .options({
           themeFile,
-          themeConfig: Object.assign(defaultScssVars, replaceVars, themeConfig || {}),
+          themeConfig: Object.assign({}, defaultScssVars, replaceVars, themeConfig || {}),
         });
     });
 
