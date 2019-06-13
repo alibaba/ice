@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Icon as NextIcon, Message } from '@alifd/next';
+import { Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
@@ -154,16 +154,16 @@ const GitPanel = ({ intl }) => {
           {
             isRepository ?
               <div className={styles.icons}>
-                <NextIcon
+                <Icon
                   className={styles.icon}
-                  type="refresh"
+                  type="reload"
                   size="small"
                   onClick={onRefresh}
                   title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' })}
                 />
-                <NextIcon
+                <Icon
                   className={styles.icon}
-                  type="add"
+                  type="plus"
                   size="small"
                   onClick={onOpenCreate}
                   title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' })}
