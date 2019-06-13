@@ -1,6 +1,11 @@
 # Changelog
 
-## 2.0.3
+## 2.1.0
+
+- [feat] watch ice.config.js changed and restart dev
+- [feat] hash option support string
+- [fix] build error exit code
+- [chore] add collect
 
 ## 2.0.2
 
