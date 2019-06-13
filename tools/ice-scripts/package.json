@@ -67,7 +67,6 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.11",
-    "lodash.clonedeep": "^4.5.0",
     "mini-css-extract-plugin": "^0.4.4",
     "mkcert": "^1.2.0",
     "node-ipc": "^9.1.1",

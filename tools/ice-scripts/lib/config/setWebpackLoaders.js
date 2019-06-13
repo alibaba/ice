@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const deepClone = require('lodash.clonedeep');
+const { cloneDeep } = require('lodash');
 const postcssConfig = require('./postcssConfig');
 const getBabelConfig = require('./getBabelConfig');
 
@@ -107,7 +107,7 @@ module.exports = (chainConfig, mode = 'development') => {
       .end()
     .use('babel-loader')
       .loader(BABEL_LOADER)
-      .options(Object.assign({}, deepClone(babelConfig), { cacheDirectory: true }));
+      .options(Object.assign({}, cloneDeep(babelConfig), { cacheDirectory: true }));
 
   // tsx loader
   chainConfig.module.rule('tsx')
@@ -117,7 +117,7 @@ module.exports = (chainConfig, mode = 'development') => {
       .end()
     .use('babel-loader')
       .loader(BABEL_LOADER)
-      .options(Object.assign({}, deepClone(babelConfig), { cacheDirectory: true }))
+      .options(Object.assign({}, cloneDeep(babelConfig), { cacheDirectory: true }))
       .end()
     .use('ts-loader')
       .loader(TYPESCRIPT_LOADER)
