@@ -1,25 +1,28 @@
+/* eslint no-useless-escape:0 */
+const fs = require('fs');
+
 module.exports = (themeFile, themeConfig) => {
-  let themeVars = {};
+  const themeVars = {};
   try {
-    // eslint-disable-next-line import/no-dynamic-require
-    themeVars = require(themeFile);
+    const themeStr = fs.readFileSync(themeFile, 'utf8');
+    const themeArr = themeStr.match(/\$[\w\-]+?:.+?;/g);
+
+    themeArr.forEach((item) => {
+      const [key, value] = item.split(':');
+      themeVars[key] = value.replace(';', '').trim();
+    });
   } catch (e) {
     throw (e);
   }
   // make a copy
   const originTheme = {};
+
   // 过滤颜色相关内容
   Object.keys(themeVars).forEach((themeKey) => {
-    let themeValue = themeVars[themeKey];
-    // in case of "$icon-xxs": "$s-2"
-    if (/^\$(\w|-)+$/.test(themeValue)) {
-      themeValue = themeVars[themeValue] || '';
-    }
-    if (themeValue) {
-      originTheme[themeKey.slice(1)] = themeValue;
-    }
-    // color-white color-black 会用于计算透明度
-    if (!/\$color-/.test(themeKey) || ['$color-white', '$color-black'].indexOf(themeKey) > -1) {
+    originTheme[themeKey.slice(1)] = themeVars[themeKey];
+
+    const themeValue = themeVars[themeKey];
+    if (themeValue && (themeValue.indexOf('#') !== 0 || ['$color-white', '$color-black'].indexOf(themeKey) > -1)) {
       delete themeVars[themeKey];
     }
   });
