@@ -8,7 +8,7 @@ import * as mkdirp from 'mkdirp';
 import * as EventEmitter from 'events';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
-import scanDirectory from '../scanDirectory';
+import scanDirectory from '../../scanDirectory';
 import getIceVersion from '../getIceVersion';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';

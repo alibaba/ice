@@ -4,12 +4,12 @@ import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
 import ErrorBoundary from '@components/ErrorBoundary';
+import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
 import CreateProjectModal from '@components/CreateProjectModal';
 import Modal from '@components/Modal';
 import { FormattedMessage } from 'react-intl';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
-import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
 import Guide from './components/Guide';
 import projectStores from './stores';
@@ -130,7 +130,7 @@ const Project = ({ history }) => {
           onCreateProject={onOpenCreateProject}
         />
       ) : null}
-      <OpenProjectModal
+      <SelectWorkFolderModal
         on={onOpenProjectModal}
         onCancel={() => setOpenProjectModal(false)}
         onOk={addProject}

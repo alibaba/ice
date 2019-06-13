@@ -15,11 +15,44 @@ export default (app) => {
     }
 
     async getOne(ctx) {
-      const { args, logger } = ctx;
+      const { args: { url }, logger } = ctx;
 
-      logger.info(`get material by url, url: ${args.url}`);
-      const data = await request(args.url);
-      return formatData(data);
+      logger.info(`get material by url, url: ${url}`);
+      const data = await request(url);
+
+      // update material metadata.
+      const allMaterials = storage.get('material');
+      let currentIdx = -1;
+      const currentItem = allMaterials.find((item, idx) => {
+        if (item.source === url) {
+          currentIdx = idx;
+          return true
+        }
+        return false;
+      });
+
+      const {
+        description = currentItem.description,
+        homepage = currentItem.homepage,
+        logo = currentItem.logo,
+      } = data;
+
+      // if the material has existed, update metadata
+      if (currentIdx > -1) {
+        const newMaterials = updateArrayItem(
+          allMaterials,
+          {
+            ...currentItem,
+            description,
+            homepage,
+            logo,
+          },
+          currentIdx
+        );
+        storage.set('material', newMaterials);
+      }
+
+      return formatMaterialData(data);
     }
 
     async getRecommendScaffolds() {
@@ -27,10 +60,51 @@ export default (app) => {
       const { scaffolds = [] } = await request(material.source);
       return scaffolds.filter(({ name }) => RECOMMEND_SCAFFOLDS.includes(name));
     }
+
+    async add(ctx) {
+      const { args: { url }, logger } = ctx;
+      const allMaterials = storage.get('material');
+      const existed = allMaterials.some(m => m.source === url);
+
+      if (existed) {
+        logger.info(`current material has existed, source URL: ${url}`);
+        throw Error('current material has existed.');
+      }
+
+      const data = await request(url);
+      const {
+        name,
+        description = '',
+        homepage = '',
+        logo = '',
+        source = url,
+      } = data;
+
+      // material's name is required
+      if (!name) {
+        logger.info(`material's name is required, source URL: ${url}`);
+        throw Error('material\'s name is required.');
+      }
+
+      storage.add('material', {
+        official: false, name, description, homepage, logo, source
+      });
+      const materialData = formatMaterialData(data);
+      return { resource: storage.get('material'), current: materialData };
+    }
+
+    async delete(ctx) {
+      const { args: { url }, logger } = ctx;
+      logger.info(`delete material, source URL: ${url}`);
+
+      storage.remove('material', (item) => item.source !== url);
+
+      return storage.get('material');
+    }
   };
 };
 
-function formatData(data) {
+function formatMaterialData(data) {
   const { blocks = [], scaffolds = [], components = [] } = data;
   return {
     blocks: { categories: generateCates(blocks), materials: formatMaterialsByCatrgory(blocks) },
@@ -101,3 +175,11 @@ const request = async (uri: string, options = {}) => {
 
   return await rp(options);
 };
+
+const updateArrayItem = (array, item, itemIdx) => {
+  return [
+    ...array.slice(0, itemIdx),
+    item,
+    ...array.slice(itemIdx + 1)
+  ];
+}

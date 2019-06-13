@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
+import * as userHome from 'user-home';
 
 // @TODO
 const defaultCwd = path.join(__dirname, '../../data');
@@ -42,17 +43,19 @@ class Store {
     return this.store.get(key);
   }
 
-  add(key: string, value: string): void {
+  add(key: string, value: any): void {
     const values = this.store.get(key);
     if (Array.isArray(values)) {
-      this.store.set(key, values.filter((v) => v !== value).unshift(value));
+      const filteredVaules = values.filter((v) => v !== value);
+      filteredVaules.unshift(value);
+      this.store.set(key, filteredVaules);
     }
   }
 
-  remove(key: string, value: string): void {
+  remove(key: string, filter: (v: any) => boolean): void {
     const values = this.store.get(key) || [];
     if (Array.isArray(values)) {
-      this.store.set(key, values.filter((v) => v !== value));
+      this.store.set(key, values.filter(filter));
     }
   }
 
@@ -67,6 +70,10 @@ class Store {
 }
 
 const schema = {
+  workFolder: {
+    type: 'string',
+    default: userHome,
+  },
   project: {
     type: 'string',
     default: {},

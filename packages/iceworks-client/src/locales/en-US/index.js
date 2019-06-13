@@ -85,9 +85,9 @@ export default {
   'iceworks.task.title': 'Task',
   'iceworks.task.dev.title': 'dev',
   'iceworks.task.dev.desc': 'Compiles and hot-reloads for development',
-  'iceworks.task.dev.start': 'Run Task',
-  'iceworks.task.dev.stop': 'Stop Task',
-  'iceworks.task.dev.setting': 'Setting',
+  'iceworks.task.start': 'Run Task',
+  'iceworks.task.stop': 'Stop Task',
+  'iceworks.task.setting': 'Setting',
   'iceworks.task.build.title': 'build',
   'iceworks.task.build.desc': 'Compiles and minifies for production',
   'iceworks.task.lint.title': 'lint',
@@ -112,4 +112,5 @@ export default {
   'iceworks.material.install.component.pacakgeName': 'Component Name: ',
   'iceworks.material.install.component.packageVersion': 'Component Version: ',
   'iceworks.material.noDesc': 'No Description',
+  'iceworks.material.sourceUrl': 'Source URL',
 };

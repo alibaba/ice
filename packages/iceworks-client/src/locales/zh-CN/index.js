@@ -106,9 +106,9 @@ export default {
   'iceworks.task.title': '工程管理',
   'iceworks.task.dev.title': '启动服务',
   'iceworks.task.dev.desc': '编译和热更新(用于开发环境)',
-  'iceworks.task.dev.start': '运行',
-  'iceworks.task.dev.stop': '停止',
-  'iceworks.task.dev.setting': '设置',
+  'iceworks.task.start': '运行',
+  'iceworks.task.stop': '停止',
+  'iceworks.task.setting': '设置',
   'iceworks.task.build.title': '构建项目',
   'iceworks.task.build.desc': '编译并压缩(用于生产环境)',
   'iceworks.task.lint.title': '检查语法',
@@ -133,4 +133,5 @@ export default {
   'iceworks.material.install.component.pacakgeName': '组件包名：',
   'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
+  'iceworks.material.sourceUrl': '物料源地址',
 };

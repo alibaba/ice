@@ -39,18 +39,24 @@ class Project implements IProject {
 
   public readonly path: string;
 
+  public readonly packagePath: string;
+
   public panels: string[] = [];
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
+    this.packagePath = path.join(this.path, packageJSONFilename);
 
     this.loadAdapter();
   }
 
   public getPackageJSON() {
-    const pakcagePath = path.join(this.path, packageJSONFilename);
-    return JSON.parse(fs.readFileSync(pakcagePath).toString());
+    return JSON.parse(fs.readFileSync(this.packagePath).toString());
+  }
+
+  public setPackageJSON(content) {
+    return fs.writeFileSync(this.packagePath, `${JSON.stringify(content, null, 2)}\n`, 'utf-8');
   }
 
   public getEnv() {
@@ -239,7 +245,7 @@ class ProjectManager extends EventEmitter {
 
   /**
    * Create a project by scaffold
-   * 
+   *
    * TODO create a project by custom scaffold
    */
   public async createProject(params: ICreateParams): Promise<void> {
