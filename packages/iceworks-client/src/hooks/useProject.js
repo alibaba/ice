@@ -2,6 +2,7 @@ import stores from '@stores';
 import useModal from '@hooks/useModal';
 import { useState } from 'react';
 import { Message } from '@alifd/next';
+import logger from '@utils/logger';
 
 function useProject({ panelStores } = {}) {
   const [projectsStore, projectStore, materialStore] = stores.useStores(['projects', 'project', 'material']);
@@ -34,7 +35,11 @@ function useProject({ panelStores } = {}) {
       newProject.dataSource.panels.forEach((name) => {
         const panelStore = panelStores[name];
         if (panelStore) {
-          panelStore.refresh();
+          panelStore
+            .refresh()
+            .catch((error) => {
+              logger.error(error);
+            });
         }
       });
     }

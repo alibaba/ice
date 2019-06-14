@@ -1,3 +1,5 @@
+import { checkAliInternal } from 'ice-npm-utils';
+
 export default function() {
   return async function client(ctx, next) {
     if (String(ctx.path).indexOf('/api') === 0) {
@@ -11,6 +13,7 @@ export default function() {
       clientPath: '//unpkg.com/iceworks-client@latest/build/',
       socketUrl: '//127.0.0.1:7001/',
       apiUrl: '//127.0.0.1:7001/api/',
+      isAliInternal: await checkAliInternal(),
     };
 
     await next();
