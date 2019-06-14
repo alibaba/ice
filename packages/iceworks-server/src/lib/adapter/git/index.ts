@@ -59,12 +59,14 @@ export default class Git implements IGitModule {
     };
   }
 
-  public async init(remoteUrl: string): Promise<void> {
+  public async init(params: {remoteUrl: string}): Promise<void> {
+    const {remoteUrl} = params;
     await this.gitTools.init();
     await this.gitTools.addRemote('origin', remoteUrl);
   }
 
-  public async setRemote(remoteUrl: string): Promise<void> {
+  public async setRemote(params: {remoteUrl: string}): Promise<void> {
+    const {remoteUrl} = params;
     const originRemotes = await this.gitTools.getRemotes(true);
     if (originRemotes.length > 0) {
       await this.gitTools.removeRemote('origin');
@@ -72,7 +74,8 @@ export default class Git implements IGitModule {
     await this.gitTools.addRemote('origin', remoteUrl);
   }
 
-  public async checkoutLocalBranch(name: string): Promise<void> {
+  public async checkoutLocalBranch(params: {name: string}): Promise<void> {
+    const {name} = params;
     await this.gitTools.checkoutLocalBranch(name);
   }
 
@@ -92,11 +95,13 @@ export default class Git implements IGitModule {
     };
   }
 
-  public async pull(branch: string): Promise<void> {
+  public async pull(params: {branch: string}): Promise<void> {
+    const {branch} = params;
     await this.gitTools.pull('origin', branch);
   }
 
-  public async push(branch: string): Promise<void> {
+  public async push(params: {branch: string}): Promise<void> {
+    const {branch} = params;
     await this.gitTools.push('origin', branch);
   }
 

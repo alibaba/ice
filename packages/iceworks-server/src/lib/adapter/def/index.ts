@@ -1,7 +1,7 @@
 /** eslint camelcase:0 */
 
 import Client from './client';
-import { IProject, IDEFModule, IDEFPushParams } from '../../../interface';
+import { IProject, IDEFModule, IDEFPushParams, IContext } from '../../../interface';
 
 const isDev = process.env.NODE_ENV === 'local';
 
@@ -21,7 +21,7 @@ export default class DEF implements IDEFModule {
     this.storage = storage;
   }
 
-  async push(params: IDEFPushParams): Promise<void> {
+  async push(params: IDEFPushParams, context: IContext): Promise<void> {
     const { target, commitId, branch, repository, empId } = params;
     const client = new Client.Client();
     client.run({
@@ -36,20 +36,20 @@ export default class DEF implements IDEFModule {
     });
 
     client.on('start', () => {
-      this.project.emit('push.start');
+      context.socket.emit('push.start');
     });
     client.on('message', (message) => {
-      this.project.emit('push.data', `${message}\n\r`);
+      context.socket.emit('push.data', `${message}\n\r`);
     });
     client.on('build_message', (message) => {
-      this.project.emit('push.data', message);
+      context.socket.emit('push.data', message);
     });
     client.on('error', (error) => {
-      this.project.emit('push.data', `\r\n${error.message}`);
-      this.project.emit('push.exit', 1);
+      context.socket.emit('push.data', `\r\n${error.message}`);
+      context.socket.emit('push.exit', 1);
     });
     client.on('success', () => {
-      this.project.emit('push.exit', 0);
+      context.socket.emit('push.exit', 0);
     });
   }
 }

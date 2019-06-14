@@ -1,9 +1,15 @@
-import * as EventEmitter from 'events';
+export interface ISocket {
+  emit(eventName: string, data?: any): void;
+}
+
+export interface IContext {
+  socket: ISocket
+}
 
 /**
  * 项目信息
  */
-export interface IProject extends EventEmitter {
+export interface IProject {
   /**
    * 项目显示名称
    */

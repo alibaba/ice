@@ -12,7 +12,7 @@ import getIceVersion from '../getIceVersion';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
-import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
+import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
@@ -64,7 +64,7 @@ export default class Page implements IPageModule {
     );
   }
 
-  private async installBlocksDependencies(blocks: IMaterialBlock[]) {
+  private async installBlocksDependencies(blocks: IMaterialBlock[], context: IContext) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
     const blocksDependencies: { [packageName: string]: string } = {};
@@ -82,7 +82,7 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], this);
+      return await installDependency([{ package: packageName, version }], false, this.project, context.socket);
     }));
   }
 
@@ -126,11 +126,11 @@ export default class Page implements IPageModule {
 
   async getOne(): Promise<any> { }
 
-  async create(page: ICreatePageParam): Promise<any> {
+  async create(page: ICreatePageParam, context: IContext): Promise<any> {
     const { name, blocks } = page;
 
     // create page dir
-    this.project.emit('create.status', { text: '创建页面目录...', percent: 10 });
+    context.socket.emit('create.status', { text: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -144,15 +144,15 @@ export default class Page implements IPageModule {
     }
 
     // download blocks
-    this.project.emit('create.status', { text: '正在下载区块...', percent: 40 });
+    context.socket.emit('create.status', { text: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
-    this.project.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
-    await this.installBlocksDependencies(blocks);
+    context.socket.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
+    await this.installBlocksDependencies(blocks, context);
 
     // create page file
-    this.project.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
+    context.socket.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
@@ -187,7 +187,8 @@ export default class Page implements IPageModule {
   async bulkCreate(): Promise<any> { }
 
   // TODO
-  async delete(pageName: string): Promise<any> {
+  async delete(params: {pageName: string}): Promise<any> {
+    const { pageName } = params;
     await rimrafAsync(path.join(this.path, pageName));
 
     // TODO rewrite routerConfig.js

@@ -1,27 +1,24 @@
 export default (app) => {
   return class GitController extends app.Controller {
-    async status() {
+    async getStatus() {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
       return await project.git.getStatus();
     }
     async init({ args }) {
-      const { remoteUrl } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.git.init(remoteUrl);
+      return await project.git.init(args);
     }
     async setRemote({ args }) {
-      const { remoteUrl } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.git.setRemote(remoteUrl);
+      return await project.git.setRemote(args);
     }
     async checkoutLocalBranch({ args }) {
-      const { name } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.git.checkoutLocalBranch(name);
+      return await project.git.checkoutLocalBranch(args);
     }
     async switchBranch({ args }) {
       const { projectManager } = app;
@@ -34,16 +31,14 @@ export default (app) => {
       return await project.git.getBranches();
     }
     async pull({ args }) {
-      const { branch } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.git.pull(branch);
+      return await project.git.pull(args);
     }
     async push({ args }) {
-      const { branch } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.git.push(branch);
+      return await project.git.push(args);
     }
     async addAndCommit({ args }) {
       const { projectManager } = app;

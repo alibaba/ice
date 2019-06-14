@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../utils/cliConf';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
-import { ITaskModule, ITaskParam, IProject } from '../../../interface';
+import { ITaskModule, ITaskParam, IProject, IContext } from '../../../interface';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
@@ -34,7 +34,7 @@ export default class Task implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: ITaskParam) {
+  async start(args: ITaskParam, context: IContext) {
     let { command } = args;
 
     if (this.process[command]) {
@@ -64,7 +64,7 @@ export default class Task implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      this.project.emit(eventName, {
+      context.socket.emit(eventName, {
         status: TASK_STATUS_WORKING,
         chunk: buffer.toString(),
       });
@@ -73,7 +73,7 @@ export default class Task implements ITaskModule {
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
         this.process[command] = null;
-        this.project.emit(eventName, {
+        context.socket.emit(eventName, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
@@ -91,7 +91,7 @@ export default class Task implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args: ITaskParam) {
+  async stop(args: ITaskParam, context: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 
@@ -103,7 +103,7 @@ export default class Task implements ITaskModule {
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
       if (code === 0) {
-        this.project.emit(eventName, {
+        context.socket.emit(eventName, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });

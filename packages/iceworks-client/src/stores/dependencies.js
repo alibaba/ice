@@ -51,6 +51,6 @@ export default {
       }
     }
 
-    await socket.emit('project.dependency.bulkCreate', deps);
+    await socket.emit('project.dependency.bulkCreate', { dependencies: deps });
   },
 };

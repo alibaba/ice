@@ -1,4 +1,4 @@
-import { IProjectLayout, IMaterialBlock, IBaseModule } from './base';
+import { IProjectLayout, IMaterialBlock, IBaseModule, IContext } from './base';
 /**
  * 项目的页面
  */
@@ -111,7 +111,7 @@ export interface IPageModule extends IBaseModule {
    *
    * @param page 页面配置
    */
-  create(page: ICreatePageParam): Promise<IPage>;
+  create(page: ICreatePageParam, context: IContext): Promise<IPage>;
 
   /**
    * 添加多个页面到项目
@@ -125,7 +125,7 @@ export interface IPageModule extends IBaseModule {
    *
    * @param pageName 页面名
    */
-  delete(pageName: string): Promise<void>;
+  delete(params: {pageName: string}): Promise<void>;
 
   /**
    * 更新页面
