@@ -26,6 +26,7 @@ async function getPuppeteer() {
           console.log(chalk.yellow('Installing puppeteer, please wait a moment.\n'));
 
           // set puppeteer download host
+          // default download host has been blocking, use cnpm mirror
           // https://github.com/cnpm/cnpmjs.org/issues/1246#issuecomment-341631992
           spawn.sync('npm', ['config', 'set', 'puppeteer_download_host=https://storage.googleapis.com.cnpmjs.org']);
           const result = spawn.sync('npm', ['install', 'puppeteer@1.17.0', '-g', '--registry', 'https://registry.npm.taobao.org'], { stdio: 'inherit' });
@@ -132,7 +133,7 @@ async function screenshotDOMElement(url, selector, path, viewport) {
     // 关闭 Chromium
     await browser.close();
   } catch (err) {
-    console.log(chalk.red('\n\nScreenshot Error. \nPlease manual install puppeteer using the following commands:'));
+    console.log(chalk.red('\n\nScreenshot Error. \nPlease install puppeteer using the following commands:'));
     console.log(chalk.white('\n  npm uninstall puppeteer -g'));
     console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
     console.log(chalk.white('\n  idev screenshot\n'));
