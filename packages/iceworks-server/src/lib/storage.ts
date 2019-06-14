@@ -3,6 +3,8 @@ import * as path from 'path';
 import * as mkdirp from 'mkdirp';
 import * as userHome from 'user-home';
 
+// Note: why not use `import`
+// ref: https://github.com/sindresorhus/conf
 const Conf = require('conf');
 const conf_path = path.join(userHome, '.iceworks');
 
