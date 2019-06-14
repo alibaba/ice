@@ -7,17 +7,19 @@ import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
 
-import { IRouter, IProject } from '../../../interface';
+import { IRouter, IRouterModule, IProject } from '../../../interface';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
 
-export default class Router extends EventEmitter {
+export default class Router extends EventEmitter implements IRouterModule {
+  public readonly project: IProject;
   public readonly projectPath: string;
 
   public readonly path: string;
+  public existLazy: boolean;
 
   constructor(project: IProject) {
     super();
@@ -30,7 +32,11 @@ export default class Router extends EventEmitter {
     const configPath = path.join(this.path);
     const fileString = fs.readFileSync(configPath).toString();
     const fileAST = parser.parse(fileString, {
+      allowImportExportEverywhere: true,
       sourceType: 'module',
+      plugins: [
+        'dynamicImport',
+      ],
     });
 
     try {
@@ -84,19 +90,26 @@ export default class Router extends EventEmitter {
     const fileString = fs.readFileSync(configPath).toString();
     const fileAST = parser.parse(fileString, {
       sourceType: 'module',
+      plugins: [
+        'dynamicImport',
+      ],
     });
 
     const dataAST = parser.parse(JSON.stringify(this.sortData(data)), {
       sourceType: 'module',
+      plugins: [
+        'dynamicImport',
+      ],
     });
     const arrayAST = dataAST.program.body[0];
 
+    // console.log('fileAST: ', JSON.stringify(fileAST));
     this.changeImportDeclarations(fileAST, data);
 
     /**
-     * { path: '/a', component: 'Page', layout: 'Layout' }
+     * { path: '/a', component: 'Page' }
      *          transform to
-     * { path: '/a', component: Page, layout: Layout } 
+     * { path: '/a', component: Page }
      */
     traverse(dataAST, {
       ObjectProperty({ node }) {
@@ -151,134 +164,153 @@ export default class Router extends EventEmitter {
   /**
    * 1. constant if there is layout or component in the data and ImportDeclarations
    * 2. remove import if there is no layout or component in the data
-   * 3. add import if there is no layout or component in the ImportDeclarations 
+   * 3. add import if there is no layout or component in the ImportDeclarations
    */
   private changeImportDeclarations(fileAST, data) {
     const removeIndex = [];
-    const pageImportDeclarations = [];
-    const layoutImportDeclarations = [];
+    const importDeclarations = [];
+    // const pageImportDeclarations = [];
+    // const layoutImportDeclarations = [];
+    this.existLazy = false;
+
+    // console.log('fileAST: ', JSON.stringify(fileAST));
+    traverse(fileAST, {
+      ImportDeclaration: ({ node, key }) => {
+        const { source } = node;
+        const match = source.value.match(/^\.\/(layouts|pages)\//);
+
+        if (match && match[1]) {
+          const { specifiers } = node;
+          const { name } = specifiers[0].local;
+          importDeclarations.push({
+            index: key,
+            name,
+            type: match[1],
+          });
+        }
+      },
+
+      VariableDeclaration: ({ node, key }) => {
+        const code = generate(node.declarations[0]).code;
+        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"](\.\/(\w+)\/.+)['|"]\)/;
+        const match = code.match(matchLazyReg);
+
+        if (match && match.length > 4) {
+          this.existLazy = true;
+          importDeclarations.push({
+            index: key,
+            name: match[1],
+            type: match[4],
+          });
+        }
+      },
+    });
 
     /**
      * remove import if there is no layout or component in the data 
      */
-    fileAST.program.body.forEach((item, index) => {
-      if (item.type === 'ImportDeclaration') {
-        const matchType = item.source.value.match(/^\.\/(layouts|pages)\//);
-        if (matchType) {
-          const { specifiers } = item;
-          const { name } = specifiers[0].local;
-          let needRemove = false;
-          const type = matchType[1];
+    importDeclarations.forEach((importItem) => {
+      const { name, type, index } = importItem;
+      let needRemove = false;
 
-          // match layout or page
-          if (type) {
-            if (type === LAYOUT_DIRECTORY) {
-              layoutImportDeclarations.push(item);
-            } else {
-              pageImportDeclarations.push(item);
+      // match layout or page
+      if (type) {
+        let findRouter = null;
+
+        if (type === LAYOUT_DIRECTORY) {
+          // layout only first layer
+          findRouter = data.find(item => item.routes && item.component === name);
+        } else if(type === PAGE_DIRECTORY) {
+          findRouter = data.find(item => {
+            let pageItem = null;
+
+            if (!item.routes && item.component === name) {
+              pageItem = item;
             }
-            let findRouter = null;
 
-            if (type === LAYOUT_DIRECTORY) {
-              // layout only first layer
-              findRouter = data.find(item => item.routes && item.component === name);
-            } else {
-              findRouter = data.find(item => {
-                let pageItem = null;
-
-                if (!item.routes && item.component === name) {
-                  pageItem = item;
+            if (item.routes) {
+              item.routes.forEach((route) => {
+                if (route.component === name) {
+                  pageItem = route;
                 }
-
-                if (item.routes) {
-                  item.routes.forEach((route) => {
-                    if (route.component === name) {
-                      pageItem = route;
-                    }
-                  });
-                }
-
-                return pageItem;
               });
             }
-            if (!findRouter) {
-              needRemove = true;
-            }
-          }
 
-          if (needRemove) {
-            removeIndex.unshift(index);
-          }
+            return pageItem;
+          });
+        }
+        if (!findRouter) {
+          needRemove = true;
         }
       }
+
+      if (needRemove) {
+        removeIndex.unshift(index);
+      }
     });
+
     removeIndex.forEach((index) => {
       fileAST.program.body.splice(index, 1);
     });
 
     const existImport = this.existImport;
     function setNewComponent(type, component) {
-      let componentExist;
-      const isLayout = type === 'layout';
+      const componentExist = existImport(importDeclarations, component, type);
 
-      if (isLayout) {
-        componentExist = existImport(layoutImportDeclarations, component);
-      } else {
-        componentExist = existImport(pageImportDeclarations, component);
-      }
-
-      if (!componentExist && isLayout && newLayouts.indexOf(component) > -1) {
-        newLayouts.push(component);
-      }
-
-      if (!componentExist && !isLayout && newPages.indexOf(component) === -1) {
-        newPages.push(component);
+      if (!componentExist && !newImports.find(item => item.name === component)) {
+        newImports.push({
+          type,
+          name: component,
+        });
       }
     }
 
-    /**
-     * add import if there is no layout or component in the ImportDeclarations 
-     */
-    const newPages = [];
-    const newLayouts = [];
+    // /**
+    //  * add import if there is no layout or component in the ImportDeclarations 
+    //  */
+    const newImports = [];
     data.forEach(({ component, routes }) => {
       if (routes) {
-        setNewComponent('layout', component);
-        routes.forEach((route) => setNewComponent('page', route.component));
+        setNewComponent(LAYOUT_DIRECTORY, component);
+        routes.forEach((route) => setNewComponent(PAGE_DIRECTORY, route.component));
       } else {
-        setNewComponent('page', component);
+        setNewComponent(PAGE_DIRECTORY, component);
       }
     });
 
-    this.addImportDeclaration(PAGE_DIRECTORY, newPages, fileAST);
-    this.addImportDeclaration(LAYOUT_DIRECTORY, newLayouts, fileAST);
-  }
-
-  /**
-   * add import to ast
-   *  eg.
-   *     import Page1 from './pages/Page1';
-   */
-  private addImportDeclaration(type, newList, fileAST): void {
-    newList.forEach(name => {
-      const importDeclaration = t.importDeclaration(
-        [t.importDefaultSpecifier(t.identifier(name))],
-        t.stringLiteral(`./${type}/${name}`)
-      );
-      const fitstIndex = this.findFirstImportIndex(type, fileAST);
-      fileAST.program.body.splice(fitstIndex, 0, importDeclaration);
+    /**
+     * add import to ast
+     *  eg.
+     *     import Page1 from './pages/Page1';
+     *            or
+     *     const Profile = React.lazy(() => import('./pages/Profile'));
+     */
+    let code = '';
+    newImports.forEach(({name, type}) => {
+      if (this.existLazy) {
+        code += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
+      } else {
+        code += `import ${name} from './${type}/${name}';\n`;
+      }
     });
+
+    const importCodeAST = parser.parse(code, {
+      sourceType: 'module',
+      plugins: [
+        'dynamicImport',
+      ],
+    });
+
+    const firstIndex = this.findFirstImportIndex(fileAST);
+    fileAST.program.body.splice(firstIndex, 0, ...importCodeAST.program.body);
   }
 
   /**
    * exist layout or page in the ImportDeclarations 
    */
-  private existImport(list, type) {
+  private existImport(list, name, type) {
     return list.some((item) => {
-      const { specifiers } = item;
-      const { name } = specifiers[0].local;
-
-      if (name === type) {
+      if (name === item.name && type === item.type) {
         return true;
       }
       return false;
@@ -286,23 +318,13 @@ export default class Router extends EventEmitter {
   }
 
   /**
-   * find last page or layout import index in ast
-   *  eg.
-   *    import Layout1 from './layouts/Layout1';
-   *    import Page1 from './pages/Page1';
-   *    import Page2 from './pages/Page2';
-   * 
-   *    findFirstImportIndex('pages') => 1
+   * find first import index
    */
-  private findFirstImportIndex(type, fileAST): number {
-    let firstIndex = -1;
+  private findFirstImportIndex(fileAST): number {
+    let firstIndex = 0;
     fileAST.program.body.some((item, index) => {
       if (item.type === 'ImportDeclaration') {
-        const match = item.source.value.indexOf(`./${type}/`) === 0;
-        if (match) {
-          firstIndex = index;
-          return true;
-        }
+        return true;
       }
       return false;
     });

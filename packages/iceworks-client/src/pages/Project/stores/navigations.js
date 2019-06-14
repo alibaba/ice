@@ -1,5 +1,5 @@
 import socket from '@src/socket';
-import createUid from '../../../utils/createUid';
+import uid from 'uid';
 import traverse from '../../../utils/traverse';
 
 export default {
@@ -11,7 +11,7 @@ export default {
     // generate id for every config item
     traverse(dataSource.asideMenuConfig, (node) => {
       const cacheNode = node;
-      cacheNode.id = node.id || createUid('Nav');
+      cacheNode.id = node.id || `Nav_${uid(5)}`;
     });
     this.dataSource = {
       ...dataSource,

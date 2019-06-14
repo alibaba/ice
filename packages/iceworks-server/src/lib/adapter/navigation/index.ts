@@ -7,12 +7,13 @@ import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
 
-import { IProjectNavigation, IProject } from '../../../interface';
+import { IProjectNavigation, IProject, INavigationModule } from '../../../interface';
 
 const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
 
-export default class Navigation extends EventEmitter {
+export default class Navigation extends EventEmitter implements INavigationModule {
   public readonly projectPath: string;
+  public readonly project: IProject;
 
   public readonly path: string;
 

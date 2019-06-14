@@ -33,14 +33,15 @@ const NavigationPanel = () => {
     navigationsStore.refresh();
   }
 
-  function onOpenEditModal(data) {
+  function onOpenModal(data) {
     setModalData(data);
     toggleCreateModal();
   }
 
   function onOpenCreateModal() {
-    onOpenEditModal({
+    onOpenModal({
       action: 'create',
+      formData: {},
     });
   }
 
@@ -114,7 +115,7 @@ const NavigationPanel = () => {
         <NavigationTreeConfig
           items={asideMenuConfig}
           onChange={onChangeTree}
-          onOpenEditModal={onOpenEditModal}
+          onOpenEditModal={onOpenModal}
           onDeleteLink={onOpenDeleteModal}
         />
       </div>

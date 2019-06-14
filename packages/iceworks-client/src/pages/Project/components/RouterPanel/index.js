@@ -10,6 +10,7 @@ import stores from '../../stores';
 import styles from './index.module.scss';
 
 let editIndex = -1;
+let editParentIndex = -1;
 let deleteIndex = -1;
 let action = 'create';
 let deleteParent = null;
@@ -43,13 +44,16 @@ const RouterPanel = () => {
     data,
     index,
     parent,
+    parentIndex,
   }) {
     editIndex = index;
+    editParentIndex = parentIndex;
     action = 'edit';
     setModalData({
       formData: data,
       action,
       editIndex,
+      editParentIndex,
       parent,
     });
     toggleCreateModal();
@@ -105,7 +109,12 @@ const RouterPanel = () => {
     toggleDeleteModal();
   }
 
-  function renderCol(item, index, parent) {
+  function renderCol({
+    item,
+    index,
+    parent,
+    parentIndex,
+  }) {
     const { path, component, routes } = item;
     return [
       (
@@ -137,6 +146,7 @@ const RouterPanel = () => {
                 data: item,
                 index,
                 parent,
+                parentIndex,
               })}
             />
             <Icon
@@ -153,7 +163,12 @@ const RouterPanel = () => {
         </li>
       ),
       routes && (
-        routes.map((route, routeIndex) => renderCol(route, routeIndex, item))
+        routes.map((route, routeIndex) => renderCol({
+          item: route,
+          index: routeIndex,
+          parent: item,
+          parentIndex: index,
+        }))
       ),
     ];
   }
@@ -188,7 +203,10 @@ const RouterPanel = () => {
           <div>
             <ul>
               {dataSource.map((item, index) => {
-                return renderCol(item, index);
+                return renderCol({
+                  item,
+                  index,
+                });
               })}
             </ul>
           </div>

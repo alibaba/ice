@@ -69,13 +69,17 @@ const CreateRouterModal = ({
   });
 
   if (modalData.action === 'create') {
-    dataSource = [{
-      label: '页面(普通组件)',
-      children: pageSelects,
-    }, {
-      label: '布局(只有布局才能配置子路由)',
-      children: layoutSelects,
-    }];
+    if (parent) {
+      dataSource = pageSelects;
+    } else {
+      dataSource = [{
+        label: '页面(普通组件)',
+        children: pageSelects,
+      }, {
+        label: '布局(只有布局才能配置子路由)',
+        children: layoutSelects,
+      }];
+    }
   } else if (formData.routes) {
     dataSource = layoutSelects;
   } else {
@@ -115,10 +119,24 @@ const CreateRouterModal = ({
       return callback('路径必须以 \'/\' 开头');
     }
     const router = routers.find((item, index) => {
+      let exist = false;
       if (item.path === value && modalData.editIndex !== index) {
+        exist = true;
         return true;
       }
-      return false;
+      if (item.routes) {
+        exist = item.routes.some((route, childIndex) => {
+          if (
+            route.path === value &&
+            modalData.editIndex !== childIndex &&
+            modalData.editParentIndex !== index
+          ) {
+            return true;
+          }
+          return false;
+        });
+      }
+      return exist;
     });
 
     if (router) {

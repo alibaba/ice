@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Modal from '@components/Modal';
 import { Input, Select, Switch, Form, Field } from '@alifd/next';
-import createUid from '../../../../utils/createUid';
+import uid from 'uid';
 import useWhenValueChanges from '../../../../hooks/useWhenValueChanges';
 
 const { Item: FormItem } = Form;
@@ -39,18 +39,24 @@ const CreateNavigationModal = ({
   });
 
   function onChange(value) {
-    setFormData(value);
+    const cacheValues = {
+      ...value,
+    };
+    if (action === 'create') {
+      delete cacheValues.id;
+    }
+    setFormData(cacheValues);
   }
 
   function onSubmit() {
-    field.validate((errors, values) => {
+    field.validate((errors) => {
       const cacheValues = {
-        ...values,
+        ...formData,
       };
       if (!errors) {
         let id = '';
         if (action === 'create') {
-          id = createUid('Nav');
+          id = `Nav_${uid(5)}`;
 
           if (cacheValues.linkType === 'linkGroup') {
             cacheValues.children = [];
@@ -58,10 +64,13 @@ const CreateNavigationModal = ({
             cacheValues.external = true;
           }
         }
+        if (cacheValues.linkType !== 'linkGroup') {
+          delete cacheValues.children;
+        }
         delete cacheValues.linkType;
         onOk(action, {
           ...cacheValues,
-          id: values.id || id,
+          id: formData.id || id,
         });
       }
     });

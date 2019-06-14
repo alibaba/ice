@@ -18,7 +18,6 @@ const NavigationTreeConfig = ({
   onDeleteLink,
 }) => {
   const [selectedKey] = useState([], '');
-  const treeData = items;
 
   function onEdit(linkType, item) {
     onOpenEditModal({
@@ -113,12 +112,18 @@ const NavigationTreeConfig = ({
       return;
     }
 
-    const { dropPosition } = info;
-    const dragProps = info.dragNode.props;
-    const dropProps = info.node.props;
+    const {
+      dropPosition,
+      dragNode: {
+        props: dragProps,
+      },
+      node: {
+        props: dropProps,
+      },
+    } = info;
     const { eventKey: dragKey } = dragProps;
     const { eventKey: dropKey } = dropProps;
-    const data = cloneDeep(treeData);
+    const data = cloneDeep(items);
 
     let dragNode;
     traverse(data, (node, array, index) => {
@@ -153,12 +158,12 @@ const NavigationTreeConfig = ({
   };
 
   /**
-   * 选择隐藏、显示导航
+   * hide/show navigation
    */
   const onCheck = (checkedKeys, extra) => {
     const { checked, node: nodeItem } = extra;
     const { eventKey } = nodeItem.props;
-    const data = cloneDeep(treeData);
+    const data = cloneDeep(items);
 
     traverse(data, (node) => {
       const cacheNode = node;
@@ -175,17 +180,15 @@ const NavigationTreeConfig = ({
   return (
     <div>
       <Tree
-        // checkable
         draggable
         selectable
         defaultExpandAll
-        // checkedKeys={checkedKeys}
         checkStrictly
         onDrop={onDrop}
         onCheck={onCheck}
-        className="navbar-config-panel-tree"
+        className="navbarConfigPanelTree"
       >
-        {loopRenderNodeElement(treeData)}
+        {loopRenderNodeElement(items)}
       </Tree>
     </div>
   );
@@ -201,19 +204,26 @@ NavigationTreeConfig.defaultProps = {
 
 NavigationTreeConfig.propTypes = {
   /**
-   * 主键，通常用 id
+   * primary key
    */
   primaryKey: PropTypes.string,
   /**
-   * 导航数据
+   * navigation data
    */
   items: PropTypes.array,
   /**
-   * 导航数据发生变化时调用
+   * on navigation data change
    */
   onChange: PropTypes.func,
 
+  /**
+   * open edit modal
+   */
   onOpenEditModal: PropTypes.func,
+
+  /**
+   * delete link
+   */
   onDeleteLink: PropTypes.func,
 };
 

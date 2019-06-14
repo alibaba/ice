@@ -1,9 +1,9 @@
 @import '../../variables.scss';
 
 /*
- * 修改 tree 的样式，需要定义内部样式
+ * change Next Tree style
  */
-.navbar-config-panel-tree {
+.navbarConfigPanelTree {
   .next-tree-node-handle {
     background-color: white;
     &:hover {
@@ -71,6 +71,12 @@
       right: 10px;
       top: 5px;
       cursor: pointer;
+    }
+
+    &.next-selected .next-tree-node-label-wrapper .next-tree-node-label,
+    &:focus .next-tree-node-label-wrapper .next-tree-node-label,
+    .next-tree-node-label:hover {
+      background-color: transparent;
     }
   }
 
