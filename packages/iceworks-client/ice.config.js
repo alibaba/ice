@@ -21,12 +21,14 @@ module.exports = {
       themePackage: [{
         name: '@alifd/theme-iceworks-dark',
         themeConfig: {
+          'panel-bg': '#434557',
           'sub-menu-bg': '#434557',
           'global-bar-bg': '#333646',
         },
       }, {
         name: '@alifd/theme-2',
         themeConfig: {
+          'panel-bg': '#fff',
           'sub-menu-bg': '#fff',
           'global-bar-bg': '#5584FF',
         },
