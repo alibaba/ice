@@ -1,72 +1,14 @@
+import * as fs from 'fs';
 import * as path from 'path';
-import * as Conf from 'conf';
+// import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
 import * as userHome from 'user-home';
+const Conf = require('conf');
 
-// @TODO
-const defaultCwd = path.join(__dirname, '../../data');
-mkdirp.sync(defaultCwd);
+const conf_path = path.join(userHome, '.iceworks');
 
-class DataStore extends Conf {
-  constructor(options?) {
-    options = {
-      name: 'config',
-      ...options,
-    };
-
-    if (options.cwd) {
-      options.cwd = path.isAbsolute(options.cwd)
-        ? options.cwd
-        : path.join(defaultCwd, options.cwd);
-    } else {
-      options.cwd = defaultCwd;
-    }
-
-    options.configName = options.name;
-    delete options.name;
-    super(options);
-  }
-}
-
-class Store {
-  private store: Conf;
-
-  constructor(options?) {
-    this.store = new DataStore(options);
-  }
-
-  set(key: string, values: any): void {
-    this.store.set(key, values);
-  }
-
-  get(key: string): any {
-    return this.store.get(key);
-  }
-
-  add(key: string, value: any): void {
-    const values = this.store.get(key);
-    if (Array.isArray(values)) {
-      const filteredVaules = values.filter((v) => v !== value);
-      filteredVaules.unshift(value);
-      this.store.set(key, filteredVaules);
-    }
-  }
-
-  remove(key: string, filter: (v: any) => boolean): void {
-    const values = this.store.get(key) || [];
-    if (Array.isArray(values)) {
-      this.store.set(key, values.filter(filter));
-    }
-  }
-
-  has(key: string, value: string): boolean {
-    const values = this.store.get(key);
-    return Array.isArray(values) ? values.some((v) => v === value) : false;
-  }
-
-  delete(key: string): void {
-    this.store.delete(key);
-  }
+if (!fs.existsSync(conf_path)) {
+  mkdirp(conf_path);
 }
 
 const schema = {
@@ -116,7 +58,8 @@ const schema = {
           '官方',
           'React',
           'ICE'
-        ]
+        ],
+        official: true
       }
     ],
   },
@@ -126,4 +69,8 @@ const schema = {
   },
 };
 
-export default new Store({ schema });
+export default new Conf({
+  schema,
+  configName: 'db',
+  cwd: conf_path,
+});

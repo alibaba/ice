@@ -86,9 +86,14 @@ export default (app) => {
         throw Error('material\'s name is required.');
       }
 
-      storage.add('material', {
+      const material = storage.get('material');
+      const currentItem = {
         official: false, name, description, homepage, logo, source
-      });
+      }
+      const newMaterials = material.filter((item) => item !== currentItem);
+      newMaterials.unshift(currentItem)
+      storage.add('material', newMaterials);
+
       const materialData = formatMaterialData(data);
       return { resource: storage.get('material'), current: materialData };
     }
@@ -97,7 +102,10 @@ export default (app) => {
       const { args: { url }, logger } = ctx;
       logger.info(`delete material, source URL: ${url}`);
 
-      storage.remove('material', (item) => item.source !== url);
+      const material = storage.get('material');
+      const newMaterials = material.filter(item => item.source !== url);
+
+      storage.set('material', newMaterials);
 
       return storage.get('material');
     }
