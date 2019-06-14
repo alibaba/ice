@@ -15,14 +15,10 @@ export default (app) => {
     }
 
     async create(ctx) {
-      const { args, socket } = ctx;
+      const { args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-
-      project.page.on('create.status', (data) => {
-        socket.emit('project.page.create.status', data);
-      });
-      await project.page.create(args);
+      await project.page.create(args, ctx);
     }
   };
 };

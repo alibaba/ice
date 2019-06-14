@@ -82,7 +82,7 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], false, this.project, context.socket);
+      return await installDependency([{ package: packageName, version }], false, this.project, context.socket, 'page');
     }));
   }
 
@@ -130,7 +130,7 @@ export default class Page implements IPageModule {
     const { name, blocks } = page;
 
     // create page dir
-    context.socket.emit('create.status', { text: '创建页面目录...', percent: 10 });
+    context.socket.emit('project.page.create.status', { text: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -144,15 +144,15 @@ export default class Page implements IPageModule {
     }
 
     // download blocks
-    context.socket.emit('create.status', { text: '正在下载区块...', percent: 40 });
+    context.socket.emit('project.page.create.status', { text: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
-    context.socket.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
+    context.socket.emit('project.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
     await this.installBlocksDependencies(blocks, context);
 
     // create page file
-    context.socket.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
+    context.socket.emit('project.page.create.status', { text: '正在创建页面文件...', percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {

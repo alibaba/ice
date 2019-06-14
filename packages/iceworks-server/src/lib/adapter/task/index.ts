@@ -64,7 +64,7 @@ export default class Task implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      context.socket.emit(eventName, {
+      context.socket.emit(`project.task.${eventName}`, {
         status: TASK_STATUS_WORKING,
         chunk: buffer.toString(),
       });
@@ -73,7 +73,7 @@ export default class Task implements ITaskModule {
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
         this.process[command] = null;
-        context.socket.emit(eventName, {
+        context.socket.emit(`project.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
@@ -103,7 +103,7 @@ export default class Task implements ITaskModule {
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
       if (code === 0) {
-        context.socket.emit(eventName, {
+        context.socket.emit(`project.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
