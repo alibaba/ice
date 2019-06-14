@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
 import SubRoutes from '@components/SubRoutes';
-import Card from '@components/Card';
 import { getMenuData } from '@utils/getMenuData';
 import styles from './index.module.scss';
 
