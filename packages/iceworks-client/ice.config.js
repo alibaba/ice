@@ -26,7 +26,7 @@ module.exports = {
           'global-bar-bg': '#333646',
         },
       }, {
-        name: '@alifd/theme-2',
+        name: '@alifd/theme-iceworks-light',
         themeConfig: {
           'panel-bg': '#fff',
           'sub-menu-bg': '#fff',
