@@ -1,5 +1,55 @@
 // TODO：https://github.com/vladocar/screenshoteer
-const puppeteer = require('puppeteer');
+const spawn = require('cross-spawn');
+const chalk = require('chalk');
+
+function isNotFoundError(error = '') {
+  return error.indexOf('Cannot find module') === 0;
+}
+
+/**
+ * get Puppeteer(headless chromium)
+ */
+async function getPuppeteer() {
+  try {
+    // get Puppeteer from local node_modules
+    return require('puppeteer');
+  } catch (error) {
+    if (isNotFoundError(error.message)) {
+      try {
+        // get Puppeteer from global node_modules
+        return require('import-global')('puppeteer');
+      } catch (importGlobalErr) {
+        // if not found puppeteer from global node_modules
+        // install it to global node_modules
+        if (isNotFoundError(importGlobalErr.message)) {
+          console.log(chalk.yellow('\n\nCannot find puppeteer in current environment.'));
+          console.log(chalk.yellow('Installing puppeteer, please wait a moment.\n'));
+
+          // set puppeteer download host
+          // https://github.com/cnpm/cnpmjs.org/issues/1246#issuecomment-341631992
+          spawn.sync('npm', ['config', 'set', 'puppeteer_download_host=https://storage.googleapis.com.cnpmjs.org']);
+          const result = spawn.sync('npm', ['install', 'puppeteer@1.17.0', '-g', '--registry', 'https://registry.npm.taobao.org'], { stdio: 'inherit' });
+          spawn.sync('npm', ['config', 'delete', 'puppeteer_download_host']);
+
+          // if get spawn error, exit
+          if (result.error) {
+            console.log(chalk.red('\n\nScreenshot Error. \nPlease manual install puppeteer using the following commands:'));
+            console.log(chalk.white('\n  npm uninstall puppeteer -g'));
+            console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
+            console.log(chalk.white('\n  idev screenshot\n'));
+            process.exit(1);
+          }
+
+          console.log(chalk.yellow('Puppeteer installed.\n'));
+          return require('import-global')('puppeteer');
+        }
+        throw Error(importGlobalErr);
+      }
+    }
+    throw Error(error);
+  }
+}
+
 /**
  * 精确截取页面中某个元素的快照
  *
@@ -52,33 +102,42 @@ async function screenBySelector(page, opts = {}) {
  * @param {Object|Null} viewport 如何裁剪
  */
 async function screenshotDOMElement(url, selector, path, viewport) {
-  // 启动 puppeteer 创建一个 Browser 对象
-  const browser = await puppeteer.launch();
+  try {
+    const puppeteer = await getPuppeteer();
+    // 启动 puppeteer 创建一个 Browser 对象
+    const browser = await puppeteer.launch();
 
-  // 打开浏览器后，新建 Tab 页
-  const page = await browser.newPage();
+    // 打开浏览器后，新建 Tab 页
+    const page = await browser.newPage();
 
-  // 默认 Viewpoint
-  const defaultViewport = {
-    width: 1240,
-    height: 600,
-    deviceScaleFactor: 2,
-  };
+    // 默认 Viewpoint
+    const defaultViewport = {
+      width: 1240,
+      height: 600,
+      deviceScaleFactor: 2,
+    };
 
-  // 设置 Tab 页的尺寸，puppeteer 允许对每个 Tab 页单独设置尺寸
-  page.setViewport(viewport || defaultViewport);
+    // 设置 Tab 页的尺寸，puppeteer 允许对每个 Tab 页单独设置尺寸
+    page.setViewport(viewport || defaultViewport);
 
-  // Tab 访问需要截图的页面，使用await可以等待页面加载完毕
-  await page.goto(url);
+    // Tab 访问需要截图的页面，使用await可以等待页面加载完毕
+    await page.goto(url);
 
-  await screenBySelector(page, {
-    path,
-    selector,
-    noClip: !!viewport,
-  });
+    await screenBySelector(page, {
+      path,
+      selector,
+      noClip: !!viewport,
+    });
 
-  // 关闭 Chromium
-  await browser.close();
+    // 关闭 Chromium
+    await browser.close();
+  } catch (err) {
+    console.log(chalk.red('\n\nScreenshot Error. \nPlease manual install puppeteer using the following commands:'));
+    console.log(chalk.white('\n  npm uninstall puppeteer -g'));
+    console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
+    console.log(chalk.white('\n  idev screenshot\n'));
+    process.exit(1);
+  }
 }
 
 module.exports = screenshotDOMElement;
