@@ -1,16 +1,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
 import * as userHome from 'user-home';
 
+const Conf = require('conf');
 const conf_path = path.join(userHome, '.iceworks');
 
 if (!fs.existsSync(conf_path)) {
   mkdirp(conf_path);
 }
 
-const schema: any = {
+const schema = {
   workFolder: {
     type: 'string',
     default: userHome,
