@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as openFolder from 'open';
+import * as execa from 'execa';
 import * as launchEditor from 'launch-editor';
 import storage from '../../../../lib/storage';
 
@@ -12,6 +13,25 @@ export default (app) => {
       return path.join(...args);
     }
 
+    async startIceworks({ socket }) {
+      console.log('\n Starting iceworks...\n');
+
+      const child = execa('iceworks');
+
+      child.stdout.on('data', (buffer) => {
+        const data = buffer.toString();
+        console.log(data);
+
+        if (data.indexOf('started on http://127.0.0.1') > -1) {
+          socket.emit('system.start.iceworks', true);
+        }
+      });
+
+      child.on('error', (buffer) => {
+        socket.emit('system.start.iceworks', false);
+        throw new Error(buffer.toString());
+      });
+    }
 
     async openFolder(ctx) {
       const { args: { path } } = ctx;

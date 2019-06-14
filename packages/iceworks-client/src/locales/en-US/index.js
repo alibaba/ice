@@ -1,7 +1,8 @@
 export default {
   // global
   'iceworks.global.connect': 'Connect',
-  'iceworks.global.disconnect': 'Disconnect',
+  'iceworks.global.disconnect.title': 'Service closed',
+  'iceworks.global.disconnect.message': 'Local service is closed, click to confirm restart service',
   'iceworks.global.button.yes': 'Yes',
   'iceworks.global.button.no': 'No',
   'iceworks.global.fallback.title': 'Loading',

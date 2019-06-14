@@ -44,6 +44,7 @@ export default (app: Application) => {
     ['home.setting.getEditor', home.setting.getEditor],
 
     ['home.system.getPath', home.system.getPath],
+    ['home.system.startIceworks', home.system.startIceworks],
     ['home.system.openFolder', home.system.openFolder],
     ['home.system.openEditor', home.system.openEditor],
   ];

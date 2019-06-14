@@ -1,7 +1,8 @@
 export default {
   // global
   'iceworks.global.connect': '已连接',
-  'iceworks.global.disconnect': '断开连接',
+  'iceworks.global.disconnect.title': '服务关闭',
+  'iceworks.global.disconnect.message': '本地服务已关闭，点击确认立即重启服务',
   'iceworks.global.button.yes': '确定',
   'iceworks.global.button.no': '取消',
   'iceworks.global.fallback.title': '加载错误',

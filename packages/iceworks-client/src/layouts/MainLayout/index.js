@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBar from '@components/NavigationBar';
 import SubRoutes from '@components/SubRoutes';
-import ConnectBar from '@components/ConnectBar';
+import ConnectModal from '@components/ConnectModal';
 import GlobalBar from '@components/GlobalBar';
 import menuConfig from '@src/menuConfig';
 import routerConfig from '@src/routerConfig';
@@ -15,19 +15,19 @@ const MainLayout = () => {
 
   useEffect(() => {
     project.refresh();
-
-    socket.on('connect', () => {
-      setConnect(true);
-    });
-
-    socket.on('disconnect', () => {
-      setConnect(false);
-    });
   }, []);
+
+  socket.on('connect', () => {
+    setConnect(true);
+  });
+
+  socket.on('disconnect', () => {
+    setConnect(false);
+  });
 
   return (
     <div className={styles.container}>
-      <ConnectBar connect={connect} />
+      <ConnectModal connect={connect} />
       <div className={styles.content}>
         <NavigationBar menuData={menuConfig} />
         <div className={styles.main}>
