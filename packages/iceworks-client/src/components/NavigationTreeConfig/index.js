@@ -6,7 +6,6 @@ import cloneDeep from 'lodash.clonedeep';
 
 import traverse from '../../utils/traverse';
 import styles from './index.module.scss';
-import './index.scss';
 
 const { Node: TreeNode } = Tree;
 
@@ -186,7 +185,7 @@ const NavigationTreeConfig = ({
         checkStrictly
         onDrop={onDrop}
         onCheck={onCheck}
-        className="navbarConfigPanelTree"
+        className={styles.navbarConfigPanelTree}
       >
         {loopRenderNodeElement(items)}
       </Tree>
