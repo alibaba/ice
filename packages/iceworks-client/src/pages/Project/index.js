@@ -40,9 +40,11 @@ const panels = {
 
 const Project = ({ history }) => {
   const { location } = history;
-  const [pages, layouts, navigations, routers] = projectStores.useStores([
+  const [pages, layouts, git, oss, navigations, routers] = projectStores.useStores([
     'pages',
     'layouts',
+    'git',
+    'oss',
     'navigations',
     'routers',
   ]);
@@ -59,6 +61,8 @@ const Project = ({ history }) => {
     Layout: layouts,
     Navigation: navigations,
     Router: routers,
+    Git: git,
+    OSS: oss,
   };
   const {
     material,

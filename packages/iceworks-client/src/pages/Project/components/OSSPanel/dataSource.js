@@ -1,0 +1,21 @@
+
+export default [
+  { value: 'oss-cn-hangzhou', label: '华东 1' },
+  { value: 'oss-cn-shanghai', label: '华东 2' },
+  { value: 'oss-cn-qingdao', label: '华北 1' },
+  { value: 'oss-cn-beijing', label: '华北 2' },
+  { value: 'oss-cn-zhangjiakou', label: '华北 3' },
+  { value: 'oss-cn-huhehaote', label: '华北 5' },
+  { value: 'oss-cn-shenzhen', label: '华南 1' },
+  { value: 'oss-cn-hongkong', label: '香港' },
+  { value: 'oss-us-west-1', label: '美国西部 1' },
+  { value: 'oss-us-east-1', label: '美国东部 1' },
+  { value: 'oss-ap-southeast-1', label: '亚太东南 1' },
+  { value: 'oss-ap-southeast-2', label: '亚太东南 2' },
+  { value: 'oss-ap-southeast-3', label: '亚太东南 3' },
+  { value: 'oss-ap-southeast-5', label: '亚太东南 5' },
+  { value: 'oss-ap-northeast-1', label: '亚太东北 1' },
+  { value: 'oss-ap-south-1', label: '亚太南部 1' },
+  { value: 'oss-eu-central-1', label: '欧洲中部 1' },
+  { value: 'oss-me-east-1', label: '中东东部 1' },
+];

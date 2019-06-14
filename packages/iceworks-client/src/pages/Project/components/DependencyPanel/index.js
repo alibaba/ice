@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Tab } from '@alifd/next';
+import { Tab } from '@alifd/next';
+import Icon from '@components/Icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
@@ -24,7 +25,7 @@ const DependencyItem = ({
         {
           wantedVestion ?
             <div title={<FormattedMessage id="iceworks.project.panel.dependency.main.upgrade" values={{ wantedVestion }} />}>
-              <Icon type="download" size="xs" className={styles.download} onClick={() => onUpgrade(packageName, isDev)} />
+              <Icon type="package" size="small" title="升级依赖" className={styles.download} onClick={() => onUpgrade(packageName, isDev)} />
             </div> :
             null
         }
@@ -84,7 +85,7 @@ const DependencyPanel = () => {
               {(title) => (
                 <Icon
                   className={styles.icon}
-                  type="refresh"
+                  type="reload"
                   size="small"
                   onClick={refresh}
                   title={title}
@@ -100,7 +101,7 @@ const DependencyPanel = () => {
                       [styles.reseting]: dataSource.status === STATUS_RESETING,
                     })
                   }
-                  type="download"
+                  type="package"
                   size="small"
                   onClick={onReset}
                   title={title}
@@ -115,7 +116,7 @@ const DependencyPanel = () => {
                     [styles.reseting]: dataSource.status === STATUS_RESETING,
                   })
                 }
-                type="add"
+                type="plus"
                 size="small"
                 onClick={onCreate}
                 title={title}

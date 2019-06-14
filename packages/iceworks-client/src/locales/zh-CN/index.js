@@ -4,6 +4,8 @@ export default {
   'iceworks.global.disconnect': '断开连接',
   'iceworks.global.button.yes': '确定',
   'iceworks.global.button.no': '取消',
+  'iceworks.global.button.submit': '提交',
+  'iceworks.global.button.selectAll': '全选',
   'iceworks.global.fallback.title': '加载错误',
 
   // menu
@@ -71,7 +73,33 @@ export default {
 
   'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.def.title': 'DEF 发布',
+
+  // project git
   'iceworks.project.panel.git.title': 'Git',
+  'iceworks.project.panel.git.button.add': '新建分支',
+  'iceworks.project.panel.git.button.switch': '切换分支',
+  'iceworks.project.panel.git.button.pull': '拉取远程代码',
+  'iceworks.project.panel.git.button.push': '发布本地代码',
+  'iceworks.project.panel.git.button.edit': '修改仓库地址',
+  'iceworks.project.panel.git.button.refresh': '刷新',
+  'iceworks.project.panel.git.addRemote': '关联仓库',
+  'iceworks.project.panel.git.remote.url.label': '仓库地址：',
+  'iceworks.project.panel.git.edit.title': '修改仓库地址',
+  'iceworks.project.panel.git.createBranch.title': '新建分支',
+  'iceworks.project.panel.git.createBranch.branch.label': '新分支名：',
+  'iceworks.project.panel.git.main.status.conflicted': '冲突',
+  'iceworks.project.panel.git.main.status.not_added': '未添加',
+  'iceworks.project.panel.git.main.status.modified': '已变更',
+  'iceworks.project.panel.git.main.status.created': '新创建',
+  'iceworks.project.panel.git.main.status.deleted': '已删除',
+  'iceworks.project.panel.git.main.status.renamed': '重命名',
+  'iceworks.project.panel.git.main.submit.file': '选择文件提交',
+  'iceworks.project.panel.git.main.submit.message': '输入信息提交',
+  'iceworks.project.panel.git.main.tip.unstageFiles': '变更文件',
+  'iceworks.project.panel.git.main.tip.refresh': '变更信息不会实时刷新，提交前请先通过右上角的按钮更新状态',
+  'iceworks.project.panel.git.switch.title': '切换分支',
+  'iceworks.project.panel.git.switch.select': '选择分支',
+  'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
   'iceworks.project.panel.oss.title': 'OSS',
 
   // project navigation

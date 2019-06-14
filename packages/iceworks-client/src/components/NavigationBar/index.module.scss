@@ -1,25 +1,35 @@
 @import '../../variables.scss';
 
-.navBar {
+.wrap {
   background: $brand-color-secondary;
   box-shadow: $shadow-right;
+  display: flex;
+  flex-direction: column;
 
-  .navItem {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 78px;
-    height: 78px;
-    border-left: 3px solid $brand-color-secondary;
+  .list {
+    flex: 1;
 
-    .navItemIcon {
-      color: $white;
-      margin-bottom: 4px;
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 78px;
+      height: 78px;
+      border-left: 3px solid $brand-color-secondary;
+  
+      .navItemIcon {
+        color: $white;
+        margin-bottom: 4px;
+      }
+  
+      .navItemText {
+        color: $white;
+      }
     }
+  }
 
-    .navItemText {
-      color: $white;
-    }
+  .user {
+    margin-bottom: 24px;
   }
 }

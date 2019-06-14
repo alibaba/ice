@@ -30,5 +30,20 @@ export default (app) => {
         directories,
       };
     }
+
+    async setUser({ args }) {
+      const { name, workId, avatarUrl } = args;
+      if (workId && name && avatarUrl) {
+        storage.set('user', { name, workId, avatarUrl, isLogin: true });
+      } else {
+        throw new Error('用户信息有误，登录失败');
+      }
+
+      return storage.get('user');
+    }
+
+    async getUser() {
+      return storage.get('user');
+    }
   };
 };

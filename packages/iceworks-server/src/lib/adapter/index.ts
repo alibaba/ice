@@ -6,4 +6,8 @@ import Layout from './layout';
 import Navigation from './navigation';
 import Router from './router';
 
-export { Page, Dependency, Configuration, Task, Layout, Navigation, Router };
+import Git from './git';
+import DEF from './def';
+import OSS from './oss';
+
+export { Page, Dependency, Configuration, Task, Layout, Git, DEF, OSS, Navigation, Router };
