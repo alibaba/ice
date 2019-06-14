@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import { IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
@@ -7,17 +6,21 @@ import * as dir from 'node-dir';
 
 const DOMAIN = 'aliyuncs.com';
 
-export default class OSS extends EventEmitter implements IOSSModule {
+export default class OSS implements IOSSModule {
   public project: IProject;
+  public storage: any;
 
   public readonly buildDir: string = 'build';
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
   }
 
-  async getBuckets(params: IOSSGetBucketsParams): Promise<IOSSBucket[]> {
+  async getBuckets(): Promise<IOSSBucket[]> {
+    const oss = this.storage.get('oss');
+    const params: IOSSGetBucketsParams = oss.find(({ project }) => project === this.project.path);
     const { region } = params;
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
     
@@ -25,7 +28,33 @@ export default class OSS extends EventEmitter implements IOSSModule {
     return buckets;
   }
 
-  async upload(params: IOSSUploadParams): Promise<IUploadResult[]> {
+  async getConfig() {
+    const oss = this.storage.get('oss');
+    return oss.find(({ project }) => project === this.project.path) || {};
+  }
+
+  async setConfig(args) {
+    const oss = this.storage.get('oss');
+
+    let newConfig;
+    const projectOSS = oss.find(({ project }) => project === this.project.path);
+    if (projectOSS) {
+      // Change the prototype chain
+      newConfig = Object.assign(projectOSS, args, { project: this.project.path });
+    } else {
+      newConfig = {...args, project: this.project.path};
+      oss.push({...args, project: this.project.path});
+    }
+    
+    this.storage.set('oss', oss);
+
+    return newConfig;
+  }
+
+  async upload(): Promise<IUploadResult[]> {
+    const oss = this.storage.get('oss');
+    const params: IOSSUploadParams = oss.find(({ project }) => project === this.project.path);
+
     const buildPath = path.join(this.project.path, this.buildDir)
     if (!await pathExists(buildPath)) {
       throw new Error(`构建目录 ${this.buildDir} 不存在`);

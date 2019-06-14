@@ -1,15 +1,16 @@
-import * as EventEmitter from 'events';
 import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../interface';
 import * as gitPromie from 'simple-git/promise';
 
-export default class Git extends EventEmitter implements IGitModule {
+export default class Git implements IGitModule {
   public project: IProject;
+  public storage: any;
 
   private gitTools: any;
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.gitTools = gitPromie(this.project.path);
   }
 

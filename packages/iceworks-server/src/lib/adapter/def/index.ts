@@ -1,6 +1,5 @@
 /** eslint camelcase:0 */
 
-import * as EventEmitter from 'events';
 import Client from './client';
 import { IProject, IDEFModule, IDEFPushParams } from '../../../interface';
 
@@ -12,12 +11,14 @@ const token = isDev
   : '72d7d45ac4495e9fb0047a96579a9af886e5c869f8ae148b68957c543d49ada1';
 const env = isDev ? 'daily' : 'prod';
 
-export default class DEF extends EventEmitter implements IDEFModule {
+export default class DEF implements IDEFModule {
   public project: IProject;
-
-  constructor(project: IProject) {
-    super();
+  public storage: any;
+ 
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
   }
 
   async push(params: IDEFPushParams): Promise<void> {
@@ -35,20 +36,20 @@ export default class DEF extends EventEmitter implements IDEFModule {
     });
 
     client.on('start', () => {
-      this.emit('push.start');
+      this.project.emit('push.start');
     });
     client.on('message', (message) => {
-      this.emit('push.data', `${message}\n\r`);
+      this.project.emit('push.data', `${message}\n\r`);
     });
     client.on('build_message', (message) => {
-      this.emit('push.data', message);
+      this.project.emit('push.data', message);
     });
     client.on('error', (error) => {
-      this.emit('push.data', `\r\n${error.message}`);
-      this.emit('push.exit', 1);
+      this.project.emit('push.data', `\r\n${error.message}`);
+      this.project.emit('push.exit', 1);
     });
     client.on('success', () => {
-      this.emit('push.exit', 0);
+      this.project.emit('push.exit', 0);
     });
   }
 }

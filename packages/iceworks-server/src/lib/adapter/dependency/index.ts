@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as util from 'util';
@@ -12,7 +11,7 @@ const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (dependencies: ICreateDependencyParam[], adapterModule: IBaseModule, isDev?: boolean): Promise<void> => {
   console.log('dependencies', dependencies);
-  adapterModule.emit('install.data', '开始安装依赖');
+  adapterModule.project.emit('install.data', '开始安装依赖');
 
   const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
     dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
@@ -31,7 +30,7 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
     const text = buffer.toString();
     console.log('install.data:', text);
 
-    adapterModule.emit('install.data', text);
+    adapterModule.project.emit('install.data', text);
   });
 
   childProcess.on('error', (buffer) => {
@@ -41,20 +40,22 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
   childProcess.on('exit', (code, signal) => {
     console.log('install.exit:', code, signal);
 
-    adapterModule.emit('install.exit', code);
+    adapterModule.project.emit('install.exit', code);
   });
 };
 
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
 
-export default class Dependency extends EventEmitter implements IDependencyModule {
+export default class Dependency implements IDependencyModule {
   public project: IProject;
+  public storage: any;
 
   public readonly path: string;
-
-  constructor(project: IProject) {
-    super();
+  
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.path = path.join(this.project.path, 'node_modules');
   }
 
@@ -137,13 +138,13 @@ export default class Dependency extends EventEmitter implements IDependencyModul
   }
 
   public async reset() {
-    this.emit('reset.data', '正在清理 node_modules 目录，请稍等');
+    this.project.emit('reset.data', '正在清理 node_modules 目录，请稍等');
 
     await rimrafAsync(this.path);
 
-    this.emit('reset.data', '清理 node_modules 目录完成');
+    this.project.emit('reset.data', '清理 node_modules 目录完成');
 
-    this.emit('reset.data', '开始安装依赖...');
+    this.project.emit('reset.data', '开始安装依赖...');
 
     const childProcess = execa('npm', ['install'], {
       cwd: this.project.path,
@@ -154,7 +155,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
       const text = buffer.toString();
       console.log('reset.data:', text);
 
-      this.emit('reset.data', text);
+      this.project.emit('reset.data', text);
     });
 
     childProcess.on('error', (buffer) => {
@@ -164,14 +165,14 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     childProcess.on('exit', (code, signal) => {
       console.log('reset.exit:', code, signal);
 
-      this.emit('reset.exit', code);
+      this.project.emit('reset.exit', code);
     });
   }
 
   public async upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void> {
     const { package: packageName } = denpendency;
 
-    this.emit('upgrade.data', `开始更新依赖：${packageName}...`);
+    this.project.emit('upgrade.data', `开始更新依赖：${packageName}...`);
 
     const childProcess = execa('npm', ['update', packageName, '--silent'], {
       cwd: this.project.path,
@@ -182,7 +183,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
       const text = buffer.toString();
       console.log('upgrade.data:', text);
 
-      this.emit('upgrade.data', text);
+      this.project.emit('upgrade.data', text);
     });
 
     childProcess.on('error', (buffer) => {
@@ -192,7 +193,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     childProcess.on('exit', (code, signal) => {
       console.log('upgrade.exit:', code, signal);
 
-      this.emit('upgrade.exit', code);
+      this.project.emit('upgrade.exit', code);
     });
   };
 }

@@ -5,7 +5,6 @@ import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as mkdirp from 'mkdirp';
-import * as EventEmitter from 'events';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../../scanDirectory';
@@ -31,14 +30,16 @@ const loadTemplate = async () => {
   };
 };
 
-export default class Page extends EventEmitter implements IPageModule {
+export default class Page implements IPageModule {
   public readonly project: IProject;
+  public readonly storage: any;
 
   public readonly path: string;
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.path = path.join(this.project.path, 'src', 'pages');
   }
 
@@ -129,7 +130,7 @@ export default class Page extends EventEmitter implements IPageModule {
     const { name, blocks } = page;
 
     // create page dir
-    this.emit('create.status', { text: '创建页面目录...', percent: 10 });
+    this.project.emit('create.status', { text: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -143,15 +144,15 @@ export default class Page extends EventEmitter implements IPageModule {
     }
 
     // download blocks
-    this.emit('create.status', { text: '正在下载区块...', percent: 40 });
+    this.project.emit('create.status', { text: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
-    this.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
+    this.project.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
     await this.installBlocksDependencies(blocks);
 
     // create page file
-    this.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
+    this.project.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {

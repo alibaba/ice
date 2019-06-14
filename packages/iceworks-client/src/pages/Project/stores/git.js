@@ -15,7 +15,7 @@ export default {
   // TODO Unified handling of errors
   async refresh() {
     try {
-      this.dataSource = await socket.emit('project.git.status');
+      this.dataSource = await socket.emit('project.git.getStatus');
     } catch (error) {
       this.dataSource = defaultDataSource;
     }

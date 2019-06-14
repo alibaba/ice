@@ -34,7 +34,7 @@ const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 
 
-class Project implements IProject {
+class Project extends EventEmitter implements IProject {
   public readonly name: string;
 
   public readonly path: string;
@@ -44,6 +44,7 @@ class Project implements IProject {
   public panels: string[] = [];
 
   constructor(folderPath: string) {
+    super();
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
@@ -103,7 +104,7 @@ class Project implements IProject {
         }
       }
 
-      this[camelCase(key)] = new Module(project);
+      this[camelCase(key)] = new Module({ project, storage });
     }
   }
 }

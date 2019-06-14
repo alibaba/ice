@@ -1,19 +1,20 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import { getCLIConf, setCLIConf } from '../utils/cliConf';
 import { ICLIConf, IProject, IConfigurationModule, IConfParam } from '../../../interface';
 import { CLI_CONF } from './const';
 
-export default class Configuration extends EventEmitter implements IConfigurationModule {
+export default class Configuration implements IConfigurationModule {
   public project: IProject;
+  public storage: any;
 
   public readonly cliConfPath: string;
 
   private cliConfFilename: string = 'ice.config.js';
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 

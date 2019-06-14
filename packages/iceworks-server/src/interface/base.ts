@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 /**
  * 项目信息
  */
-export interface IProject {
+export interface IProject extends EventEmitter {
   /**
    * 项目显示名称
    */
@@ -44,8 +44,9 @@ export interface IProject {
 /**
  * 功能模块的基类
  */
-export interface IBaseModule extends EventEmitter {
+export interface IBaseModule {
   project: IProject;
+  storage: any;
 }
 
 /**
