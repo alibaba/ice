@@ -58,7 +58,9 @@ const PagePanel = () => {
     const { createRouterGroup, menuName, routePath } = data;
     logger.info('create page data:', data);
 
-    // create router and navigation after create page
+    await pages.create(data);
+
+    // create router and navigation after success create page
     if (createRouterGroup) {
       await routerStore.create({
         path: data.parentRoutePath,
@@ -88,7 +90,6 @@ const PagePanel = () => {
       });
     }
 
-    await pages.create(data);
     toggleCreateModal();
 
     Message.show({
