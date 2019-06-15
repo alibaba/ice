@@ -3,7 +3,7 @@ import socket from '@src/socket';
 export default {
   dataSource: [],
   async refresh() {
-    this.dataSource = await socket.emit('project.page.list');
+    this.dataSource = await socket.emit('project.page.getAll');
   },
   async delete(name) {
     await socket.emit('project.page.delete', { name });

@@ -21,7 +21,7 @@ export default class Task implements ITaskModule {
 
   private cliConfFilename: string = 'ice.config.js';
 
-  private process: object;
+  private process: object = {};
 
   constructor(params: {project: IProject; storage: any;}) {
     const { project, storage } = params;

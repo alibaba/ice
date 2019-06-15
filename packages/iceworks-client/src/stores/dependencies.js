@@ -8,7 +8,7 @@ export default {
     status: '',
   },
   async refresh() {
-    this.dataSource = await socket.emit('project.dependency.list');
+    this.dataSource = await socket.emit('project.dependency.getAll');
   },
   async upgrade(args) {
     await socket.emit('project.dependency.upgrade', args);

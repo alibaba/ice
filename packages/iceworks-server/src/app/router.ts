@@ -3,7 +3,7 @@ import { Application } from 'midway';
 export default (app: Application) => {
   const { controller } = app.io;
 
-  const { project, material, home } = controller;
+  const { material, home } = controller;
   const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
@@ -13,35 +13,6 @@ export default (app: Application) => {
     ['home.project.add', home.project.add],
     ['home.project.current', home.project.getCurrent],
     ['home.project.setCurrent', home.project.setCurrent],
-    ['project.git.getStatus', project.git.getStatus],
-    ['project.git.init', project.git.init],
-    ['project.git.setRemote', project.git.setRemote],
-    ['project.git.checkoutLocalBranch', project.git.checkoutLocalBranch],
-    ['project.git.switchBranch', project.git.switchBranch],
-    ['project.git.branches', project.git.getBranches],
-    ['project.git.pull', project.git.pull],
-    ['project.git.push', project.git.push],
-    ['project.git.addAndCommit', project.git.addAndCommit],
-    ['project.git.getLog', project.git.getLog],
-    ['project.def.push', project.def.push],
-    ['project.page.list', project.page.list],
-    ['project.page.delete', project.page.delete],
-    ['project.page.create', project.page.create],
-    ['project.layout.list', project.layout.list],
-    ['project.dependency.list', project.dependency.list],
-    ['project.task.start', project.task.start],
-    ['project.task.stop', project.task.stop],
-    ['project.task.getConf', project.task.getConf],
-    ['project.task.setConf', project.task.setConf],
-    ['project.dependency.reset', project.dependency.reset],
-    ['project.dependency.bulkCreate', project.dependency.bulkCreate],
-    ['project.dependency.upgrade', project.dependency.upgrade],
-    ['project.configuration.getCLIConf', project.configuration.getCLIConf],
-    ['project.configuration.setCLIConf', project.configuration.setCLIConf],
-    ['project.oss.getConfig', project.oss.getConfig],
-    ['project.oss.setConfig', project.oss.setConfig],
-    ['project.oss.getBuckets', project.oss.getBuckets],
-    ['project.oss.upload', project.oss.upload],
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
@@ -65,7 +36,7 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
-        logger.info(eventName, data);
+        logger.info(eventName, JSON.stringify(data));
         callback(null, data);
       } catch (error) {
         logger.error(error);

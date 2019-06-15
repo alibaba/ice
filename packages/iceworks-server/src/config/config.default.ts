@@ -19,7 +19,7 @@ export = (appInfo: any) => {
     namespace: {
       '/': {
         connectionMiddleware: [],
-        packetMiddleware: [],
+        packetMiddleware: ['project'],
       },
     },
   };
