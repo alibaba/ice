@@ -47,11 +47,7 @@ export default class Navigation extends EventEmitter implements INavigationModul
     };
   }
 
-  async setData(config: {
-    type: string,
-    data: IProjectNavigation[],
-  }): Promise<void> {
-    const { data } = config;
+  async setData(type: string, data: IProjectNavigation[]): Promise<void> {
     const menuConfigPath = path.join(this.path);
     const menuFileString = fs.readFileSync(menuConfigPath).toString();
     const menuFileAST = parser.parse(menuFileString, {
@@ -81,5 +77,12 @@ export default class Navigation extends EventEmitter implements INavigationModul
         trailingComma: 'es5',
       })
     );
+  }
+
+  async create(type, data: IProjectNavigation): Promise<void> {
+    const { asideMenuConfig } = await this.getAll();
+
+    asideMenuConfig.push(data)
+    await this.setData(type, asideMenuConfig);
   }
 }

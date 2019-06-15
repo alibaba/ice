@@ -12,5 +12,12 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.router.setData(args);
     }
+
+    async create(ctx) {
+      const { args } = ctx;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.router.create(args);
+    }
   };
 };

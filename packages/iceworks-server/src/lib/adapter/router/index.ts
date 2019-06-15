@@ -84,6 +84,29 @@ export default class Router extends EventEmitter implements IRouterModule {
     return config;
   }
 
+  async create(data): Promise<void> {
+    const routers = await this.getAll();
+    const { parent } = data;
+
+    if (parent) {
+      const parentRouter = routers.find((item) => {
+        if (item.routes && item.path === parent) {
+          return true;
+        }
+        return false;
+      });
+      if (parentRouter) {
+        delete data.parent;
+        parentRouter.routes.push(data);
+      }
+    } else {
+      delete data.parent;
+      routers.push(data);
+    }
+
+    await this.setData(routers);
+  }
+
   // set router config
   async setData(data: IRouter[]): Promise<void>  {
     const configPath = path.join(this.path);
@@ -103,7 +126,6 @@ export default class Router extends EventEmitter implements IRouterModule {
     });
     const arrayAST = dataAST.program.body[0];
 
-    // console.log('fileAST: ', JSON.stringify(fileAST));
     this.changeImportDeclarations(fileAST, data);
 
     /**
@@ -173,7 +195,6 @@ export default class Router extends EventEmitter implements IRouterModule {
     // const layoutImportDeclarations = [];
     this.existLazy = false;
 
-    // console.log('fileAST: ', JSON.stringify(fileAST));
     traverse(fileAST, {
       ImportDeclaration: ({ node, key }) => {
         const { source } = node;

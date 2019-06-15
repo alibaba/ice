@@ -5,6 +5,7 @@ import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import { FormattedMessage } from 'react-intl';
+import uid from 'uid';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -22,6 +23,8 @@ const PagePanel = () => {
     toggleModal: toggleCreateModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
+  const navigationStore = stores.useStore('navigations');
+  const routerStore = stores.useStore('routers');
   const { dataSource } = pages;
 
   function onRefresh() {
@@ -52,10 +55,40 @@ const PagePanel = () => {
   }
 
   async function createPage(data) {
+    const { createRouterGroup, menuName, routePath } = data;
     logger.info('create page data:', data);
 
-    await pages.create(data);
+    // create router and navigation after create page
+    if (createRouterGroup) {
+      await routerStore.create({
+        path: data.parentRoutePath,
+        component: data.parentRouteComponent,
+        routes: [{
+          path: data.routePath,
+          component: data.name,
+        }],
+      });
+    } else {
+      await routerStore.create({
+        parent: data.routeGroup,
+        path: data.routePath,
+        component: data.name,
+      });
+    }
 
+    // add navigation if exist menuName
+    if (menuName) {
+      await navigationStore.create({
+        type: 'asideMenu',
+        data: {
+          id: `Nav_${uid(5)}`,
+          name: menuName,
+          path: routePath,
+        },
+      });
+    }
+
+    await pages.create(data);
     toggleCreateModal();
 
     Message.show({
@@ -65,6 +98,8 @@ const PagePanel = () => {
     });
 
     pages.refresh();
+    navigationStore.refresh();
+    routerStore.refresh();
   }
 
   const pagePreDelete =

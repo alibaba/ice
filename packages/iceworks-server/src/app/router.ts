@@ -31,8 +31,10 @@ export default (app: Application) => {
     ['project.dependency.list', project.dependency.list],
     ['project.navigation.list', project.navigation.list],
     ['project.navigation.setData', project.navigation.setData],
+    ['project.navigation.create', project.navigation.create],
     ['project.router.list', project.router.list],
     ['project.router.setData', project.router.setData],
+    ['project.router.create', project.router.create],
     ['project.task.start', project.task.start],
     ['project.task.stop', project.task.stop],
     ['project.task.getConf', project.task.getConf],
@@ -66,6 +68,7 @@ export default (app: Application) => {
       const params = args[0];
       const callback = args[args.length - 1];
 
+      console.log('handle: ', handle);
       try {
         this.args = params;
         const data = await handle.call(this);

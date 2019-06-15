@@ -8,9 +8,18 @@ export default (app) => {
 
     async setData(ctx) {
       const { args } = ctx;
+      const { type, data } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.navigation.setData(args);
+      return await project.navigation.setData(type, data);
+    }
+
+    async create(ctx) {
+      const { args } = ctx;
+      const { type, data } = args;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.navigation.create(type, data);
     }
   };
 };

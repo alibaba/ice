@@ -8,4 +8,7 @@ export default {
   async setData(args) {
     await socket.emit('project.router.setData', args);
   },
+  async create(args) {
+    await socket.emit('project.router.create', args);
+  },
 };

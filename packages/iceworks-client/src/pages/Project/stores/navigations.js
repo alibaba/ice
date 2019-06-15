@@ -20,4 +20,7 @@ export default {
   async setData(args) {
     await socket.emit('project.navigation.setData', args);
   },
+  async create(args) {
+    await socket.emit('project.navigation.create', args);
+  },
 };

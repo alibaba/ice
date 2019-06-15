@@ -1,16 +1,16 @@
 import { IBaseModule } from './base';
 
 /**
- * 项目的路由
+ * project router
  */
 export interface IRouter {
   /**
-   * URL 路径
+   * URL path
    */
   path: string;
 
   /**
-   * 组件名
+   * component name
    */
   component?: string;
 
@@ -19,12 +19,25 @@ export interface IRouter {
    */
   layout?: string;
 
+  /**
+   * children routes
+   */
   routes?: IRouter[];
 }
 
 export interface IRouterModule extends IBaseModule {
   /**
-   * 获取项目路由
+   * get routers
    */
   getAll(): Promise<IRouter[]>;
+
+  /**
+   * set routers
+   */
+  setData(data: IRouter[]): Promise<void>
+
+  /**
+   * create a router
+   */
+  create(data): Promise<void>
 }
