@@ -45,6 +45,7 @@ const Material = ({ history }) => {
 
   const [type, setType] = useState('scaffolds');
   const [component, setComponent] = useState({});
+  const [scaffold, setScaffold] = useState({});
 
   async function setCurrent(source) {
     await material.setCurrentSource(source);
@@ -110,6 +111,11 @@ const Material = ({ history }) => {
     await handleTabChange(); // auto focus scaffolds tab
   }
 
+  function handleDownloadScaffold(currentScaffold) {
+    setScaffold(currentScaffold);
+    setCreateProjectModal(true, currentScaffold);
+  }
+
   const tabs = [
     {
       tab: 'iceworks.material.scaffold',
@@ -118,9 +124,7 @@ const Material = ({ history }) => {
         <ScaffoldPanel
           dataSource={dataSource.currentMaterial.scaffolds}
           current={currCategory}
-          onDownload={(scaffoldData) => {
-            setCreateProjectModal(true, scaffoldData);
-          }}
+          onDownload={(scaffoldData) => handleDownloadScaffold(scaffoldData)}
         />
       ),
     },
@@ -153,6 +157,7 @@ const Material = ({ history }) => {
   return (
     <div className={styles.materialPage}>
       <CreateProjectModal
+        scaffold={scaffold}
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProject}

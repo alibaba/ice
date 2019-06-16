@@ -19,12 +19,12 @@ const formItemLayout = {
   },
 };
 
-const CreateProjectModal = ({ on, onCancel, onOk }) => {
+const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
   const {
     on: onSelectModal,
     setModal: setSelectModal,
   } = useModal();
-  const [data, setData] = useState({ name: '', path: '', workFolder: '' });
+  const [data, setData] = useState({ name: '', appId: '', path: '', workFolder: '' });
 
   function onSave(values, errors) {
     if (!errors) {
@@ -47,6 +47,13 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
       ...data,
       workFolder: value,
       path: data.name ? await socket.emit('home.system.getPath', [value, data.name]) : value,
+    });
+  }
+
+  async function onAppIdChange(value) {
+    setData({
+      ...data,
+      appId: value,
     });
   }
 
@@ -102,6 +109,26 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
             onClick={() => setSelectModal(true)}
           />
         </FormItem>
+
+        {
+          scaffold.starkbiz ?
+            <FormItem
+              {...formItemLayout}
+              required
+              size="medium"
+              label="应用 appId："
+              className={styles.item}
+            >
+              <Input
+                className={styles.input}
+                name="appId"
+                placeholder="请输入应用的 appId"
+                value={data.appId}
+                onChange={onAppIdChange}
+              />
+            </FormItem> : null
+        }
+
         <FormItem
           {...formItemLayout}
           required
@@ -133,10 +160,15 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
   );
 };
 
+CreateProjectModal.defaultProps = {
+  scaffold: {},
+};
+
 CreateProjectModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  scaffold: PropTypes.object,
 };
 
 export default CreateProjectModal;

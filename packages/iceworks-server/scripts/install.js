@@ -11,6 +11,15 @@ function installDEF() {
   });
 }
 
+function installStark() {
+  console.log('>>> Start install stark biz generator...');
+
+  return execa.shell('tnpm install @ali/stark-biz-generator', {
+    stdio: 'inherit',
+    cwd: path.join(__dirname, '..'),
+  });
+}
+
 function checkTNPM() {
   return execa
     .shell('tnpm -v')
@@ -33,7 +42,8 @@ function install() {
     })
     .then((checked) => {
       if (checked) {
-        return installDEF();
+        installDEF();
+        installStark();
       }
     }).catch(() => {
       // tnpm will output install errors
