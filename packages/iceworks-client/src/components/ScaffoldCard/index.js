@@ -15,24 +15,27 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
         {dataSource.isNewlyCreated ? (
           <div className={styles.newly}>NEW</div>
         ) : null}
-        {dataSource.screenshots.map((url, key) => {
-          const screenshotStyle = generateStyle(dataSource.screenshots, key);
-          return (
-            <img
-              alt={dataSource.title}
-              src={url}
-              style={{ transform: 'scale(0.6)', ...screenshotStyle }}
-              className={styles.screenshotImg}
-              key={key}
-            />
-          );
-        })}
+        {dataSource.screenshots &&
+          dataSource.screenshots.map((url, key) => {
+            const screenshotStyle = generateStyle(dataSource.screenshots, key);
+            return (
+              <img
+                alt={dataSource.title}
+                src={url}
+                style={{ transform: 'scale(0.6)', ...screenshotStyle }}
+                className={styles.screenshotImg}
+                key={key}
+              />
+            );
+          })}
       </div>
 
       <div className={styles.info}>
         <div className={styles.title}>{dataSource.title}</div>
         <div className={styles.desc}>
-          {dataSource.description || <FormattedMessage id="iceworks.material.noDesc" />}
+          {dataSource.description || (
+            <FormattedMessage id="iceworks.material.noDesc" />
+          )}
         </div>
       </div>
 
@@ -63,13 +66,13 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
 
 ScaffoldCard.defaultProps = {
   bgColor: '#fafafa',
-  onDownload: f => f,
+  onDownload: f => f
 };
 
 ScaffoldCard.propTypes = {
   dataSource: PropTypes.object.isRequired,
   bgColor: PropTypes.string,
-  onDownload: PropTypes.func,
+  onDownload: PropTypes.func
 };
 
 export default ScaffoldCard;
@@ -84,7 +87,7 @@ function generateStyle(screenshots, index) {
       position: 'absolute',
       bottom: '-20%',
       right: '-10%',
-      zIndex: 1,
+      zIndex: 1
     };
   }
 
@@ -96,7 +99,7 @@ function generateStyle(screenshots, index) {
         boxShadow: '0 0 30px #8b8585',
         bottom: `${i * 10}%`,
         right: `${i * 10}%`,
-        transform: 'scale(0.6)',
+        transform: 'scale(0.6)'
       };
     }
 
@@ -105,7 +108,7 @@ function generateStyle(screenshots, index) {
         position: 'absolute',
         bottom: '-5%',
         right: i === 2 ? '-20%' : '20%',
-        transform: 'scale(0.5)',
+        transform: 'scale(0.5)'
       };
     }
   }

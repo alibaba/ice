@@ -111,7 +111,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
         </FormItem>
 
         {
-          scaffold.starkbiz ?
+          scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold' ?
             <FormItem
               {...formItemLayout}
               required
