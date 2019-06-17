@@ -26,10 +26,6 @@ const MainLayout = () => {
     setConnect(true);
   });
 
-  socket.on('connect', () => {
-    setConnect(true);
-  });
-
   socket.on('disconnect', () => {
     setConnect(false);
   });

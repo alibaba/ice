@@ -48,8 +48,6 @@ const GlobalBar = ({ project }) => {
     const currentTheme = theme === THEMES.dark ? THEMES.light : THEMES.dark;
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
-    // eslint-disable-next-line
-    window.__changeTheme__(currentTheme);
   }
 
   return project.dataSource.name ? (

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Beforeunload from 'react-beforeunload';
+import useTheme from '@hooks/useTheme';
 import '@alifd/next/reset.scss';
 
 import logger from '@utils/logger';
@@ -18,7 +19,7 @@ const DEFAULT_LOCALE = 'zh-CN';
 
 const App = () => {
   const [locale, setLocale] = useState(DEFAULT_LOCALE);
-  const [theme, setTheme] = useState('');
+  const [theme, setTheme] = useTheme('');
 
   async function getLocale() {
     const currentLocale = await socket.emit('home.setting.getLocale');
@@ -30,8 +31,6 @@ const App = () => {
     const currentTheme = await socket.emit('home.setting.getTheme');
     logger.info('App theme:', currentTheme);
     setTheme(currentTheme);
-    // eslint-disable-next-line
-    window.__changeTheme__(currentTheme);
   }
 
   useEffect(() => {

@@ -73,8 +73,6 @@ const General = ({ intl }) => {
   async function onThemeChange(currentTheme) {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
-    // eslint-disable-next-line
-    window.__changeTheme__(currentTheme);
   }
 
   async function getEditor() {
@@ -88,9 +86,7 @@ const General = ({ intl }) => {
   }
 
   useEffect(() => {
-    (async () => {
-      await getEditor();
-    })();
+    getEditor();
   }, []);
 
   return (

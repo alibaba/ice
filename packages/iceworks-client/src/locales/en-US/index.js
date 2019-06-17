@@ -130,7 +130,7 @@ export default {
   'iceowrks.global.bar.editor': 'Editor',
   'iceowrks.global.bar.theme': 'Theme',
   'iceowrks.global.bar.feedback': 'Feedback',
-  'iceowrks.global.bar.feedback.title': 'How is your experience',
-  'iceowrks.global.bar.feedback.join': 'Join DingTalk',
-  'iceowrks.global.bar.feedback.submit': 'Feedback or bug report',
+  'iceowrks.global.bar.feedback.title': 'Experience feedback',
+  'iceowrks.global.bar.feedback.join': 'Join DingTalk community',
+  'iceowrks.global.bar.feedback.submit': 'Feedback or Bug report',
 };
