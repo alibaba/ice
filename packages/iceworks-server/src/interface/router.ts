@@ -1,5 +1,12 @@
 import { IBaseModule } from './base';
 
+
+export interface IRouterOptions {
+  type?: string;
+  replacement?: boolean;
+  parent?: string;
+}
+
 /**
  * project router
  */
@@ -15,7 +22,7 @@ export interface IRouter {
   component?: string;
 
   /**
-   * layout 名
+   * layout name
    */
   layout?: string;
 
@@ -34,10 +41,5 @@ export interface IRouterModule extends IBaseModule {
   /**
    * set routers
    */
-  setData(data: IRouter[]): Promise<void>
-
-  /**
-   * create a router
-   */
-  create(data): Promise<void>
+  bulkCreate(data: IRouter[], options?: IRouterOptions): Promise<void>
 }

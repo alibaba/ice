@@ -12,7 +12,6 @@ export * from './todo';
 export * from './mock';
 export * from './task';
 export * from './configuration';
-export * from './navigation';
 export * from './router';
 export * from './git';
 export * from './def';

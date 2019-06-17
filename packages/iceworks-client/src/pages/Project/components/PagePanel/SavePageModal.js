@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Form, Input, Button, Select, Switch } from '@alifd/next';
+import { Form, Input, Button, Select } from '@alifd/next';
 import Modal from '@components/Modal';
 import Progress from '@components/Progress';
 import stores from '@stores';
@@ -19,10 +19,9 @@ const formItemLayout = {
 
 const SavePageModal = ({ on, onCancel, onOk }) => {
   const progress = stores.useStore('progress');
-  const layoutStore = pageStores.useStore('layouts');
+  // const layoutStore = pageStores.useStore('layouts');
   const routerStore = pageStores.useStore('routers');
-  const [createRouterGroup, setCreateRouterGroup] = useState(false);
-  const { dataSource: layouts } = layoutStore;
+  // const { dataSource: layouts } = layoutStore;
   const { dataSource: routers } = routerStore;
 
   async function onSave(values, errors) {
@@ -31,9 +30,12 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
     }
   }
 
-  function onChangeCreateRouterGroup(value) {
-    setCreateRouterGroup(value);
-  }
+  const routerGroups = routers.filter(item => item.routes).map(item => {
+    return {
+      label: `${item.path}(${item.component})`,
+      value: item.path,
+    };
+  });
 
   return (
     <Modal
@@ -83,66 +85,14 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
           {...formItemLayout}
           labelAlign="top"
           size="medium"
-          label={<FormattedMessage id="iceworks.project.panel.page.save.createRouterGroup.label" />}
+          label={<FormattedMessage id="iceworks.project.panel.page.save.routePath.group.label" />}
         >
-          <Switch
-            name="createRouterGroup"
-            onChange={onChangeCreateRouterGroup}
+          <Select
+            className={styles.select}
+            name="routeGroup"
+            dataSource={routerGroups}
           />
         </FormItem>
-        {createRouterGroup ? (
-          [
-            <FormItem
-              {...formItemLayout}
-              key="0"
-              labelAlign="top"
-              size="medium"
-              label={<FormattedMessage id="iceworks.project.panel.page.save.parentRoutePath.label" />}
-            >
-              <Input
-                className={styles.input}
-                name="parentRoutePath"
-                placeholder=""
-              />
-            </FormItem>,
-            <FormItem
-              {...formItemLayout}
-              key="1"
-              labelAlign="top"
-              size="medium"
-              label={<FormattedMessage id="iceworks.project.panel.page.save.parentRouteComponent.label" />}
-            >
-              <Select
-                className={styles.select}
-                name="parentRouteComponent"
-                dataSource={layouts.map(item => {
-                  return {
-                    label: `${item.name}(${item.title})`,
-                    value: item.name,
-                  };
-                })}
-              />
-            </FormItem>,
-          ]
-        ) : (
-          <FormItem
-            {...formItemLayout}
-            labelAlign="top"
-            size="medium"
-            label={<FormattedMessage id="iceworks.project.panel.page.save.routePath.group.label" />}
-          >
-            <Select
-              className={styles.select}
-              name="routeGroup"
-              dataSource={routers.filter(item => item.routes).map(item => {
-                return {
-                  label: `${item.path}(${item.component})`,
-                  value: item.path,
-                };
-              })}
-            />
-          </FormItem>
-        )}
         <FormItem
           {...formItemLayout}
           size="medium"

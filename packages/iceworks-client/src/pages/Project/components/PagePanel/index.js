@@ -5,7 +5,6 @@ import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import { FormattedMessage } from 'react-intl';
-import uid from 'uid';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -23,7 +22,7 @@ const PagePanel = () => {
     toggleModal: toggleCreateModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
-  const navigationStore = stores.useStore('navigations');
+  const menuStore = stores.useStore('menus');
   const routerStore = stores.useStore('routers');
   const { dataSource } = pages;
 
@@ -55,38 +54,29 @@ const PagePanel = () => {
   }
 
   async function createPage(data) {
-    const { createRouterGroup, menuName, routePath } = data;
+    const { menuName, routePath, name, routeGroup } = data;
     logger.info('create page data:', data);
 
     await pages.create(data);
 
-    // create router and navigation after success create page
-    if (createRouterGroup) {
-      await routerStore.create({
-        path: data.parentRoutePath,
-        component: data.parentRouteComponent,
-        routes: [{
-          path: data.routePath,
-          component: data.name,
-        }],
-      });
-    } else {
-      await routerStore.create({
-        parent: data.routeGroup,
-        path: data.routePath,
-        component: data.name,
-      });
-    }
+    // create router and menu after success create page
+    await routerStore.bulkCreate({
+      data: [{
+        path: routePath,
+        component: name,
+      }],
+      options: {
+        parent: routeGroup,
+      },
+    });
 
-    // add navigation if exist menuName
+    // add menu if exist menuName
     if (menuName) {
-      await navigationStore.create({
-        type: 'asideMenu',
-        data: {
-          id: `Nav_${uid(5)}`,
+      await menuStore.bulkCreate({
+        data: [{
           name: menuName,
           path: routePath,
-        },
+        }],
       });
     }
 
@@ -99,7 +89,7 @@ const PagePanel = () => {
     });
 
     pages.refresh();
-    navigationStore.refresh();
+    menuStore.refresh();
     routerStore.refresh();
   }
 

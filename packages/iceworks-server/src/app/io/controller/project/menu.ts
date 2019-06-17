@@ -1,17 +1,17 @@
 export default (app) => {
-  return class RouterController extends app.Controller {
+  return class MenuController extends app.Controller {
     async list() {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.router.getAll();
+      return await project.menu.getAll();
     }
 
     async bulkCreate(ctx) {
       const { args } = ctx;
-      const { projectManager } = app;
       const { data, options } = args;
+      const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.router.bulkCreate(data, options);
+      return await project.menu.bulkCreate(data, options);
     }
   };
 };

@@ -28,15 +28,20 @@ const RouterPanel = () => {
   const [deleteRouter, setDeleteRouter] = useState({});
   const [modalData, setModalData] = useState({});
 
-  const routersStore = stores.useStore('routers');
-  const { dataSource } = routersStore;
+  const routerStore = stores.useStore('routers');
+  const { dataSource } = routerStore;
 
   function onRefresh() {
-    routersStore.refresh();
+    routerStore.refresh();
   }
 
   async function onChangeData(data) {
-    await routersStore.setData(data);
+    await routerStore.bulkCreate({
+      data,
+      options: {
+        replacement: true,
+      },
+    });
     onRefresh();
   }
 

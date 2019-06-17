@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 const { Node: TreeNode } = Tree;
 
-const NavigationTreeConfig = ({
+const MenuTreeConfig = ({
   items,
   primaryKey,
   onChange,
@@ -157,7 +157,7 @@ const NavigationTreeConfig = ({
   };
 
   /**
-   * hide/show navigation
+   * hide/show menu
    */
   const onCheck = (checkedKeys, extra) => {
     const { checked, node: nodeItem } = extra;
@@ -193,7 +193,7 @@ const NavigationTreeConfig = ({
   );
 };
 
-NavigationTreeConfig.defaultProps = {
+MenuTreeConfig.defaultProps = {
   primaryKey: 'id',
   items: [],
   onChange: () => {},
@@ -201,17 +201,17 @@ NavigationTreeConfig.defaultProps = {
   onDeleteLink: () => {},
 };
 
-NavigationTreeConfig.propTypes = {
+MenuTreeConfig.propTypes = {
   /**
    * primary key
    */
   primaryKey: PropTypes.string,
   /**
-   * navigation data
+   * menu data
    */
   items: PropTypes.array,
   /**
-   * on navigation data change
+   * on menu data change
    */
   onChange: PropTypes.func,
 
@@ -226,4 +226,4 @@ NavigationTreeConfig.propTypes = {
   onDeleteLink: PropTypes.func,
 };
 
-export default NavigationTreeConfig;
+export default MenuTreeConfig;

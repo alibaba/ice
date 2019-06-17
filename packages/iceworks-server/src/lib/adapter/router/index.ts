@@ -7,7 +7,7 @@ import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
 
-import { IRouter, IRouterModule, IProject } from '../../../interface';
+import { IRouter, IRouterModule, IProject, IRouterOptions } from '../../../interface';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
@@ -27,8 +27,7 @@ export default class Router extends EventEmitter implements IRouterModule {
     this.path = path.join(this.projectPath, 'src', 'routerConfig.js');
   }
 
-  async getAll(): Promise<IRouter[]> {
-    let config = [];
+  private getFileAST(): any {
     const configPath = path.join(this.path);
     const fileString = fs.readFileSync(configPath).toString();
     const fileAST = parser.parse(fileString, {
@@ -38,6 +37,13 @@ export default class Router extends EventEmitter implements IRouterModule {
         'dynamicImport',
       ],
     });
+
+    return fileAST;
+  }
+
+  async getAll(): Promise<IRouter[]> {
+    let config = [];
+    const fileAST = this.getFileAST();
 
     try {
       traverse(fileAST, {
@@ -84,40 +90,28 @@ export default class Router extends EventEmitter implements IRouterModule {
     return config;
   }
 
-  async create(data): Promise<void> {
-    const routers = await this.getAll();
-    const { parent } = data;
+  // bulk create routers
+  async bulkCreate(data: IRouter[], options: IRouterOptions = {}): Promise<void>  {
+    const { replacement = false, parent } = options;
+    const fileAST = this.getFileAST();
+    const currentData = await this.getAll();
 
-    if (parent) {
-      const parentRouter = routers.find((item) => {
-        if (item.routes && item.path === parent) {
-          return true;
+    if (!replacement) {
+      if (parent) {
+        const parentRouter = currentData.find((item) => {
+          if (item.routes && item.path === parent) {
+            return true;
+          }
+          return false;
+        });
+        if (parentRouter) {
+          parentRouter.routes = parentRouter.routes.concat(data);
+          data = currentData;
         }
-        return false;
-      });
-      if (parentRouter) {
-        delete data.parent;
-        parentRouter.routes.push(data);
+      } else {
+        data = currentData.concat(data);
       }
-    } else {
-      delete data.parent;
-      routers.push(data);
     }
-
-    await this.setData(routers);
-  }
-
-  // set router config
-  async setData(data: IRouter[]): Promise<void>  {
-    const configPath = path.join(this.path);
-    const fileString = fs.readFileSync(configPath).toString();
-    const fileAST = parser.parse(fileString, {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
-    });
-
     const dataAST = parser.parse(JSON.stringify(this.sortData(data)), {
       sourceType: 'module',
       plugins: [

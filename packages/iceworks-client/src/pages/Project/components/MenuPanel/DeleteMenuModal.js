@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { FormattedMessage } from 'react-intl';
 
-import styles from './DeleteNavigationModal.module.scss';
+import styles from './DeleteMenuModal.module.scss';
 
-const DeleteNavigationModal = ({
-  on, onCancel, onOk, navigation,
+const DeleteMenuModal = ({
+  on, onCancel, onOk, menu,
 }) => {
-  const { children, external, name } = navigation;
+  const { children, external, name } = menu;
   let linkName = '导航';
 
   if (external) {
@@ -19,16 +19,16 @@ const DeleteNavigationModal = ({
 
   return (
     <Modal
-      title={<FormattedMessage id="iceworks.project.panel.navigation.delete.title" />}
+      title={<FormattedMessage id="iceworks.project.panel.menu.delete.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={() => onOk()}
     >
       <div>
-        <FormattedMessage id="iceworks.project.panel.navigation.delete.content" values={{ name, linkName }} />
+        <FormattedMessage id="iceworks.project.panel.menu.delete.content" values={{ name, linkName }} />
         {children && children.length > 0 && (
           <span className={styles.tips}>
-            <FormattedMessage id="iceworks.project.panel.navigation.delete.subcontent" />
+            <FormattedMessage id="iceworks.project.panel.menu.delete.subcontent" />
           </span>
         )}
       </div>
@@ -36,11 +36,11 @@ const DeleteNavigationModal = ({
   );
 };
 
-DeleteNavigationModal.propTypes = {
+DeleteMenuModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
-  navigation: PropTypes.object.isRequired,
+  menu: PropTypes.object.isRequired,
 };
 
-export default DeleteNavigationModal;
+export default DeleteMenuModal;
