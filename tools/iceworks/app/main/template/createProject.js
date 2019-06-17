@@ -18,6 +18,7 @@ module.exports = async function createProject(
   let err, tarballURL, extractedFiles;
   [err, tarballURL] = await to(utils.getTarballURLBySource(scaffold.source));
   if (err) {
+    err.message = `请求模板 ${tarballURL} 包失败`;
     throw err;
   }
   [err, extractedFiles] = await to(

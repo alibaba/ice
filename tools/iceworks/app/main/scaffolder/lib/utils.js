@@ -166,7 +166,7 @@ async function downloadBlockToPage(
   );
 
   if (err) {
-    err.message = '请求区块 tarball 包失败';
+    err.message = `请求区块 ${tarballURL} 包失败`;
     throw new Error(err);
   }
 
