@@ -6,10 +6,10 @@ import * as userHome from 'user-home';
 // Note: why not use `import`
 // ref: https://github.com/sindresorhus/conf
 const Conf = require('conf');
-const conf_path = path.join(userHome, '.iceworks');
+const confPath = path.join(userHome, '.iceworks');
 
-if (!fs.existsSync(conf_path)) {
-  mkdirp(conf_path);
+if (!fs.existsSync(confPath)) {
+  mkdirp(confPath);
 }
 
 const schema = {
@@ -73,5 +73,5 @@ const schema = {
 export default new Conf({
   schema,
   configName: 'db',
-  cwd: conf_path,
+  cwd: confPath,
 });
