@@ -5,14 +5,13 @@ import Modal from '@components/Modal';
 import styles from './index.module.scss';
 
 const PanelSettingModal = ({
-  on, onCancel, onOk, panels,
+  on, onCancel, panels, onChange,
 }) => {
   return (
     <Modal
       title="面板设置"
       visible={on}
       onCancel={onCancel}
-      onOk={onOk}
       footer={false}
     >
       <div className={styles.wrapper}>
@@ -27,7 +26,12 @@ const PanelSettingModal = ({
                   <div>{title}</div>
                   <div>{description}</div>
                 </div>
-                <Switch checked={isAvailable} />
+                <Switch
+                  checked={isAvailable}
+                  onChange={async (checked) => {
+                    await onChange(name, checked);
+                  }}
+                />
               </div>
             );
           })
@@ -40,8 +44,8 @@ const PanelSettingModal = ({
 PanelSettingModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onOk: PropTypes.func.isRequired,
   panels: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default PanelSettingModal;

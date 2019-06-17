@@ -14,4 +14,8 @@ export default {
   async reset(path) {
     this.dataSource = await socket.emit('project.index.setCurrent', { path });
   },
+
+  async setPanel(args) {
+    await socket.emit('project.index.setPanel', args);
+  },
 };

@@ -40,5 +40,12 @@ export default (app) => {
 
       return await projectManager.setCurrent(path);
     }
+
+    async setPanel(ctx) {
+      const { args } = ctx;
+      const { projectManager } = app;
+      const project = await projectManager.getCurrent();
+      project.setPanel(args);
+    }
   };
 };

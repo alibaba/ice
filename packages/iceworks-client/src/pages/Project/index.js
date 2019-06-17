@@ -27,9 +27,9 @@ const Project = ({ history }) => {
     'oss',
   ]);
 
-  const { 
+  const {
     on: onPanelSettingModal,
-    setModal: setPanelSettingModal
+    setModal: setPanelSettingModal,
   } = useModal();
   const {
     dependenciesStore,
@@ -45,12 +45,15 @@ const Project = ({ history }) => {
     OSS: oss,
   };
   const {
+    projectStore,
+
     material,
     projects,
     project,
     projectPreDelete,
 
     refreshProjects,
+    refreshProject,
     addProject,
     deleteProject,
 
@@ -90,6 +93,15 @@ const Project = ({ history }) => {
   async function onCreateProjectModalOk(values) {
     await onCreateProject(values);
     setResetModal(true);
+  }
+
+  async function onPanelSettingChange(name, isAvailable) {
+    await projectStore.setPanel({ name, isAvailable });
+    await refreshProject();
+  }
+
+  async function onOpenPanelSetting() {
+    setPanelSettingModal(true);
   }
 
   useEffect(() => {
@@ -139,18 +151,19 @@ const Project = ({ history }) => {
         <FormattedMessage id="iceworks.project.create.init.content" />
       </Modal>
       <div>
-        <div>设置</div>
+        <div onClick={onOpenPanelSetting}>设置</div>
         <PanelSettingModal
           on={onPanelSettingModal}
           onCancel={() => setPanelSettingModal(false)}
           panels={project.panels}
+          onChange={onPanelSettingChange}
         />
       </div>
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
-          {project.panels.map(({ name }, index) => {
+          {project.panels.map(({ name, isAvailable }, index) => {
             const Panel = panels[name];
-            return Panel ? (
+            return Panel && isAvailable ? (
               <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
                 <Panel />
               </ErrorBoundary>

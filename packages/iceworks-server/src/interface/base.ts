@@ -1,6 +1,7 @@
 import * as EventEmitter from 'events';
 
 export interface IPanel {
+  isAvailable: boolean;
   name: string; 
   title: string; 
   description?: string; 

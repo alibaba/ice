@@ -15,6 +15,7 @@ export default class Layout extends EventEmitter implements ILayoutModule {
 
   constructor(project: IProject) {
     super();
+    this.project = project;
     this.path = path.join(this.project.path, 'src', 'layouts');
   }
 

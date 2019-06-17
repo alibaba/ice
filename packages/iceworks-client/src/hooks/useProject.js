@@ -32,9 +32,9 @@ function useProject({ panelStores } = {}) {
     }
 
     if (newProject && panelStores) {
-      newProject.dataSource.panels.forEach((name) => {
+      newProject.dataSource.panels.forEach(({ name, isAvailable }) => {
         const panelStore = panelStores[name];
-        if (panelStore) {
+        if (panelStore && isAvailable) {
           panelStore
             .refresh()
             .catch((error) => {
@@ -120,6 +120,11 @@ function useProject({ panelStores } = {}) {
     }) || {};
 
   return {
+    // store
+    projectStore,
+    materialStore,
+    projectsStore,
+
     // state
     material: materialStore.dataSource,
     projects: projectsStore.dataSource,
@@ -128,6 +133,7 @@ function useProject({ panelStores } = {}) {
 
     // method
     refreshProjects,
+    refreshProject,
     createProject,
     addProject,
     deleteProject,

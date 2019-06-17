@@ -9,6 +9,7 @@ import * as mv from 'mv';
 import * as clone from 'lodash.clone';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
+import * as orderBy from 'lodash.orderby';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
@@ -33,7 +34,6 @@ const registry = 'https://registry.npm.taobao.org';
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 
-
 class Project implements IProject {
   public readonly name: string;
 
@@ -49,6 +49,7 @@ class Project implements IProject {
     this.packagePath = path.join(this.path, packageJSONFilename);
 
     this.loadAdapter();
+    this.assemblePanels();
   }
 
   public getPackageJSON() {
@@ -109,7 +110,58 @@ class Project implements IProject {
         title: adapterModule.title,
         description: adapterModule.description,
         cover: adapterModule.cover,
+        isAvailable: true,
       });
+    }
+  }
+
+  private assemblePanels() {
+    this.resetPanelsByStore();
+    this.savePanelsToStore();
+  }
+
+  private resetPanelsByStore() {
+    const panelSettings = storage.get('panelSettings');
+    const projectPanelSettings = panelSettings.find(({ project }) => project === this.path);
+    
+    // reset isAvailable and order by user settings
+    if (projectPanelSettings) {
+      const { panels } = projectPanelSettings;
+
+      panels.forEach(({ name: settingName, isAvailable }, index) => {
+        const panel: any = this.panels.find(({ name }) => settingName === name);
+        if (panel) {
+          panel.isAvailable = isAvailable;
+          panel.index = index;
+        }
+      });
+
+      this.panels = orderBy(this.panels, 'index');
+    }
+  }
+
+  private savePanelsToStore() {
+    const panelSettings = storage.get('panelSettings');
+    const projectPanelSettings = panelSettings.find(({ project }) => project === this.path);
+    const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
+    if (projectPanelSettings) {
+      projectPanelSettings.panels = panels;
+    } else {
+      panelSettings.push({
+        project: this.path,
+        panels,
+      });
+    }
+
+    storage.set('panelSettings', panelSettings);
+  }
+
+  public setPanel(params: {name: string; isAvailable: boolean;}) {
+    const {name, isAvailable} = params;
+    const panel = this.panels.find(({ name: settingName }) => settingName === name);
+    if (panel) {
+      panel.isAvailable = isAvailable;
+      this.savePanelsToStore();
     }
   }
 }

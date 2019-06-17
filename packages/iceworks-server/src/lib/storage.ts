@@ -116,7 +116,7 @@ const schema = {
     type: 'array',
     default: [],
   },
-  panels: {
+  panelSettings: {
     type: 'array',
     default: [],
   },
