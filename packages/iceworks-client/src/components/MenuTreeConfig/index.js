@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, Icon } from '@alifd/next';
+import LocalIcon from '@components/Icon';
 import cx from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 
@@ -73,6 +74,7 @@ const MenuTreeConfig = ({
                   'navbar-config-tree-node-click': selectedKey === item[primaryKey],
                 })}
               >
+                <LocalIcon type="folder" size="xs" className={styles.icon} />
                 <span>{item.name}</span>
                 {renderRightIcons(item)}
               </span>
@@ -97,6 +99,7 @@ const MenuTreeConfig = ({
                 'navbar-config-tree-node-click': selectedKey === item[primaryKey],
               })}
             >
+              <LocalIcon type={item.external ? 'link' : 'menu'} size="xs" className={styles.icon} />
               <span>{item.name}</span>
               {renderRightIcons(item)}
             </span>

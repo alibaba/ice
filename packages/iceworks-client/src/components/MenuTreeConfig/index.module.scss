@@ -21,6 +21,10 @@
       }
     }
 
+    .next-tree-switcher {
+      margin-right: 2px;
+    }
+
     .next-tree-switcher-noline {
       margin-right: 0;
       margin-left: 8px;
@@ -59,9 +63,6 @@
 
       .next-tree-node-handle {
         cursor: move;
-      }
-      li {
-        margin-left: 16px;
       }
     }
 
