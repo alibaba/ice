@@ -18,13 +18,13 @@ const PanelSettingModal = ({
         {
           panels.map(({ title, description, cover, isAvailable, name }) => {
             return (
-              <div key={name}>
-                <div>
+              <div key={name} className={styles.item}>
+                <div className={styles.cover}>
                   <img src={cover} alt={name} />
                 </div>
-                <div>
-                  <div>{title}</div>
-                  <div>{description}</div>
+                <div className={styles.info}>
+                  <div className={styles.title}>{title}</div>
+                  <div className={styles.description}>{description}</div>
                 </div>
                 <Switch
                   checked={isAvailable}

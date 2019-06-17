@@ -7,6 +7,7 @@ import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
 import useModal from '@hooks/useModal';
 import ErrorBoundary from '@components/ErrorBoundary';
+import Icon from '@components/Icon';
 import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
 import CreateProjectModal from '@components/CreateProjectModal';
 import Modal from '@components/Modal';
@@ -207,15 +208,6 @@ const Project = ({ history }) => {
       </Modal>
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
-          <div className={styles.settings}>
-            <div onClick={onOpenPanelSetting}>设置</div>
-            <PanelSettingModal
-              on={onPanelSettingModal}
-              onCancel={() => setPanelSettingModal(false)}
-              panels={project.panels}
-              onChange={onPanelSettingChange}
-            />
-          </div>
           <SortableWrap
             useDragHandle
             axis="xy"
@@ -232,6 +224,18 @@ const Project = ({ history }) => {
             })}
             isSorting={isSorting}
           />
+          <div className={styles.opts}>
+            <div onClick={onOpenPanelSetting} className={styles.settings}>
+              <Icon type="settings" size="medium" />
+              设置
+            </div>
+            <PanelSettingModal
+              on={onPanelSettingModal}
+              onCancel={() => setPanelSettingModal(false)}
+              panels={project.panels}
+              onChange={onPanelSettingChange}
+            />
+          </div>
         </div>
       ) : (
         <Guide

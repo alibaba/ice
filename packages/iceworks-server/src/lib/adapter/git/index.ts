@@ -5,7 +5,7 @@ import * as gitPromie from 'simple-git/promise';
 export default class Git extends EventEmitter implements IGitModule {
   public readonly title: string = 'Git 仓库管理';
   public readonly description: string = '关联项目的 git 仓库';
-  public readonly cover: string = '';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1GVb_c79E3KVjSZFGXXc19XXa-300-300.png';
   public project: IProject;
 
   private gitTools: any;
