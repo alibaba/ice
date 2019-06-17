@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@alifd/next';
+import Icon from '@components/Icon';
+import { FormattedMessage } from 'react-intl';
 import MaterialCategories from '@components/MaterialCategories';
 import ComponentCard from '@components/ComponentCard';
 
@@ -20,13 +22,22 @@ const ComponentPanel = ({ dataSource, current, onInstall }) => {
           : <MaterialCategories dataSource={categories} current={current} />
       }
       <Row wrap gutter="20">
-        {currentMaterials.map((data, index) => {
-          return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={index}>
-              <ComponentCard dataSource={data} onInstall={onInstall} />
+        {
+          currentMaterials.length
+          ? currentMaterials.map((data, index) => {
+              return (
+                <Col l="8" m="8" s="12" xs="24" xxs="24" key={index}>
+                  <ComponentCard dataSource={data} onInstall={onInstall} />
+                </Col>
+              );
+            })
+          : (
+            <Col span="24" className={styles.tips}>
+              <Icon type="bad-news" size="l" style={{ marginRight: '8px' }} />
+              <FormattedMessage id="iceworks.material.noData" />
             </Col>
-          );
-        })}
+          )
+        }
       </Row>
     </div>
   );

@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
+const DEFAULT_IMG = '//img.alicdn.com/tfs/TB1lCcKc8Kw3KVjSZFOXXarDVXa-350-200.png';
+
 const BlockCard = ({ dataSource }) => {
   return (
     <div className={styles.container}>
       <div className={styles.screenshot}>
         {dataSource.isNewly ? <div className={styles.newly}>NEW</div> : null}
-        <img alt={dataSource.title} src={dataSource.screenshot} />
+        <img alt={dataSource.title} src={dataSource.screenshot || DEFAULT_IMG} />
       </div>
       <h5 className={styles.title}>{dataSource.title}</h5>
       <div className={styles.actions}>

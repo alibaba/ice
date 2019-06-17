@@ -37,6 +37,21 @@ const addMaterialModal = ({
           required
           size="medium"
           label={<FormattedMessage id="iceworks.material.sourceUrl" />}
+          patternMessage="请输入物料名称"
+          patternTrigger="onChange"
+        >
+          <Input
+            className={styles.input}
+            name="name"
+            trim
+            placeholder="请输入物料名称"
+          />
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          required
+          size="medium"
+          label={<FormattedMessage id="iceworks.material.sourceUrl" />}
           pattern={urlReg}
           patternMessage="请输入合法的 URL 地址"
           patternTrigger="onChange"
@@ -44,6 +59,7 @@ const addMaterialModal = ({
           <Input
             className={styles.input}
             name="url"
+            trim
             placeholder="请输入合法的 URL 地址"
           />
         </FormItem>

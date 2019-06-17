@@ -1,8 +1,11 @@
 import React from 'react';
 import { Grid } from '@alifd/next';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import Icon from '@components/Icon';
 import ScaffoldCard from '@components/ScaffoldCard';
 import MaterialCategories from '@components/MaterialCategories';
+
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
@@ -19,15 +22,24 @@ const ScaffoldPanel = ({ dataSource, current, onDownload }) => {
           : <MaterialCategories dataSource={categories} current={current} />
       }
       <Row wrap gutter="40">
-        {currentMaterials.map((data) => {
-          const key = data.source && data.source.npm ? data.source.npm : data.title;
+        {
+          currentMaterials.length
+          ? currentMaterials.map((data) => {
+              const key = data.source && data.source.npm ? data.source.npm : data.title;
 
-          return (
-            <Col l="12" s="12" xs="24" xxs="24" key={key}>
-              <ScaffoldCard dataSource={data} onDownload={onDownload} />
+              return (
+                <Col l="12" s="12" xs="24" xxs="24" key={key}>
+                  <ScaffoldCard dataSource={data} onDownload={onDownload} />
+                </Col>
+              );
+            })
+          : (
+            <Col span="24" className={styles.tips}>
+              <Icon type="bad-news" size="l" style={{ marginRight: '8px' }} />
+              <FormattedMessage id="iceworks.material.noData" />
             </Col>
-          );
-        })}
+          )
+        }
       </Row>
     </div>
   );

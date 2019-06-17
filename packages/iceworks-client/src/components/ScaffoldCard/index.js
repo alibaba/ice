@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
+const DEFAULT_IMG = '//img.alicdn.com/tfs/TB1lCcKc8Kw3KVjSZFOXXarDVXa-350-200.png';
+
 const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
   function handleDownload() {
     onDownload(dataSource);
@@ -15,18 +17,28 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
         {dataSource.isNewlyCreated ? (
           <div className={styles.newly}>NEW</div>
         ) : null}
-        {dataSource.screenshots.map((url, key) => {
-          const screenshotStyle = generateStyle(dataSource.screenshots, key);
-          return (
+        {dataSource.screenshots && dataSource.screenshots.length
+          ? dataSource.screenshots.map((url, key) => {
+              const screenshotStyle = generateStyle(dataSource.screenshots, key);
+              return (
+                <img
+                  alt={dataSource.title}
+                  src={url || DEFAULT_IMG}
+                  style={{ transform: 'scale(0.6)', ...screenshotStyle }}
+                  className={styles.screenshotImg}
+                  key={key}
+                />
+              );
+            })
+          : (
             <img
               alt={dataSource.title}
-              src={url}
-              style={{ transform: 'scale(0.6)', ...screenshotStyle }}
+              src={DEFAULT_IMG}
+              style={{ transform: 'scale(0.6)' }}
               className={styles.screenshotImg}
-              key={key}
             />
-          );
-        })}
+          )
+        }
       </div>
 
       <div className={styles.info}>
