@@ -1,8 +1,10 @@
 export default {
   // global
+  'iceworks.global.disconnect.title': 'Connect Filed',
   'iceworks.global.connect': 'Connect',
-  'iceworks.global.disconnect.title': 'Service closed',
-  'iceworks.global.disconnect.message': 'Local service is closed, click to confirm restart service',
+  'iceworks.global.reconnecting': 'Socket connection failed, reconnecting',
+  'iceworks.global.reconnect_failed': 'Socket reconnection failed, please restart the iceworks service',
+  'iceworks.global.disconnect': 'Socket connection failed',
   'iceworks.global.button.yes': 'Yes',
   'iceworks.global.button.no': 'No',
   'iceworks.global.button.submit': 'Submit',
