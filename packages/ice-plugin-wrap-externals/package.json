@@ -1,0 +1,15 @@
+{
+  "name": "ice-plugin-wrap-externals",
+  "version": "0.1.0",
+  "description": "ice plugin for load external scripts",
+  "main": "index.js",
+  "keywords": [
+    "ice",
+    "ice-plugin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ice-plugin-wrap-code": "^0.1.0"
+  }
+}
