@@ -1,0 +1,25 @@
+{
+  "name": "ice-screenshot",
+  "version": "1.0.0",
+  "description": "Take a screenshot of web page",
+  "main": "bin/index.js",
+  "bin": {
+    "screenshot": "bin/index.js"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.20.0",
+    "cross-spawn": "^6.0.5",
+    "fs-extra": "^8.0.1",
+    "import-global": "^0.1.0",
+    "ora": "^3.4.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
