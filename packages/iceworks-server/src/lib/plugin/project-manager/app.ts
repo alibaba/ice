@@ -10,6 +10,7 @@ import * as clone from 'lodash.clone';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as orderBy from 'lodash.orderby';
+import * as arrayMove from 'array-move';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
@@ -156,13 +157,21 @@ class Project implements IProject {
     storage.set('panelSettings', panelSettings);
   }
 
-  public setPanel(params: {name: string; isAvailable: boolean;}) {
+  public setPanel(params: {name: string; isAvailable: boolean;}): IPanel[] {
     const {name, isAvailable} = params;
     const panel = this.panels.find(({ name: settingName }) => settingName === name);
     if (panel) {
       panel.isAvailable = isAvailable;
       this.savePanelsToStore();
     }
+    return this.panels;
+  }
+
+  public sortPanel(params: { oldIndex: number; newIndex: number; }): IPanel[] {
+    const { oldIndex, newIndex } = params;
+    this.panels = arrayMove(this.panels, oldIndex, newIndex);
+    this.savePanelsToStore();
+    return this.panels;
   }
 }
 

@@ -16,6 +16,10 @@ export default {
   },
 
   async setPanel(args) {
-    await socket.emit('project.index.setPanel', args);
+    this.dataSource.panels = await socket.emit('project.index.setPanel', args);
+  },
+
+  async sortPanel(args) {
+    this.dataSource.panels = await socket.emit('project.index.sortPanel', args);
   },
 };

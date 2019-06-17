@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+/* eslint babel/new-cap:0 */
+
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
@@ -8,7 +10,13 @@ import ErrorBoundary from '@components/ErrorBoundary';
 import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
 import CreateProjectModal from '@components/CreateProjectModal';
 import Modal from '@components/Modal';
+import cx from 'classnames';
 import { FormattedMessage } from 'react-intl';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from 'react-sortable-hoc';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
@@ -18,6 +26,42 @@ import projectStores from './stores';
 import panels from './panels';
 import styles from './index.module.scss';
 
+const DragHandle = SortableHandle(() => (
+  <span className={styles.handle} />
+));
+
+const SortableItem = SortableElement(({ element, isSorting }) => {
+  return (
+    <div
+      className={cx({
+        [styles.sortableItem]: true,
+        [styles.sorting]: isSorting,
+      })}
+    >
+      <DragHandle />
+      { element }
+    </div>
+  );
+});
+
+const SortableWrap = SortableContainer(({ items, isSorting }) => {
+  return (
+    <div className={styles.sortableWrap}>
+      {items.map((element, index) => {
+        return element ? (
+          <SortableItem
+            key={index}
+            index={index}
+            element={element}
+            isSorting={isSorting}
+          />
+        ) : null;
+      })}
+    </div>
+  );
+});
+
+
 const Project = ({ history }) => {
   const { location } = history;
   const [pages, layouts, git, oss] = projectStores.useStores([
@@ -26,6 +70,7 @@ const Project = ({ history }) => {
     'git',
     'oss',
   ]);
+  const [isSorting, setIsSorting] = useState(false);
 
   const {
     on: onPanelSettingModal,
@@ -53,7 +98,6 @@ const Project = ({ history }) => {
     projectPreDelete,
 
     refreshProjects,
-    refreshProject,
     addProject,
     deleteProject,
 
@@ -97,11 +141,22 @@ const Project = ({ history }) => {
 
   async function onPanelSettingChange(name, isAvailable) {
     await projectStore.setPanel({ name, isAvailable });
-    await refreshProject();
   }
 
   async function onOpenPanelSetting() {
     setPanelSettingModal(true);
+  }
+
+  function onSortStart() {
+    setIsSorting(true);
+  }
+
+  async function onSortEnd({ oldIndex, newIndex }) {
+    setIsSorting(false);
+
+    if (oldIndex !== newIndex) {
+      await projectStore.sortPanel({ oldIndex, newIndex });
+    }
   }
 
   useEffect(() => {
@@ -150,25 +205,33 @@ const Project = ({ history }) => {
       >
         <FormattedMessage id="iceworks.project.create.init.content" />
       </Modal>
-      <div>
-        <div onClick={onOpenPanelSetting}>设置</div>
-        <PanelSettingModal
-          on={onPanelSettingModal}
-          onCancel={() => setPanelSettingModal(false)}
-          panels={project.panels}
-          onChange={onPanelSettingChange}
-        />
-      </div>
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
-          {project.panels.map(({ name, isAvailable }, index) => {
-            const Panel = panels[name];
-            return Panel && isAvailable ? (
-              <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
-                <Panel />
-              </ErrorBoundary>
-            ) : null;
-          })}
+          <div className={styles.settings}>
+            <div onClick={onOpenPanelSetting}>设置</div>
+            <PanelSettingModal
+              on={onPanelSettingModal}
+              onCancel={() => setPanelSettingModal(false)}
+              panels={project.panels}
+              onChange={onPanelSettingChange}
+            />
+          </div>
+          <SortableWrap
+            useDragHandle
+            axis="xy"
+            onSortStart={onSortStart}
+            onSortEnd={onSortEnd}
+            helperClass={styles.sortableDraging}
+            items={project.panels.map(({ name, isAvailable }, index) => {
+              const Panel = panels[name];
+              return Panel && isAvailable ? (
+                <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
+                  <Panel />
+                </ErrorBoundary>
+              ) : null;
+            })}
+            isSorting={isSorting}
+          />
         </div>
       ) : (
         <Guide

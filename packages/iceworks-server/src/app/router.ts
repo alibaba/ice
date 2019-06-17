@@ -14,6 +14,7 @@ export default (app: Application) => {
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
     ['project.index.setPanel', project.index.setPanel],
+    ['project.index.sortPanel', project.index.sortPanel],
     ['project.git.status', project.git.status],
     ['project.git.init', project.git.init],
     ['project.git.setRemote', project.git.setRemote],

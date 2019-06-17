@@ -45,7 +45,14 @@ export default (app) => {
       const { args } = ctx;
       const { projectManager } = app;
       const project = await projectManager.getCurrent();
-      project.setPanel(args);
+      return project.setPanel(args);
+    }
+
+    async sortPanel(ctx) {
+      const { args } = ctx;
+      const { projectManager } = app;
+      const project = await projectManager.getCurrent();
+      return project.sortPanel(args);
     }
   };
 };
