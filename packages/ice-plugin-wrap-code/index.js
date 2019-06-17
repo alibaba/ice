@@ -8,7 +8,9 @@ module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
     chainWebpack((config) => {
       const pluginName = `${id}WrapCodePlugin`;
       if (config.plugins.get(pluginName)) {
-        log.error(`wrap code plugin: ${id} has been already defined`);
+        if (debug) {
+          log.info(`wrap code plugin: ${id} has been already defined`);
+        }
       } else {
         config.plugin(pluginName).use(WrapCodePlugin, [{
           addCodeBefore,
