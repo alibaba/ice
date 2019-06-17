@@ -232,7 +232,7 @@ const Project = ({ history }) => {
             <PanelSettingModal
               on={onPanelSettingModal}
               onCancel={() => setPanelSettingModal(false)}
-              panels={project.panels}
+              panels={project.panels.filter(({ name }) => panels[name])}
               onChange={onPanelSettingChange}
             />
           </div>

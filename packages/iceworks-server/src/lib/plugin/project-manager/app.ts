@@ -106,11 +106,12 @@ class Project implements IProject {
       const adapterModule = new Module(project);
       this[camelCase(name)] = adapterModule;
 
+      const {title, description, cover} = adapterModule;
       this.panels.push({
         name,
-        title: adapterModule.title,
-        description: adapterModule.description,
-        cover: adapterModule.cover,
+        title,
+        description,
+        cover,
         isAvailable: true,
       });
     }
