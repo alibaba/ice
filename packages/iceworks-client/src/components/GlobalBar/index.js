@@ -6,6 +6,7 @@ import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
 import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
+import useSocket from '@hooks/useSocket';
 import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
@@ -49,6 +50,17 @@ const GlobalBar = ({ project }) => {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
   }
+
+  useSocket('home.system.open.editor.data', (data) => {
+    if (data) {
+      Message.show({
+        type: 'error',
+        align: 'tr tr',
+        title: '提示',
+        content: '打开编辑器失败',
+      });
+    }
+  });
 
   return project.dataSource.name ? (
     <div className={styles.container}>

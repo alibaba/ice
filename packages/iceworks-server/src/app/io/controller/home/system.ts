@@ -39,10 +39,12 @@ export default (app) => {
     }
 
     openEditor(ctx) {
-      const { args: { path }, logger } = ctx;
+      const { args: { path }, logger, socket } = ctx;
       const editor = storage.get('editor');
       logger.info('open editor:', path, editor);
-      launchEditor(path, editor)
+      launchEditor(path, editor, (fileName, errorMsg) => {
+        socket.emit('home.system.open.editor.data', errorMsg)
+      })
     }
   };
 };
