@@ -36,7 +36,6 @@
     "ice-npm-utils": "^1.0.1",
     "ice-skin-loader": "^0.2.0",
     "imagemin": "^6.0.0",
-    "import-global": "^0.1.0",
     "inquirer": "^6.2.0",
     "js-yaml": "^3.12.1",
     "kebab-case": "^1.0.0",
