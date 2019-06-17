@@ -8,6 +8,9 @@ import * as dir from 'node-dir';
 const DOMAIN = 'aliyuncs.com';
 
 export default class OSS extends EventEmitter implements IOSSModule {
+  public readonly title: string = '阿里云 OSS';
+  public readonly description: string = '将项目构建结果上传到阿里云 OSS。';
+  public readonly cover: string = '';
   public project: IProject;
 
   public readonly buildDir: string = 'build';

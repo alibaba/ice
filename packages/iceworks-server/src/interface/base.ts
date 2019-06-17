@@ -1,5 +1,12 @@
 import * as EventEmitter from 'events';
 
+export interface IPanel {
+  name: string; 
+  title: string; 
+  description?: string; 
+  cover?: string;
+}
+
 /**
  * 项目信息
  */
@@ -22,7 +29,7 @@ export interface IProject {
   /**
    * 项目的支持的面板
    */
-  readonly panels: string[];
+  readonly panels: IPanel[];
 
   /**
    * 获取项目的 package.json 信息
@@ -46,6 +53,9 @@ export interface IProject {
  */
 export interface IBaseModule extends EventEmitter {
   project: IProject;
+  title: string;
+  description?: string;
+  cover?: string;
 }
 
 /**

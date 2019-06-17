@@ -48,6 +48,9 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
 
 export default class Dependency extends EventEmitter implements IDependencyModule {
+  public readonly title: string = '依赖管理';
+  public readonly description: string = '探测项目中依赖是否已安装，以及依赖安装的版本，支持快捷安装项目依赖；支持一键更新依赖的操作，当依赖出现新版时可用。';
+  public readonly cover: string = '';
   public project: IProject;
 
   public readonly path: string;

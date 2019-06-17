@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
+import useModal from '@hooks/useModal';
 import ErrorBoundary from '@components/ErrorBoundary';
 import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
 import CreateProjectModal from '@components/CreateProjectModal';
@@ -11,28 +12,11 @@ import { FormattedMessage } from 'react-intl';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
+import PanelSettingModal from './components/PanelSettingModal';
 import Guide from './components/Guide';
 import projectStores from './stores';
+import panels from './panels';
 import styles from './index.module.scss';
-
-// panels
-import Page from './components/PagePanel';
-import Dependency from './components/DependencyPanel';
-import Layout from './components/LayoutPanel';
-import Todo from './components/TodoPanel';
-import Git from './components/GitPanel';
-import OSS from './components/OSSPanel';
-import DEF from './components/DEFPanel';
-
-const panels = {
-  Page,
-  Dependency,
-  Layout,
-  Todo,
-  Git,
-  OSS,
-  DEF,
-};
 
 const Project = ({ history }) => {
   const { location } = history;
@@ -43,6 +27,10 @@ const Project = ({ history }) => {
     'oss',
   ]);
 
+  const { 
+    on: onPanelSettingModal,
+    setModal: setPanelSettingModal
+  } = useModal();
   const {
     dependenciesStore,
     reset,
@@ -150,9 +138,17 @@ const Project = ({ history }) => {
       >
         <FormattedMessage id="iceworks.project.create.init.content" />
       </Modal>
+      <div>
+        <div>设置</div>
+        <PanelSettingModal
+          on={onPanelSettingModal}
+          onCancel={() => setPanelSettingModal(false)}
+          panels={project.panels}
+        />
+      </div>
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
-          {project.panels.map((name, index) => {
+          {project.panels.map(({ name }, index) => {
             const Panel = panels[name];
             return Panel ? (
               <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>

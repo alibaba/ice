@@ -12,7 +12,7 @@ import * as pathExists from 'path-exists';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject, IMaterialScaffold } from '../../../interface';
+import { IProject, IMaterialScaffold, IPanel } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -41,7 +41,7 @@ class Project implements IProject {
 
   public readonly packagePath: string;
 
-  public panels: string[] = [];
+  public panels: IPanel[] = [];
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -93,9 +93,7 @@ class Project implements IProject {
 
   private loadAdapter() {
     const adapterModuleKeys = Object.keys(adapter);
-    for (const [key, Module] of Object.entries(adapter)) {
-      this.panels.push(key);
-
+    for (const [name, Module] of Object.entries(adapter)) {
       let project: IProject = clone(this);
       for (const moduleKey of adapterModuleKeys) {
         if (project[moduleKey]) {
@@ -103,7 +101,15 @@ class Project implements IProject {
         }
       }
 
-      this[camelCase(key)] = new Module(project);
+      const adapterModule = new Module(project);
+      this[camelCase(name)] = adapterModule;
+
+      this.panels.push({
+        name,
+        title: adapterModule.title,
+        description: adapterModule.description,
+        cover: adapterModule.cover,
+      });
     }
   }
 }

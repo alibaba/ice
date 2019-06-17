@@ -116,6 +116,10 @@ const schema = {
     type: 'array',
     default: [],
   },
+  panels: {
+    type: 'array',
+    default: [],
+  },
 };
 
 export default new Store({ schema });

@@ -13,6 +13,9 @@ const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
 export default class Task extends EventEmitter implements ITaskModule {
+  public readonly title: string = '任务管理';
+  public readonly description: string = '工程相关任务的执行。';
+  public readonly cover: string = '';
   public project: IProject;
 
   public status: string;
