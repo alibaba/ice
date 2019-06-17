@@ -1,6 +1,7 @@
 module.exports = () => {
   return `
-var loadUrls = (function() {
+function __loadUrls__(urlList, callback) {
+  if (window.__stopLoadUrls__) return;
   var timer = null;
   var headNode = document.head || document.querySelector('head');
   function clearTimer() {
@@ -72,42 +73,40 @@ var loadUrls = (function() {
     headNode.insertBefore(script, headNode.firstChild);
   }
 
-  return function(urlList, callback) {
-    if (!headNode) {
-      throw new Error('页面中必须存在 head 元素');
+  if (!headNode) {
+    throw new Error('页面中必须存在 head 元素');
+  }
+  var loadList = urlList.map(function(url) {
+    var fileExtension = url.split('.').pop().toLowerCase();
+    if (/.css$/.test(url)) {
+      return { type: 'css', url: url };
+    } else if (/.js$/.test(url)) {
+      return { type: 'js', url: url };
+    } else {
+      console.warn('未知脚本', url);
+      return null;
     }
-    var loadList = urlList.map(function(url) {
-      var fileExtension = url.split('.').pop().toLowerCase();
-      if (/.css$/.test(url)) {
-        return { type: 'css', url: url };
-      } else if (/.js$/.test(url)) {
-        return { type: 'js', url: url };
-      } else {
-        console.warn('未知脚本', url);
-        return null;
+  }).filter(function(value){
+    return !!value;
+  });
+  var counter = loadList.length;
+
+  (function run(counter){
+    if (counter === 0) {
+      return callback();
+    }
+
+    var current = loadList.shift();
+
+    var loadFn = current.type === 'css' ? loadCSS : load;
+    loadFn(current.url, function(err) {
+      if (err) {
+        console.error(err);
+        return;
       }
-    }).filter(function(value){
-      return !!value;
+      run(loadList.length);
     });
-    var counter = loadList.length;
-
-    (function run(counter){
-      if (counter === 0) {
-        return callback();
-      }
-
-      var current = loadList.shift();
-
-      var loadFn = current.type === 'css' ? loadCSS : load;
-      loadFn(current.url, function(err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        run(loadList.length);
-      });
-    })(counter);
-  };
-})();
+  })(counter);
+}
   `;
 };
