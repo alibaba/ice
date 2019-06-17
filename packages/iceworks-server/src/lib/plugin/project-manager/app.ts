@@ -126,7 +126,6 @@ class Project implements IProject {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ project }) => project === this.path);
     
-    // reset isAvailable and order by user settings
     if (projectPanelSettings) {
       const { panels } = projectPanelSettings;
 
@@ -146,6 +145,7 @@ class Project implements IProject {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ project }) => project === this.path);
     const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
+    
     if (projectPanelSettings) {
       projectPanelSettings.panels = panels;
     } else {

@@ -27,8 +27,8 @@ import projectStores from './stores';
 import panels from './panels';
 import styles from './index.module.scss';
 
-const DragHandle = SortableHandle(() => (
-  <span className={styles.handle} />
+const SortableDragHandle = SortableHandle(() => (
+  <span className={styles.sortableDrag} />
 ));
 
 const SortableItem = SortableElement(({ element, isSorting }) => {
@@ -39,7 +39,7 @@ const SortableItem = SortableElement(({ element, isSorting }) => {
         [styles.sorting]: isSorting,
       })}
     >
-      <DragHandle />
+      <SortableDragHandle />
       { element }
     </div>
   );
