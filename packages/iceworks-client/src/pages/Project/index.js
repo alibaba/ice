@@ -142,6 +142,14 @@ const Project = ({ history }) => {
 
   async function onPanelSettingChange(name, isAvailable) {
     await projectStore.setPanel({ name, isAvailable });
+    const panelStore = panelStores[name];
+    if (isAvailable && panelStore) {
+      panelStore
+        .refresh()
+        .catch((error) => {
+          logger.error(error);
+        });
+    }
   }
 
   async function onOpenPanelSetting() {
