@@ -6,12 +6,13 @@ import * as prettier from 'prettier';
 import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
+import * as uid from 'uid';
 
-import { IProjectNavigation, IProject, INavigationModule } from '../../../interface';
+import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 
 const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
 
-export default class Navigation extends EventEmitter implements INavigationModule {
+export default class Menu extends EventEmitter implements IMenuModule {
   public readonly projectPath: string;
   public readonly project: IProject;
 
@@ -23,13 +24,19 @@ export default class Navigation extends EventEmitter implements INavigationModul
     this.path = path.join(this.projectPath, 'src', 'menuConfig.js');
   }
 
-  async getAll(): Promise<{ asideMenuConfig: IProjectNavigation[] }> {
-    let asideMenuConfig = [];
+  private getFileAST(): any {
     const menuConfigPath = path.join(this.path);
     const menuFileString = fs.readFileSync(menuConfigPath).toString();
     const menuFileAST = parser.parse(menuFileString, {
       sourceType: 'module',
     });
+
+    return menuFileAST;
+  }
+
+  async getAll(): Promise<{ asideMenuConfig: IMenu[] }> {
+    let asideMenuConfig = [];
+    const menuFileAST = this.getFileAST();
 
     traverse(menuFileAST, {
       VariableDeclarator({ node }) {
@@ -43,21 +50,22 @@ export default class Navigation extends EventEmitter implements INavigationModul
       }
     });
     return {
-      asideMenuConfig,
+      asideMenuConfig: this.handlerData(asideMenuConfig),
     };
   }
 
-  async setData(config: {
-    type: string,
-    data: IProjectNavigation[],
-  }): Promise<void> {
-    const { data } = config;
-    const menuConfigPath = path.join(this.path);
-    const menuFileString = fs.readFileSync(menuConfigPath).toString();
-    const menuFileAST = parser.parse(menuFileString, {
-      sourceType: 'module',
-    });
-    const dataAST = parser.parse(JSON.stringify(data), {
+  async bulkCreate(
+    data: IMenu[],
+    options: IMenuOptions = {}
+  ): Promise<void> {
+    const { replacement = false } = options;
+    const { asideMenuConfig } = await this.getAll();
+    const menuFileAST = this.getFileAST();
+
+    if (!replacement) {
+      data = data.concat(asideMenuConfig);
+    }
+    const dataAST = parser.parse(JSON.stringify(this.handlerData(data)), {
       sourceType: 'module',
     });
     const arrayAST = dataAST.program.body[0];
@@ -81,5 +89,18 @@ export default class Navigation extends EventEmitter implements INavigationModul
         trailingComma: 'es5',
       })
     );
+  }
+
+  /**
+   * handler data eg. generate id
+   */
+  private handlerData(data: IMenu[]): IMenu[] {
+    return data.map((item) => {
+      if (Array.isArray(item.children)) {
+        item.children = this.handlerData(item.children);
+      }
+      item.id = item.id || `Menu_${uid(5)}`;
+      return item;
+    });
   }
 }

@@ -6,11 +6,12 @@ export default (app) => {
       return await project.router.getAll();
     }
 
-    async setData(ctx) {
+    async bulkCreate(ctx) {
       const { args } = ctx;
       const { projectManager } = app;
+      const { data, options } = args;
       const project = projectManager.getCurrent();
-      return await project.router.setData(args);
+      return await project.router.bulkCreate(data, options);
     }
   };
 };

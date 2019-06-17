@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Form, Input, Button } from '@alifd/next';
+import { Form, Input, Button, Select } from '@alifd/next';
 import Modal from '@components/Modal';
 import Progress from '@components/Progress';
 import stores from '@stores';
+import pageStores from '../../stores';
 import styles from './SavePageModal.module.scss';
 
 const FormItem = Form.Item;
@@ -18,12 +19,23 @@ const formItemLayout = {
 
 const SavePageModal = ({ on, onCancel, onOk }) => {
   const progress = stores.useStore('progress');
+  // const layoutStore = pageStores.useStore('layouts');
+  const routerStore = pageStores.useStore('routers');
+  // const { dataSource: layouts } = layoutStore;
+  const { dataSource: routers } = routerStore;
 
   async function onSave(values, errors) {
     if (!errors) {
       await onOk(values);
     }
   }
+
+  const routerGroups = routers.filter(item => item.routes).map(item => {
+    return {
+      label: `${item.path}(${item.component})`,
+      value: item.path,
+    };
+  });
 
   return (
     <Modal
@@ -67,6 +79,18 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
             className={styles.input}
             name="routePath"
             placeholder=""
+          />
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          labelAlign="top"
+          size="medium"
+          label={<FormattedMessage id="iceworks.project.panel.page.save.routePath.group.label" />}
+        >
+          <Select
+            className={styles.select}
+            name="routeGroup"
+            dataSource={routerGroups}
           />
         </FormItem>
         <FormItem

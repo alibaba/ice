@@ -1,16 +1,17 @@
 export default (app) => {
-  return class NavigationController extends app.Controller {
+  return class MenuController extends app.Controller {
     async list() {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.navigation.getAll();
+      return await project.menu.getAll();
     }
 
-    async setData(ctx) {
+    async bulkCreate(ctx) {
       const { args } = ctx;
+      const { data, options } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.navigation.setData(args);
+      return await project.menu.bulkCreate(data, options);
     }
   };
 };

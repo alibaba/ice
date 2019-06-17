@@ -7,7 +7,7 @@ import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
 
-import { IRouter, IRouterModule, IProject } from '../../../interface';
+import { IRouter, IRouterModule, IProject, IRouterOptions } from '../../../interface';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
@@ -27,8 +27,7 @@ export default class Router extends EventEmitter implements IRouterModule {
     this.path = path.join(this.projectPath, 'src', 'routerConfig.js');
   }
 
-  async getAll(): Promise<IRouter[]> {
-    let config = [];
+  private getFileAST(): any {
     const configPath = path.join(this.path);
     const fileString = fs.readFileSync(configPath).toString();
     const fileAST = parser.parse(fileString, {
@@ -38,6 +37,13 @@ export default class Router extends EventEmitter implements IRouterModule {
         'dynamicImport',
       ],
     });
+
+    return fileAST;
+  }
+
+  async getAll(): Promise<IRouter[]> {
+    let config = [];
+    const fileAST = this.getFileAST();
 
     try {
       traverse(fileAST, {
@@ -84,17 +90,28 @@ export default class Router extends EventEmitter implements IRouterModule {
     return config;
   }
 
-  // set router config
-  async setData(data: IRouter[]): Promise<void>  {
-    const configPath = path.join(this.path);
-    const fileString = fs.readFileSync(configPath).toString();
-    const fileAST = parser.parse(fileString, {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
-    });
+  // bulk create routers
+  async bulkCreate(data: IRouter[], options: IRouterOptions = {}): Promise<void>  {
+    const { replacement = false, parent } = options;
+    const fileAST = this.getFileAST();
+    const currentData = await this.getAll();
 
+    if (!replacement) {
+      if (parent) {
+        const parentRouter = currentData.find((item) => {
+          if (item.routes && item.path === parent) {
+            return true;
+          }
+          return false;
+        });
+        if (parentRouter) {
+          parentRouter.routes = parentRouter.routes.concat(data);
+          data = currentData;
+        }
+      } else {
+        data = currentData.concat(data);
+      }
+    }
     const dataAST = parser.parse(JSON.stringify(this.sortData(data)), {
       sourceType: 'module',
       plugins: [
@@ -103,7 +120,6 @@ export default class Router extends EventEmitter implements IRouterModule {
     });
     const arrayAST = dataAST.program.body[0];
 
-    // console.log('fileAST: ', JSON.stringify(fileAST));
     this.changeImportDeclarations(fileAST, data);
 
     /**
@@ -173,7 +189,6 @@ export default class Router extends EventEmitter implements IRouterModule {
     // const layoutImportDeclarations = [];
     this.existLazy = false;
 
-    // console.log('fileAST: ', JSON.stringify(fileAST));
     traverse(fileAST, {
       ImportDeclaration: ({ node, key }) => {
         const { source } = node;

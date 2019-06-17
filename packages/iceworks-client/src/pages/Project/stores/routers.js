@@ -5,7 +5,7 @@ export default {
   async refresh() {
     this.dataSource = await socket.emit('project.router.list');
   },
-  async setData(args) {
-    await socket.emit('project.router.setData', args);
+  async bulkCreate(args) {
+    await socket.emit('project.router.bulkCreate', args);
   },
 };

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Modal from '@components/Modal';
 import { Input, Select, Switch, Form, Field } from '@alifd/next';
-import uid from 'uid';
 import useWhenValueChanges from '../../../../hooks/useWhenValueChanges';
 
 const { Item: FormItem } = Form;
@@ -19,7 +18,7 @@ const formItemLayout = {
 
 const field = new Field({});
 
-const CreateNavigationModal = ({
+const CreateMenuModal = ({
   on, onCancel, onOk, modalData,
 }) => {
   const [action, setAction] = useState('create');
@@ -54,10 +53,7 @@ const CreateNavigationModal = ({
         ...formData,
       };
       if (!errors) {
-        let id = '';
         if (action === 'create') {
-          id = `Nav_${uid(5)}`;
-
           if (cacheValues.linkType === 'linkGroup') {
             cacheValues.children = [];
           } else if (cacheValues.linkType === 'externalLink') {
@@ -70,7 +66,6 @@ const CreateNavigationModal = ({
         delete cacheValues.linkType;
         onOk(action, {
           ...cacheValues,
-          id: formData.id || id,
         });
       }
     });
@@ -78,33 +73,33 @@ const CreateNavigationModal = ({
 
   return (
     <Modal
-      title={<FormattedMessage id={`iceworks.project.panel.navigation.${action}.title`} />}
+      title={<FormattedMessage id={`iceworks.project.panel.menu.${action}.title`} />}
       visible={on}
       onCancel={onCancel}
       onOk={onSubmit}
       style={{ width: 600 }}
     >
       <Form {...formItemLayout} onChange={onChange} field={field} value={formData}>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.type" />} required>
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.type" />} required>
           <Select size="small" name="linkType" placeholder="请选择导航类型" disabled={action !== 'create'}>
             <option value="linkGroup">导航组</option>
             <option value="link">普通导航</option>
             <option value="externalLink">外链</option>
           </Select>
         </FormItem>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.name" />} required>
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.name" />} required>
           <Input size="small" name="name" placeholder="请输入名称" />
         </FormItem>
         {linkType !== 'linkGroup' && (
-          <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.path" />}>
+          <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.path" />}>
             <Input size="small" name="path" placeholder="请输入路径" />
           </FormItem>
         )}
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.icon" />}>
+        <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.icon" />}>
           <Input size="small" name="icon" placeholder="请输入图标(icon type)" />
         </FormItem>
         {linkType === 'externalLink' && (
-          <FormItem label={<FormattedMessage id="iceworks.project.panel.navigation.form.newwindow" />}>
+          <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.newwindow" />}>
             <Switch size="small" name="newWindow" />
           </FormItem>
         )}
@@ -113,11 +108,11 @@ const CreateNavigationModal = ({
   );
 };
 
-CreateNavigationModal.propTypes = {
+CreateMenuModal.propTypes = {
   on: PropTypes.bool.isRequired,
   modalData: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default CreateNavigationModal;
+export default CreateMenuModal;

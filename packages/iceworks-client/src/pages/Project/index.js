@@ -19,7 +19,7 @@ import styles from './index.module.scss';
 import Page from './components/PagePanel';
 import Dependency from './components/DependencyPanel';
 import Layout from './components/LayoutPanel';
-import Navigation from './components/NavigationPanel';
+import Menu from './components/MenuPanel';
 import Router from './components/RouterPanel';
 import Todo from './components/TodoPanel';
 import Git from './components/GitPanel';
@@ -30,7 +30,7 @@ const panels = {
   Page,
   Dependency,
   Layout,
-  Navigation,
+  Menu,
   Router,
   Todo,
   Git,
@@ -40,12 +40,12 @@ const panels = {
 
 const Project = ({ history }) => {
   const { location } = history;
-  const [pages, layouts, git, oss, navigations, routers] = projectStores.useStores([
+  const [pages, layouts, git, oss, menus, routers] = projectStores.useStores([
     'pages',
     'layouts',
     'git',
     'oss',
-    'navigations',
+    'menus',
     'routers',
   ]);
 
@@ -59,7 +59,7 @@ const Project = ({ history }) => {
     Page: pages,
     Dependency: dependenciesStore,
     Layout: layouts,
-    Navigation: navigations,
+    Menu: menus,
     Router: routers,
     Git: git,
     OSS: oss,

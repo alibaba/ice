@@ -1,30 +1,45 @@
 import { IBaseModule } from './base';
 
+
+export interface IRouterOptions {
+  type?: string;
+  replacement?: boolean;
+  parent?: string;
+}
+
 /**
- * 项目的路由
+ * project router
  */
 export interface IRouter {
   /**
-   * URL 路径
+   * URL path
    */
   path: string;
 
   /**
-   * 组件名
+   * component name
    */
   component?: string;
 
   /**
-   * layout 名
+   * layout name
    */
   layout?: string;
 
+  /**
+   * children routes
+   */
   routes?: IRouter[];
 }
 
 export interface IRouterModule extends IBaseModule {
   /**
-   * 获取项目路由
+   * get routers
    */
   getAll(): Promise<IRouter[]>;
+
+  /**
+   * set routers
+   */
+  bulkCreate(data: IRouter[], options?: IRouterOptions): Promise<void>
 }
