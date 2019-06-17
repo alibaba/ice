@@ -1,0 +1,12 @@
+{
+  "name": "ice-plugin-smart-loader",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ice-plugin-wrap-code": "^0.1.0",
+    "ice-plugin-wrap-externals": "^0.1.0"
+  }
+}
