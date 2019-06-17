@@ -7,6 +7,15 @@ module.exports = ({ chainWebpack, log, context }, pluginOptions = {}) => {
   const { command } = context;
   const { externals } = pluginOptions;
   if (externals) {
+    // inject code of getLoadScriptsCode
+    icePluginWrapCode({ chainWebpack, log }, {
+      addCodeBefore: `var initLoadUrls = (externalUrls || []).concat(customUrls || []);
+        ${getLoadScriptsCode()}
+        loadUrls(initLoadUrls, function(){`,
+      addCodeAfter: '})',
+      id: 'loadUrl',
+    });
+
     const externalsConfig = {};
     const loadUrls = { development: [], production: [] };
     Object.keys(externals).forEach((key) => {
@@ -23,15 +32,14 @@ module.exports = ({ chainWebpack, log, context }, pluginOptions = {}) => {
     // config externals
     chainWebpack((config) => {
       config.externals(externalsConfig);
+      config.plugin('loadUrlWrapCodePlugin').tap(([options]) => [
+        { ...options,
+          addCodeBefore: `var externalUrls = ${JSON.stringify(command === 'dev' ? loadUrls.development : loadUrls.production)};
+            ${options.addCodeBefore || ''}`,
+        },
+      ]);
     });
     // apply icePluginWrapCode
-    icePluginWrapCode({ chainWebpack, log }, {
-      addCodeBefore: `var initLoadUrls = ${JSON.stringify(command === 'dev' ? loadUrls.development : loadUrls.production)};
-        ${getLoadScriptsCode()}
-        loadUrls(initLoadUrls, function(){`,
-      addCodeAfter: '})',
-      id: 'loadUrl',
-    });
   } else {
     log.error('external must be an array');
   }
