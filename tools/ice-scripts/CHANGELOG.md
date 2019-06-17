@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- [fix] 修改命令参数失效问题
+
 ## 2.1.0
 
 - [feat] watch ice.config.js changed and restart dev
