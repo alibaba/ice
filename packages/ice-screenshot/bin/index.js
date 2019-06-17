@@ -79,11 +79,17 @@ async function screenshot(url, selector, output) {
     console.log(chalk.green(`Screenshot output path: ${output}`));
   } catch (err) {
     spinner.fail(chalk.red('Screenshot fail!'));
-    console.log(chalk.red('\n\nPlease install puppeteer using the following commands:'));
-    console.log(chalk.white('\n  npm uninstall puppeteer -g'));
-    console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
-    console.log(chalk.white('\n  idev screenshot\n'));
-    console.log(err);
+
+    // chromium not download error
+    // stdout reinstall puppeteer tips.
+    if (err.message === 'Chromium revision is not downloaded. Run "npm install" or "yarn install"') {
+      console.log(chalk.red('\n\nPuppeteer Install fail. \nPlease install puppeteer using the following commands:'));
+      console.log(chalk.white('\n  npm uninstall puppeteer -g'));
+      console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
+      console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
+    } else {
+      console.log(err);
+    }
     process.exit(1);
   }
 }
@@ -124,10 +130,10 @@ async function getPuppeteer() {
 
           // get spawn error, exit with code 1
           if (result.error) {
-            console.log(chalk.red('\n\nInstall Error. \nPlease manual install puppeteer using the following commands:'));
+            console.log(chalk.red('\n\nInstall Error. \nPlease install puppeteer using the following commands:'));
             console.log(chalk.white('\n  npm uninstall puppeteer -g'));
             console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
-            console.log(chalk.white('\n  idev screenshot\n'));
+            console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
             process.exit(1);
           }
 
