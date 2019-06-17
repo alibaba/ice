@@ -2,11 +2,11 @@ import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
-import * as prettier from 'prettier';
 import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
 
+import formatCodeFromAST from '../formatCodeFromAST';
 import { IRouter, IRouterModule, IProject, IRouterOptions } from '../../../interface';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
@@ -27,10 +27,9 @@ export default class Router extends EventEmitter implements IRouterModule {
     this.path = path.join(this.projectPath, 'src', 'routerConfig.js');
   }
 
-  private getFileAST(): any {
-    const configPath = path.join(this.path);
-    const fileString = fs.readFileSync(configPath).toString();
-    const fileAST = parser.parse(fileString, {
+  private getRouterConfigAST(): any {
+    const routerConfigString = fs.readFileSync(this.path).toString();
+    const routerConfigAST = parser.parse(routerConfigString, {
       allowImportExportEverywhere: true,
       sourceType: 'module',
       plugins: [
@@ -38,15 +37,15 @@ export default class Router extends EventEmitter implements IRouterModule {
       ],
     });
 
-    return fileAST;
+    return routerConfigAST;
   }
 
   async getAll(): Promise<IRouter[]> {
     let config = [];
-    const fileAST = this.getFileAST();
+    const routerConfigAST = this.getRouterConfigAST();
 
     try {
-      traverse(fileAST, {
+      traverse(routerConfigAST, {
         VariableDeclarator: ({ node }) => {
           if (
             t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
@@ -93,7 +92,7 @@ export default class Router extends EventEmitter implements IRouterModule {
   // bulk create routers
   async bulkCreate(data: IRouter[], options: IRouterOptions = {}): Promise<void>  {
     const { replacement = false, parent } = options;
-    const fileAST = this.getFileAST();
+    const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
 
     if (!replacement) {
@@ -120,7 +119,7 @@ export default class Router extends EventEmitter implements IRouterModule {
     });
     const arrayAST = dataAST.program.body[0];
 
-    this.changeImportDeclarations(fileAST, data);
+    this.changeImportDeclarations(routerConfigAST, data);
 
     /**
      * { path: '/a', component: 'Page' }
@@ -134,7 +133,7 @@ export default class Router extends EventEmitter implements IRouterModule {
         }
       }
     });
-    traverse(fileAST, {
+    traverse(routerConfigAST, {
       VariableDeclarator({ node }) {
         if (
           t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
@@ -147,12 +146,7 @@ export default class Router extends EventEmitter implements IRouterModule {
 
     fs.writeFileSync(
       this.path,
-      prettier.format(generate(fileAST, {
-        retainLines: true,
-      }).code, {
-        singleQuote: true,
-        trailingComma: 'es5',
-      })
+      formatCodeFromAST(routerConfigAST)
     );
   }
 
@@ -182,14 +176,14 @@ export default class Router extends EventEmitter implements IRouterModule {
    * 2. remove import if there is no layout or component in the data
    * 3. add import if there is no layout or component in the ImportDeclarations
    */
-  private changeImportDeclarations(fileAST, data) {
+  private changeImportDeclarations(routerConfigAST, data) {
     const removeIndex = [];
     const importDeclarations = [];
     // const pageImportDeclarations = [];
     // const layoutImportDeclarations = [];
     this.existLazy = false;
 
-    traverse(fileAST, {
+    traverse(routerConfigAST, {
       ImportDeclaration: ({ node, key }) => {
         const { source } = node;
         const match = source.value.match(/^\.\/(layouts|pages)\//);
@@ -265,7 +259,7 @@ export default class Router extends EventEmitter implements IRouterModule {
     });
 
     removeIndex.forEach((index) => {
-      fileAST.program.body.splice(index, 1);
+      routerConfigAST.program.body.splice(index, 1);
     });
 
     const existImport = this.existImport;
@@ -316,8 +310,8 @@ export default class Router extends EventEmitter implements IRouterModule {
       ],
     });
 
-    const firstIndex = this.findFirstImportIndex(fileAST);
-    fileAST.program.body.splice(firstIndex, 0, ...importCodeAST.program.body);
+    const firstIndex = this.findFirstImportIndex(routerConfigAST);
+    routerConfigAST.program.body.splice(firstIndex, 0, ...importCodeAST.program.body);
   }
 
   /**
@@ -335,9 +329,9 @@ export default class Router extends EventEmitter implements IRouterModule {
   /**
    * find first import index
    */
-  private findFirstImportIndex(fileAST): number {
+  private findFirstImportIndex(routerConfigAST): number {
     let firstIndex = 0;
-    fileAST.program.body.some((item, index) => {
+    routerConfigAST.program.body.some((item, index) => {
       if (item.type === 'ImportDeclaration') {
         return true;
       }

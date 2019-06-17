@@ -2,12 +2,12 @@ import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
-import * as prettier from 'prettier';
 import traverse from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
 import * as uid from 'uid';
 
+import formatCodeFromAST from '../formatCodeFromAST';
 import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 
 const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
@@ -25,8 +25,7 @@ export default class Menu extends EventEmitter implements IMenuModule {
   }
 
   private getFileAST(): any {
-    const menuConfigPath = path.join(this.path);
-    const menuFileString = fs.readFileSync(menuConfigPath).toString();
+    const menuFileString = fs.readFileSync(this.path).toString();
     const menuFileAST = parser.parse(menuFileString, {
       sourceType: 'module',
     });
@@ -82,12 +81,7 @@ export default class Menu extends EventEmitter implements IMenuModule {
 
     fs.writeFileSync(
       this.path,
-      prettier.format(generate(menuFileAST, {
-        retainLines: true,
-      }).code, {
-        singleQuote: true,
-        trailingComma: 'es5',
-      })
+      formatCodeFromAST(menuFileAST)
     );
   }
 
