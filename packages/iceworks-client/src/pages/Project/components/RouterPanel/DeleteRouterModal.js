@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { FormattedMessage } from 'react-intl';
 
+import styles from './DeleteRouterModal.module.scss';
+
 const DeleteRouterModal = ({
   on, onCancel, onOk, router,
 }) => {
@@ -17,6 +19,9 @@ const DeleteRouterModal = ({
     >
       <div>
         <FormattedMessage id="iceworks.project.panel.router.delete.content" values={{ name: path }} />
+      </div>
+      <div className={styles.warn}>
+        (注意：删除路由不会删除对应的导航，需要手动操作)
       </div>
     </Modal>
   );

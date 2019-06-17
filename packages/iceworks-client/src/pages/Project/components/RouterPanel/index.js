@@ -184,8 +184,8 @@ const RouterPanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="add" size="small" onClick={() => onOpenCreateModal()} />
+            <Icon className={styles.icon} type="refresh" size="xs" onClick={onRefresh} />
+            <Icon className={styles.icon} type="add" size="xs" onClick={() => onOpenCreateModal()} />
           </div>
         </div>
       }

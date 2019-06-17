@@ -32,6 +32,9 @@ const DeleteMenuModal = ({
           </span>
         )}
       </div>
+      <div className={styles.warn}>
+        (注意：删除导航不会删除对应的路由，需要手动操作)
+      </div>
     </Modal>
   );
 };

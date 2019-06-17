@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import TipIcon from '@components/TipIcon';
 import Modal from '@components/Modal';
 import { Input, Select, Form, Field, Switch } from '@alifd/next';
 
@@ -27,6 +28,7 @@ const CreateRouterModal = ({
 }) => {
   const [formData, setFormData] = useState({});
   const { parent } = modalData;
+  const isEdit = modalData.action === 'edit';
 
   useWhenValueChanges(modalData, () => {
     if (modalData && modalData.formData) {
@@ -68,16 +70,16 @@ const CreateRouterModal = ({
     };
   });
 
-  if (modalData.action === 'create') {
+  if (!isEdit) {
     if (parent) {
       dataSource = pageSelects;
     } else {
       dataSource = [{
-        label: '页面(普通组件)',
-        children: pageSelects,
-      }, {
         label: '布局(只有布局才能配置子路由)',
         children: layoutSelects,
+      }, {
+        label: '页面(普通组件)',
+        children: pageSelects,
       }];
     }
   } else if (formData.routes) {
@@ -155,10 +157,13 @@ const CreateRouterModal = ({
       style={{ width: 600 }}
     >
       <Form {...formItemLayout} onChange={onChange} field={field} value={formData}>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.path" />} required>
+        <FormItem
+          required
+          label={<FormattedMessage id="iceworks.project.panel.router.form.path" />}
+          help={isEdit ? '修改了路径需要手动到导航配置里修改对应的路径' : ''}
+        >
           <Input
             name="path"
-            // addonTextBefore={(parent && parent.path !== '/') ? parent.path : ''}
             placeholder="请填写路径"
             {...init('path', {
               rules: [{
@@ -169,7 +174,16 @@ const CreateRouterModal = ({
             })}
           />
         </FormItem>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.component" />}>
+        <FormItem
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.component" />
+              <TipIcon>
+                如果只有一个页面，没有 layout，只需选择页面下的某一个组件，如果是一个路由组(底下有子路由)，就必须选择布局
+              </TipIcon>
+            </span>
+          )}
+        >
           <Select
             size="small"
             name="component"
@@ -178,7 +192,17 @@ const CreateRouterModal = ({
             className={styles.selectBox}
           />
         </FormItem>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.router.form.exact" />}>
+        <FormItem
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.exact" />
+              <TipIcon>
+                路径是否精确匹配，如果选择了精确匹配，路径写 /one，访问 /one/two 是不能匹配的，具体文档请参考
+                <a href="https://reacttraining.com/react-router/web/api/Route/exact-bool" target="__blank">链接</a>
+              </TipIcon>
+            </span>
+          )}
+        >
           <Switch
             size="small"
             name="exact"

@@ -310,8 +310,8 @@ export default class Router extends EventEmitter implements IRouterModule {
       ],
     });
 
-    const firstIndex = this.findFirstImportIndex(routerConfigAST);
-    routerConfigAST.program.body.splice(firstIndex, 0, ...importCodeAST.program.body);
+    const lastIndex = this.findLastImportIndex(routerConfigAST);
+    routerConfigAST.program.body.splice(lastIndex, 0, ...importCodeAST.program.body);
   }
 
   /**
@@ -327,16 +327,19 @@ export default class Router extends EventEmitter implements IRouterModule {
   }
 
   /**
-   * find first import index
+   * find last import index
    */
-  private findFirstImportIndex(routerConfigAST): number {
-    let firstIndex = 0;
-    routerConfigAST.program.body.some((item, index) => {
+  private findLastImportIndex(routerConfigAST): number {
+    let lastIndex = 0;
+    routerConfigAST.program.body.forEach((item, index) => {
       if (item.type === 'ImportDeclaration') {
-        return true;
+        if (this.existLazy) {
+          lastIndex = index + 2;
+        } else {
+          lastIndex = index + 1;
+        }
       }
-      return false;
     });
-    return firstIndex;
+    return lastIndex;
   }
 }
