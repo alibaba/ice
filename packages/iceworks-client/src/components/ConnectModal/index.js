@@ -6,32 +6,38 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
 
+let listen = false;
+
 const ConnectModal = ({ intl }) => {
   const [status, setStatus] = useState('connect');
   const { on, setModal } = useModal(true);
 
-  socket.on('connect', () => {
-    setStatus('connect');
+  if (!listen) {
+    socket.on('connect', () => {
+      setStatus('connect');
 
-    Message.show({
-      title: '提示',
-      align: 'tr tr',
-      type: 'success',
-      content: '服务连接成功',
+      Message.show({
+        title: '提示',
+        align: 'tr tr',
+        type: 'success',
+        content: '服务连接成功',
+      });
     });
-  });
 
-  socket.on('reconnecting', () => {
-    setStatus('reconnecting');
-  });
+    socket.on('reconnecting', () => {
+      setStatus('reconnecting');
+    });
 
-  socket.on('reconnect_failed', () => {
-    setStatus('reconnect_failed');
-  });
+    socket.on('reconnect_failed', () => {
+      setStatus('reconnect_failed');
+    });
 
-  socket.on('disconnect', () => {
-    setStatus('disconnect');
-  });
+    socket.on('disconnect', () => {
+      setStatus('disconnect');
+    });
+
+    listen = true;
+  }
 
   const CONNECT_MAP = {
     connect: 'iceworks.global.connect',
@@ -43,6 +49,7 @@ const ConnectModal = ({ intl }) => {
   return status !== 'connect' ? (
     <Modal
       title={intl.formatMessage({ id: 'iceworks.global.disconnect.title' })}
+      style={{ width: '320px' }}
       visible={on}
       footer={false}
       onCancel={() => setModal(false)}
