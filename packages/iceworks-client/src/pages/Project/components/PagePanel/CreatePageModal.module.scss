@@ -1,3 +1,5 @@
+@import '../../../../variables.scss';
+
 .wrap {
   width: calc(100vw - 250px);
   height: calc(100vh - 250px);
@@ -5,23 +7,72 @@
   flex-direction: row;
 
   .blocks {
-    width: 70%;
+    width: 60%;
     height: 100%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
 
     .item {
       width: 100%;
+      position: relative;
+      margin-bottom: 4px;
+
+      &:hover {
+        box-shadow: 0px 0px 2px 1px $brand-color-primary;
+        z-index: 1;
+
+        .trash {
+          visibility: visible;
+        }
+        .name {
+          visibility: visible;
+        }
+      }
 
       .screenshot {
         img {
           width: 100%;
+          min-height: 60px;
+        }
+      }
+
+      .trash {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        visibility: hidden;
+      }
+
+      .name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        visibility: hidden;
+        background-color: $background-color-base;
+
+        .input {
+          flex: 1;
+          border: 0 none;
+          background-color: transparent;
+        }
+
+        .icon {
+          margin-left: 4px;
+          margin-right: 12px;
         }
       }
     }
   }
 
   .material {
-    width: 30%;
+    width: 40%;
     margin-left: 24px;
   }
 }

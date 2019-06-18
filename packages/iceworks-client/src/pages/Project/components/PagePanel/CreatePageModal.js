@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Select } from '@alifd/next';
+import { Select, Input } from '@alifd/next';
 import mockData from '@src/mock';
 import socket from '@src/socket';
 import stores from '@stores';
 import Modal from '@components/Modal';
+import Icon from '@components/Icon';
 import BlockCard from '@components/BlockCard';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
@@ -111,8 +112,26 @@ const CreatePageModal = ({
     toggleSaveModal();
   }
 
+  function generateBlockName(name, count = 0) {
+    const newName = !count ? name : `${name}${count}`;
+    const isConflict = selectedBlocks.some((block) => block.name === newName);
+    if (isConflict) {
+      return generateBlockName(name, count + 1);
+    }
+    return newName;
+  }
+
   function onSelect(block) {
-    setSelectedBlocks(selectedBlocks.concat([block]));
+    setSelectedBlocks(selectedBlocks.concat([{ ...block, name: generateBlockName(block.name) }]));
+  }
+
+  function onDelete(targetIndex) {
+    setSelectedBlocks(selectedBlocks.filter((block, index) => index !== targetIndex));
+  }
+
+  function onNameChange(name, targetIndex) {
+    selectedBlocks[targetIndex].name = name;
+    setSelectedBlocks([...selectedBlocks]);
   }
 
   useSocket('project.page.create.status', ({ text, percent }) => {
@@ -135,15 +154,21 @@ const CreatePageModal = ({
         <div className={styles.wrap}>
           <div className={styles.blocks}>
             {
-              selectedBlocks.map(({ screenshot, name, title }) => {
+              selectedBlocks.map(({ screenshot, name, title }, index) => {
                 return (
-                  <div className={styles.item}>
+                  <div className={styles.item} key={index}>
                     <div className={styles.screenshot}>
                       <img alt={title} src={screenshot} />
                     </div>
                     <div className={styles.name}>
-                      {name}
+                      <Input
+                        value={name}
+                        className={styles.input}
+                        onChange={(value) => onNameChange(value, index)}
+                      />
+                      <Icon className={styles.icon} type="pencil" size="small" />
                     </div>
+                    <Icon className={styles.trash} type="trash" size="small" onClick={() => onDelete(index)} />
                   </div>
                 );
               })
