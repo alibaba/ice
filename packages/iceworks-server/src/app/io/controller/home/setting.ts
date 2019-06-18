@@ -31,6 +31,30 @@ export default (app) => {
       };
     }
 
+    async setLocale(ctx) {
+      storage.set('locale', ctx.args.locale);
+    }
+
+    async getLocale() {
+      return storage.get('locale');
+    }
+
+    async setTheme(ctx) {
+      storage.set('theme', ctx.args.theme);
+    }
+
+    async getTheme() {
+      return storage.get('theme');
+    }
+
+    async setEditor(ctx) {
+      storage.set('editor', ctx.args.editor);
+    }
+
+    async getEditor() {
+      return storage.get('editor');
+    }
+
     async setUser({ args }) {
       const { name, workId, avatarUrl } = args;
       if (workId && name && avatarUrl) {

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
+import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
+import useSocket from '@hooks/useSocket';
+import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project }) => {
   const [terminalVisible, setTerminalVisible] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
   const projectPath = project.dataSource.path;
 
   function handleTerminal() {
@@ -40,6 +45,23 @@ const GlobalBar = ({ project }) => {
     }
   }
 
+  async function handleTheme() {
+    const currentTheme = theme === THEMES.dark ? THEMES.light : THEMES.dark;
+    await socket.emit('home.setting.setTheme', { theme: currentTheme });
+    setTheme(currentTheme);
+  }
+
+  useSocket('home.system.open.editor.data', (data) => {
+    if (data) {
+      Message.show({
+        type: 'error',
+        align: 'tr tr',
+        title: '提示',
+        content: '打开编辑器失败',
+      });
+    }
+  });
+
   return project.dataSource.name ? (
     <div className={styles.container}>
       {terminalVisible ? (
@@ -51,27 +73,63 @@ const GlobalBar = ({ project }) => {
       <div className={styles.globalBar}>
         <div className={styles.leftContent}>
           <div className={styles.item}>
-            当前项目名称：{project.dataSource.name}
+            <FormattedMessage id="iceowrks.global.bar.project" />：
+            {project.dataSource.name}
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />
-            终端
+            <FormattedMessage id="iceowrks.global.bar.terminal" />
           </div>
         </div>
 
         <div className={styles.rightContent}>
           <div className={styles.item} onClick={handleFolder}>
             <Icon type="folderopen" className={styles.icon} />
-            文件夹
+            <FormattedMessage id="iceowrks.global.bar.folder" />
           </div>
           <div className={styles.item} onClick={handleEditor}>
             <Icon type="code" className={styles.icon} />
-            编辑器
+            <FormattedMessage id="iceowrks.global.bar.editor" />
           </div>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={handleTheme}>
             <Icon type="zhuti" className={styles.icon} size="small" />
-            主题
+            <FormattedMessage id="iceowrks.global.bar.theme" />
           </div>
+          <Balloon
+            align="tl"
+            closable={false}
+            trigger={
+              <div className={styles.item}>
+                <Icon type="face" className={styles.icon} size="small" />
+                <FormattedMessage id="iceowrks.global.bar.feedback" />
+              </div>
+            }
+            triggerType="click"
+          >
+            <div className={styles.feedback}>
+              <h4 style={{ margin: '0 0 10px' }}>
+                <FormattedMessage id="iceowrks.global.bar.feedback.title" />
+              </h4>
+              <div className={styles.links}>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://img.alicdn.com/tfs/TB1q_oaQgTqK1RjSZPhXXXfOFXa-993-1280.png"
+                  style={{ display: 'block', marginBottom: '5px' }}
+                >
+                  <FormattedMessage id="iceowrks.global.bar.feedback.join" />
+                </a>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://github.com/alibaba/ice/issues/new"
+                  style={{ display: 'block' }}
+                >
+                  <FormattedMessage id="iceowrks.global.bar.feedback.submit" />
+                </a>
+              </div>
+            </div>
+          </Balloon>
         </div>
       </div>
     </div>
