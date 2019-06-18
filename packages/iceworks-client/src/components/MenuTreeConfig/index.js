@@ -44,7 +44,7 @@ const MenuTreeConfig = ({
       linkType = 'link';
     }
     return (
-      <div className="navbarConfigTreeSetIcon">
+      <div className={styles.navbarConfigTreeSetIcon}>
         <Icon
           type="edit"
           title="编辑"
