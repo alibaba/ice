@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Select } from '@alifd/next';
 import mockData from '@src/mock';
 import socket from '@src/socket';
 import stores from '@stores';
@@ -11,14 +12,12 @@ import useSocket from '@hooks/useSocket';
 import pageStores from '../../stores';
 import SavePageModal from './SavePageModal';
 import styles from './CreatePageModal.module.scss';
-// TODO
-const pageData = {
-  blocks: mockData.blocks,
-  layout: mockData.layout,
-};
 
-const MaterialSelect = ({ name, source }) => {
+const MaterialSelect = ({ resources, onSelect }) => {
+  const resource = resources[0];
+  const { source } = resource;
   const [data, setData] = useState({ categories: [], materials: { all: [] } });
+
   useEffect(() => {
     (async () => {
       const { blocks } = await socket.emit('material.index.getOne', { url: source });
@@ -29,26 +28,50 @@ const MaterialSelect = ({ name, source }) => {
   const { categories = [], materials = {} } = data;
 
   return (
-    <div>
-      <div>
-        {name}
+    <div className={styles.materialWrap}>
+      <div className={styles.select}>
+        <Select
+          dataSource={resources.map(({ source: value, name: label }) => {
+            return {
+              label,
+              value,
+            };
+          })}
+          value={source}
+        />
       </div>
-      <div>
-        {
-          materials.all.map((dataSource) => {
-            return (
-              <BlockCard dataSource={dataSource} />
-            );
-          })
-        }
+      <div className={styles.main}>
+        <div className={styles.materials}>
+          {
+            materials.all.map((dataSource) => {
+              return (
+                <BlockCard
+                  dataSource={dataSource}
+                  onClick={() => onSelect(dataSource)}
+                />
+              );
+            })
+          }
+        </div>
+        <div className={styles.categories}>
+          {
+            categories.map(({ name: categoryName }) => {
+              return (
+                <div>
+                  {categoryName}
+                </div>
+              );
+            })
+          }
+        </div>
       </div>
     </div>
   );
 };
 
 MaterialSelect.propTypes = {
-  name: PropTypes.string.isRequired,
-  source: PropTypes.string.isRequired,
+  resources: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 const CreatePageModal = ({
@@ -58,6 +81,7 @@ const CreatePageModal = ({
     on: onSaveModal,
     toggleModal: toggleSaveModal,
   } = useModal();
+  const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [page] = pageStores.useStores(['page']);
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
   const { dataSource } = material;
@@ -70,7 +94,10 @@ const CreatePageModal = ({
   }
 
   function onCreateOk() {
-    page.setData(pageData);
+    page.setData({
+      selectedBlocks,
+      layout: mockData.layout,
+    });
     toggleSaveModal();
   }
 
@@ -82,6 +109,10 @@ const CreatePageModal = ({
     });
     await progress.hide();
     toggleSaveModal();
+  }
+
+  function onSelect(block) {
+    setSelectedBlocks(selectedBlocks.concat([block]));
   }
 
   useSocket('project.page.create.status', ({ text, percent }) => {
@@ -102,15 +133,31 @@ const CreatePageModal = ({
         key="createModal"
       >
         <div className={styles.wrap}>
-          <div className={styles.page}>
-            selectedBlocks
+          <div className={styles.blocks}>
+            {
+              selectedBlocks.map(({ screenshot, name, title }) => {
+                return (
+                  <div className={styles.item}>
+                    <div className={styles.screenshot}>
+                      <img alt={title} src={screenshot} />
+                    </div>
+                    <div className={styles.name}>
+                      {name}
+                    </div>
+                  </div>
+                );
+              })
+            }
           </div>
           <div className={styles.material}>
-            {materialSources.map((source, index) => {
-              return (
-                <MaterialSelect {...source} key={index} />
-              );
-            })}
+            {
+              materialSources.length ?
+                <MaterialSelect
+                  resources={materialSources}
+                  onSelect={onSelect}
+                /> :
+                null
+            }
           </div>
         </div>
       </Modal>,

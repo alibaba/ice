@@ -4,11 +4,52 @@
   display: flex;
   flex-direction: row;
 
-  .page {
+  .blocks {
     width: 70%;
+    height: 100%;
+    overflow-y: auto;
+
+    .item {
+      width: 100%;
+
+      .screenshot {
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
 
   .material {
     width: 30%;
+    margin-left: 24px;
+  }
+}
+
+.materialWrap {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+
+  .select {
+    height: 24px;
+    margin-bottom: 12px;
+  }
+
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+
+    .categories {
+      width: 60px;
+      margin-left: 12px;
+    }
+
+    .materials {
+      overflow-y: auto;
+      flex: 1;
+    }
   }
 }
