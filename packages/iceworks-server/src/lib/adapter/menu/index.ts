@@ -64,6 +64,7 @@ export default class Menu extends EventEmitter implements IMenuModule {
         }
       }
     });
+
     return {
       asideMenuConfig: this.handlerData(asideMenuConfig),
       headerMenuConfig: this.handlerData(headerMenuConfig),

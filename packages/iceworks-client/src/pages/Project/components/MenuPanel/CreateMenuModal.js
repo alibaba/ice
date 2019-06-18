@@ -68,6 +68,9 @@ const CreateMenuModal = ({
         if (cacheValues.linkType !== 'linkGroup') {
           delete cacheValues.children;
         }
+        if (cacheValues.linkType !== 'externalLink') {
+          delete cacheValues.external;
+        }
         delete cacheValues.linkType;
         onOk(action, {
           ...cacheValues,
