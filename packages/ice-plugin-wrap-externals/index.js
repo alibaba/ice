@@ -40,8 +40,5 @@ module.exports = ({ chainWebpack, log, context }, pluginOptions = {}) => {
         },
       ]);
     });
-    // apply icePluginWrapCode
-  } else {
-    log.error('external must be an array');
   }
 };
