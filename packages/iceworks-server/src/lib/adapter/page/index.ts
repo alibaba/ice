@@ -53,7 +53,7 @@ export default class Page extends EventEmitter implements IPageModule {
         birthtime,
         ctime,
         mtime,
-      }
+      };
     });
   }
 
@@ -70,7 +70,7 @@ export default class Page extends EventEmitter implements IPageModule {
     blocks.forEach(({ dependencies }) => Object.assign(blocksDependencies, dependencies));
 
     // filter dependencies if already in project
-    const filterDependencies: { [packageName: string]: string }[] = [];
+    const filterDependencies: Array<{ [packageName: string]: string }> = [];
     Object.keys(blocksDependencies).forEach((packageName) => {
       if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
         filterDependencies.push({

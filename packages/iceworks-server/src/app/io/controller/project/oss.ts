@@ -23,7 +23,7 @@ export default (app) => {
         newConfig = {...args, project: path};
         oss.push({...args, project: path});
       }
-      
+
       storage.set('oss', oss);
 
       return newConfig;
@@ -41,7 +41,7 @@ export default (app) => {
       const currentProject = projectManager.getCurrent();
       const oss = storage.get('oss');
       const projectOSSConfig = oss.find(({ project }) => project === currentProject.path);
-      
+
       return await currentProject.oss.getBuckets(projectOSSConfig);
     }
   };

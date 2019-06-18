@@ -9,7 +9,7 @@ export default class Configuration extends EventEmitter implements IConfiguratio
 
   public readonly cliConfPath: string;
 
-  private cliConfFilename: string = 'ice.config.js';
+  private cliConfFilename = 'ice.config.js';
 
   constructor(project: IProject) {
     super();

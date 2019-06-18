@@ -1,7 +1,7 @@
 import { IBaseModule } from './base';
 
 export interface IUnstagedFile {
-  type: string; 
+  type: string;
   file: string;
 }
 
@@ -30,7 +30,7 @@ export interface IGitAddAndCommitParams {
 export interface IGitGetLog {
   latest: {
     hash: string;
-  }
+  };
 }
 
 export interface IGitModule extends IBaseModule {

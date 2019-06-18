@@ -1,5 +1,11 @@
 {
   "extends": [
+    "tslint-eslint-rules",
+    "tslint-config-prettier",
     "tslint-midway-contrib"
-  ]
+  ],
+  "rules": {
+    "no-return-await": false,
+    "no-unused-expression": [true, "allow-fast-null-checks"]
+  }
 }

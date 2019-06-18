@@ -48,7 +48,7 @@ export default class Git extends EventEmitter implements IGitModule {
     const originRemote = originRemotes[0];
     const remoteUrl = originRemote && originRemote.refs ? originRemote.refs.push : '';
 
-    return { 
+    return {
       isRepository,
       remoteUrl,
       currentBranch: localBranches.current,

@@ -20,13 +20,13 @@ export default class OSS extends EventEmitter implements IOSSModule {
   async getBuckets(params: IOSSGetBucketsParams): Promise<IOSSBucket[]> {
     const { region } = params;
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
-    
+
     const { buckets } = await aliOSS.listBuckets();
     return buckets;
   }
 
   async upload(params: IOSSUploadParams): Promise<IUploadResult[]> {
-    const buildPath = path.join(this.project.path, this.buildDir)
+    const buildPath = path.join(this.project.path, this.buildDir);
     if (!await pathExists(buildPath)) {
       throw new Error(`构建目录 ${this.buildDir} 不存在`);
     }

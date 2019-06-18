@@ -33,7 +33,6 @@ const registry = 'https://registry.npm.taobao.org';
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 
-
 class Project implements IProject {
   public readonly name: string;
 
@@ -96,7 +95,7 @@ class Project implements IProject {
     for (const [key, Module] of Object.entries(adapter)) {
       this.panels.push(key);
 
-      let project: IProject = clone(this);
+      const project: IProject = clone(this);
       for (const moduleKey of adapterModuleKeys) {
         if (project[moduleKey]) {
           delete project[moduleKey];
@@ -187,7 +186,7 @@ class ProjectManager extends EventEmitter {
 
     // check read and write
     try {
-      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // tslint:disable-line
     } catch (error) {
       error.message = '当前路径没有读写权限，请更换项目路径';
       throw error;
@@ -238,7 +237,7 @@ class ProjectManager extends EventEmitter {
       );
     }
 
-    //replace _gitignore to .gitignore
+    // replace _gitignore to .gitignore
     const gitignoreFilename = 'gitignore';
     await mvAsync(path.join(targetPath, `_${gitignoreFilename}`), path.join(targetPath, `.${gitignoreFilename}`));
   }

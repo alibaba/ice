@@ -29,7 +29,7 @@ export default class Layout extends EventEmitter {
           thumbnail: DEFAULT_IMAGE,
         };
       })
-    )
+    );
   }
 
   async getAll(): Promise<IProjectLayout[]> {
