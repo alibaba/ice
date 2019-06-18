@@ -13,6 +13,11 @@ export interface IPanel {
  */
 export interface IProject {
   /**
+   * 项目类型：react/vue/angular...
+   */
+  readonly type: string;
+
+  /**
    * 项目显示名称
    */
   readonly name: string;

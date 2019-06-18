@@ -34,6 +34,7 @@ const registry = 'https://registry.npm.taobao.org';
 
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
+const DEFAULT_TYPE = 'react';
 
 class Project implements IProject {
   public readonly name: string;
@@ -42,15 +43,24 @@ class Project implements IProject {
 
   public readonly packagePath: string;
 
+  public readonly type: string;
+
   public panels: IPanel[] = [];
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
+    this.type = this.getType();
 
     this.loadAdapter();
     this.assemblePanels();
+  }
+
+  public getType(): string {
+    const { iceworks = {} } = this.getPackageJSON();
+    const { type = DEFAULT_TYPE } = iceworks;
+    return type;
   }
 
   public getPackageJSON() {

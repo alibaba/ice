@@ -99,16 +99,10 @@ const schema = {
     type: 'array',
     default: [
       {
-        name: '飞冰物料',
-        description: '基于 ICE Design 设计语言，专业视觉设计，每周物料更新，丰富组合区块，不同领域模板',
-        homepage: 'https://alibaba.github.io/ice/',
-        logo: 'https://img.alicdn.com/tfs/TB1JbQWoQUmBKNjSZFOXXab2XXa-242-134.png',
-        source: 'https://ice.alicdn.com/assets/react-materials.json',
-        tags: [
-          '官方',
-          'React',
-          'ICE'
-        ]
+        "official": true,
+        "name": "飞冰物料",
+        "type": "react",
+        "source": "https://ice.alicdn.com/assets/react-materials.json"
       }
     ],
   },

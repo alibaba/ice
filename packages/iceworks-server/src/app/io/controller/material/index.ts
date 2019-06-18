@@ -10,8 +10,14 @@ const RECOMMEND_SCAFFOLDS = [
 
 export default (app) => {
   return class MaterialController extends app.Controller {
-    async resource() {
-      return storage.get('material');
+    async getResources({ args }) {
+      const resources = storage.get('material');
+
+      if (args && args.type) {
+        return resources.filter(({type: dataType}) => dataType === args.type);
+      }
+
+      return resources;
     }
 
     async getOne(ctx) {

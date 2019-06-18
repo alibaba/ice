@@ -1,4 +1,14 @@
 .wrap {
   width: calc(100vw - 250px);
   height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: row;
+
+  .page {
+    width: 70%;
+  }
+
+  .material {
+    width: 30%;
+  }
 }

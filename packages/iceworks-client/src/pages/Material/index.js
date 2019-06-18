@@ -52,7 +52,7 @@ const Material = ({ history }) => {
   }
 
   async function fetchData() {
-    await material.getResource();
+    await material.getResources();
     const firstResource = dataSource.resource.official[0] || {};
     const defaultActiveMaterial = firstResource.source;
     await setCurrent(defaultActiveMaterial);

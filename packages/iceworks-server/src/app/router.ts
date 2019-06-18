@@ -44,7 +44,7 @@ export default (app: Application) => {
     ['project.oss.setConfig', project.oss.setConfig],
     ['project.oss.getBuckets', project.oss.getBuckets],
     ['project.oss.upload', project.oss.upload],
-    ['material.index.resource', material.index.resource],
+    ['material.index.getResources', material.index.getResources],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['material.index.add', material.index.add],
