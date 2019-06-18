@@ -62,7 +62,6 @@ export default (app: Application) => {
     ['home.setting.setUser', home.setting.setUser],
     ['home.setting.getUser', home.setting.getUser],
     ['home.system.getPath', home.system.getPath],
-    ['home.system.startIceworks', home.system.startIceworks],
     ['home.system.openFolder', home.system.openFolder],
     ['home.system.openEditor', home.system.openEditor],
   ];

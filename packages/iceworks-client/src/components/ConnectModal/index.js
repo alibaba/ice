@@ -1,56 +1,65 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Message } from '@alifd/next';
+import socket from '@src/socket';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
-import socket from '@src/socket';
-import useSocket from '@hooks/useSocket';
-import logger from '@utils/logger';
 
-const ConnectModal = ({ connect, intl }) => {
-  const [status, setStatus] = useState(false);
+let listen = false;
+
+const ConnectModal = ({ intl }) => {
+  const [status, setStatus] = useState('connect');
   const { on, setModal } = useModal(true);
 
-  async function onOk() {
-    setStatus(true);
-    try {
-      await socket.emit('home.system.startIceworks');
-      setModal(false);
-    } catch (error) {
+  if (!listen) {
+    socket.on('connect', () => {
+      setStatus('connect');
+
       Message.show({
-        type: 'error',
-        align: 'tr tr',
         title: '提示',
-        content: error.message,
+        align: 'tr tr',
+        type: 'success',
+        content: '服务连接成功',
       });
-    }
+    });
+
+    socket.on('reconnecting', () => {
+      setStatus('reconnecting');
+    });
+
+    socket.on('reconnect_failed', () => {
+      setStatus('reconnect_failed');
+    });
+
+    socket.on('disconnect', () => {
+      setStatus('disconnect');
+    });
+
+    listen = true;
   }
 
-  useSocket('system.start.iceworks', data => {
-    logger.info('system.start.iceworks', data);
-    if (data) {
-      setStatus(false);
-    } else {
-      setStatus(true);
-    }
-  });
+  const CONNECT_MAP = {
+    connect: 'iceworks.global.connect',
+    reconnecting: 'iceworks.global.reconnecting',
+    reconnect_failed: 'iceworks.global.reconnect_failed',
+    disconnect: 'iceworks.global.disconnect',
+  };
 
-  return !connect ? (
+  return status !== 'connect' ? (
     <Modal
       title={intl.formatMessage({ id: 'iceworks.global.disconnect.title' })}
+      style={{ width: '320px' }}
       visible={on}
-      okProps={{ disabled: status }}
+      footer={false}
       onCancel={() => setModal(false)}
-      onOk={onOk}
     >
-      <FormattedMessage id="iceworks.global.disconnect.message" />
+      <FormattedMessage id={CONNECT_MAP[status]} />
     </Modal>
   ) : null;
 };
 
 ConnectModal.propTypes = {
-  connect: PropTypes.bool.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

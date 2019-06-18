@@ -1,8 +1,10 @@
 export default {
   // global
+  'iceworks.global.disconnect.title': '连接中断',
   'iceworks.global.connect': '已连接',
-  'iceworks.global.disconnect.title': '服务关闭',
-  'iceworks.global.disconnect.message': '本地服务已关闭，点击确认立即重启服务',
+  'iceworks.global.reconnecting': 'Socket 断开连接，正在重新连接中',
+  'iceworks.global.reconnect_failed': 'Socket 重新连接失败，请重新启动 iceworks 服务',
+  'iceworks.global.disconnect': 'Socket 断开连接',
   'iceworks.global.button.yes': '确定',
   'iceworks.global.button.no': '取消',
   'iceworks.global.button.submit': '提交',

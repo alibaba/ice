@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import NavigationBar from '@components/NavigationBar';
 import SubRoutes from '@components/SubRoutes';
 import ConnectModal from '@components/ConnectModal';
@@ -6,13 +6,11 @@ import GlobalBar from '@components/GlobalBar';
 import menuConfig from '@src/menuConfig';
 import routerConfig from '@src/routerConfig';
 import stores from '@stores';
-import socket from '../../socket';
 import appConfig from '../../appConfig';
 import styles from './index.module.scss';
 
 const MainLayout = () => {
   const [project, user] = stores.useStores(['project', 'user']);
-  const [connect, setConnect] = useState(false);
 
   useEffect(() => {
     project.refresh();
@@ -22,21 +20,13 @@ const MainLayout = () => {
     user.refresh();
   }
 
-  socket.on('connect', () => {
-    setConnect(true);
-  });
-
-  socket.on('disconnect', () => {
-    setConnect(false);
-  });
-
   async function onLogin(data) {
     await user.login(data);
   }
 
   return (
     <div className={styles.container}>
-      <ConnectModal connect={connect} />
+      <ConnectModal />
       <div className={styles.content}>
         <NavigationBar
           menuData={menuConfig}
