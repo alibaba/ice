@@ -34,7 +34,7 @@ export default class Menu extends EventEmitter implements IMenuModule {
     return menuFileAST;
   }
 
-  private getMenuCode(node: any, name: string): string|undefined {
+  private getMenuCode(node: any, name: string): string {
     let code = '';
     if (
       t.isIdentifier(node.id, { name })
