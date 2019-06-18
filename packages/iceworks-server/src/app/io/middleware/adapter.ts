@@ -6,7 +6,7 @@ export default app => {
       const [ eventName, args, callback ] = packet;
       const [ namespace, moduleName, methodName ] = eventName.split('.');
 
-      if (namespace === 'project') {
+      if (namespace === 'adapter') {
         try {
           const { projectManager } = app;
           const project = projectManager.getCurrent();

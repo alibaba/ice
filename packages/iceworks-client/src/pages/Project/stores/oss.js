@@ -10,12 +10,12 @@ const defaultDataSource = {
 export default {
   dataSource: defaultDataSource,
   async refresh() {
-    this.dataSource = await socket.emit('project.oss.getConfig');
+    this.dataSource = await socket.emit('adapter.oss.getConfig');
   },
   async setConfig(config) {
-    this.dataSource = await socket.emit('project.oss.setConfig', config);
+    this.dataSource = await socket.emit('adapter.oss.setConfig', config);
   },
   async clearConfig() {
-    this.dataSource = await socket.emit('project.oss.setConfig', defaultDataSource);
+    this.dataSource = await socket.emit('adapter.oss.setConfig', defaultDataSource);
   },
 };

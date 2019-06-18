@@ -23,7 +23,7 @@ const DEFPanel = () => {
   const { isLogin, workId } = user || {};
 
   async function onPush(target) {
-    const lastCommit = await socket.emit('project.git.getLog', [currentBranch]);
+    const lastCommit = await socket.emit('adapter.git.getLog', [currentBranch]);
     if (!lastCommit) {
       Message.show({
         align: 'tr tr',
@@ -38,7 +38,7 @@ const DEFPanel = () => {
       await gitStore.push();
     }
 
-    await socket.emit('project.def.push', {
+    await socket.emit('adapter.def.push', {
       target,
       commitId: lastCommit.latest.hash,
       branch: currentBranch,
@@ -47,11 +47,11 @@ const DEFPanel = () => {
     });
   }
 
-  useSocket('project.def.push.data', (data) => {
-    logger.info('project.def.push.data', data);
+  useSocket('adapter.def.push.data', (data) => {
+    logger.info('adapter.def.push.data', data);
   });
 
-  useSocket('project.def.push.exit', (code) => {
+  useSocket('adapter.def.push.exit', (code) => {
     if (code === 0) {
       Message.show({
         align: 'tr tr',

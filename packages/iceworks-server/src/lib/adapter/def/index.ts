@@ -36,20 +36,20 @@ export default class DEF implements IDEFModule {
     });
 
     client.on('start', () => {
-      context.socket.emit('project.def.push.start');
+      context.socket.emit('adapter.def.push.start');
     });
     client.on('message', (message) => {
-      context.socket.emit('project.def.push.data', `${message}\n\r`);
+      context.socket.emit('adapter.def.push.data', `${message}\n\r`);
     });
     client.on('build_message', (message) => {
-      context.socket.emit('project.def.push.data', message);
+      context.socket.emit('adapter.def.push.data', message);
     });
     client.on('error', (error) => {
-      context.socket.emit('project.def.push.data', `\r\n${error.message}`);
-      context.socket.emit('project.def.push.exit', 1);
+      context.socket.emit('adapter.def.push.data', `\r\n${error.message}`);
+      context.socket.emit('adapter.def.push.exit', 1);
     });
     client.on('success', () => {
-      context.socket.emit('project.def.push.exit', 0);
+      context.socket.emit('adapter.def.push.exit', 0);
     });
   }
 }

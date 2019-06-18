@@ -8,16 +8,16 @@ export default {
     status: '',
   },
   async refresh() {
-    this.dataSource = await socket.emit('project.dependency.getAll');
+    this.dataSource = await socket.emit('adapter.dependency.getAll');
   },
   async upgrade(args) {
-    await socket.emit('project.dependency.upgrade', args);
+    await socket.emit('adapter.dependency.upgrade', args);
   },
   async setStatus(status) {
     this.dataSource.status = status;
   },
   async reset() {
-    await socket.emit('project.dependency.reset');
+    await socket.emit('adapter.dependency.reset');
   },
   async bulkCreate(deps, force) {
     const { dependencies } = this.dataSource;
@@ -51,6 +51,6 @@ export default {
       }
     }
 
-    await socket.emit('project.dependency.bulkCreate', { dependencies: deps });
+    await socket.emit('adapter.dependency.bulkCreate', { dependencies: deps });
   },
 };
