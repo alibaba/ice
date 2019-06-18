@@ -1,42 +1,78 @@
 #!/usr/bin/env node
 
-const spawn = require('cross-spawn');
+const path = require('path');
 const program = require('commander');
 const chalk = require('chalk');
 const ora = require('ora');
-const path = require('path');
+const detect = require('detect-port');
 
+const createServer = require('../utils/createServer');
+const getPuppeteer = require('../utils/getPuppeteer');
 const packageJSON = require('../package.json');
 
 const cwd = process.cwd();
+const DEFAULT_PORT = 8100;
 
 exec();
 
 async function exec() {
-  program
-    .version(packageJSON.version)
-    .usage('-u https://www.example.com')
-    .option('-u, --url <url>', 'The target url')
-    .option('-s, --selector <selector>', 'Select a element through CSS selector')
-    .option('-o, --output <output>', 'Output path')
-    .parse(process.argv);
+  try {
+    program
+      .version(packageJSON.version)
+      .usage('-u https://www.example.com')
+      .option('-u, --url <url>', 'The target url or path to local server')
+      .option('-l, --local [local]', 'Set up a local server in a special directory and take screenshot, defaults set up in `./`')
+      .option('-s, --selector <selector>', 'Select a element through CSS selector')
+      .option('-o, --output <output>', 'Output path')
+      .parse(process.argv);
 
-  const { url, selector, output } = program;
+    const { url, selector, output, local } = program;
 
-  if (!url) {
-    console.log(chalk.red('The -u parameter is required! Using the following command:'));
-    console.log(chalk.red('screenshot -u https://www.example.com\n'));
-    program.help();
+    if (!url && !local) {
+      console.log(chalk.red('The -u or -l is required! Using the following command:'));
+      console.log(chalk.red('screenshot -u https://www.example.com\n'));
+      program.help();
+    }
+
+    if (local) {
+      const port = await detect(DEFAULT_PORT);
+      const serverPath = local === true ? cwd : local;
+      await screenshotWithLocalServer(serverPath, port, url, selector, output);
+    } else {
+      await screenshot(url, selector, output);
+    }
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
   }
+}
 
-  await screenshot(url, selector, output);
+/**
+ * take a screenshot with local server
+ *
+ * @param {string} serverPath local server path
+ * @param {number} port server port
+ * @param {string} targetUrl the target url
+ * @param {string} selector the target CSS selector
+ * @param {string} output output path
+ */
+async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, output) {
+  targetUrl = targetUrl ? `http://127.0.0.1:${port}${targetUrl}` : `http://127.0.0.1:${port}/build/index.html`;
+
+  const server = createServer(serverPath, port);
+  console.log(chalk.white(`Create local server with port ${port}`));
+  console.log(chalk.white(`The screenshot target url: ${targetUrl}`));
+
+  await screenshot(targetUrl, selector, output);
+
+  server.close();
 }
 
 /**
  * take a screenshot of web page
  *
  * @param {string} url the target url
- * @param {string} selector CSS selector
+ * @param {string} selector screenshot target CSS selector
  * @param {string} output output path
  */
 async function screenshot(url, selector, output) {
@@ -91,58 +127,5 @@ async function screenshot(url, selector, output) {
       console.log(err);
     }
     process.exit(1);
-  }
-}
-
-function isNotFoundError(error = '') {
-  return error.indexOf('Cannot find module') === 0;
-}
-
-/**
- * get Puppeteer(headless chromium)
- *
- * we don't want depend on puppeteer locally,
- * puppeteer take a long to install
- *
- */
-async function getPuppeteer() {
-  try {
-    // get Puppeteer from local node_modules
-    return require('puppeteer');
-  } catch (error) {
-    if (isNotFoundError(error.message)) {
-      try {
-        // get Puppeteer from global node_modules
-        return require('import-global')('puppeteer');
-      } catch (importGlobalErr) {
-        // if not found puppeteer from global node_modules
-        // install it to global node_modules
-        if (isNotFoundError(importGlobalErr.message)) {
-          console.log(chalk.yellow('\n\nCannot find puppeteer in current environment.'));
-          console.log(chalk.yellow('Installing globally puppeteer, please wait a moment.\n'));
-
-          // set puppeteer download host
-          // default download host has been blocking, use cnpm mirror
-          // https://github.com/cnpm/cnpmjs.org/issues/1246#issuecomment-341631992
-          spawn.sync('npm', ['config', 'set', 'puppeteer_download_host=https://storage.googleapis.com.cnpmjs.org']);
-          const result = spawn.sync('npm', ['install', 'puppeteer@1.17.0', '-g', '--registry', 'https://registry.npm.taobao.org'], { stdio: 'inherit' });
-          spawn.sync('npm', ['config', 'delete', 'puppeteer_download_host']);
-
-          // get spawn error, exit with code 1
-          if (result.error) {
-            console.log(chalk.red('\n\nInstall Error. \nPlease install puppeteer using the following commands:'));
-            console.log(chalk.white('\n  npm uninstall puppeteer -g'));
-            console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
-            console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
-            process.exit(1);
-          }
-
-          console.log(chalk.green('\nPuppeteer installed.\n'));
-          return require('import-global')('puppeteer');
-        }
-        throw Error(importGlobalErr);
-      }
-    }
-    throw Error(error);
   }
 }
