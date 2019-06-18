@@ -71,12 +71,12 @@
       position: relative;
 
       .navbar-config-tree-node-click {
-        .navbar-config-tree-set-icon {
+        .navbarConfigTreeSetIcon {
           display: block;
         }
       }
 
-      .navbar-config-tree-set-icon {
+      .navbarConfigTreeSetIcon {
         color: $brand-color-primary;
         position: absolute;
         right: 10px;

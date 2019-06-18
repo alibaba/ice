@@ -25,7 +25,7 @@ const MenuPanel = () => {
     action: 'create',
   });
   const [deleteMenu, setDeleteMenu] = useState({});
-  const menuStore = stores.useStore('menus');
+  const menuStore = stores.useStore('menu');
   const { dataSource } = menuStore;
   const { asideMenuConfig } = dataSource;
 

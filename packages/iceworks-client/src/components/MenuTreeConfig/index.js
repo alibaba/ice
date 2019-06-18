@@ -5,7 +5,7 @@ import LocalIcon from '@components/Icon';
 import cx from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 
-import traverse from '../../utils/traverse';
+import traverse from '@utils/traverse';
 import styles from './index.module.scss';
 
 const { Node: TreeNode } = Tree;
@@ -17,7 +17,7 @@ const MenuTreeConfig = ({
   onOpenEditModal,
   onDeleteLink,
 }) => {
-  const [selectedKey] = useState([], '');
+  const [selectedKey] = useState('');
 
   function onEdit(linkType, item) {
     onOpenEditModal({
@@ -44,7 +44,7 @@ const MenuTreeConfig = ({
       linkType = 'link';
     }
     return (
-      <div className="navbar-config-tree-set-icon">
+      <div className="navbarConfigTreeSetIcon">
         <Icon
           type="edit"
           title="编辑"

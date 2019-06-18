@@ -28,7 +28,7 @@ const RouterPanel = () => {
   const [deleteRouter, setDeleteRouter] = useState({});
   const [modalData, setModalData] = useState({});
 
-  const routerStore = stores.useStore('routers');
+  const routerStore = stores.useStore('routes');
   const { dataSource } = routerStore;
 
   function onRefresh() {
@@ -205,22 +205,18 @@ const RouterPanel = () => {
           onOk={onCreate}
         />
         {dataSource.length ? (
-          <div>
-            <ul>
-              {dataSource.map((item, index) => {
-                return renderCol({
-                  item,
-                  index,
-                });
-              })}
-            </ul>
-          </div>
+          <ul>
+            {dataSource.map((item, index) => {
+              return renderCol({
+                item,
+                index,
+              });
+            })}
+          </ul>
         ) : (
-          <div>
-            <Message title="暂无路由" type="help">
-              点击右上方新建路由
-            </Message>
-          </div>
+          <Message title="暂无路由" type="help">
+            点击右上方新建路由
+          </Message>
         )}
       </div>
     </Panel>

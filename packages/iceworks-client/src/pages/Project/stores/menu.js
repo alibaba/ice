@@ -7,7 +7,7 @@ export default {
   async refresh() {
     const dataSource = await socket.emit('project.menu.list');
     this.dataSource = {
-      ...dataSource,
+      asideMenuConfig: dataSource.asideMenuConfig,
     };
   },
   async bulkCreate(args) {

@@ -39,19 +39,19 @@ const CreateRouterModal = ({
       if (component) {
         // layout component
         if (routes) {
-          formValue.component = `layout&${component}`;
+          formValue.component = `layout-${component}`;
         } else {
-          formValue.component = `page&${component}`;
+          formValue.component = `page-${component}`;
         }
       }
       setFormData(formValue);
     }
   });
 
-  const routersStore = stores.useStore('routers');
+  const routersStore = stores.useStore('routes');
   const pagesStore = stores.useStore('pages');
   const layoutsStore = stores.useStore('layouts');
-  const { dataSource: routers } = routersStore;
+  const { dataSource: routes } = routersStore;
   const { dataSource: pages } = pagesStore;
   const { dataSource: layouts } = layoutsStore;
   let dataSource = [];
@@ -59,14 +59,14 @@ const CreateRouterModal = ({
   const pageSelects = pages.map((page) => {
     return {
       label: page.name,
-      value: `page&${page.name}`,
+      value: `page-${page.name}`,
     };
   });
 
   const layoutSelects = layouts.map((layout) => {
     return {
       label: layout.name,
-      value: `layout&${layout.name}`,
+      value: `layout-${layout.name}`,
     };
   });
 
@@ -98,7 +98,7 @@ const CreateRouterModal = ({
         const formValue = values;
         const { component } = formValue;
         if (component) {
-          const [type, componentValue] = component.split(/&(.+)/);
+          const [type, componentValue] = component.split(/-(.+)/);
           if (type === 'layout') {
             formValue.routes = formValue.routes || [];
           }
@@ -120,7 +120,7 @@ const CreateRouterModal = ({
     if (value.indexOf('/') !== 0) {
       return callback('路径必须以 \'/\' 开头');
     }
-    const router = routers.find((item, index) => {
+    const router = routes.find((item, index) => {
       let exist = false;
       if (item.path === value && modalData.editIndex !== index) {
         exist = true;
