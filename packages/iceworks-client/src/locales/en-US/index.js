@@ -96,6 +96,8 @@ export default {
   'iceworks.project.panel.menu.form.icon.placeholder': 'please enter icon',
   'iceworks.project.panel.menu.form.path': 'path',
   'iceworks.project.panel.menu.form.path.placeholder': 'please enter path',
+  'iceworks.project.panel.menu.tab.asideMenu': 'asideMenu',
+  'iceworks.project.panel.menu.tab.headerMenu': 'headerMenu',
   'iceworks.project.panel.menu.form.newwindow': 'open new window',
 
   // project router

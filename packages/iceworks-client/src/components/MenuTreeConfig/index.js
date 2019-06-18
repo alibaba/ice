@@ -139,7 +139,7 @@ const MenuTreeConfig = ({
       const cacheNode = node;
       if (cacheNode[primaryKey] === dropKey) {
         if (dropPosition === 0) {
-          // 外链不能有子节点
+          // External link cannot have child nodes
           if (cacheNode.external) {
             array.splice(index + 1, 0, dragNode);
           } else {

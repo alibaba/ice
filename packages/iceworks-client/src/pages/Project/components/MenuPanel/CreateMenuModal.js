@@ -18,7 +18,7 @@ const formItemLayout = {
 };
 
 const field = new Field({});
-const pathReg = /^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
+const pathReg = /^(\/?)([a-zA-Z0-9/-?@:=]+)$/;
 const urlReg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
 const CreateMenuModal = ({
@@ -91,15 +91,15 @@ const CreateMenuModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.type" />
               <TipIcon>
-                总共有导航组、普通导航、外链三种类型，导航组下可以放入普通导航和外链
+                总共有菜单组、普通菜单、外链三种类型，菜单组下可以放入普通菜单和外链
               </TipIcon>
             </span>
           )}
           required
         >
-          <Select size="small" name="linkType" placeholder="请选择导航类型" disabled={isEdit}>
-            <option value="linkGroup">导航组</option>
-            <option value="link">普通导航</option>
+          <Select size="small" name="linkType" placeholder="请选择菜单类型" disabled={isEdit}>
+            <option value="linkGroup">菜单组</option>
+            <option value="link">普通菜单</option>
             <option value="externalLink">外链</option>
           </Select>
         </FormItem>
@@ -123,7 +123,7 @@ const CreateMenuModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.icon" />
               <TipIcon>
-                导航项图标，可以从
+                菜单项图标，可以从
                 <a href="https://ice.alibaba-inc.com/component/foundationsymbol" target="__blank"> foundationsymbol </a>
                 中选择
               </TipIcon>

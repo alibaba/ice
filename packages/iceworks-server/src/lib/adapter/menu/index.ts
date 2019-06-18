@@ -10,7 +10,8 @@ import * as uid from 'uid';
 import formatCodeFromAST from '../formatCodeFromAST';
 import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 
-const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
+const ASIDE_CONFIG_VARIABLE = 'asideMenuConfig';
+const HEADER_CONFIG_VARIABLE = 'headerMenuConfig';
 
 export default class Menu extends EventEmitter implements IMenuModule {
   public readonly projectPath: string;
@@ -33,23 +34,39 @@ export default class Menu extends EventEmitter implements IMenuModule {
     return menuFileAST;
   }
 
-  async getAll(): Promise<{ asideMenuConfig: IMenu[] }> {
+  private getMenuCode(node: any, name: string): string|undefined {
+    let code = '';
+    if (
+      t.isIdentifier(node.id, { name })
+      && t.isArrayExpression(node.init)
+    ) {
+      code = generate(node.init).code;
+    }
+
+    return code;
+  }
+
+  async getAll(): Promise<{ asideMenuConfig: IMenu[], headerMenuConfig: IMenu[] }> {
     let asideMenuConfig = [];
+    let headerMenuConfig = [];
     const menuFileAST = this.getFileAST();
 
+    const getMenuCode = this.getMenuCode;
     traverse(menuFileAST, {
       VariableDeclarator({ node }) {
-        if (
-          t.isIdentifier(node.id, { name: MENU_CONFIG_VARIABLE })
-          && t.isArrayExpression(node.init)
-        ) {
-          const { code } = generate(node.init);
-          asideMenuConfig = eval(code);
+        const _asideMenuConfig = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
+        const _headerMenuConfig = getMenuCode(node, HEADER_CONFIG_VARIABLE);
+        if (_asideMenuConfig) {
+          asideMenuConfig = eval(_asideMenuConfig);
+        }
+        if (_headerMenuConfig) {
+          headerMenuConfig = eval(_headerMenuConfig);
         }
       }
     });
     return {
       asideMenuConfig: this.handlerData(asideMenuConfig),
+      headerMenuConfig: this.handlerData(headerMenuConfig),
     };
   }
 
@@ -57,12 +74,17 @@ export default class Menu extends EventEmitter implements IMenuModule {
     data: IMenu[],
     options: IMenuOptions = {}
   ): Promise<void> {
-    const { replacement = false } = options;
-    const { asideMenuConfig } = await this.getAll();
+    const { replacement = false, type = 'aside' } = options;
+    const { asideMenuConfig, headerMenuConfig } = await this.getAll();
     const menuFileAST = this.getFileAST();
+    const name = type === 'aside' ? ASIDE_CONFIG_VARIABLE : HEADER_CONFIG_VARIABLE;
 
     if (!replacement) {
-      data = data.concat(asideMenuConfig);
+      if (type === 'aside') {
+        data = data.concat(asideMenuConfig);
+      } else {
+        data = data.concat(headerMenuConfig);
+      }
     }
     const dataAST = parser.parse(JSON.stringify(this.handlerData(data)), {
       sourceType: 'module',
@@ -71,7 +93,7 @@ export default class Menu extends EventEmitter implements IMenuModule {
     traverse(menuFileAST, {
       VariableDeclarator({ node }) {
         if (
-          t.isIdentifier(node.id, { name: MENU_CONFIG_VARIABLE })
+          t.isIdentifier(node.id, { name })
           && t.isArrayExpression(node.init)
         ) {
           node.init = arrayAST;

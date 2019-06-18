@@ -9,12 +9,12 @@ const DeleteMenuModal = ({
   on, onCancel, onOk, menu,
 }) => {
   const { children, external, name } = menu;
-  let linkName = '导航';
+  let linkName = '菜单';
 
   if (external) {
     linkName = '外链';
   } else if (Array.isArray(children)) {
-    linkName = '导航组';
+    linkName = '菜单组';
   }
 
   return (
@@ -33,7 +33,7 @@ const DeleteMenuModal = ({
         )}
       </div>
       <div className={styles.warn}>
-        (注意：删除导航不会删除对应的路由，需要手动操作)
+        (注意：删除菜单不会删除对应的路由，需要手动操作)
       </div>
     </Modal>
   );
