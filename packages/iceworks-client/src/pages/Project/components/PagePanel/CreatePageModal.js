@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Select, Input } from '@alifd/next';
+import cx from 'classnames';
 import mockData from '@src/mock';
 import socket from '@src/socket';
 import stores from '@stores';
@@ -10,6 +11,12 @@ import Icon from '@components/Icon';
 import BlockCard from '@components/BlockCard';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+  arrayMove,
+} from 'react-sortable-hoc';
 import pageStores from '../../stores';
 import SavePageModal from './SavePageModal';
 import styles from './CreatePageModal.module.scss';
@@ -44,11 +51,12 @@ const MaterialSelect = ({ resources, onSelect }) => {
       <div className={styles.main}>
         <div className={styles.materials}>
           {
-            materials.all.map((dataSource) => {
+            materials.all.map((dataSource, index) => {
               return (
                 <BlockCard
                   dataSource={dataSource}
                   onClick={() => onSelect(dataSource)}
+                  key={index}
                 />
               );
             })
@@ -56,9 +64,9 @@ const MaterialSelect = ({ resources, onSelect }) => {
         </div>
         <div className={styles.categories}>
           {
-            categories.map(({ name: categoryName }) => {
+            categories.map(({ name: categoryName }, index) => {
               return (
-                <div>
+                <div key={index}>
                   {categoryName}
                 </div>
               );
@@ -75,6 +83,55 @@ MaterialSelect.propTypes = {
   onSelect: PropTypes.func.isRequired,
 };
 
+const BlockDragHandle = SortableHandle(({ title, screenshot }) => (
+  <div className={styles.screenshot}>
+    <img alt={title} src={screenshot} />
+  </div>
+));
+
+const SelectedBlock = SortableElement(({
+  title, screenshot, name, onNameChange, onDelete, index, isSorting,
+}) => {
+  return (
+    <div className={cx({ [styles.item]: true, [styles.isSorting]: isSorting })}>
+      <BlockDragHandle
+        title={title}
+        screenshot={screenshot}
+      />
+      <div className={styles.name}>
+        <Input
+          value={name}
+          className={styles.input}
+          onChange={(value) => onNameChange(value, index)}
+        />
+        <Icon className={styles.icon} type="pencil" size="small" />
+      </div>
+      <Icon className={styles.trash} type="trash" size="small" onClick={() => onDelete(index)} />
+    </div>
+  );
+});
+
+const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSorting }) => {
+  return (
+    <div className={styles.blocks}>
+      {
+        blocks.map((block, index) => {
+          return (
+            <SelectedBlock
+              {...block}
+              index={index}
+              onNameChange={onNameChange}
+              onDelete={onDelete}
+              isSorting={isSorting}
+              key={index}
+            />
+          );
+        })
+      }
+    </div>
+  );
+});
+
 const CreatePageModal = ({
   on, onCancel, onOk,
 }) => {
@@ -83,6 +140,7 @@ const CreatePageModal = ({
     toggleModal: toggleSaveModal,
   } = useModal();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
+  const [isSorting, setIsSorting] = useState(false);
   const [page] = pageStores.useStores(['page']);
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
   const { dataSource } = material;
@@ -134,6 +192,16 @@ const CreatePageModal = ({
     setSelectedBlocks([...selectedBlocks]);
   }
 
+  function onSortStart() {
+    setIsSorting(true);
+  }
+
+  function onSortEnd({ oldIndex, newIndex }) {
+    setIsSorting(false);
+    console.log('onSortEnd', oldIndex, newIndex);
+    setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
+  }
+
   useSocket('project.page.create.status', ({ text, percent }) => {
     progress.show({ statusText: text, percent });
   });
@@ -152,28 +220,17 @@ const CreatePageModal = ({
         key="createModal"
       >
         <div className={styles.wrap}>
-          <div className={styles.blocks}>
-            {
-              selectedBlocks.map(({ screenshot, name, title }, index) => {
-                return (
-                  <div className={styles.item} key={index}>
-                    <div className={styles.screenshot}>
-                      <img alt={title} src={screenshot} />
-                    </div>
-                    <div className={styles.name}>
-                      <Input
-                        value={name}
-                        className={styles.input}
-                        onChange={(value) => onNameChange(value, index)}
-                      />
-                      <Icon className={styles.icon} type="pencil" size="small" />
-                    </div>
-                    <Icon className={styles.trash} type="trash" size="small" onClick={() => onDelete(index)} />
-                  </div>
-                );
-              })
-            }
-          </div>
+          <SelectedBlocks
+            helperClass={styles.blockIsDraging}
+            blocks={selectedBlocks}
+            onDelete={onDelete}
+            onChange={onNameChange}
+            useDragHandle
+            lockAxis="y"
+            onSortStart={onSortStart}
+            onSortEnd={onSortEnd}
+            isSorting={isSorting}
+          />
           <div className={styles.material}>
             {
               materialSources.length ?
