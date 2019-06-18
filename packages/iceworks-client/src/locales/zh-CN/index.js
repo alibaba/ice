@@ -137,4 +137,5 @@ export default {
   'iceworks.material.noData': '暂无数据',
   'iceworks.material.customMaterial': '自定义物料',
   'iceworks.material.officialMaterial': '官方物料',
+  'iceworks.material.name': '物料名称',
 };

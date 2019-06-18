@@ -116,4 +116,5 @@ export default {
   'iceworks.material.noData': 'No Data',
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
+  'iceworks.material.name': 'Material name',
 };

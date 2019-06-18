@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@alifd/next';
-import Icon from '@components/Icon';
-import { FormattedMessage } from 'react-intl';
 import MaterialCategories from '@components/MaterialCategories';
 import ComponentCard from '@components/ComponentCard';
+import NoData from '@components/NoData';
 
 import styles from './index.module.scss';
 
@@ -32,9 +31,8 @@ const ComponentPanel = ({ dataSource, current, onInstall }) => {
               );
             })
           : (
-            <Col span="24" className={styles.tips}>
-              <Icon type="bad-news" size="l" style={{ marginRight: '8px' }} />
-              <FormattedMessage id="iceworks.material.noData" />
+            <Col span="24">
+              <NoData />
             </Col>
           )
         }

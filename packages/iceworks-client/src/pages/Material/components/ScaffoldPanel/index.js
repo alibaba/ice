@@ -1,10 +1,9 @@
 import React from 'react';
 import { Grid } from '@alifd/next';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import Icon from '@components/Icon';
 import ScaffoldCard from '@components/ScaffoldCard';
 import MaterialCategories from '@components/MaterialCategories';
+import NoData from '@components/NoData';
 
 import styles from './index.module.scss';
 
@@ -34,9 +33,8 @@ const ScaffoldPanel = ({ dataSource, current, onDownload }) => {
               );
             })
           : (
-            <Col span="24" className={styles.tips}>
-              <Icon type="bad-news" size="l" style={{ marginRight: '8px' }} />
-              <FormattedMessage id="iceworks.material.noData" />
+            <Col span="24">
+              <NoData />
             </Col>
           )
         }

@@ -2,9 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { placeholderImg } from '@src/appConfig';
 import styles from './index.module.scss';
-
-const DEFAULT_IMG = '//img.alicdn.com/tfs/TB1lCcKc8Kw3KVjSZFOXXarDVXa-350-200.png';
 
 const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
   function handleDownload() {
@@ -23,8 +22,8 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
               return (
                 <img
                   alt={dataSource.title}
-                  src={url || DEFAULT_IMG}
-                  style={{ transform: 'scale(0.6)', ...screenshotStyle }}
+                  src={url || placeholderImg}
+                  style={screenshotStyle}
                   className={styles.screenshotImg}
                   key={key}
                 />
@@ -33,8 +32,7 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
           : (
             <img
               alt={dataSource.title}
-              src={DEFAULT_IMG}
-              style={{ transform: 'scale(0.6)' }}
+              src={placeholderImg}
               className={styles.screenshotImg}
             />
           )

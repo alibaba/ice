@@ -36,7 +36,7 @@ const addMaterialModal = ({
           {...formItemLayout}
           required
           size="medium"
-          label={<FormattedMessage id="iceworks.material.sourceUrl" />}
+          label={<FormattedMessage id="iceworks.material.name" />}
           patternMessage="请输入物料名称"
           patternTrigger="onChange"
         >
