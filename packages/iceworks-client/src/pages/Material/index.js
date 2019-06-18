@@ -167,7 +167,7 @@ const Material = ({ history }) => {
         onDelete={handleDeleteMaterial}
       />
       <div className={styles.main}>
-        <Card title={dataSource.currentMaterial.name} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
+        <Card title={dataSource.currentMaterial.name || <FormattedMessage id="iceworks.material.title" />} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
           <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>
