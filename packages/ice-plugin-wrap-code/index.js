@@ -1,5 +1,5 @@
 const path = require('path');
-const WrapCodePlugin = require('./wrap-code-webpack-plugin');
+const WrapCodePlugin = require('./wrapCodeWebpackPlugin');
 
 module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
   const { addCodeBefore, addCodeAfter, id = '', debug } = pluginOptions;
