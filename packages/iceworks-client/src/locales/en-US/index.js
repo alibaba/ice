@@ -1,7 +1,10 @@
 export default {
   // global
+  'iceworks.global.disconnect.title': 'Connect Filed',
   'iceworks.global.connect': 'Connect',
-  'iceworks.global.disconnect': 'Disconnect',
+  'iceworks.global.reconnecting': 'Socket connection failed, reconnecting',
+  'iceworks.global.reconnect_failed': 'Socket reconnection failed, please restart the iceworks service',
+  'iceworks.global.disconnect': 'Socket connection failed',
   'iceworks.global.button.yes': 'Yes',
   'iceworks.global.button.no': 'No',
   'iceworks.global.button.submit': 'Submit',
@@ -21,12 +24,23 @@ export default {
   'iceworks.menu.task.configuration.desc': 'custom project configuration',
   'iceworks.menu.material': 'Material',
   'iceworks.menu.setting': 'Setting',
+  'iceworks.menu.setting.general': 'General',
+  'iceworks.menu.setting.general.desc': 'Set the theme and language',
+  'iceworks.menu.setting.panel': 'Panel',
+  'iceworks.menu.setting.panel.desc': 'Set the display of the project panel',
+  'iceworks.menu.setting.advanced': 'Advanced',
+  'iceworks.menu.setting.advanced.desc': 'Set editor and npm source',
 
   // setting
-  'iceworks.menu.setting.general': 'General',
-  'iceworks.menu.setting.material': 'Material',
-  'iceworks.menu.setting.panel': 'Panel',
-  'iceworks.menu.setting.advanced': 'Advanced',
+  'iceworks.setting.general.title': 'General Setting',
+  'iceworks.setting.general.language.title': 'Language',
+  'iceworks.setting.general.language.zh': 'Chinese',
+  'iceworks.setting.general.language.en': 'English',
+  'iceworks.setting.general.theme.title': 'Theme',
+  'iceworks.setting.general.theme.dark': 'Dark',
+  'iceworks.setting.general.theme.light': 'Light',
+  'iceworks.setting.general.editor.title': 'Editor',
+  'iceworks.setting.title': 'Setting',
 
   // project
   'iceworks.project.title': 'Project',
@@ -93,9 +107,6 @@ export default {
   'iceworks.task.lint.title': 'lint',
   'iceworks.task.lint.desc': 'Lints and fixes files',
 
-  // setting
-  'iceworks.setting.title': 'Setting',
-
   // material
   'iceworks.material.title': 'Material',
   'iceworks.material.scaffold': 'Scaffold',
@@ -117,4 +128,15 @@ export default {
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
   'iceworks.material.name': 'Material name',
+
+  // global bar
+  'iceowrks.global.bar.project': 'Project Name',
+  'iceowrks.global.bar.terminal': 'Terminal',
+  'iceowrks.global.bar.folder': 'Folder',
+  'iceowrks.global.bar.editor': 'Editor',
+  'iceowrks.global.bar.theme': 'Theme',
+  'iceowrks.global.bar.feedback': 'Feedback',
+  'iceowrks.global.bar.feedback.title': 'Experience feedback',
+  'iceowrks.global.bar.feedback.join': 'Join DingTalk community',
+  'iceowrks.global.bar.feedback.submit': 'Feedback or Bug report',
 };

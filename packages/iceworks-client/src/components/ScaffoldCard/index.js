@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { placeholderImg } from '@src/appConfig';
+import { PLACEHOLDER_IMG } from '@src/appConfig';
 import styles from './index.module.scss';
 
 const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
@@ -22,7 +22,7 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
               return (
                 <img
                   alt={dataSource.title}
-                  src={url || placeholderImg}
+                  src={url || PLACEHOLDER_IMG}
                   style={screenshotStyle}
                   className={styles.screenshotImg}
                   key={key}
@@ -32,7 +32,7 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
           : (
             <img
               alt={dataSource.title}
-              src={placeholderImg}
+              src={PLACEHOLDER_IMG}
               className={styles.screenshotImg}
             />
           )
