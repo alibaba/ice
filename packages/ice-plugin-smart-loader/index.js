@@ -17,9 +17,9 @@ module.exports = ({ chainWebpack, log, context }) => {
     // get outputAssetPath and outputDir
     const { outputAssetsPath, outputDir, hash } = userConfig;
     if (typeof hash === 'string') {
-      const match = hash.match(/\[(\w+):?\]/);
+      const match = hash.match(/(\w+):?/);
       const hashType = match && match[1];
-      if (hashType !== 'hash') {
+      if (hashType && hashType !== 'hash') {
         log.warn(`文件 hash 类型为：${hashType}，将不能通过 smart-loader 功能自动加载主入口 css 文件`);
       }
     }
