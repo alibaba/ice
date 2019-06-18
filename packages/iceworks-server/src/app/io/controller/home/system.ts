@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as openFolder from 'open';
-import * as openEditor from 'open-editor';
+import * as launchEditor from 'launch-editor';
 import storage from '../../../../lib/storage';
 
 export default (app) => {
@@ -12,18 +12,18 @@ export default (app) => {
       return path.join(...args);
     }
 
-
     async openFolder(ctx) {
       const { args: { path } } = ctx;
       return await openFolder(path);
     }
 
-    async openEditor(ctx) {
-      const { args: { path } } = ctx;
+    openEditor(ctx) {
+      const { args: { path }, logger, socket } = ctx;
       const editor = storage.get('editor');
-      return await openEditor([path], {
-        editor: editor
-      });
+      logger.info('open editor:', path, editor);
+      launchEditor(path, editor, (fileName, errorMsg) => {
+        socket.emit('home.system.open.editor.data', errorMsg)
+      })
     }
   };
 };

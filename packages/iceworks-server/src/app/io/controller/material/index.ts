@@ -43,22 +43,23 @@ export default (app) => {
         logo = currentItem.logo,
       } = data;
 
+      const newMaterialData = {
+        ...currentItem,
+        description,
+        homepage,
+        logo,
+      }
       // if the material has existed, update metadata
       if (currentIdx > -1) {
         const newMaterials = updateArrayItem(
           allMaterials,
-          {
-            ...currentItem,
-            description,
-            homepage,
-            logo,
-          },
+          newMaterialData,
           currentIdx
         );
         storage.set('material', newMaterials);
       }
 
-      return formatMaterialData(data);
+      return {...formatMaterialData(data), name: currentItem.name };
     }
 
     async getRecommendScaffolds() {
@@ -68,7 +69,7 @@ export default (app) => {
     }
 
     async add(ctx) {
-      const { args: { url }, logger } = ctx;
+      const { args: { url, name }, logger } = ctx;
       const allMaterials = storage.get('material');
       const existed = allMaterials.some(m => m.source === url);
 
@@ -79,7 +80,6 @@ export default (app) => {
 
       const data = await request(url);
       const {
-        name,
         description = '',
         homepage = '',
         logo = '',
@@ -92,18 +92,27 @@ export default (app) => {
         throw Error('material\'s name is required.');
       }
 
-      storage.add('material', {
+      const material = storage.get('material');
+      const currentItem = {
         official: false, name, description, homepage, logo, source
-      });
+      }
+      const newMaterials = material.filter((item) => item.name !== currentItem.name);
+      newMaterials.unshift(currentItem)
+      storage.add('material', newMaterials);
+
       const materialData = formatMaterialData(data);
-      return { resource: storage.get('material'), current: materialData };
+
+      return { resource: storage.get('material'), current: { ...materialData, name } };
     }
 
     async delete(ctx) {
       const { args: { url }, logger } = ctx;
       logger.info(`delete material, source URL: ${url}`);
 
-      storage.remove('material', (item) => item.source !== url);
+      const material = storage.get('material');
+      const newMaterials = material.filter(item => item.source !== url);
+
+      storage.set('material', newMaterials);
 
       return storage.get('material');
     }
@@ -111,8 +120,9 @@ export default (app) => {
 };
 
 function formatMaterialData(data) {
-  const { blocks = [], scaffolds = [], components = [] } = data;
+  const { blocks = [], scaffolds = [], components = [], ...other } = data;
   return {
+    ...other,
     blocks: { categories: generateCates(blocks), materials: formatMaterialsByCatrgory(blocks) },
     scaffolds: { categories: generateCates(scaffolds), materials: formatMaterialsByCatrgory(scaffolds) },
     components: { categories: generateCates(components), materials: formatMaterialsByCatrgory(components) },

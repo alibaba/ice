@@ -1,15 +1,20 @@
 // This file provide theme variables
 
-// Blue Theme
-// use @alifd/theme2 package，it is a blue theme
-// design tokens：https://fusion.design/component/tokens?themeid=2
+// Dark Theme
+// use @alifd/theme-iceworks-dark package，it is a dark theme
+// design tokens：https://fusion.design/56717/component/tokens?themeid=9079
 
-// Purple Theme
-// use @alifd/theme3 package, it is a purple theme
-// design tokens：https://fusion.design/component/tokens?themeid=2
+// Light Theme
+// use @alifd/theme-iceworks-light package, it is a light theme
+// design tokens：https://fusion.design/56717/component/tokens?themeid=9165
 
 // Both use the same variables
 // There are some major variables below, all sass variables could be found in design tokens
+
+// Note：define variables
+// $brand-color-primary: $color-brand1-9;
+// It can also be：
+// $brand-color-primary: var(--color-brand1-9);
 
 // default color
 $white: $color-white;
@@ -36,7 +41,7 @@ $font-size-xxl: $font-size-headline; // 24px;
 $font-size-xxxl: $font-size-display-1; // 36px;
 
 // border color
-$border-color-base: $color-line1-1; 
+$border-color-base: $color-line1-1;
 
 // border radius
 $border-radius-base: $corner-2; // 6px

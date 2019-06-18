@@ -7,7 +7,7 @@ import * as webLinks from 'xterm/dist/addons/webLinks/webLinks';
 // api: https://xtermjs.org/docs/api/terminal/interfaces/itheme/
 const defaultTheme = {
   foreground: '#666',
-  background: '#EEF3F9',
+  background: '#333646',
   cursor: 'rgba(0, 0, 0, 0.5)',
   selection: 'rgba(0, 0, 0, 0.5)',
   brightGreen: '#42b983',

@@ -14,7 +14,7 @@ const SubMenuItem = ({ dataSource }) => {
         key={path}
         to={path}
         className={styles.link}
-        activeStyle={{ background: '#eee' }}
+        activeClassName="selected"
       >
         {icon ? (
           <Icon type={icon} className={styles.icon} />

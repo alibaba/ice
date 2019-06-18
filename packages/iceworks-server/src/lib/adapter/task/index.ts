@@ -24,7 +24,7 @@ export default class Task extends EventEmitter implements ITaskModule {
 
   private cliConfFilename: string = 'ice.config.js';
 
-  private process: object;
+  private process: object = {};
 
   constructor(project: IProject) {
     super();

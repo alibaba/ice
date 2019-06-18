@@ -4,6 +4,7 @@ import { Grid } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
 import MaterialCategories from '@components/MaterialCategories';
 import BlockCard from '@components/BlockCard';
+import NoData from '@components/NoData';
 
 import styles from './index.module.scss';
 
@@ -21,17 +22,25 @@ const BlockPanel = ({ dataSource, current }) => {
           : <MaterialCategories dataSource={categories} current={current} />
       }
       <Row wrap gutter="20">
-        {currentMaterials.map((data) => {
-          const key = data.source && data.source.npm ? data.source.npm : data.title;
+        {
+          currentMaterials.length
+          ? currentMaterials.map((data) => {
+              const key = data.source && data.source.npm ? data.source.npm : data.title;
 
-          return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
-              <LazyLoad height={265} resize scrollContainer=".scollContainer">
-                <BlockCard dataSource={data} />
-              </LazyLoad>
+              return (
+                <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
+                  <LazyLoad height={265} resize scrollContainer=".scollContainer">
+                    <BlockCard dataSource={data} />
+                  </LazyLoad>
+                </Col>
+              );
+            })
+          : (
+            <Col span="24">
+              <NoData />
             </Col>
-          );
-        })}
+          )
+        }
       </Row>
     </div>
   );

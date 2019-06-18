@@ -48,7 +48,7 @@ const Material = ({ history }) => {
 
   async function setCurrent(source) {
     await material.setCurrentSource(source);
-    await material.getCurrentMaterial(source);
+    await material.getCurrentMaterial();
   }
 
   async function fetchData() {
@@ -103,10 +103,11 @@ const Material = ({ history }) => {
     }
   }
 
-  async function handleAddMaterial({ url }, error) {
+  async function handleAddMaterial({ url, name }, error) {
     if (error && error.url) return;
+    if (error && error.name) return;
 
-    await addMaterial(url);
+    await addMaterial(url, name);
     await handleTabChange(); // auto focus scaffolds tab
   }
 
@@ -165,9 +166,8 @@ const Material = ({ history }) => {
         onAddMaterial={() => setMaterialModal(true)}
         onDelete={handleDeleteMaterial}
       />
-
       <div className={styles.main}>
-        <Card title={<FormattedMessage id="iceworks.material.title" />} contentHeight="100%" className="scollContainer">
+        <Card title={dataSource.currentMaterial.name} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
           <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>

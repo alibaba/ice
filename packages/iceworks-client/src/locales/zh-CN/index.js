@@ -1,7 +1,10 @@
 export default {
   // global
+  'iceworks.global.disconnect.title': '连接中断',
   'iceworks.global.connect': '已连接',
-  'iceworks.global.disconnect': '断开连接',
+  'iceworks.global.reconnecting': 'Socket 断开连接，正在重新连接中',
+  'iceworks.global.reconnect_failed': 'Socket 重新连接失败，请重新启动 iceworks 服务',
+  'iceworks.global.disconnect': 'Socket 断开连接',
   'iceworks.global.button.yes': '确定',
   'iceworks.global.button.no': '取消',
   'iceworks.global.button.submit': '提交',
@@ -20,13 +23,24 @@ export default {
   'iceworks.menu.task.configuration': 'configuration',
   'iceworks.menu.task.configuration.desc': '自定义项目配置',
   'iceworks.menu.material': '物料',
-
-  // setting
   'iceworks.menu.setting': '设置',
   'iceworks.menu.setting.general': '通用设置',
-  'iceworks.menu.setting.material': '物料设置',
+  'iceworks.menu.setting.general.desc': '设置主题和语言',
   'iceworks.menu.setting.panel': '面板设置',
+  'iceworks.menu.setting.panel.desc': '项目面板的展示',
   'iceworks.menu.setting.advanced': '高级设置',
+  'iceworks.menu.setting.advanced.desc': '设置编辑器和 npm 源',
+
+  // setting
+  'iceworks.setting.title': '设置',
+  'iceworks.setting.general.title': '通用设置',
+  'iceworks.setting.general.language.title': '语言',
+  'iceworks.setting.general.language.zh': '中文',
+  'iceworks.setting.general.language.en': '英文',
+  'iceworks.setting.general.theme.title': '主题',
+  'iceworks.setting.general.theme.dark': '深色',
+  'iceworks.setting.general.theme.light': '浅色',
+  'iceworks.setting.general.editor.title': '编辑器',
 
   // project
   'iceworks.project.title': '项目管理',
@@ -65,7 +79,6 @@ export default {
   'iceworks.project.panel.dependency.main.incompatible.content': '新添加的依赖 {setDependencyText} 主版本号与项目依赖 {projectDependencyText} 主版本号发生改变可能存在不兼容的 API 修改，确定要继续吗？',
   'iceworks.project.panel.dependency.create.title': '添加依赖',
   'iceworks.project.panel.dependency.create.placeholder': '请输入 npm 包名以及版本号，例如：lodash@latest。按回车输入多个依赖。',
-
 
   // project layout
   'iceworks.project.panel.layout.title': '布局列表',
@@ -114,9 +127,6 @@ export default {
   'iceworks.task.lint.title': '检查语法',
   'iceworks.task.lint.desc': '检查代码规范并进行修复',
 
-  // setting
-  'iceworks.setting.title': '设置',
-
   // material
   'iceworks.material.title': '物料管理',
   'iceworks.material.scaffold': '模版',
@@ -134,4 +144,19 @@ export default {
   'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
   'iceworks.material.sourceUrl': '物料源地址',
+  'iceworks.material.noData': '暂无数据',
+  'iceworks.material.customMaterial': '自定义物料',
+  'iceworks.material.officialMaterial': '官方物料',
+  'iceworks.material.name': '物料名称',
+
+  // global bar
+  'iceowrks.global.bar.project': '当前项目名称',
+  'iceowrks.global.bar.terminal': '终端',
+  'iceowrks.global.bar.folder': '文件夹',
+  'iceowrks.global.bar.editor': '编辑器',
+  'iceowrks.global.bar.theme': '主题',
+  'iceowrks.global.bar.feedback': '反馈',
+  'iceowrks.global.bar.feedback.title': '体验反馈',
+  'iceowrks.global.bar.feedback.join': '加入钉钉社区群',
+  'iceowrks.global.bar.feedback.submit': '反馈建议或提交 Bug',
 };

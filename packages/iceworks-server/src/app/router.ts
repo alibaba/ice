@@ -40,6 +40,7 @@ export default (app: Application) => {
     ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.getCLIConf', project.configuration.getCLIConf],
     ['project.configuration.setCLIConf', project.configuration.setCLIConf],
+
     ['project.oss.config', project.oss.getConfig],
     ['project.oss.setConfig', project.oss.setConfig],
     ['project.oss.getBuckets', project.oss.getBuckets],
@@ -49,8 +50,16 @@ export default (app: Application) => {
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['material.index.add', material.index.add],
     ['material.index.delete', material.index.delete],
+
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.setting.setLocale', home.setting.setLocale],
+    ['home.setting.getLocale', home.setting.getLocale],
+    ['home.setting.setTheme', home.setting.setTheme],
+    ['home.setting.getTheme', home.setting.getTheme],
+    ['home.setting.setEditor', home.setting.setEditor],
+    ['home.setting.getEditor', home.setting.getEditor],
+
     ['home.setting.setUser', home.setting.setUser],
     ['home.setting.getUser', home.setting.getUser],
     ['home.system.getPath', home.system.getPath],
