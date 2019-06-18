@@ -124,6 +124,10 @@ export default {
   'iceworks.material.install.component.packageVersion': 'Component Version: ',
   'iceworks.material.noDesc': 'No Description',
   'iceworks.material.sourceUrl': 'Source URL',
+  'iceworks.material.noData': 'No Data',
+  'iceworks.material.customMaterial': 'Custom Material',
+  'iceworks.material.officialMaterial': 'Official Material',
+  'iceworks.material.name': 'Material name',
 
   // global bar
   'iceowrks.global.bar.project': 'Project Name',

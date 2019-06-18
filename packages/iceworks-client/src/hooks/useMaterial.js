@@ -9,12 +9,12 @@ function useMaterial(visible = false, onAddMaterial) {
     setLoading,
   } = useModal(visible);
 
-  async function addMaterial(url) {
+  async function addMaterial(url, name) {
     if (loading) return;
 
     setLoading(true);
     try {
-      await onAddMaterial(url);
+      await onAddMaterial(url, name);
       setMaterialModal(false);
     } catch (err) {
       Message.show({

@@ -144,6 +144,10 @@ export default {
   'iceworks.material.install.component.packageVersion': '组件版本：',
   'iceworks.material.noDesc': '暂无描述',
   'iceworks.material.sourceUrl': '物料源地址',
+  'iceworks.material.noData': '暂无数据',
+  'iceworks.material.customMaterial': '自定义物料',
+  'iceworks.material.officialMaterial': '官方物料',
+  'iceworks.material.name': '物料名称',
 
   // global bar
   'iceowrks.global.bar.project': '当前项目名称',
