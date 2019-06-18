@@ -13,13 +13,22 @@ export default (app: Application) => {
     ['home.project.add', home.project.add],
     ['home.project.current', home.project.getCurrent],
     ['home.project.setCurrent', home.project.setCurrent],
+    
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['material.index.add', material.index.add],
     ['material.index.delete', material.index.delete],
+
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.setting.setLocale', home.setting.setLocale],
+    ['home.setting.getLocale', home.setting.getLocale],
+    ['home.setting.setTheme', home.setting.setTheme],
+    ['home.setting.getTheme', home.setting.getTheme],
+    ['home.setting.setEditor', home.setting.setEditor],
+    ['home.setting.getEditor', home.setting.getEditor],
+
     ['home.setting.setUser', home.setting.setUser],
     ['home.setting.getUser', home.setting.getUser],
     ['home.system.getPath', home.system.getPath],
