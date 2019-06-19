@@ -67,9 +67,7 @@ class Project implements IProject {
 
     // Merge process.env、npmEnv and custom environment variables
     const env = Object.assign({}, process.env, npmEnv, {
-      // eslint-disable-next-line
       npm_config_registry: registry,
-      // eslint-disable-next-line
       yarn_registry: registry,
       CLICOLOR: 1,
       FORCE_COLOR: 1,
@@ -192,7 +190,7 @@ class ProjectManager extends EventEmitter {
 
     // check read and write
     try {
-      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // tslint:disable-line
     } catch (error) {
       error.message = '当前路径没有读写权限，请更换项目路径';
       throw error;
@@ -243,7 +241,7 @@ class ProjectManager extends EventEmitter {
       );
     }
 
-    //replace _gitignore to .gitignore
+    // replace _gitignore to .gitignore
     const gitignoreFilename = 'gitignore';
     await mvAsync(path.join(targetPath, `_${gitignoreFilename}`), path.join(targetPath, `.${gitignoreFilename}`));
   }

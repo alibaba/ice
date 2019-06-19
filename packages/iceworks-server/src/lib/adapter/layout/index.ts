@@ -10,7 +10,7 @@ export default class Layout implements ILayoutModule {
 
   public readonly path: string;
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -30,7 +30,7 @@ export default class Layout implements ILayoutModule {
           thumbnail: DEFAULT_IMAGE,
         };
       })
-    )
+    );
   }
 
   async getAll(): Promise<IProjectLayout[]> {

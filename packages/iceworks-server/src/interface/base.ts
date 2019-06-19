@@ -3,7 +3,7 @@ export interface ISocket {
 }
 
 export interface IContext {
-  socket: ISocket
+  socket: ISocket;
 }
 
 /**
@@ -44,7 +44,6 @@ export interface IProject {
    * 设置项目的 package.json 信息
    */
   setPackageJSON(content): any;
-
 
   /**
    * 获取项目的环境变量信息
@@ -121,10 +120,10 @@ export interface IMaterialScaffold {
   description: string;
   homepage: string;
   name: string;
-  publishTime:  string;
-  repository:  string;
-  screenshot:  string;
-  screenshots:  string[];
+  publishTime: string;
+  repository: string;
+  screenshot: string;
+  screenshots: string[];
   source: IMaterialNpmSource;
   title: string;
   updateTime: string;
@@ -140,10 +139,10 @@ export interface IMaterialComponent {
   description: string;
   homepage: string;
   name: string;
-  publishTime:  string;
-  repository:  string;
-  screenshot:  string;
-  screenshots:  string[];
+  publishTime: string;
+  repository: string;
+  screenshot: string;
+  screenshots: string[];
   source: IMaterialNpmSource;
   title: string;
   updateTime: string;
@@ -159,12 +158,12 @@ export interface IMaterialBlock {
   title: string;
   description: string;
   homepage: string;
-  categories: string[],
+  categories: string[];
   repository: string;
-  source: IMaterialNpmSource,
-  dependencies: INpmDependencies,
+  source: IMaterialNpmSource;
+  dependencies: INpmDependencies;
   screenshot: string;
-  screenshots: string[],
+  screenshots: string[];
   publishTime: string;
   updateTime: string[];
   uid: string[];

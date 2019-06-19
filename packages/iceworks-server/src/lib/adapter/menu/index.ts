@@ -9,7 +9,7 @@ import * as uid from 'uid';
 import formatCodeFromAST from '../formatCodeFromAST';
 import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 
-const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
+const MENU_CONFIG_VARIABLE = 'asideMenuConfig';
 
 export default class Menu implements IMenuModule {
   public readonly project: IProject;
@@ -17,7 +17,7 @@ export default class Menu implements IMenuModule {
 
   public readonly path: string;
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -44,7 +44,7 @@ export default class Menu implements IMenuModule {
           && t.isArrayExpression(node.init)
         ) {
           const { code } = generate(node.init);
-          asideMenuConfig = eval(code);
+          asideMenuConfig = eval(code); // tslint:disable-line
         }
       }
     });

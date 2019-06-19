@@ -19,11 +19,11 @@ export default class Task implements ITaskModule {
 
   public readonly cliConfPath: string;
 
-  private cliConfFilename: string = 'ice.config.js';
+  private cliConfFilename = 'ice.config.js';
 
   private process: object = {};
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -35,7 +35,7 @@ export default class Task implements ITaskModule {
    * @param args
    */
   async start(args: ITaskParam, ctx: IContext) {
-    let { command } = args;
+    const { command } = args;
 
     if (this.process[command]) {
       throw new Error(
@@ -122,11 +122,11 @@ export default class Task implements ITaskModule {
   async getConf(args: ITaskParam) {
     switch (args.command) {
       case 'dev':
-        return this.getDevConf()
+        return this.getDevConf();
       case 'build':
-       return getCLIConf(this.cliConfPath, BUILD_CONF)
+       return getCLIConf(this.cliConfPath, BUILD_CONF);
       case 'lint':
-        return LINT_CONF
+        return LINT_CONF;
       default:
         return [];
     }
@@ -141,17 +141,17 @@ export default class Task implements ITaskModule {
       case 'dev':
         return this.setDevConf(args);
       case 'build':
-        return setCLIConf(this.cliConfPath, args.options)
+        return setCLIConf(this.cliConfPath, args.options);
       default:
         return false;
     }
   }
 
-  /**
-  * get dev configuration
-  * merge the user configuration to return to the new configuration
-  * @param projectPath
-  */
+/**
+ * get dev configuration
+ * merge the user configuration to return to the new configuration
+ * @param projectPath
+ */
   private getDevConf() {
    const pkgContent = this.project.getPackageJSON();
    const devScriptContent = pkgContent.scripts.start;
@@ -161,11 +161,11 @@ export default class Task implements ITaskModule {
      if (item.indexOf('--') !== -1) {
       const key = item.match(/--(\S*)=/)[1];
       const value = item.match(/=(\S*)$/)[1];
-      userConf[key] = value
+      userConf[key] = value;
     }
-  })
+  });
 
-   return mergeCLIConf(DEV_CONF, userConf)
+   return mergeCLIConf(DEV_CONF, userConf);
  }
 
   /**
@@ -181,7 +181,7 @@ export default class Task implements ITaskModule {
 
     let newDevScriptContent =  `${cli} ${command}`;
     Object.keys(args.options).forEach((key) => {
-      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`
+      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`;
     });
 
     pkgContent.scripts.start = newDevScriptContent;

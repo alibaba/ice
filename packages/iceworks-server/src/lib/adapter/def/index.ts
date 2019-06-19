@@ -14,8 +14,8 @@ const env = isDev ? 'daily' : 'prod';
 export default class DEF implements IDEFModule {
   public project: IProject;
   public storage: any;
- 
-  constructor(params: {project: IProject; storage: any;}) {
+
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;

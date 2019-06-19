@@ -52,18 +52,18 @@ export interface IDependencyModule extends IBaseModule {
    *
    * @param dependency 依赖信息
    */
-  create(params: {dependency: ICreateDependencyParam, isDev?: boolean;}, ctx: IContext): Promise<void>;
+  create(params: {dependency: ICreateDependencyParam, isDev?: boolean; }, ctx: IContext): Promise<void>;
 
   /**
    * 添加多个依赖到项目
    *
    * @param dependencies 依赖列表
    */
-  bulkCreate(params: {dependencies: ICreateDependencyParam[], isDev?: boolean;}, ctx: IContext): Promise<void>;
+  bulkCreate(params: {dependencies: ICreateDependencyParam[], isDev?: boolean; }, ctx: IContext): Promise<void>;
 
   /**
    * 重装依赖
-   * 
+   *
    * @param arg 参数
    * @param ctx 上下文
    */

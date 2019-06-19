@@ -9,9 +9,9 @@ export default class Configuration implements IConfigurationModule {
 
   public readonly cliConfPath: string;
 
-  private cliConfFilename: string = 'ice.config.js';
+  private cliConfFilename = 'ice.config.js';
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;

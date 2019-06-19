@@ -7,7 +7,7 @@ export default class Git implements IGitModule {
 
   private gitTools: any;
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -49,7 +49,7 @@ export default class Git implements IGitModule {
     const originRemote = originRemotes[0];
     const remoteUrl = originRemote && originRemote.refs ? originRemote.refs.push : '';
 
-    return { 
+    return {
       isRepository,
       remoteUrl,
       currentBranch: localBranches.current,

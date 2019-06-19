@@ -44,15 +44,15 @@ export const install = async (
   });
 };
 
-export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
+export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; }
 
 export default class Dependency implements IDependencyModule {
   public project: IProject;
   public storage: any;
 
   public readonly path: string;
-  
-  constructor(params: {project: IProject; storage: any;}) {
+
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -63,7 +63,7 @@ export default class Dependency implements IDependencyModule {
     const pkgPath = path.join(this.path, name, 'package.json');
     const version: string = (await fsExtra.readJson(pkgPath)).version;
     return version;
-  };
+  }
 
   // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
@@ -106,9 +106,9 @@ export default class Dependency implements IDependencyModule {
           dev,
           localVersion,
           latestVersion: await latestVersion(packageName)
-        }
+        };
       }));
-    }
+    };
 
     let dependencies: IDependency[] = [];
     if (packageDependencies) {
@@ -197,5 +197,5 @@ export default class Dependency implements IDependencyModule {
 
       ctx.socket.emit('adapter.dependency.upgrade.exit', code);
     });
-  };
+  }
 }

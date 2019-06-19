@@ -12,7 +12,7 @@ export default class OSS implements IOSSModule {
 
   public readonly buildDir: string = 'build';
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -23,7 +23,7 @@ export default class OSS implements IOSSModule {
     const params: IOSSGetBucketsParams = oss.find(({ project }) => project === this.project.path);
     const { region } = params;
     const aliOSS = new AliOSS({...params, endpoint: `${region}.${DOMAIN}`});
-    
+
     const { buckets } = await aliOSS.listBuckets();
     return buckets;
   }
@@ -45,7 +45,7 @@ export default class OSS implements IOSSModule {
       newConfig = {...args, project: this.project.path};
       oss.push({...args, project: this.project.path});
     }
-    
+
     this.storage.set('oss', oss);
 
     return newConfig;
@@ -55,7 +55,7 @@ export default class OSS implements IOSSModule {
     const oss = this.storage.get('oss');
     const params: IOSSUploadParams = oss.find(({ project }) => project === this.project.path);
 
-    const buildPath = path.join(this.project.path, this.buildDir)
+    const buildPath = path.join(this.project.path, this.buildDir);
     if (!await pathExists(buildPath)) {
       throw new Error(`构建目录 ${this.buildDir} 不存在`);
     }
