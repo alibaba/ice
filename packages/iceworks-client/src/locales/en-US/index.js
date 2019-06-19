@@ -138,7 +138,6 @@ export default {
   'iceworks.material.block': 'Block',
   'iceworks.material.component': 'Component',
   'iceworks.material.add': 'Add',
-  'iceworks.material.all': 'All',
   'iceworks.material.preview': 'Preview',
   'iceworks.material.source': 'Source code',
   'iceworks.material.download': 'Download',

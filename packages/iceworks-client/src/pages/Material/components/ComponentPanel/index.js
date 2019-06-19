@@ -9,16 +9,16 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const ComponentPanel = ({ dataSource, current, onInstall }) => {
+const ComponentPanel = ({ dataSource, currentCategory, onCategoryChange, onInstall }) => {
   const { categories = [], materials = {} } = dataSource;
-  const currentMaterials = materials[current] || [];
+  const currentMaterials = materials[currentCategory] || [];
 
   return (
     <div className={styles.materialsPanel}>
       {
         categories.length < 1
           ? null
-          : <MaterialCategories dataSource={categories} current={current} />
+          : <MaterialCategories dataSource={categories} current={currentCategory} onChange={onCategoryChange} />
       }
       <Row wrap gutter="20">
         {
@@ -46,7 +46,6 @@ ComponentPanel.defaultProps = {
     categories: [],
     materials: {},
   },
-  current: 'all',
   onInstall: f => f,
 };
 
@@ -55,7 +54,8 @@ ComponentPanel.propTypes = {
     categories: PropTypes.array.isRequired,
     materials: PropTypes.object.isRequired,
   }),
-  current: PropTypes.string,
+  currentCategory: PropTypes.string.isRequired,
+  onCategoryChange: PropTypes.func.isRequired,
   onInstall: PropTypes.func,
 };
 
