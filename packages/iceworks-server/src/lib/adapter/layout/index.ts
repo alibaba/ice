@@ -45,8 +45,4 @@ export default class Layout implements ILayoutModule {
     const layout = layouts.find(({name}) => name === layoutName);
     return layout;
   }
-
-  async getOne(layoutName: string): Promise<IProjectLayout> {
-    return;
-  };
 }

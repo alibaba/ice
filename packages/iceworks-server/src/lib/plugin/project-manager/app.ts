@@ -96,12 +96,12 @@ class Project implements IProject {
   }
 
   private loadAdapter() {
-    for (const [key, Module] of Object.entries(adapter)) {
+    for (const [name, Module] of Object.entries(adapter)) {
       const project: IProject = clone(this);
       delete project.adapter;
 
       const adapterModule = new Module({ project, storage });
-      this.adapter[camelCase(key)] = adapterModule;
+      this.adapter[camelCase(name)] = adapterModule;
 
       const {title, description, cover} = adapterModule;
       this.panels.push({

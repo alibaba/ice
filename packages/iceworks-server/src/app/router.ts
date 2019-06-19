@@ -13,6 +13,8 @@ export default (app: Application) => {
     ['home.project.add', home.project.add],
     ['home.project.current', home.project.getCurrent],
     ['home.project.setCurrent', home.project.setCurrent],
+    ['home.project.setPanel', home.project.setPanel],
+    ['home.project.sortPanel', home.project.sortPanel],
 
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
