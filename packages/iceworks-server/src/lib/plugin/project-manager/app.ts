@@ -183,10 +183,11 @@ class Project implements IProject {
   }
 
   public toJSON() {
-    const { name, path, panels } = this;
+    const { name, path, panels, type } = this;
     return {
       name,
       path,
+      type,
       panels,
     };
   }

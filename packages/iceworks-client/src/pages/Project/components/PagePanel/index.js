@@ -117,11 +117,11 @@ const PagePanel = () => {
           onOk={deletePage}
           page={pagePreDelete}
         />
-        <CreatePageModal
+        {onCreateModal ? <CreatePageModal
           on={onCreateModal}
           onCancel={toggleCreateModal}
           onOk={createPage}
-        />
+        /> : null}
         {
           dataSource.length ?
             <div>

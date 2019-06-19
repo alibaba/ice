@@ -23,13 +23,22 @@ import styles from './CreatePageModal.module.scss';
 
 const MaterialSelect = ({ resources, onSelect }) => {
   const resource = resources[0];
-  const { source } = resource;
-  const [data, setData] = useState({ categories: [], materials: { all: [] }, category: 'all' });
+  const [data, setData] = useState({ categories: [], materials: { all: [] }, category: 'all', source: resource.source });
+  const { categories = [], materials = {}, category, source } = data;
 
   function onSetCateogry(setName) {
     setData({
       ...data,
       category: setName,
+    });
+  }
+
+  async function onSourceChange(value) {
+    const { blocks } = await socket.emit('material.index.getOne', { url: value });
+    setData({
+      ...data,
+      ...blocks,
+      source: value,
     });
   }
 
@@ -43,8 +52,6 @@ const MaterialSelect = ({ resources, onSelect }) => {
     })();
   }, []);
 
-  const { categories = [], materials = {}, category } = data;
-
   return (
     <div className={styles.materialWrap}>
       <div className={styles.selectWrap}>
@@ -57,6 +64,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
           })}
           value={source}
           className={styles.select}
+          onChange={onSourceChange}
         />
       </div>
       <div className={styles.main}>
@@ -64,11 +72,10 @@ const MaterialSelect = ({ resources, onSelect }) => {
           {
             materials[category].map((dataSource, index) => {
               return (
-                <div className={styles.item}>
+                <div className={styles.item} key={index}>
                   <BlockCard
                     dataSource={dataSource}
                     onClick={() => onSelect(dataSource)}
-                    key={index}
                   />
                 </div>
               );

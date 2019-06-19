@@ -80,9 +80,10 @@ export default (app) => {
 
       const data = await request(url);
       const {
-        description = '',
-        homepage = '',
-        logo = '',
+        description,
+        homepage,
+        logo,
+        type,
         source = url,
       } = data;
 
@@ -94,7 +95,7 @@ export default (app) => {
 
       const material = storage.get('material');
       const currentItem = {
-        official: false, name, description, homepage, logo, source
+        official: false, name, description, homepage, logo, type, source
       }
       const newMaterials = material.filter((item) => item.name !== currentItem.name);
       newMaterials.unshift(currentItem)
