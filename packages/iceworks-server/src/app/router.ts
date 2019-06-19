@@ -14,7 +14,7 @@ export default (app: Application) => {
     ['home.project.current', home.project.getCurrent],
     ['home.project.setCurrent', home.project.setCurrent],
 
-    ['material.index.resource', material.index.resource],
+    ['material.index.resources', material.index.getResources],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['material.index.add', material.index.add],

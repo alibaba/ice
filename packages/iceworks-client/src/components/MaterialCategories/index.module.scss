@@ -36,6 +36,8 @@
       padding: 0 18px;
       color: $text-color-secondary;
       display: block;
+      cursor: pointer;
+      
       &:hover {
         color: $text-color-inverse;
         text-decoration: none;
