@@ -16,8 +16,8 @@
     color: $text-color-inverse;
     &.active {
       background: $brand-color-primary;
-      a,
-      a:hover {
+      span,
+      span:hover {
         color: $text-color-inverse;
         transition: all 0.3s ease;
       }
