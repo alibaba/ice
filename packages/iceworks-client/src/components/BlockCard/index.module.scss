@@ -1,7 +1,9 @@
+@import '../../variables.scss';
+
 .container {
   margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(163, 177, 191, 0.35);
-  background: #fff;
+  box-shadow: 0 8px 24px $material-card-shadow;
+  background: $panel-bg;
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
@@ -34,8 +36,8 @@
 .title {
   margin: 0;
   padding: 10px;
-  color: #333;
-  border-top: 1px solid #eee;
+  color: $text-color-secondary;
+  border-top: 1px solid $color-line1-2;
   text-align: center;
 }
 
@@ -61,8 +63,8 @@
     line-height: 45px;
     font-size: 14px;
     font-weight: bold;
-    background: #2077ff;
-    color: #fff;
+    background: $brand-color-primary;
+    color: $text-color-inverse;
     cursor: pointer;
 
     .githubImg,
