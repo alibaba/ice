@@ -16,6 +16,7 @@ program
   .option('--analyzer', '开启构建分析')
   .option('--analyzer-port', '设置分析端口号')
   .option('--disabled-reload', '关闭 hot reload')
+  .option('--config <config>', 'use custom config')
   .parse(process.argv);
 
 validationSassAvailable();

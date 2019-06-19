@@ -27,7 +27,13 @@ module.exports = class Context {
   }
 
   getUserConfig() {
-    const iceConfigPath = path.resolve(this.rootDir, 'ice.config.js');
+    const { config } = this.commandArgs;
+    let iceConfigPath = '';
+    if (config) {
+      iceConfigPath = path.isAbsolute(config) ? config : path.resolve(this.rootDir, config);
+    } else {
+      iceConfigPath = path.resolve(this.rootDir, 'ice.config.js');
+    }
     let userConfig = {};
     if (fse.existsSync(iceConfigPath)) {
       try {
