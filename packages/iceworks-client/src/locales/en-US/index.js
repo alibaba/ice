@@ -66,7 +66,8 @@ export default {
 
   // project todo
   'iceworks.project.panel.todo.title': 'TODO',
-  'iceworks.project.panel.todo.none': 'Nothing to deal with',
+  'iceworks.project.panel.todo.none': 'No comments in the code need to deal with',
+  'iceworks.project.panel.todo.example': 'e.g., // TODO somthing to do',
   'iceworks.project.panel.todo.refresh': 'Refresh',
   'iceworks.project.panel.todo.line': 'Line {line}',
 

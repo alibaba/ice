@@ -1,51 +1,42 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as junk from 'junk';
+import * as recursiveReaddir from 'recursive-readdir';
 import { isBinaryFileSync } from 'isbinaryfile';
-import * as EventEmitter from 'events';
 import * as LineByLine from 'line-by-line';
-import { IProject } from '../../../interface';
+import { IProject, ITodoModule, ITodoMsg, ITodo } from '../../../interface';
 
-function readdirSync(targetPath) {
-  if (fs.existsSync(targetPath)) {
-    return fs.readdirSync(targetPath).filter(junk.not);
-  }
-  return [];
-}
+async function matchFileContent(filePath: string): Promise<ITodoMsg[]> {
+  const input = new LineByLine(filePath);
+  let result: ITodoMsg[] = [];
+  let currentFileLineNumber = 1;
 
-function recursiveReaddirSync(dirPath, rootDir) {
-  let list = [];
-  let stats;
-  const files = readdirSync(dirPath);
-  const ignoreFiles = ['node_modules'];
+  return new Promise((resolve) => {
+    input.on('line', (line) => {
+      if (line.length < 1000) {
+        result = result.concat(retrieveMessagesFromLine(line, currentFileLineNumber));
+      }
 
-  files.forEach((file) => {
-    if (ignoreFiles.includes(file)) {
-      return;
-    }
-    const fullPath = path.join(dirPath, file);
-    stats = fs.lstatSync(fullPath);
-    if (stats.isDirectory()) {
-      list = list.concat(recursiveReaddirSync(fullPath, rootDir));
-    } else if (!isBinaryFileSync(fullPath)) {
-      list.push([path.relative(rootDir, fullPath), fullPath]);
-    }
+      currentFileLineNumber++;
+    });
+
+    input.on('end', () => {
+      resolve(result);
+    });
   });
-
-  return list;
 }
 
-function retrieveMessagesFromLine(lineString, lineNumber) {
-  const result = [];
+function retrieveMessagesFromLine(lineString, lineNumber): ITodoMsg[] {
+  const result: ITodoMsg[] = [];
 
   const CHECK_PATTERN = ['NOTE', 'OPTIMIZE', 'TODO', 'HACK', 'FIXME'];
 
   CHECK_PATTERN.forEach(pattern => {
-    const regex = new RegExp(`(?:^|[^:])\\/[/*]\\s*${pattern}\\b\\s*(?:\\(([^:]*)\\))*\\s*:?\\s*(.*)`, 'i');
-    const matchResults = lineString.match(regex);
+    // match rules：`// ${pattern} ${content}`  example: // FIXME something to do
+    const reg = new RegExp(`(?:^|[^:])\\/[/*]\\s*${pattern}\\b\\s*(?:\\(([^:]*)\\))*\\s*:?\\s*(.*)`, 'i');
+    const matchResults = lineString.match(reg);
 
     if (matchResults && matchResults.length) {
-      const message = {
+      const message: ITodoMsg = {
         content: '',
         type: pattern,
         line: lineNumber,
@@ -62,7 +53,11 @@ function retrieveMessagesFromLine(lineString, lineNumber) {
   return result;
 }
 
-export default class Todo {
+function ignoreFile(filePath: string, stats) {
+  return stats.isDirectory() && junk.is(filePath) && isBinaryFileSync(filePath);
+}
+
+export default class Todo implements ITodoModule {
   public readonly project: IProject;
 
   public readonly storage: any;
@@ -71,41 +66,27 @@ export default class Todo {
     this.project = params.project;
   }
 
-  private async matchFileContent(filePath) {
-    const input = new LineByLine(filePath);
-    const result = { totalLines: 0, messages: [] };
-    let currentFileLineNumber = 1;
-
-    return new Promise((resolve) => {
-      input.on('line', (line) => {
-        if (line.length < 1000) {
-          result.messages = result.messages.concat(retrieveMessagesFromLine(line, currentFileLineNumber));
+  public async getList(): Promise<ITodo[]> {
+    const files: string[] = await new Promise((resolve, reject) => {
+      recursiveReaddir(this.project.path, ['node_modules', ignoreFile], (err, res) => {
+        if (err) {
+          reject(err);
+          return;
         }
 
-        currentFileLineNumber++;
-      });
-
-      input.on('end', () => {
-        result.totalLines = currentFileLineNumber;
-
-        resolve(result);
+        resolve(res);
       });
     });
-  }
 
-  public async getList() {
-    const srcDir = this.project.path;
-    const files = recursiveReaddirSync(srcDir, srcDir);
-
-    const result = [];
+    const result: ITodo[] = [];
 
     if (files.length) {
-      for (const [ filePath, fullPath ] of files) {
-        const matchInfo: any = await this.matchFileContent(fullPath);
-        if (matchInfo.messages.length) {
+      for (const filePath of files) {
+        const messages: ITodoMsg[] = await matchFileContent(filePath);
+        if (messages.length) {
           result.push({
-            path: filePath,
-            ...matchInfo
+            messages,
+            path: path.relative(this.project.path, filePath)
           });
         }
       }

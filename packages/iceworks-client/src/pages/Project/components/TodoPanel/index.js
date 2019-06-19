@@ -10,8 +10,6 @@ const TodoPanel = () => {
   const todo = stores.useStore('todo');
   const { dataSource } = todo;
 
-  console.log(dataSource);
-
   return (
     <Panel
       header={
@@ -55,7 +53,9 @@ const TodoPanel = () => {
         <Message
           title={<FormattedMessage id="iceworks.project.panel.todo.none" />}
           type="notice"
-        />
+        >
+          <FormattedMessage id="iceworks.project.panel.todo.example" />
+        </Message>
       )}
     </Panel>
   );

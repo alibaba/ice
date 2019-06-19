@@ -90,7 +90,8 @@ export default {
 
   // project todo
   'iceworks.project.panel.todo.title': '待办事项',
-  'iceworks.project.panel.todo.none': '没有事项需要处理',
+  'iceworks.project.panel.todo.none': '代码中没有注释事项需要处理',
+  'iceworks.project.panel.todo.example': '例如：// TODO XXX待处理',
   'iceworks.project.panel.todo.refresh': '刷新',
   'iceworks.project.panel.todo.line': '第{line}行',
 
