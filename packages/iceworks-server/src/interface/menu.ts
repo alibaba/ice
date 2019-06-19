@@ -1,66 +1,58 @@
 import { IBaseModule } from './base';
 
+export interface IMenuOptions {
+  type?: string;
+  replacement?: boolean;
+}
+
 /**
  * 项目的菜单
  */
 export interface IMenu {
   /**
-   * 位置
+   * position
    */
-  position: 'header' | 'aside';
+  position?: 'header' | 'aside';
 
   /**
-   * 名称
+   * id
+   */
+  id: string;
+
+  /**
+   * name
    */
   name: string;
 
   /**
-   * URL 路径
+   * URL
    */
   path: string;
 
   /**
-   * 图标标识
+   * icon
    */
   icon?: string;
 
   /**
-   * 是否新窗口打开
+   * open new window
    */
   newWindow?: boolean;
+
+  /**
+   * menu children
+   */
+  children?: IMenu[];
 }
 
 export interface IMenuModule extends IBaseModule {
   /**
-   * 获取项目菜单
+   * get menu config
    */
-  getAll(): Promise<IMenu[]>;
+  getAll(): Promise<{ asideMenuConfig: IMenu[] }>;
 
   /**
-   * 添加菜单
-   *
-   * @param menu 菜单配置
+   * bulk create menus
    */
-  create(menu: IMenu): Promise<IMenu>;
-
-  /**
-   * 添加多个菜单到项目
-   *
-   * @param menus 多个菜单配置
-   */
-  bulkCreate(menus: IMenu[]): Promise<IMenu[]>;
-
-  /**
-   * 删除菜单
-   *
-   * @param menu 菜单配置
-   */
-  delete(menu: IMenu): Promise<void>;
-
-  /**
-   * 更新菜单
-   *
-   * @param menu 菜单配置
-   */
-  update(menu: IMenu): Promise<IMenu>;
+  bulkCreate(data: IMenu[], options: IMenuOptions): Promise<void>
 }

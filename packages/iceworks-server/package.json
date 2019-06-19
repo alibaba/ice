@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/generator": "^7.4.4",
     "@babel/parser": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/traverse": "^7.4.5",
     "@babel/types": "^7.4.4",
     "ali-oss": "^6.1.1",
@@ -50,6 +51,7 @@
     "simple-git": "^1.113.0",
     "tar": "^4.4.8",
     "trash": "^5.2.0",
+    "uid": "^0.0.2",
     "uppercamelcase": "^3.0.0",
     "user-home": "^2.0.0"
   },

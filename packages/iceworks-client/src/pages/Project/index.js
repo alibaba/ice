@@ -62,14 +62,15 @@ const SortableWrap = SortableContainer(({ items, isSorting }) => {
   );
 });
 
-
 const Project = ({ history }) => {
   const { location } = history;
-  const [pages, layouts, git, oss] = projectStores.useStores([
+  const [pages, layouts, git, oss, menu, routes] = projectStores.useStores([
     'pages',
     'layouts',
     'git',
     'oss',
+    'menu',
+    'routes',
   ]);
   const [isSorting, setIsSorting] = useState(false);
 
@@ -87,6 +88,8 @@ const Project = ({ history }) => {
     Page: pages,
     Dependency: dependenciesStore,
     Layout: layouts,
+    Menu: menu,
+    Router: routes,
     Git: git,
     OSS: oss,
   };
