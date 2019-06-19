@@ -64,7 +64,7 @@ export default class Page implements IPageModule {
     );
   }
 
-  private async installBlocksDependencies(blocks: IMaterialBlock[], context: IContext) {
+  private async installBlocksDependencies(blocks: IMaterialBlock[], ctx: IContext) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
     const blocksDependencies: { [packageName: string]: string } = {};
@@ -82,7 +82,7 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], false, this.project, context.socket, 'page');
+      return await installDependency([{ package: packageName, version }], false, this.project, ctx.socket, 'page');
     }));
   }
 
@@ -126,11 +126,11 @@ export default class Page implements IPageModule {
 
   async getOne(): Promise<any> { }
 
-  async create(page: ICreatePageParam, context: IContext): Promise<any> {
+  async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
 
     // create page dir
-    context.socket.emit('adapter.page.create.status', { text: '创建页面目录...', percent: 10 });
+    ctx.socket.emit('adapter.page.create.status', { text: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -144,15 +144,15 @@ export default class Page implements IPageModule {
     }
 
     // download blocks
-    context.socket.emit('adapter.page.create.status', { text: '正在下载区块...', percent: 40 });
+    ctx.socket.emit('adapter.page.create.status', { text: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
-    context.socket.emit('adapter.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
-    await this.installBlocksDependencies(blocks, context);
+    ctx.socket.emit('adapter.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
+    await this.installBlocksDependencies(blocks, ctx);
 
     // create page file
-    context.socket.emit('adapter.page.create.status', { text: '正在创建页面文件...', percent: 90 });
+    ctx.socket.emit('adapter.page.create.status', { text: '正在创建页面文件...', percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {

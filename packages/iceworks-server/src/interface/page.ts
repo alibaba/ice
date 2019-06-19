@@ -111,7 +111,7 @@ export interface IPageModule extends IBaseModule {
    *
    * @param page 页面配置
    */
-  create(page: ICreatePageParam, context: IContext): Promise<IPage>;
+  create(page: ICreatePageParam, ctx: IContext): Promise<IPage>;
 
   /**
    * 添加多个页面到项目

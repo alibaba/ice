@@ -9,5 +9,5 @@ export interface IDEFPushParams {
 }
 
 export interface IDEFModule extends IBaseModule {
-  push(params: IDEFPushParams, context: IContext): Promise<void>;
+  push(params: IDEFPushParams, ctx: IContext): Promise<void>;
 }

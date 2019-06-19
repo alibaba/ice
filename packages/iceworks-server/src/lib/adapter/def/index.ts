@@ -21,7 +21,7 @@ export default class DEF implements IDEFModule {
     this.storage = storage;
   }
 
-  async push(params: IDEFPushParams, context: IContext): Promise<void> {
+  async push(params: IDEFPushParams, ctx: IContext): Promise<void> {
     const { target, commitId, branch, repository, empId } = params;
     const client = new Client.Client();
     client.run({
@@ -36,20 +36,20 @@ export default class DEF implements IDEFModule {
     });
 
     client.on('start', () => {
-      context.socket.emit('adapter.def.push.start');
+      ctx.socket.emit('adapter.def.push.start');
     });
     client.on('message', (message) => {
-      context.socket.emit('adapter.def.push.data', `${message}\n\r`);
+      ctx.socket.emit('adapter.def.push.data', `${message}\n\r`);
     });
     client.on('build_message', (message) => {
-      context.socket.emit('adapter.def.push.data', message);
+      ctx.socket.emit('adapter.def.push.data', message);
     });
     client.on('error', (error) => {
-      context.socket.emit('adapter.def.push.data', `\r\n${error.message}`);
-      context.socket.emit('adapter.def.push.exit', 1);
+      ctx.socket.emit('adapter.def.push.data', `\r\n${error.message}`);
+      ctx.socket.emit('adapter.def.push.exit', 1);
     });
     client.on('success', () => {
-      context.socket.emit('adapter.def.push.exit', 0);
+      ctx.socket.emit('adapter.def.push.exit', 0);
     });
   }
 }

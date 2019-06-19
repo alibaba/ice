@@ -17,10 +17,10 @@ export default class Layout implements ILayoutModule {
     this.path = path.join(this.project.path, 'src', 'layouts');
   }
 
-  private async scanLayout(dirPath: string) {
+  private async scanLayout() {
     return Promise.all(
-      (await scanDirectory(dirPath)).map(async (dir) => {
-        const fullPath = path.join(dirPath, dir);
+      (await scanDirectory(this.path)).map(async (dir) => {
+        const fullPath = path.join(this.path, dir);
         const name = path.basename(fullPath);
         return {
           name,
@@ -34,10 +34,10 @@ export default class Layout implements ILayoutModule {
   }
 
   async getAll(): Promise<IProjectLayout[]> {
-    return await this.scanLayout(this.path);
+    return await this.scanLayout();
   }
 
   async getOne(layoutName: string): Promise<IProjectLayout> {
-    return;
+    return (await this.getAll()).find(({name}) => name === layoutName);
   }
 }

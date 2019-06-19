@@ -9,7 +9,9 @@ import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISock
 
 const rimrafAsync = util.promisify(rimraf);
 
-export const install = async (dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string): Promise<void> => {
+export const install = async (
+  dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
+): Promise<void> => {
   console.log('dependencies', dependencies);
   socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
 
@@ -77,14 +79,14 @@ export default class Dependency implements IDependencyModule {
     return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string; }]) => ({ package: key, ...value }));
   }
 
-  public async create(params: {dependency: ICreateDependencyParam, idDev?: boolean}, context: IContext): Promise<void> {
+  public async create(params: {dependency: ICreateDependencyParam, idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependency, idDev } = params;
-    return (await install([dependency], idDev, this.project, context.socket, 'dependency'))[0];
+    return (await install([dependency], idDev, this.project, ctx.socket, 'dependency'))[0];
   }
 
-  public async bulkCreate(params: {dependencies: ICreateDependencyParam[], idDev?: boolean}, context: IContext): Promise<void> {
+  public async bulkCreate(params: {dependencies: ICreateDependencyParam[], idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependencies, idDev } = params;
-    return await install(dependencies, idDev, this.project, context.socket, 'dependency');
+    return await install(dependencies, idDev, this.project, ctx.socket, 'dependency');
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }> {
@@ -137,14 +139,14 @@ export default class Dependency implements IDependencyModule {
     };
   }
 
-  public async reset(arg: void, context: IContext) {
-    context.socket.emit('adapter.dependency.reset.data', '正在清理 node_modules 目录，请稍等');
+  public async reset(arg: void, ctx: IContext) {
+    ctx.socket.emit('adapter.dependency.reset.data', '正在清理 node_modules 目录，请稍等');
 
     await rimrafAsync(this.path);
 
-    context.socket.emit('adapter.dependency.reset.data', '清理 node_modules 目录完成');
+    ctx.socket.emit('adapter.dependency.reset.data', '清理 node_modules 目录完成');
 
-    context.socket.emit('adapter.dependency.reset.data', '开始安装依赖...');
+    ctx.socket.emit('adapter.dependency.reset.data', '开始安装依赖...');
 
     const childProcess = execa('npm', ['install'], {
       cwd: this.project.path,
@@ -155,7 +157,7 @@ export default class Dependency implements IDependencyModule {
       const text = buffer.toString();
       console.log('reset.data:', text);
 
-      context.socket.emit('adapter.dependency.reset.data', text);
+      ctx.socket.emit('adapter.dependency.reset.data', text);
     });
 
     childProcess.on('error', (buffer) => {
@@ -165,14 +167,14 @@ export default class Dependency implements IDependencyModule {
     childProcess.on('exit', (code, signal) => {
       console.log('reset.exit:', code, signal);
 
-      context.socket.emit('adapter.dependency.reset.exit', code);
+      ctx.socket.emit('adapter.dependency.reset.exit', code);
     });
   }
 
-  public async upgrade(denpendency: { package: string; isDev?: boolean }, context: IContext): Promise<void> {
+  public async upgrade(denpendency: { package: string; isDev?: boolean }, ctx: IContext): Promise<void> {
     const { package: packageName } = denpendency;
 
-    context.socket.emit('adapter.dependency.upgrade.data', `开始更新依赖：${packageName}...`);
+    ctx.socket.emit('adapter.dependency.upgrade.data', `开始更新依赖：${packageName}...`);
 
     const childProcess = execa('npm', ['update', packageName, '--silent'], {
       cwd: this.project.path,
@@ -183,7 +185,7 @@ export default class Dependency implements IDependencyModule {
       const text = buffer.toString();
       console.log('upgrade.data:', text);
 
-      context.socket.emit('adapter.dependency.upgrade.data', text);
+      ctx.socket.emit('adapter.dependency.upgrade.data', text);
     });
 
     childProcess.on('error', (buffer) => {
@@ -193,7 +195,7 @@ export default class Dependency implements IDependencyModule {
     childProcess.on('exit', (code, signal) => {
       console.log('upgrade.exit:', code, signal);
 
-      context.socket.emit('adapter.dependency.upgrade.exit', code);
+      ctx.socket.emit('adapter.dependency.upgrade.exit', code);
     });
   };
 }

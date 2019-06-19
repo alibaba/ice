@@ -34,7 +34,7 @@ export default class Task implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: ITaskParam, context: IContext) {
+  async start(args: ITaskParam, ctx: IContext) {
     let { command } = args;
 
     if (this.process[command]) {
@@ -64,7 +64,7 @@ export default class Task implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      context.socket.emit(`adapter.task.${eventName}`, {
+      ctx.socket.emit(`adapter.task.${eventName}`, {
         status: TASK_STATUS_WORKING,
         chunk: buffer.toString(),
       });
@@ -73,7 +73,7 @@ export default class Task implements ITaskModule {
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
         this.process[command] = null;
-        context.socket.emit(`adapter.task.${eventName}`, {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
@@ -91,7 +91,7 @@ export default class Task implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args: ITaskParam, context: IContext) {
+  async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 
@@ -103,7 +103,7 @@ export default class Task implements ITaskModule {
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
       if (code === 0) {
-        context.socket.emit(`adapter.task.${eventName}`, {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
