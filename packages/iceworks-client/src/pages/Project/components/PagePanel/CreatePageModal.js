@@ -24,16 +24,26 @@ import styles from './CreatePageModal.module.scss';
 const MaterialSelect = ({ resources, onSelect }) => {
   const resource = resources[0];
   const { source } = resource;
-  const [data, setData] = useState({ categories: [], materials: { all: [] } });
+  const [data, setData] = useState({ categories: [], materials: { all: [] }, category: 'all' });
+
+  function onSetCateogry(setName) {
+    setData({
+      ...data,
+      category: setName,
+    });
+  }
 
   useEffect(() => {
     (async () => {
       const { blocks } = await socket.emit('material.index.getOne', { url: source });
-      setData(blocks);
+      setData({
+        ...data,
+        ...blocks,
+      });
     })();
   }, []);
 
-  const { categories = [], materials = {} } = data;
+  const { categories = [], materials = {}, category } = data;
 
   return (
     <div className={styles.materialWrap}>
@@ -51,7 +61,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
       <div className={styles.main}>
         <div className={styles.materials}>
           {
-            materials.all.map((dataSource, index) => {
+            materials[category].map((dataSource, index) => {
               return (
                 <BlockCard
                   dataSource={dataSource}
@@ -66,7 +76,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
           {
             categories.map(({ name: categoryName }, index) => {
               return (
-                <div key={index}>
+                <div key={index} onClick={() => onSetCateogry(categoryName)}>
                   {categoryName}
                 </div>
               );
@@ -198,7 +208,6 @@ const CreatePageModal = ({
 
   function onSortEnd({ oldIndex, newIndex }) {
     setIsSorting(false);
-    console.log('onSortEnd', oldIndex, newIndex);
     setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
   }
 
