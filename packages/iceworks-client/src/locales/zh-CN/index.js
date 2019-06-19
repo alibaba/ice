@@ -26,10 +26,6 @@ export default {
   'iceworks.menu.setting': '设置',
   'iceworks.menu.setting.general': '通用设置',
   'iceworks.menu.setting.general.desc': '设置主题和语言',
-  'iceworks.menu.setting.panel': '面板设置',
-  'iceworks.menu.setting.panel.desc': '项目面板的展示',
-  'iceworks.menu.setting.advanced': '高级设置',
-  'iceworks.menu.setting.advanced.desc': '设置编辑器和 npm 源',
 
   // setting
   'iceworks.setting.title': '设置',
@@ -166,7 +162,6 @@ export default {
   'iceworks.material.block': '区块',
   'iceworks.material.component': '组件',
   'iceworks.material.add': '添加物料',
-  'iceworks.material.all': '全部',
   'iceworks.material.preview': '效果预览',
   'iceworks.material.source': '查看源码',
   'iceworks.material.download': '使用该模版',

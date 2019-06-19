@@ -5,14 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import { PLACEHOLDER_IMG } from '@src/appConfig';
 import styles from './index.module.scss';
 
-const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
+const ScaffoldCard = ({ dataSource, onDownload }) => {
   function handleDownload() {
     onDownload(dataSource);
   }
 
   return (
     <div className={styles.scaffold}>
-      <div className={styles.body} style={{ background: bgColor }}>
+      <div className={styles.body}>
         {dataSource.isNewlyCreated ? (
           <div className={styles.newly}>NEW</div>
         ) : null}
@@ -72,13 +72,11 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
 };
 
 ScaffoldCard.defaultProps = {
-  bgColor: '#fafafa',
   onDownload: f => f,
 };
 
 ScaffoldCard.propTypes = {
   dataSource: PropTypes.object.isRequired,
-  bgColor: PropTypes.string,
   onDownload: PropTypes.func,
 };
 
@@ -103,7 +101,6 @@ function generateStyle(screenshots, index) {
       style = {
         position: 'relative',
         zIndex: 9,
-        boxShadow: '0 0 30px #8b8585',
         bottom: `${i * 10}%`,
         right: `${i * 10}%`,
         transform: 'scale(0.6)',

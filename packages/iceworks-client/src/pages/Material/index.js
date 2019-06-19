@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Tab } from '@alifd/next';
 import stores from '@stores';
 import Card from '@components/Card';
-import qs from 'querystringify';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
@@ -19,9 +18,10 @@ import InstallModal from './components/InstallModal';
 import AddMaterialModal from './components/AddMaterialModal';
 import styles from './index.module.scss';
 
+const DEFAULT_CATEGORY = '全部';
+
 const Material = ({ history, intl }) => {
   const [material] = stores.useStores(['material']);
-  const { location } = history;
   const {
     onCreateProjectModal,
     setCreateProjectModal,
@@ -41,9 +41,8 @@ const Material = ({ history, intl }) => {
     bulkCreate,
   } = useDependency();
   const { dataSource } = material;
-  const currCategory = (qs.parse(location.search) || {}).category;
-
   const [type, setType] = useState('scaffolds');
+  const [currentCategory, setCurrentCategory] = useState(DEFAULT_CATEGORY);
   const [component, setComponent] = useState({});
 
   async function setCurrent(source) {
@@ -58,13 +57,14 @@ const Material = ({ history, intl }) => {
     await setCurrent(defaultActiveMaterial);
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  function handleCategoryChange(name = DEFAULT_CATEGORY) {
+    setCurrentCategory(name);
+  }
 
   async function handleTabChange(key = 'scaffolds') {
     history.push('/material');
     setType(key);
+    handleCategoryChange();
 
     // it is necessary to trigger lazyLoad checking
     // when block tabPanel enter the viewport
@@ -118,7 +118,8 @@ const Material = ({ history, intl }) => {
       content: (
         <ScaffoldPanel
           dataSource={dataSource.currentMaterial.scaffolds}
-          current={currCategory}
+          currentCategory={currentCategory}
+          onCategoryChange={handleCategoryChange}
           onDownload={(scaffoldData) => {
             setCreateProjectModal(true, scaffoldData);
           }}
@@ -131,7 +132,8 @@ const Material = ({ history, intl }) => {
       content: (
         <BlockPanel
           dataSource={dataSource.currentMaterial.blocks}
-          current={currCategory}
+          currentCategory={currentCategory}
+          onCategoryChange={handleCategoryChange}
         />
       ),
     },
@@ -141,7 +143,8 @@ const Material = ({ history, intl }) => {
       content: (
         <ComponentPanel
           dataSource={dataSource.currentMaterial.components}
-          current={currCategory}
+          currentCategory={currentCategory}
+          onCategoryChange={handleCategoryChange}
           onInstall={(componentData) => {
             setComponent(componentData);
             setInstallModal(true);
@@ -152,6 +155,10 @@ const Material = ({ history, intl }) => {
   ];
 
   const cardTitle = dataSource.currentMaterial.name || intl.formatMessage({ id: 'iceworks.material.title' });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className={styles.materialPage}>

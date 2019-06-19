@@ -16,7 +16,7 @@ export default (app: Application) => {
     ['home.project.setPanel', home.project.setPanel],
     ['home.project.sortPanel', home.project.sortPanel],
 
-    ['material.index.getResources', material.index.getResources],
+    ['material.index.resources', material.index.getResources],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
     ['material.index.add', material.index.add],

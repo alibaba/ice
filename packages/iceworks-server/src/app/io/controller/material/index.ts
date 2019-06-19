@@ -8,6 +8,8 @@ const RECOMMEND_SCAFFOLDS = [
   'ice-design-lite',
 ];
 
+const CATEGORY_ALL = '全部';
+
 export default (app) => {
   return class MaterialController extends app.Controller {
     async getResources({ args }) {
@@ -131,7 +133,7 @@ function formatMaterialData(data) {
 }
 
 function generateCates(data: any[]) {
-  const result = [];
+  const result = [{name: CATEGORY_ALL, count: data.length }];
   const temp = {};
   for (let i = 0, l = data.length; i < l; i++) {
     const { categories = [] } = data[i];
@@ -152,13 +154,13 @@ function generateCates(data: any[]) {
 }
 
 function formatMaterialsByCatrgory(data: any[]) {
-  const materials = { all: [] };
+  const materials = { [CATEGORY_ALL]: [] };
 
   if (isArray(data)) {
     data.forEach((item) => {
       const { categories } = item;
 
-      materials['all'].push(item);
+      materials[CATEGORY_ALL].push(item);
       if (isArray(categories) && categories.length) {
         categories.forEach((category) => {
           if (isArray(materials[category])) {

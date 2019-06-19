@@ -33,7 +33,7 @@ export default {
   },
 
   async getResources(args) {
-    const data = await socket.emit('material.index.getResources', args);
+    const data = await socket.emit('material.index.resources', args);
     this.dataSource.resource = formatResource(data);
   },
 
