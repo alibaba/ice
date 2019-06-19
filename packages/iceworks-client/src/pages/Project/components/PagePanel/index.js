@@ -19,7 +19,7 @@ const PagePanel = () => {
   } = useModal();
   const {
     on: onCreateModal,
-    toggleModal: toggleCreateModal,
+    setModal: setCreateModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
   const menuStore = stores.useStore('menu');
@@ -31,7 +31,7 @@ const PagePanel = () => {
   }
 
   function onCreate() {
-    toggleCreateModal();
+    setCreateModal(true);
   }
 
   function onDelete(name) {
@@ -59,6 +59,8 @@ const PagePanel = () => {
 
     await pages.create(data);
 
+    logger.info('created page.');
+
     // create router and menu after success create page
     await routerStore.bulkCreate({
       data: [{
@@ -70,6 +72,8 @@ const PagePanel = () => {
       },
     });
 
+    logger.info('created router.');
+
     // add menu if exist menuName
     if (menuName) {
       await menuStore.bulkCreate({
@@ -80,7 +84,9 @@ const PagePanel = () => {
       });
     }
 
-    toggleCreateModal();
+    logger.info('created menu.');
+
+    setCreateModal(false);
 
     Message.show({
       align: 'tr tr',
@@ -119,7 +125,7 @@ const PagePanel = () => {
         />
         {onCreateModal ? <CreatePageModal
           on={onCreateModal}
-          onCancel={toggleCreateModal}
+          onCancel={() => setCreateModal(false)}
           onOk={createPage}
         /> : null}
         {

@@ -17,14 +17,15 @@ import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContex
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
-const readFileAsync = util.promisify(fs.readFileSync);
+const readFileAsync = util.promisify(fs.readFile);
 
 const loadTemplate = async () => {
   const fileName = 'template.js';
   const filePath = path.join(__dirname, `${fileName}.ejs`);
   const fileStr = await readFileAsync(filePath, 'utf-8');
+  const compile = ejs.compile(fileStr);
   return {
-    compile: ejs.compile(fileStr),
+    compile,
     filePath,
     fileName,
   };
@@ -181,18 +182,14 @@ export default class Page implements IPageModule {
     );
 
     await writeFileAsync(dist, rendered, 'utf-8');
-
-    // TODO update routes.jsx
-
-    // TODO update menuConfig, routerConfig
   }
 
   async bulkCreate(): Promise<any> { }
 
   // TODO
-  async delete(params: {pageName: string}): Promise<any> {
-    const { pageName } = params;
-    await rimrafAsync(path.join(this.path, pageName));
+  async delete(params: {name: string}): Promise<any> {
+    const { name } = params;
+    await rimrafAsync(path.join(this.path, name));
 
     // TODO rewrite routerConfig.js
 

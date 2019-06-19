@@ -69,11 +69,6 @@ export interface ICreatePageParam {
   name: string;
 
   /**
-   * 使用的布局
-   */
-  layout: IProjectLayout;
-
-  /**
    * 页面内的区块
    */
   blocks?: IMaterialBlock[];
@@ -123,9 +118,9 @@ export interface IPageModule extends IBaseModule {
   /**
    * 删除项目内的页面
    *
-   * @param pageName 页面名
+   * @param name 页面名
    */
-  delete(params: {pageName: string}): Promise<void>;
+  delete(params: {name: string}): Promise<void>;
 
   /**
    * 更新页面

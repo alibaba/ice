@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Select, Input } from '@alifd/next';
 import cx from 'classnames';
-import mockData from '@src/mock';
 import socket from '@src/socket';
 import stores from '@stores';
 import Modal from '@components/Modal';
@@ -175,7 +174,7 @@ const CreatePageModal = ({
 }) => {
   const {
     on: onSaveModal,
-    toggleModal: toggleSaveModal,
+    setModal: setSaveModal,
   } = useModal();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
@@ -187,15 +186,14 @@ const CreatePageModal = ({
 
   async function onCloseSaveModal() {
     await progress.hide();
-    toggleSaveModal();
+    setSaveModal(false);
   }
 
   function onCreateOk() {
     page.setData({
-      selectedBlocks,
-      layout: mockData.layout,
+      blocks: selectedBlocks,
     });
-    toggleSaveModal();
+    setSaveModal(true);
   }
 
   async function onSaveOk(data) {
@@ -205,7 +203,7 @@ const CreatePageModal = ({
       ...data,
     });
     await progress.hide();
-    toggleSaveModal();
+    setSaveModal(false);
   }
 
   function generateBlockName(name, count = 0) {
