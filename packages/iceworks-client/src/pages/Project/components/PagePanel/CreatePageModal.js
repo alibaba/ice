@@ -23,7 +23,7 @@ import styles from './CreatePageModal.module.scss';
 
 const MaterialSelect = ({ resources, onSelect }) => {
   const resource = resources[0];
-  const [data, setData] = useState({ categories: [], materials: { all: [] }, category: 'all', source: resource.source });
+  const [data, setData] = useState({ categories: [], materials: { }, category: '全部', source: resource.source });
   const { categories = [], materials = {}, category, source } = data;
 
   function onSetCateogry(setName) {
