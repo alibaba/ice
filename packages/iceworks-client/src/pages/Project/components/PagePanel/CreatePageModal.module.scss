@@ -10,6 +10,18 @@
     overflow-y: auto;
     padding: 2px;
 
+    .empty {
+      display: block;
+      text-align: center;
+
+      img {
+        display: block;
+        margin: 0 auto;
+        width: 60px;
+        margin-bottom: 12px;
+      }
+    }
+
     .item {
       width: 100%;
       height: 120px;

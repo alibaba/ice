@@ -36,8 +36,13 @@ const MaterialSelect = ({ resources, onSelect }) => {
     });
   }
 
+  async function fetchMaterialBlocks(url) {
+    const { blocks } = await socket.emit('material.index.getOne', { url });
+    return blocks;
+  }
+
   async function onSourceChange(value) {
-    const { blocks } = await socket.emit('material.index.getOne', { url: value });
+    const blocks = await fetchMaterialBlocks(value);
     setData({
       ...data,
       ...blocks,
@@ -48,7 +53,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
 
   useEffect(() => {
     (async () => {
-      const { blocks } = await socket.emit('material.index.getOne', { url: source });
+      const blocks = await fetchMaterialBlocks(source);
       setData({
         ...data,
         ...blocks,
@@ -152,18 +157,23 @@ const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSo
   return (
     <div className={styles.blocks}>
       {
-        blocks.map((block, index) => {
-          return (
-            <SelectedBlock
-              {...block}
-              index={index}
-              onNameChange={onNameChange}
-              onDelete={onDelete}
-              isSorting={isSorting}
-              key={index}
-            />
-          );
-        })
+        blocks.length ?
+          blocks.map((block, index) => {
+            return (
+              <SelectedBlock
+                {...block}
+                index={index}
+                onNameChange={onNameChange}
+                onDelete={onDelete}
+                isSorting={isSorting}
+                key={index}
+              />
+            );
+          }) :
+          <div className={styles.empty}>
+            <img src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png" alt="区块" />
+            <FormattedMessage id="iceworks.project.panel.page.create.builder.empty" />
+          </div>
       }
     </div>
   );

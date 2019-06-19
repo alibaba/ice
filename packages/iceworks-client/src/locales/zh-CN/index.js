@@ -53,6 +53,7 @@ export default {
   // project page
   'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
+  'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
   'iceworks.project.panel.page.delete.title': '删除页面',
   'iceworks.project.panel.page.delete.content': '确定移除页面 {name} ？',
   'iceworks.project.panel.page.save.title': '填写页面信息',
