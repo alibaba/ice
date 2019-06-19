@@ -1,23 +1,21 @@
 @import '../../../../variables.scss';
 
 .wrap {
-  width: calc(100vw - 250px);
   height: calc(100vh - 250px);
   display: flex;
   flex-direction: row;
 
   .blocks {
-    width: 60%;
-    height: 100%;
+    width: 700px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
     padding: 2px;
 
     .item {
       width: 100%;
+      height: 120px;
       position: relative;
       margin-bottom: 4px;
+      overflow: hidden;
 
       &.isSorting {
         pointer-events: none;
@@ -36,8 +34,8 @@
       }
 
       .screenshot {
+        width: 100%;
         cursor: move;
-        min-height: 70px;
 
         img {
           display: block;
@@ -79,13 +77,18 @@
   }
 
   .material {
-    width: 40%;
+    width: 300px;
     margin-left: 24px;
   }
 }
 
 .blockIsDraging {
   z-index: 99999;
+  overflow: hidden;
+
+  img {
+    width: 700px;
+  }
 }
 
 .materialWrap {

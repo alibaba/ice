@@ -21,9 +21,13 @@ import pageStores from '../../stores';
 import SavePageModal from './SavePageModal';
 import styles from './CreatePageModal.module.scss';
 
+const DEFAULT_CATEGORY = '全部';
+
 const MaterialSelect = ({ resources, onSelect }) => {
   const resource = resources[0];
-  const [data, setData] = useState({ categories: [], materials: { }, category: '全部', source: resource.source });
+  const [data, setData] = useState({
+    categories: [], materials: { }, category: DEFAULT_CATEGORY, source: resource.source,
+  });
   const { categories = [], materials = {}, category, source } = data;
 
   function onSetCateogry(setName) {
@@ -38,6 +42,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
     setData({
       ...data,
       ...blocks,
+      category: DEFAULT_CATEGORY,
       source: value,
     });
   }
@@ -51,6 +56,8 @@ const MaterialSelect = ({ resources, onSelect }) => {
       });
     })();
   }, []);
+
+  const categoryMaterials = materials[category] || [];
 
   return (
     <div className={styles.materialWrap}>
@@ -70,7 +77,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
       <div className={styles.main}>
         <div className={styles.materials}>
           {
-            materials[category].map((dataSource, index) => {
+            categoryMaterials.map((dataSource, index) => {
               return (
                 <div className={styles.item} key={index}>
                   <BlockCard
@@ -82,24 +89,28 @@ const MaterialSelect = ({ resources, onSelect }) => {
             })
           }
         </div>
-        <div className={styles.categories}>
-          {
-            categories.map(({ name: categoryName }, index) => {
-              return (
-                <div
-                  className={cx({
-                    [styles.item]: true,
-                    [styles.selected]: category === categoryName,
-                  })}
-                  key={index}
-                  onClick={() => onSetCateogry(categoryName)}
-                >
-                  {categoryName}
-                </div>
-              );
-            })
-          }
-        </div>
+        {
+          categories.length ?
+            <div className={styles.categories}>
+              {
+                categories.map(({ name: categoryName }, index) => {
+                  return (
+                    <div
+                      className={cx({
+                        [styles.item]: true,
+                        [styles.selected]: category === categoryName,
+                      })}
+                      key={index}
+                      onClick={() => onSetCateogry(categoryName)}
+                    >
+                      {categoryName}
+                    </div>
+                  );
+                })
+              }
+            </div> :
+            null
+        }
       </div>
     </div>
   );
