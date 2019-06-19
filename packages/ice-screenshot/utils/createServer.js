@@ -39,7 +39,6 @@ module.exports = function (cwd, port) {
             res.end(data);
           });
         } else {
-          // 404
           res.writeHead(404, { 'Content-Type': 'text/html' });
           res.end('<h1>404 Not Found</h1>');
           console.log(chalk.yellow(`${pathname} Not Found.`));

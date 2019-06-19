@@ -12,7 +12,19 @@ Options:
   -o, --output <output>      Output path
   -h, --help                 output usage information
 
-## Example
+## Usage
+
+For ICE materials, you can take screenshot use following commands:
+
+```bash
+# for scaffold
+$ npm run build && screenshot -l
+
+# for block
+$ npm run build && screenshot -l -s \#mountNode
+```
+
+Other usage:
 
 ```bash
 # take a screenshot of taobao.com

@@ -21,7 +21,7 @@ async function exec() {
       .version(packageJSON.version)
       .usage('-u https://www.example.com')
       .option('-u, --url <url>', 'The target url or path to local server')
-      .option('-l, --local [local]', 'Set up a local server in a special directory and take screenshot, defaults set up in `./`')
+      .option('-l, --local [local]', 'Set up a local server in [local] directory and take screenshot, defaults set up in `./`')
       .option('-s, --selector <selector>', 'Select a element through CSS selector')
       .option('-o, --output <output>', 'Output path')
       .parse(process.argv);
@@ -50,14 +50,16 @@ async function exec() {
 /**
  * take a screenshot with local server
  *
- * @param {string} serverPath local server path
+ * @param {string} serverPath local server directory
  * @param {number} port server port
  * @param {string} targetUrl the target url
  * @param {string} selector the target CSS selector
  * @param {string} output output path
  */
 async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, output) {
-  targetUrl = targetUrl ? `http://127.0.0.1:${port}${targetUrl}` : `http://127.0.0.1:${port}/build/index.html`;
+  targetUrl = targetUrl
+    ? `http://127.0.0.1:${port}${targetUrl}`
+    : `http://127.0.0.1:${port}/build/index.html`; // default screenshot target
 
   const server = createServer(serverPath, port);
   console.log(chalk.white(`Create local server with port ${port}`));
@@ -99,9 +101,14 @@ async function screenshot(url, selector, output) {
     // visit the target url
     await page.goto(url);
 
+    // screenshot a element through CSS selector;
     if (selector) {
-      // screenshot a element through CSS selector;
       const el = await page.$(selector);
+
+      if (!el) {
+        throw Error(`Could not find element that matches selector: ${selector}.`);
+      }
+
       await el.screenshot({ path: output });
     } else {
       // screenshot full page
@@ -124,7 +131,7 @@ async function screenshot(url, selector, output) {
       console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
       console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
     } else {
-      console.log(err);
+      console.error(err);
     }
     process.exit(1);
   }
