@@ -64,7 +64,15 @@ const SortableWrap = SortableContainer(({ items, isSorting }) => {
 
 const Project = ({ history }) => {
   const { location } = history;
-  const [pages, layouts, git, oss, menu, routes] = projectStores.useStores([
+  const {
+    dependenciesStore,
+    reset,
+    onResetModal,
+    setResetModal,
+  } = useDependency();
+  const [
+    pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore,
+  ] = projectStores.useStores([
     'pages',
     'layouts',
     'git',
@@ -72,30 +80,22 @@ const Project = ({ history }) => {
     'menu',
     'routes',
   ]);
+  const panelStores = {
+    Page: pagesStore,
+    Dependency: dependenciesStore,
+    Layout: layoutsStore,
+    Menu: menuStore,
+    Router: routesStore,
+    Git: gitStore,
+    OSS: ossStore,
+  };
   const [isSorting, setIsSorting] = useState(false);
-
   const {
     on: onPanelSettingModal,
     setModal: setPanelSettingModal,
   } = useModal();
-  const {
-    dependenciesStore,
-    reset,
-    onResetModal,
-    setResetModal,
-  } = useDependency();
-  const panelStores = {
-    Page: pages,
-    Dependency: dependenciesStore,
-    Layout: layouts,
-    Menu: menu,
-    Router: routes,
-    Git: git,
-    OSS: oss,
-  };
-  const {
-    projectStore,
 
+  const {
     material,
     projects,
     project,
@@ -104,11 +104,13 @@ const Project = ({ history }) => {
     refreshProjects,
     addProject,
     deleteProject,
+    sortProjectPanel,
 
     onSwitchProject,
     onDeleteProject,
     onOpenProject,
     onCreateProject,
+    onChangeProjectPanel,
 
     onOpenProjectModal,
     setOpenProjectModal,
@@ -143,18 +145,6 @@ const Project = ({ history }) => {
     setResetModal(true);
   }
 
-  async function onPanelSettingChange(name, isAvailable) {
-    await projectStore.setPanel({ name, isAvailable });
-    const panelStore = panelStores[name];
-    if (isAvailable && panelStore) {
-      panelStore
-        .refresh()
-        .catch((error) => {
-          logger.error(error);
-        });
-    }
-  }
-
   async function onOpenPanelSetting() {
     setPanelSettingModal(true);
   }
@@ -167,7 +157,7 @@ const Project = ({ history }) => {
     setIsSorting(false);
 
     if (oldIndex !== newIndex) {
-      await projectStore.sortPanel({ oldIndex, newIndex });
+      await sortProjectPanel({ oldIndex, newIndex });
     }
   }
 
@@ -244,7 +234,7 @@ const Project = ({ history }) => {
               on={onPanelSettingModal}
               onCancel={() => setPanelSettingModal(false)}
               panels={project.panels.filter(({ name }) => panels[name])}
-              onChange={onPanelSettingChange}
+              onChange={onChangeProjectPanel}
             />
           </div>
         </div>
