@@ -41,5 +41,5 @@ export interface IRouterModule extends IBaseModule {
   /**
    * set routers
    */
-  bulkCreate(data: IRouter[], options?: IRouterOptions): Promise<void>
+  bulkCreate(params: {data: IRouter[], options?: IRouterOptions}): Promise<void>
 }

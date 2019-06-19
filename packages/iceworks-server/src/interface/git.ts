@@ -35,13 +35,13 @@ export interface IGitGetLog {
 
 export interface IGitModule extends IBaseModule {
   getStatus(): Promise<IGitGetStatus>;
-  init(remoteUrl: string): Promise<void>;
-  setRemote(remoteUrl: string): Promise<void>;
-  checkoutLocalBranch(name: string): Promise<void>;
+  init(params: {remoteUrl: string}): Promise<void>;
+  setRemote(params: {remoteUrl: string}): Promise<void>;
+  checkoutLocalBranch(params: {name: string}): Promise<void>;
   switchBranch(params: IGitSwitchBranchParams): Promise<void>;
   getBranches(): Promise<IGitBranchs>;
-  pull(branch: string): Promise<void>;
-  push(branch: string): Promise<void>;
+  pull(params: {branch: string}): Promise<void>;
+  push(params: {branch: string}): Promise<void>;
   addAndCommit(params: IGitAddAndCommitParams): Promise<void>;
   getLog(branches: string[]): Promise<IGitGetLog>;
 }

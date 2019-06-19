@@ -3,50 +3,16 @@ import { Application } from 'midway';
 export default (app: Application) => {
   const { controller } = app.io;
 
-  const { project, material, home } = controller;
+  const { material, home } = controller;
   const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
-    ['project.index.list', project.index.list],
-    ['project.index.create', project.index.create],
-    ['project.index.delete', project.index.delete],
-    ['project.index.add', project.index.add],
-    ['project.index.current', project.index.getCurrent],
-    ['project.index.setCurrent', project.index.setCurrent],
-    ['project.git.status', project.git.status],
-    ['project.git.init', project.git.init],
-    ['project.git.setRemote', project.git.setRemote],
-    ['project.git.checkoutLocalBranch', project.git.checkoutLocalBranch],
-    ['project.git.switchBranch', project.git.switchBranch],
-    ['project.git.branches', project.git.getBranches],
-    ['project.git.pull', project.git.pull],
-    ['project.git.push', project.git.push],
-    ['project.git.addAndCommit', project.git.addAndCommit],
-    ['project.git.getLog', project.git.getLog],
-    ['project.def.push', project.def.push],
-    ['project.page.list', project.page.list],
-    ['project.page.delete', project.page.delete],
-    ['project.page.create', project.page.create],
-    ['project.layout.list', project.layout.list],
-    ['project.dependency.list', project.dependency.list],
-    ['project.menu.list', project.menu.list],
-    ['project.menu.bulkCreate', project.menu.bulkCreate],
-    ['project.router.list', project.router.list],
-    ['project.router.bulkCreate', project.router.bulkCreate],
-    ['project.task.start', project.task.start],
-    ['project.task.stop', project.task.stop],
-    ['project.task.getConf', project.task.getConf],
-    ['project.task.setConf', project.task.setConf],
-    ['project.dependency.reset', project.dependency.reset],
-    ['project.dependency.bulkCreate', project.dependency.bulkCreate],
-    ['project.dependency.upgrade', project.dependency.upgrade],
-    ['project.configuration.getCLIConf', project.configuration.getCLIConf],
-    ['project.configuration.setCLIConf', project.configuration.setCLIConf],
-
-    ['project.oss.config', project.oss.getConfig],
-    ['project.oss.setConfig', project.oss.setConfig],
-    ['project.oss.getBuckets', project.oss.getBuckets],
-    ['project.oss.upload', project.oss.upload],
+    ['home.project.list', home.project.list],
+    ['home.project.create', home.project.create],
+    ['home.project.delete', home.project.delete],
+    ['home.project.add', home.project.add],
+    ['home.project.current', home.project.getCurrent],
+    ['home.project.setCurrent', home.project.setCurrent],
 
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
@@ -79,7 +45,6 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
-        logger.info(eventName, data);
         callback(null, data);
       } catch (error) {
         logger.error(error);

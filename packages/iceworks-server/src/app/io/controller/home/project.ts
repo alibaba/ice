@@ -4,33 +4,36 @@ export default (app) => {
   return class ProjectController extends Controller {
     async list() {
       const { projectManager } = app;
-      return await projectManager.getProjects();
+      const projects = await projectManager.getProjects();
+      return projects.map((project) => project.toJSON());
     }
 
     async create(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
 
-      return await projectManager.createProject(args);
+      await projectManager.createProject(args);
     }
 
     async delete(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
 
-      return await projectManager.deleteProject(args);
+      await projectManager.deleteProject(args);
     }
 
     async add(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
       const { projectPath } = args;
-      return await projectManager.addProject(projectPath);
+      await projectManager.addProject(projectPath);
     }
 
     async getCurrent() {
       const { projectManager } = app;
-      return await projectManager.getCurrent();
+      const project = await projectManager.getCurrent();
+      
+      return project.toJSON();
     }
 
     async setCurrent(ctx) {
@@ -38,7 +41,8 @@ export default (app) => {
       const { args } = ctx;
       const { path } = args;
 
-      return await projectManager.setCurrent(path);
+      const project = await projectManager.setCurrent(path);
+      return project.toJSON();
     }
   };
 };

@@ -5,7 +5,7 @@ export default {
     asideMenuConfig: [],
   },
   async refresh() {
-    const dataSource = await socket.emit('project.menu.list');
+    const dataSource = await socket.emit('project.menu.getAll');
     this.dataSource = {
       asideMenuConfig: dataSource.asideMenuConfig,
     };
