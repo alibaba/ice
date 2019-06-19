@@ -1,4 +1,4 @@
-import { IBaseModule } from './base';
+import { IBaseModule, IContext } from './base';
 
 /**
  * 项目的依赖信息
@@ -52,19 +52,27 @@ export interface IDependencyModule extends IBaseModule {
    *
    * @param dependency 依赖信息
    */
-  create(dependency: ICreateDependencyParam): Promise<void>;
+  create(params: {dependency: ICreateDependencyParam, isDev?: boolean; }, ctx: IContext): Promise<void>;
 
   /**
    * 添加多个依赖到项目
    *
    * @param dependencies 依赖列表
    */
-  bulkCreate(dependencies: ICreateDependencyParam[]): Promise<void>;
+  bulkCreate(params: {dependencies: ICreateDependencyParam[], isDev?: boolean; }, ctx: IContext): Promise<void>;
+
+  /**
+   * 重装依赖
+   *
+   * @param arg 参数
+   * @param ctx 上下文
+   */
+  reset(arg: void, ctx: IContext): Promise<void>;
 
   /**
    * 升级项目中的某个依赖
    *
    * @param denpendency 指定依赖
    */
-  upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void>;
+  upgrade(denpendency: { package: string; isDev?: boolean }, ctx: IContext): Promise<void>;
 }

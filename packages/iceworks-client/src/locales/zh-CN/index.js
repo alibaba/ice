@@ -26,10 +26,6 @@ export default {
   'iceworks.menu.setting': '设置',
   'iceworks.menu.setting.general': '通用设置',
   'iceworks.menu.setting.general.desc': '设置主题和语言',
-  'iceworks.menu.setting.panel': '面板设置',
-  'iceworks.menu.setting.panel.desc': '项目面板的展示',
-  'iceworks.menu.setting.advanced': '高级设置',
-  'iceworks.menu.setting.advanced.desc': '设置编辑器和 npm 源',
 
   // setting
   'iceworks.setting.title': '设置',
@@ -118,6 +114,7 @@ export default {
   'iceworks.project.panel.git.switch.select': '选择分支',
   'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
   'iceworks.project.panel.oss.title': 'OSS',
+  'iceworks.project.panel.oss.button.clear': '清空',
 
   // project menu
   'iceworks.project.panel.menu.create.title': '创建导航',

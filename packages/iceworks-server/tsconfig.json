@@ -8,16 +8,14 @@
     "emitDecoratorMetadata": true,
     "inlineSourceMap":true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
     "stripInternal": true,
     "pretty": true,
-    "declaration": true,
     "outDir": "dist",
     "lib": ["es2017", "dom"]
   },
   "exclude": [
-    "app/public",
-    "app/views",
+    "src/app/public",
+    "src/app/view",
     "dist",
     "node_modules",
     "test"

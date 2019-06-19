@@ -26,10 +26,6 @@ export default {
   'iceworks.menu.setting': 'Setting',
   'iceworks.menu.setting.general': 'General',
   'iceworks.menu.setting.general.desc': 'Set the theme and language',
-  'iceworks.menu.setting.panel': 'Panel',
-  'iceworks.menu.setting.panel.desc': 'Set the display of the project panel',
-  'iceworks.menu.setting.advanced': 'Advanced',
-  'iceworks.menu.setting.advanced.desc': 'Set editor and npm source',
 
   // setting
   'iceworks.setting.general.title': 'General Setting',
@@ -94,6 +90,7 @@ export default {
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',
   'iceworks.project.panel.oss.title': 'OSS',
+  'iceworks.project.panel.oss.button.clear': 'Clean',
 
   // project menu
   'iceworks.project.panel.menu.title': 'Menu',

@@ -5,12 +5,12 @@ export default {
     asideMenuConfig: [],
   },
   async refresh() {
-    const dataSource = await socket.emit('project.menu.list');
+    const dataSource = await socket.emit('adapter.menu.getAll');
     this.dataSource = {
       asideMenuConfig: dataSource.asideMenuConfig,
     };
   },
   async bulkCreate(args) {
-    await socket.emit('project.menu.bulkCreate', args);
+    await socket.emit('adapter.menu.bulkCreate', args);
   },
 };

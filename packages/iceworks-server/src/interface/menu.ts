@@ -54,5 +54,5 @@ export interface IMenuModule extends IBaseModule {
   /**
    * bulk create menus
    */
-  bulkCreate(data: IMenu[], options: IMenuOptions): Promise<void>
+  bulkCreate(params: {data: IMenu[], options: IMenuOptions}): Promise<void>;
 }

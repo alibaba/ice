@@ -14,7 +14,7 @@ const ProjectSubMenu = ({
       <div className={styles.wrapper}>
         <div className={styles.list}>
           {
-            projects.map(({ name, path, task }, index) => {
+            projects.map(({ name, path, task = {} }, index) => {
               return (
                 <div
                   key={index}

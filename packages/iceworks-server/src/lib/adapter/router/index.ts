@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
@@ -14,17 +13,18 @@ const PAGE_DIRECTORY = 'pages';
 
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
 
-export default class Router extends EventEmitter implements IRouterModule {
+export default class Router implements IRouterModule {
   public readonly project: IProject;
-  public readonly projectPath: string;
+  public readonly storage: any;
 
   public readonly path: string;
   public existLazy: boolean;
 
-  constructor(project: IProject) {
-    super();
-    this.projectPath = project.path;
-    this.path = path.join(this.projectPath, 'src', 'routerConfig.js');
+  constructor(params: {project: IProject; storage: any; }) {
+    const { project, storage } = params;
+    this.project = project;
+    this.storage = storage;
+    this.path = path.join(this.project.path, 'src', 'routerConfig.js');
   }
 
   private getRouterConfigAST(): any {
@@ -90,7 +90,8 @@ export default class Router extends EventEmitter implements IRouterModule {
   }
 
   // bulk create routers
-  async bulkCreate(data: IRouter[], options: IRouterOptions = {}): Promise<void>  {
+  async bulkCreate(params: {data: IRouter[], options: IRouterOptions}): Promise<void>  {
+    let {data, options = {}} = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
@@ -216,7 +217,7 @@ export default class Router extends EventEmitter implements IRouterModule {
     });
 
     /**
-     * remove import if there is no layout or component in the data 
+     * remove import if there is no layout or component in the data
      */
     importDeclarations.forEach((importItem) => {
       const { name, type, index } = importItem;
@@ -229,7 +230,7 @@ export default class Router extends EventEmitter implements IRouterModule {
         if (type === LAYOUT_DIRECTORY) {
           // layout only first layer
           findRouter = data.find(item => item.routes && item.component === name);
-        } else if(type === PAGE_DIRECTORY) {
+        } else if (type === PAGE_DIRECTORY) {
           findRouter = data.find(item => {
             let pageItem = null;
 
@@ -275,7 +276,7 @@ export default class Router extends EventEmitter implements IRouterModule {
     }
 
     // /**
-    //  * add import if there is no layout or component in the ImportDeclarations 
+    //  * add import if there is no layout or component in the ImportDeclarations
     //  */
     const newImports = [];
     data.forEach(({ component, routes }) => {
@@ -315,7 +316,7 @@ export default class Router extends EventEmitter implements IRouterModule {
   }
 
   /**
-   * exist layout or page in the ImportDeclarations 
+   * exist layout or page in the ImportDeclarations
    */
   private existImport(list, name, type) {
     return list.some((item) => {
