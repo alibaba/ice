@@ -18,7 +18,7 @@ module.exports = class WrapCodePlugin {
     const { addCodeBefore, addCodeAfter } = this;
     const entry = compiler.options.entry;
     const wrapFile = (compilation, fileName) => {
-      // preparedChunks 在 apply SingleEntryPlugin 后会向 preparedChunks push
+      // set compilation as param, you can get compilation of webpack
       const codeBefore = typeof addCodeBefore === 'function' ?
         addCodeBefore(fileName, entry, compilation) : addCodeBefore;
       const codeAfter = typeof addCodeAfter === 'function' ?
