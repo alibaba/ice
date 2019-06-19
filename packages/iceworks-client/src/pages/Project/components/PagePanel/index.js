@@ -22,6 +22,8 @@ const PagePanel = () => {
     toggleModal: toggleCreateModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
+  const menuStore = stores.useStore('menu');
+  const routerStore = stores.useStore('routes');
   const { dataSource } = pages;
 
   function onRefresh() {
@@ -52,9 +54,31 @@ const PagePanel = () => {
   }
 
   async function createPage(data) {
+    const { menuName, routePath, name, routeGroup } = data;
     logger.info('create page data:', data);
 
     await pages.create(data);
+
+    // create router and menu after success create page
+    await routerStore.bulkCreate({
+      data: [{
+        path: routePath,
+        component: name,
+      }],
+      options: {
+        parent: routeGroup,
+      },
+    });
+
+    // add menu if exist menuName
+    if (menuName) {
+      await menuStore.bulkCreate({
+        data: [{
+          name: menuName,
+          path: routePath,
+        }],
+      });
+    }
 
     toggleCreateModal();
 
@@ -65,6 +89,8 @@ const PagePanel = () => {
     });
 
     pages.refresh();
+    menuStore.refresh();
+    routerStore.refresh();
   }
 
   const pagePreDelete =

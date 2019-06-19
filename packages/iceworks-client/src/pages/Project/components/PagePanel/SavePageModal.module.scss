@@ -1,9 +1,14 @@
+
 .form {
-  width: 320px;
+  width: 400px;
 
   .input {
     height: 24px;
     line-height: 24px;
+  }
+
+  .select {
+    width: 100%;
   }
 
   .opts {
