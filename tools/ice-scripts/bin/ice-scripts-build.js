@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const program = require('commander');
 const getCliOptions = require('../lib/utils/getCliOptions');
-const checkUpdater = require('../lib/utils/checkUpdater');
 const Context = require('../lib/core/Context');
 const log = require('../lib/utils/log');
 
@@ -9,7 +8,6 @@ program
   .parse(process.argv);
 
 (async () => {
-  await checkUpdater();
   process.env.NODE_ENV = 'production';
   const cliOptions = getCliOptions(program);
   try {
