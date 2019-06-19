@@ -32,7 +32,7 @@ export default (app) => {
     async getCurrent() {
       const { projectManager } = app;
       const project = await projectManager.getCurrent();
-      
+
       return project.toJSON();
     }
 

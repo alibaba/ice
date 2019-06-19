@@ -32,7 +32,7 @@ export default (app) => {
       const currentItem = allMaterials.find((item, idx) => {
         if (item.source === url) {
           currentIdx = idx;
-          return true
+          return true;
         }
         return false;
       });
@@ -48,7 +48,7 @@ export default (app) => {
         description,
         homepage,
         logo,
-      }
+      };
       // if the material has existed, update metadata
       if (currentIdx > -1) {
         const newMaterials = updateArrayItem(
@@ -96,7 +96,7 @@ export default (app) => {
       const material = storage.get('material');
       const currentItem = {
         official: false, name, description, homepage, logo, type, source
-      }
+      };
       const newMaterials = material.filter((item) => item.name !== currentItem.name);
       newMaterials.unshift(currentItem)
       storage.set('material', newMaterials);
@@ -152,13 +152,13 @@ function generateCates(data: any[]) {
 }
 
 function formatMaterialsByCatrgory(data: any[]) {
-  const materials = { "all": [] };
+  const materials = { all: [] };
 
   if (isArray(data)) {
     data.forEach((item) => {
       const { categories } = item;
 
-      materials["all"].push(item);
+      materials['all'].push(item);
       if (isArray(categories) && categories.length) {
         categories.forEach((category) => {
           if (isArray(materials[category])) {
@@ -172,7 +172,7 @@ function formatMaterialsByCatrgory(data: any[]) {
   }
 
   return materials;
-};
+}
 
 // http request function
 const request = async (uri: string, options = {}) => {
@@ -199,4 +199,4 @@ const updateArrayItem = (array, item, itemIdx) => {
     item,
     ...array.slice(itemIdx + 1)
   ];
-}
+};

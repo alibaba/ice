@@ -42,12 +42,12 @@ export interface ITaskParam {
   /**
    * 命令名称
    */
-  command: string,
+  command: string;
 
   /**
    * 参数对象
    */
-  options: object
+  options: object;
 }
 
 export interface ITaskModule extends IBaseModule {

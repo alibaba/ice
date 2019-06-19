@@ -23,7 +23,7 @@ export default class Router implements IRouterModule {
   public readonly path: string;
   public existLazy: boolean;
 
-  constructor(params: {project: IProject; storage: any;}) {
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -220,7 +220,7 @@ export default class Router implements IRouterModule {
     });
 
     /**
-     * remove import if there is no layout or component in the data 
+     * remove import if there is no layout or component in the data
      */
     importDeclarations.forEach((importItem) => {
       const { name, type, index } = importItem;
@@ -233,7 +233,7 @@ export default class Router implements IRouterModule {
         if (type === LAYOUT_DIRECTORY) {
           // layout only first layer
           findRouter = data.find(item => item.routes && item.component === name);
-        } else if(type === PAGE_DIRECTORY) {
+        } else if (type === PAGE_DIRECTORY) {
           findRouter = data.find(item => {
             let pageItem = null;
 
@@ -279,7 +279,7 @@ export default class Router implements IRouterModule {
     }
 
     // /**
-    //  * add import if there is no layout or component in the ImportDeclarations 
+    //  * add import if there is no layout or component in the ImportDeclarations
     //  */
     const newImports = [];
     data.forEach(({ component, routes }) => {
@@ -319,7 +319,7 @@ export default class Router implements IRouterModule {
   }
 
   /**
-   * exist layout or page in the ImportDeclarations 
+   * exist layout or page in the ImportDeclarations
    */
   private existImport(list, name, type) {
     return list.some((item) => {

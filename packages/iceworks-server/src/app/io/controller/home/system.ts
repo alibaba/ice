@@ -22,8 +22,8 @@ export default (app) => {
       const editor = storage.get('editor');
       logger.info('open editor:', path, editor);
       launchEditor(path, editor, (fileName, errorMsg) => {
-        socket.emit('home.system.open.editor.data', errorMsg)
-      })
+        socket.emit('home.system.open.editor.data', errorMsg);
+      });
     }
   };
 };
