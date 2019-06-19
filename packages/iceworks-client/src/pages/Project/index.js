@@ -31,7 +31,7 @@ const SortableDragHandle = SortableHandle(() => (
   <span className={styles.sortableDrag} />
 ));
 
-const SortableItem = SortableElement(({ element, isSorting }) => {
+const SortableItem = SortableElement(({ Panel, isSorting }) => {
   return (
     <div
       className={cx({
@@ -40,22 +40,23 @@ const SortableItem = SortableElement(({ element, isSorting }) => {
       })}
     >
       <SortableDragHandle />
-      { element }
+      <Panel />
     </div>
   );
 });
 
-const SortableWrap = SortableContainer(({ items, isSorting }) => {
+const SortableWrap = SortableContainer(({ projectPanels, isSorting }) => {
   return (
     <div className={styles.sortableWrap}>
-      {items.map((element, index) => {
-        return element ? (
-          <SortableItem
-            key={index}
-            index={index}
-            element={element}
-            isSorting={isSorting}
-          />
+      {projectPanels.map(({ name, isAvailable }, index) => {
+        const Panel = panels[name];
+        return Panel && isAvailable ? (
+          <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
+            <SortableItem
+              Panel={Panel}
+              isSorting={isSorting}
+            />
+          </ErrorBoundary>
         ) : null;
       })}
     </div>
@@ -64,7 +65,15 @@ const SortableWrap = SortableContainer(({ items, isSorting }) => {
 
 const Project = ({ history }) => {
   const { location } = history;
-  const [pages, layouts, git, oss, menu, routes] = projectStores.useStores([
+  const {
+    dependenciesStore,
+    reset,
+    onResetModal,
+    setResetModal,
+  } = useDependency();
+  const [
+    pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore,
+  ] = projectStores.useStores([
     'pages',
     'layouts',
     'git',
@@ -72,30 +81,22 @@ const Project = ({ history }) => {
     'menu',
     'routes',
   ]);
+  const panelStores = {
+    Page: pagesStore,
+    Dependency: dependenciesStore,
+    Layout: layoutsStore,
+    Menu: menuStore,
+    Router: routesStore,
+    Git: gitStore,
+    OSS: ossStore,
+  };
   const [isSorting, setIsSorting] = useState(false);
-
   const {
     on: onPanelSettingModal,
     setModal: setPanelSettingModal,
   } = useModal();
-  const {
-    dependenciesStore,
-    reset,
-    onResetModal,
-    setResetModal,
-  } = useDependency();
-  const panelStores = {
-    Page: pages,
-    Dependency: dependenciesStore,
-    Layout: layouts,
-    Menu: menu,
-    Router: routes,
-    Git: git,
-    OSS: oss,
-  };
-  const {
-    projectStore,
 
+  const {
     material,
     projects,
     project,
@@ -104,11 +105,13 @@ const Project = ({ history }) => {
     refreshProjects,
     addProject,
     deleteProject,
+    sortProjectPanel,
 
     onSwitchProject,
     onDeleteProject,
     onOpenProject,
     onCreateProject,
+    onChangeProjectPanel,
 
     onOpenProjectModal,
     setOpenProjectModal,
@@ -143,18 +146,6 @@ const Project = ({ history }) => {
     setResetModal(true);
   }
 
-  async function onPanelSettingChange(name, isAvailable) {
-    await projectStore.setPanel({ name, isAvailable });
-    const panelStore = panelStores[name];
-    if (isAvailable && panelStore) {
-      panelStore
-        .refresh()
-        .catch((error) => {
-          logger.error(error);
-        });
-    }
-  }
-
   async function onOpenPanelSetting() {
     setPanelSettingModal(true);
   }
@@ -167,7 +158,7 @@ const Project = ({ history }) => {
     setIsSorting(false);
 
     if (oldIndex !== newIndex) {
-      await projectStore.sortPanel({ oldIndex, newIndex });
+      await sortProjectPanel({ oldIndex, newIndex });
     }
   }
 
@@ -225,14 +216,7 @@ const Project = ({ history }) => {
             onSortStart={onSortStart}
             onSortEnd={onSortEnd}
             helperClass={styles.sortableDraging}
-            items={project.panels.map(({ name, isAvailable }, index) => {
-              const Panel = panels[name];
-              return Panel && isAvailable ? (
-                <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
-                  <Panel />
-                </ErrorBoundary>
-              ) : null;
-            })}
+            projectPanels={project.panels}
             isSorting={isSorting}
           />
           <div className={styles.opts}>
@@ -244,7 +228,7 @@ const Project = ({ history }) => {
               on={onPanelSettingModal}
               onCancel={() => setPanelSettingModal(false)}
               panels={project.panels.filter(({ name }) => panels[name])}
-              onChange={onPanelSettingChange}
+              onChange={onChangeProjectPanel}
             />
           </div>
         </div>
