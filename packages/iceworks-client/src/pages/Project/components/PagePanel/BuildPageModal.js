@@ -16,7 +16,6 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
-import pageStores from '../../stores';
 import SavePageModal from './SavePageModal';
 import styles from './BuildPageModal.module.scss';
 
