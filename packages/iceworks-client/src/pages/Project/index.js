@@ -25,6 +25,7 @@ import Todo from './components/TodoPanel';
 import Git from './components/GitPanel';
 import OSS from './components/OSSPanel';
 import DEF from './components/DEFPanel';
+import StartGuide from './components/StartGuide';
 
 const panels = {
   Page,
@@ -160,6 +161,7 @@ const Project = ({ history }) => {
       </Modal>
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
+          <StartGuide />
           {project.panels.map((name, index) => {
             const Panel = panels[name];
             return Panel ? (
