@@ -94,6 +94,7 @@ export default {
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',
   'iceworks.project.panel.oss.title': 'OSS',
+  'iceworks.project.panel.oss.button.clear': 'Clean',
 
   // project menu
   'iceworks.project.panel.menu.title': 'Menu',
