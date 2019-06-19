@@ -13,7 +13,7 @@ export default (app: Application) => {
     ['home.project.add', home.project.add],
     ['home.project.current', home.project.getCurrent],
     ['home.project.setCurrent', home.project.setCurrent],
-    
+
     ['material.index.resource', material.index.resource],
     ['material.index.getOne', material.index.getOne],
     ['material.index.recommendScaffolds', material.index.getRecommendScaffolds],
