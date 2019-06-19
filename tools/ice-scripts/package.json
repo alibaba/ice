@@ -19,7 +19,7 @@
   "author": "ICE Team",
   "license": "MIT",
   "engines": {
-    "node": ">=8.0.0",
+    "node": ">=8.6.0",
     "npm": ">=3.0.0"
   },
   "dependencies": {
@@ -80,6 +80,7 @@
     "postcss-safe-parser": "^4.0.1",
     "react-dev-utils": "^5.0.2",
     "sass-loader": "^7.1.0",
+    "semver": "^6.1.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.3333",
     "uglifyjs-webpack-plugin": "^1.3.0",
