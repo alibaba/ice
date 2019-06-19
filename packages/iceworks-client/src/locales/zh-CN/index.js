@@ -148,13 +148,19 @@ export default {
   'iceworks.task.title': '工程管理',
   'iceworks.task.dev.title': '启动服务',
   'iceworks.task.dev.desc': '编译和热更新(用于开发环境)',
+  'iceworks.task.dev.start.msg': '运行调试服务',
+  'iceworks.task.dev.stop.msg': '停止调试服务',
   'iceworks.task.start': '运行',
   'iceworks.task.stop': '停止',
   'iceworks.task.setting': '设置',
   'iceworks.task.build.title': '构建项目',
   'iceworks.task.build.desc': '编译并压缩(用于生产环境)',
+  'iceworks.task.build.start.msg': '运行构建项目服务',
+  'iceworks.task.build.stop.msg': '构建项目完成',
   'iceworks.task.lint.title': '检查语法',
   'iceworks.task.lint.desc': '检查代码规范并进行修复',
+  'iceworks.task.lint.start.msg': '运行语法检查',
+  'iceworks.task.lint.stop.msg': '语法检查完成',
 
   // material
   'iceworks.material.title': '物料管理',
@@ -179,7 +185,7 @@ export default {
 
   // global bar
   'iceowrks.global.bar.project': '当前项目名称',
-  'iceowrks.global.bar.terminal': '终端',
+  'iceowrks.global.bar.log': '日志',
   'iceowrks.global.bar.folder': '文件夹',
   'iceowrks.global.bar.editor': '编辑器',
   'iceowrks.global.bar.theme': '主题',
