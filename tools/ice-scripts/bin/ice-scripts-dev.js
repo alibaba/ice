@@ -1,7 +1,7 @@
 const { fork } = require('child_process');
 
 function restartProcess(scriptPath) {
-  const child = fork(scriptPath);
+  const child = fork(scriptPath, process.argv.slice(2));
   child.on('message', (data) => {
     if (data && data.type === 'RESTART_DEV') {
       child.kill();
