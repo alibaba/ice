@@ -29,8 +29,7 @@ const MenuPanel = () => {
   });
   const [deleteMenu, setDeleteMenu] = useState({});
   const menuStore = stores.useStore('menu');
-  const { dataSource } = menuStore;
-  const { asideMenuConfig, headerMenuConfig } = dataSource;
+  const { asideMenuConfig, headerMenuConfig } = menuStore;
 
   function onRefresh() {
     menuStore.refresh();
