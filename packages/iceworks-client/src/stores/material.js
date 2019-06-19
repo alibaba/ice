@@ -43,17 +43,17 @@ export default {
     this.dataSource.currentSource = url;
   },
 
-  async getCurrentMaterial(url) {
+  async getCurrentMaterial() {
     const firstResource = this.dataSource.resource[0] || {};
-    const sourceUrl = url || firstResource.source;
+    const sourceUrl = this.dataSource.currentSource || firstResource.source;
     const data = await socket.emit('material.index.getOne', { url: sourceUrl });
     logger.info('Material Data:', data);
 
     this.dataSource.currentMaterial = data;
   },
 
-  async addMaterial(url) {
-    const data = await socket.emit('material.index.add', { url });
+  async addMaterial(url, name) {
+    const data = await socket.emit('material.index.add', { url, name });
     logger.info('new resource Data:', data);
     this.dataSource.resource = formatResource(data.resource);
     this.dataSource.currentSource = url;

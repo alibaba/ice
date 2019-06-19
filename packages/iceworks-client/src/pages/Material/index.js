@@ -4,7 +4,7 @@ import { Tab } from '@alifd/next';
 import stores from '@stores';
 import Card from '@components/Card';
 import qs from 'querystringify';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
 import useMaterial from '@hooks/useMaterial';
@@ -19,7 +19,7 @@ import InstallModal from './components/InstallModal';
 import AddMaterialModal from './components/AddMaterialModal';
 import styles from './index.module.scss';
 
-const Material = ({ history }) => {
+const Material = ({ history, intl }) => {
   const [material] = stores.useStores(['material']);
   const { location } = history;
   const {
@@ -48,7 +48,7 @@ const Material = ({ history }) => {
 
   async function setCurrent(source) {
     await material.setCurrentSource(source);
-    await material.getCurrentMaterial(source);
+    await material.getCurrentMaterial();
   }
 
   async function fetchData() {
@@ -103,10 +103,11 @@ const Material = ({ history }) => {
     }
   }
 
-  async function handleAddMaterial({ url }, error) {
+  async function handleAddMaterial({ url, name }, error) {
     if (error && error.url) return;
+    if (error && error.name) return;
 
-    await addMaterial(url);
+    await addMaterial(url, name);
     await handleTabChange(); // auto focus scaffolds tab
   }
 
@@ -150,6 +151,8 @@ const Material = ({ history }) => {
     },
   ];
 
+  const cardTitle = dataSource.currentMaterial.name || intl.formatMessage({ id: 'iceworks.material.title' });
+
   return (
     <div className={styles.materialPage}>
       <CreateProjectModal
@@ -165,9 +168,8 @@ const Material = ({ history }) => {
         onAddMaterial={() => setMaterialModal(true)}
         onDelete={handleDeleteMaterial}
       />
-
       <div className={styles.main}>
-        <Card title={<FormattedMessage id="iceworks.material.title" />} contentHeight="100%" className="scollContainer">
+        <Card title={cardTitle} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
           <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>
@@ -195,6 +197,7 @@ const Material = ({ history }) => {
 
 Material.propTypes = {
   history: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default Material;
+export default injectIntl(Material);

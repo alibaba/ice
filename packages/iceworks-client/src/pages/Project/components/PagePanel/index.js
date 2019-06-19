@@ -22,8 +22,8 @@ const PagePanel = () => {
     toggleModal: toggleCreateModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
-  const menuStore = stores.useStore('menus');
-  const routerStore = stores.useStore('routers');
+  const menuStore = stores.useStore('menu');
+  const routerStore = stores.useStore('routes');
   const { dataSource } = pages;
 
   function onRefresh() {

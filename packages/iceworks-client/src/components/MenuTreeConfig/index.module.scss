@@ -13,6 +13,15 @@
  * change Next Tree style
  */
 .navbarConfigPanelTree {
+  .navbarConfigTreeSetIcon {
+    display: block;
+    color: $brand-color-primary;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+  }
+
   :global {
     .next-tree-node-handle {
       background-color: white;
@@ -69,20 +78,6 @@
     /* 为了增加右边功能 */
     .next-tree-node-inner {
       position: relative;
-
-      .navbar-config-tree-node-click {
-        .navbar-config-tree-set-icon {
-          display: block;
-        }
-      }
-
-      .navbar-config-tree-set-icon {
-        color: $brand-color-primary;
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        cursor: pointer;
-      }
 
       &.next-selected .next-tree-node-label-wrapper .next-tree-node-label,
       &:focus .next-tree-node-label-wrapper .next-tree-node-label,

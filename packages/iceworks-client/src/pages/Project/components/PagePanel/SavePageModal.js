@@ -20,10 +20,8 @@ const formItemLayout = {
 
 const SavePageModal = ({ on, onCancel, onOk }) => {
   const progress = stores.useStore('progress');
-  // const layoutStore = pageStores.useStore('layouts');
-  const routerStore = pageStores.useStore('routers');
-  // const { dataSource: layouts } = layoutStore;
-  const { dataSource: routers } = routerStore;
+  const routerStore = pageStores.useStore('routes');
+  const { dataSource: routes } = routerStore;
   const pathReg = /^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
 
   async function onSave(values, errors) {
@@ -32,7 +30,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
     }
   }
 
-  const routerGroups = routers.filter(item => item.routes).map(item => {
+  const routerGroups = routes.filter(item => item.routes).map(item => {
     return {
       label: `${item.path}(${item.component})`,
       value: item.path,

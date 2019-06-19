@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { PLACEHOLDER_IMG } from '@src/appConfig';
 import styles from './index.module.scss';
 
 const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
@@ -15,18 +16,27 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
         {dataSource.isNewlyCreated ? (
           <div className={styles.newly}>NEW</div>
         ) : null}
-        {dataSource.screenshots.map((url, key) => {
-          const screenshotStyle = generateStyle(dataSource.screenshots, key);
-          return (
+        {dataSource.screenshots && dataSource.screenshots.length
+          ? dataSource.screenshots.map((url, key) => {
+              const screenshotStyle = generateStyle(dataSource.screenshots, key);
+              return (
+                <img
+                  alt={dataSource.title}
+                  src={url || PLACEHOLDER_IMG}
+                  style={screenshotStyle}
+                  className={styles.screenshotImg}
+                  key={key}
+                />
+              );
+            })
+          : (
             <img
               alt={dataSource.title}
-              src={url}
-              style={{ transform: 'scale(0.6)', ...screenshotStyle }}
+              src={PLACEHOLDER_IMG}
               className={styles.screenshotImg}
-              key={key}
             />
-          );
-        })}
+          )
+        }
       </div>
 
       <div className={styles.info}>

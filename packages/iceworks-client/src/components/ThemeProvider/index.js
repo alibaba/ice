@@ -1,9 +1,27 @@
-import createTheme from './createTheme';
+import React, { createContext } from 'react';
+import PropTypes from 'prop-types';
 
-const themes = { blue: '@alifd/theme-2', purple: '@alifd/theme-3' };
-const defaultTheme = themes.blue;
+export const ThemeContext = createContext();
 
-export const { ThemeProvider, withTheme } = createTheme({
-  defaultTheme,
-  themes,
-});
+const ThemeProvider = ({ theme, setTheme, children }) => {
+  return (
+    <ThemeContext.Provider
+      value={{ theme, setTheme }}
+    >
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+ThemeProvider.defaultProps = {
+  theme: '',
+  setTheme: () => {},
+};
+
+ThemeProvider.propTypes = {
+  theme: PropTypes.string,
+  setTheme: PropTypes.func,
+  children: PropTypes.element.isRequired,
+};
+
+export default ThemeProvider;
