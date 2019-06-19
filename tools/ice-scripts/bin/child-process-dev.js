@@ -13,6 +13,7 @@ program
   .option('-p, --port <port>', '服务端口号')
   .option('-h, --host <host>', '服务主机名', '0.0.0.0')
   .option('--https', '开启 https ')
+  .option('--config <configfile>', '指定配置文件')
   .option('--analyzer', '开启构建分析')
   .option('--analyzer-port', '设置分析端口号')
   .option('--disabled-reload', '关闭 hot reload')

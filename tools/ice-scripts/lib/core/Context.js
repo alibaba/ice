@@ -16,7 +16,7 @@ module.exports = class Context {
     this.rootDir = rootDir;
     this.pkg = getPkgData(this.rootDir);
     // get user config form ice.config.js
-    this.userConfig = this.getUserConfig(this.rootDir);
+    this.userConfig = this.getUserConfig();
     this.plugins = this.getPlugins();
     // init chainWebpackFns and hooks
     this.chainWebpackFns = [];
@@ -27,14 +27,19 @@ module.exports = class Context {
   }
 
   getUserConfig() {
-    const iceConfigPath = path.resolve(this.rootDir, 'ice.config.js');
+    let iceConfigPath;
+    if (this.commandArgs.config) {
+      iceConfigPath = path.resolve(this.commandArgs.config);
+    } else {
+      iceConfigPath = path.resolve(this.rootDir, 'ice.config.js');
+    }
     let userConfig = {};
     if (fse.existsSync(iceConfigPath)) {
       try {
         // eslint-disable-next-line import/no-dynamic-require
         userConfig = require(iceConfigPath);
       } catch (err) {
-        log.error('Fail to load ice.config.js, use default config instead');
+        log.error(`Fail to load ${iceConfigPath}, use default config instead`);
         console.error(err);
         process.exit(1);
       }

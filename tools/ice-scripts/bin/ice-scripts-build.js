@@ -7,6 +7,7 @@ const Context = require('../lib/core/Context');
 const log = require('../lib/utils/log');
 
 program
+  .option('--config <configfile>', '指定配置文件')
   .parse(process.argv);
 
 validationSassAvailable();
