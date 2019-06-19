@@ -1,4 +1,5 @@
 const path = require('path');
+const formatWinPath = require('../utils/formatWinPath');
 
 module.exports = ({ chainWebpack, context }, hash) => {
   const { command } = context;
@@ -12,9 +13,9 @@ module.exports = ({ chainWebpack, context }, hash) => {
       pathArray.pop(); // pop filename
       pathArray = pathArray.filter((v) => v);
       const outputPath = pathArray.length ? pathArray.join('/') : '';
-      config.output.filename(path.join(outputPath, `[name].[${hashStr}].js`));
+      config.output.filename(formatWinPath(path.join(outputPath, `[name].[${hashStr}].js`)));
       config.plugin('MiniCssExtractPlugin').tap((args) => [Object.assign(...args, {
-        filename: path.join(outputPath, `[name].[${hashStr}].css`),
+        filename: formatWinPath(path.join(outputPath, `[name].[${hashStr}].css`)),
       })]);
     });
   }
