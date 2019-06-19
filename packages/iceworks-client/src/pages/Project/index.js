@@ -31,7 +31,7 @@ const SortableDragHandle = SortableHandle(() => (
   <span className={styles.sortableDrag} />
 ));
 
-const SortableItem = SortableElement(({ element, isSorting }) => {
+const SortableItem = SortableElement(({ Panel, isSorting }) => {
   return (
     <div
       className={cx({
@@ -40,22 +40,23 @@ const SortableItem = SortableElement(({ element, isSorting }) => {
       })}
     >
       <SortableDragHandle />
-      { element }
+      <Panel />
     </div>
   );
 });
 
-const SortableWrap = SortableContainer(({ items, isSorting }) => {
+const SortableWrap = SortableContainer(({ projectPanels, isSorting }) => {
   return (
     <div className={styles.sortableWrap}>
-      {items.map((element, index) => {
-        return element ? (
-          <SortableItem
-            key={index}
-            index={index}
-            element={element}
-            isSorting={isSorting}
-          />
+      {projectPanels.map(({ name, isAvailable }, index) => {
+        const Panel = panels[name];
+        return Panel && isAvailable ? (
+          <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
+            <SortableItem
+              Panel={Panel}
+              isSorting={isSorting}
+            />
+          </ErrorBoundary>
         ) : null;
       })}
     </div>
@@ -215,14 +216,7 @@ const Project = ({ history }) => {
             onSortStart={onSortStart}
             onSortEnd={onSortEnd}
             helperClass={styles.sortableDraging}
-            items={project.panels.map(({ name, isAvailable }, index) => {
-              const Panel = panels[name];
-              return Panel && isAvailable ? (
-                <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
-                  <Panel />
-                </ErrorBoundary>
-              ) : null;
-            })}
+            projectPanels={project.panels}
             isSorting={isSorting}
           />
           <div className={styles.opts}>
