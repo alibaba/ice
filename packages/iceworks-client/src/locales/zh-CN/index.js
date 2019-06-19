@@ -162,7 +162,6 @@ export default {
   'iceworks.material.block': '区块',
   'iceworks.material.component': '组件',
   'iceworks.material.add': '添加物料',
-  'iceworks.material.all': '全部',
   'iceworks.material.preview': '效果预览',
   'iceworks.material.source': '查看源码',
   'iceworks.material.download': '使用该模版',

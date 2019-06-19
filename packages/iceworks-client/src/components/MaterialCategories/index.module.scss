@@ -16,8 +16,8 @@
     color: $text-color-inverse;
     &.active {
       background: $brand-color-primary;
-      a,
-      a:hover {
+      span,
+      span:hover {
         color: $text-color-inverse;
         transition: all 0.3s ease;
       }
@@ -29,13 +29,15 @@
       color: $text-color-inverse;
       background: $brand-color-primary;
     }
-    a {
+    span {
       font-size: 13px;
       height: 24px;
       line-height: 24px;
       padding: 0 18px;
       color: $text-color-secondary;
       display: block;
+      cursor: pointer;
+      
       &:hover {
         color: $text-color-inverse;
         text-decoration: none;
