@@ -6,6 +6,7 @@
   ],
   "rules": {
     "no-return-await": false,
-    "no-unused-expression": [true, "allow-fast-null-checks"]
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "array-type": [true, "array-simple"]
   }
 }

@@ -1,4 +1,4 @@
-import { IBaseModule } from './base';
+import { IBaseModule, IContext } from './base';
 
 export interface IDEFPushParams {
   target: string;
@@ -9,5 +9,5 @@ export interface IDEFPushParams {
 }
 
 export interface IDEFModule extends IBaseModule {
-  push(params: IDEFPushParams): Promise<void>;
+  push(params: IDEFPushParams, ctx: IContext): Promise<void>;
 }

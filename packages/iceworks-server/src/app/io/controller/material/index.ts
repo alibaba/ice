@@ -92,7 +92,7 @@ export default (app) => {
       };
       const newMaterials = material.filter((item) => item.name !== currentItem.name);
       newMaterials.unshift(currentItem);
-      storage.add('material', newMaterials);
+      storage.set('material', newMaterials);
 
       const materialData = formatMaterialData(data);
 

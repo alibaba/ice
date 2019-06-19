@@ -1,0 +1,63 @@
+@import '../../../../variables.scss';
+
+.confirmContent {
+  line-height: 24px;
+  width: 320px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  h3 {
+    flex: 1;
+  }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      margin-right: 12px;
+      color: $brand-color-primary;
+      cursor: pointer;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.reseting {
+        color: $text-color-normal;
+      }
+    }
+  }
+}
+
+.main {
+  .item {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $border-color-base;
+    height: 32px;
+    align-items: center;
+
+    strong {
+      font-size: $font-size-base;
+      height: $font-size-base;
+      line-height: $font-size-base;
+      font-weight: 400;
+    }
+
+    .itemCol {
+      flex: 1;
+    }
+
+    .icon {
+      color: $brand-color-primary;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+  }
+}

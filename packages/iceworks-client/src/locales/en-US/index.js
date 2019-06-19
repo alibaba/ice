@@ -94,6 +94,35 @@ export default {
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',
   'iceworks.project.panel.oss.title': 'OSS',
+  'iceworks.project.panel.oss.button.clear': 'Clean',
+
+  // project menu
+  'iceworks.project.panel.menu.title': 'Menu',
+  'iceworks.project.panel.menu.create.title': 'Create Menu',
+  'iceworks.project.panel.menu.delete.title': 'Delete Menu',
+  'iceworks.project.panel.menu.delete.content': 'Are you sure delete menu \'{name}\' ？',
+  'iceworks.project.panel.menu.delete.subcontent': 'Menu under the menu group, please be careful to delete!!!',
+  'iceworks.project.panel.menu.edit.title': 'Edit Menu',
+  'iceworks.project.panel.menu.form.type': 'type',
+  'iceworks.project.panel.menu.form.type.placeholder': 'please select type',
+  'iceworks.project.panel.menu.form.name': 'name',
+  'iceworks.project.panel.menu.form.name.placeholder': 'please enter name',
+  'iceworks.project.panel.menu.form.icon': 'icon',
+  'iceworks.project.panel.menu.form.icon.placeholder': 'please enter icon',
+  'iceworks.project.panel.menu.form.path': 'path',
+  'iceworks.project.panel.menu.form.path.placeholder': 'please enter path',
+  'iceworks.project.panel.menu.form.newwindow': 'open new window',
+
+  // project router
+  'iceworks.project.panel.router.title': 'router',
+  'iceworks.project.panel.router.create.title': 'Create Router',
+  'iceworks.project.panel.router.delete.title': 'Delete Router',
+  'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',
+  'iceworks.project.panel.router.edit.title': 'Edit Router',
+  'iceworks.project.panel.router.form.path': 'path',
+  'iceworks.project.panel.router.form.component': 'component',
+  'iceworks.project.panel.router.form.exact': 'exact',
+  'iceworks.project.panel.router.form.layout': 'layout',
 
   // task
   'iceworks.task.title': 'Task',

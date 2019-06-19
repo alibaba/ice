@@ -26,7 +26,7 @@ const OSSPanel = ({ intl }) => {
 
   async function refeshBucket() {
     try {
-      const newBuckets = await socket.emit('project.oss.getBuckets');
+      const newBuckets = await socket.emit('adapter.oss.getBuckets');
       setBuckets(newBuckets.map(({ name }) => {
         return {
           label: name,
@@ -48,7 +48,7 @@ const OSSPanel = ({ intl }) => {
 
   async function onSubmit() {
     try {
-      const result = await socket.emit('project.oss.upload');
+      const result = await socket.emit('adapter.oss.upload');
       setResults(result);
     } catch (error) {
       Message.show({
@@ -175,7 +175,7 @@ const OSSPanel = ({ intl }) => {
         </Form>
         <Modal
           title="上传结果"
-          visible={results.length}
+          visible={!!results.length}
           onCancel={onCancel}
           footer={false}
         >

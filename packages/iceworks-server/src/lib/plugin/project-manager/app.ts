@@ -12,7 +12,7 @@ import * as pathExists from 'path-exists';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject, IMaterialScaffold } from '../../../interface';
+import { IProject, IMaterialScaffold, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -42,6 +42,8 @@ class Project implements IProject {
 
   public panels: string[] = [];
 
+  public adapter: {[name: string]: IBaseModule} = {};
+
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
@@ -65,9 +67,7 @@ class Project implements IProject {
 
     // Merge process.env、npmEnv and custom environment variables
     const env = Object.assign({}, process.env, npmEnv, {
-      // eslint-disable-next-line
       npm_config_registry: registry,
-      // eslint-disable-next-line
       yarn_registry: registry,
       CLICOLOR: 1,
       FORCE_COLOR: 1,
@@ -91,19 +91,23 @@ class Project implements IProject {
   }
 
   private loadAdapter() {
-    const adapterModuleKeys = Object.keys(adapter);
     for (const [key, Module] of Object.entries(adapter)) {
       this.panels.push(key);
 
       const project: IProject = clone(this);
-      for (const moduleKey of adapterModuleKeys) {
-        if (project[moduleKey]) {
-          delete project[moduleKey];
-        }
-      }
+      delete project.adapter;
 
-      this[camelCase(key)] = new Module(project);
+      this.adapter[camelCase(key)] = new Module({ project, storage });
     }
+  }
+
+  public toJSON() {
+    const { name, path, panels } = this;
+    return {
+      name,
+      path,
+      panels,
+    };
   }
 }
 
