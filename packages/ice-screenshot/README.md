@@ -24,7 +24,7 @@ $ npm run build && screenshot -l
 $ npm run build && screenshot -l -s \#mountNode
 ```
 
-Other usage:
+Others:
 
 ```bash
 # take a screenshot of taobao.com
