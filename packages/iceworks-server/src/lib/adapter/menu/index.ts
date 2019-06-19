@@ -53,10 +53,11 @@ export default class Menu implements IMenuModule {
     };
   }
 
-  async bulkCreate(
-    data: IMenu[],
-    options: IMenuOptions = {}
-  ): Promise<void> {
+  async bulkCreate(params: {data: IMenu[], options: IMenuOptions}): Promise<void> {
+    let {
+      data = [],
+      options = {}
+    } = params;
     const { replacement = false } = options;
     const { asideMenuConfig } = await this.getAll();
     const menuFileAST = this.getFileAST();

@@ -90,7 +90,8 @@ export default class Router implements IRouterModule {
   }
 
   // bulk create routers
-  async bulkCreate(data: IRouter[], options: IRouterOptions = {}): Promise<void>  {
+  async bulkCreate(params: {data: IRouter[], options: IRouterOptions}): Promise<void>  {
+    let {data, options = {}} = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
