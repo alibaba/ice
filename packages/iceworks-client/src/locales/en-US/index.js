@@ -64,7 +64,13 @@ export default {
   'iceworks.project.panel.layout.title': 'Layout',
   'iceworks.project.panel.layout.none': 'No layout',
 
+  // project todo
   'iceworks.project.panel.todo.title': 'TODO',
+  'iceworks.project.panel.todo.none': 'Nothing to deal with',
+  'iceworks.project.panel.todo.refresh': 'Refresh',
+  'iceworks.project.panel.todo.line': 'Line {line}',
+
+  // project def
   'iceworks.project.panel.def.title': 'DEF',
 
   // project git

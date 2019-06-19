@@ -84,7 +84,13 @@ export default {
   'iceworks.project.panel.layout.title': '布局列表',
   'iceworks.project.panel.layout.none': '暂无布局',
 
-  'iceworks.project.panel.todo.title': 'TODO',
+  // project todo
+  'iceworks.project.panel.todo.title': '待办事项',
+  'iceworks.project.panel.todo.none': '没有事项需要处理',
+  'iceworks.project.panel.todo.refresh': '刷新',
+  'iceworks.project.panel.todo.line': '第{line}行',
+
+  // project def
   'iceworks.project.panel.def.title': 'DEF 发布',
 
   // project git

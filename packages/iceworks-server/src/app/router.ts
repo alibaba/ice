@@ -38,6 +38,7 @@ export default (app: Application) => {
     ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.getCLIConf', project.configuration.getCLIConf],
     ['project.configuration.setCLIConf', project.configuration.setCLIConf],
+    ['project.todo.list', project.todo.list],
 
     ['project.oss.config', project.oss.getConfig],
     ['project.oss.setConfig', project.oss.setConfig],
@@ -75,7 +76,6 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
-        logger.info(eventName, data);
         callback(null, data);
       } catch (error) {
         logger.error(error);

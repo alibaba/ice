@@ -8,7 +8,6 @@
     "emitDecoratorMetadata": true,
     "inlineSourceMap":true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
     "stripInternal": true,
     "pretty": true,
     "declaration": true,

@@ -6,5 +6,15 @@ import Layout from './layout';
 import Git from './git';
 import DEF from './def';
 import OSS from './oss';
+import Todo from './todo';
 
-export { Page, Dependency, Configuration, Task, Layout, Git, DEF, OSS };
+export {
+  Page,
+  Dependency,
+  Configuration,
+  Task, Layout,
+  Git,
+  DEF,
+  OSS,
+  Todo
+};
