@@ -62,7 +62,6 @@ const Material = ({ history, intl }) => {
   }
 
   async function handleTabChange(key = 'scaffolds') {
-    history.push('/material');
     setType(key);
     handleCategoryChange();
 
