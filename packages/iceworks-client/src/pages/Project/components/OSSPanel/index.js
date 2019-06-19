@@ -175,7 +175,7 @@ const OSSPanel = ({ intl }) => {
         </Form>
         <Modal
           title="上传结果"
-          visible={results.length}
+          visible={!!results.length}
           onCancel={onCancel}
           footer={false}
         >
