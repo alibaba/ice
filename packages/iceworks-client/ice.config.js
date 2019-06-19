@@ -25,6 +25,8 @@ module.exports = {
           'panel-title-color': '#eee',
           'sub-menu-bg': '#434557',
           'global-bar-bg': '#434557',
+          'material-card-shadow': 'rgba(0, 0, 0, 0)',
+          'text-color-inverse': '#e4e4e4',
         },
       }, {
         name: '@alifd/theme-iceworks-light',
@@ -33,6 +35,8 @@ module.exports = {
           'panel-title-color': '#333',
           'sub-menu-bg': '#fff',
           'global-bar-bg': '#5584FF',
+          'material-card-shadow': 'rgba(163, 177, 191, 0.35)',
+          'text-color-inverse': '#fff',
         },
       }],
     }],

@@ -9,16 +9,20 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const ScaffoldPanel = ({ dataSource, current, onDownload }) => {
+const ScaffoldPanel = ({ dataSource, currentCategory, onDownload, onCategoryChange }) => {
   const { categories, materials } = dataSource;
-  const currentMaterials = materials[current] || [];
+  const currentMaterials = materials[currentCategory] || [];
 
   return (
     <div className={styles.materialsPanel}>
       {
-        categories.length < 1
-          ? null
-          : <MaterialCategories dataSource={categories} current={current} />
+        categories.length < 1 ?
+          null :
+          <MaterialCategories
+            dataSource={categories}
+            current={currentCategory}
+            onChange={onCategoryChange}
+          />
       }
       <Row wrap gutter="40">
         {
@@ -48,7 +52,6 @@ ScaffoldPanel.defaultProps = {
     categories: [],
     materials: {},
   },
-  current: 'all',
   onDownload: f => f,
 };
 
@@ -57,8 +60,9 @@ ScaffoldPanel.propTypes = {
     categories: PropTypes.array.isRequired,
     materials: PropTypes.object.isRequired,
   }),
-  current: PropTypes.string,
+  currentCategory: PropTypes.string.isRequired,
   onDownload: PropTypes.func,
+  onCategoryChange: PropTypes.func.isRequired,
 };
 
 export default ScaffoldPanel;

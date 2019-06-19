@@ -52,12 +52,6 @@ const menuConfig = [
         icon: 'gaojishezhi',
         desc: 'iceworks.menu.setting.general.desc',
       },
-      {
-        name: 'iceworks.menu.setting.panel',
-        path: '/setting/panel',
-        icon: 'panel1',
-        desc: 'iceworks.menu.setting.panel.desc',
-      },
     ],
   },
 ];

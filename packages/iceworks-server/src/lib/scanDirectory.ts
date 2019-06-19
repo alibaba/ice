@@ -9,8 +9,8 @@ const accessAsync = util.promisify(fs.access);
 
 /**
  * Given a directory, scan the directory below
- * 
- * @param directoryPath 
+ *
+ * @param directoryPath
  */
 export default async (directoryPath: string): Promise<string[]> => {
   if (!pathExists.sync(directoryPath)) {
@@ -18,7 +18,7 @@ export default async (directoryPath: string): Promise<string[]> => {
   }
 
   const files = await readdirAsync(directoryPath);
-  let targetFiles = [];
+  const targetFiles = [];
   await Promise.all(files.map(async (filename: string) => {
     const targetPath = path.join(directoryPath, filename);
     const stats = await lstatAsync(targetPath);

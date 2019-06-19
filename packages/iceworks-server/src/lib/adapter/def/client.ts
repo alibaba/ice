@@ -9,7 +9,7 @@ try {
         throw new Error('缺少 DEF 客户端依赖');
       }
     }
-  }
+  };
 }
 
 export default Client;

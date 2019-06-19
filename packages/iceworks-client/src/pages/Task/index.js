@@ -39,8 +39,15 @@ const Task = ({ history, intl }) => {
   const type = getType(history.location.pathname);
   const [status, setStatus] = useState('');
 
+  const writeLog = (t) => {
+    const term = termManager.find('globalTerminal');
+    const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
+    term.writeLog(msg);
+  };
+
   async function onStart() {
     try {
+      writeLog(type);
       await task.start(type);
     } catch (error) {
       showMessage(error.message);
@@ -49,6 +56,7 @@ const Task = ({ history, intl }) => {
 
   async function onStop() {
     try {
+      writeLog(type);
       await task.stop(type);
     } catch (error) {
       showMessage(error.message);
@@ -98,21 +106,21 @@ const Task = ({ history, intl }) => {
   }
 
   const id = `${project.dataSource.name}.${type}`;
-  const startEventName = `project.task.start.data.${type}`;
-  const stopEventName = `project.task.stop.data.${type}`;
+  const startEventName = `adapter.task.start.data.${type}`;
+  const stopEventName = `adapter.task.stop.data.${type}`;
 
   // listen start envent handle
   useSocket(startEventName, (data) => {
     setStatus(data.status);
     const term = termManager.find(id);
-    term.formatWrite(data.chunk);
+    term.writeChunk(data.chunk);
   }, [status]);
 
   // listen stop envent handle
   useSocket(stopEventName, (data) => {
     setStatus(data.status);
     const term = termManager.find(id);
-    term.formatWrite(data.chunk);
+    term.writeChunk(data.chunk);
   }, [status]);
 
   const data = task.dataSource[type] ? task.dataSource[type] : {};

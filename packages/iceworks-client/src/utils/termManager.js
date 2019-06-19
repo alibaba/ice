@@ -1,12 +1,13 @@
 /* eslint no-underscore-dangle:0 */
 import { Terminal } from 'xterm';
+import dateTime from 'date-time';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as webLinks from 'xterm/dist/addons/webLinks/webLinks';
 
 // default theme
 // api: https://xtermjs.org/docs/api/terminal/interfaces/itheme/
 const defaultTheme = {
-  foreground: '#666',
+  foreground: '#fff',
   background: '#333646',
   cursor: 'rgba(0, 0, 0, 0.5)',
   selection: 'rgba(0, 0, 0, 0.5)',
@@ -26,10 +27,10 @@ Terminal.applyAddon(fit);
 Terminal.applyAddon(webLinks);
 
 // format and write the text content of the terminal
-const fn = (term) => {
-  const formatWrite = (data, ln = true) => {
+const writeChunkFn = (term) => {
+  const writeChunk = (data, ln = true) => {
     if (data && data.indexOf('\n') !== -1) {
-      data.split('\n').forEach((value) => formatWrite(value));
+      data.split('\n').forEach((value) => writeChunk(value));
       return;
     }
     if (typeof data === 'string') {
@@ -42,8 +43,11 @@ const fn = (term) => {
       term.writeln('');
     }
   };
-  return formatWrite;
+  return writeChunk;
 };
+
+
+const writeLog = (term) => (data) => term.writeln(` ${dateTime()} ${data}`);
 
 class TermManager {
   constructor() {
@@ -60,7 +64,8 @@ class TermManager {
     const opts = Object.assign({}, defaultOptions, options);
     if (!this.terms[id]) {
       this.terms[id] = new Terminal(opts);
-      this.terms[id].formatWrite = fn(this.terms[id]);
+      this.terms[id].writeChunk = writeChunkFn(this.terms[id]);
+      this.terms[id].writeLog = writeLog(this.terms[id]);
     } else {
       this.terms[id]._core.options.theme = opts.theme;
     }

@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as execa from 'execa';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
@@ -6,26 +5,31 @@ import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../utils/cliConf';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
-import { ITaskModule, ITaskParam, IProject } from '../../../interface';
+import { ITaskModule, ITaskParam, IProject, IContext } from '../../../interface';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
-export default class Task extends EventEmitter implements ITaskModule {
+export default class Task implements ITaskModule {
+  public readonly title: string = '任务管理';
+  public readonly description: string = '工程相关任务的执行。';
+  public readonly cover: string = '';
   public project: IProject;
+  public storage: any;
 
   public status: string;
 
   public readonly cliConfPath: string;
 
-  private cliConfFilename: string = 'ice.config.js';
+  private cliConfFilename = 'ice.config.js';
 
   private process: object = {};
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any; }) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 
@@ -33,8 +37,8 @@ export default class Task extends EventEmitter implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: ITaskParam) {
-    let { command } = args;
+  async start(args: ITaskParam, ctx: IContext) {
+    const { command } = args;
 
     if (this.process[command]) {
       throw new Error(
@@ -63,7 +67,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      this.emit(eventName, {
+      ctx.socket.emit(`adapter.task.${eventName}`, {
         status: TASK_STATUS_WORKING,
         chunk: buffer.toString(),
       });
@@ -72,7 +76,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
         this.process[command] = null;
-        this.emit(eventName, {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
@@ -90,7 +94,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args: ITaskParam) {
+  async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 
@@ -102,7 +106,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
       if (code === 0) {
-        this.emit(eventName, {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
@@ -121,11 +125,11 @@ export default class Task extends EventEmitter implements ITaskModule {
   async getConf(args: ITaskParam) {
     switch (args.command) {
       case 'dev':
-        return this.getDevConf()
+        return this.getDevConf();
       case 'build':
-       return getCLIConf(this.cliConfPath, BUILD_CONF)
+       return getCLIConf(this.cliConfPath, BUILD_CONF);
       case 'lint':
-        return LINT_CONF
+        return LINT_CONF;
       default:
         return [];
     }
@@ -140,17 +144,17 @@ export default class Task extends EventEmitter implements ITaskModule {
       case 'dev':
         return this.setDevConf(args);
       case 'build':
-        return setCLIConf(this.cliConfPath, args.options)
+        return setCLIConf(this.cliConfPath, args.options);
       default:
         return false;
     }
   }
 
-  /**
-  * get dev configuration
-  * merge the user configuration to return to the new configuration
-  * @param projectPath
-  */
+/**
+ * get dev configuration
+ * merge the user configuration to return to the new configuration
+ * @param projectPath
+ */
   private getDevConf() {
    const pkgContent = this.project.getPackageJSON();
    const devScriptContent = pkgContent.scripts.start;
@@ -160,11 +164,11 @@ export default class Task extends EventEmitter implements ITaskModule {
      if (item.indexOf('--') !== -1) {
       const key = item.match(/--(\S*)=/)[1];
       const value = item.match(/=(\S*)$/)[1];
-      userConf[key] = value
+      userConf[key] = value;
     }
-  })
+  });
 
-   return mergeCLIConf(DEV_CONF, userConf)
+   return mergeCLIConf(DEV_CONF, userConf);
  }
 
   /**
@@ -180,7 +184,7 @@ export default class Task extends EventEmitter implements ITaskModule {
 
     let newDevScriptContent =  `${cli} ${command}`;
     Object.keys(args.options).forEach((key) => {
-      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`
+      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`;
     });
 
     pkgContent.scripts.start = newDevScriptContent;

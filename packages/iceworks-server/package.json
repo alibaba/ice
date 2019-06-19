@@ -13,6 +13,7 @@
     "@babel/traverse": "^7.4.5",
     "@babel/types": "^7.4.4",
     "ali-oss": "^6.1.1",
+    "array-move": "^2.1.0",
     "camelcase": "^5.3.1",
     "chalk": "^2.4.2",
     "conf": "^4.0.1",
@@ -32,12 +33,12 @@
     "launch-editor": "^2.2.1",
     "lodash.clone": "^4.5.0",
     "lodash.clonedeepwith": "^4.5.0",
+    "lodash.orderby": "^4.6.0",
     "midway": "^1.5.6",
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "node-dir": "^0.1.17",
     "node-ipc": "^9.1.1",
-    "npm-run-path": "^3.1.0",
     "open": "^6.3.0",
     "path-exists": "^4.0.0",
     "prettier": "^1.17.1",
@@ -56,10 +57,11 @@
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.5.5",
-    "egg-ci": "^1.8.0",
     "midway-bin": "1",
     "midway-mock": "1",
     "tslib": "^1.8.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
     "tslint-midway-contrib": "1",
     "ts-node": "^8.0.2",
     "tslint": "^5.11.0",
@@ -81,9 +83,6 @@
     "lint-nofix": "tslint -c tslint.json --project .",
     "ci": "npm run cov",
     "build": "midway-bin build -c"
-  },
-  "ci": {
-    "version": "8, 10"
   },
   "repository": {
     "type": "git",

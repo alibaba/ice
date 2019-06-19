@@ -24,7 +24,7 @@ function getCLIConf(path: string, defaultConf) {
         userConf[path.node.name] = path.container.value.value;
       }
     }
-  }
+  };
 
   traverse(ast, visitor);
 
@@ -36,13 +36,13 @@ function getCLIConf(path: string, defaultConf) {
  * @param path the cli path, eg: ice.config.js
  * @param conf the current conf
  */
-function setCLIConf(path: string, conf: object, ) {
+function setCLIConf(path: string, conf: object) {
   const confKeys = Object.keys(conf);
   const useConfContent = fsExtra.readFileSync(path, 'utf8');
   const ast = parser.parse(useConfContent, { sourceType: 'module' });
 
   let flag = false;
-  let properties = []
+  let properties = [];
 
   // find object properties via ast
   const visitor = {
@@ -52,7 +52,7 @@ function setCLIConf(path: string, conf: object, ) {
         flag = true;
       }
     }
-  }
+  };
 
   // traverse ast
   traverse(ast, visitor);
@@ -61,7 +61,7 @@ function setCLIConf(path: string, conf: object, ) {
   // modify the object if the conf exist
   // add a new object if the conf does not exist
   confKeys.forEach(key => {
-    const node = properties.find((property) => property.key.name === key)
+    const node = properties.find((property) => property.key.name === key);
 
     if (node) {
       node.value.value = conf[key];
@@ -92,14 +92,14 @@ function setCLIConf(path: string, conf: object, ) {
 function mergeCLIConf(defaultConf: any, userConf: any) {
   return clonedeepwith(defaultConf).map((item) => {
      if (Object.keys(userConf).includes(item.name)) {
-       if (item.componentName === "Switch") {
+       if (item.componentName === 'Switch') {
          item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
        } else {
          item.componentProps.placeholder = userConf[item.name].toString();
        }
      }
      return item;
-   })
+   });
  }
 
 export {
