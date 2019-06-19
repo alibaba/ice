@@ -8,18 +8,18 @@ export default {
   },
 
   async refresh() {
-    this.dataSource = await socket.emit('project.index.current');
+    this.dataSource = await socket.emit('home.project.current');
   },
 
   async reset(path) {
-    this.dataSource = await socket.emit('project.index.setCurrent', { path });
+    this.dataSource = await socket.emit('home.project.setCurrent', { path });
   },
 
   async setPanel(args) {
-    this.dataSource.panels = await socket.emit('project.index.setPanel', args);
+    this.dataSource.panels = await socket.emit('home.project.setPanel', args);
   },
 
   async sortPanel(args) {
-    this.dataSource.panels = await socket.emit('project.index.sortPanel', args);
+    this.dataSource.panels = await socket.emit('home.project.sortPanel', args);
   },
 };

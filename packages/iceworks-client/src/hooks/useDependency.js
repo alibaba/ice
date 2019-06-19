@@ -69,11 +69,11 @@ function useDependency() {
     setResetModal(false);
   }
 
-  useSocket('project.dependency.reset.data', (data) => {
-    logger.info('project.dependency.reset.data', data);
+  useSocket('adapter.dependency.reset.data', (data) => {
+    logger.info('adapter.dependency.reset.data', data);
   });
 
-  useSocket('project.dependency.reset.exit', (code) => {
+  useSocket('adapter.dependency.reset.exit', (code) => {
     if (code === 0) {
       Message.show({
         align: 'tr tr',
@@ -91,11 +91,11 @@ function useDependency() {
     }
   });
 
-  useSocket('project.dependency.upgrade.data', (data) => {
-    logger.info('project.dependency.upgrade.data', data);
+  useSocket('adapter.dependency.upgrade.data', (data) => {
+    logger.info('adapter.dependency.upgrade.data', data);
   });
 
-  useSocket('project.dependency.upgrade.exit', (code) => {
+  useSocket('adapter.dependency.upgrade.exit', (code) => {
     if (code === 0) {
       Message.show({
         align: 'tr tr',
@@ -114,11 +114,11 @@ function useDependency() {
     }
   });
 
-  useSocket('project.dependency.install.data', (data) => {
-    logger.info('project.dependency.install.data', data);
+  useSocket('adapter.dependency.install.data', (data) => {
+    logger.info('adapter.dependency.install.data', data);
   });
 
-  useSocket('project.dependency.install.exit', (code) => {
+  useSocket('adapter.dependency.install.exit', (code) => {
     if (code === 0) {
       Message.show({
         align: 'tr tr',
