@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
@@ -14,17 +13,18 @@ const PAGE_DIRECTORY = 'pages';
 
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
 
-export default class Router extends EventEmitter implements IRouterModule {
+export default class Router implements IRouterModule {
   public readonly project: IProject;
-  public readonly projectPath: string;
+  public readonly storage: any;
 
   public readonly path: string;
   public existLazy: boolean;
 
-  constructor(project: IProject) {
-    super();
-    this.projectPath = project.path;
-    this.path = path.join(this.projectPath, 'src', 'routerConfig.js');
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
+    this.project = project;
+    this.storage = storage;
+    this.path = path.join(this.project.path, 'src', 'routerConfig.js');
   }
 
   private getRouterConfigAST(): any {

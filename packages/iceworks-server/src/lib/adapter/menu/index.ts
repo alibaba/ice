@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
@@ -12,16 +11,17 @@ import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 
 const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
 
-export default class Menu extends EventEmitter implements IMenuModule {
-  public readonly projectPath: string;
+export default class Menu implements IMenuModule {
   public readonly project: IProject;
+  public readonly storage: any;
 
   public readonly path: string;
 
-  constructor(project: IProject) {
-    super();
-    this.projectPath = project.path;
-    this.path = path.join(this.projectPath, 'src', 'menuConfig.js');
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
+    this.project = project;
+    this.storage = storage;
+    this.path = path.join(this.project.path, 'src', 'menuConfig.js');
   }
 
   private getFileAST(): any {
