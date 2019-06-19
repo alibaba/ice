@@ -26,10 +26,6 @@ export default {
   'iceworks.menu.setting': 'Setting',
   'iceworks.menu.setting.general': 'General',
   'iceworks.menu.setting.general.desc': 'Set the theme and language',
-  'iceworks.menu.setting.panel': 'Panel',
-  'iceworks.menu.setting.panel.desc': 'Set the display of the project panel',
-  'iceworks.menu.setting.advanced': 'Advanced',
-  'iceworks.menu.setting.advanced.desc': 'Set editor and npm source',
 
   // setting
   'iceworks.setting.general.title': 'General Setting',
@@ -142,7 +138,6 @@ export default {
   'iceworks.material.block': 'Block',
   'iceworks.material.component': 'Component',
   'iceworks.material.add': 'Add',
-  'iceworks.material.all': 'All',
   'iceworks.material.preview': 'Preview',
   'iceworks.material.source': 'Source code',
   'iceworks.material.download': 'Download',

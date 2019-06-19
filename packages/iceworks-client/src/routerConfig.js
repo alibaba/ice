@@ -50,10 +50,6 @@ const routerConfig = [
         path: '/setting/general',
         component: Setting.General,
       },
-      {
-        path: '/setting/panel',
-        component: Setting.Panel,
-      },
     ],
   },
 ];

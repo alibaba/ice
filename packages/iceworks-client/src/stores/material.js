@@ -32,8 +32,8 @@ export default {
     this.dataSource.recommendScaffolds = await socket.emit('material.index.recommendScaffolds');
   },
 
-  async getResource() {
-    const data = await socket.emit('material.index.resource');
+  async getResources() {
+    const data = await socket.emit('material.index.resources');
     logger.info('resource Data:', data);
 
     this.dataSource.resource = formatResource(data);
