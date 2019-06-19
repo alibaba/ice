@@ -17,9 +17,13 @@ const BlockPanel = ({ dataSource, currentCategory, onCategoryChange }) => {
   return (
     <div className={styles.materialsPanel}>
       {
-        categories.length < 1
-          ? null
-          : <MaterialCategories dataSource={categories} current={currentCategory} onChange={onCategoryChange} />
+        categories.length < 1 ?
+          null :
+          <MaterialCategories
+            dataSource={categories}
+            current={currentCategory}
+            onChange={onCategoryChange}
+          />
       }
       <Row wrap gutter="20">
         {
