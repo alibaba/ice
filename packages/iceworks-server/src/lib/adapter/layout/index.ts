@@ -38,6 +38,8 @@ export default class Layout implements ILayoutModule {
   }
 
   async getOne(layoutName: string): Promise<IProjectLayout> {
-    return (await this.getAll()).find(({name}) => name === layoutName);
+    const layouts = await this.getAll();
+    const layout = layouts.find(({name}) => name === layoutName);
+    return layout;
   }
 }
