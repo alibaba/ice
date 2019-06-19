@@ -118,6 +118,7 @@ export default {
   'iceworks.project.panel.git.switch.select': '选择分支',
   'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
   'iceworks.project.panel.oss.title': 'OSS',
+  'iceworks.project.panel.oss.button.clear': '清空',
 
   // project menu
   'iceworks.project.panel.menu.create.title': '创建导航',
