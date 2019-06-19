@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
-import Guide from './components/Guide';
+import QuickStart from './components/QuickStart';
 import projectStores from './stores';
 import styles from './index.module.scss';
 
@@ -170,7 +170,7 @@ const Project = ({ history }) => {
           })}
         </div>
       ) : (
-        <Guide
+        <QuickStart
           onOpenProject={onOpenProject}
           onCreateProject={onOpenCreateProject}
           scaffolds={material.recommendScaffolds}
