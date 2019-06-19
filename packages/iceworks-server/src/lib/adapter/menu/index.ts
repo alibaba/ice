@@ -54,13 +54,13 @@ export default class Menu extends EventEmitter implements IMenuModule {
     const getMenuCode = this.getMenuCode;
     traverse(menuFileAST, {
       VariableDeclarator({ node }) {
-        const _asideMenuConfig = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
-        const _headerMenuConfig = getMenuCode(node, HEADER_CONFIG_VARIABLE);
-        if (_asideMenuConfig) {
-          asideMenuConfig = eval(_asideMenuConfig);
+        const asideMenuCode = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
+        const headerMenuCode = getMenuCode(node, HEADER_CONFIG_VARIABLE);
+        if (asideMenuCode) {
+          asideMenuConfig = eval(asideMenuCode);
         }
-        if (_headerMenuConfig) {
-          headerMenuConfig = eval(_headerMenuConfig);
+        if (headerMenuCode) {
+          headerMenuConfig = eval(headerMenuCode);
         }
       }
     });

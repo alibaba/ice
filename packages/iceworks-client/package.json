@@ -32,7 +32,6 @@
     "react-router-dom": "^5.0.0",
     "semver": "^6.1.0",
     "socket.io-client": "^2.2.0",
-    "uid": "^0.0.2",
     "url-parse": "^1.4.6",
     "xterm": "^3.12.2"
   },
