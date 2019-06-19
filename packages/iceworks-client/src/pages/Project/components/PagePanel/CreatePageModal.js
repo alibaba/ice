@@ -47,7 +47,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
 
   return (
     <div className={styles.materialWrap}>
-      <div className={styles.select}>
+      <div className={styles.selectWrap}>
         <Select
           dataSource={resources.map(({ source: value, name: label }) => {
             return {
@@ -56,6 +56,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
             };
           })}
           value={source}
+          className={styles.select}
         />
       </div>
       <div className={styles.main}>
@@ -63,11 +64,13 @@ const MaterialSelect = ({ resources, onSelect }) => {
           {
             materials[category].map((dataSource, index) => {
               return (
-                <BlockCard
-                  dataSource={dataSource}
-                  onClick={() => onSelect(dataSource)}
-                  key={index}
-                />
+                <div className={styles.item}>
+                  <BlockCard
+                    dataSource={dataSource}
+                    onClick={() => onSelect(dataSource)}
+                    key={index}
+                  />
+                </div>
               );
             })
           }
@@ -76,7 +79,14 @@ const MaterialSelect = ({ resources, onSelect }) => {
           {
             categories.map(({ name: categoryName }, index) => {
               return (
-                <div key={index} onClick={() => onSetCateogry(categoryName)}>
+                <div
+                  className={cx({
+                    [styles.item]: true,
+                    [styles.selected]: category === categoryName,
+                  })}
+                  key={index}
+                  onClick={() => onSetCateogry(categoryName)}
+                >
                   {categoryName}
                 </div>
               );

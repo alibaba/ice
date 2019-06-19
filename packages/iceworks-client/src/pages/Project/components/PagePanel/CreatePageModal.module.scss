@@ -93,9 +93,13 @@
   height: 100%;
   flex-direction: column;
 
-  .select {
+  .selectWrap {
     height: 24px;
     margin-bottom: 12px;
+
+    .select {
+      width: 100%;
+    }
   }
 
   .main {
@@ -105,8 +109,21 @@
     overflow: hidden;
 
     .categories {
-      width: 60px;
+      width: 80px;
       margin-left: 12px;
+      background-color: $background-color-light;
+      padding: 6px;
+      overflow-y: auto;
+
+      .item {
+        padding: 2px 0;
+        cursor: pointer;
+        margin-bottom: 6px;
+
+        &.selected {
+          border-bottom: 2px solid $black;
+        }
+      }
     }
 
     .materials {
