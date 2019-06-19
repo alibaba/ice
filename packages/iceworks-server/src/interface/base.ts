@@ -31,6 +31,11 @@ export interface IProject {
   readonly panels: string[];
 
   /**
+   * 项目的适配器
+   */
+  adapter: {[name: string]: IBaseModule};
+
+  /**
    * 获取项目的 package.json 信息
    */
   getPackageJSON(): any;

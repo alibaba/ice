@@ -45,7 +45,6 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
-        logger.info(eventName, JSON.stringify(data));
         callback(null, data);
       } catch (error) {
         logger.error(error);

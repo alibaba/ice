@@ -10,7 +10,7 @@ export default app => {
       try {
         const { projectManager } = app;
         const project = projectManager.getCurrent();
-        callback(null, await project[moduleName][methodName](args, ctx));
+        callback(null, await project.adapter[moduleName][methodName](args, ctx));
       } catch (error) {
         logger.error(error);
         callback({

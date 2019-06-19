@@ -12,7 +12,7 @@ import * as pathExists from 'path-exists';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject, IMaterialScaffold } from '../../../interface';
+import { IProject, IMaterialScaffold, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -33,7 +33,6 @@ const registry = 'https://registry.npm.taobao.org';
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 
-
 class Project implements IProject {
   public readonly name: string;
 
@@ -42,6 +41,8 @@ class Project implements IProject {
   public readonly packagePath: string;
 
   public panels: string[] = [];
+
+  public adapter: {[name: string]: IBaseModule} = {};
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -92,19 +93,23 @@ class Project implements IProject {
   }
 
   private loadAdapter() {
-    const adapterModuleKeys = Object.keys(adapter);
     for (const [key, Module] of Object.entries(adapter)) {
       this.panels.push(key);
 
-      let project: IProject = clone(this);
-      for (const moduleKey of adapterModuleKeys) {
-        if (project[moduleKey]) {
-          delete project[moduleKey];
-        }
-      }
+      const project: IProject = clone(this);
+      delete project.adapter;
 
-      this[camelCase(key)] = new Module({ project, storage });
+      this.adapter[camelCase(key)] = new Module({ project, storage });
     }
+  }
+
+  public toJSON() {
+    const { name, path, panels } = this;
+    return {
+      name,
+      path,
+      panels,
+    };
   }
 }
 
