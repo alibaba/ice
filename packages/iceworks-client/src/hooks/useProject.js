@@ -88,7 +88,7 @@ function useProject({ panelStores } = {}) {
   }
 
   async function sortProjectPanel({ oldIndex, newIndex }) {
-    await projectStore.sortPanel({ oldIndex, newIndex });
+    await projectStore.sortPanels({ oldIndex, newIndex });
   }
 
   // event handle

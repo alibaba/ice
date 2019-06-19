@@ -52,11 +52,11 @@ export default (app) => {
       return project.setPanel(args);
     }
 
-    async sortPanel(ctx) {
+    async sortPanels(ctx) {
       const { args } = ctx;
       const { projectManager } = app;
       const project = await projectManager.getCurrent();
-      return project.sortPanel(args);
+      return project.sortPanels(args);
     }
   };
 };

@@ -113,13 +113,13 @@ class Project implements IProject {
   }
 
   private assemblePanels() {
-    this.resetPanelsByStore();
-    this.savePanelsToStore();
+    this.pullPanels();
+    this.savePanels();
   }
 
-  private resetPanelsByStore() {
+  private pullPanels() {
     const panelSettings = storage.get('panelSettings');
-    const projectPanelSettings = panelSettings.find(({ project }) => project === this.path);
+    const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
     
     if (projectPanelSettings) {
       const { panels } = projectPanelSettings;
@@ -136,16 +136,16 @@ class Project implements IProject {
     }
   }
 
-  private savePanelsToStore() {
+  private savePanels() {
     const panelSettings = storage.get('panelSettings');
-    const projectPanelSettings = panelSettings.find(({ project }) => project === this.path);
+    const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
     const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
     
     if (projectPanelSettings) {
       projectPanelSettings.panels = panels;
     } else {
       panelSettings.push({
-        project: this.path,
+        projectPath: this.path,
         panels,
       });
     }
@@ -158,15 +158,15 @@ class Project implements IProject {
     const panel = this.panels.find(({ name: settingName }) => settingName === name);
     if (panel) {
       panel.isAvailable = isAvailable;
-      this.savePanelsToStore();
+      this.savePanels();
     }
     return this.panels;
   }
 
-  public sortPanel(params: { oldIndex: number; newIndex: number; }): IPanel[] {
+  public sortPanels(params: { oldIndex: number; newIndex: number; }): IPanel[] {
     const { oldIndex, newIndex } = params;
     this.panels = arrayMove(this.panels, oldIndex, newIndex);
-    this.savePanelsToStore();
+    this.savePanels();
     return this.panels;
   }
 
