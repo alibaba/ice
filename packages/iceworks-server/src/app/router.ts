@@ -6,7 +6,7 @@ export default (app: Application) => {
   const { material, home } = controller;
   const logger = app.getLogger();
 
-  const routers: Array<[string, () => {}]> = [
+  const routers: [string, () => {}][] = [
     ['home.project.list', home.project.list],
     ['home.project.create', home.project.create],
     ['home.project.delete', home.project.delete],
