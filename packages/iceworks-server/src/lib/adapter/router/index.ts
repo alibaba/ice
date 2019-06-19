@@ -14,6 +14,9 @@ const PAGE_DIRECTORY = 'pages';
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
 
 export default class Router implements IRouterModule {
+  public readonly title: string = '路由管理';
+  public readonly description: string = '展示项目中的所有路由，支持对路由的增删改。';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png';
   public readonly project: IProject;
   public readonly storage: any;
 

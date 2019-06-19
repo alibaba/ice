@@ -100,7 +100,7 @@ export default (app) => {
         official: false, name, description, homepage, logo, type, source
       };
       const newMaterials = material.filter((item) => item.name !== currentItem.name);
-      newMaterials.unshift(currentItem);
+      newMaterials.unshift(currentItem)
       storage.set('material', newMaterials);
 
       const materialData = formatMaterialData(data);

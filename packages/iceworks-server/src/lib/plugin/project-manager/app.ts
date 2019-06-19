@@ -9,10 +9,12 @@ import * as mv from 'mv';
 import * as clone from 'lodash.clone';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
+import * as orderBy from 'lodash.orderby';
+import * as arrayMove from 'array-move';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject, IMaterialScaffold, IBaseModule } from '../../../interface';
+import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -40,7 +42,7 @@ class Project implements IProject {
 
   public readonly packagePath: string;
 
-  public panels: string[] = [];
+  public panels: IPanel[] = [];
 
   public adapter: {[name: string]: IBaseModule} = {};
 
@@ -50,6 +52,7 @@ class Project implements IProject {
     this.packagePath = path.join(this.path, packageJSONFilename);
 
     this.loadAdapter();
+    this.assemblePanels();
   }
 
   public getPackageJSON() {
@@ -91,14 +94,80 @@ class Project implements IProject {
   }
 
   private loadAdapter() {
-    for (const [key, Module] of Object.entries(adapter)) {
-      this.panels.push(key);
-
+    for (const [name, Module] of Object.entries(adapter)) {
       const project: IProject = clone(this);
       delete project.adapter;
 
-      this.adapter[camelCase(key)] = new Module({ project, storage });
+      const adapterModule = new Module({ project, storage });
+      this.adapter[camelCase(name)] = adapterModule;
+
+      const {title, description, cover} = adapterModule;
+      this.panels.push({
+        name,
+        title,
+        description,
+        cover,
+        isAvailable: true,
+      });
     }
+  }
+
+  private assemblePanels() {
+    this.pullPanels();
+    this.savePanels();
+  }
+
+  private pullPanels() {
+    const panelSettings = storage.get('panelSettings');
+    const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
+    
+    if (projectPanelSettings) {
+      const { panels } = projectPanelSettings;
+
+      panels.forEach(({ name: settingName, isAvailable }, index) => {
+        const panel: any = this.panels.find(({ name }) => settingName === name);
+        if (panel) {
+          panel.isAvailable = isAvailable;
+          panel.index = index;
+        }
+      });
+
+      this.panels = orderBy(this.panels, 'index');
+    }
+  }
+
+  private savePanels() {
+    const panelSettings = storage.get('panelSettings');
+    const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
+    const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
+    
+    if (projectPanelSettings) {
+      projectPanelSettings.panels = panels;
+    } else {
+      panelSettings.push({
+        projectPath: this.path,
+        panels,
+      });
+    }
+
+    storage.set('panelSettings', panelSettings);
+  }
+
+  public setPanel(params: {name: string; isAvailable: boolean;}): IPanel[] {
+    const {name, isAvailable} = params;
+    const panel = this.panels.find(({ name: settingName }) => settingName === name);
+    if (panel) {
+      panel.isAvailable = isAvailable;
+      this.savePanels();
+    }
+    return this.panels;
+  }
+
+  public sortPanels(params: { oldIndex: number; newIndex: number; }): IPanel[] {
+    const { oldIndex, newIndex } = params;
+    this.panels = arrayMove(this.panels, oldIndex, newIndex);
+    this.savePanels();
+    return this.panels;
   }
 
   public toJSON() {

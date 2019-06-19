@@ -4,6 +4,9 @@ import { ICLIConf, IProject, IConfigurationModule, IConfParam } from '../../../i
 import { CLI_CONF } from './const';
 
 export default class Configuration implements IConfigurationModule {
+  public readonly title: string = '工程配置';
+  public readonly description: string = '工程相关配置的管理。';
+  public readonly cover: string = '';
   public project: IProject;
   public storage: any;
 
