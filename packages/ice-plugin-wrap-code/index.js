@@ -2,7 +2,7 @@ const path = require('path');
 const WrapCodePlugin = require('./wrapCodeWebpackPlugin');
 
 module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
-  const { addCodeBefore, addCodeAfter, id = '', debug } = pluginOptions;
+  const { addCodeBefore, addCodeAfter, fileMatch, id = '', debug } = pluginOptions;
   if (addCodeBefore || addCodeAfter) {
     // use id to specify a new plugin name
     chainWebpack((config) => {
@@ -12,10 +12,14 @@ module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
           log.info(`wrap code plugin: ${id} has been already defined`);
         }
       } else {
+        if (fileMatch && typeof fileMatch !== 'function') {
+          log.error('fileMatch must be a function');
+          return;
+        }
         config.plugin(pluginName).use(WrapCodePlugin, [{
           addCodeBefore,
           addCodeAfter,
-          fileMatch: (chunkName, compilerEntry) => {
+          fileMatch: fileMatch || ((chunkName, compilerEntry) => {
             const entryKeys = Object.keys(compilerEntry || {});
             // filter entry js file
             if (entryKeys.length && /\.js$/.test(chunkName)) {
@@ -29,7 +33,7 @@ module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
               }
             }
             return false;
-          },
+          }),
         }]);
       }
     });
