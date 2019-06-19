@@ -46,7 +46,7 @@ const CreatePageModal = ({
     toggleSaveModal();
   }
 
-  useSocket('project.page.create.status', ({ text, percent }) => {
+  useSocket('adapter.page.create.status', ({ text, percent }) => {
     progress.show({ statusText: text, percent });
   });
 

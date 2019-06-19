@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/generator": "^7.4.4",
     "@babel/parser": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/traverse": "^7.4.5",
     "@babel/types": "^7.4.4",
     "ali-oss": "^6.1.1",
@@ -50,16 +51,18 @@
     "simple-git": "^1.113.0",
     "tar": "^4.4.8",
     "trash": "^5.2.0",
+    "uid": "^0.0.2",
     "uppercamelcase": "^3.0.0",
     "user-home": "^2.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.5.5",
-    "egg-ci": "^1.8.0",
     "midway-bin": "1",
     "midway-mock": "1",
     "tslib": "^1.8.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
     "tslint-midway-contrib": "1",
     "ts-node": "^8.0.2",
     "tslint": "^5.11.0",
@@ -81,9 +84,6 @@
     "lint-nofix": "tslint -c tslint.json --project .",
     "ci": "npm run cov",
     "build": "midway-bin build -c"
-  },
-  "ci": {
-    "version": "8, 10"
   },
   "repository": {
     "type": "git",

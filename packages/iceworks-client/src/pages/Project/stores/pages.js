@@ -3,12 +3,12 @@ import socket from '@src/socket';
 export default {
   dataSource: [],
   async refresh() {
-    this.dataSource = await socket.emit('project.page.list');
+    this.dataSource = await socket.emit('adapter.page.getAll');
   },
   async delete(name) {
-    await socket.emit('project.page.delete', { name });
+    await socket.emit('adapter.page.delete', { name });
   },
   async create(data) {
-    await socket.emit('project.page.create', data);
+    await socket.emit('adapter.page.create', data);
   },
 };

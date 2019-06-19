@@ -1,4 +1,10 @@
-import * as EventEmitter from 'events';
+export interface ISocket {
+  emit(eventName: string, data?: any): void;
+}
+
+export interface IContext {
+  socket: ISocket;
+}
 
 /**
  * 项目信息
@@ -25,6 +31,11 @@ export interface IProject {
   readonly panels: string[];
 
   /**
+   * 项目的适配器
+   */
+  adapter: {[name: string]: IBaseModule};
+
+  /**
    * 获取项目的 package.json 信息
    */
   getPackageJSON(): any;
@@ -33,7 +44,6 @@ export interface IProject {
    * 设置项目的 package.json 信息
    */
   setPackageJSON(content): any;
-
 
   /**
    * 获取项目的环境变量信息
@@ -44,8 +54,9 @@ export interface IProject {
 /**
  * 功能模块的基类
  */
-export interface IBaseModule extends EventEmitter {
+export interface IBaseModule {
   project: IProject;
+  storage: any;
 }
 
 /**
@@ -109,10 +120,10 @@ export interface IMaterialScaffold {
   description: string;
   homepage: string;
   name: string;
-  publishTime:  string;
-  repository:  string;
-  screenshot:  string;
-  screenshots:  string[];
+  publishTime: string;
+  repository: string;
+  screenshot: string;
+  screenshots: string[];
   source: IMaterialNpmSource;
   title: string;
   updateTime: string;
@@ -128,10 +139,10 @@ export interface IMaterialComponent {
   description: string;
   homepage: string;
   name: string;
-  publishTime:  string;
-  repository:  string;
-  screenshot:  string;
-  screenshots:  string[];
+  publishTime: string;
+  repository: string;
+  screenshot: string;
+  screenshots: string[];
   source: IMaterialNpmSource;
   title: string;
   updateTime: string;
@@ -147,12 +158,12 @@ export interface IMaterialBlock {
   title: string;
   description: string;
   homepage: string;
-  categories: string[],
+  categories: string[];
   repository: string;
-  source: IMaterialNpmSource,
-  dependencies: INpmDependencies,
+  source: IMaterialNpmSource;
+  dependencies: INpmDependencies;
   screenshot: string;
-  screenshots: string[],
+  screenshots: string[];
   publishTime: string;
   updateTime: string[];
   uid: string[];

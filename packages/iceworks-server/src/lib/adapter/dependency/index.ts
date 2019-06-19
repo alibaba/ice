@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as util from 'util';
@@ -6,13 +5,15 @@ import * as rimraf from 'rimraf';
 import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
 
-import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IBaseModule } from '../../../interface';
+import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 
-export const install = async (dependencies: ICreateDependencyParam[], adapterModule: IBaseModule, isDev?: boolean): Promise<void> => {
+export const install = async (
+  dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
+): Promise<void> => {
   console.log('dependencies', dependencies);
-  adapterModule.emit('install.data', '开始安装依赖');
+  socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
 
   const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
     dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
@@ -22,39 +23,39 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
     'npm',
     args,
     {
-      cwd: adapterModule.project.path,
-      env: adapterModule.project.getEnv(),
+      cwd: project.path,
+      env: project.getEnv(),
     }
   );
 
   childProcess.stdout.on('data', (buffer) => {
     const text = buffer.toString();
-    console.log('install.data:', text);
+    console.log(`${namespace}.install.data:`, text);
 
-    adapterModule.emit('install.data', text);
+    socket.emit(`adapter.${namespace}.install.data`, text);
   });
 
   childProcess.on('error', (buffer) => {
-    console.log('install.error:', buffer.toString());
+    console.log(`${namespace}.install.error:`, buffer.toString());
   });
 
   childProcess.on('exit', (code, signal) => {
-    console.log('install.exit:', code, signal);
-
-    adapterModule.emit('install.exit', code);
+    socket.emit(`adapter.${namespace}.install.exit`, code);
   });
 };
 
-export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
+export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; }
 
-export default class Dependency extends EventEmitter implements IDependencyModule {
+export default class Dependency implements IDependencyModule {
   public project: IProject;
+  public storage: any;
 
   public readonly path: string;
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any; }) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.path = path.join(this.project.path, 'node_modules');
   }
 
@@ -62,7 +63,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     const pkgPath = path.join(this.path, name, 'package.json');
     const version: string = (await fsExtra.readJson(pkgPath)).version;
     return version;
-  };
+  }
 
   // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
@@ -78,12 +79,14 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string; }]) => ({ package: key, ...value }));
   }
 
-  public async create(dependency: ICreateDependencyParam, idDev?: boolean): Promise<void> {
-    return (await install([dependency], this, idDev))[0];
+  public async create(params: {dependency: ICreateDependencyParam, idDev?: boolean}, ctx: IContext): Promise<void> {
+    const { dependency, idDev } = params;
+    return (await install([dependency], idDev, this.project, ctx.socket, 'dependency'))[0];
   }
 
-  public async bulkCreate(dependencies: ICreateDependencyParam[], idDev?: boolean): Promise<void> {
-    return await install(dependencies, this, idDev);
+  public async bulkCreate(params: {dependencies: ICreateDependencyParam[], idDev?: boolean}, ctx: IContext): Promise<void> {
+    const { dependencies, idDev } = params;
+    return await install(dependencies, idDev, this.project, ctx.socket, 'dependency');
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }> {
@@ -103,9 +106,9 @@ export default class Dependency extends EventEmitter implements IDependencyModul
           dev,
           localVersion,
           latestVersion: await latestVersion(packageName)
-        }
+        };
       }));
-    }
+    };
 
     let dependencies: IDependency[] = [];
     if (packageDependencies) {
@@ -136,14 +139,14 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     };
   }
 
-  public async reset() {
-    this.emit('reset.data', '正在清理 node_modules 目录，请稍等');
+  public async reset(arg: void, ctx: IContext) {
+    ctx.socket.emit('adapter.dependency.reset.data', '正在清理 node_modules 目录，请稍等');
 
     await rimrafAsync(this.path);
 
-    this.emit('reset.data', '清理 node_modules 目录完成');
+    ctx.socket.emit('adapter.dependency.reset.data', '清理 node_modules 目录完成');
 
-    this.emit('reset.data', '开始安装依赖...');
+    ctx.socket.emit('adapter.dependency.reset.data', '开始安装依赖...');
 
     const childProcess = execa('npm', ['install'], {
       cwd: this.project.path,
@@ -154,7 +157,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
       const text = buffer.toString();
       console.log('reset.data:', text);
 
-      this.emit('reset.data', text);
+      ctx.socket.emit('adapter.dependency.reset.data', text);
     });
 
     childProcess.on('error', (buffer) => {
@@ -164,14 +167,14 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     childProcess.on('exit', (code, signal) => {
       console.log('reset.exit:', code, signal);
 
-      this.emit('reset.exit', code);
+      ctx.socket.emit('adapter.dependency.reset.exit', code);
     });
   }
 
-  public async upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void> {
+  public async upgrade(denpendency: { package: string; isDev?: boolean }, ctx: IContext): Promise<void> {
     const { package: packageName } = denpendency;
 
-    this.emit('upgrade.data', `开始更新依赖：${packageName}...`);
+    ctx.socket.emit('adapter.dependency.upgrade.data', `开始更新依赖：${packageName}...`);
 
     const childProcess = execa('npm', ['update', packageName, '--silent'], {
       cwd: this.project.path,
@@ -182,7 +185,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
       const text = buffer.toString();
       console.log('upgrade.data:', text);
 
-      this.emit('upgrade.data', text);
+      ctx.socket.emit('adapter.dependency.upgrade.data', text);
     });
 
     childProcess.on('error', (buffer) => {
@@ -192,7 +195,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     childProcess.on('exit', (code, signal) => {
       console.log('upgrade.exit:', code, signal);
 
-      this.emit('upgrade.exit', code);
+      ctx.socket.emit('adapter.dependency.upgrade.exit', code);
     });
-  };
+  }
 }

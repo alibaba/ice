@@ -17,7 +17,7 @@ const MaterialSubMenu = ({
     <SubMenu title="iceworks.material.title">
       <div className={styles.itemWrapper}>
         <div>
-          <div className={styles.separator}><FormattedMessage id="iceworks.material.customMaterial" /></div>
+          <div className={styles.separator}><FormattedMessage id="iceworks.material.officialMaterial" /></div>
           {official.map((item) => {
             return (
               <SubMenuItem
@@ -33,7 +33,7 @@ const MaterialSubMenu = ({
         {
           hasCustomMaterial ?
             <div>
-              <div className={styles.separator}><FormattedMessage id="iceworks.material.officialMaterial" /></div>
+              <div className={styles.separator}><FormattedMessage id="iceworks.material.customMaterial" /></div>
               {custom.map((item) => {
                 return (
                   <SubMenuItem

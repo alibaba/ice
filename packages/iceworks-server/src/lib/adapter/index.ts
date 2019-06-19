@@ -3,6 +3,9 @@ import Dependency from './dependency';
 import Configuration from './configuration';
 import Task from './task';
 import Layout from './layout';
+import Menu from './menu';
+import Router from './router';
+
 import Git from './git';
 import DEF from './def';
 import OSS from './oss';
@@ -12,7 +15,11 @@ export {
   Page,
   Dependency,
   Configuration,
-  Task, Layout,
+  Task,
+  Layout,
+  Menu,
+  Router,
+
   Git,
   DEF,
   OSS,

@@ -62,12 +62,13 @@ function retrieveMessagesFromLine(lineString, lineNumber) {
   return result;
 }
 
-export default class Todo extends EventEmitter {
+export default class Todo {
   public readonly project: IProject;
 
-  constructor(project: IProject) {
-    super();
-    this.project = project;
+  public readonly storage: any;
+
+  constructor(params: {project: IProject; storage: any; }) {
+    this.project = params.project;
   }
 
   private async matchFileContent(filePath) {
