@@ -52,10 +52,7 @@ const SortableWrap = SortableContainer(({ projectPanels, isSorting }) => {
         const Panel = panels[name];
         return Panel && isAvailable ? (
           <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
-            <SortableItem
-              Panel={Panel}
-              isSorting={isSorting}
-            />
+            <SortableItem key={index} index={index} Panel={Panel} isSorting={isSorting} />
           </ErrorBoundary>
         ) : null;
       })}
