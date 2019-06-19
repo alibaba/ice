@@ -1,4 +1,10 @@
-import * as EventEmitter from 'events';
+export interface ISocket {
+  emit(eventName: string, data?: any): void;
+}
+
+export interface IContext {
+  socket: ISocket
+}
 
 export interface IPanel {
   isAvailable: boolean;
@@ -33,6 +39,11 @@ export interface IProject {
   readonly panels: IPanel[];
 
   /**
+   * 项目的适配器
+   */
+  adapter: {[name: string]: IBaseModule};
+
+  /**
    * 获取项目的 package.json 信息
    */
   getPackageJSON(): any;
@@ -52,8 +63,9 @@ export interface IProject {
 /**
  * 功能模块的基类
  */
-export interface IBaseModule extends EventEmitter {
+export interface IBaseModule {
   project: IProject;
+  storage: any;
   title: string;
   description?: string;
   cover?: string;

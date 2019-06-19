@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as execa from 'execa';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
@@ -6,17 +5,18 @@ import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../utils/cliConf';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
-import { ITaskModule, ITaskParam, IProject } from '../../../interface';
+import { ITaskModule, ITaskParam, IProject, IContext } from '../../../interface';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
-export default class Task extends EventEmitter implements ITaskModule {
+export default class Task implements ITaskModule {
   public readonly title: string = '任务管理';
   public readonly description: string = '工程相关任务的执行。';
   public readonly cover: string = '';
   public project: IProject;
+  public storage: any;
 
   public status: string;
 
@@ -26,9 +26,10 @@ export default class Task extends EventEmitter implements ITaskModule {
 
   private process: object = {};
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 
@@ -36,7 +37,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: ITaskParam) {
+  async start(args: ITaskParam, ctx: IContext) {
     let { command } = args;
 
     if (this.process[command]) {
@@ -66,7 +67,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      this.emit(eventName, {
+      ctx.socket.emit(`adapter.task.${eventName}`, {
         status: TASK_STATUS_WORKING,
         chunk: buffer.toString(),
       });
@@ -75,7 +76,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
         this.process[command] = null;
-        this.emit(eventName, {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });
@@ -93,7 +94,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args: ITaskParam) {
+  async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 
@@ -105,7 +106,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
       if (code === 0) {
-        this.emit(eventName, {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
         });

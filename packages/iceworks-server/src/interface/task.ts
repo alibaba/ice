@@ -1,4 +1,4 @@
-import { IBaseModule } from './base';
+import { IBaseModule, IContext } from './base';
 
 /**
  * 调试服务设置项
@@ -56,14 +56,14 @@ export interface ITaskModule extends IBaseModule {
    *
    * @param task 任务信息
    */
-  start(taskParam: ITaskParam): Promise<ITaskModule>;
+  start(taskParam: ITaskParam, ctx: IContext): Promise<ITaskModule>;
 
   /**
    * 停止调试服务
    *
    * @param task 任务信息
    */
-  stop(task: ITaskParam): Promise<ITaskModule>;
+  stop(task: ITaskParam, ctx: IContext): Promise<ITaskModule>;
 
   /**
    * 获取任务配置项

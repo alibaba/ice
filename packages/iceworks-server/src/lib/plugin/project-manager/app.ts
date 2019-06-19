@@ -14,7 +14,7 @@ import * as arrayMove from 'array-move';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject, IMaterialScaffold, IPanel } from '../../../interface';
+import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -43,6 +43,8 @@ class Project implements IProject {
   public readonly packagePath: string;
 
   public panels: IPanel[] = [];
+
+  public adapter: {[name: string]: IBaseModule} = {};
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -94,17 +96,12 @@ class Project implements IProject {
   }
 
   private loadAdapter() {
-    const adapterModuleKeys = Object.keys(adapter);
-    for (const [name, Module] of Object.entries(adapter)) {
-      let project: IProject = clone(this);
-      for (const moduleKey of adapterModuleKeys) {
-        if (project[moduleKey]) {
-          delete project[moduleKey];
-        }
-      }
+    for (const [key, Module] of Object.entries(adapter)) {
+      const project: IProject = clone(this);
+      delete project.adapter;
 
-      const adapterModule = new Module(project);
-      this[camelCase(name)] = adapterModule;
+      const adapterModule = new Module({ project, storage });
+      this.adapter[camelCase(key)] = adapterModule;
 
       const {title, description, cover} = adapterModule;
       this.panels.push({
@@ -173,6 +170,15 @@ class Project implements IProject {
     this.panels = arrayMove(this.panels, oldIndex, newIndex);
     this.savePanelsToStore();
     return this.panels;
+  }
+
+  public toJSON() {
+    const { name, path, panels } = this;
+    return {
+      name,
+      path,
+      panels,
+    };
   }
 }
 

@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
@@ -12,19 +11,21 @@ import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 
 const MENU_CONFIG_VARIABLE = 'asideMenuConfig'; 
 
-export default class Menu extends EventEmitter implements IMenuModule {
+export default class Menu implements IMenuModule {
   public readonly title: string = '菜单管理';
   public readonly description: string = '展示项目中的所有菜单，支持对菜单的增删改。';
   public readonly cover: string = 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png';
   public readonly projectPath: string;
   public readonly project: IProject;
+  public readonly storage: any;
 
   public readonly path: string;
 
-  constructor(project: IProject) {
-    super();
-    this.projectPath = project.path;
-    this.path = path.join(this.projectPath, 'src', 'menuConfig.js');
+  constructor(params: {project: IProject; storage: any;}) {
+    const { project, storage } = params;
+    this.project = project;
+    this.storage = storage;
+    this.path = path.join(this.project.path, 'src', 'menuConfig.js');
   }
 
   private getFileAST(): any {
@@ -56,10 +57,11 @@ export default class Menu extends EventEmitter implements IMenuModule {
     };
   }
 
-  async bulkCreate(
-    data: IMenu[],
-    options: IMenuOptions = {}
-  ): Promise<void> {
+  async bulkCreate(params: {data: IMenu[], options: IMenuOptions}): Promise<void> {
+    let {
+      data = [],
+      options = {}
+    } = params;
     const { replacement = false } = options;
     const { asideMenuConfig } = await this.getAll();
     const menuFileAST = this.getFileAST();
