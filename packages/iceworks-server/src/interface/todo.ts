@@ -12,7 +12,7 @@ export interface ITodo {
   /**
    * 文件内的 todo
    */
-  messages: Array<{
+  messages: {
     /**
      * 在第几行
      */
@@ -22,7 +22,7 @@ export interface ITodo {
      * 文本
      */
     text: string;
-  }>;
+  }[];
 }
 
 export interface ITodoModule extends IBaseModule {

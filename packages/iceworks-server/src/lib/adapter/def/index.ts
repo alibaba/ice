@@ -17,8 +17,8 @@ export default class DEF implements IDEFModule {
   public readonly cover: string = 'https://img.alicdn.com/tfs/TB1qDkAXMFY.1VjSZFnXXcFHXXa-300-300.png';
   public project: IProject;
   public storage: any;
- 
-  constructor(params: {project: IProject; storage: any;}) {
+
+  constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
