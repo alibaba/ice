@@ -1,10 +1,10 @@
-
+const path = require('path');
 const icePluginWrapCode = require('ice-plugin-wrap-code');
 const getLoadScriptsCode = require('ice-plugin-wrap-externals/getLoadScriptsCode');
 const getSmartLoaderCode = require('./getSmartLoaderCode');
 
 module.exports = ({ chainWebpack, log, context }) => {
-  const { userConfig } = context;
+  const { userConfig, rootDir } = context;
   // inject code of getLoadScriptsCode
   icePluginWrapCode({ chainWebpack, log }, {
     addCodeBefore: `var initLoadUrls = (window.externalUrls || []).concat(window.customUrls || []);
@@ -27,7 +27,7 @@ module.exports = ({ chainWebpack, log, context }) => {
     const rule = config.module.rule('runtime-publicPath').test(/\.jsx?|\.tsx?$/);
     Object.keys(entries).forEach((key) => {
       // only include entry path
-      rule.include.add(new RegExp(entries[key][0]));
+      rule.include.add(new RegExp(path.resolve(rootDir, entries[key][0])));
     });
     rule.use('publicpath-loader').loader(require.resolve('./runtimePublicPathLoader')).options({});
     rule.before('jsx');

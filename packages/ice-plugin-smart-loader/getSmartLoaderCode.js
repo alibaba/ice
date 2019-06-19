@@ -22,7 +22,7 @@ if (search.debug) {
   var originValue = '127.0.0.1'; // can not be override
   var originPort = search.debugPort || '3333';
   var originPath = search.debugPath || '/${outputDir}/${outputAssetsPath.js ? `${outputAssetsPath.js}/index.js` : 'index.js'}';
-  var outputPath = search.ouputPath || '${outputDir}';
+  var outputPath = search.hasOwnProperty('outputPath') ? search.outputPath : '${outputDir}';
   if (window.ICE.debug) {
     window.ICE.debug.origin = originValue;
     window.ICE.debug.port = originPort;
