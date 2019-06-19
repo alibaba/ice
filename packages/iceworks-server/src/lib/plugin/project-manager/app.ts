@@ -3,8 +3,6 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as npmRunPath from 'npm-run-path';
-import * as os from 'os';
 import * as mv from 'mv';
 import * as clone from 'lodash.clone';
 import * as mkdirp from 'mkdirp';
@@ -25,12 +23,6 @@ const existsAsync = util.promisify(fs.exists);
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 const mvAsync = util.promisify(mv);
-
-const isWin = os.type() === 'Windows_NT';
-
-// const settings = require('./services/settings');
-// settings.get('registry')
-const registry = 'https://registry.npm.taobao.org';
 
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
@@ -64,33 +56,7 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    // https://github.com/sindresorhus/npm-run-path
-    // Returns the augmented process.env object.
-    const npmEnv = npmRunPath.env();
-
-    // Merge process.env、npmEnv and custom environment variables
-    const env = Object.assign({}, process.env, npmEnv, {
-      npm_config_registry: registry,
-      yarn_registry: registry,
-      CLICOLOR: 1,
-      FORCE_COLOR: 1,
-      COLORTERM: 'truecolor',
-      TERM: 'xterm-256color',
-      ICEWORKS_IPC: 'yes',
-    });
-
-    const pathEnv = [process.env.PATH, npmEnv.PATH].filter(
-      (p) => !!p
-    );
-
-    if (isWin) {
-      // do something
-    } else {
-      pathEnv.push('/usr/local/bin');
-      env.PATH = pathEnv.join(path.delimiter);
-    }
-
-    return env;
+    return process.env;
   }
 
   private loadAdapter() {
