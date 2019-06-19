@@ -9,7 +9,7 @@ import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
-import CreatePageModal from './CreatePageModal';
+import BuildPageModal from './BuildPageModal';
 
 const PagePanel = () => {
   const [deleteName, setDeleteName] = useState('');
@@ -18,8 +18,8 @@ const PagePanel = () => {
     toggleModal: toggleDeleteModal,
   } = useModal();
   const {
-    on: onCreateModal,
-    setModal: setCreateModal,
+    on: onBuildPageModal,
+    setModal: setBuildPageModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
   const menuStore = stores.useStore('menu');
@@ -31,7 +31,7 @@ const PagePanel = () => {
   }
 
   function onCreate() {
-    setCreateModal(true);
+    setBuildPageModal(true);
   }
 
   function onDelete(name) {
@@ -86,7 +86,7 @@ const PagePanel = () => {
 
     logger.info('created menu.');
 
-    setCreateModal(false);
+    setBuildPageModal(false);
 
     Message.show({
       align: 'tr tr',
@@ -123,9 +123,9 @@ const PagePanel = () => {
           onOk={deletePage}
           page={pagePreDelete}
         />
-        {onCreateModal ? <CreatePageModal
-          on={onCreateModal}
-          onCancel={() => setCreateModal(false)}
+        {onBuildPageModal ? <BuildPageModal
+          on={onBuildPageModal}
+          onCancel={() => setBuildPageModal(false)}
           onOk={createPage}
         /> : null}
         {

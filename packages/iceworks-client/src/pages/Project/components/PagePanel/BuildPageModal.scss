@@ -6,9 +6,9 @@
   flex-direction: row;
 
   .blocks {
-    width: 700px;
+    width: 800px;
+    padding: 2px 150px;
     overflow-y: auto;
-    padding: 2px;
 
     .empty {
       display: block;
@@ -24,7 +24,7 @@
 
     .item {
       width: 100%;
-      height: 120px;
+      // height: 120px;
       position: relative;
       margin-bottom: 4px;
       overflow: hidden;

@@ -18,7 +18,7 @@ import {
 } from 'react-sortable-hoc';
 import pageStores from '../../stores';
 import SavePageModal from './SavePageModal';
-import styles from './CreatePageModal.module.scss';
+import styles from './BuildPageModal.module.scss';
 
 const DEFAULT_CATEGORY = '全部';
 
@@ -179,7 +179,7 @@ const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSo
   );
 });
 
-const CreatePageModal = ({
+const BuildPageModal = ({
   on, onCancel, onOk,
 }) => {
   const {
@@ -188,7 +188,6 @@ const CreatePageModal = ({
   } = useModal();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
-  const [page] = pageStores.useStores(['page']);
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
   const { dataSource } = material;
   const { resource } = dataSource;
@@ -200,16 +199,13 @@ const CreatePageModal = ({
   }
 
   function onCreateOk() {
-    page.setData({
-      blocks: selectedBlocks,
-    });
     setSaveModal(true);
   }
 
   async function onSaveOk(data) {
     await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
     await onOk({
-      ...page.dataSource,
+      blocks: selectedBlocks,
       ...data,
     });
     await progress.hide();
@@ -298,10 +294,10 @@ const CreatePageModal = ({
   );
 };
 
-CreatePageModal.propTypes = {
+BuildPageModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default CreatePageModal;
+export default BuildPageModal;
