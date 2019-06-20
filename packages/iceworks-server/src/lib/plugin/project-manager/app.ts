@@ -77,13 +77,13 @@ class Project implements IProject {
       const adapterModule = new Module({ project, storage });
       this.adapter[camelCase(name)] = adapterModule;
 
-      const {title, description, cover} = adapterModule;
+      const {title, description, cover, isAvailable } = adapterModule;
       this.panels.push({
         name,
         title,
         description,
         cover,
-        isAvailable: true,
+        isAvailable,
       });
     }
   }
@@ -96,7 +96,7 @@ class Project implements IProject {
   private pullPanels() {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
-    
+
     if (projectPanelSettings) {
       const { panels } = projectPanelSettings;
 
@@ -116,7 +116,7 @@ class Project implements IProject {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
     const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
-    
+
     if (projectPanelSettings) {
       projectPanelSettings.panels = panels;
     } else {

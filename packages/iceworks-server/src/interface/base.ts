@@ -8,9 +8,9 @@ export interface IContext {
 
 export interface IPanel {
   isAvailable: boolean;
-  name: string; 
-  title: string; 
-  description?: string; 
+  name: string;
+  title: string;
+  description?: string;
   cover?: string;
 }
 
@@ -70,6 +70,7 @@ export interface IProject {
 export interface IBaseModule {
   project: IProject;
   storage: any;
+  isAvailable: boolean;
   title: string;
   description?: string;
   cover?: string;

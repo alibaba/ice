@@ -2,11 +2,15 @@ import * as path from 'path';
 import { getCLIConf, setCLIConf } from '../utils/cliConf';
 import { ICLIConf, IProject, IConfigurationModule, IConfParam } from '../../../interface';
 import { CLI_CONF } from './const';
+import config from '../config';
+
+const { title,  description, cover, isAvailable } = config['configuration'];
 
 export default class Configuration implements IConfigurationModule {
-  public readonly title: string = '工程配置';
-  public readonly description: string = '工程相关配置的管理。';
-  public readonly cover: string = '';
+  public readonly title: string = title;
+  public readonly description: string = description;
+  public readonly cover: string = cover;
+  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
-import useModal from '@hooks/useModal';
 import ErrorBoundary from '@components/ErrorBoundary';
 import Icon from '@components/Icon';
 import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
@@ -21,8 +20,8 @@ import {
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
-import PanelSettingModal from './components/PanelSettingModal';
-import Guide from './components/Guide';
+import PanelSetting from './components/PanelSetting';
+import QuickStart from './components/QuickStart';
 import projectStores from './stores';
 import panels from './panels';
 import styles from './index.module.scss';
@@ -52,7 +51,12 @@ const SortableWrap = SortableContainer(({ projectPanels, isSorting }) => {
         const Panel = panels[name];
         return Panel && isAvailable ? (
           <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
-            <SortableItem key={index} index={index} Panel={Panel} isSorting={isSorting} />
+            <SortableItem
+              Panel={Panel}
+              key={index}
+              index={index}
+              isSorting={isSorting}
+            />
           </ErrorBoundary>
         ) : null;
       })}
@@ -90,10 +94,10 @@ const Project = ({ history }) => {
     Todo: todoStore,
   };
   const [isSorting, setIsSorting] = useState(false);
-  const {
-    on: onPanelSettingModal,
-    setModal: setPanelSettingModal,
-  } = useModal();
+  const [
+    panelSettingVisible,
+    setPanelSettingVisible,
+  ] = useState(false);
 
   const {
     material,
@@ -145,8 +149,8 @@ const Project = ({ history }) => {
     setResetModal(true);
   }
 
-  async function onOpenPanelSetting() {
-    setPanelSettingModal(true);
+  async function onTogglePanelSetting() {
+    setPanelSettingVisible(!panelSettingVisible);
   }
 
   function onSortStart() {
@@ -207,6 +211,8 @@ const Project = ({ history }) => {
       >
         <FormattedMessage id="iceworks.project.create.init.content" />
       </Modal>
+
+      {/* Render panel */}
       {projects.length && project.panels.length ? (
         <div className={styles.main}>
           <SortableWrap
@@ -218,27 +224,33 @@ const Project = ({ history }) => {
             projectPanels={project.panels}
             isSorting={isSorting}
           />
-          <div className={styles.opts}>
-            <div onClick={onOpenPanelSetting} className={styles.settings}>
-              <Icon type="settings" size="medium" />
-              设置
-            </div>
-            <PanelSettingModal
-              on={onPanelSettingModal}
-              onCancel={() => setPanelSettingModal(false)}
-              panels={project.panels.filter(({ name }) => panels[name])}
-              onChange={onChangeProjectPanel}
-            />
-          </div>
         </div>
       ) : (
-        <Guide
+        <QuickStart
           onOpenProject={onOpenProject}
           onCreateProject={onOpenCreateProject}
           scaffolds={material.recommendScaffolds}
           createProject={(scaffoldData) => setCreateProjectModal(true, scaffoldData)}
         />
       )}
+
+      {/* Panel setting */}
+      <div className={styles.panelSetting}>
+        <div
+          onClick={onTogglePanelSetting}
+          className={cx({
+            [styles.button]: true, [styles.isVisible]: panelSettingVisible,
+          })}
+        >
+          <Icon type={panelSettingVisible ? 'close' : 'settings'} size="medium" />
+        </div>
+        {panelSettingVisible ?
+          <PanelSetting
+            panels={project.panels.filter(({ name }) => panels[name])}
+            onChange={onChangeProjectPanel}
+          /> : null
+        }
+      </div>
     </div>
   );
 };
