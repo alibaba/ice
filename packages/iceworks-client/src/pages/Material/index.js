@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
 import useMaterial from '@hooks/useMaterial';
-import useModal from '@hooks/useModal';
 import useDependency from '@hooks/useDependency';
 import CreateProjectModal from '@components/CreateProjectModal';
 import SubMenu from './components/SubMenu';
