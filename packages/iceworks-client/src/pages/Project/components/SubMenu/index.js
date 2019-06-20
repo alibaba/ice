@@ -2,8 +2,9 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Button, Badge } from '@alifd/next';
 import SubMenu from '@components/SubMenu';
-import { Icon, Button, Badge } from '@alifd/next';
+import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
 const ProjectSubMenu = ({
@@ -34,7 +35,7 @@ const ProjectSubMenu = ({
                   </div>
                   <Icon
                     className={styles.icon}
-                    type="ashbin"
+                    type="trash"
                     size="xs"
                     onClick={(e) => {
                       e.preventDefault();
@@ -49,11 +50,11 @@ const ProjectSubMenu = ({
         </div>
         <div className={styles.opts}>
           <Button className={styles.btn} type="secondary" size="medium" onClick={onOpenProject}>
-            <Icon type="download" size="xl" />
+            <Icon type="package" size="small" />
             <FormattedMessage id="iceworks.project.submenu.opts.openProject" />
           </Button>
           <Button className={styles.btn} type="primary" size="medium" onClick={onCreateProject}>
-            <Icon type="add" size="xl" />
+            <Icon type="plus" size="small" />
             <FormattedMessage id="iceworks.project.submenu.opts.createProject" />
           </Button>
         </div>
