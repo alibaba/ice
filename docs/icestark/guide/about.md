@@ -13,7 +13,7 @@ order: 0
 
 ## 什么是 icestark
 
-[icestark](https://github.com/ice-lab/icestark) 是针对大型中后台多应用共存的解决方案。它允许你：
+[icestark](https://github.com/ice-lab/icestark) 是针对大型中后台多应用共存的解决方案。他可以：
 
 - 以路由为基础，模块化方式组合多个 SPA 应用
 - 多个应用间保持仓库独立，实现业务解耦、独立开发部署
