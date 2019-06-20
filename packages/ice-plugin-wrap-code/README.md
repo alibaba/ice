@@ -22,13 +22,6 @@ module.exports = {
       addCodeBefore: () => {
         return 'console.log("some code before entry")';
       },
-      fileMatch: (chunkName, compilerEntry, compilation) => {
-        // 指定需要添加代码的目标文件
-        if (chunkName.indexOf('target')) {
-          return true;
-        }
-        return false;
-      },
     }
   ]
 }
