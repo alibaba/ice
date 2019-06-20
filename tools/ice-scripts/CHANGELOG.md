@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.2
+
+- [feat] 支持通过 `--config` 指定配置文件 #2188
+- [feat] 启动时 Node 环境检测 #2145
+- [fix] 修复 Windows 下构建输出路径问题 #2166
+- [feat] 新增 ice-plugin-wrap-code 插件，支持编译后的脚本注入
+- [feat] 新增 ice-plugin-load-asset 插件，支持资源加载
+- [feat] 新增 ice-plugin-smart-debug 插件，支持代码调试
+
 ## 2.1.1
 
 - [fix] 修改命令参数失效问题
