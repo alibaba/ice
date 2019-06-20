@@ -10,6 +10,7 @@
     "@alifd/theme-iceworks-dark": "^0.1.1",
     "@alifd/theme-iceworks-light": "^0.1.0",
     "@icedesign/dynamic-icon": "^0.1.8",
+    "@icedesign/ellipsis": "^1.0.4",
     "@icedesign/notification": "^1.0.5",
     "alife-logger": "^1.5.1",
     "classnames": "^2.2.6",
