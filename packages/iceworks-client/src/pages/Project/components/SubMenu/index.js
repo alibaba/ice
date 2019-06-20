@@ -2,10 +2,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import SubMenu from '@components/SubMenu';
 import { Button, Badge } from '@alifd/next';
-import styles from './index.module.scss';
+import SubMenu from '@components/SubMenu';
 import Icon from '@components/Icon';
+import styles from './index.module.scss';
 
 const ProjectSubMenu = ({
   projects, project, onSwitchProject, onDeleteProject, onCreateProject, onOpenProject,

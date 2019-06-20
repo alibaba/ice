@@ -1,9 +1,12 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import SubMenu from '@components/SubMenu';
 import { FormattedMessage } from 'react-intl';
-import Icon from '@components/Icon';
 import { Button } from '@alifd/next';
+
+import Icon from '@components/Icon';
+import SubMenu from '@components/SubMenu';
+
 import SubMenuItem from './SubMenuItem';
 import styles from './index.module.scss';
 
