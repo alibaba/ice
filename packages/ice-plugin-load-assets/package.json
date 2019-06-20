@@ -1,7 +1,7 @@
 {
-  "name": "ice-plugin-wrap-externals",
-  "version": "0.1.1",
-  "description": "ice plugin for load external scripts",
+  "name": "ice-plugin-load-assets",
+  "version": "0.1.0",
+  "description": "ice plugin for load assets",
   "main": "index.js",
   "keywords": [
     "ice",
