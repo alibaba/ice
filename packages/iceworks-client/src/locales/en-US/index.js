@@ -37,8 +37,6 @@ export default {
   // setting
   'iceworks.setting.general.title': 'General Setting',
   'iceworks.setting.general.language.title': 'Language',
-  'iceworks.setting.general.language.zh': '中文',
-  'iceworks.setting.general.language.en': 'English',
   'iceworks.setting.general.theme.title': 'Theme',
   'iceworks.setting.general.theme.dark': 'Dark',
   'iceworks.setting.general.theme.light': 'Light',
