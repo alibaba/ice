@@ -32,7 +32,7 @@ export default {
   'iceworks.setting.general.title': '通用设置',
   'iceworks.setting.general.language.title': '语言',
   'iceworks.setting.general.language.zh': '中文',
-  'iceworks.setting.general.language.en': '英文',
+  'iceworks.setting.general.language.en': 'English',
   'iceworks.setting.general.theme.title': '主题',
   'iceworks.setting.general.theme.dark': '深色',
   'iceworks.setting.general.theme.light': '浅色',
@@ -85,7 +85,7 @@ export default {
   'iceworks.project.panel.layout.none': '暂无布局',
 
   // project todo
-  'iceworks.project.panel.todo.title': '待办事项',
+  'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.todo.none': '代码中没有注释事项需要处理',
   'iceworks.project.panel.todo.example': '例如：// TODO XXXXXXX',
   'iceworks.project.panel.todo.refresh': '刷新',
