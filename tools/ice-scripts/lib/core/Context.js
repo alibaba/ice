@@ -16,7 +16,7 @@ module.exports = class Context {
     this.rootDir = rootDir;
     this.pkg = getPkgData(this.rootDir);
     // get user config form ice.config.js
-    this.userConfig = this.getUserConfig(this.rootDir);
+    this.userConfig = this.getUserConfig();
     this.plugins = this.getPlugins();
     // init chainWebpackFns and hooks
     this.chainWebpackFns = [];
@@ -40,7 +40,7 @@ module.exports = class Context {
         // eslint-disable-next-line import/no-dynamic-require
         userConfig = require(iceConfigPath);
       } catch (err) {
-        log.error('Fail to load ice.config.js, use default config instead');
+        log.error(`Fail to load config file ${iceConfigPath}, use default config instead`);
         console.error(err);
         process.exit(1);
       }
