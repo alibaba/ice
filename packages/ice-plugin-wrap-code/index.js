@@ -2,15 +2,13 @@ const path = require('path');
 const WrapCodePlugin = require('./wrapCodeWebpackPlugin');
 
 module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
-  const { addCodeBefore, addCodeAfter, fileMatch, id = '', debug } = pluginOptions;
+  const { addCodeBefore, addCodeAfter, fileMatch, id = '' } = pluginOptions;
   if (addCodeBefore || addCodeAfter) {
     // use id to specify a new plugin name
     chainWebpack((config) => {
       const pluginName = `${id}WrapCodePlugin`;
       if (config.plugins.get(pluginName)) {
-        if (debug) {
-          log.info(`wrap code plugin: ${id} has been already defined`);
-        }
+        log.verbose(`wrap code plugin: ${id} has been already defined`);
       } else {
         if (fileMatch && typeof fileMatch !== 'function') {
           log.error('fileMatch must be a function');
@@ -26,9 +24,7 @@ module.exports = ({ chainWebpack, log }, pluginOptions = {}) => {
               // index.js => index, index.[hash:6].js => index
               const assetsName = path.basename(chunkName, path.extname(chunkName)).split('.')[0];
               if (entryKeys.indexOf(assetsName) !== -1) {
-                if (debug) {
-                  log.info(`\nadd code to ${chunkName}`);
-                }
+                log.verbose(`\nadd code to ${chunkName}`);
                 return true;
               }
             }
