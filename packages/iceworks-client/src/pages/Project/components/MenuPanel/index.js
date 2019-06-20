@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
-import { Icon } from '@alifd/next';
+import Icon from '@components/Icon';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
 import CreateMenuModal from './CreateMenuModal';
 import DeleteMenuModal from './DeleteMenuModal';
@@ -94,8 +94,8 @@ const MenuPanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.menu.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="refresh" size="xs" onClick={onRefresh} />
-            <Icon className={styles.icon} type="add" size="xs" onClick={onOpenCreateModal} />
+            <Icon className={styles.icon} type="reload" size="small" onClick={onRefresh} />
+            <Icon className={styles.icon} type="plus" size="small" onClick={onOpenCreateModal} />
           </div>
         </div>
       }

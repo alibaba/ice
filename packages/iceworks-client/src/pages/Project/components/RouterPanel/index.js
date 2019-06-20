@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
-import { Icon, Message } from '@alifd/next';
+import { Message } from '@alifd/next';
+import Icon from '@components/Icon';
+
 import CreateRouterModal from './CreateRouterModal';
 import DeleteRouterModal from './DeleteRouterModal';
 
@@ -135,7 +137,7 @@ const RouterPanel = () => {
           <span>
             {Array.isArray(routes) && (
               <Icon
-                type="add"
+                type="plus"
                 title="创建"
                 size="xs"
                 className={styles.icon}
@@ -156,7 +158,7 @@ const RouterPanel = () => {
             />
             <Icon
               className={styles.icon}
-              type="ashbin"
+              type="trash"
               size="xs"
               onClick={() => onOpenDeleteModal({
                 index,
@@ -184,8 +186,8 @@ const RouterPanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="refresh" size="xs" onClick={onRefresh} />
-            <Icon className={styles.icon} type="add" size="xs" onClick={() => onOpenCreateModal()} />
+            <Icon className={styles.icon} type="reload" size="small" onClick={onRefresh} />
+            <Icon className={styles.icon} type="plus" size="small" onClick={() => onOpenCreateModal()} />
           </div>
         </div>
       }
