@@ -3,8 +3,6 @@ const program = require('commander');
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
-const validationSassAvailable = require('../lib/utils/validationSassAvailable');
-const checkUpdater = require('../lib/utils/checkUpdater');
 const getCliOptions = require('../lib/utils/getCliOptions');
 const Context = require('../lib/core/Context');
 const log = require('../lib/utils/log');
@@ -19,8 +17,6 @@ program
   .option('--config <config>', 'use custom config')
   .parse(process.argv);
 
-validationSassAvailable();
-
 // 是否可交互：目前没用
 const isInteractive = process.stdout.isTTY;
 
@@ -28,7 +24,6 @@ const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const defaultPort = parseInt(DEFAULT_PORT, 10);
 
 (async () => {
-  await checkUpdater();
   let newPort = await detect(defaultPort);
   if (newPort !== defaultPort && isInteractive) {
     const question = {
