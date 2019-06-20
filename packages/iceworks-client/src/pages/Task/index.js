@@ -123,7 +123,7 @@ const Task = ({ history, intl }) => {
     term.writeChunk(data.chunk);
   }, [status]);
 
-  const data = task.dataSource[type] ? task.dataSource[type] : {};
+  const data = task.dataSource[type] ? task.dataSource[type] : [];
 
   return (
     <Card
@@ -146,7 +146,7 @@ const Task = ({ history, intl }) => {
 
       <TaskModal
         on={on}
-        data={data.conf || []}
+        data={data}
         toggleModal={toggleModal}
         onConfirm={onConfirm}
       />
