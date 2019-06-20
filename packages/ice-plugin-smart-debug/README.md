@@ -1,4 +1,4 @@
-## ice-plugin-smart-loader
+## ice-plugin-smart-debug
 
 Feature：
 
@@ -15,7 +15,7 @@ Usage:
 // ice.config.js
 module.exports = {
   plugins: [
-    'ice-plugin-smart-loader'
+    'ice-plugin-smart-debug'
   ]
 }
 ```

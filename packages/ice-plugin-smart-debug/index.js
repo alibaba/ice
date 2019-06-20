@@ -1,13 +1,13 @@
 const path = require('path');
 const icePluginWrapCode = require('ice-plugin-wrap-code');
-const getLoadScriptsCode = require('ice-plugin-wrap-externals/getLoadScriptsCode');
+const getLoadScriptsCode = require('ice-plugin-load-assets/getLoadScriptsCode');
 const getSmartLoaderCode = require('./getSmartLoaderCode');
 
 module.exports = ({ chainWebpack, log, context }) => {
   const { userConfig, rootDir } = context;
   // inject code of getLoadScriptsCode
   icePluginWrapCode({ chainWebpack, log }, {
-    addCodeBefore: `var initLoadUrls = (window.externalUrls || []).concat(window.customUrls || []);
+    addCodeBefore: `var initLoadUrls = (window.assetsUrls || []).concat(window.customUrls || []);
       ${getLoadScriptsCode()}
       __loadUrls__(initLoadUrls, function(){`,
     addCodeAfter: '})',
