@@ -38,7 +38,6 @@ function useProject({ panelStores } = {}) {
     let newProject;
     try {
       newProject = await projectStore.refresh();
-      console.log('newProject', newProject);
     } catch (err) {
       // error handle
     }
