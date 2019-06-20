@@ -9,5 +9,19 @@ import Router from './router';
 import Git from './git';
 import DEF from './def';
 import OSS from './oss';
+import Todo from './todo';
 
-export { Page, Dependency, Configuration, Task, Layout, Git, DEF, OSS, Menu, Router };
+export {
+  Page,
+  Dependency,
+  Configuration,
+  Task,
+  Layout,
+  Menu,
+  Router,
+
+  Git,
+  DEF,
+  OSS,
+  Todo
+};
