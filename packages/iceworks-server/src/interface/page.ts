@@ -88,9 +88,9 @@ export interface IPageModule extends IBaseModule {
   /**
    * 获取单个页面的信息
    *
-   * @param pageName 页面名
+   * @param name 页面名
    */
-  getOne(pageName): Promise<IPage>;
+  getOne(name): Promise<IPage>;
 
   /**
    * 获取项目内的页面信息
@@ -132,26 +132,23 @@ export interface IPageModule extends IBaseModule {
   /**
    * 获取区块列表
    *
-   * @param pageName 页面名称，如果无则获取项目的区块
+   * @param name 页面名称，如果无则获取项目的区块
    */
-  getBlocks(pageName?: string): Promise<IProjectBlock[]>;
+  getBlocks(name?: string): Promise<IProjectBlock[]>;
 
   /**
    * 添加区块
    *
    * @param block 区块信息
-   * @param pageName 页面名称，如果无则添加区块的项目
+   * @param name 页面名称，如果无则添加区块的项目
    */
-  createBlock(block: IMaterialBlock, pageName?: string): Promise<IProjectBlock>;
+  addBlock(params: {block: IMaterialBlock, name?: string;}): Promise<void>;
 
   /**
    * 添加区块列表
    *
    * @param blocks 区块列表
-   * @param pageName 页面名称，如果无则添加区块列表到项目
+   * @param name 页面名称，如果无则添加区块列表到项目
    */
-  createBlocks(
-    blocks: IMaterialBlock[],
-    pageName?: string
-  ): Promise<IProjectBlock[]>;
+  addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void>;
 }

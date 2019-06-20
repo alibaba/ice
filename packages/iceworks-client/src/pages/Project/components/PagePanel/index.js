@@ -13,13 +13,18 @@ import BuildPageModal from './BuildPageModal';
 
 const PagePanel = () => {
   const [deleteName, setDeleteName] = useState('');
+  const [editingName, setEditingName] = useState('');
   const {
     on: onDeleteModal,
     toggleModal: toggleDeleteModal,
   } = useModal();
   const {
-    on: onBuildPageModal,
-    setModal: setBuildPageModal,
+    on: onCreatePageModal,
+    setModal: setCreatePageModal,
+  } = useModal();
+  const {
+    on: onAddBlocksModal,
+    setModal: setAddBlocksModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
   const menuStore = stores.useStore('menu');
@@ -31,12 +36,17 @@ const PagePanel = () => {
   }
 
   function onCreate() {
-    setBuildPageModal(true);
+    setCreatePageModal(true);
   }
 
   function onDelete(name) {
     setDeleteName(name);
     toggleDeleteModal();
+  }
+
+  function onAddBlocks(name) {
+    setEditingName(name);
+    setAddBlocksModal(true);
   }
 
   async function deletePage() {
@@ -86,7 +96,7 @@ const PagePanel = () => {
 
     logger.info('created menu.');
 
-    setBuildPageModal(false);
+    setCreatePageModal(false);
 
     Message.show({
       align: 'tr tr',
@@ -99,9 +109,27 @@ const PagePanel = () => {
     routerStore.refresh();
   }
 
+  async function addBlocks(newBlocks) {
+    await pages.addBlocks({ blocks: newBlocks, name: editingName });
+
+    setAddBlocksModal(false);
+
+    Message.show({
+      align: 'tr tr',
+      type: 'success',
+      content: '添加区块成功',
+    });
+
+    pages.refresh();
+  }
+
   const pagePreDelete =
     pages.dataSource.find(({ name }) => {
       return name === deleteName;
+    }) || {};
+  const pageEditing =
+    pages.dataSource.find(({ name }) => {
+      return name === editingName;
     }) || {};
 
   return (
@@ -123,11 +151,25 @@ const PagePanel = () => {
           onOk={deletePage}
           page={pagePreDelete}
         />
-        {onBuildPageModal ? <BuildPageModal
-          on={onBuildPageModal}
-          onCancel={() => setBuildPageModal(false)}
-          onOk={createPage}
-        /> : null}
+        {
+          onCreatePageModal ?
+            <BuildPageModal
+              on={onCreatePageModal}
+              onCancel={() => setCreatePageModal(false)}
+              onOk={createPage}
+            /> :
+            null
+        }
+        {
+          onAddBlocksModal ?
+            <BuildPageModal
+              on={onAddBlocksModal}
+              onCancel={() => setAddBlocksModal(false)}
+              onOk={addBlocks}
+              existedBlocks={pageEditing.blocks}
+            /> :
+            null
+        }
         {
           dataSource.length ?
             <div>
@@ -137,6 +179,7 @@ const PagePanel = () => {
                     <li className={styles.item} key={name}>
                       <strong>{name}</strong>
                       <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
+                      <Icon className={styles.icon} type="new-page" size="xs" onClick={() => onAddBlocks(name)} />
                       <Icon className={styles.icon} type="trash" size="xs" onClick={() => onDelete(name)} />
                     </li>
                   );

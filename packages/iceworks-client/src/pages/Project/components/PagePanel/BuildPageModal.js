@@ -179,7 +179,7 @@ const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSo
 });
 
 const BuildPageModal = ({
-  on, onCancel, onOk,
+  on, onCancel, onOk, existedBlocks,
 }) => {
   const {
     on: onSaveModal,
@@ -197,8 +197,13 @@ const BuildPageModal = ({
     setSaveModal(false);
   }
 
-  function onCreateOk() {
-    setSaveModal(true);
+  async function onCreateOk() {
+    // If has exists blocks, it is represented in edit mode
+    if (existedBlocks.length) {
+      await onOk(selectedBlocks);
+    } else {
+      setSaveModal(true);
+    }
   }
 
   async function onSaveOk(data) {
@@ -260,17 +265,30 @@ const BuildPageModal = ({
         key="createModal"
       >
         <div className={styles.wrap}>
-          <SelectedBlocks
-            helperClass={styles.blockIsDraging}
-            blocks={selectedBlocks}
-            onDelete={onDelete}
-            onChange={onNameChange}
-            useDragHandle
-            lockAxis="y"
-            onSortStart={onSortStart}
-            onSortEnd={onSortEnd}
-            isSorting={isSorting}
-          />
+          <div className={styles.main}>
+            <div className={styles.existed}>
+              {
+                existedBlocks.map(({ name }, index) => {
+                  return (
+                    <div key={index} className={styles.item}>
+                      {name}
+                    </div>
+                  );
+                })
+              }
+            </div>
+            <SelectedBlocks
+              helperClass={styles.blockIsDraging}
+              blocks={selectedBlocks}
+              onDelete={onDelete}
+              onNameChange={onNameChange}
+              useDragHandle
+              lockAxis="y"
+              onSortStart={onSortStart}
+              onSortEnd={onSortEnd}
+              isSorting={isSorting}
+            />
+          </div>
           <div className={styles.material}>
             {
               materialSources.length ?
@@ -293,10 +311,15 @@ const BuildPageModal = ({
   );
 };
 
+BuildPageModal.defaultProps = {
+  existedBlocks: [],
+};
+
 BuildPageModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  existedBlocks: PropTypes.array,
 };
 
 export default BuildPageModal;

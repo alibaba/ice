@@ -11,4 +11,7 @@ export default {
   async create(data) {
     await socket.emit('adapter.page.create', data);
   },
+  async addBlocks(data) {
+    await socket.emit('adapter.page.addBlocks', data);
+  },
 };
