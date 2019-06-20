@@ -65,6 +65,12 @@ const config = {
     cover: '',
     isAvailable: true
   },
+  todo: {
+    title: '待办事项',
+    description: '收集项目代码中的TODO、FIXME、HACK等需要处理的注释信息。',
+    cover: 'https://img.alicdn.com/tfs/TB1zZJKdEGF3KVjSZFmXXbqPXXa-300-300.png',
+    isAvailable: false
+  },
 }
 
 
