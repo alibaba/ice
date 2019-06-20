@@ -7,6 +7,7 @@ const Context = require('../lib/core/Context');
 const log = require('../lib/utils/log');
 
 program
+  .option('--config <config>', 'use custom config')
   .parse(process.argv);
 
 validationSassAvailable();
