@@ -1,6 +1,6 @@
 {
   "name": "ice-plugin-wrap-code",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ice plugin for inject code to files",
   "main": "index.js",
   "keywords": [
