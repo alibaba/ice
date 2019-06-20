@@ -73,7 +73,7 @@ const Project = ({ history }) => {
     setResetModal,
   } = useDependency();
   const [
-    pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore,
+    pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore, todoStore,
   ] = projectStores.useStores([
     'pages',
     'layouts',
@@ -81,6 +81,7 @@ const Project = ({ history }) => {
     'oss',
     'menu',
     'routes',
+    'todo',
   ]);
   const panelStores = {
     Page: pagesStore,
@@ -90,6 +91,7 @@ const Project = ({ history }) => {
     Router: routesStore,
     Git: gitStore,
     OSS: ossStore,
+    Todo: todoStore,
   };
   const [isSorting, setIsSorting] = useState(false);
   const [
