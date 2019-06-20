@@ -1,8 +1,10 @@
+@import '../../variables.scss';
+
 .container {
   position: relative;
   margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(163, 177, 191, 0.35);
-  background: #fff;
+  box-shadow: 0 8px 24px $material-card-shadow;
+  background: $panel-bg;
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
@@ -20,7 +22,7 @@
 
 .title {
   margin: 0 0 5px;
-  color: #333;
+  color: $text-color-secondary;
   height: 30px;
   line-height: 1.6;
   font-weight: 500;
@@ -31,6 +33,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: $text-color-primary;
 }
 
 .actions {
@@ -55,8 +58,8 @@
     line-height: 35px;
     font-size: 14px;
     font-weight: bold;
-    background: #2077ff;
-    color: #fff;
+    background: $brand-color-primary;
+    color: $text-color-inverse;
     cursor: pointer;
 
     .githubImg,

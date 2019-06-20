@@ -6,11 +6,11 @@ export default {
   },
 
   async getCLIConf() {
-    this.dataSource.cli = await socket.emit('project.configuration.getCLIConf');
+    this.dataSource.cli = await socket.emit('adapter.configuration.getCLIConf');
   },
 
   async setCLIConf(params) {
-    const result = await socket.emit('project.configuration.setCLIConf', {
+    const result = await socket.emit('adapter.configuration.setCLIConf', {
       options: params,
     });
 

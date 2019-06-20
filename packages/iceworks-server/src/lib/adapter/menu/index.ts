@@ -13,15 +13,20 @@ import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
 const ASIDE_CONFIG_VARIABLE = 'asideMenuConfig';
 const HEADER_CONFIG_VARIABLE = 'headerMenuConfig';
 
-export default class Menu extends EventEmitter implements IMenuModule {
+export default class Menu implements IMenuModule {
+  public readonly title: string = '菜单管理';
+  public readonly description: string = '展示项目中的所有菜单，支持对菜单的增删改。';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png';
   public readonly projectPath: string;
   public readonly project: IProject;
+  public storage: any;
 
   public readonly path: string;
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any; }) {
+    const { project, storage } = params;
     this.projectPath = project.path;
+    this.storage = storage;
     this.path = path.join(this.projectPath, 'src', 'menuConfig.js');
   }
 
@@ -54,13 +59,13 @@ export default class Menu extends EventEmitter implements IMenuModule {
     const getMenuCode = this.getMenuCode;
     traverse(menuFileAST, {
       VariableDeclarator({ node }) {
-        const asideMenuCode = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
-        const headerMenuCode = getMenuCode(node, HEADER_CONFIG_VARIABLE);
-        if (asideMenuCode) {
-          asideMenuConfig = eval(asideMenuCode);
+        const _asideMenuConfig = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
+        const _headerMenuConfig = getMenuCode(node, HEADER_CONFIG_VARIABLE);
+        if (_asideMenuConfig) {
+          asideMenuConfig = eval(_asideMenuConfig);
         }
-        if (headerMenuCode) {
-          headerMenuConfig = eval(headerMenuCode);
+        if (_headerMenuConfig) {
+          headerMenuConfig = eval(_headerMenuConfig);
         }
       }
     });
@@ -71,10 +76,11 @@ export default class Menu extends EventEmitter implements IMenuModule {
     };
   }
 
-  async bulkCreate(
-    data: IMenu[],
-    options: IMenuOptions = {}
-  ): Promise<void> {
+  async bulkCreate(params: {data: IMenu[], options: IMenuOptions}): Promise<void> {
+    let {
+      data = [],
+      options = {}
+    } = params;
     const { replacement = false, type = 'aside' } = options;
     const { asideMenuConfig, headerMenuConfig } = await this.getAll();
     const menuFileAST = this.getFileAST();

@@ -22,7 +22,6 @@
     "loglevel-plugin-prefix": "^0.8.4",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
-    "querystringify": "^2.1.1",
     "react": "^16.8.6",
     "react-beforeunload": "^1.0.4",
     "react-document-title": "^2.0.3",

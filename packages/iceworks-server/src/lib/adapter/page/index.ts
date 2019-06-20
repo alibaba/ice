@@ -5,7 +5,6 @@ import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as mkdirp from 'mkdirp';
-import * as EventEmitter from 'events';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../../scanDirectory';
@@ -13,7 +12,7 @@ import getIceVersion from '../getIceVersion';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
-import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
+import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
@@ -31,14 +30,16 @@ const loadTemplate = async () => {
   };
 };
 
-export default class Page extends EventEmitter implements IPageModule {
+export default class Page implements IPageModule {
   public readonly project: IProject;
+  public readonly storage: any;
 
   public readonly path: string;
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any; }) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.path = path.join(this.project.path, 'src', 'pages');
   }
 
@@ -53,7 +54,7 @@ export default class Page extends EventEmitter implements IPageModule {
         birthtime,
         ctime,
         mtime,
-      }
+      };
     });
   }
 
@@ -63,7 +64,7 @@ export default class Page extends EventEmitter implements IPageModule {
     );
   }
 
-  private async installBlocksDependencies(blocks: IMaterialBlock[]) {
+  private async installBlocksDependencies(blocks: IMaterialBlock[], ctx: IContext) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
     const blocksDependencies: { [packageName: string]: string } = {};
@@ -81,7 +82,7 @@ export default class Page extends EventEmitter implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], this);
+      return await installDependency([{ package: packageName, version }], false, this.project, ctx.socket, 'page');
     }));
   }
 
@@ -125,11 +126,11 @@ export default class Page extends EventEmitter implements IPageModule {
 
   async getOne(): Promise<any> { }
 
-  async create(page: ICreatePageParam): Promise<any> {
+  async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
 
     // create page dir
-    this.emit('create.status', { text: '创建页面目录...', percent: 10 });
+    ctx.socket.emit('adapter.page.create.status', { text: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -143,15 +144,15 @@ export default class Page extends EventEmitter implements IPageModule {
     }
 
     // download blocks
-    this.emit('create.status', { text: '正在下载区块...', percent: 40 });
+    ctx.socket.emit('adapter.page.create.status', { text: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
-    this.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
-    await this.installBlocksDependencies(blocks);
+    ctx.socket.emit('adapter.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
+    await this.installBlocksDependencies(blocks, ctx);
 
     // create page file
-    this.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
+    ctx.socket.emit('adapter.page.create.status', { text: '正在创建页面文件...', percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
@@ -186,7 +187,8 @@ export default class Page extends EventEmitter implements IPageModule {
   async bulkCreate(): Promise<any> { }
 
   // TODO
-  async delete(pageName: string): Promise<any> {
+  async delete(params: {pageName: string}): Promise<any> {
+    const { pageName } = params;
     await rimrafAsync(path.join(this.path, pageName));
 
     // TODO rewrite routerConfig.js

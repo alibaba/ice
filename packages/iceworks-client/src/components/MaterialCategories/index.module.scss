@@ -1,21 +1,24 @@
+@import '../../variables.scss';
+
 .materialCategories {
   margin: 20px 0 20px;
   padding: 20px 10px;
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 6px 18px 0 rgba(82, 94, 102, 0.15);
+  background: $panel-bg;
+  box-shadow: 0 8px 24px $material-card-shadow;
   border-radius: 4px;
   li {
     float: left;
-    background: #fff;
+    background: $panel-bg;
     border-radius: 24px;
     margin: 10px;
     transition: all 0.3s ease;
+    color: $text-color-inverse;
     &.active {
-      background: #1b73ff;
-      a,
-      a:hover {
-        color: #fff;
+      background: $brand-color-primary;
+      span,
+      span:hover {
+        color: $text-color-inverse;
         transition: all 0.3s ease;
       }
     }
@@ -23,18 +26,20 @@
       margin-right: 10px;
     }
     &:hover {
-      color: #fff;
-      background: #1b73ff;
+      color: $text-color-inverse;
+      background: $brand-color-primary;
     }
-    a {
+    span {
       font-size: 13px;
       height: 24px;
       line-height: 24px;
       padding: 0 18px;
-      color: #666;
+      color: $text-color-secondary;
       display: block;
+      cursor: pointer;
+      
       &:hover {
-        color: #fff;
+        color: $text-color-inverse;
         text-decoration: none;
         transition: all 0.3s ease;
       }
