@@ -57,6 +57,24 @@ export default {
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
+  // project page
+  'iceworks.project.panel.page.create.title': 'Create Page',
+  'iceworks.project.panel.page.create.progress.start': 'Start create page...',
+  'iceworks.project.panel.page.create.builder.empty': 'Select the block from the right',
+  'iceworks.project.panel.page.delete.title': 'Delete Page',
+  'iceworks.project.panel.page.delete.content': 'Sure to delete {name} ？',
+  'iceworks.project.panel.page.save.title': 'Page Information',
+  'iceworks.project.panel.page.save.name.label': 'Page Name',
+  'iceworks.project.panel.page.save.name.placeholder': 'Please enter the page directory name, combination of letters and numbers, beginning with letters',
+  'iceworks.project.panel.page.save.routePath.label': 'Router Path',
+  'iceworks.project.panel.page.save.createRouterGroup.label': 'Whether to create a new router packet',
+  'iceworks.project.panel.page.save.parentRoutePath.label': 'Router Packet Path',
+  'iceworks.project.panel.page.save.parentRouteComponent.label': 'Router Packet Component',
+  'iceworks.project.panel.page.save.routePath.group.label': 'Selecting Group Path',
+  'iceworks.project.panel.page.save.routePath.placeholder': 'Enter a combination of lowercase letters and numbers to support secondary routing separated by `/`',
+  'iceworks.project.panel.page.save.menuName.label': 'Page Navigation Name',
+  'iceworks.project.panel.page.save.menuName.placeholder': 'No navigation items are generated for null',
+
   // project dependency
   'iceworks.project.panel.dependency.title': 'Dependency',
   'iceworks.project.panel.dependency.main.upgrade': 'Upgrade to {wantedVestion}',
