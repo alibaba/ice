@@ -3,16 +3,16 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as npmRunPath from 'npm-run-path';
-import * as os from 'os';
 import * as mv from 'mv';
 import * as clone from 'lodash.clone';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
+import * as orderBy from 'lodash.orderby';
+import * as arrayMove from 'array-move';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject, IMaterialScaffold, IBaseModule } from '../../../interface';
+import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -24,12 +24,6 @@ const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 const mvAsync = util.promisify(mv);
 
-const isWin = os.type() === 'Windows_NT';
-
-// const settings = require('./services/settings');
-// settings.get('registry')
-const registry = 'https://registry.npm.taobao.org';
-
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 
@@ -40,7 +34,7 @@ class Project implements IProject {
 
   public readonly packagePath: string;
 
-  public panels: string[] = [];
+  public panels: IPanel[] = [];
 
   public adapter: {[name: string]: IBaseModule} = {};
 
@@ -50,6 +44,7 @@ class Project implements IProject {
     this.packagePath = path.join(this.path, packageJSONFilename);
 
     this.loadAdapter();
+    this.assemblePanels();
   }
 
   public getPackageJSON() {
@@ -61,44 +56,84 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    // https://github.com/sindresorhus/npm-run-path
-    // Returns the augmented process.env object.
-    const npmEnv = npmRunPath.env();
-
-    // Merge process.env、npmEnv and custom environment variables
-    const env = Object.assign({}, process.env, npmEnv, {
-      npm_config_registry: registry,
-      yarn_registry: registry,
-      CLICOLOR: 1,
-      FORCE_COLOR: 1,
-      COLORTERM: 'truecolor',
-      TERM: 'xterm-256color',
-      ICEWORKS_IPC: 'yes',
-    });
-
-    const pathEnv = [process.env.PATH, npmEnv.PATH].filter(
-      (p) => !!p
-    );
-
-    if (isWin) {
-      // do something
-    } else {
-      pathEnv.push('/usr/local/bin');
-      env.PATH = pathEnv.join(path.delimiter);
-    }
-
-    return env;
+    return process.env;
   }
 
   private loadAdapter() {
-    for (const [key, Module] of Object.entries(adapter)) {
-      this.panels.push(key);
-
+    for (const [name, Module] of Object.entries(adapter)) {
       const project: IProject = clone(this);
       delete project.adapter;
 
-      this.adapter[camelCase(key)] = new Module({ project, storage });
+      const adapterModule = new Module({ project, storage });
+      this.adapter[camelCase(name)] = adapterModule;
+
+      const {title, description, cover} = adapterModule;
+      this.panels.push({
+        name,
+        title,
+        description,
+        cover,
+        isAvailable: true,
+      });
     }
+  }
+
+  private assemblePanels() {
+    this.pullPanels();
+    this.savePanels();
+  }
+
+  private pullPanels() {
+    const panelSettings = storage.get('panelSettings');
+    const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
+    
+    if (projectPanelSettings) {
+      const { panels } = projectPanelSettings;
+
+      panels.forEach(({ name: settingName, isAvailable }, index) => {
+        const panel: any = this.panels.find(({ name }) => settingName === name);
+        if (panel) {
+          panel.isAvailable = isAvailable;
+          panel.index = index;
+        }
+      });
+
+      this.panels = orderBy(this.panels, 'index');
+    }
+  }
+
+  private savePanels() {
+    const panelSettings = storage.get('panelSettings');
+    const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
+    const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
+    
+    if (projectPanelSettings) {
+      projectPanelSettings.panels = panels;
+    } else {
+      panelSettings.push({
+        projectPath: this.path,
+        panels,
+      });
+    }
+
+    storage.set('panelSettings', panelSettings);
+  }
+
+  public setPanel(params: {name: string; isAvailable: boolean;}): IPanel[] {
+    const {name, isAvailable} = params;
+    const panel = this.panels.find(({ name: settingName }) => settingName === name);
+    if (panel) {
+      panel.isAvailable = isAvailable;
+      this.savePanels();
+    }
+    return this.panels;
+  }
+
+  public sortPanels(params: { oldIndex: number; newIndex: number; }): IPanel[] {
+    const { oldIndex, newIndex } = params;
+    this.panels = arrayMove(this.panels, oldIndex, newIndex);
+    this.savePanels();
+    return this.panels;
   }
 
   public toJSON() {

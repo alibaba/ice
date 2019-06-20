@@ -16,10 +16,17 @@ export default {
   'iceworks.menu.task': 'Task',
   'iceworks.menu.task.dev': 'dev',
   'iceworks.menu.task.dev.desc': 'start server for development',
+  'iceworks.task.dev.start.msg': 'Running Server',
+  'iceworks.task.dev.stop.msg': 'Stop Server',
   'iceworks.menu.task.build': 'build',
   'iceworks.menu.task.build.desc': 'build project for production',
+  'iceworks.task.build.start.msg': 'Run the build project service',
+  'iceworks.task.build.stop.msg': 'Build project completed',
   'iceworks.menu.task.lint': 'lint',
   'iceworks.menu.task.lint.desc': 'lint check for development',
+  'iceworks.task.lint.start.msg': 'Run lint check',
+  'iceworks.task.lint.stop.msg': 'Lint check completed',
+
   'iceworks.menu.task.configuration': 'configuration',
   'iceworks.menu.task.configuration.desc': 'custom project configuration',
   'iceworks.menu.material': 'Material',
@@ -60,7 +67,14 @@ export default {
   'iceworks.project.panel.layout.title': 'Layout',
   'iceworks.project.panel.layout.none': 'No layout',
 
+  // project todo
   'iceworks.project.panel.todo.title': 'TODO',
+  'iceworks.project.panel.todo.none': 'No comments in the code need to deal with',
+  'iceworks.project.panel.todo.example': 'e.g., // TODO somthing to do',
+  'iceworks.project.panel.todo.refresh': 'Refresh',
+  'iceworks.project.panel.todo.line': 'Line {line}',
+
+  // project def
   'iceworks.project.panel.def.title': 'DEF',
 
   // project git
@@ -157,7 +171,7 @@ export default {
 
   // global bar
   'iceowrks.global.bar.project': 'Project Name',
-  'iceowrks.global.bar.terminal': 'Terminal',
+  'iceowrks.global.bar.log': 'Log',
   'iceowrks.global.bar.folder': 'Folder',
   'iceowrks.global.bar.editor': 'Editor',
   'iceowrks.global.bar.theme': 'Theme',

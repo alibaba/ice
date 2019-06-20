@@ -12,6 +12,9 @@ const token = isDev
 const env = isDev ? 'daily' : 'prod';
 
 export default class DEF implements IDEFModule {
+  public readonly title: string = 'DEF 发布';
+  public readonly description: string = '支持阿里内网 DEF 发布构建流程，发布到日常以及线上。';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1qDkAXMFY.1VjSZFnXXcFHXXa-300-300.png';
   public project: IProject;
   public storage: any;
 

@@ -6,6 +6,14 @@ export interface IContext {
   socket: ISocket;
 }
 
+export interface IPanel {
+  isAvailable: boolean;
+  name: string; 
+  title: string; 
+  description?: string; 
+  cover?: string;
+}
+
 /**
  * 项目信息
  */
@@ -28,7 +36,7 @@ export interface IProject {
   /**
    * 项目的支持的面板
    */
-  readonly panels: string[];
+  readonly panels: IPanel[];
 
   /**
    * 项目的适配器
@@ -57,6 +65,9 @@ export interface IProject {
 export interface IBaseModule {
   project: IProject;
   storage: any;
+  title: string;
+  description?: string;
+  cover?: string;
 }
 
 /**

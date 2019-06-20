@@ -31,6 +31,9 @@ const loadTemplate = async () => {
 };
 
 export default class Page implements IPageModule {
+  public readonly title: string = '页面列表';
+  public readonly description: string = '展示当前项目中 pages 目录下的所有页面，新建页面快捷入口，支持对已有页面下载区块。';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1Vl4javBj_uVjSZFpXXc0SXXa-300-300.png';
   public readonly project: IProject;
   public readonly storage: any;
 
