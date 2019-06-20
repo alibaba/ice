@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Icon as NextIcon } from '@alifd/next';
 import PropTypes from 'prop-types';
 import socket from '@src/socket';
 import Icon from '@components/Icon';
@@ -33,9 +32,9 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
     >
       <div className={styles.wrap}>
         <div className={styles.bar}>
-          <NextIcon
+          <Icon
             type="arrow-left"
-            size="xs"
+            size="small"
             className={styles.icon}
             onClick={onSetParentAsWork}
           />
