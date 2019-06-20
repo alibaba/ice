@@ -4,7 +4,6 @@ module.exports = {
       'ice-plugin-fusion',
       {
         themePackage: '@icedesign/theme',
-        uniteBaseComponent: '@alife/next',
       },
     ],
   ],
