@@ -166,6 +166,8 @@ export default {
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
   'iceworks.material.name': 'Material name',
+  'iceworks.material.delete': 'Delete material',
+  'iceworks.material.deleteConfirm': 'Are you sure delete material?',
 
   // global bar
   'iceowrks.global.bar.project': 'Project Name',
