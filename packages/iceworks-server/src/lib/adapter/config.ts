@@ -1,4 +1,10 @@
 const config = {
+  guide: {
+    title: '引导指南',
+    description: '展示 iceworks 的基础功能简介。',
+    cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
+    isAvailable: true
+  },
   layout: {
     title: '布局列表',
     description: '展示当前项目中 layouts 目录下的所有布局。',

@@ -18,10 +18,10 @@ const FEATURES = [
   },
 ];
 
-const StartGuide = () => {
+const GuidePanel = () => {
   return (
     <Panel>
-      <div className={styles.startGuide}>
+      <div className={styles.guidePanel}>
         <div className={styles.head}>
           <img src="https://img.alicdn.com/tfs/TB1_bn0dlCw3KVjSZFuXXcAOpXa-132-132.png" className={styles.logo} alt="logo" />
           <h3 className={styles.title}>欢迎来到 iceworks 工作台</h3>
@@ -43,4 +43,4 @@ const StartGuide = () => {
   );
 };
 
-export default StartGuide;
+export default GuidePanel;

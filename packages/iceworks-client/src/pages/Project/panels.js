@@ -1,3 +1,4 @@
+import Guide from './components/GuidePanel';
 import Page from './components/PagePanel';
 import Dependency from './components/DependencyPanel';
 import Layout from './components/LayoutPanel';
@@ -7,6 +8,7 @@ import OSS from './components/OSSPanel';
 import DEF from './components/DEFPanel';
 
 export default {
+  Guide,
   Page,
   Dependency,
   Layout,
