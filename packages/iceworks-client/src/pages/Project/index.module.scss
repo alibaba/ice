@@ -48,22 +48,26 @@
         }
       }
     }
+  }
+}
 
-    .opts {
-      margin: 12px 10px;
-      padding: 12px;
-      display: flex;
-      justify-content: center;
-      background-color: $white;
+.panelSetting {
+  .button {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: $panel-bg;
+    width: 40px;
+    height: 40px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
 
-      .settings {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-      }
-    }
+  .isVisible {
+    right: 350px;
   }
 }
 

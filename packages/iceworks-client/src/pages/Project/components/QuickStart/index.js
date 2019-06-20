@@ -5,14 +5,14 @@ import ScaffoldCard from '@components/ScaffoldCard';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
-const Guide = ({
+const QuickStart = ({
   onOpenProject,
   onCreateProject,
   scaffolds,
   createProject,
 }) => {
   return (
-    <div className={styles.guide}>
+    <div className={styles.quickStart}>
       {
         scaffolds.length ?
           <div className={styles.scaffolds}>
@@ -44,11 +44,11 @@ const Guide = ({
   );
 };
 
-Guide.propTypes = {
+QuickStart.propTypes = {
   onCreateProject: PropTypes.func.isRequired,
   onOpenProject: PropTypes.func.isRequired,
   scaffolds: PropTypes.array.isRequired,
   createProject: PropTypes.func.isRequired,
 };
 
-export default Guide;
+export default QuickStart;
