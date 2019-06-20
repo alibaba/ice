@@ -6,8 +6,11 @@ import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
 
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../interface';
+import config from '../config';
 
 const rimrafAsync = util.promisify(rimraf);
+const { title,  description, cover, isAvailable } = config['dependency'];
+
 
 export const install = async (
   dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
@@ -47,9 +50,10 @@ export const install = async (
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; }
 
 export default class Dependency implements IDependencyModule {
-  public readonly title: string = '依赖管理';
-  public readonly description: string = '探测项目中依赖是否已安装，以及依赖安装的版本，支持快捷安装项目依赖；当依赖出现新版时，支持一键更新依赖的操作。';
-  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1nPY8c21H3KVjSZFBXXbSMXXa-300-300.png';
+  public readonly title: string = title;
+  public readonly description: string = description;
+  public readonly cover: string = cover;
+  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 

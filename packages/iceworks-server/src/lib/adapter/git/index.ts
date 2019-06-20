@@ -1,11 +1,15 @@
 import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../interface';
 import * as gitPromie from 'simple-git/promise';
+import config from '../config';
+
+const { title,  description, cover, isAvailable } = config['git'];
 
 export default class Git implements IGitModule {
-  public readonly title: string = 'Git 仓库管理';
-  public readonly description: string = '关联项目的 git 仓库';
-  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1GVb_c79E3KVjSZFGXXc19XXa-300-300.png';
-  public project: IProject;
+  public readonly title: string = title;
+  public readonly description: string = description;
+  public readonly cover: string = cover;
+  public readonly isAvailable: boolean = isAvailable;
+  public readonly project: IProject;
   public storage: any;
 
   private gitTools: any;

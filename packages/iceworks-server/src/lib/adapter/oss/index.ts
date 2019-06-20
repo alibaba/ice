@@ -3,13 +3,16 @@ import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
 import * as dir from 'node-dir';
+import config from '../config';
 
 const DOMAIN = 'aliyuncs.com';
+const { title,  description, cover, isAvailable } = config['oss'];
 
 export default class OSS implements IOSSModule {
-  public readonly title: string = '阿里云 OSS';
-  public readonly description: string = '将项目构建结果上传到阿里云 OSS。';
-  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png';
+  public readonly title: string = title;
+  public readonly description: string = description;
+  public readonly cover: string = cover;
+  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 
