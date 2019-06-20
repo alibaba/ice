@@ -46,7 +46,7 @@ const DEV_CONF = [
     link: '',
     componentName: 'Switch',
     componentProps: {
-      defaultChecked: false
+      defaultChecked: true
     },
   },
 ];

@@ -19,7 +19,7 @@ const MaterialSubMenu = ({
   return (
     <SubMenu title="iceworks.material.title">
       <div className={styles.itemWrapper}>
-        <div>
+        <div style={{ marginBottom: '20px' }}>
           <div className={styles.separator}><FormattedMessage id="iceworks.material.officialMaterial" /></div>
           {official.map((item) => {
             return (
