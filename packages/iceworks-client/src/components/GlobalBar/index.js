@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Message, Balloon } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
 import { ThemeContext } from '@components/ThemeProvider';
@@ -10,7 +10,7 @@ import useSocket from '@hooks/useSocket';
 import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
-const GlobalBar = ({ project }) => {
+const GlobalBar = ({ project, intl }) => {
   const [terminalVisible, setTerminalVisible] = useState(false);
   const { theme, setTheme } = useContext(ThemeContext);
   const projectPath = project.dataSource.path;
@@ -66,7 +66,7 @@ const GlobalBar = ({ project }) => {
     <div className={styles.container}>
       {terminalVisible ? (
         <div className={styles.globalTerminal}>
-          <XtermTerminal id="globalTerminal" name={project.dataSource.name} />
+          <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceowrks.global.bar.log' })} />
         </div>
       ) : null}
 
@@ -78,7 +78,7 @@ const GlobalBar = ({ project }) => {
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />
-            <FormattedMessage id="iceowrks.global.bar.terminal" />
+            <FormattedMessage id="iceowrks.global.bar.log" />
           </div>
         </div>
 
@@ -138,6 +138,7 @@ const GlobalBar = ({ project }) => {
 
 GlobalBar.propTypes = {
   project: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default GlobalBar;
+export default injectIntl(GlobalBar);
