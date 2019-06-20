@@ -1,9 +1,11 @@
+@import '../../variables.scss';
+
 .scaffold {
   position: relative;
   display: block;
   transition: transform 0.3s ease;
-  box-shadow: 0 8px 24px rgba(163, 177, 191, 0.35);
-  background: #fafafa;
+  box-shadow: 0 8px 24px $material-card-shadow;
+  background: $panel-bg;
   margin-bottom: 40px;
   overflow: hidden;
   &:hover {
@@ -21,18 +23,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: $background-color-base;
     .screenshotImg {
       display: block;
       max-width: 100%;
       height: auto;
       border-radius: 4px;
-      box-shadow: 0 6px 18px 0 rgba(82, 94, 102, 0.15);
+      box-shadow: 0 6px 18px 0 $material-card-shadow;
       transform: scale(0.6);
     }
   }
 
   .info {
-    background: #ffff;
+    background: $panel-bg;
     text-align: center;
     padding: 20px 40px;
     transition: transform 0.3s ease;
@@ -43,10 +46,10 @@
       margin-top: 14px;
       font-size: 14px;
       font-weight: bold;
-      color: #333;
+      color: $text-color-secondary;
     }
     .desc {
-      color: #999;
+      color: $text-color-primary;
       margin-top: 10px;
       font-size: 12px;
       line-height: 22px;
@@ -78,8 +81,8 @@
       line-height: 48px;
       font-size: 14px;
       font-weight: bold;
-      background: #2077ff;
-      color: #fff;
+      background: $brand-color-primary;
+      color: $text-color-inverse;
       cursor: pointer;
 
       .githubImg,
@@ -99,8 +102,8 @@
     height: 20px;
     line-height: 20px;
     text-align: center;
-    background-color: #4172ff;
-    color: #fff;
+    background: $brand-color-primary;
+    color: $text-color-inverse;
     font-size: 12px;
   }
 }

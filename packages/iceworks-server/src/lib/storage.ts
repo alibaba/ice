@@ -68,6 +68,10 @@ const schema = {
     type: 'array',
     default: [],
   },
+  panelSettings: {
+    type: 'array',
+    default: [],
+  },
 };
 
 export default new Conf({

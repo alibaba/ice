@@ -58,8 +58,10 @@ function ignoreFile(filePath: string, stats) {
 }
 
 export default class Todo implements ITodoModule {
+  public readonly title: string = '待办事项';
+  public readonly description: string = '收集项目代码中的TODO、FIXME、HACK等需要处理的注释信息';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1zZJKdEGF3KVjSZFmXXbqPXXa-300-300.png';
   public readonly project: IProject;
-
   public readonly storage: any;
 
   constructor(params: {project: IProject; storage: any; }) {

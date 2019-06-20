@@ -5,7 +5,10 @@ import scanDirectory from '../../scanDirectory';
 const DEFAULT_IMAGE = 'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976-974.png';
 
 export default class Layout implements ILayoutModule {
-  public project: IProject;
+  public readonly title: string = '布局列表';
+  public readonly description: string = '展示当前项目中 layouts 目录下的所有布局。';
+  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1KUD8c4iH3KVjSZPfXXXBiVXa-300-300.png';
+  public readonly project: IProject;
   public storage: any;
 
   public readonly path: string;
