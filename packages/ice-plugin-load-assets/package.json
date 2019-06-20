@@ -1,0 +1,15 @@
+{
+  "name": "ice-plugin-load-assets",
+  "version": "0.1.0",
+  "description": "ice plugin for load assets",
+  "main": "index.js",
+  "keywords": [
+    "ice",
+    "ice-plugin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ice-plugin-wrap-code": "^0.1.0"
+  }
+}
