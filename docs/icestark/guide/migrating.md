@@ -29,8 +29,25 @@ class App extends React.Component {
       <div>
         <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange}>
-          <AppRoute path={['/', '/home', '/about']} basename="/" title="A应用" url="xxx">
-          <AppRoute path="/user" basename="/user" title="B应用" url="xxx" />
+          <AppRoute
+            path={['/', '/home', '/about']}
+            basename="/"
+            exact
+            title="主页"
+            url={[
+              '//g.alicdn.com/icestark-demo/child/0.1.2/js/index.js',
+              '//g.alicdn.com/icestark-demo/child/0.1.2/css/index.css'
+            ]}
+          />
+          <AppRoute
+            path="/user"
+            basename="/user"
+            title="用户页面"
+            url={[
+              '//g.alicdn.com/icestark-demo/child2/0.1.2/js/index.js',
+              '//g.alicdn.com/icestark-demo/child2/0.1.2/css/index.css'
+            ]}
+          />
         </AppRouter>
         <div className="footer">this is common footer</div>
       </div>
@@ -40,7 +57,7 @@ class App extends React.Component {
 ```
 
 - `AppRouter` 节点即为子应用最终渲染位置
-- `AppRoute` 负责注册子应用的基本信息，`title`、`path`、`url` 为必填项，分别对应子应用渲染时的 `documentTitle`、子应用的`basename`、子应用资源发布的 cdn 地址
+- `AppRoute` 负责注册子应用的基本信息，`title`、`path`、`url` 为必填项，分别对应子应用渲染时的 `documentTitle`、子应用的`path`、子应用资源发布的 cdn 地址。`basename` 表示子应用内部路由的 `basename` (规则同 `react-router`)
 
 ## 在子应用中使用
 

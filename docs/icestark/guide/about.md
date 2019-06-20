@@ -3,7 +3,7 @@ title: 关于 icestark
 order: 0
 ---
 
-[icestark](https://github.com/ice-lab/icestark) 是一个非常轻量的，支持模块化开发大型 react 项目的解决方案。是飞冰（ICE）的工作台解决方案，面向大型中后台系统的前端架构方案。
+[icestark](https://github.com/ice-lab/icestark)是飞冰（ICE）的工作台解决方案，是一个非常轻量的，支持模块化开发大型 react 中后台系统的前端架构方案。
 
 随着 SPA 的不断发展，越来越多逻辑处理转移到前端，我们大胆预判，未来大型中后台项目的场景会越来越多，包括
 

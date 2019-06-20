@@ -43,6 +43,6 @@ CSS Module 可以设置默认的前缀到不同的子应用中，是实际使用
 
 icestark 并没有对应用之间的 react 版本有强制性要求，目前建议是在 15+ 的版本。同时 icestark 内部没有对子应用的 react、react-dom 版本有强依赖，因此 icestark 支持不用应用之间使用不同的 react 版本，彼此之间相互独立，因此也不能透传 context、props 等属性。
 
-### todo
+### 规划
 
 未来，icestark 会尝试使用 worker 等新方式实现更加彻底的 JS 隔离。关于 JS 隔离，如有相关建议，欢迎在 [github](https://github.com/ice-lab/icestark) 中一起探讨。
