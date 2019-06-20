@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button } from '@alifd/next';
+import { Button } from '@alifd/next';
 import ScaffoldCard from '@components/ScaffoldCard';
+import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
 const Guide = ({
@@ -31,11 +32,11 @@ const Guide = ({
       </div>
       <div className={styles.opts}>
         <Button className={styles.btn} type="secondary" size="large" onClick={onOpenProject}>
-          <Icon type="download" size="xl" />
+          <Icon type="package" size="small" />
           <span>打开项目</span>
         </Button>
         <Button className={styles.btn} type="primary" size="large" onClick={onCreateProject}>
-          <Icon type="add" size="xl" />
+          <Icon type="plus" size="small" />
           <span>更多模板</span>
         </Button>
       </div>
