@@ -33,7 +33,7 @@ class App extends React.Component {
             path={['/', '/home', '/about']}
             basename="/"
             exact
-            title="主页"
+            title="Index"
             url={[
               '//g.alicdn.com/icestark-demo/child/0.1.2/js/index.js',
               '//g.alicdn.com/icestark-demo/child/0.1.2/css/index.css'
@@ -42,7 +42,7 @@ class App extends React.Component {
           <AppRoute
             path="/user"
             basename="/user"
-            title="用户页面"
+            title="User"
             url={[
               '//g.alicdn.com/icestark-demo/child2/0.1.2/js/index.js',
               '//g.alicdn.com/icestark-demo/child2/0.1.2/css/index.css'
