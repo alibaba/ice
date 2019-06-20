@@ -52,7 +52,7 @@ const TodoPanel = () => {
       ) : (
         <Message
           title={<FormattedMessage id="iceworks.project.panel.todo.none" />}
-          type="notice"
+          type="help"
         >
           <FormattedMessage id="iceworks.project.panel.todo.example" />
         </Message>

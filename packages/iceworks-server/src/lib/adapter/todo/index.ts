@@ -68,7 +68,7 @@ export default class Todo implements ITodoModule {
 
   public async getList(): Promise<ITodo[]> {
     const files: string[] = await new Promise((resolve, reject) => {
-      recursiveReaddir(this.project.path, ['node_modules', ignoreFile], (err, res) => {
+      recursiveReaddir(this.project.path, ['node_modules', '.*', ignoreFile], (err, res) => {
         if (err) {
           reject(err);
           return;
