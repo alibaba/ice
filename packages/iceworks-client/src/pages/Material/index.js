@@ -61,18 +61,26 @@ const Material = ({ history, intl }) => {
     setCurrentCategory(name);
   }
 
+  // it is necessary to trigger lazyLoad checking
+  // when block tabPanel enter the viewport
+  // https://github.com/twobin/react-lazyload#forcecheck
+  useEffect(() => {
+    forceCheck();
+  }, [currentCategory]);
+
   async function handleTabChange(key = 'scaffolds') {
     setType(key);
     handleCategoryChange();
-
-    // it is necessary to trigger lazyLoad checking
-    // when block tabPanel enter the viewport
-    if (key === 'blocks') {
-      setTimeout(() => {
-        forceCheck();
-      }, 100);
-    }
   }
+
+  // it is necessary to trigger lazyLoad checking
+  // when block tabPanel enter the viewport
+  // https://github.com/twobin/react-lazyload#forcecheck
+  useEffect(() => {
+    if (type === 'blocks') {
+      forceCheck();
+    }
+  }, [type]);
 
   async function handleMenuChange(url) {
     await handleTabChange();
