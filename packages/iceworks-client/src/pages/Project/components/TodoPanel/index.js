@@ -1,10 +1,12 @@
 import React from 'react';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
 import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
+
+const { Tooltip } = Balloon;
 
 const TodoPanel = () => {
   const todo = stores.useStore('todo');
@@ -18,13 +20,20 @@ const TodoPanel = () => {
           <div className={styles.icons}>
             <FormattedMessage id="iceworks.project.panel.todo.refresh">
               {(title) => (
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={todo.refresh}
-                  title={title}
-                />
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="reload"
+                      size="small"
+                      onClick={todo.refresh}
+                      title={title}
+                    />
+                  )}
+                  align="b"
+                >
+                  {title}
+                </Tooltip>
               )}
             </FormattedMessage>
           </div>

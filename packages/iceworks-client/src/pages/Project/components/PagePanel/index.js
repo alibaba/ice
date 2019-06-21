@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
 import BuildPageModal from './BuildPageModal';
 
-const PagePanel = () => {
+const { Tooltip } = Balloon;
+
+const PagePanel = ({ intl }) => {
   const [deleteName, setDeleteName] = useState('');
   const [editingName, setEditingName] = useState('');
   const {
@@ -138,8 +141,32 @@ const PagePanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} title="刷新" type="reload" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} title="添加页面" type="plus" size="small" onClick={onCreate} />
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={onRefresh}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' })}
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="plus"
+                  size="small"
+                  onClick={onCreate}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -197,4 +224,8 @@ const PagePanel = () => {
   );
 };
 
-export default PagePanel;
+PagePanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(PagePanel);

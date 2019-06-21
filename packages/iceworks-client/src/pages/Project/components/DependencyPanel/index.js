@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab } from '@alifd/next';
+import { Tab, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -11,6 +11,7 @@ import Panel from '../Panel';
 import styles from './index.module.scss';
 
 const { Item: TabPane } = Tab;
+const { Tooltip } = Balloon;
 
 const DependencyItem = ({
   package: packageName, localVersion, wantedVestion, isDev, onUpgrade,
@@ -83,44 +84,64 @@ const DependencyPanel = () => {
           <div className={styles.icons}>
             <FormattedMessage id="iceworks.project.panel.dependency.main.refresh">
               {(title) => (
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={refresh}
-                  title={title}
-                />
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="reload"
+                      size="small"
+                      onClick={refresh}
+                    />
+                  )}
+                  align="b"
+                >
+                  {title}
+                </Tooltip>
               )}
             </FormattedMessage>
             <FormattedMessage id="iceworks.project.panel.dependency.main.download">
               {(title) => (
-                <Icon
-                  className={
-                    classNames({
-                      [styles.icon]: true,
-                      [styles.reseting]: dataSource.status === STATUS_RESETING,
-                    })
-                  }
-                  type="package"
-                  size="small"
-                  onClick={onReset}
-                  title={title}
-                />
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={
+                        classNames({
+                          [styles.icon]: true,
+                          [styles.reseting]: dataSource.status === STATUS_RESETING,
+                        })
+                      }
+                      type="package"
+                      size="small"
+                      onClick={onReset}
+                    />
+                  )}
+                  align="b"
+                >
+                  {title}
+                </Tooltip>
               )}
             </FormattedMessage>
             <FormattedMessage id="iceworks.project.panel.dependency.main.add">
-              {(title) => (<Icon
-                className={
-                  classNames({
-                    [styles.icon]: true,
-                    [styles.reseting]: dataSource.status === STATUS_RESETING,
-                  })
-                }
-                type="plus"
-                size="small"
-                onClick={onCreate}
-                title={title}
-              />)}
+              {(title) => (
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={
+                        classNames({
+                          [styles.icon]: true,
+                          [styles.reseting]: dataSource.status === STATUS_RESETING,
+                        })
+                      }
+                      type="plus"
+                      size="small"
+                      onClick={onCreate}
+                    />
+                  )}
+                  align="b"
+                >
+                  {title}
+                </Tooltip>
+              )}
             </FormattedMessage>
           </div>
         </div>
