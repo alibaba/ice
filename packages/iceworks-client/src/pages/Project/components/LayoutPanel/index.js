@@ -1,12 +1,15 @@
 import React from 'react';
-import { Message } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { Message, Balloon } from '@alifd/next';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const LayoutPanel = () => {
+const { Tooltip } = Balloon;
+
+const LayoutPanel = ({ intl }) => {
   const layouts = stores.useStore('layouts');
   const { dataSource } = layouts;
 
@@ -22,7 +25,19 @@ const LayoutPanel = () => {
             <FormattedMessage id="iceworks.project.panel.layout.title" />
           </h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="reload" size="small" onClick={onRefresh} />
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={onRefresh}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.layout.refresh' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -48,4 +63,8 @@ const LayoutPanel = () => {
   );
 };
 
-export default LayoutPanel;
+LayoutPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(LayoutPanel);
