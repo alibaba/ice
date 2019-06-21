@@ -167,6 +167,7 @@ class ProjectManager extends EventEmitter {
       storage.get('projects').map(async (projectPath) => {
         const project = new Project(projectPath);
         await project.initialize();
+        return project;
       })
     );
   }
@@ -212,7 +213,9 @@ class ProjectManager extends EventEmitter {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
-      this.projects.push(new Project(projectPath));
+      const project = new Project(projectPath);
+      await project.initialize();
+      this.projects.push(project);
       projects.push(projectPath);
       storage.set('projects', projects);
     }
