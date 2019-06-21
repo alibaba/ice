@@ -78,7 +78,9 @@ export default async function(): Promise<IPanel[]> {
   const isAliInternal = await checkAliInternal();
 
   let filteredPanels = [];
-  if (!isAliInternal) {
+  if (isAliInternal) {
+    filteredPanels = ['OSS'];
+  } else {
     filteredPanels = ['DEF'];
   }
 
