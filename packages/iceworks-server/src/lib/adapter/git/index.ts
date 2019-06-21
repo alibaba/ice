@@ -1,14 +1,7 @@
 import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../interface';
 import * as gitPromie from 'simple-git/promise';
-import config from '../config';
-
-const { title,  description, cover, isAvailable } = config['git'];
 
 export default class Git implements IGitModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public storage: any;
 

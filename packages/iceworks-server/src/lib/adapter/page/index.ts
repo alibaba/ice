@@ -14,15 +14,12 @@ import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
 import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext, IProjectBlock } from '../../../interface';
-import config from '../config';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
-
-const { title,  description, cover, isAvailable } = config['page'];
 
 const loadTemplate = async () => {
   const fileName = 'template.js';
@@ -37,10 +34,6 @@ const loadTemplate = async () => {
 };
 
 export default class Page implements IPageModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 

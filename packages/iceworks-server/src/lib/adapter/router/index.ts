@@ -7,20 +7,14 @@ import * as t from '@babel/types';
 
 import formatCodeFromAST from '../formatCodeFromAST';
 import { IRouter, IRouterModule, IProject, IRouterOptions } from '../../../interface';
-import config from '../config';
 
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
-const { title,  description, cover, isAvailable } = config['router'];
 
 export default class Router implements IRouterModule {
-  public readonly title: string = title;
-  public readonly description: string = description
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 

@@ -11,7 +11,7 @@ import * as orderBy from 'lodash.orderby';
 import * as arrayMove from 'array-move';
 import camelCase from 'camelCase';
 import storage from '../../storage';
-import * as adapter from '../../adapter';
+import adapter from '../../adapter';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
@@ -46,9 +46,11 @@ class Project implements IProject {
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
     this.type = this.getType();
+  }
 
-    this.loadAdapter();
-    this.assemblePanels();
+  public async initialize() {
+    await this.loadAdapter();
+    await this.assemblePanels();
   }
 
   public getType(): string {
@@ -69,26 +71,19 @@ class Project implements IProject {
     return process.env;
   }
 
-  private loadAdapter() {
-    for (const [name, Module] of Object.entries(adapter)) {
+  private async loadAdapter() {
+    for (const [name, Module] of Object.entries(adapter.modules)) {
       const project: IProject = clone(this);
       delete project.adapter;
 
       const adapterModule = new Module({ project, storage });
       this.adapter[camelCase(name)] = adapterModule;
-
-      const {title, description, cover, isAvailable } = adapterModule;
-      this.panels.push({
-        name,
-        title,
-        description,
-        cover,
-        isAvailable,
-      });
     }
   }
 
-  private assemblePanels() {
+  private async assemblePanels() {
+    this.panels = await adapter.getPanels();
+
     this.pullPanels();
     this.savePanels();
   }
@@ -168,9 +163,10 @@ class ProjectManager extends EventEmitter {
   private projects;
 
   private async refresh(): Promise<Project[]> {
-    return Promise.all(
+    return await Promise.all(
       storage.get('projects').map(async (projectPath) => {
-        return new Project(projectPath);
+        const project = new Project(projectPath);
+        await project.loadAdapter();
       })
     );
   }

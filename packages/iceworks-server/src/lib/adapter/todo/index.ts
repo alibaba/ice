@@ -4,9 +4,6 @@ import * as recursiveReaddir from 'recursive-readdir';
 import { isBinaryFileSync } from 'isbinaryfile';
 import * as LineByLine from 'line-by-line';
 import { IProject, ITodoModule, ITodoMsg, ITodo } from '../../../interface';
-import config from '../config';
-
-const { title,  description, cover, isAvailable } = config['todo'];
 
 async function matchFileContent(filePath: string): Promise<ITodoMsg[]> {
   const input = new LineByLine(filePath);
@@ -61,10 +58,6 @@ function ignoreFile(filePath: string, stats) {
 }
 
 export default class Todo implements ITodoModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 

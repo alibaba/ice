@@ -8,16 +8,10 @@ import * as uid from 'uid';
 
 import formatCodeFromAST from '../formatCodeFromAST';
 import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../interface';
-import config from '../config';
 
 const MENU_CONFIG_VARIABLE = 'asideMenuConfig';
-const { title,  description, cover, isAvailable } = config['menu'];
 
 export default class Menu implements IMenuModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly projectPath: string;
   public readonly project: IProject;
   public readonly storage: any;

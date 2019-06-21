@@ -6,19 +6,12 @@ import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../utils/cliConf';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 import { ITaskModule, ITaskParam, IProject, IContext } from '../../../interface';
-import config from '../config';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
-const { title,  description, cover, isAvailable } = config['task'];
-
 export default class Task implements ITaskModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 

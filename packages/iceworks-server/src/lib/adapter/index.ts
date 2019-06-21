@@ -1,4 +1,3 @@
-import Guide from './guide';
 import Page from './page';
 import Dependency from './dependency';
 import Configuration from './configuration';
@@ -10,18 +9,21 @@ import Git from './git';
 import DEF from './def';
 import OSS from './oss';
 import Todo from './todo';
+import getPanels from './getPanels';
 
-export {
-  Guide,
-  Page,
-  Dependency,
-  Configuration,
-  Task,
-  Layout,
-  Menu,
-  Router,
-  Git,
-  DEF,
-  OSS,
-  Todo
+export default {
+  getPanels,
+  modules: {
+    Page,
+    Dependency,
+    Configuration,
+    Task,
+    Layout,
+    Menu,
+    Router,
+    Git,
+    DEF,
+    OSS,
+    Todo
+  }
 };

@@ -4,13 +4,9 @@ import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
-
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../interface';
-import config from '../config';
 
 const rimrafAsync = util.promisify(rimraf);
-const { title,  description, cover, isAvailable } = config['dependency'];
-
 
 export const install = async (
   dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
@@ -50,10 +46,6 @@ export const install = async (
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; }
 
 export default class Dependency implements IDependencyModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 
