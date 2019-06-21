@@ -1,4 +1,5 @@
 import { checkAliInternal } from 'ice-npm-utils';
+import { IPanel } from '../../interface';
 
 const panels = [
   {
@@ -73,7 +74,7 @@ const panels = [
   },
 ];
 
-export default async function() {
+export default async function(): Promise<IPanel[]> {
   const isAliInternal = await checkAliInternal();
 
   let filteredPanels = [];

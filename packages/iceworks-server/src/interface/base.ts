@@ -7,10 +7,10 @@ export interface IContext {
 }
 
 export interface IPanel {
-  isAvailable: boolean;
   name: string;
   title: string;
   description?: string;
+  isAvailable?: boolean;
   cover?: string;
 }
 
