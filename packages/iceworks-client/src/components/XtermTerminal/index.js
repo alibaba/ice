@@ -15,7 +15,10 @@ const XtermTerminal = ({ id, name, options }) => {
     currentTerm = termManager.create(id, xtermRef.current, options);
     if (!currentTerm.inited) {
       currentTerm.inited = true;
-      currentTerm.formatWrite(`\x1B[1;3;31m${name}\x1B[0m $ `);
+
+      if (name) {
+        currentTerm.writeChunk(`${name}\x1B[0m `);
+      }
     }
   }, []);
 

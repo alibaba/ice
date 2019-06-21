@@ -1,0 +1,43 @@
+@import '../../../../variables.scss';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  h3 {
+    flex: 1;
+  }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      color: $brand-color-primary;
+      cursor: pointer;
+    }
+  }
+}
+
+.main {
+  .item {
+    margin-bottom: 12px;
+    .path {
+      margin-bottom: 6px;
+      color: $text-color-secondary;
+      font-size: 14px;
+    }
+
+    .msg {
+      margin-left: 20px;
+      margin-bottom: 4px;
+
+      .msgLine {
+        margin-right: 6px;
+        color: $text-color-secondary;
+      }
+    }
+  }
+}

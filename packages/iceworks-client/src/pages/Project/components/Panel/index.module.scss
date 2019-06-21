@@ -6,9 +6,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 48%;
   height: 320px;
-  margin-bottom: 34px;
 
   .header {
     background-color: $brand-color-normal;
@@ -25,13 +23,14 @@
   }
   .main {
     padding: 12px;
-    background-color: $white;
+    background: $panel-bg;
     display: flex;
     flex: 1;
     overflow: hidden;
 
     .box {
       flex: 1;
+      padding-right: 10px;
       overflow-y: auto;
     }
   }

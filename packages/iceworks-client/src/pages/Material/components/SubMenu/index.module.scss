@@ -7,7 +7,7 @@
 .subMenuItem {
   display: flex;
   align-items: center;
-  height: 72px;
+  height: 58px;
   padding: 0 15px;
   color: $text-color-secondary;
   text-decoration: none;
@@ -59,6 +59,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      font-size: 12px;
     }
   }
 
@@ -70,7 +71,7 @@
 }
 
 .active {
-  background-color: #eee;
+  background: $background-color-light;
 }
 
 .opts {

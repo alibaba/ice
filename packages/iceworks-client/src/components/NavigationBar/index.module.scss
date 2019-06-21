@@ -3,11 +3,14 @@
 .wrap {
   background: $brand-color-secondary;
   box-shadow: $shadow-right;
+  position: relative;
+  z-index: 9;
   display: flex;
   flex-direction: column;
 
   .list {
     flex: 1;
+    padding-top: 32px;
 
     .item {
       display: flex;
@@ -15,14 +18,18 @@
       justify-content: center;
       flex-direction: column;
       width: 78px;
-      height: 78px;
+      margin-top: 32px;
       border-left: 3px solid $brand-color-secondary;
-  
+
+      &:first-child {
+        margin-top: 0;
+      }
+
       .navItemIcon {
         color: $white;
-        margin-bottom: 4px;
+        margin-bottom: 8px;
       }
-  
+
       .navItemText {
         color: $white;
       }

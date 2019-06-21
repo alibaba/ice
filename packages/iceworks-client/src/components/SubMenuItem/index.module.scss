@@ -1,10 +1,13 @@
 @import '../../variables.scss';
 
 .item {
+  &:hover {
+    background: $background-color-base;
+  }
   .link {
     display: flex;
     align-items: center;
-    height: 72px;
+    height: 58px;
     padding: 0 15px;
     color: $text-color-secondary;
     text-decoration: none;
@@ -12,9 +15,6 @@
 
   .icon {
     color: $text-color-primary;
-  }
-
-  .image {
   }
 
   .info {
@@ -27,5 +27,11 @@
       margin: 0;
       color: $text-color-primary;
     }
+  }
+}
+
+:global {
+  .selected {
+    background: $background-color-light;
   }
 }

@@ -1,72 +1,15 @@
+import * as fs from 'fs';
 import * as path from 'path';
-import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
 import * as userHome from 'user-home';
 
-// @TODO
-const defaultCwd = path.join(__dirname, '../../data');
-mkdirp.sync(defaultCwd);
+// Note: why not use `import`
+// ref: https://github.com/sindresorhus/conf
+const Conf = require('conf');
+const confPath = path.join(userHome, '.iceworks');
 
-class DataStore extends Conf {
-  constructor(options?) {
-    options = {
-      name: 'config',
-      ...options,
-    };
-
-    if (options.cwd) {
-      options.cwd = path.isAbsolute(options.cwd)
-        ? options.cwd
-        : path.join(defaultCwd, options.cwd);
-    } else {
-      options.cwd = defaultCwd;
-    }
-
-    options.configName = options.name;
-    delete options.name;
-    super(options);
-  }
-}
-
-class Store {
-  private store: Conf;
-
-  constructor(options?) {
-    this.store = new DataStore(options);
-  }
-
-  set(key: string, values: any): void {
-    this.store.set(key, values);
-  }
-
-  get(key: string): any {
-    return this.store.get(key);
-  }
-
-  add(key: string, value: any): void {
-    const values = this.store.get(key);
-    if (Array.isArray(values)) {
-      const filteredVaules = values.filter((v) => v !== value);
-      filteredVaules.unshift(value);
-      this.store.set(key, filteredVaules);
-    }
-  }
-
-  remove(key: string, filter: (v: any) => boolean): void {
-    const values = this.store.get(key) || [];
-    if (Array.isArray(values)) {
-      this.store.set(key, values.filter(filter));
-    }
-  }
-
-  has(key: string, value: string): boolean {
-    const values = this.store.get(key);
-    return Array.isArray(values) ? values.some((v) => v === value) : false;
-  }
-
-  delete(key: string): void {
-    this.store.delete(key);
-  }
+if (!fs.existsSync(confPath)) {
+  mkdirp(confPath);
 }
 
 const schema = {
@@ -93,22 +36,24 @@ const schema = {
   },
   editor: {
     type: 'string',
-    default: 'vscode',
+    default: 'code',
+  },
+  locale: {
+    type: 'string',
+    default: 'zh-CN',
+  },
+  theme: {
+    type: 'string',
+    default: '@alifd/theme-iceworks-dark',
   },
   material: {
     type: 'array',
     default: [
       {
-        name: '飞冰物料',
-        description: '基于 ICE Design 设计语言，专业视觉设计，每周物料更新，丰富组合区块，不同领域模板',
-        homepage: 'https://alibaba.github.io/ice/',
-        logo: 'https://img.alicdn.com/tfs/TB1JbQWoQUmBKNjSZFOXXab2XXa-242-134.png',
-        source: 'https://ice.alicdn.com/assets/react-materials.json',
-        tags: [
-          '官方',
-          'React',
-          'ICE'
-        ]
+        "official": true,
+        "name": "飞冰物料",
+        "type": "react",
+        "source": "https://ice.alicdn.com/assets/react-materials.json"
       }
     ],
   },
@@ -116,6 +61,14 @@ const schema = {
     type: 'array',
     default: [],
   },
+  panelSettings: {
+    type: 'array',
+    default: [],
+  },
 };
 
-export default new Store({ schema });
+export default new Conf({
+  schema,
+  configName: 'db',
+  cwd: confPath,
+});

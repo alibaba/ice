@@ -3,30 +3,43 @@ import PropTypes from 'prop-types';
 import { Grid } from '@alifd/next';
 import MaterialCategories from '@components/MaterialCategories';
 import ComponentCard from '@components/ComponentCard';
+import NoData from '@components/NoData';
 
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const ComponentPanel = ({ dataSource, current, onInstall }) => {
+const ComponentPanel = ({ dataSource, currentCategory, onCategoryChange, onInstall }) => {
   const { categories = [], materials = {} } = dataSource;
-  const currentMaterials = materials[current] || [];
+  const currentMaterials = materials[currentCategory] || [];
 
   return (
     <div className={styles.materialsPanel}>
       {
-        categories.length < 1
-          ? null
-          : <MaterialCategories dataSource={categories} current={current} />
+        categories.length < 1 ?
+          null :
+          <MaterialCategories
+            dataSource={categories}
+            current={currentCategory}
+            onChange={onCategoryChange}
+          />
       }
       <Row wrap gutter="20">
-        {currentMaterials.map((data, index) => {
-          return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={index}>
-              <ComponentCard dataSource={data} onInstall={onInstall} />
+        {
+          currentMaterials.length
+          ? currentMaterials.map((data, index) => {
+              return (
+                <Col l="8" m="8" s="12" xs="24" xxs="24" key={index}>
+                  <ComponentCard dataSource={data} onInstall={onInstall} />
+                </Col>
+              );
+            })
+          : (
+            <Col span="24">
+              <NoData />
             </Col>
-          );
-        })}
+          )
+        }
       </Row>
     </div>
   );
@@ -37,7 +50,6 @@ ComponentPanel.defaultProps = {
     categories: [],
     materials: {},
   },
-  current: 'all',
   onInstall: f => f,
 };
 
@@ -46,7 +58,8 @@ ComponentPanel.propTypes = {
     categories: PropTypes.array.isRequired,
     materials: PropTypes.object.isRequired,
   }),
-  current: PropTypes.string,
+  currentCategory: PropTypes.string.isRequired,
+  onCategoryChange: PropTypes.func.isRequired,
   onInstall: PropTypes.func,
 };
 

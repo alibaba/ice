@@ -19,7 +19,7 @@ const MaterialSubMenu = ({
     onDelete(source);
   }
 
-  const { source, logo, name, description } = material;
+  const { source, logo, name } = material;
   return (
     <div
       className={cx(styles.subMenuItem, { [styles.active]: current === source })}
@@ -36,11 +36,6 @@ const MaterialSubMenu = ({
         <h5 className={styles.name}>
           {name}
         </h5>
-        {
-          description
-          ? <p className={styles.description}>{description}</p>
-          : null
-        }
       </div>
       {
         enableDelete ? <Icon type="trash" className={styles.del} onClick={(event) => handleDelete(source, material, event)} /> : null

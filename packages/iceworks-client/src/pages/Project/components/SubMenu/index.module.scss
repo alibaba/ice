@@ -8,7 +8,7 @@
   .list {
     flex: 1;
     .itemCurrent {
-      background-color: $background-color-base;
+      background-color: $background-color-light;
     }
     .item {
       height: 72px;
@@ -40,7 +40,6 @@
       }
 
       &:hover {
-        background-color: $background-color-light;
         .icon {
           visibility: visible;
         }

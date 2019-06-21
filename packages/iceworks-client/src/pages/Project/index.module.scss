@@ -8,10 +8,69 @@
     flex: 1;
     padding: 20px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    overflow: hidden;
     overflow-y: auto;
+    flex-direction: column;
+
+    .sortableWrap {
+      display: block;
+      white-space: nowrap;
+      user-select: none;
+
+      &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: ' ';
+        clear: both;
+        height: 0;
+      }
+
+      .sortableItem {
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+        padding: 10px;
+        position: relative;
+
+        &.sorting {
+          pointer-events: none;
+        }
+
+        .sortableDrag {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          height: 48px;
+          width: 100%;
+          cursor: move;
+          width: calc(100% - 20px);
+          z-index: 1;
+        }
+      }
+    }
   }
 }
-  
+
+.panelSetting {
+  .button {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: $panel-bg;
+    width: 40px;
+    height: 40px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .isVisible {
+    right: 350px;
+  }
+}
+
+.sortableDraging {
+  cursor: move;
+}

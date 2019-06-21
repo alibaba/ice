@@ -2,40 +2,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { PLACEHOLDER_IMG } from '@src/appConfig';
 import styles from './index.module.scss';
 
-const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
+const ScaffoldCard = ({ dataSource, onDownload }) => {
   function handleDownload() {
     onDownload(dataSource);
   }
 
   return (
     <div className={styles.scaffold}>
-      <div className={styles.body} style={{ background: bgColor }}>
-        {dataSource.isNewlyCreated ? (
-          <div className={styles.newly}>NEW</div>
-        ) : null}
-        {dataSource.screenshots &&
+      <div className={styles.body}>
+        {dataSource.isNewlyCreated ? <div className={styles.newly}>NEW</div> : null}
+        {dataSource.screenshots && dataSource.screenshots.length ? (
           dataSource.screenshots.map((url, key) => {
             const screenshotStyle = generateStyle(dataSource.screenshots, key);
             return (
               <img
                 alt={dataSource.title}
-                src={url}
-                style={{ transform: 'scale(0.6)', ...screenshotStyle }}
+                src={url || PLACEHOLDER_IMG}
+                style={screenshotStyle}
                 className={styles.screenshotImg}
                 key={key}
               />
             );
-          })}
+          })
+        ) : (
+          <img alt={dataSource.title} src={PLACEHOLDER_IMG} className={styles.screenshotImg} />
+        )}
       </div>
 
       <div className={styles.info}>
         <div className={styles.title}>{dataSource.title}</div>
         <div className={styles.desc}>
-          {dataSource.description || (
-            <FormattedMessage id="iceworks.material.noDesc" />
-          )}
+          {dataSource.description || <FormattedMessage id="iceworks.material.noDesc" />}
         </div>
       </div>
 
@@ -65,13 +65,11 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
 };
 
 ScaffoldCard.defaultProps = {
-  bgColor: '#fafafa',
   onDownload: f => f,
 };
 
 ScaffoldCard.propTypes = {
   dataSource: PropTypes.object.isRequired,
-  bgColor: PropTypes.string,
   onDownload: PropTypes.func,
 };
 
@@ -96,7 +94,6 @@ function generateStyle(screenshots, index) {
       style = {
         position: 'relative',
         zIndex: 9,
-        boxShadow: '0 0 30px #8b8585',
         bottom: `${i * 10}%`,
         right: `${i * 10}%`,
         transform: 'scale(0.6)',

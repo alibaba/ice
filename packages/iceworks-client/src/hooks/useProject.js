@@ -23,6 +23,17 @@ function useProject({ panelStores } = {}) {
   } = useModal();
 
   // function method
+  function refreshProjectStore(name) {
+    const panelStore = panelStores[name];
+    if (panelStore) {
+      panelStore
+        .refresh()
+        .catch((error) => {
+          logger.error(error);
+        });
+    }
+  }
+
   async function refreshProject() {
     let newProject;
     try {
@@ -32,14 +43,9 @@ function useProject({ panelStores } = {}) {
     }
 
     if (newProject && panelStores) {
-      newProject.dataSource.panels.forEach((name) => {
-        const panelStore = panelStores[name];
-        if (panelStore) {
-          panelStore
-            .refresh()
-            .catch((error) => {
-              logger.error(error);
-            });
+      newProject.dataSource.panels.forEach(({ name, isAvailable }) => {
+        if (isAvailable) {
+          refreshProjectStore(name);
         }
       });
     }
@@ -81,6 +87,10 @@ function useProject({ panelStores } = {}) {
     setCreateProjectModal(false);
   }
 
+  async function sortProjectPanel({ oldIndex, newIndex }) {
+    await projectStore.sortPanels({ oldIndex, newIndex });
+  }
+
   // event handle
   async function onSwitchProject(path) {
     await projectStore.reset(path);
@@ -114,12 +124,20 @@ function useProject({ panelStores } = {}) {
     }
   }
 
+  async function onChangeProjectPanel(name, isAvailable) {
+    await projectStore.setPanel({ name, isAvailable });
+    if (isAvailable) {
+      refreshProjectStore(name);
+    }
+  }
+
   const projectPreDelete =
     projectsStore.dataSource.find(({ path }) => {
       return path === deleteProjectPath;
     }) || {};
 
   return {
+
     // state
     material: materialStore.dataSource,
     projects: projectsStore.dataSource,
@@ -128,9 +146,11 @@ function useProject({ panelStores } = {}) {
 
     // method
     refreshProjects,
+    refreshProject,
     createProject,
     addProject,
     deleteProject,
+    sortProjectPanel,
 
     // modal
     onCreateProjectModal,
@@ -148,6 +168,7 @@ function useProject({ panelStores } = {}) {
     onOpenProject,
     onDeleteProject,
     onSwitchProject,
+    onChangeProjectPanel,
   };
 }
 

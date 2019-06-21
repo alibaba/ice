@@ -8,10 +8,18 @@ const RECOMMEND_SCAFFOLDS = [
   'ice-design-lite',
 ];
 
+const CATEGORY_ALL = '全部';
+
 export default (app) => {
   return class MaterialController extends app.Controller {
-    async resource() {
-      return storage.get('material');
+    async getResources({ args }) {
+      const resources = storage.get('material');
+
+      if (args && args.type) {
+        return resources.filter(({type: dataType}) => dataType === args.type);
+      }
+
+      return resources;
     }
 
     async getOne(ctx) {
@@ -26,7 +34,7 @@ export default (app) => {
       const currentItem = allMaterials.find((item, idx) => {
         if (item.source === url) {
           currentIdx = idx;
-          return true
+          return true;
         }
         return false;
       });
@@ -37,22 +45,23 @@ export default (app) => {
         logo = currentItem.logo,
       } = data;
 
+      const newMaterialData = {
+        ...currentItem,
+        description,
+        homepage,
+        logo,
+      };
       // if the material has existed, update metadata
       if (currentIdx > -1) {
         const newMaterials = updateArrayItem(
           allMaterials,
-          {
-            ...currentItem,
-            description,
-            homepage,
-            logo,
-          },
+          newMaterialData,
           currentIdx
         );
         storage.set('material', newMaterials);
       }
 
-      return formatMaterialData(data);
+      return {...formatMaterialData(data), name: currentItem.name };
     }
 
     async getRecommendScaffolds() {
@@ -62,7 +71,7 @@ export default (app) => {
     }
 
     async add(ctx) {
-      const { args: { url }, logger } = ctx;
+      const { args: { url, name }, logger } = ctx;
       const allMaterials = storage.get('material');
       const existed = allMaterials.some(m => m.source === url);
 
@@ -73,10 +82,10 @@ export default (app) => {
 
       const data = await request(url);
       const {
-        name,
-        description = '',
-        homepage = '',
-        logo = '',
+        description,
+        homepage,
+        logo,
+        type,
         source = url,
       } = data;
 
@@ -86,18 +95,27 @@ export default (app) => {
         throw Error('material\'s name is required.');
       }
 
-      storage.add('material', {
-        official: false, name, description, homepage, logo, source
-      });
+      const material = storage.get('material');
+      const currentItem = {
+        official: false, name, description, homepage, logo, type, source
+      };
+      const newMaterials = material.filter((item) => item.name !== currentItem.name);
+      newMaterials.unshift(currentItem)
+      storage.set('material', newMaterials);
+
       const materialData = formatMaterialData(data);
-      return { resource: storage.get('material'), current: materialData };
+
+      return { resource: storage.get('material'), current: { ...materialData, name } };
     }
 
     async delete(ctx) {
       const { args: { url }, logger } = ctx;
       logger.info(`delete material, source URL: ${url}`);
 
-      storage.remove('material', (item) => item.source !== url);
+      const material = storage.get('material');
+      const newMaterials = material.filter(item => item.source !== url);
+
+      storage.set('material', newMaterials);
 
       return storage.get('material');
     }
@@ -105,8 +123,9 @@ export default (app) => {
 };
 
 function formatMaterialData(data) {
-  const { blocks = [], scaffolds = [], components = [] } = data;
+  const { blocks = [], scaffolds = [], components = [], ...other } = data;
   return {
+    ...other,
     blocks: { categories: generateCates(blocks), materials: formatMaterialsByCatrgory(blocks) },
     scaffolds: { categories: generateCates(scaffolds), materials: formatMaterialsByCatrgory(scaffolds) },
     components: { categories: generateCates(components), materials: formatMaterialsByCatrgory(components) },
@@ -114,7 +133,7 @@ function formatMaterialData(data) {
 }
 
 function generateCates(data: any[]) {
-  const result = [];
+  const result = [{name: CATEGORY_ALL, count: data.length }];
   const temp = {};
   for (let i = 0, l = data.length; i < l; i++) {
     const { categories = [] } = data[i];
@@ -135,13 +154,13 @@ function generateCates(data: any[]) {
 }
 
 function formatMaterialsByCatrgory(data: any[]) {
-  const materials = { "all": [] };
+  const materials = { [CATEGORY_ALL]: [] };
 
   if (isArray(data)) {
     data.forEach((item) => {
       const { categories } = item;
 
-      materials["all"].push(item);
+      materials[CATEGORY_ALL].push(item);
       if (isArray(categories) && categories.length) {
         categories.forEach((category) => {
           if (isArray(materials[category])) {
@@ -155,7 +174,7 @@ function formatMaterialsByCatrgory(data: any[]) {
   }
 
   return materials;
-};
+}
 
 // http request function
 const request = async (uri: string, options = {}) => {
@@ -182,4 +201,4 @@ const updateArrayItem = (array, item, itemIdx) => {
     item,
     ...array.slice(itemIdx + 1)
   ];
-}
+};

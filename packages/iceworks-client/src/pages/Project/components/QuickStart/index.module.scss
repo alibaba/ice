@@ -1,0 +1,39 @@
+@import '../../../../variables.scss';
+
+.quickStart {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .scaffolds {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+
+    .item {
+      margin-right: 36px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .text {
+    color: $text-color-secondary;
+    font-size: $font-size-md;
+    margin-bottom: 24px;
+  }
+
+  .opts {
+    .btn {
+      margin-right: 24px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

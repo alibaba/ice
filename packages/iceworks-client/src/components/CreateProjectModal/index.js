@@ -92,6 +92,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
           size="medium"
           label="路径："
           className={styles.item}
+          onClick={() => setSelectModal(true)}
         >
           <Input
             className={cx({
@@ -106,7 +107,6 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
             type="folderopen"
             size="large"
             className={styles.icon}
-            onClick={() => setSelectModal(true)}
           />
         </FormItem>
 

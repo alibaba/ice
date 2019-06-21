@@ -10,7 +10,9 @@
     }
 
     .pathInput {
-      cursor: pointer!important;
+      &, input {
+        cursor: pointer!important;
+      }
     }
 
     .icon {

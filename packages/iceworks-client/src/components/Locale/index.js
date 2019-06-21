@@ -1,5 +1,5 @@
 /* eslint camelcase:0 */
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import { ConfigProvider } from '@alifd/next';
@@ -39,11 +39,8 @@ export const localeInfos = {
 
 export const LocalContext = createContext();
 
-const LocaleProvider = (props) => {
-  const { children } = props;
-
-  // TODO 语言值可进行本地存储
-  const [locale, setLocale] = useState(LOCAL_ZH_CN);
+export const LocaleProvider = (props) => {
+  const { children, locale, setLocale } = props;
 
   const myLocale = localeInfos[locale]
     ? localeInfos[locale]
@@ -62,6 +59,6 @@ const LocaleProvider = (props) => {
 
 LocaleProvider.propTypes = {
   children: PropTypes.element.isRequired,
+  locale: PropTypes.string.isRequired,
+  setLocale: PropTypes.func.isRequired,
 };
-
-export default LocaleProvider;

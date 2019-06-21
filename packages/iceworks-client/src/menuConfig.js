@@ -49,26 +49,8 @@ const menuConfig = [
       {
         name: 'iceworks.menu.setting.general',
         path: '/setting/general',
-        icon: 'basic-settings',
-        desc: '通用的操作设置',
-      },
-      {
-        name: 'iceworks.menu.setting.material',
-        path: '/setting/material',
-        icon: 'material',
-        desc: '添加/开启/关闭自定义物料',
-      },
-      {
-        name: 'iceworks.menu.setting.panel',
-        path: '/setting/panel',
-        icon: 'panel1',
-        desc: '项目面板管理设置',
-      },
-      {
-        name: 'iceworks.menu.setting.advanced',
-        path: '/setting/advanced',
         icon: 'gaojishezhi',
-        desc: '高级的操作设置',
+        desc: 'iceworks.menu.setting.general.desc',
       },
     ],
   },

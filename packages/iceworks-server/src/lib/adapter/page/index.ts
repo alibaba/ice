@@ -5,56 +5,72 @@ import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as mkdirp from 'mkdirp';
-import * as EventEmitter from 'events';
 import * as upperCamelCase from 'uppercamelcase';
+import * as orderBy from 'lodash.orderby';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../../scanDirectory';
 import getIceVersion from '../getIceVersion';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
-import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
+import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext, IProjectBlock } from '../../../interface';
+import config from '../config';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
-const readFileAsync = util.promisify(fs.readFileSync);
+const readFileAsync = util.promisify(fs.readFile);
+const lstatAsync = util.promisify(fs.lstat);
+
+const { title,  description, cover, isAvailable } = config['page'];
 
 const loadTemplate = async () => {
   const fileName = 'template.js';
   const filePath = path.join(__dirname, `${fileName}.ejs`);
   const fileStr = await readFileAsync(filePath, 'utf-8');
+  const compile = ejs.compile(fileStr);
   return {
-    compile: ejs.compile(fileStr),
+    compile,
     filePath,
     fileName,
   };
 };
 
-export default class Page extends EventEmitter implements IPageModule {
+export default class Page implements IPageModule {
+  public readonly title: string = title;
+  public readonly description: string = description;
+  public readonly cover: string = cover;
+  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
+  public readonly storage: any;
 
   public readonly path: string;
+  private readonly componentDirName: string = 'components';
 
-  constructor(project: IProject) {
-    super();
+  constructor(params: {project: IProject; storage: any; }) {
+    const { project, storage } = params;
     this.project = project;
+    this.storage = storage;
     this.path = path.join(this.project.path, 'src', 'pages');
   }
 
   private async scanPages(dirPath: string): Promise<IPage[]> {
-    return (await scanDirectory(dirPath)).map(dir => {
-      const fullPath = path.join(dirPath, dir);
-      const { atime, birthtime, ctime, mtime } = fs.lstatSync(fullPath);
+    const subDirectories = await scanDirectory(dirPath);
+    const pages = await Promise.all(subDirectories.map(async(dir) => {
+      const pagePath = path.join(dirPath, dir);
+      const { atime, birthtime, ctime, mtime } = await lstatAsync(pagePath);
+      const blocks = await this.getBlocks(dir);
       return {
-        name: path.basename(fullPath),
-        path: fullPath,
+        name: path.basename(pagePath),
+        path: pagePath,
         atime,
         birthtime,
         ctime,
         mtime,
-      }
-    });
+        blocks,
+      };
+    }));
+    return pages;
   }
 
   private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string) {
@@ -63,7 +79,7 @@ export default class Page extends EventEmitter implements IPageModule {
     );
   }
 
-  private async installBlocksDependencies(blocks: IMaterialBlock[]) {
+  private async installBlocksDependencies(blocks: IMaterialBlock[], ctx: IContext) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
     const blocksDependencies: { [packageName: string]: string } = {};
@@ -81,7 +97,7 @@ export default class Page extends EventEmitter implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], this);
+      return await installDependency([{ package: packageName, version }], false, this.project, ctx.socket, 'page');
     }));
   }
 
@@ -90,7 +106,7 @@ export default class Page extends EventEmitter implements IPageModule {
     const componentsDir = path.join(
       this.path,
       pageName,
-      'components'
+      this.componentDirName
     );
     await mkdirpAsync(componentsDir);
 
@@ -120,16 +136,17 @@ export default class Page extends EventEmitter implements IPageModule {
   }
 
   async getAll(): Promise<IPage[]> {
-    return await this.scanPages(this.path);
+    const pages = await this.scanPages(this.path);
+    return orderBy(pages, 'birthtime', 'desc');
   }
 
   async getOne(): Promise<any> { }
 
-  async create(page: ICreatePageParam): Promise<any> {
+  async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
 
     // create page dir
-    this.emit('create.status', { text: '创建页面目录...', percent: 10 });
+    ctx.socket.emit('adapter.page.create.status', { text: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -143,15 +160,15 @@ export default class Page extends EventEmitter implements IPageModule {
     }
 
     // download blocks
-    this.emit('create.status', { text: '正在下载区块...', percent: 40 });
+    ctx.socket.emit('adapter.page.create.status', { text: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
-    this.emit('create.status', { text: '正在安装区块依赖...', percent: 80 });
-    await this.installBlocksDependencies(blocks);
+    ctx.socket.emit('adapter.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
+    await this.installBlocksDependencies(blocks, ctx);
 
     // create page file
-    this.emit('create.status', { text: '正在创建页面文件...', percent: 90 });
+    ctx.socket.emit('adapter.page.create.status', { text: '正在创建页面文件...', percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
@@ -161,7 +178,7 @@ export default class Page extends EventEmitter implements IPageModule {
         return {
           ...block,
           className: blockClassName,
-          relativePath: `./components/${blockFolderName}`,
+          relativePath: `./${this.componentDirName}/${blockFolderName}`,
         };
       }),
       className: pageFolderName,
@@ -177,17 +194,14 @@ export default class Page extends EventEmitter implements IPageModule {
     );
 
     await writeFileAsync(dist, rendered, 'utf-8');
-
-    // TODO update routes.jsx
-
-    // TODO update menuConfig, routerConfig
   }
 
   async bulkCreate(): Promise<any> { }
 
   // TODO
-  async delete(pageName: string): Promise<any> {
-    await rimrafAsync(path.join(this.path, pageName));
+  async delete(params: {name: string}): Promise<any> {
+    const { name } = params;
+    await rimrafAsync(path.join(this.path, name));
 
     // TODO rewrite routerConfig.js
 
@@ -196,11 +210,28 @@ export default class Page extends EventEmitter implements IPageModule {
     // TODO rewrite menuConfig.js
   }
 
+  public async getBlocks(name: string): Promise<IProjectBlock[]> { 
+    const pagePath = path.join(this.path, name);
+    const blocksPath = path.join(pagePath, this.componentDirName);
+    const blockDirectroies = await scanDirectory(blocksPath);
+    const blocks = blockDirectroies.map((blockDir) => {
+      return {
+        name: blockDir,
+        path: path.join(blocksPath, blockDir),
+      };
+    });
+    return blocks;
+  }
+
+  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void> { 
+    const {blocks, name} = params;
+    await this.downloadBlocksToPage(blocks, name);
+  }
+
+  async addBlock(params: {block: IMaterialBlock, name?: string;}): Promise<void> {
+    const {block, name} = params;
+    await this.downloadBlockToPage(block, name);
+  }
+
   async update(): Promise<any> { }
-
-  async getBlocks(): Promise<any> { }
-
-  async createBlock(): Promise<any> { }
-
-  async createBlocks(): Promise<any> { }
 }
