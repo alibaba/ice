@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/template-builder",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "",
   "main": "lib/index.js",
   "files": [
