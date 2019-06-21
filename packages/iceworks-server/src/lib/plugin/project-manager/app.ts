@@ -166,7 +166,7 @@ class ProjectManager extends EventEmitter {
     return await Promise.all(
       storage.get('projects').map(async (projectPath) => {
         const project = new Project(projectPath);
-        await project.loadAdapter();
+        await project.initialize();
       })
     );
   }
