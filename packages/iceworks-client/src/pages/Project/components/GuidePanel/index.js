@@ -23,8 +23,7 @@ const GuidePanel = () => {
     <Panel>
       <div className={styles.guidePanel}>
         <div className={styles.head}>
-          <img src="https://img.alicdn.com/tfs/TB1_bn0dlCw3KVjSZFuXXcAOpXa-132-132.png" className={styles.logo} alt="logo" />
-          <h3 className={styles.title}>欢迎来到 iceworks 工作台</h3>
+          <h3 className={styles.title}>入门指引</h3>
         </div>
         <div className={styles.features}>
           {

@@ -61,7 +61,7 @@ export default {
   'iceworks.project.panel.page.save.createRouterGroup.label': '是否新建路由分组',
   'iceworks.project.panel.page.save.parentRoutePath.label': '路由分组路径',
   'iceworks.project.panel.page.save.parentRouteComponent.label': '路由分组组件',
-  'iceworks.project.panel.page.save.routePath.group.label': '选择群组路径',
+  'iceworks.project.panel.page.save.routePath.group.label': '选择路由分组',
   'iceworks.project.panel.page.save.routePath.placeholder': '请输入小写字母数字组合，支持二级路由以 `/` 分隔',
   'iceworks.project.panel.page.save.menuName.label': '页面导航名',
   'iceworks.project.panel.page.save.menuName.placeholder': '为空则不生成导航项',

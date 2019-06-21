@@ -140,7 +140,7 @@ export default {
   'iceworks.project.panel.menu.form.newwindow': 'open new window',
 
   // project router
-  'iceworks.project.panel.router.title': 'router',
+  'iceworks.project.panel.router.title': 'Router',
   'iceworks.project.panel.router.create.title': 'Create Router',
   'iceworks.project.panel.router.delete.title': 'Delete Router',
   'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',
