@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
@@ -12,6 +12,8 @@ import CreateBranchModal from './CreateBranchModal';
 import SwtichBranchModal from './SwtichBranchModal';
 import stores from '../../stores';
 import styles from './index.module.scss';
+
+const { Tooltip } = Balloon;
 
 const GitPanel = ({ intl }) => {
   const {
@@ -154,48 +156,85 @@ const GitPanel = ({ intl }) => {
           {
             isRepository ?
               <div className={styles.icons}>
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={onRefresh}
-                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' })}
-                />
-                <Icon
-                  className={styles.icon}
-                  type="plus"
-                  size="small"
-                  onClick={onOpenCreate}
-                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' })}
-                />
-                <Icon
-                  className={styles.icon}
-                  type="git"
-                  size="small"
-                  onClick={onOpenSwitch}
-                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' })}
-                />
-                <Icon
-                  className={styles.icon}
-                  type="down-arrow"
-                  size="small"
-                  onClick={onPull}
-                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.pull' })}
-                />
-                <Icon
-                  className={styles.icon}
-                  type="up-arrow"
-                  size="small"
-                  onClick={onPush}
-                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.push' })}
-                />
-                <Icon
-                  className={styles.icon}
-                  type="edit"
-                  size="small"
-                  onClick={onOpenEdit}
-                  title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.edit' })}
-                />
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="reload"
+                      size="small"
+                      onClick={onRefresh}
+                      title={intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' })}
+                    />
+                  )}
+                  align="b"
+                >
+                  {intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' })}
+                </Tooltip>
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="plus"
+                      size="small"
+                      onClick={onOpenCreate}
+                    />
+                  )}
+                  align="b"
+                >
+                  {intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' })}
+                </Tooltip>
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="git"
+                      size="small"
+                      onClick={onOpenSwitch}
+                    />
+                  )}
+                  align="b"
+                >
+                  {intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' })}
+                </Tooltip>
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="down-arrow"
+                      size="small"
+                      onClick={onPull}
+                    />
+                  )}
+                  align="b"
+                >
+                  {intl.formatMessage({ id: 'iceworks.project.panel.git.button.pull' })}
+                </Tooltip>
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="up-arrow"
+                      size="small"
+                      onClick={onPush}
+                    />
+                  )}
+                  align="b"
+                >
+                  {intl.formatMessage({ id: 'iceworks.project.panel.git.button.push' })}
+                </Tooltip>
+                <Tooltip
+                  trigger={(
+                    <Icon
+                      className={styles.icon}
+                      type="edit"
+                      size="small"
+                      onClick={onOpenEdit}
+                    />
+                  )}
+                  align="b"
+                >
+                  {intl.formatMessage({ id: 'iceworks.project.panel.git.button.edit' })}
+                </Tooltip>
               </div> :
               null
           }

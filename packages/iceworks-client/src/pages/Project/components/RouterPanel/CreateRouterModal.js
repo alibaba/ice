@@ -21,7 +21,7 @@ const formItemLayout = {
 };
 
 const field = new Field({});
-const { init } = field;
+const { init, getError } = field;
 
 const CreateRouterModal = ({
   on, onCancel, onOk, modalData,
@@ -160,7 +160,7 @@ const CreateRouterModal = ({
         <FormItem
           required
           label={<FormattedMessage id="iceworks.project.panel.router.form.path" />}
-          help={isEdit ? '修改了路径需要手动到导航配置里修改对应的路径' : ''}
+          help={isEdit ? `${getError('path') ? getError('path') : ''}(修改了路径需要手动到导航配置里修改对应的路径)` : getError('path')}
         >
           <Input
             name="path"
