@@ -163,6 +163,7 @@ interface ICreateParams {
   scaffold: IMaterialScaffold;
   forceCover?: boolean;
   appId?: string,
+  changeId?: string,
 }
 
 class ProjectManager extends EventEmitter {
@@ -302,7 +303,7 @@ class ProjectManager extends EventEmitter {
     if (params.appId) {
       try {
         const generate = require('@ali/stark-biz-generator');
-        generate({ appId: params.appId, targetDir: params.path })
+        generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
       } catch (error) {
         throw error;
       }
