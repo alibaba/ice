@@ -20,11 +20,8 @@ const formItemLayout = {
 };
 
 const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
-  const {
-    on: onSelectModal,
-    setModal: setSelectModal,
-  } = useModal();
-  const [data, setData] = useState({ name: '', appId: '', path: '', workFolder: '' });
+  const { on: onSelectModal, setModal: setSelectModal } = useModal();
+  const [data, setData] = useState({ name: '', appId: '', changeId: '', path: '', workFolder: '' });
 
   function onSave(values, errors) {
     if (!errors) {
@@ -57,6 +54,13 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
     });
   }
 
+  async function onChangeIdChange(value) {
+    setData({
+      ...data,
+      changeId: value,
+    });
+  }
+
   useEffect(() => {
     (async () => {
       const { path: workFolder } = await socket.emit('home.setting.workFolder');
@@ -68,24 +72,16 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
     })();
   }, []);
 
+  // deal with xiaoer scaffold
+  const isBzbScaffold = scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold';
   return (
-    <Modal
-      title="填写项目信息"
-      visible={on}
-      onCancel={onCancel}
-      onOk={onSave}
-      footer={false}
-    >
+    <Modal title="填写项目信息" visible={on} onCancel={onCancel} onOk={onSave} footer={false}>
       <SelectWorkFolderModal
         on={onSelectModal}
         onCancel={() => setSelectModal(false)}
         onOk={onPathChange}
       />
-      <Form
-        size="small"
-        labelAlign="top"
-        className={styles.form}
-      >
+      <Form size="small" labelAlign="top" className={styles.form}>
         <FormItem
           {...formItemLayout}
           required
@@ -103,21 +99,18 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
             value={data.path}
             disabled
           />
-          <Icon
-            type="folderopen"
-            size="large"
-            className={styles.icon}
-          />
+          <Icon type="folderopen" size="large" className={styles.icon} />
         </FormItem>
 
-        {
-          scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold' ?
+        {isBzbScaffold
+          ? [
             <FormItem
               {...formItemLayout}
               required
               size="medium"
               label="应用 appId："
               className={styles.item}
+              key="appId"
             >
               <Input
                 className={styles.input}
@@ -126,8 +119,25 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
                 value={data.appId}
                 onChange={onAppIdChange}
               />
-            </FormItem> : null
-        }
+            </FormItem>,
+            <FormItem
+              {...formItemLayout}
+              required
+              size="medium"
+              label="变更 changeId："
+              className={styles.item}
+              key="changeId"
+            >
+              <Input
+                className={styles.input}
+                name="changeId"
+                placeholder="请输入变更的 changeId"
+                value={data.changeId}
+                onChange={onChangeIdChange}
+              />
+            </FormItem>,
+            ]
+          : null}
 
         <FormItem
           {...formItemLayout}

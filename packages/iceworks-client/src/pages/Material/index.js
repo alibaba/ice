@@ -111,11 +111,6 @@ const Material = ({ history, intl }) => {
     await handleTabChange(); // auto focus scaffolds tab
   }
 
-  function handleDownloadScaffold(currentScaffold) {
-    setScaffold(currentScaffold);
-    setCreateProjectModal(true, currentScaffold);
-  }
-
   const tabs = [
     {
       tab: 'iceworks.material.scaffold',
@@ -126,6 +121,7 @@ const Material = ({ history, intl }) => {
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
           onDownload={(scaffoldData) => {
+            setScaffold(scaffoldData);
             setCreateProjectModal(true, scaffoldData);
           }}
         />
