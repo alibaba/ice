@@ -11,7 +11,7 @@ const FormSubmit = Form.Submit;
 
 const formItemLayout = {
   labelCol: {
-    fixedSpan: 5,
+    fixedSpan: 6,
   },
 };
 
@@ -30,16 +30,22 @@ const addMaterialModal = ({
     >
       <Form
         size="small"
-        labelAlign="top"
         className={styles.form}
       >
         <FormItem
           {...formItemLayout}
           required
           size="medium"
-          label={<FormattedMessage id="iceworks.material.name" />}
           patternMessage="请输入物料名称"
           patternTrigger="onChange"
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.material.name" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.material.nameTips" />
+              </TipIcon>
+            </span>
+          )}
         >
           <Input
             className={styles.input}
