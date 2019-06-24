@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.4.3",
+    "@hapi/joi": "^15.1.0",
     "async": "^2.6.1",
     "axios": "^0.19.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",

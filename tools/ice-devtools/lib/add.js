@@ -17,26 +17,30 @@ const MATERIAL_TEMPLATE_QUESION = [
 ];
 
 module.exports = async function add(cwd) {
-  debug('cwd: %s', cwd);
+  try {
+    debug('cwd: %s', cwd);
 
-  const pkg = pkgJSON.getPkgJSON(cwd);
+    const pkg = pkgJSON.getPkgJSON(cwd);
 
-  if (!pkg || !pkg.materialConfig || !pkg.materialConfig.template) {
-    logger.fatal(message.invalid);
+    if (!pkg || !pkg.materialConfig || !pkg.materialConfig.template) {
+      throw new Error(message.invalid);
+    }
+
+    const templateName = pkg.materialConfig.template;
+    const npmPrefix = `${pkg.name}-`;
+
+    // block、scaffold、etc...
+    const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
+    debug('ans: %j', type);
+
+    const templatePath = await getTemplatePath(cwd, type, templateName);
+
+    /* eslint-disable-next-line import/no-dynamic-require */
+    require(`./${type}/add`)(cwd, {
+      npmPrefix,
+      templatePath,
+    });
+  } catch (err) {
+    logger.fatal(err);
   }
-
-  const templateName = pkg.materialConfig.template;
-  const npmPrefix = `${pkg.name}-`;
-
-  // block、scaffold、etc...
-  const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
-  debug('ans: %j', type);
-
-  const templatePath = await getTemplatePath(cwd, type, templateName);
-
-  /* eslint-disable-next-line import/no-dynamic-require */
-  require(`./${type}/add`)(cwd, {
-    npmPrefix,
-    templatePath,
-  });
 };

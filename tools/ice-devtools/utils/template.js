@@ -9,12 +9,11 @@ const home = require('user-home');
 const rimraf = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const mkdirp = require('mkdirp');
-const spawn = require('cross-spawn');
 
 const isLocalPath = require('../utils/local-path').isLocalPath;
 const logger = require('../utils/logger');
+const getNpmRegistry = require('../utils/npm').getNpmRegistry;
 const {
-  isAliNpm,
   getNpmLatestSemverVersion,
   getLatestVersion,
 } = require('ice-npm-utils');
@@ -143,38 +142,6 @@ async function getNpmVersion(npm, version) {
     return getNpmLatestSemverVersion(npm, version);
   }
   return getLatestVersion(npm);
-}
-
-/**
- * get NPM registry
- *
- * @returns {string} npm registry url
- */
-function getNpmRegistry(npmName) {
-  // return REGISTRY env variable
-  if (process.env.REGISTRY) return process.env.REGISTRY;
-
-  // return tnpm if is a interior npm
-  if (isAliNpm(npmName)) return 'https://registry.npm.alibaba-inc.com';
-
-  // get registry through npm config
-  let npmRegistry = spawn.sync('npm', ['config', 'get', 'registry'], { stdio: ['ignore', 'pipe', 'pipe'] });
-  npmRegistry = npmRegistry.stdout.toString().replace(/\/+(\n?)$/, '');
-
-  // return registry
-  if (isVaildRegistry(npmRegistry)) return npmRegistry;
-
-  // default
-  return 'https://registry.npmjs.com';
-}
-
-/**
- * verify a registry URL
- *
- * @param {string} url
- */
-function isVaildRegistry(url) {
-  return /^(https?):\/\/.+$/.test(url);
 }
 
 module.exports = getTemplatePath;

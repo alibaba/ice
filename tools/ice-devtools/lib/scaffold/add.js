@@ -35,8 +35,8 @@ module.exports = async function addScaffold(cwd, opt = {}) {
       skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
-  } catch (e) {
-    logger.fatal(e);
+  } catch (err) {
+    logger.fatal(err);
   }
 };
 
@@ -71,14 +71,14 @@ function completedMessage(scaffoldName, scaffoldPath, standalone) {
   boxenLog(`
     Success! Created ${scaffoldName} at ${scaffoldPath}
     Inside ${scaffoldName} directory, you can run several commands:
-    
+
       Starts the development server.
     ${!standalone ? chalk.cyan(`    cd scaffolds/${scaffoldName}`) : ''}
     ${chalk.cyan('    npm install')}
     ${chalk.cyan('    npm start')}
-    
+
       When the development is complete, you need to run npm publish
       Contains screenshots and build, equivalent to npm run build && npm run screenshoy
-    ${chalk.cyan('    npm publish')}  
+    ${chalk.cyan('    npm publish')}
   `);
 }

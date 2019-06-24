@@ -61,4 +61,5 @@ module.exports = {
       },
     },
   },
+  categories: BLOCK_CATEGORIES,
 };

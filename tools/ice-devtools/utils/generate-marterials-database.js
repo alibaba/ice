@@ -3,13 +3,17 @@ const path = require('path');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
 const chalk = require('chalk');
-const uppercamelcase = require('uppercamelcase');
 const BluebirdPromise = require('bluebird');
+// const {} = require('../utils/validate.js');
+const pkgJSON = require('../utils/pkg-json');
+const {
+  getUnpkgHost,
+} = require('ice-npm-utils');
 const { getNpmTime } = require('./npm');
 const logger = require('./logger');
-const depAnalyze = require('./dep-analyze');
 
 const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
+
 
 /**
  * 生成物料数据文件：
@@ -102,8 +106,12 @@ function generateMaterialsData(files, SPACE, type) {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
 
     const materialConfig = pkg[`${type}Config`] || {};
+    const unpkgHost = pkgJSON.getPkgJSON(SPACE).materialConfig.unpkg || getUnpkgHost(pkg.name);
+
     // 兼容 snapshot 字段
-    const screenshot = materialConfig.screenshot || materialConfig.snapshot;
+    const screenshot = materialConfig.screenshot
+      || materialConfig.snapshot
+      || `${unpkgHost}/${pkg.name}@${pkg.version}/screenshot.png`;
 
     const registry =
       (pkg.publishConfig && pkg.publishConfig.registry) ||
@@ -115,7 +123,7 @@ function generateMaterialsData(files, SPACE, type) {
       // (必)中文描述
       title: materialConfig.title,
       description: pkg.description,
-      homepage: pkg.homepage,
+      homepage: pkg.homepage || `${unpkgHost}/${pkg.name}@${pkg.version}/build/index.html`,
       categories: materialConfig.categories || [],
       repository: pkg.repository && pkg.repository.url,
       source: {
@@ -123,20 +131,18 @@ function generateMaterialsData(files, SPACE, type) {
         npm: pkg.name,
         version: pkg.version,
         registry,
+        author: pkg.author,
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
       // (必) 截图
       screenshot,
+
       // 站点模板预览需要多张截图
       screenshots: materialConfig.screenshots || [screenshot],
 
       // ice-scripts/create-react-app，Iceworks 里选择模板里使用，不是 ice-scripts 给出提示
       builder: materialConfig.builder,
-
-      // 没有使用
-      thumbnail: materialConfig.thumbnail,
-      sketchURL: materialConfig.sketchURL,
 
       // 支持用户自定义的配置
       customConfig: materialConfig.customConfig || null,
@@ -150,43 +156,6 @@ function generateMaterialsData(files, SPACE, type) {
       }
 
       payload.source.sourceCodeDirectory = 'src/';
-
-      // 解析区块依赖：payload.features.useComponents
-      // 用于站点上关联组件的使用区块
-      const blockIndex = path.resolve(SPACE, pkgPath, '../src/index.js');
-      if (fs.existsSync(blockIndex)) {
-        try {
-          const componentDeps = depAnalyze(blockIndex);
-          const useComponents = filterDeps(componentDeps).map((mod) => {
-            let basePackage = '';
-            let className = '';
-            if (mod.startsWith('@icedesign/base')) {
-              basePackage = '@icedesign/base';
-              const subCom = /@icedesign\/base\/lib\/(.*)/.exec(mod)[1];
-              className = uppercamelcase(subCom);
-            } if (mod.startsWith('@alifd/next')) {
-              basePackage = '@alifd/next';
-              const subCom = /@alifd\/next\/lib\/(.*)/.exec(mod)[1];
-              className = uppercamelcase(subCom);
-            } else {
-              basePackage = mod;
-              const subCom = /@icedesign\/(.*)/.exec(mod)[1];
-              className = uppercamelcase(subCom);
-            }
-
-            return {
-              basePackage,
-              className,
-            };
-          });
-
-          payload.features = {
-            useComponents,
-          };
-        } catch (err) {
-          logger.warn('解析区块依赖失败', err);
-        }
-      }
     }
 
     return payload;
@@ -208,21 +177,5 @@ function generateMaterialsData(files, SPACE, type) {
     });
   }, {
     concurrency,
-  });
-}
-
-function filterDeps(deps) {
-  return deps.filter((moduleName) => {
-    return (
-      !/^\./.test(moduleName) &&
-      /* eslint-disable no-useless-escape */
-      (
-        // 基础组件
-        /(@icedesign\/base)[$\/]lib/.test(moduleName)
-        || /(@alifd\/next)[$\/]lib/.test(moduleName)
-        // 业务组件
-        || /^(@icedesign\/)\w+/.test(moduleName)
-      )
-    );
   });
 }
