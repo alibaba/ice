@@ -10,7 +10,6 @@ const rimraf = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const mkdirp = require('mkdirp');
 
-const isLocalPath = require('../utils/local-path').isLocalPath;
 const logger = require('../utils/logger');
 const getNpmRegistry = require('../utils/npm').getNpmRegistry;
 const {
@@ -19,6 +18,14 @@ const {
 } = require('ice-npm-utils');
 
 const Parser = tar.Parse;
+
+/**
+ * local path validator
+ * @param {string} aPath
+ */
+function isLocalPath(aPath) {
+  return /^[./]|(^[a-zA-Z]:)/.test(aPath);
+}
 
 /**
  * get material template path
