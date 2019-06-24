@@ -156,6 +156,7 @@ export default {
   'iceworks.project.panel.router.form.component': 'component',
   'iceworks.project.panel.router.form.exact': 'exact',
   'iceworks.project.panel.router.form.layout': 'layout',
+  'iceworks.project.panel.router.form.routerType': 'routerType',
   'iceworks.project.panel.router.button.refresh': 'refresh',
   'iceworks.project.panel.router.button.add': 'add router',
 

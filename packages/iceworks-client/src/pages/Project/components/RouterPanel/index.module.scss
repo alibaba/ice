@@ -37,13 +37,17 @@
 }
 
 .main {
-  .item {
+  .layoutItem {
+    background-color: #f1f1f1;
+  }
+
+  .item, .title {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid $border-color-base;
     height: 32px;
     align-items: center;
-   
+    padding-left: 3px;
 
     strong {
       font-size: $font-size-base;
@@ -52,8 +56,17 @@
       font-weight: 400;
     }
 
-    .itemCol {
+    .itemCol, .titleCol {
       flex: 1;
+    }
+
+    .titleCol {
+      font-weight: bold;
+    }
+
+    .operater {
+      text-align: right;
+      margin-right: 8px;
     }
 
     .icon {

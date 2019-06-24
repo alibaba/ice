@@ -156,6 +156,7 @@ export default {
   'iceworks.project.panel.router.form.component': '组件',
   'iceworks.project.panel.router.form.exact': '是否精确匹配',
   'iceworks.project.panel.router.form.layout': '布局',
+  'iceworks.project.panel.router.form.routerType': '是否路由分组',
   'iceworks.project.panel.router.button.refresh': '刷新',
   'iceworks.project.panel.router.button.add': '新建路由',
 

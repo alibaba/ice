@@ -126,9 +126,10 @@ const RouterPanel = ({ intl }) => {
     parentIndex,
   }) {
     const { path, component, children } = item;
+    const layoutRouter = Array.isArray(children);
     return [
       (
-        <li className={styles.item} key={index}>
+        <li className={`${styles.item} ${layoutRouter ? styles.layoutItem : ''}`} key={index}>
           <strong
             className={styles.itemCol}
             style={{
@@ -138,7 +139,7 @@ const RouterPanel = ({ intl }) => {
           </strong>
           <span className={styles.itemCol}>{component}</span>
           <span>
-            {Array.isArray(children) && (
+            {layoutRouter && (
               <Icon
                 type="plus"
                 title="创建"
@@ -235,6 +236,22 @@ const RouterPanel = ({ intl }) => {
         />
         {dataSource.length ? (
           <ul>
+            <li className={styles.title}>
+              <strong className={`${styles.titleCol}`}>路径</strong>
+              <strong
+                className={`${styles.titleCol} ${styles.titleMiddle}`}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                组件
+              </strong>
+              <strong
+                className={`${styles.titleCol} ${styles.operater}`}
+              >
+                操作
+              </strong>
+            </li>
             {dataSource.map((item, index) => {
               return renderCol({
                 item,

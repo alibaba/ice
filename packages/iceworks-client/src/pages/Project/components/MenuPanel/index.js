@@ -59,7 +59,7 @@ const MenuPanel = ({ intl }) => {
         type: currentTab,
       },
     });
-    onRefresh();
+    setTimeout(onRefresh, 0);
   }
 
   async function onCreate(action, value) {
