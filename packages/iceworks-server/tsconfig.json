@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "inlineSourceMap":true,
     "noImplicitThis": true,
     "stripInternal": true,
