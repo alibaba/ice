@@ -15,8 +15,6 @@ $ npm install @ice/form --save
 import { Form, Field, FieldArray } from '@ice/form';
 ```
 
-透出 Form、Field、FieldArray 三个组件。
-
 ## 快速上手
 
 下面例子演示了如何创建一个简单的 form：
