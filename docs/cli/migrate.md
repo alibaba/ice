@@ -139,10 +139,10 @@ module.exports = {
 {
   "buildConfig": {
     "theme": "@icedesign/theme",
-    "uniteBaseComponent": "@alife/next",
-    "themeConfig": {
-      "nextPrefix": "nextfd-"
-    }
+    "uniteBaseComponent": "@alife/next"
+  },
+  "themeConfig": {
+    "nextPrefix": "nextfd-"
   }
 }
 ```
