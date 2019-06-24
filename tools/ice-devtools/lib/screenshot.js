@@ -12,7 +12,7 @@ module.exports = function build() {
   console.log(chalk.yellow('对于 scaffold:'));
   console.log(chalk.cyan('"screenshot": "idev screenshot" -> "screenshot": "screenshot -l"'));
   console.log(chalk.yellow('对于 block:'));
-  console.log(chalk.cyan('"screenshot": "idev screenshot" -> "screenshot": "screenshot -l -s \\#mountNode"'));
+  console.log(chalk.cyan('"screenshot": "idev screenshot" -> "screenshot": "screenshot -l -s \\\\#mountNode"'));
   console.log();
   console.log('升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade');
   console.log();
