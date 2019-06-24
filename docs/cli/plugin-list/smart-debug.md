@@ -36,7 +36,7 @@ http://example.com/?debug=true
 开启后页面将默认加载本地入口脚本 `127.0.0.1:3333/build/js/index.js`，`__webpack_public_path__` 将会变为 `127.0.0.1:3333/build/`。
 
 > 默认加载的脚本地址，将会受 `ice.config.js` 中的 `outputDir` 和 `outputAssetPath.js` 配置影响，即默认入口文件路径规则 `${outputDir}/${outputAssetPath.js}/index.js`。
-> 对应入口 css 文件的规则为 `${outputDir}/${outputAssetPath.css}/index.css`，smart-debug 将自动通过 js 路径按规则替换并推导出 css 路径地址并进行自动加载。
+> 对应入口 css 文件的规则为 `${outputDir}/${outputAssetPath.css}/index.css`，`ice-plugin-smart-debug` 插件会自动通过 js 路径按规则替换并推导出 css 路径地址并进行自动加载。
 
 支持定制的参数包括：
 
