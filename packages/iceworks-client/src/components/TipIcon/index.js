@@ -8,7 +8,7 @@ const TipIcon = (props) => {
   return (
     <Balloon
       type="primary"
-      trigger={<Icon type="info" size="xs" className={styles.tipIcon} />}
+      trigger={<Icon type="info" size="small" className={styles.tipIcon} />}
       closable={false}
     >
       {props.children}

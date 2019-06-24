@@ -72,6 +72,8 @@ export default {
   'iceworks.project.panel.page.save.routePath.placeholder': 'Enter a combination of lowercase letters and numbers to support secondary routing separated by `/`',
   'iceworks.project.panel.page.save.menuName.label': 'Page Navigation Name',
   'iceworks.project.panel.page.save.menuName.placeholder': 'No navigation items are generated for null',
+  'iceworks.project.panel.page.button.refresh': 'refresh',
+  'iceworks.project.panel.page.button.add': 'add page',
 
   // project dependency
   'iceworks.project.panel.dependency.title': 'Dependency',
@@ -82,6 +84,7 @@ export default {
   // project layout
   'iceworks.project.panel.layout.title': 'Layout',
   'iceworks.project.panel.layout.none': 'No layout',
+  'iceworks.project.panel.layout.refresh': 'refresh',
 
   // project todo
   'iceworks.project.panel.todo.title': 'TODO',
@@ -138,6 +141,8 @@ export default {
   'iceworks.project.panel.menu.form.path': 'path',
   'iceworks.project.panel.menu.form.path.placeholder': 'please enter path',
   'iceworks.project.panel.menu.form.newwindow': 'open new window',
+  'iceworks.project.panel.menu.button.refresh': 'refresh',
+  'iceworks.project.panel.menu.button.add': 'Create Menu',
 
   // project router
   'iceworks.project.panel.router.title': 'Router',
@@ -149,6 +154,8 @@ export default {
   'iceworks.project.panel.router.form.component': 'component',
   'iceworks.project.panel.router.form.exact': 'exact',
   'iceworks.project.panel.router.form.layout': 'layout',
+  'iceworks.project.panel.router.button.refresh': 'refresh',
+  'iceworks.project.panel.router.button.add': 'add router',
 
   // task
   'iceworks.task.title': 'Task',

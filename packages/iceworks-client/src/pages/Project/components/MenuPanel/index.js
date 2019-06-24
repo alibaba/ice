@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Balloon } from '@alifd/next';
 import useModal from '@hooks/useModal';
 import Icon from '@components/Icon';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
@@ -11,7 +13,9 @@ import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const MenuPanel = () => {
+const { Tooltip } = Balloon;
+
+const MenuPanel = ({ intl }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -94,8 +98,32 @@ const MenuPanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.menu.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="reload" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="plus" size="small" onClick={onOpenCreateModal} />
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={onRefresh}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.menu.button.refresh' })}
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="plus"
+                  size="small"
+                  onClick={onOpenCreateModal}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.menu.button.add' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -125,4 +153,8 @@ const MenuPanel = () => {
   );
 };
 
-export default MenuPanel;
+MenuPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(MenuPanel);

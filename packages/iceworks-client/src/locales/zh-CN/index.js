@@ -65,6 +65,8 @@ export default {
   'iceworks.project.panel.page.save.routePath.placeholder': '请输入小写字母数字组合，支持二级路由以 `/` 分隔',
   'iceworks.project.panel.page.save.menuName.label': '页面导航名',
   'iceworks.project.panel.page.save.menuName.placeholder': '为空则不生成导航项',
+  'iceworks.project.panel.page.button.refresh': '刷新',
+  'iceworks.project.panel.page.button.add': '新建页面',
 
   // project dependency
   'iceworks.project.panel.dependency.title': '依赖管理',
@@ -81,6 +83,7 @@ export default {
 
   // project layout
   'iceworks.project.panel.layout.title': '布局列表',
+  'iceworks.project.panel.layout.refresh': '刷新',
   'iceworks.project.panel.layout.none': '暂无布局',
 
   // project todo
@@ -138,6 +141,8 @@ export default {
   'iceworks.project.panel.menu.form.path': '路径',
   'iceworks.project.panel.menu.form.path.placeholder': '请输入与路径',
   'iceworks.project.panel.menu.form.newwindow': '是否打开新窗口',
+  'iceworks.project.panel.menu.button.refresh': '刷新',
+  'iceworks.project.panel.menu.button.add': '新建菜单',
 
   // project router
   'iceworks.project.panel.router.create.title': '创建路由',
@@ -149,6 +154,8 @@ export default {
   'iceworks.project.panel.router.form.component': '组件',
   'iceworks.project.panel.router.form.exact': '是否精确匹配',
   'iceworks.project.panel.router.form.layout': '布局',
+  'iceworks.project.panel.router.button.refresh': '刷新',
+  'iceworks.project.panel.router.button.add': '新建路由',
 
   // task
   'iceworks.task.title': '工程管理',
