@@ -1,3 +1,4 @@
+import Guide from './components/GuidePanel';
 import Page from './components/PagePanel';
 import Dependency from './components/DependencyPanel';
 import Layout from './components/LayoutPanel';
@@ -9,6 +10,7 @@ import Menu from './components/MenuPanel';
 import Router from './components/RouterPanel';
 
 export default {
+  Guide,
   Page,
   Dependency,
   Layout,

@@ -26,6 +26,7 @@ const mvAsync = util.promisify(mv);
 
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
+const DEFAULT_TYPE = 'react';
 
 class Project implements IProject {
   public readonly name: string;
@@ -33,6 +34,8 @@ class Project implements IProject {
   public readonly path: string;
 
   public readonly packagePath: string;
+
+  public readonly type: string;
 
   public panels: IPanel[] = [];
 
@@ -42,9 +45,16 @@ class Project implements IProject {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
+    this.type = this.getType();
 
     this.loadAdapter();
     this.assemblePanels();
+  }
+
+  public getType(): string {
+    const { iceworks = {} } = this.getPackageJSON();
+    const { type = DEFAULT_TYPE } = iceworks;
+    return type;
   }
 
   public getPackageJSON() {
@@ -67,13 +77,13 @@ class Project implements IProject {
       const adapterModule = new Module({ project, storage });
       this.adapter[camelCase(name)] = adapterModule;
 
-      const {title, description, cover} = adapterModule;
+      const {title, description, cover, isAvailable } = adapterModule;
       this.panels.push({
         name,
         title,
         description,
         cover,
-        isAvailable: true,
+        isAvailable,
       });
     }
   }
@@ -86,7 +96,7 @@ class Project implements IProject {
   private pullPanels() {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
-    
+
     if (projectPanelSettings) {
       const { panels } = projectPanelSettings;
 
@@ -106,7 +116,7 @@ class Project implements IProject {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
     const panels = this.panels.map(({name, isAvailable}) => ({name, isAvailable}));
-    
+
     if (projectPanelSettings) {
       projectPanelSettings.panels = panels;
     } else {
@@ -137,10 +147,11 @@ class Project implements IProject {
   }
 
   public toJSON() {
-    const { name, path, panels } = this;
+    const { name, path, panels, type } = this;
     return {
       name,
       path,
+      type,
       panels,
     };
   }

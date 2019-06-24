@@ -5,9 +5,11 @@ import styles from './index.module.scss';
 const Panel = ({ header, children }) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>
-        {header}
-      </div>
+      {header ?
+        <div className={styles.header}>
+          {header}
+        </div> : null
+      }
       <div className={styles.main}>
         <div className={styles.box}>
           {children}
@@ -17,8 +19,12 @@ const Panel = ({ header, children }) => {
   );
 };
 
+Panel.defaultProps = {
+  header: null,
+};
+
 Panel.propTypes = {
-  header: PropTypes.element.isRequired,
+  header: PropTypes.element,
   children: PropTypes.element.isRequired,
 };
 

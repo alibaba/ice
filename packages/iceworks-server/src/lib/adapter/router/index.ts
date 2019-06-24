@@ -7,16 +7,20 @@ import * as t from '@babel/types';
 
 import formatCodeFromAST from '../formatCodeFromAST';
 import { IRouter, IRouterModule, IProject, IRouterOptions } from '../../../interface';
+import config from '../config';
+
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
-const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
+const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'children'];
+const { title,  description, cover, isAvailable } = config['router'];
 
 export default class Router implements IRouterModule {
-  public readonly title: string = '路由管理';
-  public readonly description: string = '展示项目中的所有路由，支持对路由的增删改。';
-  public readonly cover: string = 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png';
+  public readonly title: string = title;
+  public readonly description: string = description
+  public readonly cover: string = cover;
+  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 
@@ -67,7 +71,7 @@ export default class Router implements IRouterModule {
   parseRoute(elements) {
     const config = [];
     elements.forEach((element) => {
-      // { path: '/home', component: Home, routes: [] }
+      // { path: '/home', component: Home, children: [] }
       const { properties } = element;
       const item: any = {};
       properties.forEach((property) => {
@@ -77,9 +81,9 @@ export default class Router implements IRouterModule {
         // component is react Component
         if (keyName === 'component') {
           item[keyName] = value.name;
-        } else if (keyName === 'routes') {
-          // routes is array
-          item.routes = this.parseRoute(value.elements);
+        } else if (keyName === 'children') {
+          // children is array
+          item.children = this.parseRoute(value.elements);
         } else if (ROUTE_PROP_WHITELIST.indexOf(keyName) > -1) {
           item[keyName] = value.value;
         }
@@ -94,7 +98,7 @@ export default class Router implements IRouterModule {
 
   // bulk create routers
   async bulkCreate(params: {data: IRouter[], options: IRouterOptions}): Promise<void>  {
-    let {data, options = {}} = params;
+    let { data, options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
@@ -102,13 +106,13 @@ export default class Router implements IRouterModule {
     if (!replacement) {
       if (parent) {
         const parentRouter = currentData.find((item) => {
-          if (item.routes && item.path === parent) {
+          if (item.children && item.path === parent) {
             return true;
           }
           return false;
         });
         if (parentRouter) {
-          parentRouter.routes = parentRouter.routes.concat(data);
+          parentRouter.children = parentRouter.children.concat(data);
           data = currentData;
         }
       } else {
@@ -162,8 +166,8 @@ export default class Router implements IRouterModule {
    */
   private sortData(data: IRouter[]): IRouter[] {
     return data.sort((a, b) => {
-      if (a.routes) {
-        a.routes = this.sortData(a.routes);
+      if (a.children) {
+        a.children = this.sortData(a.children);
       }
       if (a.path.indexOf(b.path) === 0) {
         return -1;
@@ -183,8 +187,6 @@ export default class Router implements IRouterModule {
   private changeImportDeclarations(routerConfigAST, data) {
     const removeIndex = [];
     const importDeclarations = [];
-    // const pageImportDeclarations = [];
-    // const layoutImportDeclarations = [];
     this.existLazy = false;
 
     traverse(routerConfigAST, {
@@ -232,17 +234,17 @@ export default class Router implements IRouterModule {
 
         if (type === LAYOUT_DIRECTORY) {
           // layout only first layer
-          findRouter = data.find(item => item.routes && item.component === name);
+          findRouter = data.find(item => item.children && item.component === name);
         } else if (type === PAGE_DIRECTORY) {
           findRouter = data.find(item => {
             let pageItem = null;
 
-            if (!item.routes && item.component === name) {
+            if (!item.children && item.component === name) {
               pageItem = item;
             }
 
-            if (item.routes) {
-              item.routes.forEach((route) => {
+            if (item.children) {
+              item.children.forEach((route) => {
                 if (route.component === name) {
                   pageItem = route;
                 }
@@ -278,14 +280,14 @@ export default class Router implements IRouterModule {
       }
     }
 
-    // /**
-    //  * add import if there is no layout or component in the ImportDeclarations
-    //  */
+    /**
+     * add import if there is no layout or component in the ImportDeclarations
+     */
     const newImports = [];
-    data.forEach(({ component, routes }) => {
-      if (routes) {
+    data.forEach(({ component, children }) => {
+      if (children) {
         setNewComponent(LAYOUT_DIRECTORY, component);
-        routes.forEach((route) => setNewComponent(PAGE_DIRECTORY, route.component));
+        children.forEach((route) => setNewComponent(PAGE_DIRECTORY, route.component));
       } else {
         setNewComponent(PAGE_DIRECTORY, component);
       }

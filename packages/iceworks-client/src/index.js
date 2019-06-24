@@ -9,17 +9,16 @@ import '@alifd/next/reset.scss';
 import logger from '@utils/logger';
 import socket from '@src/socket';
 import MainLayout from '@layouts/MainLayout/index';
-import LocaleProvider from '@components/Locale';
+import { LocaleProvider } from '@components/Locale';
 import ThemeProvider from '@components/ThemeProvider';
 import './global.scss';
 import './variables.scss';
 
 const history = createBrowserHistory();
-const DEFAULT_LOCALE = 'zh-CN';
 
 const App = () => {
-  const [locale, setLocale] = useState(DEFAULT_LOCALE);
-  const [theme, setTheme] = useTheme('');
+  const [locale, setLocale] = useState();
+  const [theme, setTheme] = useTheme();
 
   async function getLocale() {
     const currentLocale = await socket.emit('home.setting.getLocale');
@@ -39,7 +38,12 @@ const App = () => {
       await getLocale();
       await getTheme();
     })();
-  }, []);
+  });
+
+  // 防止初始化UI抖动
+  if (!locale || !theme) {
+    return null;
+  }
 
   return (
     <Beforeunload onBeforeunload={() => "You'll loose your data"}>

@@ -21,7 +21,7 @@ const formItemLayout = {
 };
 
 const field = new Field({});
-const { init } = field;
+const { init, getError } = field;
 
 const CreateRouterModal = ({
   on, onCancel, onOk, modalData,
@@ -35,10 +35,10 @@ const CreateRouterModal = ({
       const formValue = {
         ...modalData.formData,
       };
-      const { component, routes } = formValue;
+      const { component, children } = formValue;
       if (component) {
         // layout component
-        if (routes) {
+        if (children) {
           formValue.component = `layout-${component}`;
         } else {
           formValue.component = `page-${component}`;
@@ -82,7 +82,7 @@ const CreateRouterModal = ({
         children: pageSelects,
       }];
     }
-  } else if (formData.routes) {
+  } else if (formData.children) {
     dataSource = layoutSelects;
   } else {
     dataSource = pageSelects;
@@ -100,7 +100,7 @@ const CreateRouterModal = ({
         if (component) {
           const [type, componentValue] = component.split(/-(.+)/);
           if (type === 'layout') {
-            formValue.routes = formValue.routes || [];
+            formValue.children = formValue.children || [];
           }
           formValue.component = componentValue;
         }
@@ -126,8 +126,8 @@ const CreateRouterModal = ({
         exist = true;
         return true;
       }
-      if (item.routes) {
-        exist = item.routes.some((route, childIndex) => {
+      if (item.children) {
+        exist = item.children.some((route, childIndex) => {
           if (
             route.path === value &&
             modalData.editIndex !== childIndex &&
@@ -160,7 +160,7 @@ const CreateRouterModal = ({
         <FormItem
           required
           label={<FormattedMessage id="iceworks.project.panel.router.form.path" />}
-          help={isEdit ? '修改了路径需要手动到导航配置里修改对应的路径' : ''}
+          help={isEdit ? `${getError('path') ? getError('path') : ''}(修改了路径需要手动到导航配置里修改对应的路径)` : getError('path')}
         >
           <Input
             name="path"

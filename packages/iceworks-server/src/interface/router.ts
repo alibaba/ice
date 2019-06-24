@@ -28,7 +28,7 @@ export interface IRouter {
   /**
    * children routes
    */
-  routes?: IRouter[];
+  children?: IRouter[];
 }
 
 export interface IRouterModule extends IBaseModule {

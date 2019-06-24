@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { PLACEHOLDER_IMG } from '@src/appConfig';
 import styles from './index.module.scss';
 
-const BlockCard = ({ dataSource }) => {
+const BlockCard = ({ dataSource, onClick }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.screenshot}>
+      <div className={styles.screenshot} onClick={onClick}>
         {dataSource.isNewly ? <div className={styles.newly}>NEW</div> : null}
         <img alt={dataSource.title} src={dataSource.screenshot || PLACEHOLDER_IMG} />
       </div>
@@ -38,6 +38,7 @@ BlockCard.defaultProps = {
   dataSource: {
     isNewlyCreated: false,
   },
+  onClick: () => {},
 };
 
 BlockCard.propTypes = {
@@ -46,6 +47,7 @@ BlockCard.propTypes = {
     screenshot: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   }),
+  onClick: PropTypes.func,
 };
 
 export default BlockCard;

@@ -12,10 +12,6 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 const RadioGroup = Radio.Group;
-const LOCALE_MAP = {
-  '中文': 'iceworks.setting.general.language.zh',
-  'English': 'iceworks.setting.general.language.en',
-};
 const DEFAULT_EDITOR = 'vscode';
 
 const General = ({ intl }) => {
@@ -27,7 +23,7 @@ const General = ({ intl }) => {
   const languageOptions = Object.keys(localeInfos).map(key => {
     return {
       value: key,
-      label: intl.formatMessage({ id: LOCALE_MAP[localeInfos[key].label] }),
+      label: localeInfos[key].label,
     };
   });
 

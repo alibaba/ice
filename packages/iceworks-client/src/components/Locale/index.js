@@ -39,7 +39,7 @@ export const localeInfos = {
 
 export const LocalContext = createContext();
 
-const LocaleProvider = (props) => {
+export const LocaleProvider = (props) => {
   const { children, locale, setLocale } = props;
 
   const myLocale = localeInfos[locale]
@@ -62,5 +62,3 @@ LocaleProvider.propTypes = {
   locale: PropTypes.string.isRequired,
   setLocale: PropTypes.func.isRequired,
 };
-
-export default LocaleProvider;

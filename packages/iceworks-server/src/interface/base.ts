@@ -8,9 +8,9 @@ export interface IContext {
 
 export interface IPanel {
   isAvailable: boolean;
-  name: string; 
-  title: string; 
-  description?: string; 
+  name: string;
+  title: string;
+  description?: string;
   cover?: string;
 }
 
@@ -18,6 +18,11 @@ export interface IPanel {
  * 项目信息
  */
 export interface IProject {
+  /**
+   * 项目类型：react/vue/angular...
+   */
+  readonly type: string;
+
   /**
    * 项目显示名称
    */
@@ -65,6 +70,7 @@ export interface IProject {
 export interface IBaseModule {
   project: IProject;
   storage: any;
+  isAvailable: boolean;
   title: string;
   description?: string;
   cover?: string;

@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
-import CreatePageModal from './CreatePageModal';
+import BuildPageModal from './BuildPageModal';
 
-const PagePanel = () => {
+const { Tooltip } = Balloon;
+
+const PagePanel = ({ intl }) => {
   const [deleteName, setDeleteName] = useState('');
+  const [editingName, setEditingName] = useState('');
   const {
     on: onDeleteModal,
     toggleModal: toggleDeleteModal,
   } = useModal();
   const {
-    on: onCreateModal,
-    toggleModal: toggleCreateModal,
+    on: onCreatePageModal,
+    setModal: setCreatePageModal,
+  } = useModal();
+  const {
+    on: onAddBlocksModal,
+    setModal: setAddBlocksModal,
   } = useModal();
   const [pages] = stores.useStores(['pages']);
   const menuStore = stores.useStore('menu');
@@ -31,12 +39,17 @@ const PagePanel = () => {
   }
 
   function onCreate() {
-    toggleCreateModal();
+    setCreatePageModal(true);
   }
 
   function onDelete(name) {
     setDeleteName(name);
     toggleDeleteModal();
+  }
+
+  function onAddBlocks(name) {
+    setEditingName(name);
+    setAddBlocksModal(true);
   }
 
   async function deletePage() {
@@ -59,6 +72,8 @@ const PagePanel = () => {
 
     await pages.create(data);
 
+    logger.info('created page.');
+
     // create router and menu after success create page
     await routerStore.bulkCreate({
       data: [{
@@ -70,6 +85,8 @@ const PagePanel = () => {
       },
     });
 
+    logger.info('created router.');
+
     // add menu if exist menuName
     if (menuName) {
       await menuStore.bulkCreate({
@@ -80,7 +97,9 @@ const PagePanel = () => {
       });
     }
 
-    toggleCreateModal();
+    logger.info('created menu.');
+
+    setCreatePageModal(false);
 
     Message.show({
       align: 'tr tr',
@@ -93,9 +112,27 @@ const PagePanel = () => {
     routerStore.refresh();
   }
 
+  async function addBlocks(newBlocks) {
+    await pages.addBlocks({ blocks: newBlocks, name: editingName });
+
+    setAddBlocksModal(false);
+
+    Message.show({
+      align: 'tr tr',
+      type: 'success',
+      content: '添加区块成功',
+    });
+
+    pages.refresh();
+  }
+
   const pagePreDelete =
     pages.dataSource.find(({ name }) => {
       return name === deleteName;
+    }) || {};
+  const pageEditing =
+    pages.dataSource.find(({ name }) => {
+      return name === editingName;
     }) || {};
 
   return (
@@ -104,8 +141,32 @@ const PagePanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} title="刷新" type="reload" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} title="添加页面" type="plus" size="small" onClick={onCreate} />
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={onRefresh}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' })}
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="plus"
+                  size="small"
+                  onClick={onCreate}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -117,11 +178,25 @@ const PagePanel = () => {
           onOk={deletePage}
           page={pagePreDelete}
         />
-        <CreatePageModal
-          on={onCreateModal}
-          onCancel={toggleCreateModal}
-          onOk={createPage}
-        />
+        {
+          onCreatePageModal ?
+            <BuildPageModal
+              on={onCreatePageModal}
+              onCancel={() => setCreatePageModal(false)}
+              onOk={createPage}
+            /> :
+            null
+        }
+        {
+          onAddBlocksModal ?
+            <BuildPageModal
+              on={onAddBlocksModal}
+              onCancel={() => setAddBlocksModal(false)}
+              onOk={addBlocks}
+              existedBlocks={pageEditing.blocks}
+            /> :
+            null
+        }
         {
           dataSource.length ?
             <div>
@@ -131,6 +206,7 @@ const PagePanel = () => {
                     <li className={styles.item} key={name}>
                       <strong>{name}</strong>
                       <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
+                      <Icon className={styles.icon} type="new-page" size="xs" onClick={() => onAddBlocks(name)} />
                       <Icon className={styles.icon} type="trash" size="xs" onClick={() => onDelete(name)} />
                     </li>
                   );
@@ -148,4 +224,8 @@ const PagePanel = () => {
   );
 };
 
-export default PagePanel;
+PagePanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(PagePanel);

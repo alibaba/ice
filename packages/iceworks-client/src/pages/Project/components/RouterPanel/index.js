@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
-import { Message } from '@alifd/next';
+import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
 
 import CreateRouterModal from './CreateRouterModal';
@@ -11,13 +12,15 @@ import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
+const { Tooltip } = Balloon;
+
 let editIndex = -1;
 let editParentIndex = -1;
 let deleteIndex = -1;
 let action = 'create';
 let deleteParent = null;
 
-const RouterPanel = () => {
+const RouterPanel = ({ intl }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -81,13 +84,13 @@ const RouterPanel = () => {
     toggleCreateModal();
     if (action === 'create') {
       if (parent) {
-        parent.routes.push(value);
+        parent.children.push(value);
       } else {
         dataSource.push(value);
       }
     } else if (action === 'edit') {
       if (parent) {
-        Object.assign(parent.routes[editIndex], value);
+        Object.assign(parent.children[editIndex], value);
       } else {
         Object.assign(dataSource[editIndex], value);
       }
@@ -108,7 +111,7 @@ const RouterPanel = () => {
 
   async function onDeleteRouter() {
     if (deleteParent) {
-      deleteParent.routes.splice(deleteIndex, 1);
+      deleteParent.children.splice(deleteIndex, 1);
     } else {
       dataSource.splice(deleteIndex, 1);
     }
@@ -122,7 +125,7 @@ const RouterPanel = () => {
     parent,
     parentIndex,
   }) {
-    const { path, component, routes } = item;
+    const { path, component, children } = item;
     return [
       (
         <li className={styles.item} key={index}>
@@ -135,7 +138,7 @@ const RouterPanel = () => {
           </strong>
           <span className={styles.itemCol}>{component}</span>
           <span>
-            {Array.isArray(routes) && (
+            {Array.isArray(children) && (
               <Icon
                 type="plus"
                 title="创建"
@@ -169,8 +172,8 @@ const RouterPanel = () => {
           </span>
         </li>
       ),
-      routes && (
-        routes.map((route, routeIndex) => renderCol({
+      children && (
+        children.map((route, routeIndex) => renderCol({
           item: route,
           index: routeIndex,
           parent: item,
@@ -186,8 +189,32 @@ const RouterPanel = () => {
         <div className={styles.header}>
           <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="reload" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="plus" size="small" onClick={() => onOpenCreateModal()} />
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={onRefresh}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' })}
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="plus"
+                  size="small"
+                  onClick={() => onOpenCreateModal()}
+                />
+              )}
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -225,4 +252,8 @@ const RouterPanel = () => {
   );
 };
 
-export default RouterPanel;
+RouterPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(RouterPanel);
