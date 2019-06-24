@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const logger = require('../utils/logger');
 const message = require('../utils/message');
 
 /**
@@ -20,7 +19,7 @@ function getPkgJSON(cwd) {
  */
 function getJSON(jsonPath) {
   if (!fs.existsSync(jsonPath)) {
-    logger.fatal('getJSON:', message.invalid);
+    throw new Error(message.invalid);
   }
   const jsonString = fs.readFileSync(jsonPath, 'utf-8');
   return JSON.parse(jsonString);
@@ -43,7 +42,7 @@ function writePkgJSON(pkg, cwd) {
  */
 function writeJSON(obj, jsonPath) {
   if (!fs.existsSync(jsonPath)) {
-    logger.fatal('writeJSON:', message.invalid);
+    throw new Error(message.invalid);
   }
   const jsonString = JSON.stringify(obj, null, 2);
   fs.writeFileSync(jsonPath, jsonString, 'utf-8');

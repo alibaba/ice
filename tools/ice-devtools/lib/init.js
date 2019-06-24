@@ -1,16 +1,8 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { checkAliInternal } = require('ice-npm-utils');
-const path = require('path');
-const { existsSync } = require('fs');
-const ora = require('ora');
-const home = require('user-home');
-const { sync: rm } = require('rimraf');
-const debug = require('debug')('ice:add:general');
-
 const logger = require('../utils/logger');
-const download = require('../utils/download');
-const { isLocalPath } = require('../utils/local-path');
+const getTemplatePath = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
 
 module.exports = async function init(cwd) {
@@ -28,7 +20,7 @@ module.exports = async function init(cwd) {
     // get user answers
     const { type, template, scope, forInnerNet } = await initAsk(options);
     const npmPrefix = scope ? `${scope}/` : '';
-    const templatePath = await getTemplatePath(type, template);
+    const templatePath = await getTemplatePath(cwd, type, template);
 
     if (type === 'material') {
       // init material project
@@ -45,6 +37,7 @@ module.exports = async function init(cwd) {
       /* eslint-disable-next-line import/no-dynamic-require */
       require(`./${type}/add`)(cwd, {
         npmPrefix,
+        template,
         templatePath,
         forInnerNet,
         standalone: true,
@@ -142,48 +135,4 @@ async function initAsk(options = {}) {
     template,
     forInnerNet,
   };
-}
-
-/**
- * 获取模板路径
- *
- * @param {string} type
- * @param {string} template
- */
-async function getTemplatePath(type, template) {
-  // from local path
-  if (template && isLocalPath(template)) {
-    const templatePath = path.join(template, type === 'material' ? 'template' : `template/${type}`);
-    if (existsSync(templatePath)) {
-      return templatePath;
-    }
-    logger.fatal(`template is not found in ${templatePath}`);
-  }
-
-  // form npm package
-  const tmp = await downloadTemplate(template);
-  return path.join(tmp, type === 'material' ? 'template' : `template/${type}`);
-}
-
-/**
- * 下载模板
- *
- * @param {String} template
- */
-function downloadTemplate(template) {
-  const downloadspinner = ora('downloading template');
-  downloadspinner.start();
-
-  const tmp = path.join(home, '.ice-templates', template);
-  debug('downloadTemplate', template);
-  if (existsSync(tmp)) rm(tmp);
-  return download({ template })
-    .then(() => {
-      downloadspinner.stop();
-      return tmp;
-    })
-    .catch((err) => {
-      downloadspinner.stop();
-      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
-    });
 }

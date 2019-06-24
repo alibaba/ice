@@ -3,50 +3,53 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const validateName = require('validate-npm-package-name');
-const fse = require('fs-extra');
 const uppercamelcase = require('uppercamelcase');
 const generate = require('../../utils/generate');
 const pkgJSON = require('../../utils/pkg-json');
+const logger = require('../../utils/logger');
 const boxenLog = require('../../utils/boxen-log');
 
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 
 const initTemplatePath = path.join(__dirname, '../../template/init');
 
+const MATERIAL_TYPES = ['block', 'component', 'scaffold'];
+
 // 缓存目录 用于之后的自定义模板、idev add默认模板来源
-const appTemplatePath = (appPath, ...subFiles) => path.join(appPath, '.template', ...subFiles);
+// const appTemplatePath = (appPath, ...subFiles) => path.join(appPath, '.template', ...subFiles);
 
 /**
  * @param{String} cwd 当前路径
  * @param{Object} opt 参数
  */
 module.exports = async function addMaterial(cwd, opt = {}) {
-  const { template, templatePath, npmPrefix, forInnerNet } = opt;
-  const dest = cwd;
+  try {
+    const { template, templatePath, npmPrefix, forInnerNet } = opt;
+    const dest = cwd;
 
-  const questions = defaultQuestion({ cwd, forInnerNet, npmPrefix });
-  const { name, description } = await inquirer.prompt(questions);
-  const npmName = generateNpmNameByPrefix(name, npmPrefix);
+    const questions = defaultQuestion({ cwd, forInnerNet, npmPrefix });
+    const { name, description } = await inquirer.prompt(questions);
+    const npmName = generateNpmNameByPrefix(name, npmPrefix);
 
-  // init material project
-  await generate({
-    template,
-    name: npmName,
-    npmName,
-    version: '1.0.0',
-    description,
-    src: initTemplatePath,
-    dest,
-    categories: {},
-  });
+    // init material project
+    await generate({
+      template,
+      name: npmName,
+      npmName,
+      version: '1.0.0',
+      description,
+      src: initTemplatePath,
+      dest,
+      categories: {},
+    });
 
-  // clone template to .template for custom template
-  fse.copySync(templatePath, appTemplatePath(dest));
+    // generate demo
+    await generateMaterialsDemo(cwd, templatePath);
 
-  // generate demo
-  await generateMaterialsDemo(dest);
-
-  completedMessage(dest, name);
+    completedMessage(dest, name);
+  } catch (err) {
+    logger.fatal(err);
+  }
 };
 
 function defaultQuestion({ cwd, forInnerNet, npmPrefix }) {
@@ -82,20 +85,19 @@ function defaultQuestion({ cwd, forInnerNet, npmPrefix }) {
 /**
  * generate demo for material project
  */
-async function generateMaterialsDemo(appPath) {
-  const pkg = pkgJSON.getPkgJSON(appPath);
+async function generateMaterialsDemo(cwd, templatePath) {
+  const pkg = pkgJSON.getPkgJSON(cwd);
 
   // [block, component, scaffold]
-  const types = fs.readdirSync(appTemplatePath(appPath)).filter((file) => fs.statSync(appTemplatePath(appPath, file)).isDirectory()
-  );
+  const types = MATERIAL_TYPES.filter((type) => fs.statSync(path.join(templatePath, type)).isDirectory());
 
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
-    // 生成 blocks\components\scaffolds 文件夹 以及示例demo
+    // generate blocks\components\scaffolds folders and demo
     /* eslint-disable-next-line no-await-in-loop */
     await generate({
-      src: appTemplatePath(appPath, type),
-      dest: path.join(appPath, `${type}s/Example${uppercamelcase(type)}`),
+      src: path.join(templatePath, type),
+      dest: path.join(cwd, `${type}s/Example${uppercamelcase(type)}`),
       name: `example-${type}`,
       npmName: `${pkg.name}-example-${type}`,
       adaptor: false, // TODO

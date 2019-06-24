@@ -41,6 +41,7 @@
     "kebab-case": "^1.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "lodash": "^4.17.11",
     "marked": "^0.6.0",
     "metalsmith": "^2.3.0",
     "minimatch": "^3.0.4",
@@ -62,8 +63,7 @@
     "update-notifier": "^3.0.0",
     "uppercamelcase": "^3.0.0",
     "user-home": "^2.0.0",
-    "validate-npm-package-name": "^3.0.0",
-    "zlib": "^1.0.5"
+    "validate-npm-package-name": "^3.0.0"
   },
   "engines": {
     "node": ">=8.0.0"
