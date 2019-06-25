@@ -19,6 +19,11 @@ order: 1
 
 > iceworks 本质上是某一类型前端项目的最佳实践和工程的抽象，通过 Adapter 机制可以接入 iceworks 进行可视化的项目工程管理，定制专有的前端工作台。
 
+Adapter 核心包括两部分功能：
+
+* 工程实践：即使用的构建调试工具，比如 ice-scripts、vue-cli 等，决定了项目启动构建以及工程配置等能力。
+* 项目实践：即项目开发的最佳实践，包含目录结构、路由配置、权限管理等，决定了面板里新建页面、新建路由如何实现，数据流等方案。
+
 ![iceworks-adapter-design](https://img.alicdn.com/tfs/TB1wwsmcAxz61VjSZFrXXXeLFXa-2384-1404.png)
 
 
