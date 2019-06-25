@@ -2,17 +2,16 @@ const http = require('http');
 const fs = require('fs');
 const url = require('url');
 const path = require('path');
+const chalk = require('chalk');
 
 module.exports = function (cwd, port) {
   const server = http
     .createServer((req, res) => {
-      const pathname = cwd + url.parse(req.url).pathname; // 对于文件路径统一处理
+      const pathname = cwd + url.parse(req.url).pathname;
 
       fs.exists(pathname, (exists) => {
         if (exists) {
-          switch (
-            path.extname(pathname) // 不同文件返回不同类型
-          ) {
+          switch (path.extname(pathname)) { // set HTTP HEAD
             case '.html':
               res.writeHead(200, { 'Content-Type': 'text/html' });
               break;
@@ -36,18 +35,17 @@ module.exports = function (cwd, port) {
                 'Content-Type': 'application/octet-stream',
               });
           }
-          fs.readFile(pathname, (err, data) => {
-            // console.log((new Date()).toLocaleString() + " " + pathname);
+          fs.readFile(pathname, (_err, data) => {
             res.end(data);
           });
         } else {
-          // 找不到目录时的处理
           res.writeHead(404, { 'Content-Type': 'text/html' });
           res.end('<h1>404 Not Found</h1>');
+          console.log(chalk.yellow(`${pathname} Not Found.`));
         }
       });
     })
-    .listen(port, '127.0.0.1'); // 监听端口
+    .listen(port, '127.0.0.1');
 
   return server;
 };

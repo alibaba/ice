@@ -8,6 +8,6 @@ module.exports = function build() {
   console.log(chalk.cyan('    npm install ice-scripts@latest -g'));
   console.log(chalk.cyan('    ice build'));
   console.log();
-  console.log('升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade');
+  console.log('升级访问 https://www.yuque.com/ice-team/wiki/cb36go');
   console.log();
 };
