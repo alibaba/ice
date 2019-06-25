@@ -64,7 +64,7 @@ module.exports = {
 1. 提取主题包中的 scss 变量（色值变量）
 2. 将 scss 变量具体内容转换为 css 变量，即 $color-brand1-1: #E2EDFF; => $color-brand1-1: var(--color-brand-1);
 3. 注入新的 scss 变量值（如 $color-brand1-1: var(--color-brand-1)）进行编译
-4. 在 `window` 下注入 `__changeTheme` 方法，实现不同主题包全局 css 变量声明的切换
+4. 在 `window` 下注入 `__changeTheme__` 方法，实现不同主题包全局 css 变量声明的切换
 
 ```js
 module.exports = {
