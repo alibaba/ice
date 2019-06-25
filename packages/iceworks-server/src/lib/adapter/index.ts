@@ -15,7 +15,8 @@ const config = {
     title: '引导指南',
     description: '展示 iceworks 的基础功能简介。',
     cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
-    isAvailable: true
+    isAvailable: true,
+    module: null
   },
   layout: {
     title: '布局列表',

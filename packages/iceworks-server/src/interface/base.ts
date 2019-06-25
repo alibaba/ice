@@ -13,6 +13,7 @@ export interface IPanel {
   title: string;
   description?: string;
   cover?: string;
+  module?: any;
 }
 
 /**
