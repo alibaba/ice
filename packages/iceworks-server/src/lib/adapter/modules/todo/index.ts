@@ -1,10 +1,7 @@
 import * as path from 'path';
 import * as LineByLine from 'line-by-line';
-import { IProject, ITodoModule, ITodoMsg, ITodo } from '../../../interface';
-import config from '../config';
-import recursiveReaddir from '../../recursiveReaddir';
-
-const { title, description, cover, isAvailable } = config['todo'];
+import { IProject, ITodoModule, ITodoMsg, ITodo } from '../../../../interface';
+import recursiveReaddir from '../../../recursiveReaddir';
 
 async function matchFileContent(filePath: string): Promise<ITodoMsg[]> {
   const input = new LineByLine(filePath);
@@ -55,10 +52,6 @@ function retrieveMessagesFromLine(lineString, lineNumber): ITodoMsg[] {
 }
 
 export default class Todo implements ITodoModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 
