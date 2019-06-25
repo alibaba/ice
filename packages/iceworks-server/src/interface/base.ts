@@ -13,6 +13,7 @@ export interface IPanel {
   title: string;
   description?: string;
   cover?: string;
+  module?: any;
 }
 
 /**
@@ -78,10 +79,6 @@ export interface IProject {
 export interface IBaseModule {
   project: IProject;
   storage: any;
-  isAvailable: boolean;
-  title: string;
-  description?: string;
-  cover?: string;
 }
 
 /**

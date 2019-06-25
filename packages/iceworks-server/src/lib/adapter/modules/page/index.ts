@@ -8,21 +8,18 @@ import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as orderBy from 'lodash.orderby';
 import * as kebabCase from 'kebab-case';
-import scanDirectory from '../../scanDirectory';
-import getIceVersion from '../getIceVersion';
-import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
-import downloadAndExtractPackage from '../../downloadAndExtractPackage';
+import scanDirectory from '../../../scanDirectory';
+import getIceVersion from '../../utils/getIceVersion';
+import getTarballURLByMaterielSource from '../../../getTarballURLByMaterielSource';
+import downloadAndExtractPackage from '../../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
-import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext, IProjectBlock } from '../../../interface';
-import config from '../config';
+import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext, IProjectBlock } from '../../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
-
-const { title,  description, cover, isAvailable } = config['page'];
 
 const loadTemplate = async () => {
   const fileName = 'template.js';
@@ -37,10 +34,6 @@ const loadTemplate = async () => {
 };
 
 export default class Page implements IPageModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 
@@ -210,7 +203,7 @@ export default class Page implements IPageModule {
     // TODO rewrite menuConfig.js
   }
 
-  public async getBlocks(name: string): Promise<IProjectBlock[]> { 
+  public async getBlocks(name: string): Promise<IProjectBlock[]> {
     const pagePath = path.join(this.path, name);
     const blocksPath = path.join(pagePath, this.componentDirName);
     const blockDirectroies = await scanDirectory(blocksPath);
@@ -223,7 +216,7 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void> { 
+  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void> {
     const {blocks, name} = params;
     await this.downloadBlocksToPage(blocks, name);
   }
