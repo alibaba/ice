@@ -139,10 +139,12 @@ export default class Router implements IRouterModule {
       if (!item.children) {
         if (item.component === componentName) {
           removeIndex.unshift(index);
-          if (parent) {
-            this.removePaths.push(path.join(parent.path, item.path));
-          } else {
-            this.removePaths.push(item.path);
+          if (item.path) {
+            if (parent) {
+              this.removePaths.push(path.join(parent.path, item.path));
+            } else {
+              this.removePaths.push(item.path);
+            }
           }
         }
       } else {
