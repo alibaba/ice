@@ -8,9 +8,13 @@ export default app => {
 
     if (namespace === 'adapter') {
       try {
-        const { projectManager } = app;
+        const { projectManager, i18n } = app;
         const project = projectManager.getCurrent();
-        callback(null, await project.adapter[moduleName][methodName](args, ctx));
+        const combinedContext = {
+          ...ctx,
+          i18n,
+        };
+        callback(null, await project.adapter[moduleName][methodName](args, combinedContext));
       } catch (error) {
         logger.error(error);
         callback({
