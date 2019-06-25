@@ -37,7 +37,7 @@ const Task = ({ history, intl }) => {
   const task = taskStores.useStore('task');
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('stop');
 
   const writeLog = (t) => {
     const term = termManager.find('globalTerminal');
@@ -108,8 +108,8 @@ const Task = ({ history, intl }) => {
   async function queryStatus() {
     try {
       writeLog(type);
-      const status = await task.query(type);
-      setStatus(status || 'stop');
+      await task.queryStatus(type);
+      setStatus(task.dataSource.status);
     } catch (error) {
       showMessage(error.message);
     }

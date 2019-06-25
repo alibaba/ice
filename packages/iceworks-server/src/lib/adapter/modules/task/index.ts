@@ -15,7 +15,7 @@ export default class Task implements ITaskModule {
   public project: IProject;
   public storage: any;
 
-  public status: string;
+  private status: string = TASK_STATUS_STOP;
 
   public readonly cliConfPath: string;
 

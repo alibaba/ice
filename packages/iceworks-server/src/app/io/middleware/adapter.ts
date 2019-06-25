@@ -10,11 +10,8 @@ export default app => {
       try {
         const { projectManager, i18n } = app;
         const project = projectManager.getCurrent();
-        const combinedContext = {
-          ...ctx,
-          i18n,
-        };
-        callback(null, await project.adapter[moduleName][methodName](args, combinedContext));
+        ctx.i18n = i18n;
+        callback(null, await project.adapter[moduleName][methodName](args, ctx));
       } catch (error) {
         logger.error(error);
         callback({
