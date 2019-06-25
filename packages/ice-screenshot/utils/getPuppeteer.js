@@ -9,7 +9,7 @@ function isNotFoundError(error = '') {
  * get Puppeteer(headless chromium)
  *
  * we don't want depend on puppeteer locally,
- * puppeteer take a long to install
+ * puppeteer takes a long to install
  *
  */
 module.exports = async function getPuppeteer() {
