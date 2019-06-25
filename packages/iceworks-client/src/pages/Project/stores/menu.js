@@ -11,4 +11,7 @@ export default {
   async bulkCreate(args) {
     await socket.emit('adapter.menu.bulkCreate', args);
   },
+  async delete(args) {
+    await socket.emit('adapter.menu.delete', args);
+  },
 };

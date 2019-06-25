@@ -96,11 +96,42 @@ export default class Menu implements IMenuModule {
         data = data.concat(headerMenuConfig);
       }
     }
+    this.setData(data, menuFileAST, name);
+  }
+
+  async delete(params: {paths: string[]}) {
+    const { paths } = params;
+    const menuFileAST = this.getFileAST();
+    const { asideMenuConfig, headerMenuConfig } = await this.getAll();
+
+    this.setData(this.removeItemByPaths(asideMenuConfig, paths), menuFileAST, ASIDE_CONFIG_VARIABLE);
+    this.setData(this.removeItemByPaths(headerMenuConfig, paths), menuFileAST, HEADER_CONFIG_VARIABLE);
+  }
+
+  removeItemByPaths(data: IMenu[], paths: string[]) {
+    const removeIndex = [];
+    data.forEach((item, index) => {
+      if (paths.indexOf(item.path) > -1) {
+        removeIndex.unshift(index);
+      }
+      if (item.children) {
+        item.children = this.removeItemByPaths(item.children, paths);
+      }
+    });
+
+    removeIndex.forEach((index) => {
+      data.splice(index, 1);
+    });
+
+    return data;
+  }
+
+  private setData(data: IMenu[], menuAST: any, name: string)  {
     const dataAST = parser.parse(JSON.stringify(this.handlerData(data)), {
       sourceType: 'module',
     });
     const arrayAST = dataAST.program.body[0];
-    traverse(menuFileAST, {
+    traverse(menuAST, {
       VariableDeclarator({ node }) {
         if (
           t.isIdentifier(node.id, { name })
@@ -113,7 +144,7 @@ export default class Menu implements IMenuModule {
 
     fs.writeFileSync(
       this.path,
-      formatCodeFromAST(menuFileAST)
+      formatCodeFromAST(menuAST)
     );
   }
 

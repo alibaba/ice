@@ -26,6 +26,7 @@ export default class Router implements IRouterModule {
 
   public readonly path: string;
   public existLazy: boolean;
+  public removePaths: string[];
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
@@ -119,6 +120,44 @@ export default class Router implements IRouterModule {
         data = currentData.concat(data);
       }
     }
+    this.setData(data, routerConfigAST);
+  }
+
+  async delete(params: {componentName: string}): Promise<string[]> {
+    const { componentName } = params;
+    const routerConfigAST = this.getRouterConfigAST();
+    const data = await this.getAll();
+    this.removePaths = [];
+
+    this.setData(this.removeItemByComponent(data, componentName), routerConfigAST);
+    return this.removePaths;
+  }
+
+  removeItemByComponent(data: IRouter[], componentName: string, parent?: IRouter) {
+    const removeIndex = [];
+    data.forEach((item, index) => {
+      if (!item.children) {
+        if (item.component === componentName) {
+          removeIndex.unshift(index);
+          if (parent) {
+            this.removePaths.push(path.join(parent.path, item.path));
+          } else {
+            this.removePaths.push(item.path);
+          }
+        }
+      } else {
+        item.children = this.removeItemByComponent(item.children, componentName, item);
+      }
+    });
+
+    removeIndex.forEach((index) => {
+      data.splice(index, 1);
+    });
+
+    return data;
+  }
+
+  private setData(data: IRouter[], routerConfigAST: any) {
     const dataAST = parser.parse(JSON.stringify(this.sortData(data)), {
       sourceType: 'module',
       plugins: [
@@ -128,7 +167,6 @@ export default class Router implements IRouterModule {
     const arrayAST = dataAST.program.body[0];
 
     this.changeImportDeclarations(routerConfigAST, data);
-
     /**
      * { path: '/a', component: 'Page' }
      *          transform to
@@ -151,7 +189,6 @@ export default class Router implements IRouterModule {
         }
       },
     });
-
     fs.writeFileSync(
       this.path,
       formatCodeFromAST(routerConfigAST)
