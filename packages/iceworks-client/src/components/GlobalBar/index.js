@@ -62,13 +62,13 @@ const GlobalBar = ({ project, intl }) => {
     }
   });
 
+  const hiddenClassName = terminalVisible ? '' : styles.hidden;
+
   return project.dataSource.name ? (
     <div className={styles.container}>
-      {terminalVisible ? (
-        <div className={styles.globalTerminal}>
-          <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceowrks.global.bar.log' })} />
-        </div>
-      ) : null}
+      <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
+        <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceowrks.global.bar.log' })} />
+      </div>
 
       <div className={styles.globalBar}>
         <div className={styles.leftContent}>
