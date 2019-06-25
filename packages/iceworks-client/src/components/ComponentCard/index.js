@@ -36,6 +36,8 @@ ComponentCard.propTypes = {
   dataSource: PropTypes.shape({
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    homepage: PropTypes.string,
   }),
   onInstall: PropTypes.func,
 };

@@ -1,8 +1,7 @@
 /** eslint camelcase:0 */
 
 import Client from './client';
-import { IProject, IDEFModule, IDEFPushParams, IContext } from '../../../interface';
-import config from '../config';
+import { IProject, IDEFModule, IDEFPushParams, IContext } from '../../../../interface';
 
 const isDev = process.env.NODE_ENV === 'local';
 
@@ -11,13 +10,8 @@ const token = isDev
   ? 'f87bf958ad0ecb310b86b1536746b5209799902b1f556850f1a29f26a2375f28'
   : '72d7d45ac4495e9fb0047a96579a9af886e5c869f8ae148b68957c543d49ada1';
 const env = isDev ? 'daily' : 'prod';
-const { title,  description, cover, isAvailable } = config['def'];
 
 export default class DEF implements IDEFModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 
