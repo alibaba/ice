@@ -64,8 +64,8 @@ module.exports = {
 `ice-plugin-fusion` 结合 fusion 自身可以配置主题包的能力，支持多个主题包的配置，大大简化多主题切换的成本，通过 css 变量能力实现动态主题的切换，核心实现思路如下：
 
 1. 提取主题包中的 scss 变量（色值变量）
-2. 将 scss 变量具体内容转换为 css 变量，即 $color-brand1-1: #E2EDFF; => $color-brand1-1: var(--color-brand-1);
-3. 注入新的 scss 变量值（如 $color-brand1-1: var(--color-brand-1)）进行编译
+2. 将 scss 变量具体内容转换为 css 变量，即 `$color-brand1-1: #E2EDFF; => $color-brand1-1: var(--color-brand-1);`
+3. 注入新的 scss 变量值（如 `$color-brand1-1: var(--color-brand-1)` ）进行编译
 4. 在 `window` 下注入 `__changeTheme__` 方法，实现不同主题包全局 css 变量声明的切换
 
 ```js
