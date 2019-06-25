@@ -3,9 +3,9 @@ const chalk = require('chalk');
 
 module.exports = function build() {
   console.log();
-  console.log(chalk.yellow('[ERROR] 此功能已废弃，请安装 ice-screenshot 截图'));
+  console.log(chalk.yellow('[ERROR] 此功能已废弃，请安装 @ice/screenshot 截图'));
   console.log();
-  console.log(chalk.cyan('    npm install ice-screenshot --save-dev'));
+  console.log(chalk.cyan('    npm install @ice/screenshot --save-dev'));
   console.log();
   console.log(chalk.yellow('安装完成后，请更改 package.json 中的 npm scripts'));
   console.log();

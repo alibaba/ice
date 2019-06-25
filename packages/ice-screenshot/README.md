@@ -1,4 +1,4 @@
-# ice-screenshot
+# @ice/screenshot
 
 Take a screenshot of web page in the terminal.
 
