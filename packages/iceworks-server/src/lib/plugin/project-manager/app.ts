@@ -9,7 +9,7 @@ import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as orderBy from 'lodash.orderby';
 import * as arrayMove from 'array-move';
-import camelCase from 'camelCase';
+import * as upperCamelCase from 'uppercamelcase';
 import storage from '../../storage';
 import adapter from '../../adapter';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
@@ -77,12 +77,12 @@ class Project implements IProject {
       const Module = config.module;
       if (Module) {
         const adapterModule = new Module({ project, storage });
-        this.adapter[camelCase(name)] = adapterModule;
+        this.adapter[name] = adapterModule;
       }
 
-      const {title, description, cover, isAvailable } = config;
+      const { title, description, cover, isAvailable } = config;
       this.panels.push({
-        name,
+        name: upperCamelCase(name),
         title,
         description,
         cover,
