@@ -28,6 +28,8 @@ Options:
 
 Usage:
 
+基础用法：
+
 ```js
 // ice.config.js
 module.exports = {
@@ -50,4 +52,34 @@ module.exports = {
     }]
   ]
 }
+```
+
+多主题配置：
+
+```js
+module.exports = {
+  plugins: [
+    ['ice-plugin-fusion', {
+      // 通过数组方式配置多主题包
+      themePackage: [{
+        name: '@icedesign/theme',
+        // 设置默认加载主题，如果不进行设置，默认以最后添加主题包作为默认主题
+        default: true,
+      }, {
+        name: '@alifd/theme-ice-purple',
+        // 设置自定义主题颜色，可以在 scss 文件中直接使用该变量，比如： .bg-color { background: $custom-color; }
+        themeConfig: {
+          'custom-color': '#000',
+        },
+      }],
+    }]
+  ]
+}
+```
+
+`ice.config.js` 中完成多主题包配置后，业务代码中可以直接调用 `__changeTheme__` 方法在多个主题包之间进行切换：
+
+```js
+// 可以在设置的主题包 @icedesign/theme 和 @alifd/theme-ice-purple 之间切换
+window.__changeTheme__('@alifd/theme-ice-purple');
 ```
