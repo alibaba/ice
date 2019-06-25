@@ -1,30 +1,191 @@
 const chalk = require('chalk');
-const pkg = require('../utils/pkg-json');
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
+const mkdirp = require('mkdirp');
+const BluebirdPromise = require('bluebird');
+const getUnpkgHost = require('ice-npm-utils').getUnpkgHost;
+const validate = require('../utils/validate.js');
+const getNpmTime = require('../utils/npm').getNpmTime;
+const getPkgJSON = require('../utils/pkg-json').getPkgJSON;
 const logger = require('../utils/logger');
 const message = require('../utils/message');
 
-const generateMaterialsDatabases = require('../utils/generate-marterials-database');
+const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
 
-module.exports = function generate(cwd) {
-  const pkgJson = pkg.getPkgJSON(cwd);
-  const { materialConfig } = pkgJson;
+module.exports = async function generate(cwd) {
+  try {
+    const pkgJson = getPkgJSON(cwd);
+    const { materialConfig } = pkgJson;
 
-  // 全局的 materialConfig，字段会生成在全局 json 上，仅用于标识物料源根目录以及自定义全局字段
-  if (!materialConfig) {
-    logger.fatal(message.invalid);
+    // 全局的 materialConfig，字段会生成在全局 json 上，仅用于标识物料源根目录以及自定义全局字段
+    if (!materialConfig) {
+      throw new Error(message.invalid);
+    }
+    await generateMaterialsDatabases(pkgJson, cwd);
+  } catch (err) {
+    console.log(chalk.red('generate fail!\n'));
+    logger.fatal(err);
   }
-
-  generateMaterialsDatabases(
-    pkgJson.name,
-    cwd,
-    materialConfig,
-  ).then(() => {
-    console.log(chalk.cyan('Success! materials db generated'));
-    console.log();
-    console.log('The build folder is ready to be deployed.');
-    console.log();
-  }).catch((error) => {
-    console.log(chalk.red(' generate fail!\n'), error);
-    process.exit(1);
-  });
 };
+
+/**
+ * 生成物料数据文件：
+ *  - 收集所有物料路径
+ *  - [批量]根据每个物料的 package.json 组装原数据
+ *  - [批量]从 npm 查询包信息补全数据
+ *  - 写入 build 文件夹
+ */
+async function generateMaterialsDatabases(pkgJson, materialPath) {
+  logger.verbose('generateMaterialsDatabases start', pkgJson.name, materialPath);
+
+  const distDir = path.resolve(process.cwd(), 'build');
+  const materialConfig = pkgJson.materialConfig;
+  mkdirp.sync(distDir);
+
+  const [blocks, components, scaffolds] = await Promise.all([
+    gather('blocks/*/package.json', materialPath, 'block', materialConfig),
+    gather('components/*/package.json', materialPath, 'component', materialConfig),
+    gather('scaffolds/*/package.json', materialPath, 'scaffold', materialConfig),
+  ]);
+
+  logger.info('数据收集完成，开始写入文件');
+
+  // validate material data
+  const data = await validate.validateMaterial({
+    ...materialConfig,
+    name: pkgJson.name,
+    description: pkgJson.description,
+    homepage: pkgJson.homepage,
+    author: pkgJson.author,
+    blocks,
+    components,
+    scaffolds,
+  });
+
+  const file = path.join(distDir, 'materials.json');
+  fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
+
+  console.log();
+  logger.success(`Created ${pkgJson.name} json at: ${chalk.yellow(file)}`);
+  console.log();
+}
+
+/**
+ * get all materials through global pattern
+ *
+ * @param {*} pattern path pattern
+ * @param {*} SPACE target directory
+ * @param {Object} options generate options
+ */
+function gather(pattern, SPACE, type, options) {
+  logger.verbose('gather start', pattern);
+  return new Promise((resolve, reject) => {
+    glob(
+      pattern,
+      {
+        cwd: SPACE,
+        nodir: true,
+      },
+      (err, files) => {
+        if (err) {
+          console.log('err:', err);
+          reject(err);
+        } else {
+          logger.verbose('gather end', pattern, files.length);
+          resolve(files);
+        }
+      }
+    );
+  }).then((files) => {
+    return generateMaterialsData(files, SPACE, type, options);
+  }).then((data) => {
+    logger.info(`通过 npm 查询 ${type} 信息完成`);
+    return data;
+  });
+}
+
+/**
+ * 根据 files 生成 blocks/components/scaffolds 数据
+ *
+ * @param {*} files
+ * @param {*} SPACE target directory
+ * @param {String} type | block or react
+ * @param {Object} options material options
+ */
+function generateMaterialsData(files, SPACE, type, options) {
+  /**
+   * 构造每个物料的数据：
+   *  - 读取 package.json 数据
+   *  - 区块：根据 src/index.js 分析依赖
+   */
+  const result = files.map((pkgPath) => {
+    const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
+
+    const materialConfig = pkg[`${type}Config`] || {};
+    const unpkgHost = options.unpkg || getUnpkgHost(pkg.name);
+
+    // 兼容 snapshot 字段
+    const screenshot = materialConfig.screenshot
+      || materialConfig.snapshot
+      || `${unpkgHost}/${pkg.name}@${pkg.version}/screenshot.png`;
+
+    const registry =
+      (pkg.publishConfig && pkg.publishConfig.registry) ||
+      DEFAULT_REGISTRY;
+
+    // details: ./validate.js
+    const payload = {
+      name: materialConfig.name,
+      title: materialConfig.title,
+      description: pkg.description,
+      homepage: pkg.homepage || `${unpkgHost}/${pkg.name}@${pkg.version}/build/index.html`,
+      categories: materialConfig.categories || [],
+      repository: pkg.repository && pkg.repository.url,
+      source: {
+        type: 'npm',
+        npm: pkg.name,
+        version: pkg.version,
+        registry,
+        author: pkg.author,
+      },
+      dependencies: pkg.dependencies || {},
+      screenshot,
+      screenshots: materialConfig.screenshots || (screenshot && [screenshot]),
+      builder: materialConfig.builder,
+
+      // 支持用户自定义的配置
+      // customConfig: materialConfig.customConfig || null,
+    };
+
+    if (type === 'block') {
+      if (materialConfig['version-0.x']) {
+        // 仅官方 react 物料会走到这个逻辑，Iceworks 端会区分
+        payload.source['version-0.x'] = pkg.version;
+        payload.source.version = materialConfig['version-0.x'] || pkg.version;
+      }
+
+      payload.source.sourceCodeDirectory = 'src/';
+    }
+
+    return payload;
+  });
+
+  // 并行从 npm 查询包信息并补全数据
+  // 实际并行数是 concurrency * 3（block+component+scaffold）
+  const concurrency = 20;
+  logger.info(`通过 npm 查询 ${type} 信息开始，个数：${result.length}，并行个数：${concurrency}`);
+
+  // 根据 npm 信息补全物料数据：publishTime, updateTime
+  return BluebirdPromise.map(result, (materialItem) => {
+    const npmName = materialItem.source.npm;
+    const version = materialItem.source.version;
+    return getNpmTime(npmName, version).then((time) => {
+      materialItem.publishTime = time.created;
+      materialItem.updateTime = time.modified;
+      return materialItem;
+    });
+  }, {
+    concurrency,
+  });
+}
