@@ -38,8 +38,8 @@ class App extends Component {
       <div>
         <Form onSubmit={this.onSubmit}>
           <div>Simple Form</div>
-          <Field label="年龄：" name="age" component={Input} />
-          <Field label="年龄：" name="age" component={Input} htmlType="number" />
+          <Field label="姓名：" name="username" component={Input} placeholder="请输入名字" />
+          <Field label="年龄：" name="age" component={Input} htmlType="number" placeholder="请输入年龄" />
           <Field label="简介：" name="intro" component={Input.TextArea} />
           <Button htmlType="submit">Submit</Button>
         </Form>
