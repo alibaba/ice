@@ -37,6 +37,8 @@ const BlockCard = ({ dataSource, onClick }) => {
 BlockCard.defaultProps = {
   dataSource: {
     isNewlyCreated: false,
+    homepage: '',
+    repository: '',
   },
   onClick: () => {},
 };
@@ -46,6 +48,9 @@ BlockCard.propTypes = {
     isNewlyCreated: PropTypes.bool,
     screenshot: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    homepage: PropTypes.string,
+    repository: PropTypes.string,
+    isNewly: PropTypes.string.isRequired,
   }),
   onClick: PropTypes.func,
 };
