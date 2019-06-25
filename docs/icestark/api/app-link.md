@@ -3,7 +3,7 @@ title: AppLink
 order: 7
 ---
 
-子应用内部跳转使用，替代 React Router 的 `Link` 组件，表示本次跳转可能需要重新加载静态资源，包含如下 props
+子应用互相跳转使用，替代 React Router 的 `Link` 组件，表示本次跳转可能需要重新加载静态资源，包含如下 props
 
 ## to
 
