@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
@@ -104,6 +104,20 @@ const Task = ({ history, intl }) => {
       });
     }
   }
+
+  async function queryStatus() {
+    try {
+      writeLog(type);
+      const status = await task.query(type);
+      setStatus(status || 'stop');
+    } catch (error) {
+      showMessage(error.message);
+    }
+  }
+
+  useEffect(() => {
+    queryStatus();
+  }, []);
 
   const id = `${project.dataSource.name}.${type}`;
   const startEventName = `adapter.task.start.data.${type}`;

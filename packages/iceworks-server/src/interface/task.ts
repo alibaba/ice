@@ -66,6 +66,14 @@ export interface ITaskModule extends IBaseModule {
   stop(task: ITaskParam, ctx: IContext): Promise<ITaskModule>;
 
   /**
+   * 查询调试服务运行状态
+   *
+   * @param task 任务信息
+   * @return {string} 是否运行中
+   */
+  queryStatus(task: ITaskParam): string;
+
+  /**
    * 获取任务配置项
    *
    * @param task 任务信息

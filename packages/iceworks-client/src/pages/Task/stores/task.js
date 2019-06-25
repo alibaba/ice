@@ -11,6 +11,11 @@ export default {
     await socket.emit('adapter.task.stop', { command: type });
   },
 
+  async query(type) {
+    const status = await socket.emit('adapter.task.queryStatus', { command: type });
+    return status;
+  },
+
   async getConf(type) {
     this.dataSource[type] = await socket.emit('adapter.task.getConf', {
       command: type,
