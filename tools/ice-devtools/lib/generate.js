@@ -24,7 +24,7 @@ module.exports = async function generate(cwd) {
     }
     await generateMaterialsDatabases(pkgJson, cwd);
   } catch (err) {
-    console.log(chalk.red('generate fail!\n'));
+    console.log(chalk.red('Generate fail!\n'));
     logger.fatal(err);
   }
 };
@@ -110,7 +110,7 @@ function gather(pattern, SPACE, type, options) {
  *
  * @param {*} files
  * @param {*} SPACE target directory
- * @param {String} type | block or react
+ * @param {String} type block or react
  * @param {Object} options material options
  */
 function generateMaterialsData(files, SPACE, type, options) {
@@ -120,7 +120,8 @@ function generateMaterialsData(files, SPACE, type, options) {
    *  - 区块：根据 src/index.js 分析依赖
    */
   const result = files.map((pkgPath) => {
-    const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
+    const currentDir = path.join(SPACE, pkgPath);
+    const pkg = getPkgJSON(currentDir);
 
     const materialConfig = pkg[`${type}Config`] || {};
     const unpkgHost = options.unpkg || getUnpkgHost(pkg.name);

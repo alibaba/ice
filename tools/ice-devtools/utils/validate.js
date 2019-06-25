@@ -14,7 +14,6 @@ const validate = (obj, schema) => {
   });
 };
 
-
 const componentSchema = createSchema((joi) => joi.object().keys({
   name: joi.string().required(), // （必选）名称
   title: joi.string().required(),
