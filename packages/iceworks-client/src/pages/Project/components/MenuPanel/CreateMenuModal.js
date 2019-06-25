@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import TipIcon from '@components/TipIcon';
 import { Input, Select, Switch, Form, Field } from '@alifd/next';
@@ -24,8 +24,9 @@ const pathReg = /^(\/?)([a-zA-Z0-9/-?@:=]+)$/;
 const urlReg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
 const CreateMenuModal = ({
-  on, onCancel, onOk, modalData,
+  on, onCancel, onOk, modalData, intl,
 }) => {
+  const { formatMessage } = intl;
   const [action, setAction] = useState('create');
   const [formData, setFormData] = useState({});
   const isEdit = action === 'edit';
@@ -102,28 +103,28 @@ const CreateMenuModal = ({
           )}
           required
         >
-          <Select size="small" name="linkType" placeholder="请选择菜单类型" disabled={isEdit}>
+          <Select size="small" name="linkType" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.type.placeholder' })} disabled={isEdit}>
             <option value="linkGroup">菜单组</option>
             <option value="link">普通菜单</option>
             <option value="externalLink">外链</option>
           </Select>
         </FormItem>
         <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.name" />} required>
-          <Input size="small" name="name" placeholder="请输入名称" />
+          <Input size="small" name="name" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.name.placeholder' })} />
         </FormItem>
         {linkType !== 'linkGroup' && (
           <FormItem
             label={<FormattedMessage id="iceworks.project.panel.menu.form.path" />}
             pattern={linkType === 'link' ? pathReg : urlReg}
-            patternMessage="请填写正确的路径"
-            help={isEdit && linkType === 'link' ? '修改了路径需要手动到路由配置里修改对应的路径' : ''}
+            patternMessage={formatMessage({ id: 'iceworks.project.panel.menu.form.path.message' })}
+            help={isEdit && linkType === 'link' ? formatMessage({ id: 'iceworks.project.panel.menu.form.path.help' }) : ''}
           >
-            <Input size="small" name="path" placeholder="请输入路径" />
+            <Input size="small" name="path" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.path.placeholder' })} />
           </FormItem>
         )}
         <FormItem
           pattern={/^[a-zA-Z]([-_a-zA-Z0-9]*)$/i}
-          patternMessage="请填写正确的图标名称"
+          patternMessage={formatMessage({ id: 'iceworks.project.panel.menu.form.icon.message' })}
           label={(
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.icon" />
@@ -135,7 +136,7 @@ const CreateMenuModal = ({
             </span>
           )}
         >
-          <Input size="small" name="icon" placeholder="请输入图标(icon type)" />
+          <Input size="small" name="icon" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.icon.placeholder' })} />
         </FormItem>
         {linkType === 'externalLink' && (
           <FormItem
@@ -143,7 +144,7 @@ const CreateMenuModal = ({
               <span>
                 <FormattedMessage id="iceworks.project.panel.menu.form.newwindow" />
                 <TipIcon>
-                  浏览器点击外链是否新打开页面
+                  <FormattedMessage id="iceworks.project.panel.menu.form.newwindow.tip" />
                 </TipIcon>
               </span>
             )}
@@ -161,6 +162,7 @@ CreateMenuModal.propTypes = {
   modalData: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default CreateMenuModal;
+export default injectIntl(CreateMenuModal);

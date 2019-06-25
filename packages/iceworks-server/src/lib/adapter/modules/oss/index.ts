@@ -1,18 +1,12 @@
-import { IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../interface';
+import { IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
 import * as dir from 'node-dir';
-import config from '../config';
 
 const DOMAIN = 'aliyuncs.com';
-const { title,  description, cover, isAvailable } = config['oss'];
 
 export default class OSS implements IOSSModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public project: IProject;
   public storage: any;
 

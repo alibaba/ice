@@ -129,47 +129,74 @@ const RouterPanel = ({ intl }) => {
     const layoutRouter = Array.isArray(children);
     return [
       (
-        <li className={`${styles.item} ${layoutRouter ? styles.layoutItem : ''}`} key={index}>
+        <li className={styles.item} key={index}>
           <strong
             className={styles.itemCol}
             style={{
               textIndent: parent ? '20px' : 0,
             }}
-          >{path}
+          >
+            <Icon
+              type={layoutRouter ? 'folder' : 'menu'}
+              size="xs"
+              style={{
+                marginRight: 4,
+              }}
+            />
+            {path}
           </strong>
           <span className={styles.itemCol}>{component}</span>
           <span>
             {layoutRouter && (
-              <Icon
-                type="plus"
-                title="创建"
-                size="xs"
-                className={styles.icon}
-                onClick={() => onOpenCreateModal(item)}
-              />
+              <Tooltip
+                trigger={(
+                  <Icon
+                    type="plus"
+                    size="xs"
+                    className={styles.icon}
+                    onClick={() => onOpenCreateModal(item)}
+                  />
+                )}
+                align="b"
+              >
+                <FormattedMessage id="iceworks.project.panel.router.create.title" />
+              </Tooltip>
             )}
-            <Icon
-              type="edit"
-              title="编辑"
-              size="xs"
-              className={styles.icon}
-              onClick={() => onOpenEditModal({
-                data: item,
-                index,
-                parent,
-                parentIndex,
-              })}
-            />
-            <Icon
-              className={styles.icon}
-              type="trash"
-              size="xs"
-              onClick={() => onOpenDeleteModal({
-                index,
-                parent,
-                current: item,
-              })}
-            />
+            <Tooltip
+              trigger={(
+                <Icon
+                  type="edit"
+                  size="xs"
+                  className={styles.icon}
+                  onClick={() => onOpenEditModal({
+                    data: item,
+                    index,
+                    parent,
+                    parentIndex,
+                  })}
+                />
+              )}
+              align="b"
+            >
+              <FormattedMessage id="iceworks.project.panel.router.edit.title" />
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="trash"
+                  size="xs"
+                  onClick={() => onOpenDeleteModal({
+                    index,
+                    parent,
+                    current: item,
+                  })}
+                />
+              )}
+              align="b"
+            >
+              <FormattedMessage id="iceworks.project.panel.router.delete.title" />
+            </Tooltip>
           </span>
         </li>
       ),
@@ -237,19 +264,21 @@ const RouterPanel = ({ intl }) => {
         {dataSource.length ? (
           <ul>
             <li className={styles.title}>
-              <strong className={`${styles.titleCol}`}>路径</strong>
+              <strong className={`${styles.titleCol}`}>
+                <FormattedMessage id="iceworks.project.panel.router.title.path" />
+              </strong>
               <strong
                 className={`${styles.titleCol} ${styles.titleMiddle}`}
                 style={{
                   textAlign: 'center',
                 }}
               >
-                组件
+                <FormattedMessage id="iceworks.project.panel.router.title.component" />
               </strong>
               <strong
                 className={`${styles.titleCol} ${styles.operater}`}
               >
-                操作
+                <FormattedMessage id="iceworks.project.panel.router.title.operate" />
               </strong>
             </li>
             {dataSource.map((item, index) => {

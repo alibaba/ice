@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import TipIcon from '@components/TipIcon';
 import Modal from '@components/Modal';
 import { Input, Select, Form, Field, Switch } from '@alifd/next';
@@ -26,8 +26,9 @@ const { init, getError } = field;
 let selectRouterGroup = false;
 
 const CreateRouterModal = ({
-  on, onCancel, onOk, modalData,
+  on, onCancel, onOk, modalData, intl,
 }) => {
+  const { formatMessage } = intl;
   const [formData, setFormData] = useState({});
   const [dataSource, setData] = useState([]);
   const { parent } = modalData;
@@ -108,11 +109,11 @@ const CreateRouterModal = ({
 
   function onValidtePath(rule, value, callback) {
     if (!value) {
-      return callback('路径必填');
+      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.required' }));
     }
 
     if (value.indexOf('/') !== 0) {
-      return callback('路径必须以 \'/\' 开头');
+      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.valid' }));
     }
     let url = value;
     if (parent) {
@@ -141,7 +142,7 @@ const CreateRouterModal = ({
     });
 
     if (router) {
-      return callback('路径已存在');
+      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.hasExist' }));
     }
 
     return callback();
@@ -168,7 +169,7 @@ const CreateRouterModal = ({
         >
           <Input
             name="path"
-            placeholder="请填写路径"
+            placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.path.placeholder' })}
             {...init('path', {
               rules: [{
                 validator: onValidtePath,
@@ -183,7 +184,7 @@ const CreateRouterModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.routerType" />
               <TipIcon>
-                选择路由分组，组件需要选择一个 layout，群组下面可以创建子路由，非群组不能创建子路由
+                <FormattedMessage id="iceworks.project.panel.router.form.routerType.tip" />
               </TipIcon>
             </span>
           )}
@@ -201,7 +202,7 @@ const CreateRouterModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.component" />
               <TipIcon>
-                如果上面选了路由分组，这里的列表是布局(layouts)组件，没选路由分组，这里的列表是组件(pages)组件
+                <FormattedMessage id="iceworks.project.panel.router.form.component.tip" />
               </TipIcon>
             </span>
           )}
@@ -209,7 +210,7 @@ const CreateRouterModal = ({
           <Select
             size="small"
             name="component"
-            placeholder="请选择组件"
+            placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.component.placeholder' })}
             dataSource={dataSource}
             className={styles.selectBox}
           />
@@ -219,7 +220,7 @@ const CreateRouterModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.exact" />
               <TipIcon>
-                路径是否精确匹配，如果选择了精确匹配，路径写 /one，访问 /one/two 是不能匹配的，具体文档请参考
+                <FormattedMessage id="iceworks.project.panel.router.form.exact.tip" />
                 <a href="https://reacttraining.com/react-router/web/api/Route/exact-bool" target="__blank">链接</a>
               </TipIcon>
             </span>
@@ -240,6 +241,7 @@ CreateRouterModal.propTypes = {
   modalData: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default CreateRouterModal;
+export default injectIntl(CreateRouterModal);
