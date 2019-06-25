@@ -2,8 +2,6 @@
 
 Take a screenshot of a web page in the terminal.
 
-Usage: screenshot -u https://www.example.com
-
 Options:
 
 ```
@@ -16,6 +14,12 @@ Options:
 ```
 
 ## Usage
+
+Install:
+
+```bash
+$ npm i -g @ice-screenshot
+```
 
 For ICE materials, you can take screenshot use following commands:
 
