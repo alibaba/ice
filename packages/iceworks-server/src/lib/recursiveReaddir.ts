@@ -8,11 +8,7 @@ function ignoreFile(filePath: string, stats: fs.Stats) {
 }
 
 export default async function(filePath: string, ignores: string[] = []): Promise<string[]> {
-  let combinedIgnores = ['node_modules', '.*', ignoreFile];
-  if (Array.isArray(ignores)) {
-    combinedIgnores = combinedIgnores.concat(ignores);
-  }
-
+  const combinedIgnores = ['node_modules', '.*', ignoreFile].concat(ignores);
   const files = await readdir(filePath, combinedIgnores);
 
   return files;
