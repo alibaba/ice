@@ -18,7 +18,9 @@ const formItemLayout = {
 };
 
 const field = new Field({});
+// match eg. /abc、/abc?name=123、/abc?:id
 const pathReg = /^(\/?)([a-zA-Z0-9/-?@:=]+)$/;
+// match eg. https://www.taobao.com、www.taobao.com
 const urlReg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
 const CreateMenuModal = ({
@@ -94,7 +96,7 @@ const CreateMenuModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.type" />
               <TipIcon>
-                总共有菜单组、普通菜单、外链三种类型，菜单组下可以放入普通菜单和外链
+                <FormattedMessage id="iceworks.project.panel.menu.form.type.tip" />
               </TipIcon>
             </span>
           )}

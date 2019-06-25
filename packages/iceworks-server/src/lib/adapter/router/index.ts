@@ -35,15 +35,19 @@ export default class Router implements IRouterModule {
     this.path = path.join(this.project.path, 'src', 'routerConfig.js');
   }
 
-  private getRouterConfigAST(): any {
-    const routerConfigString = fs.readFileSync(this.path).toString();
-    const routerConfigAST = parser.parse(routerConfigString, {
+  private getASTByCode(code: string): any {
+    return parser.parse(code, {
       allowImportExportEverywhere: true,
       sourceType: 'module',
       plugins: [
         'dynamicImport',
       ],
     });
+  }
+
+  private getRouterConfigAST(): any {
+    const routerConfigString = fs.readFileSync(this.path).toString();
+    const routerConfigAST = this.getASTByCode(routerConfigString);
 
     return routerConfigAST;
   }
@@ -160,12 +164,7 @@ export default class Router implements IRouterModule {
   }
 
   private setData(data: IRouter[], routerConfigAST: any) {
-    const dataAST = parser.parse(JSON.stringify(this.sortData(data)), {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
-    });
+    const dataAST = this.getASTByCode(JSON.stringify(this.sortData(data)));
     const arrayAST = dataAST.program.body[0];
 
     this.changeImportDeclarations(routerConfigAST, data);
@@ -343,24 +342,17 @@ export default class Router implements IRouterModule {
     let importCode = '';
     newImports.forEach(({name, type}) => {
       if (!this.existLazy || type === LAYOUT_DIRECTORY) {
+        // layour or not exist lazy use `import Page from './pages/Page'`
         importCode += `import ${name} from './${type}/${name}';\n`;
       } else {
+        // use lazy `const Page = React.lazy(() => import('./pages/Page'))`
         lazyCode += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
       }
     });
 
-    const lazyCodeAST = parser.parse(lazyCode, {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
-    });
-    const importCodeAST = parser.parse(importCode, {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
-    });
+    // get ast from lazy or import code
+    const lazyCodeAST = this.getASTByCode(lazyCode);
+    const importCodeAST = this.getASTByCode(importCode);
 
     const lastIndex = this.findLastImportIndex(routerConfigAST);
     routerConfigAST.program.body.splice(lastIndex, 0, ...lazyCodeAST.program.body);

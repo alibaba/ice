@@ -34,7 +34,7 @@ const DeleteMenuModal = ({
       </div>
       {!external && (
         <div className={styles.warn}>
-          (注意：删除菜单不会删除对应的路由，需要手动操作)
+          注意：删除菜单不会删除对应的路由，需要手动操作
         </div>
       )}
     </Modal>

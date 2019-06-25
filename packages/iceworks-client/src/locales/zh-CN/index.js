@@ -145,6 +145,7 @@ export default {
   'iceworks.project.panel.menu.form.newwindow': '是否打开新窗口',
   'iceworks.project.panel.menu.button.refresh': '刷新',
   'iceworks.project.panel.menu.button.add': '新建菜单',
+  'iceworks.project.panel.menu.form.type.tip': '总共有菜单组、普通菜单、外链三种类型，普通菜单和外链下可以放入菜单组',
 
   // project router
   'iceworks.project.panel.router.create.title': '创建路由',

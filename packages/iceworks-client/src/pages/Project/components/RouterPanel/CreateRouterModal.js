@@ -40,14 +40,14 @@ const CreateRouterModal = ({
   const { dataSource: pages } = pagesStore;
   const { dataSource: layouts } = layoutsStore;
 
-  const pageSelects = pages.map((page) => {
+  const selectedPages = pages.map((page) => {
     return {
       label: page.name,
       value: page.name,
     };
   });
 
-  const layoutSelects = layouts.map((layout) => {
+  const selectedLayouts = layouts.map((layout) => {
     return {
       label: layout.name,
       value: layout.name,
@@ -59,16 +59,14 @@ const CreateRouterModal = ({
 
     if (isEdit) {
       if (formValue.children) {
-        data = layoutSelects;
+        data = selectedLayouts;
       } else {
-        data = pageSelects;
+        data = selectedPages;
       }
-    } else if (!isEdit) {
-      if (parent || !selectRouterGroup) {
-        data = pageSelects;
-      } else if (selectRouterGroup) {
-        data = layoutSelects;
-      }
+    } else if (parent || !selectRouterGroup) {
+      data = selectedPages;
+    } else {
+      data = selectedLayouts;
     }
     setData(data);
   }

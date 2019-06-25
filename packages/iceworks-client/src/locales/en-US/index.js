@@ -140,11 +140,12 @@ export default {
   'iceworks.project.panel.menu.form.icon.placeholder': 'please enter icon',
   'iceworks.project.panel.menu.form.path': 'path',
   'iceworks.project.panel.menu.form.path.placeholder': 'please enter path',
-  'iceworks.project.panel.menu.tab.asideMenu': 'asideMenu',
-  'iceworks.project.panel.menu.tab.headerMenu': 'headerMenu',
+  'iceworks.project.panel.menu.tab.asideMenu': 'Aside Menu',
+  'iceworks.project.panel.menu.tab.headerMenu': 'Header Menu',
   'iceworks.project.panel.menu.form.newwindow': 'open new window',
   'iceworks.project.panel.menu.button.refresh': 'refresh',
   'iceworks.project.panel.menu.button.add': 'Create Menu',
+  'iceworks.project.panel.menu.form.type.tip': 'There are three types of menu groups, ordinary menus and external chains, which can be put into menu groups under ordinary menus and external chains',
 
   // project router
   'iceworks.project.panel.router.title': 'Router',
