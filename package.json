@@ -1,15 +1,10 @@
 {
-  "name": "ice-workspace",
-  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "upload-oss": "node scripts/upload-oss.js",
     "generate:docs": "node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js .jsx ./"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
   },
   "husky": {
     "hooks": {
