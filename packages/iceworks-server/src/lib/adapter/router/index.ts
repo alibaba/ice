@@ -300,16 +300,23 @@ export default class Router implements IRouterModule {
      *            or
      *     const Profile = React.lazy(() => import('./pages/Profile'));
      */
-    let code = '';
+    let lazyCode = '';
+    let importCode = '';
     newImports.forEach(({name, type}) => {
-      if (this.existLazy) {
-        code += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
+      if (!this.existLazy || type === LAYOUT_DIRECTORY) {
+        importCode += `import ${name} from './${type}/${name}';\n`;
       } else {
-        code += `import ${name} from './${type}/${name}';\n`;
+        lazyCode += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
       }
     });
 
-    const importCodeAST = parser.parse(code, {
+    const lazyCodeAST = parser.parse(lazyCode, {
+      sourceType: 'module',
+      plugins: [
+        'dynamicImport',
+      ],
+    });
+    const importCodeAST = parser.parse(importCode, {
       sourceType: 'module',
       plugins: [
         'dynamicImport',
@@ -317,7 +324,12 @@ export default class Router implements IRouterModule {
     });
 
     const lastIndex = this.findLastImportIndex(routerConfigAST);
-    routerConfigAST.program.body.splice(lastIndex, 0, ...importCodeAST.program.body);
+    routerConfigAST.program.body.splice(lastIndex, 0, ...lazyCodeAST.program.body);
+    routerConfigAST.program.body.splice(
+      this.existLazy ? lastIndex - 1 : lastIndex,
+      0,
+      ...importCodeAST.program.body
+    );
   }
 
   /**
