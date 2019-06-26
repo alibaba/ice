@@ -16,6 +16,7 @@ const MenuTreeConfig = ({
   onChange,
   onOpenEditModal,
   onDeleteLink,
+  nested,
 }) => {
   const [selectedKey] = useState('');
 
@@ -140,7 +141,7 @@ const MenuTreeConfig = ({
       if (cacheNode[primaryKey] === dropKey) {
         if (dropPosition === 0) {
           // External link cannot have child nodes
-          if (cacheNode.external) {
+          if (cacheNode.external || !nested) {
             array.splice(index + 1, 0, dragNode);
           } else {
             cacheNode.children = cacheNode.children || [];
@@ -202,6 +203,7 @@ MenuTreeConfig.defaultProps = {
   onChange: () => {},
   onOpenEditModal: () => {},
   onDeleteLink: () => {},
+  nested: true,
 };
 
 MenuTreeConfig.propTypes = {
@@ -227,6 +229,11 @@ MenuTreeConfig.propTypes = {
    * delete link
    */
   onDeleteLink: PropTypes.func,
+
+  /**
+   * allow nested
+   */
+  nested: PropTypes.bool,
 };
 
 export default MenuTreeConfig;

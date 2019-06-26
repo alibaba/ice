@@ -18,19 +18,22 @@ const formItemLayout = {
 };
 
 const field = new Field({});
+const { getError } = field;
 // match eg. /abc、/abc?name=123、/abc?:id
 const pathReg = /^(\/?)([a-zA-Z0-9/-?@:=]+)$/;
 // match eg. https://www.taobao.com、www.taobao.com
 const urlReg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
 const CreateMenuModal = ({
-  on, onCancel, onOk, modalData, intl,
+  on, onCancel, onOk, modalData, intl, currentType,
 }) => {
   const { formatMessage } = intl;
   const [action, setAction] = useState('create');
   const [formData, setFormData] = useState({});
   const isEdit = action === 'edit';
   const isCreate = action === 'create';
+  // @TODO: header config does not support nesting in current version
+  const isHeader = currentType === 'header';
 
   const { linkType } = formData || {};
 
@@ -38,7 +41,7 @@ const CreateMenuModal = ({
     setAction(modalData.action);
     if (modalData.action === 'create') {
       setFormData({
-        linkType: 'linkGroup',
+        linkType: isHeader ? 'link' : 'linkGroup',
       });
     } else if (modalData.action === 'edit' && modalData.formData) {
       setFormData(modalData.formData);
@@ -104,9 +107,17 @@ const CreateMenuModal = ({
           required
         >
           <Select size="small" name="linkType" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.type.placeholder' })} disabled={isEdit}>
-            <option value="linkGroup">菜单组</option>
-            <option value="link">普通菜单</option>
-            <option value="externalLink">外链</option>
+            {!isHeader && (
+              <option value="linkGroup">
+                <FormattedMessage id="iceworks.project.panel.menu.group" />
+              </option>
+            )}
+            <option value="link">
+              <FormattedMessage id="iceworks.project.panel.menu.ordinary" />
+            </option>
+            <option value="externalLink">
+              <FormattedMessage id="iceworks.project.panel.menu.external" />
+            </option>
           </Select>
         </FormItem>
         <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.name" />} required>
@@ -117,7 +128,11 @@ const CreateMenuModal = ({
             label={<FormattedMessage id="iceworks.project.panel.menu.form.path" />}
             pattern={linkType === 'link' ? pathReg : urlReg}
             patternMessage={formatMessage({ id: 'iceworks.project.panel.menu.form.path.message' })}
-            help={isEdit && linkType === 'link' ? formatMessage({ id: 'iceworks.project.panel.menu.form.path.help' }) : ''}
+            help={isEdit && linkType === 'link' ? (
+              <div>
+                {getError('path')}(<FormattedMessage id="iceworks.project.panel.menu.form.path.help" />)
+              </div>
+            ) : getError('path')}
           >
             <Input size="small" name="path" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.path.placeholder' })} />
           </FormItem>
@@ -129,9 +144,9 @@ const CreateMenuModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.icon" />
               <TipIcon>
-                菜单项图标，可以从
+                <FormattedMessage id="iceworks.project.panel.menu.form.icon.tip.first" />
                 <a href="https://ice.alibaba-inc.com/component/foundationsymbol" target="__blank"> foundationsymbol </a>
-                中选择
+                <FormattedMessage id="iceworks.project.panel.menu.form.icon.tip.end" />
               </TipIcon>
             </span>
           )}
@@ -163,6 +178,7 @@ CreateMenuModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  currentType: PropTypes.string.isRequired,
 };
 
 export default injectIntl(CreateMenuModal);

@@ -220,8 +220,10 @@ const CreateRouterModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.exact" />
               <TipIcon>
-                <FormattedMessage id="iceworks.project.panel.router.form.exact.tip" />
-                <a href="https://reacttraining.com/react-router/web/api/Route/exact-bool" target="__blank">链接</a>
+                <FormattedMessage id="iceworks.project.panel.router.form.exact.tip" />.
+                <a href="https://reacttraining.com/react-router/web/api/Route/exact-bool" target="__blank">
+                  <FormattedMessage id="iceworks.project.panel.router.form.exact.link" />
+                </a>
               </TipIcon>
             </span>
           )}

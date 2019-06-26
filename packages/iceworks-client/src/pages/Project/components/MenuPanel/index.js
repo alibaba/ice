@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Balloon, Tab } from '@alifd/next';
 import useModal from '@hooks/useModal';
+import cloneDeep from 'lodash.clonedeep';
 import Icon from '@components/Icon';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
 import CreateMenuModal from './CreateMenuModal';
@@ -65,10 +66,11 @@ const MenuPanel = ({ intl }) => {
   async function onCreate(action, value) {
     toggleCreateModal();
     const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
+    const copyData = cloneDeep(data);
     if (action === 'create') {
-      data.push(value);
+      copyData.push(value);
     } else {
-      traverse(data, (config) => {
+      traverse(copyData, (config) => {
         if (config.id === value.id) {
           Object.assign(config, value);
           return true;
@@ -76,7 +78,7 @@ const MenuPanel = ({ intl }) => {
         return false;
       }, true);
     }
-    await onChangeTree(data);
+    await onChangeTree(copyData);
   }
 
   function onOpenDeleteModal(menu) {
@@ -143,6 +145,7 @@ const MenuPanel = ({ intl }) => {
           on={onCreateModel}
           onCancel={toggleCreateModal}
           onOk={onCreate}
+          currentType={currentTab}
         />
         <DeleteMenuModal
           on={onDeleteModel}
@@ -175,6 +178,7 @@ const MenuPanel = ({ intl }) => {
               onChange={onChangeTree}
               onOpenEditModal={onOpenModal}
               onDeleteLink={onOpenDeleteModal}
+              nested={false}
             />
           </TabPane>
         </Tab>
