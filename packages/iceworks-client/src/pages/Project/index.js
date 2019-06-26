@@ -175,6 +175,40 @@ const Project = ({ history }) => {
     refreshProjects();
   }, []);
 
+  function renderContent() {
+    if (projects.length) {
+      if (project.panels.length && project.adapter) {
+        return (
+          <div className={styles.main}>
+            <SortableWrap
+              useDragHandle
+              axis="xy"
+              onSortStart={onSortStart}
+              onSortEnd={onSortEnd}
+              helperClass={styles.sortableDraging}
+              projectPanels={project.panels}
+              isSorting={isSorting}
+            />
+          </div>
+        );
+      }
+      return (
+        <div className={styles.noAdapter}>
+          <h5><FormattedMessage id="iceworks.global.adapter.title" /></h5>
+          <p><FormattedMessage id="iceworks.global.adapter.description" /></p>
+        </div>
+      );
+    }
+    return (
+      <QuickStart
+        onOpenProject={onOpenProject}
+        onCreateProject={onOpenCreateProject}
+        scaffolds={material.recommendScaffolds}
+        createProject={(scaffoldData) => setCreateProjectModal(true, scaffoldData)}
+      />
+    );
+  }
+
   return (
     <div className={styles.page}>
       {projects.length ? (
@@ -212,27 +246,8 @@ const Project = ({ history }) => {
         <FormattedMessage id="iceworks.project.create.init.content" />
       </Modal>
 
-      {/* Render panel */}
-      {projects.length && project.panels.length ? (
-        <div className={styles.main}>
-          <SortableWrap
-            useDragHandle
-            axis="xy"
-            onSortStart={onSortStart}
-            onSortEnd={onSortEnd}
-            helperClass={styles.sortableDraging}
-            projectPanels={project.panels}
-            isSorting={isSorting}
-          />
-        </div>
-      ) : (
-        <QuickStart
-          onOpenProject={onOpenProject}
-          onCreateProject={onOpenCreateProject}
-          scaffolds={material.recommendScaffolds}
-          createProject={(scaffoldData) => setCreateProjectModal(true, scaffoldData)}
-        />
-      )}
+      {/* Render Content */}
+      {renderContent()}
 
       {/* Panel setting */}
       <div className={styles.panelSetting}>

@@ -26,6 +26,7 @@ const mvAsync = util.promisify(mv);
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 const DEFAULT_TYPE = 'react';
+const DEFAULT_ADAPTER = ['adapter', 'adapter-react-v1', 'adapter-react-v2'];
 
 class Project implements IProject {
   public readonly name: string;
@@ -80,49 +81,38 @@ class Project implements IProject {
     // reset panels
     this.panels = []
 
-    let adapterName: string;
-    let adapterModules: [IPanel];
+    const pkgContent = require(this.packagePath);
+    const adapterName = pkgContent.iceworks ? pkgContent.iceworks.adapter : null;
 
-    try {
-      const pkgContent = this.interopRequire(this.packagePath);
-      adapterName = pkgContent.iceworks.adapter;
-    } catch (error) {
-      error.message = 'Adapter not found'
-      throw error;
-    }
+    if (adapterName && DEFAULT_ADAPTER.includes(adapterName)) {
+      const adapterModules: [IPanel] = this.interopRequire(`../../${adapterName}`);
+      for (const [moduleName, moduleCofing] of Object.entries(adapterModules)) {
+        const project: IProject = clone(this);
+        delete project.adapter;
 
-    const cacheAdapters = storage.get('adapters');
-    const adapterExist = cacheAdapters.find((item) => adapterName.indexOf(item.name) > -1);
-    if (adapterExist) {
-      // get adapter form the cache
-      adapterModules = this.interopRequire(`../../${adapterName}`);
-    } else {
-      // TODO:
-      // dynamic install adapter package
-    }
+        // instance adapter Module
+        const { module: Module } = moduleCofing;
+        if (Module) {
+          const adapterModule = new Module({ project, storage });
+          this.adapter[moduleName] = adapterModule;
+        }
 
-    for (const [moduleName, moduleCofing] of Object.entries(adapterModules)) {
-      const project: IProject = clone(this);
-      delete project.adapter;
-
-      const { module: Module } = moduleCofing;
-      if (Module) {
-        const adapterModule = new Module({ project, storage });
-        this.adapter[moduleName] = adapterModule;
+        // collect panels
+        const { title, description, cover, isAvailable } = moduleCofing;
+        this.panels.push({
+          name: upperCamelCase(moduleName),
+          title,
+          description,
+          cover,
+          isAvailable,
+        });
       }
 
-      const { title, description, cover, isAvailable } = moduleCofing;
-      this.panels.push({
-        name: upperCamelCase(moduleName),
-        title,
-        description,
-        cover,
-        isAvailable,
-      });
-    }
+      // Get the panel of the current project from the cache and update the panel data according to the adapter
+      this.assemblePanels();
 
-    // Get the panel of the current project from the cache and update the panel data according to the adapter
-    this.assemblePanels();
+      return adapterName;
+    }
   }
 
   private assemblePanels() {

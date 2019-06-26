@@ -10,6 +10,8 @@ export default {
   'iceworks.global.button.submit': '提交',
   'iceworks.global.button.selectAll': '全选',
   'iceworks.global.fallback.title': '加载错误',
+  'iceworks.global.adapter.title': '项目适配失败',
+  'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考文档进行适配',
 
   // menu
   'iceworks.menu.project': '项目',
