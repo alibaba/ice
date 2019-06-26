@@ -4,9 +4,9 @@ import * as util from 'util';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
+import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
-import * as orderBy from 'lodash.orderby';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../../../scanDirectory';
 import getIceVersion from '../../utils/getIceVersion';
@@ -130,7 +130,7 @@ export default class Page implements IPageModule {
 
   async getAll(): Promise<IPage[]> {
     const pages = await this.scanPages(this.path);
-    return orderBy(pages, 'birthtime', 'desc');
+    return _.orderBy(pages, 'birthtime', 'desc');
   }
 
   async getOne(): Promise<any> { }

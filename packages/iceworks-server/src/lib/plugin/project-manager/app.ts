@@ -4,10 +4,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as mv from 'mv';
-import * as clone from 'lodash.clone';
+import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
-import * as orderBy from 'lodash.orderby';
 import * as arrayMove from 'array-move';
 import * as upperCamelCase from 'uppercamelcase';
 import storage from '../../storage';
@@ -87,20 +86,21 @@ class Project implements IProject {
     if (adapterName && DEFAULT_ADAPTER.includes(adapterName)) {
       const adapterModules: [IPanel] = this.interopRequire(`../../${adapterName}`);
       for (const [moduleName, moduleCofing] of Object.entries(adapterModules)) {
-        const project: IProject = clone(this);
+        const project: IProject = _.clone(this);
         delete project.adapter;
 
         // instance adapter Module
         const { module: Module } = moduleCofing;
         if (Module) {
           const adapterModule = new Module({ project, storage });
-          this.adapter[moduleName] = adapterModule;
+          const name = moduleName.toLowerCase();
+          this.adapter[name] = adapterModule;
         }
 
         // collect panels
         const { title, description, cover, isAvailable } = moduleCofing;
         this.panels.push({
-          name: upperCamelCase(moduleName),
+          name: moduleName,
           title,
           description,
           cover,
@@ -135,7 +135,7 @@ class Project implements IProject {
         }
       });
 
-      this.panels = orderBy(this.panels, 'index');
+      this.panels = _.orderBy(this.panels, 'index');
     }
   }
 
