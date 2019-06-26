@@ -35,8 +35,6 @@ class I18n implements II18n {
 
       this.localeMap[name] = Object.assign({}, this.localeMap[name], content);
     }
-
-    console.log(this.localeMap['zh-CN']);
   }
 
   public format(localeKey: string, args?: object): string {
