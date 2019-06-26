@@ -192,7 +192,7 @@ const CreateRouterModal = ({
           <Switch
             size="small"
             name="layoutType"
-            disabled={isEdit || (!isEdit && parent)}
+            disabled={isEdit || (!isEdit && !!parent)}
             onChange={onChangeLayoutType}
           />
         </FormItem>
