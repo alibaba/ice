@@ -231,10 +231,10 @@
   resolved "https://registry.npm.taobao.org/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
   integrity sha1-vo5i9Gelouq+efVN4jsJJegw2uI=
 
-"@icedesign/template-builder@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/@icedesign/template-builder/download/@icedesign/template-builder-2.0.1.tgz#8ee6d33ab7d4c6b70cbd63730eed853763b7764d"
-  integrity sha1-jubTOrfUxrcMvWNzDu2FN2O3dk0=
+"@icedesign/template-builder@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@icedesign/template-builder/download/@icedesign/template-builder-3.0.0.tgz#eec43e3378500e4d772972246a60f5a465cc6e27"
+  integrity sha1-7sQ+M3hQDk13KXIkamD1pGXMbic=
   dependencies:
     "@icedesign/base" "^0.2.2"
     "@icedesign/form-binder" "^0.1.11"
@@ -681,14 +681,6 @@ aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.npm.taobao.org/aws4/download/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha1-8OAD2cqef1nHpQiUXXsu+aBKVC8=
-
-axios@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.npm.taobao.org/axios/download/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
-  integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
-  dependencies:
-    follow-redirects "^1.3.0"
-    is-buffer "^1.1.5"
 
 babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -1998,7 +1990,7 @@ debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.8, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^3.0.1, debug@^3.1.0, debug@^3.2.6:
+debug@^3.0.1, debug@^3.1.0:
   version "3.2.6"
   resolved "https://registry.npm.taobao.org/debug/download/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha1-6D0X3hbYp++3cX7b5fsQE17uYps=
@@ -2740,13 +2732,6 @@ flush-write-stream@^1.0.0:
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
-
-follow-redirects@^1.3.0:
-  version "1.7.0"
-  resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"
-  integrity sha1-SJ68GY3A5/ZBZ70jsDxMGbV4THY=
-  dependencies:
-    debug "^3.2.6"
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
