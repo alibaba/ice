@@ -65,6 +65,15 @@ const schema = {
     type: 'array',
     default: [],
   },
+  adapters: {
+    type: 'array',
+    default: [
+      {
+        name: 'adapter',
+        version: ''
+      }
+    ]
+  }
 };
 
 export default new Conf({

@@ -38,6 +38,7 @@ function useProject({ panelStores } = {}) {
     let newProject;
     try {
       newProject = await projectStore.refresh();
+      await projectStore.loadAdapter();
     } catch (err) {
       // error handle
     }

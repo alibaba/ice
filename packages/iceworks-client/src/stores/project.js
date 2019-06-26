@@ -4,6 +4,7 @@ export default {
   dataSource: {
     name: '',
     path: '',
+    adapter: '',
     panels: [],
   },
 
@@ -21,5 +22,9 @@ export default {
 
   async sortPanels(args) {
     this.dataSource.panels = await socket.emit('home.project.sortPanels', args);
+  },
+
+  async loadAdapter() {
+    this.dataSource.adapter = await socket.emit('home.project.loadAdapter');
   },
 };
