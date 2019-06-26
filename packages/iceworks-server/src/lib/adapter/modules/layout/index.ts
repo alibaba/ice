@@ -1,20 +1,13 @@
 import * as path from 'path';
-import { IProjectLayout, IProject, ILayoutModule } from '../../../interface';
-import scanDirectory from '../../scanDirectory';
-import config from '../config';
+import { IProjectLayout, IProject, ILayoutModule } from '../../../../interface';
+import scanDirectory from '../../../scanDirectory';
 
 const DEFAULT_IMAGE = 'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976-974.png';
-const { title,  description, cover, isAvailable } = config['layout'];
 
 export default class Layout implements ILayoutModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
-  public storage: any;
-
   public readonly path: string;
+  public storage: any;
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;

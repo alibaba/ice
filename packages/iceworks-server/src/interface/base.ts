@@ -4,6 +4,7 @@ export interface ISocket {
 
 export interface IContext {
   socket: ISocket;
+  i18n: II18n;
 }
 
 export interface IPanel {
@@ -12,6 +13,14 @@ export interface IPanel {
   title: string;
   description?: string;
   cover?: string;
+  module?: any;
+}
+
+/**
+ * 本地化插件
+ */
+export interface II18n {
+  format(localeKey: string, args?: object): string;
 }
 
 /**
@@ -70,10 +79,6 @@ export interface IProject {
 export interface IBaseModule {
   project: IProject;
   storage: any;
-  isAvailable: boolean;
-  title: string;
-  description?: string;
-  cover?: string;
 }
 
 /**

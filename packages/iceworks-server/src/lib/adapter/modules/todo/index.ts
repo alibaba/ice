@@ -1,12 +1,7 @@
 import * as path from 'path';
-import * as junk from 'junk';
-import * as recursiveReaddir from 'recursive-readdir';
-import { isBinaryFileSync } from 'isbinaryfile';
 import * as LineByLine from 'line-by-line';
-import { IProject, ITodoModule, ITodoMsg, ITodo } from '../../../interface';
-import config from '../config';
-
-const { title,  description, cover, isAvailable } = config['todo'];
+import { IProject, ITodoModule, ITodoMsg, ITodo } from '../../../../interface';
+import recursiveReaddir from '../../../recursiveReaddir';
 
 async function matchFileContent(filePath: string): Promise<ITodoMsg[]> {
   const input = new LineByLine(filePath);
@@ -56,15 +51,7 @@ function retrieveMessagesFromLine(lineString, lineNumber): ITodoMsg[] {
   return result;
 }
 
-function ignoreFile(filePath: string, stats) {
-  return stats.isDirectory() && junk.is(filePath) && isBinaryFileSync(filePath);
-}
-
 export default class Todo implements ITodoModule {
-  public readonly title: string = title;
-  public readonly description: string = description;
-  public readonly cover: string = cover;
-  public readonly isAvailable: boolean = isAvailable;
   public readonly project: IProject;
   public readonly storage: any;
 
@@ -73,16 +60,7 @@ export default class Todo implements ITodoModule {
   }
 
   public async getList(): Promise<ITodo[]> {
-    const files: string[] = await new Promise((resolve, reject) => {
-      recursiveReaddir(this.project.path, ['node_modules', '.*', ignoreFile], (err, res) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve(res);
-      });
-    });
+    const files: string[] = await recursiveReaddir(this.project.path);
 
     const result: ITodo[] = [];
 
