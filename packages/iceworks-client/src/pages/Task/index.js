@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
@@ -66,7 +65,6 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      // await task.getConf(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
