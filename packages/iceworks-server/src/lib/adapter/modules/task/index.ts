@@ -66,7 +66,7 @@ export default class Task implements ITaskModule {
     this.process[command].stdout.on('data', (buffer) => {
       this.status = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
-        status: TASK_STATUS_WORKING,
+        status: this.status,
         chunk: buffer.toString(),
       });
     });
@@ -76,7 +76,7 @@ export default class Task implements ITaskModule {
         this.process[command] = null;
         this.status = TASK_STATUS_STOP;
         ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: TASK_STATUS_STOP,
+          status: this.status,
           chunk: chalk.grey('Task has stopped'),
         });
       }
@@ -107,7 +107,7 @@ export default class Task implements ITaskModule {
       if (code === 0) {
         this.status = TASK_STATUS_STOP;
         ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: TASK_STATUS_STOP,
+          status: this.status,
           chunk: chalk.grey('Task has stopped'),
         });
       }
@@ -118,7 +118,7 @@ export default class Task implements ITaskModule {
     return this;
   }
 
-  queryStatus (args: ITaskParam) {
+  getStatus (args: ITaskParam) {
     return this.status;
   }
 

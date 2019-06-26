@@ -1,7 +1,13 @@
 import socket from '@src/socket';
 
 export default {
-  dataSource: {},
+  dataSource: {
+    status: 'stop',
+  },
+
+  setStatus(status) {
+    this.dataSource.status = status;
+  },
 
   async start(type) {
     await socket.emit('adapter.task.start', { command: type });
@@ -11,8 +17,8 @@ export default {
     await socket.emit('adapter.task.stop', { command: type });
   },
 
-  async queryStatus(type) {
-    const status = await socket.emit('adapter.task.queryStatus', { command: type });
+  async getStatus(type) {
+    const status = await socket.emit('adapter.task.getStatus', { command: type });
     this.dataSource.status = status;
   },
 

@@ -71,7 +71,7 @@ export interface ITaskModule extends IBaseModule {
    * @param task 任务信息
    * @return {string} 是否运行中
    */
-  queryStatus(task: ITaskParam): string;
+  getStatus(task: ITaskParam): string;
 
   /**
    * 获取任务配置项

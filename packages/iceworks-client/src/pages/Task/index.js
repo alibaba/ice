@@ -35,9 +35,9 @@ function getType(pathname) {
 const Task = ({ history, intl }) => {
   const project = stores.useStore('project');
   const task = taskStores.useStore('task');
+  const { dataSource: { status }, setStatus, getStatus } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
-  const [status, setStatus] = useState('stop');
 
   const writeLog = (t) => {
     const term = termManager.find('globalTerminal');
@@ -105,32 +105,31 @@ const Task = ({ history, intl }) => {
     }
   }
 
-  async function queryStatus() {
+  async function onGetStatus() {
     try {
       writeLog(type);
-      await task.queryStatus(type);
-      setStatus(task.dataSource.status);
+      await getStatus(type);
     } catch (error) {
       showMessage(error.message);
     }
   }
 
   useEffect(() => {
-    queryStatus();
+    onGetStatus();
   }, []);
 
   const id = `${project.dataSource.name}.${type}`;
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
 
-  // listen start envent handle
+  // listen start event handle
   useSocket(startEventName, (data) => {
     setStatus(data.status);
     const term = termManager.find(id);
     term.writeChunk(data.chunk);
   }, [status]);
 
-  // listen stop envent handle
+  // listen stop event handle
   useSocket(stopEventName, (data) => {
     setStatus(data.status);
     const term = termManager.find(id);
