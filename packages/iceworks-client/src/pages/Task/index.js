@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
@@ -35,9 +35,9 @@ function getType(pathname) {
 const Task = ({ history, intl }) => {
   const project = stores.useStore('project');
   const task = taskStores.useStore('task');
+  const { dataSource: { status }, setStatus, getStatus } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
-  const [status, setStatus] = useState('');
 
   const writeLog = (t) => {
     const term = termManager.find('globalTerminal');
@@ -105,18 +105,31 @@ const Task = ({ history, intl }) => {
     }
   }
 
+  async function onGetStatus() {
+    try {
+      writeLog(type);
+      await getStatus(type);
+    } catch (error) {
+      showMessage(error.message);
+    }
+  }
+
+  useEffect(() => {
+    onGetStatus();
+  }, []);
+
   const id = `${project.dataSource.name}.${type}`;
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
 
-  // listen start envent handle
+  // listen start event handle
   useSocket(startEventName, (data) => {
     setStatus(data.status);
     const term = termManager.find(id);
     term.writeChunk(data.chunk);
   }, [status]);
 
-  // listen stop envent handle
+  // listen stop event handle
   useSocket(stopEventName, (data) => {
     setStatus(data.status);
     const term = termManager.find(id);

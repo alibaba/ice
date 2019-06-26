@@ -4,10 +4,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as mv from 'mv';
-import * as clone from 'lodash.clone';
+import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
-import * as orderBy from 'lodash.orderby';
 import * as arrayMove from 'array-move';
 import * as upperCamelCase from 'uppercamelcase';
 import storage from '../../storage';
@@ -72,18 +71,19 @@ class Project implements IProject {
 
   private loadAdapter() {
     for (const [name, config] of Object.entries(adapter)) {
-      const project: IProject = clone(this);
+      const project: IProject = _.clone(this);
       delete project.adapter;
 
       const Module = config.module;
       if (Module) {
         const adapterModule = new Module({ project, storage });
-        this.adapter[name] = adapterModule;
+        const moduleName = name.toLowerCase();
+        this.adapter[moduleName] = adapterModule;
       }
 
       const { title, description, cover, isAvailable } = config;
       this.panels.push({
-        name: upperCamelCase(name),
+        name,
         title,
         description,
         cover,
@@ -112,7 +112,7 @@ class Project implements IProject {
         }
       });
 
-      this.panels = orderBy(this.panels, 'index');
+      this.panels = _.orderBy(this.panels, 'index');
     }
   }
 
