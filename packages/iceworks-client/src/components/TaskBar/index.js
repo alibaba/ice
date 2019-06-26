@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
-const TaskBar = ({ loading, onStart, onStop, onSetting, extra, type }) => {
+const TaskBar = ({ loading, onStart, onStop, onSetting, extra, type, enableSetting}) => {
   return (
     <div className={styles.taskBar}>
       {/* Left Button Group */}
@@ -26,8 +26,8 @@ const TaskBar = ({ loading, onStart, onStop, onSetting, extra, type }) => {
             <FormattedMessage id="iceworks.task.stop" />
           </Button>
         )}
-        {/* TODO: Eslint configuration support */}
-        {type !== 'lint' ? (
+
+        {enableSetting ? (
           <Button
             type="secondary"
             className={styles.leftButton}

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
@@ -35,7 +36,7 @@ function getType(pathname) {
 const Task = ({ history, intl }) => {
   const project = stores.useStore('project');
   const task = taskStores.useStore('task');
-  const { dataSource: { status }, setStatus, getStatus } = task;
+  const { dataSource: { status }, setStatus, getStatus, getConf } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
 
@@ -65,7 +66,7 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      await task.getConf(type);
+      // await task.getConf(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
@@ -109,6 +110,7 @@ const Task = ({ history, intl }) => {
     try {
       writeLog(type);
       await getStatus(type);
+      await getConf(type);
     } catch (error) {
       showMessage(error.message);
     }
@@ -151,6 +153,7 @@ const Task = ({ history, intl }) => {
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
+        enableSetting={data && data.length !== 0}
       />
 
       <div className={styles.content}>

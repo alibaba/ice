@@ -133,7 +133,8 @@ export default class Task implements ITaskModule {
       case 'build':
        return getCLIConf(this.cliConfPath, BUILD_CONF);
       case 'lint':
-        return LINT_CONF;
+        // @TODO support lint configuration
+        return null;
       default:
         return [];
     }
