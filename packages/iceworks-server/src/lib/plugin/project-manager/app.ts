@@ -77,12 +77,13 @@ class Project implements IProject {
       const Module = config.module;
       if (Module) {
         const adapterModule = new Module({ project, storage });
-        this.adapter[name] = adapterModule;
+        const moduleName = name.toLowerCase();
+        this.adapter[moduleName] = adapterModule;
       }
 
       const { title, description, cover, isAvailable } = config;
       this.panels.push({
-        name: upperCamelCase(name),
+        name,
         title,
         description,
         cover,
