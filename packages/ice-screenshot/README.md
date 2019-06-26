@@ -10,7 +10,6 @@ Options:
 -l, --local [local]          Set up a local server in [local] directory and take screenshot, defaults set up in `./`
 -s, --selector <selector>    Select a element through CSS selector
 -o, --output <output>        Output path
--t, --thumbnail [width]      generate thumbnail, default width is 600px
 -h, --help                   output usage information
 ```
 
