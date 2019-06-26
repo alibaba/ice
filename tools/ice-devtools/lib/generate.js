@@ -5,7 +5,9 @@ const glob = require('glob');
 const mkdirp = require('mkdirp');
 const BluebirdPromise = require('bluebird');
 const getUnpkgHost = require('ice-npm-utils').getUnpkgHost;
-const validate = require('../utils/validate.js');
+
+const generateI18nData = require('../utils/i18n');
+const validate = require('../utils/validate');
 const getNpmTime = require('../utils/npm').getNpmTime;
 const getPkgJSON = require('../utils/pkg-json').getPkgJSON;
 const logger = require('../utils/logger');
@@ -135,11 +137,14 @@ function generateMaterialsData(files, SPACE, type, options) {
       (pkg.publishConfig && pkg.publishConfig.registry) ||
       DEFAULT_REGISTRY;
 
+    // generage i18n data
+    const i18nData = generateI18nData({ title: materialConfig.title, description: pkg.description });
+
     // details: ./validate.js
     const payload = {
       name: materialConfig.name,
-      title: materialConfig.title,
-      description: pkg.description,
+      title: i18nData.zh_CN.title || i18nData.en_US.title,
+      description: i18nData.zh_CN.description || i18nData.en_US.description,
       homepage: pkg.homepage || `${unpkgHost}/${pkg.name}@${pkg.version}/build/index.html`,
       categories: materialConfig.categories || [],
       repository: pkg.repository && pkg.repository.url,
@@ -154,7 +159,7 @@ function generateMaterialsData(files, SPACE, type, options) {
       screenshot,
       screenshots: materialConfig.screenshots || (screenshot && [screenshot]),
       builder: materialConfig.builder,
-
+      ...i18nData,
       // 支持用户自定义的配置
       // customConfig: materialConfig.customConfig || null,
     };
