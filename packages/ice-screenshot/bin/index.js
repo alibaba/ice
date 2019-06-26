@@ -5,6 +5,10 @@ const program = require('commander');
 const chalk = require('chalk');
 const ora = require('ora');
 const detect = require('detect-port');
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
+const jimp = require('jimp');
 
 const createServer = require('../utils/createServer');
 const getPuppeteer = require('../utils/getPuppeteer');
@@ -26,7 +30,8 @@ async function exec() {
       .option('-o, --output <output>', 'Output path')
       .parse(process.argv);
 
-    const { url, selector, output, local } = program;
+    const { url, selector, local, thumbnail } = program;
+    const output = program.output || path.join(cwd, 'screenshot.png');
 
     if (!url && !local) {
       console.log(chalk.red('The -u or -l is required! Using the following command:'));
@@ -40,6 +45,12 @@ async function exec() {
       await screenshotWithLocalServer(serverPath, port, url, selector, output);
     } else {
       await screenshot(url, selector, output);
+    }
+
+    if (thumbnail) {
+      const width = thumbnail === true ? 600 : Number(thumbnail);
+
+      await generateThumbnail(output, width);
     }
   } catch (err) {
     console.error(err);
@@ -82,7 +93,6 @@ async function screenshot(url, selector, output) {
   const spinner = ora('screenshoting ...').start();
 
   try {
-    output = output || path.join(cwd, 'screenshot.jpg');
     const puppeteer = await getPuppeteer();
 
     // start puppeteer
@@ -115,6 +125,10 @@ async function screenshot(url, selector, output) {
       await page.screenshot({ path: output });
     }
 
+    const outputDir = path.dirname(output);
+    // minify screenshot
+    await minifyImg(output, outputDir);
+
     // close chromium
     await browser.close();
 
@@ -135,4 +149,41 @@ async function screenshot(url, selector, output) {
     }
     process.exit(1);
   }
+}
+
+/**
+ * gengrate a thumbnail of an image
+ *
+ * @param {*} imgPath
+ * @param {number} [width=600]
+ */
+async function generateThumbnail(imgPath, width = 600) {
+  try {
+    const imgPathObj = path.parse(imgPath);
+    const thumbnailPath = path.join(imgPathObj.dir, `${imgPathObj.name}_thumbnail${imgPathObj.ext}`);
+    const image = await jimp.read(imgPath);
+    image.resize(width, jimp.AUTO);
+    image.write(thumbnailPath);
+
+    // minify thumbnail
+    await minifyImg(thumbnailPath, imgPathObj.dir);
+    console.log(chalk.green(`Thumbnail output path: ${thumbnailPath}`));
+  } catch (err) {
+    console.error(chalk.red('Generate thumbnail failed!'));
+    console.error(err);
+    process.exit(1);
+  }
+}
+
+/**
+ * minify an image
+ *
+ * @param {String} imgPath
+ * @param {*} outputDir output dir
+ * @returns
+ */
+async function minifyImg(imgPath, outputDir) {
+  return imagemin([imgPath], outputDir, {
+    plugins: [imageminMozjpeg(), imageminPngquant()],
+  });
 }
