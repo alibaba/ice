@@ -6,7 +6,9 @@
   "bin": {
     "iceworks": "bin/iceworks.js"
   },
-  "scripts": {},
+  "scripts": {
+    "postinstall": "node ./lib/downloadAndInstall.js"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",

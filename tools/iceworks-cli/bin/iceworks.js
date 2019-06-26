@@ -13,8 +13,6 @@ async function check() {
 // check node version and iceworks version
 check();
 
-console.log('iceworks cli', pkgData.version);
-
 program.version(pkgData.version).usage('<command> [options]');
 
 // output help information on unknown commands
@@ -73,6 +71,12 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
+if (!process.argv.slice(2).length) {
+  // start web server for iceworks 3.0
+  require('../command/start')(cleanArgs());
+}
+
+
 function camelize(str) {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
 }
@@ -95,10 +99,4 @@ function cleanArgs(cmd) {
     }
   }
   return args;
-}
-
-if (!process.argv.slice(2).length) {
-  // TODO: start web server for iceworks 3.0
-  // require('../command/start')(cleanArgs());
-  program.outputHelp();
 }
