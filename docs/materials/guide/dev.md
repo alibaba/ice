@@ -35,12 +35,12 @@ $ idev add
 │   ├── index.css
 │   ├── index.html
 │   └── index.js
-├── demo             // 组件的示例
+├── demo             // 区块的示例
 │   ├── index.html
 │   └── index.js     // 示例入口文件
 ├── ice.config.js    // ice-scripts 配置，请勿随意更改（react）
 ├── package.json
-├── screenshot.png          // 截图
+├── screenshot.png   // 截图
 └── src              // 源码
     ├── index.js
     └── main.scss
@@ -87,7 +87,7 @@ npm publish
     └── main.scss
 ```
 
-和区块不同的地方在于，demo 目录下不再是 `html` 和 `js` 文件，而是一个个的 `md` 文件。这些 `md` 是一个个该组件的示例代码及描述，每个示例一个文件，这些 `md` 会在启动开发服务时自动渲染，为组件提供开发预览及文档能力。示例如下：
+和区块不同的地方在于，demo 目录下不再是 `html` 和 `js` 文件，而是一个个的 `md` 文件。这些 `md` 是该组件的示例代码及描述，每个示例一个文件，这些 `md` 会在启动开发服务时自动渲染，为组件提供开发预览及文档能力。示例如下：
 
 ```markdown
 ---

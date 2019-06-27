@@ -40,7 +40,7 @@ $ mkdir custom-material && cd custom-material
 $ idev init
 ```
 
-此时，需要输入 npm scope（如果需要）、 materials name 和 description。之后选择物料模版，ice-devtools 默认内置了 React/Vue/Angular 三种物料模版，如果需要自定义物料模版，可参考《自定义物料模版》，在这里，我们选择 React 模版。
+此时，需要输入 npm scope（如果需要）、 materials name 和 description。之后选择物料模版，ice-devtools 默认内置了 React/Vue/Angular 三种物料模版，如果需要自定义物料模版，可参考[《自定义物料模版》](/docs/material/template/custom.md)，在这里，我们选择 React 模版。
 
 之后，ice-devtools 会自动生成 React 物料，并生成示例组件、区块和项目，根据提示执行对应命令即可启动。
 
@@ -71,7 +71,7 @@ $ idev add
 
 新增组件和项目同理，其开发过程不再赘述，当我们完成所有物料开发之后，我们需要**先将各个组件、区块、项目发布到 npm 之后，再执行物料数据托管命令。**
 
-在 ProfileCard 目录下执行 `npm publish` 即可将 ProfileCard 组件发布到 npm，在执行这里命令的时候，你会发现终端会自动执行构建并生成一张截图，然后再执行发布。这是因为当使用物料时， iceworks 强依赖 screenshot 以提供物料预览能力（详情可查看[使用物料]()）。
+在 ProfileCard 目录下执行 `npm publish` 即可将 ProfileCard 组件发布到 npm，在执行这里命令的时候，你会发现终端会自动执行构建并生成一张截图，然后再执行发布。这是因为当使用物料时， iceworks 强依赖 screenshot 以提供物料预览能力（详情可查看[物料数据托管与使用](/docs/material/guide/usage.md)）。
 
 其他物料的发布流程与此一致（组件无需截图），当所有物料都发布到 npm 之后，我们即可生成物料数据并将这份物料数据托管到平台上，这样，即可在 iceworks 中使用这份物料集。
 
@@ -86,7 +86,7 @@ ice-devtools 支持使用以下两个平台存放物料数据，他们都是免�
 - fusion.design（只支持 React 体系的物料）
 - unpkg（支持所有物料体系）
 
-可根据自己的需要选择适合的平台，具体可参考[物料数据托管]()。
+可根据自己的需要选择适合的平台，具体可参考[物料数据托管与使用](/docs/material/guide/usage.md)。
 
 这里，我们选择托管到 unpkg，在 `custom-material` 根目录执行以下命令：
 
@@ -100,12 +100,6 @@ $ idev sync-unpkg
 物料源同步成功!
 
 https://unpkg.com/custom-material@latest/build/materials.json
-
-如果初次使用，请拷贝上面的物料地址，到 iceworks 中开始私有物料配置
-
-如果已经接入 iceworks，刷新物料面板即可查看更新后的物料
-
-物料配置文档: https://alibaba.github.io/ice/docs/materials/devtools
 ```
 
 ## 使用物料

@@ -3,7 +3,7 @@ title: 开发独立业务组件
 order: 4
 ---
 
-在某些特殊情况下，我们可能只想开发一个独立的业务组件，而非网站的物料集合，这种情况下，可使用 `ice-devtools` 开发基于指定物料模版的独立业务组件。
+在某些特殊情况下，我们可能只想开发一个独立的业务组件，而非完整的物料集合，这种情况下，可使用 `ice-devtools` 开发基于指定物料模版的独立业务组件。
 
 ## 初始化
 
@@ -97,7 +97,7 @@ import Button from '@icedesign/title';
 
 // 默认渲染到 mountNode
 ReactDOM.render(<div className="test">
-    <CustomCard color="#f00">content..</CustomCard>
+  <CustomCard color="#f00">content..</CustomCard>
 </div>, mountNode);
 ​````
 ```

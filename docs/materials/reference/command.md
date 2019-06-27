@@ -38,16 +38,6 @@ eg：
 $ idev generate
 ```
 
-## screenshot
-
-生成截图，并保存为 `screenshot.png`
-
-eg：
-
-```bash
-$ idev screenshot
-```
-
 ## sync
 
 同步物料数据到 [fusion.design](https://fusion.design/)

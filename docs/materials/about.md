@@ -16,3 +16,5 @@ order: 1
 基于以上三种不同粒度的物料，开发者可以快速开始前端项目开发。
 
 在 ICE 体系中，我们可以使用 ice-devtools 开发物料，可以将自己的物料同步到 funsion.design 或 unpkg 进行管理，可以在 iceworks 中使用物料快速搭建前端项目，可以说物料是 ICE 体系中最重要的组成部分，接下来，你将能够通过文档学会如何开发、发布和使用物料。
+
+![](https://img.alicdn.com/tfs/TB1EPrreoGF3KVjSZFmXXbqPXXa-1486-924.png)

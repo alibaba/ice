@@ -20,7 +20,7 @@ $ idev init
 - material：**推荐**，创建完整的物料仓库，包含component、block 和 scaffold
 - block：**不推荐**，单独创建区块物料
 - component：**不推荐**，单独创建组件物料
-- scaffold：**不推荐**，单独创建项目模版。
+- scaffold：**不推荐**，单独创建项目模版
 
 该选项可通过 `--type` 参数直接指定。选择某一种类后，ice-devtools 将根据物料模版初始化指定种类的物料。
 
@@ -30,7 +30,7 @@ ice-devtools 默认集成了三种物料模版：
 - [Vue 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-vue-material-template)
 - [Angular 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-angular-material-template)
 
-该选项可通过 `--tempalte` 指定任意物料模版（包括官网或自定义的），如有自定义物料模版需求，可参考[《自定义物料模版》]()。
+该选项可通过 `--tempalte` 指定任意物料模版（包括官网或自定义的），如有自定义物料模版需求，可参考[《自定义物料模版》](/docs/material/template/custom.md)。
 
 之后，需要填写物料的基本信息，根据命令行提示填写即可。
 
@@ -73,5 +73,5 @@ ice-devtools 默认集成了三种物料模版：
 
 - type: 字符串，指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'
 - logo：配置物料的品牌 logo
-- template：记录当前物料初始化时的物料模版，当新建物料时，将依赖这个值获取物料模版，**请勿随意更改**
+- template：记录当前物料初始化时的物料模版，当添加物料时，将依赖这个值获取物料模版，**请勿随意更改**
 - unpkg：指定物料托管平台
