@@ -1,7 +1,23 @@
 /**
  * generate i18n data
  *
- * @param {*} sourceData
+ * {
+ *  title: '按钮[en_US]button',
+ *  description: '[zh_CN]一个简单的按钮[en_US] a sample buttom'
+ * }
+ * =====>
+ * {
+ *  zh_CN: {
+ *    title: '按钮',
+ *    description: '一个简单的按钮',
+ *  },
+ *  en_US: {
+ *    title: 'button',
+ *    description: 'a sample buttom',
+ *  }
+ * }
+ *
+ * @param {Object} sourceData
  * @returns
  */
 function generateI18nData(sourceData) {
@@ -18,9 +34,11 @@ function generateI18nData(sourceData) {
  * parse i18n string;
  *
  * i18n string:
- * [zh_CN]这是个描述 [en_US] this is a description
+ * [zh_CN]这是个描述 [en_US]this is a description
  * 这是个描述 [en_US] this is a description
- * 这是个描述 [en_US] this is a description
+ * 这是个描述
+ * this is a description
+ * this is a description [zh_CN] 这是个描述
  * this is a description [zh_CN] 这是个描述
  *
  * @param {string} i18nStr
@@ -36,6 +54,7 @@ function parseI18NString(i18nStr) {
 
   return local;
 
+  // recursive parser
   function parseString(str = '') {
     const match = flagReg.exec(str);
 
