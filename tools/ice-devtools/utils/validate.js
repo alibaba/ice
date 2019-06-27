@@ -1,11 +1,12 @@
+const Joi = require('@hapi/joi');
 const componentCaterories = require('../lib/component/meta').categories;
 const blockCaterories = require('../lib/block/meta').categories;
 
-const createSchema = ((fn) => fn(require('@hapi/joi')));
+const createSchema = ((fn) => fn(Joi));
 
 const validate = (obj, schema) => {
   return new Promise((resolve, reject) => {
-    const result = require('@hapi/joi').validate(obj, schema);
+    const result = Joi.validate(obj, schema);
 
     if (result.error) {
       reject(result.error);
@@ -13,6 +14,11 @@ const validate = (obj, schema) => {
     resolve(obj);
   });
 };
+
+const authorSchema = createSchema((joi) => [joi.string().allow(''), joi.object().keys({
+  name: joi.string(),
+  email: joi.string().email(),
+}).unknown()]);
 
 const componentSchema = createSchema((joi) => joi.object().keys({
   name: joi.string().required(), // （必选）名称
@@ -26,6 +32,7 @@ const componentSchema = createSchema((joi) => joi.object().keys({
     npm: joi.string().required(), // （必选）npm package name
     version: joi.string().required(), // （必选）版本号
     registry: joi.string().uri().required(), // （必选）npm 源
+    author: authorSchema, // （可选）作者信息
   }),
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
@@ -45,6 +52,7 @@ const blockSchema = createSchema((joi) => joi.object().keys({
     version: joi.string().required(), // （必选）版本号
     registry: joi.string().uri().required(), // （必选）npm 源
     sourceCodeDirectory: joi.string().uri({ relativeOnly: true }).required(),
+    author: authorSchema, // （可选）作者信息
   }),
   screenshot: joi.string().uri().required(), // （必选）截图
   screenshots: joi.array().items(joi.string().uri()), // （可选）多张截图
@@ -68,6 +76,7 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
     npm: joi.string().required(), // （必选）npm package name
     version: joi.string().required(), // （必选）版本号
     registry: joi.string().uri().required(), // （必选）npm 源
+    author: authorSchema, // （可选）作者信息
   }),
   screenshot: joi.string().uri().required(), // （必选）截图
   screenshots: joi.array().items(joi.string().uri()).required(), // （必选）站点模板预览需要多张截图
@@ -83,11 +92,11 @@ const materialSchema = createSchema((joi) => joi.object().keys({
   description: joi.string(),
   logo: joi.string().uri(),
   homepage: joi.string().uri(),
-  author: joi.object(),
+  author: authorSchema,
   components: joi.array().items(componentSchema).required(),
   blocks: joi.array().items(blockSchema).required(),
   scaffolds: joi.array().items(scaffoldSchema).required(),
-}));
+}).unknown());
 
 const validateMaterial = (obj) => validate(obj, materialSchema);
 const validateComponent = (obj) => validate(obj, componentSchema);

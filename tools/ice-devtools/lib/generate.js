@@ -26,7 +26,7 @@ module.exports = async function generate(cwd) {
     }
     await generateMaterialsDatabases(pkgJson, cwd);
   } catch (err) {
-    console.log(chalk.red('Generate fail!\n'));
+    console.log(chalk.red('Generate fail!'));
     logger.fatal(err);
   }
 };
@@ -51,19 +51,24 @@ async function generateMaterialsDatabases(pkgJson, materialPath) {
     gather('scaffolds/*/package.json', materialPath, 'scaffold', materialConfig),
   ]);
 
-  logger.info('数据收集完成，开始写入文件');
+  const i18nData = generateI18nData({ description: pkgJson.description });
+
+  logger.info('Start validating material data.');
 
   // validate material data
   const data = await validate.validateMaterial({
     ...materialConfig,
+    ...i18nData,
     name: pkgJson.name,
-    description: pkgJson.description,
+    description: i18nData.zh_CN.description || i18nData.en_US.description,
     homepage: pkgJson.homepage,
     author: pkgJson.author,
     blocks,
     components,
     scaffolds,
   });
+
+  logger.info('Verification passed. Start writing materials.json.');
 
   const file = path.join(distDir, 'materials.json');
   fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
@@ -122,8 +127,7 @@ function generateMaterialsData(files, SPACE, type, options) {
    *  - 区块：根据 src/index.js 分析依赖
    */
   const result = files.map((pkgPath) => {
-    const currentDir = path.join(SPACE, pkgPath);
-    const pkg = getPkgJSON(currentDir);
+    const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
 
     const materialConfig = pkg[`${type}Config`] || {};
     const unpkgHost = options.unpkg || getUnpkgHost(pkg.name);
@@ -131,7 +135,7 @@ function generateMaterialsData(files, SPACE, type, options) {
     // 兼容 snapshot 字段
     const screenshot = materialConfig.screenshot
       || materialConfig.snapshot
-      || `${unpkgHost}/${pkg.name}@${pkg.version}/screenshot.png`;
+      || hasScreenshot(path.dirname(pkgPath)) ? `${unpkgHost}/${pkg.name}@${pkg.version}/screenshot.png` : '';
 
     const registry =
       (pkg.publishConfig && pkg.publishConfig.registry) ||
@@ -140,14 +144,14 @@ function generateMaterialsData(files, SPACE, type, options) {
     // generage i18n data
     const i18nData = generateI18nData({ title: materialConfig.title, description: pkg.description });
 
-    // details: ./validate.js
+    // details: ../utils/validate.js
     const payload = {
       name: materialConfig.name,
       title: i18nData.zh_CN.title || i18nData.en_US.title,
       description: i18nData.zh_CN.description || i18nData.en_US.description,
       homepage: pkg.homepage || `${unpkgHost}/${pkg.name}@${pkg.version}/build/index.html`,
       categories: materialConfig.categories || [],
-      repository: pkg.repository && pkg.repository.url,
+      repository: (pkg.repository && pkg.repository.url) || pkg.repository,
       source: {
         type: 'npm',
         npm: pkg.name,
@@ -194,4 +198,8 @@ function generateMaterialsData(files, SPACE, type, options) {
   }, {
     concurrency,
   });
+}
+
+function hasScreenshot(cwd) {
+  return fs.existsSync(path.join(cwd, 'screenshot.png'));
 }

@@ -64,7 +64,10 @@ function parseI18NString(i18nStr) {
  * @returns
  */
 function mergeI18N(sourceData) {
-  const locales = {};
+  const locales = {
+    zh_CN: {},
+    en_US: {},
+  };
 
   Object.keys(sourceData).forEach((key) => {
     const i18nObj = sourceData[key];
