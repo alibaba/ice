@@ -12,7 +12,7 @@ const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
-const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'routes'];
+const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'children'];
 
 export default class Router implements IRouterModule {
   public readonly project: IProject;
@@ -20,6 +20,7 @@ export default class Router implements IRouterModule {
 
   public readonly path: string;
   public existLazy: boolean;
+  public removePaths: string[];
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
@@ -28,15 +29,19 @@ export default class Router implements IRouterModule {
     this.path = path.join(this.project.path, 'src', 'routerConfig.js');
   }
 
-  private getRouterConfigAST(): any {
-    const routerConfigString = fs.readFileSync(this.path).toString();
-    const routerConfigAST = parser.parse(routerConfigString, {
+  private getASTByCode(code: string): any {
+    return parser.parse(code, {
       allowImportExportEverywhere: true,
       sourceType: 'module',
       plugins: [
         'dynamicImport',
       ],
     });
+  }
+
+  private getRouterConfigAST(): any {
+    const routerConfigString = fs.readFileSync(this.path).toString();
+    const routerConfigAST = this.getASTByCode(routerConfigString);
 
     return routerConfigAST;
   }
@@ -65,7 +70,7 @@ export default class Router implements IRouterModule {
   parseRoute(elements) {
     const config = [];
     elements.forEach((element) => {
-      // { path: '/home', component: Home, routes: [] }
+      // { path: '/home', component: Home, children: [] }
       const { properties } = element;
       const item: any = {};
       properties.forEach((property) => {
@@ -75,9 +80,9 @@ export default class Router implements IRouterModule {
         // component is react Component
         if (keyName === 'component') {
           item[keyName] = value.name;
-        } else if (keyName === 'routes') {
-          // routes is array
-          item.routes = this.parseRoute(value.elements);
+        } else if (keyName === 'children') {
+          // children is array
+          item.children = this.parseRoute(value.elements);
         } else if (ROUTE_PROP_WHITELIST.indexOf(keyName) > -1) {
           item[keyName] = value.value;
         }
@@ -92,7 +97,7 @@ export default class Router implements IRouterModule {
 
   // bulk create routers
   async bulkCreate(params: {data: IRouter[], options: IRouterOptions}): Promise<void>  {
-    let {data, options = {}} = params;
+    let { data, options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
@@ -100,29 +105,63 @@ export default class Router implements IRouterModule {
     if (!replacement) {
       if (parent) {
         const parentRouter = currentData.find((item) => {
-          if (item.routes && item.path === parent) {
+          if (item.children && item.path === parent) {
             return true;
           }
           return false;
         });
         if (parentRouter) {
-          parentRouter.routes = parentRouter.routes.concat(data);
+          parentRouter.children = parentRouter.children.concat(data);
           data = currentData;
         }
       } else {
         data = currentData.concat(data);
       }
     }
-    const dataAST = parser.parse(JSON.stringify(this.sortData(data)), {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
+    this.setData(data, routerConfigAST);
+  }
+
+  async delete(params: {componentName: string}): Promise<string[]> {
+    const { componentName } = params;
+    const routerConfigAST = this.getRouterConfigAST();
+    const data = await this.getAll();
+    this.removePaths = [];
+
+    this.setData(this.removeItemByComponent(data, componentName), routerConfigAST);
+    return this.removePaths;
+  }
+
+  removeItemByComponent(data: IRouter[], componentName: string, parent?: IRouter) {
+    const removeIndex = [];
+    data.forEach((item, index) => {
+      if (!item.children) {
+        if (item.component === componentName) {
+          removeIndex.unshift(index);
+          if (item.path) {
+            if (parent) {
+              this.removePaths.push(path.join(parent.path, item.path));
+            } else {
+              this.removePaths.push(item.path);
+            }
+          }
+        }
+      } else {
+        item.children = this.removeItemByComponent(item.children, componentName, item);
+      }
     });
+
+    removeIndex.forEach((index) => {
+      data.splice(index, 1);
+    });
+
+    return data;
+  }
+
+  private setData(data: IRouter[], routerConfigAST: any) {
+    const dataAST = this.getASTByCode(JSON.stringify(this.sortData(data)));
     const arrayAST = dataAST.program.body[0];
 
     this.changeImportDeclarations(routerConfigAST, data);
-
     /**
      * { path: '/a', component: 'Page' }
      *          transform to
@@ -145,7 +184,6 @@ export default class Router implements IRouterModule {
         }
       },
     });
-
     fs.writeFileSync(
       this.path,
       formatCodeFromAST(routerConfigAST)
@@ -160,8 +198,8 @@ export default class Router implements IRouterModule {
    */
   private sortData(data: IRouter[]): IRouter[] {
     return data.sort((a, b) => {
-      if (a.routes) {
-        a.routes = this.sortData(a.routes);
+      if (a.children) {
+        a.children = this.sortData(a.children);
       }
       if (a.path.indexOf(b.path) === 0) {
         return -1;
@@ -181,8 +219,6 @@ export default class Router implements IRouterModule {
   private changeImportDeclarations(routerConfigAST, data) {
     const removeIndex = [];
     const importDeclarations = [];
-    // const pageImportDeclarations = [];
-    // const layoutImportDeclarations = [];
     this.existLazy = false;
 
     traverse(routerConfigAST, {
@@ -230,17 +266,17 @@ export default class Router implements IRouterModule {
 
         if (type === LAYOUT_DIRECTORY) {
           // layout only first layer
-          findRouter = data.find(item => item.routes && item.component === name);
+          findRouter = data.find(item => item.children && item.component === name);
         } else if (type === PAGE_DIRECTORY) {
           findRouter = data.find(item => {
             let pageItem = null;
 
-            if (!item.routes && item.component === name) {
+            if (!item.children && item.component === name) {
               pageItem = item;
             }
 
-            if (item.routes) {
-              item.routes.forEach((route) => {
+            if (item.children) {
+              item.children.forEach((route) => {
                 if (route.component === name) {
                   pageItem = route;
                 }
@@ -276,14 +312,14 @@ export default class Router implements IRouterModule {
       }
     }
 
-    // /**
-    //  * add import if there is no layout or component in the ImportDeclarations
-    //  */
+    /**
+     * add import if there is no layout or component in the ImportDeclarations
+     */
     const newImports = [];
-    data.forEach(({ component, routes }) => {
-      if (routes) {
+    data.forEach(({ component, children }) => {
+      if (children) {
         setNewComponent(LAYOUT_DIRECTORY, component);
-        routes.forEach((route) => setNewComponent(PAGE_DIRECTORY, route.component));
+        children.forEach((route) => setNewComponent(PAGE_DIRECTORY, route.component));
       } else {
         setNewComponent(PAGE_DIRECTORY, component);
       }
@@ -296,24 +332,29 @@ export default class Router implements IRouterModule {
      *            or
      *     const Profile = React.lazy(() => import('./pages/Profile'));
      */
-    let code = '';
+    let lazyCode = '';
+    let importCode = '';
     newImports.forEach(({name, type}) => {
-      if (this.existLazy) {
-        code += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
+      if (!this.existLazy || type === LAYOUT_DIRECTORY) {
+        // layour or not exist lazy use `import Page from './pages/Page'`
+        importCode += `import ${name} from './${type}/${name}';\n`;
       } else {
-        code += `import ${name} from './${type}/${name}';\n`;
+        // use lazy `const Page = React.lazy(() => import('./pages/Page'))`
+        lazyCode += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
       }
     });
 
-    const importCodeAST = parser.parse(code, {
-      sourceType: 'module',
-      plugins: [
-        'dynamicImport',
-      ],
-    });
+    // get ast from lazy or import code
+    const lazyCodeAST = this.getASTByCode(lazyCode);
+    const importCodeAST = this.getASTByCode(importCode);
 
     const lastIndex = this.findLastImportIndex(routerConfigAST);
-    routerConfigAST.program.body.splice(lastIndex, 0, ...importCodeAST.program.body);
+    routerConfigAST.program.body.splice(lastIndex, 0, ...lazyCodeAST.program.body);
+    routerConfigAST.program.body.splice(
+      this.existLazy ? lastIndex - 1 : lastIndex,
+      0,
+      ...importCodeAST.program.body
+    );
   }
 
   /**

@@ -21,7 +21,7 @@ const DeleteRouterModal = ({
         <FormattedMessage id="iceworks.project.panel.router.delete.content" values={{ name: path }} />
       </div>
       <div className={styles.warn}>
-        (注意：删除路由不会删除对应的导航，需要手动操作)
+        <FormattedMessage id="iceworks.project.panel.router.delete.warn" />
       </div>
     </Modal>
   );

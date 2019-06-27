@@ -8,11 +8,11 @@ export interface IContext {
 }
 
 export interface IPanel {
-  isAvailable: boolean;
   name: string;
   title: string;
   description?: string;
   cover?: string;
+  isAvailable?: boolean;
   module?: any;
 }
 
