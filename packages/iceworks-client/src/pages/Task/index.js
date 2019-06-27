@@ -151,7 +151,7 @@ const Task = ({ history, intl }) => {
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
-        enableSetting={data && data.length !== 0}
+        enableSetting={data.length !== 0}
       />
 
       <div className={styles.content}>
