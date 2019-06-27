@@ -28,7 +28,7 @@ export interface IRouter {
   /**
    * children routes
    */
-  routes?: IRouter[];
+  children?: IRouter[];
 }
 
 export interface IRouterModule extends IBaseModule {
@@ -41,4 +41,9 @@ export interface IRouterModule extends IBaseModule {
    * set routers
    */
   bulkCreate(params: {data: IRouter[], options?: IRouterOptions}): Promise<void>;
+
+  /**
+   * delete router by component name
+   */
+  delete(params: {componentName: string}): Promise<string[]>;
 }

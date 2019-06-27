@@ -13,10 +13,19 @@
     height: 300px;
     overflow: hidden;
     box-shadow: 0 -2px 10px rgba(51, 51, 51, 0.35);
-    display: block;
+    visibility: show;
   }
+
   .hidden {
-    display: none;
+    visibility: hidden;
+  }
+
+  .closeIcon {
+    position: absolute;
+    right: 40px;
+    z-index: 9;
+    top: 10px;
+    cursor: pointer;
   }
 
   .globalBar {
@@ -29,6 +38,13 @@
     background: $global-bar-bg;
     color: $color-white;
     box-shadow: $shadow-up;
+
+    .projectName {
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
     .leftContent,
     .rightContent {

@@ -2,11 +2,13 @@ import socket from '@src/socket';
 
 export default {
   dataSource: {
-    status: 'stop',
   },
 
-  setStatus(status) {
-    this.dataSource.status = status;
+  setStatus(type, status) {
+    if (!this.dataSource[type]) {
+      this.dataSource[type] = {};
+    }
+    this.dataSource[type].status = status;
   },
 
   async start(type) {
@@ -18,15 +20,23 @@ export default {
   },
 
   async getStatus(type) {
-    const status = await socket.emit('adapter.task.getStatus', { command: type });
-    this.dataSource.status = status;
+    const status = await socket.emit('adapter.task.getStatus', {
+      command: type,
+    });
+    if (!this.dataSource[type]) {
+      this.dataSource[type] = {};
+    }
+    this.dataSource[type].status = status;
   },
 
   async getConf(type) {
     const conf = await socket.emit('adapter.task.getConf', {
       command: type,
     });
-    this.dataSource[type] = conf;
+    if (!this.dataSource[type]) {
+      this.dataSource[type] = {};
+    }
+    this.dataSource[type].conf = conf;
   },
 
   async setConf(type, params) {
