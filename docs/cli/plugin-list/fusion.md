@@ -26,6 +26,8 @@ $ npm i --save-dev ice-plugin-fusion
 - `themeConfig`: 主题配置
 - `uniteBaseComponent`: 如果项目里依赖了多个不同名称的基础包，可以通过 uniteBaseComponent 来统一基础包，减少重复的代码（社区用户无需关心该问题）
 
+注意：themePackage 与 themeConfig 中的变量配置是冲突的，两种方式只能选择一个，[原因](https://github.com/alibaba/ice/pull/1435#issuecomment-460055905)
+
 ### 基础用法
 
 ```js
@@ -40,8 +42,6 @@ module.exports = {
         nextPrefix: 'nextfd-',
         // 根据配置推导主品牌色
         primaryColor: '#f60',
-        // 根据配置推导次品牌色，仅组件 0.x 版本支持
-        secondaryCorlor: '#f60',
         // 覆盖 scss 原始变量
         'font-size-body-1': '14px',
       },
@@ -56,7 +56,7 @@ module.exports = {
 
 多主题常规的实现思路可以分为两步：
 
-1. 准备不同主题的 css 
+1. 准备不同主题的 css
 2. 通过 js 动态加载对应的主题 css
 
 而前端工程化的如今，很多基本依赖的组件库本身带有可配置的主题变量,比如 `fusion`，生成多份主题意味着需要提前打包出多份不同的主题文件，对于前端工程的调试和构建都带来极大的处理成本。
