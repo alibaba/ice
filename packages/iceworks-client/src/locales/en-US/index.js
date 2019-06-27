@@ -191,13 +191,14 @@ export default {
   'iceworks.material.name': 'Material name',
 
   // global bar
-  'iceowrks.global.bar.project': 'Project Name',
-  'iceowrks.global.bar.log': 'Log',
-  'iceowrks.global.bar.folder': 'Folder',
-  'iceowrks.global.bar.editor': 'Editor',
-  'iceowrks.global.bar.theme': 'Theme',
-  'iceowrks.global.bar.feedback': 'Feedback',
-  'iceowrks.global.bar.feedback.title': 'Experience feedback',
-  'iceowrks.global.bar.feedback.join': 'Join DingTalk community',
-  'iceowrks.global.bar.feedback.submit': 'Feedback or Bug report',
+  'iceworks.global.bar.project': 'Project Name',
+  'iceworks.global.bar.log': 'Log',
+  'iceworks.global.bar.folder': 'Folder',
+  'iceworks.global.bar.editor': 'Editor',
+  'iceworks.global.bar.feedback': 'Feedback',
+  'iceworks.global.bar.feedback.title': 'Experience feedback',
+  'iceworks.global.bar.feedback.join': 'Join DingTalk community',
+  'iceworks.global.bar.feedback.submit': 'Feedback or Bug report',
+  'iceworks.global.bar.theme.dark': 'Dark',
+  'iceworks.global.bar.theme.light': 'Light',
 };
