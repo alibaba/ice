@@ -6,7 +6,7 @@ const validateName = require('validate-npm-package-name');
 
 const logger = require('../../utils/logger');
 const boxenLog = require('../../utils/boxen-log');
-const generate = require('../../utils/generate');
+const templateRender = require('../../utils/template-renderer');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const meta = require('./meta');
 
@@ -33,7 +33,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
   }
 
   try {
-    await generate({
+    await templateRender({
       src,
       dest,
       name,
@@ -84,12 +84,12 @@ function completedMessage(name, filepath, standalone) {
   boxenLog(`
     Success! Created ${name} at ${filepath}
     Inside ${name} directory, you can run several commands:
-    
+
       Starts the development server.
     ${!standalone ? chalk.cyan(`    cd components/${name}`) : ''}
     ${chalk.cyan('    npm install')}
     ${chalk.cyan('    npm start')}
-    
+
       When the development is complete, you need to run npm publish
     ${chalk.cyan('    npm publish')}
   `);

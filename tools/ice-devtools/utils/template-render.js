@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const Metalsmith = require('metalsmith');
 const uppercamelcase = require('uppercamelcase');
 const async = require('async');
-const render = require('consolidate').ejs.render;
+const ejsRender = require('consolidate').ejs.render;
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
 const { getNpmRegistry } = require('ice-npm-utils');
@@ -11,13 +11,13 @@ const ask = require('./ask');
 const filter = require('./filter');
 const transform = require('./transform');
 const logger = require('./logger');
-const debug = require('debug')('ice:generate');
+const debug = require('debug')('ice:templateRender');
 
 const TEMPLATE_PATH = '.template';
 
 module.exports = (options) => {
   return new Promise((resolve, reject) => {
-    generate(options, (err) => {
+    render(options, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -36,7 +36,7 @@ module.exports = (options) => {
  * @param {String} dest
  * @param {Function} done
  */
-function generate(options, done) {
+function render(options, done) {
   const {
     src,
     dest,
@@ -112,7 +112,7 @@ function generate(options, done) {
  * @return {Function}
  */
 function askQuestions(prompts) {
-  return (files, metalsmith, done) => {
+  return (_files, metalsmith, done) => {
     ask(prompts, metalsmith.metadata(), done);
   };
 }
@@ -183,7 +183,7 @@ function renderTemplateFiles(skipInterpolation) {
         }
         const str = files[file].contents.toString();
 
-        render(str, metalsmithMetadata, (err, res) => {
+        ejsRender(str, metalsmithMetadata, (err, res) => {
           if (err) {
             err.message = `[${file}] ${err.message}`;
             return next(err);
@@ -206,7 +206,7 @@ function renderTemplateFiles(skipInterpolation) {
  */
 function logMessage(message, data) {
   if (!message) return;
-  render(message, data, (err, res) => {
+  ejsRender(message, data, (err, res) => {
     if (err) {
       console.error(
         `\n   Error when rendering template complete message: ${

@@ -4,7 +4,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const validateName = require('validate-npm-package-name');
 const uppercamelcase = require('uppercamelcase');
-const generate = require('../../utils/generate');
+const templateRender = require('../../utils/template-renderer');
 const pkgJSON = require('../../utils/pkg-json');
 const logger = require('../../utils/logger');
 const boxenLog = require('../../utils/boxen-log');
@@ -32,7 +32,7 @@ module.exports = async function addMaterial(cwd, opt = {}) {
     const npmName = generateNpmNameByPrefix(name, npmPrefix);
 
     // init material project
-    await generate({
+    await templateRender({
       template,
       name: npmName,
       npmName,
@@ -95,7 +95,7 @@ async function generateMaterialsDemo(cwd, templatePath) {
     const type = types[i];
     // generate blocks\components\scaffolds folders and demo
     /* eslint-disable-next-line no-await-in-loop */
-    await generate({
+    await templateRender({
       src: path.join(templatePath, type),
       dest: path.join(cwd, `${type}s/Example${uppercamelcase(type)}`),
       name: `example-${type}`,

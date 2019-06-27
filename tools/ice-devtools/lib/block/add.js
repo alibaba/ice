@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const validateName = require('validate-npm-package-name');
 
 const logger = require('../../utils/logger');
-const generate = require('../../utils/generate');
+const templateRender = require('../../utils/template-render');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const boxenLog = require('../../utils/boxen-log');
 const meta = require('./meta');
@@ -26,7 +26,7 @@ module.exports = async function addBlock(cwd, opt = {}) {
   const dest = standalone ? cwd : path.join(cwd, 'blocks', name);
 
   try {
-    await generate({
+    await templateRender({
       src,
       dest,
       name,
@@ -70,12 +70,12 @@ function completedMessage(blockName, blockPath, standalone) {
   boxenLog(`
     Success! Created ${blockName} at ${blockPath}
     Inside ${blockName} directory, you can run several commands:
-    
+
       Starts the development server.
     ${!standalone ? chalk.cyan(`    cd blocks/${blockName}`) : ''}
     ${chalk.cyan('    npm install')}
     ${chalk.cyan('    npm start')}
-    
+
       When the development is complete, you need to run npm publish
       Contains screenshots and build, equivalent to npm run build && npm run screenshoy
     ${chalk.cyan('    npm publish')}

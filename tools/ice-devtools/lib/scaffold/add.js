@@ -5,7 +5,7 @@ const validateName = require('validate-npm-package-name');
 const boxenLog = require('../../utils/boxen-log');
 
 const logger = require('../../utils/logger');
-const generate = require('../../utils/generate');
+const templateRender = require('../../utils/template-renderer');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const meta = require('./meta');
 
@@ -26,7 +26,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
   const dest = standalone ? cwd : path.join(cwd, 'scaffolds', name);
 
   try {
-    await generate({
+    await templateRender({
       src,
       dest,
       name,
