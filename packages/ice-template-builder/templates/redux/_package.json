@@ -9,7 +9,6 @@
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/foundation-symbol": "^1.x",
-    "@icedesign/theme": "^0.1.4",
     "axios": "^0.17.1",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
