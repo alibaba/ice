@@ -51,6 +51,10 @@ const GlobalBar = ({ project, intl }) => {
     setTheme(currentTheme);
   }
 
+  function onClose() {
+    setTerminalVisible(!terminalVisible);
+  }
+
   useSocket('home.system.open.editor.data', (data) => {
     if (data) {
       Message.show({
@@ -68,6 +72,11 @@ const GlobalBar = ({ project, intl }) => {
   return project.dataSource.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
+        <Icon
+          type="close"
+          className={styles.closeIcon}
+          onClick={onClose}
+        />
         <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceworks.global.bar.log' })} />
       </div>
 
