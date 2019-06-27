@@ -16,7 +16,7 @@ export default class Menu implements IMenuModule {
   public readonly project: IProject;
   public readonly storage: any;
   public readonly path: string;
-  public configFilePath = 'menuConfig.js';
+  public configFilePath = 'config/menu.js';
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;

@@ -4,7 +4,7 @@ import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../../interfac
 
 export default class Router extends RouterAdapter {
   public readonly path: string;
-  public configFilePath = 'config/router.js';
+  public configFilePath = 'routerConfig.js';
 
   constructor(params: {project: IProject; storage: any; }) {
     super(params);

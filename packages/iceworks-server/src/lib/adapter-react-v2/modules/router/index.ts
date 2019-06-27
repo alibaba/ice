@@ -1,10 +1,10 @@
 import * as path from 'path';
-import MenuAdapter from '../../../adapter/modules/menu';
+import RouterAdapter from '../../../adapter/modules/router';
 import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../../interface';
 
-export default class Menu extends MenuAdapter {
+export default class Router extends RouterAdapter {
   public readonly path: string;
-  public configFilePath = 'config/menu.js';
+  public configFilePath = 'routerConfig.js';
 
   constructor(params: {project: IProject; storage: any; }) {
     super(params);

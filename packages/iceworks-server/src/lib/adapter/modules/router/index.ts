@@ -20,7 +20,7 @@ export default class Router implements IRouterModule {
 
   public readonly path: string;
   public existLazy: boolean;
-  public configFilePath = 'routerConfig.js';
+  public configFilePath = 'config/router.js';
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
