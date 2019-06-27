@@ -207,3 +207,35 @@ export interface INpmDependencies {
 export interface IMaterialCustomConfig {
   [config: string]: any;
 }
+
+export interface IConfSchema {
+  /**
+   * 标签名
+   */
+  label: string;
+
+  /**
+   * 字段名
+   */
+  name: string;
+
+  /**
+   * 描述
+   */
+  description: string;
+
+  /**
+   * 链接
+   */
+  link: string;
+
+  /**
+   * 展示组件名称
+   */
+  componentName: string;
+
+  /**
+   * 展示组件的 props
+   */
+  componentProps: object;
+}

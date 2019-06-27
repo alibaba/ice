@@ -1,4 +1,4 @@
-const CLI_CONF = [
+export default [
   {
     label: '入口文件',
     name: 'entry',
@@ -87,5 +87,3 @@ const CLI_CONF = [
     },
   },
 ];
-
-export { CLI_CONF };

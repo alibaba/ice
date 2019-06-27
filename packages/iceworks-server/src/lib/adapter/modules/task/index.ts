@@ -4,8 +4,8 @@ import * as path from 'path';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
-import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
-import { ITaskModule, ITaskParam, IProject, IContext } from '../../../../interface';
+import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
+import taskConfig from './taskConfig';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
@@ -19,9 +19,11 @@ export default class Task implements ITaskModule {
 
   public readonly cliConfPath: string;
 
-  private cliConfFilename = 'ice.config.js';
-
   private process: object = {};
+
+  public cliConfFilename = 'ice.config.js';
+
+  public taskConfig: ITaskConf = taskConfig;
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
@@ -131,9 +133,9 @@ export default class Task implements ITaskModule {
       case 'dev':
         return this.getDevConf();
       case 'build':
-       return getCLIConf(this.cliConfPath, BUILD_CONF);
+       return getCLIConf(this.cliConfPath, this.taskConfig.build);
       case 'lint':
-        return LINT_CONF;
+        return this.taskConfig.lint;
       default:
         return [];
     }
@@ -172,7 +174,7 @@ export default class Task implements ITaskModule {
     }
   });
 
-   return mergeCLIConf(DEV_CONF, userConf);
+   return mergeCLIConf(this.taskConfig.dev, userConf);
  }
 
   /**
