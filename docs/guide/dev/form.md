@@ -65,7 +65,7 @@ ReactDOM.render((
 
 针对表单这块，社区也有很多方案，如果需要可以参考：
 
-- Fusion Form 组件：需要结合 field API，使用成本高一些，[文档](/components/form)
-- FormBinder：使用较简单，但是在 UI 以及复杂场景性能方面考虑不够周全，[文档](/components/formbinder)
+- Fusion Form 组件：需要结合 field API，使用成本高一些，[文档](/component/form)
+- FormBinder：使用较简单，但是在 UI 以及复杂场景性能方面考虑不够周全，[文档](/component/formbinder)
 - uform: [仓库](https://github.com/alibaba/uform)
 - NoForm: [仓库](https://github.com/alibaba/nopage)
