@@ -63,37 +63,38 @@ const GlobalBar = ({ project, intl }) => {
   });
 
   const hiddenClassName = terminalVisible ? '' : styles.hidden;
+  const themeValue = theme.indexOf('dark') > -1 ? 'dark' : 'light';
 
   return project.dataSource.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-        <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceowrks.global.bar.log' })} />
+        <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceworks.global.bar.log' })} />
       </div>
 
       <div className={styles.globalBar}>
         <div className={styles.leftContent}>
           <div className={styles.item}>
-            <FormattedMessage id="iceowrks.global.bar.project" />：
+            <FormattedMessage id="iceworks.global.bar.project" />：
             <span className={styles.projectName}>{project.dataSource.name}</span>
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />
-            <FormattedMessage id="iceowrks.global.bar.log" />
+            <FormattedMessage id="iceworks.global.bar.log" />
           </div>
         </div>
 
         <div className={styles.rightContent}>
           <div className={styles.item} onClick={handleFolder}>
             <Icon type="folderopen" className={styles.icon} />
-            <FormattedMessage id="iceowrks.global.bar.folder" />
+            <FormattedMessage id="iceworks.global.bar.folder" />
           </div>
           <div className={styles.item} onClick={handleEditor}>
             <Icon type="code" className={styles.icon} />
-            <FormattedMessage id="iceowrks.global.bar.editor" />
+            <FormattedMessage id="iceworks.global.bar.editor" />
           </div>
           <div className={styles.item} onClick={handleTheme}>
             <Icon type="zhuti" className={styles.icon} size="small" />
-            <FormattedMessage id="iceowrks.global.bar.theme" />
+            <FormattedMessage id={`iceworks.global.bar.theme.${themeValue}`} />
           </div>
           <Balloon
             align="tl"
@@ -101,14 +102,14 @@ const GlobalBar = ({ project, intl }) => {
             trigger={
               <div className={styles.item}>
                 <Icon type="face" className={styles.icon} size="small" />
-                <FormattedMessage id="iceowrks.global.bar.feedback" />
+                <FormattedMessage id="iceworks.global.bar.feedback" />
               </div>
             }
             triggerType="click"
           >
             <div className={styles.feedback}>
               <h4 style={{ margin: '0 0 10px' }}>
-                <FormattedMessage id="iceowrks.global.bar.feedback.title" />
+                <FormattedMessage id="iceworks.global.bar.feedback.title" />
               </h4>
               <div className={styles.links}>
                 <a
@@ -117,7 +118,7 @@ const GlobalBar = ({ project, intl }) => {
                   href="https://img.alicdn.com/tfs/TB1q_oaQgTqK1RjSZPhXXXfOFXa-993-1280.png"
                   style={{ display: 'block', marginBottom: '5px' }}
                 >
-                  <FormattedMessage id="iceowrks.global.bar.feedback.join" />
+                  <FormattedMessage id="iceworks.global.bar.feedback.join" />
                 </a>
                 <a
                   target="_blank"
@@ -125,7 +126,7 @@ const GlobalBar = ({ project, intl }) => {
                   href="https://github.com/alibaba/ice/issues/new"
                   style={{ display: 'block' }}
                 >
-                  <FormattedMessage id="iceowrks.global.bar.feedback.submit" />
+                  <FormattedMessage id="iceworks.global.bar.feedback.submit" />
                 </a>
               </div>
             </div>
