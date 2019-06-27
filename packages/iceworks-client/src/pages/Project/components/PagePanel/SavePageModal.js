@@ -30,7 +30,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
     }
   }
 
-  const routerGroups = routes.filter(item => item.routes).map(item => {
+  const routerGroups = routes.filter(item => item.children).map(item => {
     return {
       label: `${item.path}(${item.component})`,
       value: item.path,

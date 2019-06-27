@@ -54,6 +54,12 @@ const PagePanel = ({ intl }) => {
 
   async function deletePage() {
     await pages.delete(deleteName);
+    const { deletePaths } = await routerStore.delete({
+      componentName: deleteName,
+    });
+    await menuStore.delete({
+      paths: deletePaths,
+    });
 
     toggleDeleteModal();
 
@@ -64,6 +70,8 @@ const PagePanel = ({ intl }) => {
     });
 
     pages.refresh();
+    menuStore.refresh();
+    routerStore.refresh();
   }
 
   async function createPage(data) {
