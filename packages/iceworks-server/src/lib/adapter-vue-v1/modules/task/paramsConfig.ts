@@ -61,4 +61,6 @@ const BUILD_CONF = [
   }
 ];
 
-export { DEV_CONF, BUILD_CONF };
+const LINT_CONF = [];
+
+export default { DEV_CONF, BUILD_CONF, LINT_CONF };

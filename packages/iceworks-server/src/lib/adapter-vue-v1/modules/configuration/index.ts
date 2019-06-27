@@ -1,26 +1,11 @@
-import * as path from 'path';
-import { getCLIConf, setCLIConf } from '../../../adapter/utils/cliConf';
-import { ICLIConf, IProject, IConfigurationModule, IConfParam } from '../../../../interface';
-import { CLI_CONF } from './const';
+import baseAdapter from '../../../adapter';
+import paramsConfig from './paramsConfig';
 
-export default class Configuration implements IConfigurationModule {
-  public project: IProject;
-  public storage: any;
-  public readonly cliConfPath: string;
-  private cliConfFilename = 'vue.config.js';
+export default class Configuration extends baseAdapter.Configuration.module {
+  public cliConfFilename = 'vue.config.js';
+  public paramsConfig = paramsConfig;
 
-  constructor(params: {project: IProject; storage: any; }) {
-    const { project, storage } = params;
-    this.project = project;
-    this.storage = storage;
-    this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
-  }
-
-  async getCLIConf(): Promise<ICLIConf[]> {
-   return getCLIConf(this.cliConfPath, CLI_CONF);
-  }
-
-  async setCLIConf(args: IConfParam) {
-    return setCLIConf(this.cliConfPath, args.options);
+  constructor(params) {
+    super(params);
   }
 }

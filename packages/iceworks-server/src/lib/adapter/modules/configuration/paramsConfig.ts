@@ -88,4 +88,4 @@ const CLI_CONF = [
   },
 ];
 
-export { CLI_CONF };
+export default { CLI_CONF };

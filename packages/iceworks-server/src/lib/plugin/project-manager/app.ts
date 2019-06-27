@@ -11,7 +11,7 @@ import * as arrayMove from 'array-move';
 import * as upperCamelCase from 'uppercamelcase';
 import storage from '../../storage';
 // import adapter from '../../adapter';
-import adapter from '../../adapter-vue-cli-3-kit-2'; // TODO TEST
+import adapter from '../../adapter-vue-v1'; // TODO TEST
 import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
