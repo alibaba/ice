@@ -1,5 +1,5 @@
 import * as fsExtra from 'fs-extra';
-import * as clonedeepwith from 'lodash.clonedeepwith';
+import * as _ from 'lodash';
 import * as prettier from 'prettier';
 import * as parser from '@babel/parser';
 import traverse from '@babel/traverse';
@@ -95,7 +95,7 @@ function setCLIConf(path: string, conf: object) {
  * @param userConf
  */
 function mergeCLIConf(defaultConf: any, userConf: any) {
-  return clonedeepwith(defaultConf).map((item) => {
+  return _.cloneDeepWith(defaultConf).map((item) => {
      if (Object.keys(userConf).includes(item.name)) {
        if (item.componentName === 'Switch') {
          item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
