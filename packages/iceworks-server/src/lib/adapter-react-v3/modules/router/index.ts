@@ -1,5 +1,5 @@
 import * as path from 'path';
-import RouterAdapter from '../../../adapter/modules/menu';
+import RouterAdapter from '../../../adapter/modules/router';
 import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../../interface';
 
 export default class Router extends RouterAdapter {

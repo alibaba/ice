@@ -11,7 +11,7 @@ import * as orderBy from 'lodash.orderby';
 import * as arrayMove from 'array-move';
 import * as upperCamelCase from 'uppercamelcase';
 import storage from '../../storage';
-import adapter from '../../adapter-react-v3';
+import adapter from '../../adapter';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
