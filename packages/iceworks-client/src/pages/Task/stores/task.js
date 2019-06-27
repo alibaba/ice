@@ -23,7 +23,7 @@ export default {
   },
 
   async getConf(type) {
-     const conf = await socket.emit('adapter.task.getConf', {
+    const conf = await socket.emit('adapter.task.getConf', {
       command: type,
     });
     this.dataSource[type] = conf;

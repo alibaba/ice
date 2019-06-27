@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
-const TaskBar = ({ loading, onStart, onStop, onSetting, extra, type, enableSetting}) => {
+const TaskBar = ({ loading, onStart, onStop, onSetting, extra, enableSetting }) => {
   return (
     <div className={styles.taskBar}>
       {/* Left Button Group */}
@@ -47,21 +47,21 @@ const TaskBar = ({ loading, onStart, onStop, onSetting, extra, type, enableSetti
 };
 
 TaskBar.defaultProps = {
-  type: '',
   loading: false,
   onStart: () => {},
   onStop: () => {},
   onSetting: () => {},
   extra: null,
+  enableSetting: false,
 };
 
 TaskBar.propTypes = {
-  type: PropTypes.string,
   loading: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
   onSetting: PropTypes.func,
   extra: PropTypes.node,
+  enableSetting: PropTypes.bool,
 };
 
 export default TaskBar;

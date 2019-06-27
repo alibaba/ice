@@ -30,7 +30,7 @@ function getMenuData(hiddenPaths) {
   if (hiddenPaths.indexOf(config.path) !== -1) {
     config = [];
   } else if (config.children) {
-    for (let i = config.children.length - 1; i > -1; i--) {
+    for (let i = config.children.length - 1; i > -1; i -= 1) {
       const childMenu = config.children[i];
       if (hiddenPaths.indexOf(childMenu.path) !== -1) {
         config.children.splice(i, 1);
