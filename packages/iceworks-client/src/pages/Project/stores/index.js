@@ -1,4 +1,4 @@
-import Icestore from '@ice/store';
+import Icestore from 'icestore';
 import pages from './pages';
 import layouts from './layouts';
 import menu from './menu';

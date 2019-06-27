@@ -1,4 +1,4 @@
-import Icestore from '@ice/store';
+import Icestore from 'icestore';
 import projects from './projects';
 import project from './project';
 import material from './material';
