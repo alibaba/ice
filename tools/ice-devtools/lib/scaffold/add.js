@@ -5,7 +5,7 @@ const validateName = require('validate-npm-package-name');
 const boxenLog = require('../../utils/boxen-log');
 
 const logger = require('../../utils/logger');
-const templateRender = require('../../utils/template-renderer');
+const templateRender = require('../../utils/template-render');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const meta = require('./meta');
 

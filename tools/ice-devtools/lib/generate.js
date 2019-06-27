@@ -74,6 +74,7 @@ async function generateMaterialsDatabases(pkgJson, materialPath) {
   fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
 
   console.log();
+  console.log(chalk.cyan('Success! materials db generated'));
   logger.success(`Created ${pkgJson.name} json at: ${chalk.yellow(file)}`);
   console.log();
 }
