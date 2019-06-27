@@ -30,7 +30,7 @@ ice-devtools 默认集成了三种物料模版：
 - [Vue 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-vue-material-template)
 - [Angular 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-angular-material-template)
 
-该选项可通过 `--tempalte` 指定任意物料模版（包括官网或自定义的），如有自定义物料模版需求，可参考[《自定义物料模版》](/docs/material/template/custom.md)。
+该选项可通过 `--tempalte` 指定任意物料模版（包括官网或自定义的），如有自定义物料模版需求，可参考[《自定义物料模版》](/docs/materials/template/custom.md)。
 
 之后，需要填写物料的基本信息，根据命令行提示填写即可。
 

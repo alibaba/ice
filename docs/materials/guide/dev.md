@@ -97,7 +97,7 @@ order: 1
 
 本 Demo 演示一行文字的用法。
 
-\`\`\`jsx
+````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ExampleComponent from 'custom-material-example-component';
@@ -115,7 +115,7 @@ class App extends Component {
 ReactDOM.render((
   <App />
 ), mountNode);
-\`\`\`
+````
 ```
 
 另一个区别在于组件的构建产物多个一个 `lib/` 目录，这个目录存放组件 ES5 风格的代码。
@@ -154,6 +154,6 @@ ReactDOM.render((
 └── tests
 ```
 
-其生成的代码和普通前端项目没有太多区别，唯一需要注意的是 `menuConfig.js` 和 `routerConfig.js`，这两个文件作用是配置菜单项和路由项，请按照物料协议标准进行修改，否则**无法在 icework 中使用**，关于这两个文件的更多信息，可参考[《物料数据协议》](/docs/material/reference/protocol.md)和[《项目模版规范》](/docs/material/template/scaffold.md)
+其生成的代码和普通前端项目没有太多区别，唯一需要注意的是 `menuConfig.js` 和 `routerConfig.js`，这两个文件作用是配置菜单项和路由项，请按照物料协议标准进行修改，否则**无法在 icework 中使用**，关于这两个文件的更多信息，可参考[《物料数据协议》](/docs/materials/reference/protocol.md)和[《项目模版规范》](/docs/materials/template/scaffold.md)
 
 而其他流程则和区块没有太多区别，开发完成后需要补充项目截图，完成后正常发布即可。

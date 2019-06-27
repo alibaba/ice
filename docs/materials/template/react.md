@@ -11,13 +11,13 @@ ICE 提供了标准化的 React 物料模版，在使用 `ice-devtools init` 时
 
 ### 初始化
 
-首先，初始化物料项目，可参考[《物料初始化》](/docs/material/guide/init.md)，完成后添加组件：
+首先，初始化物料项目，可参考[《物料初始化》](/docs/materials/guide/init.md)，完成后添加组件：
 
 ```bash
 $ idev add
 ```
 
-以组件为例，按照提示补充组件信息后，ice-devtools 会自动生成相关代码，保存在 `components/` 目录下，更多细节可参考[《单个物料开发》](/docs/material/guide/dev.md)。
+以组件为例，按照提示补充组件信息后，ice-devtools 会自动生成相关代码，保存在 `components/` 目录下，更多细节可参考[《单个物料开发》](/docs/materials/guide/dev.md)。
 
 ### 开发
 
