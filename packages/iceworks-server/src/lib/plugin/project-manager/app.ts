@@ -25,7 +25,12 @@ const mvAsync = util.promisify(mv);
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 const DEFAULT_TYPE = 'react';
-const DEFAULT_ADAPTER = ['adapter', 'adapter-react-v1', 'adapter-react-v2'];
+const DEFAULT_ADAPTER = [
+  'adapter-react-v1',
+  'adapter-react-v2',
+  'adapter-react-v3',
+  'adapter-vue-v1'
+];
 
 class Project implements IProject {
   public readonly name: string;
