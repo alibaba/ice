@@ -161,4 +161,4 @@ $ git push origin v1.0.2
 
 iceworks CLI 的实现核心思路是将 iceworks-server 作为 Npm 包的形式进行依赖，同时 iceworks-server 本质是一个 Node 项目的形式，并加装 iceworks-client 的静态资源进行渲染，如此一来就可以通过 iceworks CLI 命令行的形式启动 iceworks 工作台界面。
 
-![iceworks-cli](https://img.alicdn.com/tfs/TB1efLaekWE3KVjSZSyXXXocXXa-2201-1368.png)
+![iceworks-cli](https://img.alicdn.com/tfs/TB1gFDgegmH3KVjSZKzXXb2OXXa-1581-1048.png)
