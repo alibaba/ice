@@ -74,7 +74,7 @@ const GlobalBar = ({ project, intl }) => {
         <div className={styles.leftContent}>
           <div className={styles.item}>
             <FormattedMessage id="iceowrks.global.bar.project" />：
-            {project.dataSource.name}
+            <span className={styles.projectName}>{project.dataSource.name}</span>
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />

@@ -30,6 +30,13 @@
     color: $color-white;
     box-shadow: $shadow-up;
 
+    .projectName {
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .leftContent,
     .rightContent {
       display: flex;
