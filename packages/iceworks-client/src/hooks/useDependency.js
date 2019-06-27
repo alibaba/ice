@@ -70,12 +70,7 @@ function useDependency() {
     globalTerminalStore.show();
   }
 
-  const writeLog = (msg) => {
-    const term = termManager.find('globalTerminal');
-    term.writeLog(msg);
-  };
-
-  useSocket('adapter.dependency.reset.data', writeLog);
+  useSocket('adapter.dependency.reset.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.dependency.reset.exit', (code) => {
     if (code === 0) {
@@ -95,7 +90,7 @@ function useDependency() {
     }
   });
 
-  useSocket('adapter.dependency.upgrade.data', writeLog);
+  useSocket('adapter.dependency.upgrade.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.dependency.upgrade.exit', (code) => {
     if (code === 0) {
@@ -116,7 +111,7 @@ function useDependency() {
     }
   });
 
-  useSocket('adapter.dependency.install.data', writeLog);
+  useSocket('adapter.dependency.install.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.dependency.install.exit', (code) => {
     if (code === 0) {

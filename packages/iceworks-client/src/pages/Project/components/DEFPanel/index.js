@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import stores from '@src/stores';
-import termManager from '@utils/termManager';
 import Panel from '../Panel';
 import projectStores from '../../stores';
 import styles from './index.module.scss';
@@ -49,12 +48,7 @@ const DEFPanel = () => {
     });
   }
 
-  const writeLog = (msg) => {
-    const term = termManager.find('globalTerminal');
-    term.writeLog(msg);
-  };
-
-  useSocket('adapter.def.push.data', writeLog);
+  useSocket('adapter.def.push.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.def.push.exit', (code) => {
     if (code === 0) {

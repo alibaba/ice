@@ -40,8 +40,9 @@ const Task = ({ history, intl }) => {
   const type = getType(history.location.pathname);
 
   const writeLog = (t) => {
-    const term = termManager.find('globalTerminal');
     const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
+
+    const term = termManager.find('globalTerminal');
     term.writeLog(msg);
   };
 
