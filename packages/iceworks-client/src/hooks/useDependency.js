@@ -3,7 +3,6 @@ import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import { useState } from 'react';
 import { Message } from '@alifd/next';
-import termManager from '@utils/termManager';
 
 export const STATUS_RESETING = 'reseting';
 
