@@ -9,4 +9,7 @@ export default {
   async hide() {
     this.dataSource.show = false;
   },
+  async trigger() {
+    this.dataSource.show = !this.dataSource.show;
+  },
 };
