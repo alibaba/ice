@@ -1,6 +1,6 @@
 {
   "name": "@ice/screenshot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Take a screenshot of web page",
   "main": "bin/index.js",
   "bin": {
@@ -16,6 +16,9 @@
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",
     "detect-port": "^1.3.0",
+    "imagemin": "^6.1.0",
+    "imagemin-mozjpeg": "^8.0.0",
+    "imagemin-pngquant": "^8.0.0",
     "import-global": "^0.1.0",
     "ora": "^3.4.0"
   },

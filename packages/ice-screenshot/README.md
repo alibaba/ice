@@ -5,12 +5,12 @@ Take a screenshot of a web page in the terminal.
 Options:
 
 ```
--V, --version              output the version number
--u, --url <url>            The target url or path to local server
--l, --local [local]        Set up a local server in a special directory and take screenshot, defaults set up in `./`
--s, --selector <selector>  Select a element through CSS selector
--o, --output <output>      Output path
--h, --help                 output usage information
+-V, --version                output the version number
+-u, --url <url>              The target url or path to local server
+-l, --local [local]          Set up a local server in [local] directory and take screenshot, defaults set up in `./`
+-s, --selector <selector>    Select a element through CSS selector
+-o, --output <output>        Output path
+-h, --help                   output usage information
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ Options:
 Install:
 
 ```bash
-$ npm i -g @ice-screenshot
+$ npm i -g @ice/screenshot
 ```
 
 For ICE materials, you can take screenshot use following commands:

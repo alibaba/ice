@@ -5,6 +5,9 @@ const program = require('commander');
 const chalk = require('chalk');
 const ora = require('ora');
 const detect = require('detect-port');
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
 
 const createServer = require('../utils/createServer');
 const getPuppeteer = require('../utils/getPuppeteer');
@@ -26,7 +29,8 @@ async function exec() {
       .option('-o, --output <output>', 'Output path')
       .parse(process.argv);
 
-    const { url, selector, output, local } = program;
+    const { url, selector, local } = program;
+    const output = program.output || path.join(cwd, 'screenshot.png');
 
     if (!url && !local) {
       console.log(chalk.red('The -u or -l is required! Using the following command:'));
@@ -82,7 +86,6 @@ async function screenshot(url, selector, output) {
   const spinner = ora('screenshoting ...').start();
 
   try {
-    output = output || path.join(cwd, 'screenshot.jpg');
     const puppeteer = await getPuppeteer();
 
     // start puppeteer
@@ -115,6 +118,10 @@ async function screenshot(url, selector, output) {
       await page.screenshot({ path: output });
     }
 
+    const outputDir = path.dirname(output);
+    // minify screenshot
+    await minifyImg(output, outputDir);
+
     // close chromium
     await browser.close();
 
@@ -135,4 +142,17 @@ async function screenshot(url, selector, output) {
     }
     process.exit(1);
   }
+}
+
+/**
+ * minify an image
+ *
+ * @param {String} imgPath
+ * @param {*} outputDir output dir
+ * @returns
+ */
+async function minifyImg(imgPath, outputDir) {
+  return imagemin([imgPath], outputDir, {
+    plugins: [imageminMozjpeg(), imageminPngquant()],
+  });
 }
