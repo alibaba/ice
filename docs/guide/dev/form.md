@@ -37,8 +37,8 @@ import { Form, Field } from '@ice/form';
 import { Button, Input } from '@alifd/next';
 
 class App extends Component {
-  async onSubmit(values) {
-    window.alert(JSON.stringify(values, 0, 2))
+  onSubmit = (values) => {
+    window.alert(JSON.stringify(values, 0, 2));
   }
 
   render() {
