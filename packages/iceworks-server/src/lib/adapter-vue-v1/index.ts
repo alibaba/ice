@@ -8,7 +8,6 @@ export default {
   Layout: baseAdapter.Layout,
   Git: baseAdapter.Git,
   OSS: baseAdapter.OSS,
-  DEF: baseAdapter.DEF,
   Todo: baseAdapter.Todo,
   Dependency: baseAdapter.Dependency,
   Task: {
