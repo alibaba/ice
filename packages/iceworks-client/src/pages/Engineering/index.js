@@ -5,12 +5,12 @@ import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
 import { getMenuData } from '@utils/getMenuData';
 
-import stores from '@stores';
+import engineeringStores from './stores';
 
 import styles from './index.module.scss';
 
-const Tasks = ({ routes }) => {
-  const conf = stores.useStore('configuration');
+const Engineering = ({ routes }) => {
+  const conf = engineeringStores.useStore('configuration');
 
   function getSubMenuData() {
     const hiddenPaths = [];
@@ -51,12 +51,12 @@ const Tasks = ({ routes }) => {
   );
 };
 
-Tasks.defaultProps = {
+Engineering.defaultProps = {
   routes: [],
 };
 
-Tasks.propTypes = {
+Engineering.propTypes = {
   routes: PropTypes.array,
 };
 
-export default Tasks;
+export default Engineering;

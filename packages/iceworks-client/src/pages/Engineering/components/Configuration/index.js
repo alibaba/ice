@@ -3,7 +3,7 @@ import { Message } from '@alifd/next';
 import logger from '@utils/logger';
 import Card from '@components/Card';
 import DynamicForm from '@components/DynamicForm';
-import stores from '@stores';
+import engineeringStores from '../../stores';
 
 const formItemLayout = {
   labelTextAlign: 'left',
@@ -17,7 +17,7 @@ const formItemLayout = {
 };
 
 const Configuration = () => {
-  const conf = stores.useStore('configuration');
+  const conf = engineeringStores.useStore('configuration');
 
   async function onChange(values) {
     const params = {};
