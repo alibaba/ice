@@ -18,7 +18,7 @@
     "date-time": "^3.1.0",
     "deepmerge": "^3.2.0",
     "history": "^4.9.0",
-    "icestore": "^0.1.0",
+    "icestore": "^0.1.2",
     "lodash.clonedeep": "^4.5.0",
     "loglevel": "^1.6.1",
     "loglevel-plugin-prefix": "^0.8.4",
