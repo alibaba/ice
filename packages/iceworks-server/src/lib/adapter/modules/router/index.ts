@@ -20,13 +20,14 @@ export default class Router implements IRouterModule {
 
   public readonly path: string;
   public existLazy: boolean;
+  public configFilePath = 'config/router.js';
   public removePaths: string[];
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
-    this.path = path.join(this.project.path, 'src', 'routerConfig.js');
+    this.path = path.join(this.project.path, 'src', this.configFilePath);
   }
 
   private getASTByCode(code: string): any {

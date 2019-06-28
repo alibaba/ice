@@ -136,7 +136,8 @@ export default class Task implements ITaskModule {
       case 'build':
        return getCLIConf(this.cliConfPath, this.taskConfig.build);
       case 'lint':
-        return this.taskConfig.lint;
+        // @TODO support lint configuration
+        return null;
       default:
         return [];
     }
