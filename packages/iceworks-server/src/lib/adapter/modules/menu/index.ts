@@ -18,12 +18,13 @@ export default class Menu implements IMenuModule {
   public readonly project: IProject;
   public readonly storage: any;
   public readonly path: string;
+  public configFilePath = 'config/menu.js';
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
     this.projectPath = project.path;
     this.storage = storage;
-    this.path = path.join(this.projectPath, 'src', 'menuConfig.js');
+    this.path = path.join(this.projectPath, 'src', this.configFilePath);
   }
 
   private getFileAST(): any {

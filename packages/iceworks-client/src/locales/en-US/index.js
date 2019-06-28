@@ -13,7 +13,7 @@ export default {
 
   // menu
   'iceworks.menu.project': 'Project',
-  'iceworks.menu.task': 'Task',
+  'iceworks.menu.task': 'Engineering',
   'iceworks.menu.task.dev': 'dev',
   'iceworks.menu.task.dev.desc': 'start server for development',
   'iceworks.task.dev.start.msg': 'Running Server',
@@ -185,7 +185,7 @@ export default {
   'iceworks.project.panel.router.form.path.hasExist': 'exist path',
 
   // task
-  'iceworks.task.title': 'Task',
+  'iceworks.task.title': 'Engineering',
   'iceworks.task.dev.title': 'dev',
   'iceworks.task.dev.desc': 'Compiles and hot-reloads for development',
   'iceworks.task.start': 'Run Task',
