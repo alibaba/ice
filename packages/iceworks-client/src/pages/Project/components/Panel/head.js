@@ -12,18 +12,22 @@ const PanelHead = ({ title, description, operations, children }) => {
     <div className={styles.wrapper}>
       <h3>
         {title}
-        <Tooltip
-          trigger={(
-            <Icon
-              size="small"
-              type="info"
-              className={styles.info}
-            />
-          )}
-          align="b"
-        >
-          {description}
-        </Tooltip>
+        {
+          description ?
+            <Tooltip
+              trigger={(
+                <Icon
+                  size="small"
+                  type="info"
+                  className={styles.info}
+                />
+              )}
+              align="b"
+            >
+              {description}
+            </Tooltip> :
+            null
+        }
       </h3>
       <div className={styles.main}>
         {children}
@@ -56,13 +60,14 @@ const PanelHead = ({ title, description, operations, children }) => {
 };
 
 PanelHead.defaultProps = {
+  description: '',
   operations: [],
   children: null,
 };
 
 PanelHead.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   children: PropTypes.element,
   operations: PropTypes.array,
 };

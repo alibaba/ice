@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Loading } from '@alifd/next';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 
 const FallbackPanel = ({ intl }) => {
   return (
     <Panel
       header={
-        <h3>
-          {intl.formatMessage({ id: 'iceworks.project.panel.fallback.title' })}
-        </h3>
+        <PanelHead
+          title={intl.formatMessage({ id: 'iceworks.project.panel.fallback.title' })}
+        />
       }
     >
       <div
