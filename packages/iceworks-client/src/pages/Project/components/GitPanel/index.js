@@ -64,6 +64,7 @@ const GitPanel = ({ intl }) => {
 
   async function onEdit(setRemoteUrl) {
     await gitStore.setRemote(setRemoteUrl);
+    await gitStore.refresh();
     setEditModal(false);
   }
 
