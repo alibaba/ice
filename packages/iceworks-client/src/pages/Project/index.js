@@ -235,22 +235,24 @@ const Project = ({ history }) => {
       )}
 
       {/* Panel setting */}
-      <div className={styles.panelSetting}>
-        <div
-          onClick={onTogglePanelSetting}
-          className={cx({
-            [styles.button]: true, [styles.isVisible]: panelSettingVisible,
-          })}
-        >
-          <Icon type={panelSettingVisible ? 'close' : 'settings'} size="medium" />
+      {projects.length ? (
+        <div className={styles.panelSetting}>
+          <div
+            onClick={onTogglePanelSetting}
+            className={cx({
+              [styles.button]: true, [styles.isVisible]: panelSettingVisible,
+            })}
+          >
+            <Icon type={panelSettingVisible ? 'close' : 'settings'} size="medium" />
+          </div>
+          {panelSettingVisible ?
+            <PanelSetting
+              panels={project.panels.filter(({ name }) => panels[name])}
+              onChange={onChangeProjectPanel}
+            /> : null
+          }
         </div>
-        {panelSettingVisible ?
-          <PanelSetting
-            panels={project.panels.filter(({ name }) => panels[name])}
-            onChange={onChangeProjectPanel}
-          /> : null
-        }
-      </div>
+      ) : null}
     </div>
   );
 };
