@@ -69,8 +69,17 @@ const GitPanel = ({ intl }) => {
   }
 
   async function onOpenSwitch() {
-    await gitStore.getBranches();
-    setSwitchModal(true);
+    try {
+      await gitStore.getBranches();
+      setSwitchModal(true);
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '获取分支失败！',
+        content: error.message,
+        align: 'tr tr',
+      });
+    }
   }
 
   async function onSwtich(data) {
