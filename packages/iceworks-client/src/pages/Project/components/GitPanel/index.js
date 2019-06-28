@@ -15,7 +15,7 @@ import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
-const GitPanel = ({ intl }) => {
+const GitPanel = ({ intl, title, description }) => {
   const {
     on: onEditModal,
     setModal: setEditModal,
@@ -150,7 +150,7 @@ const GitPanel = ({ intl }) => {
       header={
         <div className={styles.header}>
           <h3>
-            <FormattedMessage id="iceworks.project.panel.git.title" />
+            {title}
             {currentBranch ? <span className={styles.branch}>({currentBranch})</span> : null}
           </h3>
           {
@@ -286,6 +286,8 @@ const GitPanel = ({ intl }) => {
 
 GitPanel.propTypes = {
   intl: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default injectIntl(GitPanel);

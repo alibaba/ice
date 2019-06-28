@@ -19,7 +19,7 @@ let currentTab = 'aside';
 
 const { Tooltip } = Balloon;
 
-const MenuPanel = ({ intl }) => {
+const MenuPanel = ({ intl, title }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -107,7 +107,7 @@ const MenuPanel = ({ intl }) => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.menu.title" /></h3>
+          <h3>{title}</h3>
           <div className={styles.icons}>
             <Tooltip
               trigger={(
@@ -188,6 +188,8 @@ const MenuPanel = ({ intl }) => {
 };
 
 MenuPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

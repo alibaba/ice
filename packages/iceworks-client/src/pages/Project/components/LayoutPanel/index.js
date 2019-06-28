@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
-const LayoutPanel = ({ intl }) => {
+const LayoutPanel = ({ intl, title }) => {
   const layouts = stores.useStore('layouts');
   const { dataSource } = layouts;
 
@@ -22,7 +22,7 @@ const LayoutPanel = ({ intl }) => {
       header={
         <div className={styles.header}>
           <h3>
-            <FormattedMessage id="iceworks.project.panel.layout.title" />
+            {title}
           </h3>
           <div className={styles.icons}>
             <Tooltip
@@ -64,6 +64,8 @@ const LayoutPanel = ({ intl }) => {
 };
 
 LayoutPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

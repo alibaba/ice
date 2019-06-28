@@ -14,7 +14,7 @@ import BuildPageModal from './BuildPageModal';
 
 const { Tooltip } = Balloon;
 
-const PagePanel = ({ intl }) => {
+const PagePanel = ({ intl, title }) => {
   const [deleteName, setDeleteName] = useState('');
   const [editingName, setEditingName] = useState('');
   const {
@@ -147,7 +147,7 @@ const PagePanel = ({ intl }) => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
+          <h3>{title}</h3>
           <div className={styles.icons}>
             <Tooltip
               trigger={(
@@ -233,6 +233,8 @@ const PagePanel = ({ intl }) => {
 };
 
 PagePanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

@@ -20,7 +20,7 @@ let deleteIndex = -1;
 let action = 'create';
 let deleteParent = null;
 
-const RouterPanel = ({ intl }) => {
+const RouterPanel = ({ intl, title }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -215,7 +215,7 @@ const RouterPanel = ({ intl }) => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
+          <h3>{title}</h3>
           <div className={styles.icons}>
             <Tooltip
               trigger={(
@@ -299,6 +299,8 @@ const RouterPanel = ({ intl }) => {
 };
 
 RouterPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
-const OSSPanel = ({ intl }) => {
+const OSSPanel = ({ intl, title }) => {
   const ossStore = stores.useStore('oss');
   const { dataSource } = ossStore;
   const {
@@ -74,7 +74,7 @@ const OSSPanel = ({ intl }) => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.oss.title" /></h3>
+          <h3>{title}</h3>
           <div className={styles.icons}>
             <Tooltip
               trigger={(
@@ -232,6 +232,8 @@ const OSSPanel = ({ intl }) => {
 };
 
 OSSPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

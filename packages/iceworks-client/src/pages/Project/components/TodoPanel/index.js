@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Message, Balloon } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import Panel from '../Panel';
 import stores from '../../stores';
@@ -8,7 +9,7 @@ import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
-const TodoPanel = () => {
+const TodoPanel = ({ title, intl }) => {
   const todo = stores.useStore('todo');
   const { dataSource } = todo;
 
@@ -16,26 +17,22 @@ const TodoPanel = () => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.todo.title" /></h3>
+          <h3>{title}</h3>
           <div className={styles.icons}>
-            <FormattedMessage id="iceworks.project.panel.todo.refresh">
-              {(title) => (
-                <Tooltip
-                  trigger={(
-                    <Icon
-                      className={styles.icon}
-                      type="reload"
-                      size="small"
-                      onClick={todo.refresh}
-                      title={title}
-                    />
-                  )}
-                  align="b"
-                >
-                  {title}
-                </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={todo.refresh}
+                  title={title}
+                />
               )}
-            </FormattedMessage>
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.todo.refresh' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -70,4 +67,10 @@ const TodoPanel = () => {
   );
 };
 
-export default TodoPanel;
+TodoPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(TodoPanel);

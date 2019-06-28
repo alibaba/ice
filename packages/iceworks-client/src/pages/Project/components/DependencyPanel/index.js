@@ -4,7 +4,7 @@ import Icon from '@components/Icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import useDependency, { STATUS_RESETING } from '@hooks/useDependency';
 import CreateDependencyModal from './CreateDependencyModal';
 import Panel from '../Panel';
@@ -51,7 +51,7 @@ DependencyItem.propTypes = {
   onUpgrade: PropTypes.func,
 };
 
-const DependencyPanel = () => {
+const DependencyPanel = ({ intl, title }) => {
   const {
     onReset,
     onCreate,
@@ -80,69 +80,57 @@ const DependencyPanel = () => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.dependency.title" /></h3>
+          <h3>{title}</h3>
           <div className={styles.icons}>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.refresh">
-              {(title) => (
-                <Tooltip
-                  trigger={(
-                    <Icon
-                      className={styles.icon}
-                      type="reload"
-                      size="small"
-                      onClick={refresh}
-                    />
-                  )}
-                  align="b"
-                >
-                  {title}
-                </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="reload"
+                  size="small"
+                  onClick={refresh}
+                />
               )}
-            </FormattedMessage>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.download">
-              {(title) => (
-                <Tooltip
-                  trigger={(
-                    <Icon
-                      className={
-                        classNames({
-                          [styles.icon]: true,
-                          [styles.reseting]: dataSource.status === STATUS_RESETING,
-                        })
-                      }
-                      type="package"
-                      size="small"
-                      onClick={onReset}
-                    />
-                  )}
-                  align="b"
-                >
-                  {title}
-                </Tooltip>
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.refresh' })}
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={
+                    classNames({
+                      [styles.icon]: true,
+                      [styles.reseting]: dataSource.status === STATUS_RESETING,
+                    })
+                  }
+                  type="package"
+                  size="small"
+                  onClick={onReset}
+                />
               )}
-            </FormattedMessage>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.add">
-              {(title) => (
-                <Tooltip
-                  trigger={(
-                    <Icon
-                      className={
-                        classNames({
-                          [styles.icon]: true,
-                          [styles.reseting]: dataSource.status === STATUS_RESETING,
-                        })
-                      }
-                      type="plus"
-                      size="small"
-                      onClick={onCreate}
-                    />
-                  )}
-                  align="b"
-                >
-                  {title}
-                </Tooltip>
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' })}
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={
+                    classNames({
+                      [styles.icon]: true,
+                      [styles.reseting]: dataSource.status === STATUS_RESETING,
+                    })
+                  }
+                  type="plus"
+                  size="small"
+                  onClick={onCreate}
+                />
               )}
-            </FormattedMessage>
+              align="b"
+            >
+              {intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' })}
+            </Tooltip>
           </div>
         </div>
       }
@@ -154,7 +142,7 @@ const DependencyPanel = () => {
           onOk={bulkCreate}
         />
         <Modal
-          title={<FormattedMessage id="iceworks.project.panel.dependency.main.reset.title" />}
+          title={intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.reset.title' })}
           visible={onResetModal}
           onCancel={() => setResetModal(false)}
           onOk={reset}
@@ -162,7 +150,7 @@ const DependencyPanel = () => {
           <FormattedMessage id="iceworks.project.panel.dependency.main.reset.content" />
         </Modal>
         <Modal
-          title={<FormattedMessage id="iceworks.project.panel.dependency.main.incompatible.title" />}
+          title={intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.incompatible.title' })}
           visible={onIncompatibleModal}
           onCancel={() => setIncompatibleModal(false)}
           onOk={async () => {
@@ -207,4 +195,10 @@ const DependencyPanel = () => {
   );
 };
 
-export default DependencyPanel;
+DependencyPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
+
+export default injectIntl(DependencyPanel);
