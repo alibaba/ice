@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Message, Balloon } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -7,16 +7,17 @@ import XtermTerminal from '@components/XtermTerminal';
 import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
+import stores from '@stores';
 import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
-  const [terminalVisible, setTerminalVisible] = useState(false);
+  const [globalTerminalStore] = stores.useStores(['globalTerminal']);
   const { theme, setTheme } = useContext(ThemeContext);
   const projectPath = project.dataSource.path;
 
   function handleTerminal() {
-    setTerminalVisible(!terminalVisible);
+    globalTerminalStore.trigger();
   }
 
   async function handleFolder() {
@@ -52,7 +53,7 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   function onClose() {
-    setTerminalVisible(!terminalVisible);
+    globalTerminalStore.hide();
   }
 
   useSocket('home.system.open.editor.data', (data) => {
@@ -66,7 +67,7 @@ const GlobalBar = ({ project, intl }) => {
     }
   });
 
-  const hiddenClassName = terminalVisible ? '' : styles.hidden;
+  const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
   const themeValue = theme.indexOf('dark') > -1 ? 'dark' : 'light';
 
   return project.dataSource.name ? (
