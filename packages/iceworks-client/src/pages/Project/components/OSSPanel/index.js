@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Input, Select, Message, Balloon } from '@alifd/next';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { Button, Form, Input, Select, Message } from '@alifd/next';
+import { injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import socket from '@src/socket';
@@ -9,11 +9,10 @@ import cx from 'classnames';
 import Panel from '../Panel';
 import stores from '../../stores';
 import regions from './dataSource';
+import PanelHead from '../Panel/head';
 import styles from './index.module.scss';
 
-const { Tooltip } = Balloon;
-
-const OSSPanel = ({ intl, title }) => {
+const OSSPanel = ({ intl, title, description }) => {
   const ossStore = stores.useStore('oss');
   const { dataSource } = ossStore;
   const {
@@ -73,24 +72,19 @@ const OSSPanel = ({ intl, title }) => {
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3>{title}</h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="clear"
-                  size="small"
-                  onClick={onClear}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.oss.button.clear' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={[
+            {
+              icon: {
+                type: 'clear',
+                onClick: onClear,
+              },
+              tip: intl.formatMessage({ id: 'iceworks.project.panel.oss.button.clear' }),
+            },
+          ]}
+        />
       }
     >
       <div className={styles.wrap}>

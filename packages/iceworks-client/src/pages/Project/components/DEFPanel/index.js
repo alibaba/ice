@@ -5,10 +5,11 @@ import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import stores from '@src/stores';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import projectStores from '../../stores';
 import styles from './index.module.scss';
 
-const DEFPanel = ({ title }) => {
+const DEFPanel = ({ title, description }) => {
   const gitStore = projectStores.useStore('git');
   const [userStore, globalTerminalStore] = stores.useStores(['user', 'globalTerminal']);
 
@@ -106,7 +107,7 @@ const DEFPanel = ({ title }) => {
   }
 
   return (
-    <Panel header={<h3>{title}</h3>}>
+    <Panel header={<PanelHead title={title} description={description} />}>
       <div className={styles.wrap}>
         {mainElement}
       </div>

@@ -1,40 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Message, Balloon } from '@alifd/next';
+import { Message } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import Icon from '@components/Icon';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const { Tooltip } = Balloon;
-
-const TodoPanel = ({ title, intl }) => {
+const TodoPanel = ({ title, intl, description }) => {
   const todo = stores.useStore('todo');
   const { dataSource } = todo;
 
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3>{title}</h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={todo.refresh}
-                  title={title}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.todo.refresh' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={[
+            {
+              icon: {
+                type: 'reload',
+                onClick: todo.refresh,
+              },
+              tip: intl.formatMessage({ id: 'iceworks.project.panel.todo.refresh' }),
+            },
+          ]}
+        />
       }
     >
       {dataSource.length ? (

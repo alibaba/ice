@@ -1,17 +1,16 @@
 import React from 'react';
-import { Tab, Balloon } from '@alifd/next';
+import { Tab } from '@alifd/next';
 import Icon from '@components/Icon';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import useDependency, { STATUS_RESETING } from '@hooks/useDependency';
 import CreateDependencyModal from './CreateDependencyModal';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import styles from './index.module.scss';
 
 const { Item: TabPane } = Tab;
-const { Tooltip } = Balloon;
 
 const DependencyItem = ({
   package: packageName, localVersion, wantedVestion, isDev, onUpgrade,
@@ -51,7 +50,7 @@ DependencyItem.propTypes = {
   onUpgrade: PropTypes.func,
 };
 
-const DependencyPanel = ({ intl, title }) => {
+const DependencyPanel = ({ intl, title, description }) => {
   const {
     onReset,
     onCreate,
@@ -79,60 +78,35 @@ const DependencyPanel = ({ intl, title }) => {
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3>{title}</h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={refresh}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.refresh' })}
-            </Tooltip>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={
-                    classNames({
-                      [styles.icon]: true,
-                      [styles.reseting]: dataSource.status === STATUS_RESETING,
-                    })
-                  }
-                  type="package"
-                  size="small"
-                  onClick={onReset}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' })}
-            </Tooltip>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={
-                    classNames({
-                      [styles.icon]: true,
-                      [styles.reseting]: dataSource.status === STATUS_RESETING,
-                    })
-                  }
-                  type="plus"
-                  size="small"
-                  onClick={onCreate}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={[
+            {
+              icon: {
+                type: 'reload',
+                onClick: refresh,
+              },
+              tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.refresh' }),
+            },
+            {
+              icon: {
+                type: 'package',
+                onClick: onReset,
+                className: { [styles.reseting]: dataSource.status === STATUS_RESETING },
+              },
+              tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' }),
+            },
+            {
+              icon: {
+                type: 'plus',
+                onClick: onCreate,
+                className: { [styles.reseting]: dataSource.status === STATUS_RESETING },
+              },
+              tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' }),
+            },
+          ]}
+        />
       }
     >
       <div className={styles.main}>
