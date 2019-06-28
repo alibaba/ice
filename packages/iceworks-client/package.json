@@ -9,6 +9,7 @@
     "@alifd/next": "^1.13.13",
     "@alifd/theme-iceworks-dark": "^0.1.1",
     "@alifd/theme-iceworks-light": "^0.1.0",
+    "@ice/store": "^0.1.1",
     "@icedesign/dynamic-icon": "^0.1.8",
     "@icedesign/ellipsis": "^1.0.4",
     "@icedesign/notification": "^1.0.5",

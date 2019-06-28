@@ -1,4 +1,4 @@
-import Icestore from 'icestore';
+import Icestore from '@ice/store';
 import configuration from './configuration';
 
 const icestore = new Icestore();
