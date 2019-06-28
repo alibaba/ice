@@ -3,9 +3,6 @@ import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import { useState } from 'react';
 import { Message } from '@alifd/next';
-import log from '@utils/logger';
-
-const logger = log.getLogger('dependency');
 
 export const STATUS_RESETING = 'reseting';
 
@@ -23,7 +20,7 @@ function useDependency() {
     setModal: setIncompatibleModal,
   } = useModal();
   const [createValues, setCreateValues] = useState({});
-  const dependenciesStore = stores.useStore('dependencies');
+  const [dependenciesStore, globalTerminalStore] = stores.useStores(['dependencies', 'globalTerminal']);
   const { dataSource } = dependenciesStore;
 
   async function onCreate() {
@@ -48,12 +45,14 @@ function useDependency() {
 
   async function upgrade(packageName, isDev) {
     dependenciesStore.upgrade({ package: packageName, isDev });
+    globalTerminalStore.show();
   }
 
   async function bulkCreate(values, force) {
     try {
       await dependenciesStore.bulkCreate(values, force);
       setCreateModal(false);
+      globalTerminalStore.show();
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
         setCreateValues({ setDependencies: values, incompatibleDependencies: error.info });
@@ -67,11 +66,10 @@ function useDependency() {
     await dependenciesStore.reset();
 
     setResetModal(false);
+    globalTerminalStore.show();
   }
 
-  useSocket('adapter.dependency.reset.data', (data) => {
-    logger.info('adapter.dependency.reset.data', data);
-  });
+  useSocket('adapter.dependency.reset.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.dependency.reset.exit', (code) => {
     if (code === 0) {
@@ -91,9 +89,7 @@ function useDependency() {
     }
   });
 
-  useSocket('adapter.dependency.upgrade.data', (data) => {
-    logger.info('adapter.dependency.upgrade.data', data);
-  });
+  useSocket('adapter.dependency.upgrade.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.dependency.upgrade.exit', (code) => {
     if (code === 0) {
@@ -114,9 +110,7 @@ function useDependency() {
     }
   });
 
-  useSocket('adapter.dependency.install.data', (data) => {
-    logger.info('adapter.dependency.install.data', data);
-  });
+  useSocket('adapter.dependency.install.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.dependency.install.exit', (code) => {
     if (code === 0) {
