@@ -119,6 +119,7 @@ export default {
   'iceworks.project.panel.git.main.submit.message': 'Input Message',
   'iceworks.project.panel.git.main.tip.unstageFiles': 'Unstaged Files',
   'iceworks.project.panel.git.main.tip.refresh': 'Change information will not be refreshed in real time. Please update the status through the button in the upper right corner before submitting it.',
+  'iceworks.project.panel.git.main.tip.nodata': 'No file changes',
   'iceworks.project.panel.git.switch.title': 'Checkout Branch',
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',

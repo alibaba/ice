@@ -119,6 +119,7 @@ export default {
   'iceworks.project.panel.git.main.submit.message': '输入信息提交',
   'iceworks.project.panel.git.main.tip.unstageFiles': '变更文件',
   'iceworks.project.panel.git.main.tip.refresh': '变更信息不会实时刷新，提交前请先通过右上角的按钮更新状态',
+  'iceworks.project.panel.git.main.tip.nodata': '暂无文件变更',
   'iceworks.project.panel.git.switch.title': '切换分支',
   'iceworks.project.panel.git.switch.select': '选择分支',
   'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
