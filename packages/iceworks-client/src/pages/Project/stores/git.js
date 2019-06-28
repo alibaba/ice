@@ -38,7 +38,7 @@ export default {
   },
 
   async getBranches() {
-    const { localBranches, originBranches } = await socket.emit('adapter.git.branches');
+    const { localBranches, originBranches } = await socket.emit('adapter.git.getBranches');
     this.dataSource.localBranches = localBranches;
     this.dataSource.originBranches = originBranches;
   },

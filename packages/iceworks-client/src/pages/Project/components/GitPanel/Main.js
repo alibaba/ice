@@ -79,24 +79,28 @@ function Main({ dataSource, onOk }) {
         </Button>
       </div>
       <div className={styles.content}>
-        <CheckboxGroup value={files} onChange={onFilesChange}>
-          { dataSource.map((item, index) => {
-            const { type, file } = item;
-            const status = statusMap[type];
-            const [color, text] = status;
+        {
+          dataSource.length ?
+            <CheckboxGroup value={files} onChange={onFilesChange}>
+              { dataSource.map((item, index) => {
+                const { type, file } = item;
+                const status = statusMap[type];
+                const [color, text] = status;
 
-            return (
-              <div key={index} className={styles.item}>
-                <Checkbox value={file}>
-                  <span className={styles.label} style={{ backgroundColor: color }}>
-                    {text}
-                  </span>
-                  <span>{file}</span>
-                </Checkbox>
-              </div>
-            );
-          }) }
-        </CheckboxGroup>
+                return (
+                  <div key={index} className={styles.item}>
+                    <Checkbox value={file}>
+                      <span className={styles.label} style={{ backgroundColor: color }}>
+                        {text}
+                      </span>
+                      <span>{file}</span>
+                    </Checkbox>
+                  </div>
+                );
+              }) }
+            </CheckboxGroup> :
+            <FormattedMessage id="iceworks.project.panel.git.main.tip.nodata" />
+        }
       </div>
       <div className={styles.opts}>
         <Input
