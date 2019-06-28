@@ -8,7 +8,7 @@ export default class AppBootHook {
   }
 
   async didLoad() {
-    // 线上环境远程上传错误log
+    // send server log to remote in production
     if (this.app.config.env === 'prod') {
       this.app.getLogger().set('remote', new RemoteLogger({ level: 'INFO' }));
     }

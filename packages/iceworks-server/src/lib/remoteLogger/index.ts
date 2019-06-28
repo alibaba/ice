@@ -5,11 +5,11 @@ import { Transport } from 'egg-logger';
 const remoteUrl = `http://iceworks.cn-hangzhou.log.aliyuncs.com/logstores/iceworks-node-log/track`;
 
 export default class RemoteLogger extends Transport {
-  // 定义 log 方法，在此方法中把日志上报给远端服务
+  // send to remote
   async log(level, args) {
     const qsData = {
-      APIVersion: '0.6.0', // sls 必须的参数
-      __topic__: level, // 日志类型
+      APIVersion: '0.6.0', // sls required
+      __topic__: level, // log type
       node_version: process.version,
 
       message: '',
