@@ -93,7 +93,7 @@ const DependencyPanel = ({ intl, title, description }) => {
               icon: {
                 type: 'package',
                 onClick: onReset,
-                className: { [styles.reseting]: dataSource.status === STATUS_RESETING },
+                className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
               },
               tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' }),
             },
@@ -101,7 +101,7 @@ const DependencyPanel = ({ intl, title, description }) => {
               icon: {
                 type: 'plus',
                 onClick: onCreate,
-                className: { [styles.reseting]: dataSource.status === STATUS_RESETING },
+                className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
               },
               tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' }),
             },
