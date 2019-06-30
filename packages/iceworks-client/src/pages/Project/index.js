@@ -20,7 +20,7 @@ import {
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
-import PanelSetting from './components/PanelSetting';
+import SettingPanel from './components/SettingPanel';
 import QuickStart from './components/QuickStart';
 import projectStores from './stores';
 import panels from './panels';
@@ -235,7 +235,7 @@ const Project = ({ history }) => {
 
       {/* Panel setting */}
       {projects.length ? (
-        <div className={styles.panelSetting}>
+        <div className={styles.settingPanel}>
           <div
             onClick={onToggleSettingPanel}
             className={cx({
@@ -245,7 +245,7 @@ const Project = ({ history }) => {
             <Icon type={settingPanelVisible ? 'close' : 'settings'} size="medium" />
           </div>
           {settingPanelVisible ?
-            <PanelSetting
+            <SettingPanel
               panels={project.panels.filter(({ name }) => panels[name])}
               onChange={onChangeProjectPanel}
             /> : null
