@@ -5,6 +5,7 @@ import { Grid, Radio } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { LocalContext, localeInfos } from '@components/Locale';
 import { ThemeContext } from '@components/ThemeProvider';
+import useTermTheme from '@hooks/useTermTheme';
 import Card from '@components/Card';
 import { THEMES } from '@src/appConfig';
 import socket from '@src/socket';
@@ -18,6 +19,7 @@ const General = ({ intl }) => {
   const { locale, setLocale } = useContext(LocalContext);
   const { theme, setTheme } = useContext(ThemeContext);
   const [editor, setEditor] = useState(DEFAULT_EDITOR);
+  const { setTermTheme } = useTermTheme(theme);
 
   // language options
   const languageOptions = Object.keys(localeInfos).map(key => {
@@ -69,6 +71,7 @@ const General = ({ intl }) => {
   async function onThemeChange(currentTheme) {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
+    setTermTheme(theme);
   }
 
   async function getEditor() {

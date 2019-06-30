@@ -7,12 +7,14 @@ import XtermTerminal from '@components/XtermTerminal';
 import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
+import useTermTheme from '@hooks/useTermTheme';
 import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
   const [terminalVisible, setTerminalVisible] = useState(false);
   const { theme, setTheme } = useContext(ThemeContext);
+  const { themeValue, termTheme, setTermTheme } = useTermTheme(theme, 'globalTerminal');
   const projectPath = project.dataSource.path;
 
   function handleTerminal() {
@@ -46,9 +48,14 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   async function handleTheme() {
-    const currentTheme = theme === THEMES.dark ? THEMES.light : THEMES.dark;
+    const currentTheme = (theme === THEMES.dark) ? THEMES.light : THEMES.dark;
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
+
+    // set app theme
     setTheme(currentTheme);
+
+    // set term theme
+    setTermTheme(currentTheme);
   }
 
   function onClose() {
@@ -67,7 +74,6 @@ const GlobalBar = ({ project, intl }) => {
   });
 
   const hiddenClassName = terminalVisible ? '' : styles.hidden;
-  const themeValue = theme.indexOf('dark') > -1 ? 'dark' : 'light';
 
   return project.dataSource.name ? (
     <div className={styles.container}>
@@ -77,7 +83,11 @@ const GlobalBar = ({ project, intl }) => {
           className={styles.closeIcon}
           onClick={onClose}
         />
-        <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceworks.global.bar.log' })} />
+        <XtermTerminal
+          id="globalTerminal"
+          name={intl.formatMessage({ id: 'iceworks.global.bar.log' })}
+          options={{ theme: termTheme }}
+        />
       </div>
 
       <div className={styles.globalBar}>

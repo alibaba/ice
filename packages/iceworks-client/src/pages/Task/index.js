@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
 import useSocket from '@hooks/useSocket';
 import useModal from '@hooks/useModal';
+import useTermTheme from '@hooks/useTermTheme';
 import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
 import { withErrorBoundary } from '@components/ErrorBoundary';
+import { ThemeContext } from '@components/ThemeProvider';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
@@ -38,6 +40,7 @@ const Task = ({ history, intl }) => {
   const { dataSource: { status }, setStatus, getStatus } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
+  const { theme } = useContext(ThemeContext);
 
   const writeLog = (t) => {
     const term = termManager.find('globalTerminal');
@@ -121,6 +124,7 @@ const Task = ({ history, intl }) => {
   const id = `${project.dataSource.name}.${type}`;
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
+  const { termTheme } = useTermTheme(theme, id);
 
   // listen start event handle
   useSocket(startEventName, (data) => {
@@ -154,7 +158,11 @@ const Task = ({ history, intl }) => {
       />
 
       <div className={styles.content}>
-        <XtermTerminal id={id} name={project.dataSource.name} />
+        <XtermTerminal
+          id={id}
+          name={project.dataSource.name}
+          options={{ theme: termTheme }}
+        />
       </div>
 
       <TaskModal
