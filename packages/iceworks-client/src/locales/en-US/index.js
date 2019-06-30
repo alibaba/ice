@@ -55,6 +55,9 @@ export default {
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
+  // project task
+  'iceworks.project.panel.task.title': 'Run Task',
+
   // project page
   'iceworks.project.panel.page.create.title': 'Create Page',
   'iceworks.project.panel.page.create.progress.start': 'Start create page...',

@@ -18,6 +18,20 @@ const config = {
     isAvailable: true,
     module: null
   },
+  QuickDev: {
+    title: '启动服务',
+    description: '用于快速启动调试服务。',
+    cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
+    isAvailable: true,
+    module: null
+  },
+  QuickBuild: {
+    title: '构建项目',
+    description: '用于快速构建项目。',
+    cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
+    isAvailable: true,
+    module: null
+  },
   Layout: {
     title: '布局列表',
     description: '展示当前项目中 layouts 目录下的所有布局。',

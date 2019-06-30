@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  h3 {
+    flex: 1;
+  };
+}
+
+.taskItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .taskInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .title {
+      margin: 0 0 0 10px;
+    }
+
+    .desc {
+      margin: 0;
+    }
+  }
+
+  .settingButton {
+    display: inline-flex;
+    align-items: center;
+
+    .settingIcon {
+      margin-right: 5px;
+    }
+  }
+}

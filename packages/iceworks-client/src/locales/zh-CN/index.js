@@ -48,6 +48,9 @@ export default {
   'iceworks.project.panel.fallback.title': '面板',
   'iceworks.project.panel.fallback.desc': '面板加载出错',
 
+  // project task
+  'iceworks.project.panel.task.title': '运行任务',
+
   // project page
   'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
@@ -188,14 +191,14 @@ export default {
   // task
   'iceworks.task.title': '工程管理',
   'iceworks.task.dev.title': '启动服务',
-  'iceworks.task.dev.desc': '编译和热更新(用于开发环境)',
+  'iceworks.task.dev.desc': '编译和热更新，用于开发环境',
   'iceworks.task.dev.start.msg': '运行调试服务',
   'iceworks.task.dev.stop.msg': '停止调试服务',
   'iceworks.task.start': '运行',
   'iceworks.task.stop': '停止',
   'iceworks.task.setting': '设置',
   'iceworks.task.build.title': '构建项目',
-  'iceworks.task.build.desc': '编译并压缩(用于生产环境)',
+  'iceworks.task.build.desc': '编译并压缩，用于生产环境',
   'iceworks.task.build.start.msg': '运行构建项目服务',
   'iceworks.task.build.stop.msg': '构建项目完成',
   'iceworks.task.lint.title': '检查语法',

@@ -1,5 +1,4 @@
 /* eslint babel/new-cap:0 */
-
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import logger from '@utils/logger';
