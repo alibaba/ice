@@ -12,7 +12,6 @@ import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
-import { THEMES } from '@src/appConfig';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
 import styles from './index.module.scss';
