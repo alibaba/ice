@@ -15,9 +15,9 @@ const QuickDevPanel = ({ intl }) => {
 
   return (
     <TaskItem
-      title="启动服务"
-      desc="编译和热更新，用于开发环境"
-      icon="builder"
+      title={intl.formatMessage({ id: 'iceworks.task.dev.title' })}
+      desc={intl.formatMessage({ id: 'iceworks.task.dev.desc' })}
+      icon="dev"
       path="/task/dev"
       status={status}
       onStart={onStart}

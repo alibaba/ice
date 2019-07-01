@@ -15,8 +15,8 @@ const QuickDevPanel = ({ intl }) => {
 
   return (
     <TaskItem
-      title="构建项目"
-      desc="编译并压缩，用于生产环境"
+      title={intl.formatMessage({ id: 'iceworks.task.build.title' })}
+      desc={intl.formatMessage({ id: 'iceworks.task.build.desc' })}
       icon="builder"
       path="/task/build"
       status={status}

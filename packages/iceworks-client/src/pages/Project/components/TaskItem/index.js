@@ -37,7 +37,7 @@ const TaskItem = ({ title, desc, icon, path, history, status, onStart, onStop })
           />
           <Button type="normal" onClick={handleClick} className={styles.settingButton}>
             <Icon type="settings" className={styles.settingIcon} />
-            设置
+            <FormattedMessage id="iceworks.task.setting" />
           </Button>
         </div>
       </div>
