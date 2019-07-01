@@ -11,7 +11,7 @@ const QuickDevPanel = ({ intl }) => {
     writeGlobalLog(msg);
   }
 
-  const { status, onStart, onStop } = useTask({ type: 'build', writeLog });
+  const { status, onStart, onStop } = useTask({ type: 'dev', writeLog });
 
   return (
     <TaskItem
