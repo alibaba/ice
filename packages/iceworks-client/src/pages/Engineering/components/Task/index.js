@@ -110,7 +110,6 @@ const Task = ({ history, intl }) => {
 
   async function onGetStatus() {
     try {
-      writeLog(type);
       await getStatus(type);
       await getConf(type);
     } catch (error) {

@@ -71,7 +71,7 @@ const General = ({ intl }) => {
   async function onThemeChange(currentTheme) {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
-    setTermTheme(theme);
+    setTermTheme(currentTheme);
   }
 
   async function getEditor() {
