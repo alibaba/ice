@@ -34,17 +34,17 @@ const PanelHead = ({ title, description, operations, children }) => {
       </div>
       <div className={styles.operation}>
         {operations.map((operation, index) => {
-          const { tip, icon } = operation;
+          const { tip } = operation;
           return (
             <Tooltip
               key={index}
               trigger={(
                 <Icon
-                  {...icon}
+                  {...operation}
                   size="small"
                   className={classNames({
                     [styles.icon]: true,
-                    ...icon.className,
+                    ...operation.className,
                   })}
                 />
               )}

@@ -101,28 +101,26 @@ const MenuPanel = ({ intl, title, description }) => {
     currentTab = value;
   }
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onOpenCreateModal,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={[
-            {
-              icon: {
-                type: 'reload',
-                onClick: onRefresh,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.refresh' }),
-            },
-            {
-              icon: {
-                type: 'plus',
-                onClick: onOpenCreateModal,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.add' }),
-            },
-          ]}
+          operations={operations}
         />
       }
     >

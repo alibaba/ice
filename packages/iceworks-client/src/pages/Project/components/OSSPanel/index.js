@@ -69,21 +69,21 @@ const OSSPanel = ({ intl, title, description }) => {
     refeshBucket();
   }, []);
 
+  const operations = [
+    {
+      type: 'clear',
+      onClick: onClear,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.oss.button.clear' }),
+    },
+  ];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={[
-            {
-              icon: {
-                type: 'clear',
-                onClick: onClear,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.oss.button.clear' }),
-            },
-          ]}
+          operations={operations}
         />
       }
     >

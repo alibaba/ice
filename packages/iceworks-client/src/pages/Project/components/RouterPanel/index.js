@@ -212,28 +212,26 @@ const RouterPanel = ({ intl, title, description }) => {
     ];
   }
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onOpenCreateModal,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={[
-            {
-              icon: {
-                type: 'reload',
-                onClick: onRefresh,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' }),
-            },
-            {
-              icon: {
-                type: 'plus',
-                onClick: onOpenCreateModal,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
-            },
-          ]}
+          operations={operations}
         />
       }
     >

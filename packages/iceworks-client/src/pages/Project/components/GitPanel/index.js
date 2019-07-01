@@ -143,60 +143,48 @@ const GitPanel = ({ intl, title, description }) => {
     });
   }
 
+  const operations = isRepository ?
+    [
+      {
+        type: 'reload',
+        onClick: onRefresh,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' }),
+      },
+      {
+        type: 'plus',
+        onClick: onOpenCreate,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' }),
+      },
+      {
+        type: 'git',
+        onClick: onOpenSwitch,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' }),
+      },
+      {
+        type: 'down-arrow',
+        onClick: onPull,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.pull' }),
+      },
+      {
+        type: 'up-arrow',
+        onClick: onPush,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.push' }),
+      },
+      {
+        type: 'edit',
+        onClick: onOpenEdit,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.edit' }),
+      },
+    ] :
+    [];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={
-            isRepository ?
-              [
-                {
-                  icon: {
-                    type: 'reload',
-                    onClick: onRefresh,
-                  },
-                  tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.refresh' }),
-                },
-                {
-                  icon: {
-                    type: 'plus',
-                    onClick: onOpenCreate,
-                  },
-                  tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' }),
-                },
-                {
-                  icon: {
-                    type: 'git',
-                    onClick: onOpenSwitch,
-                  },
-                  tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' }),
-                },
-                {
-                  icon: {
-                    type: 'down-arrow',
-                    onClick: onPull,
-                  },
-                  tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.pull' }),
-                },
-                {
-                  icon: {
-                    type: 'up-arrow',
-                    onClick: onPush,
-                  },
-                  tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.push' }),
-                },
-                {
-                  icon: {
-                    type: 'edit',
-                    onClick: onOpenEdit,
-                  },
-                  tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.edit' }),
-                },
-              ] :
-              []
-          }
+          operations={operations}
         >
           {currentBranch ? <span className={styles.branch} key="branch">({currentBranch})</span> : null}
         </PanelHead>

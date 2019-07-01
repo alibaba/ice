@@ -75,37 +75,33 @@ const DependencyPanel = ({ intl, title, description }) => {
 
   const { dataSource } = dependenciesStore;
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: refresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.refresh' }),
+    },
+    {
+      type: 'package',
+      onClick: onReset,
+      className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' }),
+    },
+    {
+      type: 'plus',
+      onClick: onCreate,
+      className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={[
-            {
-              icon: {
-                type: 'reload',
-                onClick: refresh,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.refresh' }),
-            },
-            {
-              icon: {
-                type: 'package',
-                onClick: onReset,
-                className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' }),
-            },
-            {
-              icon: {
-                type: 'plus',
-                onClick: onCreate,
-                className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' }),
-            },
-          ]}
+          operations={operations}
         />
       }
     >

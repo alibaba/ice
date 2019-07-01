@@ -11,21 +11,21 @@ const TodoPanel = ({ title, intl, description }) => {
   const todo = stores.useStore('todo');
   const { dataSource } = todo;
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: todo.refresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.todo.refresh' }),
+    },
+  ];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={[
-            {
-              icon: {
-                type: 'reload',
-                onClick: todo.refresh,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.todo.refresh' }),
-            },
-          ]}
+          operations={operations}
         />
       }
     >

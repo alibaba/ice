@@ -142,28 +142,26 @@ const PagePanel = ({ intl, title, description }) => {
       return name === editingName;
     }) || {};
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onCreate,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
         <PanelHead
           title={title}
           description={description}
-          operations={[
-            {
-              icon: {
-                type: 'reload',
-                onClick: onRefresh,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' }),
-            },
-            {
-              icon: {
-                type: 'plus',
-                onClick: onCreate,
-              },
-              tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' }),
-            },
-          ]}
+          operations={operations}
         />
       }
     >
