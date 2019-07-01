@@ -46,7 +46,7 @@ const App = () => {
   }
 
   return (
-    <Beforeunload onBeforeunload="">
+    <Beforeunload onBeforeunload={() => "You'll loose your data"}>
       <LocaleProvider locale={locale} setLocale={setLocale}>
         <ThemeProvider theme={theme} setTheme={setTheme}>
           <Router history={history}>
