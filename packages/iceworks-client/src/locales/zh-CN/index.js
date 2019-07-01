@@ -49,7 +49,6 @@ export default {
   'iceworks.project.panel.fallback.desc': '面板加载出错',
 
   // project page
-  'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
   'iceworks.project.panel.page.delete.title': '删除页面',
@@ -69,7 +68,6 @@ export default {
   'iceworks.project.panel.page.button.add': '新建页面',
 
   // project dependency
-  'iceworks.project.panel.dependency.title': '依赖管理',
   'iceworks.project.panel.dependency.main.refresh': '刷新',
   'iceworks.project.panel.dependency.main.download': '重装依赖',
   'iceworks.project.panel.dependency.main.add': '添加依赖',
@@ -82,22 +80,18 @@ export default {
   'iceworks.project.panel.dependency.create.placeholder': '请输入 npm 包名以及版本号，例如：lodash@latest。按回车输入多个依赖。',
 
   // project layout
-  'iceworks.project.panel.layout.title': '布局列表',
   'iceworks.project.panel.layout.refresh': '刷新',
   'iceworks.project.panel.layout.none': '暂无布局',
 
   // project todo
-  'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.todo.none': '代码中没有注释事项需要处理',
   'iceworks.project.panel.todo.example': '例如：// TODO XXXXXXX',
   'iceworks.project.panel.todo.refresh': '刷新',
   'iceworks.project.panel.todo.line': '第{line}行',
 
   // project def
-  'iceworks.project.panel.def.title': 'DEF 发布',
 
   // project git
-  'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.git.button.add': '新建分支',
   'iceworks.project.panel.git.button.switch': '切换分支',
   'iceworks.project.panel.git.button.pull': '拉取远程代码',
@@ -136,7 +130,6 @@ export default {
   'iceworks.project.panel.menu.delete.subcontent': '组下还有菜单，删除请谨慎！！！',
   'iceworks.project.panel.menu.delete.warn': '注意：删除菜单不会删除对应的路由，需要手动操作',
   'iceworks.project.panel.menu.edit.title': '编辑菜单',
-  'iceworks.project.panel.menu.title': '菜单管理',
   'iceworks.project.panel.menu.form.type': '类型',
   'iceworks.project.panel.menu.form.type.placeholder': '请选择菜单类型',
   'iceworks.project.panel.menu.form.name': '名称',
@@ -167,7 +160,6 @@ export default {
   'iceworks.project.panel.router.delete.content': '确定移除路由 \'{name}\' ？',
   'iceworks.project.panel.router.delete.warn': '注意：删除路由不会删除对应的导航，需要手动操作',
   'iceworks.project.panel.router.edit.title': '编辑路由',
-  'iceworks.project.panel.router.title': '路由管理',
   'iceworks.project.panel.router.form.path': '路径',
   'iceworks.project.panel.router.form.path.placeholder': '请填写路径',
   'iceworks.project.panel.router.form.component': '组件',

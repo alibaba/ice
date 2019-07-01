@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Message, Balloon } from '@alifd/next';
+import { Message } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import Icon from '@components/Icon';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const { Tooltip } = Balloon;
-
-const LayoutPanel = ({ intl }) => {
+const LayoutPanel = ({ intl, title, description }) => {
   const layouts = stores.useStore('layouts');
   const { dataSource } = layouts;
 
@@ -17,38 +15,31 @@ const LayoutPanel = ({ intl }) => {
     layouts.refresh();
   }
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.layout.refresh' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3>
-            <FormattedMessage id="iceworks.project.panel.layout.title" />
-          </h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={onRefresh}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.layout.refresh' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       {dataSource.length ? (
         <div className={styles.main}>
-          {dataSource.map(({ name, title }) => {
+          {dataSource.map(({ name, title: layoutTitle }) => {
             return (
               <div key={name} className={styles.item}>
                 <strong>{name}</strong>
-                <span>{title}</span>
+                <span>{layoutTitle}</span>
               </div>
             );
           })}
@@ -64,6 +55,8 @@ const LayoutPanel = ({ intl }) => {
 };
 
 LayoutPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

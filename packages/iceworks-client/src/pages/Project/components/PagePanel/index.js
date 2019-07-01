@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Message, Balloon } from '@alifd/next';
+import { Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
 import BuildPageModal from './BuildPageModal';
 
-const { Tooltip } = Balloon;
-
-const PagePanel = ({ intl }) => {
+const PagePanel = ({ intl, title, description }) => {
   const [deleteName, setDeleteName] = useState('');
   const [editingName, setEditingName] = useState('');
   const {
@@ -143,40 +142,27 @@ const PagePanel = ({ intl }) => {
       return name === editingName;
     }) || {};
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onCreate,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={onRefresh}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' })}
-            </Tooltip>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="plus"
-                  size="small"
-                  onClick={onCreate}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
@@ -233,6 +219,8 @@ const PagePanel = ({ intl }) => {
 };
 
 PagePanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

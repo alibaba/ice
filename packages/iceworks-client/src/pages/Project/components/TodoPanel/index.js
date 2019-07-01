@@ -1,43 +1,32 @@
 import React from 'react';
-import { Message, Balloon } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
-import Icon from '@components/Icon';
+import PropTypes from 'prop-types';
+import { Message } from '@alifd/next';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const { Tooltip } = Balloon;
-
-const TodoPanel = () => {
+const TodoPanel = ({ title, intl, description }) => {
   const todo = stores.useStore('todo');
   const { dataSource } = todo;
+
+  const operations = [
+    {
+      type: 'reload',
+      onClick: todo.refresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.todo.refresh' }),
+    },
+  ];
 
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.todo.title" /></h3>
-          <div className={styles.icons}>
-            <FormattedMessage id="iceworks.project.panel.todo.refresh">
-              {(title) => (
-                <Tooltip
-                  trigger={(
-                    <Icon
-                      className={styles.icon}
-                      type="reload"
-                      size="small"
-                      onClick={todo.refresh}
-                      title={title}
-                    />
-                  )}
-                  align="b"
-                >
-                  {title}
-                </Tooltip>
-              )}
-            </FormattedMessage>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       {dataSource.length ? (
@@ -70,4 +59,10 @@ const TodoPanel = () => {
   );
 };
 
-export default TodoPanel;
+TodoPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(TodoPanel);

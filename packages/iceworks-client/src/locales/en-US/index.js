@@ -51,7 +51,6 @@ export default {
   'iceworks.project.submenu.opts.createProject': 'Create',
 
   // project panel
-  'iceworks.project.panel.page.title': 'Page',
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
@@ -76,28 +75,23 @@ export default {
   'iceworks.project.panel.page.button.add': 'add page',
 
   // project dependency
-  'iceworks.project.panel.dependency.title': 'Dependency',
   'iceworks.project.panel.dependency.main.upgrade': 'Upgrade to {wantedVestion}',
   'iceworks.project.panel.dependency.main.reset.title': 'Reinstall',
   'iceworks.project.panel.dependency.main.reset.content': 'All dependencies of the installation project will be reset. During installation, debugging services, new pages, and project operation can not be started. Please wait patiently.',
 
   // project layout
-  'iceworks.project.panel.layout.title': 'Layout',
   'iceworks.project.panel.layout.none': 'No layout',
   'iceworks.project.panel.layout.refresh': 'refresh',
 
   // project todo
-  'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.todo.none': 'No comments in the code need to deal with',
   'iceworks.project.panel.todo.example': 'e.g., // TODO somthing to do',
   'iceworks.project.panel.todo.refresh': 'Refresh',
   'iceworks.project.panel.todo.line': 'Line {line}',
 
   // project def
-  'iceworks.project.panel.def.title': 'DEF',
 
   // project git
-  'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.git.button.add': 'New Branch',
   'iceworks.project.panel.git.button.switch': 'Checkout Branch',
   'iceworks.project.panel.git.button.pull': 'Pull',
@@ -130,7 +124,6 @@ export default {
   'iceworks.project.panel.menu.ordinary': 'menu',
   'iceworks.project.panel.menu.group': 'menu group',
   'iceworks.project.panel.menu.external': 'external',
-  'iceworks.project.panel.menu.title': 'Menu',
   'iceworks.project.panel.menu.create.title': 'Create Menu',
   'iceworks.project.panel.menu.delete.title': 'Delete Menu',
   'iceworks.project.panel.menu.delete.content': 'Are you sure delete menu \'{name}\' ？',
@@ -162,7 +155,6 @@ export default {
   'iceworks.project.panel.router.title.path': 'path',
   'iceworks.project.panel.router.title.component': 'component',
   'iceworks.project.panel.router.title.operate': 'operate',
-  'iceworks.project.panel.router.title': 'Router',
   'iceworks.project.panel.router.create.title': 'Create Router',
   'iceworks.project.panel.router.delete.title': 'Delete Router',
   'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',

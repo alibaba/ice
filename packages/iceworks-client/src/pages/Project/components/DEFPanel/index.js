@@ -1,14 +1,15 @@
 import React from 'react';
 import { Button, Message } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import stores from '@src/stores';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import projectStores from '../../stores';
 import styles from './index.module.scss';
 
-const DEFPanel = () => {
+const DEFPanel = ({ title, description }) => {
   const gitStore = projectStores.useStore('git');
   const [userStore, globalTerminalStore] = stores.useStores(['user', 'globalTerminal']);
 
@@ -106,12 +107,17 @@ const DEFPanel = () => {
   }
 
   return (
-    <Panel header={<h3><FormattedMessage id="iceworks.project.panel.def.title" /></h3>}>
+    <Panel header={<PanelHead title={title} description={description} />}>
       <div className={styles.wrap}>
         {mainElement}
       </div>
     </Panel>
   );
+};
+
+DEFPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default DEFPanel;

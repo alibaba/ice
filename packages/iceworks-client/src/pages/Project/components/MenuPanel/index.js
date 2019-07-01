@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Balloon, Tab } from '@alifd/next';
+import { Tab } from '@alifd/next';
 import useModal from '@hooks/useModal';
 import cloneDeep from 'lodash.clonedeep';
-import Icon from '@components/Icon';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
 import CreateMenuModal from './CreateMenuModal';
 import DeleteMenuModal from './DeleteMenuModal';
 import traverse from '../../../../utils/traverse';
 
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
 const { Item: TabPane } = Tab;
 let currentTab = 'aside';
 
-const { Tooltip } = Balloon;
-
-const MenuPanel = ({ intl }) => {
+const MenuPanel = ({ intl, title, description }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -103,40 +101,27 @@ const MenuPanel = ({ intl }) => {
     currentTab = value;
   }
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onOpenCreateModal,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.menu.title" /></h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={onRefresh}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.menu.button.refresh' })}
-            </Tooltip>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="plus"
-                  size="small"
-                  onClick={onOpenCreateModal}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.menu.button.add' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
@@ -188,6 +173,8 @@ const MenuPanel = ({ intl }) => {
 };
 
 MenuPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

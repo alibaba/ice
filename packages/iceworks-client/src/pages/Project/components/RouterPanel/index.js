@@ -9,6 +9,7 @@ import CreateRouterModal from './CreateRouterModal';
 import DeleteRouterModal from './DeleteRouterModal';
 
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
@@ -20,7 +21,7 @@ let deleteIndex = -1;
 let action = 'create';
 let deleteParent = null;
 
-const RouterPanel = ({ intl }) => {
+const RouterPanel = ({ intl, title, description }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -211,40 +212,27 @@ const RouterPanel = ({ intl }) => {
     ];
   }
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onOpenCreateModal,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={onRefresh}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' })}
-            </Tooltip>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="plus"
-                  size="small"
-                  onClick={() => onOpenCreateModal()}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
@@ -299,6 +287,8 @@ const RouterPanel = ({ intl }) => {
 };
 
 RouterPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 
