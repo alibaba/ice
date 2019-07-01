@@ -86,8 +86,8 @@ const GlobalBar = ({ project, intl }) => {
         />
         <XtermTerminal
           id="globalTerminal"
-          name={intl.formatMessage({ id: 'iceworks.global.bar.log' })}
-          options={{ theme: termTheme }}
+          name={`\n${intl.formatMessage({ id: 'iceworks.global.bar.log' })}`}
+          options={{ cols: '100', rows: '17', theme: termTheme }}
         />
       </div>
 
