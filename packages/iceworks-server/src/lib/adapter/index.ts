@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import Page from './modules/page';
 import Dependency from './modules/dependency';
 import Configuration from './modules/configuration';
@@ -12,8 +14,22 @@ import Todo from './modules/todo';
 
 import { II18n } from '../../interface';
 
+export const baseModules = {
+  Page,
+  Dependency,
+  Configuration,
+  Task,
+  Layout,
+  Menu,
+  Router,
+  Git,
+  DEF,
+  OSS,
+  Todo,
+};
+
 export default (i18n: II18n) => {
-  const adapter = {
+  const adapter: any = {
     Guide: {
       cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
       isAvailable: true,
@@ -76,10 +92,10 @@ export default (i18n: II18n) => {
     },
   };
 
-  for (const name in adapter) {
-    adapter[name].title = i18n.format(`baseAdapter.config.${name}.title`);
-    adapter[name].description = i18n.format(`baseAdapter.config.${name}.des`);
-  }
+  _.forEach(adapter, (config, name) => {
+    config.title = i18n.format(`baseAdapter.config.${name}.title`);
+    config.description = i18n.format(`baseAdapter.config.${name}.des`);
+  });
 
   return adapter;
 };

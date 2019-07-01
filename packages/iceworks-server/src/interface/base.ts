@@ -20,6 +20,7 @@ export interface IPanel {
  * 本地化插件
  */
 export interface II18n {
+  readLocales(): void;
   format(localeKey: string, args?: object): string;
 }
 

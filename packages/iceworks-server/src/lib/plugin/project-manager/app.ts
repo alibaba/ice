@@ -69,7 +69,8 @@ class Project implements IProject {
 
   private loadAdapter(i18n: II18n) {
     const adapter = getAdapter(i18n);
-    for (const [name, config] of Object.entries(adapter)) {
+
+    _.forEach(adapter, (config: IPanel, name) => {
       const project: IProject = _.clone(this);
       delete project.adapter;
 
@@ -80,15 +81,11 @@ class Project implements IProject {
         this.adapter[moduleName] = adapterModule;
       }
 
-      const { title, description, cover, isAvailable } = config;
       this.panels.push({
         name,
-        title,
-        description,
-        cover,
-        isAvailable,
+        ..._.omit(config, 'module')
       });
-    }
+    });
   }
 
   private assemblePanels() {
@@ -185,6 +182,7 @@ class ProjectManager extends EventEmitter {
   }
 
   async ready() {
+    await this.i18n.readLocales();
     this.projects = await this.refresh();
   }
 
@@ -346,8 +344,8 @@ class ProjectManager extends EventEmitter {
 }
 
 export default (app) => {
-  app.projectManager = new ProjectManager(app.i18n);
   app.beforeStart(async () => {
+    app.projectManager = new ProjectManager(app.i18n);
     await app.projectManager.ready();
   });
 };

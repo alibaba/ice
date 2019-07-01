@@ -1,10 +1,8 @@
 import * as path from 'path';
-import BaseAdapter from '../../../adapter';
-import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../../interface';
+import { baseModules } from '../../../adapter';
+import { IProject } from '../../../../interface';
 
-const {module: BaseMenu} = BaseAdapter.Menu;
-
-export default class Menu extends BaseMenu {
+export default class Menu extends baseModules.Menu {
   public readonly path: string;
   public configFilePath = 'menuConfig.js';
 

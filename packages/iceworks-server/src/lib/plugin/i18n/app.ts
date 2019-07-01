@@ -26,7 +26,7 @@ class I18n implements II18n {
   }
 
   // read locale json file in adapter/locales
-  async ready() {
+  public async readLocales() {
     const adapterFiles: string[] = await recursiveReaddir(LIB_PATH, [ignoreFile]);
 
     const localeFiles = adapterFiles.filter(file => {
@@ -54,7 +54,4 @@ class I18n implements II18n {
 
 export default (app) => {
   app.i18n = new I18n();
-  app.beforeStart(async () => {
-    await app.i18n.ready();
-  });
 };
