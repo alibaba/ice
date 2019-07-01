@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Balloon } from '@alifd/next';
+import { Balloon, Tab } from '@alifd/next';
 import useModal from '@hooks/useModal';
+import cloneDeep from 'lodash.clonedeep';
 import Icon from '@components/Icon';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
 import CreateMenuModal from './CreateMenuModal';
@@ -12,6 +13,9 @@ import traverse from '../../../../utils/traverse';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
+
+const { Item: TabPane } = Tab;
+let currentTab = 'aside';
 
 const { Tooltip } = Balloon;
 
@@ -30,8 +34,7 @@ const MenuPanel = ({ intl }) => {
   });
   const [deleteMenu, setDeleteMenu] = useState({});
   const menuStore = stores.useStore('menu');
-  const { dataSource } = menuStore;
-  const { asideMenuConfig } = dataSource;
+  const { asideMenuConfig, headerMenuConfig } = menuStore;
 
   function onRefresh() {
     menuStore.refresh();
@@ -54,17 +57,20 @@ const MenuPanel = ({ intl }) => {
       data: menuTree,
       options: {
         replacement: true,
+        type: currentTab,
       },
     });
-    onRefresh();
+    setTimeout(onRefresh, 0);
   }
 
   async function onCreate(action, value) {
     toggleCreateModal();
+    const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
+    const copyData = cloneDeep(data);
     if (action === 'create') {
-      asideMenuConfig.push(value);
+      copyData.push(value);
     } else {
-      traverse(asideMenuConfig, (config) => {
+      traverse(copyData, (config) => {
         if (config.id === value.id) {
           Object.assign(config, value);
           return true;
@@ -72,7 +78,7 @@ const MenuPanel = ({ intl }) => {
         return false;
       }, true);
     }
-    await onChangeTree(asideMenuConfig);
+    await onChangeTree(copyData);
   }
 
   function onOpenDeleteModal(menu) {
@@ -81,15 +87,20 @@ const MenuPanel = ({ intl }) => {
   }
 
   async function onDelete() {
+    const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
     toggleDeleteModal();
-    traverse(asideMenuConfig, (config, parentList, index) => {
+    traverse(data, (config, parentList, index) => {
       if (config.id === deleteMenu.id) {
         parentList.splice(index, 1);
         return true;
       }
       return false;
     }, true);
-    await onChangeTree(asideMenuConfig);
+    await onChangeTree(data);
+  }
+
+  function onChangeTab(value) {
+    currentTab = value;
   }
 
   return (
@@ -130,11 +141,11 @@ const MenuPanel = ({ intl }) => {
     >
       <div className={styles.main}>
         <CreateMenuModal
-          title="添加导航"
           modalData={modalData}
           on={onCreateModel}
           onCancel={toggleCreateModal}
           onOk={onCreate}
+          currentType={currentTab}
         />
         <DeleteMenuModal
           on={onDeleteModel}
@@ -142,12 +153,35 @@ const MenuPanel = ({ intl }) => {
           onOk={onDelete}
           menu={deleteMenu}
         />
-        <MenuTreeConfig
-          items={asideMenuConfig}
-          onChange={onChangeTree}
-          onOpenEditModal={onOpenModal}
-          onDeleteLink={onOpenDeleteModal}
-        />
+        <Tab
+          size="small"
+          contentStyle={{ padding: '10px 0 0' }}
+          onChange={onChangeTab}
+        >
+          <TabPane
+            title={<FormattedMessage id="iceworks.project.panel.menu.tab.asideMenu" />}
+            key="aside"
+          >
+            <MenuTreeConfig
+              items={asideMenuConfig}
+              onChange={onChangeTree}
+              onOpenEditModal={onOpenModal}
+              onDeleteLink={onOpenDeleteModal}
+            />
+          </TabPane>
+          <TabPane
+            title={<FormattedMessage id="iceworks.project.panel.menu.tab.headerMenu" />}
+            key="header"
+          >
+            <MenuTreeConfig
+              items={headerMenuConfig}
+              onChange={onChangeTree}
+              onOpenEditModal={onOpenModal}
+              onDeleteLink={onOpenDeleteModal}
+              nested={false}
+            />
+          </TabPane>
+        </Tab>
       </div>
     </Panel>
   );

@@ -8,7 +8,6 @@ import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as arrayMove from 'array-move';
-import * as upperCamelCase from 'uppercamelcase';
 import storage from '../../storage';
 import adapter from '../../adapter';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';

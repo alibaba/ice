@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Message } from '@alifd/next';
 import logger from '@utils/logger';
 import Card from '@components/Card';
 import DynamicForm from '@components/DynamicForm';
-import configurationStores from './stores';
+import engineeringStores from '../../stores';
 
 const formItemLayout = {
   labelTextAlign: 'left',
@@ -17,7 +17,7 @@ const formItemLayout = {
 };
 
 const Configuration = () => {
-  const conf = configurationStores.useStore('configuration');
+  const conf = engineeringStores.useStore('configuration');
 
   async function onChange(values) {
     const params = {};
@@ -47,10 +47,6 @@ const Configuration = () => {
       });
     }
   }
-
-  useEffect(() => {
-    conf.getCLIConf();
-  }, []);
 
   return (
     <Card title="自定义配置" contentHeight="100%">

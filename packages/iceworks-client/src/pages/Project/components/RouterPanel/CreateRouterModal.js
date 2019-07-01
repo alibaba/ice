@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import TipIcon from '@components/TipIcon';
 import Modal from '@components/Modal';
 import { Input, Select, Form, Field, Switch } from '@alifd/next';
+import path from 'path';
 
 import useWhenValueChanges from '../../../../hooks/useWhenValueChanges';
 import stores from '../../stores';
@@ -22,31 +23,16 @@ const formItemLayout = {
 
 const field = new Field({});
 const { init, getError } = field;
+let selectRouterGroup = false;
 
 const CreateRouterModal = ({
-  on, onCancel, onOk, modalData,
+  on, onCancel, onOk, modalData, intl,
 }) => {
+  const { formatMessage } = intl;
   const [formData, setFormData] = useState({});
+  const [dataSource, setData] = useState([]);
   const { parent } = modalData;
   const isEdit = modalData.action === 'edit';
-
-  useWhenValueChanges(modalData, () => {
-    if (modalData && modalData.formData) {
-      const formValue = {
-        ...modalData.formData,
-      };
-      const { component, routes } = formValue;
-      if (component) {
-        // layout component
-        if (routes) {
-          formValue.component = `layout-${component}`;
-        } else {
-          formValue.component = `page-${component}`;
-        }
-      }
-      setFormData(formValue);
-    }
-  });
 
   const routersStore = stores.useStore('routes');
   const pagesStore = stores.useStore('pages');
@@ -54,39 +40,49 @@ const CreateRouterModal = ({
   const { dataSource: routes } = routersStore;
   const { dataSource: pages } = pagesStore;
   const { dataSource: layouts } = layoutsStore;
-  let dataSource = [];
 
-  const pageSelects = pages.map((page) => {
+  const selectedPages = pages.map((page) => {
     return {
       label: page.name,
-      value: `page-${page.name}`,
+      value: page.name,
     };
   });
 
-  const layoutSelects = layouts.map((layout) => {
+  const selectedLayouts = layouts.map((layout) => {
     return {
       label: layout.name,
-      value: `layout-${layout.name}`,
+      value: layout.name,
     };
   });
 
-  if (!isEdit) {
-    if (parent) {
-      dataSource = pageSelects;
+  function setDataSource(formValue) {
+    let data = [];
+
+    if (isEdit) {
+      if (formValue.children) {
+        data = selectedLayouts;
+      } else {
+        data = selectedPages;
+      }
+    } else if (parent || !selectRouterGroup) {
+      data = selectedPages;
     } else {
-      dataSource = [{
-        label: '布局(只有布局才能配置子路由)',
-        children: layoutSelects,
-      }, {
-        label: '页面(普通组件)',
-        children: pageSelects,
-      }];
+      data = selectedLayouts;
     }
-  } else if (formData.routes) {
-    dataSource = layoutSelects;
-  } else {
-    dataSource = pageSelects;
+    setData(data);
   }
+
+  useWhenValueChanges(modalData, () => {
+    if (modalData && modalData.formData) {
+      const formValue = {
+        ...modalData.formData,
+        layoutType: Boolean(modalData.formData.children),
+      };
+      selectRouterGroup = formValue.layoutType;
+      setDataSource(formValue);
+      setFormData(formValue);
+    }
+  });
 
   function onChange(value) {
     setFormData(value);
@@ -98,12 +94,11 @@ const CreateRouterModal = ({
         const formValue = values;
         const { component } = formValue;
         if (component) {
-          const [type, componentValue] = component.split(/-(.+)/);
-          if (type === 'layout') {
-            formValue.routes = formValue.routes || [];
+          if (selectRouterGroup) {
+            formValue.children = formValue.children || [];
           }
-          formValue.component = componentValue;
         }
+        delete formValue.layoutType;
         onOk({
           formData: formValue,
           parent,
@@ -114,22 +109,27 @@ const CreateRouterModal = ({
 
   function onValidtePath(rule, value, callback) {
     if (!value) {
-      return callback('路径必填');
+      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.required' }));
     }
 
     if (value.indexOf('/') !== 0) {
-      return callback('路径必须以 \'/\' 开头');
+      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.valid' }));
+    }
+    let url = value;
+    if (parent) {
+      url = path.join(parent.path, url);
     }
     const router = routes.find((item, index) => {
       let exist = false;
-      if (item.path === value && modalData.editIndex !== index) {
+      if (item.path === url && modalData.editIndex !== index) {
         exist = true;
         return true;
       }
-      if (item.routes) {
-        exist = item.routes.some((route, childIndex) => {
+      if (item.children && !exist) {
+        exist = item.children.some((route, childIndex) => {
+          const compareUrl = path.join(item.path, route.path);
           if (
-            route.path === value &&
+            compareUrl === url &&
             modalData.editIndex !== childIndex &&
             modalData.editParentIndex !== index
           ) {
@@ -142,10 +142,15 @@ const CreateRouterModal = ({
     });
 
     if (router) {
-      return callback('路径已存在');
+      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.hasExist' }));
     }
 
     return callback();
+  }
+
+  async function onChangeLayoutType(value) {
+    selectRouterGroup = value;
+    setDataSource(formData);
   }
 
   return (
@@ -164,7 +169,7 @@ const CreateRouterModal = ({
         >
           <Input
             name="path"
-            placeholder="请填写路径"
+            placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.path.placeholder' })}
             {...init('path', {
               rules: [{
                 validator: onValidtePath,
@@ -177,9 +182,27 @@ const CreateRouterModal = ({
         <FormItem
           label={(
             <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.routerType" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.project.panel.router.form.routerType.tip" />
+              </TipIcon>
+            </span>
+          )}
+        >
+          <Switch
+            size="small"
+            name="layoutType"
+            disabled={isEdit || (!isEdit && !!parent)}
+            onChange={onChangeLayoutType}
+          />
+        </FormItem>
+        <FormItem
+          required
+          label={(
+            <span>
               <FormattedMessage id="iceworks.project.panel.router.form.component" />
               <TipIcon>
-                如果只有一个页面，没有 layout，只需选择页面下的某一个组件，如果是一个路由组(底下有子路由)，就必须选择布局
+                <FormattedMessage id="iceworks.project.panel.router.form.component.tip" />
               </TipIcon>
             </span>
           )}
@@ -187,7 +210,7 @@ const CreateRouterModal = ({
           <Select
             size="small"
             name="component"
-            placeholder="请选择组件"
+            placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.component.placeholder' })}
             dataSource={dataSource}
             className={styles.selectBox}
           />
@@ -197,8 +220,10 @@ const CreateRouterModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.exact" />
               <TipIcon>
-                路径是否精确匹配，如果选择了精确匹配，路径写 /one，访问 /one/two 是不能匹配的，具体文档请参考
-                <a href="https://reacttraining.com/react-router/web/api/Route/exact-bool" target="__blank">链接</a>
+                <FormattedMessage id="iceworks.project.panel.router.form.exact.tip" />.
+                <a href="https://reacttraining.com/react-router/web/api/Route/exact-bool" target="__blank">
+                  <FormattedMessage id="iceworks.project.panel.router.form.exact.link" />
+                </a>
               </TipIcon>
             </span>
           )}
@@ -218,6 +243,7 @@ CreateRouterModal.propTypes = {
   modalData: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default CreateRouterModal;
+export default injectIntl(CreateRouterModal);

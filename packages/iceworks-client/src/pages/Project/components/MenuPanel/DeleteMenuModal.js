@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import styles from './DeleteMenuModal.module.scss';
 
 const DeleteMenuModal = ({
-  on, onCancel, onOk, menu,
+  on, onCancel, onOk, menu, intl,
 }) => {
+  const { formatMessage } = intl;
   const { children, external, name } = menu;
-  let linkName = '导航';
+  let linkName = formatMessage({ id: 'iceworks.project.panel.menu.ordinary' });
 
   if (external) {
-    linkName = '外链';
+    linkName = formatMessage({ id: 'iceworks.project.panel.menu.external' });
   } else if (Array.isArray(children)) {
-    linkName = '导航组';
+    linkName = formatMessage({ id: 'iceworks.project.panel.menu.group' });
   }
 
   return (
@@ -32,9 +33,11 @@ const DeleteMenuModal = ({
           </span>
         )}
       </div>
-      <div className={styles.warn}>
-        (注意：删除导航不会删除对应的路由，需要手动操作)
-      </div>
+      {!external && (
+        <div className={styles.warn}>
+          <FormattedMessage id="iceworks.project.panel.menu.delete.warn" />
+        </div>
+      )}
     </Modal>
   );
 };
@@ -44,6 +47,7 @@ DeleteMenuModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
   menu: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default DeleteMenuModal;
+export default injectIntl(DeleteMenuModal);
