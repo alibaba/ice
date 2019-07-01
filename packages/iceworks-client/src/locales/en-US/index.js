@@ -217,6 +217,10 @@ export default {
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
   'iceworks.material.name': 'Material name',
+  'iceworks.material.delete': 'Delete material',
+  'iceworks.material.deleteConfirm': 'Are you sure delete material?',
+  'iceworks.material.sourceUrlTips': 'Material source URL is the URL of the material data. It can be a API or a URL of a JSON file. It cannot be repeated.',
+  'iceworks.material.nameTips': 'You can customize material name',
 
   // global bar
   'iceworks.global.bar.project': 'Project Name',
