@@ -7,7 +7,7 @@
     "iceworks": "bin/iceworks.js"
   },
   "scripts": {
-    "postinstall": "node ./lib/downloadAndInstall.js"
+    "postinstall": "node ./lib/downloadServer.js"
   },
   "license": "MIT",
   "dependencies": {
