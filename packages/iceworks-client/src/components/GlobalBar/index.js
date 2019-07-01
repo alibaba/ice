@@ -15,7 +15,7 @@ import styles from './index.module.scss';
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
   const { theme, setTheme } = useContext(ThemeContext);
-  const { themeValue, termTheme, setTermTheme } = useTermTheme(theme, 'globalTerminal');
+  const { themeValue } = useTermTheme();
   const projectPath = project.dataSource.path;
 
   function handleTerminal() {
@@ -49,14 +49,11 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   async function handleTheme() {
-    const currentTheme = (theme === THEMES.dark) ? THEMES.light : THEMES.dark;
+    const currentTheme = (theme === THEMES.dark.themePackage) ? THEMES.light.themePackage : THEMES.dark.themePackage;
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
 
     // set app theme
     setTheme(currentTheme);
-
-    // set term theme
-    setTermTheme(currentTheme);
   }
 
   function onClose() {
@@ -87,7 +84,7 @@ const GlobalBar = ({ project, intl }) => {
         <XtermTerminal
           id="globalTerminal"
           name={`\n${intl.formatMessage({ id: 'iceworks.global.bar.log' })}`}
-          options={{ cols: '100', rows: '17', theme: termTheme }}
+          options={{ cols: '100', rows: '17' }}
         />
       </div>
 

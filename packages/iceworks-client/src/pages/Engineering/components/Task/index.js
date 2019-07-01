@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
@@ -9,10 +9,10 @@ import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
 import { withErrorBoundary } from '@components/ErrorBoundary';
-import { ThemeContext } from '@components/ThemeProvider';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
+import { THEMES } from '@src/appConfig';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
 import styles from './index.module.scss';
@@ -40,7 +40,7 @@ const Task = ({ history, intl }) => {
   const { dataSource, setStatus, getStatus, getConf } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
-  const { theme } = useContext(ThemeContext);
+  const { themeValue } = useTermTheme();
 
   const writeLog = (t) => {
     const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
@@ -124,7 +124,6 @@ const Task = ({ history, intl }) => {
   const id = `${project.dataSource.name}.${type}`;
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
-  const { termTheme } = useTermTheme(theme, id);
 
   const conf = (dataSource[type] && dataSource[type].conf) || [];
   const status = (dataSource[type] && dataSource[type].status) || 'stop';
@@ -163,7 +162,7 @@ const Task = ({ history, intl }) => {
         <XtermTerminal
           id={id}
           name={project.dataSource.name}
-          options={{ theme: termTheme }}
+          options={{ theme: THEMES[themeValue].termTheme }}
         />
       </div>
 

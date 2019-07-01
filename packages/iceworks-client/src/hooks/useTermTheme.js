@@ -1,39 +1,13 @@
-import { useState } from 'react';
-import termManager from '@utils/termManager';
+import { useContext } from 'react';
+import { ThemeContext } from '@components/ThemeProvider';
+import { THEMES } from '@src/appConfig';
 
-const TERM_THEMES = {
-  dark: {
-    foreground: '#fff',
-    background: '#333646',
-  },
-  light: {
-    foreground: '#333',
-    background: '#f7f8fa',
-  },
-};
-
-const termIds = [];
-
-const useTermTheme = (initTheme, termId) => {
-  const [theme, setTermTheme] = useState(initTheme);
-  const themeValue = (theme.indexOf('dark') > -1) ? 'dark' : 'light';
-
-  if (termId && !termIds.includes(termId)) {
-    termIds.push(termId);
-  }
-
-  termIds.forEach(id => {
-    const term = termManager.find(id);
-    if (term) {
-      term.setOption('theme', TERM_THEMES[themeValue]);
-    }
-  });
+export default function useTermTheme() {
+  const { theme } = useContext(ThemeContext);
+  const themeValue = theme.indexOf('dark') > -1 ? 'dark' : 'light';
 
   return {
-    termTheme: TERM_THEMES[themeValue],
     themeValue,
-    setTermTheme,
+    termTheme: THEMES[themeValue].termTheme,
   };
-};
-
-export default useTermTheme;
+}
