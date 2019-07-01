@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
 import useModal from '@hooks/useModal';
 import useTask from '@hooks/useTask';
+import useTermTheme from '@hooks/useTermTheme';
 import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
@@ -38,6 +39,7 @@ const Task = ({ history, intl }) => {
   const type = getType(history.location.pathname);
   const id = `${projectStore.dataSource.name}.${type}`;
   const conf = (dataSource[type] && dataSource[type].conf) || [];
+  const { termTheme } = useTermTheme();
 
   function writeLog(taskType) {
     const msg = intl.formatMessage({ id: `iceworks.task.${taskType}.start.msg` });
@@ -121,7 +123,11 @@ const Task = ({ history, intl }) => {
       />
 
       <div className={styles.content}>
-        <XtermTerminal id={id} name={projectStore.dataSource.name} />
+        <XtermTerminal
+          id={id}
+          name={projectStore.dataSource.name}
+          options={{ theme: termTheme }}
+        />
       </div>
 
       <TaskModal

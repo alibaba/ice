@@ -4,7 +4,7 @@ import { Switch } from '@alifd/next';
 import Ellipsis from '@icedesign/ellipsis';
 import styles from './index.module.scss';
 
-const PanelSetting = ({ panels, onChange }) => {
+const SettingPanel = ({ panels, onChange }) => {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.head}>面板设置</h2>
@@ -35,9 +35,9 @@ const PanelSetting = ({ panels, onChange }) => {
   );
 };
 
-PanelSetting.propTypes = {
+SettingPanel.propTypes = {
   panels: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-export default PanelSetting;
+export default SettingPanel;

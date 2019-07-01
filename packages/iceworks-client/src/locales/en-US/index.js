@@ -51,12 +51,20 @@ export default {
   'iceworks.project.submenu.opts.createProject': 'Create',
 
   // project panel
-  'iceworks.project.panel.page.title': 'Page',
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
   // project task
   'iceworks.project.panel.task.title': 'Run Task',
+
+  // project guide
+  'iceworks.project.panel.guide.title': 'Getting Started Guide',
+  'iceworks.project.panel.guide.project': 'Project Management',
+  'iceworks.project.panel.guide.project.desc': 'Visualize the management of the current project information, or you can customize the panel through the settings button on the right',
+  'iceworks.project.panel.guide.engineering': 'Engineering Management',
+  'iceworks.project.panel.guide.engineering.desc': 'Visualize and manage complex engineering configurations to make front-end engineering easy and convenient',
+  'iceworks.project.panel.guide.material': 'Material Market',
+  'iceworks.project.panel.guide.material.desc': 'Provide a lot of templates and blocks, quickly create projects, support style switching, and meet custom features',
 
   // project page
   'iceworks.project.panel.page.create.title': 'Create Page',
@@ -79,28 +87,23 @@ export default {
   'iceworks.project.panel.page.button.add': 'add page',
 
   // project dependency
-  'iceworks.project.panel.dependency.title': 'Dependency',
   'iceworks.project.panel.dependency.main.upgrade': 'Upgrade to {wantedVestion}',
   'iceworks.project.panel.dependency.main.reset.title': 'Reinstall',
   'iceworks.project.panel.dependency.main.reset.content': 'All dependencies of the installation project will be reset. During installation, debugging services, new pages, and project operation can not be started. Please wait patiently.',
 
   // project layout
-  'iceworks.project.panel.layout.title': 'Layout',
   'iceworks.project.panel.layout.none': 'No layout',
   'iceworks.project.panel.layout.refresh': 'refresh',
 
   // project todo
-  'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.todo.none': 'No comments in the code need to deal with',
   'iceworks.project.panel.todo.example': 'e.g., // TODO somthing to do',
   'iceworks.project.panel.todo.refresh': 'Refresh',
   'iceworks.project.panel.todo.line': 'Line {line}',
 
   // project def
-  'iceworks.project.panel.def.title': 'DEF',
 
   // project git
-  'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.git.button.add': 'New Branch',
   'iceworks.project.panel.git.button.switch': 'Checkout Branch',
   'iceworks.project.panel.git.button.pull': 'Pull',
@@ -133,7 +136,6 @@ export default {
   'iceworks.project.panel.menu.ordinary': 'menu',
   'iceworks.project.panel.menu.group': 'menu group',
   'iceworks.project.panel.menu.external': 'external',
-  'iceworks.project.panel.menu.title': 'Menu',
   'iceworks.project.panel.menu.create.title': 'Create Menu',
   'iceworks.project.panel.menu.delete.title': 'Delete Menu',
   'iceworks.project.panel.menu.delete.content': 'Are you sure delete menu \'{name}\' ？',
@@ -165,7 +167,6 @@ export default {
   'iceworks.project.panel.router.title.path': 'path',
   'iceworks.project.panel.router.title.component': 'component',
   'iceworks.project.panel.router.title.operate': 'operate',
-  'iceworks.project.panel.router.title': 'Router',
   'iceworks.project.panel.router.create.title': 'Create Router',
   'iceworks.project.panel.router.delete.title': 'Delete Router',
   'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',
@@ -220,6 +221,10 @@ export default {
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
   'iceworks.material.name': 'Material name',
+  'iceworks.material.delete': 'Delete material',
+  'iceworks.material.deleteConfirm': 'Are you sure delete material?',
+  'iceworks.material.sourceUrlTips': 'Material source URL is the URL of the material data. It can be a API or a URL of a JSON file. It cannot be repeated.',
+  'iceworks.material.nameTips': 'You can customize material name',
 
   // global bar
   'iceworks.global.bar.project': 'Project Name',

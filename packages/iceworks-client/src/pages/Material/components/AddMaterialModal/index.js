@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { Form, Input, Button } from '@alifd/next';
+import TipIcon from '@components/TipIcon';
 import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
@@ -10,7 +11,7 @@ const FormSubmit = Form.Submit;
 
 const formItemLayout = {
   labelCol: {
-    fixedSpan: 5,
+    fixedSpan: 6,
   },
 };
 
@@ -29,16 +30,22 @@ const addMaterialModal = ({
     >
       <Form
         size="small"
-        labelAlign="top"
         className={styles.form}
       >
         <FormItem
           {...formItemLayout}
           required
           size="medium"
-          label={<FormattedMessage id="iceworks.material.name" />}
           patternMessage="请输入物料名称"
           patternTrigger="onChange"
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.material.name" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.material.nameTips" />
+              </TipIcon>
+            </span>
+          )}
         >
           <Input
             className={styles.input}
@@ -51,10 +58,17 @@ const addMaterialModal = ({
           {...formItemLayout}
           required
           size="medium"
-          label={<FormattedMessage id="iceworks.material.sourceUrl" />}
           pattern={urlReg}
           patternMessage="请输入合法的 URL 地址"
           patternTrigger="onChange"
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.material.sourceUrl" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.material.sourceUrlTips" />
+              </TipIcon>
+            </span>
+          )}
         >
           <Input
             className={styles.input}

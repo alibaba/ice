@@ -73,7 +73,7 @@ function setCLIConf(path: string, conf: object) {
     } else {
       // distinguish between string and boolean
       // eg: { hash: true,  entry: 'src/index' }
-      const value = (typeof conf[key] === 'boolean') ? t.booleanLiteral(conf[key]) : t.identifier(conf[key]);
+      const value = (typeof conf[key] === 'boolean') ? t.booleanLiteral(conf[key]) : t.stringLiteral(conf[key]);
       properties.push(t.objectProperty(t.identifier(key), value));
     }
   });

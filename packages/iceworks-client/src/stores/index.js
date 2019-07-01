@@ -7,6 +7,7 @@ import progress from './progress';
 import dependencies from './dependencies';
 import user from './user';
 import globalTerminal from './globalTerminal';
+import settingPanel from './settingPanel';
 
 const icestore = new Icestore();
 icestore.registerStore('material', material);
@@ -17,5 +18,6 @@ icestore.registerStore('dependencies', dependencies);
 icestore.registerStore('user', user);
 icestore.registerStore('globalTerminal', globalTerminal);
 icestore.registerStore('task', task);
+icestore.registerStore('settingPanel', settingPanel);
 
 export default icestore;

@@ -31,7 +31,7 @@ export default {
   'iceworks.setting.title': '设置',
   'iceworks.setting.general.title': '通用设置',
   'iceworks.setting.general.language.title': '语言',
-  'iceworks.setting.general.theme.title': '{name}',
+  'iceworks.setting.general.theme.title': '主题',
   'iceworks.setting.general.theme.dark': '深色',
   'iceworks.setting.general.theme.light': '浅色',
   'iceworks.setting.general.editor.title': '编辑器',
@@ -51,8 +51,16 @@ export default {
   // project task
   'iceworks.project.panel.task.title': '运行任务',
 
+  // project guide
+  'iceworks.project.panel.guide.title': '入门指引',
+  'iceworks.project.panel.guide.project': '项目管理',
+  'iceworks.project.panel.guide.project.desc': '可视化展示管理当前项目的信息，也可以通过右侧的设置按钮进行面板的自定义配置',
+  'iceworks.project.panel.guide.engineering': '工程管理',
+  'iceworks.project.panel.guide.engineering.desc': '可视化展示和管理复杂的工程配置，让前端工程变得轻松便捷',
+  'iceworks.project.panel.guide.material': '物料市场',
+  'iceworks.project.panel.guide.material.desc': '提供多种垂直领域模板和区块，快速创建项目，支持风格切换，满足个性化需求',
+
   // project page
-  'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
   'iceworks.project.panel.page.delete.title': '删除页面',
@@ -72,7 +80,6 @@ export default {
   'iceworks.project.panel.page.button.add': '新建页面',
 
   // project dependency
-  'iceworks.project.panel.dependency.title': '依赖管理',
   'iceworks.project.panel.dependency.main.refresh': '刷新',
   'iceworks.project.panel.dependency.main.download': '重装依赖',
   'iceworks.project.panel.dependency.main.add': '添加依赖',
@@ -85,22 +92,18 @@ export default {
   'iceworks.project.panel.dependency.create.placeholder': '请输入 npm 包名以及版本号，例如：lodash@latest。按回车输入多个依赖。',
 
   // project layout
-  'iceworks.project.panel.layout.title': '布局列表',
   'iceworks.project.panel.layout.refresh': '刷新',
   'iceworks.project.panel.layout.none': '暂无布局',
 
   // project todo
-  'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.todo.none': '代码中没有注释事项需要处理',
   'iceworks.project.panel.todo.example': '例如：// TODO XXXXXXX',
   'iceworks.project.panel.todo.refresh': '刷新',
   'iceworks.project.panel.todo.line': '第{line}行',
 
   // project def
-  'iceworks.project.panel.def.title': 'DEF 发布',
 
   // project git
-  'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.git.button.add': '新建分支',
   'iceworks.project.panel.git.button.switch': '切换分支',
   'iceworks.project.panel.git.button.pull': '拉取远程代码',
@@ -139,7 +142,6 @@ export default {
   'iceworks.project.panel.menu.delete.subcontent': '组下还有菜单，删除请谨慎！！！',
   'iceworks.project.panel.menu.delete.warn': '注意：删除菜单不会删除对应的路由，需要手动操作',
   'iceworks.project.panel.menu.edit.title': '编辑菜单',
-  'iceworks.project.panel.menu.title': '菜单管理',
   'iceworks.project.panel.menu.form.type': '类型',
   'iceworks.project.panel.menu.form.type.placeholder': '请选择菜单类型',
   'iceworks.project.panel.menu.form.name': '名称',
@@ -170,7 +172,6 @@ export default {
   'iceworks.project.panel.router.delete.content': '确定移除路由 \'{name}\' ？',
   'iceworks.project.panel.router.delete.warn': '注意：删除路由不会删除对应的导航，需要手动操作',
   'iceworks.project.panel.router.edit.title': '编辑路由',
-  'iceworks.project.panel.router.title': '路由管理',
   'iceworks.project.panel.router.form.path': '路径',
   'iceworks.project.panel.router.form.path.placeholder': '请填写路径',
   'iceworks.project.panel.router.form.component': '组件',
@@ -226,6 +227,10 @@ export default {
   'iceworks.material.customMaterial': '自定义物料',
   'iceworks.material.officialMaterial': '官方物料',
   'iceworks.material.name': '物料名称',
+  'iceworks.material.delete': '删除物料',
+  'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',
+  'iceworks.material.sourceUrlTips': '物料源地址是获取物料数据的地址，可以是一个 GET 接口，也可以是一个 JSON 文件的 URL 地址，不可重复',
+  'iceworks.material.nameTips': '可自定义物料名称',
 
   // global bar
   'iceworks.global.bar.project': '当前项目名称',

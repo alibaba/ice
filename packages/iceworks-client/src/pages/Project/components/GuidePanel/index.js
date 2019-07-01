@@ -1,24 +1,46 @@
+/* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '@components/Icon';
+import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import stores from '@stores';
 import Panel from '../Panel';
 import styles from './index.module.scss';
 
-const FEATURES = [
-  {
-    icon: 'projects',
-    description: '项目面板，可视化展示管理当前项目的信息，也可以通过右侧的“设置”按钮进行面板进行自定义配置',
-  },
-  {
-    icon: 'zujian',
-    description: '工程管理，可化展示和管理复杂的工程配置，让前端工程变的轻松便捷',
-  },
-  {
-    icon: 'template',
-    description: '物料市场，提供多种垂直领域模板和区块，快速创建项目，支持风格切换，满足个性化需求',
-  },
-];
+const GuidePanel = ({ history, intl }) => {
+  const [settingPanelStore] = stores.useStores(['settingPanel']);
 
-const GuidePanel = () => {
+  const FEATURES = [
+    {
+      icon: 'projects',
+      path: '/project',
+      title: intl.formatMessage({ id: 'iceworks.project.panel.guide.project' }),
+      description: intl.formatMessage({ id: 'iceworks.project.panel.guide.project.desc' }),
+    },
+    {
+      icon: 'zujian',
+      path: '/task/dev',
+      title: intl.formatMessage({ id: 'iceworks.project.panel.guide.engineering' }),
+      description: intl.formatMessage({ id: 'iceworks.project.panel.guide.engineering.desc' }),
+    },
+    {
+      icon: 'template',
+      path: '/material',
+      title: intl.formatMessage({ id: 'iceworks.project.panel.guide.material' }),
+      description: intl.formatMessage({ id: 'iceworks.project.panel.guide.material.desc' }),
+    },
+  ];
+
+  function handleClick(path) {
+    if (path === '/project') {
+      settingPanelStore.toggle();
+      return;
+    }
+
+    history.push(path);
+  }
+
   return (
     <Panel>
       <div className={styles.guidePanel}>
@@ -31,6 +53,13 @@ const GuidePanel = () => {
               return (
                 <div className={styles.feature} key={index}>
                   <Icon type={feature.icon} className={styles.icon} size="small" />
+                  <h6
+                    className={styles.title}
+                    onClick={() => handleClick(feature.path)}
+                  >
+                    {feature.title}
+                  </h6>
+                  <span>：</span>
                   <p className={styles.description}>{feature.description}</p>
                 </div>
               );
@@ -42,4 +71,9 @@ const GuidePanel = () => {
   );
 };
 
-export default GuidePanel;
+GuidePanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+};
+
+export default injectIntl(withRouter(GuidePanel));

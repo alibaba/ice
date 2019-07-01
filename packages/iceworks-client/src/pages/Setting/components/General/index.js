@@ -32,11 +32,11 @@ const General = ({ intl }) => {
   const themeOptions = [
     {
       label: intl.formatMessage({ id: 'iceworks.setting.general.theme.light' }),
-      value: THEMES.light,
+      value: THEMES.light.themePackage,
     },
     {
       label: intl.formatMessage({ id: 'iceworks.setting.general.theme.dark' }),
-      value: THEMES.dark,
+      value: THEMES.dark.themePackage,
     },
   ];
 

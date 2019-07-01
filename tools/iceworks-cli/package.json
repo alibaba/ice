@@ -1,12 +1,14 @@
 {
   "name": "iceworks",
   "version": "0.1.2",
-  "description": "A simple CLI for scaffolding Web projects",
+  "description": "a simple CLI for iceworks",
   "main": "bin/iceworks.js",
   "bin": {
     "iceworks": "bin/iceworks.js"
   },
-  "scripts": {},
+  "scripts": {
+    "postinstall": "node ./lib/downloadServer.js"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
@@ -27,8 +29,6 @@
     "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "tar": "^2.0.0",
-    "tarball-extract": "^0.0.6",
-    "uuid": "^3.3.2",
     "zlib": "^1.0.5"
   },
   "engines": {

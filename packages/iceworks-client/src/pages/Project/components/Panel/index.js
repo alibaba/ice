@@ -5,11 +5,7 @@ import styles from './index.module.scss';
 const Panel = ({ header, children }) => {
   return (
     <div className={styles.wrapper}>
-      {header ?
-        <div className={styles.header}>
-          {header}
-        </div> : null
-      }
+      { header }
       <div className={styles.main}>
         <div className={styles.box}>
           {children}
