@@ -22,7 +22,7 @@ const DynamicForm = ({ config, formItemLayout, onChange }) => {
   };
 
   const renderFormItems = () => {
-    return config.map((item, index) => {
+    return config && config.map((item, index) => {
       const ComponentName = components[item.componentName];
       return (
         <FormItem
