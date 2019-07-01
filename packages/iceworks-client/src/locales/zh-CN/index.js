@@ -113,6 +113,7 @@ export default {
   'iceworks.project.panel.git.main.submit.message': '输入信息提交',
   'iceworks.project.panel.git.main.tip.unstageFiles': '变更文件',
   'iceworks.project.panel.git.main.tip.refresh': '变更信息不会实时刷新，提交前请先通过右上角的按钮更新状态',
+  'iceworks.project.panel.git.main.tip.nodata': '暂无文件变更',
   'iceworks.project.panel.git.switch.title': '切换分支',
   'iceworks.project.panel.git.switch.select': '选择分支',
   'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
@@ -214,6 +215,10 @@ export default {
   'iceworks.material.customMaterial': '自定义物料',
   'iceworks.material.officialMaterial': '官方物料',
   'iceworks.material.name': '物料名称',
+  'iceworks.material.delete': '删除物料',
+  'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',
+  'iceworks.material.sourceUrlTips': '物料源地址是获取物料数据的地址，可以是一个 GET 接口，也可以是一个 JSON 文件的 URL 地址，不可重复',
+  'iceworks.material.nameTips': '可自定义物料名称',
 
   // global bar
   'iceworks.global.bar.project': '当前项目名称',

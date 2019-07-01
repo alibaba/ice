@@ -113,6 +113,7 @@ export default {
   'iceworks.project.panel.git.main.submit.message': 'Input Message',
   'iceworks.project.panel.git.main.tip.unstageFiles': 'Unstaged Files',
   'iceworks.project.panel.git.main.tip.refresh': 'Change information will not be refreshed in real time. Please update the status through the button in the upper right corner before submitting it.',
+  'iceworks.project.panel.git.main.tip.nodata': 'No file changes',
   'iceworks.project.panel.git.switch.title': 'Checkout Branch',
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',
@@ -208,6 +209,10 @@ export default {
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
   'iceworks.material.name': 'Material name',
+  'iceworks.material.delete': 'Delete material',
+  'iceworks.material.deleteConfirm': 'Are you sure delete material?',
+  'iceworks.material.sourceUrlTips': 'Material source URL is the URL of the material data. It can be a API or a URL of a JSON file. It cannot be repeated.',
+  'iceworks.material.nameTips': 'You can customize material name',
 
   // global bar
   'iceworks.global.bar.project': 'Project Name',

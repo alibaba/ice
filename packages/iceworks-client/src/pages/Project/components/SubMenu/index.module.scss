@@ -19,9 +19,17 @@
 
       .name {
         flex: 1;
+        display: flex;
+        align-items: center;
+        
         strong {
           font-size: $font-size-md;
           font-weight: 400;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 180px;
+          display: inline-block;
         }
 
         .badge {
