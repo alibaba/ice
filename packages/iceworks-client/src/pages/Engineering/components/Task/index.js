@@ -40,7 +40,7 @@ const Task = ({ history, intl }) => {
   const { dataSource, setStatus, getStatus, getConf } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
-  const { themeValue } = useTermTheme();
+  const { termTheme } = useTermTheme();
 
   const writeLog = (t) => {
     const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
@@ -162,7 +162,7 @@ const Task = ({ history, intl }) => {
         <XtermTerminal
           id={id}
           name={project.dataSource.name}
-          options={{ theme: THEMES[themeValue].termTheme }}
+          options={{ theme: termTheme }}
         />
       </div>
 
