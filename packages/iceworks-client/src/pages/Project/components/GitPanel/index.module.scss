@@ -1,38 +1,5 @@
 @import '../../../../variables.scss';
 
-.header {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-
-  h3 {
-    flex: 1;
-
-    .branch {
-      font-size: $font-size-sm;
-      font-weight: 400;
-      margin-left: 6px;
-    }
-  }
-
-  .icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-
-    .icon {
-      margin-right: 12px;
-      color: $brand-color-primary;
-      cursor: pointer;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-}
-
 .wrap {
   height: 100%;
 }

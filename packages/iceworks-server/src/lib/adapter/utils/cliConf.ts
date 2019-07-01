@@ -12,23 +12,28 @@ import * as t from '@babel/types';
  * @param defaultConf
  */
 function getCLIConf(path: string, defaultConf) {
-  const code = fsExtra.readFileSync(path, 'utf8');
-  const ast = parser.parse(code, { sourceType: 'module' });
+  try {
+    const code = fsExtra.readFileSync(path, 'utf8');
+    const ast = parser.parse(code, { sourceType: 'module' });
 
-  const defaultConfKeys = defaultConf.map(item => item.name);
+    const defaultConfKeys = defaultConf.map(item => item.name);
 
-  const userConf = {};
-  const visitor = {
-    Identifier(path) {
-      if (defaultConfKeys.includes(path.node.name)) {
-        userConf[path.node.name] = path.container.value.value;
+    const userConf = {};
+    const visitor = {
+      Identifier(path) {
+        if (defaultConfKeys.includes(path.node.name)) {
+          userConf[path.node.name] = path.container.value.value;
+        }
       }
-    }
-  };
+    };
 
-  traverse(ast, visitor);
+    traverse(ast, visitor);
 
-  return mergeCLIConf(defaultConf, userConf);
+    return mergeCLIConf(defaultConf, userConf);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 }
 
 /**
@@ -68,7 +73,7 @@ function setCLIConf(path: string, conf: object) {
     } else {
       // distinguish between string and boolean
       // eg: { hash: true,  entry: 'src/index' }
-      const value = (typeof conf[key] === 'boolean') ? t.booleanLiteral(conf[key]) : t.identifier(conf[key]);
+      const value = (typeof conf[key] === 'boolean') ? t.booleanLiteral(conf[key]) : t.stringLiteral(conf[key]);
       properties.push(t.objectProperty(t.identifier(key), value));
     }
   });

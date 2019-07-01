@@ -1,4 +1,4 @@
-import Icestore from 'icestore';
+import Icestore from '@ice/store';
 import task from './task';
 
 const icestore = new Icestore();

@@ -9,6 +9,7 @@ import CreateRouterModal from './CreateRouterModal';
 import DeleteRouterModal from './DeleteRouterModal';
 
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
@@ -20,7 +21,7 @@ let deleteIndex = -1;
 let action = 'create';
 let deleteParent = null;
 
-const RouterPanel = ({ intl }) => {
+const RouterPanel = ({ intl, title, description }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -84,13 +85,13 @@ const RouterPanel = ({ intl }) => {
     toggleCreateModal();
     if (action === 'create') {
       if (parent) {
-        parent.routes.push(value);
+        parent.children.push(value);
       } else {
         dataSource.push(value);
       }
     } else if (action === 'edit') {
       if (parent) {
-        Object.assign(parent.routes[editIndex], value);
+        Object.assign(parent.children[editIndex], value);
       } else {
         Object.assign(dataSource[editIndex], value);
       }
@@ -111,7 +112,7 @@ const RouterPanel = ({ intl }) => {
 
   async function onDeleteRouter() {
     if (deleteParent) {
-      deleteParent.routes.splice(deleteIndex, 1);
+      deleteParent.children.splice(deleteIndex, 1);
     } else {
       dataSource.splice(deleteIndex, 1);
     }
@@ -125,7 +126,8 @@ const RouterPanel = ({ intl }) => {
     parent,
     parentIndex,
   }) {
-    const { path, component, routes } = item;
+    const { path, component, children } = item;
+    const layoutRouter = Array.isArray(children);
     return [
       (
         <li className={styles.item} key={index}>
@@ -134,46 +136,73 @@ const RouterPanel = ({ intl }) => {
             style={{
               textIndent: parent ? '20px' : 0,
             }}
-          >{path}
+          >
+            <Icon
+              type={layoutRouter ? 'folder' : 'menu'}
+              size="xs"
+              style={{
+                marginRight: 4,
+              }}
+            />
+            {path}
           </strong>
           <span className={styles.itemCol}>{component}</span>
           <span>
-            {Array.isArray(routes) && (
-              <Icon
-                type="plus"
-                title="创建"
-                size="xs"
-                className={styles.icon}
-                onClick={() => onOpenCreateModal(item)}
-              />
+            {layoutRouter && (
+              <Tooltip
+                trigger={(
+                  <Icon
+                    type="plus"
+                    size="xs"
+                    className={styles.icon}
+                    onClick={() => onOpenCreateModal(item)}
+                  />
+                )}
+                align="b"
+              >
+                <FormattedMessage id="iceworks.project.panel.router.create.title" />
+              </Tooltip>
             )}
-            <Icon
-              type="edit"
-              title="编辑"
-              size="xs"
-              className={styles.icon}
-              onClick={() => onOpenEditModal({
-                data: item,
-                index,
-                parent,
-                parentIndex,
-              })}
-            />
-            <Icon
-              className={styles.icon}
-              type="trash"
-              size="xs"
-              onClick={() => onOpenDeleteModal({
-                index,
-                parent,
-                current: item,
-              })}
-            />
+            <Tooltip
+              trigger={(
+                <Icon
+                  type="edit"
+                  size="xs"
+                  className={styles.icon}
+                  onClick={() => onOpenEditModal({
+                    data: item,
+                    index,
+                    parent,
+                    parentIndex,
+                  })}
+                />
+              )}
+              align="b"
+            >
+              <FormattedMessage id="iceworks.project.panel.router.edit.title" />
+            </Tooltip>
+            <Tooltip
+              trigger={(
+                <Icon
+                  className={styles.icon}
+                  type="trash"
+                  size="xs"
+                  onClick={() => onOpenDeleteModal({
+                    index,
+                    parent,
+                    current: item,
+                  })}
+                />
+              )}
+              align="b"
+            >
+              <FormattedMessage id="iceworks.project.panel.router.delete.title" />
+            </Tooltip>
           </span>
         </li>
       ),
-      routes && (
-        routes.map((route, routeIndex) => renderCol({
+      children && (
+        children.map((route, routeIndex) => renderCol({
           item: route,
           index: routeIndex,
           parent: item,
@@ -183,40 +212,27 @@ const RouterPanel = ({ intl }) => {
     ];
   }
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onOpenCreateModal,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.router.title" /></h3>
-          <div className={styles.icons}>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={onRefresh}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.router.button.refresh' })}
-            </Tooltip>
-            <Tooltip
-              trigger={(
-                <Icon
-                  className={styles.icon}
-                  type="plus"
-                  size="small"
-                  onClick={() => onOpenCreateModal()}
-                />
-              )}
-              align="b"
-            >
-              {intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' })}
-            </Tooltip>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
@@ -235,6 +251,24 @@ const RouterPanel = ({ intl }) => {
         />
         {dataSource.length ? (
           <ul>
+            <li className={styles.title}>
+              <strong className={`${styles.titleCol}`}>
+                <FormattedMessage id="iceworks.project.panel.router.title.path" />
+              </strong>
+              <strong
+                className={`${styles.titleCol} ${styles.titleMiddle}`}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                <FormattedMessage id="iceworks.project.panel.router.title.component" />
+              </strong>
+              <strong
+                className={`${styles.titleCol} ${styles.operater}`}
+              >
+                <FormattedMessage id="iceworks.project.panel.router.title.operate" />
+              </strong>
+            </li>
             {dataSource.map((item, index) => {
               return renderCol({
                 item,
@@ -253,6 +287,8 @@ const RouterPanel = ({ intl }) => {
 };
 
 RouterPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

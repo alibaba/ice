@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@components/Icon';
 import termManager from '@utils/termManager';
+import useTermTheme from '@hooks/useTermTheme';
 import 'xterm/dist/xterm.css';
 import styles from './index.module.scss';
 
@@ -21,6 +22,12 @@ const XtermTerminal = ({ id, name, options }) => {
       }
     }
   }, []);
+
+  const { termTheme } = useTermTheme();
+  const term = termManager.find(id);
+  if (term) {
+    term.setOption('theme', termTheme);
+  }
 
   return (
     <div className={styles.xtermContainer}>

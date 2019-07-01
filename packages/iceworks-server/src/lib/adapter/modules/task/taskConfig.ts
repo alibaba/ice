@@ -1,4 +1,4 @@
-const DEV_CONF = [
+const dev = [
   {
     label: '服务端口号',
     name: 'port',
@@ -51,7 +51,7 @@ const DEV_CONF = [
   },
 ];
 
-const BUILD_CONF = [
+const build = [
   {
     label: '构建目录',
     name: 'outputDir',
@@ -84,7 +84,7 @@ const BUILD_CONF = [
   },
 ];
 
-const LINT_CONF = [
+const lint = [
   {
     label: '定义执行脚本',
     name: 'script',
@@ -103,4 +103,4 @@ const LINT_CONF = [
   },
 ];
 
-export { DEV_CONF, BUILD_CONF, LINT_CONF };
+export default { dev, build, lint };

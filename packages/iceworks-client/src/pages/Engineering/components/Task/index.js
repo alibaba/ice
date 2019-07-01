@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
 import useSocket from '@hooks/useSocket';
 import useModal from '@hooks/useModal';
+import useTermTheme from '@hooks/useTermTheme';
 import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
@@ -35,13 +36,15 @@ function getType(pathname) {
 const Task = ({ history, intl }) => {
   const project = stores.useStore('project');
   const task = taskStores.useStore('task');
-  const { dataSource: { status }, setStatus, getStatus } = task;
+  const { dataSource, setStatus, getStatus, getConf } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
+  const { termTheme } = useTermTheme();
 
   const writeLog = (t) => {
-    const term = termManager.find('globalTerminal');
     const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
+
+    const term = termManager.find('globalTerminal');
     term.writeLog(msg);
   };
 
@@ -65,7 +68,6 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      await task.getConf(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
@@ -107,8 +109,8 @@ const Task = ({ history, intl }) => {
 
   async function onGetStatus() {
     try {
-      writeLog(type);
       await getStatus(type);
+      await getConf(type);
     } catch (error) {
       showMessage(error.message);
     }
@@ -122,21 +124,22 @@ const Task = ({ history, intl }) => {
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
 
+  const conf = (dataSource[type] && dataSource[type].conf) || [];
+  const status = (dataSource[type] && dataSource[type].status) || 'stop';
+
   // listen start event handle
   useSocket(startEventName, (data) => {
-    setStatus(data.status);
+    setStatus(type, data.status);
     const term = termManager.find(id);
     term.writeChunk(data.chunk);
   }, [status]);
 
   // listen stop event handle
   useSocket(stopEventName, (data) => {
-    setStatus(data.status);
+    setStatus(type, data.status);
     const term = termManager.find(id);
     term.writeChunk(data.chunk);
   }, [status]);
-
-  const data = task.dataSource[type] ? task.dataSource[type] : [];
 
   return (
     <Card
@@ -151,15 +154,20 @@ const Task = ({ history, intl }) => {
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
+        enableSetting={conf.length !== 0}
       />
 
       <div className={styles.content}>
-        <XtermTerminal id={id} name={project.dataSource.name} />
+        <XtermTerminal
+          id={id}
+          name={project.dataSource.name}
+          options={{ theme: termTheme }}
+        />
       </div>
 
       <TaskModal
         on={on}
-        data={data}
+        data={conf}
         toggleModal={toggleModal}
         onConfirm={onConfirm}
       />

@@ -28,16 +28,19 @@ const ComponentCard = ({ dataSource, onInstall }) => {
 };
 
 ComponentCard.defaultProps = {
-  dataSource: {},
+  dataSource: {
+    description: '',
+    homepage: '',
+  },
   onInstall: f => f,
 };
 
 ComponentCard.propTypes = {
   dataSource: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
     description: PropTypes.string,
     homepage: PropTypes.string,
+    title: PropTypes.string.isRequired,
   }),
   onInstall: PropTypes.func,
 };
