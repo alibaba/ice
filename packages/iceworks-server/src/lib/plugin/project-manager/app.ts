@@ -9,8 +9,8 @@ import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as arrayMove from 'array-move';
 import storage from '../../storage';
-import adapter from '../../adapter';
-import { IProject, IMaterialScaffold, IPanel, IBaseModule } from '../../../interface';
+import getAdapter from '../../adapter';
+import { IProject, IMaterialScaffold, IPanel, IBaseModule, II18n } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
@@ -39,13 +39,13 @@ class Project implements IProject {
 
   public adapter: {[name: string]: IBaseModule} = {};
 
-  constructor(folderPath: string) {
+  constructor(folderPath: string, i18n: II18n) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
     this.type = this.getType();
 
-    this.loadAdapter();
+    this.loadAdapter(i18n);
     this.assemblePanels();
   }
 
@@ -67,14 +67,15 @@ class Project implements IProject {
     return process.env;
   }
 
-  private loadAdapter() {
+  private loadAdapter(i18n: II18n) {
+    const adapter = getAdapter(i18n);
     for (const [name, config] of Object.entries(adapter)) {
       const project: IProject = _.clone(this);
       delete project.adapter;
 
       const Module = config.module;
       if (Module) {
-        const adapterModule = new Module({ project, storage });
+        const adapterModule = new Module({ project, storage, i18n });
         const moduleName = name.toLowerCase();
         this.adapter[moduleName] = adapterModule;
       }
@@ -168,11 +169,17 @@ interface ICreateParams {
 
 class ProjectManager extends EventEmitter {
   private projects;
+  private i18n: II18n;
+
+  constructor(i18n: II18n) {
+    super();
+    this.i18n = i18n;
+  }
 
   private async refresh(): Promise<Project[]> {
     return Promise.all(
       storage.get('projects').map(async (projectPath) => {
-        return new Project(projectPath);
+        return new Project(projectPath, this.i18n);
       })
     );
   }
@@ -218,7 +225,7 @@ class ProjectManager extends EventEmitter {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
-      this.projects.push(new Project(projectPath));
+      this.projects.push(new Project(projectPath, this.i18n));
       projects.push(projectPath);
       storage.set('projects', projects);
     }
@@ -339,7 +346,7 @@ class ProjectManager extends EventEmitter {
 }
 
 export default (app) => {
-  app.projectManager = new ProjectManager();
+  app.projectManager = new ProjectManager(app.i18n);
   app.beforeStart(async () => {
     await app.projectManager.ready();
   });

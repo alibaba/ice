@@ -142,7 +142,7 @@ export interface IPageModule extends IBaseModule {
    * @param block 区块信息
    * @param name 页面名称，如果无则添加区块的项目
    */
-  addBlock(params: {block: IMaterialBlock, name?: string;}): Promise<void>;
+  addBlock(params: {block: IMaterialBlock, name?: string; }, ctx: IContext): Promise<void>;
 
   /**
    * 添加区块列表
@@ -150,5 +150,5 @@ export interface IPageModule extends IBaseModule {
    * @param blocks 区块列表
    * @param name 页面名称，如果无则添加区块列表到项目
    */
-  addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void>;
+  addBlocks(params: {blocks: IMaterialBlock[]; name?: string; }, ctx: IContext): Promise<void>;
 }
