@@ -1,10 +1,10 @@
 import { baseModules } from '../../../adapter';
-import taskConfig from './taskConfig';
+import getTaskConfig from './getTaskConfig';
 
 export default class Task extends baseModules.Task {
   public cliConfFilename = 'vue.config.js';
 
-  public taskConfig = taskConfig;
+  public getTaskConfig = getTaskConfig;
 
   constructor(params) {
     super(params);

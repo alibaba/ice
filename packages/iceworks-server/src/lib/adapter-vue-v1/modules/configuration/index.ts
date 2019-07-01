@@ -1,9 +1,9 @@
 import { baseModules } from '../../../adapter';
-import configSchema from './configSchema';
+import getConfigSchema from './getConfigSchema';
 
 export default class Configuration extends baseModules.Configuration {
   public cliConfFilename = 'vue.config.js';
-  public configSchema = configSchema;
+  public getConfigSchema = getConfigSchema;
 
   constructor(params) {
     super(params);
