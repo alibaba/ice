@@ -9,15 +9,19 @@ import user from './user';
 import globalTerminal from './globalTerminal';
 import settingPanel from './settingPanel';
 
+const stores = {
+  material,
+  project,
+  projects,
+  progress,
+  dependencies,
+  user,
+  globalTerminal,
+  task,
+  settingPanel,
+};
+
 const icestore = new Icestore();
-icestore.registerStore('material', material);
-icestore.registerStore('project', project);
-icestore.registerStore('projects', projects);
-icestore.registerStore('progress', progress);
-icestore.registerStore('dependencies', dependencies);
-icestore.registerStore('user', user);
-icestore.registerStore('globalTerminal', globalTerminal);
-icestore.registerStore('task', task);
-icestore.registerStore('settingPanel', settingPanel);
+Object.keys(stores).forEach(key => icestore.registerStore(key, stores[key]));
 
 export default icestore;
