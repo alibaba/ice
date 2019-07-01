@@ -1,10 +1,10 @@
 /* eslint babel/new-cap:0 */
-
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
+import stores from '@stores';
 import ErrorBoundary from '@components/ErrorBoundary';
 import Icon from '@components/Icon';
 import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
@@ -20,7 +20,7 @@ import {
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
-import PanelSetting from './components/PanelSetting';
+import SettingPanel from './components/SettingPanel';
 import QuickStart from './components/QuickStart';
 import projectStores from './stores';
 import panels from './panels';
@@ -95,10 +95,7 @@ const Project = ({ history }) => {
     Todo: todoStore,
   };
   const [isSorting, setIsSorting] = useState(false);
-  const [
-    panelSettingVisible,
-    setPanelSettingVisible,
-  ] = useState(false);
+  const [settingPanelStore] = stores.useStores(['settingPanel']);
 
   const {
     material,
@@ -150,8 +147,8 @@ const Project = ({ history }) => {
     setResetModal(true);
   }
 
-  async function onTogglePanelSetting() {
-    setPanelSettingVisible(!panelSettingVisible);
+  async function onToggleSettingPanel() {
+    settingPanelStore.toggle();
   }
 
   function onSortStart() {
@@ -175,6 +172,8 @@ const Project = ({ history }) => {
 
     refreshProjects();
   }, []);
+
+  const settingPanelVisible = settingPanelStore.dataSource.visible;
 
   return (
     <div className={styles.page}>
@@ -237,17 +236,17 @@ const Project = ({ history }) => {
 
       {/* Panel setting */}
       {projects.length ? (
-        <div className={styles.panelSetting}>
+        <div className={styles.settingPanel}>
           <div
-            onClick={onTogglePanelSetting}
+            onClick={onToggleSettingPanel}
             className={cx({
-              [styles.button]: true, [styles.isVisible]: panelSettingVisible,
+              [styles.button]: true, [styles.isVisible]: settingPanelVisible,
             })}
           >
-            <Icon type={panelSettingVisible ? 'close' : 'settings'} size="medium" />
+            <Icon type={settingPanelVisible ? 'close' : 'settings'} size="medium" />
           </div>
-          {panelSettingVisible ?
-            <PanelSetting
+          {settingPanelVisible ?
+            <SettingPanel
               panels={project.panels.filter(({ name }) => panels[name])}
               onChange={onChangeProjectPanel}
             /> : null
