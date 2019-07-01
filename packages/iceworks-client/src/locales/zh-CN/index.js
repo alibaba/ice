@@ -51,9 +51,9 @@ export default {
   // project guide
   'iceworks.project.panel.guide.title': '入门指引',
   'iceworks.project.panel.guide.project': '项目管理',
-  'iceworks.project.panel.guide.project.desc': '可视化展示管理当前项目的信息，也可以通过右侧的设置按钮进行面板进行自定义配置',
+  'iceworks.project.panel.guide.project.desc': '可视化展示管理当前项目的信息，也可以通过右侧的设置按钮进行面板的自定义配置',
   'iceworks.project.panel.guide.engineering': '工程管理',
-  'iceworks.project.panel.guide.engineering.desc': '可视化展示和管理复杂的工程配置，让前端工程变的轻松便捷',
+  'iceworks.project.panel.guide.engineering.desc': '可视化展示和管理复杂的工程配置，让前端工程变得轻松便捷',
   'iceworks.project.panel.guide.material': '物料市场',
   'iceworks.project.panel.guide.material.desc': '提供多种垂直领域模板和区块，快速创建项目，支持风格切换，满足个性化需求',
 
