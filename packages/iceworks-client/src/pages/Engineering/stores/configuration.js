@@ -2,7 +2,7 @@ import socket from '@src/socket';
 
 export default {
   dataSource: {
-    cli: [],
+    cli: null,
   },
 
   async getCLIConf() {

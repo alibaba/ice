@@ -15,7 +15,7 @@ export default class Task implements ITaskModule {
   public project: IProject;
   public storage: any;
 
-  private status: string = TASK_STATUS_STOP;
+  private status: object = {};
 
   public readonly cliConfPath: string;
 
@@ -66,9 +66,9 @@ export default class Task implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      this.status = TASK_STATUS_WORKING;
+      this.status[command] = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
-        status: this.status,
+        status: this.status[command],
         chunk: buffer.toString(),
       });
     });
@@ -76,9 +76,9 @@ export default class Task implements ITaskModule {
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
         this.process[command] = null;
-        this.status = TASK_STATUS_STOP;
+        this.status[command] = TASK_STATUS_STOP;
         ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status,
+          status: this.status[command],
           chunk: chalk.grey('Task has stopped'),
         });
       }
@@ -107,9 +107,9 @@ export default class Task implements ITaskModule {
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
       if (code === 0) {
-        this.status = TASK_STATUS_STOP;
+        this.status[command] = TASK_STATUS_STOP;
         ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status,
+          status: this.status[command],
           chunk: chalk.grey('Task has stopped'),
         });
       }
@@ -121,7 +121,8 @@ export default class Task implements ITaskModule {
   }
 
   getStatus (args: ITaskParam) {
-    return this.status;
+    const { command } = args;
+    return this.status[command];
   }
 
   /**
@@ -135,7 +136,8 @@ export default class Task implements ITaskModule {
       case 'build':
        return getCLIConf(this.cliConfPath, this.taskConfig.build);
       case 'lint':
-        return this.taskConfig.lint;
+        // @TODO support lint configuration
+        return null;
       default:
         return [];
     }

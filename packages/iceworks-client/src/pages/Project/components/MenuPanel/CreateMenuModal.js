@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import TipIcon from '@components/TipIcon';
 import { Input, Select, Switch, Form, Field } from '@alifd/next';
@@ -18,16 +18,22 @@ const formItemLayout = {
 };
 
 const field = new Field({});
-const pathReg = /^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
+const { getError } = field;
+// match eg. /abc、/abc?name=123、/abc?:id
+const pathReg = /^(\/?)([a-zA-Z0-9/-?@:=]+)$/;
+// match eg. https://www.taobao.com、www.taobao.com
 const urlReg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
 const CreateMenuModal = ({
-  on, onCancel, onOk, modalData,
+  on, onCancel, onOk, modalData, intl, currentType,
 }) => {
+  const { formatMessage } = intl;
   const [action, setAction] = useState('create');
   const [formData, setFormData] = useState({});
   const isEdit = action === 'edit';
   const isCreate = action === 'create';
+  // @TODO: header config does not support nesting in current version
+  const isHeader = currentType === 'header';
 
   const { linkType } = formData || {};
 
@@ -35,7 +41,7 @@ const CreateMenuModal = ({
     setAction(modalData.action);
     if (modalData.action === 'create') {
       setFormData({
-        linkType: 'linkGroup',
+        linkType: isHeader ? 'link' : 'linkGroup',
       });
     } else if (modalData.action === 'edit' && modalData.formData) {
       setFormData(modalData.formData);
@@ -68,6 +74,9 @@ const CreateMenuModal = ({
         if (cacheValues.linkType !== 'linkGroup') {
           delete cacheValues.children;
         }
+        if (cacheValues.linkType !== 'externalLink') {
+          delete cacheValues.external;
+        }
         delete cacheValues.linkType;
         onOk(action, {
           ...cacheValues,
@@ -91,46 +100,58 @@ const CreateMenuModal = ({
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.type" />
               <TipIcon>
-                总共有导航组、普通导航、外链三种类型，导航组下可以放入普通导航和外链
+                <FormattedMessage id="iceworks.project.panel.menu.form.type.tip" />
               </TipIcon>
             </span>
           )}
           required
         >
-          <Select size="small" name="linkType" placeholder="请选择导航类型" disabled={isEdit}>
-            <option value="linkGroup">导航组</option>
-            <option value="link">普通导航</option>
-            <option value="externalLink">外链</option>
+          <Select size="small" name="linkType" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.type.placeholder' })} disabled={isEdit}>
+            {!isHeader && (
+              <option value="linkGroup">
+                <FormattedMessage id="iceworks.project.panel.menu.group" />
+              </option>
+            )}
+            <option value="link">
+              <FormattedMessage id="iceworks.project.panel.menu.ordinary" />
+            </option>
+            <option value="externalLink">
+              <FormattedMessage id="iceworks.project.panel.menu.external" />
+            </option>
           </Select>
         </FormItem>
         <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.name" />} required>
-          <Input size="small" name="name" placeholder="请输入名称" />
+          <Input size="small" name="name" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.name.placeholder' })} />
         </FormItem>
         {linkType !== 'linkGroup' && (
           <FormItem
             label={<FormattedMessage id="iceworks.project.panel.menu.form.path" />}
             pattern={linkType === 'link' ? pathReg : urlReg}
-            patternMessage="请填写正确的路径"
-            help={isEdit && linkType === 'link' ? '修改了路径需要手动到路由配置里修改对应的路径' : ''}
+            patternMessage={formatMessage({ id: 'iceworks.project.panel.menu.form.path.message' })}
+            help={isEdit && linkType === 'link' ? (
+              <div>
+                {getError('path')}(<FormattedMessage id="iceworks.project.panel.menu.form.path.help" />)
+              </div>
+            ) : getError('path')}
           >
-            <Input size="small" name="path" placeholder="请输入路径" />
+            <Input size="small" name="path" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.path.placeholder' })} />
           </FormItem>
         )}
         <FormItem
           pattern={/^[a-zA-Z]([-_a-zA-Z0-9]*)$/i}
-          patternMessage="请填写正确的图标名称"
+          patternMessage={formatMessage({ id: 'iceworks.project.panel.menu.form.icon.message' })}
           label={(
             <span>
               <FormattedMessage id="iceworks.project.panel.menu.form.icon" />
               <TipIcon>
-                导航项图标，可以从
+                <FormattedMessage id="iceworks.project.panel.menu.form.icon.tip.first" />
                 <a href="https://ice.alibaba-inc.com/component/foundationsymbol" target="__blank"> foundationsymbol </a>
-                中选择
+                <FormattedMessage id="iceworks.project.panel.menu.form.icon.tip.end" />
               </TipIcon>
             </span>
           )}
         >
-          <Input size="small" name="icon" placeholder="请输入图标(icon type)" />
+          <Input size="small" name="icon" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.icon.placeholder' })} />
         </FormItem>
         {linkType === 'externalLink' && (
           <FormItem
@@ -138,7 +159,7 @@ const CreateMenuModal = ({
               <span>
                 <FormattedMessage id="iceworks.project.panel.menu.form.newwindow" />
                 <TipIcon>
-                  浏览器点击外链是否新打开页面
+                  <FormattedMessage id="iceworks.project.panel.menu.form.newwindow.tip" />
                 </TipIcon>
               </span>
             )}
@@ -156,6 +177,8 @@ CreateMenuModal.propTypes = {
   modalData: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
+  currentType: PropTypes.string.isRequired,
 };
 
-export default CreateMenuModal;
+export default injectIntl(CreateMenuModal);

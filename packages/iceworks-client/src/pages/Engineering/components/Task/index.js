@@ -37,14 +37,15 @@ function getType(pathname) {
 const Task = ({ history, intl }) => {
   const project = stores.useStore('project');
   const task = taskStores.useStore('task');
-  const { dataSource: { status }, setStatus, getStatus } = task;
+  const { dataSource, setStatus, getStatus, getConf } = task;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
   const { theme } = useContext(ThemeContext);
 
   const writeLog = (t) => {
-    const term = termManager.find('globalTerminal');
     const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
+
+    const term = termManager.find('globalTerminal');
     term.writeLog(msg);
   };
 
@@ -68,7 +69,6 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      await task.getConf(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
@@ -112,6 +112,7 @@ const Task = ({ history, intl }) => {
     try {
       writeLog(type);
       await getStatus(type);
+      await getConf(type);
     } catch (error) {
       showMessage(error.message);
     }
@@ -126,21 +127,22 @@ const Task = ({ history, intl }) => {
   const stopEventName = `adapter.task.stop.data.${type}`;
   const { termTheme } = useTermTheme(theme, id);
 
+  const conf = (dataSource[type] && dataSource[type].conf) || [];
+  const status = (dataSource[type] && dataSource[type].status) || 'stop';
+
   // listen start event handle
   useSocket(startEventName, (data) => {
-    setStatus(data.status);
+    setStatus(type, data.status);
     const term = termManager.find(id);
     term.writeChunk(data.chunk);
   }, [status]);
 
   // listen stop event handle
   useSocket(stopEventName, (data) => {
-    setStatus(data.status);
+    setStatus(type, data.status);
     const term = termManager.find(id);
     term.writeChunk(data.chunk);
   }, [status]);
-
-  const data = task.dataSource[type] ? task.dataSource[type] : [];
 
   return (
     <Card
@@ -155,6 +157,7 @@ const Task = ({ history, intl }) => {
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
+        enableSetting={conf.length !== 0}
       />
 
       <div className={styles.content}>
@@ -167,7 +170,7 @@ const Task = ({ history, intl }) => {
 
       <TaskModal
         on={on}
-        data={data}
+        data={conf}
         toggleModal={toggleModal}
         onConfirm={onConfirm}
       />

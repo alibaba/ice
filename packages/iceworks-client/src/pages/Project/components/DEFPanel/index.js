@@ -3,7 +3,6 @@ import { Button, Message } from '@alifd/next';
 import { FormattedMessage } from 'react-intl';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
-import logger from '@utils/logger';
 import stores from '@src/stores';
 import Panel from '../Panel';
 import projectStores from '../../stores';
@@ -11,7 +10,7 @@ import styles from './index.module.scss';
 
 const DEFPanel = () => {
   const gitStore = projectStores.useStore('git');
-  const userStore = stores.useStore('user');
+  const [userStore, globalTerminalStore] = stores.useStores(['user', 'globalTerminal']);
 
   const { dataSource } = gitStore;
   const {
@@ -34,6 +33,8 @@ const DEFPanel = () => {
       return;
     }
 
+    globalTerminalStore.show();
+
     if (target === 'daily') {
       await gitStore.push();
     }
@@ -47,9 +48,7 @@ const DEFPanel = () => {
     });
   }
 
-  useSocket('adapter.def.push.data', (data) => {
-    logger.info('adapter.def.push.data', data);
-  });
+  useSocket('adapter.def.push.data', globalTerminalStore.writeLog);
 
   useSocket('adapter.def.push.exit', (code) => {
     if (code === 0) {
