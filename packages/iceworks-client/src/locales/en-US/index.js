@@ -10,6 +10,8 @@ export default {
   'iceworks.global.button.submit': 'Submit',
   'iceworks.global.button.selectAll': 'Select All',
   'iceworks.global.fallback.title': 'Loading',
+  'iceworks.global.adapter.title': 'Project adaptation failed',
+  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the documentation for adaptation',
 
   // menu
   'iceworks.menu.project': 'Project',
@@ -53,6 +55,15 @@ export default {
   // project panel
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
+
+  // project guide
+  'iceworks.project.panel.guide.title': 'Getting Started Guide',
+  'iceworks.project.panel.guide.project': 'Project Management',
+  'iceworks.project.panel.guide.project.desc': 'Visualize the management of the current project information, or you can customize the panel through the settings button on the right',
+  'iceworks.project.panel.guide.engineering': 'Engineering Management',
+  'iceworks.project.panel.guide.engineering.desc': 'Visualize and manage complex engineering configurations to make front-end engineering easy and convenient',
+  'iceworks.project.panel.guide.material': 'Material Market',
+  'iceworks.project.panel.guide.material.desc': 'Provide a lot of templates and blocks, quickly create projects, support style switching, and meet custom features',
 
   // project page
   'iceworks.project.panel.page.create.title': 'Create Page',

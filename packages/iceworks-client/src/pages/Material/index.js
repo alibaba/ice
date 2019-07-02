@@ -188,7 +188,7 @@ const Material = ({ history, intl }) => {
       />
       <div className={styles.main}>
         <Card title={cardTitle} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
-          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
+          <Tab shape="capsule" size="medium" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>
                 {tab.content}

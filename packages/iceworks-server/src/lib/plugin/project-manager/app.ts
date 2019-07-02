@@ -9,7 +9,6 @@ import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as arrayMove from 'array-move';
 import storage from '../../storage';
-import getAdapter from '../../adapter';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule, II18n } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
 import downloadAndExtractPackage from '../../downloadAndExtractPackage';
@@ -25,6 +24,12 @@ const mvAsync = util.promisify(mv);
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 const DEFAULT_TYPE = 'react';
+const DEFAULT_ADAPTER = [
+  'adapter-react-v1',
+  'adapter-react-v2',
+  'adapter-react-v3',
+  'adapter-vue-v1'
+];
 
 class Project implements IProject {
   public readonly name: string;
@@ -39,14 +44,13 @@ class Project implements IProject {
 
   public adapter: {[name: string]: IBaseModule} = {};
 
-  constructor(folderPath: string, i18n: II18n) {
+  public adapterName: string;
+
+  constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
     this.type = this.getType();
-
-    this.loadAdapter(i18n);
-    this.assemblePanels();
   }
 
   public getType(): string {
@@ -67,36 +71,59 @@ class Project implements IProject {
     return process.env;
   }
 
-  private loadAdapter(i18n: II18n) {
-    const adapter = getAdapter(i18n);
+  private interopRequire(id) {
+    let mod;
+    try {
+      mod = require(id);
+    } catch (error) {
+      throw error;
+    }
 
-    _.forEach(adapter, (config: IPanel, name) => {
-      const project: IProject = _.clone(this);
-      delete project.adapter;
-
-      const Module = config.module;
-      if (Module) {
-        const adapterModule = new Module({ project, storage, i18n });
-        const moduleName = name.toLowerCase();
-        this.adapter[moduleName] = adapterModule;
-      }
-
-      this.panels.push({
-        name,
-        ..._.omit(config, 'module')
-      });
-    });
+    return mod && mod.__esModule ? mod.default : mod;
   }
 
-  private assemblePanels() {
-    this.pullPanels();
+  public loadAdapter(i18n: II18n) {
+    // reset panels
+    this.panels = [];
+
+    const pkgContent = require(this.packagePath);
+    const adapterName = pkgContent.iceworks ? pkgContent.iceworks.adapter : null;
+
+    if (adapterName && DEFAULT_ADAPTER.includes(adapterName)) {
+      this.adapterName = adapterName;
+
+      const getAdapter = this.interopRequire(`../../${adapterName}`);
+      const adapters = getAdapter(i18n);
+      _.forEach(adapters, (config: IPanel, name) => {
+        const project: IProject = _.clone(this);
+        delete project.adapter;
+
+        const Module = config.module;
+        if (Module) {
+          const adapterModule = new Module({ project, storage, i18n });
+          const moduleName = name.toLowerCase();
+          this.adapter[moduleName] = adapterModule;
+        }
+
+        this.panels.push({
+          name,
+          ..._.omit(config, 'module')
+        });
+      });
+
+      // Get the panel of the current project from the cache and update the panel data according to the adapter
+      this.initPanels();
+    }
+  }
+
+  private initPanels() {
+    this.getPanels();
     this.savePanels();
   }
 
-  private pullPanels() {
+  private getPanels() {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
-
     if (projectPanelSettings) {
       const { panels } = projectPanelSettings;
 
@@ -129,7 +156,7 @@ class Project implements IProject {
     storage.set('panelSettings', panelSettings);
   }
 
-  public setPanel(params: {name: string; isAvailable: boolean;}): IPanel[] {
+  public setPanel(params: {name: string; isAvailable: boolean; }): IPanel[] {
     const {name, isAvailable} = params;
     const panel = this.panels.find(({ name: settingName }) => settingName === name);
     if (panel) {
@@ -147,9 +174,10 @@ class Project implements IProject {
   }
 
   public toJSON() {
-    const { name, path, panels, type } = this;
+    const { name, path, panels, type, adapterName } = this;
     return {
       name,
+      adapterName,
       path,
       type,
       panels,
@@ -176,7 +204,9 @@ class ProjectManager extends EventEmitter {
   private async refresh(): Promise<Project[]> {
     return Promise.all(
       storage.get('projects').map(async (projectPath) => {
-        return new Project(projectPath, this.i18n);
+        const project = new Project(projectPath);
+        project.loadAdapter(this.i18n);
+        return project;
       })
     );
   }
@@ -223,7 +253,9 @@ class ProjectManager extends EventEmitter {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
-      this.projects.push(new Project(projectPath, this.i18n));
+      const project = new Project(projectPath);
+      project.loadAdapter(this.i18n);
+      this.projects.push(project);
       projects.push(projectPath);
       storage.set('projects', projects);
     }

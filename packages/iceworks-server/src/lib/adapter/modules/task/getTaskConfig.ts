@@ -4,7 +4,7 @@ export default (ctx: IContext): ITaskConf => {
   const { i18n } = ctx;
 
   function addLabel(env: string, item): IConfSchema {
-    item.label = i18n.format(`baseAdapter.task.${env}.${name}.label`);
+    item.label = i18n.format(`baseAdapter.task.${env}.${item.name}.label`);
 
     return item;
   }

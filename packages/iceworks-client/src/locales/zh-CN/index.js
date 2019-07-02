@@ -10,6 +10,8 @@ export default {
   'iceworks.global.button.submit': '提交',
   'iceworks.global.button.selectAll': '全选',
   'iceworks.global.fallback.title': '加载错误',
+  'iceworks.global.adapter.title': '项目适配失败',
+  'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考文档进行适配',
 
   // menu
   'iceworks.menu.project': '项目',
@@ -31,7 +33,7 @@ export default {
   'iceworks.setting.title': '设置',
   'iceworks.setting.general.title': '通用设置',
   'iceworks.setting.general.language.title': '语言',
-  'iceworks.setting.general.theme.title': '{name}',
+  'iceworks.setting.general.theme.title': '主题',
   'iceworks.setting.general.theme.dark': '深色',
   'iceworks.setting.general.theme.light': '浅色',
   'iceworks.setting.general.editor.title': '编辑器',
@@ -47,6 +49,15 @@ export default {
   'iceworks.project.panel.page.title': '页面管理',
   'iceworks.project.panel.fallback.title': '面板',
   'iceworks.project.panel.fallback.desc': '面板加载出错',
+
+  // project guide
+  'iceworks.project.panel.guide.title': '入门指引',
+  'iceworks.project.panel.guide.project': '项目管理',
+  'iceworks.project.panel.guide.project.desc': '可视化展示管理当前项目的信息，也可以通过右侧的设置按钮进行面板的自定义配置',
+  'iceworks.project.panel.guide.engineering': '工程管理',
+  'iceworks.project.panel.guide.engineering.desc': '可视化展示和管理复杂的工程配置，让前端工程变得轻松便捷',
+  'iceworks.project.panel.guide.material': '物料市场',
+  'iceworks.project.panel.guide.material.desc': '提供多种垂直领域模板和区块，快速创建项目，支持风格切换，满足个性化需求',
 
   // project page
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',

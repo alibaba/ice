@@ -7,6 +7,7 @@ import XtermTerminal from '@components/XtermTerminal';
 import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
+import useTermTheme from '@hooks/useTermTheme';
 import stores from '@stores';
 import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
@@ -14,6 +15,7 @@ import styles from './index.module.scss';
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
   const { theme, setTheme } = useContext(ThemeContext);
+  const { themeValue } = useTermTheme();
   const projectPath = project.dataSource.path;
 
   function handleTerminal() {
@@ -47,8 +49,12 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   async function handleTheme() {
-    const currentTheme = theme === THEMES.dark ? THEMES.light : THEMES.dark;
+    const currentTheme = (theme === THEMES.dark.themePackage)
+      ? THEMES.light.themePackage
+      : THEMES.dark.themePackage;
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
+
+    // set app theme
     setTheme(currentTheme);
   }
 
@@ -68,7 +74,6 @@ const GlobalBar = ({ project, intl }) => {
   });
 
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
-  const themeValue = theme.indexOf('dark') > -1 ? 'dark' : 'light';
 
   return project.dataSource.name ? (
     <div className={styles.container}>
@@ -78,7 +83,11 @@ const GlobalBar = ({ project, intl }) => {
           className={styles.closeIcon}
           onClick={onClose}
         />
-        <XtermTerminal id="globalTerminal" name={intl.formatMessage({ id: 'iceworks.global.bar.log' })} />
+        <XtermTerminal
+          id="globalTerminal"
+          name={`\n${intl.formatMessage({ id: 'iceworks.global.bar.log' })}`}
+          options={{ cols: '100', rows: '17' }}
+        />
       </div>
 
       <div className={styles.globalBar}>
