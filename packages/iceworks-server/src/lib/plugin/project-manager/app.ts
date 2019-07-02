@@ -156,6 +156,21 @@ class Project implements IProject {
     storage.set('panelSettings', panelSettings);
   }
 
+  public updateAdapter(i18n: II18n) {
+    this.panels = [];
+    const getAdapter = this.interopRequire(`../../${this.adapterName}`);
+    const adapters = getAdapter(i18n);
+    _.forEach(adapters, (config: IPanel, name) => {
+      this.panels.push({
+        name,
+        ..._.omit(config, 'module')
+      });
+    });
+
+    // Get the panel of the current project from the cache and update the panel data according to the adapter
+    this.initPanels();
+  }
+
   public setPanel(params: {name: string; isAvailable: boolean; }): IPanel[] {
     const {name, isAvailable} = params;
     const panel = this.panels.find(({ name: settingName }) => settingName === name);
@@ -234,6 +249,9 @@ class ProjectManager extends EventEmitter {
     if (!project) {
       throw new Error('notfound project');
     }
+
+    // update adapter i18n text
+    project.updateAdapter(this.i18n);
 
     return project;
   }
