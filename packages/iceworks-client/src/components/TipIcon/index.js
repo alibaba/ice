@@ -4,15 +4,25 @@ import Icon from '@components/Icon';
 import PropTypes from 'prop-types';
 import styles from './index.module.scss';
 
+const { Tooltip } = Balloon;
+
 const TipIcon = (props) => {
+  const triggerIcon = (
+    <Icon
+      type="info-circle"
+      size="xs"
+      className={styles.tipIcon}
+    />
+  );
+
   return (
-    <Balloon
-      type="primary"
-      trigger={<Icon type="info" size="small" className={styles.tipIcon} />}
-      closable={false}
+    <Tooltip
+      trigger={triggerIcon}
+      align="b"
+      {...props}
     >
       {props.children}
-    </Balloon>
+    </Tooltip>
   );
 };
 
