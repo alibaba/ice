@@ -58,12 +58,5 @@ export default (app) => {
       const project = await projectManager.getCurrent();
       return project.sortPanels(args);
     }
-
-    async loadAdapter() {
-      const { projectManager } = app;
-      const project = await projectManager.getCurrent();
-      const result = await project.loadAdapter();
-      return result;
-    }
   };
 };
