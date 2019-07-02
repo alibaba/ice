@@ -10,6 +10,8 @@ export default {
   'iceworks.global.button.submit': 'Submit',
   'iceworks.global.button.selectAll': 'Select All',
   'iceworks.global.fallback.title': 'Loading',
+  'iceworks.global.adapter.title': 'Project adaptation failed',
+  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the documentation for adaptation',
 
   // menu
   'iceworks.menu.project': 'Project',

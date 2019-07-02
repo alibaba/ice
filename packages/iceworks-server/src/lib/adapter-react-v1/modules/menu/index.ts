@@ -1,6 +1,6 @@
 import * as path from 'path';
 import BaseAdapter from '../../../adapter';
-import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../../interface';
+import { IProject } from '../../../../interface';
 
 const {module: BaseMenu} = BaseAdapter.Menu;
 
