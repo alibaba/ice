@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
+import TipIcon from '@components/TipIcon';
 import classNames from 'classnames';
 import styles from './head.module.scss';
 
@@ -12,22 +13,7 @@ const PanelHead = ({ title, description, operations, children }) => {
     <div className={styles.wrapper}>
       <h3>
         {title}
-        {
-          description ?
-            <Tooltip
-              trigger={(
-                <Icon
-                  size="small"
-                  type="info"
-                  className={styles.info}
-                />
-              )}
-              align="b"
-            >
-              {description}
-            </Tooltip> :
-            null
-        }
+        {description ? <TipIcon>{description}</TipIcon> : null}
       </h3>
       <div className={styles.main}>
         {children}

@@ -5,10 +5,14 @@ import storage from '../../storage';
 import { II18n } from '../../../interface';
 import recursiveReaddir from '../../recursiveReaddir';
 
-import * as zhCNGlobal from '../../../locale/zh-CN.json';
-import * as enUSGlobal from '../../../locale/en-US.json';
+import * as zhCNGlobal from '../../../locales/zh-CN.json';
+import * as enUSGlobal from '../../../locales/en-US.json';
 
-const ADAPTER_PATH = path.resolve(__dirname, '../../adapter');
+const LIB_PATH = path.resolve(__dirname, '../../');
+
+function ignoreFile(filePath: string) {
+  return !_.includes(filePath, 'adapter');
+}
 
 class I18n implements II18n {
   localeMap: {
@@ -21,12 +25,12 @@ class I18n implements II18n {
     };
   }
 
-  // read locale json file in adapter/**/locale
-  async ready() {
-    let localeFiles: string[] = await recursiveReaddir(ADAPTER_PATH);
+  // read locale json file in adapter/locales
+  public async readLocales() {
+    const adapterFiles: string[] = await recursiveReaddir(LIB_PATH, [ignoreFile]);
 
-    localeFiles = localeFiles.filter(file => {
-      return _.includes(file, 'locale') && path.extname(file) === '.json';
+    const localeFiles = adapterFiles.filter(file => {
+      return _.includes(file, 'locales') && path.extname(file) === '.json';
     });
 
     for (const file of localeFiles) {
@@ -50,7 +54,4 @@ class I18n implements II18n {
 
 export default (app) => {
   app.i18n = new I18n();
-  app.beforeStart(async () => {
-    await app.i18n.ready();
-  });
 };

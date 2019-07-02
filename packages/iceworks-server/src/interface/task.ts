@@ -63,7 +63,7 @@ export interface ITaskModule extends IBaseModule {
    *
    * @param task 任务信息
    */
-  getConf(task: ITaskParam): Promise<IConfSchema[]>;
+  getConf(task: ITaskParam, ctx: IContext): Promise<IConfSchema[]>;
 
   /**
    * 设置任务配置项

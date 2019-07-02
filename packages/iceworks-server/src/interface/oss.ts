@@ -1,4 +1,4 @@
-import { IBaseModule } from './base';
+import { IBaseModule, IContext } from './base';
 
 export interface IOSSGetBucketsParams {
   region: string;
@@ -27,5 +27,5 @@ export interface IUploadResult {
 
 export interface IOSSModule extends IBaseModule {
   getBuckets(params: IOSSGetBucketsParams): Promise<IOSSBucket[]>;
-  upload(params: IOSSUploadParams): Promise<IUploadResult[]>;
+  upload(params: IOSSUploadParams, ctx: IContext): Promise<IUploadResult[]>;
 }

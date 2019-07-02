@@ -66,9 +66,9 @@ export default class Page implements IPageModule {
     return pages;
   }
 
-  private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string) {
+  private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string, ctx: IContext) {
     return await Promise.all(
-      blocks.map(async (block) => await this.downloadBlockToPage(block, pageName))
+      blocks.map(async (block) => await this.downloadBlockToPage(block, pageName, ctx))
     );
   }
 
@@ -94,7 +94,8 @@ export default class Page implements IPageModule {
     }));
   }
 
-  private async downloadBlockToPage(block: IMaterialBlock, pageName: string): Promise<string[]> {
+  private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<string[]> {
+    const { i18n } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
       this.path,
@@ -110,7 +111,7 @@ export default class Page implements IPageModule {
     try {
       tarballURL = await getTarballURLByMaterielSource(block.source, iceVersion);
     } catch (error) {
-      error.message = '请求区块 tarball 包失败';
+      error.message = i18n.format('baseAdapter.page.download.requestError');
       throw error;
     }
 
@@ -120,9 +121,9 @@ export default class Page implements IPageModule {
         tarballURL
       );
     } catch (error) {
-      error.message = `解压区块${blockName}出错, 请重试`;
+      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-        error.message = `解压区块${blockName}超时，请重试`;
+        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName});
       }
       throw error;
     }
@@ -137,9 +138,10 @@ export default class Page implements IPageModule {
 
   async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
+    const { socket, i18n } = ctx;
 
     // create page dir
-    ctx.socket.emit('adapter.page.create.status', { text: '创建页面目录...', percent: 10 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -153,15 +155,15 @@ export default class Page implements IPageModule {
     }
 
     // download blocks
-    ctx.socket.emit('adapter.page.create.status', { text: '正在下载区块...', percent: 40 });
-    await this.downloadBlocksToPage(blocks, pageName);
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.download'), percent: 40 });
+    await this.downloadBlocksToPage(blocks, pageName, ctx);
 
     // install block dependencies
-    ctx.socket.emit('adapter.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.installDep'), percent: 80 });
     await this.installBlocksDependencies(blocks, ctx);
 
     // create page file
-    ctx.socket.emit('adapter.page.create.status', { text: '正在创建页面文件...', percent: 90 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
@@ -216,14 +218,14 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void> {
+  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string; }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
-    await this.downloadBlocksToPage(blocks, name);
+    await this.downloadBlocksToPage(blocks, name, ctx);
   }
 
-  async addBlock(params: {block: IMaterialBlock, name?: string;}): Promise<void> {
+  async addBlock(params: {block: IMaterialBlock, name?: string; }, ctx: IContext): Promise<void> {
     const {block, name} = params;
-    await this.downloadBlockToPage(block, name);
+    await this.downloadBlockToPage(block, name, ctx);
   }
 
   async update(): Promise<any> { }

@@ -1,10 +1,12 @@
 /**
  * icescripts 2.0 + kit 3.0
  */
-import baseConfig from '../adapter';
+import getBaseAdapter from '../adapter';
 
-const config = {
-  ...baseConfig,
+export default (i18n) => {
+  const baseAdapter = getBaseAdapter(i18n);
+
+  return {
+    ...baseAdapter
+  };
 };
-
-export default config;
