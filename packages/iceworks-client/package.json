@@ -14,6 +14,7 @@
     "@icedesign/ellipsis": "^1.0.4",
     "@icedesign/notification": "^1.0.5",
     "alife-logger": "^1.5.1",
+    "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cookies-js": "^1.2.3",
     "date-time": "^3.1.0",
