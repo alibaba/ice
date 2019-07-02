@@ -223,7 +223,7 @@ export interface IConfSchema {
   /**
    * 描述
    */
-  description: string;
+  description?: string;
 
   /**
    * 链接
