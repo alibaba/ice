@@ -8,6 +8,8 @@ import OSS from './components/OSSPanel';
 import DEF from './components/DEFPanel';
 import Menu from './components/MenuPanel';
 import Router from './components/RouterPanel';
+import QuickDev from './components/QuickDevPanel';
+import QuickBuild from './components/QuickBuildPanel';
 
 export default {
   Guide,
@@ -20,4 +22,6 @@ export default {
   DEF,
   Menu,
   Router,
+  QuickDev,
+  QuickBuild,
 };

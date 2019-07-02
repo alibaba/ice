@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
-import useSocket from '@hooks/useSocket';
 import useModal from '@hooks/useModal';
+import useTask from '@hooks/useTask';
 import useTermTheme from '@hooks/useTermTheme';
 import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
@@ -12,8 +12,7 @@ import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
-import taskStores from './stores';
-import TaskModal from './components/TaskModal';
+import TaskModal from '../../components/TaskModal';
 import styles from './index.module.scss';
 
 function showMessage(message, type) {
@@ -34,36 +33,23 @@ function getType(pathname) {
 }
 
 const Task = ({ history, intl }) => {
-  const project = stores.useStore('project');
-  const task = taskStores.useStore('task');
-  const { dataSource, setStatus, getStatus, getConf } = task;
+  const [projectStore, taskStore] = stores.useStores(['project', 'task']);
+  const { dataSource, getConf } = taskStore;
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
+  const id = `${projectStore.dataSource.name}.${type}`;
+  const conf = (dataSource[type] && dataSource[type].conf) || [];
   const { termTheme } = useTermTheme();
 
-  const writeLog = (t) => {
-    const msg = intl.formatMessage({ id: `iceworks.task.${t}.start.msg` });
-
+  function writeLog(taskType) {
+    const msg = intl.formatMessage({ id: `iceworks.task.${taskType}.start.msg` });
     const term = termManager.find('globalTerminal');
     term.writeLog(msg);
-  };
-
-  async function onStart() {
-    try {
-      writeLog(type);
-      await task.start(type);
-    } catch (error) {
-      showMessage(error.message);
-    }
   }
 
-  async function onStop() {
-    try {
-      writeLog(type);
-      await task.stop(type);
-    } catch (error) {
-      showMessage(error.message);
-    }
+  function writeChunk(data) {
+    const term = termManager.find(id);
+    term.writeChunk(data);
   }
 
   async function onSetting() {
@@ -90,7 +76,7 @@ const Task = ({ history, intl }) => {
     logger.info(params);
 
     try {
-      await task.setConf(type, params);
+      await taskStore.setConf(type, params);
       Message.show({
         type: 'success',
         title: '提示',
@@ -107,9 +93,8 @@ const Task = ({ history, intl }) => {
     }
   }
 
-  async function onGetStatus() {
+  async function onGetConf() {
     try {
-      await getStatus(type);
       await getConf(type);
     } catch (error) {
       showMessage(error.message);
@@ -117,29 +102,10 @@ const Task = ({ history, intl }) => {
   }
 
   useEffect(() => {
-    onGetStatus();
+    onGetConf();
   }, []);
 
-  const id = `${project.dataSource.name}.${type}`;
-  const startEventName = `adapter.task.start.data.${type}`;
-  const stopEventName = `adapter.task.stop.data.${type}`;
-
-  const conf = (dataSource[type] && dataSource[type].conf) || [];
-  const status = (dataSource[type] && dataSource[type].status) || 'stop';
-
-  // listen start event handle
-  useSocket(startEventName, (data) => {
-    setStatus(type, data.status);
-    const term = termManager.find(id);
-    term.writeChunk(data.chunk);
-  }, [status]);
-
-  // listen stop event handle
-  useSocket(stopEventName, (data) => {
-    setStatus(type, data.status);
-    const term = termManager.find(id);
-    term.writeChunk(data.chunk);
-  }, [status]);
+  const { isWorking, onStart, onStop } = useTask({ type, writeLog, writeChunk });
 
   return (
     <Card
@@ -149,8 +115,7 @@ const Task = ({ history, intl }) => {
       className={styles.taskCard}
     >
       <TaskBar
-        type={type}
-        loading={status === 'working'}
+        isWorking={isWorking}
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
@@ -160,7 +125,7 @@ const Task = ({ history, intl }) => {
       <div className={styles.content}>
         <XtermTerminal
           id={id}
-          name={project.dataSource.name}
+          name={projectStore.dataSource.name}
           options={{ theme: termTheme }}
         />
       </div>

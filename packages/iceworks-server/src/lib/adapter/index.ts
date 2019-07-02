@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-
 import Page from './modules/page';
 import Dependency from './modules/dependency';
 import Configuration from './modules/configuration';
@@ -11,7 +10,6 @@ import Git from './modules/git';
 import DEF from './modules/def';
 import OSS from './modules/oss';
 import Todo from './modules/todo';
-
 import { II18n } from '../../interface';
 
 export const baseModules = {
