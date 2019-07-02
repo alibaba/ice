@@ -7,10 +7,17 @@ import Router from './modules/router';
 
 export default (i18n) => {
   const baseAdapter = getBaseAdapter(i18n);
-  const { Configuration, ...resetConfig } = baseAdapter;
 
   return {
-    ...resetConfig,
+    Guide: baseAdapter.Guide,
+    Layout: baseAdapter.Layout,
+    Page: baseAdapter.Page,
+    Git: baseAdapter.Git,
+    OSS: baseAdapter.OSS,
+    DEF: baseAdapter.DEF,
+    Todo: baseAdapter.Todo,
+    Dependency: baseAdapter.Dependency,
+    Task: baseAdapter.Task,
     Router: {
       ...baseAdapter.Router,
       module: Router
