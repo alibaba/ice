@@ -44,6 +44,8 @@ class Project implements IProject {
 
   public adapter: {[name: string]: IBaseModule} = {};
 
+  public adapterName: string = '';
+
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
@@ -88,6 +90,8 @@ class Project implements IProject {
     const adapterName = pkgContent.iceworks ? pkgContent.iceworks.adapter : null;
 
     if (adapterName && DEFAULT_ADAPTER.includes(adapterName)) {
+      this.adapterName = adapterName;
+
       const adapterModules: [IPanel] = this.interopRequire(`../../${adapterName}`);
       for (const [moduleName, moduleCofing] of Object.entries(adapterModules)) {
         const project: IProject = _.clone(this);
@@ -113,18 +117,16 @@ class Project implements IProject {
       }
 
       // Get the panel of the current project from the cache and update the panel data according to the adapter
-      this.assemblePanels();
-
-      return adapterName;
+      this.initPanels();
     }
   }
 
-  private assemblePanels() {
-    this.pullPanels();
+  private initPanels() {
+    this.getPanels();
     this.savePanels();
   }
 
-  private pullPanels() {
+  private getPanels() {
     const panelSettings = storage.get('panelSettings');
     const projectPanelSettings = panelSettings.find(({ projectPath }) => projectPath === this.path);
 
@@ -178,9 +180,10 @@ class Project implements IProject {
   }
 
   public toJSON() {
-    const { name, path, panels, type } = this;
+    const { name, path, panels, type, adapterName } = this;
     return {
       name,
+      adapterName,
       path,
       type,
       panels,
@@ -201,7 +204,9 @@ class ProjectManager extends EventEmitter {
   private async refresh(): Promise<Project[]> {
     return Promise.all(
       storage.get('projects').map(async (projectPath) => {
-        return new Project(projectPath);
+        const project = new Project(projectPath);
+        project.loadAdapter();
+        return project;
       })
     );
   }
@@ -247,7 +252,9 @@ class ProjectManager extends EventEmitter {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
-      this.projects.push(new Project(projectPath));
+      const project = new Project(projectPath);
+      project.loadAdapter()
+      this.projects.push(project);
       projects.push(projectPath);
       storage.set('projects', projects);
     }

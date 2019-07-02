@@ -175,7 +175,7 @@ const Project = ({ history }) => {
 
   function renderContent() {
     if (projects.length) {
-      if (project.panels.length && project.adapter) {
+      if (project.panels.length && project.adapterName) {
         return (
           <div className={styles.main}>
             <SortableWrap
