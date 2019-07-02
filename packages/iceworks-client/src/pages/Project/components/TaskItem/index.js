@@ -9,7 +9,7 @@ import Panel from '../Panel';
 import PanelHead from '../Panel/head';
 import styles from './index.module.scss';
 
-const TaskItem = ({ title, desc, icon, path, intl, history, status, onStart, onStop }) => {
+const TaskItem = ({ title, desc, icon, path, intl, history, isWorking, onStart, onStop }) => {
   function handleClick() {
     history.push(path);
   }
@@ -28,7 +28,7 @@ const TaskItem = ({ title, desc, icon, path, intl, history, status, onStart, onS
         </div>
         <div className={styles.taskAction}>
           <TaskButton
-            status={status}
+            isWorking={isWorking}
             onStart={onStart}
             onStop={onStop}
           />
@@ -44,7 +44,7 @@ const TaskItem = ({ title, desc, icon, path, intl, history, status, onStart, onS
 
 
 TaskItem.defaultProps = {
-  status: false,
+  isWorking: false,
   onStart: () => {},
   onStop: () => {},
 };
@@ -56,7 +56,7 @@ TaskItem.propTypes = {
   path: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
-  status: PropTypes.bool,
+  isWorking: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
 };

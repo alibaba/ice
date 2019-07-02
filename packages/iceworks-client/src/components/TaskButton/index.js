@@ -5,8 +5,8 @@ import Icon from '@components/Icon';
 import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
-const TaskButton = ({ status, onStart, onStop }) => {
-  if (!status) {
+const TaskButton = ({ isWorking, onStart, onStop }) => {
+  if (!isWorking) {
     return (
       <Button
         type="primary"
@@ -28,13 +28,13 @@ const TaskButton = ({ status, onStart, onStop }) => {
 };
 
 TaskButton.defaultProps = {
-  status: false,
+  isWorking: false,
   onStart: () => {},
   onStop: () => {},
 };
 
 TaskButton.propTypes = {
-  status: PropTypes.bool,
+  isWorking: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
 };

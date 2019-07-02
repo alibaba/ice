@@ -11,7 +11,7 @@ const QuickDevPanel = ({ intl }) => {
     writeGlobalLog(msg);
   }
 
-  const { status, onStart, onStop } = useTask({ type: 'dev', writeLog });
+  const { isWorking, onStart, onStop } = useTask({ type: 'dev', writeLog });
 
   return (
     <TaskItem
@@ -19,7 +19,7 @@ const QuickDevPanel = ({ intl }) => {
       desc={intl.formatMessage({ id: 'iceworks.task.dev.desc' })}
       icon="dev"
       path="/task/dev"
-      status={status}
+      isWorking={isWorking}
       onStart={onStart}
       onStop={onStop}
     />

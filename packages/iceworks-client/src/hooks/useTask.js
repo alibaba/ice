@@ -65,7 +65,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   taskEventListener(stopEventName);
 
   return {
-    status: status === 'working',
+    isWorking: status === 'working',
     onStart,
     onStop,
   };

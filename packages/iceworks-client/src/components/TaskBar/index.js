@@ -7,13 +7,13 @@ import Icon from '@components/Icon';
 import TaskButton from '@components/TaskButton';
 import styles from './index.module.scss';
 
-const TaskBar = ({ status, onStart, onStop, onSetting, extra, enableSetting }) => {
+const TaskBar = ({ isWorking, onStart, onStop, onSetting, extra, enableSetting }) => {
   return (
     <div className={styles.taskBar}>
       {/* Left Button Group */}
       <div className={styles.leftTaskBar}>
         <TaskButton
-          status={status}
+          isWorking={isWorking}
           onStop={onStop}
           onStart={onStart}
         />
@@ -23,7 +23,7 @@ const TaskBar = ({ status, onStart, onStop, onSetting, extra, enableSetting }) =
             type="secondary"
             className={styles.leftButton}
             onClick={onSetting}
-            disabled={status}
+            disabled={isWorking}
           >
             <Icon type="settings" className={styles.icon} />
             <FormattedMessage id="iceworks.task.setting" />
@@ -38,7 +38,7 @@ const TaskBar = ({ status, onStart, onStop, onSetting, extra, enableSetting }) =
 };
 
 TaskBar.defaultProps = {
-  status: false,
+  isWorking: false,
   onStart: () => {},
   onStop: () => {},
   onSetting: () => {},
@@ -47,7 +47,7 @@ TaskBar.defaultProps = {
 };
 
 TaskBar.propTypes = {
-  status: PropTypes.bool,
+  isWorking: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
   onSetting: PropTypes.func,

@@ -105,7 +105,7 @@ const Task = ({ history, intl }) => {
     onGetConf();
   }, []);
 
-  const { status, onStart, onStop } = useTask({ type, writeLog, writeChunk });
+  const { isWorking, onStart, onStop } = useTask({ type, writeLog, writeChunk });
 
   return (
     <Card
@@ -115,7 +115,7 @@ const Task = ({ history, intl }) => {
       className={styles.taskCard}
     >
       <TaskBar
-        status={status}
+        isWorking={isWorking}
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
