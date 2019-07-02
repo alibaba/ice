@@ -60,6 +60,7 @@
   "baseAdapter.config.OSS.title": "阿里云 OSS",
   "baseAdapter.config.OSS.des": "将项目构建结果上传到阿里云 OSS。",
   "baseAdapter.config.DEF.title": "DEF 发布",
+  "baseAdapter.config.DEF.des": "支持阿里内网 DEF 发布构建流程，发布到日常以及线上。",
   "baseAdapter.config.Todo.title": "TODO",
   "baseAdapter.config.Todo.des": "收集项目代码中的TODO、FIXME、HACK等需要处理的注释信息。",
   "baseAdapter.config.Dependency.title": "依赖管理",
