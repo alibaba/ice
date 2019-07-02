@@ -1,4 +1,6 @@
 import axios from 'axios';
+import browser from 'browser-detect';
+
 
 /**
  * Send log records to the aplus website
@@ -11,6 +13,7 @@ function goldlog(action, extraData = {}) {
     action: `iceworks-v3-${action}`,
     data: {
       ...extraData,
+      browser: browser(),
     },
   };
 
