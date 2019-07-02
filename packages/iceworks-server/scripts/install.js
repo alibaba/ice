@@ -5,10 +5,17 @@ const { checkAliInternal } = require('ice-npm-utils');
 function installDEF() {
   console.log('>>> Start install DEF client...');
 
-  return execa.shell('tnpm install @ali/def-pub-client', {
-    stdio: 'inherit',
-    cwd: path.join(__dirname, '..'),
-  });
+  return execa
+    .shell('tnpm install @ali/def-pub-client', {
+      stdio: 'inherit',
+      cwd: path.join(__dirname, '..'),
+    })
+    .then(() => Promise.resolve(true))
+    .catch(() => {
+      console.log('>>> install @ali/def-pub-client error \r\n');
+
+      return Promise.resolve(true);
+    });
 }
 
 function installStark() {
@@ -42,10 +49,15 @@ function install() {
     })
     .then((checked) => {
       if (checked) {
-        installDEF();
-        installStark();
+        return installDEF();
       }
-    }).catch(() => {
+    })
+    .then((finished) => {
+      if (finished) {
+        return installStark();
+      }
+    })
+    .catch(() => {
       // tnpm will output install errors
     });
 }
