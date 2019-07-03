@@ -3,6 +3,7 @@ const spawn = require('cross-spawn');
 const portfinder = require('portfinder');
 const chalk = require('chalk');
 const ora = require('ora');
+const glodlog = require('../lib/glodlog');
 
 async function start(options = {}) {
   const host = options.host || 'http://127.0.0.1';
@@ -30,6 +31,7 @@ async function start(options = {}) {
     if (data.toString().indexOf('started on http://127.0.0.1') !== -1) {
       spinner.stop();
       successMsg(url);
+      glodlog('start-server');
     }
   });
 
