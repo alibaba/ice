@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
 import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
-import taskConfig from './taskConfig';
+import getTaskConfig from './getTaskConfig';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
@@ -23,7 +23,7 @@ export default class Task implements ITaskModule {
 
   public cliConfFilename = 'ice.config.js';
 
-  public taskConfig: ITaskConf = taskConfig;
+  public getTaskConfig: (ctx: IContext) => ITaskConf = getTaskConfig;
 
   constructor(params: {project: IProject; storage: any; }) {
     const { project, storage } = params;
@@ -129,12 +129,13 @@ export default class Task implements ITaskModule {
    * get the conf of the current task
    * @param args
    */
-  async getConf(args: ITaskParam) {
+  async getConf(args: ITaskParam, ctx: IContext) {
+    const taskConfig = this.getTaskConfig(ctx);
     switch (args.command) {
       case 'dev':
-        return this.getDevConf();
+        return this.getDevConf(taskConfig);
       case 'build':
-       return getCLIConf(this.cliConfPath, this.taskConfig.build);
+       return getCLIConf(this.cliConfPath, taskConfig.build);
       case 'lint':
         // @TODO support lint configuration
         return null;
@@ -163,21 +164,21 @@ export default class Task implements ITaskModule {
  * merge the user configuration to return to the new configuration
  * @param projectPath
  */
-  private getDevConf() {
-   const pkgContent = this.project.getPackageJSON();
-   const devScriptContent = pkgContent.scripts.start;
-   const devScriptArray = devScriptContent.split(' ');
-   const userConf = {};
-   devScriptArray.forEach(item => {
-     if (item.indexOf('--') !== -1) {
-      const key = item.match(/--(\S*)=/)[1];
-      const value = item.match(/=(\S*)$/)[1];
-      userConf[key] = value;
-    }
-  });
+  private getDevConf(taskConfig: ITaskConf) {
+    const pkgContent = this.project.getPackageJSON();
+    const devScriptContent = pkgContent.scripts.start;
+    const devScriptArray = devScriptContent.split(' ');
+    const userConf = {};
+    devScriptArray.forEach(item => {
+      if (item.indexOf('--') !== -1) {
+        const key = item.match(/--(\S*)=/)[1];
+        const value = item.match(/=(\S*)$/)[1];
+        userConf[key] = value;
+      }
+    });
 
-   return mergeCLIConf(this.taskConfig.dev, userConf);
- }
+    return mergeCLIConf(taskConfig.dev, userConf);
+  }
 
   /**
    * set dev configuration

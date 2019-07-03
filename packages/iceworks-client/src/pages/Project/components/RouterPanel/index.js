@@ -277,8 +277,8 @@ const RouterPanel = ({ intl, title, description }) => {
             })}
           </ul>
         ) : (
-          <Message title="暂无路由" type="help">
-            点击右上方新建路由
+          <Message title={<FormattedMessage id="iceworks.project.panel.router.none" />} type="help">
+            <FormattedMessage id="iceworks.project.panel.router.example" />
           </Message>
         )}
       </div>

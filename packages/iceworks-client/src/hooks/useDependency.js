@@ -3,6 +3,7 @@ import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import { useState } from 'react';
 import { Message } from '@alifd/next';
+import writeGlobalLog from '@utils/writeGlobalLog';
 
 export const STATUS_RESETING = 'reseting';
 
@@ -69,7 +70,7 @@ function useDependency() {
     globalTerminalStore.show();
   }
 
-  useSocket('adapter.dependency.reset.data', globalTerminalStore.writeLog);
+  useSocket('adapter.dependency.reset.data', writeGlobalLog);
 
   useSocket('adapter.dependency.reset.exit', (code) => {
     if (code === 0) {
@@ -89,7 +90,7 @@ function useDependency() {
     }
   });
 
-  useSocket('adapter.dependency.upgrade.data', globalTerminalStore.writeLog);
+  useSocket('adapter.dependency.upgrade.data', writeGlobalLog);
 
   useSocket('adapter.dependency.upgrade.exit', (code) => {
     if (code === 0) {
@@ -110,7 +111,7 @@ function useDependency() {
     }
   });
 
-  useSocket('adapter.dependency.install.data', globalTerminalStore.writeLog);
+  useSocket('adapter.dependency.install.data', writeGlobalLog);
 
   useSocket('adapter.dependency.install.exit', (code) => {
     if (code === 0) {
