@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@components/Icon';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import stores from '@stores';
 import Panel from '../Panel';
@@ -45,7 +45,7 @@ const GuidePanel = ({ history, intl }) => {
     <Panel>
       <div className={styles.guidePanel}>
         <div className={styles.head}>
-          <h3 className={styles.title}>入门指引</h3>
+          <h3 className={styles.title}><FormattedMessage id="iceworks.project.panel.guide.title" /></h3>
         </div>
         <div className={styles.features}>
           {
