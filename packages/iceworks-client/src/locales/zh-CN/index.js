@@ -13,6 +13,11 @@ export default {
   'iceworks.global.adapter.title': '项目适配失败',
   'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考文档进行适配',
 
+  // quick start
+  'iceworks.quickStart.title': '从热门模板开始初始化你的项目',
+  'iceworks.quickStart.open': '打开项目',
+  'iceworks.quickStart.more': '更多模板',
+
   // menu
   'iceworks.menu.project': '项目',
   'iceworks.menu.task': '工程',
@@ -46,12 +51,11 @@ export default {
   'iceworks.project.submenu.opts.createProject': '创建项目',
 
   // project panel
-  'iceworks.project.panel.page.title': '页面管理',
   'iceworks.project.panel.fallback.title': '面板',
   'iceworks.project.panel.fallback.desc': '面板加载出错',
 
-  // project task
-  'iceworks.project.panel.task.title': '运行任务',
+  // project quick task
+  'iceworks.project.panel.quick.task.setting': '前往设置',
 
   // project guide
   'iceworks.project.panel.guide.title': '入门指引',
@@ -63,6 +67,7 @@ export default {
   'iceworks.project.panel.guide.material.desc': '提供多种垂直领域模板和区块，快速创建项目，支持风格切换，满足个性化需求',
 
   // project page
+  'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
   'iceworks.project.panel.page.delete.title': '删除页面',
@@ -131,8 +136,15 @@ export default {
   'iceworks.project.panel.git.switch.title': '切换分支',
   'iceworks.project.panel.git.switch.select': '选择分支',
   'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
+
+  // project oss
   'iceworks.project.panel.oss.title': 'OSS',
   'iceworks.project.panel.oss.button.clear': '清空',
+  'iceworks.project.panel.oss.region.label': '区域',
+  'iceworks.project.panel.oss.bucket.label': '存储空间',
+  'iceworks.project.panel.oss.directory.label': '存储路径',
+  'iceworks.project.panel.oss.directory.tip': '存储路径（不填则默认在根目录）',
+  'iceworks.project.panel.oss.button.upload': '提交上传',
 
   // project menu
   'iceworks.project.panel.menu.ordinary': '菜单',
@@ -253,4 +265,7 @@ export default {
   'iceworks.global.bar.feedback.submit': '反馈建议或提交 Bug',
   'iceworks.global.bar.theme.dark': '深色',
   'iceworks.global.bar.theme.light': '浅色',
+
+  'iceworks.project.panel.title': '面板设置',
+  'iceworks.engineer.config.title': '自定义配置',
 };

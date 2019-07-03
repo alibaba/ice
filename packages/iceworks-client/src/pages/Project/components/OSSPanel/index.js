@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Input, Select, Message } from '@alifd/next';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import socket from '@src/socket';
@@ -90,11 +90,10 @@ const OSSPanel = ({ intl, title, description }) => {
       <div className={styles.wrap}>
         <Form labelAlign="left" className={styles.form}>
           <div className={styles.item}>
-            <div className={styles.label}>区域:</div>
+            <div className={styles.label}><FormattedMessage id="iceworks.project.panel.oss.region.label" /></div>
             <Select
               size="medium"
               className={styles.field}
-              placeholder="请选择 region"
               value={region}
               onChange={(value) => onValueChange('region', value)}
               dataSource={regions}
@@ -138,11 +137,10 @@ const OSSPanel = ({ intl, title, description }) => {
             />
           </div>
           <div className={styles.item}>
-            <div className={styles.label}>存储空间:</div>
+            <div className={styles.label}><FormattedMessage id="iceworks.project.panel.oss.bucket.label" /></div>
             <Select
               size="medium"
               className={styles.field}
-              placeholder="请选择 bucket"
               value={bucket}
               onChange={(value) => onValueChange('bucket', value)}
               dataSource={buckets || []}
@@ -151,18 +149,17 @@ const OSSPanel = ({ intl, title, description }) => {
               type="reload"
               size="medium"
               className={styles.reload}
-              title="刷新 bukcet 列表"
               onClick={refeshBucket}
             />
           </div>
           <div className={styles.item}>
-            <div className={styles.label}>存储路径:</div>
+            <div className={styles.label}><FormattedMessage id="iceworks.project.panel.oss.directory.label" /></div>
             <Input
               size="medium"
               className={styles.field}
               value={directory}
               onChange={(value) => onValueChange('directory', value)}
-              placeholder="存储路径（不填则默认在根目录）"
+              placeholder={<FormattedMessage id="iceworks.project.panel.oss.directory.tip" />}
             />
           </div>
           <div className={styles.item}>
@@ -171,7 +168,7 @@ const OSSPanel = ({ intl, title, description }) => {
               type="primary"
               onClick={onSubmit}
             >
-              提交上传
+              <FormattedMessage id="iceworks.project.panel.oss.button.upload" />
             </Button>
           </div>
         </Form>
