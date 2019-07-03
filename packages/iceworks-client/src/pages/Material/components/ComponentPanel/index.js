@@ -16,7 +16,7 @@ const ComponentPanel = ({ dataSource, currentCategory, onCategoryChange, onInsta
   return (
     <div className={styles.materialsPanel}>
       {
-        categories.length < 1 ?
+        categories.length <= 1 ?
           null :
           <MaterialCategories
             dataSource={categories}

@@ -16,7 +16,7 @@ const ScaffoldPanel = ({ dataSource, currentCategory, onDownload, onCategoryChan
   return (
     <div className={styles.materialsPanel}>
       {
-        categories.length < 1 ?
+        categories.length <= 1 ?
           null :
           <MaterialCategories
             dataSource={categories}

@@ -17,7 +17,7 @@ const BlockPanel = ({ dataSource, currentCategory, onCategoryChange }) => {
   return (
     <div className={styles.materialsPanel}>
       {
-        categories.length < 1 ?
+        categories.length <= 1 ?
           null :
           <MaterialCategories
             dataSource={categories}
