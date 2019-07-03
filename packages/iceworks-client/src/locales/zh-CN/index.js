@@ -50,8 +50,8 @@ export default {
   'iceworks.project.panel.fallback.title': '面板',
   'iceworks.project.panel.fallback.desc': '面板加载出错',
 
-  // project task
-  'iceworks.project.panel.task.title': '运行任务',
+  // project quick task
+  'iceworks.project.panel.quick.task.setting': '前往设置',
 
   // project guide
   'iceworks.project.panel.guide.title': '入门指引',

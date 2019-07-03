@@ -5,7 +5,7 @@ import useTask from '@hooks/useTask';
 import writeGlobalLog from '@utils/writeGlobalLog';
 import TaskItem from '../TaskItem';
 
-const QuickDevPanel = ({ intl }) => {
+const QuickDevPanel = ({ intl, title, description }) => {
   function writeLog() {
     const msg = intl.formatMessage({ id: 'iceworks.task.dev.start.msg' });
     writeGlobalLog(msg);
@@ -15,8 +15,8 @@ const QuickDevPanel = ({ intl }) => {
 
   return (
     <TaskItem
-      title={intl.formatMessage({ id: 'iceworks.task.dev.title' })}
-      desc={intl.formatMessage({ id: 'iceworks.task.dev.desc' })}
+      title={title}
+      desc={description}
       icon="dev"
       path="/task/dev"
       isWorking={isWorking}
@@ -29,6 +29,8 @@ const QuickDevPanel = ({ intl }) => {
 
 QuickDevPanel.propTypes = {
   intl: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default injectIntl(QuickDevPanel);
