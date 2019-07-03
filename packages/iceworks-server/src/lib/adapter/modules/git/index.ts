@@ -43,26 +43,26 @@ export default class Git implements IGitModule {
   public async getStatus(): Promise<IGitGetStatus> {
     const isRepository = await this.gitTools.checkIsRepo();
 
-    let currentBranch = '',
-    localBranches = [],
-    originBranches = [],
-    remoteUrl = '',
-    unstageFiles = [];
+    let currentBranch = '';
+    let localBranches = [];
+    let originBranches = [];
+    let remoteUrl = '';
+    let unstageFiles = [];
 
     try {
       const branchLocal = await this.getLocalBranches();
       currentBranch = branchLocal.current;
       localBranches = branchLocal.all;
-  
+
       const branchOrigin = await this.getOriginBranches();
       originBranches = branchOrigin.all;
-  
+
       const originRemotes = await this.gitTools.getRemotes(true);
       const originRemote = originRemotes[0];
       if (originRemote && originRemote.refs) {
         remoteUrl = originRemote.refs.push;
       }
-  
+
       unstageFiles = await this.getUnstagedFiles();
     } catch (err) {
       console.warn(err);
@@ -121,7 +121,7 @@ export default class Git implements IGitModule {
 
   public async push(params: {branch: string}): Promise<void> {
     const {branch} = params;
-    await this.gitTools.push('origin', branch);
+    await this.gitTools.push('origin', branch, { '--set-upstream': null });
   }
 
   public async addAndCommit(params: IGitAddAndCommitParams): Promise<void> {
