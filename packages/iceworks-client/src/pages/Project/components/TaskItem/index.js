@@ -35,7 +35,7 @@ const TaskItem = ({ title, desc, icon, path, history, isWorking, onStart, onStop
           />
           <Button type="normal" onClick={handleClick} className={styles.settingButton}>
             <Icon type="settings" className={styles.settingIcon} />
-            <FormattedMessage id="iceworks.task.setting" />
+            <FormattedMessage id="iceworks.project.panel.quick.task.setting" />
           </Button>
         </div>
       </div>

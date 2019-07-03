@@ -60,7 +60,7 @@ export default (i18n: II18n) => {
     },
     QuickBuild: {
       cover: 'https://img.alicdn.com/tfs/TB1P8pAe79E3KVjSZFGXXc19XXa-300-300.png',
-      isAvailable: true,
+      isAvailable: false,
       module: null,
     },
     Git: {
