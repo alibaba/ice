@@ -82,19 +82,20 @@ class Project implements IProject {
     return mod && mod.__esModule ? mod.default : mod;
   }
 
-  public loadAdapter(i18n: II18n) {
+  public async loadAdapter(i18n: II18n) {
     // reset panels
     this.panels = [];
 
-    const pkgContent = require(this.packagePath);
+    const pkgContent = this.getPackageJSON();
     const adapterName = pkgContent.iceworks ? pkgContent.iceworks.adapter : null;
 
     if (adapterName && DEFAULT_ADAPTER.includes(adapterName)) {
       this.adapterName = adapterName;
 
       const getAdapter = this.interopRequire(`../../${adapterName}`);
-      const adapters = getAdapter(i18n);
-      _.forEach(adapters, (config: IPanel, name) => {
+      const adapter = await getAdapter(i18n);
+
+      _.forEach(adapter, (config: IPanel, name) => {
         const project: IProject = _.clone(this);
         delete project.adapter;
 
@@ -111,11 +112,14 @@ class Project implements IProject {
         });
       });
 
-      // Get the panel of the current project from the cache and update the panel data according to the adapter
       this.initPanels();
     }
   }
 
+  /**
+   *  Get the panel of the current project from the cache and 
+   *  update the panel data according to the adapter.
+   */
   private initPanels() {
     this.getPanels();
     this.savePanels();
@@ -156,10 +160,10 @@ class Project implements IProject {
     storage.set('panelSettings', panelSettings);
   }
 
-  public updateAdapter(i18n: II18n) {
+  public async updateAdapter(i18n: II18n) {
     this.panels = [];
     const getAdapter = this.interopRequire(`../../${this.adapterName}`);
-    const adapters = getAdapter(i18n);
+    const adapters = await getAdapter(i18n);
     _.forEach(adapters, (config: IPanel, name) => {
       this.panels.push({
         name,
@@ -217,10 +221,10 @@ class ProjectManager extends EventEmitter {
   }
 
   private async refresh(): Promise<Project[]> {
-    return Promise.all(
+    return await Promise.all(
       storage.get('projects').map(async (projectPath) => {
         const project = new Project(projectPath);
-        project.loadAdapter(this.i18n);
+        await project.loadAdapter(this.i18n);
         return project;
       })
     );
@@ -241,7 +245,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Get the project in the project list
    */
-  public getProject(path: string) {
+  public async getProject(path: string) {
     const project = this.projects.find(
       (currentItem) => currentItem.path === path
     );
@@ -251,7 +255,7 @@ class ProjectManager extends EventEmitter {
     }
 
     // update adapter i18n text
-    project.updateAdapter(this.i18n);
+    await project.updateAdapter(this.i18n);
 
     return project;
   }
@@ -259,9 +263,10 @@ class ProjectManager extends EventEmitter {
   /**
    * Get current project
    */
-  public getCurrent() {
+  public async getCurrent() {
     const projectPath = storage.get('project');
-    return this.getProject(projectPath);
+    const project = await this.getProject(projectPath);
+    return project;
   }
 
   /**
@@ -272,7 +277,7 @@ class ProjectManager extends EventEmitter {
 
     if (projects.indexOf(projectPath) === -1) {
       const project = new Project(projectPath);
-      project.loadAdapter(this.i18n);
+      await project.loadAdapter(this.i18n);
       this.projects.push(project);
       projects.push(projectPath);
       storage.set('projects', projects);
@@ -387,9 +392,10 @@ class ProjectManager extends EventEmitter {
   /**
    * Set current project
    */
-  public setCurrent(path: string) {
+  public async setCurrent(path: string) {
     storage.set('project', path);
-    return this.getProject(path);
+    const project = await this.getProject(path);
+    return project;
   }
 }
 

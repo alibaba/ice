@@ -26,7 +26,7 @@ export const baseModules = {
   Todo,
 };
 
-export default (i18n: II18n) => {
+export default async (i18n: II18n) => {
   const adapter: any = {
     Guide: {
       cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
