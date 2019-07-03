@@ -1,7 +1,7 @@
 import stores from '@stores';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
-import glodlog from '@utils/glodlog';
+import goldlog from '@utils/goldlog';
 import { useState } from 'react';
 import { Message } from '@alifd/next';
 
@@ -47,7 +47,7 @@ function useDependency() {
   async function upgrade(packageName, isDev) {
     dependenciesStore.upgrade({ package: packageName, isDev });
     globalTerminalStore.show();
-    glodlog('upgrade-dependencies', {
+    goldlog('upgrade-dependencies', {
       type: 'project',
     });
   }
@@ -57,7 +57,7 @@ function useDependency() {
       await dependenciesStore.bulkCreate(values, force);
       setCreateModal(false);
       globalTerminalStore.show();
-      glodlog('install-dependencies', {
+      goldlog('install-dependencies', {
         type: 'project',
       });
     } catch (error) {

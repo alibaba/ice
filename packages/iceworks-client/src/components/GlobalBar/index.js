@@ -10,7 +10,7 @@ import useSocket from '@hooks/useSocket';
 import useTermTheme from '@hooks/useTermTheme';
 import stores from '@stores';
 import { THEMES } from '@src/appConfig';
-import glodlog from '@utils/glodlog';
+import goldlog from '@utils/goldlog';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
@@ -57,7 +57,7 @@ const GlobalBar = ({ project, intl }) => {
 
     // set app theme
     setTheme(currentTheme);
-    glodlog('set-theme', {
+    goldlog('set-theme', {
       type: 'setting',
       locale: currentTheme,
     });

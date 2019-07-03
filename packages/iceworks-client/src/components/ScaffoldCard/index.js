@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { PLACEHOLDER_IMG } from '@src/appConfig';
-import glodlog from '@utils/glodlog';
+import goldlog from '@utils/goldlog';
 import styles from './index.module.scss';
 
 const ScaffoldCard = ({ dataSource, onDownload }) => {
   function handleDownload() {
-    glodlog('download-scaffold', {
+    goldlog('download-scaffold', {
       type: 'material',
       name: dataSource.title,
     });

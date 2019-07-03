@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import socket from '@src/socket';
-import glodlog from '@utils/glodlog';
+import goldlog from '@utils/goldlog';
 import cx from 'classnames';
 import Panel from '../Panel';
 import stores from '../../stores';
@@ -52,7 +52,7 @@ const OSSPanel = ({ intl, title, description }) => {
     try {
       const result = await socket.emit('adapter.oss.upload');
       setResults(result);
-      glodlog('upload-oss', {
+      goldlog('upload-oss', {
         type: 'project',
       });
     } catch (error) {
