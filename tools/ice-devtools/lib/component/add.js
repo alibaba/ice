@@ -19,6 +19,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
     npmPrefix,
     templatePath: src,
     standalone,
+    materialConfig,
   } = opt;
 
   const questions = defaultQuestion(npmPrefix);
@@ -40,6 +41,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
       npmName,
       adaptor,
       meta,
+      materialConfig,
       skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);

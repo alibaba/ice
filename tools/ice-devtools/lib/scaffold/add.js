@@ -18,6 +18,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
     npmPrefix,
     templatePath: src,
     standalone,
+    materialConfig,
   } = opt;
 
   const questions = defaultQuestion(npmPrefix);
@@ -32,6 +33,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
       name,
       npmName,
       meta,
+      materialConfig,
       skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);

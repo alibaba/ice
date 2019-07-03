@@ -22,6 +22,7 @@
     "eslint-plugin-react": "^7.5.1"
   },
   "materialConfig": {
-    "template": "<%= template %>"
+    "template": "<%= template %>",
+    "type": "<%= materialConfig.type %>"
   }
 }

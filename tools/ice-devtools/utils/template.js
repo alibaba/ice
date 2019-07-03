@@ -10,8 +10,9 @@ const rimraf = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const mkdirp = require('mkdirp');
 
-const logger = require('../utils/logger');
-const getNpmRegistry = require('../utils/npm').getNpmRegistry;
+const logger = require('./logger');
+const getPkgJSON = require('./pkg-json').getPkgJSON;
+const getNpmRegistry = require('./npm').getNpmRegistry;
 const {
   getNpmLatestSemverVersion,
   getLatestVersion,
@@ -34,19 +35,26 @@ function isLocalPath(aPath) {
  * @param {string} type material type
  * @param {string} template material template name
  */
-async function getTemplatePath(cwd, type, template) {
+async function getTemplate(cwd, type, template) {
   // from local path
   if (template && isLocalPath(template)) {
     const templatePath = path.join(template, type === 'material' ? 'template' : `template/${type}`);
     if (existsSync(templatePath)) {
-      return templatePath;
+      const pkgJson = getPkgJSON(template);
+      return {
+        path: templatePath,
+        config: pkgJson.materialConfig || {},
+      };
     }
     logger.fatal(`template is not found in ${templatePath}`);
   }
 
   // form npm package
   const tmp = await downloadTemplate(cwd, template);
-  return path.join(tmp, type === 'material' ? 'template' : `template/${type}`);
+  return {
+    path: path.join(tmp, type === 'material' ? 'template' : `template/${type}`),
+    config: getPkgJSON(tmp).materialConfig || {},
+  };
 }
 
 async function downloadTemplate(_cwd, template, version, tempDir) {
@@ -151,4 +159,4 @@ async function getNpmVersion(npm, version) {
   return getLatestVersion(npm);
 }
 
-module.exports = getTemplatePath;
+module.exports = getTemplate;

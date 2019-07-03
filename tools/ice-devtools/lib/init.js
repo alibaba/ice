@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { checkAliInternal } = require('ice-npm-utils');
 const logger = require('../utils/logger');
-const getTemplatePath = require('../utils/template');
+const getTemplate = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
 
 module.exports = async function init(cwd) {
@@ -20,7 +20,7 @@ module.exports = async function init(cwd) {
     // get user answers
     const { type, template, scope, forInnerNet } = await initAsk(options);
     const npmPrefix = scope ? `${scope}/` : '';
-    const templatePath = await getTemplatePath(cwd, type, template);
+    const { path: templatePath, config: materialConfig } = await getTemplate(cwd, type, template);
 
     if (type === 'material') {
       // init material project
@@ -31,6 +31,7 @@ module.exports = async function init(cwd) {
         templatePath,
         forInnerNet,
         standalone: true,
+        materialConfig,
       });
     } else {
       // init single component/block/scaffold project
@@ -41,6 +42,7 @@ module.exports = async function init(cwd) {
         templatePath,
         forInnerNet,
         standalone: true,
+        materialConfig,
       });
     }
   } catch (error) {

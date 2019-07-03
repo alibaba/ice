@@ -24,13 +24,13 @@ const MATERIAL_TYPES = ['block', 'component', 'scaffold'];
  */
 module.exports = async function addMaterial(cwd, opt = {}) {
   try {
-    const { template, templatePath, npmPrefix, forInnerNet } = opt;
+    const { template, templatePath, npmPrefix, forInnerNet, materialConfig } = opt;
     const dest = cwd;
 
     const questions = defaultQuestion({ cwd, forInnerNet, npmPrefix });
     const { name, description } = await inquirer.prompt(questions);
     const npmName = generateNpmNameByPrefix(name, npmPrefix);
-
+    console.log('tp', templatePath)
     // init material project
     await templateRender({
       template,
@@ -40,11 +40,12 @@ module.exports = async function addMaterial(cwd, opt = {}) {
       description,
       src: initTemplatePath,
       dest,
+      materialConfig,
       categories: {},
     });
 
     // generate demo
-    await generateMaterialsDemo(cwd, templatePath);
+    await generateMaterialsDemo(cwd, templatePath, materialConfig);
 
     completedMessage(dest, name);
   } catch (err) {
@@ -85,7 +86,7 @@ function defaultQuestion({ cwd, forInnerNet, npmPrefix }) {
 /**
  * generate demo for material project
  */
-async function generateMaterialsDemo(cwd, templatePath) {
+async function generateMaterialsDemo(cwd, templatePath, materialConfig) {
   const pkg = pkgJSON.getPkgJSON(cwd);
 
   // [block, component, scaffold]
@@ -106,6 +107,7 @@ async function generateMaterialsDemo(cwd, templatePath) {
       description: '示例',
       skipGitIgnore: true,
       categories: {},
+      materialConfig,
     });
   }
 }

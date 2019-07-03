@@ -3,7 +3,7 @@ const debug = require('debug')('ice:add:general');
 const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
-const getTemplatePath = require('../utils/template');
+const getTemplate = require('../utils/template');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 
@@ -33,12 +33,13 @@ module.exports = async function add(cwd) {
     const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
     debug('ans: %j', type);
 
-    const templatePath = await getTemplatePath(cwd, type, templateName);
+    const { path: templatePath, config: materialConfig } = await getTemplate(cwd, type, templateName);
 
     /* eslint-disable-next-line import/no-dynamic-require */
     require(`./${type}/add`)(cwd, {
       npmPrefix,
       templatePath,
+      materialConfig,
     });
   } catch (err) {
     logger.fatal(err);
