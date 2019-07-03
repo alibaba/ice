@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { checkAliInternal } from 'ice-npm-utils';
 import getBaseAdapter from '../adapter';
 import Configuration from './modules/configuration';
@@ -24,14 +23,7 @@ export default async (i18n) => {
   };
 
   const isAliInternal = await checkAliInternal();
-
-  let filteredPanels = [];
-  if (isAliInternal) {
-    filteredPanels = ['OSS'];
-  } else {
-    filteredPanels = ['DEF'];
-  }
-
+  const filteredPanels = isAliInternal ? ['OSS'] : ['DEF'];
   Object.keys(adapter).forEach((name) => {
     if (filteredPanels.indexOf(name) > -1) {
       delete adapter[name];
