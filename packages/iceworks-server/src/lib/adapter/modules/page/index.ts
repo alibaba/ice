@@ -131,7 +131,7 @@ export default class Page implements IPageModule {
 
   async getAll(): Promise<IPage[]> {
     const pages = await this.scanPages(this.path);
-    return _.orderBy(pages, 'birthtime', 'desc');
+    return _.orderBy(pages, 'name', 'asc');
   }
 
   async getOne(): Promise<any> { }
