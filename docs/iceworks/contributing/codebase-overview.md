@@ -13,7 +13,7 @@ order: 2
 
 * iceworks-client：前端工程代码，主要承担 iceworks UI 部分的职责，基于 React 进行开发。
 * iceworks-server：后端工程代码，主要承担 iceworks APIs 部分的职责，基于 Node 进行开发。
-* iceworks：命令行工具，主要承担 iceworks 用户端的职责，提供基础命令用于快速启动 iceworks 应用。
+* iceworks-cli：命令行工具，主要承担 iceworks 用户端的职责，提供基础命令用于快速启动 iceworks 应用。
 
 ## 前端工程
 
