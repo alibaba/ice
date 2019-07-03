@@ -1,10 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as util from 'util';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as _ from 'lodash';
+import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
@@ -20,6 +22,7 @@ const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
+const mvAsync = util.promisify(mv);
 
 const loadTemplate = async () => {
   const fileName = 'template.jsx';
@@ -94,7 +97,7 @@ export default class Page implements IPageModule {
     }));
   }
 
-  private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<string[]> {
+  private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<void> {
     const { i18n } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
@@ -115,11 +118,16 @@ export default class Page implements IPageModule {
       throw error;
     }
 
+    const blockDir = path.join(componentsDir, blockName);
+    const blockTempDir = path.join(os.tmpdir(), blockName);
     try {
-      return await downloadAndExtractPackage(
-        path.join(componentsDir, blockName),
+      await downloadAndExtractPackage(
+        blockTempDir,
         tarballURL
       );
+      
+      await mkdirpAsync(blockDir);
+      await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
       error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
