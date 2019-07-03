@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Input, CascaderSelect } from '@alifd/next';
+import { Select } from '@alifd/next';
 import { injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import styles from './SwtichBranchModal.module.scss';
@@ -9,7 +9,6 @@ const originData = {};
 
 function SwtichBranchModal({ onOk, on, onCancel, dataSource, intl }) {
   const [data, setData] = useState(originData);
-  const { originBranch, checkoutBranch } = data;
 
   async function onSave() {
     await onOk(data);
@@ -21,16 +20,8 @@ function SwtichBranchModal({ onOk, on, onCancel, dataSource, intl }) {
     await onCancel();
   }
 
-  function onOriginChange(value, _, extra) {
+  function onOriginChange(value) {
     setData({
-      originBranch: value,
-      checkoutBranch: extra.selectedPath[0].label === 'local' ? value : '',
-    });
-  }
-
-  function onCheckoutChange(value) {
-    setData({
-      ...data,
       checkoutBranch: value,
     });
   }
@@ -44,18 +35,11 @@ function SwtichBranchModal({ onOk, on, onCancel, dataSource, intl }) {
     >
       <div className={styles.wrap}>
         <span>Checkout</span>
-        <CascaderSelect
+        <Select
           placeholder={intl.formatMessage({ id: 'iceworks.project.panel.git.switch.select' })}
           onChange={onOriginChange}
           dataSource={dataSource}
           displayRender={(label) => label[1]}
-        />
-        <span>As</span>
-        <Input
-          placeholder={intl.formatMessage({ id: 'iceworks.project.panel.git.switch.input' })}
-          onChange={onCheckoutChange}
-          value={checkoutBranch}
-          disabled={!originBranch}
         />
       </div>
     </Modal>
