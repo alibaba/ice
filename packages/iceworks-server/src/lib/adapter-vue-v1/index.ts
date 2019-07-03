@@ -1,12 +1,12 @@
+import * as _ from 'lodash';
+import { checkAliInternal } from 'ice-npm-utils';
 import getBaseAdapter from '../adapter';
-
 import Configuration from './modules/configuration';
 import Task from './modules/task';
 
-export default (i18n) => {
-  const baseAdapter = getBaseAdapter(i18n);
-
-  return {
+export default async (i18n) => {
+  const baseAdapter = await getBaseAdapter(i18n);
+  const adapter = {
     Guide: baseAdapter.Guide,
     Layout: baseAdapter.Layout,
     Git: baseAdapter.Git,
@@ -22,4 +22,20 @@ export default (i18n) => {
       module: Configuration
     }
   };
+
+  const isAliInternal = await checkAliInternal();
+
+  let filteredPanels = [];
+  if (isAliInternal) {
+    filteredPanels = ['OSS'];
+  } else {
+    filteredPanels = ['DEF'];
+  }
+
+  Object.keys(adapter).forEach((name) => {
+    if (filteredPanels.indexOf(name) > -1) {
+      delete adapter[name];
+    }
+  });
+  return adapter;
 };
