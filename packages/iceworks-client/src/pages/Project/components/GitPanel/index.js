@@ -66,19 +66,19 @@ const GitPanel = ({ intl, title, description }) => {
     setEditModal(false);
   }
 
-  // async function onOpenSwitch() {
-  //   try {
-  //     await gitStore.getBranches();
-  //     setSwitchModal(true);
-  //   } catch (error) {
-  //     Message.show({
-  //       type: 'error',
-  //       title: '获取分支失败！',
-  //       content: error.message,
-  //       align: 'tr tr',
-  //     });
-  //   }
-  // }
+  async function onOpenSwitch() {
+    try {
+      await gitStore.getBranches();
+      setSwitchModal(true);
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '获取分支失败！',
+        content: error.message,
+        align: 'tr tr',
+      });
+    }
+  }
 
   async function onSwtich(data) {
     await gitStore.switchBranch(data);
@@ -135,23 +135,7 @@ const GitPanel = ({ intl, title, description }) => {
     });
   }
 
-  const locals = localBranches.map((value) => ({ label: value, value }));
-  const origins = originBranches.map((value) => ({ label: value, value }));
-  const checkoutBranches = [];
-  if (locals.length) {
-    checkoutBranches.push({
-      label: 'local',
-      value: 'local',
-      children: locals,
-    });
-  }
-  if (origin.length) {
-    checkoutBranches.push({
-      label: 'origin',
-      value: 'origin',
-      children: origins,
-    });
-  }
+  const checkoutBranches = localBranches.map((value) => ({ label: value, value }));
 
   const operations = isRepository ?
     [
@@ -165,12 +149,11 @@ const GitPanel = ({ intl, title, description }) => {
         onClick: onOpenCreate,
         tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' }),
       },
-      // temporarily removed
-      // {
-      //   type: 'git',
-      //   onClick: onOpenSwitch,
-      //   tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' }),
-      // },
+      {
+        type: 'git',
+        onClick: onOpenSwitch,
+        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' }),
+      },
       {
         type: 'down-arrow',
         onClick: onPull,
