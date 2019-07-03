@@ -22,7 +22,7 @@ const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
 
 const loadTemplate = async () => {
-  const fileName = 'template.js';
+  const fileName = 'template.jsx';
   const filePath = path.join(__dirname, `${fileName}.ejs`);
   const fileStr = await readFileAsync(filePath, 'utf-8');
   const compile = ejs.compile(fileStr);
@@ -193,16 +193,9 @@ export default class Page implements IPageModule {
 
   async bulkCreate(): Promise<any> { }
 
-  // TODO
   async delete(params: {name: string}): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
-
-    // TODO rewrite routerConfig.js
-
-    // TODO rewrite router.js
-
-    // TODO rewrite menuConfig.js
   }
 
   public async getBlocks(name: string): Promise<IProjectBlock[]> {
