@@ -50,6 +50,7 @@
     "semver": "^6.0.0",
     "simple-git": "^1.113.0",
     "tar": "^4.4.8",
+    "terminate": "^2.1.2",
     "trash": "^5.2.0",
     "uid": "^0.0.2",
     "uppercamelcase": "^3.0.0",
