@@ -66,19 +66,19 @@ const GitPanel = ({ intl, title, description }) => {
     setEditModal(false);
   }
 
-  async function onOpenSwitch() {
-    try {
-      await gitStore.getBranches();
-      setSwitchModal(true);
-    } catch (error) {
-      Message.show({
-        type: 'error',
-        title: '获取分支失败！',
-        content: error.message,
-        align: 'tr tr',
-      });
-    }
-  }
+  // async function onOpenSwitch() {
+  //   try {
+  //     await gitStore.getBranches();
+  //     setSwitchModal(true);
+  //   } catch (error) {
+  //     Message.show({
+  //       type: 'error',
+  //       title: '获取分支失败！',
+  //       content: error.message,
+  //       align: 'tr tr',
+  //     });
+  //   }
+  // }
 
   async function onSwtich(data) {
     await gitStore.switchBranch(data);
@@ -165,11 +165,12 @@ const GitPanel = ({ intl, title, description }) => {
         onClick: onOpenCreate,
         tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.add' }),
       },
-      {
-        type: 'git',
-        onClick: onOpenSwitch,
-        tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' }),
-      },
+      // temporarily removed
+      // {
+      //   type: 'git',
+      //   onClick: onOpenSwitch,
+      //   tip: intl.formatMessage({ id: 'iceworks.project.panel.git.button.switch' }),
+      // },
       {
         type: 'down-arrow',
         onClick: onPull,
