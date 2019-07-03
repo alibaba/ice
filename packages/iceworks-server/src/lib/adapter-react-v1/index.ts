@@ -8,10 +8,14 @@ import Router from './modules/router';
 export default (i18n) => {
   const baseAdapter = getBaseAdapter(i18n);
 
+  console.log('BaseAdapter', baseAdapter);
+
   return {
     Guide: baseAdapter.Guide,
     Layout: baseAdapter.Layout,
     Page: baseAdapter.Page,
+    QuickDev: baseAdapter.QuickDev,
+    QuickBuild: baseAdapter.QuickBuild,
     Git: baseAdapter.Git,
     OSS: baseAdapter.OSS,
     DEF: baseAdapter.DEF,

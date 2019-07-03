@@ -53,6 +53,16 @@ export default (i18n: II18n) => {
       isAvailable: true,
       module: Menu
     },
+    QuickDev: {
+      cover: 'https://img.alicdn.com/tfs/TB1hcJCe.uF3KVjSZK9XXbVtXXa-300-300.png',
+      isAvailable: true,
+      module: null,
+    },
+    QuickBuild: {
+      cover: 'https://img.alicdn.com/tfs/TB1P8pAe79E3KVjSZFGXXc19XXa-300-300.png',
+      isAvailable: true,
+      module: null,
+    },
     Git: {
       cover: 'https://img.alicdn.com/tfs/TB1GVb_c79E3KVjSZFGXXc19XXa-300-300.png',
       isAvailable: false,
