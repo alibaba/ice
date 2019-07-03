@@ -37,8 +37,9 @@
 
       .title {
         cursor: pointer;
-        background: $brand-color-normal;
+        background: $brand-color-secondary;
         border-radius: $border-radius-base;
+        color: $color-white;;
         padding: 2px 6px;
       }
 

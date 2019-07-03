@@ -1,7 +1,7 @@
 @import '../../variables.scss';
 
 .wrap {
-  background: $brand-color-secondary;
+  background: $nav-bg;
   box-shadow: $shadow-right;
   position: relative;
   z-index: 9;
@@ -19,7 +19,7 @@
       flex-direction: column;
       width: 78px;
       margin-top: 32px;
-      border-left: 3px solid $brand-color-secondary;
+      border-left: 3px solid transparent;
 
       &:first-child {
         margin-top: 0;

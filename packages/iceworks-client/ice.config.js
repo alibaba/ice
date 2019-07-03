@@ -18,29 +18,46 @@ module.exports = {
 
   plugins: [
     ['ice-plugin-fusion', {
-      themePackage: [{
-        name: '@alifd/theme-iceworks-dark',
-        themeConfig: {
-          'panel-bg': '#333645',
-          'panel-title-color': '#eee',
-          'tip-icon-color': '#6B6F83',
-          'sub-menu-bg': '#434557',
-          'global-bar-bg': '#434557',
-          'material-card-shadow': 'rgba(0, 0, 0, 0)',
-          'text-color-inverse': '#e4e4e4',
+      themePackage: [
+        // {
+        //   name: '@alifd/theme-iceworks-dark',
+        //   themeConfig: {
+        //     'panel-bg': '#333645',
+        //     'panel-title-color': '#eee',
+        //     'tip-icon-color': '#6B6F83',
+        //     'sub-menu-bg': '#434557',
+        //     'global-bar-bg': '#434557',
+        //     'material-card-shadow': 'rgba(0, 0, 0, 0)',
+        //     'text-color-inverse': '#e4e4e4',
+        //   },
+        // },
+        {
+          name: '@alifd/theme-3',
+          themeConfig: {
+            'nav-bg': '#333645',
+            'panel-bg': '#333645',
+            'panel-title-color': '#eee',
+            'tip-icon-color': '#6B6F83',
+            'sub-menu-bg': '#434557',
+            'global-bar-bg': '#434557',
+            'material-card-shadow': 'rgba(0, 0, 0, 0)',
+            'text-color-inverse': '#e4e4e4',
+          },
         },
-      }, {
-        name: '@alifd/theme-iceworks-light',
-        themeConfig: {
-          'panel-bg': '#fff',
-          'panel-title-color': '#333',
-          'tip-icon-color': '#BAD9FF',
-          'sub-menu-bg': '#fff',
-          'global-bar-bg': '#5584FF',
-          'material-card-shadow': 'rgba(163, 177, 191, 0.35)',
-          'text-color-inverse': '#fff',
+        {
+          name: '@alifd/theme-iceworks-light',
+          themeConfig: {
+            'nav-bg': '#5584FF',
+            'panel-bg': '#fff',
+            'panel-title-color': '#333',
+            'tip-icon-color': '#BAD9FF',
+            'sub-menu-bg': '#fff',
+            'global-bar-bg': '#3E71F7',
+            'material-card-shadow': 'rgba(163, 177, 191, 0.35)',
+            'text-color-inverse': '#fff',
+          },
         },
-      }],
+      ],
     }],
   ],
 
