@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const formatProject = require('../lib/formatProject');
 const log = require('../lib/log');
-const goldlog = require('../lib/glodlog');
+const glodlog = require('../lib/glodlog');
 const checkEmpty = require('../lib/checkEmpty');
 const downloadNpm = require('../lib/downloadNpm');
 const packageConfig = require('../package.json');
@@ -26,8 +26,8 @@ async function init(options = {}) {
     npmName = await selectTemplate();
   }
 
-  goldlog('version', { version: packageConfig.version });
-  goldlog('init', { npmName });
+  glodlog('version', { version: packageConfig.version });
+  glodlog('init', { npmName });
 
   await downloadNpm({ npmName, destDir: cwd });
 
