@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Tab } from '@alifd/next';
+import glodlog from '@utils/glodlog';
 import useModal from '@hooks/useModal';
 import cloneDeep from 'lodash.clonedeep';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
@@ -77,6 +78,9 @@ const MenuPanel = ({ intl, title, description }) => {
       }, true);
     }
     await onChangeTree(copyData);
+    glodlog('create-menu', {
+      type: 'project',
+    });
   }
 
   function onOpenDeleteModal(menu) {

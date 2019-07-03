@@ -8,6 +8,7 @@ import { ThemeContext } from '@components/ThemeProvider';
 import Card from '@components/Card';
 import { THEMES } from '@src/appConfig';
 import socket from '@src/socket';
+import glodlog from '@utils/glodlog';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
@@ -64,11 +65,19 @@ const General = ({ intl }) => {
   async function onLocaleChange(currentLocale) {
     await socket.emit('home.setting.setLocale', { locale: currentLocale });
     setLocale(currentLocale);
+    glodlog('set-locale', {
+      type: 'setting',
+      locale: currentLocale,
+    });
   }
 
   async function onThemeChange(currentTheme) {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
+    glodlog('set-theme', {
+      type: 'setting',
+      locale: currentTheme,
+    });
   }
 
   async function getEditor() {
@@ -79,6 +88,10 @@ const General = ({ intl }) => {
   async function onEditorChange(currentEditor) {
     await socket.emit('home.setting.setEditor', { editor: currentEditor });
     setEditor(currentEditor);
+    glodlog('set-editor', {
+      type: 'setting',
+      locale: currentEditor,
+    });
   }
 
   useEffect(() => {

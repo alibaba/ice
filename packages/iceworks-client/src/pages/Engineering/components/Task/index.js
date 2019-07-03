@@ -12,6 +12,7 @@ import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
+import glodlog from '@utils/glodlog';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
 import styles from './index.module.scss';
@@ -52,6 +53,9 @@ const Task = ({ history, intl }) => {
     try {
       writeLog(type);
       await task.start(type);
+      glodlog(`start-${type}-task`, {
+        type: 'engineering',
+      });
     } catch (error) {
       showMessage(error.message);
     }
@@ -61,6 +65,9 @@ const Task = ({ history, intl }) => {
     try {
       writeLog(type);
       await task.stop(type);
+      glodlog(`stop-${type}-task`, {
+        type: 'engineering',
+      });
     } catch (error) {
       showMessage(error.message);
     }
@@ -96,6 +103,9 @@ const Task = ({ history, intl }) => {
         title: '提示',
         content: '配置修改成功',
         align: 'tr tr',
+      });
+      glodlog(`set-${type}-config`, {
+        type: 'engineering',
       });
     } catch (error) {
       Message.show({
