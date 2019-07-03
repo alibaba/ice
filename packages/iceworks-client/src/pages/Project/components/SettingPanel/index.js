@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Switch } from '@alifd/next';
 import Ellipsis from '@icedesign/ellipsis';
 import styles from './index.module.scss';
@@ -7,7 +8,7 @@ import styles from './index.module.scss';
 const SettingPanel = ({ panels, onChange }) => {
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.head}>面板设置</h2>
+      <h2 className={styles.head}><FormattedMessage id="iceworks.project.panel.title" /></h2>
       {
         panels.map(({ title, description, cover, isAvailable, name }) => {
           return (
@@ -40,4 +41,4 @@ SettingPanel.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default SettingPanel;
+export default injectIntl(SettingPanel);

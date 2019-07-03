@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Button } from '@alifd/next';
 import ScaffoldCard from '@components/ScaffoldCard';
@@ -28,16 +29,16 @@ const QuickStart = ({
           </div> : null
       }
       <div className={styles.text}>
-        从热门模板开始初始化你的项目
+        <FormattedMessage id="iceworks.quickStart.title" />
       </div>
       <div className={styles.opts}>
         <Button className={styles.btn} type="secondary" size="large" onClick={onOpenProject}>
           <Icon type="package" size="small" />
-          <span>打开项目</span>
+          <FormattedMessage id="iceworks.quickStart.open" />
         </Button>
         <Button className={styles.btn} type="primary" size="large" onClick={onCreateProject}>
           <Icon type="plus" size="small" />
-          <span>更多模板</span>
+          <FormattedMessage id="iceworks.quickStart.more" />
         </Button>
       </div>
     </div>
