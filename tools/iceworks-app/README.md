@@ -6,7 +6,7 @@
 
     ```bash
     $ cd ../../pacakges/iceworks-server
-    $ npm run dev
+    $ npm run start
     ```
 0. Start iceworks client:
 
@@ -17,6 +17,7 @@
 0. Start icewroks app:
 
     ```
+    $ cd ../../packages/iceworks-app
     $ npm run start
     ```
 
