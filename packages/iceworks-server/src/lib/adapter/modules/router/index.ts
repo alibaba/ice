@@ -218,37 +218,44 @@ export default class Router implements IRouterModule {
    * 3. add import if there is no layout or component in the ImportDeclarations
    */
   private changeImportDeclarations(routerConfigAST, data) {
-    const removeIndex = [];
+    // gt v3 exist config catalog
+    const existConfigCatalog = this.configFilePath.indexOf('config/') === 0;
     const importDeclarations = [];
+    const removeIndex = [];
+    // router import page or layout have @
+    let existAtSign = false;
     this.existLazy = false;
 
     traverse(routerConfigAST, {
       ImportDeclaration: ({ node, key }) => {
         const { source } = node;
-        const match = source.value.match(/^\.\/(layouts|pages)\//);
+        const match = source.value.match(/^(\.|@)\/(layouts|pages)\//);
 
-        if (match && match[1]) {
+        if (match && match[2]) {
           const { specifiers } = node;
           const { name } = specifiers[0].local;
+          existAtSign = match[1] === '@';
           importDeclarations.push({
             index: key,
             name,
-            type: match[1],
+            type: match[2],
           });
         }
       },
 
+      // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
       VariableDeclaration: ({ node, key }) => {
         const code = generate(node.declarations[0]).code;
-        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"](\.\/(\w+)\/.+)['|"]\)/;
+        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|\@)\/(\w+)\/.+)['|"]\)/;
         const match = code.match(matchLazyReg);
 
-        if (match && match.length > 4) {
+        if (match && match.length > 5) {
           this.existLazy = true;
+          existAtSign = match[4] === '@';
           importDeclarations.push({
             index: key,
             name: match[1],
-            type: match[4],
+            type: match[5],
           });
         }
       },
@@ -302,6 +309,7 @@ export default class Router implements IRouterModule {
     });
 
     const existImport = this.existImport;
+    // add new page or layout
     function setNewComponent(type, component) {
       const componentExist = existImport(importDeclarations, component, type);
 
@@ -335,13 +343,17 @@ export default class Router implements IRouterModule {
      */
     let lazyCode = '';
     let importCode = '';
+    let sign = '@';
+    if (!existConfigCatalog && !existAtSign) {
+      sign = '.';
+    }
     newImports.forEach(({name, type}) => {
       if (!this.existLazy || type === LAYOUT_DIRECTORY) {
-        // layour or not exist lazy use `import Page from './pages/Page'`
-        importCode += `import ${name} from './${type}/${name}';\n`;
+        // layour or not exist lazy use `import Page from '@/pages/Page'`
+        importCode += `import ${name} from '${sign}/${type}/${name}';\n`;
       } else {
-        // use lazy `const Page = React.lazy(() => import('./pages/Page'))`
-        lazyCode += `const ${name} = React.lazy(() => import('./${type}/${name}'));\n`;
+        // use lazy `const Page = React.lazy(() => import('@/pages/Page'))`
+        lazyCode += `const ${name} = React.lazy(() => import('${sign}/${type}/${name}'));\n`;
       }
     });
 
