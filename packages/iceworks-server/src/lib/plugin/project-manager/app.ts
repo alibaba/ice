@@ -114,8 +114,6 @@ class Project implements IProject {
 
       this.initPanels();
     }
-
-    console.log('this.panels:::', this.panels);
   }
 
   /**
