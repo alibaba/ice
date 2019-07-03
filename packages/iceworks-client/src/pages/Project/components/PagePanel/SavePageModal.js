@@ -93,24 +93,26 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
             placeholder=""
           />
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          size="medium"
-          label={(
-            <span>
-              <FormattedMessage id="iceworks.project.panel.page.save.routePath.group.label" />
-              <TipIcon>
-                选择一个已存在的路由分组，会将该路由放到这个分组下面，共用分组上的布局组件
-              </TipIcon>
-            </span>
-          )}
-        >
-          <Select
-            className={styles.select}
-            name="routeGroup"
-            dataSource={routerGroups}
-          />
-        </FormItem>
+        {routerGroups.length ? (
+          <FormItem
+            {...formItemLayout}
+            size="medium"
+            label={(
+              <span>
+                <FormattedMessage id="iceworks.project.panel.page.save.routePath.group.label" />
+                <TipIcon>
+                  选择一个已存在的路由分组，会将该路由放到这个分组下面，共用分组上的布局组件
+                </TipIcon>
+              </span>
+            )}
+          >
+            <Select
+              className={styles.select}
+              name="routeGroup"
+              dataSource={routerGroups}
+            />
+          </FormItem>
+        ) : null}
         <FormItem
           {...formItemLayout}
           size="medium"
