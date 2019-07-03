@@ -22,7 +22,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
   const progress = stores.useStore('progress');
   const routerStore = pageStores.useStore('routes');
   const { dataSource: routes } = routerStore;
-  const pathReg = /^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
+  const pathReg = /^\/([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
 
   async function onSave(values, errors) {
     if (!errors) {
