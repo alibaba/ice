@@ -33,8 +33,8 @@ async function start(options = {}) {
     }
   });
 
-  child.on('error', () => {
-    failedMsg();
+  child.on('error', (error) => {
+    failedMsg(error);
   });
 }
 
@@ -53,9 +53,11 @@ function successMsg(url) {
 /**
  * Log an error `message` to the console and exit.
  */
-function failedMsg() {
+function failedMsg(error) {
   console.log();
   console.log('😞  Start iceworks failed');
+  console.log();
+  console.log(error);
   console.log();
 }
 

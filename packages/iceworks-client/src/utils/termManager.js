@@ -1,6 +1,7 @@
 /* eslint no-underscore-dangle:0 */
 import { Terminal } from 'xterm';
 import dateTime from 'date-time';
+import deepmerge from 'deepmerge';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as webLinks from 'xterm/dist/addons/webLinks/webLinks';
 
@@ -46,7 +47,6 @@ const writeChunkFn = (term) => {
   return writeChunk;
 };
 
-
 const writeLog = (term) => (data) => term.writeln(` ${dateTime()} ${data}`);
 
 class TermManager {
@@ -61,7 +61,7 @@ class TermManager {
    * @param {object} container
    */
   create(id, container, options = {}) {
-    const opts = Object.assign({}, defaultOptions, options);
+    const opts = deepmerge(defaultOptions, options);
     if (!this.terms[id]) {
       this.terms[id] = new Terminal(opts);
       this.terms[id].writeChunk = writeChunkFn(this.terms[id]);

@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Tab } from '@alifd/next';
 import useModal from '@hooks/useModal';
-import Icon from '@components/Icon';
+import cloneDeep from 'lodash.clonedeep';
 import MenuTreeConfig from '../../../../components/MenuTreeConfig';
 import CreateMenuModal from './CreateMenuModal';
 import DeleteMenuModal from './DeleteMenuModal';
 import traverse from '../../../../utils/traverse';
 
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const MenuPanel = () => {
+const { Item: TabPane } = Tab;
+let currentTab = 'aside';
+
+const MenuPanel = ({ intl, title, description }) => {
   const {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
@@ -26,8 +32,7 @@ const MenuPanel = () => {
   });
   const [deleteMenu, setDeleteMenu] = useState({});
   const menuStore = stores.useStore('menu');
-  const { dataSource } = menuStore;
-  const { asideMenuConfig } = dataSource;
+  const { asideMenuConfig, headerMenuConfig } = menuStore;
 
   function onRefresh() {
     menuStore.refresh();
@@ -50,17 +55,20 @@ const MenuPanel = () => {
       data: menuTree,
       options: {
         replacement: true,
+        type: currentTab,
       },
     });
-    onRefresh();
+    setTimeout(onRefresh, 0);
   }
 
   async function onCreate(action, value) {
     toggleCreateModal();
+    const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
+    const copyData = cloneDeep(data);
     if (action === 'create') {
-      asideMenuConfig.push(value);
+      copyData.push(value);
     } else {
-      traverse(asideMenuConfig, (config) => {
+      traverse(copyData, (config) => {
         if (config.id === value.id) {
           Object.assign(config, value);
           return true;
@@ -68,7 +76,7 @@ const MenuPanel = () => {
         return false;
       }, true);
     }
-    await onChangeTree(asideMenuConfig);
+    await onChangeTree(copyData);
   }
 
   function onOpenDeleteModal(menu) {
@@ -77,36 +85,52 @@ const MenuPanel = () => {
   }
 
   async function onDelete() {
+    const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
     toggleDeleteModal();
-    traverse(asideMenuConfig, (config, parentList, index) => {
+    traverse(data, (config, parentList, index) => {
       if (config.id === deleteMenu.id) {
         parentList.splice(index, 1);
         return true;
       }
       return false;
     }, true);
-    await onChangeTree(asideMenuConfig);
+    await onChangeTree(data);
   }
+
+  function onChangeTab(value) {
+    currentTab = value;
+  }
+
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onOpenCreateModal,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.menu.button.add' }),
+    },
+  ];
 
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.menu.title" /></h3>
-          <div className={styles.icons}>
-            <Icon className={styles.icon} type="reload" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="plus" size="small" onClick={onOpenCreateModal} />
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
         <CreateMenuModal
-          title="添加导航"
           modalData={modalData}
           on={onCreateModel}
           onCancel={toggleCreateModal}
           onOk={onCreate}
+          currentType={currentTab}
         />
         <DeleteMenuModal
           on={onDeleteModel}
@@ -114,15 +138,44 @@ const MenuPanel = () => {
           onOk={onDelete}
           menu={deleteMenu}
         />
-        <MenuTreeConfig
-          items={asideMenuConfig}
-          onChange={onChangeTree}
-          onOpenEditModal={onOpenModal}
-          onDeleteLink={onOpenDeleteModal}
-        />
+        <Tab
+          size="small"
+          contentStyle={{ padding: '10px 0 0' }}
+          onChange={onChangeTab}
+        >
+          <TabPane
+            title={<FormattedMessage id="iceworks.project.panel.menu.tab.asideMenu" />}
+            key="aside"
+          >
+            <MenuTreeConfig
+              items={asideMenuConfig}
+              onChange={onChangeTree}
+              onOpenEditModal={onOpenModal}
+              onDeleteLink={onOpenDeleteModal}
+            />
+          </TabPane>
+          <TabPane
+            title={<FormattedMessage id="iceworks.project.panel.menu.tab.headerMenu" />}
+            key="header"
+          >
+            <MenuTreeConfig
+              items={headerMenuConfig}
+              onChange={onChangeTree}
+              onOpenEditModal={onOpenModal}
+              onDeleteLink={onOpenDeleteModal}
+              nested={false}
+            />
+          </TabPane>
+        </Tab>
       </div>
     </Panel>
   );
 };
 
-export default MenuPanel;
+MenuPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(MenuPanel);

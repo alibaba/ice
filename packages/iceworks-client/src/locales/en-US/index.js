@@ -10,10 +10,12 @@ export default {
   'iceworks.global.button.submit': 'Submit',
   'iceworks.global.button.selectAll': 'Select All',
   'iceworks.global.fallback.title': 'Loading',
+  'iceworks.global.adapter.title': 'Project adaptation failed',
+  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the documentation for adaptation',
 
   // menu
   'iceworks.menu.project': 'Project',
-  'iceworks.menu.task': 'Task',
+  'iceworks.menu.task': 'Engineering',
   'iceworks.menu.task.dev': 'dev',
   'iceworks.menu.task.dev.desc': 'start server for development',
   'iceworks.task.dev.start.msg': 'Running Server',
@@ -51,9 +53,20 @@ export default {
   'iceworks.project.submenu.opts.createProject': 'Create',
 
   // project panel
-  'iceworks.project.panel.page.title': 'Page',
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
+
+  // project task
+  'iceworks.project.panel.task.title': 'Run Task',
+
+  // project guide
+  'iceworks.project.panel.guide.title': 'Getting Started Guide',
+  'iceworks.project.panel.guide.project': 'Project Management',
+  'iceworks.project.panel.guide.project.desc': 'Visualize the management of the current project information, or you can customize the panel through the settings button on the right',
+  'iceworks.project.panel.guide.engineering': 'Engineering Management',
+  'iceworks.project.panel.guide.engineering.desc': 'Visualize and manage complex engineering configurations to make front-end engineering easy and convenient',
+  'iceworks.project.panel.guide.material': 'Material Market',
+  'iceworks.project.panel.guide.material.desc': 'Provide a lot of templates and blocks, quickly create projects, support style switching, and meet custom features',
 
   // project page
   'iceworks.project.panel.page.create.title': 'Create Page',
@@ -72,29 +85,27 @@ export default {
   'iceworks.project.panel.page.save.routePath.placeholder': 'Enter a combination of lowercase letters and numbers to support secondary routing separated by `/`',
   'iceworks.project.panel.page.save.menuName.label': 'Page Navigation Name',
   'iceworks.project.panel.page.save.menuName.placeholder': 'No navigation items are generated for null',
+  'iceworks.project.panel.page.button.refresh': 'refresh',
+  'iceworks.project.panel.page.button.add': 'add page',
 
   // project dependency
-  'iceworks.project.panel.dependency.title': 'Dependency',
   'iceworks.project.panel.dependency.main.upgrade': 'Upgrade to {wantedVestion}',
   'iceworks.project.panel.dependency.main.reset.title': 'Reinstall',
   'iceworks.project.panel.dependency.main.reset.content': 'All dependencies of the installation project will be reset. During installation, debugging services, new pages, and project operation can not be started. Please wait patiently.',
 
   // project layout
-  'iceworks.project.panel.layout.title': 'Layout',
   'iceworks.project.panel.layout.none': 'No layout',
+  'iceworks.project.panel.layout.refresh': 'refresh',
 
   // project todo
-  'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.todo.none': 'No comments in the code need to deal with',
   'iceworks.project.panel.todo.example': 'e.g., // TODO somthing to do',
   'iceworks.project.panel.todo.refresh': 'Refresh',
   'iceworks.project.panel.todo.line': 'Line {line}',
 
   // project def
-  'iceworks.project.panel.def.title': 'DEF',
 
   // project git
-  'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.git.button.add': 'New Branch',
   'iceworks.project.panel.git.button.switch': 'Checkout Branch',
   'iceworks.project.panel.git.button.pull': 'Pull',
@@ -116,6 +127,7 @@ export default {
   'iceworks.project.panel.git.main.submit.message': 'Input Message',
   'iceworks.project.panel.git.main.tip.unstageFiles': 'Unstaged Files',
   'iceworks.project.panel.git.main.tip.refresh': 'Change information will not be refreshed in real time. Please update the status through the button in the upper right corner before submitting it.',
+  'iceworks.project.panel.git.main.tip.nodata': 'No file changes',
   'iceworks.project.panel.git.switch.title': 'Checkout Branch',
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',
@@ -123,11 +135,14 @@ export default {
   'iceworks.project.panel.oss.button.clear': 'Clean',
 
   // project menu
-  'iceworks.project.panel.menu.title': 'Menu',
+  'iceworks.project.panel.menu.ordinary': 'menu',
+  'iceworks.project.panel.menu.group': 'menu group',
+  'iceworks.project.panel.menu.external': 'external',
   'iceworks.project.panel.menu.create.title': 'Create Menu',
   'iceworks.project.panel.menu.delete.title': 'Delete Menu',
   'iceworks.project.panel.menu.delete.content': 'Are you sure delete menu \'{name}\' ？',
   'iceworks.project.panel.menu.delete.subcontent': 'Menu under the menu group, please be careful to delete!!!',
+  'iceworks.project.panel.menu.delete.warn': 'Note: Delete menu will not delete the corresponding routing, manual operation is required',
   'iceworks.project.panel.menu.edit.title': 'Edit Menu',
   'iceworks.project.panel.menu.form.type': 'type',
   'iceworks.project.panel.menu.form.type.placeholder': 'please select type',
@@ -135,23 +150,49 @@ export default {
   'iceworks.project.panel.menu.form.name.placeholder': 'please enter name',
   'iceworks.project.panel.menu.form.icon': 'icon',
   'iceworks.project.panel.menu.form.icon.placeholder': 'please enter icon',
+  'iceworks.project.panel.menu.form.icon.message': 'please enter a correct icon name.',
+  'iceworks.project.panel.menu.form.icon.tip.first': 'Menu item icon, can be from',
+  'iceworks.project.panel.menu.form.icon.tip.end': 'choice',
   'iceworks.project.panel.menu.form.path': 'path',
   'iceworks.project.panel.menu.form.path.placeholder': 'please enter path',
+  'iceworks.project.panel.menu.form.path.help': 'To modify the path, you need to modify the corresponding path manually in the routing configuration',
+  'iceworks.project.panel.menu.form.path.message': 'please enter a correct path',
+  'iceworks.project.panel.menu.tab.asideMenu': 'Aside Menu',
+  'iceworks.project.panel.menu.tab.headerMenu': 'Header Menu',
   'iceworks.project.panel.menu.form.newwindow': 'open new window',
+  'iceworks.project.panel.menu.form.newwindow.tip': 'clicks on the link to open a new page',
+  'iceworks.project.panel.menu.button.refresh': 'refresh',
+  'iceworks.project.panel.menu.button.add': 'Create Menu',
+  'iceworks.project.panel.menu.form.type.tip': 'There are three types of menu groups, ordinary menus and external chains, which can be put into menu groups under ordinary menus and external chains',
 
   // project router
-  'iceworks.project.panel.router.title': 'Router',
+  'iceworks.project.panel.router.title.path': 'path',
+  'iceworks.project.panel.router.title.component': 'component',
+  'iceworks.project.panel.router.title.operate': 'operate',
   'iceworks.project.panel.router.create.title': 'Create Router',
   'iceworks.project.panel.router.delete.title': 'Delete Router',
   'iceworks.project.panel.router.delete.content': 'Are you sure delete router \'{name}\' ？',
+  'iceworks.project.panel.router.delete.warn': 'Note: Deleting routing does not delete the corresponding navigation and requires manual operation',
   'iceworks.project.panel.router.edit.title': 'Edit Router',
   'iceworks.project.panel.router.form.path': 'path',
+  'iceworks.project.panel.router.form.path.placeholder': 'please select path',
   'iceworks.project.panel.router.form.component': 'component',
+  'iceworks.project.panel.router.form.component.placeholder': 'please select component',
+  'iceworks.project.panel.router.form.component.tip': 'If the routing group is selected above, the list here is the layouts component, the routing group is not selected, and the list here is the components component',
   'iceworks.project.panel.router.form.exact': 'exact',
+  'iceworks.project.panel.router.form.exact.tip': 'If the exact matching is selected, path writing /one, access /one /two cannot match, please refer to the specific document',
+  'iceworks.project.panel.router.form.exact.link': 'link',
   'iceworks.project.panel.router.form.layout': 'layout',
+  'iceworks.project.panel.router.form.routerType': 'routerType',
+  'iceworks.project.panel.router.form.routerType.tip': 'To select a routing packet, the component needs to select a layout. Subrouting can be created under the group, and subrouting can not be created under the non-group',
+  'iceworks.project.panel.router.button.refresh': 'refresh',
+  'iceworks.project.panel.router.button.add': 'add router',
+  'iceworks.project.panel.router.form.path.required': 'path required',
+  'iceworks.project.panel.router.form.path.valid': 'The path must begin with \'/\'',
+  'iceworks.project.panel.router.form.path.hasExist': 'exist path',
 
   // task
-  'iceworks.task.title': 'Task',
+  'iceworks.task.title': 'Engineering',
   'iceworks.task.dev.title': 'dev',
   'iceworks.task.dev.desc': 'Compiles and hot-reloads for development',
   'iceworks.task.start': 'Run Task',
@@ -182,15 +223,20 @@ export default {
   'iceworks.material.customMaterial': 'Custom Material',
   'iceworks.material.officialMaterial': 'Official Material',
   'iceworks.material.name': 'Material name',
+  'iceworks.material.delete': 'Delete material',
+  'iceworks.material.deleteConfirm': 'Are you sure delete material?',
+  'iceworks.material.sourceUrlTips': 'Material source URL is the URL of the material data. It can be a API or a URL of a JSON file. It cannot be repeated.',
+  'iceworks.material.nameTips': 'You can customize material name',
 
   // global bar
-  'iceowrks.global.bar.project': 'Project Name',
-  'iceowrks.global.bar.log': 'Log',
-  'iceowrks.global.bar.folder': 'Folder',
-  'iceowrks.global.bar.editor': 'Editor',
-  'iceowrks.global.bar.theme': 'Theme',
-  'iceowrks.global.bar.feedback': 'Feedback',
-  'iceowrks.global.bar.feedback.title': 'Experience feedback',
-  'iceowrks.global.bar.feedback.join': 'Join DingTalk community',
-  'iceowrks.global.bar.feedback.submit': 'Feedback or Bug report',
+  'iceworks.global.bar.project': 'Project Name',
+  'iceworks.global.bar.log': 'Log',
+  'iceworks.global.bar.folder': 'Folder',
+  'iceworks.global.bar.editor': 'Editor',
+  'iceworks.global.bar.feedback': 'Feedback',
+  'iceworks.global.bar.feedback.title': 'Experience feedback',
+  'iceworks.global.bar.feedback.join': 'Join DingTalk community',
+  'iceworks.global.bar.feedback.submit': 'Feedback or Bug report',
+  'iceworks.global.bar.theme.dark': 'Dark',
+  'iceworks.global.bar.theme.light': 'Light',
 };

@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import useProject from '@hooks/useProject';
 import useMaterial from '@hooks/useMaterial';
-import useModal from '@hooks/useModal';
 import useDependency from '@hooks/useDependency';
 import CreateProjectModal from '@components/CreateProjectModal';
 import SubMenu from './components/SubMenu';
@@ -16,6 +15,7 @@ import BlockPanel from './components/BlockPanel';
 import ComponentPanel from './components/ComponentPanel';
 import InstallModal from './components/InstallModal';
 import AddMaterialModal from './components/AddMaterialModal';
+import DeleteMaterialModal from './components/DeleteMaterialModal';
 import styles from './index.module.scss';
 
 const DEFAULT_CATEGORY = '全部';
@@ -32,11 +32,15 @@ const Material = ({ history, intl }) => {
     setMaterialModal,
     addMaterial,
     addMaterialLoading,
-  } = useMaterial(false, material.addMaterial);
-  const {
-    on: onInstallModal,
-    setModal: setInstallModal,
-  } = useModal();
+    deleteMaterialLoading,
+    deleteMaterial,
+    openDeleteMaterialModal,
+    onDeleteMaterialModal,
+    setDeleteMaterialModal,
+    deleteMaterialSource,
+    onInstallModal,
+    setInstallModal,
+  } = useMaterial(false, material);
   const {
     bulkCreate,
   } = useDependency();
@@ -62,18 +66,26 @@ const Material = ({ history, intl }) => {
     setCurrentCategory(name);
   }
 
+  // it is necessary to trigger lazyLoad checking
+  // when block tabPanel enter the viewport
+  // https://github.com/twobin/react-lazyload#forcecheck
+  useEffect(() => {
+    forceCheck();
+  }, [currentCategory]);
+
   async function handleTabChange(key = 'scaffolds') {
     setType(key);
     handleCategoryChange();
-
-    // it is necessary to trigger lazyLoad checking
-    // when block tabPanel enter the viewport
-    if (key === 'blocks') {
-      setTimeout(() => {
-        forceCheck();
-      }, 100);
-    }
   }
+
+  // it is necessary to trigger lazyLoad checking
+  // when block tabPanel enter the viewport
+  // https://github.com/twobin/react-lazyload#forcecheck
+  useEffect(() => {
+    if (type === 'blocks') {
+      forceCheck();
+    }
+  }, [type]);
 
   async function handleMenuChange(url) {
     await handleTabChange();
@@ -91,11 +103,11 @@ const Material = ({ history, intl }) => {
     history.push('/project', { createdProject: true });
   }
 
-  async function handleDeleteMaterial(url) {
-    await material.deleteMaterial(url);
+  async function handleDeleteMaterial() {
+    await deleteMaterial(deleteMaterialSource);
 
     // if deleted current item, go back to first item
-    if (dataSource.currentSource === url) {
+    if (dataSource.currentSource === deleteMaterialSource) {
       const firstResource = dataSource.resource.official[0] || {};
       const defaultActiveMaterial = firstResource.source;
       await handleTabChange();
@@ -175,11 +187,11 @@ const Material = ({ history, intl }) => {
         data={dataSource.resource}
         onChange={handleMenuChange}
         onAddMaterial={() => setMaterialModal(true)}
-        onDelete={handleDeleteMaterial}
+        onDelete={openDeleteMaterialModal}
       />
       <div className={styles.main}>
         <Card title={cardTitle} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
-          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
+          <Tab shape="capsule" size="medium" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>
                 {tab.content}
@@ -198,6 +210,12 @@ const Material = ({ history, intl }) => {
           onCancel={() => setMaterialModal(false)}
           onSave={handleAddMaterial}
           loading={addMaterialLoading}
+        />
+        <DeleteMaterialModal
+          on={onDeleteMaterialModal}
+          onCancel={() => setDeleteMaterialModal(false)}
+          loading={deleteMaterialLoading}
+          onOk={handleDeleteMaterial}
         />
       </div>
     </div>

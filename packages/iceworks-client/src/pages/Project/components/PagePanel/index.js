@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Message } from '@alifd/next';
 import Icon from '@components/Icon';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
 import BuildPageModal from './BuildPageModal';
 
-const PagePanel = () => {
+const PagePanel = ({ intl, title, description }) => {
   const [deleteName, setDeleteName] = useState('');
   const [editingName, setEditingName] = useState('');
   const {
@@ -51,6 +53,12 @@ const PagePanel = () => {
 
   async function deletePage() {
     await pages.delete(deleteName);
+    const { deletePaths } = await routerStore.delete({
+      componentName: deleteName,
+    });
+    await menuStore.delete({
+      paths: deletePaths,
+    });
 
     toggleDeleteModal();
 
@@ -61,6 +69,8 @@ const PagePanel = () => {
     });
 
     pages.refresh();
+    menuStore.refresh();
+    routerStore.refresh();
   }
 
   async function createPage(data) {
@@ -132,16 +142,27 @@ const PagePanel = () => {
       return name === editingName;
     }) || {};
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.refresh' }),
+    },
+    {
+      type: 'plus',
+      onClick: onCreate,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.page.button.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
-          <div className={styles.icons}>
-            <Icon className={styles.icon} title="刷新" type="reload" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} title="添加页面" type="plus" size="small" onClick={onCreate} />
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
@@ -197,4 +218,10 @@ const PagePanel = () => {
   );
 };
 
-export default PagePanel;
+PagePanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(PagePanel);

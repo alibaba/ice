@@ -1,13 +1,13 @@
 import React from 'react';
 import { Tab } from '@alifd/next';
 import Icon from '@components/Icon';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import useDependency, { STATUS_RESETING } from '@hooks/useDependency';
 import CreateDependencyModal from './CreateDependencyModal';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import styles from './index.module.scss';
 
 const { Item: TabPane } = Tab;
@@ -50,7 +50,7 @@ DependencyItem.propTypes = {
   onUpgrade: PropTypes.func,
 };
 
-const DependencyPanel = () => {
+const DependencyPanel = ({ intl, title, description }) => {
   const {
     onReset,
     onCreate,
@@ -75,55 +75,34 @@ const DependencyPanel = () => {
 
   const { dataSource } = dependenciesStore;
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: refresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.refresh' }),
+    },
+    {
+      type: 'package',
+      onClick: onReset,
+      className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.download' }),
+    },
+    {
+      type: 'plus',
+      onClick: onCreate,
+      className: { [styles.iconReseting]: dataSource.status === STATUS_RESETING },
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.add' }),
+    },
+  ];
+
   return (
     <Panel
       header={
-        <div className={styles.header}>
-          <h3><FormattedMessage id="iceworks.project.panel.dependency.title" /></h3>
-          <div className={styles.icons}>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.refresh">
-              {(title) => (
-                <Icon
-                  className={styles.icon}
-                  type="reload"
-                  size="small"
-                  onClick={refresh}
-                  title={title}
-                />
-              )}
-            </FormattedMessage>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.download">
-              {(title) => (
-                <Icon
-                  className={
-                    classNames({
-                      [styles.icon]: true,
-                      [styles.reseting]: dataSource.status === STATUS_RESETING,
-                    })
-                  }
-                  type="package"
-                  size="small"
-                  onClick={onReset}
-                  title={title}
-                />
-              )}
-            </FormattedMessage>
-            <FormattedMessage id="iceworks.project.panel.dependency.main.add">
-              {(title) => (<Icon
-                className={
-                  classNames({
-                    [styles.icon]: true,
-                    [styles.reseting]: dataSource.status === STATUS_RESETING,
-                  })
-                }
-                type="plus"
-                size="small"
-                onClick={onCreate}
-                title={title}
-              />)}
-            </FormattedMessage>
-          </div>
-        </div>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       <div className={styles.main}>
@@ -133,7 +112,7 @@ const DependencyPanel = () => {
           onOk={bulkCreate}
         />
         <Modal
-          title={<FormattedMessage id="iceworks.project.panel.dependency.main.reset.title" />}
+          title={intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.reset.title' })}
           visible={onResetModal}
           onCancel={() => setResetModal(false)}
           onOk={reset}
@@ -141,7 +120,7 @@ const DependencyPanel = () => {
           <FormattedMessage id="iceworks.project.panel.dependency.main.reset.content" />
         </Modal>
         <Modal
-          title={<FormattedMessage id="iceworks.project.panel.dependency.main.incompatible.title" />}
+          title={intl.formatMessage({ id: 'iceworks.project.panel.dependency.main.incompatible.title' })}
           visible={onIncompatibleModal}
           onCancel={() => setIncompatibleModal(false)}
           onOk={async () => {
@@ -186,4 +165,10 @@ const DependencyPanel = () => {
   );
 };
 
-export default DependencyPanel;
+DependencyPanel.propTypes = {
+  intl: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
+
+export default injectIntl(DependencyPanel);

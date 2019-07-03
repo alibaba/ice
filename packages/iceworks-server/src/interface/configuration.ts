@@ -1,36 +1,4 @@
-import { IBaseModule } from './base';
-
-export interface ICLIConf {
-  /**
-   * 标签名
-   */
-  label: string;
-
-  /**
-   * 字段名
-   */
-  name: string;
-
-  /**
-   * 描述
-   */
-  description: string;
-
-  /**
-   * 链接
-   */
-  link: string;
-
-  /**
-   * 展示组件名称
-   */
-  componentName: string;
-
-  /**
-   * 展示组件的 props
-   */
-  componentProps: object;
-}
+import { IBaseModule, IConfSchema, IContext } from './base';
 
 export interface IConfParam {
   /**
@@ -48,7 +16,7 @@ export interface IConfigurationModule extends IBaseModule {
   /**
    * 获取构建配置项
    */
-  getCLIConf(): Promise<ICLIConf[]>;
+  getCLIConf(args, ctx: IContext): Promise<IConfSchema[]>;
 
   /**
    * 设置构建配置项

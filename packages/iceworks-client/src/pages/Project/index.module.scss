@@ -51,7 +51,7 @@
   }
 }
 
-.panelSetting {
+.settingPanel {
   .button {
     position: fixed;
     right: 0;
@@ -73,4 +73,12 @@
 
 .sortableDraging {
   cursor: move;
+}
+
+.noAdapter {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }

@@ -1,38 +1,23 @@
-import { IBaseModule, IContext } from './base';
+import { IBaseModule, IContext, IConfSchema } from './base';
 
 /**
  * 调试服务设置项
  */
 export interface ITaskConf {
   /**
-   * 标签名
+   * 开发配置
    */
-  label: string;
+  dev: IConfSchema[];
 
   /**
-   * 字段名
+   * 构建配置
    */
-  name: string;
+  build: IConfSchema[];
 
   /**
-   * 描述
+   * 语法检查配置
    */
-  description: string;
-
-  /**
-   * 链接
-   */
-  link: string;
-
-  /**
-   * 展示组件名称
-   */
-  componentName: string;
-
-  /**
-   * 展示组件的 props
-   */
-  componentProps: object;
+  lint: IConfSchema[];
 }
 
 /**
@@ -66,11 +51,19 @@ export interface ITaskModule extends IBaseModule {
   stop(task: ITaskParam, ctx: IContext): Promise<ITaskModule>;
 
   /**
+   * 查询调试服务运行状态
+   *
+   * @param task 任务信息
+   * @return {string} 是否运行中
+   */
+  getStatus(task: ITaskParam): string;
+
+  /**
    * 获取任务配置项
    *
    * @param task 任务信息
    */
-  getConf(task: ITaskParam): Promise<ITaskConf[]>;
+  getConf(task: ITaskParam, ctx: IContext): Promise<IConfSchema[]>;
 
   /**
    * 设置任务配置项

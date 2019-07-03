@@ -14,11 +14,10 @@ const MainLayout = () => {
 
   useEffect(() => {
     project.refresh();
+    if (appConfig.isAliInternal) {
+      user.refresh();
+    }
   }, []);
-
-  if (appConfig.isAliInternal) {
-    user.refresh();
-  }
 
   async function onLogin(data) {
     await user.login(data);

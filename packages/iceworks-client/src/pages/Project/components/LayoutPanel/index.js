@@ -1,29 +1,45 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Message } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
+import PanelHead from '../Panel/head';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const LayoutPanel = () => {
+const LayoutPanel = ({ intl, title, description }) => {
   const layouts = stores.useStore('layouts');
   const { dataSource } = layouts;
+
+  function onRefresh() {
+    layouts.refresh();
+  }
+
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: intl.formatMessage({ id: 'iceworks.project.panel.layout.refresh' }),
+    },
+  ];
 
   return (
     <Panel
       header={
-        <h3>
-          <FormattedMessage id="iceworks.project.panel.layout.title" />
-        </h3>
+        <PanelHead
+          title={title}
+          description={description}
+          operations={operations}
+        />
       }
     >
       {dataSource.length ? (
         <div className={styles.main}>
-          {dataSource.map(({ name, title }) => {
+          {dataSource.map(({ name, title: layoutTitle }) => {
             return (
               <div key={name} className={styles.item}>
                 <strong>{name}</strong>
-                <span>{title}</span>
+                <span>{layoutTitle}</span>
               </div>
             );
           })}
@@ -38,4 +54,10 @@ const LayoutPanel = () => {
   );
 };
 
-export default LayoutPanel;
+LayoutPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(LayoutPanel);
