@@ -4,7 +4,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
 import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
-import goldlog from '@utils/goldlog'
+import goldlog from '@utils/goldlog';
 
 import CreateRouterModal from './CreateRouterModal';
 import DeleteRouterModal from './DeleteRouterModal';
