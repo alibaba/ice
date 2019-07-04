@@ -4,7 +4,6 @@
   "description": "iceworks server",
   "files": [
     "dist/",
-    "data/",
     "scripts/"
   ],
   "dependencies": {
