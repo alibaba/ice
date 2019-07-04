@@ -4,6 +4,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
 import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
+import ActionStatus from '@components/ActionStatus';
 
 import CreateRouterModal from './CreateRouterModal';
 import DeleteRouterModal from './DeleteRouterModal';
@@ -114,6 +115,7 @@ const RouterPanel = ({ intl, title, description }) => {
     if (deleteParent) {
       deleteParent.children.splice(deleteIndex, 1);
     } else {
+      // @TODO 不能直接修改state，否则会报错！
       dataSource.splice(deleteIndex, 1);
     }
     await onChangeData(dataSource);
@@ -277,11 +279,31 @@ const RouterPanel = ({ intl, title, description }) => {
               });
             })}
           </ul>
-        ) : (
+        ) : (!routerStore.refresh.error && (
           <Message title={<FormattedMessage id="iceworks.project.panel.router.none" />} type="help">
             <FormattedMessage id="iceworks.project.panel.router.prompt.create" />
           </Message>
-        )}
+        ))}
+
+        <ActionStatus
+          store={stores}
+          config={[
+            {
+              storeName: "routes",
+              actions: [
+                {
+                  actionName: 'refresh',
+                  showLoading: true,
+                  showError: true,
+                },
+                {
+                  actionName: 'bulkCreate',
+                  showError: true,
+                }
+              ]
+            }
+          ]}
+        />
       </div>
     </Panel>
   );

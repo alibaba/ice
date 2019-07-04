@@ -6,6 +6,7 @@ import GlobalBar from '@components/GlobalBar';
 import menuConfig from '@src/menuConfig';
 import routerConfig from '@src/routerConfig';
 import stores from '@stores';
+import ActionStatus from '@components/ActionStatus';
 import appConfig from '../../appConfig';
 import styles from './index.module.scss';
 
@@ -37,6 +38,20 @@ const MainLayout = () => {
         </div>
       </div>
       <GlobalBar project={project} />
+      <ActionStatus
+        store={stores}
+        config={[
+          {
+            storeName: 'user',
+            actions: [
+              {
+                actionName: 'refresh',
+                showError: true,
+              }
+            ],
+          }
+        ]}
+      />
     </div>
   );
 };
