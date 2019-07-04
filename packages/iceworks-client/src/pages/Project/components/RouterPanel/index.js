@@ -137,13 +137,15 @@ const RouterPanel = ({ intl, title, description }) => {
               textIndent: parent ? '20px' : 0,
             }}
           >
-            <Icon
-              type={layoutRouter ? 'folder' : 'menu'}
-              size="xs"
-              style={{
-                marginRight: 4,
-              }}
-            />
+            {layoutRouter && (
+              <Icon
+                type="folder"
+                size="xs"
+                style={{
+                  marginRight: 4,
+                }}
+              />
+            )}
             {path}
           </strong>
           <span className={styles.itemCol}>{component}</span>
@@ -220,7 +222,7 @@ const RouterPanel = ({ intl, title, description }) => {
     },
     {
       type: 'plus',
-      onClick: onOpenCreateModal,
+      onClick: () => onOpenCreateModal(),
       tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
     },
   ];
@@ -243,7 +245,6 @@ const RouterPanel = ({ intl, title, description }) => {
           router={deleteRouter}
         />
         <CreateRouterModal
-          title="添加路由"
           modalData={modalData}
           on={onCreateModel}
           onCancel={toggleCreateModal}
@@ -278,7 +279,7 @@ const RouterPanel = ({ intl, title, description }) => {
           </ul>
         ) : (
           <Message title={<FormattedMessage id="iceworks.project.panel.router.none" />} type="help">
-            <FormattedMessage id="iceworks.project.panel.router.example" />
+            <FormattedMessage id="iceworks.project.panel.router.prompt.create" />
           </Message>
         )}
       </div>

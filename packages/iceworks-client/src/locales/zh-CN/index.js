@@ -153,7 +153,7 @@ export default {
   'iceworks.project.panel.menu.create.title': '创建菜单',
   'iceworks.project.panel.menu.delete.title': '删除菜单',
   'iceworks.project.panel.menu.delete.content': '确定移除菜单 \'{name}\' ？',
-  'iceworks.project.panel.menu.delete.subcontent': '组下还有菜单，删除请谨慎！！！',
+  'iceworks.project.panel.menu.delete.subcontent': '注意：组下还有菜单，删除请谨慎',
   'iceworks.project.panel.menu.delete.warn': '注意：删除菜单不会删除对应的路由，需要手动操作',
   'iceworks.project.panel.menu.edit.title': '编辑菜单',
   'iceworks.project.panel.menu.form.type': '类型',
@@ -176,6 +176,12 @@ export default {
   'iceworks.project.panel.menu.button.refresh': '刷新',
   'iceworks.project.panel.menu.button.add': '新建菜单',
   'iceworks.project.panel.menu.form.type.tip': '总共有菜单组、普通菜单、外链三种类型，普通菜单和外链下可以放入菜单组',
+  'iceworks.project.panel.menu.form.name.tip': '导航名称，最终会显示在页面上',
+  'iceworks.project.panel.menu.form.path.tip': '导航路径，点击跳转到哪个页面',
+  'iceworks.project.panel.menu.aside.none': '暂无侧边栏导航',
+  'iceworks.project.panel.menu.aside.prompt.create': '点击右上方新建侧边栏导航',
+  'iceworks.project.panel.menu.header.none': '暂无头部导航',
+  'iceworks.project.panel.menu.header.prompt.create': '点击右上方新建头部导航',
 
   // project router
   'iceworks.project.panel.router.title.path': '路径',
@@ -203,7 +209,7 @@ export default {
   'iceworks.project.panel.router.form.path.valid': '路径必须以 \'/\' 开头',
   'iceworks.project.panel.router.form.path.hasExist': '路径已存在',
   'iceworks.project.panel.router.none': '暂无路由',
-  'iceworks.project.panel.router.example': '点击右上方新建路由',
+  'iceworks.project.panel.router.prompt.create': '点击右上方新建路由',
 
   // task
   'iceworks.task.title': '工程管理',
