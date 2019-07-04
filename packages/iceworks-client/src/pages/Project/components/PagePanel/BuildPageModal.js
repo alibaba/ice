@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Select, Input } from '@alifd/next';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Select, Input, Message } from '@alifd/next';
+import uniqBy from 'lodash.uniqby';
 import cx from 'classnames';
 import socket from '@src/socket';
 import stores from '@stores';
@@ -179,7 +180,7 @@ const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSo
 });
 
 const BuildPageModal = ({
-  on, onCancel, onOk, existedBlocks,
+  on, onCancel, onOk, existedBlocks, intl,
 }) => {
   const {
     on: onSaveModal,
@@ -198,6 +199,17 @@ const BuildPageModal = ({
   }
 
   async function onCreateOk() {
+    // check name
+    const hasSameName = uniqBy(selectedBlocks, 'name').length !== selectedBlocks.length;
+    if (hasSameName) {
+      Message.show({
+        type: 'error',
+        content: intl.formatMessage({ id: 'iceworks.project.panel.page.create.error.name.content' }),
+        align: 'tr tr',
+      });
+      return;
+    }
+
     // If has exists blocks, it is represented in edit mode
     if (existedBlocks.length) {
       await onOk(selectedBlocks);
@@ -322,4 +334,4 @@ BuildPageModal.propTypes = {
   existedBlocks: PropTypes.array,
 };
 
-export default BuildPageModal;
+export default injectIntl(BuildPageModal);

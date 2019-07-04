@@ -70,6 +70,7 @@ export default {
   'iceworks.project.panel.page.create.title': 'Create Page',
   'iceworks.project.panel.page.create.progress.start': 'Start create page...',
   'iceworks.project.panel.page.create.builder.empty': 'Select the block from the right',
+  'iceworks.project.panel.page.create.error.name.content': 'Please check block name as uniq.',
   'iceworks.project.panel.page.delete.title': 'Delete Page',
   'iceworks.project.panel.page.delete.content': 'Sure to delete {name} ？',
   'iceworks.project.panel.page.save.title': 'Page Information',
