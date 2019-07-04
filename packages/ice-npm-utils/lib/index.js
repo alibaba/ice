@@ -65,7 +65,8 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
         allWriteStream.push(new Promise((streamResolve) => {
           entry
             .pipe(fs.createWriteStream(destPath))
-            .on('finish', () => streamResolve());
+            .on('finish', () => streamResolve())
+            .on('close', () => streamResolve()); // resolve when file is empty in node v8
         }));
       })
       .on('end', () => {
