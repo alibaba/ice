@@ -199,7 +199,7 @@ const Project = ({ history, intl }) => {
       return (
         <div className={styles.noAdapter}>
           <h5><FormattedMessage id="iceworks.global.adapter.title" /></h5>
-          <p dangerouslySetInnerHTML={{ __html: intl.formatHTMLMessage({ id: 'iceworks.global.adapter.description' })}}></p>
+          <p dangerouslySetInnerHTML={{ __html: intl.formatHTMLMessage({ id: 'iceworks.global.adapter.description' }) }}></p>
           <div className={styles.reloadButton}>
             <Button type="primary" onClick={reloadAdapter}>
               <FormattedMessage id="iceworks.global.adapter.reload" />
