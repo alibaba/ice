@@ -1,6 +1,7 @@
 /* eslint babel/new-cap:0 */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@alifd/next';
 import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
@@ -25,6 +26,7 @@ import QuickStart from './components/QuickStart';
 import projectStores from './stores';
 import panels from './panels';
 import styles from './index.module.scss';
+
 
 const SortableDragHandle = SortableHandle(() => (
   <span className={styles.sortableDrag} />
@@ -95,7 +97,7 @@ const Project = ({ history }) => {
     Todo: todoStore,
   };
   const [isSorting, setIsSorting] = useState(false);
-  const [settingPanelStore] = stores.useStores(['settingPanel']);
+  const [settingPanelStore, projectStore] = stores.useStores(['settingPanel', 'project']);
 
   const {
     material,
@@ -133,6 +135,10 @@ const Project = ({ history }) => {
     if (isCreatedProject) {
       history.replace({ createdProject: false });
     }
+  }
+
+  async function reloadAdapter() {
+    await projectStore.reloadAdapter();
   }
 
   async function onResetModalOk() {
@@ -194,6 +200,9 @@ const Project = ({ history }) => {
         <div className={styles.noAdapter}>
           <h5><FormattedMessage id="iceworks.global.adapter.title" /></h5>
           <p><FormattedMessage id="iceworks.global.adapter.description" /></p>
+          <div className={styles.reloadButton}>
+            <Button type="primary" onClick={reloadAdapter}>刷新重试</Button>
+          </div>
         </div>
       );
     }
