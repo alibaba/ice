@@ -1,6 +1,8 @@
 const { resolve } = require('path');
 
 module.exports = {
+  publicPath: 'https://unpkg.com/iceworks-client@latest/build/',
+
   alias: {
     '@src': resolve(__dirname, 'src/'),
     '@layouts': resolve(__dirname, 'src/layouts/'),
