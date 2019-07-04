@@ -1,3 +1,4 @@
+const os = require('os');
 const gulp = require('gulp');
 const path = require('path');
 const fs = require('fs');
@@ -10,7 +11,13 @@ const packageJSON = require('./package.json');
 const Platform = builder.Platform;
 
 gulp.task('dist', (done) => {
-  const targets = Platform.MAC.createTarget();
+  let targets;
+  if(os.platform() == 'win32'){
+    targets = Platform.WINDOWS.createTarget();
+  }
+  else{
+    targets = Platform.MAC.createTarget();
+  }
   const serverDir = path.join(__dirname, 'server');
 
   getNpmTarball('iceworks-server')
