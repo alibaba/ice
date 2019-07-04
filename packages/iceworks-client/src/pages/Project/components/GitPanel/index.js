@@ -33,7 +33,6 @@ const GitPanel = ({ intl, title, description }) => {
     remoteUrl,
     currentBranch,
     localBranches,
-    originBranches,
     unstageFiles,
   } = dataSource;
 
