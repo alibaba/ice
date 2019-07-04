@@ -12,10 +12,9 @@ const Platform = builder.Platform;
 
 gulp.task('dist', (done) => {
   let targets;
-  if(os.platform() == 'win32'){
+  if (os.platform() === 'win32') {
     targets = Platform.WINDOWS.createTarget();
-  }
-  else{
+  } else {
     targets = Platform.MAC.createTarget();
   }
   const serverDir = path.join(__dirname, 'server');
