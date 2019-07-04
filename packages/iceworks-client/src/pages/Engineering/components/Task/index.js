@@ -13,8 +13,7 @@ import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
 import goldlog from '@utils/goldlog';
-import taskStores from './stores';
-import TaskModal from './components/TaskModal';
+import TaskModal from '../TaskModal';
 import styles from './index.module.scss';
 
 function showMessage(message, type) {
