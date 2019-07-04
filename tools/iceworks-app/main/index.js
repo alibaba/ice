@@ -45,7 +45,11 @@ function createWindow() {
       });
 
       serverProcess.stdout.on('data', (buffer) => {
-        console.log(buffer.toString());
+        let log_info = buffer.toString();
+        console.log(log_info);
+        if(log_info.search('midway started on')>0){
+          mainWindow.loadURL(getServerUrl());
+        }
       });
 
       serverProcess.on('error', (buffer) => {
