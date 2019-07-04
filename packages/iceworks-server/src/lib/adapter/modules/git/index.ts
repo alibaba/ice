@@ -22,8 +22,7 @@ export default class Git implements IGitModule {
     return await this.gitTools.branchLocal();
   }
 
-  private async getUnstagedFiles(): Promise<IUnstagedFile[]> {
-    const gitStatus = await this.gitTools.status();
+  private getUnstagedFiles(gitStatus): IUnstagedFile[] {
     const types = ['conflicted', 'not_added', 'modified', 'created', 'deleted', 'renamed'];
     let unstageFiles = [];
     if (gitStatus && gitStatus.files && gitStatus.files.length > 0) {
@@ -43,27 +42,28 @@ export default class Git implements IGitModule {
   public async getStatus(): Promise<IGitGetStatus> {
     const isRepository = await this.gitTools.checkIsRepo();
 
-    let currentBranch = '',
-    localBranches = [],
-    originBranches = [],
-    remoteUrl = '',
-    unstageFiles = [];
+    let currentBranch = '';
+    let localBranches = [];
+    let originBranches = [];
+    let remoteUrl = '';
+    let unstageFiles = [];
 
     try {
+      const gitStatus = await this.gitTools.status();
       const branchLocal = await this.getLocalBranches();
-      currentBranch = branchLocal.current;
+      currentBranch = gitStatus.current;
       localBranches = branchLocal.all;
-  
+
       const branchOrigin = await this.getOriginBranches();
       originBranches = branchOrigin.all;
-  
+
       const originRemotes = await this.gitTools.getRemotes(true);
       const originRemote = originRemotes[0];
       if (originRemote && originRemote.refs) {
         remoteUrl = originRemote.refs.push;
       }
-  
-      unstageFiles = await this.getUnstagedFiles();
+
+      unstageFiles = this.getUnstagedFiles(gitStatus);
     } catch (err) {
       console.warn(err);
     }
@@ -95,13 +95,15 @@ export default class Git implements IGitModule {
 
   public async checkoutLocalBranch(params: {name: string}): Promise<void> {
     const {name} = params;
-    await this.gitTools.checkoutLocalBranch(name);
+    const gitStatus = await this.gitTools.status();
+
+    await this.gitTools.checkoutBranch(name, gitStatus.current);
   }
 
   public async switchBranch(params: IGitSwitchBranchParams): Promise<void> {
-    const { originBranch, checkoutBranch } = params;
+    const { checkoutBranch } = params;
 
-    await this.gitTools.checkoutBranch(checkoutBranch, originBranch);
+    await this.gitTools.checkout(checkoutBranch);
   }
 
   public async getBranches(): Promise<IGitBranchs> {
@@ -121,7 +123,7 @@ export default class Git implements IGitModule {
 
   public async push(params: {branch: string}): Promise<void> {
     const {branch} = params;
-    await this.gitTools.push('origin', branch);
+    await this.gitTools.push('origin', branch, { '--set-upstream': null });
   }
 
   public async addAndCommit(params: IGitAddAndCommitParams): Promise<void> {
