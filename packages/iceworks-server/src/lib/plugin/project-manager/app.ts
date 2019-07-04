@@ -245,9 +245,6 @@ class ProjectManager extends EventEmitter {
       throw new Error('notfound project');
     }
 
-    // update adapter i18n text
-    await project.reloadAdapter(this.i18n);
-
     return project;
   }
 
