@@ -52,8 +52,17 @@ const Task = ({ history, intl }) => {
     term.writeChunk(data);
   }
 
+  async function onGetConf() {
+    try {
+      await getConf(type);
+    } catch (error) {
+      showMessage(error.message);
+    }
+  }
+
   async function onSetting() {
     try {
+      await onGetConf();
       toggleModal();
     } catch (error) {
       showMessage(error.message);
@@ -90,14 +99,6 @@ const Task = ({ history, intl }) => {
         content: error.message,
         align: 'tr tr',
       });
-    }
-  }
-
-  async function onGetConf() {
-    try {
-      await getConf(type);
-    } catch (error) {
-      showMessage(error.message);
     }
   }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Message } from '@alifd/next';
 import logger from '@utils/logger';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -18,7 +18,7 @@ const formItemLayout = {
 };
 
 const Configuration = () => {
-  const conf = engineeringStores.useStore('configuration');
+  const confStore = engineeringStores.useStore('configuration');
 
   async function onChange(values) {
     const params = {};
@@ -32,7 +32,7 @@ const Configuration = () => {
     logger.info(params);
 
     try {
-      await conf.setCLIConf(params);
+      await confStore.setCLIConf(params);
       Message.show({
         type: 'success',
         title: '提示',
@@ -49,10 +49,14 @@ const Configuration = () => {
     }
   }
 
+  useEffect(() => {
+    confStore.getCLIConf();
+  }, []);
+
   return (
     <Card title={<FormattedMessage id="iceworks.engineer.config.title" />} contentHeight="100%">
       <DynamicForm
-        config={conf.dataSource.cli}
+        config={confStore.dataSource.cli}
         formItemLayout={formItemLayout}
         onChange={onChange}
       />
