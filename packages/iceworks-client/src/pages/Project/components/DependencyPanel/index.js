@@ -71,7 +71,9 @@ const DependencyPanel = ({ intl, title, description }) => {
     incompatibleDependencyText,
     projectDependencyText,
     setDependencies,
-  } = useDependency();
+
+    // TODO HACK project has already set socket
+  } = useDependency(true);
 
   const { dataSource } = dependenciesStore;
 
