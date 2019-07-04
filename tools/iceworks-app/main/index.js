@@ -11,7 +11,7 @@ let setPort = '7001';
 
 const isProduction = true; // is.production();
 const ip = address.ip();
-const serverDir = path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
+const serverDir = path.join(__dirname, '..', 'server');
 const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
 const stopLoadingHTML = path.join(__dirname, '..', 'renderer', 'stop_loading.html');
 const errorLoadingHTML = path.join(__dirname, '..', 'renderer', 'error.html');
