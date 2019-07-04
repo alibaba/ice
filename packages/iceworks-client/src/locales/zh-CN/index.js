@@ -13,6 +13,11 @@ export default {
   'iceworks.global.adapter.title': '项目适配失败',
   'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考文档进行适配',
 
+  // quick start
+  'iceworks.quickStart.title': '从热门模板开始初始化你的项目',
+  'iceworks.quickStart.open': '打开项目',
+  'iceworks.quickStart.more': '更多模板',
+
   // menu
   'iceworks.menu.project': '项目',
   'iceworks.menu.task': '工程',
@@ -46,9 +51,11 @@ export default {
   'iceworks.project.submenu.opts.createProject': '创建项目',
 
   // project panel
-  'iceworks.project.panel.page.title': '页面管理',
   'iceworks.project.panel.fallback.title': '面板',
   'iceworks.project.panel.fallback.desc': '面板加载出错',
+
+  // project quick task
+  'iceworks.project.panel.quick.task.setting': '前往设置',
 
   // project guide
   'iceworks.project.panel.guide.title': '入门指引',
@@ -60,8 +67,10 @@ export default {
   'iceworks.project.panel.guide.material.desc': '提供多种垂直领域模板和区块，快速创建项目，支持风格切换，满足个性化需求',
 
   // project page
+  'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
+  'iceworks.project.panel.page.create.error.name.content': '区块名不能重复，请检查',
   'iceworks.project.panel.page.delete.title': '删除页面',
   'iceworks.project.panel.page.delete.content': '确定移除页面 {name} ？',
   'iceworks.project.panel.page.save.title': '填写页面信息',
@@ -128,8 +137,15 @@ export default {
   'iceworks.project.panel.git.switch.title': '切换分支',
   'iceworks.project.panel.git.switch.select': '选择分支',
   'iceworks.project.panel.git.switch.input': '请输入本地分支名称',
+
+  // project oss
   'iceworks.project.panel.oss.title': 'OSS',
   'iceworks.project.panel.oss.button.clear': '清空',
+  'iceworks.project.panel.oss.region.label': '区域',
+  'iceworks.project.panel.oss.bucket.label': '存储空间',
+  'iceworks.project.panel.oss.directory.label': '存储路径',
+  'iceworks.project.panel.oss.directory.tip': '存储路径（不填则默认在根目录）',
+  'iceworks.project.panel.oss.button.upload': '提交上传',
 
   // project menu
   'iceworks.project.panel.menu.ordinary': '菜单',
@@ -138,7 +154,7 @@ export default {
   'iceworks.project.panel.menu.create.title': '创建菜单',
   'iceworks.project.panel.menu.delete.title': '删除菜单',
   'iceworks.project.panel.menu.delete.content': '确定移除菜单 \'{name}\' ？',
-  'iceworks.project.panel.menu.delete.subcontent': '组下还有菜单，删除请谨慎！！！',
+  'iceworks.project.panel.menu.delete.subcontent': '注意：组下还有菜单，删除请谨慎',
   'iceworks.project.panel.menu.delete.warn': '注意：删除菜单不会删除对应的路由，需要手动操作',
   'iceworks.project.panel.menu.edit.title': '编辑菜单',
   'iceworks.project.panel.menu.form.type': '类型',
@@ -161,6 +177,12 @@ export default {
   'iceworks.project.panel.menu.button.refresh': '刷新',
   'iceworks.project.panel.menu.button.add': '新建菜单',
   'iceworks.project.panel.menu.form.type.tip': '总共有菜单组、普通菜单、外链三种类型，普通菜单和外链下可以放入菜单组',
+  'iceworks.project.panel.menu.form.name.tip': '导航名称，最终会显示在页面上',
+  'iceworks.project.panel.menu.form.path.tip': '导航路径，点击跳转到哪个页面',
+  'iceworks.project.panel.menu.aside.none': '暂无侧边栏导航',
+  'iceworks.project.panel.menu.aside.prompt.create': '点击右上方新建侧边栏导航',
+  'iceworks.project.panel.menu.header.none': '暂无头部导航',
+  'iceworks.project.panel.menu.header.prompt.create': '点击右上方新建头部导航',
 
   // project router
   'iceworks.project.panel.router.title.path': '路径',
@@ -187,18 +209,20 @@ export default {
   'iceworks.project.panel.router.form.path.required': '路径必填',
   'iceworks.project.panel.router.form.path.valid': '路径必须以 \'/\' 开头',
   'iceworks.project.panel.router.form.path.hasExist': '路径已存在',
+  'iceworks.project.panel.router.none': '暂无路由',
+  'iceworks.project.panel.router.prompt.create': '点击右上方新建路由',
 
   // task
   'iceworks.task.title': '工程管理',
   'iceworks.task.dev.title': '启动服务',
-  'iceworks.task.dev.desc': '编译和热更新(用于开发环境)',
+  'iceworks.task.dev.desc': '编译和热更新，用于开发环境',
   'iceworks.task.dev.start.msg': '运行调试服务',
   'iceworks.task.dev.stop.msg': '停止调试服务',
   'iceworks.task.start': '运行',
   'iceworks.task.stop': '停止',
   'iceworks.task.setting': '设置',
   'iceworks.task.build.title': '构建项目',
-  'iceworks.task.build.desc': '编译并压缩(用于生产环境)',
+  'iceworks.task.build.desc': '编译并压缩，用于生产环境',
   'iceworks.task.build.start.msg': '运行构建项目服务',
   'iceworks.task.build.stop.msg': '构建项目完成',
   'iceworks.task.lint.title': '检查语法',
@@ -242,4 +266,7 @@ export default {
   'iceworks.global.bar.feedback.submit': '反馈建议或提交 Bug',
   'iceworks.global.bar.theme.dark': '深色',
   'iceworks.global.bar.theme.light': '浅色',
+
+  'iceworks.project.panel.title': '面板设置',
+  'iceworks.engineer.config.title': '自定义配置',
 };

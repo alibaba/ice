@@ -1,4 +1,4 @@
-import { IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
+import { IContext, IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
@@ -51,18 +51,19 @@ export default class OSS implements IOSSModule {
     return newConfig;
   }
 
-  async upload(): Promise<IUploadResult[]> {
+  async upload(args, ctx: IContext): Promise<IUploadResult[]> {
+    const { i18n } = ctx;
     const oss = this.storage.get('oss');
     const params: IOSSUploadParams = oss.find(({ project }) => project === this.project.path);
 
     const buildPath = path.join(this.project.path, this.buildDir);
     if (!await pathExists(buildPath)) {
-      throw new Error(`构建目录 ${this.buildDir} 不存在`);
+      throw new Error(i18n.format('baseAdapter.oss.upload.dirEmptyError', {buildDir: this.buildDir}));
     }
 
     const files = await dir.promiseFiles(buildPath);
     if (!files.length) {
-      throw new Error('当前构建结果为空，请先构建');
+      throw new Error(i18n.format('baseAdapter.oss.upload.buildEmptyError'));
     }
 
     const { bucket, directory, region } = params;

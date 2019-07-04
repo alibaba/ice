@@ -4,7 +4,7 @@ import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
 
 export default (app) => {
-  const { Controller } = app;
+  const { Controller, i18n } = app;
 
   return class HomeController extends Controller {
     async getWorkFolder() {
@@ -60,7 +60,7 @@ export default (app) => {
       if (workId && name && avatarUrl) {
         storage.set('user', { name, workId, avatarUrl, isLogin: true });
       } else {
-        throw new Error('用户信息有误，登录失败');
+        throw new Error(i18n.format('controller.home.userError'));
       }
 
       return storage.get('user');

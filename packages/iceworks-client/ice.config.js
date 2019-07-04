@@ -23,6 +23,7 @@ module.exports = {
         themeConfig: {
           'panel-bg': '#333645',
           'panel-title-color': '#eee',
+          'tip-icon-color': '#6B6F83',
           'sub-menu-bg': '#434557',
           'global-bar-bg': '#434557',
           'material-card-shadow': 'rgba(0, 0, 0, 0)',
@@ -33,6 +34,7 @@ module.exports = {
         themeConfig: {
           'panel-bg': '#fff',
           'panel-title-color': '#333',
+          'tip-icon-color': '#BAD9FF',
           'sub-menu-bg': '#fff',
           'global-bar-bg': '#5584FF',
           'material-card-shadow': 'rgba(163, 177, 191, 0.35)',

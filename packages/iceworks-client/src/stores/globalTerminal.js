@@ -1,5 +1,3 @@
-import termManager from '@utils/termManager';
-
 export default {
   dataSource: {
     show: false,
@@ -12,11 +10,5 @@ export default {
   },
   async trigger() {
     this.dataSource.show = !this.dataSource.show;
-  },
-  async writeLog(msg) {
-    const term = termManager.find('globalTerminal');
-    if (term) {
-      term.writeLog(msg);
-    }
   },
 };

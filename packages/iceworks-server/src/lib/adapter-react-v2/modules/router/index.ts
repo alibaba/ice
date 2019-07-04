@@ -1,10 +1,8 @@
 import * as path from 'path';
-import BaseAdapter from '../../../adapter';
-import { IMenu, IProject, IMenuModule, IMenuOptions } from '../../../../interface';
+import { baseModules } from '../../../adapter';
+import { IProject } from '../../../../interface';
 
-const {module: BaseRouter} = BaseAdapter.Router;
-
-export default class Router extends BaseRouter {
+export default class Router extends baseModules.Router {
   public readonly path: string;
   public configFilePath = 'routerConfig.js';
 

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Tab } from '@alifd/next';
 import goldlog from '@utils/goldlog';
+import { Tab, Message } from '@alifd/next';
 import useModal from '@hooks/useModal';
 import cloneDeep from 'lodash.clonedeep';
-import MenuTreeConfig from '../../../../components/MenuTreeConfig';
+import MenuTreeConfig from '@components/MenuTreeConfig';
+import traverse from '@utils/traverse';
 import CreateMenuModal from './CreateMenuModal';
 import DeleteMenuModal from './DeleteMenuModal';
-import traverse from '../../../../utils/traverse';
 
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
@@ -151,24 +151,36 @@ const MenuPanel = ({ intl, title, description }) => {
             title={<FormattedMessage id="iceworks.project.panel.menu.tab.asideMenu" />}
             key="aside"
           >
-            <MenuTreeConfig
-              items={asideMenuConfig}
-              onChange={onChangeTree}
-              onOpenEditModal={onOpenModal}
-              onDeleteLink={onOpenDeleteModal}
-            />
+            {asideMenuConfig.length ? (
+              <MenuTreeConfig
+                items={asideMenuConfig}
+                onChange={onChangeTree}
+                onOpenEditModal={onOpenModal}
+                onDeleteLink={onOpenDeleteModal}
+              />
+            ) : (
+              <Message title={<FormattedMessage id="iceworks.project.panel.menu.aside.none" />} type="help">
+                <FormattedMessage id="iceworks.project.panel.menu.aside.prompt.create" />
+              </Message>
+            )}
           </TabPane>
           <TabPane
             title={<FormattedMessage id="iceworks.project.panel.menu.tab.headerMenu" />}
             key="header"
           >
-            <MenuTreeConfig
-              items={headerMenuConfig}
-              onChange={onChangeTree}
-              onOpenEditModal={onOpenModal}
-              onDeleteLink={onOpenDeleteModal}
-              nested={false}
-            />
+            {headerMenuConfig.length ? (
+              <MenuTreeConfig
+                items={headerMenuConfig}
+                onChange={onChangeTree}
+                onOpenEditModal={onOpenModal}
+                onDeleteLink={onOpenDeleteModal}
+                nested={false}
+              />
+            ) : (
+              <Message title={<FormattedMessage id="iceworks.project.panel.menu.header.none" />} type="help">
+                <FormattedMessage id="iceworks.project.panel.menu.header.prompt.create" />
+              </Message>
+            )}
           </TabPane>
         </Tab>
       </div>

@@ -1,11 +1,15 @@
-import baseAdapter from '../../../adapter';
-import configSchema from './configSchema';
+import * as path from 'path';
+import { baseModules } from '../../../adapter';
+import getConfigSchema from './getConfigSchema';
 
-export default class Configuration extends baseAdapter.Configuration.module {
+export default class Configuration extends baseModules.Configuration {
   public cliConfFilename = 'vue.config.js';
-  public configSchema = configSchema;
+  public getConfigSchema = getConfigSchema;
+
+  public cliConfPath: string;
 
   constructor(params) {
     super(params);
+    this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 }

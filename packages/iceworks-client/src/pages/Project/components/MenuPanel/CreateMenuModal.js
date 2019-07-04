@@ -10,7 +10,7 @@ const { Item: FormItem } = Form;
 
 const formItemLayout = {
   labelCol: {
-    fixedSpan: 6,
+    span: 6,
   },
   wrapperCol: {
     span: 18,
@@ -120,12 +120,29 @@ const CreateMenuModal = ({
             </option>
           </Select>
         </FormItem>
-        <FormItem label={<FormattedMessage id="iceworks.project.panel.menu.form.name" />} required>
+        <FormItem
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.menu.form.name" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.project.panel.menu.form.name.tip" />
+              </TipIcon>
+            </span>
+          )}
+          required
+        >
           <Input size="small" name="name" placeholder={formatMessage({ id: 'iceworks.project.panel.menu.form.name.placeholder' })} />
         </FormItem>
         {linkType !== 'linkGroup' && (
           <FormItem
-            label={<FormattedMessage id="iceworks.project.panel.menu.form.path" />}
+            label={(
+              <span>
+                <FormattedMessage id="iceworks.project.panel.menu.form.path" />
+                <TipIcon>
+                  <FormattedMessage id="iceworks.project.panel.menu.form.path.tip" />
+                </TipIcon>
+              </span>
+            )}
             pattern={linkType === 'link' ? pathReg : urlReg}
             patternMessage={formatMessage({ id: 'iceworks.project.panel.menu.form.path.message' })}
             help={isEdit && linkType === 'link' ? (

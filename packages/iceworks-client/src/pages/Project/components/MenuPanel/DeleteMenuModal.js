@@ -28,16 +28,11 @@ const DeleteMenuModal = ({
       <div>
         <FormattedMessage id="iceworks.project.panel.menu.delete.content" values={{ name, linkName }} />
         {children && children.length > 0 && (
-          <span className={styles.tips}>
+          <div className={styles.tips}>
             <FormattedMessage id="iceworks.project.panel.menu.delete.subcontent" />
-          </span>
+          </div>
         )}
       </div>
-      {!external && (
-        <div className={styles.warn}>
-          <FormattedMessage id="iceworks.project.panel.menu.delete.warn" />
-        </div>
-      )}
     </Modal>
   );
 };

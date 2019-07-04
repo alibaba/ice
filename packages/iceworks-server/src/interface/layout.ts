@@ -1,4 +1,4 @@
-import { IProjectLayout, IBaseModule } from './base';
+import { IProjectLayout, IBaseModule, IContext } from './base';
 
 export interface ILayoutModule extends IBaseModule {
   /**
@@ -6,10 +6,10 @@ export interface ILayoutModule extends IBaseModule {
    *
    * @param layoutName 布局名
    */
-  getOne(layoutName: string): Promise<IProjectLayout>;
+  getOne(layoutName: string, ctx: IContext): Promise<IProjectLayout>;
 
   /**
    * 获取项目内的布局
    */
-  getAll(): Promise<IProjectLayout[]>;
+  getAll(args, ctx: IContext): Promise<IProjectLayout[]>;
 }

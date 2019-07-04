@@ -91,16 +91,22 @@
           left: 0;
           visibility: hidden;
           background-color: $background-color-base;
-  
+
           .input {
             flex: 1;
             border: 0 none;
             background-color: transparent;
+            z-index: 2;
+            position: relative;
           }
   
           .icon {
             margin-left: 4px;
             margin-right: 12px;
+            position: absolute;
+            right: 0;
+            top: 3px;
+            z-index: 1;
           }
         }
       }

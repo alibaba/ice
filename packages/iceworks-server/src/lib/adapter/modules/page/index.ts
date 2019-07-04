@@ -1,10 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as util from 'util';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as _ from 'lodash';
+import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
@@ -20,9 +22,10 @@ const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
+const mvAsync = util.promisify(mv);
 
 const loadTemplate = async () => {
-  const fileName = 'template.js';
+  const fileName = 'template.jsx';
   const filePath = path.join(__dirname, `${fileName}.ejs`);
   const fileStr = await readFileAsync(filePath, 'utf-8');
   const compile = ejs.compile(fileStr);
@@ -66,9 +69,9 @@ export default class Page implements IPageModule {
     return pages;
   }
 
-  private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string) {
+  private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string, ctx: IContext) {
     return await Promise.all(
-      blocks.map(async (block) => await this.downloadBlockToPage(block, pageName))
+      blocks.map(async (block) => await this.downloadBlockToPage(block, pageName, ctx))
     );
   }
 
@@ -94,7 +97,8 @@ export default class Page implements IPageModule {
     }));
   }
 
-  private async downloadBlockToPage(block: IMaterialBlock, pageName: string): Promise<string[]> {
+  private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<void> {
+    const { i18n } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
       this.path,
@@ -110,19 +114,24 @@ export default class Page implements IPageModule {
     try {
       tarballURL = await getTarballURLByMaterielSource(block.source, iceVersion);
     } catch (error) {
-      error.message = '请求区块 tarball 包失败';
+      error.message = i18n.format('baseAdapter.page.download.requestError');
       throw error;
     }
 
+    const blockDir = path.join(componentsDir, blockName);
+    const blockTempDir = path.join(os.tmpdir(), blockName);
     try {
-      return await downloadAndExtractPackage(
-        path.join(componentsDir, blockName),
+      await downloadAndExtractPackage(
+        blockTempDir,
         tarballURL
       );
+      
+      await mkdirpAsync(blockDir);
+      await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
-      error.message = `解压区块${blockName}出错, 请重试`;
+      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-        error.message = `解压区块${blockName}超时，请重试`;
+        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName});
       }
       throw error;
     }
@@ -130,16 +139,17 @@ export default class Page implements IPageModule {
 
   async getAll(): Promise<IPage[]> {
     const pages = await this.scanPages(this.path);
-    return _.orderBy(pages, 'birthtime', 'desc');
+    return _.orderBy(pages, 'name', 'asc');
   }
 
   async getOne(): Promise<any> { }
 
   async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
+    const { socket, i18n } = ctx;
 
     // create page dir
-    ctx.socket.emit('adapter.page.create.status', { text: '创建页面目录...', percent: 10 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -153,15 +163,15 @@ export default class Page implements IPageModule {
     }
 
     // download blocks
-    ctx.socket.emit('adapter.page.create.status', { text: '正在下载区块...', percent: 40 });
-    await this.downloadBlocksToPage(blocks, pageName);
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.download'), percent: 40 });
+    await this.downloadBlocksToPage(blocks, pageName, ctx);
 
     // install block dependencies
-    ctx.socket.emit('adapter.page.create.status', { text: '正在安装区块依赖...', percent: 80 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.installDep'), percent: 80 });
     await this.installBlocksDependencies(blocks, ctx);
 
     // create page file
-    ctx.socket.emit('adapter.page.create.status', { text: '正在创建页面文件...', percent: 90 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 90 });
     const template = await loadTemplate();
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
@@ -191,16 +201,9 @@ export default class Page implements IPageModule {
 
   async bulkCreate(): Promise<any> { }
 
-  // TODO
   async delete(params: {name: string}): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
-
-    // TODO rewrite routerConfig.js
-
-    // TODO rewrite router.js
-
-    // TODO rewrite menuConfig.js
   }
 
   public async getBlocks(name: string): Promise<IProjectBlock[]> {
@@ -216,14 +219,14 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string;}): Promise<void> {
+  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string; }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
-    await this.downloadBlocksToPage(blocks, name);
+    await this.downloadBlocksToPage(blocks, name, ctx);
   }
 
-  async addBlock(params: {block: IMaterialBlock, name?: string;}): Promise<void> {
+  async addBlock(params: {block: IMaterialBlock, name?: string; }, ctx: IContext): Promise<void> {
     const {block, name} = params;
-    await this.downloadBlockToPage(block, name);
+    await this.downloadBlockToPage(block, name, ctx);
   }
 
   async update(): Promise<any> { }

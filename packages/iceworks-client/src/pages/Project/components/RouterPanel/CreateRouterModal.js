@@ -6,7 +6,7 @@ import Modal from '@components/Modal';
 import { Input, Select, Form, Field, Switch } from '@alifd/next';
 import path from 'path';
 
-import useWhenValueChanges from '../../../../hooks/useWhenValueChanges';
+import useWhenValueChanges from '@hooks/useWhenValueChanges';
 import stores from '../../stores';
 import styles from './CreateRouterModal.module.scss';
 
