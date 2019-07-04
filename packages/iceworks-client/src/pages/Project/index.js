@@ -1,4 +1,4 @@
-/* eslint babel/new-cap:0 */
+/* eslint babel/new-cap:0, react/no-danger:0, react/self-closing-comp: 0 */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@alifd/next';
@@ -12,7 +12,7 @@ import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
 import CreateProjectModal from '@components/CreateProjectModal';
 import Modal from '@components/Modal';
 import cx from 'classnames';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   SortableContainer,
   SortableElement,
@@ -67,7 +67,7 @@ const SortableWrap = SortableContainer(({ projectPanels, isSorting }) => {
   );
 });
 
-const Project = ({ history }) => {
+const Project = ({ history, intl }) => {
   const { location } = history;
   const {
     dependenciesStore,
@@ -199,7 +199,7 @@ const Project = ({ history }) => {
       return (
         <div className={styles.noAdapter}>
           <h5><FormattedMessage id="iceworks.global.adapter.title" /></h5>
-          <p><FormattedMessage id="iceworks.global.adapter.description" /></p>
+          <p dangerouslySetInnerHTML={{ __html: intl.formatHTMLMessage({ id: 'iceworks.global.adapter.description' })}}></p>
           <div className={styles.reloadButton}>
             <Button type="primary" onClick={reloadAdapter}>
               <FormattedMessage id="iceworks.global.adapter.reload" />
@@ -285,6 +285,7 @@ const Project = ({ history }) => {
 
 Project.propTypes = {
   history: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default Project;
+export default injectIntl(Project);

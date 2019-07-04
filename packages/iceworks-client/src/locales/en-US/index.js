@@ -11,7 +11,7 @@ export default {
   'iceworks.global.button.selectAll': 'Select All',
   'iceworks.global.fallback.title': 'Loading',
   'iceworks.global.adapter.title': 'Project adaptation failed',
-  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the documentation for adaptation',
+  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the <a href="https://ice.work/docs/iceworks/migrate" target="_blank">documentation <a>documentation for adaptation',
   'iceworks.global.adapter.reload': 'Reload retry',
 
   // quick start
