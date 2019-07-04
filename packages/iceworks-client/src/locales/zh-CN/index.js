@@ -12,6 +12,7 @@ export default {
   'iceworks.global.fallback.title': '加载错误',
   'iceworks.global.adapter.title': '项目适配失败',
   'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考文档进行适配',
+  'iceworks.global.adapter.reload': '刷新重试',
 
   // quick start
   'iceworks.quickStart.title': '从热门模板开始初始化你的项目',

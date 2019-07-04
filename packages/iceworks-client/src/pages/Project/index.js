@@ -201,7 +201,9 @@ const Project = ({ history }) => {
           <h5><FormattedMessage id="iceworks.global.adapter.title" /></h5>
           <p><FormattedMessage id="iceworks.global.adapter.description" /></p>
           <div className={styles.reloadButton}>
-            <Button type="primary" onClick={reloadAdapter}>刷新重试</Button>
+            <Button type="primary" onClick={reloadAdapter}>
+              <FormattedMessage id="iceworks.global.adapter.reload" />
+            </Button>
           </div>
         </div>
       );
