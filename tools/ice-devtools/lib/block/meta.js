@@ -1,17 +1,17 @@
 // 默认配置
 const BLOCK_CATEGORIES = [
-  '表格',
-  '表单',
-  '图表',
-  '列表',
-  '模态框',
-  '筛选',
-  '数据展示',
-  '信息展示',
-  '异常',
-  '欢迎页',
-  '视频',
-  '其他',
+  'Table',
+  'Form',
+  'Chart',
+  'List',
+  'Modal',
+  'Filter',
+  'Data visualization',
+  'Information',
+  'Exception',
+  'Landing page',
+  'video',
+  'Others',
 ];
 
 module.exports = {

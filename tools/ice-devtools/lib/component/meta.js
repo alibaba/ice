@@ -1,14 +1,14 @@
 // 默认配置
 const CATEGORIES = [
-  '表格',
-  '表单',
-  '图表',
-  '列表',
-  '模态框',
-  '筛选',
-  '数据展示',
-  '信息展示',
-  '其他',
+  'Table',
+  'Form',
+  'Chart',
+  'List',
+  'Modal',
+  'Filter',
+  'Data visualization',
+  'Information',
+  'Others',
 ];
 
 module.exports = {
