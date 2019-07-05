@@ -35,13 +35,14 @@ function useProject({ panelStores } = {}) {
   }
 
   async function refreshProject() {
+    let error;
     try {
       await projectStore.refresh();
     } catch (err) {
-      // error handle
+      error = err;
     }
 
-    if (panelStores) {
+    if (!error && panelStores) {
       projectStore.dataSource.panels.forEach(({ name, isAvailable }) => {
         if (isAvailable) {
           refreshProjectStore(name);
