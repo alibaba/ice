@@ -133,7 +133,7 @@ const Project = ({ history, intl }) => {
 
   function onResetModalCancel() {
     setResetModal(false);
-    if (isCreatedProject) {
+    if (isCreatedProject && projectStore.dataSource.adapterName) {
       history.replace({ createdProject: false });
     }
   }
@@ -144,14 +144,17 @@ const Project = ({ history, intl }) => {
 
   async function onResetModalOk() {
     await reset();
-    if (isCreatedProject) {
+    if (isCreatedProject && projectStore.dataSource.adapterName) {
       history.replace({ createdProject: false });
     }
   }
 
   async function onCreateProjectModalOk(values) {
     await onCreateProject(values);
-    setResetModal(true);
+
+    if (projectStore.dataSource.adapterName) {
+      setResetModal(true);
+    }
   }
 
   async function onToggleSettingPanel() {
