@@ -1,16 +1,7 @@
 import { useEffect } from 'react';
-import { Message } from '@alifd/next';
 import useSocket from '@hooks/useSocket';
+import showMessage from '@uitls/showMessage';
 import stores from '@stores';
-
-function showMessage(message, type) {
-  Message.show({
-    type: type || 'error',
-    title: 'Message',
-    content: message || 'Plase try again',
-    align: 'tr tr',
-  });
-}
 
 const useTask = ({ type, writeLog, writeChunk }) => {
   const taskStore = stores.useStore('task');
