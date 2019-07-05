@@ -4,7 +4,7 @@ export default function showMessage(message, type) {
   Message.show({
     type: type || 'error',
     title: 'Message',
-    content: message || 'Plase try again',
+    content: message || 'Please try again',
     align: 'tr tr',
   });
 }
