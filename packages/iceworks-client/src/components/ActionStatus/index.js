@@ -49,4 +49,4 @@ export default (props) => {
       )}
     </div>
   );
-}
+};

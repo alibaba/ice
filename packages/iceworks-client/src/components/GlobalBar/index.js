@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Message, Balloon } from '@alifd/next';
+import { Balloon } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -9,6 +9,7 @@ import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import useTermTheme from '@hooks/useTermTheme';
 import stores from '@stores';
+import showMessage from '@utils/showMessage';
 import { THEMES } from '@src/appConfig';
 import styles from './index.module.scss';
 
@@ -26,12 +27,7 @@ const GlobalBar = ({ project, intl }) => {
     try {
       await socket.emit('home.system.openFolder', { path: projectPath });
     } catch (error) {
-      Message.show({
-        type: 'error',
-        align: 'tr tr',
-        title: '提示',
-        content: error.message,
-      });
+      showMessage(error);
     }
   }
 
@@ -39,12 +35,7 @@ const GlobalBar = ({ project, intl }) => {
     try {
       await socket.emit('home.system.openEditor', { path: projectPath });
     } catch (error) {
-      Message.show({
-        type: 'error',
-        align: 'tr tr',
-        title: '提示',
-        content: error.message,
-      });
+      showMessage(error);
     }
   }
 
@@ -64,12 +55,7 @@ const GlobalBar = ({ project, intl }) => {
 
   useSocket('home.system.open.editor.data', (data) => {
     if (data) {
-      Message.show({
-        type: 'error',
-        align: 'tr tr',
-        title: '提示',
-        content: '打开编辑器失败',
-      });
+      showMessage('打开编辑器失败');
     }
   });
 

@@ -47,9 +47,9 @@ const MainLayout = () => {
               {
                 actionName: 'refresh',
                 showError: true,
-              }
+              },
             ],
-          }
+          },
         ]}
       />
     </div>

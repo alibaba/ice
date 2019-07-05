@@ -293,7 +293,7 @@ const RouterPanel = ({ intl, title, description }) => {
           store={stores}
           config={[
             {
-              storeName: "routes",
+              storeName: 'routes',
               actions: [
                 {
                   actionName: 'refresh',
@@ -303,9 +303,9 @@ const RouterPanel = ({ intl, title, description }) => {
                 {
                   actionName: 'bulkCreate',
                   showError: true,
-                }
-              ]
-            }
+                },
+              ],
+            },
           ]}
         />
       </div>
