@@ -52,18 +52,15 @@ function useProject({ panelStores } = {}) {
 
   async function refreshProjects() {
     let error;
-    let newProjects;
     try {
-      newProjects = await projectsStore.refresh();
+      await projectsStore.refresh();
     } catch (err) {
       error = err;
     }
 
-    if (!newProjects || !newProjects.dataSource.length) {
+    if (error || !projectsStore.dataSource.length) {
       await materialStore.getRecommendScaffolds();
-    }
-
-    if (!error) {
+    } else {
       await refreshProject();
     }
   }
