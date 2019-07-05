@@ -5,6 +5,7 @@ import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import stores from '@src/stores';
 import writeGlobalLog from '@utils/writeGlobalLog';
+import showMessage from '@utils/showMessage';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
 import projectStores from '../../stores';
@@ -26,12 +27,7 @@ const DEFPanel = ({ title, description }) => {
   async function onPush(target) {
     const lastCommit = await socket.emit('adapter.git.getLog', [currentBranch]);
     if (!lastCommit) {
-      Message.show({
-        align: 'tr tr',
-        type: 'error',
-        title: '发布失败',
-        content: '请先提交 Git 发布',
-      });
+      showMessage('请先提交 Git 发布');
       return;
     }
 
@@ -54,19 +50,9 @@ const DEFPanel = ({ title, description }) => {
 
   useSocket('adapter.def.push.exit', (code) => {
     if (code === 0) {
-      Message.show({
-        align: 'tr tr',
-        type: 'success',
-        title: '发布成功',
-        content: '请查看日志',
-      });
+      showMessage('发布成功', 'success');
     } else {
-      Message.error({
-        align: 'tr tr',
-        type: 'error',
-        title: '发布失败',
-        content: '请查看日志',
-      });
+      showMessage('发布失败，请查看日志');
     }
   });
 
