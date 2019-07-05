@@ -1,43 +1,19 @@
+/* eslint no-param-reassign:0 */
 import axios from 'axios';
+import dateTime from 'date-time';
 import browser from 'browser-detect';
+import appConfig from '../appConfig';
 
 const browserInfo = browser();
 
-/**
- * Send log records to the aplus website
- *
- * @param {String} action
- * @param {Object} extraData
- */
-function goldlog(action, extraData = {}) {
-  const realData = {
-    action: `iceworks-v3-${action}`,
-    data: {
-      ...extraData,
-      browser: browserInfo,
-    },
-  };
+function goldlog(data = {}) {
+  data.data.visit_time = dateTime();
+  data.data.browser_info = browserInfo;
 
-  const dataKeyArray = Object.keys(realData);
-  const gokey = dataKeyArray.reduce((finnalStr, currentKey, index) => {
-    const currentData =
-      typeof realData[currentKey] === 'string'
-        ? realData[currentKey]
-        : JSON.stringify(realData[currentKey]);
-    return `${finnalStr}${currentKey}=${currentData}${
-      dataKeyArray.length - 1 === index ? '' : '&'
-    }`;
-  }, '');
-
-  axios({
+  return axios({
     method: 'post',
-    url: 'http://gm.mmstat.com/iceteam.iceworks.log',
-    data: {
-      cache: Math.random(),
-      gmkey: 'CLK',
-      gokey: encodeURIComponent(gokey),
-      logtype: '2',
-    },
+    url: `${appConfig.apiUrl}goldlog/record`,
+    data: { ...data },
   });
 }
 

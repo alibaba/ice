@@ -17,7 +17,6 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
-import goldlog from '@utils/goldlog';
 import SavePageModal from './SavePageModal';
 import styles from './BuildPageModal.module.scss';
 
@@ -226,9 +225,6 @@ const BuildPageModal = ({
       ...data,
     });
     await progress.hide();
-    goldlog('create-page', {
-      type: 'project',
-    });
     setSaveModal(false);
   }
 

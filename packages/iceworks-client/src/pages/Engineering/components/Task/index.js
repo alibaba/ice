@@ -12,7 +12,6 @@ import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
-import goldlog from '@utils/goldlog';
 import TaskModal from '../TaskModal';
 import styles from './index.module.scss';
 
@@ -92,9 +91,6 @@ const Task = ({ history, intl }) => {
         title: '提示',
         content: '配置修改成功',
         align: 'tr tr',
-      });
-      goldlog(`set-${type}-config`, {
-        type: 'engineering',
       });
     } catch (error) {
       Message.show({

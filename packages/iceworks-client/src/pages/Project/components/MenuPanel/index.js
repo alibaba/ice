@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import goldlog from '@utils/goldlog';
 import { Tab, Message } from '@alifd/next';
 import useModal from '@hooks/useModal';
 import cloneDeep from 'lodash.clonedeep';
@@ -78,9 +77,6 @@ const MenuPanel = ({ intl, title, description }) => {
       }, true);
     }
     await onChangeTree(copyData);
-    goldlog('create-menu', {
-      type: 'project',
-    });
   }
 
   function onOpenDeleteModal(menu) {

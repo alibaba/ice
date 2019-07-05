@@ -4,7 +4,6 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { Message } from '@alifd/next';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
-import goldlog from '@utils/goldlog';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
 import GitRemote from './GitRemote';
@@ -41,10 +40,6 @@ const GitPanel = ({ intl, title, description }) => {
   async function onInit(setRemoteUrl) {
     await gitStore.init(setRemoteUrl);
     await gitStore.refresh();
-    goldlog('git-init', {
-      type: 'project',
-      url: setRemoteUrl,
-    });
   }
 
   async function onRefresh() {

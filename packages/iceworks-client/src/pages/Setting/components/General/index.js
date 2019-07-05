@@ -65,18 +65,26 @@ const General = ({ intl }) => {
   async function onLocaleChange(currentLocale) {
     await socket.emit('home.setting.setLocale', { locale: currentLocale });
     setLocale(currentLocale);
-    goldlog('set-locale', {
-      type: 'setting',
-      locale: currentLocale,
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-locale',
+      data: {
+        locale: currentLocale,
+      },
     });
   }
 
   async function onThemeChange(currentTheme) {
     await socket.emit('home.setting.setTheme', { theme: currentTheme });
     setTheme(currentTheme);
-    goldlog('set-theme', {
-      type: 'setting',
-      locale: currentTheme,
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-theme',
+      data: {
+        theme: currentTheme,
+      },
     });
   }
 
@@ -88,9 +96,13 @@ const General = ({ intl }) => {
   async function onEditorChange(currentEditor) {
     await socket.emit('home.setting.setEditor', { editor: currentEditor });
     setEditor(currentEditor);
-    goldlog('set-editor', {
-      type: 'setting',
-      locale: currentEditor,
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-editor',
+      data: {
+        editor: currentEditor,
+      },
     });
   }
 

@@ -1,7 +1,6 @@
 import stores from '@stores';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
-import goldlog from '@utils/goldlog';
 import { useState } from 'react';
 import { Message } from '@alifd/next';
 import writeGlobalLog from '@utils/writeGlobalLog';
@@ -48,9 +47,6 @@ function useDependency() {
   async function upgrade(packageName, isDev) {
     dependenciesStore.upgrade({ package: packageName, isDev });
     globalTerminalStore.show();
-    goldlog('upgrade-dependencies', {
-      type: 'project',
-    });
   }
 
   async function bulkCreate(values, force) {
@@ -58,9 +54,6 @@ function useDependency() {
       await dependenciesStore.bulkCreate(values, force);
       setCreateModal(false);
       globalTerminalStore.show();
-      goldlog('install-dependencies', {
-        type: 'project',
-      });
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
         setCreateValues({ setDependencies: values, incompatibleDependencies: error.info });

@@ -117,7 +117,7 @@ class Project implements IProject {
   }
 
   /**
-   *  Get the panel of the current project from the cache and 
+   *  Get the panel of the current project from the cache and
    *  update the panel data according to the adapter.
    */
   private initPanels() {

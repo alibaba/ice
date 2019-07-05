@@ -50,10 +50,10 @@ const schema = {
     type: 'array',
     default: [
       {
-        "official": true,
-        "name": "飞冰物料",
-        "type": "react",
-        "source": "https://ice.alicdn.com/assets/react-materials.json"
+        official: true,
+        name: '飞冰物料',
+        type: 'react',
+        source: 'https://ice.alicdn.com/assets/react-materials.json'
       }
     ],
   },

@@ -26,6 +26,11 @@ const GlobalBar = ({ project, intl }) => {
   async function handleFolder() {
     try {
       await socket.emit('home.system.openFolder', { path: projectPath });
+      goldlog({
+        namespace: 'home',
+        module: 'system',
+        action: 'open-folder',
+      });
     } catch (error) {
       Message.show({
         type: 'error',
@@ -39,6 +44,11 @@ const GlobalBar = ({ project, intl }) => {
   async function handleEditor() {
     try {
       await socket.emit('home.system.openEditor', { path: projectPath });
+      goldlog({
+        namespace: 'home',
+        module: 'system',
+        action: 'open-editor',
+      });
     } catch (error) {
       Message.show({
         type: 'error',
@@ -57,9 +67,14 @@ const GlobalBar = ({ project, intl }) => {
 
     // set app theme
     setTheme(currentTheme);
-    goldlog('set-theme', {
-      type: 'setting',
-      locale: currentTheme,
+
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-theme',
+      data: {
+        theme: currentTheme,
+      },
     });
   }
 

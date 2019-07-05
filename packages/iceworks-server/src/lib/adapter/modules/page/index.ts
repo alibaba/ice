@@ -125,7 +125,7 @@ export default class Page implements IPageModule {
         blockTempDir,
         tarballURL
       );
-      
+
       await mkdirpAsync(blockDir);
       await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {

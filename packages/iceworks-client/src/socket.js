@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import logger from '@utils/logger';
+import goldlog from '@utils/goldlog';
 import appConfig from './appConfig';
 
 // ref: https://socket.io/docs/client-api/#new-Manager-url-options
@@ -15,6 +16,22 @@ socket.on('error', error => {
 const originalEmit = socket.emit.bind(socket);
 socket.emit = function emit(...args) {
   return new Promise((resolve, reject) => {
+    const eventNameStr = args[0];
+
+    if (eventNameStr.indexOf('adapter') > -1) {
+      const eventNameArr = eventNameStr.split('.');
+      const [namespace, module, action] = eventNameArr;
+      const data = args[1];
+      goldlog({
+        namespace,
+        module,
+        action,
+        data: {
+          ...data,
+        },
+      });
+    }
+
     if (!args[1]) {
       args.push({});
     }
