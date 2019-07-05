@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Message } from '@alifd/next';
 import Icon from '@components/Icon';
+import ActionStatus from '@components/ActionStatus';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import { injectIntl } from 'react-intl';
@@ -28,13 +29,13 @@ const PagePanel = ({ intl, title, description }) => {
     on: onAddBlocksModal,
     setModal: setAddBlocksModal,
   } = useModal();
-  const [pages] = stores.useStores(['pages']);
+  const [pagesStore] = stores.useStores(['pages']);
   const menuStore = stores.useStore('menu');
   const routerStore = stores.useStore('routes');
-  const { dataSource } = pages;
+  const { dataSource } = pagesStore;
 
   function onRefresh() {
-    pages.refresh();
+    pagesStore.refresh();
   }
 
   function onCreate() {
@@ -52,7 +53,7 @@ const PagePanel = ({ intl, title, description }) => {
   }
 
   async function deletePage() {
-    await pages.delete(deleteName);
+    await pagesStore.delete(deleteName);
     const { deletePaths } = await routerStore.delete({
       componentName: deleteName,
     });
@@ -68,7 +69,7 @@ const PagePanel = ({ intl, title, description }) => {
       content: '删除页面成功',
     });
 
-    pages.refresh();
+    pagesStore.refresh();
     menuStore.refresh();
     routerStore.refresh();
   }
@@ -77,7 +78,7 @@ const PagePanel = ({ intl, title, description }) => {
     const { menuName, routePath, name, routeGroup } = data;
     logger.info('create page data:', data);
 
-    await pages.create(data);
+    await pagesStore.create(data);
 
     logger.info('created page.');
 
@@ -114,13 +115,13 @@ const PagePanel = ({ intl, title, description }) => {
       content: '创建页面成功',
     });
 
-    pages.refresh();
+    pagesStore.refresh();
     menuStore.refresh();
     routerStore.refresh();
   }
 
   async function addBlocks(newBlocks) {
-    await pages.addBlocks({ blocks: newBlocks, name: editingName });
+    await pagesStore.addBlocks({ blocks: newBlocks, name: editingName });
 
     setAddBlocksModal(false);
 
@@ -130,15 +131,15 @@ const PagePanel = ({ intl, title, description }) => {
       content: '添加区块成功',
     });
 
-    pages.refresh();
+    pagesStore.refresh();
   }
 
   const pagePreDelete =
-    pages.dataSource.find(({ name }) => {
+    pagesStore.dataSource.find(({ name }) => {
       return name === deleteName;
     }) || {};
   const pageEditing =
-    pages.dataSource.find(({ name }) => {
+    pagesStore.dataSource.find(({ name }) => {
       return name === editingName;
     }) || {};
 
@@ -207,12 +208,30 @@ const PagePanel = ({ intl, title, description }) => {
                 })}
               </ul>
             </div> :
-            <div>
-              <Message title="暂无页面" type="help">
-                点击右上方新建页面
-              </Message>
-            </div>
+            (
+              !pagesStore.refresh.error &&
+              <div>
+                <Message title="暂无页面" type="help">
+                  点击右上方新建页面
+                </Message>
+              </div>
+            )
         }
+        <ActionStatus
+          store={stores}
+          config={[
+            {
+              storeName: 'pages',
+              actions: [
+                {
+                  actionName: 'refresh',
+                  showLoading: true,
+                  showError: true,
+                },
+              ],
+            },
+          ]}
+        />
       </div>
     </Panel>
   );
