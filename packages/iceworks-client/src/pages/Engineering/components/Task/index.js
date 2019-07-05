@@ -12,7 +12,7 @@ import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
-import TaskModal from '../../components/TaskModal';
+import TaskModal from '../TaskModal';
 import styles from './index.module.scss';
 
 function showMessage(message, type) {
