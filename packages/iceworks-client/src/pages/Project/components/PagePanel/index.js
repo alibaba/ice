@@ -6,6 +6,7 @@ import Icon from '@components/Icon';
 import ActionStatus from '@components/ActionStatus';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
+import showMessage from '@utils/showMessage';
 import { injectIntl } from 'react-intl';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
@@ -63,11 +64,7 @@ const PagePanel = ({ intl, title, description }) => {
 
     toggleDeleteModal();
 
-    Message.show({
-      align: 'tr tr',
-      type: 'success',
-      content: '删除页面成功',
-    });
+    showMessage('删除页面成功', 'success');
 
     pagesStore.refresh();
     menuStore.refresh();
@@ -109,11 +106,7 @@ const PagePanel = ({ intl, title, description }) => {
 
     setCreatePageModal(false);
 
-    Message.show({
-      align: 'tr tr',
-      type: 'success',
-      content: '创建页面成功',
-    });
+    showMessage('创建页面成功', 'success');
 
     pagesStore.refresh();
     menuStore.refresh();
@@ -125,11 +118,7 @@ const PagePanel = ({ intl, title, description }) => {
 
     setAddBlocksModal(false);
 
-    Message.show({
-      align: 'tr tr',
-      type: 'success',
-      content: '添加区块成功',
-    });
+    showMessage('添加区块成功', 'success');
 
     pagesStore.refresh();
   }

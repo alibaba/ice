@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Message } from '@alifd/next';
+import { Button } from '@alifd/next';
 import PropTypes from 'prop-types';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
