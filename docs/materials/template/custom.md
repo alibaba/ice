@@ -71,6 +71,7 @@ ice-devtools 根据用户输入，提供了以下变量供物料模版开发者�
 - `adaptor`：用户输入的 adaptor（true or false）
 - `categories`：用户输入的分类
 - `registry`：npm 源地址
+- `materialConfig`：物料模版的 `package.json` 中定义的配置
 
 ### _package.json 与 _gitignore
 

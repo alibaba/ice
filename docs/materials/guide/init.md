@@ -71,7 +71,7 @@ ice-devtools 默认集成了三种物料模版：
 
 此外，在物料仓库的根 `package.json` 中，还包含另一个字段 `materialConfig`，这个属性存储了一些当前物料的信息及配置：
 
-- type: 字符串，指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'
+- type: 字符串，指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'，**请勿随意更改**
 - logo：配置物料的品牌 logo
 - template：记录当前物料初始化时的物料模版，当添加物料时，将依赖这个值获取物料模版，**请勿随意更改**
 - unpkg：指定物料托管平台

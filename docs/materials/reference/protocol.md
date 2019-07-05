@@ -10,14 +10,15 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 生成物料数据可通过 `idev generate` 命令生成，具体过程可参考[《物料数据生成》](/docs/materials/guide/generate.md)。生成的数据将被存储到 `build/materials.json` 文件中，该文件包含以下字段的数据：
 
 - type `{string}`：（必选）指定物料类型，来源自 `package.json` 中的 `materialConfig`，例如： react、vue、angular、bootstrap 等
-- name `{string}`：（必选）物料名称，来源自 `package.json` 中的 `name`
+- name `{string}`：（必选）物料名称，来源自 `package.json` 中的 `name` 字段
 - components `{Array[ComponentMetaData]}`：（必选）包含所有组件元数据的数组
 - blocks `{Array[BlockMetaData]}`：（必选）包含所有区块信息的数组
 - scaffolds `{Array[ScaffoldMetaData]}`：（必选）包含所有项目模版信息的数组
-- description `{string}`：（可选）物料描述，来源自 `package.json` 中的 `description`
-- logo `{string}`：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig`
-- homepage `{string}`：（可选）物料主页，来源自 `package.json` 中的 `homepage`
-- author `{object}`：（可选）物料作者，来源自 `package.json` 中的 `author`
+- description `{string}`：（可选）物料描述，来源自 `package.json` 中的 `description` 字段
+- logo `{string}`：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig` 字段
+- homepage `{string}`：（可选）物料主页，来源自 `package.json` 中的 `homepage` 字段
+- author `{object}`：（可选）物料作者，来源自 `package.json` 中的 `author` 字段
+- en_US `{object}`：（可选）物料国际化文案，根据 `package.json` 中的 `description` 字段生成国际化文案
 
 ## ComponentMetaData 组件元数据
 
@@ -25,14 +26,14 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 {
   // （必选）英文名称
   name: "balloon-confirm",
-  // （必选）名称
+  // （必选）中文名称
   title: "ICE 气泡确认框",
   //（必选）描述
   description: "ICE 气泡确认框",
   //（必选）预览地址
   homepage: "https://unpkg.com/@icedesign/balloon-confirm@1.0.4/build/index.html",
   //（必选）分类
-  categories: ["信息展示", "数据展示"],
+  categories: ["Information", "Data visualization"],
   //（必选）源码地址
   repository: "https://github.com/ice-lab/react-materials/tree/master/components/balloon-confirm",
   //（必选）描述安装方式
@@ -54,7 +55,14 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）发布时间
   publishTime: "2018-09-06T16:23:58.708Z",
   // （必选）最后更新时间
-  updateTime: "2019-05-25T05:54:33.164Z"
+  updateTime: "2019-05-25T05:54:33.164Z",
+  // （可选）国际化文案
+  en_US: {
+    // （可选）英文标题
+    title: 'ice balloon confirm',
+    // （可选）英文描述
+    description: 'ice balloon confirm',
+  }
 }
 ```
 
@@ -72,7 +80,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   homepage: "https://unpkg.com/@icedesign/ability-introduction-block/build/index.html",
   //（必选）分类
   categories: [
-    "信息展示"
+    "Information"
   ],
   //（必选）源码地址
   repository: "https://github.com/ice-lab/react-materials/tree/master/blocks/AbilityIntroduction",
@@ -101,27 +109,26 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   screenshots: [
     "https://unpkg.com/@icedesign/ability-introduction-block/screenshot.png"
   ],
-  // （可选）区块使用的功能
-  features: {
-    // （可选）区块使用到的组件
-    useComponents: [
-      {
-        basePackage: "@alifd/next",
-        className: "Grid"
-      }
-    ]
-  },
   // （必选）发布时间
   publishTime: "2018-12-13T08:48:27.377Z",
   // （必选）最后更新时间
-  updateTime: "2019-04-26T13:52:36.487Z"
+  updateTime: "2019-04-26T13:52:36.487Z",
+  // （可选）国际化文案
+  en_US: {
+    // （可选）英文标题
+    title: 'ability introduction',
+    // （可选）英文描述
+    description: 'ability introduction',
+  }
 }
 ```
 
-## ScaffoldMetaData 区块元数据
+## ScaffoldMetaData 项目元数据
 
 ```javascript
 {
+  // （必选）前端框架类型
+  type: "react",
   // （必选）英文名称
   name: "ice-design-pro",
   // （必选）名称
@@ -130,9 +137,9 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   description: "该模板提供了 Redux、Mock、国际化、权限管理、注册登录等完整的方案，且内置了丰富的区块，主要用于展示现有区块的分类以及区块组合的效果，使用时需要根据需求进行删除和添加",
   //（必选）预览地址
   homepage: "https://unpkg.com/@icedesign/pro-scaffold@latest/build/index.html",
-  //（必选）分类
+  //（可选）分类
   categories: [
-    "基础模板"
+    "Basic"
   ],
   //（必选）源码地址
   repository: "https://github.com/ice-lab/react-materials/tree/master/scaffolds/ice-design-pro",
@@ -172,6 +179,72 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）发布时间
   publishTime: "2018-05-04T08:55:23.677Z",
   // （必选）最后更新时间
-  updateTime: "2019-06-12T03:24:10.435Z"
+  updateTime: "2019-06-12T03:24:10.435Z",
+  // （可选）国际化文案
+  en_US: {
+    // （可选）英文标题
+    title: 'ICE Design Pro',
+    // （可选）英文描述
+    description: 'a sample scaffold',
+  }
+}
+```
+
+## 物料数据国际化
+
+根据以上协议可发现，在物料数据生成阶段会自动生成 `title` 和 `description` 的国际化文案，这些文案在初始化物料时根据用户输入的物料 title 和 description 自动生成，如有国际化需求，可根据 `[语言A标识符]文案[语言B标识符]文案[语言C标识符]文案` 的规则编辑物料 package.json 下的 `description` 字段和 `xxxConfig.title` 字段，其中语言标识符规则按照 `language_REGION` 的方式标示，即小写语言+下划线+大写地域标示，例如： `zh_CN`、`en_US`、`ja_JP`、`zh_TW` 等。ice-devtools 将按照从后往前（从右往左）方向的进行匹配，直到匹配到第一组 `[语言标识符]文案`，如果多次标示了同一种语言，则以最后匹配到的文案为准，最终未匹配到以上格式，则判段文案是否包含中文，如果包含则视为中文文案（zh_CN）否则视为英文文案（en_US）。例如：
+
+```
+'[zh_CN]描述信息[en_US]hello description'
+->
+zh_CN: '描述信息'
+en_US: 'hello description'
+
+[zh_CN]描述信息[en_US]
+->
+zh_CN: '描述信息'
+en_US: ''
+
+[zh_CN]hello description[en_US]other description
+->
+zh_CN: 'hello description'
+en_US: 'other description'
+
+'描述信息[en_US]hello description'
+->
+zh_CN: '描述信息'
+en_US: 'hello description'
+
+'hello[en_US]other description'
+->
+zh_CN: ''
+en_US: 'hello'
+
+'hello description[zh_CN]描述信息'
+->
+zh_CN: '描述信息'
+en_US: 'hello description'
+
+'描述信息'
+->
+zh_CN: '描述信息'
+
+'hello description'
+->
+en_US: 'hello description'
+```
+
+eg:
+
+```json
+//  package.json
+{
+  "name": "custom-material-button",
+  "description": "一个基本按钮[en_US]a sample button",
+  "compoentConfig": {
+    "title": "按钮[en_US]Button",
+    // others property...
+  }
+  // others property...
 }
 ```

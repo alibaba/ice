@@ -66,6 +66,8 @@ npm publish
 
 执行 publish 命令的时会自动执行 `npm run build` 和 `npm run screenshot`。build 命令完成区块的构建任务，而 screenshot 命令作用是生成区块截图，截图被用于 iceworks 展示。当然，你也可以手动截图图片作为截图，只需要截图以 `screenshot.png` 保存在当前目录即可。
 
+> 你可以使用你喜欢的截图工具截图，但我们建议使用 [@ice/screenshot](https://github.com/alibaba/ice/tree/master/packages/ice-screenshot) 工具自动截图。
+
 至此，区块的开发已经结束。
 
 ## 组件开发
@@ -154,6 +156,6 @@ ReactDOM.render((
 └── tests
 ```
 
-其生成的代码和普通前端项目没有太多区别，唯一需要注意的是 `menuConfig.js` 和 `routerConfig.js`，这两个文件作用是配置菜单项和路由项，请按照物料协议标准进行修改，否则**无法在 icework 中使用**，关于这两个文件的更多信息，可参考[《物料数据协议》](/docs/materials/reference/protocol.md)和[《项目模版规范》](/docs/materials/template/scaffold.md)
+其生成的代码和普通前端项目没有太多区别，唯一需要注意的是 `menuConfig.js` 和 `routerConfig.js`，这两个文件作用是配置菜单项和路由项，请按照物料协议标准进行修改，否则**无法在 icework 中使用**，关于这两个文件的更多信息，可参考[《物料数据协议》](/docs/materials/reference/protocol.md)和[《项目模版规范》](/docs/materials/template/scaffold.md)。
 
 而其他流程则和区块没有太多区别，开发完成后需要补充项目截图，完成后正常发布即可。

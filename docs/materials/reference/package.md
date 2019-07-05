@@ -7,7 +7,7 @@ order: 5
 
 在物料的 `package.json` 中，包含一个 `materialConfig` 字段描述当前物料的一些配置：
 
-- type `{string}`：指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'
+- type `{string}`：指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'，**请勿随意更改**
 - logo `{string}`：配置物料的品牌 logo
 - template `{string}`：记录当前物料初始化时的物料模版，当新建物料时，将依赖这个值获取物料模版，**请勿随意更改**
 - unpkg `{string}`：指定物料托管平台
@@ -36,3 +36,4 @@ order: 5
 - name `{string}`：项目名称（英文）
 - title `{string}`：项目名称（任意文本）
 - categories `{Array[string]}`：项目的分类
+- type `{string}`：指定当前项目的前端框架类型 eg: 'react', 'vue', 'angular'，根据物料仓库的 `package.json` 自动生成
