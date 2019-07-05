@@ -38,8 +38,12 @@ const RouterPanel = ({ intl, title, description }) => {
   const routerStore = stores.useStore('routes');
   const { dataSource } = routerStore;
 
-  function onRefresh() {
-    routerStore.refresh();
+  async function onRefresh() {
+    try {
+      await routerStore.refresh();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async function onChangeData(data) {
@@ -49,7 +53,7 @@ const RouterPanel = ({ intl, title, description }) => {
         replacement: true,
       },
     });
-    onRefresh();
+    await onRefresh();
   }
 
   function onOpenEditModal({
