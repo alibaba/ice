@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useSocket from '@hooks/useSocket';
-import showMessage from '@uitls/showMessage';
+import showMessage from '@utils/showMessage';
 import stores from '@stores';
 
 const useTask = ({ type, writeLog, writeChunk }) => {

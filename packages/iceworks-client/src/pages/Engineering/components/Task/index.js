@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
-import showMessage from '@uitls/showMessage';
+import showMessage from '@utils/showMessage';
 import useModal from '@hooks/useModal';
 import useTask from '@hooks/useTask';
 import useTermTheme from '@hooks/useTermTheme';
