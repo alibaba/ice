@@ -8,11 +8,10 @@ export default function() {
     }
 
     ctx.clientConfig = {
-      // TODO: 区分环境和端口检测
       // default use iceworks-client@latest
-      clientPath: '//unpkg.com/iceworks-client@latest/build/',
-      socketUrl: '//127.0.0.1:7001/',
-      apiUrl: '//127.0.0.1:7001/api/',
+      clientPath: 'https://unpkg.com/iceworks-client@latest/build/',
+      socketUrl: `//127.0.0.1:${process.env.PORT}/`,
+      apiUrl: `//127.0.0.1:${process.env.PORT}/api/`,
       isAliInternal: await checkAliInternal(),
     };
 

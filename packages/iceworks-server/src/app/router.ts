@@ -15,6 +15,7 @@ export default (app: Application) => {
     ['home.project.setCurrent', home.project.setCurrent],
     ['home.project.setPanel', home.project.setPanel],
     ['home.project.sortPanels', home.project.sortPanels],
+    ['home.project.reloadAdapter', home.project.reloadAdapter],
 
     ['material.index.resources', material.index.getResources],
     ['material.index.getOne', material.index.getOne],

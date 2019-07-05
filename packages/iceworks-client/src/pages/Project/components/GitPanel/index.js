@@ -33,7 +33,6 @@ const GitPanel = ({ intl, title, description }) => {
     remoteUrl,
     currentBranch,
     localBranches,
-    originBranches,
     unstageFiles,
   } = dataSource;
 
@@ -135,23 +134,7 @@ const GitPanel = ({ intl, title, description }) => {
     });
   }
 
-  const locals = localBranches.map((value) => ({ label: value, value }));
-  const origins = originBranches.map((value) => ({ label: value, value }));
-  const checkoutBranches = [];
-  if (locals.length) {
-    checkoutBranches.push({
-      label: 'local',
-      value: 'local',
-      children: locals,
-    });
-  }
-  if (origin.length) {
-    checkoutBranches.push({
-      label: 'origin',
-      value: 'origin',
-      children: origins,
-    });
-  }
+  const checkoutBranches = localBranches.map((value) => ({ label: value, value }));
 
   const operations = isRepository ?
     [

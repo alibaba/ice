@@ -157,6 +157,7 @@ function useProject({ panelStores } = {}) {
     projectPreDelete,
 
     // method
+    refreshProjectStore,
     refreshProjects,
     refreshProject,
     createProject,
