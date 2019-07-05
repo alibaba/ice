@@ -39,8 +39,16 @@ const Configuration = () => {
     }
   }
 
+  async function onGetCLIConf() {
+    try {
+      await confStore.getCLIConf();
+    } catch (error) {
+      showMessage(error);
+    }
+  }
+
   useEffect(() => {
-    confStore.getCLIConf();
+    onGetCLIConf();
   }, []);
 
   return (

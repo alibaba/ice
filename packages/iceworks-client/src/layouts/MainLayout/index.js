@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import showMessage from '@utils/showMessage';
 import NavigationBar from '@components/NavigationBar';
 import SubRoutes from '@components/SubRoutes';
 import ConnectModal from '@components/ConnectModal';
@@ -6,23 +7,33 @@ import GlobalBar from '@components/GlobalBar';
 import menuConfig from '@src/menuConfig';
 import routerConfig from '@src/routerConfig';
 import stores from '@stores';
-import ActionStatus from '@components/ActionStatus';
 import appConfig from '../../appConfig';
 import styles from './index.module.scss';
 
 const MainLayout = () => {
   const [project, user] = stores.useStores(['project', 'user']);
 
-  useEffect(() => {
-    project.refresh();
-    if (appConfig.isAliInternal) {
-      user.refresh();
+  async function onInit() {
+    try {
+      await project.refresh();
+      if (appConfig.isAliInternal) {
+        await user.refresh();
+      }
+    } catch (error) {
+      showMessage(error);
     }
-  }, []);
-
-  async function onLogin(data) {
-    await user.login(data);
   }
+  async function onLogin(data) {
+    try {
+      await user.login(data);
+    } catch (error) {
+      showMessage(error);
+    }
+  }
+
+  useEffect(() => {
+    onInit();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -38,20 +49,6 @@ const MainLayout = () => {
         </div>
       </div>
       <GlobalBar project={project} />
-      <ActionStatus
-        store={stores}
-        config={[
-          {
-            storeName: 'user',
-            actions: [
-              {
-                actionName: 'refresh',
-                showError: true,
-              },
-            ],
-          },
-        ]}
-      />
     </div>
   );
 };

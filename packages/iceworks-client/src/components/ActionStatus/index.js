@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Message, Loading } from '@alifd/next';
 import styles from './index.module.scss';
 
-export default (props) => {
+const ActionStatus = (props) => {
   const { store, config } = props;
   const namespaces = config.map(item => item.storeName);
   const storesBinding = store.useStores(namespaces);
@@ -50,3 +51,13 @@ export default (props) => {
     </div>
   );
 };
+
+ActionStatus.defaultProps = {
+};
+
+ActionStatus.propTypes = {
+  store: PropTypes.object.isRequired,
+  config: PropTypes.array.isRequired,
+};
+
+export default ActionStatus;
