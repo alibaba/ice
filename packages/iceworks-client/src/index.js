@@ -46,7 +46,11 @@ const App = () => {
   }
 
   return (
-    <Beforeunload onBeforeunload={() => "You'll loose your data"}>
+    <Beforeunload
+      onBeforeunload={() => {
+        return process.env.NODE_ENV === 'production' ? 'You\'ll loose your data' : undefined;
+      }}
+    >
       <LocaleProvider locale={locale} setLocale={setLocale}>
         <ThemeProvider theme={theme} setTheme={setTheme}>
           <Router history={history}>

@@ -3,6 +3,7 @@ import socket from '@src/socket';
 export default {
   dataSource: {
     name: '',
+    adapterName: '',
     path: '',
     panels: [],
   },
@@ -21,5 +22,10 @@ export default {
 
   async sortPanels(args) {
     this.dataSource.panels = await socket.emit('home.project.sortPanels', args);
+  },
+
+  async reloadAdapter() {
+    const result = await socket.emit('home.project.reloadAdapter');
+    this.dataSource = { ...result };
   },
 };

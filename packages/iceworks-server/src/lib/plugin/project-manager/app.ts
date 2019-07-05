@@ -88,7 +88,6 @@ class Project implements IProject {
 
     const pkgContent = this.getPackageJSON();
     const adapterName = pkgContent.iceworks ? pkgContent.iceworks.adapter : null;
-
     if (adapterName && DEFAULT_ADAPTER.includes(adapterName)) {
       this.adapterName = adapterName;
 
@@ -113,11 +112,18 @@ class Project implements IProject {
       });
 
       this.initPanels();
+
+      return this.toJSON();
     }
   }
 
+  public async reloadAdapter(i18n: II18n) {
+    const result = await this.loadAdapter(i18n);
+    return result;
+  }
+
   /**
-   *  Get the panel of the current project from the cache and 
+   *  Get the panel of the current project from the cache and
    *  update the panel data according to the adapter.
    */
   private initPanels() {
@@ -158,21 +164,6 @@ class Project implements IProject {
     }
 
     storage.set('panelSettings', panelSettings);
-  }
-
-  public async updateAdapter(i18n: II18n) {
-    this.panels = [];
-    const getAdapter = this.interopRequire(`../../${this.adapterName}`);
-    const adapters = await getAdapter(i18n);
-    _.forEach(adapters, (config: IPanel, name) => {
-      this.panels.push({
-        name,
-        ..._.omit(config, 'module')
-      });
-    });
-
-    // Get the panel of the current project from the cache and update the panel data according to the adapter
-    this.initPanels();
   }
 
   public setPanel(params: {name: string; isAvailable: boolean; }): IPanel[] {
@@ -253,9 +244,6 @@ class ProjectManager extends EventEmitter {
     if (!project) {
       throw new Error('notfound project');
     }
-
-    // update adapter i18n text
-    await project.updateAdapter(this.i18n);
 
     return project;
   }
