@@ -13,7 +13,7 @@ const Engineering = ({ routes }) => {
   function isConfExist() {
     return projectStore.dataSource.panels.some((panel) => {
       return panel.name === 'Configuration';
-    })
+    });
   }
 
   function getSubMenuData() {
