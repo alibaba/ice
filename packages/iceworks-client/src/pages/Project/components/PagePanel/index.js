@@ -210,11 +210,9 @@ const PagePanel = ({ intl, title, description }) => {
             </div> :
             (
               !pagesStore.refresh.error &&
-              <div>
-                <Message title="暂无页面" type="help">
-                  点击右上方新建页面
-                </Message>
-              </div>
+              <Message title="暂无页面" type="help">
+                点击右上方新建页面
+              </Message>
             )
         }
         <ActionStatus

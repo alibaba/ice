@@ -29,7 +29,7 @@ function useProject({ panelStores } = {}) {
       panelStore
         .refresh()
         .catch((error) => {
-          logger.error(error);
+          logger.error('refresh project got error: ', error);
         });
     }
   }
