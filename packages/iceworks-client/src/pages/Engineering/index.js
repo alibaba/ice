@@ -4,18 +4,22 @@ import SubRoutes from '@components/SubRoutes';
 import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
 import { getMenuData } from '@utils/getMenuData';
-
-import engineeringStores from './stores';
-
+import stores from '@stores';
 import styles from './index.module.scss';
 
 const Engineering = ({ routes }) => {
-  const conf = engineeringStores.useStore('configuration');
+  const projectStore = stores.useStore('project');
+
+  function isConfExist() {
+    return projectStore.dataSource.panels.some((panel) => {
+      return panel.name === 'Configuration';
+    })
+  }
 
   function getSubMenuData() {
     const hiddenPaths = [];
-    // if ice.config.js not found, hide configuration menu
-    if (!conf.dataSource.cli) {
+    // if configuration panel not found, hide configuration menu
+    if (!isConfExist()) {
       hiddenPaths.push('/task/configuration');
     }
     const menuData = getMenuData(hiddenPaths) || {};
@@ -25,13 +29,8 @@ const Engineering = ({ routes }) => {
 
   const [subMenuData, setSubMenuData] = useState([]);
 
-  async function onGetCLIConf() {
-    await conf.getCLIConf();
-    setSubMenuData(getSubMenuData());
-  }
-
   useEffect(() => {
-    onGetCLIConf();
+    setSubMenuData(getSubMenuData());
   }, []);
 
   return (
