@@ -3,6 +3,7 @@ import useModal from '@hooks/useModal';
 import { useState } from 'react';
 import showMessage from '@utils/showMessage';
 import logger from '@utils/logger';
+import goldlog from '@utils/goldlog';
 
 function useProject({ panelStores } = {}) {
   const [projectsStore, projectStore, materialStore] = stores.useStores(['projects', 'project', 'material']);
@@ -69,6 +70,11 @@ function useProject({ panelStores } = {}) {
   async function addProject(path) {
     await projectsStore.add(path);
     await refreshProjects();
+    goldlog({
+      namespace: 'home',
+      module: 'project',
+      action: 'add-project',
+    });
     setOpenProjectModal(false);
   }
 
@@ -81,6 +87,12 @@ function useProject({ panelStores } = {}) {
   async function createProject(data) {
     await projectsStore.create(data);
     await refreshProjects();
+    goldlog({
+      namespace: 'home',
+      module: 'project',
+      action: 'create-project',
+      data,
+    });
     setCreateProjectModal(false);
   }
 

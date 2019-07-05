@@ -11,6 +11,7 @@ import useTermTheme from '@hooks/useTermTheme';
 import stores from '@stores';
 import showMessage from '@utils/showMessage';
 import { THEMES } from '@src/appConfig';
+import goldlog from '@utils/goldlog';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
@@ -26,6 +27,11 @@ const GlobalBar = ({ project, intl }) => {
   async function handleFolder() {
     try {
       await socket.emit('home.system.openFolder', { path: projectPath });
+      goldlog({
+        namespace: 'home',
+        module: 'system',
+        action: 'open-folder',
+      });
     } catch (error) {
       showMessage(error);
     }
@@ -34,16 +40,31 @@ const GlobalBar = ({ project, intl }) => {
   async function handleEditor() {
     try {
       await socket.emit('home.system.openEditor', { path: projectPath });
+      goldlog({
+        namespace: 'home',
+        module: 'system',
+        action: 'open-editor',
+      });
     } catch (error) {
       showMessage(error);
     }
   }
 
   async function handleTheme() {
+    const currentTheme = (theme === THEMES.dark.themePackage)
+      ? THEMES.light.themePackage
+      : THEMES.dark.themePackage;
+
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-theme',
+      data: {
+        theme: currentTheme,
+      },
+    });
+
     try {
-      const currentTheme = (theme === THEMES.dark.themePackage)
-        ? THEMES.light.themePackage
-        : THEMES.dark.themePackage;
       await socket.emit('home.setting.setTheme', { theme: currentTheme });
       // set app theme
       setTheme(currentTheme);

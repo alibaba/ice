@@ -9,6 +9,7 @@ import { ThemeContext } from '@components/ThemeProvider';
 import Card from '@components/Card';
 import { THEMES } from '@src/appConfig';
 import socket from '@src/socket';
+import goldlog from '@utils/goldlog';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
@@ -63,6 +64,15 @@ const General = ({ intl }) => {
   ];
 
   async function onLocaleChange(currentLocale) {
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-locale',
+      data: {
+        locale: currentLocale,
+      },
+    });
+
     try {
       await socket.emit('home.setting.setLocale', { locale: currentLocale });
       setLocale(currentLocale);
@@ -72,6 +82,15 @@ const General = ({ intl }) => {
   }
 
   async function onThemeChange(currentTheme) {
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-theme',
+      data: {
+        theme: currentTheme,
+      },
+    });
+
     try {
       await socket.emit('home.setting.setTheme', { theme: currentTheme });
       setTheme(currentTheme);
@@ -90,6 +109,15 @@ const General = ({ intl }) => {
   }
 
   async function onEditorChange(currentEditor) {
+    goldlog({
+      namespace: 'home',
+      module: 'setting',
+      action: 'set-editor',
+      data: {
+        editor: currentEditor,
+      },
+    });
+
     try {
       await socket.emit('home.setting.setEditor', { editor: currentEditor });
       setEditor(currentEditor);

@@ -7,6 +7,7 @@ import ActionStatus from '@components/ActionStatus';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import showMessage from '@utils/showMessage';
+import goldlog from '@utils/goldlog';
 import { injectIntl } from 'react-intl';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
@@ -111,6 +112,13 @@ const PagePanel = ({ intl, title, description }) => {
     pagesStore.refresh();
     menuStore.refresh();
     routerStore.refresh();
+
+    goldlog({
+      namespace: 'home',
+      module: 'project',
+      action: 'create-page',
+      data,
+    });
   }
 
   async function addBlocks(newBlocks) {
