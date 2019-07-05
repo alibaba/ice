@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Message } from '@alifd/next';
 import Modal from '@components/Modal';
 import ActionStatus from '@components/ActionStatus';
 import useModal from '@hooks/useModal';
@@ -99,38 +98,18 @@ const GitPanel = ({ intl, title, description }) => {
   async function onPull() {
     try {
       await gitStore.pull();
-      Message.show({
-        type: 'success',
-        title: 'Pull',
-        content: '拉取当前分支最新代码成功',
-        align: 'tr tr',
-      });
+      showMessage('拉取当前分支最新代码成功', 'success');
     } catch (error) {
-      Message.show({
-        type: 'error',
-        title: '拉取最新代码失败！',
-        content: error.message,
-        align: 'tr tr',
-      });
+      showMessage('拉取最新代码失败！');
     }
   }
 
   async function onPush() {
     try {
       await gitStore.push();
-      Message.show({
-        type: 'success',
-        title: 'Push',
-        content: '推送当前分支本地代码成功',
-        align: 'tr tr',
-      });
+      showMessage('推送当前分支本地代码成功', 'success');
     } catch (error) {
-      Message.show({
-        type: 'error',
-        title: '推送本地代码失败！',
-        content: error.message,
-        align: 'tr tr',
-      });
+      showMessage('推送本地代码失败！');
     }
   }
 

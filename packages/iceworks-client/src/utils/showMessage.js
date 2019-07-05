@@ -1,10 +1,16 @@
 import { Message } from '@alifd/next';
 
-export default function showMessage(message, type) {
+export default function showMessage(message, type = 'error') {
+  let content = 'Please try again';
+
+  if (message) {
+    content = message instanceof Error ? message.message : message;
+  }
+
   Message.show({
-    type: type || 'error',
     title: 'Message',
-    content: message || 'Please try again',
     align: 'tr tr',
+    type,
+    content,
   });
 }
