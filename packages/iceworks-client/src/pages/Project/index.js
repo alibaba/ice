@@ -169,14 +169,18 @@ const Project = ({ history, intl }) => {
     }
   }
 
+  async function wrapRefreshProjects() {
+    await refreshProjects();
+
+    if (isCreatedProject && projectStore.dataSource.adapterName) {
+      setResetModal(true);
+    }
+  }
+
   useEffect(() => {
     logger.info('Project page loaded.');
 
-    if (isCreatedProject) {
-      setResetModal(true);
-    }
-
-    refreshProjects();
+    wrapRefreshProjects();
   }, []);
 
   function renderContent() {
