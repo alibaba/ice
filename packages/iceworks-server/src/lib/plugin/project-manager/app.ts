@@ -28,7 +28,8 @@ const DEFAULT_ADAPTER = [
   'adapter-react-v1',
   'adapter-react-v2',
   'adapter-react-v3',
-  'adapter-vue-v1'
+  'adapter-vue-v1',
+  'adapter-vue-v2'
 ];
 
 class Project implements IProject {
