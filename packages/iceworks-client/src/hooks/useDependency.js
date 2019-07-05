@@ -2,7 +2,6 @@ import stores from '@stores';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import { useState } from 'react';
-import { Message } from '@alifd/next';
 import writeGlobalLog from '@utils/writeGlobalLog';
 import showMessage from '@utils/showMessage';
 
