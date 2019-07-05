@@ -10,10 +10,10 @@ import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
+import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
 import getIceVersion from '../../utils/getIceVersion';
 import getTarballURLByMaterielSource from '../../../getTarballURLByMaterielSource';
-import downloadAndExtractPackage from '../../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
 import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext, IProjectBlock } from '../../../../interface';
 
@@ -121,11 +121,11 @@ export default class Page implements IPageModule {
     const blockDir = path.join(componentsDir, blockName);
     const blockTempDir = path.join(os.tmpdir(), blockName);
     try {
-      await downloadAndExtractPackage(
+      await getAndExtractTarball(
         blockTempDir,
         tarballURL
       );
-      
+
       await mkdirpAsync(blockDir);
       await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
