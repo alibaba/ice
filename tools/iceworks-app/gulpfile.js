@@ -49,12 +49,11 @@ gulp.task('dist-dev', (done) => {
   } else {
     targets = Platform.MAC.createTarget();
   }
-  const serverDir = path.join(__dirname, 'server');
   // the server directory is creade and installed manually.
   builder.build({
-        targets,
-        config: packageJSON.build,
-      })
+    targets,
+    config: packageJSON.build,
+  })
     .then(done)
     .catch(console.error);
 });
