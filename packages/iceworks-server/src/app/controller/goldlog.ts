@@ -9,7 +9,6 @@ export class GoldlogController {
     async record(ctx) {
       if (ctx.request.body) {
         const data = ctx.request.body;
-        console.log(data);
         const dataKeyArray = Object.keys(data);
         const gokey = dataKeyArray.reduce((finnalStr, currentKey, index) => {
           const currentData =
@@ -20,8 +19,6 @@ export class GoldlogController {
             dataKeyArray.length - 1 === index ? '' : '&'
           }`;
         }, '');
-
-        console.log('gokey=====', gokey)
 
         await rp({
           method: 'post',

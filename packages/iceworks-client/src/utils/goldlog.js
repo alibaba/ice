@@ -4,16 +4,16 @@ import dateTime from 'date-time';
 import browser from 'browser-detect';
 import appConfig from '../appConfig';
 
-const browserInfo = browser();
+const UA = browser();
 
 function goldlog(data = {}) {
-  data.data.visit_time = dateTime();
-  data.data.browser_info = browserInfo;
+  data.visit_time = dateTime();
+  data.UA = UA;
 
   return axios({
     method: 'post',
     url: `${appConfig.apiUrl}goldlog/record`,
-    data: { ...data },
+    data,
   });
 }
 

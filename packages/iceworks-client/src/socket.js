@@ -21,14 +21,11 @@ socket.emit = function emit(...args) {
     if (eventNameStr.indexOf('adapter') > -1) {
       const eventNameArr = eventNameStr.split('.');
       const [namespace, module, action] = eventNameArr;
-      const data = args[1];
       goldlog({
         namespace,
         module,
         action,
-        data: {
-          ...data,
-        },
+        data: args[1] ? args[1] : {},
       });
     }
 
