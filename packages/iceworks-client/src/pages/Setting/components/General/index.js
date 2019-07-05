@@ -2,6 +2,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Radio } from '@alifd/next';
+import showMessage from '@utils/showMessage';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { LocalContext, localeInfos } from '@components/Locale';
 import { ThemeContext } from '@components/ThemeProvider';
@@ -62,23 +63,39 @@ const General = ({ intl }) => {
   ];
 
   async function onLocaleChange(currentLocale) {
-    await socket.emit('home.setting.setLocale', { locale: currentLocale });
-    setLocale(currentLocale);
+    try {
+      await socket.emit('home.setting.setLocale', { locale: currentLocale });
+      setLocale(currentLocale);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function onThemeChange(currentTheme) {
-    await socket.emit('home.setting.setTheme', { theme: currentTheme });
-    setTheme(currentTheme);
+    try {
+      await socket.emit('home.setting.setTheme', { theme: currentTheme });
+      setTheme(currentTheme);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function getEditor() {
-    const currentLocale = await socket.emit('home.setting.getEditor');
-    setEditor(currentLocale);
+    try {
+      const currentLocale = await socket.emit('home.setting.getEditor');
+      setEditor(currentLocale);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function onEditorChange(currentEditor) {
-    await socket.emit('home.setting.setEditor', { editor: currentEditor });
-    setEditor(currentEditor);
+    try {
+      await socket.emit('home.setting.setEditor', { editor: currentEditor });
+      setEditor(currentEditor);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   useEffect(() => {

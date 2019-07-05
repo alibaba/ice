@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Message, Loading } from '@alifd/next';
 import styles from './index.module.scss';
 
-export default (props) => {
+const ActionStatus = (props) => {
   const { store, config } = props;
   const namespaces = config.map(item => item.storeName);
   const storesBinding = store.useStores(namespaces);
@@ -25,8 +26,22 @@ export default (props) => {
 
   const loadingVisible = loadingFlags.some(flag => flag);
   const error = errors.find(item => item);
+  const [errorVisible, setErrorVisible] = useState(!!error);
 
-  if (!loadingVisible && !error) {
+  useEffect(() => {
+    let timer;
+    if (error) {
+      setErrorVisible(true);
+      timer = setTimeout(() => {
+        setErrorVisible(false);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
+
+  if (!loadingVisible && !errorVisible) {
     return null;
   }
 
@@ -37,16 +52,24 @@ export default (props) => {
       {loadingVisible && (
         <Loading color="#fff" />
       )}
-      {error && (
+      {errorVisible && error && (
         <Message
           align="tc, tc"
           type="error"
-          closable
           visible
-        >
-          {error.message}
-        </Message>
+          title={error.message}
+        />
       )}
     </div>
   );
 };
+
+ActionStatus.defaultProps = {
+};
+
+ActionStatus.propTypes = {
+  store: PropTypes.object.isRequired,
+  config: PropTypes.array.isRequired,
+};
+
+export default ActionStatus;
