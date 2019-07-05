@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Message } from '@alifd/next';
 import Modal from '@components/Modal';
+import ActionStatus from '@components/ActionStatus';
 import useModal from '@hooks/useModal';
+import showMessage from '@utils/showMessage';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
 import GitRemote from './GitRemote';
@@ -37,7 +39,12 @@ const GitPanel = ({ intl, title, description }) => {
   } = dataSource;
 
   async function onInit(setRemoteUrl) {
-    await gitStore.init(setRemoteUrl);
+    try {
+      await gitStore.init(setRemoteUrl);
+    } catch (error) {
+      showMessage(error);
+    }
+
     await gitStore.refresh();
   }
 
@@ -50,9 +57,18 @@ const GitPanel = ({ intl, title, description }) => {
   }
 
   async function onCreate(name) {
-    await gitStore.checkoutLocalBranch(name);
-    await gitStore.refresh();
-    setCreateModal(false);
+    let error;
+    try {
+      await gitStore.checkoutLocalBranch(name);
+    } catch (err) {
+      error = err;
+      showMessage(error);
+    }
+
+    if (!error) {
+      await gitStore.refresh();
+      setCreateModal(false);
+    }
   }
 
   async function onOpenEdit() {
@@ -70,12 +86,7 @@ const GitPanel = ({ intl, title, description }) => {
       await gitStore.getBranches();
       setSwitchModal(true);
     } catch (error) {
-      Message.show({
-        type: 'error',
-        title: '获取分支失败！',
-        content: error.message,
-        align: 'tr tr',
-      });
+      showMessage(error);
     }
   }
 
@@ -124,14 +135,18 @@ const GitPanel = ({ intl, title, description }) => {
   }
 
   async function onCommit(data) {
-    await gitStore.addAndCommit(data);
-    await gitStore.refresh();
-    Message.show({
-      type: 'success',
-      title: 'Commit',
-      content: '提交成功',
-      align: 'tr tr',
-    });
+    let error;
+    try {
+      await gitStore.addAndCommit(data);
+    } catch (err) {
+      showMessage(err);
+      error = err;
+    }
+
+    if (!error) {
+      showMessage('提交成功', 'success');
+      await gitStore.refresh();
+    }
   }
 
   const checkoutBranches = localBranches.map((value) => ({ label: value, value }));
@@ -171,6 +186,53 @@ const GitPanel = ({ intl, title, description }) => {
     ] :
     [];
 
+  let contentElement = null;
+  if (!gitStore.refresh.error) {
+    if (isRepository) {
+      contentElement = (
+        <div className={styles.wrap}>
+          <Main
+            dataSource={unstageFiles}
+            onOk={onCommit}
+          />
+          <Modal
+            title={intl.formatMessage({ id: 'iceworks.project.panel.git.edit.title' })}
+            visible={onEditModal}
+            onCancel={() => setEditModal(false)}
+            onOk={onEdit}
+            footer={false}
+          >
+            <div className={styles.editModal}>
+              <GitRemote
+                onOk={onEdit}
+                remoteUrl={remoteUrl}
+                submitMessage={<FormattedMessage id="iceworks.global.button.yes" />}
+              />
+            </div>
+          </Modal>
+          <CreateBranchModal
+            on={onCreateModal}
+            onCancel={() => setCreateModal(false)}
+            onOk={onCreate}
+          />
+          <SwtichBranchModal
+            on={onSwtichModal}
+            onCancel={() => setSwitchModal(false)}
+            onOk={onSwtich}
+            dataSource={checkoutBranches}
+          />
+        </div>
+      );
+    } else {
+      contentElement = (
+        <GitRemote
+          onOk={onInit}
+          submitMessage={<FormattedMessage id="iceworks.project.panel.git.addRemote" />}
+        />
+      );
+    }
+  }
+
   return (
     <Panel
       header={
@@ -183,45 +245,22 @@ const GitPanel = ({ intl, title, description }) => {
         </PanelHead>
       }
     >
-      {
-        isRepository ?
-          <div className={styles.wrap}>
-            <Main
-              dataSource={unstageFiles}
-              onOk={onCommit}
-            />
-            <Modal
-              title={intl.formatMessage({ id: 'iceworks.project.panel.git.edit.title' })}
-              visible={onEditModal}
-              onCancel={() => setEditModal(false)}
-              onOk={onEdit}
-              footer={false}
-            >
-              <div className={styles.editModal}>
-                <GitRemote
-                  onOk={onEdit}
-                  remoteUrl={remoteUrl}
-                  submitMessage={<FormattedMessage id="iceworks.global.button.yes" />}
-                />
-              </div>
-            </Modal>
-            <CreateBranchModal
-              on={onCreateModal}
-              onCancel={() => setCreateModal(false)}
-              onOk={onCreate}
-            />
-            <SwtichBranchModal
-              on={onSwtichModal}
-              onCancel={() => setSwitchModal(false)}
-              onOk={onSwtich}
-              dataSource={checkoutBranches}
-            />
-          </div> :
-          <GitRemote
-            onOk={onInit}
-            submitMessage={<FormattedMessage id="iceworks.project.panel.git.addRemote" />}
-          />
-      }
+      {contentElement}
+      <ActionStatus
+        store={stores}
+        config={[
+          {
+            storeName: 'git',
+            actions: [
+              {
+                actionName: 'refresh',
+                showLoading: true,
+                showError: true,
+              },
+            ],
+          },
+        ]}
+      />
     </Panel>
   );
 };
