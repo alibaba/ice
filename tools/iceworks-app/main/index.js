@@ -94,7 +94,7 @@ app.on('before-quit', (event) => {
       if (code === 0) {
         serverProcess.kill();
         serverProcess = null;
-        app.quit();
+        app.exit();
       } else {
         app.quit();
       }
