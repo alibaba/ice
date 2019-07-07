@@ -4,7 +4,8 @@
   "main": "main/index.js",
   "scripts": {
     "start": "electron main",
-    "dist": "gulp dist"
+    "dist": "gulp dist",
+    "dist-dev": "gulp dist-dev"
   },
   "devDependencies": {
     "address": "^1.1.0",
