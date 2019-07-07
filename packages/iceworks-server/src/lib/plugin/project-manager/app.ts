@@ -112,9 +112,9 @@ class Project implements IProject {
       });
 
       this.initPanels();
-
-      return this.toJSON();
     }
+
+    return this.toJSON();
   }
 
   public async reloadAdapter(i18n: II18n) {
