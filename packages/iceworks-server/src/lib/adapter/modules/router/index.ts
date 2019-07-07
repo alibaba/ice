@@ -12,7 +12,7 @@ const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
-const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'children'];
+const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'children', 'redirect'];
 
 export default class Router implements IRouterModule {
   public readonly project: IProject;
@@ -20,7 +20,7 @@ export default class Router implements IRouterModule {
 
   public readonly path: string;
   public existLazy: boolean;
-  public configFilePath = 'config/router.js';
+  public configFilePath = 'config/routes.js';
   public removePaths: string[];
 
   constructor(params: {project: IProject; storage: any; }) {
@@ -198,14 +198,20 @@ export default class Router implements IRouterModule {
    *  [{path: '/project/abc'}, {path: '/project'}, {path: '/bbc'}, {path: '/'}]
    */
   private sortData(data: IRouter[]): IRouter[] {
-    return data.sort((a, b) => {
-      if (a.children) {
-        a.children = this.sortData(a.children);
+    return data.sort((beforeItem, item) => {
+      if (beforeItem.children) {
+        beforeItem.children = this.sortData(beforeItem.children);
       }
-      if (a.path.indexOf(b.path) === 0) {
+      if (!beforeItem.path) {
+        return 1;
+      }
+      if (!item.path) {
+        return 0;
+      }
+      if (beforeItem.path.indexOf(item.path) === 0) {
         return -1;
       }
-      if (b.path.indexOf(a.path) === 0) {
+      if (item.path.indexOf(beforeItem.path) === 0) {
         return 1;
       }
       return 0;
@@ -312,6 +318,11 @@ export default class Router implements IRouterModule {
     // add new page or layout
     function setNewComponent(type, component) {
       const componentExist = existImport(importDeclarations, component, type);
+
+      // no component dont add import
+      if (!component) {
+        return false;
+      }
 
       if (!componentExist && !newImports.find(item => item.name === component)) {
         newImports.push({

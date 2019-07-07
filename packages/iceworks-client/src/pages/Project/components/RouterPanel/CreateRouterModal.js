@@ -109,7 +109,7 @@ const CreateRouterModal = ({
 
   function onValidtePath(rule, value, callback) {
     if (!value) {
-      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.required' }));
+      return callback();
     }
 
     if (value.indexOf('/') !== 0) {
@@ -127,6 +127,9 @@ const CreateRouterModal = ({
       }
       if (item.children && !exist) {
         exist = item.children.some((route, childIndex) => {
+          if (!route.path) {
+            return false;
+          }
           const compareUrl = path.join(item.path, route.path);
           if (
             compareUrl === url &&
@@ -163,9 +166,15 @@ const CreateRouterModal = ({
     >
       <Form {...formItemLayout} onChange={onChange} field={field} value={formData}>
         <FormItem
-          required
-          label={<FormattedMessage id="iceworks.project.panel.router.form.path" />}
-          help={isEdit ? `${getError('path') ? getError('path') : ''}(修改了路径需要手动到导航配置里修改对应的路径)` : getError('path')}
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.path" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.project.panel.router.form.path.tip" />
+              </TipIcon>
+            </span>
+          )}
+          help={isEdit ? `${getError('path') ? getError('path') : ''}(${formatMessage({ id: 'iceworks.project.panel.router.form.path.help' })})` : getError('path')}
         >
           <Input
             name="path"
@@ -197,7 +206,6 @@ const CreateRouterModal = ({
           />
         </FormItem>
         <FormItem
-          required
           label={(
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.component" />
@@ -212,6 +220,23 @@ const CreateRouterModal = ({
             name="component"
             placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.component.placeholder' })}
             dataSource={dataSource}
+            className={styles.selectBox}
+          />
+        </FormItem>
+        <FormItem
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.redirect" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.project.panel.router.form.redirect.tip" />
+              </TipIcon>
+            </span>
+          )}
+        >
+          <Input
+            size="small"
+            name="redirect"
+            placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.redirect.placeholder' })}
             className={styles.selectBox}
           />
         </FormItem>
