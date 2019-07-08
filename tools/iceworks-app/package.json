@@ -5,7 +5,8 @@
   "scripts": {
     "start": "electron main",
     "dist": "gulp dist",
-    "dist-dev": "gulp dist-dev"
+    "dist-dev": "gulp dist-dev",
+    "build": "electron-builder"
   },
   "devDependencies": {
     "address": "^1.1.0",
