@@ -79,7 +79,7 @@ const GlobalBar = ({ project, intl }) => {
 
   useSocket('home.system.open.editor.data', (data) => {
     if (data) {
-      showMessage('打开编辑器失败');
+      showMessage('打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中');
     }
   });
 
