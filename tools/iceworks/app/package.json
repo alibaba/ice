@@ -3,7 +3,7 @@
   "productName": "Iceworks",
   "private": true,
   "description": "ICE Desktop Application.",
-  "version": "2.20.0",
+  "version": "2.22.0",
   "author": {
     "name": "Alibaba Group Holding Limited",
     "url": "http://alibaba.github.io/ice"
@@ -18,7 +18,7 @@
     "@babel/types": "^7.0.0",
     "@icedesign/iceworks-scaffolder": "^0.3.0",
     "@icedesign/layout-builder": "^0.4.1",
-    "@icedesign/template-builder": "^2.0.1",
+    "@icedesign/template-builder": "3.0.1",
     "@iceland/dsl2code": "^1.0.0",
     "@iceland/material-engine": "^1.0.0",
     "address": "^1.0.3",
@@ -26,7 +26,6 @@
     "app-path": "^2.2.0",
     "app-root-path": "^2.0.1",
     "await-to-js": "^2.1.1",
-    "axios": "^0.18.0",
     "babel-generator": "^6.26.1",
     "babel-traverse": "^6.26.0",
     "babel-types": "^6.26.0",

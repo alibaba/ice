@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const utils = require('./utils');
 const to = require('await-to-js').default;
+const env = require('../env');
 
 /**
  * destDir 项目解压路径: 项目文件夹下/client文件夹下
@@ -17,16 +18,23 @@ module.exports = async function createProject(
 ) {
   let err, tarballURL, extractedFiles;
   [err, tarballURL] = await to(utils.getTarballURLBySource(scaffold.source));
+
+  const registry = env.npm_config_registry || scaffold.source.registry;
+  const scaffoldInfo = `${registry}/${scaffold.source.npm}`;
+
   if (err) {
+    err.message = `请求模板 ${scaffoldInfo} 包失败`;
     throw err;
   }
-  [err, extractedFiles] = await to(utils.extractTarball(
-    tarballURL,
-    destDir,
-    scaffold.source,
-    progressFunc,
-    afterCreateRequest
-  ));
+  [err, extractedFiles] = await to(
+    utils.extractTarball(
+      tarballURL,
+      destDir,
+      scaffold.source,
+      progressFunc,
+      afterCreateRequest
+    )
+  );
   if (err) {
     throw err;
   }
@@ -40,9 +48,16 @@ module.exports = async function createProject(
     utils.createInterpreter('FILE_CREATED', extractedFiles, interpreter);
 
     pkgJSON.title = projectName;
-    pkgJSON.version = '1.0.0'; // 初始化项目到 1.0.0
 
+    delete pkgJSON.files;
+    delete pkgJSON.publishConfig;
+    if (pkgJSON.buildConfig) {
+      delete pkgJSON.buildConfig.output;
+      delete pkgJSON.buildConfig.localization;
+    }
     delete pkgJSON.homepage;
+    delete pkgJSON.scripts.screenshot;
+    delete pkgJSON.scripts.prepublishOnly;
 
     fs.writeFileSync(
       pkgJSONPath,

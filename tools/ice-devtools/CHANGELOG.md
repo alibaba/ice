@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.3
+
+- [refactor] 移除 zlib 依赖，使用 node 内置 zlib
+
+## 2.3.2
+
+- [feat] init component support fusion component adaptor
+
 ## 2.3.1
 
 - [fix] 删除物料 publish 默认源配置，由用户自定义 #1866

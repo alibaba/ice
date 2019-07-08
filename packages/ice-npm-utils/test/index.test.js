@@ -1,3 +1,6 @@
+const path = require('path');
+const { tmpdir } = require('os');
+const rimraf = require('rimraf');
 const {
   getNpmRegistry,
   getUnpkgHost,
@@ -6,6 +9,8 @@ const {
   getNpmInfo,
   getNpmClient,
   checkAliInternal,
+  getNpmTarball,
+  getAndExtractTarball,
 } = require('../lib/index');
 
 jest.setTimeout(10 * 1000);
@@ -75,10 +80,15 @@ test('getNpmLatestSemverVersion', () => {
   });
 });
 
+test('getNpmInfo success', () => {
+  return getNpmInfo('koa').then((data) => {
+    expect(data.name).toBe('koa');
+  });
+});
 
 test('getNpmInfo 404 error case', () => {
   return getNpmInfo('not-exis-npm-error').catch((err) => {
-    expect(err.message).toMatch('Request failed');
+    expect(err.statusCode).toBe(404);
   });
 });
 
@@ -110,3 +120,28 @@ test('checkAliInternal', () => {
     expect(internal).toBeBoolean();
   });
 });
+
+test('getNpmTarball', () => {
+  return getNpmTarball('ice-npm-utils', '1.0.0').then((tarball) => {
+    expect(tarball).toBe('https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz');
+  });
+});
+
+test('getNpmTarball should get latest version', () => {
+  return getNpmTarball('http').then((tarball) => {
+    expect(tarball).toBe('https://registry.npm.taobao.org/http/download/http-0.0.0.tgz');
+  });
+});
+
+test('getAndExtractTarball', () => {
+  const tempDir = path.resolve(tmpdir(), 'ice_npm_utils_tarball');
+  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz')
+    .then((files) => {
+      rimraf.sync(tempDir);
+      expect(files.length > 0).toBe(true);
+    })
+    .catch(() => {
+      rimraf.sync(tempDir);
+    });
+});
+

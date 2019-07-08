@@ -1,6 +1,26 @@
 [
   {
     "changelog": [
+      "修复：iceworks 删除项目白屏问题 #2117",
+      "修复：自定义模板 ice-scripts 升级 2.x",
+      "修复：区块下载依赖失败显示 URL 信息"
+    ],
+    "releaseDate": "2019年06月20日",
+    "version": "2.22.0"
+  },
+
+  {
+    "changelog": [
+      "修复：iceworks 下载的模板跟 npm 上模板内容不一致 #2041",
+      "修复：根据 ice-scripts 的版本生成不同的 abc.json 文件内容 #2060",
+      "修复：版本自动更新问题 #2074",
+      "修复：代理面板只在 ice-scripts@1.x 时显示 #2097"
+    ],
+    "releaseDate": "2019年06月06日",
+    "version": "2.21.0"
+  },
+  {
+    "changelog": [
       "修复：启动白屏问题",
       "修复：Vue 项目构建失败问题",
       "升级：升级 electron 到 4.x 版本"

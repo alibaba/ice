@@ -52,10 +52,7 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      generateAbcJsonFile(needCreateDefflow, targetPath, projectName);
-    })
-    .then(() => {
-      updateScaffoldConfig(isCustomScaffold, layoutConfig);
+      generateAbcJsonFile(needCreateDefflow, targetPath, scaffold);
     })
     .then(() => {
       if (nodeFramework) {
@@ -115,17 +112,29 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
  * 内网环境，生成 abc.json 文件，用于云构建
  * @param {Boolean} needCreateDefflow
  * @param {String}  destDir
- * @param {String}  projectName
+ * @param {String}  scaffold
  */
-function generateAbcJsonFile(needCreateDefflow, destDir, projectName) {
+function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
+  console.log(scaffold);
   if (needCreateDefflow) {
     logger.debug('内网用户，创建 abc.json');
+
+    let devDependencies;
+    if (scaffold.devDependencies) {
+      devDependencies = scaffold.devDependencies;
+    } else {
+      const pkgPath = path.join(destDir, 'package.json');
+      const pkgContent = require(pkgPath);
+      devDependencies = pkgContent.devDependencies;
+    }
+
     const abcJson = path.join(destDir, 'abc.json');
+    const latestVersion = /^\^2\./.test(devDependencies['ice-scripts']);
     return new Promise((resolve) => {
       const abcContext = {
-        name: projectName,
-        type: 'iceworks',
-        builder: '@ali/builder-iceworks',
+        name: scaffold.name,
+        type: latestVersion ? 'ice-scripts' : 'iceworks',
+        builder: latestVersion ? '@ali/builder-ice-scripts' : '@ali/builder-iceworks',
       };
 
       if (pathExists.sync(abcJson)) {
@@ -134,41 +143,6 @@ function generateAbcJsonFile(needCreateDefflow, destDir, projectName) {
         fs.writeFile(abcJson, JSON.stringify(abcContext, null, 2), () => {
           resolve();
         });
-      }
-    });
-  }
-  return Promise.resolve();
-}
-
-/**
- * 更新模板配置
- * @param {Boolean} isCustomScaffold
- * @param {Object}  layoutConfig
- */
-function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
-  if (isCustomScaffold) {
-    const currentPath = layoutConfig.directory;
-    return new Promise((resolve, reject) => {
-      const pkgJSONPath = path.join(currentPath, 'package.json');
-      let pkgJSON;
-      if ('themeConfig' in layoutConfig) {
-        try {
-          pkgJSON = fs.readFileSync(pkgJSONPath);
-          pkgJSON = JSON.parse(pkgJSON.toString());
-          pkgJSON.themeConfig = layoutConfig.themeConfig;
-          const data = `${JSON.stringify(pkgJSON, null, 2)}\n`;
-          fs.writeFile(pkgJSONPath, data, 'utf-8', (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(currentPath);
-            }
-          });
-        } catch (err) {
-          reject(err);
-        }
-      } else {
-        resolve(currentPath);
       }
     });
   }
