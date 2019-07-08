@@ -83,16 +83,16 @@ async function generateMaterialsDatabases(pkgJson, materialPath) {
  * get all materials through global pattern
  *
  * @param {*} pattern path pattern
- * @param {*} SPACE target directory
+ * @param {*} targetDir target directory
  * @param {Object} options generate options
  */
-function gather(pattern, SPACE, type, options) {
+function gather(pattern, targetDir, type, options) {
   logger.verbose('gather start', pattern);
   return new Promise((resolve, reject) => {
     glob(
       pattern,
       {
-        cwd: SPACE,
+        cwd: targetDir,
         nodir: true,
       },
       (err, files) => {
@@ -106,7 +106,7 @@ function gather(pattern, SPACE, type, options) {
       }
     );
   }).then((files) => {
-    return generateMaterialsData(files, SPACE, type, options);
+    return generateMaterialsData(files, targetDir, type, options);
   }).then((data) => {
     logger.info(`通过 npm 查询 ${type} 信息完成`);
     return data;
@@ -117,18 +117,18 @@ function gather(pattern, SPACE, type, options) {
  * 根据 files 生成 blocks/components/scaffolds 数据
  *
  * @param {*} files
- * @param {*} SPACE target directory
+ * @param {*} targetDir target directory
  * @param {String} type block or react
  * @param {Object} options material options
  */
-function generateMaterialsData(files, SPACE, type, options) {
+function generateMaterialsData(files, targetDir, type, options) {
   /**
    * 构造每个物料的数据：
    *  - 读取 package.json 数据
    *  - 区块：根据 src/index.js 分析依赖
    */
   const result = files.map((pkgPath) => {
-    const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
+    const pkg = JSON.parse(fs.readFileSync(path.join(targetDir, pkgPath)));
 
     const materialConfig = pkg[`${type}Config`] || {};
     const unpkgHost = options.unpkg || getUnpkgHost(pkg.name);
@@ -142,7 +142,7 @@ function generateMaterialsData(files, SPACE, type, options) {
       (pkg.publishConfig && pkg.publishConfig.registry) ||
       DEFAULT_REGISTRY;
 
-    // generage i18n data
+    // generate i18n data
     const i18nData = generateI18nData({ title: materialConfig.title, description: pkg.description });
 
     // details: ../utils/validate.js
