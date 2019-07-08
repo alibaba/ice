@@ -24,6 +24,7 @@
     "cross-spawn": "^6.0.5",
     "debug": "^2.6.3",
     "decamelize": "^3.2.0",
+    "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "fs-extra": "^8.0.1",
     "ice-npm-utils": "^1.0.1",

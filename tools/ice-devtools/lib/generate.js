@@ -55,28 +55,32 @@ async function generateMaterialsDatabases(pkgJson, materialPath) {
 
   logger.info('Start validating material data.');
 
-  // validate material data
-  const data = await validate.validateMaterial({
+  const data = {
     ...materialConfig,
     ...i18nData,
     name: pkgJson.name,
-    description: i18nData.zh_CN.description || i18nData.en_US.description,
+    description: i18nData['zh-CN'].description || i18nData['en-US'].description,
     homepage: pkgJson.homepage,
     author: pkgJson.author,
     blocks,
     components,
     scaffolds,
-  });
+  };
 
-  logger.info('Verification passed. Start writing materials.json.');
+  // validate material data
+  const valid = await validate.validateMaterial(data);
 
-  const file = path.join(distDir, 'materials.json');
-  fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
+  if (valid) {
+    logger.info('Verification passed. Start writing materials.json.');
 
-  console.log();
-  console.log(chalk.cyan('Success! materials db generated'));
-  logger.success(`Created ${pkgJson.name} json at: ${chalk.yellow(file)}`);
-  console.log();
+    const file = path.join(distDir, 'materials.json');
+    fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
+
+    console.log();
+    console.log(chalk.cyan('Success! materials db generated'));
+    logger.success(`Created ${pkgJson.name} json at: ${chalk.yellow(file)}`);
+    console.log();
+  }
 }
 
 /**
@@ -131,7 +135,7 @@ function generateMaterialsData(files, targetDir, type, options) {
     const pkg = JSON.parse(fs.readFileSync(path.join(targetDir, pkgPath)));
 
     const materialConfig = pkg[`${type}Config`] || {};
-    const unpkgHost = options.unpkg || getUnpkgHost(pkg.name);
+    const unpkgHost = getUnpkgHost(pkg.name);
     const materialType = options.type;
 
     // 兼容 snapshot 字段
@@ -149,10 +153,11 @@ function generateMaterialsData(files, targetDir, type, options) {
     // details: ../utils/validate.js
     const payload = {
       name: materialConfig.name,
-      title: i18nData.zh_CN.title || i18nData.en_US.title,
-      description: i18nData.zh_CN.description || i18nData.en_US.description,
+      title: i18nData['zh-CN'].title || i18nData['en-US'].title,
+      description: i18nData['zh-CN'].description || i18nData['en-US'].description,
       homepage: pkg.homepage || `${unpkgHost}/${pkg.name}@${pkg.version}/build/index.html`,
-      categories: materialConfig.categories || [],
+      categories: [],
+      category: materialConfig.category,
       repository: (pkg.repository && pkg.repository.url) || pkg.repository,
       source: {
         type: 'npm',
@@ -165,6 +170,7 @@ function generateMaterialsData(files, targetDir, type, options) {
       screenshot,
       screenshots: materialConfig.screenshots || (screenshot && [screenshot]),
       builder: materialConfig.builder,
+      // TODO: 和思忠确认下，建议不要
       iceworks: {
         type: materialType,
       },
@@ -174,12 +180,6 @@ function generateMaterialsData(files, targetDir, type, options) {
     };
 
     if (type === 'block') {
-      if (materialConfig['version-0.x']) {
-        // 仅官方 react 物料会走到这个逻辑，Iceworks 端会区分
-        payload.source['version-0.x'] = pkg.version;
-        payload.source.version = materialConfig['version-0.x'] || pkg.version;
-      }
-
       payload.source.sourceCodeDirectory = 'src/';
     }
 

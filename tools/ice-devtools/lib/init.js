@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { checkAliInternal } = require('ice-npm-utils');
+const rimraf = require('rimraf');
 const logger = require('../utils/logger');
 const getTemplate = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
@@ -20,12 +21,12 @@ module.exports = async function init(cwd) {
     // get user answers
     const { type, template, scope, forInnerNet } = await initAsk(options);
     const npmPrefix = scope ? `${scope}/` : '';
-    const { path: templatePath, config: materialConfig } = await getTemplate(cwd, type, template);
+    const { templatePath, downloadPath, config: materialConfig } = await getTemplate(cwd, type, template);
 
     if (type === 'material') {
       // init material project
       /* eslint-disable-next-line import/no-dynamic-require */
-      require('./material/init')(cwd, {
+      await require('./material/init')(cwd, {
         npmPrefix,
         template,
         templatePath,
@@ -36,7 +37,7 @@ module.exports = async function init(cwd) {
     } else {
       // init single component/block/scaffold project
       /* eslint-disable-next-line import/no-dynamic-require */
-      require(`./${type}/add`)(cwd, {
+      await require(`./${type}/add`)(cwd, {
         npmPrefix,
         template,
         templatePath,
@@ -45,6 +46,8 @@ module.exports = async function init(cwd) {
         materialConfig,
       });
     }
+
+    rimraf.sync(downloadPath);
   } catch (error) {
     logger.fatal(error);
   }

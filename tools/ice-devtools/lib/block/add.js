@@ -13,6 +13,7 @@ const meta = require('./meta');
  * @param{String} cwd 当前路径
  * @param{Object} opt 参数
  */
+// TODO: 是否合并
 module.exports = async function addBlock(cwd, opt = {}) {
   const {
     npmPrefix,

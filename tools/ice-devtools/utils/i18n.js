@@ -1,17 +1,16 @@
 /**
  * generate i18n data
- *
  * {
- *  title: '按钮[en_US]button',
- *  description: '[zh_CN]一个简单的按钮[en_US] a sample buttom'
+ *  title: '按钮[en-US]button',
+ *  description: '[zh-CN]一个简单的按钮[en-US] a sample buttom'
  * }
  * =====>
  * {
- *  zh_CN: {
+ *  zh-CN: {
  *    title: '按钮',
  *    description: '一个简单的按钮',
  *  },
- *  en_US: {
+ *  en-US: {
  *    title: 'button',
  *    description: 'a sample buttom',
  *  }
@@ -34,19 +33,19 @@ function generateI18nData(sourceData) {
  * parse i18n string;
  *
  * i18n string:
- * [zh_CN]这是个描述 [en_US]this is a description
- * 这是个描述 [en_US] this is a description
+ * [zh-CN]这是个描述 [en-US]this is a description
+ * 这是个描述 [en-US] this is a description
  * 这是个描述
  * this is a description
- * this is a description [zh_CN] 这是个描述
- * this is a description [zh_CN] 这是个描述
+ * this is a description [zh-CN] 这是个描述
+ * this is a description [zh-CN] 这是个描述
  *
  * @param {string} i18nStr
  * @returns
  */
 function parseI18NString(i18nStr) {
   // i18n pattern
-  const flagReg = /(.*)(\[([\w]+)\])(.*)/;
+  const flagReg = /(.*)(\[([a-z]+-[A-Z]+)\])(.*)/;
   const cnReg = /[\u4e00-\u9fa5]+/g;
   const local = {};
 
@@ -84,8 +83,8 @@ function parseI18NString(i18nStr) {
  */
 function mergeI18N(sourceData) {
   const locales = {
-    zh_CN: {},
-    en_US: {},
+    'zh-CN': {},
+    'en-US': {},
   };
 
   Object.keys(sourceData).forEach((key) => {

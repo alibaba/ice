@@ -11,7 +11,7 @@ const validate = (obj, schema) => {
     if (result.error) {
       reject(result.error);
     }
-    resolve(obj);
+    resolve(true);
   });
 };
 
@@ -30,6 +30,7 @@ const componentSchema = createSchema((joi) => joi.object().keys({
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
   categories: joi.array().items(joi.string().only([...componentCaterories])), // （必选）分类
+  category: joi.string().only([...componentCaterories]), // （必选）分类
   repository: joi.string().uri(), // （可选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -50,6 +51,7 @@ const blockSchema = createSchema((joi) => joi.object().keys({
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
   categories: joi.array().items(joi.string().only([...blockCaterories])), // （必选）分类
+  category: joi.string().only([...blockCaterories]), // （必选）分类
   repository: joi.string().uri().required(), // （必选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm

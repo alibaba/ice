@@ -59,6 +59,7 @@ function render(options, done) {
     inPlace: dest === process.cwd(),
     noEscape: true,
     registry: getNpmRegistry(npmName || name),
+    categories: {},
     ...opts,
   });
   debug('%j', data);

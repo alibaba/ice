@@ -5,17 +5,15 @@ const zlib = require('zlib');
 const tar = require('tar');
 const ora = require('ora');
 const existsSync = require('fs').existsSync;
-const home = require('user-home');
 const rimraf = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const mkdirp = require('mkdirp');
 
 const logger = require('./logger');
 const getPkgJSON = require('./pkg-json').getPkgJSON;
-const getNpmRegistry = require('./npm').getNpmRegistry;
 const {
-  getNpmLatestSemverVersion,
   getLatestVersion,
+  getNpmRegistry,
 } = require('ice-npm-utils');
 
 const Parser = tar.Parse;
@@ -50,31 +48,32 @@ async function getTemplate(cwd, type, template) {
   }
 
   // form npm package
-  const tmp = await downloadTemplate(cwd, template);
+  const downloadDir = path.join(cwd, '.ice-template');
+  const tmp = await downloadTemplate(template, downloadDir);
   return {
-    path: path.join(tmp, type === 'material' ? 'template' : `template/${type}`),
+    downloadPath: downloadDir,
+    templatePath: path.join(tmp, type === 'material' ? 'template' : `template/${type}`),
     config: getPkgJSON(tmp).materialConfig || {},
   };
 }
 
-async function downloadTemplate(_cwd, template, version, tempDir) {
-  tempDir = tempDir || path.join(home, '.ice-templates', template);
+async function downloadTemplate(template, downloadDir) {
+  downloadDir = path.join(downloadDir, template);
 
-  const spinner = ora('downloading template...').start();
   debug('downloadTemplate', template);
-  console.log('download', template);
+  const spinner = ora('downloading template...').start();
 
   try {
-    deleteDir(tempDir);
-    const npmVersion = await getNpmVersion(template, version);
-    console.log('version', npmVersion);
+    deleteDir(downloadDir);
+    const npmVersion = await getLatestVersion(template);
+
     await downloadAndFilterNpmFiles(
       template,
       npmVersion,
-      tempDir
+      downloadDir
     );
     spinner.succeed('Download success.');
-    return tempDir;
+    return downloadDir;
   } catch (err) {
     spinner.fail(`Failed to download repo ${template}.`);
     logger.fatal(err);
@@ -108,8 +107,8 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
     }
 
     const npmTarball = `${getNpmRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
-    // logger.info('npmtra', npmTarball);
-    taskComplete.entryPipe = false;
+    logger.info('npmtra', npmTarball);
+
     request
       .get(npmTarball)
       .on('error', (err) => {
@@ -140,23 +139,9 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
         });
       })
       .on('end', () => {
-        taskComplete.entryPipe = true;
         end();
       });
   });
-}
-
-/**
- * get template version
- *
- * @param {String} npm
- * @param {String} version
- */
-async function getNpmVersion(npm, version) {
-  if (version) {
-    return getNpmLatestSemverVersion(npm, version);
-  }
-  return getLatestVersion(npm);
 }
 
 module.exports = getTemplate;

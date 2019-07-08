@@ -13,6 +13,9 @@ module.exports = (files, data, done) => {
     if (/_package.json/.test(filename)) {
       newFilename = filename.replace(/_package.json/, 'package.json');
     }
+    if (/_env/.test(filename)) {
+      newFilename = filename.replace(/_env/, '.env');
+    }
 
     if (newFilename !== filename) {
       files[newFilename] = files[filename];

@@ -46,9 +46,9 @@ module.exports = {
         return true;
       },
     },
-    categories: {
-      type: 'checkbox',
-      message: 'categories',
+    category: {
+      type: 'list',
+      message: 'category',
       choices: BLOCK_CATEGORIES,
       validate: (answer) => {
         if (answer.length < 1) {

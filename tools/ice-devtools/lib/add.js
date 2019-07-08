@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const rimraf = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
@@ -33,14 +34,16 @@ module.exports = async function add(cwd) {
     const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
     debug('ans: %j', type);
 
-    const { path: templatePath, config: materialConfig } = await getTemplate(cwd, type, templateName);
+    const { templatePath, downloadPath, config: materialConfig } = await getTemplate(cwd, type, templateName);
 
     /* eslint-disable-next-line import/no-dynamic-require */
-    require(`./${type}/add`)(cwd, {
+    await require(`./${type}/add`)(cwd, {
       npmPrefix,
       templatePath,
       materialConfig,
     });
+
+    rimraf.sync(downloadPath);
   } catch (err) {
     logger.fatal(err);
   }
