@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Message, Loading } from '@alifd/next';
+import useLoadingTheme from '@hooks/useLoadingTheme';
 import styles from './index.module.scss';
 
 const ActionStatus = (props) => {
   const { store, config } = props;
   const namespaces = config.map(item => item.storeName);
   const storesBinding = store.useStores(namespaces);
+  const { loadingTheme } = useLoadingTheme();
   const loadingFlags = [];
   const errors = [];
+
   config.forEach((child, index) => {
     const { actions } = child;
     const bindings = storesBinding[index];
@@ -55,7 +58,7 @@ const ActionStatus = (props) => {
       className={styles.overlay}
     >
       {loadingVisible && (
-        <Loading color="#fff" />
+        <Loading color={loadingTheme.color} />
       )}
       {errorVisible && error && (
         <Message
