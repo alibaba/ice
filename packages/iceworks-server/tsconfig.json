@@ -1,0 +1,24 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "inlineSourceMap":true,
+    "noImplicitThis": true,
+    "stripInternal": true,
+    "pretty": true,
+    "outDir": "dist",
+    "lib": ["es2017", "dom"]
+  },
+  "exclude": [
+    "src/app/public",
+    "src/app/view",
+    "dist",
+    "node_modules",
+    "test"
+  ]
+}

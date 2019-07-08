@@ -1,0 +1,109 @@
+@import '../../variables.scss';
+
+.scaffold {
+  position: relative;
+  display: block;
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 24px $material-card-shadow;
+  background: $panel-bg;
+  margin-bottom: 20px;
+  overflow: hidden;
+  &:hover {
+    transform: translateY(-6px);
+    .actions {
+      transform: translateY(0);
+    }
+    .info {
+      transform: translateY(-20px);
+    }
+  }
+
+  .body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $background-color-base;
+    .screenshotImg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 6px 18px 0 $material-card-shadow;
+      transform: scale(0.6);
+    }
+  }
+
+  .info {
+    background: $panel-bg;
+    text-align: center;
+    padding: 20px 40px;
+    transition: transform 0.3s ease;
+    transform: translateY(0);
+    position: relative;
+    z-index: 9;
+    .title {
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: bold;
+      color: $text-color-secondary;
+    }
+    .desc {
+      color: $text-color-primary;
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 22px;
+      height: 44px;
+      font-weight: normal;
+      overflow: hidden;
+    }
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 4px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+    z-index: 10;
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 48px;
+      line-height: 48px;
+      font-size: 14px;
+      font-weight: bold;
+      background: $brand-color-primary;
+      color: $text-color-inverse;
+      cursor: pointer;
+
+      .githubImg,
+      .eyeImg,
+      .downloadImg {
+        width: 20px;
+        margin-right: 6px;
+      }
+    }
+  }
+
+  .newly {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background: $brand-color-primary;
+    color: $text-color-inverse;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "iceworks-client",
+  "version": "1.0.0-beta.5",
+  "description": "",
+  "files": [
+    "build"
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.13.13",
+    "@alifd/theme-iceworks-dark": "^0.1.1",
+    "@alifd/theme-iceworks-light": "^0.1.0",
+    "@ice/store": "^0.2.0",
+    "@icedesign/dynamic-icon": "^0.1.8",
+    "@icedesign/ellipsis": "^1.0.4",
+    "@icedesign/notification": "^1.0.5",
+    "alife-logger": "^1.5.1",
+    "axios": "^0.19.0",
+    "browser-detect": "^0.2.28",
+    "classnames": "^2.2.6",
+    "cookies-js": "^1.2.3",
+    "date-time": "^3.1.0",
+    "deepmerge": "^3.3.0",
+    "history": "^4.9.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.uniqby": "^4.7.0",
+    "loglevel": "^1.6.1",
+    "loglevel-plugin-prefix": "^0.8.4",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-beforeunload": "^1.0.4",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.8.6",
+    "react-intl": "^2.8.0",
+    "react-lazyload": "^2.5.0",
+    "react-router-dom": "^5.0.0",
+    "react-sortable-hoc": "^1.9.1",
+    "semver": "^6.1.0",
+    "socket.io-client": "^2.2.0",
+    "url-parse": "^1.4.6",
+    "xterm": "^3.12.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^2.0.2",
+    "ice-plugin-fusion": "^0.1.7-2"
+  },
+  "scripts": {
+    "start": "ice-scripts dev",
+    "build": "ice-scripts build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

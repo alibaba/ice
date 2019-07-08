@@ -1,0 +1,46 @@
+@import '../../variables.scss';
+
+.wrap {
+  width: 460px;
+
+  .bar {
+    display: flex;
+    flex-direction: row;
+
+    .icon {
+      cursor: pointer;
+      color: $brand-color-primary;
+    }
+
+    .text {
+      font-size: 14px;
+      margin-left: 14px;
+    }
+  }
+
+  .list {
+    height: 400px;
+    padding: 0 14px;
+    overflow-y: auto;
+    margin-top: 12px;
+
+    .item {
+      padding: 6px 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+
+      &:hover {
+        background-color: $background-color-base;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        height: 24px;
+        font-size: 16px;
+        margin-left: 6px;
+      }
+    }
+  }
+}

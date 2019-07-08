@@ -1,0 +1,43 @@
+@import '../../variables.scss';
+
+.wrap {
+  background: $brand-color-secondary;
+  box-shadow: $shadow-right;
+  position: relative;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+
+  .list {
+    flex: 1;
+    padding-top: 32px;
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 78px;
+      margin-top: 32px;
+      border-left: 3px solid $brand-color-secondary;
+      text-decoration: none;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      .navItemIcon {
+        color: $white;
+        margin-bottom: 8px;
+      }
+
+      .navItemText {
+        color: $white;
+      }
+    }
+  }
+
+  .user {
+    margin-bottom: 24px;
+  }
+}

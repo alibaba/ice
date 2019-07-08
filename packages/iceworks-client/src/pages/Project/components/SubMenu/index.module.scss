@@ -1,0 +1,81 @@
+@import '../../../../variables.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .list {
+    flex: 1;
+    .itemCurrent {
+      background-color: $background-color-light;
+    }
+    .item {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      cursor: pointer;
+
+      .name {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        
+        strong {
+          font-size: $font-size-md;
+          font-weight: 400;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 180px;
+          display: inline-block;
+        }
+
+        .badge {
+          margin-left: 4px;
+          sup {
+            background-color: $success-color!important;
+          }
+        }
+      }
+
+      .icon {
+        visibility: hidden;
+        float: right;
+        color: $error-color;
+        cursor: pointer;
+      }
+
+      &:hover {
+        .icon {
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .opts {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    margin-bottom: 24px;
+    align-items: center;
+
+    .btn {
+      margin-bottom: 14px;
+      width: 180px;
+      height: 40px;
+      border-radius: 28px;
+
+      span {
+        font-size: $font-size-md;
+        margin-left: 4px;
+      }
+
+      :last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

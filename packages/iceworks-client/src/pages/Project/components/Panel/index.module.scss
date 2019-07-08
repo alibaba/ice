@@ -1,0 +1,24 @@
+@import '../../../../variables.scss';
+
+.wrapper {
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+
+  .main {
+    padding: 12px;
+    background: $panel-bg;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+
+    .box {
+      flex: 1;
+      padding-right: 10px;
+      overflow-y: auto;
+    }
+  }
+}
