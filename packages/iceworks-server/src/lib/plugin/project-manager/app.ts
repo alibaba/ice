@@ -351,12 +351,8 @@ class ProjectManager extends EventEmitter {
    */
   public async createProject(params: ICreateParams): Promise<void> {
     if (params.appId) {
-      try {
-        const generate = require('@ali/stark-biz-generator');
-        generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
-      } catch (error) {
-        throw error;
-      }
+      const generate = require('@ali/stark-biz-generator');
+      generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
     } else {
       await this.createProjectFolder(params);
       await this.generateProject(params);
