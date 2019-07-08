@@ -53,7 +53,7 @@ const schema = {
         official: true,
         name: '飞冰物料',
         type: 'react',
-        source: 'https://ice.alicdn.com/assets/react-materials.json'
+        source: 'http://ice.alicdn.com/pre-assets/materials/react-materials.json'
       }
     ],
   },
