@@ -87,15 +87,16 @@ const MenuPanel = ({ intl, title, description }) => {
 
   async function onDelete() {
     const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
+    const copyData = cloneDeep(data);
     toggleDeleteModal();
-    traverse(data, (config, parentList, index) => {
+    traverse(copyData, (config, parentList, index) => {
       if (config.id === deleteMenu.id) {
         parentList.splice(index, 1);
         return true;
       }
       return false;
     }, true);
-    await onChangeTree(data);
+    await onChangeTree(copyData);
   }
 
   function onChangeTab(value) {

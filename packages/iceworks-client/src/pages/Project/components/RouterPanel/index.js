@@ -36,7 +36,7 @@ const RouterPanel = ({ intl, title, description }) => {
   const [modalData, setModalData] = useState({});
 
   const routerStore = stores.useStore('routes');
-  const { dataSource } = routerStore;
+  const { dataSource, deleteChildRoute, addChildRoute, editRoute } = routerStore;
 
   async function onRefresh() {
     try {
@@ -90,15 +90,15 @@ const RouterPanel = ({ intl, title, description }) => {
     toggleCreateModal();
     if (action === 'create') {
       if (parent) {
-        parent.children.push(value);
+        addChildRoute(parent.children, value);
       } else {
-        dataSource.push(value);
+        addChildRoute(dataSource, value);
       }
     } else if (action === 'edit') {
       if (parent) {
-        Object.assign(parent.children[editIndex], value);
+        editRoute(parent.children, editIndex, value);
       } else {
-        Object.assign(dataSource[editIndex], value);
+        editRoute(dataSource, editIndex, value);
       }
     }
     await onChangeData(dataSource);
@@ -117,10 +117,9 @@ const RouterPanel = ({ intl, title, description }) => {
 
   async function onDeleteRouter() {
     if (deleteParent) {
-      deleteParent.children.splice(deleteIndex, 1);
+      deleteChildRoute(deleteParent.children, deleteIndex);
     } else {
-      // @TODO 不能直接修改state，否则会报错！
-      dataSource.splice(deleteIndex, 1);
+      deleteChildRoute(dataSource, deleteIndex);
     }
     await onChangeData(dataSource);
     toggleDeleteModal();
