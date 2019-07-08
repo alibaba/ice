@@ -188,7 +188,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     index,
                     parent,
                     current: item,
-                    parentIndex
+                    parentIndex,
                   })}
                 />
               )}
