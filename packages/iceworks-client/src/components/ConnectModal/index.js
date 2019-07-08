@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Message } from '@alifd/next';
 import socket from '@src/socket';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
+import showMessage from '@utils/showMessage';
 
 let listen = false;
 
@@ -15,13 +15,7 @@ const ConnectModal = ({ intl }) => {
   if (!listen) {
     socket.on('connect', () => {
       setStatus('connect');
-
-      Message.show({
-        title: '提示',
-        align: 'tr tr',
-        type: 'success',
-        content: '服务连接成功',
-      });
+      showMessage('服务连接成功', 'success');
     });
 
     socket.on('reconnecting', () => {

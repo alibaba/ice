@@ -5,6 +5,7 @@ import { Tab, Message } from '@alifd/next';
 import useModal from '@hooks/useModal';
 import cloneDeep from 'lodash.clonedeep';
 import MenuTreeConfig from '@components/MenuTreeConfig';
+import ActionStatus from '@components/ActionStatus';
 import traverse from '@utils/traverse';
 import CreateMenuModal from './CreateMenuModal';
 import DeleteMenuModal from './DeleteMenuModal';
@@ -86,15 +87,16 @@ const MenuPanel = ({ intl, title, description }) => {
 
   async function onDelete() {
     const data = currentTab === 'aside' ? asideMenuConfig : headerMenuConfig;
+    const copyData = cloneDeep(data);
     toggleDeleteModal();
-    traverse(data, (config, parentList, index) => {
+    traverse(copyData, (config, parentList, index) => {
       if (config.id === deleteMenu.id) {
         parentList.splice(index, 1);
         return true;
       }
       return false;
     }, true);
-    await onChangeTree(data);
+    await onChangeTree(copyData);
   }
 
   function onChangeTab(value) {
@@ -124,62 +126,80 @@ const MenuPanel = ({ intl, title, description }) => {
         />
       }
     >
-      <div className={styles.main}>
-        <CreateMenuModal
-          modalData={modalData}
-          on={onCreateModel}
-          onCancel={toggleCreateModal}
-          onOk={onCreate}
-          currentType={currentTab}
-        />
-        <DeleteMenuModal
-          on={onDeleteModel}
-          onCancel={toggleDeleteModal}
-          onOk={onDelete}
-          menu={deleteMenu}
-        />
-        <Tab
-          size="small"
-          contentStyle={{ padding: '10px 0 0' }}
-          onChange={onChangeTab}
-        >
-          <TabPane
-            title={<FormattedMessage id="iceworks.project.panel.menu.tab.asideMenu" />}
-            key="aside"
+      {
+        !menuStore.refresh.error &&
+        <div className={styles.main}>
+          <CreateMenuModal
+            modalData={modalData}
+            on={onCreateModel}
+            onCancel={toggleCreateModal}
+            onOk={onCreate}
+            currentType={currentTab}
+          />
+          <DeleteMenuModal
+            on={onDeleteModel}
+            onCancel={toggleDeleteModal}
+            onOk={onDelete}
+            menu={deleteMenu}
+          />
+          <Tab
+            size="small"
+            contentStyle={{ padding: '10px 0 0' }}
+            onChange={onChangeTab}
           >
-            {asideMenuConfig.length ? (
-              <MenuTreeConfig
-                items={asideMenuConfig}
-                onChange={onChangeTree}
-                onOpenEditModal={onOpenModal}
-                onDeleteLink={onOpenDeleteModal}
-              />
-            ) : (
-              <Message title={<FormattedMessage id="iceworks.project.panel.menu.aside.none" />} type="help">
-                <FormattedMessage id="iceworks.project.panel.menu.aside.prompt.create" />
-              </Message>
-            )}
-          </TabPane>
-          <TabPane
-            title={<FormattedMessage id="iceworks.project.panel.menu.tab.headerMenu" />}
-            key="header"
-          >
-            {headerMenuConfig.length ? (
-              <MenuTreeConfig
-                items={headerMenuConfig}
-                onChange={onChangeTree}
-                onOpenEditModal={onOpenModal}
-                onDeleteLink={onOpenDeleteModal}
-                nested={false}
-              />
-            ) : (
-              <Message title={<FormattedMessage id="iceworks.project.panel.menu.header.none" />} type="help">
-                <FormattedMessage id="iceworks.project.panel.menu.header.prompt.create" />
-              </Message>
-            )}
-          </TabPane>
-        </Tab>
-      </div>
+            <TabPane
+              title={<FormattedMessage id="iceworks.project.panel.menu.tab.asideMenu" />}
+              key="aside"
+            >
+              {asideMenuConfig.length ? (
+                <MenuTreeConfig
+                  items={asideMenuConfig}
+                  onChange={onChangeTree}
+                  onOpenEditModal={onOpenModal}
+                  onDeleteLink={onOpenDeleteModal}
+                />
+              ) : (
+                <Message title={<FormattedMessage id="iceworks.project.panel.menu.aside.none" />} type="help">
+                  <FormattedMessage id="iceworks.project.panel.menu.aside.prompt.create" />
+                </Message>
+              )}
+            </TabPane>
+            <TabPane
+              title={<FormattedMessage id="iceworks.project.panel.menu.tab.headerMenu" />}
+              key="header"
+            >
+              {headerMenuConfig.length ? (
+                <MenuTreeConfig
+                  items={headerMenuConfig}
+                  onChange={onChangeTree}
+                  onOpenEditModal={onOpenModal}
+                  onDeleteLink={onOpenDeleteModal}
+                  nested={false}
+                />
+              ) : (
+                <Message title={<FormattedMessage id="iceworks.project.panel.menu.header.none" />} type="help">
+                  <FormattedMessage id="iceworks.project.panel.menu.header.prompt.create" />
+                </Message>
+              )}
+            </TabPane>
+          </Tab>
+        </div>
+      }
+      <ActionStatus
+        store={stores}
+        config={[
+          {
+            storeName: 'menu',
+            actions: [
+              {
+                actionName: 'refresh',
+                showLoading: true,
+                showError: true,
+              },
+            ],
+          },
+        ]}
+      />
     </Panel>
   );
 };

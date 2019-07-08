@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@alifd/next';
+import showMessage from '@utils/showMessage';
 import stores from '@stores';
 import Card from '@components/Card';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -48,15 +49,23 @@ const Material = ({ history, intl }) => {
   const [component, setComponent] = useState({});
 
   async function setCurrent(source) {
-    await material.setCurrentSource(source);
-    await material.getCurrentMaterial();
+    try {
+      await material.setCurrentSource(source);
+      await material.getCurrentMaterial();
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function fetchData() {
-    await material.getResources();
-    const firstResource = dataSource.resource.official[0] || {};
-    const defaultActiveMaterial = firstResource.source;
-    await setCurrent(defaultActiveMaterial);
+    try {
+      await material.getResources();
+      const firstResource = dataSource.resource.official[0] || {};
+      const defaultActiveMaterial = firstResource.source;
+      await setCurrent(defaultActiveMaterial);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   function handleCategoryChange(name = DEFAULT_CATEGORY) {

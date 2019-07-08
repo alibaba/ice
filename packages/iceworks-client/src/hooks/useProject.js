@@ -1,7 +1,7 @@
 import stores from '@stores';
 import useModal from '@hooks/useModal';
 import { useState } from 'react';
-import { Message } from '@alifd/next';
+import showMessage from '@utils/showMessage';
 import logger from '@utils/logger';
 import goldlog from '@utils/goldlog';
 
@@ -30,21 +30,21 @@ function useProject({ panelStores } = {}) {
       panelStore
         .refresh()
         .catch((error) => {
-          logger.error(error);
+          logger.error('refresh project got error: ', error);
         });
     }
   }
 
   async function refreshProject() {
-    let newProject;
+    let error;
     try {
-      newProject = await projectStore.refresh();
+      await projectStore.refresh();
     } catch (err) {
-      // error handle
+      error = err;
     }
 
-    if (newProject && panelStores) {
-      newProject.dataSource.panels.forEach(({ name, isAvailable }) => {
+    if (!error && panelStores) {
+      projectStore.dataSource.panels.forEach(({ name, isAvailable }) => {
         if (isAvailable) {
           refreshProjectStore(name);
         }
@@ -54,18 +54,15 @@ function useProject({ panelStores } = {}) {
 
   async function refreshProjects() {
     let error;
-    let newProjects;
     try {
-      newProjects = await projectsStore.refresh();
+      await projectsStore.refresh();
     } catch (err) {
       error = err;
     }
 
-    if (!newProjects || !newProjects.dataSource.length) {
+    if (error || !projectsStore.dataSource.length) {
       await materialStore.getRecommendScaffolds();
-    }
-
-    if (!error) {
+    } else {
       await refreshProject();
     }
   }
@@ -125,12 +122,7 @@ function useProject({ panelStores } = {}) {
       if (error.code === 'LEGAL_PROJECT') {
         await addProject(values.path);
       } else {
-        Message.show({
-          align: 'tr tr',
-          type: 'error',
-          title: '创建项目失败',
-          content: error.message,
-        });
+        showMessage('创建项目失败');
         throw error;
       }
     }

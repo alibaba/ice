@@ -126,6 +126,7 @@ const Project = ({ history, intl }) => {
   } = useProject({ panelStores });
 
   const isCreatedProject = location.state && location.state.createdProject;
+  const hasProjects = projects.length;
 
   async function onOpenCreateProject() {
     history.push('/material');
@@ -133,7 +134,7 @@ const Project = ({ history, intl }) => {
 
   function onResetModalCancel() {
     setResetModal(false);
-    if (isCreatedProject) {
+    if (isCreatedProject && projectStore.dataSource.adapterName) {
       history.replace({ createdProject: false });
     }
   }
@@ -144,14 +145,17 @@ const Project = ({ history, intl }) => {
 
   async function onResetModalOk() {
     await reset();
-    if (isCreatedProject) {
+    if (isCreatedProject && projectStore.dataSource.adapterName) {
       history.replace({ createdProject: false });
     }
   }
 
   async function onCreateProjectModalOk(values) {
     await onCreateProject(values);
-    setResetModal(true);
+
+    if (projectStore.dataSource.adapterName) {
+      setResetModal(true);
+    }
   }
 
   async function onToggleSettingPanel() {
@@ -192,7 +196,7 @@ const Project = ({ history, intl }) => {
   });
 
   function renderContent() {
-    if (projects.length) {
+    if (hasProjects) {
       if (project.panels.length && project.adapterName) {
         return (
           <div className={styles.main}>
@@ -234,7 +238,7 @@ const Project = ({ history, intl }) => {
 
   return (
     <div className={styles.page}>
-      {projects.length ? (
+      {hasProjects ? (
         <SubMenu
           projects={projects}
           project={project}
@@ -273,7 +277,7 @@ const Project = ({ history, intl }) => {
       {renderContent()}
 
       {/* Panel setting */}
-      {projects.length ? (
+      {hasProjects ? (
         <div className={styles.settingPanel}>
           <div
             onClick={onToggleSettingPanel}
