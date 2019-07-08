@@ -22,7 +22,7 @@ async function start(options = {}) {
 
   const child = spawn('npm', ['start'], {
     stdio: ['pipe'],
-    cwd: path.join(process.cwd(), 'server'),
+    cwd: path.join(__dirname, '../', 'server'),
     env,
   });
 
