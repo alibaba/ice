@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import TipIcon from '@components/TipIcon';
 import Modal from '@components/Modal';
-import { Input, Select, Form, Field, Switch } from '@alifd/next';
+import { Input, Select, Form, Field, Switch, Message } from '@alifd/next';
 import path from 'path';
 
 import useWhenValueChanges from '@hooks/useWhenValueChanges';
@@ -56,18 +56,25 @@ const CreateRouterModal = ({
   });
 
   function setDataSource(formValue) {
-    let data = [];
+    let data = [{
+      label: (
+        <span>
+          <FormattedMessage id="iceworks.project.panel.router.form.component.none" />
+        </span>
+      ),
+      value: 0,
+    }];
 
     if (isEdit) {
       if (formValue.children) {
-        data = selectedLayouts;
+        data = data.concat(selectedLayouts);
       } else {
-        data = selectedPages;
+        data = data.concat(selectedPages);
       }
     } else if (parent || !selectRouterGroup) {
-      data = selectedPages;
+      data = data.concat(selectedPages);
     } else {
-      data = selectedLayouts;
+      data = data.concat(selectedLayouts);
     }
     setData(data);
   }
@@ -88,15 +95,42 @@ const CreateRouterModal = ({
     setFormData(value);
   }
 
+  /**
+   * valid form in global
+   *
+   * 1. no path and no component
+   * 2. has redirect and no path
+   * 3. has redirect and component
+   *
+   */
+  function onValidForm(values) {
+    let message = '';
+    if (!values.path && !values.component) {
+      message = formatMessage({ id: 'iceworks.project.panel.router.form.no.path.and.component' });
+    }
+    if (values.redirect && !values.path) {
+      message = formatMessage({ id: 'iceworks.project.panel.router.form.redirect.and.no.path' });
+    }
+    if (values.redirect && values.component) {
+      message = formatMessage({ id: 'iceworks.project.panel.router.form.redirect.and.component' });
+    }
+    return message;
+  }
+
   function onSubmit() {
     field.validate((errors, values) => {
       if (!errors) {
+        const errorMessage = onValidForm(values);
+        if (errorMessage) {
+          return Message.error(errorMessage);
+        }
         const formValue = values;
         const { component } = formValue;
-        if (component) {
-          if (selectRouterGroup) {
-            formValue.children = formValue.children || [];
-          }
+        if (!component) {
+          delete formValue.component;
+        }
+        if (component && selectRouterGroup) {
+          formValue.children = formValue.children || [];
         }
         delete formValue.layoutType;
         onOk({
@@ -104,12 +138,13 @@ const CreateRouterModal = ({
           parent,
         });
       }
+      return null;
     });
   }
 
   function onValidtePath(rule, value, callback) {
     if (!value) {
-      return callback(formatMessage({ id: 'iceworks.project.panel.router.form.path.required' }));
+      return callback();
     }
 
     if (value.indexOf('/') !== 0) {
@@ -127,6 +162,9 @@ const CreateRouterModal = ({
       }
       if (item.children && !exist) {
         exist = item.children.some((route, childIndex) => {
+          if (!route.path) {
+            return false;
+          }
           const compareUrl = path.join(item.path, route.path);
           if (
             compareUrl === url &&
@@ -163,9 +201,15 @@ const CreateRouterModal = ({
     >
       <Form {...formItemLayout} onChange={onChange} field={field} value={formData}>
         <FormItem
-          required
-          label={<FormattedMessage id="iceworks.project.panel.router.form.path" />}
-          help={isEdit ? `${getError('path') ? getError('path') : ''}(修改了路径需要手动到导航配置里修改对应的路径)` : getError('path')}
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.path" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.project.panel.router.form.path.tip" />
+              </TipIcon>
+            </span>
+          )}
+          help={isEdit ? `${getError('path') ? getError('path') : ''}(${formatMessage({ id: 'iceworks.project.panel.router.form.path.help' })})` : getError('path')}
         >
           <Input
             name="path"
@@ -197,7 +241,6 @@ const CreateRouterModal = ({
           />
         </FormItem>
         <FormItem
-          required
           label={(
             <span>
               <FormattedMessage id="iceworks.project.panel.router.form.component" />
@@ -212,6 +255,23 @@ const CreateRouterModal = ({
             name="component"
             placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.component.placeholder' })}
             dataSource={dataSource}
+            className={styles.selectBox}
+          />
+        </FormItem>
+        <FormItem
+          label={(
+            <span>
+              <FormattedMessage id="iceworks.project.panel.router.form.redirect" />
+              <TipIcon>
+                <FormattedMessage id="iceworks.project.panel.router.form.redirect.tip" />
+              </TipIcon>
+            </span>
+          )}
+        >
+          <Input
+            size="small"
+            name="redirect"
+            placeholder={formatMessage({ id: 'iceworks.project.panel.router.form.redirect.placeholder' })}
             className={styles.selectBox}
           />
         </FormItem>

@@ -197,6 +197,7 @@ export default class Page implements IPageModule {
     );
 
     await writeFileAsync(dist, rendered, 'utf-8');
+    return pageFolderName;
   }
 
   async bulkCreate(): Promise<any> { }

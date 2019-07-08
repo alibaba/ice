@@ -121,7 +121,7 @@ const RouterPanel = ({ intl, title, description }) => {
     parent,
     parentIndex,
   }) {
-    const { path, component, children } = item;
+    const { path, component, children, redirect } = item;
     const layoutRouter = Array.isArray(children);
     return [
       (
@@ -141,9 +141,14 @@ const RouterPanel = ({ intl, title, description }) => {
                 }}
               />
             )}
+            {!path && <Icon
+              type="kong"
+              size="xs"
+            />}
             {path}
           </strong>
           <span className={styles.itemCol}>{component}</span>
+          <span className={styles.itemCol}>{redirect}</span>
           <span>
             {layoutRouter && (
               <Tooltip
@@ -152,7 +157,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     type="plus"
                     size="xs"
                     className={styles.icon}
-                    onClick={() => onOpenCreateModal(parent, index)}
+                    onClick={() => onOpenCreateModal(item, index)}
                   />
                 )}
                 align="b"
@@ -259,6 +264,14 @@ const RouterPanel = ({ intl, title, description }) => {
                 }}
               >
                 <FormattedMessage id="iceworks.project.panel.router.title.component" />
+              </strong>
+              <strong
+                className={`${styles.titleCol} ${styles.titleMiddle}`}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                <FormattedMessage id="iceworks.project.panel.router.title.redirect" />
               </strong>
               <strong
                 className={`${styles.titleCol} ${styles.operater}`}
