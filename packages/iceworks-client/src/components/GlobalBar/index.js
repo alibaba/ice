@@ -87,8 +87,8 @@ const GlobalBar = ({ project, intl }) => {
       Message.show({
         type: 'error',
         align: 'tr tr',
-        title: '提示',
-        content: '打开编辑器失败',
+        title: '打开编辑器失败',
+        content: '请先手动启动编辑器，或者将编辑器注册到终端命令行中',
       });
     }
   });
