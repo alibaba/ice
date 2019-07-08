@@ -2,8 +2,25 @@
   display: flex;
   flex-direction: column;
 
+  .status {
+    margin-bottom: 6px;
+  }
+
   .progress {
     flex: 1;
-    margin-top: 6px;
+
+    :global {
+      .next-progress-line {
+        display: flex;
+
+        .next-progress-line-container {
+          flex: 1;
+        }
+
+        .next-progress-line-text {
+          width: auto;
+        }
+      }
+    }
   }
 }

@@ -118,7 +118,7 @@ export default class Task implements ITaskModule {
         status: this.status[command],
         chunk: chalk.grey('Task has stopped'),
       });
-    })
+    });
 
     return this;
   }

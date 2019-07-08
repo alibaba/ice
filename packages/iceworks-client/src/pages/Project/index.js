@@ -5,6 +5,7 @@ import { Button } from '@alifd/next';
 import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
+import useVisibilityChange from '@hooks/useVisibilityChange';
 import stores from '@stores';
 import ErrorBoundary from '@components/ErrorBoundary';
 import Icon from '@components/Icon';
@@ -106,6 +107,7 @@ const Project = ({ history, intl }) => {
     projectPreDelete,
 
     refreshProjects,
+    refreshProjectStore,
     addProject,
     deleteProject,
     sortProjectPanel,
@@ -169,15 +171,26 @@ const Project = ({ history, intl }) => {
     }
   }
 
+  async function wrapRefreshProjects() {
+    await refreshProjects();
+
+    if (isCreatedProject && projectStore.dataSource.adapterName) {
+      setResetModal(true);
+    }
+  }
+
   useEffect(() => {
     logger.info('Project page loaded.');
 
-    if (isCreatedProject) {
-      setResetModal(true);
-    }
-
-    refreshProjects();
+    wrapRefreshProjects();
   }, []);
+
+  useVisibilityChange((hidden) => {
+    if (!hidden) {
+      logger.info('Page visibility.');
+      refreshProjectStore();
+    }
+  });
 
   function renderContent() {
     if (projects.length) {

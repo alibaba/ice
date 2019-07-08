@@ -8,10 +8,10 @@ import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as arrayMove from 'array-move';
+import { getAndExtractTarball } from 'ice-npm-utils';
 import storage from '../../storage';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule, II18n } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
-import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
 const mkdirpAsync = util.promisify(mkdirp);
 const accessAsync = util.promisify(fs.access);
@@ -115,6 +115,13 @@ class Project implements IProject {
 
       return this.toJSON();
     }
+
+    return this.toJSON();
+  }
+
+  public async reloadAdapter(i18n: II18n) {
+    const result = await this.loadAdapter(i18n);
+    return result;
   }
 
   public async reloadAdapter(i18n: II18n) {
@@ -316,7 +323,7 @@ class ProjectManager extends EventEmitter {
   private async generateProject(params: ICreateParams) {
     const { path: targetPath, scaffold, name } = params;
     const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
-    await downloadAndExtractPackage(targetPath, tarballURL);
+    await getAndExtractTarball(targetPath, tarballURL);
 
     // rewrite pakcage.json
     const packageJSONPath = path.join(targetPath, packageJSONFilename);
