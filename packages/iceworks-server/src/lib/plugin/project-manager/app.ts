@@ -202,6 +202,8 @@ interface ICreateParams {
   path: string;
   scaffold: IMaterialScaffold;
   forceCover?: boolean;
+  appId?: string,
+  changeId?: string,
 }
 
 class ProjectManager extends EventEmitter {
@@ -367,9 +369,14 @@ class ProjectManager extends EventEmitter {
    * TODO create a project by custom scaffold
    */
   public async createProject(params: ICreateParams): Promise<void> {
-    await this.createProjectFolder(params);
-    await this.generateProject(params);
-    await this.addProject(params.path);
+    if (params.appId) {
+      const generate = require('@ali/stark-biz-generator');
+      generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
+    } else {
+      await this.createProjectFolder(params);
+      await this.generateProject(params);
+      await this.addProject(params.path);
+    }
   }
 
   /**

@@ -146,6 +146,7 @@ function useProject({ panelStores } = {}) {
     material: materialStore.dataSource,
     projects: projectsStore.dataSource,
     project: projectStore.dataSource,
+    scaffold,
     projectPreDelete,
 
     // method
