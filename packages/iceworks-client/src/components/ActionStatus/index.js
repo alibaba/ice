@@ -64,6 +64,7 @@ const ActionStatus = (props) => {
         <Message
           align="tc, tc"
           type="error"
+          className={styles.message}
           visible
           title={error.content.message}
         />
