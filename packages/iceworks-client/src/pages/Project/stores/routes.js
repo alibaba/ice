@@ -7,15 +7,21 @@ export default {
   async refresh() {
     this.dataSource = await socket.emit('adapter.router.getAll');
   },
-  addChildRoute(dataSource, value) {
-    dataSource.push(value);
+  addRoute(createParentIndex, value) {
+    const parentChildren = createParentIndex !== -1 ?
+      this.dataSource[createParentIndex].children : this.dataSource;
+    parentChildren.push(value);
   },
-  deleteChildRoute(parentChildren, deleteIndex) {
+  deleteRoute(deleteIndex, deleteParentIndex) {
+    const parentChildren = deleteParentIndex !== -1 ?
+      this.dataSource[deleteParentIndex].children : this.dataSource;
     parentChildren.splice(deleteIndex, 1);
   },
-  editRoute(parentChildren, editIndex, value) {
-    const localChildren = parentChildren;
-    localChildren[editIndex] = value;
+
+  editRoute(editIndex, editParentIndex, value) {
+    const parentChildren = editParentIndex !== -1 ?
+      this.dataSource[editParentIndex].children : this.dataSource;
+    parentChildren[editIndex] = value;
   },
   async bulkCreate(args) {
     await socket.emit('adapter.router.bulkCreate', args);

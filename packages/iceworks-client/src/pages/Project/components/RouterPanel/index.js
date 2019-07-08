@@ -16,11 +16,12 @@ import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
+let createParentIndex = -1;
 let editIndex = -1;
 let editParentIndex = -1;
 let deleteIndex = -1;
+let deleteParentIndex = -1;
 let action = 'create';
-let deleteParent = null;
 
 const RouterPanel = ({ intl, title, description }) => {
   const {
@@ -36,7 +37,7 @@ const RouterPanel = ({ intl, title, description }) => {
   const [modalData, setModalData] = useState({});
 
   const routerStore = stores.useStore('routes');
-  const { dataSource, deleteChildRoute, addChildRoute, editRoute } = routerStore;
+  const { dataSource, deleteRoute, addRoute, editRoute } = routerStore;
 
   async function onRefresh() {
     try {
@@ -75,7 +76,7 @@ const RouterPanel = ({ intl, title, description }) => {
     toggleCreateModal();
   }
 
-  function onOpenCreateModal(parent) {
+  function onOpenCreateModal(parent, parentIndex) {
     action = 'create';
     setModalData({
       formData: {},
@@ -83,44 +84,33 @@ const RouterPanel = ({ intl, title, description }) => {
       editIndex: -1,
       parent,
     });
+    createParentIndex = parentIndex;
     toggleCreateModal();
   }
 
-  async function onCreate({ formData: value, parent }) {
+  async function onCreate({ formData: value }) {
     toggleCreateModal();
     if (action === 'create') {
-      if (parent) {
-        addChildRoute(parent.children, value);
-      } else {
-        addChildRoute(dataSource, value);
-      }
+      addRoute(createParentIndex, value);
     } else if (action === 'edit') {
-      if (parent) {
-        editRoute(parent.children, editIndex, value);
-      } else {
-        editRoute(dataSource, editIndex, value);
-      }
+      editRoute(editIndex, editParentIndex, value);
     }
     await onChangeData(dataSource);
   }
 
   async function onOpenDeleteModal({
     index,
-    parent,
     current,
+    parentIndex,
   }) {
     deleteIndex = index;
-    deleteParent = parent;
+    deleteParentIndex = parentIndex;
     setDeleteRouter(current);
     toggleDeleteModal();
   }
 
   async function onDeleteRouter() {
-    if (deleteParent) {
-      deleteChildRoute(deleteParent.children, deleteIndex);
-    } else {
-      deleteChildRoute(dataSource, deleteIndex);
-    }
+    deleteRoute(deleteIndex, deleteParentIndex);
     await onChangeData(dataSource);
     toggleDeleteModal();
   }
@@ -162,7 +152,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     type="plus"
                     size="xs"
                     className={styles.icon}
-                    onClick={() => onOpenCreateModal(item)}
+                    onClick={() => onOpenCreateModal(parent, index)}
                   />
                 )}
                 align="b"
@@ -198,6 +188,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     index,
                     parent,
                     current: item,
+                    parentIndex
                   })}
                 />
               )}
@@ -227,7 +218,7 @@ const RouterPanel = ({ intl, title, description }) => {
     },
     {
       type: 'plus',
-      onClick: () => onOpenCreateModal(),
+      onClick: () => onOpenCreateModal(null, -1),
       tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
     },
   ];
@@ -279,6 +270,7 @@ const RouterPanel = ({ intl, title, description }) => {
               return renderCol({
                 item,
                 index,
+                parentIndex: -1,
               });
             })}
           </ul>
