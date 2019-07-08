@@ -8,7 +8,8 @@ import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
 import * as arrayMove from 'array-move';
-import { getAndExtractTarball } from 'ice-npm-utils';
+import * as rimraf from 'rimraf';
+import { getAndExtractTarball, checkAliInternal } from 'ice-npm-utils';
 import storage from '../../storage';
 import { IProject, IMaterialScaffold, IPanel, IBaseModule, II18n } from '../../../interface';
 import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
@@ -20,6 +21,7 @@ const existsAsync = util.promisify(fs.exists);
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 const mvAsync = util.promisify(mv);
+const rimrafAsync = util.promisify(rimraf);
 
 const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
@@ -311,35 +313,52 @@ class ProjectManager extends EventEmitter {
   }
 
   /**
-   * generate project
+   * Generate abc.json for alibaba user
+   */
+  private async generateAbcFile(projectDir: string, iceScriptsVersion: string) {
+    // '^2.0.0' -> true
+    const latestVersion = /^\^2\./.test(iceScriptsVersion);
+  
+    const abcData = {
+      type: latestVersion ? 'ice-scripts' : 'iceworks',
+      builder: latestVersion ? '@ali/builder-ice-scripts' : '@ali/builder-iceworks',
+    };
+
+    const abcJsonPath = path.join(projectDir, abcJSONFilename);
+    await writeFileAsync(abcJsonPath, JSON.stringify(abcData, null, 2));
+  }
+
+  /**
+   * Generate project
    */
   private async generateProject(params: ICreateParams) {
     const { path: targetPath, scaffold, name } = params;
     const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
     await getAndExtractTarball(targetPath, tarballURL);
 
+    await rimraf(path.join(targetPath, 'build'));
+
     // rewrite pakcage.json
     const packageJSONPath = path.join(targetPath, packageJSONFilename);
     const packageJSON: any = JSON.parse((await readFileAsync(packageJSONPath)).toString());
-    packageJSON.title = name;
-    packageJSON.version = '1.0.0';
+
+    delete packageJSON.files;
+    delete packageJSON.publishConfig;
+    if (packageJSON.buildConfig) {
+      delete packageJSON.buildConfig.output;
+      delete packageJSON.buildConfig.localization;
+    }
+    delete packageJSON.scaffoldConfig;
     delete packageJSON.homepage;
+    delete packageJSON.scripts.screenshot;
+    delete packageJSON.scripts.prepublishOnly;
+    packageJSON.title = name;
     await writeFileAsync(packageJSONPath, `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
 
-    // generate abc.json for alibaba user
-    // TODO get information from App
-    const isAlibaba = false;
-    const abcJsonPath = path.join(targetPath, abcJSONFilename);
-    if (isAlibaba && !await pathExists(abcJsonPath)) {
-      await writeFileAsync(
-        abcJsonPath,
-        JSON.stringify({ name, type: 'iceworks', builder: '@ali/builder-iceworks' }, null, 2)
-      );
+    const isAlibaba = await checkAliInternal();
+    if (isAlibaba ) {
+      await this.generateAbcFile(targetPath, packageJSON.devDependencies['ice-scripts']);
     }
-
-    // replace _gitignore to .gitignore
-    const gitignoreFilename = 'gitignore';
-    await mvAsync(path.join(targetPath, `_${gitignoreFilename}`), path.join(targetPath, `.${gitignoreFilename}`));
   }
 
   /**
