@@ -7,7 +7,7 @@ const Progress = ({ statusText, show, percent }) => {
   return (
     show ?
       <div className={styles.wrap}>
-        {statusText ? <span className={styles.status}>{statusText}</span> : null}
+        {statusText ? <div className={styles.status}>{statusText}</div> : null}
         <div className={styles.progress}>
           <NextProgress
             percent={percent}

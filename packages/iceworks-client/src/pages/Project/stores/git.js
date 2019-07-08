@@ -44,11 +44,11 @@ export default {
   },
 
   async pull() {
-    await socket.emit('adapter.git.pull', this.dataSource.currentBranch);
+    await socket.emit('adapter.git.pull', { branch: this.dataSource.currentBranch });
   },
 
   async push() {
-    await socket.emit('adapter.git.push', this.dataSource.currentBranch);
+    await socket.emit('adapter.git.push', { branch: this.dataSource.currentBranch });
   },
 
   async addAndCommit(data) {

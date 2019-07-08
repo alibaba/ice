@@ -1,17 +1,19 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as util from 'util';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as _ from 'lodash';
+import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
+import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
 import getIceVersion from '../../utils/getIceVersion';
 import getTarballURLByMaterielSource from '../../../getTarballURLByMaterielSource';
-import downloadAndExtractPackage from '../../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
 import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock, IContext, IProjectBlock } from '../../../../interface';
 
@@ -20,9 +22,10 @@ const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
+const mvAsync = util.promisify(mv);
 
 const loadTemplate = async () => {
-  const fileName = 'template.js';
+  const fileName = 'template.jsx';
   const filePath = path.join(__dirname, `${fileName}.ejs`);
   const fileStr = await readFileAsync(filePath, 'utf-8');
   const compile = ejs.compile(fileStr);
@@ -94,7 +97,7 @@ export default class Page implements IPageModule {
     }));
   }
 
-  private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<string[]> {
+  private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<void> {
     const { i18n } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
@@ -115,11 +118,16 @@ export default class Page implements IPageModule {
       throw error;
     }
 
+    const blockDir = path.join(componentsDir, blockName);
+    const blockTempDir = path.join(os.tmpdir(), blockName);
     try {
-      return await downloadAndExtractPackage(
-        path.join(componentsDir, blockName),
+      await getAndExtractTarball(
+        blockTempDir,
         tarballURL
       );
+
+      await mkdirpAsync(blockDir);
+      await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
       error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
@@ -131,7 +139,7 @@ export default class Page implements IPageModule {
 
   async getAll(): Promise<IPage[]> {
     const pages = await this.scanPages(this.path);
-    return _.orderBy(pages, 'birthtime', 'desc');
+    return _.orderBy(pages, 'name', 'asc');
   }
 
   async getOne(): Promise<any> { }
@@ -193,16 +201,9 @@ export default class Page implements IPageModule {
 
   async bulkCreate(): Promise<any> { }
 
-  // TODO
   async delete(params: {name: string}): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
-
-    // TODO rewrite routerConfig.js
-
-    // TODO rewrite router.js
-
-    // TODO rewrite menuConfig.js
   }
 
   public async getBlocks(name: string): Promise<IProjectBlock[]> {

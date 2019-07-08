@@ -1,6 +1,7 @@
 import * as execa from 'execa';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
+import * as terminate from 'terminate';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
@@ -104,18 +105,20 @@ export default class Task implements ITaskModule {
       ipc.stop();
     }
 
-    this.process[command].kill();
-    this.process[command].on('exit', (code) => {
-      if (code === 0) {
-        this.status[command] = TASK_STATUS_STOP;
-        ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status[command],
-          chunk: chalk.grey('Task has stopped'),
-        });
+    const { pid } = this.process[command];
+    terminate(pid, (err) => {
+      if (err) {
+        throw err;
       }
-    });
 
-    this.process[command] = null;
+      this.status[command] = TASK_STATUS_STOP;
+      this.process[command] = null;
+
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        chunk: chalk.grey('Task has stopped'),
+      });
+    });
 
     return this;
   }

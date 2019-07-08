@@ -15,6 +15,7 @@ export default (app: Application) => {
     ['home.project.setCurrent', home.project.setCurrent],
     ['home.project.setPanel', home.project.setPanel],
     ['home.project.sortPanels', home.project.sortPanels],
+    ['home.project.reloadAdapter', home.project.reloadAdapter],
 
     ['material.index.resources', material.index.getResources],
     ['material.index.getOne', material.index.getOne],
@@ -30,9 +31,9 @@ export default (app: Application) => {
     ['home.setting.getTheme', home.setting.getTheme],
     ['home.setting.setEditor', home.setting.setEditor],
     ['home.setting.getEditor', home.setting.getEditor],
-
     ['home.setting.setUser', home.setting.setUser],
     ['home.setting.getUser', home.setting.getUser],
+
     ['home.system.getPath', home.system.getPath],
     ['home.system.openFolder', home.system.openFolder],
     ['home.system.openEditor', home.system.openEditor],

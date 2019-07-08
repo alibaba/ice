@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as openFolder from 'open';
-import * as launchEditor from 'launch-editor';
+import * as launchEditor from 'launch-code-editor';
 import storage from '../../../../lib/storage';
 
 export default (app) => {

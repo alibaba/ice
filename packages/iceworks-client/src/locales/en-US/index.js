@@ -11,24 +11,23 @@ export default {
   'iceworks.global.button.selectAll': 'Select All',
   'iceworks.global.fallback.title': 'Loading',
   'iceworks.global.adapter.title': 'Project adaptation failed',
-  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the documentation for adaptation',
+  'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the <a href="https://ice.work/docs/iceworks/migrate" target="_blank">documentation <a>documentation for adaptation',
+  'iceworks.global.adapter.reload': 'Reload retry',
+
+  // quick start
+  'iceworks.quickStart.title': 'Create your project from popular templates',
+  'iceworks.quickStart.open': 'Open project',
+  'iceworks.quickStart.more': 'More templates',
 
   // menu
   'iceworks.menu.project': 'Project',
   'iceworks.menu.task': 'Engineering',
   'iceworks.menu.task.dev': 'dev',
   'iceworks.menu.task.dev.desc': 'start server for development',
-  'iceworks.task.dev.start.msg': 'Running Server',
-  'iceworks.task.dev.stop.msg': 'Stop Server',
   'iceworks.menu.task.build': 'build',
   'iceworks.menu.task.build.desc': 'build project for production',
-  'iceworks.task.build.start.msg': 'Run the build project service',
-  'iceworks.task.build.stop.msg': 'Build project completed',
   'iceworks.menu.task.lint': 'lint',
   'iceworks.menu.task.lint.desc': 'lint check for development',
-  'iceworks.task.lint.start.msg': 'Run lint check',
-  'iceworks.task.lint.stop.msg': 'Lint check completed',
-
   'iceworks.menu.task.configuration': 'configuration',
   'iceworks.menu.task.configuration.desc': 'custom project configuration',
   'iceworks.menu.material': 'Material',
@@ -56,8 +55,8 @@ export default {
   'iceworks.project.panel.fallback.title': 'Panel',
   'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
-  // project task
-  'iceworks.project.panel.task.title': 'Run Task',
+  // project quick task
+  'iceworks.project.panel.quick.task.setting': 'Go to settings',
 
   // project guide
   'iceworks.project.panel.guide.title': 'Getting Started Guide',
@@ -72,6 +71,7 @@ export default {
   'iceworks.project.panel.page.create.title': 'Create Page',
   'iceworks.project.panel.page.create.progress.start': 'Start create page...',
   'iceworks.project.panel.page.create.builder.empty': 'Select the block from the right',
+  'iceworks.project.panel.page.create.error.name.content': 'Please check block name as uniq.',
   'iceworks.project.panel.page.delete.title': 'Delete Page',
   'iceworks.project.panel.page.delete.content': 'Sure to delete {name} ？',
   'iceworks.project.panel.page.save.title': 'Page Information',
@@ -81,9 +81,9 @@ export default {
   'iceworks.project.panel.page.save.createRouterGroup.label': 'Whether to create a new router packet',
   'iceworks.project.panel.page.save.parentRoutePath.label': 'Router Packet Path',
   'iceworks.project.panel.page.save.parentRouteComponent.label': 'Router Packet Component',
-  'iceworks.project.panel.page.save.routePath.group.label': 'Selecting Group Path',
+  'iceworks.project.panel.page.save.routePath.group.label': 'Select Group',
   'iceworks.project.panel.page.save.routePath.placeholder': 'Enter a combination of lowercase letters and numbers to support secondary routing separated by `/`',
-  'iceworks.project.panel.page.save.menuName.label': 'Page Navigation Name',
+  'iceworks.project.panel.page.save.menuName.label': 'Page Navigation',
   'iceworks.project.panel.page.save.menuName.placeholder': 'No navigation items are generated for null',
   'iceworks.project.panel.page.button.refresh': 'refresh',
   'iceworks.project.panel.page.button.add': 'add page',
@@ -92,10 +92,17 @@ export default {
   'iceworks.project.panel.dependency.main.upgrade': 'Upgrade to {wantedVestion}',
   'iceworks.project.panel.dependency.main.reset.title': 'Reinstall',
   'iceworks.project.panel.dependency.main.reset.content': 'All dependencies of the installation project will be reset. During installation, debugging services, new pages, and project operation can not be started. Please wait patiently.',
+  'iceworks.project.panel.dependency.main.refresh': 'Refresh',
+  'iceworks.project.panel.dependency.main.download': 'Reinstall dependencies',
+  'iceworks.project.panel.dependency.main.add': 'Add dependencies',
+  'iceworks.project.panel.dependency.main.incompatible.title': 'Incompatible',
+  'iceworks.project.panel.dependency.main.incompatible.content': 'Newly added dependencies {setDependencyText} have incompatible versions with {projectDependencyText}. Are you sure you want to continue?',
+  'iceworks.project.panel.dependency.create.title': 'Add dependencies',
+  'iceworks.project.panel.dependency.create.placeholder': 'Please enter npm package name and its version, e.g., lodash@latest. Press Enter to enter multiple dependencies.',
 
   // project layout
-  'iceworks.project.panel.layout.none': 'No layout',
   'iceworks.project.panel.layout.refresh': 'refresh',
+  'iceworks.project.panel.layout.none': 'No layout',
 
   // project todo
   'iceworks.project.panel.todo.none': 'No comments in the code need to deal with',
@@ -131,8 +138,15 @@ export default {
   'iceworks.project.panel.git.switch.title': 'Checkout Branch',
   'iceworks.project.panel.git.switch.select': 'Select Branch',
   'iceworks.project.panel.git.switch.input': 'Input Local Branch',
+
+  // project oss
   'iceworks.project.panel.oss.title': 'OSS',
   'iceworks.project.panel.oss.button.clear': 'Clean',
+  'iceworks.project.panel.oss.region.label': 'Region',
+  'iceworks.project.panel.oss.bucket.label': 'Bucket',
+  'iceworks.project.panel.oss.directory.label': 'Directory',
+  'iceworks.project.panel.oss.directory.tip': 'Storage path (not filled in, the default is in the root directory)',
+  'iceworks.project.panel.oss.button.upload': 'Upload',
 
   // project menu
   'iceworks.project.panel.menu.ordinary': 'menu',
@@ -141,7 +155,7 @@ export default {
   'iceworks.project.panel.menu.create.title': 'Create Menu',
   'iceworks.project.panel.menu.delete.title': 'Delete Menu',
   'iceworks.project.panel.menu.delete.content': 'Are you sure delete menu \'{name}\' ？',
-  'iceworks.project.panel.menu.delete.subcontent': 'Menu under the menu group, please be careful to delete!!!',
+  'iceworks.project.panel.menu.delete.subcontent': 'Note: Menu under the menu group, please be careful to delete!!!',
   'iceworks.project.panel.menu.delete.warn': 'Note: Delete menu will not delete the corresponding routing, manual operation is required',
   'iceworks.project.panel.menu.edit.title': 'Edit Menu',
   'iceworks.project.panel.menu.form.type': 'type',
@@ -160,10 +174,16 @@ export default {
   'iceworks.project.panel.menu.tab.asideMenu': 'Aside Menu',
   'iceworks.project.panel.menu.tab.headerMenu': 'Header Menu',
   'iceworks.project.panel.menu.form.newwindow': 'open new window',
-  'iceworks.project.panel.menu.form.newwindow.tip': 'clicks on the link to open a new page',
+  'iceworks.project.panel.menu.form.newwindow.tip': 'click the link to open a new page',
   'iceworks.project.panel.menu.button.refresh': 'refresh',
   'iceworks.project.panel.menu.button.add': 'Create Menu',
   'iceworks.project.panel.menu.form.type.tip': 'There are three types of menu groups, ordinary menus and external chains, which can be put into menu groups under ordinary menus and external chains',
+  'iceworks.project.panel.menu.form.name.tip': 'Navigation name which will eventually be displayed on the page',
+  'iceworks.project.panel.menu.form.path.tip': 'Navigation path which click to jump to one page',
+  'iceworks.project.panel.menu.aside.none': 'No aside menu yet',
+  'iceworks.project.panel.menu.aside.prompt.create': 'Click on the top right to create a new aside menu',
+  'iceworks.project.panel.menu.header.none': 'No header menu yet',
+  'iceworks.project.panel.menu.header.prompt.create': 'Click on the top right to create a new header menu',
 
   // project router
   'iceworks.project.panel.router.title.path': 'path',
@@ -190,18 +210,26 @@ export default {
   'iceworks.project.panel.router.form.path.required': 'path required',
   'iceworks.project.panel.router.form.path.valid': 'The path must begin with \'/\'',
   'iceworks.project.panel.router.form.path.hasExist': 'exist path',
+  'iceworks.project.panel.router.none': 'No router yet',
+  'iceworks.project.panel.router.prompt.create': 'Click on the top right to create a new route',
 
   // task
   'iceworks.task.title': 'Engineering',
   'iceworks.task.dev.title': 'dev',
   'iceworks.task.dev.desc': 'Compiles and hot-reloads for development',
+  'iceworks.task.dev.start.msg': 'Running Server',
+  'iceworks.task.dev.stop.msg': 'Stop Server',
   'iceworks.task.start': 'Run Task',
   'iceworks.task.stop': 'Stop Task',
   'iceworks.task.setting': 'Setting',
   'iceworks.task.build.title': 'build',
   'iceworks.task.build.desc': 'Compiles and minifies for production',
+  'iceworks.task.build.start.msg': 'Run the build project service',
+  'iceworks.task.build.stop.msg': 'Build project completed',
   'iceworks.task.lint.title': 'lint',
   'iceworks.task.lint.desc': 'Lints and fixes files',
+  'iceworks.task.lint.start.msg': 'Run lint check',
+  'iceworks.task.lint.stop.msg': 'Lint check completed',
 
   // material
   'iceworks.material.title': 'Material',
@@ -239,4 +267,7 @@ export default {
   'iceworks.global.bar.feedback.submit': 'Feedback or Bug report',
   'iceworks.global.bar.theme.dark': 'Dark',
   'iceworks.global.bar.theme.light': 'Light',
+
+  'iceworks.project.panel.title': 'Panel settings',
+  'iceworks.engineer.config.title': 'Configuration',
 };

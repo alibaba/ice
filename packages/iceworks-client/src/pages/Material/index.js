@@ -10,9 +10,7 @@ import useMaterial from '@hooks/useMaterial';
 import useDependency from '@hooks/useDependency';
 import CreateProjectModal from '@components/CreateProjectModal';
 import SubMenu from './components/SubMenu';
-import ScaffoldPanel from './components/ScaffoldPanel';
-import BlockPanel from './components/BlockPanel';
-import ComponentPanel from './components/ComponentPanel';
+import MaterialPanel from './components/MaterialPanel';
 import InstallModal from './components/InstallModal';
 import AddMaterialModal from './components/AddMaterialModal';
 import DeleteMaterialModal from './components/DeleteMaterialModal';
@@ -128,13 +126,14 @@ const Material = ({ history, intl }) => {
       tab: 'iceworks.material.scaffold',
       key: 'scaffolds',
       content: (
-        <ScaffoldPanel
-          dataSource={dataSource.currentMaterial.scaffolds}
+        <MaterialPanel
+          type="scaffolds"
+          dataSource={dataSource.currentMaterial}
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
-          onDownload={(scaffoldData) => {
-            setScaffold(scaffoldData);
+          onUse={(scaffoldData) => {
             setCreateProjectModal(true, scaffoldData);
+            setScaffold(scaffoldData);
           }}
         />
       ),
@@ -143,8 +142,9 @@ const Material = ({ history, intl }) => {
       tab: 'iceworks.material.block',
       key: 'blocks',
       content: (
-        <BlockPanel
-          dataSource={dataSource.currentMaterial.blocks}
+        <MaterialPanel
+          type="blocks"
+          dataSource={dataSource.currentMaterial}
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
         />
@@ -154,11 +154,12 @@ const Material = ({ history, intl }) => {
       tab: 'iceworks.material.component',
       key: 'components',
       content: (
-        <ComponentPanel
-          dataSource={dataSource.currentMaterial.components}
+        <MaterialPanel
+          type="components"
+          dataSource={dataSource.currentMaterial}
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
-          onInstall={(componentData) => {
+          onUse={(componentData) => {
             setComponent(componentData);
             setInstallModal(true);
           }}
