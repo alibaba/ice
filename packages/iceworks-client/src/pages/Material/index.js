@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@alifd/next';
+import showMessage from '@utils/showMessage';
 import stores from '@stores';
 import Card from '@components/Card';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -21,6 +22,7 @@ const DEFAULT_CATEGORY = '全部';
 const Material = ({ history, intl }) => {
   const [material] = stores.useStores(['material']);
   const {
+    scaffold,
     onCreateProjectModal,
     setCreateProjectModal,
     onCreateProject: onOriginCreateProject,
@@ -48,15 +50,23 @@ const Material = ({ history, intl }) => {
   const [component, setComponent] = useState({});
 
   async function setCurrent(source) {
-    await material.setCurrentSource(source);
-    await material.getCurrentMaterial();
+    try {
+      await material.setCurrentSource(source);
+      await material.getCurrentMaterial();
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function fetchData() {
-    await material.getResources();
-    const firstResource = dataSource.resource.official[0] || {};
-    const defaultActiveMaterial = firstResource.source;
-    await setCurrent(defaultActiveMaterial);
+    try {
+      await material.getResources();
+      const firstResource = dataSource.resource.official[0] || {};
+      const defaultActiveMaterial = firstResource.source;
+      await setCurrent(defaultActiveMaterial);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   function handleCategoryChange(name = DEFAULT_CATEGORY) {
@@ -175,6 +185,7 @@ const Material = ({ history, intl }) => {
   return (
     <div className={styles.materialPage}>
       <CreateProjectModal
+        isBiz={scaffold && scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold'}
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProject}
@@ -189,7 +200,7 @@ const Material = ({ history, intl }) => {
       />
       <div className={styles.main}>
         <Card title={cardTitle} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">
-          <Tab shape="capsule" size="medium" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
+          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>
                 {tab.content}

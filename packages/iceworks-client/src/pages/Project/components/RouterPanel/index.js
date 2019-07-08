@@ -4,6 +4,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
 import { Message, Balloon } from '@alifd/next';
 import Icon from '@components/Icon';
+import ActionStatus from '@components/ActionStatus';
 
 import CreateRouterModal from './CreateRouterModal';
 import DeleteRouterModal from './DeleteRouterModal';
@@ -15,11 +16,12 @@ import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
+let createParentIndex = -1;
 let editIndex = -1;
 let editParentIndex = -1;
 let deleteIndex = -1;
+let deleteParentIndex = -1;
 let action = 'create';
-let deleteParent = null;
 
 const RouterPanel = ({ intl, title, description }) => {
   const {
@@ -35,10 +37,14 @@ const RouterPanel = ({ intl, title, description }) => {
   const [modalData, setModalData] = useState({});
 
   const routerStore = stores.useStore('routes');
-  const { dataSource } = routerStore;
+  const { dataSource, deleteRoute, addRoute, editRoute } = routerStore;
 
-  function onRefresh() {
-    routerStore.refresh();
+  async function onRefresh() {
+    try {
+      await routerStore.refresh();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async function onChangeData(data) {
@@ -48,7 +54,7 @@ const RouterPanel = ({ intl, title, description }) => {
         replacement: true,
       },
     });
-    onRefresh();
+    await onRefresh();
   }
 
   function onOpenEditModal({
@@ -70,7 +76,7 @@ const RouterPanel = ({ intl, title, description }) => {
     toggleCreateModal();
   }
 
-  function onOpenCreateModal(parent) {
+  function onOpenCreateModal(parent, parentIndex) {
     action = 'create';
     setModalData({
       formData: {},
@@ -78,44 +84,33 @@ const RouterPanel = ({ intl, title, description }) => {
       editIndex: -1,
       parent,
     });
+    createParentIndex = parentIndex;
     toggleCreateModal();
   }
 
-  async function onCreate({ formData: value, parent }) {
+  async function onCreate({ formData: value }) {
     toggleCreateModal();
     if (action === 'create') {
-      if (parent) {
-        parent.children.push(value);
-      } else {
-        dataSource.push(value);
-      }
+      addRoute(createParentIndex, value);
     } else if (action === 'edit') {
-      if (parent) {
-        Object.assign(parent.children[editIndex], value);
-      } else {
-        Object.assign(dataSource[editIndex], value);
-      }
+      editRoute(editIndex, editParentIndex, value);
     }
     await onChangeData(dataSource);
   }
 
   async function onOpenDeleteModal({
     index,
-    parent,
     current,
+    parentIndex,
   }) {
     deleteIndex = index;
-    deleteParent = parent;
+    deleteParentIndex = parentIndex;
     setDeleteRouter(current);
     toggleDeleteModal();
   }
 
   async function onDeleteRouter() {
-    if (deleteParent) {
-      deleteParent.children.splice(deleteIndex, 1);
-    } else {
-      dataSource.splice(deleteIndex, 1);
-    }
+    deleteRoute(deleteIndex, deleteParentIndex);
     await onChangeData(dataSource);
     toggleDeleteModal();
   }
@@ -126,7 +121,7 @@ const RouterPanel = ({ intl, title, description }) => {
     parent,
     parentIndex,
   }) {
-    const { path, component, children } = item;
+    const { path, component, children, redirect } = item;
     const layoutRouter = Array.isArray(children);
     return [
       (
@@ -146,9 +141,14 @@ const RouterPanel = ({ intl, title, description }) => {
                 }}
               />
             )}
+            {!path && <Icon
+              type="kong"
+              size="xs"
+            />}
             {path}
           </strong>
           <span className={styles.itemCol}>{component}</span>
+          <span className={styles.itemCol}>{redirect}</span>
           <span>
             {layoutRouter && (
               <Tooltip
@@ -157,7 +157,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     type="plus"
                     size="xs"
                     className={styles.icon}
-                    onClick={() => onOpenCreateModal(item)}
+                    onClick={() => onOpenCreateModal(item, index)}
                   />
                 )}
                 align="b"
@@ -193,6 +193,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     index,
                     parent,
                     current: item,
+                    parentIndex,
                   })}
                 />
               )}
@@ -222,7 +223,7 @@ const RouterPanel = ({ intl, title, description }) => {
     },
     {
       type: 'plus',
-      onClick: () => onOpenCreateModal(),
+      onClick: () => onOpenCreateModal(null, -1),
       tip: intl.formatMessage({ id: 'iceworks.project.panel.router.button.add' }),
     },
   ];
@@ -265,6 +266,14 @@ const RouterPanel = ({ intl, title, description }) => {
                 <FormattedMessage id="iceworks.project.panel.router.title.component" />
               </strong>
               <strong
+                className={`${styles.titleCol} ${styles.titleMiddle}`}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                <FormattedMessage id="iceworks.project.panel.router.title.redirect" />
+              </strong>
+              <strong
                 className={`${styles.titleCol} ${styles.operater}`}
               >
                 <FormattedMessage id="iceworks.project.panel.router.title.operate" />
@@ -274,14 +283,35 @@ const RouterPanel = ({ intl, title, description }) => {
               return renderCol({
                 item,
                 index,
+                parentIndex: -1,
               });
             })}
           </ul>
-        ) : (
+        ) : (!routerStore.refresh.error && (
           <Message title={<FormattedMessage id="iceworks.project.panel.router.none" />} type="help">
             <FormattedMessage id="iceworks.project.panel.router.prompt.create" />
           </Message>
-        )}
+        ))}
+
+        <ActionStatus
+          store={stores}
+          config={[
+            {
+              storeName: 'routes',
+              actions: [
+                {
+                  actionName: 'refresh',
+                  showLoading: true,
+                  showError: true,
+                },
+                {
+                  actionName: 'bulkCreate',
+                  showError: true,
+                },
+              ],
+            },
+          ]}
+        />
       </div>
     </Panel>
   );

@@ -21,7 +21,7 @@ Panel.defaultProps = {
 
 Panel.propTypes = {
   header: PropTypes.element,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
 export default Panel;

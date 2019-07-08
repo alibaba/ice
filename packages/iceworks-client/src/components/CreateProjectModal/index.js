@@ -19,12 +19,12 @@ const formItemLayout = {
   },
 };
 
-const CreateProjectModal = ({ on, onCancel, onOk }) => {
+const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
   const {
     on: onSelectModal,
     setModal: setSelectModal,
   } = useModal();
-  const [data, setData] = useState({ name: '', path: '', workFolder: '' });
+  const [data, setData] = useState({ name: '', appId: '', changeId: '', path: '', workFolder: '' });
 
   function onSave(values, errors) {
     if (!errors) {
@@ -47,6 +47,20 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
       ...data,
       workFolder: value,
       path: data.name ? await socket.emit('home.system.getPath', [value, data.name]) : value,
+    });
+  }
+
+  async function onAppIdChange(value) {
+    setData({
+      ...data,
+      appId: value,
+    });
+  }
+
+  async function onChangeIdChange(value) {
+    setData({
+      ...data,
+      changeId: value,
     });
   }
 
@@ -102,6 +116,44 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
             className={styles.icon}
           />
         </FormItem>
+
+        {isBiz
+          ? [
+            <FormItem
+              {...formItemLayout}
+              required
+              size="medium"
+              label="应用 appId："
+              className={styles.item}
+              key="appId"
+            >
+              <Input
+                className={styles.input}
+                name="appId"
+                placeholder="请输入应用的 appId"
+                value={data.appId}
+                onChange={onAppIdChange}
+              />
+            </FormItem>,
+            <FormItem
+              {...formItemLayout}
+              required
+              size="medium"
+              label="变更 changeId："
+              className={styles.item}
+              key="changeId"
+            >
+              <Input
+                className={styles.input}
+                name="changeId"
+                placeholder="请输入变更的 changeId"
+                value={data.changeId}
+                onChange={onChangeIdChange}
+              />
+            </FormItem>,
+            ]
+          : null}
+
         <FormItem
           {...formItemLayout}
           required
@@ -133,10 +185,15 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
   );
 };
 
+CreateProjectModal.defaultProps = {
+  isBiz: false,
+};
+
 CreateProjectModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  isBiz: PropTypes.bool,
 };
 
 export default CreateProjectModal;

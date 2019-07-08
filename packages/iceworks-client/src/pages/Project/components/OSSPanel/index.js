@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Input, Select, Message } from '@alifd/next';
+import { Button, Form, Input, Select } from '@alifd/next';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import showMessage from '@utils/showMessage';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import socket from '@src/socket';
@@ -52,12 +53,7 @@ const OSSPanel = ({ intl, title, description }) => {
       const result = await socket.emit('adapter.oss.upload');
       setResults(result);
     } catch (error) {
-      Message.show({
-        align: 'tr tr',
-        type: 'error',
-        title: '上传失败',
-        content: error.message,
-      });
+      showMessage('上传失败');
     }
   }
 
