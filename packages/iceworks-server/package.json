@@ -95,6 +95,9 @@
       "app/view"
     ]
   },
+  "midway-server-options":{
+     "sticky": true
+  },
   "author": "chenbin92",
   "license": "MIT"
 }
