@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import TipIcon from '@components/TipIcon';
 import Modal from '@components/Modal';
-import { Input, Select, Form, Field, Switch } from '@alifd/next';
+import { Input, Select, Form, Field, Switch, Message } from '@alifd/next';
 import path from 'path';
 
 import useWhenValueChanges from '@hooks/useWhenValueChanges';
@@ -56,18 +56,25 @@ const CreateRouterModal = ({
   });
 
   function setDataSource(formValue) {
-    let data = [];
+    let data = [{
+      label: (
+        <span>
+          <FormattedMessage id="iceworks.project.panel.router.form.component.none" />
+        </span>
+      ),
+      value: 0,
+    }];
 
     if (isEdit) {
       if (formValue.children) {
-        data = selectedLayouts;
+        data = data.concat(selectedLayouts);
       } else {
-        data = selectedPages;
+        data = data.concat(selectedPages);
       }
     } else if (parent || !selectRouterGroup) {
-      data = selectedPages;
+      data = data.concat(selectedPages);
     } else {
-      data = selectedLayouts;
+      data = data.concat(selectedLayouts);
     }
     setData(data);
   }
@@ -88,15 +95,42 @@ const CreateRouterModal = ({
     setFormData(value);
   }
 
+  /**
+   * valid form in global
+   *
+   * 1. no path and no component
+   * 2. has redirect and no path
+   * 3. has redirect and component
+   *
+   */
+  function onValidForm(values) {
+    let message = '';
+    if (!values.path && !values.component) {
+      message = formatMessage({ id: 'iceworks.project.panel.router.form.no.path.and.component' });
+    }
+    if (values.redirect && !values.path) {
+      message = formatMessage({ id: 'iceworks.project.panel.router.form.redirect.and.no.path' });
+    }
+    if (values.redirect && values.component) {
+      message = formatMessage({ id: 'iceworks.project.panel.router.form.redirect.and.component' });
+    }
+    return message;
+  }
+
   function onSubmit() {
     field.validate((errors, values) => {
       if (!errors) {
+        const errorMessage = onValidForm(values);
+        if (errorMessage) {
+          return Message.error(errorMessage);
+        }
         const formValue = values;
         const { component } = formValue;
-        if (component) {
-          if (selectRouterGroup) {
-            formValue.children = formValue.children || [];
-          }
+        if (!component) {
+          delete formValue.component;
+        }
+        if (component && selectRouterGroup) {
+          formValue.children = formValue.children || [];
         }
         delete formValue.layoutType;
         onOk({
@@ -104,6 +138,7 @@ const CreateRouterModal = ({
           parent,
         });
       }
+      return null;
     });
   }
 

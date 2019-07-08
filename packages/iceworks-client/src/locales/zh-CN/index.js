@@ -200,6 +200,7 @@ export default {
   'iceworks.project.panel.router.form.path.help': '修改了路径需要手动到导航配置里修改对应的路径',
   'iceworks.project.panel.router.form.path.placeholder': '请填写路径',
   'iceworks.project.panel.router.form.component': '组件',
+  'iceworks.project.panel.router.form.component.none': '无',
   'iceworks.project.panel.router.form.component.placeholder': '请选择组件',
   'iceworks.project.panel.router.form.component.tip': '如果上面选了路由分组，这里的列表是布局(layouts)组件，没选路由分组，这里的列表是组件(pages)组件',
   'iceworks.project.panel.router.form.exact': '是否精确匹配',
@@ -218,6 +219,9 @@ export default {
   'iceworks.project.panel.router.form.redirect.placeholder': '请输入重定向定制',
   'iceworks.project.panel.router.none': '暂无路由',
   'iceworks.project.panel.router.prompt.create': '点击右上方新建路由',
+  'iceworks.project.panel.router.form.no.path.and.component': '没有填路径，必须选择组件',
+  'iceworks.project.panel.router.form.redirect.and.no.path': '填了重定向路径，必须填原路径',
+  'iceworks.project.panel.router.form.redirect.and.component': '填了重定向路径，选了组件不会生效',
 
   // task
   'iceworks.task.title': '工程管理',

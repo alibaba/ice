@@ -200,6 +200,7 @@ export default {
   'iceworks.project.panel.router.form.path.help': 'To modify the path, you need to manually go to the navigation configuration to modify the corresponding path.',
   'iceworks.project.panel.router.form.path.placeholder': 'please enter path',
   'iceworks.project.panel.router.form.component': 'component',
+  'iceworks.project.panel.router.form.component.none': 'none',
   'iceworks.project.panel.router.form.component.placeholder': 'please select component',
   'iceworks.project.panel.router.form.component.tip': 'If the routing group is selected above, the list here is the layouts component, the routing group is not selected, and the list here is the components component',
   'iceworks.project.panel.router.form.exact': 'exact',
@@ -218,6 +219,9 @@ export default {
   'iceworks.project.panel.router.form.redirect.placeholder': 'please enter redirect path',
   'iceworks.project.panel.router.none': 'No router yet',
   'iceworks.project.panel.router.prompt.create': 'Click on the top right to create a new route',
+  'iceworks.project.panel.router.form.no.path.and.component': 'No path is filled in, components must be selected',
+  'iceworks.project.panel.router.form.redirect.and.no.path': 'Fill in the redirect path, must fill in the original path',
+  'iceworks.project.panel.router.form.redirect.and.component': 'Fill in the redirection path, the selected component will not take effect',
 
   // task
   'iceworks.task.title': 'Engineering',
