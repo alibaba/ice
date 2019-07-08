@@ -13,9 +13,9 @@ export default {
   deleteChildRoute(parentChildren, deleteIndex) {
     parentChildren.splice(deleteIndex, 1);
   },
-  /* eslint no-param-reassign: 0 */
   editRoute(parentChildren, editIndex, value) {
-    parentChildren[editIndex] = value;
+    const localChildren = parentChildren;
+    localChildren[editIndex] = value;
   },
   async bulkCreate(args) {
     await socket.emit('adapter.router.bulkCreate', args);
