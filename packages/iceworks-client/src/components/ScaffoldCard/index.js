@@ -13,23 +13,30 @@ const ScaffoldCard = ({ dataSource, onDownload }) => {
   return (
     <div className={styles.scaffold}>
       <div className={styles.body}>
-        {dataSource.isNewlyCreated ? <div className={styles.newly}>NEW</div> : null}
-        {dataSource.screenshots && dataSource.screenshots.length ? (
-          dataSource.screenshots.map((url, key) => {
-            const screenshotStyle = generateStyle(dataSource.screenshots, key);
-            return (
-              <img
-                alt={dataSource.title}
-                src={url || PLACEHOLDER_IMG}
-                style={screenshotStyle}
-                className={styles.screenshotImg}
-                key={key}
-              />
-            );
-          })
-        ) : (
-          <img alt={dataSource.title} src={PLACEHOLDER_IMG} className={styles.screenshotImg} />
-        )}
+        {dataSource.isNewlyCreated ? (
+          <div className={styles.newly}>NEW</div>
+        ) : null}
+        {dataSource.screenshots && dataSource.screenshots.length
+          ? dataSource.screenshots.map((url, key) => {
+              const screenshotStyle = generateStyle(dataSource.screenshots, key);
+              return (
+                <img
+                  alt={dataSource.title}
+                  src={url || PLACEHOLDER_IMG}
+                  style={screenshotStyle}
+                  className={styles.screenshotImg}
+                  key={key}
+                />
+              );
+            })
+          : (
+            <img
+              alt={dataSource.title}
+              src={PLACEHOLDER_IMG}
+              className={styles.screenshotImg}
+            />
+          )
+        }
       </div>
 
       <div className={styles.info}>

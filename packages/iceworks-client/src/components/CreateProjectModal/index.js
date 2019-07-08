@@ -20,7 +20,10 @@ const formItemLayout = {
 };
 
 const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
-  const { on: onSelectModal, setModal: setSelectModal } = useModal();
+  const {
+    on: onSelectModal,
+    setModal: setSelectModal,
+  } = useModal();
   const [data, setData] = useState({ name: '', appId: '', changeId: '', path: '', workFolder: '' });
 
   function onSave(values, errors) {
@@ -75,13 +78,23 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
   // deal with xiaoer scaffold
   const isBzbScaffold = scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold';
   return (
-    <Modal title="填写项目信息" visible={on} onCancel={onCancel} onOk={onSave} footer={false}>
+    <Modal
+      title="填写项目信息"
+      visible={on}
+      onCancel={onCancel}
+      onOk={onSave}
+      footer={false}
+    >
       <SelectWorkFolderModal
         on={onSelectModal}
         onCancel={() => setSelectModal(false)}
         onOk={onPathChange}
       />
-      <Form size="small" labelAlign="top" className={styles.form}>
+      <Form
+        size="small"
+        labelAlign="top"
+        className={styles.form}
+      >
         <FormItem
           {...formItemLayout}
           required
@@ -99,7 +112,11 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
             value={data.path}
             disabled
           />
-          <Icon type="folderopen" size="large" className={styles.icon} />
+          <Icon
+            type="folderopen"
+            size="large"
+            className={styles.icon}
+          />
         </FormItem>
 
         {isBzbScaffold
