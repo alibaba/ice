@@ -176,7 +176,7 @@ const Material = ({ history, intl }) => {
   return (
     <div className={styles.materialPage}>
       <CreateProjectModal
-        isBiz={scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold'}
+        isBiz={scaffold && scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold'}
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProject}
