@@ -132,6 +132,7 @@ function generateMaterialsData(files, targetDir, type, options) {
 
     const materialConfig = pkg[`${type}Config`] || {};
     const unpkgHost = options.unpkg || getUnpkgHost(pkg.name);
+    const materialType = options.type;
 
     // 兼容 snapshot 字段
     const screenshot = materialConfig.screenshot
@@ -164,6 +165,9 @@ function generateMaterialsData(files, targetDir, type, options) {
       screenshot,
       screenshots: materialConfig.screenshots || (screenshot && [screenshot]),
       builder: materialConfig.builder,
+      iceworks: {
+        type: materialType,
+      },
       ...i18nData,
       // 支持用户自定义的配置
       // customConfig: materialConfig.customConfig || null,

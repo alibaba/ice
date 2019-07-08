@@ -20,6 +20,10 @@ const authorSchema = createSchema((joi) => [joi.string().allow(''), joi.object()
   email: joi.string().email(),
 }).unknown()]);
 
+const iceworksSchema = createSchema((joi) => joi.object().keys({
+  type: joi.string(),
+}));
+
 const componentSchema = createSchema((joi) => joi.object().keys({
   name: joi.string().required(), // （必选）名称
   title: joi.string().required(),
@@ -34,6 +38,7 @@ const componentSchema = createSchema((joi) => joi.object().keys({
     registry: joi.string().uri().required(), // （必选）npm 源
     author: authorSchema, // （可选）作者信息
   }),
+  iceworks: iceworksSchema,
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
   updateTime: joi.string().isoDate().required(), // （必选）最后更新时间
@@ -59,6 +64,7 @@ const blockSchema = createSchema((joi) => joi.object().keys({
   features: joi.object().keys({ // （可选）区块使用的功能
     useComponents: joi.array(), // （可选）区块使用到的组件
   }),
+  iceworks: iceworksSchema,
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
   updateTime: joi.string().isoDate().required(), // （必选）最后更新时间
@@ -78,6 +84,7 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
     registry: joi.string().uri().required(), // （必选）npm 源
     author: authorSchema, // （可选）作者信息
   }),
+  iceworks: iceworksSchema,
   screenshot: joi.string().uri().required(), // （必选）截图
   screenshots: joi.array().items(joi.string().uri()).required(), // （必选）站点模板预览需要多张截图
   builder: joi.string().required(), // （必选）模板构建方式
