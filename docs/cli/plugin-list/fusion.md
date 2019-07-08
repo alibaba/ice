@@ -52,7 +52,9 @@ module.exports = {
 }
 ```
 
-### 多主题配置 `0.1.7新增`
+### 多主题配置
+
+> 多主题能力在版本 0.1.7 及更高版本中支持，建议安装最新版本 `npm install ice-plugin-fusion@lastest` 
 
 多主题常规的实现思路可以分为两步：
 
