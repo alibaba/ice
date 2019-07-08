@@ -19,7 +19,7 @@ const formItemLayout = {
   },
 };
 
-const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
+const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
   const {
     on: onSelectModal,
     setModal: setSelectModal,
@@ -75,8 +75,6 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
     })();
   }, []);
 
-  // deal with xiaoer scaffold
-  const isBzbScaffold = scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold';
   return (
     <Modal
       title="填写项目信息"
@@ -119,7 +117,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
           />
         </FormItem>
 
-        {isBzbScaffold
+        {isBiz
           ? [
             <FormItem
               {...formItemLayout}
@@ -188,14 +186,14 @@ const CreateProjectModal = ({ on, onCancel, onOk, scaffold }) => {
 };
 
 CreateProjectModal.defaultProps = {
-  scaffold: {},
+  isBiz: false,
 };
 
 CreateProjectModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
-  scaffold: PropTypes.object,
+  isBiz: PropTypes.bool,
 };
 
 export default CreateProjectModal;

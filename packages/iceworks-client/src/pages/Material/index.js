@@ -21,6 +21,7 @@ const DEFAULT_CATEGORY = '全部';
 const Material = ({ history, intl }) => {
   const [material] = stores.useStores(['material']);
   const {
+    scaffold,
     onCreateProjectModal,
     setCreateProjectModal,
     onCreateProject: onOriginCreateProject,
@@ -46,7 +47,6 @@ const Material = ({ history, intl }) => {
   const [type, setType] = useState('scaffolds');
   const [currentCategory, setCurrentCategory] = useState(DEFAULT_CATEGORY);
   const [component, setComponent] = useState({});
-  const [scaffold, setScaffold] = useState({});
 
   async function setCurrent(source) {
     await material.setCurrentSource(source);
@@ -133,7 +133,6 @@ const Material = ({ history, intl }) => {
           onCategoryChange={handleCategoryChange}
           onUse={(scaffoldData) => {
             setCreateProjectModal(true, scaffoldData);
-            setScaffold(scaffoldData);
           }}
         />
       ),
@@ -177,7 +176,7 @@ const Material = ({ history, intl }) => {
   return (
     <div className={styles.materialPage}>
       <CreateProjectModal
-        scaffold={scaffold}
+        isBiz={scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold'}
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProject}
