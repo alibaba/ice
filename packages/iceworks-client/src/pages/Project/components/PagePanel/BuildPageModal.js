@@ -27,7 +27,11 @@ const DEFAULT_CATEGORY = '全部';
 const MaterialSelect = ({ resources, onSelect }) => {
   const resource = resources[0];
   const [data, setData] = useState({
-    categories: [], materials: { }, category: DEFAULT_CATEGORY, source: resource.source, isLoading: false,
+    categories: [],
+    materials: { },
+    category: DEFAULT_CATEGORY,
+    source: resource.source,
+    isLoading: false,
   });
   const { categories = [], materials = {}, category, source, isLoading } = data;
 
