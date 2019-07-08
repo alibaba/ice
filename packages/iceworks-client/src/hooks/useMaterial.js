@@ -1,6 +1,6 @@
 import useModal from '@hooks/useModal';
 import { useState } from 'react';
-import { Message } from '@alifd/next';
+import showMessage from '@utils/showMessage';
 
 function useMaterial(visible = false, materialStore) {
   const {
@@ -32,12 +32,7 @@ function useMaterial(visible = false, materialStore) {
       await materialStore.addMaterial(url, name);
       setMaterialModal(false);
     } catch (err) {
-      Message.show({
-        align: 'tr tr',
-        type: 'error',
-        title: '添加物料失败',
-        content: err.message,
-      });
+      showMessage('添加物料失败');
     }
     setAddMaterialLoading(false);
   }
@@ -50,12 +45,7 @@ function useMaterial(visible = false, materialStore) {
       await materialStore.deleteMaterial(source);
       setDeleteMaterialModal(false);
     } catch (err) {
-      Message.show({
-        align: 'tr tr',
-        type: 'error',
-        title: '删除物料失败',
-        content: err.message,
-      });
+      showMessage('删除物料失败');
     }
     setDeleteMaterialLoading(false);
   }

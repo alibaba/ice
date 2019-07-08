@@ -31,7 +31,7 @@
     "junk": "^3.1.0",
     "kebab-case": "^1.0.0",
     "latest-version": "^5.1.0",
-    "launch-editor": "^2.2.1",
+    "launch-code-editor": "^0.1.0",
     "line-by-line": "^0.1.6",
     "lodash": "^4.17.11",
     "midway": "^1.5.6",

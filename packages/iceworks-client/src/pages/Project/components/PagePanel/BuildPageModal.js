@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Select, Input, Message } from '@alifd/next';
+import { Select, Input, Loading } from '@alifd/next';
 import uniqBy from 'lodash.uniqby';
 import cx from 'classnames';
 import socket from '@src/socket';
@@ -9,6 +9,8 @@ import stores from '@stores';
 import Modal from '@components/Modal';
 import Icon from '@components/Icon';
 import BlockCard from '@components/BlockCard';
+import ActionStatus from '@components/ActionStatus';
+import showMessage from '@utils/showMessage';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import {
@@ -25,14 +27,25 @@ const DEFAULT_CATEGORY = '全部';
 const MaterialSelect = ({ resources, onSelect }) => {
   const resource = resources[0];
   const [data, setData] = useState({
-    categories: [], materials: { }, category: DEFAULT_CATEGORY, source: resource.source,
+    categories: [],
+    materials: { },
+    category: DEFAULT_CATEGORY,
+    source: resource.source,
+    isLoading: false,
   });
-  const { categories = [], materials = {}, category, source } = data;
+  const { categories = [], materials = {}, category, source, isLoading } = data;
 
   function onSetCateogry(setName) {
     setData({
       ...data,
       category: setName,
+    });
+  }
+
+  function setLoading(value) {
+    setData({
+      ...data,
+      isLoading: value,
     });
   }
 
@@ -42,21 +55,25 @@ const MaterialSelect = ({ resources, onSelect }) => {
   }
 
   async function onSourceChange(value) {
+    setLoading(true);
     const blocks = await fetchMaterialBlocks(value);
     setData({
       ...data,
       ...blocks,
       category: DEFAULT_CATEGORY,
       source: value,
+      isLoading: false,
     });
   }
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const blocks = await fetchMaterialBlocks(source);
       setData({
         ...data,
         ...blocks,
+        isLoading: false,
       });
     })();
   }, []);
@@ -78,7 +95,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
           onChange={onSourceChange}
         />
       </div>
-      <div className={styles.main}>
+      <Loading visible={isLoading} className={styles.main}>
         <div className={styles.materials}>
           {
             categoryMaterials.map((dataSource, index) => {
@@ -115,7 +132,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
             </div> :
             null
         }
-      </div>
+      </Loading>
     </div>
   );
 };
@@ -202,11 +219,7 @@ const BuildPageModal = ({
     // check name
     const hasSameName = uniqBy(selectedBlocks, 'name').length !== selectedBlocks.length;
     if (hasSameName) {
-      Message.show({
-        type: 'error',
-        content: intl.formatMessage({ id: 'iceworks.project.panel.page.create.error.name.content' }),
-        align: 'tr tr',
-      });
+      showMessage(intl.formatMessage({ id: 'iceworks.project.panel.page.create.error.name.content' }));
       return;
     }
 
@@ -303,13 +316,28 @@ const BuildPageModal = ({
           </div>
           <div className={styles.material}>
             {
-              materialSources.length ?
+              !material.getResources.error && materialSources.length ?
                 <MaterialSelect
                   resources={materialSources}
                   onSelect={onSelect}
                 /> :
                 null
             }
+            <ActionStatus
+              store={stores}
+              config={[
+                {
+                  storeName: 'material',
+                  actions: [
+                    {
+                      actionName: 'getResources',
+                      showLoading: true,
+                      showError: true,
+                    },
+                  ],
+                },
+              ]}
+            />
           </div>
         </div>
       </Modal>,

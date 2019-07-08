@@ -28,7 +28,9 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
       title="打开项目"
       visible={on}
       onCancel={onCancel}
-      onOk={() => onOk(workPath)}
+      onOk={async () => {
+        await onOk(workPath);
+      }}
     >
       <div className={styles.wrap}>
         <div className={styles.bar}>

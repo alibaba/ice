@@ -116,6 +116,7 @@
   .material {
     width: 400px;
     margin-left: 24px;
+    position: relative;
   }
 }
 
@@ -145,8 +146,14 @@
   .main {
     flex: 1;
     display: flex;
-    flex-direction: row;
     overflow: hidden;
+
+    :global {
+      .next-loading-wrap {
+        display: flex;
+        flex-direction: row;
+      }
+    }
 
     .categories {
       width: 100px;

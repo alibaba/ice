@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Message, Balloon } from '@alifd/next';
+import { Balloon } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -9,6 +9,7 @@ import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import useTermTheme from '@hooks/useTermTheme';
 import stores from '@stores';
+import showMessage from '@utils/showMessage';
 import { THEMES } from '@src/appConfig';
 import goldlog from '@utils/goldlog';
 import styles from './index.module.scss';
@@ -32,12 +33,7 @@ const GlobalBar = ({ project, intl }) => {
         action: 'open-folder',
       });
     } catch (error) {
-      Message.show({
-        type: 'error',
-        align: 'tr tr',
-        title: '提示',
-        content: error.message,
-      });
+      showMessage(error);
     }
   }
 
@@ -50,12 +46,7 @@ const GlobalBar = ({ project, intl }) => {
         action: 'open-editor',
       });
     } catch (error) {
-      Message.show({
-        type: 'error',
-        align: 'tr tr',
-        title: '提示',
-        content: error.message,
-      });
+      showMessage(error);
     }
   }
 
@@ -63,10 +54,6 @@ const GlobalBar = ({ project, intl }) => {
     const currentTheme = (theme === THEMES.dark.themePackage)
       ? THEMES.light.themePackage
       : THEMES.dark.themePackage;
-    await socket.emit('home.setting.setTheme', { theme: currentTheme });
-
-    // set app theme
-    setTheme(currentTheme);
 
     goldlog({
       namespace: 'home',
@@ -76,6 +63,14 @@ const GlobalBar = ({ project, intl }) => {
         theme: currentTheme,
       },
     });
+
+    try {
+      await socket.emit('home.setting.setTheme', { theme: currentTheme });
+      // set app theme
+      setTheme(currentTheme);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   function onClose() {
@@ -84,12 +79,7 @@ const GlobalBar = ({ project, intl }) => {
 
   useSocket('home.system.open.editor.data', (data) => {
     if (data) {
-      Message.show({
-        type: 'error',
-        align: 'tr tr',
-        title: '提示',
-        content: '打开编辑器失败',
-      });
+      showMessage('打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中');
     }
   });
 

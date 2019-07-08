@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import showMessage from '@utils/showMessage';
 import NavigationBar from '@components/NavigationBar';
 import SubRoutes from '@components/SubRoutes';
 import ConnectModal from '@components/ConnectModal';
@@ -12,16 +13,27 @@ import styles from './index.module.scss';
 const MainLayout = () => {
   const [project, user] = stores.useStores(['project', 'user']);
 
-  useEffect(() => {
-    project.refresh();
-    if (appConfig.isAliInternal) {
-      user.refresh();
+  async function onInit() {
+    try {
+      await project.refresh();
+      if (appConfig.isAliInternal) {
+        await user.refresh();
+      }
+    } catch (error) {
+      showMessage(error);
     }
-  }, []);
-
-  async function onLogin(data) {
-    await user.login(data);
   }
+  async function onLogin(data) {
+    try {
+      await user.login(data);
+    } catch (error) {
+      showMessage(error);
+    }
+  }
+
+  useEffect(() => {
+    onInit();
+  }, []);
 
   return (
     <div className={styles.container}>
