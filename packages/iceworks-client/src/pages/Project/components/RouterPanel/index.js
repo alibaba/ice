@@ -157,7 +157,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     type="plus"
                     size="xs"
                     className={styles.icon}
-                    onClick={() => onOpenCreateModal(parent, index)}
+                    onClick={() => onOpenCreateModal(item, index)}
                   />
                 )}
                 align="b"
@@ -193,7 +193,7 @@ const RouterPanel = ({ intl, title, description }) => {
                     index,
                     parent,
                     current: item,
-                    parentIndex
+                    parentIndex,
                   })}
                 />
               )}
