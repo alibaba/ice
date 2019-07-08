@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
-import { Message } from '@alifd/next';
 import logger from '@utils/logger';
+import showMessage from '@utils/showMessage';
 import appConfig from '@src/appConfig';
 import styles from './index.module.scss';
 
@@ -19,11 +19,7 @@ function UserLoginModal({ on, onCancel, onOk }) {
       if (user) {
         await onOk(user);
       } else {
-        Message.show({
-          align: 'tr tr',
-          type: 'error',
-          content: '登录失败！',
-        });
+        showMessage('登录失败！');
       }
     }
   }

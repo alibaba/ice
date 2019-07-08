@@ -2,12 +2,12 @@ import stores from '@stores';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import { useState } from 'react';
-import { Message } from '@alifd/next';
 import writeGlobalLog from '@utils/writeGlobalLog';
+import showMessage from '@utils/showMessage';
 
 export const STATUS_RESETING = 'reseting';
 
-function useDependency() {
+function useDependency(diableUseSocket) {
   const {
     on: onCreateModal,
     setModal: setCreateModal,
@@ -70,67 +70,40 @@ function useDependency() {
     globalTerminalStore.show();
   }
 
-  useSocket('adapter.dependency.reset.data', writeGlobalLog);
+  if (!diableUseSocket) {
+    useSocket('adapter.dependency.reset.data', writeGlobalLog);
 
-  useSocket('adapter.dependency.reset.exit', (code) => {
-    if (code === 0) {
-      Message.show({
-        align: 'tr tr',
-        type: 'success',
-        content: '项目依赖安装成功',
-      });
-      dependenciesStore.refresh();
-    } else {
-      Message.error({
-        align: 'tr tr',
-        type: 'error',
-        title: '项目依赖安装失败',
-        content: '请查看控制台日志输出',
-      });
-    }
-  });
+    useSocket('adapter.dependency.reset.exit', (code) => {
+      if (code === 0) {
+        showMessage('项目依赖安装成功', 'success');
+        dependenciesStore.refresh();
+      } else {
+        showMessage('项目依赖安装失败，请查看控制台日志输出');
+      }
+    });
 
-  useSocket('adapter.dependency.upgrade.data', writeGlobalLog);
+    useSocket('adapter.dependency.upgrade.data', writeGlobalLog);
 
-  useSocket('adapter.dependency.upgrade.exit', (code) => {
-    if (code === 0) {
-      Message.show({
-        align: 'tr tr',
-        type: 'success',
-        title: '项目依赖更新成功',
-        content: '依赖列表已经刷新',
-      });
-      dependenciesStore.refresh();
-    } else {
-      Message.error({
-        align: 'tr tr',
-        type: 'error',
-        title: '项目依赖更新失败',
-        content: '请查看控制台日志输出',
-      });
-    }
-  });
+    useSocket('adapter.dependency.upgrade.exit', (code) => {
+      if (code === 0) {
+        showMessage('项目依赖更新成功', 'success');
+        dependenciesStore.refresh();
+      } else {
+        showMessage('项目依赖更新失败，请查看控制台日志输出');
+      }
+    });
 
-  useSocket('adapter.dependency.install.data', writeGlobalLog);
+    useSocket('adapter.dependency.install.data', writeGlobalLog);
 
-  useSocket('adapter.dependency.install.exit', (code) => {
-    if (code === 0) {
-      Message.show({
-        align: 'tr tr',
-        type: 'success',
-        title: '项目依赖安装成功',
-        content: '依赖列表已经刷新',
-      });
-      dependenciesStore.refresh();
-    } else {
-      Message.show({
-        align: 'tr tr',
-        type: 'error',
-        title: '项目依赖安装失败',
-        content: '请查看控制台日志输出',
-      });
-    }
-  });
+    useSocket('adapter.dependency.install.exit', (code) => {
+      if (code === 0) {
+        showMessage('项目依赖安装成功', 'success');
+        dependenciesStore.refresh();
+      } else {
+        showMessage('项目依赖安装失败，请查看控制台日志输出');
+      }
+    });
+  }
 
   const { setDependencies, incompatibleDependencies = [] } = createValues;
   const incompatibleDependencyText = incompatibleDependencies.map(({ pacakge: packageName, version }) => `${packageName}@${version}`).join(',');

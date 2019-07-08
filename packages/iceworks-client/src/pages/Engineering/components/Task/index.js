@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Message } from '@alifd/next';
+import showMessage from '@utils/showMessage';
 import useModal from '@hooks/useModal';
 import useTask from '@hooks/useTask';
 import useTermTheme from '@hooks/useTermTheme';
@@ -12,17 +12,8 @@ import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
-import TaskModal from '../../components/TaskModal';
+import TaskModal from '../TaskModal';
 import styles from './index.module.scss';
-
-function showMessage(message, type) {
-  Message.show({
-    type: type || 'error',
-    title: 'Message',
-    content: message || 'Plase try again',
-    align: 'tr tr',
-  });
-}
 
 function getType(pathname) {
   if (!pathname) {
@@ -86,19 +77,9 @@ const Task = ({ history, intl }) => {
 
     try {
       await taskStore.setConf(type, params);
-      Message.show({
-        type: 'success',
-        title: '提示',
-        content: '配置修改成功',
-        align: 'tr tr',
-      });
+      showMessage('配置修改成功', 'success');
     } catch (error) {
-      Message.show({
-        type: 'error',
-        title: '提示',
-        content: error.message,
-        align: 'tr tr',
-      });
+      showMessage(error);
     }
   }
 
