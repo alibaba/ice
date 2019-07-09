@@ -5,7 +5,7 @@ const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
 const getTemplate = require('../utils/template');
-const addMaterial = require('./add');
+const addMaterial = require('./material/add');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 

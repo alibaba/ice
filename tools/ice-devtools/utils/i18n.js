@@ -59,9 +59,9 @@ function parseI18NString(i18nStr) {
 
     if (!match) {
       if (cnReg.test(str)) {
-        local.zh_CN = str.trim();
+        local['zh-CN'] = str.trim();
       } else {
-        local.en_US = str.trim();
+        local['en-US'] = str.trim();
       }
       return;
     }
