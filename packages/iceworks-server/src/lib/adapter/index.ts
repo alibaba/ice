@@ -12,6 +12,14 @@ import OSS from './modules/oss';
 import Todo from './modules/todo';
 import { II18n } from '../../interface';
 
+import * as zhCN from './locales/zh-CN.json';
+import * as enUS from './locales/en-US.json';
+
+export const locales = {
+  zhCN,
+  enUS,
+};
+
 export const baseModules = {
   Page,
   Dependency,
