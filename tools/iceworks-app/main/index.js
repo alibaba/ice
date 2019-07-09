@@ -1,13 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 const address = require('address');
-const {spawn} = require('child_process');
+const { spawn } = require('child_process');
 const path = require('path');
 const detectPort = require('detect-port');
 // const is = require('electron-is');
 
 let mainWindow;
 let serverProcess;
-let setPort = '7001';
+const setPort = '7001';
 
 const isProduction = true; // is.production();
 const ip = address.ip();
@@ -26,28 +26,28 @@ function createWindow() {
     mainWindow = null;
   });
 
-    mainWindow.loadFile(startLoadingHTML);
+  mainWindow.loadFile(startLoadingHTML);
 
-    serverProcess = spawn('node', ['start_server.js']);
-    serverProcess.stdout.on('data', (buffer) => {
-      const logInfo = buffer.toString();
-      console.log(logInfo);
-      if (logInfo.search('midway started on') > 0) {
-        mainWindow.loadURL('http://localhost:7001/');
-      }
-    });
+  serverProcess = spawn('node', ['start_server.js']);
+  serverProcess.stdout.on('data', (buffer) => {
+    const logInfo = buffer.toString();
+    console.log(logInfo);
+    if (logInfo.search('midway started on') > 0) {
+      mainWindow.loadURL('http://localhost:7001/');
+    }
+  });
 
-    serverProcess.stderr.on('data', (buffer) => {
-      console.error(buffer.toString());
+  serverProcess.stderr.on('data', (buffer) => {
+    console.error(buffer.toString());
+    mainWindow.loadFile(errorLoadingHTML);
+  });
+
+  serverProcess.on('close', (code) => {
+    if (code != 0) {
+      serverProcess = null;
       mainWindow.loadFile(errorLoadingHTML);
-    });
-
-    serverProcess.on('close', (code) => {
-      if (code != 0) {
-        serverProcess = null;
-        mainWindow.loadFile(errorLoadingHTML);
-      }
-    });
+    }
+  });
 }
 
 app.on('ready', createWindow);
