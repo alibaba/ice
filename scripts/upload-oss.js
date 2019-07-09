@@ -38,18 +38,20 @@ function uploadAssetsToOSS(fromPath, toPath, globPatterns) {
   });
 }
 
+// 同步文档静态资源
 if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
-  // 同步文档静态资源
   const docsFromPath = path.join(cwd, 'build');
   const docsToPath = branch === 'production' ? 'assets' : 'pre-assets';
   uploadAssetsToOSS(docsFromPath, docsToPath, '*.json');
-
-  // 同步 iceworks-client 静态资源
-  const clientFromPath = path.join(cwd, 'packages', 'iceworks-client', 'build');
-  const clientToPath = branch === 'production' ? 'iceworks-client/assets' : 'iceworks-client/pre-assets';
-  uploadAssetsToOSS(clientFromPath, clientToPath, '*/**');
 } else {
   console.log('当前分支非 master/docs*, 不执行文档同步脚本');
   console.log(`TRAVIS_BRANCH=${branch}`);
   process.exit(0);
+}
+
+// 同步 iceworks-client 静态资源
+if (['master'].indexOf(branch) !== -1) {
+  const clientFromPath = path.join(cwd, 'packages', 'iceworks-client', 'build');
+  const clientToPath = 'iceworks-client/assets';
+  uploadAssetsToOSS(clientFromPath, clientToPath, '*/**');
 }
