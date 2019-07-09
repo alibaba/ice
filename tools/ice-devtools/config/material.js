@@ -47,9 +47,9 @@ function nameQuestion(type, npmPrefix) {
   };
 }
 
-module.exports = (npmPrefix) => ({
-  component: {
-    prompts: [
+function getQuestions(npmPrefix) {
+  return {
+    component: [
       {
         type: 'confirm',
         name: 'adaptor',
@@ -100,10 +100,7 @@ module.exports = (npmPrefix) => ({
         },
       },
     ],
-    categories: COMPONENT_CATEGORIES,
-  },
-  block: {
-    prompts: [
+    block: [
       nameQuestion('block', npmPrefix),
       {
         type: 'input',
@@ -154,10 +151,7 @@ module.exports = (npmPrefix) => ({
         },
       },
     ],
-    categories: BLOCK_CATEGORIES,
-  },
-  scaffold: {
-    prompts: [
+    scaffold: [
       nameQuestion('scaffold', npmPrefix),
       {
         type: 'input',
@@ -193,5 +187,16 @@ module.exports = (npmPrefix) => ({
         },
       },
     ],
-  },
-});
+  };
+}
+
+function getCategories() {
+  return {
+    component: COMPONENT_CATEGORIES,
+    block: BLOCK_CATEGORIES,
+    scaffold: [],
+  };
+}
+
+module.exports = { getQuestions, getCategories };
+

@@ -123,9 +123,8 @@ function gather(pattern, targetDir, type, options) {
  * @param {*} files
  * @param {*} targetDir target directory
  * @param {String} type block or react
- * @param {Object} options material options
  */
-function generateMaterialsData(files, targetDir, type, options) {
+function generateMaterialsData(files, targetDir, type) {
   /**
    * 构造每个物料的数据：
    *  - 读取 package.json 数据
@@ -136,7 +135,6 @@ function generateMaterialsData(files, targetDir, type, options) {
 
     const materialConfig = pkg[`${type}Config`] || {};
     const unpkgHost = getUnpkgHost(pkg.name);
-    const materialType = options.type;
 
     // 兼容 snapshot 字段
     const screenshot = materialConfig.screenshot
@@ -156,7 +154,8 @@ function generateMaterialsData(files, targetDir, type, options) {
       title: i18nData['zh-CN'].title || i18nData['en-US'].title,
       description: i18nData['zh-CN'].description || i18nData['en-US'].description,
       homepage: pkg.homepage || `${unpkgHost}/${pkg.name}@${pkg.version}/build/index.html`,
-      categories: [],
+      // TODO: 老物料展示依赖 categories，下个版本删除
+      categories: materialConfig.categories || [],
       category: materialConfig.category,
       repository: (pkg.repository && pkg.repository.url) || pkg.repository,
       source: {
@@ -170,16 +169,13 @@ function generateMaterialsData(files, targetDir, type, options) {
       screenshot,
       screenshots: materialConfig.screenshots || (screenshot && [screenshot]),
       builder: materialConfig.builder,
-      // TODO: 和思忠确认下，建议不要
-      iceworks: {
-        type: materialType,
-      },
       ...i18nData,
       // 支持用户自定义的配置
       // customConfig: materialConfig.customConfig || null,
     };
 
     if (type === 'block') {
+      // TODO: iceworks 2.x 依赖该字段，下个版本删除
       payload.source.sourceCodeDirectory = 'src/';
     }
 

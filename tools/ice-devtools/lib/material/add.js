@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const path = require('path');
 const fse = require('fs-extra');
-const getConfig = require('../../config/material');
+const { getQuestions } = require('../../config/material');
 const boxenLog = require('../../utils/boxen-log');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const templateRender = require('../../utils/template-render');
@@ -16,9 +16,9 @@ module.exports = async function addMaterial(cwd, opts = {}) {
     materialConfig,
   } = opts;
 
-  const addConfig = getConfig(npmPrefix);
+  const questions = getQuestions(npmPrefix);
 
-  const answers = await (inquirer.prompt(addConfig[type].prompts));
+  const answers = await (inquirer.prompt(questions[type]));
 
   const name = answers.name;
   const npmName = generateNpmNameByPrefix(name, npmPrefix);

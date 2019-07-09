@@ -1,7 +1,7 @@
 const Joi = require('@hapi/joi');
-const componentCaterories = require('../lib/component/meta').categories;
-const blockCaterories = require('../lib/block/meta').categories;
+const getCategories = require('../config/material').getCategories;
 
+const categories = getCategories();
 const createSchema = ((fn) => fn(Joi));
 
 const validate = (obj, schema) => {
@@ -20,17 +20,13 @@ const authorSchema = createSchema((joi) => [joi.string().allow(''), joi.object()
   email: joi.string().email(),
 }).unknown()]);
 
-const iceworksSchema = createSchema((joi) => joi.object().keys({
-  type: joi.string(),
-}));
-
 const componentSchema = createSchema((joi) => joi.object().keys({
   name: joi.string().required(), // （必选）名称
   title: joi.string().required(),
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
-  categories: joi.array().items(joi.string().only([...componentCaterories])), // （必选）分类
-  category: joi.string().only([...componentCaterories]), // （必选）分类
+  categories: joi.array().items(joi.string().only([...categories.component])), // （必选）分类
+  category: joi.string().only([...categories.component]), // （必选）分类
   repository: joi.string().uri(), // （可选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -39,7 +35,6 @@ const componentSchema = createSchema((joi) => joi.object().keys({
     registry: joi.string().uri().required(), // （必选）npm 源
     author: authorSchema, // （可选）作者信息
   }),
-  iceworks: iceworksSchema,
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
   updateTime: joi.string().isoDate().required(), // （必选）最后更新时间
@@ -50,8 +45,8 @@ const blockSchema = createSchema((joi) => joi.object().keys({
   title: joi.string().required(),
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
-  categories: joi.array().items(joi.string().only([...blockCaterories])), // （必选）分类
-  category: joi.string().only([...blockCaterories]), // （必选）分类
+  categories: joi.array().items(joi.string().only([...categories.block])), // （必选）分类
+  category: joi.string().only([...categories.block]), // （必选）分类
   repository: joi.string().uri().required(), // （必选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -63,10 +58,6 @@ const blockSchema = createSchema((joi) => joi.object().keys({
   }),
   screenshot: joi.string().uri().required(), // （必选）截图
   screenshots: joi.array().items(joi.string().uri()), // （可选）多张截图
-  features: joi.object().keys({ // （可选）区块使用的功能
-    useComponents: joi.array(), // （可选）区块使用到的组件
-  }),
-  iceworks: iceworksSchema,
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
   updateTime: joi.string().isoDate().required(), // （必选）最后更新时间
@@ -86,7 +77,6 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
     registry: joi.string().uri().required(), // （必选）npm 源
     author: authorSchema, // （可选）作者信息
   }),
-  iceworks: iceworksSchema,
   screenshot: joi.string().uri().required(), // （必选）截图
   screenshots: joi.array().items(joi.string().uri()).required(), // （必选）站点模板预览需要多张截图
   builder: joi.string().required(), // （必选）模板构建方式
