@@ -1,5 +1,5 @@
 /**
- * 将站点文档和 iceworks-client 静态资源上传到 oss
+ *  将 build/docs.json 上传到 oss
  */
 const oss = require('ali-oss');
 const path = require('path');
