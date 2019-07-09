@@ -16,13 +16,14 @@
   "scripts": {
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
-    "screenshot": "ice-devtools screenshot",
+    "screenshot": "screenshot -l -s \\#mountNode",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
     "ice-plugin-fusion": "^0.1.4",
     "ice-scripts": "^2.0.0",
     "react": "^16.3.0",
@@ -31,6 +32,6 @@
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "category": "<%= category %>"
   }
 }

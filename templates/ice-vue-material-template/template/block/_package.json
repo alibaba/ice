@@ -18,13 +18,14 @@
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "screenshot": "ice-devtools screenshot",
+    "screenshot": "screenshot -l \\#mountNode",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
     "vue": "^2.5.16"
   },
   "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
@@ -50,7 +51,6 @@
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>,
-    "screenshot": ""
+    "category": "<%= category %>"
   }
 }

@@ -20,9 +20,11 @@
     "_gitignore",
     ".editorconfig",
     ".eslintignore",
-    ".eslintrc"
+    ".eslintrc",
+    "screenshot.png"
   ],
   "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
     "babel-eslint": "^8.0.3",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
@@ -37,16 +39,13 @@
   "scripts": {
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
-    "screenshot": "ice-devtools screenshot",
+    "screenshot": "screenshot -l",
     "prepublishOnly": "npm run build && npm run screenshot",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "<%= npmName %>",
-    "title": "<%= title %>",
-    "categories": [
-      "基础模板"
-    ]
+    "title": "<%= title %>"
   }
 }

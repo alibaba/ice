@@ -6,14 +6,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
-    "screenshot": "ice-devtools screenshot",
+    "screenshot": "screenshot -l -s \\#mountNode",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "keywords": ["ice", "angular", "block"],
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "category": "<%= category %>"
   },
   "dependencies": {
     "@angular/animations": "~7.2.0",
@@ -37,6 +37,7 @@
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@ice/screenshot": "^0.1.1",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
