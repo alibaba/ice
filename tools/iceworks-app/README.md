@@ -8,7 +8,7 @@
     $ npm install
     $ npm run build
     $ cd ../../tools/iceworks-app
-    $ ln -s ../../pacakges/iceworks-server server    
+    $ ln -s ../../packages/iceworks-server server    
     ```
 0. Start icewroks app:
     ```bash

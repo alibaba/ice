@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const address = require('address');
-const execa = require('execa');
+const {spawn} = require('child_process');
 const path = require('path');
 const detectPort = require('detect-port');
 // const is = require('electron-is');
@@ -26,49 +26,28 @@ function createWindow() {
     mainWindow = null;
   });
 
-  if (isProduction && !serverProcess) {
-    (async () => {
-      mainWindow.loadFile(startLoadingHTML);
+    mainWindow.loadFile(startLoadingHTML);
 
-      try {
-        await execa('npm', ['stop'], { cwd: serverDir });
-      } catch (error) {
-        console.warn(error);
+    serverProcess = spawn('node', ['start_server.js']);
+    serverProcess.stdout.on('data', (buffer) => {
+      const logInfo = buffer.toString();
+      console.log(logInfo);
+      if (logInfo.search('midway started on') > 0) {
+        mainWindow.loadURL('http://localhost:7001/');
       }
+    });
 
-      setPort = await detectPort(setPort);
-      serverProcess = execa('npm', ['start'], {
-        cwd: serverDir,
-        env: {
-          PORT: setPort,
-        },
-      });
+    serverProcess.stderr.on('data', (buffer) => {
+      console.error(buffer.toString());
+      mainWindow.loadFile(errorLoadingHTML);
+    });
 
-      serverProcess.stdout.on('data', (buffer) => {
-        const logInfo = buffer.toString();
-        console.log(logInfo);
-        if (logInfo.search('midway started on') > 0) {
-          mainWindow.loadURL(getServerUrl());
-        }
-      });
-
-      serverProcess.on('error', (buffer) => {
-        console.error(buffer.toString());
+    serverProcess.on('close', (code) => {
+      if (code != 0) {
+        serverProcess = null;
         mainWindow.loadFile(errorLoadingHTML);
-      });
-
-      serverProcess.on('exit', (code) => {
-        if (code === 0) {
-          mainWindow.loadURL(getServerUrl());
-        } else {
-          serverProcess = null;
-          mainWindow.loadFile(errorLoadingHTML);
-        }
-      });
-    })();
-  } else {
-    mainWindow.loadURL(getServerUrl());
-  }
+      }
+    });
 }
 
 app.on('ready', createWindow);
@@ -78,27 +57,7 @@ app.on('before-quit', (event) => {
     event.preventDefault();
 
     mainWindow.loadFile(stopLoadingHTML);
-
-    const stopProcess = execa('npm', ['stop'], { cwd: serverDir });
-
-    stopProcess.stdout.on('data', (buffer) => {
-      console.log(buffer.toString());
-    });
-
-    stopProcess.on('error', (buffer) => {
-      console.error(buffer.toString());
-      app.quit();
-    });
-
-    stopProcess.on('exit', (code) => {
-      if (code === 0) {
-        serverProcess.kill();
-        serverProcess = null;
-        app.exit();
-      } else {
-        app.quit();
-      }
-    });
+    serverProcess.kill('SIGKILL');
   }
 });
 
