@@ -8,6 +8,6 @@ script:
 deploy:
   provider: script
   skip_cleanup: true # 避免清空已安装的依赖
-  script: npm run generate:docs && npm run upload-oss
+  script: npm run generate:docs && npm run publish:client && npm run upload-oss
   on:
     all_branches: true
