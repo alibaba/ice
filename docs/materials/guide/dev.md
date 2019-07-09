@@ -23,7 +23,7 @@ $ idev add
 - title：可随意填写，用于填充示例代码
 - version：版本号，默认 1.0.0
 - description：区块描述
-- categories：选择分类，用于快速索引
+- category：选择分类，用于快速索引
 
 完成后，在 `blocks/` 目录下生成了新的区块目录，其目录结构如下：
 

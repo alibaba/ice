@@ -54,7 +54,7 @@ module.exports = {
 - 模版化 `name`、`version`、`description`、`componentConfig` 字段，以便 ice-devtools 动态写入
 - files 至少包含 `build/` 和 `src/` 目录及 `screenshot.png` 文件，`build/` 存放着文档静态文件，`src/` 则是 js 源码模块，`screenshot.png` 是该区块的截图
 - 至少包含 `start` 、`build` 和 `screenshot` 三个命令，screenshot 能力由 ice-devtools 提供
-- 包含 `blockConfig` 字段，描述区块的 name、title 及 categories
+- 包含 `blockConfig` 字段，描述区块的 name、title 及 category
 
 ```json
 {
@@ -78,7 +78,7 @@ module.exports = {
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "category": "<%- category %>"
   }
 }
 ```

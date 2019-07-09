@@ -10,7 +10,6 @@ order: 5
 - type `{string}`：指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'，**请勿随意更改**
 - logo `{string}`：配置物料的品牌 logo
 - template `{string}`：记录当前物料初始化时的物料模版，当新建物料时，将依赖这个值获取物料模版，**请勿随意更改**
-- unpkg `{string}`：指定物料托管平台
 
 ## componentConfig
 
@@ -18,7 +17,7 @@ order: 5
 
 - name `{string}`：组件名称（英文）
 - title `{string}`：组件名称（任意文本）
-- categories `{Array[string]}`：组件的分类
+- category `{string}`：组件的分类
 
 ## blockConfig
 
@@ -26,7 +25,7 @@ order: 5
 
 - name `{string}`：区块名称（英文）
 - title `{string}`：区块名称（任意文本）
-- categories `{Array[string]}`：区块的分类
+- category `{string}`：区块的分类
 
 ## scaffoldConfig
 
@@ -35,5 +34,5 @@ order: 5
 - builder `{string}`：项目的构建工具
 - name `{string}`：项目名称（英文）
 - title `{string}`：项目名称（任意文本）
-- categories `{Array[string]}`：项目的分类
+- category `{string}`：项目的分类
 - type `{string}`：指定当前项目的前端框架类型 eg: 'react', 'vue', 'angular'，根据物料仓库的 `package.json` 自动生成

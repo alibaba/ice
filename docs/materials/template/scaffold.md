@@ -95,7 +95,7 @@ module.exports = {
 - 模版化 `name`、`version`、`description`、`componentConfig` 字段，以便 ice-devtools 动态写入
 - files 至少包含 `build/`、`src/`、`public/` 目录及 `screenshot.png`、`_gitignore` 文件
 - 至少包含 `start` 、`build` 和 `screenshot` 三个命令，screenshot 能力由 ice-devtools 提供
-- 包含 `scaffoldConfig` 字段，描述区块的 name、title、builder（构建方式）、type（前端框架类型）及 categories
+- 包含 `scaffoldConfig` 字段，描述区块的 name、title、builder（构建方式）、type（前端框架类型）及 category
 
 ```json
 {
@@ -128,7 +128,7 @@ module.exports = {
     "type": "<%= materialConfig.type %>",
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "category": "<%- category %>"
   }
 }
 ```

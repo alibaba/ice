@@ -43,7 +43,7 @@ component
 - files 至少包含 `build/` 和 `lib/` 目录，这两个目录中分别存放着文档静态文件和 js 模块
 - 入口文件为 `lib/index.js`
 - 至少包含 `start` 和 `build` 两个 npm scripts
-- 包含 `componentConfig` 字段，描述组件的 name、title 及 categories
+- 包含 `componentConfig` 字段，描述组件的 name、title 及 category
 
 ```JSON
 {
@@ -69,7 +69,7 @@ component
   "componentConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "category": "<%- category %>"
   }
 }
 ```

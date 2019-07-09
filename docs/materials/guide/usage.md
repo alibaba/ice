@@ -36,9 +36,11 @@ order: 4
 
 先到 [npm](https://www.npmjs.com/) 注册账号，注册完成后，在终端执行 `npm login` 登录。如果已经登录，可忽略这一步。
 
-然后在物料仓库根目录执行 `npm run sync-unpkg` 开始同步物料数据，同步完成后，将会获得物料源地址：
+然后进入物料仓库根目录，更新物料仓库 `package.json` 版本号，执行 `npm publish` 将物料数据发布到 npm，发布完成后，可根据以下规则拼接物料源地址：
 
-![](https://img.alicdn.com/tfs/TB1eF9NcBiE3KVjSZFMXXbQhVXa-686-189.png)
+```javascript
+`https://unpkg.com/${packageName}@latest/build/materials.json`
+```
 
 ## 使用物料
 
@@ -49,3 +51,5 @@ order: 4
 ![](https://img.alicdn.com/tfs/TB1qxeQcCWD3KVjSZSgXXcCxVXa-1740-1200.png)
 
 关于 iceworks 使用，请查看 [iceworks 文档](https://ice.work/docs/iceworks/about)。
+
+> 不管是将物料数据托管到 fusign.design 还是 unpkg，本质上都是通过 HTTP GET 请求获取物料数据，因此，除了以上方式，你也可以将物料数据的 JSON 文件放到你的 CDN 或某个后端接口上使用。

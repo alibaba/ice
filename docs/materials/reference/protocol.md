@@ -18,7 +18,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 - logo `{string}`：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig` 字段
 - homepage `{string}`：（可选）物料主页，来源自 `package.json` 中的 `homepage` 字段
 - author `{object}`：（可选）物料作者，来源自 `package.json` 中的 `author` 字段
-- en_US `{object}`：（可选）物料国际化文案，根据 `package.json` 中的 `description` 字段生成国际化文案
+- en-us `{object}`：（可选）物料国际化文案，根据 `package.json` 中的 `description` 字段生成国际化文案
 
 ## ComponentMetaData 组件元数据
 
@@ -33,7 +33,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   //（必选）预览地址
   homepage: "https://unpkg.com/@icedesign/balloon-confirm@1.0.4/build/index.html",
   //（必选）分类
-  categories: ["Information", "Data visualization"],
+  category: "Information",
   //（必选）源码地址
   repository: "https://github.com/ice-lab/react-materials/tree/master/components/balloon-confirm",
   //（必选）描述安装方式
@@ -57,7 +57,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）最后更新时间
   updateTime: "2019-05-25T05:54:33.164Z",
   // （可选）国际化文案
-  en_US: {
+  'en-us': {
     // （可选）英文标题
     title: 'ice balloon confirm',
     // （可选）英文描述
@@ -79,9 +79,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   //（必选）预览地址
   homepage: "https://unpkg.com/@icedesign/ability-introduction-block/build/index.html",
   //（必选）分类
-  categories: [
-    "Information"
-  ],
+  category: "Information",
   //（必选）源码地址
   repository: "https://github.com/ice-lab/react-materials/tree/master/blocks/AbilityIntroduction",
   //（必选）描述安装方式
@@ -114,7 +112,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）最后更新时间
   updateTime: "2019-04-26T13:52:36.487Z",
   // （可选）国际化文案
-  en_US: {
+  'en-us': {
     // （可选）英文标题
     title: 'ability introduction',
     // （可选）英文描述
@@ -138,9 +136,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   //（必选）预览地址
   homepage: "https://unpkg.com/@icedesign/pro-scaffold@latest/build/index.html",
   //（可选）分类
-  categories: [
-    "Basic"
-  ],
+  category: "Information",
   //（必选）源码地址
   repository: "https://github.com/ice-lab/react-materials/tree/master/scaffolds/ice-design-pro",
   //（必选）描述安装方式
@@ -181,7 +177,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）最后更新时间
   updateTime: "2019-06-12T03:24:10.435Z",
   // （可选）国际化文案
-  en_US: {
+  'en-us': {
     // （可选）英文标题
     title: 'ICE Design Pro',
     // （可选）英文描述
@@ -192,46 +188,46 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 
 ## 物料数据国际化
 
-根据以上协议可发现，在物料数据生成阶段会自动生成 `title` 和 `description` 的国际化文案，这些文案在初始化物料时根据用户输入的物料 title 和 description 自动生成，如有国际化需求，可根据 `[语言A标识符]文案[语言B标识符]文案[语言C标识符]文案` 的规则编辑物料 package.json 下的 `description` 字段和 `xxxConfig.title` 字段，其中语言标识符规则按照 `language_REGION` 的方式标示，即小写语言+下划线+大写地域标示，例如： `zh_CN`、`en_US`、`ja_JP`、`zh_TW` 等。ice-devtools 将按照从后往前（从右往左）方向的进行匹配，直到匹配到第一组 `[语言标识符]文案`，如果多次标示了同一种语言，则以最后匹配到的文案为准，最终未匹配到以上格式，则判段文案是否包含中文，如果包含则视为中文文案（zh_CN）否则视为英文文案（en_US）。例如：
+根据以上协议可发现，在物料数据生成阶段会自动生成 `title` 和 `description` 的国际化文案，这些文案在初始化物料时根据用户输入的物料 title 和 description 自动生成，如有国际化需求，可根据 `[语言A标识符]文案[语言B标识符]文案[语言C标识符]文案` 的规则编辑物料 package.json 下的 `description` 字段和 `xxxConfig.title` 字段，其中语言标识符规则按照 `language-REGION` 的方式标示，即小写语言+中划线+大写地域标示，例如： `zh-CN`、`en-US`、`ja-JP`、`zh-TW` 等。ice-devtools 将按照从后往前（从右往左）方向的进行匹配，直到匹配到第一组 `[语言标识符]文案`，如果多次标示了同一种语言，则以最后匹配到的文案为准，最终未匹配到以上格式，则判段文案是否包含中文，如果包含则视为中文文案（zh-CN）否则视为英文文案（en-US）。例如：
 
 ```
-'[zh_CN]描述信息[en_US]hello description'
+'[zh-CN]描述信息[en-US]hello description'
 ->
-zh_CN: '描述信息'
-en_US: 'hello description'
+zh-CN: '描述信息'
+en-US: 'hello description'
 
-[zh_CN]描述信息[en_US]
+[zh-CN]描述信息[en-US]
 ->
-zh_CN: '描述信息'
-en_US: ''
+zh-CN: '描述信息'
+en-US: ''
 
-[zh_CN]hello description[en_US]other description
+[zh-CN]hello description[en-US]other description
 ->
-zh_CN: 'hello description'
-en_US: 'other description'
+zh-CN: 'hello description'
+en-US: 'other description'
 
-'描述信息[en_US]hello description'
+'描述信息[en-US]hello description'
 ->
-zh_CN: '描述信息'
-en_US: 'hello description'
+zh-CN: '描述信息'
+en-US: 'hello description'
 
-'hello[en_US]other description'
+'hello[en-US]other description'
 ->
-zh_CN: ''
-en_US: 'hello'
+zh-CN: ''
+en-US: 'hello'
 
-'hello description[zh_CN]描述信息'
+'hello description[zh-CN]描述信息'
 ->
-zh_CN: '描述信息'
-en_US: 'hello description'
+zh-CN: '描述信息'
+en-US: 'hello description'
 
 '描述信息'
 ->
-zh_CN: '描述信息'
+zh-CN: '描述信息'
 
 'hello description'
 ->
-en_US: 'hello description'
+en-US: 'hello description'
 ```
 
 eg:
@@ -240,9 +236,9 @@ eg:
 //  package.json
 {
   "name": "custom-material-button",
-  "description": "一个基本按钮[en_US]a sample button",
+  "description": "一个基本按钮[en-US]a sample button",
   "compoentConfig": {
-    "title": "按钮[en_US]Button",
+    "title": "按钮[en-US]Button",
     // others property...
   }
   // others property...

@@ -48,16 +48,6 @@ eg：
 $ idev sync
 ```
 
-## sync-unpkg
-
-同步物料数据到 [unpkg](https://unpkg.com/)
-
-eg：
-
-```bash
-$ idev sync-unpkg
-```
-
 ## clear
 
 清理 fusion.design 的 token

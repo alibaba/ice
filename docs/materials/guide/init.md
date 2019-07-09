@@ -56,7 +56,6 @@ ice-devtools 默认集成了三种物料模版：
     "deploy": "npm run generate && npm run sync",
     "generate": "ice-devtools generate",
     "sync": "ice-devtools sync",
-    "sync-unpkg": "ice-devtools sync-unpkg",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
 }
@@ -65,7 +64,6 @@ ice-devtools 默认集成了三种物料模版：
 - deploy：生成物料数据并同步，默认同步到 fusion.design
 - generate：生成物料数据
 - sync：同步物料数据到 fusion.design
-- sync-unpkg：同步物料数据到 unpkg
 
 这些命令除 `deploy` 之外，其他命令都只是 ice-devtools 命令的快捷使用方式。
 
@@ -74,4 +72,3 @@ ice-devtools 默认集成了三种物料模版：
 - type: 字符串，指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'，**请勿随意更改**
 - logo：配置物料的品牌 logo
 - template：记录当前物料初始化时的物料模版，当添加物料时，将依赖这个值获取物料模版，**请勿随意更改**
-- unpkg：指定物料托管平台
