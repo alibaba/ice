@@ -32,11 +32,11 @@ export default (app) => {
     }
 
     async setLocale(ctx) {
-      const { projectManager } = app;
+      const { projectManager, i18n } = app;
       const project = await projectManager.getCurrent();
 
       // Refresh adapter's locale
-      await project.reloadAdapter();
+      await project.reloadAdapter(i18n);
       storage.set('locale', ctx.args.locale);
     }
 
