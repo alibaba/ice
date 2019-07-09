@@ -13,6 +13,7 @@ export default {
   'iceworks.global.adapter.title': 'Project adaptation failed',
   'iceworks.global.adapter.description': 'The current project is not configured with Adapter, please refer to the <a href="https://ice.work/docs/iceworks/migrate" target="_blank">documentation <a>documentation for adaptation',
   'iceworks.global.adapter.reload': 'Reload retry',
+  'iceworks.global.no.project': 'Project not found, Please add a project',
 
   // quick start
   'iceworks.quickStart.title': 'Create your project from popular templates',
