@@ -46,7 +46,7 @@ if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
 
   // 同步 iceworks-client 静态资源
   const clientFromPath = path.join(cwd, 'packages', 'iceworks-client', 'build');
-  const clientToPath = 'iceworks-client/assets';
+  const clientToPath = branch === 'production' ? 'iceworks-client/assets' : 'iceworks-client/pre-assets';
   uploadAssetsToOSS(clientFromPath, clientToPath, '*/**');
 } else {
   console.log('当前分支非 master/docs*, 不执行文档同步脚本');
