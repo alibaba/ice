@@ -42,7 +42,7 @@ gulp.task('dist', (done) => {
     .catch(console.error);
 });
 
-gulp.task('dist-dev', (done) => {
+gulp.task('dist-dev', () => {
   let targets;
   if (os.platform() === 'win32') {
     targets = Platform.WINDOWS.createTarget();
@@ -54,6 +54,5 @@ gulp.task('dist-dev', (done) => {
     targets,
     config: packageJSON.build,
   })
-    .then(done)
     .catch(console.error);
 });

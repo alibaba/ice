@@ -8,7 +8,6 @@
     "dist-dev": "gulp dist-dev"
   },
   "devDependencies": {
-    "address": "^1.1.0",
     "electron": "^5.0.1",
     "electron-builder": "^20.41.0",
     "gulp": "^3.9.1",
@@ -17,6 +16,7 @@
   },
   "description": "iceworks desktop app",
   "dependencies": {
+    "address": "^1.1.0",
     "detect-port": "^1.3.0",
     "electron-is": "^3.0.0",
     "execa": "^1.0.0"
