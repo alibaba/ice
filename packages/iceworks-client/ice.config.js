@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 
 module.exports = {
-  publicPath: 'http://ice.alicdn.com/iceworks-client/',
+  publicPath: 'http://ice.alicdn.com/iceworks-client/assets/',
 
   alias: {
     '@src': resolve(__dirname, 'src/'),
