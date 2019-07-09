@@ -1,5 +1,4 @@
 /* eslint no-unused-expressions: 0 */
-const chalk = require('chalk');
 const Metalsmith = require('metalsmith');
 const uppercamelcase = require('uppercamelcase');
 const async = require('async');
@@ -7,10 +6,7 @@ const ejsRender = require('consolidate').ejs.render;
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
 const { getNpmRegistry } = require('ice-npm-utils');
-const ask = require('./ask');
-const filter = require('./filter');
 const transform = require('./transform');
-const logger = require('./logger');
 const debug = require('debug')('ice:templateRender');
 
 const TEMPLATE_PATH = '.template';
@@ -42,7 +38,6 @@ function render(options, done) {
     dest,
     name,
     npmName,
-    meta = {},
     ...opts
   } = options;
 
@@ -64,58 +59,23 @@ function render(options, done) {
   });
   debug('%j', data);
 
-  const helpers = { chalk, logger };
-
-  if (meta.metalsmith && typeof meta.metalsmith.before === 'function') {
-    meta.metalsmith.before(metalsmith, meta, helpers);
-  }
-
-  if (meta.prompts) {
-    metalsmith
-      .use(askQuestions(meta.prompts));
-  }
-
   metalsmith
-    .use(filterFiles(meta.filters))
-    .use(renderTemplateFiles(meta.skipInterpolation))
+    .use(renderTemplateFiles())
     .use(transformFile(data.skipGitIgnore))
     .ignore([TEMPLATE_PATH, 'meta.js']);
-
-  if (typeof meta.metalsmith === 'function') {
-    meta.metalsmith(metalsmith, meta, helpers);
-  } else if (meta.metalsmith && typeof meta.metalsmith.after === 'function') {
-    meta.metalsmith.after(metalsmith, meta, helpers);
-  }
 
   metalsmith
     .clean(false)
     .source('.') // start from template root instead of `./src` which is Metalsmith's default for `source`
     .destination(dest)
-    .build((err, files) => {
+    .build((err) => {
       // 需要显性控制从物料 meta.js 中提取出来的 message 展现时机
       done(err, () => {
-        if (typeof meta.complete === 'function') {
-          const thisHelpers = { chalk, logger, files };
-          meta.complete(data, thisHelpers);
-        } else {
-          logMessage(meta.completeMessage, data);
-        }
+        logMessage(data);
       });
     });
 
   return data;
-}
-
-/**
- * Create a middleware for asking questions.
- *
- * @param {Object} prompts
- * @return {Function}
- */
-function askQuestions(prompts) {
-  return (_files, metalsmith, done) => {
-    ask(prompts, metalsmith.metadata(), done);
-  };
 }
 
 function transformFile(skipGitIgnore) {
@@ -124,18 +84,6 @@ function transformFile(skipGitIgnore) {
       ...metalsmith.metadata(),
       skipGitIgnore,
     }, done);
-  };
-}
-
-/**
- * Create a middleware for filtering files.
- *
- * @param {Object} filters
- * @return {Function}
- */
-function filterFiles(filters) {
-  return (files, metalsmith, done) => {
-    filter(files, filters, metalsmith.metadata(), done);
   };
 }
 

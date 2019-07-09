@@ -5,6 +5,7 @@ const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
 const getTemplate = require('../utils/template');
+const addMaterial = require('./add');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 
@@ -36,8 +37,8 @@ module.exports = async function add(cwd) {
 
     const { templatePath, downloadPath, config: materialConfig } = await getTemplate(cwd, type, templateName);
 
-    /* eslint-disable-next-line import/no-dynamic-require */
-    await require(`./${type}/add`)(cwd, {
+    await addMaterial(cwd, {
+      type,
       npmPrefix,
       templatePath,
       materialConfig,

@@ -37,7 +37,8 @@ module.exports = async function init(cwd) {
     } else {
       // init single component/block/scaffold project
       /* eslint-disable-next-line import/no-dynamic-require */
-      await require(`./${type}/add`)(cwd, {
+      await require('./material/add')(cwd, {
+        type,
         npmPrefix,
         template,
         templatePath,
