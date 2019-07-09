@@ -1,15 +1,20 @@
+/* eslint no-console:0 */
 /**
- * 将站点文档和 iceworks-client 静态资源上传到 oss
+ * 将 iceworks-client 静态资源上传到 oss
  */
-const oss = require('ali-oss');
 const path = require('path');
+const oss = require('ali-oss');
 const glob = require('glob');
 
 const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
 const accessKeySecret = process.env.ACCESS_KEY_SECRET;
-const branch = process.env.TRAVIS_BRANCH;
-const cwd = process.cwd();
+
+if (!accessKeyId || !accessKeySecret) {
+  console.log('请设置 accessKeyId 和 accessKeySecret 环境变量\n');
+  console.log('示例：ACCESS_KEY_ID=xxx ACCESS_KEY_SECRET=xxx npm publush\n');
+  process.exit(1);
+}
 
 function uploadAssetsToOSS(fromPath, toPath, globPatterns) {
   const ossClient = oss({
@@ -38,13 +43,8 @@ function uploadAssetsToOSS(fromPath, toPath, globPatterns) {
   });
 }
 
-// 同步文档静态资源
-if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
-  const docsFromPath = path.join(cwd, 'build');
-  const docsToPath = branch === 'production' ? 'assets' : 'pre-assets';
-  uploadAssetsToOSS(docsFromPath, docsToPath, '*.json');
-} else {
-  console.log('当前分支非 master/docs*, 不执行文档同步脚本');
-  console.log(`TRAVIS_BRANCH=${branch}`);
-  process.exit(0);
-}
+// 同步 iceworks-client 静态资源
+const clientFromPath = path.join(process.cwd(), 'packages', 'iceworks-client', 'build');
+const clientToPath = 'iceworks-client/assets';
+uploadAssetsToOSS(clientFromPath, clientToPath, '*/**');
+
