@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.0-beta.1
+
+- [fix] Fix theme switching error
+- [fix] Fix new project error
+- [chore] No project add hint
+
 ## 3.0.0-beta.0
 
 - [feat] We’re excited to announce the release of iceworks 3.0.0-beta.0

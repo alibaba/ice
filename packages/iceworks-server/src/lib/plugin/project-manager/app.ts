@@ -20,7 +20,6 @@ const readdirAsync = util.promisify(fs.readdir);
 const existsAsync = util.promisify(fs.exists);
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
-const mvAsync = util.promisify(mv);
 const rimrafAsync = util.promisify(rimraf);
 
 const packageJSONFilename = 'package.json';
@@ -338,7 +337,7 @@ class ProjectManager extends EventEmitter {
     const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
     await getAndExtractTarball(targetPath, tarballURL);
 
-    await rimraf(path.join(targetPath, 'build'));
+    await rimrafAsync(path.join(targetPath, 'build'));
 
     // rewrite pakcage.json
     const packageJSONPath = path.join(targetPath, packageJSONFilename);

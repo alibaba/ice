@@ -1,13 +1,14 @@
 {
   "name": "iceworks",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "description": "a simple CLI for iceworks",
   "main": "bin/iceworks.js",
   "bin": {
     "iceworks": "bin/iceworks.js"
   },
   "scripts": {
-    "postinstall": "node ./lib/downloadServer.js"
+    "postinstall": "node ./lib/downloadServer.js",
+    "sync": "node ./lib/downloadServer.js"
   },
   "license": "MIT",
   "dependencies": {
