@@ -55,7 +55,7 @@
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
     "lint": "eslint . --ext '.js,.jsx' --fix",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm install && npm run build"
   },
   "engines": {
     "node": ">=8.0.0"
