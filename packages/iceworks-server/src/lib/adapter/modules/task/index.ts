@@ -44,14 +44,12 @@ export default class Task implements ITaskModule {
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
     if(!pathExists) {
-      throw new Error(i18n.format('baseAdapter.dependency.reset.clearWait'));
+      throw new Error(i18n.format('baseAdapter.task.install.dependency'));
     }
 
     const { command } = args;
     if (this.process[command]) {
-      throw new Error(
-        'The task has started. Please stop the task before trying again.'
-      );
+      throw new Error(i18n.format('baseAdapter.task.runing'));
     }
 
     let env: object = {};
