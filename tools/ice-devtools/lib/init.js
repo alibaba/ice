@@ -1,10 +1,10 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { checkAliInternal } = require('ice-npm-utils');
-
+const rimraf = require('rimraf');
 const logger = require('../utils/logger');
+const getTemplate = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
-const add = require('./add');
 
 module.exports = async function init(cwd) {
   try {
@@ -19,13 +19,40 @@ module.exports = async function init(cwd) {
     });
 
     // get user answers
-    const answers = await initAsk(options);
-    add(cwd, { ...answers });
+    const { type, template, scope, forInnerNet } = await initAsk(options);
+    const npmPrefix = scope ? `${scope}/` : '';
+    const { templatePath, downloadPath, config: materialConfig } = await getTemplate(cwd, type, template);
+
+    if (type === 'material') {
+      // init material project
+      /* eslint-disable-next-line import/no-dynamic-require */
+      await require('./material/init')(cwd, {
+        npmPrefix,
+        template,
+        templatePath,
+        forInnerNet,
+        standalone: true,
+        materialConfig,
+      });
+    } else {
+      // init single component/block/scaffold project
+      /* eslint-disable-next-line import/no-dynamic-require */
+      await require('./material/add')(cwd, {
+        type,
+        npmPrefix,
+        template,
+        templatePath,
+        forInnerNet,
+        standalone: true,
+        materialConfig,
+      });
+    }
+
+    rimraf.sync(downloadPath);
   } catch (error) {
     logger.fatal(error);
   }
 };
-
 
 async function initAsk(options = {}) {
   const types = ['material', 'scaffold', 'component', 'block'];
