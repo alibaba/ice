@@ -35,4 +35,9 @@ order: 5
 - name `{string}`：项目名称（英文）
 - title `{string}`：项目名称（任意文本）
 - category `{string}`：项目的分类
-- type `{string}`：指定当前项目的前端框架类型 eg: 'react', 'vue', 'angular'，根据物料仓库的 `package.json` 自动生成
+
+## iceworks
+
+在项目的 `package.json` 中，包含一个 `iceworks` 字段描述当前项目在 iceworks 中的一些配置：
+
+- type `{string}`：指定当前项目的前端框架类型 eg: 'react', 'vue', 'angular'

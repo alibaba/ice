@@ -18,7 +18,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 - logo `{string}`：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig` 字段
 - homepage `{string}`：（可选）物料主页，来源自 `package.json` 中的 `homepage` 字段
 - author `{object}`：（可选）物料作者，来源自 `package.json` 中的 `author` 字段
-- en-us `{object}`：（可选）物料国际化文案，根据 `package.json` 中的 `description` 字段生成国际化文案
+- en-US `{object}`：（可选）物料国际化文案，根据 `package.json` 中的 `description` 字段生成国际化文案
 
 ## ComponentMetaData 组件元数据
 
@@ -57,7 +57,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）最后更新时间
   updateTime: "2019-05-25T05:54:33.164Z",
   // （可选）国际化文案
-  'en-us': {
+  'en-US': {
     // （可选）英文标题
     title: 'ice balloon confirm',
     // （可选）英文描述
@@ -112,7 +112,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）最后更新时间
   updateTime: "2019-04-26T13:52:36.487Z",
   // （可选）国际化文案
-  'en-us': {
+  'en-US': {
     // （可选）英文标题
     title: 'ability introduction',
     // （可选）英文描述
@@ -177,7 +177,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （必选）最后更新时间
   updateTime: "2019-06-12T03:24:10.435Z",
   // （可选）国际化文案
-  'en-us': {
+  'en-US': {
     // （可选）英文标题
     title: 'ICE Design Pro',
     // （可选）英文描述

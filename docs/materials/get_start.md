@@ -81,30 +81,27 @@ $ idev add
 
 `materials.json` 即物料数据，这份物料数据中维护了当前物料仓库下所有物料的基本信息。完成物料数据之后，需要将这份数据存放到某个平台上，当我们想在 iceworks 中使用物料时，iceworks 将会根据 URL 获取物料数据。
 
-ice-devtools 支持使用以下两个平台存放物料数据，他们都是免费的：
-
-- fusion.design（只支持 React 体系的物料）
-- unpkg（支持所有物料体系）
+ice-devtools 支持使用 fusion.design 存放物料数据，但目前仅支持 React 体系的物料，对于其他物料，可将物料数据发布到 [unpkg](https://unpkg.com/)。
 
 可根据自己的需要选择适合的平台，具体可参考[物料数据托管与使用](/docs/materials/guide/usage.md)。
 
 这里，我们选择托管到 unpkg，在 `custom-material` 根目录执行以下命令：
 
 ```bash
-$ idev sync-unpkg
+$ npm publish
 ```
 
-当同步完成后，终端会输出以下内容提示物料数据的 URL 地址：
+npm 发布成功后当同步完成后，可根据以下规则填写物料数据的 URL 地址：
 
+```javascript
+`https://unpkg.com/${packageName}@latest/build/materials.json`
 ```
-物料源同步成功!
 
-https://unpkg.com/custom-material@latest/build/materials.json
-```
+> [unpkg](https://unpkg.com/) 是 npm 的 CDN 托管服务，可通过 URL 获取 npm package 的内容。将物料数据发布到 unpkg 本质上就是将 `material.json` 发布到 npm，这样，就能通过 unpkg 服务得到物料源的 URL 地址。
 
 ## 使用物料
 
-物料同步成功后我们可获得物料地址 `https://unpkg.com/custom-material@latest/build/materials.json`。
+物料发布成功后我们可获得物料地址 `https://unpkg.com/custom-material@latest/build/materials.json`。
 
 打开 iceworks，进入设置面板，添加自定义物料源，
 

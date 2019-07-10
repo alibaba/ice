@@ -95,7 +95,8 @@ module.exports = {
 - 模版化 `name`、`version`、`description`、`componentConfig` 字段，以便 ice-devtools 动态写入
 - files 至少包含 `build/`、`src/`、`public/` 目录及 `screenshot.png`、`_gitignore` 文件
 - 至少包含 `start` 、`build` 和 `screenshot` 三个命令，screenshot 能力由 ice-devtools 提供
-- 包含 `scaffoldConfig` 字段，描述区块的 name、title、builder（构建方式）、type（前端框架类型）及 category
+- 包含 `scaffoldConfig` 字段，描述项目的 name、title、builder（构建方式）及 category
+- 包含 `iceworks` 字段，描述 type（前端框架类型）
 
 ```json
 {
@@ -125,10 +126,12 @@ module.exports = {
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
-    "type": "<%= materialConfig.type %>",
     "name": "<%= name %>",
     "title": "<%= title %>",
     "category": "<%- category %>"
+  },
+  "iceworks": {
+    "type": "react",
   }
 }
 ```
