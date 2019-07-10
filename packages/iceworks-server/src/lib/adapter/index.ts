@@ -41,30 +41,35 @@ export default async (i18n: II18n) => {
       isAvailable: true,
       module: null
     },
-    Layout: {
-      cover: 'https://img.alicdn.com/tfs/TB1KUD8c4iH3KVjSZPfXXXBiVXa-300-300.png',
+    QuickDev: {
+      cover: 'https://img.alicdn.com/tfs/TB1hcJCe.uF3KVjSZK9XXbVtXXa-300-300.png',
       isAvailable: true,
-      module: Layout
+      module: null,
+    },
+    Dependency: {
+      cover: 'https://img.alicdn.com/tfs/TB1nPY8c21H3KVjSZFBXXbSMXXa-300-300.png',
+      isAvailable: true,
+      module: Dependency
     },
     Page: {
       cover: 'https://img.alicdn.com/tfs/TB1Vl4javBj_uVjSZFpXXc0SXXa-300-300.png',
       isAvailable: true,
       module: Page
     },
+    Layout: {
+      cover: 'https://img.alicdn.com/tfs/TB1KUD8c4iH3KVjSZPfXXXBiVXa-300-300.png',
+      isAvailable: false,
+      module: Layout
+    },
     Router: {
       cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
-      isAvailable: true,
+      isAvailable: false,
       module: Router
     },
     Menu: {
       cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
-      isAvailable: true,
+      isAvailable: false,
       module: Menu
-    },
-    QuickDev: {
-      cover: 'https://img.alicdn.com/tfs/TB1hcJCe.uF3KVjSZK9XXbVtXXa-300-300.png',
-      isAvailable: true,
-      module: null,
     },
     QuickBuild: {
       cover: 'https://img.alicdn.com/tfs/TB1P8pAe79E3KVjSZFGXXc19XXa-300-300.png',
@@ -90,11 +95,6 @@ export default async (i18n: II18n) => {
       cover: 'https://img.alicdn.com/tfs/TB1zZJKdEGF3KVjSZFmXXbqPXXa-300-300.png',
       isAvailable: false,
       module: Todo
-    },
-    Dependency: {
-      cover: 'https://img.alicdn.com/tfs/TB1nPY8c21H3KVjSZFBXXbSMXXa-300-300.png',
-      isAvailable: false,
-      module: Dependency
     },
     Task: {
       cover: '',
