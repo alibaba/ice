@@ -17,7 +17,7 @@ order: 3
 
 对于 iceworks 用户端，我们提供 Electron 桌面软件和本地化 Web 版本的两种使用链路，而本质上运行的是同一套代码，策略也基本是一样的，不同的只是两者的运行依赖环境，在实现上，我们将前端静态资源进行发布，将后端服务以 Npm 包的形式发布，最终在 Electron 和本地化 Web 版本中去进行调用，桌面软件依赖 Electron 载体，本地化 Web 版本依赖 iceworks CLI 命令行工具。
 
-注释：iceworks 3.0 beta 版本暂未提供 Electron 版本。
+*提示：iceworks 3.0 beta 版本暂未提供 Electron 版本。*
 
 ### 服务端
 
