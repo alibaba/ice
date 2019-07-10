@@ -7,7 +7,7 @@ order: 2
 
 ## 目录结构
 
-Adapter 主要包含 `modules` 和 `locales` 两个核心目录；其中 modules 是对功能模块的实现，locales 用于多语言包的配置，如果不需要配置多语言，则可不需要。
+Adapter 主要包含 `modules` 和 `locales` 两个核心目录；modules 是对功能模块的实现。locales 用于多语言包的配置，如果不需要配置多语言，则不需要添加此文件夹。
 
 ```
 adapter
@@ -43,7 +43,7 @@ adapter
 
 ## 接口实现
 
-如果你需要实现的 Adapter 功能与 ICE 团队提供的 Adapter 功能大致相似，但是你希望定制面板 UI 或者想隐藏一些面板时，你可以希望你继承 ice adapter 进行开发。
+如果你需要实现的 Adapter 功能与 ICE 团队提供的 Adapter 功能大致相似，但是你希望定制面板 UI 或者想隐藏一些面板时，你可以继承`ice-adapter`里的相关模块进行开发。
 
 * 功能逻辑实现
 
@@ -94,7 +94,7 @@ Adapter 命名规范遵循 「简单」、「语义化」、「易理解」原�
 
 ## Adapter 使用
 
-通过对项目指定对应的 adapter 即可接入 iceworks 工作台进行使用，配置如下：
+给项目配置对应的 adapter ，即可接入 iceworks 工作台进行管理，配置如下：
 
 ```
 // 用户项目的 package.json

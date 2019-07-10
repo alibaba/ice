@@ -3,7 +3,7 @@ title: 如何参与
 order: 1
 ---
 
-iceworks 是阿里巴巴飞冰团队开源的项目之一，目前正处于非常活跃的开发状态；这篇文档会指导你如何为 iceworks 贡献一份自己的力量，请在提交 issue 或者 pull request 之前请务必花一些时间阅读这份指南。
+iceworks 是阿里巴巴飞冰团队开源的项目之一，目前正处于非常活跃的开发状态；这篇文档会指导你如何为 iceworks 贡献一份自己的力量，请务必在提交 issue 或者 pull request 之前花一些时间阅读这份指南。
 
 ## 透明开发
 
@@ -11,15 +11,13 @@ iceworks 是阿里巴巴飞冰团队开源的项目之一，目前正处于非�
 
 ## 分支管理
 
-仓库主要维护 master 和 dev 两个分支，master 分支只是最新稳定版本的快照，所有开发都应该基于 dev 分支进行开发，如果你要提一个增加新功能的 pull request，那么请基于 dev 分支来做。
-
+仓库主要维护 master 和 dev 两个分支，master 分支只是最新稳定版本的快照，所有开发都会基于 dev 分支进行开发，如果你要提一个增加新功能的 pull request，请基于 dev 分支的代码改动。
 
 ## Bugs
 
 我们使用 [GitHub Issues](https://github.com/alibaba/ice/issues) 来做 bug 追踪。 如果你想要你发现的 bug 被快速解决，最好的办法就是通过我们提供的 [issue](https://github.com/alibaba/ice/issues/new) 模板来提交你的 issue。
 
 在新建 issue 前，可以先搜索一下以往的旧 issue，你遇到的问题可能已经有人提了，也可能已经在最新版本中被修正。
-
 
 ## Pull Request
 
@@ -33,10 +31,9 @@ iceworks 是阿里巴巴飞冰团队开源的项目之一，目前正处于非�
 4. 如果你提交的代码修改了 APIs 或者功能改动，请更新对应的文档。
 5. 确保你的代码通过了 lints 检查。
 
-
 ## Contributor License Agreement (CLA)
 
-为了接受你的 pull request，我们需要你去提交 CLA。你只需要去做一次，所以如果你已经为另一个阿里巴巴开源项目做过贡献，你可以继续。如果你是第一次提交 pull request，只要让我们知道你已经完成了CLA，我们可以再次确认（cross-check）你的GitHub 用户名。
+为了接受你的 pull request，我们需要你去提交 CLA。你只需要去做一次，所以如果你已经为另一个阿里巴巴开源项目做过贡献，你不需要再提交这个流程。如果你是第一次提交 pull request，只要让我们知道你已经完成了CLA，我们可以再次确认（cross-check）你的GitHub 用户名。
 
 [点此完成你的 CLA](https://cla-assistant.io/alibaba/ice)
 
@@ -47,7 +44,6 @@ iceworks 是阿里巴巴飞冰团队开源的项目之一，目前正处于非�
 [怎么在GitHub上为开源项目作贡献](https://zhuanlan.zhihu.com/p/23457016)
 
 当你 clone 代码完成后，你可以按照以下流程开始 iceworks 的开发工作：
-
 
 ### 启动 UI 服务
 
