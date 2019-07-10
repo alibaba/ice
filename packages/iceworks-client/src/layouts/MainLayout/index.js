@@ -11,21 +11,22 @@ import appConfig from '../../appConfig';
 import styles from './index.module.scss';
 
 const MainLayout = () => {
-  const [project, user] = stores.useStores(['project', 'user']);
+  const [projectStore, userStore] = stores.useStores(['project', 'user']);
 
   async function onInit() {
     try {
-      await project.refresh();
-      if (appConfig.isAliInternal) {
-        await user.refresh();
-      }
+      await projectStore.refresh();
     } catch (error) {
-      showMessage(error);
+      // ignore project refresh error
+    }
+
+    if (appConfig.isAliInternal) {
+      await userStore.refresh();
     }
   }
   async function onLogin(data) {
     try {
-      await user.login(data);
+      await userStore.login(data);
     } catch (error) {
       showMessage(error);
     }
@@ -41,14 +42,14 @@ const MainLayout = () => {
       <div className={styles.content}>
         <NavigationBar
           menuData={menuConfig}
-          user={user.dataSource}
+          user={userStore.dataSource}
           onLogin={onLogin}
         />
         <div className={styles.main}>
           <SubRoutes routes={routerConfig} />
         </div>
       </div>
-      <GlobalBar project={project} />
+      <GlobalBar project={projectStore.dataSource} />
     </div>
   );
 };
