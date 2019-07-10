@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const address = require('address');
 const { spawn } = require('child_process');
 const path = require('path');
+const StopCommand = require('egg-scripts').StopCommand;
 const detectPort = require('detect-port');
 // const is = require('electron-is');
 
@@ -11,6 +12,7 @@ const setPort = '7001';
 
 const isProduction = true; // is.production();
 const ip = address.ip();
+const sc = new StopCommand();
 const serverDir = path.join(__dirname, '..', 'server');
 const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
 const stopLoadingHTML = path.join(__dirname, '..', 'renderer', 'stop_loading.html');
@@ -43,8 +45,9 @@ function createWindow() {
   });
 
   serverProcess.on('close', (code) => {
-    if (code != 0) {
+    if (code == 0) {
       serverProcess = null;
+      app.exit();
       // mainWindow.loadFile(errorLoadingHTML);
     }
   });
@@ -54,12 +57,14 @@ app.on('ready', createWindow);
 
 app.on('before-quit', (event) => {
   if (serverProcess) {
-    // mainWindow.loadFile(stopLoadingHTML);
-    serverProcess.kill('SIGKILL');
-    app.exit();
+    // mainWindow.loadFile(stopLoadingHTML);    
+    sc.helper.kill([String(serverProcess.pid)]);
   }
 });
-
+app.on('quit', (event)=>{
+  console.log('quit');
+  console.log(event);
+})
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
