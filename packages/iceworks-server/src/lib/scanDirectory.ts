@@ -22,7 +22,7 @@ export default async (directoryPath: string): Promise<string[]> => {
   await Promise.all(files.map(async (filename: string) => {
     const targetPath = path.join(directoryPath, filename);
     const stats = await lstatAsync(targetPath);
-    const isDirectory = stats.isDirectory() && junk.not(filename);
+    const isDirectory = stats.isDirectory() && junk.not(filename) && filename.indexOf('.') !== 0;
 
     if (isDirectory) {
       try {
