@@ -4,7 +4,7 @@ export default function showMessage(message, type = 'error') {
   let content = 'Please try again';
 
   if (message) {
-    content = message instanceof Error ? message.message : message;
+    content = (message instanceof Error || typeof message === 'object') && message.message ? message.message : message;
   }
 
   Message.show({
