@@ -14,57 +14,72 @@ order: 7
 
 ## 实际应用
 
-在前后端分离设计中，通常的做法是由服务端提供权限数据接口，前端根据接口数据做对应的路由拦截控制和页面数据的渲染。在模板中，我们使用 [Authorized](https://pro.ant.design/components/Authorized-cn/) 权限组件实现了基本的权限管理方案，你可以基于模板结合实际的业务进行开发，模板中主要包含菜单权限控制和路由权限控制。
+在前后端分离设计中，通常的做法是由服务端提供权限数据接口或者将当前用户角色写到 `cookie` 中，前端根据接口数据或当前用户角色做对应的路由拦截控制和页面数据的渲染。在模板中，我们将权限组件写在 `src/components/Auth/index.jsx` 中。
 
-### 菜单权限
+```js
+import React from 'react';
+import Exception from '@/components/Exception';
+import cookie from 'cookie';
 
-如需对某些菜单进行权限控制，只须对菜单配置文件 menuConfig  中的菜单项设置 authority 属性即可，代表该项菜单的准入权限，菜单生成文件中会默认调用 Authorized.check 进行判断处理。
+const Auth = ({ children, authorities = [] }) => {
+  // 服务端将 authority 保存在 cookie 中，前端只负责取 cookie
+  const { authority } = cookie.parse(document.cookie);
 
-```
-const menuConfig = [
- ...
- {
-    name: '表格页',
-    path: '/table',
-    icon: 'table',
-    // authority: 'admin',  // 权限配置，如果子菜单没有配置，则子菜单继承这里的权限
-    children: [
-      {
-        name: '基础表格',
-        path: '/table/basic-table',
-        authority: 'admin',  // 优先级大于父级菜单
-      },
-      {
-        name: '常用竖向表格',
-        path: '/table/table-display',
-        authority: 'user',
-      }
- }
- ...
-]
-```
-
-### 路由权限（AuthorizedRoute）
-
-在模板中提供了 AuthorizedRoute 权限组件，实现思路是通过传入准入权限和当前用户的权限进行对比过滤掉没有权限的路由。可以在路由配置中配置权限，但菜单中配置的权限会自动同步到对应路由中，如果 routerConfig.js 中有不同的配置，路由控制以 routerConfig.js 的配置为准。
-
-```
-const routerConfig = [
-  ...
-  {
-    path: '/dashboard',
-    component: Dashboard,
-    layout: BasicLayout,
-    authority: 'admin',
-  },
-  {
-    path: '/table/basic-table',
-    component: BasicTable,
-    layout: BasicLayout,
-    authority: 'user',
+  if (authorities.indexOf(authority) === -1) {
+    // 也可以跳转到统一的无权限页面，具体看业务需求
+    return (
+      <Exception
+        statusCode="403"
+        description="抱歉，你没有权限访问该页面"
+      />
+    );
   }
-  ...
-]
+
+  return children;
+};
+
+const withAuth = (params) => (WrapperedComponent) => {
+  return (props) => {
+    return (
+      <Auth {...params}>
+        <WrapperedComponent {...props} />
+      </Auth>
+    );
+  };
+};
+
+export { withAuth };
+
+export default Auth;
 ```
 
-模板权限默认是配置在菜单中的，如果是需要从服务端获取权限数据，则可以在 BasicLayout 中获取数据，将服务端返回的数据和配置项进行合并处理即可，渲染逻辑是通用的。
+### 如何使用
+
+可以使用上面的 `withAuth` 控制页面的权限：
+
+```js
+import React from 'react';
+import { withAuth } from '@/components/Auth';
+
+function BasicList() {
+  return (
+    <div className="list-page">
+      <Table />
+    </div>
+  );
+}
+
+export default withAuth({
+  authorities: ['admin', 'user'],
+})(BasicList);
+```
+
+上述代码表示用户角色为 `admin` 和 `user` 的可以访问 `BasicList` 页面，否则显示无权限。
+
+如果页面中某个组件要根据角色判断是否显示，可以使用 `Auth` 组件：
+
+```js
+<Auth authorities={['admin', 'user']}>
+  <Button>auth</Button>
+</Auth>
+```

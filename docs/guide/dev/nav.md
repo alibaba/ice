@@ -3,7 +3,7 @@ title: 菜单管理
 order: 6
 ---
 
-在模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。菜单信息配置在 src/menuConfig.js 中，这样设计的目的主要有以下几点：
+在模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。菜单信息配置在 `src/config/menu.js` 中，这样设计的目的主要有以下几点：
 
 - 菜单配置包含 headerMenuConfig 和 asideMenuConfig 两种形式，headerMenuConfig 用于顶部导航的渲染，asideMenuConfig 用于侧边栏导航的渲染，这样方便在统一的位置管理应用的导航信息
 - 如果需要对某些菜单进行权限控制，只需在对应的菜单配置项设置 authority 属性即可，代表该菜单的准入权限，详见 权限管理
