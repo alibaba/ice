@@ -1,4 +1,5 @@
 import * as execa from 'execa';
+import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
 import * as terminate from 'terminate';
@@ -38,6 +39,12 @@ export default class Task implements ITaskModule {
    * @param args
    */
   async start(args: ITaskParam, ctx: IContext) {
+    const nodeModulesPath = path.join(this.project.path, 'node_modules')
+    const pathExists = await fs.pathExists(nodeModulesPath);
+    if(!pathExists) {
+      throw new Error('Please try again after installing the dependency');
+    }
+
     const { command } = args;
 
     if (this.process[command]) {
