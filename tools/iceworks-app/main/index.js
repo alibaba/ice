@@ -39,13 +39,13 @@ function createWindow() {
 
   serverProcess.stderr.on('data', (buffer) => {
     console.error(buffer.toString());
-    mainWindow.loadFile(errorLoadingHTML);
+    // mainWindow.loadFile(errorLoadingHTML);
   });
 
   serverProcess.on('close', (code) => {
     if (code != 0) {
       serverProcess = null;
-      mainWindow.loadFile(errorLoadingHTML);
+      // mainWindow.loadFile(errorLoadingHTML);
     }
   });
 }
@@ -54,10 +54,9 @@ app.on('ready', createWindow);
 
 app.on('before-quit', (event) => {
   if (serverProcess) {
-    event.preventDefault();
-
-    mainWindow.loadFile(stopLoadingHTML);
+    // mainWindow.loadFile(stopLoadingHTML);
     serverProcess.kill('SIGKILL');
+    app.exit();
   }
 });
 
