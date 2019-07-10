@@ -1,0 +1,12 @@
+import * as path from 'path';
+import { baseModules } from '../../../adapter';
+
+export default class Configuration extends baseModules.Configuration {
+  public cliConfFilename: string = 'vue.config.js';
+  public cliConfPath: string;
+
+  constructor(params) {
+    super(params);
+    this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
+  }
+}
