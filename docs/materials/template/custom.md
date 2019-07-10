@@ -1,6 +1,6 @@
 ---
 title: 自定义物料模版
-order: 3
+order: 4
 ---
 
 ice-devtools 默认集成了三种物料模版：
@@ -11,7 +11,7 @@ ice-devtools 默认集成了三种物料模版：
 
 在 `idev init` 时供开发者选择。
 
-但是基础模版往往不能满足开发者自定义的需要，因此，大部分情况下，我们需要开发自己的物料模版。
+当基础物料模版不满足开发者需求时，可根据[《物料模版规范》](/docs/materials/template/standard.md)开发自己的物料模版。
 
 **对于 React、Vue、Angular 项目，强烈建议在官方标准模版的基础上自定义。**
 
@@ -37,7 +37,7 @@ ice-devtools 默认集成了三种物料模版：
 
 ## 模版文件
 
-物料模版 `tempalte/` 目录下包含 `block`、`component` 和 `scaffold` 三个子目录，它们即物料的模版文件，ice-devtools 获取到物料模版后，也是根据这三个文件生成对应的区块、组件和项目代码。
+物料模版 `template/` 目录下包含 `block`、`component` 和 `scaffold` 三个子目录，它们即物料的模版文件，ice-devtools 获取到物料模版后，也是根据这三个文件生成对应的区块、组件和项目代码。
 
 ### 模版语法
 
@@ -83,13 +83,11 @@ ice-devtools 根据用户输入，提供了以下变量供物料模版开发者�
 
 物料模版除了以上介绍的需要遵循的规则外，每种物料都有特定的规范需要遵守，如果无法满足，可能导致物料模版无法正常使用：
 
-- [《组件模版规范》](/docs/materials/template/component.md)
-- [《区块模版规范》](/docs/materials/template/block.md)
-- [《项目模版规范》](/docs/materials/template/scaffold.md)
+- [《物料模版规范》](/docs/materials/template/standard.md)
 
 当物料模版创建成功后，还需要关注基于该模版开发的物料在发布时是否满足物料数据协议标准：
 
-- 关于物料数据生成及发布可参考[《物料数据生成》](/docs/materials/guide/generate.md)、[《物料托管与使用》](/docs/materials/guide/usage.md)
+- 关于物料数据生成与使用可参考[《物料数据生成》](/docs/materials/guide/generate.md)、[《物料数据托管》](/docs/materials/guide/sync.md)、[《使用物料》](/docs/materials/guide/sync.md)
 - 关于物料数据协议标准可参考[《物料数据协议》](/docs/materials/reference/protocol.md)
 
 ## 如何使用物料模版

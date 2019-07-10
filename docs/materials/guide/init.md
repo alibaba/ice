@@ -13,16 +13,7 @@ $ mkdir my-materilas & cd my-materilas
 $ idev init
 ```
 
-执行 init 命令后，需要选择物料项目类型及物料模版。
-
-物料类型分为以下几种：
-
-- material：**推荐**，创建完整的物料仓库，包含component、block 和 scaffold
-- block：**不推荐**，单独创建区块物料
-- component：**不推荐**，单独创建组件物料
-- scaffold：**不推荐**，单独创建项目模版
-
-该选项可通过 `--type` 参数直接指定。选择某一种类后，ice-devtools 将根据物料模版初始化指定种类的物料。
+执行 init 命令后，默认创建完整的物料仓库，如需要创建独立物料，请参考[《开发独立业务组件》](/docs/materials/reference/dev.md)。
 
 ice-devtools 默认集成了三种物料模版：
 
@@ -49,26 +40,21 @@ ice-devtools 默认集成了三种物料模版：
 
 对于物料类型选择为 block、component 或 scaffold 的物料，则直接生成源码，文件结构与 `ExampleBlock`、 `ExampleComponent`、`ExampleScaffold` 保持一致。**如非特殊情况，不建议直接生成以上三种物料。**
 
-初始化完成后，除了在项目根目录安装全局 npm 依赖外，还需要关注一下 npm scripts，
+初始化完成后，在项目根目录 `package.json` 中，ice-devtools 已经初始化好了一些 npm scripts，此外，还有一个 `materialConfig` 字段，这个字段存储了一些当前物料的信息及配置：
 
 ```json
-"scripts": {
-    "deploy": "npm run generate && npm run sync",
-    "generate": "ice-devtools generate",
-    "sync": "ice-devtools sync",
-    "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
+{
+  // some property...
+  "scripts": {
+    "deploy": "npm run generate && npm run sync", // 生成物料数据并同步，默认同步到 fusion.design
+    "generate": "ice-devtools generate", // 生成物料数据
+    "sync": "ice-devtools sync", // 同步物料数据到 fusion.design
+    "lint": "eslint --cache --ext .js --ext .jsx ./",
+  },
+  "materialConfig": {
+    "type": "react", // 字符串，指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'，请勿随意更改
+    "logo": "https://https://img.alicdn.com/tfs/TB1AI2vteOSBuNjy0FdXXbDnVXa-680-192.png", // 配置物料的品牌 logo
+    "template": "@icedesign/ice-react-material-template" // 记录当前物料初始化时的物料模版，当添加物料时，将依赖这个值获取物料模版，请勿随意更改
+  }
 }
 ```
-
-- deploy：生成物料数据并同步，默认同步到 fusion.design
-- generate：生成物料数据
-- sync：同步物料数据到 fusion.design
-
-这些命令除 `deploy` 之外，其他命令都只是 ice-devtools 命令的快捷使用方式。
-
-此外，在物料仓库的根 `package.json` 中，还包含另一个字段 `materialConfig`，这个属性存储了一些当前物料的信息及配置：
-
-- type: 字符串，指定当前物料的前端框架类型 eg: 'react', 'vue', 'angular'，**请勿随意更改**
-- logo：配置物料的品牌 logo
-- template：记录当前物料初始化时的物料模版，当添加物料时，将依赖这个值获取物料模版，**请勿随意更改**
