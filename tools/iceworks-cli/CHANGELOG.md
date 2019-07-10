@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.0-beta.2
+- [fix] Fix no project error message
+- [chore] Style optimization
+
 ## 3.0.0-beta.1
 
 - [fix] Fix theme switching error
