@@ -29,6 +29,13 @@ const BLOCK_CATEGORIES = [
   'Others',
 ];
 
+
+const SCAFFOLD_CATEGORIES = [
+  'Basic',
+  'Pro',
+  'Others',
+];
+
 function nameQuestion(type, npmPrefix) {
   return {
     type: 'input',
@@ -186,6 +193,15 @@ function getQuestions(npmPrefix) {
           return true;
         },
       },
+      {
+        type: 'list',
+        name: 'category',
+        message: 'category',
+        choices: SCAFFOLD_CATEGORIES,
+        filter: (answer) => {
+          return answer;
+        },
+      },
     ],
   };
 }
@@ -194,7 +210,7 @@ function getCategories() {
   return {
     component: COMPONENT_CATEGORIES,
     block: BLOCK_CATEGORIES,
-    scaffold: [],
+    scaffold: SCAFFOLD_CATEGORIES,
   };
 }
 
