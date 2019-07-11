@@ -36,6 +36,6 @@
   "componentConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "category": "<%= category %>"
   }
 }

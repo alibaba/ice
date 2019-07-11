@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-react-material-template",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "自定义物料源的初始模板",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +24,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
+  },
+  "materialConfig": {
+    "type": "react"
   }
 }
