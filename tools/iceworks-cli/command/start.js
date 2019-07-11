@@ -3,6 +3,7 @@ const spawn = require('cross-spawn');
 const portfinder = require('portfinder');
 const chalk = require('chalk');
 const ora = require('ora');
+const open = require('open');
 const goldlog = require('../lib/goldlog');
 
 async function start(options = {}) {
@@ -26,11 +27,12 @@ async function start(options = {}) {
     env,
   });
 
-  child.stdout.on('data', (data) => {
+  child.stdout.on('data', async (data) => {
     spinner.start();
     if (data.toString().indexOf('started on http://127.0.0.1') !== -1) {
       spinner.stop();
       successMsg(url);
+      await open(url);
       goldlog('start-server');
     }
   });
