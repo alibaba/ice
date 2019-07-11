@@ -1,6 +1,6 @@
 {
   "name": "iceworks",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.3",
   "description": "a simple CLI for iceworks",
   "main": "bin/iceworks.js",
   "bin": {
