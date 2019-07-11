@@ -27,6 +27,7 @@
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "fs-extra": "^8.0.1",
+    "globby": "^10.0.1",
     "ice-npm-utils": "^1.0.1",
     "inquirer": "^6.2.0",
     "kebab-case": "^1.0.0",
