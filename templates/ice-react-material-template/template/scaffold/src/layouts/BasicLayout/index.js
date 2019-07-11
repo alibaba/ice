@@ -6,9 +6,9 @@ import styles from './index.module.scss';
 export default function BasicLayout ({ children }) {
 
   return (
-    <div style={styles.container}>
+    <div className={styles.container}>
       {/* Aside */}
-      <div style={styles.aside}>
+      <div className={styles.aside}>
         {asideMenuConfig && asideMenuConfig.length > 0 ? (
           asideMenuConfig.map((item, idx) => {
             return <NavLink key={idx} {...item} />;
@@ -17,9 +17,9 @@ export default function BasicLayout ({ children }) {
       </div>
 
       {/* Main */}
-      <div style={styles.main}>
+      <div className={styles.main}>
         {/* Header */}
-        <div style={styles.header}>
+        <div className={styles.header}>
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
             headerMenuConfig.map((item, idx) => {
               return <NavLink key={idx} {...item} />;
@@ -28,7 +28,7 @@ export default function BasicLayout ({ children }) {
         </div>
 
         {/* Content */}
-        <div style={styles.content}>
+        <div className={styles.content}>
           {children}
         </div>
       </div>
