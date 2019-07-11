@@ -6,6 +6,8 @@ const logger = require('../utils/logger');
 const getTemplate = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
 
+const DEFAULT_TYPES = ['material', 'component', 'block', 'scaffold'];
+
 module.exports = async function init(cwd) {
   try {
     // check current directory empty
@@ -14,12 +16,17 @@ module.exports = async function init(cwd) {
 
     const options = Object.assign({
       cwd,
-      type: process.env.TYPE, // --type
       template: process.env.TEMPLATE, // --template
     });
 
+    const type = process.env.TYPE || 'material'; // --type
+
+    if (!DEFAULT_TYPES.includes(type)) {
+      throw new Error('Invalid type, `type` must be component/block/scaffold.');
+    }
+
     // get user answers
-    const { type, template, scope, forInnerNet } = await initAsk(options);
+    const { template, scope, forInnerNet } = await initAsk(options);
     const npmPrefix = scope ? `${scope}/` : '';
     const { templatePath, downloadPath, config: materialConfig } = await getTemplate(cwd, type, template);
 
@@ -55,25 +62,6 @@ module.exports = async function init(cwd) {
 };
 
 async function initAsk(options = {}) {
-  const types = ['material', 'scaffold', 'component', 'block'];
-  let type = options.type;
-
-  // confirm init type
-  if (!type || !types.includes(type)) {
-    const result = await inquirer.prompt([
-      {
-        type: 'list',
-        message: 'please select the material type',
-        name: 'type',
-        default: types[0],
-        choices: types,
-      },
-    ]);
-    type = result.type;
-  } else {
-    console.log(`you assign the type ${chalk.cyan(type)} by --type`);
-  }
-
   // select template
   let template = options.template;
   if (!template) {
@@ -136,7 +124,6 @@ async function initAsk(options = {}) {
   ]);
 
   return {
-    type,
     scope,
     template,
     forInnerNet,

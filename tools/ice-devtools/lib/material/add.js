@@ -26,7 +26,7 @@ module.exports = async function addMaterial(cwd, opts = {}) {
 
   if (answers.adaptor) {
     // copy template adaptor to src
-    const adaptorDir = path.join(__dirname, '../template/component');
+    const adaptorDir = path.join(__dirname, '../../template/component');
     fse.copySync(adaptorDir, src);
   }
 
