@@ -54,7 +54,8 @@ function render(options, done) {
     inPlace: dest === process.cwd(),
     noEscape: true,
     registry: getNpmRegistry(npmName || name),
-    categories: {},
+    categories: {}, // TODO: 已废弃，使用 category，下版本移除
+    category: '',
     ...opts,
   });
   debug('%j', data);

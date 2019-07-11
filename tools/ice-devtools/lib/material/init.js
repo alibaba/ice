@@ -41,7 +41,6 @@ module.exports = async function addMaterial(cwd, opt = {}) {
       dest: cwd,
       materialConfig,
       categories: {},
-      category: '',
       registry: process.env.REGISTRY,
     });
 
@@ -108,7 +107,6 @@ async function generateExample(cwd, templatePath, materialConfig) {
       title: `demo ${type}`,
       description: '示例',
       skipGitIgnore: true,
-      categories: {},
       materialConfig,
     });
   }
