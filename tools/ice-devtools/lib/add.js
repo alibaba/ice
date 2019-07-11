@@ -25,7 +25,7 @@ module.exports = async function add(cwd) {
     const pkg = pkgJSON.getPkgJSON(cwd);
 
     if (!pkg || !pkg.materialConfig || !pkg.materialConfig.template) {
-      throw new Error(message.invalid);
+      throw new Error(message.missingTemplate);
     }
 
     const templateName = pkg.materialConfig.template;

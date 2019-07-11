@@ -1,5 +1,7 @@
 const chalk = require('chalk');
 
 module.exports = {
-  invalid: `invalid ice materials project ${chalk.cyan('docs: https://alibaba.github.io/ice')}`,
+  invalid: `Invalid ice materials project ${chalk.cyan('docs: https://ice.work/docs/materials/about')}`,
+  missingMaterialConfig: 'Missing `materialConfig` property in package.json file.',
+  missingTemplate: 'Missing `materialConfig.template` property in package.json file.',
 };

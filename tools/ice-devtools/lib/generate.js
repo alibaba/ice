@@ -22,8 +22,9 @@ module.exports = async function generate(cwd) {
 
     // 全局的 materialConfig，字段会生成在全局 json 上，仅用于标识物料源根目录以及自定义全局字段
     if (!materialConfig) {
-      throw new Error(message.invalid);
+      throw new Error(message.missingMaterialConfig);
     }
+
     await generateMaterialsDatabases(pkgJson, cwd);
   } catch (err) {
     console.log(chalk.red('Generate fail!'));
