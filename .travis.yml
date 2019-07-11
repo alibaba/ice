@@ -16,4 +16,4 @@ matrix:
     - os: osx
       if: branch = iceworks/electron
       script:
-        - npm run dist
+        - cd tools/iceworks-app && npm run dist
