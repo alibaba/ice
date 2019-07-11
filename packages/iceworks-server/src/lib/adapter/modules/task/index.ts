@@ -19,6 +19,8 @@ export default class Task implements ITaskModule {
 
   private status: object = {};
 
+  private installed: boolean = true;
+
   public readonly cliConfPath: string;
 
   private process: object = {};
@@ -44,7 +46,8 @@ export default class Task implements ITaskModule {
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
     if(!pathExists) {
-      throw new Error(i18n.format('baseAdapter.task.install.dependency'));
+      this.installed = false;
+      return this;
     }
 
     const { command } = args;

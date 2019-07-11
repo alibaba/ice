@@ -47,8 +47,8 @@ export default {
 
   // project
   'iceworks.project.title': 'Project',
-  'iceworks.project.create.init.title': 'Initialization Project',
-  'iceworks.project.create.init.content': 'The dependencies of the current project have not been installed yet. The installation process may take several minutes. Do you want to install it immediately?',
+  'iceworks.project.install.dependencies.title': 'Installing dependencies',
+  'iceworks.project.install.dependencies.content': 'The dependencies of the current project have not been installed yet. The installation process may take several minutes. Do you want to install it immediately?',
   'iceworks.project.submenu.opts.openProject': 'Open',
   'iceworks.project.submenu.opts.createProject': 'Create',
 
