@@ -4,5 +4,5 @@ const detectPort = require('detect-port');
 
 const baseDir = path.join(process.cwd(), 'node_modules/iceworks-server');
 let setPort = '7001';
-setPort = await detectPort(setPort);
+setPort = detectPort(setPort);
 mv.startCluster({ sticky: true, baseDir, port: setPort });
