@@ -13,6 +13,10 @@ import * as t from '@babel/types';
  */
 function getCLIConf(path: string, defaultConf) {
   try {
+    // Do not merge if there is no user specified config file
+    if (path.length === 0) {
+      return;
+    }
     const code = fsExtra.readFileSync(path, 'utf8');
     const ast = parser.parse(code, { sourceType: 'module' });
 
