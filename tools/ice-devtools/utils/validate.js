@@ -26,7 +26,7 @@ const componentSchema = createSchema((joi) => joi.object().keys({
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
   categories: joi.array().items(joi.string().only([...categories.component])), // （必选）分类
-  category: joi.string().only([...categories.component]), // （必选）分类
+  category: joi.string().allow('').only([...categories.component]), // （必选）分类
   repository: joi.string().uri(), // （可选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -46,7 +46,7 @@ const blockSchema = createSchema((joi) => joi.object().keys({
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
   categories: joi.array().items(joi.string().only([...categories.block])), // （必选）分类
-  category: joi.string().only([...categories.block]), // （必选）分类
+  category: joi.string().allow('').only([...categories.block]), // （必选）分类
   repository: joi.string().uri().required(), // （必选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -68,7 +68,7 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
   title: joi.string().required(),
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
-  category: joi.string().only([...categories.scaffold]), // （必选）分类
+  category: joi.string().allow('').only([...categories.scaffold]), // （必选）分类
   repository: joi.string().uri().required(), // （必选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
