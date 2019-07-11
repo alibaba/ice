@@ -14,7 +14,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     reset: installDependency,
     onResetModal: installDependencyVisible,
     setResetModal: setInstallDependencyVisible,
-  } = useDependency();
+  } = useDependency(false, writeChunk, false);
 
   async function onStart() {
     try {
