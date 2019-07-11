@@ -38,7 +38,6 @@ gulp.task('dist', (done) => {
         config: packageJSON.build,
       });
     })
-    .then(done)
     .catch(console.error);
 });
 
