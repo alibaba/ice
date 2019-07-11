@@ -28,7 +28,7 @@ module.exports = {
           'tip-icon-color': '#6B6F83',
           'sub-menu-bg': '#434557',
           'global-bar-bg': '#434557',
-          'material-card-shadow': 'rgba(0, 0, 0, 0)',
+          'material-card-shadow': 'rgba(193, 193, 193, 0.35)',
           'text-color-inverse': '#e4e4e4',
         },
       }, {
