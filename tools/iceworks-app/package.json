@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "address": "^1.1.0",
-    "electron": "^5.0.6",
+    "electron": "5.0.1",
     "electron-builder": "^21.0.15",
     "gulp": "^3.9.1",
     "ice-npm-utils": "^1.1.0",
@@ -24,5 +24,45 @@
   "author": {
     "name": "Alibaba Group Holding Limited",
     "url": "http://alibaba.github.io/ice"
+  },
+  "build": {
+    "appId": "com.alibaba-inc.ice",
+    "asar": false,
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://iceworks.oss-cn-hangzhou.aliyuncs.com/${os}"
+      }
+    ],
+    "extraResources": [
+      {
+        "from": "./bin-${platform}",
+        "to": "./bin"
+      },
+      {
+        "from": "./binary/${platform}",
+        "to": "./binary"
+      }
+    ],
+    "files": [
+      "**/*"
+    ],
+    "mac": {
+      "category": "iceworks.app.category.type",
+      "icon": "build/icons/mac/icon.icns"
+    },
+    "win": {
+      "icon": "build/icons/win/icon.ico",
+      "artifactName": "${productName}-setup-${version}.${ext}"
+    },
+    "dmg": {
+      "iconSize": 160
+    },
+    "protocols": {
+      "name": "iceworks",
+      "schemes": [
+        "iceworks"
+      ]
+    }
   }
 }
