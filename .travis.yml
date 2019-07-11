@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - '8'
 script:
-  - npm run lint:nofix
+  - npm run lint
 
 deploy:
   provider: script
