@@ -36,11 +36,13 @@ function isLocalPath(aPath) {
 async function getTemplate(cwd, type, template) {
   // from local path
   if (template && isLocalPath(template)) {
+    logger.verbose('getTemplate -> local', template, type);
+
     const templatePath = path.join(template, type === 'material' ? 'template' : `template/${type}`);
     if (existsSync(templatePath)) {
       const pkgJson = getPkgJSON(template);
       return {
-        path: templatePath,
+        templatePath,
         config: pkgJson.materialConfig || {},
       };
     }
@@ -48,6 +50,8 @@ async function getTemplate(cwd, type, template) {
   }
 
   // form npm package
+  logger.verbose('getTemplate -> start download npm', template, type);
+
   const downloadDir = path.join(cwd, '.ice-template');
   const tmp = await downloadTemplate(template, downloadDir);
   return {
@@ -60,7 +64,7 @@ async function getTemplate(cwd, type, template) {
 async function downloadTemplate(template, downloadDir) {
   downloadDir = path.join(downloadDir, template);
 
-  debug('downloadTemplate', template);
+  logger.debug('downloadTemplate', template, downloadDir);
   const spinner = ora('downloading template...').start();
 
   try {

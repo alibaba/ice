@@ -5,6 +5,8 @@ const rimraf = require('rimraf');
 const logger = require('../utils/logger');
 const getTemplate = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
+const materialAdd = require('./material/add');
+const materialInit = require('./material/init');
 
 const DEFAULT_TYPES = ['material', 'component', 'block', 'scaffold'];
 
@@ -32,8 +34,7 @@ module.exports = async function init(cwd) {
 
     if (type === 'material') {
       // init material project
-      /* eslint-disable-next-line import/no-dynamic-require */
-      await require('./material/init')(cwd, {
+      materialInit(cwd, {
         npmPrefix,
         template,
         templatePath,
@@ -43,8 +44,7 @@ module.exports = async function init(cwd) {
       });
     } else {
       // init single component/block/scaffold project
-      /* eslint-disable-next-line import/no-dynamic-require */
-      await require('./material/add')(cwd, {
+      materialAdd(cwd, {
         type,
         npmPrefix,
         template,
@@ -55,7 +55,11 @@ module.exports = async function init(cwd) {
       });
     }
 
-    rimraf.sync(downloadPath);
+    // TODO: 这里不需要等上面结束吗？
+    if (downloadPath) {
+      logger.debug('remove download files', downloadPath);
+      rimraf.sync(downloadPath);
+    }
   } catch (error) {
     logger.fatal(error);
   }
