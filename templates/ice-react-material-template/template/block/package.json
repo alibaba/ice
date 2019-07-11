@@ -17,10 +17,7 @@
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
     "screenshot": "screenshot -l -s \\#mountNode",
-    "prepublishOnly": "npm run build && npm run screenshot",
-    "lint": "npm run eslint && npm run stylelint",
-    "eslint": "eslint --cache --ext .js,.jsx ./",
-    "stylelint": "stylelint ./**/*.scss"
+    "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
     "prop-types": "^15.5.8"
@@ -32,10 +29,7 @@
     "ice-plugin-moment-locales": "^0.1.0",
     "ice-scripts": "^2.0.0",
     "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "@ice/spec": "^0.1.4",
-    "eslint": "^6.0.1",
-    "stylelint": "^10.1.0"
+    "react-dom": "^16.3.0"
   },
   "blockConfig": {
     "name": "<%= name %>",
