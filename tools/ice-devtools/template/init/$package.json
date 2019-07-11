@@ -14,7 +14,8 @@
   "files": ["build"],
   "devDependencies": {
     "@ice/spec": "^0.1.1",
-    "eslint": "^6.0.1"
+    "eslint": "^6.0.1",
+    "stylelint": "^10.1.0"
   },
   "materialConfig": {
     "template": "<%= template %>",

@@ -1,6 +1,6 @@
 .container {
-  height: 100vh;
   display: flex;
+  height: 100vh;
   background: #eee;
 }
 
@@ -11,8 +11,8 @@
 
 .main {
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
 }
 
 .header {
@@ -24,8 +24,8 @@
 .content {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   height: 100vh;
   margin: 20px;
   background: #fff;

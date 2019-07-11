@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import styles from './index.module.css';
 
-export default function <%= className %>() {
+export default function <%= className %>({ value }) {
   return (
     <div className={styles['<%= name %>']}>
-      <%= name %>
+      <%= name %> {value}
     </div>
   );
 }
 
 <%= className %>.propTypes = {
-  value: PropTypes.string
+  value: PropTypes.string,
 };
 
 <%= className %>.defaultProps = {
-  value: 'string data'
+  value: 'string data',
 };
