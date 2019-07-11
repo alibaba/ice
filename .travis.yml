@@ -2,12 +2,18 @@ sudo: required
 language: node_js
 node_js:
   - '8'
-script:
-  - npm run lint:nofix
-
-deploy:
-  provider: script
-  skip_cleanup: true # 避免清空已安装的依赖
-  script: npm run generate:docs && npm run upload-oss
-  on:
-    all_branches: true
+matrix:
+  include:
+    - os: linux  
+      script:
+        - npm run lint:nofix
+      deploy:
+        provider: script
+        skip_cleanup: true # 避免清空已安装的依赖
+        script: npm run generate:docs && npm run upload-oss
+        on:
+          all_branches: true
+    - os: osx
+      if: branch = iceworks/electron
+      script:
+        - npm run dist
