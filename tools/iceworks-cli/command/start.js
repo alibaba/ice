@@ -20,6 +20,7 @@ async function start(options = {}) {
   const env = Object.create(process.env);
   env.PORT = opts.port;
 
+  spinner.start();
   const child = spawn('npm', ['start'], {
     stdio: ['pipe'],
     cwd: path.join(__dirname, '../', 'server'),
@@ -27,7 +28,6 @@ async function start(options = {}) {
   });
 
   child.stdout.on('data', (data) => {
-    spinner.start();
     if (data.toString().indexOf('started on http://127.0.0.1') !== -1) {
       spinner.stop();
       successMsg(url);
