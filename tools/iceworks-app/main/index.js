@@ -3,13 +3,13 @@ const address = require('address');
 const execa = require('execa');
 const path = require('path');
 const detectPort = require('detect-port');
-// const is = require('electron-is');
+const is = require('electron-is');
 
 let mainWindow;
 let serverProcess;
 let setPort = '7001';
 
-const isProduction = true; // is.production();
+const isProduction = is.production();
 const ip = address.ip();
 const serverDir = path.join(__dirname, '..', 'server');
 const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
@@ -46,7 +46,6 @@ function createWindow() {
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
-        console.log(logInfo);
         if (logInfo.search('midway started on') > 0) {
           mainWindow.loadURL(getServerUrl());
         }
