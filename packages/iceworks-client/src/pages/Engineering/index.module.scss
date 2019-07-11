@@ -1,0 +1,16 @@
+.tasksPage {
+  display: flex;
+  height: 100%;
+
+  .main {
+    flex: 1;
+    margin: 20px;
+  }
+}
+
+.noProject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

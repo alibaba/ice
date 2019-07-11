@@ -1,0 +1,58 @@
+@import '../../../../variables.scss';
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .tip {
+      flex: 1;
+    }
+  }
+
+  .content {
+    flex: 1;
+    background-color: $background-color-light;
+    margin: 10px 0;
+    overflow-y: auto;
+    padding: 6px 4px;
+
+    .item {
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .label {
+        margin-right: 4px;
+        padding: 2px;
+      }
+    }
+  }
+
+  .opts {
+    display: flex;
+    flex-direction: row;
+
+    .input {
+      flex: 1;
+    }
+
+    .button {
+      margin-left: 6px;
+      width: 120px;
+    }
+  }
+
+  .tips {
+    color: $text-color-normal;
+    margin-top: 6px;
+    font-size: $font-size-sm;
+  }
+}

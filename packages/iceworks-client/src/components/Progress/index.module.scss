@@ -1,0 +1,26 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+
+  .status {
+    margin-bottom: 6px;
+  }
+
+  .progress {
+    flex: 1;
+
+    :global {
+      .next-progress-line {
+        display: flex;
+
+        .next-progress-line-container {
+          flex: 1;
+        }
+
+        .next-progress-line-text {
+          width: auto;
+        }
+      }
+    }
+  }
+}

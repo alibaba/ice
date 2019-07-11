@@ -1,0 +1,19 @@
+.materialPage {
+  display: flex;
+  height: 100%;
+
+  .main {
+    flex: 1;
+    margin: 20px;
+    overflow: hidden;
+  }
+  :global {
+    .next-card {
+      padding: 0;
+    }
+
+    .next-card-head {
+      padding: 0 16px;
+    }
+  }
+}

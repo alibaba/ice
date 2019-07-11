@@ -1,6 +1,16 @@
 # Changelog
 
 ## 2.4.0
+- [feat] 移除 .template 的设计
+- [refactor] screentshot/homepage 两个字段的生成逻辑优化，截图功能提供单独的 CLI 工具 @ice/screenshot
+- [refactor] utils 相关代码优化
+- [feat] 物料数据的国际化
+- [feat] 物料数据校验
+- [feat] 物料数据增加 type、category 字段，取消 categories
+
+## 2.3.3
+
+- [refactor] 移除 zlib 依赖，使用 node 内置 zlib
 
 ## 2.3.2
 

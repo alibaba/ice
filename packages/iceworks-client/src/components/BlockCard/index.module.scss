@@ -1,0 +1,77 @@
+@import '../../variables.scss';
+
+.container {
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px $material-card-shadow;
+  background: $panel-bg;
+  transition: transform 0.3s ease;
+  display: block;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-6px);
+    .actions {
+      transform: translateY(0);
+    }
+  }
+}
+
+.screenshot {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  transition: all 0.3s ease;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+}
+
+.title {
+  margin: 0;
+  padding: 10px;
+  color: $text-color-secondary;
+  border-top: 1px solid $color-line1-2;
+  text-align: center;
+}
+
+.actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: transform 0.3s ease;
+  transform: translateY(100%);
+  z-index: 10;
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: bold;
+    background: $brand-color-primary;
+    color: $text-color-inverse;
+    cursor: pointer;
+
+    .githubImg,
+    .eyeImg,
+    .downloadImg {
+      width: 20px;
+      margin-right: 6px;
+    }
+  }
+}

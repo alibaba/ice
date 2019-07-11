@@ -1,0 +1,37 @@
+@import '../../variables.scss';
+
+.item {
+  &:hover {
+    background: $background-color-base;
+  }
+  .link {
+    display: flex;
+    align-items: center;
+    height: 58px;
+    padding: 0 15px;
+    color: $text-color-secondary;
+    text-decoration: none;
+  }
+
+  .icon {
+    color: $text-color-primary;
+  }
+
+  .info {
+    margin-left: 10px;
+    .name {
+      margin: 0;
+    }
+
+    .desc {
+      margin: 0;
+      color: $text-color-primary;
+    }
+  }
+}
+
+:global {
+  .selected {
+    background: $background-color-light;
+  }
+}

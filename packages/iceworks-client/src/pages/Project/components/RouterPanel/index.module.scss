@@ -1,0 +1,43 @@
+@import '../../../../variables.scss';
+
+.confirmContent {
+  line-height: 24px;
+  width: 320px;
+}
+
+.main {
+  .item, .title {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $border-color-base;
+    height: 32px;
+    align-items: center;
+    padding-left: 3px;
+
+    strong {
+      font-size: $font-size-base;
+      height: $font-size-base;
+      line-height: $font-size-base;
+      font-weight: 400;
+    }
+
+    .itemCol, .titleCol {
+      flex: 1;
+    }
+
+    .titleCol {
+      font-weight: bold;
+    }
+
+    .operater {
+      text-align: right;
+      margin-right: 8px;
+    }
+
+    .icon {
+      color: $brand-color-primary;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+  }
+}
