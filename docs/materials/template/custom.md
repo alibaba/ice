@@ -1,6 +1,6 @@
 ---
 title: 自定义物料模版
-order: 4
+order: 5
 ---
 
 ice-devtools 默认集成了三种物料模版：

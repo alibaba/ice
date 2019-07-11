@@ -89,7 +89,7 @@ npm publish
 
 和区块不同的地方在于，demo 目录下不再是 `html` 和 `js` 文件，而是一个个的 `md` 文件。这些 `md` 是该组件的示例代码及描述，每个示例一个文件，这些 `md` 会在启动开发服务时自动渲染，为组件提供开发预览及文档能力。示例如下：
 
-```
+````
 ---
 title: Simple Usage
 order: 1
@@ -97,7 +97,7 @@ order: 1
 
 本 Demo 演示一行文字的用法。
 
-````jsx
+```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ExampleComponent from 'custom-material-example-component';
@@ -115,8 +115,8 @@ class App extends Component {
 ReactDOM.render((
   <App />
 ), mountNode);
-````
 ```
+````
 
 另一个区别在于组件的构建产物多个一个 `lib/` 目录，这个目录存放组件 ES5 风格的代码。
 
