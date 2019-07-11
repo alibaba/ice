@@ -1,6 +1,9 @@
 module.exports = {
   entry: 'src/index.js',
   publicPath: './',
+  alias: {
+    '@': path.resolve(__dirname, './src/'),
+  },
   plugins: [
     ['ice-plugin-fusion', {
       themePackage: '@icedesign/theme',

@@ -7,19 +7,14 @@
     "deploy": "npm run generate && npm run sync",
     "generate": "idev generate",
     "sync": "idev sync",
-    "sync-unpkg": "idev sync-unpkg",
-    "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint --cache --ext .js,.jsx ./",
+    "stylelint": "stylelint ./**/*.scss"
   },
   "files": ["build"],
   "devDependencies": {
-    "babel-eslint": "^8.1.2",
-    "eslint": "^4.14.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1"
+    "@ice/spec": "^0.1.1",
+    "eslint": "^6.0.1"
   },
   "materialConfig": {
     "template": "<%= template %>",

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "react-router-dom": "^5.0.1"
+  },
+  "devDependencies": {
+    "@ice/spec": "^0.1.4",
+    "eslint": "^6.0.1",
+    "stylelint": "^10.1.0"
+  }
+}

@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import Greeting from '../../components/Greeting';
+import { Link } from 'react-router-dom';
 
-export default class About extends Component {
-  render() {
-    const links = [
-      {
-        text: '返回首页',
-        path: '/',
-      },
-    ];
-    return <Greeting title="关于页面" links={links} />;
-  }
+export default function About() {
+  return (
+    <div>
+      <h2>About Page</h2>
+      <link to="/">Go to home</link>
+    </div>
+  );
 }
