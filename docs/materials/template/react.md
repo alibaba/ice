@@ -116,4 +116,4 @@ Antd 是 React 热门组件库之一，使用在物料中使用 Antd 需要以�
 
 1. 移除 @alifd/next 和 ice-plugin-fusion 依赖；
 2. 添加 andt 和 [ice-plugin-antd](https://ice.work/docs/cli/plugin-list/antd) 依赖；
-3. 修改 `ice.config.js` 文件，移除 `ice-plugin-fusion` 后添加 `ice-plugin-antd` 配置，具体配置可查看 [`ice-plugin-antd` 文档](https://ice.work/docs/cli/plugin-list/antd)。
+3. 修改 `ice.config.js` 文件，移除 `ice-plugin-fusion` 后添加 `ice-plugin-antd` 配置，具体配置可查看 [ice-plugin-antd 文档](https://ice.work/docs/cli/plugin-list/antd)。
