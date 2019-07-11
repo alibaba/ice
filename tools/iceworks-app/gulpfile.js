@@ -26,12 +26,6 @@ gulp.task('dist', (done) => {
   const buildDir = path.join(__dirname, 'build');
   const distDir = path.join(__dirname, 'dist');
 
-  async function copyFiles() {
-    await filecopy(
-      'app/*',
-      'build'
-    );
-  }
 
   async function build() {
     if (fs.existsSync(distDir)) {
@@ -64,6 +58,13 @@ gulp.task('dist', (done) => {
     });
   }
 
+  async function copyAppFiles() {
+    await filecopy(
+      'app/*',
+      'build'
+    );
+  }
+
   async function setPackage() {
     const packageJSONFileName = 'package.json';
     const packageJSONPath = path.join(__dirname, packageJSONFileName);
@@ -81,7 +82,7 @@ gulp.task('dist', (done) => {
   }
 
   async function devDist() {
-    await copyFiles();
+    await copyAppFiles();
 
     await setPackage();
 
@@ -96,7 +97,7 @@ gulp.task('dist', (done) => {
 
     await getServerCode();
 
-    await copyFiles();
+    await copyAppFiles();
 
     await setPackage();
 
