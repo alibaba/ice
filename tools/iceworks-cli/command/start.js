@@ -21,18 +21,18 @@ async function start(options = {}) {
   const env = Object.create(process.env);
   env.PORT = opts.port;
 
+  spinner.start();
   const child = spawn('npm', ['start'], {
     stdio: ['pipe'],
     cwd: path.join(__dirname, '../', 'server'),
     env,
   });
 
-  child.stdout.on('data', async (data) => {
-    spinner.start();
+  child.stdout.on('data', (data) => {
     if (data.toString().indexOf('started on http://127.0.0.1') !== -1) {
       spinner.stop();
       successMsg(url);
-      await open(url);
+      open(url);
       goldlog('start-server');
     }
   });
