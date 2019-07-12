@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const { spawn } = require('child_process');
+const { fork } = require('child_process');
 const path = require('path');
 const StopCommand = require('egg-scripts').StopCommand;
 // const is = require('electron-is');
@@ -18,7 +18,7 @@ function createWindow() {
 
   mainWindow.loadFile(startLoadingHTML);
 
-  serverProcess = spawn('node', ['start_server.js']);
+  serverProcess = fork(require.resolve('../start_server.js'));
   serverProcess.stdout.on('data', (buffer) => {
     const logInfo = buffer.toString();
     console.log(logInfo);

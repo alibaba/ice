@@ -27,7 +27,7 @@ gulp.task('dist', () => {
       return getAndExtractTarball(serverDir, tarball);
     })
     .then(() => {
-      return execa.shell('npm install', {
+      return execa.shell('cnpm install', {
         stdio: 'inherit',
         cwd: serverDir,
       });
