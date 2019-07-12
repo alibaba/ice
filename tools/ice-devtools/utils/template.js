@@ -63,7 +63,7 @@ async function getTemplate(cwd, type, template) {
 async function downloadTemplate(template, downloadDir) {
   downloadDir = path.join(downloadDir, template);
 
-  logger.debug('downloadTemplate', template, downloadDir);
+  logger.verbose('downloadTemplate', template, downloadDir);
   const spinner = ora('downloading template...').start();
 
   try {
