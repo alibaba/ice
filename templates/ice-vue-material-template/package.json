@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-vue-material-template",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "自定义物料源的初始模板",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +24,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
+  },
+  "materialConfig": {
+    "type": "vue"
   }
 }

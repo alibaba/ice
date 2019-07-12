@@ -144,18 +144,7 @@ class BasicForm extends Component {
                     this.props.handleColorChange('primary', color)
                   }
                 />
-
-                <span
-                  style={{ paddingLeft: 10, paddingRight: 10, fontSize: 12 }}
-                >
-                  辅色
-                </span>
-                <ColorPicker
-                  backgroundColor={value.themeConfig.secondaryColor}
-                  onChange={(color) =>
-                    this.props.handleColorChange('secondary', color)
-                  }
-                />
+                
               </div>
 
               <div

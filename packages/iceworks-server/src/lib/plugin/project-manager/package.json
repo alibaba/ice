@@ -1,0 +1,6 @@
+{
+  "eggPlugin": {
+    "name": "projectManager",
+    "dependencies": [ "i18n" ]
+  }
+}

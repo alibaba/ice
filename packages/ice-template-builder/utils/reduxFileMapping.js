@@ -44,6 +44,7 @@ const REDUX_TEMPLATE_FILE_MAPPING = {
     '_eslintrc',
     '_gitignore',
     '_package.json',
+    'ice.config.js',
     'README.md',
   ],
 };

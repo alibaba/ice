@@ -3,7 +3,7 @@ title: 关于 ice-scripts
 order: 1
 ---
 
-[ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 是飞冰（ICE）团队提供的 React 链路的工程工具。
+[ice-scripts](https://github.com/ice-lab/ice-scripts) 是飞冰（ICE）团队提供的 React 链路的工程工具。
 
 ice-scripts 提供了丰富的功能帮助我们开发 React 项目：完善的默认配置，让开发者专注于项目开发，不必理会复杂的工程配置问题；提供灵活的配置能力，无需像 create-react-app 那样 eject 所有 webpack 配置；通过丰富的插件体系涵盖不同场景，支持各种功能拓展和业务需求。
 

@@ -5,6 +5,17 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc",
+    "screenshot.png"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,15 +23,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "screenshot": "ice-devtools screenshot",
+    "screenshot": "screenshot -l",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "keywords": ["ice", "angular", "scaffold"],
   "scaffoldConfig": {
     "builder": "angular-cli",
     "name": "<%= npmName %>",
-    "title": "<%= title %>",
-    "categories": ["基础模板"]
+    "title": "<%= title %>"
   },
   "dependencies": {
     "@angular/animations": "~7.2.0",
@@ -41,6 +51,7 @@
     "@angular/cli": "~7.3.8",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
+    "@ice/screenshot": "^0.1.1",
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",

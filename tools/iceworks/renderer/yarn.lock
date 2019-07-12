@@ -83,10 +83,10 @@
   resolved "https://registry.npm.taobao.org/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
   integrity sha1-vo5i9Gelouq+efVN4jsJJegw2uI=
 
-"@icedesign/template-builder@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/@icedesign/template-builder/download/@icedesign/template-builder-2.0.1.tgz#8ee6d33ab7d4c6b70cbd63730eed853763b7764d"
-  integrity sha1-jubTOrfUxrcMvWNzDu2FN2O3dk0=
+"@icedesign/template-builder@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/@icedesign/template-builder/download/@icedesign/template-builder-3.0.1.tgz#669c0bdf2b77681538991f3c94fdc7fd0a5290c4"
+  integrity sha1-ZpwL3yt3aBU4mR88lP3H/QpSkMQ=
   dependencies:
     "@icedesign/base" "^0.2.2"
     "@icedesign/form-binder" "^0.1.11"

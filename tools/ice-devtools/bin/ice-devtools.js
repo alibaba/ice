@@ -3,13 +3,13 @@ const program = require('commander');
 const chalk = require('chalk');
 const semver = require('semver');
 const updateNotifier = require('update-notifier');
+const dotenv = require('dotenv');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
 const optionsAttachToEnv = require('../utils/options-attach-to-env');
 const goldlog = require('../utils/goldlog');
 const boxenLog = require('../utils/boxen-log');
 
-const cwd = process.cwd();
 
 // 统计用户版本
 goldlog('version', {
@@ -24,6 +24,8 @@ updateNotifier({
 exec();
 
 function exec() {
+  const cwd = process.cwd();
+
   welcome();
   const requiredVersion = packageJson.engines.node;
   checkNodeVersion(requiredVersion, packageJson.name);
@@ -46,6 +48,7 @@ function exec() {
 
     command.action((...args) => {
       optionsAttachToEnv(command);
+      dotenv.config({ debug: process.env.DEBUG });
       goldlog(cmdType, {});
       /* eslint-disable-next-line import/no-dynamic-require */
       require(`../lib/${cmdType}`).apply(global, [cwd, ...args]);

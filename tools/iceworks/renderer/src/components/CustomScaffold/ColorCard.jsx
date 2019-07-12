@@ -12,7 +12,6 @@ class ColorCard extends Component {
   render() {
     const { customScaffold } = this.props;
     const primaryColors = customScaffold.primaryColors;
-    const secondaryColors = customScaffold.secondaryColors;
     return (
       <div>
         <div
@@ -32,33 +31,12 @@ class ColorCard extends Component {
         <div
           style={{ display: 'flex', flexDirection: 'row', padding: '5px 0' }}
         >
-          <div>辅色阶：</div>
-          {secondaryColors.map((hex) => {
-            return (
-              <div
-                title={hex}
-                key={hex}
-                style={{ backgroundColor: hex, width: 16, height: 16 }}
-              />
-            );
-          })}
-        </div>
-        <div
-          style={{ display: 'flex', flexDirection: 'row', padding: '5px 0' }}
-        >
           <Button
             type="primary"
             size="small"
             style={{ backgroundColor: primaryColors[5] }}
           >
             主按钮
-          </Button>
-          <Button
-            type="secondary"
-            size="small"
-            style={{ backgroundColor: secondaryColors[0], marginLeft: 10 }}
-          >
-            次按钮
           </Button>
         </div>
       </div>

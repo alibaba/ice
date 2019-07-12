@@ -114,7 +114,7 @@ module.exports = {
 
 ## hash
 
-* 类型：`boolean`
+* 类型：`boolean` | `string`
 * 默认值：`false`
 
 如果希望构建后的资源带 hash 版本，可以将 `hash` 设置为 `true`
@@ -122,7 +122,8 @@ module.exports = {
 ```js
 // ice.config.js
 module.exports = {
-  hash: true
+  hash: true,
+  // hash: 'contenthash'
 }
 ```
 

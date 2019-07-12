@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $white;
+  cursor: pointer;
+
+  &.isLogin {
+    cursor: default;
+  }
+
+  .avatar {
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    margin-bottom: 4px;
+  }
+}

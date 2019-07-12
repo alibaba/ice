@@ -4,8 +4,7 @@ const { format } = require('util');
 /**
  * Prefix.
  */
-const prefix = '   ice-devtools';
-const sep = chalk.gray('·');
+const prefix = '[ice-devtools]';
 
 /**
  * Log a `message` to the console.
@@ -14,7 +13,7 @@ const sep = chalk.gray('·');
  */
 exports.log = function (...args) {
   const msg = format.apply(format, args);
-  console.log(chalk.white(prefix), sep, msg);
+  console.log(chalk.white(prefix), msg);
 };
 
 /**
@@ -24,7 +23,7 @@ exports.log = function (...args) {
  */
 exports.info = function (...args) {
   const msg = format.apply(format, args);
-  console.log(chalk.green(prefix), sep, msg);
+  console.log(chalk.green(prefix), msg);
 };
 
 /**
@@ -36,7 +35,7 @@ exports.verbose = function (...args) {
   }
 
   const msg = format.apply(format, args);
-  console.log(chalk.white(prefix), sep, msg);
+  console.log(chalk.white(prefix), msg);
 };
 
 /**
@@ -45,10 +44,14 @@ exports.verbose = function (...args) {
  * @param {String} message
  */
 exports.fatal = function (...args) {
-  if (args[0] instanceof Error) args[0] = args[0].message.trim();
-  const msg = format.apply(format, args);
   console.log();
-  console.error(chalk.red(prefix), sep, msg);
+  if (args[0] instanceof Error) {
+    const errorName = args[0].name ? ` ${args[0].name}:` : '';
+    console.error(chalk.red(prefix + errorName + args[0].message.trim()));
+    console.error(args[0]);
+  } else {
+    console.error(chalk.red(prefix), ...args);
+  }
   console.log();
   process.exit(1);
 };
@@ -61,7 +64,7 @@ exports.fatal = function (...args) {
 exports.success = function (...args) {
   const msg = format.apply(format, args);
   console.log();
-  console.log(chalk.white(prefix), sep, msg);
+  console.log(chalk.white(prefix), msg);
   console.log();
 };
 
@@ -74,6 +77,6 @@ exports.success = function (...args) {
 exports.warn = function (...args) {
   const msg = format.apply(format, args);
   console.log();
-  console.log(chalk.yellow(prefix), sep, msg);
+  console.log(chalk.yellow(prefix), msg);
   console.log();
 };

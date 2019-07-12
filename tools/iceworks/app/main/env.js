@@ -5,7 +5,6 @@ const is = require('electron-is');
 const pathKey = require('path-key');
 const settings = require('./services/settings');
 const logger = require('./logger');
-
 const { APP_BIN_PATH } = require('./paths');
 
 exports.getEnv = () => {

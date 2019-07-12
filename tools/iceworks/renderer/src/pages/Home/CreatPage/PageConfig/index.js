@@ -383,7 +383,7 @@ class PageConfig extends Component {
               确定
             </Button>
           </div>
-)}
+        )}
       >
         <Form
           size="small"

@@ -98,10 +98,10 @@ class Extensions {
       }, gitConfig);
     }
 
-    if (projects.currentProject) {
+    if (projects && projects.currentProject && projects.currentProject.pkgData) {
       const { pkgData = {} } = projects.currentProject;
-      const { devDependencies = {} } = pkgData;
-      if (/^\^1\./.test(devDependencies['ice-scripts'])) {
+      const { devDependencies } = pkgData;
+      if (devDependencies && /^\^1\./.test(devDependencies['ice-scripts'])) {
         this.list.push({
           name: 'proxies',
           cover: require('../static/prories@3x.png'), // 1x1 的封面图

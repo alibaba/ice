@@ -16,6 +16,7 @@ const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
 const glodlog = require('../../glodlog');
 const autoRetry = require('../../utils/autoRetry');
+const env = require('../../env');
 
 /**
  * 批量下载 block 到页面中
@@ -165,8 +166,11 @@ async function downloadBlockToPage(
     materialUtils.getTarballURLBySource(block.source, projectVersion)
   );
 
+  const registry = env.npm_config_registry || block.source.registry;
+  const blockInfo = `${registry}/${block.source.npm}`;
+
   if (err) {
-    err.message = '请求区块 tarball 包失败';
+    err.message = `请求区块 ${blockInfo} 包失败`;
     throw new Error(err);
   }
 

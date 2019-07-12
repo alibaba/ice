@@ -12,6 +12,7 @@ const {
   getLatestVersion,
 } = require('ice-npm-utils');
 
+
 const Parser = tar.Parse;
 
 module.exports = (options = {}) => {
@@ -66,7 +67,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
       .on('error', (err) => {
         reject(err);
       })
-      .pipe(zlib.Unzip())
+      .pipe(zlib.createGunzip())
       .pipe(new Parser())
       .on('entry', (entry) => {
         /* eslint-disable-next-line no-useless-escape */

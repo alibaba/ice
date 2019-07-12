@@ -53,8 +53,18 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
         const realPath = entry.path.replace(/^package\//, '');
-        const destPath = path.join(destDir, realPath);
 
+        let filename = path.basename(realPath);
+
+        // _gitignore -> .gitignore
+        // Special logic：_package.json -> package.json
+        if (filename === '_package.json') {
+          filename = filename.replace(/^_/, '');
+        } else {
+          filename = filename.replace(/^_/, '.');
+        }
+
+        const destPath = path.join(destDir, path.dirname(realPath), filename);
         const dirToBeCreate = path.dirname(destPath);
         if (!dirCollector.includes(dirToBeCreate)) {
           dirCollector.push(dirToBeCreate);
@@ -65,7 +75,8 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
         allWriteStream.push(new Promise((streamResolve) => {
           entry
             .pipe(fs.createWriteStream(destPath))
-            .on('finish', () => streamResolve());
+            .on('finish', () => streamResolve())
+            .on('close', () => streamResolve()); // resolve when file is empty in node v8
         }));
       })
       .on('end', () => {

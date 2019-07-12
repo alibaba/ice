@@ -55,9 +55,6 @@ module.exports = (_options, afterCreateRequest) => {
       generateAbcJsonFile(needCreateDefflow, targetPath, scaffold);
     })
     .then(() => {
-      updateScaffoldConfig(isCustomScaffold, layoutConfig);
-    })
-    .then(() => {
       if (nodeFramework) {
         processNodeProject(targetPath, nodeFramework);
       }
@@ -146,41 +143,6 @@ function generateAbcJsonFile(needCreateDefflow, destDir, scaffold) {
         fs.writeFile(abcJson, JSON.stringify(abcContext, null, 2), () => {
           resolve();
         });
-      }
-    });
-  }
-  return Promise.resolve();
-}
-
-/**
- * 更新模板配置
- * @param {Boolean} isCustomScaffold
- * @param {Object}  layoutConfig
- */
-function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
-  if (isCustomScaffold) {
-    const currentPath = layoutConfig.directory;
-    return new Promise((resolve, reject) => {
-      const pkgJSONPath = path.join(currentPath, 'package.json');
-      let pkgJSON;
-      if ('themeConfig' in layoutConfig) {
-        try {
-          pkgJSON = fs.readFileSync(pkgJSONPath);
-          pkgJSON = JSON.parse(pkgJSON.toString());
-          pkgJSON.themeConfig = layoutConfig.themeConfig;
-          const data = `${JSON.stringify(pkgJSON, null, 2)}\n`;
-          fs.writeFile(pkgJSONPath, data, 'utf-8', (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(currentPath);
-            }
-          });
-        } catch (err) {
-          reject(err);
-        }
-      } else {
-        resolve(currentPath);
       }
     });
   }

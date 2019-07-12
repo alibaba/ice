@@ -1,6 +1,7 @@
 const kebabCase = require('kebab-case');
 const chalk = require('chalk');
-const { getNpmInfo } = require('ice-npm-utils');
+const spawn = require('cross-spawn');
+const { getNpmInfo, isAliNpm } = require('ice-npm-utils');
 
 /**
  * 获取 npm 包名
@@ -49,7 +50,40 @@ function getNpmTime(npm, version = 'latest') {
     });
 }
 
+/**
+ * get NPM registry
+ *
+ * @returns {string} npm registry url
+ */
+function getNpmRegistry(npmName) {
+  // return REGISTRY env variable
+  if (process.env.REGISTRY) return process.env.REGISTRY;
+
+  // return tnpm if is a interior npm
+  if (isAliNpm(npmName)) return 'https://registry.npm.alibaba-inc.com';
+
+  // get registry through npm config
+  let npmRegistry = spawn.sync('npm', ['config', 'get', 'registry'], { stdio: ['ignore', 'pipe', 'pipe'] });
+  npmRegistry = npmRegistry.stdout.toString().replace(/\/+(\n?)$/, '');
+
+  // return registry
+  if (isVaildRegistry(npmRegistry)) return npmRegistry;
+
+  // default
+  return 'https://registry.npmjs.com';
+}
+
+/**
+ * verify a registry URL
+ *
+ * @param {string} url
+ */
+function isVaildRegistry(url) {
+  return /^(https?):\/\/.+$/.test(url);
+}
+
 module.exports = {
   generateNpmNameByPrefix,
   getNpmTime,
+  getNpmRegistry,
 };

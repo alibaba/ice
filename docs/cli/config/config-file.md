@@ -9,18 +9,23 @@ ice-scripts 将 `ice.config.js` 作为项目的配置文件，文件需要存放
 
 ```js
 // ice.config.js
+const path = require('path');
+
 module.exports = {
-  // 基础配置项
+  // 1. 基础配置项
   entry: 'src/index.js',
   publicPath: './',
+  alias: {
+    '@components': path.resolve(__dirname, 'src/components/')
+  },
   // ...
 
-  // 插件配置
+  // 2. 插件配置
   plugins: [
     ['ice-plugins-fusion', { themePackage: '@icedesign/theme' }],
   ],
 
-  // 自定义 webpack 配置
+  // 3. 自定义 webpack 配置
   chainWebpack: (config) => {
     // 通过 webpack-chain 形式修改 webpack 配置
     config.devServer.hot(true);

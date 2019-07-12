@@ -1,0 +1,38 @@
+.form {
+  width: 320px;
+
+  .item {
+    position: relative;
+
+    .input {
+      height: 24px;
+      line-height: 24px;
+    }
+
+    .pathInput {
+      &, input {
+        cursor: pointer!important;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .opts {
+    text-align: center;
+    margin-top: 32px;
+
+    .button {
+      margin-right: 12px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -1,144 +1,124 @@
-const path = require('path');
-const fs = require('fs');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const validateName = require('validate-npm-package-name');
+const path = require('path');
 const fse = require('fs-extra');
-const uppercamelcase = require('uppercamelcase');
-const generate = require('../../utils/generate');
-const pkgJSON = require('../../utils/pkg-json');
+const { getQuestions } = require('../../config/material');
 const boxenLog = require('../../utils/boxen-log');
-
+const logger = require('../../utils/logger');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
+const templateRender = require('../../utils/template-render');
+const pkgJSON = require('../../utils/pkg-json');
 
-const initTemplatePath = path.join(__dirname, '../../template/init');
+module.exports = async function addMaterial(cwd, opts = {}) {
+  logger.verbose('init -> init single material', opts);
 
-// 缓存目录 用于之后的自定义模板、idev add默认模板来源
-const appTemplatePath = (appPath, ...subFiles) => path.join(appPath, '.template', ...subFiles);
+  const {
+    type,
+    npmPrefix,
+    templatePath: src,
+    standalone,
+    materialConfig,
+    initMaterial,
+  } = opts;
 
-/**
- * @param{String} cwd 当前路径
- * @param{Object} opt 参数
- */
-module.exports = async function addMaterial(cwd, opt = {}) {
-  const { templatePath, npmPrefix, forInnerNet } = opt;
-  const dest = cwd;
+  const questions = getQuestions(npmPrefix);
 
-  const questions = defaultQuestion({ cwd, forInnerNet, npmPrefix });
-  const { name, description } = await inquirer.prompt(questions);
+  const answers = await (inquirer.prompt(questions[type]));
+
+  const name = answers.name;
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
+  const dest = standalone ? cwd : path.join(cwd, `${type}s`, name);
 
-  // init material project
-  await generate({
-    name: npmName,
-    npmName,
-    version: '1.0.0',
-    description,
-    src: initTemplatePath,
+  if (answers.adaptor) {
+    // copy template adaptor to src
+    const adaptorDir = path.join(__dirname, '../../template/component');
+    fse.copySync(adaptorDir, src);
+  }
+
+  await templateRender({
+    ...answers,
+    src,
     dest,
-    categories: {},
+    npmName,
+    materialConfig,
+    transformRegexp: initMaterial ? /.+/ : /_package.json/,
+    skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
   });
 
-  // clone template to .template for custom template
-  fse.copySync(templatePath, appTemplatePath(dest));
+  // generate lint file only material type is react
+  // scaffold has it's own lint file
+  if (initMaterial && materialConfig.type === 'react' && type !== 'scaffold') {
+    // render lint files
+    const lintTemplatePath = path.join(__dirname, '../../template/lint');
+    await templateRender({
+      src: lintTemplatePath,
+      dest,
+    });
+    // add lint scripts to package.json
+    extendPackage(dest, {
+      scripts: {
+        lint: 'npm run eslint && npm run stylelint',
+        eslint: 'eslint --cache --ext .js,.jsx ./',
+        stylelint: 'stylelint ./**/*.scss',
+      },
+      devDependencies: {
+        '@ice/spec': '^0.1.1',
+        eslint: '^6.0.1',
+        stylelint: '^10.1.0',
+      },
+    });
+  }
 
-  // generate demo
-  await generateMaterialsDemo(dest);
-
-  completedMessage(dest, name);
+  completedMessage(type, name, dest, standalone);
 };
 
-function defaultQuestion({ cwd, forInnerNet, npmPrefix }) {
-  const projectName = path.basename(cwd);
-  return [
-    {
-      type: 'input',
-      message: 'materials name',
-      name: 'name',
-      default: projectName,
-      require: true,
-      validate: (value) => {
-        if (!value) {
-          return 'cannot be empty, please enter again';
-        }
-        const materialsName = (npmPrefix ? `${npmPrefix}/` : '') + value.replace(/\s+/g, '');
-        if (forInnerNet && !validateName(materialsName).validForNewPackages) {
-          return `this material name(${materialsName}) has already exist. please enter again`;
-        }
-        return true;
-      },
-    },
-    {
-      name: 'description',
-      type: 'string',
-      label: 'description',
-      message: 'description',
-      default: 'This is a ice material project',
-    },
-  ];
+function isObject(val) {
+  return Object.prototype.toString.call(val) === '[object Object]';
 }
-
 /**
- * generate demo for material project
+ * extend packge
+ * @param {string} pkgPath
+ * @param {object} feilds
  */
-async function generateMaterialsDemo(appPath) {
-  const pkg = pkgJSON.getPkgJSON(appPath);
-
-  // [block, component, scaffold]
-  const types = fs.readdirSync(appTemplatePath(appPath)).filter((file) => fs.statSync(appTemplatePath(appPath, file)).isDirectory()
-  );
-
-  for (let i = 0; i < types.length; i++) {
-    const type = types[i];
-    // 生成blocks\components\scaffolds文件夹 以及示例demo
-    /* eslint-disable-next-line no-await-in-loop */
-    await generate({
-      src: appTemplatePath(appPath, type),
-      dest: path.join(appPath, `${type}s/Example${uppercamelcase(type)}`),
-      name: `example-${type}`,
-      npmName: `${pkg.name}-example-${type}`,
-      adaptor: false, // TODO
-      version: '1.0.0',
-      title: `demo ${type}`,
-      description: '示例',
-      skipGitIgnore: true,
-      categories: {},
+function extendPackage(pkgPath, fields) {
+  const pkgInfo = pkgJSON.getPkgJSON(pkgPath);
+  if (isObject(fields)) {
+    Object.keys(fields).forEach((fieldKey) => {
+      const existing = pkgInfo[fieldKey];
+      const fieldValue = fields[fieldKey];
+      if (isObject(existing) && isObject(fieldValue)) {
+        // TODO deepmerge
+        pkgInfo[fieldKey] = Object.assign(existing, fieldValue);
+      } else if (Array.isArray(existing) && Array.isArray(fieldValue)) {
+        pkgInfo[fieldKey] = Array.from(new Set([...existing, ...fieldValue]));
+      } else {
+        pkgInfo[fieldKey] = fieldValue;
+      }
     });
+    pkgJSON.writePkgJSON(pkgInfo, pkgPath);
+  } else {
+    logger.fatal('package.json feilds must be an object');
   }
 }
 
 /**
  * 下载完成后的提示信息
- * @param {string} appPath
- * @param {string} appName
+ * @param {string} name 组件名称
+ * @param {string} filepath 组件路径
+ * @param {boolean} standalone
  */
-function completedMessage(appPath, appName) {
+function completedMessage(type, name, filepath, standalone) {
   boxenLog(`
-    Success! Created ${appName} at ${appPath}
-    Inside that directory, you can run several commands:
-    
-      Install dependencies
-    ${chalk.cyan('    npm install')}
-    
-      Starts the block development server.
-    ${chalk.cyan('    cd blocks/ExampleBlock')}
+    Success! Created ${name} at ${filepath}
+    Inside ${name} directory, you can run several commands:
+
+      Starts the development server.
+    ${!standalone ? chalk.cyan(`    cd ${type}s/${name}`) : ''}
     ${chalk.cyan('    npm install')}
     ${chalk.cyan('    npm start')}
-    
-      Starts the scaffold development server.
-    ${chalk.cyan('    cd scaffolds/ExampleScaffold')}  
-    ${chalk.cyan('    npm install')}  
-    ${chalk.cyan('    npm start')}
-    
-      Generate materials json.
-    ${chalk.cyan('    npm run generate')}
-    
-      You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.
-      You will see your materials in Iceworks
-      
-      We suggest that you can sync the materials json to fusion or unpkg by run: 
-    ${chalk.cyan('    npm run sync')}  or  ${chalk.cyan('npm run sync-unpkg')}
-      
-    Happy hacking!
+
+      When the development is complete, you need to run npm publish
+    ${chalk.cyan('    npm publish')}
   `);
 }
+

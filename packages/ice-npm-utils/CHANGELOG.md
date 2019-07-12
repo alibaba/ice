@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- [fix] 修复getAndExtractTarball写空文件时卡死的问题
+
 ## 1.1.1
 
 - [fix] 用 request-promise 替换 axios 之后的参数变化

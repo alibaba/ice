@@ -1,10 +1,14 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { checkAliInternal } = require('ice-npm-utils');
-
+const rimraf = require('rimraf');
 const logger = require('../utils/logger');
+const getTemplate = require('../utils/template');
 const checkEmpty = require('../utils/check-empty');
-const add = require('./add');
+const materialAdd = require('./material/add');
+const materialInit = require('./material/init');
+
+const DEFAULT_TYPES = ['material', 'component', 'block', 'scaffold'];
 
 module.exports = async function init(cwd) {
   try {
@@ -14,39 +18,54 @@ module.exports = async function init(cwd) {
 
     const options = Object.assign({
       cwd,
-      type: process.env.TYPE, // --type
       template: process.env.TEMPLATE, // --template
     });
 
+    const type = process.env.TYPE || 'material'; // --type
+
+    if (!DEFAULT_TYPES.includes(type)) {
+      throw new Error('Invalid type, `type` must be component/block/scaffold.');
+    }
+
     // get user answers
-    const answers = await initAsk(options);
-    add(cwd, { ...answers });
+    const { template, scope, forInnerNet } = await initAsk(options);
+    const npmPrefix = scope ? `${scope}/` : '';
+    const { templatePath, downloadPath, config: materialConfig } = await getTemplate(cwd, type, template);
+
+    if (type === 'material') {
+      // init material project
+      await materialInit(cwd, {
+        npmPrefix,
+        template,
+        templatePath,
+        forInnerNet,
+        standalone: true,
+        materialConfig,
+      });
+    } else {
+      // init single component/block/scaffold project
+      await materialAdd(cwd, {
+        type,
+        npmPrefix,
+        template,
+        templatePath,
+        forInnerNet,
+        standalone: true,
+        materialConfig,
+        initMaterial: true,
+      });
+    }
+
+    if (downloadPath) {
+      logger.verbose('remove download files', downloadPath);
+      rimraf.sync(downloadPath);
+    }
   } catch (error) {
     logger.fatal(error);
   }
 };
 
-
 async function initAsk(options = {}) {
-  const types = ['material', 'scaffold', 'component', 'block'];
-  let type = options.type;
-
-  // confirm init type
-  if (!type || !types.includes(type)) {
-    const result = await inquirer.prompt([
-      {
-        type: 'list',
-        message: 'please select the material type',
-        name: 'type',
-        default: types[0],
-        choices: types,
-      },
-    ]);
-    type = result.type;
-  } else {
-    console.log(`you assign the type ${chalk.cyan(type)} by --type`);
-  }
-
   // select template
   let template = options.template;
   if (!template) {
@@ -109,7 +128,6 @@ async function initAsk(options = {}) {
   ]);
 
   return {
-    type,
     scope,
     template,
     forInnerNet,

@@ -7,11 +7,16 @@ module.exports = (files, data, done) => {
       /* eslint-disable-next-line no-useless-escape */
       newFilename = filename.replace(/[_\.]_className__/, data.className);
     }
-    if (/_gitignore/.test(filename) && !data.skipGitIgnore) {
-      newFilename = filename.replace(/_gitignore/, '.gitignore');
+    // if transformRegexp is passed, filename must match regexp
+    if (data.transformRegexp && !data.transformRegexp.test(filename)) {
+      return;
     }
-    if (/_package.json/.test(filename)) {
-      newFilename = filename.replace(/_package.json/, 'package.json');
+    // _gitignore -> .gitignore
+    // Special logic：_package.json -> package.json
+    if (filename === '_package.json') {
+      newFilename = filename.replace(/^_/, '');
+    } else {
+      newFilename = filename.replace(/^_/, '.');
     }
 
     if (newFilename !== filename) {
