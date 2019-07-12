@@ -5,6 +5,7 @@ const path = require('path');
 const detectPort = require('detect-port');
 const is = require('electron-is');
 const log = require('electron-log');
+const getEnv = require('./getEnv');
 
 let mainWindow;
 let serverProcess;
@@ -12,6 +13,7 @@ let setPort = '7001';
 
 const isProduction = is.production();
 const ip = address.ip();
+const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, 'server') : path.join(__dirname, '...', 'build', 'server');
 const startLoadingHTML = path.join(__dirname, 'start_loading.html');
 const stopLoadingHTML = path.join(__dirname, 'stop_loading.html');
@@ -32,7 +34,7 @@ function createWindow() {
       mainWindow.loadFile(startLoadingHTML);
 
       try {
-        await execa('npm', ['stop'], { cwd: serverDir });
+        await execa('npm', ['stop'], { cwd: serverDir, env });
       } catch (error) {
         log.warn(error);
       }
@@ -41,6 +43,7 @@ function createWindow() {
       serverProcess = execa('npm', ['start'], {
         cwd: serverDir,
         env: {
+          ...env,
           PORT: setPort,
         },
       });
@@ -79,7 +82,7 @@ app.on('before-quit', (event) => {
 
     mainWindow.loadFile(stopLoadingHTML);
 
-    const stopProcess = execa('npm', ['stop'], { cwd: serverDir });
+    const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
     stopProcess.stdout.on('data', (buffer) => {
       log.log(buffer.toString());

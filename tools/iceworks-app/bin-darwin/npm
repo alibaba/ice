@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+const path = require('path');
+const npmCli = path.join(
+  __dirname,
+  '..',
+  'app',
+  'node_modules',
+  'npm',
+  'bin',
+  'npm-cli.js'
+);
+require(npmCli);
