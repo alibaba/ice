@@ -46,28 +46,60 @@ module.exports = async function addMaterial(cwd, opts = {}) {
   });
 
   // generate lint file only material type is react
-  if (initMaterial && materialConfig.type === 'react') {
+  // scaffold has it's own lint file
+  if (initMaterial && materialConfig.type === 'react' && type !== 'scaffold') {
     // render lint files
     const lintTemplatePath = path.join(__dirname, '../../template/lint');
     await templateRender({
       src: lintTemplatePath,
       dest,
     });
-
-    const pkgInfo = pkgJSON.getPkgJSON(dest);
     // add lint scripts to package.json
-    pkgInfo.scripts.lint = 'npm run eslint && npm run stylelint';
-    pkgInfo.scripts.eslint = 'eslint --cache --ext .js,.jsx ./';
-    pkgInfo.scripts.stylelint = 'stylelint ./**/*.scss';
-    // add lint devDependencies to package.json
-    pkgInfo.devDependencies['@ice/spec'] = '^0.1.1';
-    pkgInfo.devDependencies.eslint = '^6.0.1';
-    pkgInfo.devDependencies.stylelint = '^10.1.0';
-    pkgJSON.writePkgJSON(pkgInfo, dest);
+    extendPackage(dest, {
+      scripts: {
+        lint: 'npm run eslint && npm run stylelint',
+        eslint: 'eslint --cache --ext .js,.jsx ./',
+        stylelint: 'stylelint ./**/*.scss',
+      },
+      devDependencies: {
+        '@ice/spec': '^0.1.1',
+        eslint: '^6.0.1',
+        stylelint: '^10.1.0',
+      },
+    });
   }
 
   completedMessage(type, name, dest, standalone);
 };
+
+function isObject(val) {
+  return Object.prototype.toString.call(val) === '[object Object]';
+}
+/**
+ * extend packge
+ * @param {string} pkgPath
+ * @param {object} feilds
+ */
+function extendPackage(pkgPath, feilds) {
+  const pkgInfo = pkgJSON.getPkgJSON(pkgPath);
+  if (isObject(feilds)) {
+    Object.keys(feilds).forEach((feildKey) => {
+      const existing = pkgInfo[feildKey];
+      const feildValue = feilds[feildKey];
+      if (isObject(existing) && isObject(feildValue)) {
+        // TODO deepmerge
+        pkgInfo[feildKey] = Object.assign(existing, feildValue);
+      } else if (Array.isArray(existing) && Array.isArray(feildValue)) {
+        pkgInfo[feildKey] = Array.from(new Set([...existing, ...feildValue]));
+      } else {
+        pkgInfo[feildKey] = feildValue;
+      }
+    });
+    pkgJSON.writePkgJSON(pkgInfo, pkgPath);
+  } else {
+    logger.fatal('package.json feilds must be an object');
+  }
+}
 
 /**
  * 下载完成后的提示信息
