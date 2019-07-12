@@ -79,7 +79,6 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
   }),
   screenshot: joi.string().uri().required(), // （必选）截图
   screenshots: joi.array().items(joi.string().uri()).required(), // （必选）站点模板预览需要多张截图
-  builder: joi.string().required(), // （必选）模板构建方式
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
   updateTime: joi.string().isoDate().required(), // （必选）最后更新时间

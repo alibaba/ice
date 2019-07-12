@@ -15,6 +15,10 @@
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
   "keywords": [
     "ice",
     "react",

@@ -169,7 +169,6 @@ function generateMaterialsData(files, targetDir, type) {
       dependencies: pkg.dependencies || {},
       screenshot,
       screenshots: materialConfig.screenshots || (screenshot && [screenshot]),
-      builder: materialConfig.builder,
       ...i18nData,
       // 支持用户自定义的配置
       // customConfig: materialConfig.customConfig || null,
