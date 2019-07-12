@@ -16,12 +16,66 @@ order: 3
 ```json
 {
   "iceworks": {
+    "adapter": "adapter-react-v0"
+  }
+}
+```
+
+如果旧项目根目录**存在**`ice.config.js`文件，且 `routerConfig.js` 中无路由分组 (所有路由平铺)，类似如下结构
+
+```javascript
+const routerConfig = [
+  {
+    path: '/',
+    component: 'pages/Dashboard/index.jsx',
+    layout: 'layouts/BasicLayout',
+    exact: true	
+  }, {
+    path: '/dashboard',
+    component: 'pages/Dashboard/index.jsx',
+    layout: 'layouts/BasicLayout',
+  }, {
+    component: 'components/NotFound/index.jsx',
+    layout: 'layouts/BasicLayout',
+  }
+];
+```
+
+则在`package.json`中增加如下配置
+
+```json
+{
+  "iceworks": {
     "adapter": "adapter-react-v1"
   }
 }
 ```
 
-如果项目根目录**存在**`ice.config.js`文件，则在`package.json`中增加如下配置
+如果项目根目录**存在**`ice.config.js`文件，且 `routerConfig.js` 中有路由分组（路由有层级关系），类似如下结构
+
+```javascript
+const routerConfig = [
+  {
+    path: '/',
+    component: BasicLayout,
+    children: [
+      {
+        path: '/dashboard',
+        component: Dashboard,
+      },
+      {
+        path: '/',
+        redirect: '/dashboard',
+      },
+      {
+        component: NotFound,
+      },
+    ],
+  },
+];
+```
+
+则在`package.json`中增加如下配置
 
 ```json
 {
