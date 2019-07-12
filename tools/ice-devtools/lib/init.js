@@ -52,6 +52,7 @@ module.exports = async function init(cwd) {
         forInnerNet,
         standalone: true,
         materialConfig,
+        initMaterial: true,
       });
     }
 

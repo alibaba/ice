@@ -36,8 +36,9 @@ function render(options, done) {
   const {
     src,
     dest,
-    name,
+    name = '',
     npmName,
+    transformRegexp,
     ...opts
   } = options;
 
@@ -62,7 +63,7 @@ function render(options, done) {
 
   metalsmith
     .use(renderTemplateFiles())
-    .use(transformFile(data.skipGitIgnore))
+    .use(transformFile(data.skipGitIgnore, transformRegexp))
     .ignore([TEMPLATE_PATH, 'meta.js']);
 
   metalsmith
@@ -79,11 +80,12 @@ function render(options, done) {
   return data;
 }
 
-function transformFile(skipGitIgnore) {
+function transformFile(skipGitIgnore, transformRegexp) {
   return (files, metalsmith, done) => {
     transform(files, {
       ...metalsmith.metadata(),
       skipGitIgnore,
+      transformRegexp,
     }, done);
   };
 }

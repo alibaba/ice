@@ -113,6 +113,7 @@ async function generateExample(cwd, templatePath, materialConfig) {
       description: '示例',
       skipGitIgnore: true,
       materialConfig,
+      transformRegexp: /_package.json/, // only transfrom _package.json
     };
 
     logger.verbose(`generateExample -> ${type}`, options);
