@@ -80,19 +80,19 @@ function isObject(val) {
  * @param {string} pkgPath
  * @param {object} feilds
  */
-function extendPackage(pkgPath, feilds) {
+function extendPackage(pkgPath, fields) {
   const pkgInfo = pkgJSON.getPkgJSON(pkgPath);
-  if (isObject(feilds)) {
-    Object.keys(feilds).forEach((feildKey) => {
-      const existing = pkgInfo[feildKey];
-      const feildValue = feilds[feildKey];
-      if (isObject(existing) && isObject(feildValue)) {
+  if (isObject(fields)) {
+    Object.keys(fields).forEach((fieldKey) => {
+      const existing = pkgInfo[fieldKey];
+      const fieldValue = fields[fieldKey];
+      if (isObject(existing) && isObject(fieldValue)) {
         // TODO deepmerge
-        pkgInfo[feildKey] = Object.assign(existing, feildValue);
-      } else if (Array.isArray(existing) && Array.isArray(feildValue)) {
-        pkgInfo[feildKey] = Array.from(new Set([...existing, ...feildValue]));
+        pkgInfo[fieldKey] = Object.assign(existing, fieldValue);
+      } else if (Array.isArray(existing) && Array.isArray(fieldValue)) {
+        pkgInfo[fieldKey] = Array.from(new Set([...existing, ...fieldValue]));
       } else {
-        pkgInfo[feildKey] = feildValue;
+        pkgInfo[fieldKey] = fieldValue;
       }
     });
     pkgJSON.writePkgJSON(pkgInfo, pkgPath);
