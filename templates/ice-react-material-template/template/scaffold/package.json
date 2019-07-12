@@ -16,12 +16,14 @@
     "_eslintrc.js",
     "_stylelintignore",
     "_stylelintrc.js",
-    "ice.config.js"
+    "ice.config.js",
+    "screenshot.png"
   ],
   "scripts": {
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
-    "prepublishOnly": "npm run build",
+    "screenshot": "screenshot -l",
+    "prepublishOnly": "npm run build && npm run screenshot",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint --cache --ext .js,.jsx ./",
     "stylelint": "stylelint ./**/*.scss"
@@ -45,5 +47,10 @@
   "iceworks": {
     "type": "react",
     "adapter": "adapter-react-v3"
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "<%= npmName %>",
+    "title": "<%= title %>"
   }
 }
