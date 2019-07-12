@@ -137,13 +137,13 @@ import React, { useState } from 'react';
 
 export default function Test() {
   const [content, setContent] = useState('default content');
-  function onInputChanged() {
+  function onContentChanged() {
     setContent('test');
   }
   return (
     <div className="test-component">
       <span>{content}</span>
-      <button onClick={onInputChanged}>button</button>
+      <button onClick={onContentChanged}>button</button>
     </div>
   );
 }
