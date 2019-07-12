@@ -1,5 +1,5 @@
 /**
- *  将 build/docs.json 上传到 oss
+ * 将 build/docs.json 上传到 oss
  */
 const oss = require('ali-oss');
 const path = require('path');
@@ -9,9 +9,9 @@ const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
 const accessKeySecret = process.env.ACCESS_KEY_SECRET;
 const branch = process.env.TRAVIS_BRANCH;
-const cwd = process.cwd();
+const assetsPath = branch === 'master' ? 'assets' : 'pre-assets';
 
-function uploadAssetsToOSS(fromPath, toPath, globPatterns) {
+if (branch === 'master' || /docs/.test(branch)) {
   const ossClient = oss({
     bucket,
     endpoint: 'oss-cn-hangzhou.aliyuncs.com',
@@ -20,29 +20,23 @@ function uploadAssetsToOSS(fromPath, toPath, globPatterns) {
     time: '120s',
   });
 
-  const files = glob.sync(globPatterns, {
+  const baseDir = path.resolve(__dirname, '../build');
+  const files = glob.sync('*.json', {
     nodir: true,
-    cwd: fromPath,
+    cwd: baseDir,
   });
 
   const promiseQueue = files.map((file) => {
-    const from = path.join(fromPath, file);
-    const to = path.join(toPath, file);
+    const fromPath = path.resolve(baseDir, file);
+    const toPath = path.join(assetsPath, 'docs', file);
 
-    console.log('ossput', `${from} => ${to}`);
-    return ossClient.put(to, from);
+    console.log('ossput', fromPath, toPath);
+    return ossClient.put(toPath, fromPath);
   });
 
   Promise.all(promiseQueue).then(() => {
     console.log('upload success');
   });
-}
-
-// 同步文档静态资源
-if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
-  const docsFromPath = path.join(cwd, 'build');
-  const docsToPath = branch === 'production' ? 'assets' : 'pre-assets';
-  uploadAssetsToOSS(docsFromPath, docsToPath, '*.json');
 } else {
   console.log('当前分支非 master/docs*, 不执行文档同步脚本');
   console.log(`TRAVIS_BRANCH=${branch}`);
