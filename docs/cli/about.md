@@ -9,7 +9,7 @@ ice-scripts 提供了丰富的功能帮助我们开发 React 项目：完善的�
 
 我们致力于将 ice-scripts 打造为 React 生态下高可配置性、高可用的工程工具。
 
-![架构图](https://img.alicdn.com/tfs/TB12LBZawKG3KVjSZFLXXaMvXXa-2844-2133.png)
+![架构图](https://img.alicdn.com/tfs/TB1OSVdXbr1gK0jSZFDXXb9yVXa-2844-2133.jpg)
 
 ## 特性
 
@@ -18,6 +18,7 @@ ice-scripts 提供了丰富的功能帮助我们开发 React 项目：完善的�
 - 提供丰富的工程能力，如 ES6+ 语言特性、TypeScript、样式方案（Less/Sass/CSS Modules）等开箱即用支持
 - 支持不同类型 React 项目的开发&构建，包括项目开发、业务组件开发和区块开发
 - 基于 webpack-chain 提供灵活的自定义 webpack 配置能力
+- 基于 Jest 提供前端单元测试解决方案
 
 ## 为什么不是？
 
