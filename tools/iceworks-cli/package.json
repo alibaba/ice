@@ -23,6 +23,7 @@
     "inquirer": "^6.3.1",
     "mkdirp": "^0.5.1",
     "npmlog": "^4.1.2",
+    "open": "^6.4.0",
     "ora": "^3.4.0",
     "portfinder": "^1.0.20",
     "request": "^2.88.0",

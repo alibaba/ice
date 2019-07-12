@@ -4,7 +4,7 @@
   position: relative;
   display: block;
   transition: transform 0.3s ease;
-  box-shadow: 0 8px 24px $material-card-shadow;
+  box-shadow: $material-card-shadow;
   background: $panel-bg;
   margin-bottom: 20px;
   overflow: hidden;
@@ -29,7 +29,7 @@
       max-width: 100%;
       height: auto;
       border-radius: 4px;
-      box-shadow: 0 6px 18px 0 $material-card-shadow;
+      box-shadow: 0 6px 18px 0 $material-card-shadow-color;
       transform: scale(0.6);
     }
   }
