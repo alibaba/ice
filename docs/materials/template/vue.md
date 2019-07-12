@@ -1,19 +1,19 @@
 ---
-title: Vue 物料开发指南
-order: 7
+title: 官方 Vue 物料模板
+order: 3
 ---
 
-> 工程统一使用 Vue CLI
+ICE 提供了标准化的 Vue 物料模版，在使用 `ice-devtools init` 时选择 Vue 官方模版即可。官方 Vue 模版包含以下功能：
 
-## 开发业务组件
+- 包含 block、scaffold 两种物料类型，暂不支持 component
+- 基于 Vue CLI 作为 Vue 工程工具
 
-**暂时不支持，需要确定组件开发及构建规范。**
 
 ## 使用 element-ui
 
 ### 1. 将 vue 和 element 作为 npm 依赖
 
-区块请移除 `demo/index.html` 里的 script 标签，建议将 `.template/block` 一起改掉
+区块请移除 `demo/index.html` 里的 script 标签：
 
 ```diff
 // demo/index.html
@@ -49,4 +49,5 @@ new Vue();
 
 ### 3. 按需打包
 
-参考 Element 官方文档
+参考 Element 官方文档。
+
