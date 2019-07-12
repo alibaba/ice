@@ -25,19 +25,6 @@ ice-devtools 默认集成了三种物料模版：
 
 之后，需要填写物料的基本信息，根据命令行提示填写即可。
 
-初始化完成后，将会生成如下目录结构：
-
-```
-├── README.md
-├── blocks                          // 区块
-│      └── ExampleBlock             // 单个区块
-├── components                      // 组件
-│      └── ExampleComponent         // 单个组件
-├── package.json
-└── scaffolds                       // 项目
-    └── ExampleScaffold             // 单个项目
-```
-
 对于物料类型选择为 block、component 或 scaffold 的物料，则直接生成源码，文件结构与 `ExampleBlock`、 `ExampleComponent`、`ExampleScaffold` 保持一致。**如非特殊情况，不建议直接生成以上三种物料。**
 
 初始化完成后，在项目根目录 `package.json` 中，ice-devtools 已经初始化好了一些 npm scripts，此外，还有一个 `materialConfig` 字段，这个字段存储了一些当前物料的信息及配置：
