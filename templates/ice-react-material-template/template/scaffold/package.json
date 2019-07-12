@@ -53,5 +53,8 @@
     "title": "<%= title %>",
     "category": "<%= category %>"
   },
-  "repository": "https://github.com/alibaba/ice"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  }
 }
