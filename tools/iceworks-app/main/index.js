@@ -18,7 +18,7 @@ function createWindow() {
 
   mainWindow.loadFile(startLoadingHTML);
 
-  serverProcess = fork(require.resolve('../start_server.js'));
+  serverProcess = fork(require.resolve('../start_server.js'), [], {stdio:"pipe"});
   serverProcess.stdout.on('data', (buffer) => {
     const logInfo = buffer.toString();
     console.log(logInfo);
