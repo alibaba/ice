@@ -22,8 +22,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   },
   "materialConfig": {
     "type": "react"
