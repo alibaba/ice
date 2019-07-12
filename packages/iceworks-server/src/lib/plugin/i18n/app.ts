@@ -34,12 +34,12 @@ class I18n implements II18n {
       return _.includes(file, 'locales') && path.extname(file) === '.json';
     });
 
-    for (const file of localeFiles) {
+    await Promise.all(localeFiles.map(async (file) => {
       const name = path.basename(file, '.json');
       const content = await fs.readJSON(file);
 
       this.localeMap[name] = Object.assign({}, this.localeMap[name], content);
-    }
+    }));
   }
 
   public format(localeKey: string, args?: object): string {

@@ -10,7 +10,7 @@ export default class RemoteLogger extends Transport {
     const qsData = {
       APIVersion: '0.6.0', // sls required
       __topic__: level, // log type
-      node_version: process.version,
+      node_version: process.version, // eslint-disable-line
 
       message: '',
       name: '',

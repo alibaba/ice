@@ -1,3 +1,4 @@
+/* eslint no-eval: 0 */
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
@@ -75,10 +76,8 @@ export default class Menu implements IMenuModule {
   }
 
   public async bulkCreate(params: {data: IMenu[]; options: IMenuOptions}): Promise<void> {
-    let {
-      data = [],
-      options = {},
-    } = params;
+    let { data = [] } = params;
+    const {options = {} } = params;
     const { replacement = false, type = 'aside' } = options;
     const { asideMenuConfig, headerMenuConfig } = await this.getAll();
     const menuFileAST = this.getFileAST();

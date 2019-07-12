@@ -64,18 +64,15 @@ export default class Todo implements ITodoModule {
     const files: string[] = await recursiveReaddir(this.project.path);
 
     const result: ITodo[] = [];
-
-    if (files.length) {
-      for (const filePath of files) {
-        const messages: ITodoMsg[] = await matchFileContent(filePath);
-        if (messages.length) {
-          result.push({
-            messages,
-            path: path.relative(this.project.path, filePath),
-          });
-        }
+    await Promise.all(files.map(async (filePath) => {
+      const messages: ITodoMsg[] = await matchFileContent(filePath);
+      if (messages.length) {
+        result.push({
+          messages,
+          path: path.relative(this.project.path, filePath),
+        });
       }
-    }
+    }));
 
     return result;
   }

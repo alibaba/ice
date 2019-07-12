@@ -75,12 +75,12 @@ class Project implements IProject {
   private interopRequire(id) {
     let mod;
     try {
-      mod = require(id);
+      mod = require(id); // eslint-disable-line
     } catch (error) {
       throw error;
     }
 
-    return mod && mod.__esModule ? mod.default : mod;
+    return mod && mod.__esModule ? mod.default : mod; // eslint-disable-line
   }
 
   public async loadAdapter(i18n: II18n) {
@@ -290,7 +290,7 @@ class ProjectManager extends EventEmitter {
 
     // check read and write
     try {
-      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // tslint:disable-line
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // eslint-disable-line  
     } catch (error) {
       error.message = '当前路径没有读写权限，请更换项目路径';
       throw error;
@@ -370,7 +370,7 @@ class ProjectManager extends EventEmitter {
    */
   public async createProject(params: ICreateParams): Promise<void> {
     if (params.appId) {
-      const generate = require('@ali/stark-biz-generator');
+      const generate = require('@ali/stark-biz-generator'); // eslint-disable-line
       generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
     } else {
       await this.createProjectFolder(params);

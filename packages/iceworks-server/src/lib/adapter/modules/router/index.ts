@@ -102,7 +102,8 @@ export default class Router implements IRouterModule {
 
   // bulk create routers
   public async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}): Promise<void>  {
-    let { data, options = {} } = params;
+    let { data } = params;
+    const { options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
@@ -256,7 +257,7 @@ export default class Router implements IRouterModule {
       // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
       VariableDeclaration: ({ node, key }) => {
         const code = generate(node.declarations[0]).code;
-        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|\@)\/(\w+)\/.+)['|"]\)/;
+        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
         const match = code.match(matchLazyReg);
 
         if (match && match.length > 5) {

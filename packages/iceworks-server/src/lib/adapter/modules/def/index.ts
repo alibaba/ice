@@ -1,4 +1,4 @@
-/** eslint camelcase:0 */
+/* eslint @typescript-eslint/camelcase: 0 */
 
 import Client from './client';
 import { IProject, IDEFModule, IDEFPushParams, IContext } from '../../../../interface';
