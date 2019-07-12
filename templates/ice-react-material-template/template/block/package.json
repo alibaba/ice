@@ -8,6 +8,7 @@
     "screenshot.png"
   ],
   "license": "MIT",
+  "repository": "https://github.com/alibaba/ice",
   "keywords": [
     "ice",
     "react",
