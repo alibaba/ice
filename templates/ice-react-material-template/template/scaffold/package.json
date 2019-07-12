@@ -49,8 +49,8 @@
     "adapter": "adapter-react-v3"
   },
   "scaffoldConfig": {
-    "builder": "ice-scripts",
     "name": "<%= npmName %>",
-    "title": "<%= title %>"
+    "title": "<%= title %>",
+    "category": "<%= category %>"
   }
 }
