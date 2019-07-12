@@ -23,6 +23,8 @@ const MATERIAL_TYPES = ['block', 'component', 'scaffold'];
  * @param{Object} opt 参数
  */
 module.exports = async function addMaterial(cwd, opt = {}) {
+  logger.verbose('init -> material.init opts', opt);
+
   try {
     const { template, templatePath, npmPrefix, forInnerNet, materialConfig } = opt;
 
@@ -31,7 +33,7 @@ module.exports = async function addMaterial(cwd, opt = {}) {
     const npmName = generateNpmNameByPrefix(name, npmPrefix);
 
     // init material project
-    await templateRender({
+    const options = {
       template,
       name: npmName,
       npmName,
@@ -42,10 +44,13 @@ module.exports = async function addMaterial(cwd, opt = {}) {
       materialConfig,
       categories: {},
       registry: process.env.REGISTRY,
-    });
+    };
+    logger.verbose('addMaterial -> start templateRender', options);
+    await templateRender(options);
 
     // generate example:
     // components/ExampleComponent blocks/ExampleBlock scaffold/ExampleScaffold
+    logger.verbose('addMaterial -> start generateExample');
     await generateExample(cwd, templatePath, materialConfig);
 
     completedMessage(cwd, name);
@@ -67,9 +72,11 @@ function defaultQuestion({ cwd, forInnerNet, npmPrefix }) {
         if (!value) {
           return 'cannot be empty, please enter again';
         }
-        const materialsName = (npmPrefix ? `${npmPrefix}/` : '') + value.replace(/\s+/g, '');
-        if (forInnerNet && !validateName(materialsName).validForNewPackages) {
-          return `this material name(${materialsName}) has already exist. please enter again`;
+
+        const npmName = (npmPrefix ? `${npmPrefix}` : '') + value.replace(/\s+/g, '');
+        const validateResult = validateName(npmName);
+        if (forInnerNet && !validateResult.validForNewPackages) {
+          return `${npmName} is not a validate npmName, ${validateResult.errors.join(';')}`;
         }
         return true;
       },
@@ -95,20 +102,24 @@ async function generateExample(cwd, templatePath, materialConfig) {
 
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
-    // generate blocks\components\scaffolds folders and demo
-    /* eslint-disable-next-line no-await-in-loop */
-    await templateRender({
+    const options = {
       src: path.join(templatePath, type),
       dest: path.join(cwd, `${type}s/Example${uppercamelcase(type)}`),
       name: `example-${type}`,
       npmName: `${pkg.name}-example-${type}`,
-      adaptor: false, // TODO
+      adaptor: false,
       version: '1.0.0',
       title: `demo ${type}`,
       description: '示例',
       skipGitIgnore: true,
       materialConfig,
-    });
+    };
+
+    logger.verbose(`generateExample -> ${type}`, options);
+
+    // generate blocks\components\scaffolds folders and demo
+    /* eslint-disable-next-line no-await-in-loop */
+    await templateRender(options);
   }
 }
 

@@ -24,7 +24,9 @@
   },
   "devDependencies": {
     "@ice/screenshot": "^0.1.1",
+    "ice-plugin-block": "^0.1.0",
     "ice-plugin-fusion": "^0.1.4",
+    "ice-plugin-moment-locales": "^0.1.0",
     "ice-scripts": "^2.0.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"

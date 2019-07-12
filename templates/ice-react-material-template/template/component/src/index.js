@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class <%= className %> extends Component {
-  static displayName = '<%= className %>';
-
-  render() {
-    return (
-      <div className="<%= name %>">Hello <%= className %></div>
-    );
-  }
+export default function <%= className %>() {
+  return (
+    <div className="<%= name %>">Hello <%= className %></div>
+  );
 }
+
+<%= className %>.propTypes = {
+};
+
+<%= className %>.defaultProps = {
+};

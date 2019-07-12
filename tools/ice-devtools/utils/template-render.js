@@ -7,7 +7,7 @@ const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
 const { getNpmRegistry } = require('ice-npm-utils');
 const transform = require('./transform');
-const debug = require('debug')('ice:templateRender');
+const logger = require('./logger');
 
 const TEMPLATE_PATH = '.template';
 
@@ -41,7 +41,7 @@ function render(options, done) {
     ...opts
   } = options;
 
-  debug('%j', { name, src, dest });
+  logger.verbose('Metalsmith template render', { name, src, dest });
 
   // const metalsmith = Metalsmith(path.join(src, 'template'));
   const metalsmith = Metalsmith(src);
@@ -58,7 +58,7 @@ function render(options, done) {
     category: '',
     ...opts,
   });
-  debug('%j', data);
+  logger.verbose('Metalsmith render options', data);
 
   metalsmith
     .use(renderTemplateFiles())
@@ -101,7 +101,11 @@ function renderTemplateFiles(skipInterpolation) {
       ? [skipInterpolation]
       : skipInterpolation;
 
+  logger.verbose('Metasmith renderTemplateFiles', skipInterpolation);
+
   return (files, metalsmith, done) => {
+    logger.verbose('Metasmith renderTemplateFiles callback');
+
     const keys = Object.keys(files);
     const metalsmithMetadata = metalsmith.metadata();
 
@@ -133,11 +137,14 @@ function renderTemplateFiles(skipInterpolation) {
         }
         const str = files[file].contents.toString();
 
+        logger.verbose('ejsRender start', file);
         ejsRender(str, metalsmithMetadata, (err, res) => {
           if (err) {
             err.message = `[${file}] ${err.message}`;
             return next(err);
           }
+
+          logger.verbose('ejsRender success', file);
           /* eslint-disable-next-line no-buffer-constructor */
           files[file].contents = new Buffer(res);
           next();

@@ -6,10 +6,10 @@
 
 ## 使用
 
-#### 安装开发者工具
+#### 安装依赖
 
 ```
-$ npm install ice-devtools -g
+$ npm install
 ```
 
 #### 区块预览

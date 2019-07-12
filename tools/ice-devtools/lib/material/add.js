@@ -4,10 +4,13 @@ const path = require('path');
 const fse = require('fs-extra');
 const { getQuestions } = require('../../config/material');
 const boxenLog = require('../../utils/boxen-log');
+const logger = require('../../utils/logger');
 const { generateNpmNameByPrefix } = require('../../utils/npm');
 const templateRender = require('../../utils/template-render');
 
 module.exports = async function addMaterial(cwd, opts = {}) {
+  logger.verbose('init -> init single material', opts);
+
   const {
     type,
     npmPrefix,

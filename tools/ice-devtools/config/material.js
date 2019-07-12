@@ -9,7 +9,7 @@ const COMPONENT_CATEGORIES = [
   'List',
   'Modal',
   'Filter',
-  'Data visualization',
+  'DataDisplay',
   'Information',
   'Others',
 ];
@@ -21,10 +21,10 @@ const BLOCK_CATEGORIES = [
   'List',
   'Modal',
   'Filter',
-  'Data visualization',
+  'DataDisplay',
   'Information',
   'Exception',
-  'Landing page',
+  'Landing',
   'video',
   'Others',
 ];
