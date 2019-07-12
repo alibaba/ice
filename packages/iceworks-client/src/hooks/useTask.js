@@ -37,6 +37,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   }
 
   function taskEventListener(eventName) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useSocket(eventName, (data) => {
       setStatus(type, data.status);
       if (writeChunk) {

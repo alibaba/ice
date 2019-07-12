@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint quotes:0, prefer-template:0 */
+/* eslint quotes:0, prefer-template:0, global-require:0 */
 const chalk = require('chalk');
 const program = require('commander');
 const pkgData = require('../package');

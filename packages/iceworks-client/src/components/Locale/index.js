@@ -1,4 +1,4 @@
-/* eslint camelcase:0 */
+/* eslint @typescript-eslint/camelcase:0 */
 import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider, addLocaleData } from 'react-intl';

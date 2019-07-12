@@ -8,10 +8,10 @@ import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import useTermTheme from '@hooks/useTermTheme';
-import stores from '@stores';
 import showMessage from '@utils/showMessage';
 import { THEMES } from '@src/appConfig';
 import goldlog from '@utils/goldlog';
+import stores from '@stores';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {

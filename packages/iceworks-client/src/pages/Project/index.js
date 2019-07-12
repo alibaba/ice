@@ -1,4 +1,4 @@
-/* eslint babel/new-cap:0, react/no-danger:0, react/self-closing-comp: 0 */
+/* eslint */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@alifd/next';
@@ -6,7 +6,6 @@ import logger from '@utils/logger';
 import useProject from '@hooks/useProject';
 import useDependency from '@hooks/useDependency';
 import useVisibilityChange from '@hooks/useVisibilityChange';
-import stores from '@stores';
 import ErrorBoundary from '@components/ErrorBoundary';
 import Icon from '@components/Icon';
 import SelectWorkFolderModal from '@components/SelectWorkFolderModal';
@@ -19,6 +18,7 @@ import {
   SortableElement,
   SortableHandle,
 } from 'react-sortable-hoc';
+import stores from '@stores';
 import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import DeleteProjectModal from './components/DeleteProjectModal';
@@ -215,7 +215,7 @@ const Project = ({ history, intl }) => {
       return (
         <div className={styles.noAdapter}>
           <h5><FormattedMessage id="iceworks.global.adapter.title" /></h5>
-          <p dangerouslySetInnerHTML={{ __html: intl.formatHTMLMessage({ id: 'iceworks.global.adapter.description' }) }}></p>
+          <p dangerouslySetInnerHTML={{ __html: intl.formatHTMLMessage({ id: 'iceworks.global.adapter.description' }) }} />
           <div className={styles.reloadButton}>
             <Button type="primary" onClick={reloadAdapter}>
               <FormattedMessage id="iceworks.global.adapter.reload" />

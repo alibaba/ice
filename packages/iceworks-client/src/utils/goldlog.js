@@ -1,4 +1,4 @@
-/* eslint no-param-reassign:0 */
+/* eslint @typescript-eslint/camelcase:0 */
 import axios from 'axios';
 import dateTime from 'date-time';
 import browser from 'browser-detect';
