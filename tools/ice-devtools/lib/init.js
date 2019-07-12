@@ -34,7 +34,7 @@ module.exports = async function init(cwd) {
 
     if (type === 'material') {
       // init material project
-      materialInit(cwd, {
+      await materialInit(cwd, {
         npmPrefix,
         template,
         templatePath,
@@ -44,7 +44,7 @@ module.exports = async function init(cwd) {
       });
     } else {
       // init single component/block/scaffold project
-      materialAdd(cwd, {
+      await materialAdd(cwd, {
         type,
         npmPrefix,
         template,
@@ -55,7 +55,6 @@ module.exports = async function init(cwd) {
       });
     }
 
-    // TODO: 这里不需要等上面结束吗？
     if (downloadPath) {
       logger.verbose('remove download files', downloadPath);
       rimraf.sync(downloadPath);
