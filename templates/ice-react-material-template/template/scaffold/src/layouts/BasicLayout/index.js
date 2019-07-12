@@ -1,65 +1,52 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import routerConfig from '../../routerConfig';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { headerMenuConfig, asideMenuConfig } from '@/config/menu.js';
+import styles from './index.module.scss';
 
-export default class BasicLayout extends Component {
-  render() {
-    return (
-      <div style={styles.container}>
-        {/* Aside */}
-        <div style={styles.aside} />
+export default function BasicLayout ({ children }) {
 
-        {/* Main */}
-        <div style={styles.main}>
-          {/* Header */}
-          <div style={styles.header} />
+  return (
+    <div className={styles.container}>
+      {/* Aside */}
+      <div className={styles.aside}>
+        {asideMenuConfig && asideMenuConfig.length > 0 ? (
+          asideMenuConfig.map((item, idx) => {
+            return <NavLink key={idx} {...item} />;
+          })
+        ) : null}
+      </div>
 
-          {/* Content */}
-          <div style={styles.content}>
-            {routerConfig.map((item, index) => (
-              <Route
-                exact
-                path={item.path}
-                key={index}
-                component={item.component}
-              />
-            ))}
-          </div>
+      {/* Main */}
+      <div className={styles.main}>
+        {/* Header */}
+        <div className={styles.header}>
+          {headerMenuConfig && headerMenuConfig.length > 0 ? (
+            headerMenuConfig.map((item, idx) => {
+              return <NavLink key={idx} {...item} />;
+            })
+          ) : null}
+        </div>
+
+        {/* Content */}
+        <div className={styles.content}>
+          {children}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-const styles = {
-  container: {
-    height: '100vh',
-    display: 'flex',
-    background: '#eee',
-  },
-  aside: {
-    width: '240px',
-    background: '#06152a',
-  },
-  main: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: '1',
-  },
-  header: {
-    width: '100%',
-    height: '64px',
-    boxShadow: '0 1px 4px rgba(0,21,41,.08)',
-    background: '#fff',
-  },
-  content: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    height: '100vh',
-    margin: '20px',
-    background: '#fff',
-    borderRadius: '4px',
-  },
-};
+
+function NavLink(props) {
+  const linkProps = {};
+  if (props.newWindow) {
+    linkProps.href = props.path;
+    linkProps.target = '_blank';
+  } else if (props.external) {
+    linkProps.href = props.path;
+  } else {
+    linkProps.to = props.path;
+  }
+
+  return <Link {...linkProps}>{props.name}</Link>;
+}

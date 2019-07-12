@@ -7,7 +7,7 @@
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "screenshot": "ice-devtools screenshot",
+    "screenshot": "screenshot -l",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "files": [
@@ -21,6 +21,7 @@
     "vue-router": "^3.0.2"
   },
   "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
@@ -58,9 +59,6 @@
   "scaffoldConfig": {
     "builder": "vue-cli-service",
     "name": "<%= name %>",
-    "title": "<%= title %>",
-    "categories": [
-      "基础模板"
-    ]
+    "title": "<%= title %>"
   }
 }
