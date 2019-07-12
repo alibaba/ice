@@ -3,18 +3,19 @@ const address = require('address');
 const execa = require('execa');
 const path = require('path');
 const detectPort = require('detect-port');
-// const is = require('electron-is');
+const is = require('electron-is');
+const log = require('electron-log');
 
 let mainWindow;
 let serverProcess;
 let setPort = '7001';
 
-const isProduction = true; // is.production();
+const isProduction = is.production();
 const ip = address.ip();
-const serverDir = path.join(__dirname, '..', 'server');
-const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
-const stopLoadingHTML = path.join(__dirname, '..', 'renderer', 'stop_loading.html');
-const errorLoadingHTML = path.join(__dirname, '..', 'renderer', 'error.html');
+const serverDir = isProduction ? path.join(__dirname, 'server') : path.join(__dirname, '...', 'build', 'server');
+const startLoadingHTML = path.join(__dirname, 'start_loading.html');
+const stopLoadingHTML = path.join(__dirname, 'stop_loading.html');
+const errorLoadingHTML = path.join(__dirname, 'error.html');
 
 function getServerUrl() {
   return isProduction ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
@@ -33,7 +34,7 @@ function createWindow() {
       try {
         await execa('npm', ['stop'], { cwd: serverDir });
       } catch (error) {
-        console.warn(error);
+        log.warn(error);
       }
 
       setPort = await detectPort(setPort);
@@ -46,14 +47,13 @@ function createWindow() {
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
-        console.log(logInfo);
         if (logInfo.search('midway started on') > 0) {
           mainWindow.loadURL(getServerUrl());
         }
       });
 
       serverProcess.on('error', (buffer) => {
-        console.error(buffer.toString());
+        log.error(buffer.toString());
         mainWindow.loadFile(errorLoadingHTML);
       });
 
@@ -82,11 +82,11 @@ app.on('before-quit', (event) => {
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir });
 
     stopProcess.stdout.on('data', (buffer) => {
-      console.log(buffer.toString());
+      log.log(buffer.toString());
     });
 
     stopProcess.on('error', (buffer) => {
-      console.error(buffer.toString());
+      log.error(buffer.toString());
       app.quit();
     });
 

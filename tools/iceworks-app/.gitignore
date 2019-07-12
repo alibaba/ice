@@ -1,3 +1,2 @@
-server/
 dist/
-!build/
+build/
