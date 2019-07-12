@@ -5,7 +5,7 @@ try {
 } catch (e) {
   Client = {
     Client: class C {
-      run() {
+      public run() {
         throw new Error('缺少 DEF 客户端依赖');
       }
     },

@@ -15,7 +15,7 @@ function ignoreFile(filePath: string) {
 }
 
 class I18n implements II18n {
-  localeMap: {
+  private localeMap: {
     [key: string]: object;
   };
 

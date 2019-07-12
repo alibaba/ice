@@ -21,11 +21,11 @@ export default class Configuration implements IConfigurationModule {
     this.cliConfPath = path.join(this.project.path, this.cliConfFilename);
   }
 
-  async getCLIConf(args, ctx): Promise<IConfSchema[]> {
+  public async getCLIConf(args, ctx): Promise<IConfSchema[]> {
     return getCLIConf(this.cliConfPath, this.getConfigSchema(ctx));
   }
 
-  async setCLIConf(args: IConfParam) {
+  public async setCLIConf(args: IConfParam) {
     return setCLIConf(this.cliConfPath, args.options);
   }
 }

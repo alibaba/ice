@@ -49,7 +49,7 @@ export default class Menu implements IMenuModule {
     return code;
   }
 
-  async getAll(): Promise<{ asideMenuConfig: IMenu[]; headerMenuConfig: IMenu[] }> {
+  public async getAll(): Promise<{ asideMenuConfig: IMenu[]; headerMenuConfig: IMenu[] }> {
     let asideMenuConfig = [];
     let headerMenuConfig = [];
     const menuFileAST = this.getFileAST();
@@ -74,7 +74,7 @@ export default class Menu implements IMenuModule {
     };
   }
 
-  async bulkCreate(params: {data: IMenu[]; options: IMenuOptions}): Promise<void> {
+  public async bulkCreate(params: {data: IMenu[]; options: IMenuOptions}): Promise<void> {
     let {
       data = [],
       options = {},
@@ -94,7 +94,7 @@ export default class Menu implements IMenuModule {
     this.setData(data, menuFileAST, name);
   }
 
-  async delete(params: {paths: string[]}) {
+  public async delete(params: {paths: string[]}) {
     const { paths } = params;
     const menuFileAST = this.getFileAST();
     const { asideMenuConfig, headerMenuConfig } = await this.getAll();
@@ -103,7 +103,7 @@ export default class Menu implements IMenuModule {
     this.setData(this.removeItemByPaths(headerMenuConfig, paths), menuFileAST, HEADER_CONFIG_VARIABLE);
   }
 
-  removeItemByPaths(data: IMenu[], paths: string[]) {
+  private removeItemByPaths(data: IMenu[], paths: string[]) {
     const removeIndex = [];
     data.forEach((item, index) => {
       if (paths.indexOf(item.path) > -1) {

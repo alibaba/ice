@@ -6,7 +6,7 @@ const remoteUrl = `http://iceworks.cn-hangzhou.log.aliyuncs.com/logstores/icewor
 
 export default class RemoteLogger extends Transport {
   // send to remote
-  async log(level, args) {
+  public async log(level, args) {
     const qsData = {
       APIVersion: '0.6.0', // sls required
       __topic__: level, // log type

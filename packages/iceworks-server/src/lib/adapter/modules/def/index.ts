@@ -22,7 +22,7 @@ export default class DEF implements IDEFModule {
     this.storage = storage;
   }
 
-  async push(params: IDEFPushParams, ctx: IContext): Promise<void> {
+  public async push(params: IDEFPushParams, ctx: IContext): Promise<void> {
     const { target, commitId, branch, repository, empId } = params;
     const client = new Client.Client();
     client.run({

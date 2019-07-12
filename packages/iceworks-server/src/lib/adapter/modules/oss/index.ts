@@ -19,7 +19,7 @@ export default class OSS implements IOSSModule {
     this.storage = storage;
   }
 
-  async getBuckets(): Promise<IOSSBucket[]> {
+  public async getBuckets(): Promise<IOSSBucket[]> {
     const oss = this.storage.get('oss');
     const params: IOSSGetBucketsParams = oss.find(({ project }) => project === this.project.path);
     const { region } = params;
@@ -29,12 +29,12 @@ export default class OSS implements IOSSModule {
     return buckets;
   }
 
-  async getConfig() {
+  public async getConfig() {
     const oss = this.storage.get('oss');
     return oss.find(({ project }) => project === this.project.path) || {};
   }
 
-  async setConfig(args) {
+  public async setConfig(args) {
     const oss = this.storage.get('oss');
 
     let newConfig;
@@ -52,7 +52,7 @@ export default class OSS implements IOSSModule {
     return newConfig;
   }
 
-  async upload(args, ctx: IContext): Promise<IUploadResult[]> {
+  public async upload(args, ctx: IContext): Promise<IUploadResult[]> {
     const { i18n } = ctx;
     const oss = this.storage.get('oss');
     const params: IOSSUploadParams = oss.find(({ project }) => project === this.project.path);

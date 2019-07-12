@@ -35,11 +35,11 @@ export default class Layout implements ILayoutModule {
     );
   }
 
-  async getAll(args, ctx: IContext): Promise<IProjectLayout[]> {
+  public async getAll(args, ctx: IContext): Promise<IProjectLayout[]> {
     return await this.scanLayout(ctx);
   }
 
-  async getOne(layoutName: string, ctx: IContext): Promise<IProjectLayout> {
+  public async getOne(layoutName: string, ctx: IContext): Promise<IProjectLayout> {
     const layouts = await this.getAll(null, ctx);
     const layout = layouts.find(({name}) => name === layoutName);
     return layout;

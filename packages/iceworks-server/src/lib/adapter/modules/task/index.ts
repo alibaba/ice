@@ -39,7 +39,7 @@ export default class Task implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: ITaskParam, ctx: IContext) {
+  public async start(args: ITaskParam, ctx: IContext) {
     const { i18n } = ctx;
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
@@ -103,7 +103,7 @@ export default class Task implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args: ITaskParam, ctx: IContext) {
+  public async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 
@@ -130,7 +130,7 @@ export default class Task implements ITaskModule {
     return this;
   }
 
-  getStatus (args: ITaskParam) {
+  public getStatus (args: ITaskParam) {
     const { command } = args;
     return this.status[command];
   }
@@ -139,7 +139,7 @@ export default class Task implements ITaskModule {
    * get the conf of the current task
    * @param args
    */
-  async getConf(args: ITaskParam, ctx: IContext) {
+  public async getConf(args: ITaskParam, ctx: IContext) {
     const taskConfig = this.getTaskConfig(ctx);
     switch (args.command) {
       case 'dev':
@@ -158,7 +158,7 @@ export default class Task implements ITaskModule {
    * set the conf of the current task
    * @param args
    */
-  async setConf(args: ITaskParam) {
+  public async setConf(args: ITaskParam) {
     switch (args.command) {
       case 'dev':
         return this.setDevConf(args);
@@ -170,10 +170,10 @@ export default class Task implements ITaskModule {
   }
 
   /**
- * get dev configuration
- * merge the user configuration to return to the new configuration
- * @param projectPath
- */
+   * get dev configuration
+   * merge the user configuration to return to the new configuration
+   * @param projectPath
+   */
   private getDevConf(taskConfig: ITaskConf) {
     const pkgContent = this.project.getPackageJSON();
     const devScriptContent = pkgContent.scripts.start;

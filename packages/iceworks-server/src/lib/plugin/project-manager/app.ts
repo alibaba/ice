@@ -225,7 +225,7 @@ class ProjectManager extends EventEmitter {
     );
   }
 
-  async ready() {
+  public async ready() {
     await this.i18n.readLocales();
     this.projects = await this.refresh();
   }

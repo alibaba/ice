@@ -51,7 +51,7 @@ export default class Router implements IRouterModule {
     return routerConfigAST;
   }
 
-  async getAll(): Promise<IRouter[]> {
+  public async getAll(): Promise<IRouter[]> {
     let config = [];
     const routerConfigAST = this.getRouterConfigAST();
 
@@ -72,7 +72,7 @@ export default class Router implements IRouterModule {
     return config;
   }
 
-  parseRoute(elements) {
+  private parseRoute(elements) {
     const config = [];
     elements.forEach((element) => {
       // { path: '/home', component: Home, children: [] }
@@ -101,7 +101,7 @@ export default class Router implements IRouterModule {
   }
 
   // bulk create routers
-  async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}): Promise<void>  {
+  public async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}): Promise<void>  {
     let { data, options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
@@ -126,7 +126,7 @@ export default class Router implements IRouterModule {
     this.setData(data, routerConfigAST);
   }
 
-  async delete(params: {componentName: string}): Promise<string[]> {
+  public async delete(params: {componentName: string}): Promise<string[]> {
     const { componentName } = params;
     const routerConfigAST = this.getRouterConfigAST();
     const data = await this.getAll();
@@ -136,7 +136,7 @@ export default class Router implements IRouterModule {
     return this.removePaths;
   }
 
-  removeItemByComponent(data: IRouter[], componentName: string, parent?: IRouter) {
+  private removeItemByComponent(data: IRouter[], componentName: string, parent?: IRouter) {
     const removeIndex = [];
     data.forEach((item, index) => {
       if (!item.children) {

@@ -5,8 +5,8 @@ import * as rp from 'request';
 @controller('/api/goldlog')
 export class GoldlogController {
 
-    @post('/record')
-  async record(ctx) {
+  @post('/record')
+  public async record(ctx) {
     if (ctx.request.body) {
       const data = ctx.request.body;
       const dataKeyArray = Object.keys(data);
