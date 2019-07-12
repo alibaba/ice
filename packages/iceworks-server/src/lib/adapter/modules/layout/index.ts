@@ -6,10 +6,12 @@ const DEFAULT_IMAGE = 'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976
 
 export default class Layout implements ILayoutModule {
   public readonly project: IProject;
+
   public readonly path: string;
+
   public storage: any;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;

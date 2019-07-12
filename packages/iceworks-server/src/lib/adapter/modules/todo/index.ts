@@ -53,9 +53,10 @@ function retrieveMessagesFromLine(lineString, lineNumber): ITodoMsg[] {
 
 export default class Todo implements ITodoModule {
   public readonly project: IProject;
+
   public readonly storage: any;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     this.project = params.project;
   }
 
@@ -70,7 +71,7 @@ export default class Todo implements ITodoModule {
         if (messages.length) {
           result.push({
             messages,
-            path: path.relative(this.project.path, filePath)
+            path: path.relative(this.project.path, filePath),
           });
         }
       }

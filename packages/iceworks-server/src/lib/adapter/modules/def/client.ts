@@ -8,7 +8,7 @@ try {
       run() {
         throw new Error('缺少 DEF 客户端依赖');
       }
-    }
+    },
   };
 }
 

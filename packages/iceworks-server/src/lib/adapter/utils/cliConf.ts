@@ -24,7 +24,7 @@ function getCLIConf(path: string, defaultConf) {
         if (defaultConfKeys.includes(path.node.name)) {
           userConf[path.node.name] = path.container.value.value;
         }
-      }
+      },
     };
 
     traverse(ast, visitor);
@@ -56,7 +56,7 @@ function setCLIConf(path: string, conf: object) {
         properties = node.properties;
         flag = true;
       }
-    }
+    },
   };
 
   // traverse ast
@@ -96,16 +96,16 @@ function setCLIConf(path: string, conf: object) {
  */
 function mergeCLIConf(defaultConf: any, userConf: any) {
   return _.cloneDeepWith(defaultConf).map((item) => {
-     if (Object.keys(userConf).includes(item.name)) {
-       if (item.componentName === 'Switch') {
-         item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
-       } else {
-         item.componentProps.placeholder = userConf[item.name].toString();
-       }
-     }
-     return item;
-   });
- }
+    if (Object.keys(userConf).includes(item.name)) {
+      if (item.componentName === 'Switch') {
+        item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
+      } else {
+        item.componentProps.placeholder = userConf[item.name].toString();
+      }
+    }
+    return item;
+  });
+}
 
 export {
   getCLIConf,

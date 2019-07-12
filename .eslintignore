@@ -3,6 +3,7 @@ build/
 test/
 tests/
 node_modules/
+dist/
 
 # node 覆盖率文件
 coverage/
@@ -34,4 +35,4 @@ tools/iceworks
 tools/iceworks-cli
 tools/ice-devtools
 packages/iceworks-client
-packages/iceworks-server
+# packages/iceworks-server

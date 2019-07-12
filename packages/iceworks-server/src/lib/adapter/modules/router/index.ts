@@ -16,14 +16,18 @@ const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive
 
 export default class Router implements IRouterModule {
   public readonly project: IProject;
+
   public readonly storage: any;
 
   public readonly path: string;
+
   public existLazy: boolean;
+
   public configFilePath = 'config/routes.js';
+
   public removePaths: string[];
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -60,7 +64,7 @@ export default class Router implements IRouterModule {
           ) {
             config = this.parseRoute(node.init.elements);
           }
-        }
+        },
       });
     } catch (error) {
       console.log(error);
@@ -97,7 +101,7 @@ export default class Router implements IRouterModule {
   }
 
   // bulk create routers
-  async bulkCreate(params: {data: IRouter[], options: IRouterOptions}): Promise<void>  {
+  async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}): Promise<void>  {
     let { data, options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
@@ -173,7 +177,7 @@ export default class Router implements IRouterModule {
         if (['component'].indexOf(node.key.value) > -1) {
           node.value = t.identifier(node.value.value);
         }
-      }
+      },
     });
     traverse(routerConfigAST, {
       VariableDeclarator({ node }) {

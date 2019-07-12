@@ -38,12 +38,14 @@ const loadTemplate = async () => {
 
 export default class Page implements IPageModule {
   public readonly project: IProject;
+
   public readonly storage: any;
 
   public readonly path: string;
+
   private readonly componentDirName: string = 'components';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -86,7 +88,7 @@ export default class Page implements IPageModule {
     Object.keys(blocksDependencies).forEach((packageName) => {
       if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
         filterDependencies.push({
-          [packageName]: blocksDependencies[packageName]
+          [packageName]: blocksDependencies[packageName],
         });
       }
     });
@@ -220,12 +222,12 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string; }, ctx: IContext): Promise<void> {
+  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
     await this.downloadBlocksToPage(blocks, name, ctx);
   }
 
-  async addBlock(params: {block: IMaterialBlock, name?: string; }, ctx: IContext): Promise<void> {
+  async addBlock(params: {block: IMaterialBlock; name?: string }, ctx: IContext): Promise<void> {
     const {block, name} = params;
     await this.downloadBlockToPage(block, name, ctx);
   }

@@ -16,12 +16,13 @@ function ignoreFile(filePath: string) {
 
 class I18n implements II18n {
   localeMap: {
-    [key: string]: object
+    [key: string]: object;
   };
+
   constructor() {
     this.localeMap = {
       'zh-CN': zhCNGlobal,
-      'en-US': enUSGlobal
+      'en-US': enUSGlobal,
     };
   }
 

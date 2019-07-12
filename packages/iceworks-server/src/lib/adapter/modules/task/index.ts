@@ -15,6 +15,7 @@ const TASK_STATUS_STOP = 'stop';
 
 export default class Task implements ITaskModule {
   public project: IProject;
+
   public storage: any;
 
   private status: object = {};
@@ -27,7 +28,7 @@ export default class Task implements ITaskModule {
 
   public getTaskConfig: (ctx: IContext) => ITaskConf = getTaskConfig;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -144,7 +145,7 @@ export default class Task implements ITaskModule {
       case 'dev':
         return this.getDevConf(taskConfig);
       case 'build':
-       return getCLIConf(this.cliConfPath, taskConfig.build);
+        return getCLIConf(this.cliConfPath, taskConfig.build);
       case 'lint':
         // @TODO support lint configuration
         return null;
@@ -168,7 +169,7 @@ export default class Task implements ITaskModule {
     }
   }
 
-/**
+  /**
  * get dev configuration
  * merge the user configuration to return to the new configuration
  * @param projectPath
@@ -202,7 +203,7 @@ export default class Task implements ITaskModule {
 
     let newDevScriptContent =  `${cli} ${command}`;
     Object.keys(args.options).forEach((key) => {
-      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`;
+      newDevScriptContent += ` --${key}=${args.options[key]}`;
     });
 
     pkgContent.scripts.start = newDevScriptContent;

@@ -14,12 +14,12 @@ export default async (i18n) => {
     Dependency: baseAdapter.Dependency,
     Task: {
       ...baseAdapter.Task,
-      module: Task
+      module: Task,
     },
     Configuration: {
       ...baseAdapter.Configuration,
-      module: Configuration
-    }
+      module: Configuration,
+    },
   };
 
   const isAliInternal = await checkAliInternal();

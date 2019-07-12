@@ -29,7 +29,7 @@ const DEFAULT_ADAPTER = [
   'adapter-react-v1',
   'adapter-react-v2',
   'adapter-react-v3',
-  'adapter-vue-v1'
+  'adapter-vue-v1',
 ];
 
 class Project implements IProject {
@@ -108,7 +108,7 @@ class Project implements IProject {
 
         this.panels.push({
           name,
-          ..._.omit(config, 'module')
+          ..._.omit(config, 'module'),
         });
       });
 
@@ -167,7 +167,7 @@ class Project implements IProject {
     storage.set('panelSettings', panelSettings);
   }
 
-  public setPanel(params: {name: string; isAvailable: boolean; }): IPanel[] {
+  public setPanel(params: {name: string; isAvailable: boolean }): IPanel[] {
     const {name, isAvailable} = params;
     const panel = this.panels.find(({ name: settingName }) => settingName === name);
     if (panel) {
@@ -177,7 +177,7 @@ class Project implements IProject {
     return this.panels;
   }
 
-  public sortPanels(params: { oldIndex: number; newIndex: number; }): IPanel[] {
+  public sortPanels(params: { oldIndex: number; newIndex: number }): IPanel[] {
     const { oldIndex, newIndex } = params;
     this.panels = arrayMove(this.panels, oldIndex, newIndex);
     this.savePanels();
@@ -201,12 +201,13 @@ interface ICreateParams {
   path: string;
   scaffold: IMaterialScaffold;
   forceCover?: boolean;
-  appId?: string,
-  changeId?: string,
+  appId?: string;
+  changeId?: string;
 }
 
 class ProjectManager extends EventEmitter {
   private projects;
+
   private i18n: II18n;
 
   constructor(i18n: II18n) {
@@ -280,7 +281,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Create folder for project
    */
-  private async createProjectFolder(params: { path: string; forceCover?: boolean; }) {
+  private async createProjectFolder(params: { path: string; forceCover?: boolean }) {
     const { path: targetPath, forceCover } = params;
 
     if (!await pathExists(targetPath)) {
@@ -381,7 +382,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Delete a project in project list
    */
-  public async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
+  public async deleteProject(params: { projectPath: string; deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);

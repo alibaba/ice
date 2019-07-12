@@ -14,11 +14,14 @@ const HEADER_CONFIG_VARIABLE = 'headerMenuConfig';
 
 export default class Menu implements IMenuModule {
   public readonly project: IProject;
+
   public readonly storage: any;
+
   public readonly path: string;
+
   public configFilePath = 'config/menu.js';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.storage = storage;
     this.project = project;
@@ -46,7 +49,7 @@ export default class Menu implements IMenuModule {
     return code;
   }
 
-  async getAll(): Promise<{ asideMenuConfig: IMenu[], headerMenuConfig: IMenu[] }> {
+  async getAll(): Promise<{ asideMenuConfig: IMenu[]; headerMenuConfig: IMenu[] }> {
     let asideMenuConfig = [];
     let headerMenuConfig = [];
     const menuFileAST = this.getFileAST();
@@ -62,7 +65,7 @@ export default class Menu implements IMenuModule {
         if (headerMenuCode) {
           headerMenuConfig = eval(headerMenuCode);
         }
-      }
+      },
     });
 
     return {
@@ -71,10 +74,10 @@ export default class Menu implements IMenuModule {
     };
   }
 
-  async bulkCreate(params: {data: IMenu[], options: IMenuOptions}): Promise<void> {
+  async bulkCreate(params: {data: IMenu[]; options: IMenuOptions}): Promise<void> {
     let {
       data = [],
-      options = {}
+      options = {},
     } = params;
     const { replacement = false, type = 'aside' } = options;
     const { asideMenuConfig, headerMenuConfig } = await this.getAll();
@@ -131,7 +134,7 @@ export default class Menu implements IMenuModule {
         ) {
           node.init = arrayAST;
         }
-      }
+      },
     });
 
     fs.writeFileSync(

@@ -5,12 +5,16 @@ import getConfigSchema from './getConfigSchema';
 
 export default class Configuration implements IConfigurationModule {
   public project: IProject;
+
   public storage: any;
+
   public readonly cliConfPath: string;
+
   public cliConfFilename = 'ice.config.js';
+
   public getConfigSchema: (ctx: IContext) => IConfSchema[] = getConfigSchema;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;

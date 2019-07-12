@@ -97,7 +97,7 @@ export default (app) => {
 
       const material = storage.get('material');
       const currentItem = {
-        official: false, name, description, homepage, logo, type, source
+        official: false, name, description, homepage, logo, type, source,
       };
       const newMaterials = material.filter((item) => item.name !== currentItem.name);
       newMaterials.unshift(currentItem)
@@ -199,6 +199,6 @@ const updateArrayItem = (array, item, itemIdx) => {
   return [
     ...array.slice(0, itemIdx),
     item,
-    ...array.slice(itemIdx + 1)
+    ...array.slice(itemIdx + 1),
   ];
 };

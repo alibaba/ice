@@ -32,7 +32,7 @@ export default class RemoteLogger extends Transport {
     await request({
       url: remoteUrl,
       qs: qsData,
-      timeout: 2000
+      timeout: 2000,
     });
   }
 }

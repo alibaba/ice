@@ -1,18 +1,19 @@
-import { IContext, IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
 import * as dir from 'node-dir';
+import { IContext, IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
 
 const DOMAIN = 'aliyuncs.com';
 
 export default class OSS implements IOSSModule {
   public project: IProject;
+
   public storage: any;
 
   public readonly buildDir: string = 'build';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
