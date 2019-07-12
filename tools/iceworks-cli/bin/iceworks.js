@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint quotes:0, prefer-template:0, global-require:0 */
+/* eslint global-require:0 */
 const chalk = require('chalk');
 const program = require('commander');
 const pkgData = require('../package');
@@ -18,6 +18,7 @@ program.version(pkgData.version).usage('<command> [options]');
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
   program.outputHelp();
+  // eslint-disable-next-line prefer-template
   console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
   console.log();
 });
