@@ -10,7 +10,7 @@ const packageJSON = require('./package.json');
 
 const Platform = builder.Platform;
 
-gulp.task('dist', (done) => {
+gulp.task('dist', () => {
   let targets;
   if (os.platform() === 'win32') {
     targets = Platform.WINDOWS.createTarget();
