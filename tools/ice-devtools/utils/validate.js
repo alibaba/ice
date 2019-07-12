@@ -25,8 +25,8 @@ const componentSchema = createSchema((joi) => joi.object().keys({
   title: joi.string().required(),
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
-  categories: joi.array().items(joi.string().only([...categories.component])), // （必选）分类
-  category: joi.string().allow('').only([...categories.component]), // （必选）分类
+  categories: joi.array(), // （可选）分类
+  category: joi.string().allow(''), // （必选）分类，允许其他分类
   repository: joi.string().uri(), // （可选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -45,8 +45,8 @@ const blockSchema = createSchema((joi) => joi.object().keys({
   title: joi.string().required(),
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
-  categories: joi.array().items(joi.string().only([...categories.block])), // （必选）分类
-  category: joi.string().allow('').only([...categories.block]), // （必选）分类
+  categories: joi.array(), // （可选）分类
+  category: joi.string().allow(''), // （必选）分类，允许其他分类
   repository: joi.string().uri().required(), // （必选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -68,7 +68,7 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
   title: joi.string().required(),
   description: joi.string().required(), // （必选）描述
   homepage: joi.string().uri().required(), // （必选）预览地址
-  category: joi.string().allow('').only([...categories.scaffold]), // （必选）分类
+  category: joi.string().allow(''), // （必选）分类
   repository: joi.string().uri().required(), // （必选）源码地址
   source: joi.object().keys({ // （必选）描述安装方式
     type: joi.string().only(['npm']), // （必选）安装方式 npm
@@ -78,7 +78,7 @@ const scaffoldSchema = createSchema((joi) => joi.object().keys({
     author: authorSchema, // （可选）作者信息
   }),
   screenshot: joi.string().uri().required(), // （必选）截图
-  screenshots: joi.array().items(joi.string().uri()).required(), // （必选）站点模板预览需要多张截图
+  screenshots: joi.array().items(joi.string().uri()), // （必选）站点模板预览需要多张截图
   dependencies: joi.object().required(), // （必选）依赖关系
   publishTime: joi.string().isoDate().required(), // （必选）发布时间
   updateTime: joi.string().isoDate().required(), // （必选）最后更新时间
