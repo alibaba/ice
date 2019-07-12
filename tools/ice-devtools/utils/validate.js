@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi');
 const getCategories = require('../config/material').getCategories;
+const logger = require('../utils/logger');
 
 const categories = getCategories();
 const createSchema = ((fn) => fn(Joi));
@@ -9,7 +10,9 @@ const validate = (obj, schema) => {
     const result = Joi.validate(obj, schema);
 
     if (result.error) {
-      reject(result.error);
+      delete result.error._object;
+      logger.warn('物料数据校验不通过');
+      console.log(result.error);
     }
     resolve(true);
   });
