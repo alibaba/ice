@@ -7,6 +7,21 @@
 .aside {
   width: 240px;
   background: #06152a;
+  padding-top: 40px;
+
+  a {
+    display: block;
+    padding: 10px 20px;
+
+    &:link,
+    &:visited {
+      color: #fff;
+    }
+
+    &:hover {
+      background: #000;
+    }
+  }
 }
 
 .main {
@@ -19,6 +34,15 @@
   width: 100%;
   height: 64px;
   background: #fff;
+
+  a {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    margin: 10px;
+  }
 }
 
 .content {
