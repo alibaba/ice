@@ -6,7 +6,6 @@ const tar = require('tar');
 const ora = require('ora');
 const existsSync = require('fs').existsSync;
 const rimraf = require('rimraf');
-const debug = require('debug')('ice:add:general');
 const mkdirp = require('mkdirp');
 
 const logger = require('./logger');
