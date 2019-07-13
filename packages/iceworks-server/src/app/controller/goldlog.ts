@@ -1,4 +1,4 @@
-import { controller, provide, post } from 'midway';
+import { controller, provide, post } from 'midway-mirror';
 import * as rp from 'request';
 
 @provide()
