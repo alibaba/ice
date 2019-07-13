@@ -6,5 +6,5 @@ const baseDir = path.join(process.cwd(), 'server');
 let setPort = '7001';
 setPort = detectPort(setPort);
 let start = new StartCommand([baseDir, '--sticky=true', '--framework=midway',
- 'port =  + setPort']);
+ 'port = ' + setPort]);
 start.start();

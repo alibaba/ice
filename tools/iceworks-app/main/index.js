@@ -30,6 +30,7 @@ function createWindow() {
   });
 
   serverProcess.stderr.on('data', (buffer) => {
+    log.error(buffer.toString());
     console.error(buffer.toString());
     // mainWindow.loadFile(errorLoadingHTML);
   });
