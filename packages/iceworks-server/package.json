@@ -34,7 +34,7 @@
     "launch-code-editor": "^0.1.0",
     "line-by-line": "^0.1.6",
     "lodash": "^4.17.11",
-    "midway": "^1.5.6",
+    "midway-mirror": "^1.8.0",
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "node-dir": "^0.1.17",
