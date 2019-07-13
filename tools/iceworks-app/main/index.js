@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const { fork } = require('child_process');
 const path = require('path');
 const StopCommand = require('egg-scripts').StopCommand;
+const log = require('electron-log');
 // const is = require('electron-is');
 
 let mainWindow;
@@ -18,7 +19,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile(startLoadingHTML);
-
+  log.info('prepare to start the server');
   serverProcess = fork(require.resolve('../start_server.js'), [], {stdio:"pipe"});
   serverProcess.stdout.on('data', (buffer) => {
     const logInfo = buffer.toString();
@@ -34,8 +35,9 @@ function createWindow() {
   });
 
   serverProcess.on('close', (code) => {
+    log.info(code);
+    serverProcess = null;
     if (code === 0) {
-      serverProcess = null;
       app.exit();
     }
     else{
@@ -44,8 +46,14 @@ function createWindow() {
   });
 
   serverProcess.on('error', (err) => {
+    log.error('error...');
+    log.error(err);
     mainWindow.load(errorLoadingHTML);
     console.log(err.message);
+  })
+
+  serverProcess.on('message',(msg) => {
+    log.info(msg);
   })
 }
 
