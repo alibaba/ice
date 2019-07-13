@@ -9,6 +9,7 @@ let serverProcess;
 
 const sc = new StopCommand();
 const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
+const errorLoadingHTML = path.join(__dirname, '..', 'renderer', 'error.html');
 
 function createWindow() {
   mainWindow = new BrowserWindow();
@@ -36,9 +37,16 @@ function createWindow() {
     if (code === 0) {
       serverProcess = null;
       app.exit();
-      // mainWindow.loadFile(errorLoadingHTML);
+    }
+    else{
+      mainWindow.loadFile(errorLoadingHTML);
     }
   });
+
+  serverProcess.on('error', (err) => {
+    mainWindow.load(errorLoadingHTML);
+    console.log(err.message);
+  })
 }
 
 app.on('ready', createWindow);
