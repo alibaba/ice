@@ -1,13 +1,10 @@
-const npmRunPath = require('npm-run-path');	
-const os = require('os');	
-const path = require('path');	
+const npmRunPath = require('npm-run-path');
+const os = require('os');
+const path = require('path');
 const pathKey = require('path-key');
 const is = require('electron-is');
 
-const isDev = is.dev();
-const isWin = os.type() === 'Windows_NT';	
-
-const APP_BIN_PATH = isDev
+const APP_BIN_PATH = is.dev()
   ? path.join(process.cwd(), `bin-${process.platform}`)
   : path.join(process.resourcesPath, 'bin');
 
