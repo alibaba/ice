@@ -51,8 +51,9 @@ function createWindow() {
 
 app.on('ready', createWindow);
 
-app.on('before-quit', () => {
+app.on('before-quit', (event) => {
   if (serverProcess) {
+    event.preventDefault();
     // mainWindow.loadFile(stopLoadingHTML);
     sc.helper.kill([String(serverProcess.pid)]);
   }
