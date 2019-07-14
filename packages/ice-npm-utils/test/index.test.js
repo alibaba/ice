@@ -147,5 +147,12 @@ test('getAndExtractTarball', () => {
 
 test('getAndExtractTarballWithDir', () => {
   const tempDir = path.resolve(tmpdir(), 'babel_helper_function_name_tarball');
-  
+  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz')
+    .then((files) => {
+      rimraf.sync(tempDir);
+      expect(files.length > 0).toBe(true);
+    })
+    .catch(() => {
+      rimraf.sync(tempDir);
+    });  
 });
