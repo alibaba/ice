@@ -17,10 +17,10 @@
 
 ## 特性
 
-- **可视化开发**：通过 GUI 方式简化前端工程复杂度，同时可通过适配器支持不同的项目类型
+- **可视化开发**：通过 GUI 操作简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专有的前端工作台
 - **丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
 - **最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结果、开发调试、路由配置、状态管理等
-- **自定义物料**：通过工具可快速开发&使用公司自定义的物料体系
+- **自定义物料**：通过物料开发者工具可快速开发构建私有物料体系
 
 更多特性请参考站点 [ice.work](https://ice.work)。
 
@@ -49,12 +49,6 @@ $ mkdir iceapp & cd iceapp
 
 # 通过模板初始化项目
 $ iceworks init
-
-# 安装项目依赖
-$ npm install
-
-# 本地开发调试
-$ npm start
 ```
 
 ## 生态
@@ -105,7 +99,7 @@ $ npm start
 
 | 钉钉群                               | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
-|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="100" /> | [issues]     | [gitter]|
+|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="200" /> | [issues]     | [gitter]|
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
