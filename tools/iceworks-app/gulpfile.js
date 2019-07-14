@@ -25,7 +25,7 @@ gulp.task('dist', (done) => {
   }
   const buildDir = path.join(__dirname, 'build');
   const distDir = path.join(__dirname, 'dist');
-  const serverDir = path.join(buildDir, 'server');
+  const serverDir = path.join(__dirname, 'server');
 
   async function build() {
     if (fs.existsSync(distDir)) {
@@ -51,6 +51,10 @@ gulp.task('dist', (done) => {
   async function getServerCode() {
     const tarball = await getNpmTarball('iceworks-server');
     await getAndExtractTarball(serverDir, tarball);
+    await execa.shell('npm install', {
+      stdio: 'inherit',
+      cwd: serverDir,
+    });
   }
 
   async function copyAppFiles() {
@@ -65,10 +69,6 @@ gulp.task('dist', (done) => {
     const projectPackageJSONPath = path.join(__dirname, packageJSONFileName);
     const projectPackageJSON = JSON.parse((await readFileAsync(projectPackageJSONPath)).toString());
 
-    const serverPackageJSONPath = path.join(serverDir, packageJSONFileName);
-    const serverProjectPackageJSON = JSON.parse((await readFileAsync(serverPackageJSONPath)).toString());
-
-    projectPackageJSON.dependencies = Object.assign({}, serverProjectPackageJSON.dependencies, projectPackageJSON.dependencies);
     projectPackageJSON.main = './index.js';
     delete projectPackageJSON.build;
 

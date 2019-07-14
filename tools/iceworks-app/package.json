@@ -51,6 +51,10 @@
       {
         "from": "./bin-${platform}",
         "to": "./bin"
+      },
+      {
+        "from": "./server",
+        "to": "./server"
       }
     ],
     "mac": {

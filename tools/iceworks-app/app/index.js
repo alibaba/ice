@@ -14,7 +14,7 @@ let setPort = '7001';
 const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
-const serverDir = isProduction ? path.join(__dirname, 'server') : path.join(__dirname, '...', 'build', 'server');
+const serverDir = path.join(__dirname, '..', 'server');
 const startLoadingHTML = path.join(__dirname, 'start_loading.html');
 const stopLoadingHTML = path.join(__dirname, 'stop_loading.html');
 const errorLoadingHTML = path.join(__dirname, 'error.html');
@@ -79,7 +79,7 @@ function createWindow() {
 app.on('ready', createWindow);
 
 app.on('before-quit', (event) => {
-  if (serverProcess) {
+  if (isProduction && serverProcess) {
     event.preventDefault();
 
     mainWindow.loadFile(stopLoadingHTML);
