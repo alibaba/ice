@@ -64,6 +64,8 @@ function createWindow() {
         if (code === 0) {
           mainWindow.loadURL(getServerUrl());
         } else {
+          log.error('exit!');
+
           serverProcess = null;
           mainWindow.loadFile(errorLoadingHTML);
         }
