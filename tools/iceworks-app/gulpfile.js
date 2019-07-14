@@ -50,7 +50,7 @@ gulp.task('dist', (done) => {
   async function getServerCode() {
     if (isDev) {
       shelljs.cp('-R', '../../packages/iceworks-server/', './server/');
-      
+
       await execa.shell('npm install', {
         stdio: 'inherit',
         cwd: serverDir,
