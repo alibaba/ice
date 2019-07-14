@@ -4,6 +4,10 @@
   </a>
 </p>
 
+<h1 align="center">飞冰（ICE）</h1>
+
+<p align="center">简单而友好的前端研发体系</p>
+
 <p align="center">
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
   <a href="https://travis-ci.org/alibaba/ice"><img src="https://travis-ci.org/alibaba/ice.svg?branch=master" alt="Build Status" /></a>
@@ -11,9 +15,7 @@
   <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 </p>
 
----
-
-简单而友好的前端研发体系，通过 iceworks 支持项目的可视化开发调试，同时为开发者提供丰富的物料选择以及项目最佳实践，降低前端研发门槛同时不断提高研发效率。
+<div align="center">
 
 ## 特性
 
