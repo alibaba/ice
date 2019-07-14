@@ -85,12 +85,6 @@ export interface ICreatePageParam {
 }
 
 export interface IPageModule extends IBaseModule {
-  /**
-   * 获取单个页面的信息
-   *
-   * @param name 页面名
-   */
-  getOne(name): Promise<IPage>;
 
   /**
    * 获取项目内的页面信息
@@ -109,25 +103,11 @@ export interface IPageModule extends IBaseModule {
   create(page: ICreatePageParam, ctx: IContext): Promise<IPage>;
 
   /**
-   * 添加多个页面到项目
-   *
-   * @param pages 页面配置信息
-   */
-  bulkCreate(pages: ICreatePageParam[]): Promise<IPage[]>;
-
-  /**
    * 删除项目内的页面
    *
    * @param name 页面名
    */
   delete(params: {name: string}): Promise<void>;
-
-  /**
-   * 更新页面
-   *
-   * @param page 页面信息
-   */
-  update(page: IPage): Promise<IPage>;
 
   /**
    * 获取区块列表

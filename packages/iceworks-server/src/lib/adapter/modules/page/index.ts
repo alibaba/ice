@@ -1,5 +1,3 @@
-/* eslint no-empty-function: 0 */
-
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -146,8 +144,6 @@ export default class Page implements IPageModule {
     return _.orderBy(pages, 'name', 'asc');
   }
 
-  public async getOne(): Promise<any> { }
-
   public async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
     const { socket, i18n } = ctx;
@@ -204,8 +200,6 @@ export default class Page implements IPageModule {
     return pageFolderName;
   }
 
-  public async bulkCreate(): Promise<any> { }
-
   public async delete(params: {name: string}): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
@@ -233,6 +227,4 @@ export default class Page implements IPageModule {
     const {block, name} = params;
     await this.downloadBlockToPage(block, name, ctx);
   }
-
-  public async update(): Promise<any> { }
 }
