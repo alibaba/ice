@@ -3,15 +3,11 @@ const gulp = require('gulp');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
-const rimraf = require('rimraf');
 const execa = require('execa');
 const { getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
-const mkdirp = require('mkdirp');
-const filecopy = require('filecopy');
+const shelljs = require('shelljs');
 
 const cliBuilder = require.resolve('electron-builder/out/cli/cli.js');
-const rimrafAsync = util.promisify(rimraf);
-const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const isDev = process.env.NODE_ENV === 'development';
@@ -23,13 +19,16 @@ gulp.task('dist', (done) => {
   } else {
     target = 'mac';
   }
-  const buildDir = path.join(__dirname, 'build');
-  const distDir = path.join(__dirname, 'dist');
-
+  const buildName = 'build';
+  const distName = 'dist';
+  const serverName = 'server';
+  const buildDir = path.join(__dirname, buildName);
+  const distDir = path.join(__dirname, distName);
+  const serverDir = path.join(__dirname, serverName);
 
   async function build() {
     if (fs.existsSync(distDir)) {
-      await rimrafAsync(distDir);
+      shelljs.rm('-rf', [distName]);
     }
 
     const params = [`--${target}`, '--publish', 'always'];
@@ -49,31 +48,40 @@ gulp.task('dist', (done) => {
   }
 
   async function getServerCode() {
-    const serverDir = path.join(buildDir, 'server');
-    const tarball = await getNpmTarball('iceworks-server');
-    await getAndExtractTarball(serverDir, tarball);
-    await execa.shell('npm install', {
-      stdio: 'inherit',
-      cwd: serverDir,
-    });
+    if (isDev) {
+      shelljs.cp('-R', '../../packages/iceworks-server/', './server/');
+
+      await execa.shell('npm install', {
+        stdio: 'inherit',
+        cwd: serverDir,
+      });
+      await execa.shell('npm build', {
+        stdio: 'inherit',
+        cwd: serverDir,
+      });
+    } else {
+      const tarball = await getNpmTarball('iceworks-server');
+      await getAndExtractTarball(serverDir, tarball);
+      await execa.shell('npm install', {
+        stdio: 'inherit',
+        cwd: serverDir,
+      });
+    }
   }
 
   async function copyAppFiles() {
-    await filecopy(
-      'app/*',
-      'build'
-    );
+    shelljs.cp('-R', './app/', `./${buildName}/`);
   }
 
   async function setPackage() {
     const packageJSONFileName = 'package.json';
-    const packageJSONPath = path.join(__dirname, packageJSONFileName);
-    const packageJSON = JSON.parse((await readFileAsync(packageJSONPath)).toString());
+    const projectPackageJSONPath = path.join(__dirname, packageJSONFileName);
+    const projectPackageJSON = JSON.parse((await readFileAsync(projectPackageJSONPath)).toString());
 
-    packageJSON.main = './index.js';
-    delete packageJSON.build;
+    projectPackageJSON.main = './index.js';
+    delete projectPackageJSON.build;
 
-    await writeFileAsync(path.join(buildDir, packageJSONFileName), `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
+    await writeFileAsync(path.join(buildDir, packageJSONFileName), `${JSON.stringify(projectPackageJSON, null, 2)}\n`, 'utf-8');
 
     await execa.shell('npm install', {
       stdio: 'inherit',
@@ -81,19 +89,11 @@ gulp.task('dist', (done) => {
     });
   }
 
-  async function devDist() {
-    await copyAppFiles();
-
-    await setPackage();
-
-    build();
-  }
-
   async function dist() {
     if (fs.existsSync(buildDir)) {
-      await rimrafAsync(buildDir);
+      shelljs.rm('-rf', [buildName]);
     }
-    await mkdirpAsync(buildDir);
+    shelljs.mkdir('-p', buildName);
 
     await getServerCode();
 
@@ -104,9 +104,5 @@ gulp.task('dist', (done) => {
     build();
   }
 
-  if (isDev) {
-    devDist();
-  } else {
-    dist();
-  }
+  dist();
 });
