@@ -24,4 +24,6 @@ matrix:
         - cp -r ../../packages/iceworks-server/dist dist
         - cp ../../packages/iceworks-server/package.json dist/
         - export CSC_IDENTITY_AUTO_DISCOVERY=false
+        - pwd
+        - ls ../../
         - npm run build

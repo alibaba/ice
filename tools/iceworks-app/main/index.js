@@ -21,7 +21,7 @@ function createWindow() {
 
   mainWindow.loadFile(startLoadingHTML);
   log.info('prepare to start the server');
-  serverProcess = fork(require.resolve('../start_server.js'), [], {stdio:"pipe"});
+  serverProcess = fork(require.resolve('../start_server.js'), [], { stdio: 'pipe' });
   serverProcess.stdout.on('data', (buffer) => {
     const logInfo = buffer.toString();
     console.log(logInfo);
@@ -41,8 +41,7 @@ function createWindow() {
     serverProcess = null;
     if (code === 0) {
       app.exit();
-    }
-    else{
+    } else {
       mainWindow.loadFile(errorLoadingHTML);
     }
   });
@@ -52,11 +51,11 @@ function createWindow() {
     log.error(err);
     mainWindow.load(errorLoadingHTML);
     console.log(err.message);
-  })
+  });
 
-  serverProcess.on('message',(msg) => {
+  serverProcess.on('message', (msg) => {
     log.info(msg);
-  })
+  });
 }
 
 app.on('ready', createWindow);
