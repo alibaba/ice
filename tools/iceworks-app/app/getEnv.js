@@ -1,5 +1,4 @@
 const npmRunPath = require('npm-run-path');
-const os = require('os');
 const path = require('path');
 const pathKey = require('path-key');
 const is = require('electron-is');
