@@ -52,7 +52,7 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
       .pipe(zlib.Unzip())
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
-        if(entry.type == 'Directory'){
+        if (entry.type === 'Directory') {
           return;
         }
         const realPath = entry.path.replace(/^package\//, '');
