@@ -55,7 +55,7 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
         if(entry.type == 'Directory'){
           return;
         }
-	const realPath = entry.path.replace(/^package\//, '');
+        const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
 
