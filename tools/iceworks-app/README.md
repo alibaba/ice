@@ -3,15 +3,24 @@
 ## Develop
 
 0. Start iceworks server: 
+
     ```bash
     $ cd ../../pacakges/iceworks-server
     $ npm install
-    $ npm run build
-    $ cd ../../tools/iceworks-app
-    $ ln -s ../../packages/iceworks-server server    
+    $ npm run dev
+    ```
+0. Start iceworks client:
+
+    ```bash
+    $ cd ../../packages/iceworks-client
+    $ npm install
+    $ npm run start
     ```
 0. Start icewroks app:
-    ```bash
+
+    ```
+    $ cd ../../packages/iceworks-app
+    $ npm install
     $ npm run start
     ```
 

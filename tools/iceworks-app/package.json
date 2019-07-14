@@ -1,91 +1,65 @@
 {
   "name": "iceworks-app",
   "version": "3.0.0",
-  "main": "main/index.js",
+  "main": "app/index.js",
   "scripts": {
-    "start": "electron main",
+    "start": "electron app",
     "dist": "gulp dist",
-    "dist-dev": "gulp dist-dev",
-    "build": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder ."
+    "pack": "NODE_ENV=development gulp dist"
   },
   "devDependencies": {
-    "electron": "^5.0.6",
+    "address": "^1.1.0",
+    "electron": "5.0.1",
     "electron-builder": "^21.0.15",
-    "gulp": "^4.0.2"
+    "gulp": "^3.9.1",
+    "ice-npm-utils": "^1.1.0",
+    "rimraf": "^2.6.3"
   },
   "description": "iceworks desktop app",
   "dependencies": {
-    "@babel/generator": "^7.4.4",
-    "@babel/parser": "^7.4.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/traverse": "^7.4.5",
-    "@babel/types": "^7.4.4",
-    "address": "^1.1.0",
-    "ali-oss": "^6.1.1",
-    "array-move": "^2.1.0",
-    "camelcase": "^5.3.1",
-    "chalk": "^2.4.2",
-    "conf": "^4.0.1",
     "detect-port": "^1.3.0",
-    "egg": "^2.22.2",
-    "egg-core": "^4.17.3",
-    "egg-cors": "^2.2.0",
-    "egg-logger": "^2.4.1",
-    "egg-scripts": "^2.10.0",
-    "egg-socket.io": "^4.1.5",
-    "egg-view": "^2.1.2",
-    "egg-view-nunjucks": "^2.2.0",
-    "ejs": "^2.6.1",
+    "electron-is": "^3.0.0",
     "electron-log": "^3.0.6",
     "execa": "^1.0.0",
-    "fs-extra": "^8.0.1",
-    "ice-npm-utils": "^1.1.2",
-    "isbinaryfile": "^4.0.1",
-    "junk": "^3.1.0",
-    "kebab-case": "^1.0.0",
-    "latest-version": "^5.1.0",
-    "launch-code-editor": "^0.1.0",
-    "line-by-line": "^0.1.6",
-    "lodash": "^4.17.11",
-    "midway": "^1.5.6",
-    "mkdirp": "^0.5.1",
-    "mv": "^2.1.1",
-    "node-dir": "^0.1.17",
-    "node-ipc": "^9.1.1",
-    "open": "^6.3.0",
-    "package-json": "^6.4.0",
-    "path-exists": "^4.0.0",
-    "prettier": "^1.17.1",
-    "recursive-readdir": "^2.2.2",
-    "request": "^2.88.0",
-    "request-progress": "^3.0.0",
-    "request-promise-native": "^1.0.7",
-    "rimraf": "^2.6.3",
-    "semver": "^6.0.0",
-    "simple-git": "^1.113.0",
-    "tar": "^4.4.8",
-    "terminate": "^2.1.2",
-    "trash": "^5.2.0",
-    "uid": "^0.0.2",
-    "uppercamelcase": "^3.0.0",
-    "user-home": "^2.0.0"
+    "filecopy": "^4.0.2",
+    "mkdirp": "^0.5.1"
   },
   "author": {
     "name": "Alibaba Group Holding Limited",
     "url": "http://alibaba.github.io/ice"
   },
   "build": {
+    "appId": "com.alibaba-inc.ice",
     "asar": false,
-    "npmRebuild": false,
-    "files": [
-      "main/index.js",
-      "start_server.js",
-      "package.json",
-      "renderer/*",
-      "dist/**/*"
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://iceworks.oss-cn-hangzhou.aliyuncs.com/${os}"
+      }
     ],
     "directories": {
-      "output": "dist-electron"
+      "app": "build",
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "mac": {
+      "category": "iceworks.app.category.type",
+      "icon": "public/icons/mac/icon.icns"
+    },
+    "win": {
+      "icon": "public/icons/win/icon.ico",
+      "artifactName": "${productName}-setup-${version}.${ext}"
+    },
+    "dmg": {
+      "iconSize": 160
+    },
+    "protocols": {
+      "name": "iceworks",
+      "schemes": [
+        "iceworks"
+      ]
     }
   }
 }
