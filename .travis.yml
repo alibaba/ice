@@ -16,7 +16,6 @@ matrix:
     - os: osx
       if: branch = iceworks/electron
       script:
-        - ls
         - cd tools/iceworks-app
         - npm install 
         - sed -i.bak "s/proto === EggCore.prototype/proto.constructor.name === EggCore.name/g" node_modules/egg-core/lib/loader/egg_loader.js # patch egg-core loader
@@ -28,5 +27,5 @@ matrix:
         - cp ../../packages/iceworks-server/package.json dist/
         - export CSC_IDENTITY_AUTO_DISCOVERY=false
         - pwd
-        - ls ../../
+        - rm -rf ../../node_modules
         - npm run build
