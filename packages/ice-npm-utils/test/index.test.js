@@ -145,3 +145,7 @@ test('getAndExtractTarball', () => {
     });
 });
 
+test('getAndExtractTarballWithDir', () => {
+  const tempDir = path.resolve(tmpdir(), 'babel_helper_function_name_tarball');
+  
+});
