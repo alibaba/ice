@@ -47,6 +47,25 @@ const docCategories = {
   materials: {
     // 自定义物料
     title: {},
+    children: [{
+      title: {
+        'zh-cn': '开发指南',
+        'en-us': 'Guide',
+      },
+      dir: 'guide',
+    }, {
+      title: {
+        'zh-cn': '物料模版',
+        'en-us': 'Material template',
+      },
+      dir: 'template',
+    }, {
+      title: {
+        'zh-cn': '参考',
+        'en-us': 'Reference',
+      },
+      dir: 'reference',
+    }],
   },
   'cli-1.x': {
     // ice-scripts 1.x
