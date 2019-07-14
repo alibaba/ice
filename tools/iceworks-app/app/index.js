@@ -24,7 +24,7 @@ function getServerUrl() {
 }
 
 function createWindow() {
-  mainWindow = new BrowserWindow();
+  mainWindow = new BrowserWindow({ width: 1280, height: 800 });
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -36,7 +36,7 @@ function createWindow() {
       try {
         await execa('npm', ['stop'], { cwd: serverDir, env });
       } catch (error) {
-        log.warn(error);
+        log.warn('stop got error:', error);
       }
 
       setPort = await detectPort(setPort);
@@ -50,22 +50,29 @@ function createWindow() {
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
+        log.info('start stdout:', buffer.toString());
+
         if (logInfo.search('midway started on') > 0) {
           mainWindow.loadURL(getServerUrl());
         }
       });
 
       serverProcess.on('error', (buffer) => {
-        log.error(buffer.toString());
+        log.error('start got error:', buffer.toString());
+        mainWindow.loadFile(errorLoadingHTML);
+      });
+
+      serverProcess.stderr.on('data', (buffer) => {
+        log.error('start stderr:', buffer.toString());
         mainWindow.loadFile(errorLoadingHTML);
       });
 
       serverProcess.on('exit', (code) => {
+        log.error('start process exit width:', code);
+
         if (code === 0) {
           mainWindow.loadURL(getServerUrl());
         } else {
-          log.error('exit!');
-
           serverProcess = null;
           mainWindow.loadFile(errorLoadingHTML);
         }
@@ -87,15 +94,16 @@ app.on('before-quit', (event) => {
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
     stopProcess.stdout.on('data', (buffer) => {
-      log.log(buffer.toString());
+      log.info('stop stdout:', buffer.toString());
     });
 
     stopProcess.on('error', (buffer) => {
-      log.error(buffer.toString());
+      log.error('stop got error:', buffer.toString());
       app.quit();
     });
 
     stopProcess.on('exit', (code) => {
+      log.error('stop process exit width:', code);
       if (code === 0) {
         serverProcess.kill();
         serverProcess = null;
