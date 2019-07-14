@@ -1,4 +1,3 @@
-/* eslint no-eval: 0 */
 import * as path from 'path';
 import * as fs from 'fs';
 import * as parser from '@babel/parser';
@@ -61,10 +60,10 @@ export default class Menu implements IMenuModule {
         const asideMenuCode = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
         const headerMenuCode = getMenuCode(node, HEADER_CONFIG_VARIABLE);
         if (asideMenuCode) {
-          asideMenuConfig = eval(asideMenuCode);
+          asideMenuConfig = eval(asideMenuCode); // eslint-disable-line
         }
         if (headerMenuCode) {
-          headerMenuConfig = eval(headerMenuCode);
+          headerMenuConfig = eval(headerMenuCode); // eslint-disable-line
         }
       },
     });
