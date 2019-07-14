@@ -13,6 +13,7 @@ export default {
   'iceworks.global.adapter.title': '项目适配失败',
   'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考 <a href="https://ice.work/docs/iceworks/migrate" target="_blank">文档</a> 进行适配',
   'iceworks.global.adapter.reload': '刷新重试',
+  'iceworks.global.no.project': '未找到项目，请先添加项目',
 
   // quick start
   'iceworks.quickStart.title': '从热门模板开始初始化你的项目',

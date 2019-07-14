@@ -36,6 +36,8 @@
   "baseAdapter.page.download.tarError": "Unpacking block {blockName} error, please try again",
   "baseAdapter.page.download.tarTimeOut": "Unpacking block {blockName} timed out, please try again",
 
+  "baseAdapter.task.runing": "The task has started. Please stop the task before trying again",
+  "baseAdapter.task.install.dependency": "Please try again after installing the dependency",
   "baseAdapter.task.dev.port.label": "Service port number",
   "baseAdapter.task.dev.host.label": "Service host name",
   "baseAdapter.task.dev.https.label": "Use https",

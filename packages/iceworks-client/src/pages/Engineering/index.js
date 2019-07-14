@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import SubRoutes from '@components/SubRoutes';
 import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
@@ -32,6 +33,14 @@ const Engineering = ({ routes }) => {
   useEffect(() => {
     setSubMenuData(getSubMenuData());
   }, []);
+
+  if (!projectStore.dataSource.name) {
+    return (
+      <div className={styles.noProject}>
+        <h5><FormattedMessage id="iceworks.global.no.project" /></h5>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.tasksPage}>

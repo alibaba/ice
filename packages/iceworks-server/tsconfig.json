@@ -14,11 +14,7 @@
     "outDir": "dist",
     "lib": ["es2017", "dom"]
   },
-  "exclude": [
-    "src/app/public",
-    "src/app/view",
-    "dist",
-    "node_modules",
-    "test"
+  "include": [
+    "src"
   ]
 }

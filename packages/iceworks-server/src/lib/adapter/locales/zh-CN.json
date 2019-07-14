@@ -36,6 +36,8 @@
   "baseAdapter.page.download.tarError": "解压区块{blockName}出错, 请重试",
   "baseAdapter.page.download.tarTimeOut": "解压区块{blockName}超时, 请重试",
 
+  "baseAdapter.task.runing": "服务已启动，请先停止服务再重试",
+  "baseAdapter.task.install.dependency": "请先安装依赖后再重试",
   "baseAdapter.task.dev.port.label": "服务端口号",
   "baseAdapter.task.dev.host.label": "服务主机名",
   "baseAdapter.task.dev.https.label": "开启 https",

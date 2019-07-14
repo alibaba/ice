@@ -18,9 +18,9 @@ const QuickStart = ({
         scaffolds.length ?
           <div className={styles.scaffolds}>
             {
-              scaffolds.map((scaffold) => {
+              scaffolds.map((scaffold, index) => {
                 return (
-                  <div className={styles.item}>
+                  <div className={styles.item} key={index}>
                     <ScaffoldCard dataSource={scaffold} onDownload={createProject} />
                   </div>
                 );
