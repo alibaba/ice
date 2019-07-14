@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "electron": "^5.0.6",
-    "electron-builder": "^21.0.15"
+    "electron-builder": "^21.0.15",
+    "gulp": "^4.0.2"
   },
   "description": "iceworks desktop app",
   "dependencies": {
@@ -73,6 +74,9 @@
       "package.json",
       "renderer/*",
       "dist/**/*"
-    ]
+    ],
+    "directories": {
+      "output": "dist-electron"
+    }
   }
 }

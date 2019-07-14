@@ -1,3 +1,5 @@
+dist-electron/
+logs/
+run/
 server/
 dist/
-!build/
