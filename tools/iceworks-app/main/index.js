@@ -11,6 +11,7 @@ let serverProcess;
 const sc = new StopCommand();
 const startLoadingHTML = path.join(__dirname, '..', 'renderer', 'start_loading.html');
 const errorLoadingHTML = path.join(__dirname, '..', 'renderer', 'error.html');
+const indexHTML = path.join(__dirname, '..', 'renderer', 'index.html');
 
 function createWindow() {
   mainWindow = new BrowserWindow();
@@ -25,7 +26,7 @@ function createWindow() {
     const logInfo = buffer.toString();
     console.log(logInfo);
     if (logInfo.search('midway started on') > 0) {
-      mainWindow.loadURL('http://localhost:7001/');
+      mainWindow.loadFile(indexHTML);
     }
   });
 
