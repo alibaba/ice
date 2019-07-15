@@ -1,14 +1,14 @@
 <p align="center">
   <a href="https://ice.work">
-    <img alt="飞冰（ICE）" src="https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png" width="96">
+    <img alt="ICE" src="https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png" width="96">
   </a>
 </p>
 
-<h1 align="center">飞冰（ICE）</h1>
+<h1 align="center">ICE</h1>
 
 <div align="center">
 
-Simple and friendly front-end solution
+Simple and friendly front-end R&D system
 
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 <a href="https://travis-ci.org/alibaba/ice"><img src="https://travis-ci.org/alibaba/ice.svg?branch=master" alt="Build Status" /></a>
@@ -32,9 +32,9 @@ more information [ice.work](https://ice.work).
 
 ## Quick start
 
-To support different user groups，Provides two ways to use the web interface and CLI, as follows:
+We provide two ways to use iceworks for different user groups:
 
-#### Web usage
+#### Web usage [recommend]
 
 ```bash
 # Install the CLI tool
@@ -62,12 +62,12 @@ $ iceworks init
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials|
-| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |Devtools for init and develop materials|
-| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Configurable build tool for React project based on webpack|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React hooks|
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Large-scale mid-background multi-application coexistence solution|
-| [react-materials] | / | [docs][react-materials-docs] |Officially maintained high quality react material|
-| [vue-materials] | / | [docs][vue-materials-docs] |Community maintains high quality vue materials       |
+| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |Material development tools, support React&Vue.|
+| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Highly configurable development and build tools based on webpack|
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
+| [react-materials] | / | [docs][react-materials-docs] |High quality and abundant React materials provided by the authorities|
+| [vue-materials] | / | [docs][vue-materials-docs] |High quality Vue materials maintained by the community|
 
 [iceworks]: https://github.com/alibaba/ice
 [ice-devtools]: https://github.com/ice-lab/ice-devtools
@@ -105,7 +105,7 @@ Contributing Guide [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 | DingTalk community                               | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
-|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="200" /> | [issues]     | [gitter]|
+|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /> | [issues]     | [gitter]|
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
