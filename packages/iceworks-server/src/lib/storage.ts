@@ -54,6 +54,12 @@ const schema = {
         name: '飞冰物料',
         type: 'react',
         source: 'http://ice.alicdn.com/assets/materials/react-materials.json'
+      },
+      {
+        official: true,
+        name: 'Vue物料',
+        type: 'vue',
+        source: 'http://ice.alicdn.com/assets/materials/vue-materials.json'
       }
     ],
   },
