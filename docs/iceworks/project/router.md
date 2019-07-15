@@ -1,6 +1,6 @@
 ---
 title: 路由管理
-order: 3
+order: 6
 ---
 
 在 iceworks 中 **路由管理面板** 指的是对项目所有路由的可视化管理。通过可视化的管理配置，可以快速地创建、修改和删除路由。路由面板修改的文件是 `src/config/routes.js`，具体的协议制定可参考[此处](https://github.com/alibaba/ice/issues/2031)。
