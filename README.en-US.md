@@ -8,7 +8,7 @@
 
 <div align="center">
 
-简单而友好的前端研发体系
+Simple and friendly front-end solution
 
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 <a href="https://travis-ci.org/alibaba/ice"><img src="https://travis-ci.org/alibaba/ice.svg?branch=master" alt="Build Status" /></a>
@@ -17,53 +17,53 @@
 
 </div>
 
-## 特性
+## Feature
 
-- :fire:**可视化开发**：通过 GUI 操作简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专有的前端工作台
-- :100:**丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
-- :tophat:**最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结果、开发调试、路由配置、状态管理等
-- :whale:**自定义物料**：通过物料开发者工具快速开发构建私有物料体系
+- :fire:**Visual Development**：Simplify front-end engineering complexity through GUI operations, while visually managing different project projects via adapters, customizing proprietary front-end workbench.
+- :100:**Rich materials**：Improve project development efficiency based on material assembly while providing a wide range of React/Vue materials
+- :tophat:**Best Practices**：Project development best practices based on rich experience, including directory results, development debugging, routing configuration, state management, etc.
+- :whale:**Custom material**：Building Private Material System by Rapid Development of Material Developer Tools
 
-更多特性请参考站点 [ice.work](https://ice.work)。
+more information [ice.work](https://ice.work)。
 
-## 快速开始
+## Quick start
 
-为了支持不同的用户群体，我们提供了 Web 界面以及 CLI 两种使用方式，具体如下：
+To support different user groups，Provides two ways to use the web interface and CLI, as follows:
 
-#### Web 界面使用
+#### Web interface usage
 
 ```bash
-# 安装 CLI 工具
+# Install the CLI tool
 $ npm install iceworks -g
 
-# 通过浏览器打开页面
-$ iceworks  # 通过浏览器打开 http://127.0.0.1:8000
+# Run iceworks
+$ iceworks  # Open the browser： http://127.0.0.1:8000
 ```
 
-#### 命令行工具
+#### CLI
 
 ```bash
-# 安装 CLI 工具
+# Install the CLI tool
 $ npm install iceworks -g
 
-# 新建目录
+# New project
 $ mkdir iceapp & cd iceapp
 
-# 通过模板初始化项目
+# Initialize the project with a template
 $ iceworks init
 ```
 
-## 生态
+## Ecosystem
 
-|    项目         |    版本                                 |     文档    |   描述       |
+|    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |一站式的源码研发工作台|
-| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |物料开发和管理工具|
-| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置 React 项目构建工具|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |大型中后台多应用共存的解决方案|
-| [react-materials] | / | [docs][react-materials-docs] |由官方维护的高质量丰富的 React 物料|
-| [vue-materials] | / | [docs][vue-materials-docs] |由社区维护的高质量 Vue 物料    |
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop source code development workbench|
+| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |Devtools for init and develop materials|
+| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Configurable build tool for React project based on webpack|
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React hooks|
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Large-scale mid-background multi-application coexistence solution|
+| [react-materials] | / | [docs][react-materials-docs] |Officially maintained high quality react material|
+| [vue-materials] | / | [docs][vue-materials-docs] |Community maintains high quality vue materials       |
 
 [iceworks]: https://github.com/alibaba/ice
 [ice-devtools]: https://github.com/ice-lab/ice-devtools
@@ -93,13 +93,13 @@ $ iceworks init
 [icestark-docs]: https://github.com/ice-lab/icestark#icestark
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 
-## 贡献代码
+## Contributing
 
-参考文档 [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
+Contributing Guide [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
-## 社区
+## Community
 
-| 钉钉群                               | GitHub issues |  Gitter |
+| DingTalk community                               | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
 |<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="200" /> | [issues]     | [gitter]|
 
