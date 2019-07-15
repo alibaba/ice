@@ -62,11 +62,7 @@
     "midway-bin": "1",
     "midway-mock": "1",
     "tslib": "^1.8.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-midway-contrib": "1",
     "ts-node": "^8.0.2",
-    "tslint": "^5.11.0",
     "typescript": "^3.2.0"
   },
   "engines": {

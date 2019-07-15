@@ -18,17 +18,17 @@ const ScaffoldCard = ({ dataSource, onDownload }) => {
         ) : null}
         {dataSource.screenshots && dataSource.screenshots.length
           ? dataSource.screenshots.map((url, key) => {
-              const screenshotStyle = generateStyle(dataSource.screenshots, key);
-              return (
-                <img
-                  alt={dataSource.title}
-                  src={url || PLACEHOLDER_IMG}
-                  style={screenshotStyle}
-                  className={styles.screenshotImg}
-                  key={key}
-                />
-              );
-            })
+            const screenshotStyle = generateStyle(dataSource.screenshots, key);
+            return (
+              <img
+                alt={dataSource.title}
+                src={url || PLACEHOLDER_IMG}
+                style={screenshotStyle}
+                className={styles.screenshotImg}
+                key={key}
+              />
+            );
+          })
           : (
             <img
               alt={dataSource.title}

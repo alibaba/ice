@@ -16,14 +16,18 @@ const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive
 
 export default class Router implements IRouterModule {
   public readonly project: IProject;
+
   public readonly storage: any;
 
   public readonly path: string;
+
   public existLazy: boolean;
+
   public configFilePath = 'config/routes.js';
+
   public removePaths: string[];
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -47,7 +51,7 @@ export default class Router implements IRouterModule {
     return routerConfigAST;
   }
 
-  async getAll(): Promise<IRouter[]> {
+  public async getAll(): Promise<IRouter[]> {
     let config = [];
     const routerConfigAST = this.getRouterConfigAST();
 
@@ -60,7 +64,7 @@ export default class Router implements IRouterModule {
           ) {
             config = this.parseRoute(node.init.elements);
           }
-        }
+        },
       });
     } catch (error) {
       console.log(error);
@@ -68,7 +72,7 @@ export default class Router implements IRouterModule {
     return config;
   }
 
-  parseRoute(elements) {
+  private parseRoute(elements) {
     const config = [];
     elements.forEach((element) => {
       // { path: '/home', component: Home, children: [] }
@@ -97,8 +101,9 @@ export default class Router implements IRouterModule {
   }
 
   // bulk create routers
-  async bulkCreate(params: {data: IRouter[], options: IRouterOptions}): Promise<void>  {
-    let { data, options = {} } = params;
+  public async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}): Promise<void>  {
+    let { data } = params;
+    const { options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
     const currentData = await this.getAll();
@@ -122,7 +127,7 @@ export default class Router implements IRouterModule {
     this.setData(data, routerConfigAST);
   }
 
-  async delete(params: {componentName: string}): Promise<string[]> {
+  public async delete(params: {componentName: string}): Promise<string[]> {
     const { componentName } = params;
     const routerConfigAST = this.getRouterConfigAST();
     const data = await this.getAll();
@@ -132,7 +137,7 @@ export default class Router implements IRouterModule {
     return this.removePaths;
   }
 
-  removeItemByComponent(data: IRouter[], componentName: string, parent?: IRouter) {
+  private removeItemByComponent(data: IRouter[], componentName: string, parent?: IRouter) {
     const removeIndex = [];
     data.forEach((item, index) => {
       if (!item.children) {
@@ -173,7 +178,7 @@ export default class Router implements IRouterModule {
         if (['component'].indexOf(node.key.value) > -1) {
           node.value = t.identifier(node.value.value);
         }
-      }
+      },
     });
     traverse(routerConfigAST, {
       VariableDeclarator({ node }) {
@@ -252,7 +257,7 @@ export default class Router implements IRouterModule {
       // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
       VariableDeclaration: ({ node, key }) => {
         const code = generate(node.declarations[0]).code;
-        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|\@)\/(\w+)\/.+)['|"]\)/;
+        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
         const match = code.match(matchLazyReg);
 
         if (match && match.length > 5) {

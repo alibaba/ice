@@ -22,11 +22,11 @@ export default async (i18n) => {
     Task: baseAdapter.Task,
     Router: {
       ...baseAdapter.Router,
-      module: Router
+      module: Router,
     },
     Menu: {
       ...baseAdapter.Menu,
-      module: Menu
+      module: Menu,
     },
   };
 
