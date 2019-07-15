@@ -58,7 +58,7 @@ function createWindow() {
 
         mainWindow.webContents.send('log', logInfo);
 
-        if (logInfo.search('midway started on') > 0) {
+        if (logInfo.search('midway-mirror started on') > 0) {
           mainWindow.loadURL(getServerUrl());
         }
       });

@@ -69,7 +69,7 @@ export default class Task implements ITaskModule {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
         shell: true,
-        env: Object.assign({}, process.env, env),
+        env: Object.assign({}, this.project.getEnv(), env),
       }
     );
 

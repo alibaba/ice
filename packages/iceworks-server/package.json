@@ -38,6 +38,8 @@
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "node-dir": "^0.1.17",
+    "npm-run-path": "^3.1.0",
+    "path-key": "^3.1.0",
     "node-ipc": "^9.1.1",
     "open": "^6.3.0",
     "path-exists": "^4.0.0",
