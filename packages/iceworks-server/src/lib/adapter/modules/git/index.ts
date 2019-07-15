@@ -1,13 +1,14 @@
-import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../../interface';
 import * as gitPromie from 'simple-git/promise';
+import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../../interface';
 
 export default class Git implements IGitModule {
   public readonly project: IProject;
+
   public storage: any;
 
   private gitTools: any;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -112,7 +113,7 @@ export default class Git implements IGitModule {
     const localBranches = await this.gitTools.branchLocal();
     return {
       localBranches: localBranches.all,
-      originBranches: originBranches.all
+      originBranches: originBranches.all,
     };
   }
 

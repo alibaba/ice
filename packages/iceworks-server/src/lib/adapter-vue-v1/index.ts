@@ -5,21 +5,32 @@ import Task from './modules/task';
 
 export default async (i18n) => {
   const baseAdapter = await getBaseAdapter(i18n);
+  const {
+    Guide,
+    Layout,
+    Git,
+    OSS,
+    Todo,
+    Dependency,
+    Task: baseTask,
+    Configuration: baseConfiguration,
+  } = baseAdapter;
+
   const adapter = {
-    Guide: baseAdapter.Guide,
-    Layout: baseAdapter.Layout,
-    Git: baseAdapter.Git,
-    OSS: baseAdapter.OSS,
-    Todo: baseAdapter.Todo,
-    Dependency: baseAdapter.Dependency,
+    Guide,
+    Layout,
+    Git,
+    OSS,
+    Todo,
+    Dependency,
     Task: {
-      ...baseAdapter.Task,
-      module: Task
+      ...baseTask,
+      module: Task,
     },
     Configuration: {
-      ...baseAdapter.Configuration,
-      module: Configuration
-    }
+      ...baseConfiguration,
+      module: Configuration,
+    },
   };
 
   const isAliInternal = await checkAliInternal();

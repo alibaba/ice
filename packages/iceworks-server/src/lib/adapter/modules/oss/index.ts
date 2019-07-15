@@ -1,24 +1,25 @@
-import { IContext, IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
 import * as AliOSS from 'ali-oss';
 import * as pathExists from 'path-exists';
 import * as path from 'path';
 import * as dir from 'node-dir';
+import { IContext, IProject, IOSSModule, IOSSUploadParams, IUploadResult, IOSSGetBucketsParams, IOSSBucket } from '../../../../interface';
 
 const DOMAIN = 'aliyuncs.com';
 
 export default class OSS implements IOSSModule {
   public project: IProject;
+
   public storage: any;
 
   public readonly buildDir: string = 'build';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
   }
 
-  async getBuckets(): Promise<IOSSBucket[]> {
+  public async getBuckets(): Promise<IOSSBucket[]> {
     const oss = this.storage.get('oss');
     const params: IOSSGetBucketsParams = oss.find(({ project }) => project === this.project.path);
     const { region } = params;
@@ -28,12 +29,12 @@ export default class OSS implements IOSSModule {
     return buckets;
   }
 
-  async getConfig() {
+  public async getConfig() {
     const oss = this.storage.get('oss');
     return oss.find(({ project }) => project === this.project.path) || {};
   }
 
-  async setConfig(args) {
+  public async setConfig(args) {
     const oss = this.storage.get('oss');
 
     let newConfig;
@@ -51,7 +52,7 @@ export default class OSS implements IOSSModule {
     return newConfig;
   }
 
-  async upload(args, ctx: IContext): Promise<IUploadResult[]> {
+  public async upload(args, ctx: IContext): Promise<IUploadResult[]> {
     const { i18n } = ctx;
     const oss = this.storage.get('oss');
     const params: IOSSUploadParams = oss.find(({ project }) => project === this.project.path);

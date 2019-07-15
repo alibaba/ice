@@ -36,6 +36,7 @@ const ConnectModal = ({ intl }) => {
   const CONNECT_MAP = {
     connect: 'iceworks.global.connect',
     reconnecting: 'iceworks.global.reconnecting',
+    // eslint-disable-next-line @typescript-eslint/camelcase
     reconnect_failed: 'iceworks.global.reconnect_failed',
     disconnect: 'iceworks.global.disconnect',
   };

@@ -47,6 +47,7 @@ function Main({ dataSource, onOk }) {
 
   const statusMap = {
     conflicted: ['#FA7070', <FormattedMessage id="iceworks.project.panel.git.main.status.conflicted" />],
+    // eslint-disable-next-line @typescript-eslint/camelcase
     not_added: ['#2ECA9C', <FormattedMessage id="iceworks.project.panel.git.main.status.not_added" />],
     modified: ['#FCDA52', <FormattedMessage id="iceworks.project.panel.git.main.status.modified" />],
     created: ['#5485F7', <FormattedMessage id="iceworks.project.panel.git.main.status.created" />],

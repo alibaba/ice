@@ -7,7 +7,7 @@ export default (app) => {
   const { Controller, i18n } = app;
 
   return class HomeController extends Controller {
-    async getWorkFolder() {
+    public async getWorkFolder() {
       const workFolder = storage.get('workFolder');
       const directories = await scanDirectory(workFolder);
       return {
@@ -16,7 +16,7 @@ export default (app) => {
       };
     }
 
-    async setWorkFolder(ctx) {
+    public async setWorkFolder(ctx) {
       const { args } = ctx;
       const { path: setPath } = args;
 
@@ -31,36 +31,40 @@ export default (app) => {
       };
     }
 
-    async setLocale(ctx) {
-      const { projectManager, i18n } = app;
-      const project = await projectManager.getCurrent();
+    public async setLocale(ctx) {
+      const { projectManager, i18n, logger } = app;
+      try {
+        const project = await projectManager.getCurrent();
 
-      // Refresh adapter's locale
-      await project.reloadAdapter(i18n);
+        // Refresh adapter's locale
+        await project.reloadAdapter(i18n);
+      } catch (error) {
+        logger.error(error);
+      }
       storage.set('locale', ctx.args.locale);
     }
 
-    async getLocale() {
+    public async getLocale() {
       return storage.get('locale');
     }
 
-    async setTheme(ctx) {
+    public async setTheme(ctx) {
       storage.set('theme', ctx.args.theme);
     }
 
-    async getTheme() {
+    public async getTheme() {
       return storage.get('theme');
     }
 
-    async setEditor(ctx) {
+    public async setEditor(ctx) {
       storage.set('editor', ctx.args.editor);
     }
 
-    async getEditor() {
+    public async getEditor() {
       return storage.get('editor');
     }
 
-    async setUser({ args }) {
+    public async setUser({ args }) {
       const { name, workId, avatarUrl } = args;
       if (workId && name && avatarUrl) {
         storage.set('user', { name, workId, avatarUrl, isLogin: true });
@@ -71,7 +75,7 @@ export default (app) => {
       return storage.get('user');
     }
 
-    async getUser() {
+    public async getUser() {
       return storage.get('user');
     }
   };
