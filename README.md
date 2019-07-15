@@ -15,7 +15,13 @@
 <a href="https://github.com/alibaba/ice/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
 <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 
+<div align="center">
+  <img src="https://img.alicdn.com/tfs/TB1kvL9aoT1gK0jSZFrXXcNCXXa-2924-1988.png" width="1000" />
 </div>
+</div>
+
+
+[English](./README.en-US.md) | 简体中文
 
 ## 特性
 
@@ -28,9 +34,9 @@
 
 ## 快速开始
 
-为了支持不同的用户群体，我们提供了 Web 界面以及 CLI 两种使用方式，具体如下：
+为了支持不同的用户群体，我们提供了 Web 界面和 CLI 两种使用方式，具体如下：
 
-#### Web 界面使用
+#### Web 界面 [推荐]
 
 ```bash
 # 安装 CLI 工具
@@ -57,13 +63,13 @@ $ iceworks init
 
 |    项目         |    版本                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |通过 GUI+物料提效项目开发的工具|
-| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |物料开发工具|
-| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |React 体系的开发调试工具|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的状态管理方案|
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型系统的微前端解决方案|
-| [react-materials] | / | [docs][react-materials-docs] |由官方维护的高质量丰富的 React 物料|
-| [vue-materials] | / | [docs][vue-materials-docs] |由社区维护的高质量 Vue 物料        |
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化源码研发工作台|
+| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |物料开发工具，支持 React&Vue|
+| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置开发构建工具|
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
+| [react-materials] | / | [docs][react-materials-docs] |由官方提供的丰富的高质量 React 物料|
+| [vue-materials] | / | [docs][vue-materials-docs] |由社区维护的高质量 Vue 物料|
 
 [iceworks]: https://github.com/alibaba/ice
 [ice-devtools]: https://github.com/ice-lab/ice-devtools
@@ -101,7 +107,7 @@ $ iceworks init
 
 | 钉钉群                               | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
-|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="200" /> | [issues]     | [gitter]|
+|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /> | [issues]     | [gitter]|
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
