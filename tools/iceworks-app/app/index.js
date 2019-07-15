@@ -3,6 +3,7 @@ const address = require('address');
 const execa = require('execa');
 const path = require('path');
 const detectPort = require('detect-port');
+const { fork } = require('child_process');
 const is = require('electron-is');
 const log = require('electron-log');
 const getEnv = require('./getEnv');
@@ -41,16 +42,9 @@ function createWindow() {
       } catch (error) {
         log.warn('stop got error:', error);
       }
-
-      const args = isProduction ? ['start'] : ['run', 'dev'];
       setPort = await detectPort(setPort);
-      serverProcess = execa('npm', args, {
-        cwd: serverDir,
-        env: {
-          ...env,
-          PORT: setPort,
-        },
-      });
+      const startScriptPath = path.join(serverDir, 'scripts', 'start.js');
+      serverProcess = fork(startScriptPath, [], { stdio: 'pipe' });
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
