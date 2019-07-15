@@ -154,5 +154,5 @@ test('getAndExtractTarballWithDir', () => {
     })
     .catch(() => {
       rimraf.sync(tempDir);
-    });  
+    });
 });
