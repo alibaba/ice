@@ -1,6 +1,5 @@
 const { app, BrowserWindow } = require('electron');
 const address = require('address');
-const execa = require('execa');
 const path = require('path');
 const detectPort = require('detect-port');
 const { fork } = require('child_process');
@@ -16,6 +15,7 @@ const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, '..', 'server') : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
+const stopScriptPath = path.join(serverDir, 'scripts', 'stop.js');
 const loadingHTML = path.join(__dirname, 'loading.html');
 const errorHTML = path.join(__dirname, 'error.html');
 
@@ -38,7 +38,7 @@ function createWindow() {
       }
 
       try {
-        await execa('npm', ['stop'], { cwd: serverDir, env });
+        require(stopScriptPath);
       } catch (error) {
         log.warn('stop got error:', error);
       }
@@ -92,7 +92,7 @@ app.on('before-quit', (event) => {
     if (mainWindow) {
       mainWindow.loadFile(loadingHTML);
     }
-    const stopScriptPath = path.join(serverDir, 'scripts', 'stop.js');
+    
     const stopProcess = fork(stopScriptPath, [], { stdio: 'pipe' });
 
     stopProcess.stdout.on('data', (buffer) => {
