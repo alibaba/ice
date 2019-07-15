@@ -95,7 +95,7 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], false, this.project, ctx.socket, 'page');
+      return await installDependency([{ package: packageName, version }], false, this.project, 'page', ctx);
     }));
   }
 

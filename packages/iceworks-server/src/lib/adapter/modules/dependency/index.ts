@@ -10,9 +10,10 @@ import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISock
 const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (
-  dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
+  dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, namespace: string, ctx: IContext
 ): Promise<void> => {
-  console.log('dependencies', dependencies);
+  const { socket, logger } = ctx;
+  logger.info('dependencies', dependencies);
   socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
 
   const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
@@ -30,13 +31,13 @@ export const install = async (
 
   childProcess.stdout.on('data', (buffer) => {
     const text = buffer.toString();
-    console.log(`${namespace}.install.data:`, text);
+    logger.info(`${namespace}.install.data:`, text);
 
     socket.emit(`adapter.${namespace}.install.data`, text);
   });
 
   childProcess.on('error', (buffer) => {
-    console.log(`${namespace}.install.error:`, buffer.toString());
+    logger.info(`${namespace}.install.error:`, buffer.toString());
   });
 
   childProcess.on('exit', (code, signal) => {
@@ -82,12 +83,12 @@ export default class Dependency implements IDependencyModule {
 
   public async create(params: {dependency: ICreateDependencyParam; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependency, idDev } = params;
-    return (await install([dependency], idDev, this.project, ctx.socket, 'dependency'))[0];
+    return (await install([dependency], idDev, this.project, 'dependency', ctx))[0];
   }
 
   public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependencies, idDev } = params;
-    return await install(dependencies, idDev, this.project, ctx.socket, 'dependency');
+    return await install(dependencies, idDev, this.project, 'dependency', ctx);
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }> {
@@ -141,7 +142,7 @@ export default class Dependency implements IDependencyModule {
   }
 
   public async reset(arg: void, ctx: IContext) {
-    const { socket, i18n } = ctx;
+    const { socket, i18n, logger } = ctx;
 
     socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.clearWait'));
 
@@ -158,17 +159,17 @@ export default class Dependency implements IDependencyModule {
 
     childProcess.stdout.on('data', (buffer) => {
       const text = buffer.toString();
-      console.log('reset.data:', text);
+      logger.info('reset.data:', text);
 
       socket.emit('adapter.dependency.reset.data', text);
     });
 
     childProcess.on('error', (buffer) => {
-      console.log('reset.error:', buffer.toString());
+      logger.info('reset.error:', buffer.toString());
     });
 
     childProcess.on('exit', (code, signal) => {
-      console.log('reset.exit:', code, signal);
+      logger.info('reset.exit:', code, signal);
 
       socket.emit('adapter.dependency.reset.exit', code);
     });
@@ -176,7 +177,7 @@ export default class Dependency implements IDependencyModule {
 
   public async upgrade(denpendency: { package: string; isDev?: boolean }, ctx: IContext): Promise<void> {
     const { package: packageName } = denpendency;
-    const { socket, i18n } = ctx;
+    const { socket, i18n, logger } = ctx;
 
     socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
 
@@ -187,17 +188,17 @@ export default class Dependency implements IDependencyModule {
 
     childProcess.stdout.on('data', (buffer) => {
       const text = buffer.toString();
-      console.log('upgrade.data:', text);
+      logger.info('upgrade.data:', text);
 
       socket.emit('adapter.dependency.upgrade.data', text);
     });
 
     childProcess.on('error', (buffer) => {
-      console.log('upgrade.error:', buffer.toString());
+      logger.info('upgrade.error:', buffer.toString());
     });
 
     childProcess.on('exit', (code, signal) => {
-      console.log('upgrade.exit:', code, signal);
+      logger.info('upgrade.exit:', code, signal);
 
       socket.emit('adapter.dependency.upgrade.exit', code);
     });
