@@ -15,8 +15,9 @@ const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 async function start(options = {}) {
   const answers = await checkServerVersion();
   if (answers && answers.update) {
-    const child = spawn('npm', ['run', 'sync'], {
+    const child = spawn('node', ['./lib/downloadServer.js'], {
       stdio: ['pipe'],
+      cwd: path.join(__dirname, '../')
     });
 
     child.stdout.on('data', (data) => {
