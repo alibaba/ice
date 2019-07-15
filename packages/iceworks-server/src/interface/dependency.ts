@@ -45,21 +45,21 @@ export interface IDependencyModule extends IBaseModule {
   /**
    * 获取项目内的依赖
    */
-  getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }>;
+  getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }>;
 
   /**
    * 添加依赖到项目
    *
    * @param dependency 依赖信息
    */
-  create(params: {dependency: ICreateDependencyParam, isDev?: boolean; }, ctx: IContext): Promise<void>;
+  create(params: {dependency: ICreateDependencyParam; isDev?: boolean }, ctx: IContext): Promise<void>;
 
   /**
    * 添加多个依赖到项目
    *
    * @param dependencies 依赖列表
    */
-  bulkCreate(params: {dependencies: ICreateDependencyParam[], isDev?: boolean; }, ctx: IContext): Promise<void>;
+  bulkCreate(params: {dependencies: ICreateDependencyParam[]; isDev?: boolean }, ctx: IContext): Promise<void>;
 
   /**
    * 重装依赖

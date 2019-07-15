@@ -3,6 +3,7 @@ build/
 test/
 tests/
 node_modules/
+dist/
 
 # node 覆盖率文件
 coverage/
@@ -32,4 +33,3 @@ packages/iceworks-scaffolder
 # temp ignore
 tools/iceworks
 tools/ice-devtools
-packages/iceworks-server

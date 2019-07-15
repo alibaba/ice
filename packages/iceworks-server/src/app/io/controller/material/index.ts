@@ -12,7 +12,7 @@ const CATEGORY_ALL = '全部';
 
 export default (app) => {
   return class MaterialController extends app.Controller {
-    async getResources({ args }) {
+    public async getResources({ args }) {
       const resources = storage.get('material');
 
       if (args && args.type) {
@@ -22,7 +22,7 @@ export default (app) => {
       return resources;
     }
 
-    async getOne(ctx) {
+    public async getOne(ctx) {
       const { args: { url }, logger } = ctx;
 
       logger.info(`get material by url, url: ${url}`);
@@ -64,13 +64,13 @@ export default (app) => {
       return {...formatMaterialData(data), name: currentItem.name };
     }
 
-    async getRecommendScaffolds() {
+    public async getRecommendScaffolds() {
       const material = storage.get('material')[0];
       const { scaffolds = [] } = await request(material.source);
       return scaffolds.filter(({ name }) => RECOMMEND_SCAFFOLDS.includes(name));
     }
 
-    async add(ctx) {
+    public async add(ctx) {
       const { args: { url, name }, logger } = ctx;
       const allMaterials = storage.get('material');
       const existed = allMaterials.some(m => m.source === url);
@@ -97,7 +97,7 @@ export default (app) => {
 
       const material = storage.get('material');
       const currentItem = {
-        official: false, name, description, homepage, logo, type, source
+        official: false, name, description, homepage, logo, type, source,
       };
       const newMaterials = material.filter((item) => item.name !== currentItem.name);
       newMaterials.unshift(currentItem)
@@ -108,7 +108,7 @@ export default (app) => {
       return { resource: storage.get('material'), current: { ...materialData, name } };
     }
 
-    async delete(ctx) {
+    public async delete(ctx) {
       const { args: { url }, logger } = ctx;
       logger.info(`delete material, source URL: ${url}`);
 
@@ -199,6 +199,6 @@ const updateArrayItem = (array, item, itemIdx) => {
   return [
     ...array.slice(0, itemIdx),
     item,
-    ...array.slice(itemIdx + 1)
+    ...array.slice(itemIdx + 1),
   ];
 };

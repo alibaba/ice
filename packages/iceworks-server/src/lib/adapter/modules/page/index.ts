@@ -38,12 +38,14 @@ const loadTemplate = async () => {
 
 export default class Page implements IPageModule {
   public readonly project: IProject;
+
   public readonly storage: any;
 
   public readonly path: string;
+
   private readonly componentDirName: string = 'components';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -86,7 +88,7 @@ export default class Page implements IPageModule {
     Object.keys(blocksDependencies).forEach((packageName) => {
       if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
         filterDependencies.push({
-          [packageName]: blocksDependencies[packageName]
+          [packageName]: blocksDependencies[packageName],
         });
       }
     });
@@ -137,14 +139,12 @@ export default class Page implements IPageModule {
     }
   }
 
-  async getAll(): Promise<IPage[]> {
+  public async getAll(): Promise<IPage[]> {
     const pages = await this.scanPages(this.path);
     return _.orderBy(pages, 'name', 'asc');
   }
 
-  async getOne(): Promise<any> { }
-
-  async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
+  public async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
     const { socket, i18n } = ctx;
 
@@ -200,9 +200,7 @@ export default class Page implements IPageModule {
     return pageFolderName;
   }
 
-  async bulkCreate(): Promise<any> { }
-
-  async delete(params: {name: string}): Promise<any> {
+  public async delete(params: {name: string}): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
   }
@@ -220,15 +218,13 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string; }, ctx: IContext): Promise<void> {
+  public async addBlocks(params: {blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
     await this.downloadBlocksToPage(blocks, name, ctx);
   }
 
-  async addBlock(params: {block: IMaterialBlock, name?: string; }, ctx: IContext): Promise<void> {
+  public async addBlock(params: {block: IMaterialBlock; name?: string }, ctx: IContext): Promise<void> {
     const {block, name} = params;
     await this.downloadBlockToPage(block, name, ctx);
   }
-
-  async update(): Promise<any> { }
 }
