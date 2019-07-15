@@ -14,13 +14,13 @@ let setPort = '7001';
 const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
-const serverDir = path.join(__dirname, '..', 'server');
+const serverDir = isProduction ? path.join(__dirname, '..', 'server') : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
 const startLoadingHTML = path.join(__dirname, 'start_loading.html');
 const stopLoadingHTML = path.join(__dirname, 'stop_loading.html');
-const errorLoadingHTML = path.join(__dirname, 'error.html');
+const errorHTML = path.join(__dirname, 'error.html');
 
 function getServerUrl() {
-  return isProduction ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
+  return `http://${ip}:${setPort}/`;
 }
 
 function createWindow() {
@@ -29,7 +29,7 @@ function createWindow() {
     mainWindow = null;
   });
 
-  if (isProduction && !serverProcess) {
+  if (!serverProcess) {
     (async () => {
       mainWindow.loadFile(startLoadingHTML);
 
@@ -59,12 +59,12 @@ function createWindow() {
 
       serverProcess.on('error', (buffer) => {
         log.error('start got error:', buffer.toString());
-        mainWindow.loadFile(errorLoadingHTML);
+        mainWindow.loadFile(errorHTML);
       });
 
       serverProcess.stderr.on('data', (buffer) => {
         log.error('start stderr:', buffer.toString());
-        mainWindow.loadFile(errorLoadingHTML);
+        mainWindow.loadFile(errorHTML);
       });
 
       serverProcess.on('exit', (code) => {
@@ -74,7 +74,7 @@ function createWindow() {
           mainWindow.loadURL(getServerUrl());
         } else {
           serverProcess = null;
-          mainWindow.loadFile(errorLoadingHTML);
+          mainWindow.loadFile(errorHTML);
         }
       });
     })();
@@ -86,11 +86,10 @@ function createWindow() {
 app.on('ready', createWindow);
 
 app.on('before-quit', (event) => {
-  if (isProduction && serverProcess) {
+  if (serverProcess) {
     event.preventDefault();
 
     mainWindow.loadFile(stopLoadingHTML);
-
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
     stopProcess.stdout.on('data', (buffer) => {
@@ -99,7 +98,7 @@ app.on('before-quit', (event) => {
 
     stopProcess.on('error', (buffer) => {
       log.error('stop got error:', buffer.toString());
-      app.quit();
+      app.exit();
     });
 
     stopProcess.on('exit', (code) => {
