@@ -32,6 +32,4 @@ packages/iceworks-scaffolder
 
 # temp ignore
 tools/iceworks
-tools/iceworks-cli
 tools/ice-devtools
-packages/iceworks-client
