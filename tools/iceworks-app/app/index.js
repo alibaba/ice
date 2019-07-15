@@ -14,13 +14,12 @@ let setPort = '7001';
 const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
-const serverDir = path.join(__dirname, '..', 'server');
-const startLoadingHTML = path.join(__dirname, 'start_loading.html');
-const stopLoadingHTML = path.join(__dirname, 'stop_loading.html');
-const errorLoadingHTML = path.join(__dirname, 'error.html');
+const serverDir = isProduction ? path.join(__dirname, '..', 'server') : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
+const loadingHTML = path.join(__dirname, 'loading.html');
+const errorHTML = path.join(__dirname, 'error.html');
 
 function getServerUrl() {
-  return isProduction ? `http://${ip}:${setPort}/` : `http://${ip}:4444/`;
+  return `http://${ip}:${setPort}/`;
 }
 
 function createWindow() {
@@ -29,9 +28,13 @@ function createWindow() {
     mainWindow = null;
   });
 
-  if (isProduction && !serverProcess) {
+  if (!serverProcess) {
     (async () => {
-      mainWindow.loadFile(startLoadingHTML);
+      mainWindow.loadFile(loadingHTML);
+
+      if (!isProduction) {
+        mainWindow.webContents.openDevTools({ mode: 'right' });
+      }
 
       try {
         await execa('npm', ['stop'], { cwd: serverDir, env });
@@ -39,8 +42,9 @@ function createWindow() {
         log.warn('stop got error:', error);
       }
 
+      const args = isProduction ? ['start'] : ['run', 'dev'];
       setPort = await detectPort(setPort);
-      serverProcess = execa('npm', ['start'], {
+      serverProcess = execa('npm', args, {
         cwd: serverDir,
         env: {
           ...env,
@@ -50,7 +54,9 @@ function createWindow() {
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
-        log.info('start stdout:', buffer.toString());
+        log.info('start stdout:', logInfo);
+
+        mainWindow.webContents.send('log', logInfo);
 
         if (logInfo.search('midway started on') > 0) {
           mainWindow.loadURL(getServerUrl());
@@ -59,22 +65,21 @@ function createWindow() {
 
       serverProcess.on('error', (buffer) => {
         log.error('start got error:', buffer.toString());
-        mainWindow.loadFile(errorLoadingHTML);
+        mainWindow.loadFile(errorHTML);
       });
 
       serverProcess.stderr.on('data', (buffer) => {
         log.error('start stderr:', buffer.toString());
-        mainWindow.loadFile(errorLoadingHTML);
       });
 
       serverProcess.on('exit', (code) => {
         log.error('start process exit width:', code);
 
-        if (code === 0) {
-          mainWindow.loadURL(getServerUrl());
-        } else {
+        if (code === 1) {
           serverProcess = null;
-          mainWindow.loadFile(errorLoadingHTML);
+          if (mainWindow) {
+            mainWindow.loadFile(errorHTML);
+          }
         }
       });
     })();
@@ -86,10 +91,13 @@ function createWindow() {
 app.on('ready', createWindow);
 
 app.on('before-quit', (event) => {
-  if (isProduction && serverProcess) {
+  if (serverProcess) {
     event.preventDefault();
 
-    mainWindow.loadFile(stopLoadingHTML);
+    // TODO The following call does not take effect
+    if (mainWindow) {
+      mainWindow.loadFile(loadingHTML);
+    }
 
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
@@ -99,7 +107,7 @@ app.on('before-quit', (event) => {
 
     stopProcess.on('error', (buffer) => {
       log.error('stop got error:', buffer.toString());
-      app.quit();
+      app.exit();
     });
 
     stopProcess.on('exit', (code) => {
