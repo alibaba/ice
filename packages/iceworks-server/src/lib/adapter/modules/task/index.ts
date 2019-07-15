@@ -73,13 +73,17 @@ export default class Task implements ITaskModule {
       }
     );
 
-    this.process[command].stdout.on('data', (buffer) => {
+    const listenFunc = (buffer) => {
       this.status[command] = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         chunk: buffer.toString(),
       });
-    });
+    }
+
+    this.process[command].stderr.on('data', listenFunc);
+
+    this.process[command].stdout.on('data',listenFunc);
 
     this.process[command].on('close', () => {
       if (command === 'build' || command === 'lint') {
