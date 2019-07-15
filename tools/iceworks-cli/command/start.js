@@ -17,7 +17,7 @@ async function start(options = {}) {
   if (answers && answers.update) {
     const child = spawn('node', ['./lib/downloadServer.js'], {
       stdio: ['pipe'],
-      cwd: path.join(__dirname, '../')
+      cwd: path.join(__dirname, '../'),
     });
 
     child.stdout.on('data', (data) => {
