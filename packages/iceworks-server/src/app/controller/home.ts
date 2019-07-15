@@ -1,4 +1,4 @@
-import { controller, get, provide } from 'midway';
+import { controller, get, provide } from 'midway-mirror';
 
 @provide()
 @controller('/')
