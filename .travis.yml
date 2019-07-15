@@ -18,14 +18,6 @@ matrix:
       script:
         - cd tools/iceworks-app
         - npm install 
-        - sed -i.bak "s/proto === EggCore.prototype/proto.constructor.name === EggCore.name/g" node_modules/egg-core/lib/loader/egg_loader.js # patch egg-core loader
-        - pushd ../../packages/iceworks-server
-        - npm install
-        - npm run build
-        - popd
-        - cp -r ../../packages/iceworks-server/dist dist
-        - cp ../../packages/iceworks-server/package.json dist/
         - export CSC_IDENTITY_AUTO_DISCOVERY=false
-        - pwd
         - rm -rf ../../node_modules
-        - npm run build
+        - npm run dist
