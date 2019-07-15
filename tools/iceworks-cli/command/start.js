@@ -109,7 +109,7 @@ async function checkServerVersion() {
     const answers = await inquirer.prompt([
       {
         type: 'confirm',
-        message: 'A newer version of iceworks-server is available',
+        message: 'A newer version of iceworks core is available',
         name: 'update',
         default: false,
       },
