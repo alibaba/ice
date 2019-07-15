@@ -4,9 +4,7 @@ const pathKey = require('path-key');
 const is = require('electron-is');
 const log = require('electron-log');
 
-const APP_BIN_PATH = is.dev()
-  ? path.join(process.cwd(), `bin-${process.platform}`)
-  : path.join(process.resourcesPath, 'bin');
+const APP_BIN_PATH = path.join(process.resourcesPath, 'bin');
 
 module.exports = function () {
   const PATH = pathKey();
