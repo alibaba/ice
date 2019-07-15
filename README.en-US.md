@@ -17,7 +17,7 @@ Simple and friendly front-end R&D system
 
 </div>
 
-![iceworks](https://img.alicdn.com/tfs/TB1YErSafb2gK0jSZK9XXaEgFXa-7244-4970.png)
+![iceworks](https://img.alicdn.com/tfs/TB1lSH3aXP7gK0jSZFjXXc5aXXa-7244-4970.png)
 
 English | [简体中文](./README.md)
 
