@@ -32,6 +32,10 @@ function createWindow() {
     (async () => {
       mainWindow.loadFile(loadingHTML);
 
+      if (!isProduction) {
+        mainWindow.webContents.openDevTools({ mode: 'right' });
+      }
+
       try {
         await execa('npm', ['stop'], { cwd: serverDir, env });
       } catch (error) {
