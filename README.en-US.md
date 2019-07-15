@@ -34,7 +34,7 @@ more information [ice.work](https://ice.work).
 
 To support different user groups，Provides two ways to use the web interface and CLI, as follows:
 
-#### Web interface usage
+#### Web usage
 
 ```bash
 # Install the CLI tool
@@ -44,7 +44,7 @@ $ npm install iceworks -g
 $ iceworks  # Open the browser： http://127.0.0.1:8000
 ```
 
-#### CLI
+#### CLI usage
 
 ```bash
 # Install the CLI tool
