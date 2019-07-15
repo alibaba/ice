@@ -92,7 +92,7 @@ app.on('before-quit', (event) => {
 
     // TODO The following call does not take effect
     mainWindow.loadFile(loadingHTML);
-  
+
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
     stopProcess.stdout.on('data', (buffer) => {
