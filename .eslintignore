@@ -1,6 +1,9 @@
 # 忽略目录
 build/
+test/
+tests/
 node_modules/
+dist/
 
 # node 覆盖率文件
 coverage/
@@ -27,5 +30,6 @@ packages/ice-skin-loader
 packages/ice-template-builder
 packages/iceworks-scaffolder
 
-# tools
-tools/iceworks/renderer/public/
+# temp ignore
+tools/iceworks
+tools/ice-devtools

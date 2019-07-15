@@ -15,6 +15,7 @@ const TASK_STATUS_STOP = 'stop';
 
 export default class Task implements ITaskModule {
   public project: IProject;
+
   public storage: any;
 
   private status: object = {};
@@ -29,7 +30,7 @@ export default class Task implements ITaskModule {
 
   public getTaskConfig: (ctx: IContext) => ITaskConf = getTaskConfig;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -40,7 +41,7 @@ export default class Task implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: ITaskParam, ctx: IContext) {
+  public async start(args: ITaskParam, ctx: IContext) {
     const { i18n } = ctx;
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
@@ -105,7 +106,7 @@ export default class Task implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args: ITaskParam, ctx: IContext) {
+  public async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 
@@ -132,7 +133,7 @@ export default class Task implements ITaskModule {
     return this;
   }
 
-  getStatus (args: ITaskParam) {
+  public getStatus (args: ITaskParam) {
     const { command } = args;
     return this.status[command];
   }
@@ -141,13 +142,13 @@ export default class Task implements ITaskModule {
    * get the conf of the current task
    * @param args
    */
-  async getConf(args: ITaskParam, ctx: IContext) {
+  public async getConf(args: ITaskParam, ctx: IContext) {
     const taskConfig = this.getTaskConfig(ctx);
     switch (args.command) {
       case 'dev':
         return this.getDevConf(taskConfig);
       case 'build':
-       return getCLIConf(this.cliConfPath, taskConfig.build);
+        return getCLIConf(this.cliConfPath, taskConfig.build);
       case 'lint':
         // @TODO support lint configuration
         return null;
@@ -160,7 +161,7 @@ export default class Task implements ITaskModule {
    * set the conf of the current task
    * @param args
    */
-  async setConf(args: ITaskParam) {
+  public async setConf(args: ITaskParam) {
     switch (args.command) {
       case 'dev':
         return this.setDevConf(args);
@@ -171,11 +172,11 @@ export default class Task implements ITaskModule {
     }
   }
 
-/**
- * get dev configuration
- * merge the user configuration to return to the new configuration
- * @param projectPath
- */
+  /**
+   * get dev configuration
+   * merge the user configuration to return to the new configuration
+   * @param projectPath
+   */
   private getDevConf(taskConfig: ITaskConf) {
     const pkgContent = this.project.getPackageJSON();
     const devScriptContent = pkgContent.scripts.start;
@@ -205,7 +206,7 @@ export default class Task implements ITaskModule {
 
     let newDevScriptContent =  `${cli} ${command}`;
     Object.keys(args.options).forEach((key) => {
-      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`;
+      newDevScriptContent += ` --${key}=${args.options[key]}`;
     });
 
     pkgContent.scripts.start = newDevScriptContent;

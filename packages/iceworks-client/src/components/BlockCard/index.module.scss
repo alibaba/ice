@@ -2,7 +2,7 @@
 
 .container {
   margin-bottom: 20px;
-  box-shadow: 0 8px 24px $material-card-shadow;
+  box-shadow: $material-card-shadow;
   background: $panel-bg;
   transition: transform 0.3s ease;
   display: block;
