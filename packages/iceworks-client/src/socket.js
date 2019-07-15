@@ -7,6 +7,7 @@ import appConfig from './appConfig';
 const socket = io(appConfig.socketUrl, {
   // number of reconnection attempts before giving up
   reconnectionAttempts: 3,
+  transports: ['websocket'],
 });
 
 socket.on('error', error => {
