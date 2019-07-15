@@ -8,15 +8,42 @@ import Router from './modules/router';
 
 export default async (i18n) => {
   const baseAdapter = await getBaseAdapter(i18n);
+  const {
+    Guide,
+    Layout,
+    Page,
+    QuickDev,
+    QuickBuild,
+    Git,
+    OSS,
+    DEF,
+    Todo,
+    Dependency,
+    Task,
+    Configuration,
+    Router,
+    Menu,
+  } = baseAdapter;
 
   const adapter = {
-    ...baseAdapter,
+    Guide,
+    Layout,
+    Page,
+    QuickDev,
+    QuickBuild,
+    Git,
+    OSS,
+    DEF,
+    Todo,
+    Dependency,
+    Task,
+    Configuration,
     Router: {
-      ...baseAdapter.Router,
+      ...Router,
       module: Router,
     },
     Menu: {
-      ...baseAdapter.Menu,
+      ...Menu,
       module: Menu,
     },
   };

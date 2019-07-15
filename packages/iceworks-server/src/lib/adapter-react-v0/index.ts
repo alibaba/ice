@@ -1,5 +1,5 @@
 /**
- * icescripts 2.0 + kit 3.0
+ * icescripts 1.0 + kit 1.0
  */
 import { checkAliInternal } from 'ice-npm-utils';
 import getBaseAdapter from '../adapter';
@@ -18,9 +18,6 @@ export default async (i18n) => {
     Todo,
     Dependency,
     Task,
-    Configuration,
-    Router,
-    Menu,
   } = baseAdapter;
 
   const adapter = {
@@ -35,9 +32,6 @@ export default async (i18n) => {
     Todo,
     Dependency,
     Task,
-    Configuration,
-    Router,
-    Menu,
   };
 
   const isAliInternal = await checkAliInternal();
