@@ -12,8 +12,8 @@ export default async (i18n) => {
     OSS,
     Todo,
     Dependency,
-    Task,
-    Configuration,
+    Task: baseTask,
+    Configuration: baseConfiguration,
   } = baseAdapter;
 
   const adapter = {
@@ -24,11 +24,11 @@ export default async (i18n) => {
     Todo,
     Dependency,
     Task: {
-      ...Task,
+      ...baseTask,
       module: Task,
     },
     Configuration: {
-      ...Configuration,
+      ...baseConfiguration,
       module: Configuration,
     },
   };

@@ -21,8 +21,8 @@ export default async (i18n) => {
     Dependency,
     Task,
     Configuration,
-    Router,
-    Menu,
+    Router: baseRouter,
+    Menu: baseMenu,
   } = baseAdapter;
 
   const adapter = {
@@ -39,11 +39,11 @@ export default async (i18n) => {
     Task,
     Configuration,
     Router: {
-      ...Router,
+      ...baseRouter,
       module: Router,
     },
     Menu: {
-      ...Menu,
+      ...baseMenu,
       module: Menu,
     },
   };
