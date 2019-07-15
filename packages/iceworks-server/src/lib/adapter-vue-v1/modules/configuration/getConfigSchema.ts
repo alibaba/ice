@@ -27,8 +27,8 @@ export default () => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true
+        defaultChecked: true,
       },
-    }
+    },
   ];
 };

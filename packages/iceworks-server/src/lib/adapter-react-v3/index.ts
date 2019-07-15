@@ -7,7 +7,7 @@ import getBaseAdapter from '../adapter';
 export default async (i18n) => {
   const baseAdapter = await getBaseAdapter(i18n);
   const adapter = {
-    ...baseAdapter
+    ...baseAdapter,
   };
 
   const isAliInternal = await checkAliInternal();

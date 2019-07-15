@@ -32,6 +32,7 @@ program
   .action((npmName, cmd) => {
     const options = cleanArgs(cmd);
     options.npmName = npmName;
+    // eslint-disable-next-line global-require
     require('../command/init')(options);
   });
 
@@ -51,6 +52,7 @@ program
   .action((npmName, cmd) => {
     const options = cleanArgs(cmd);
     options.npmName = npmName;
+    // eslint-disable-next-line global-require
     require('../command/addBlock')(options);
   });
 
@@ -69,6 +71,7 @@ program.parse(process.argv);
 
 if (!process.argv.slice(2).length) {
   // start web server for iceworks 3.0
+  // eslint-disable-next-line global-require
   require('../command/start')(cleanArgs());
 }
 

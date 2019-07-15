@@ -1,4 +1,4 @@
-import { Application } from 'midway';
+import { Application } from 'midway-mirror';
 
 export default (app: Application) => {
   const { controller } = app.io;

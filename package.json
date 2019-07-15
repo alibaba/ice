@@ -3,32 +3,27 @@
   "scripts": {
     "upload-oss": "node scripts/upload-oss.js",
     "generate:docs": "node ./scripts/generate-docs-database",
-    "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js .jsx ./"
+    "lint": "eslint --cache --ext .js,.jsx,.ts ./",
+    "lint-fix": "npm run lint -- --fix"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm run lint"
     }
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@babel/runtime": "^7.4.5",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@ice/spec": "^0.1.4",
     "ali-oss": "^6.1.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^4.14.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1",
+    "eslint": "^5.16.0",
     "fs-extra": "^7.0.1",
     "husky": "^1.3.1",
     "mark-twain": "^2.0.2",
     "nodejieba": "^2.2.5",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "typescript": "^3.5.3"
   }
 }

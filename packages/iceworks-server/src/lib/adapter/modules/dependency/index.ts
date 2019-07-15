@@ -44,15 +44,16 @@ export const install = async (
   });
 };
 
-export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; }
+export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string }
 
 export default class Dependency implements IDependencyModule {
   public project: IProject;
+
   public storage: any;
 
   public readonly path: string;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -76,20 +77,20 @@ export default class Dependency implements IDependencyModule {
       npmOutdated = JSON.parse(error.stdout);
     }
 
-    return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string; }]) => ({ package: key, ...value }));
+    return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string }]) => ({ package: key, ...value }));
   }
 
-  public async create(params: {dependency: ICreateDependencyParam, idDev?: boolean}, ctx: IContext): Promise<void> {
+  public async create(params: {dependency: ICreateDependencyParam; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependency, idDev } = params;
     return (await install([dependency], idDev, this.project, ctx.socket, 'dependency'))[0];
   }
 
-  public async bulkCreate(params: {dependencies: ICreateDependencyParam[], idDev?: boolean}, ctx: IContext): Promise<void> {
+  public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependencies, idDev } = params;
     return await install(dependencies, idDev, this.project, ctx.socket, 'dependency');
   }
 
-  public async getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }> {
+  public async getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }> {
     const { dependencies: packageDependencies, devDependencies: packageDevDependencies } = this.project.getPackageJSON();
 
     const getAll = async (list, dev) => {
@@ -105,7 +106,7 @@ export default class Dependency implements IDependencyModule {
           specifyVersion,
           dev,
           localVersion,
-          latestVersion: await latestVersion(packageName)
+          latestVersion: await latestVersion(packageName),
         };
       }));
     };
@@ -135,7 +136,7 @@ export default class Dependency implements IDependencyModule {
 
     return {
       dependencies,
-      devDependencies
+      devDependencies,
     };
   }
 
