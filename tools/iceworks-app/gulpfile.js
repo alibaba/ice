@@ -70,7 +70,7 @@ gulp.task('dist', (done) => {
   }
 
   async function copyAppFiles() {
-    shelljs.cp('-R', './app/', `./${buildName}/`);
+    shelljs.cp('-R', './app/*', `./${buildName}/`);
   }
 
   async function setPackage() {
@@ -95,11 +95,11 @@ gulp.task('dist', (done) => {
     }
     shelljs.mkdir('-p', buildName);
 
-    await getServerCode();
-
     await copyAppFiles();
 
     await setPackage();
+
+    await getServerCode();
 
     build();
   }
