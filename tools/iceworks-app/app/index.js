@@ -42,8 +42,9 @@ function createWindow() {
         log.warn('stop got error:', error);
       }
 
+      const args = isProduction ? ['start'] : ['run', 'dev'];
       setPort = await detectPort(setPort);
-      serverProcess = execa('npm', ['start'], {
+      serverProcess = execa('npm', args, {
         cwd: serverDir,
         env: {
           ...env,
@@ -69,7 +70,6 @@ function createWindow() {
 
       serverProcess.stderr.on('data', (buffer) => {
         log.error('start stderr:', buffer.toString());
-        mainWindow.loadFile(errorHTML);
       });
 
       serverProcess.on('exit', (code) => {
@@ -95,7 +95,9 @@ app.on('before-quit', (event) => {
     event.preventDefault();
 
     // TODO The following call does not take effect
-    mainWindow.loadFile(loadingHTML);
+    if (mainWindow) {
+      mainWindow.loadFile(loadingHTML);
+    }
 
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
