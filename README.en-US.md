@@ -16,7 +16,7 @@ Simple and friendly front-end R&D system
 <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 
 <div align="center">
-  <img src="https://img.alicdn.com/tfs/TB1c4T7aoz1gK0jSZLeXXb9kVXa-1449-994.png" width="781" />
+  <img src="https://img.alicdn.com/tfs/TB12869ai_1gK0jSZFqXXcpaXXa-2898-1988.png" width="1000" />
 </div>
 </div>
 

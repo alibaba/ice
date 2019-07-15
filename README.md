@@ -16,7 +16,7 @@
 <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 
 <div align="center">
-  <img src="https://img.alicdn.com/tfs/TB114P7aoD1gK0jSZFGXXbd3FXa-1462-994.png" width="781" />
+  <img src="https://img.alicdn.com/tfs/TB1kvL9aoT1gK0jSZFrXXcNCXXa-2924-1988.png" width="1000" />
 </div>
 </div>
 
