@@ -75,11 +75,11 @@ function createWindow() {
       serverProcess.on('exit', (code) => {
         log.error('start process exit width:', code);
 
-        if (code === 0) {
-          mainWindow.loadURL(getServerUrl());
-        } else {
+        if (code === 1) {
           serverProcess = null;
-          mainWindow.loadFile(errorHTML);
+          if (mainWindow) {
+            mainWindow.loadFile(errorHTML);
+          }
         }
       });
     })();
