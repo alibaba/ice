@@ -15,8 +15,7 @@ const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, '..', 'server') : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
-const startLoadingHTML = path.join(__dirname, 'start_loading.html');
-const stopLoadingHTML = path.join(__dirname, 'stop_loading.html');
+const loadingHTML = path.join(__dirname, 'loading.html');
 const errorHTML = path.join(__dirname, 'error.html');
 
 function getServerUrl() {
@@ -31,7 +30,7 @@ function createWindow() {
 
   if (!serverProcess) {
     (async () => {
-      mainWindow.loadFile(startLoadingHTML);
+      mainWindow.loadFile(loadingHTML);
 
       try {
         await execa('npm', ['stop'], { cwd: serverDir, env });
@@ -50,7 +49,9 @@ function createWindow() {
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
-        log.info('start stdout:', buffer.toString());
+        log.info('start stdout:', logInfo);
+
+        mainWindow.webContents.send('log', logInfo);
 
         if (logInfo.search('midway started on') > 0) {
           mainWindow.loadURL(getServerUrl());
@@ -89,7 +90,9 @@ app.on('before-quit', (event) => {
   if (serverProcess) {
     event.preventDefault();
 
-    mainWindow.loadFile(stopLoadingHTML);
+    // TODO The following call does not take effect
+    mainWindow.loadFile(loadingHTML);
+  
     const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
     stopProcess.stdout.on('data', (buffer) => {
