@@ -9,6 +9,8 @@ const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
 const SERVER_PATH = path.join(__dirname, '../', 'server');
+// eslint-disable-next-line import/no-dynamic-require
+const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
 async function start(options = {}) {
   const answers = await checkServerVersion();
@@ -98,10 +100,8 @@ function failedMsg(error) {
  * Get the server package version
  */
 async function checkServerVersion() {
-  // eslint-disable-next-line import/no-dynamic-require
-  const packageConfig = require(path.join(SERVER_PATH, 'package.json'));
-  const packageName = packageConfig.name;
-  const packageVersion = packageConfig.version;
+  const packageName = serverPackageConfig.name;
+  const packageVersion = serverPackageConfig.version;
 
   const result = await checkVersion(packageName, packageVersion);
   if (result) {
