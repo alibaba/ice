@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import * as junk from 'junk';
+
 const readdirAsync = util.promisify(fs.readdir);
 const lstatAsync = util.promisify(fs.lstat);
 const accessAsync = util.promisify(fs.access);

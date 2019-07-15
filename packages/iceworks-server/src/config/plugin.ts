@@ -24,5 +24,5 @@ export = {
   i18n: {
     enable: true,
     path: path.join(__dirname, '../lib/plugin/i18n'),
-  }
+  },
 };

@@ -43,7 +43,7 @@ export default (ctx: IContext): ITaskConf => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: false
+        defaultChecked: false,
       },
     },
     {
@@ -52,7 +52,7 @@ export default (ctx: IContext): ITaskConf => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true
+        defaultChecked: true,
       },
     },
   ];
@@ -64,7 +64,7 @@ export default (ctx: IContext): ITaskConf => {
       link: '',
       componentName: 'Input',
       componentProps: {
-        placeholder: '/dist'
+        placeholder: '/dist',
       },
     },
     {
@@ -73,7 +73,7 @@ export default (ctx: IContext): ITaskConf => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true
+        defaultChecked: true,
       },
     },
     {

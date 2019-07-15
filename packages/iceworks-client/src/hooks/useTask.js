@@ -36,13 +36,11 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     }
   }
 
-  function taskEventListener(eventName) {
-    useSocket(eventName, (data) => {
-      setStatus(type, data.status);
-      if (writeChunk) {
-        writeChunk(data.chunk);
-      }
-    }, [status]);
+  function taskEventListener(data) {
+    setStatus(type, data.status);
+    if (writeChunk) {
+      writeChunk(data.chunk);
+    }
   }
 
   useEffect(() => {
@@ -50,10 +48,10 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   }, []);
 
   // listen start event handle
-  taskEventListener(startEventName);
+  useSocket(startEventName, data => taskEventListener(data), [status]);
 
   // listen stop event handle
-  taskEventListener(stopEventName);
+  useSocket(stopEventName, data => taskEventListener(data), [status]);
 
   return {
     isWorking: status === 'working',
