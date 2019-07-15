@@ -17,7 +17,9 @@ Simple and friendly front-end solution
 
 </div>
 
-## Feature
+English | [简体中文](./README.md)
+
+## Features
 
 - :fire:**Visual Development**：Simplify front-end engineering complexity through GUI operations, while visually managing different project projects via adapters, customizing proprietary front-end workbench.
 - :100:**Rich materials**：Improve project development efficiency based on material assembly while providing a wide range of React/Vue materials
