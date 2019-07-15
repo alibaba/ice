@@ -16,11 +16,9 @@ Simple and friendly front-end R&D system
 <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 
 <div align="center">
-  <img src="https://img.alicdn.com/tfs/TB114P7aoD1gK0jSZFGXXbd3FXa-1462-994.png" width="781" />
+  <img src="https://img.alicdn.com/tfs/TB1c4T7aoz1gK0jSZLeXXb9kVXa-1449-994.png" width="781" />
 </div>
 </div>
-
-![iceworks](https://img.alicdn.com/tfs/TB1lSH3aXP7gK0jSZFjXXc5aXXa-7244-4970.png)
 
 English | [简体中文](./README.md)
 
