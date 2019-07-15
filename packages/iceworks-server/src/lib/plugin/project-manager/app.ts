@@ -79,8 +79,9 @@ class Project implements IProject {
     ];
 
     // for electron 
-    if (process['resourcesPath']) {
-      path.join(process['resourcesPath'], 'bin');
+    const resourcesPath = process['resourcesPath']; // eslint-disable-line
+    if (resourcesPath) {
+      path.join(resourcesPath, 'bin');
     }
 
     if (os.type() === 'Darwin') {
