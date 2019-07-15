@@ -5,7 +5,7 @@
   padding: 20px 10px;
   overflow: hidden;
   background: $panel-bg;
-  box-shadow: 0 8px 24px $material-card-shadow;
+  box-shadow: $material-card-shadow;
   border-radius: 4px;
   li {
     float: left;

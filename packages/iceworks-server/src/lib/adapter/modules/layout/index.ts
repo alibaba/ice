@@ -6,10 +6,12 @@ const DEFAULT_IMAGE = 'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976
 
 export default class Layout implements ILayoutModule {
   public readonly project: IProject;
+
   public readonly path: string;
+
   public storage: any;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -33,11 +35,11 @@ export default class Layout implements ILayoutModule {
     );
   }
 
-  async getAll(args, ctx: IContext): Promise<IProjectLayout[]> {
+  public async getAll(args, ctx: IContext): Promise<IProjectLayout[]> {
     return await this.scanLayout(ctx);
   }
 
-  async getOne(layoutName: string, ctx: IContext): Promise<IProjectLayout> {
+  public async getOne(layoutName: string, ctx: IContext): Promise<IProjectLayout> {
     const layouts = await this.getAll(null, ctx);
     const layout = layouts.find(({name}) => name === layoutName);
     return layout;

@@ -29,7 +29,7 @@ export default () => {
       componentProps: {
         defaultChecked: false,
       },
-    }
+    },
   ];
 
   const build = [
@@ -57,9 +57,9 @@ export default () => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true
+        defaultChecked: true,
       },
-    }
+    },
   ];
 
   const lint = [];

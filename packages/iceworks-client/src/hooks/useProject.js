@@ -1,9 +1,9 @@
-import stores from '@stores';
-import useModal from '@hooks/useModal';
 import { useState } from 'react';
+import useModal from '@hooks/useModal';
 import showMessage from '@utils/showMessage';
 import logger from '@utils/logger';
 import goldlog from '@utils/goldlog';
+import stores from '@stores';
 
 function useProject({ panelStores } = {}) {
   const [projectsStore, projectStore, materialStore] = stores.useStores(['projects', 'project', 'material']);

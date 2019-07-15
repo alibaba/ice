@@ -5,7 +5,6 @@ import { Select, Input, Loading } from '@alifd/next';
 import uniqBy from 'lodash.uniqby';
 import cx from 'classnames';
 import socket from '@src/socket';
-import stores from '@stores';
 import Modal from '@components/Modal';
 import Icon from '@components/Icon';
 import BlockCard from '@components/BlockCard';
@@ -19,6 +18,7 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
+import stores from '@stores';
 import SavePageModal from './SavePageModal';
 import styles from './BuildPageModal.module.scss';
 
