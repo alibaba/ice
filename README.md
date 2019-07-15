@@ -17,7 +17,7 @@
 
 </div>
 
-![iceworks](https://img.alicdn.com/tfs/TB1YErSafb2gK0jSZK9XXaEgFXa-7244-4970.png)
+![iceworks](https://img.alicdn.com/tfs/TB1khHTaX67gK0jSZPfXXahhFXa-7310-4970.png)
 
 [English](./README.en-US.md) | 简体中文
 
