@@ -16,8 +16,8 @@ matrix:
     - os: osx
       if: branch = iceworks/electron
       script:
+        - rm -rf node_modules
         - cd tools/iceworks-app
         - npm install 
         - export CSC_IDENTITY_AUTO_DISCOVERY=false
-        - rm -rf ../../node_modules
         - npm run dist
