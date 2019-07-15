@@ -14,11 +14,14 @@ const HEADER_CONFIG_VARIABLE = 'headerMenuConfig';
 
 export default class Menu implements IMenuModule {
   public readonly project: IProject;
+
   public readonly storage: any;
+
   public readonly path: string;
+
   public configFilePath = 'config/menu.js';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.storage = storage;
     this.project = project;
@@ -46,7 +49,7 @@ export default class Menu implements IMenuModule {
     return code;
   }
 
-  async getAll(): Promise<{ asideMenuConfig: IMenu[], headerMenuConfig: IMenu[] }> {
+  public async getAll(): Promise<{ asideMenuConfig: IMenu[]; headerMenuConfig: IMenu[] }> {
     let asideMenuConfig = [];
     let headerMenuConfig = [];
     const menuFileAST = this.getFileAST();
@@ -57,12 +60,12 @@ export default class Menu implements IMenuModule {
         const asideMenuCode = getMenuCode(node, ASIDE_CONFIG_VARIABLE);
         const headerMenuCode = getMenuCode(node, HEADER_CONFIG_VARIABLE);
         if (asideMenuCode) {
-          asideMenuConfig = eval(asideMenuCode);
+          asideMenuConfig = eval(asideMenuCode); // eslint-disable-line
         }
         if (headerMenuCode) {
-          headerMenuConfig = eval(headerMenuCode);
+          headerMenuConfig = eval(headerMenuCode); // eslint-disable-line
         }
-      }
+      },
     });
 
     return {
@@ -71,11 +74,9 @@ export default class Menu implements IMenuModule {
     };
   }
 
-  async bulkCreate(params: {data: IMenu[], options: IMenuOptions}): Promise<void> {
-    let {
-      data = [],
-      options = {}
-    } = params;
+  public async bulkCreate(params: {data: IMenu[]; options: IMenuOptions}): Promise<void> {
+    let { data = [] } = params;
+    const {options = {} } = params;
     const { replacement = false, type = 'aside' } = options;
     const { asideMenuConfig, headerMenuConfig } = await this.getAll();
     const menuFileAST = this.getFileAST();
@@ -91,7 +92,7 @@ export default class Menu implements IMenuModule {
     this.setData(data, menuFileAST, name);
   }
 
-  async delete(params: {paths: string[]}) {
+  public async delete(params: {paths: string[]}) {
     const { paths } = params;
     const menuFileAST = this.getFileAST();
     const { asideMenuConfig, headerMenuConfig } = await this.getAll();
@@ -100,7 +101,7 @@ export default class Menu implements IMenuModule {
     this.setData(this.removeItemByPaths(headerMenuConfig, paths), menuFileAST, HEADER_CONFIG_VARIABLE);
   }
 
-  removeItemByPaths(data: IMenu[], paths: string[]) {
+  private removeItemByPaths(data: IMenu[], paths: string[]) {
     const removeIndex = [];
     data.forEach((item, index) => {
       if (paths.indexOf(item.path) > -1) {
@@ -131,7 +132,7 @@ export default class Menu implements IMenuModule {
         ) {
           node.init = arrayAST;
         }
-      }
+      },
     });
 
     fs.writeFileSync(
