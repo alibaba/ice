@@ -92,8 +92,8 @@ app.on('before-quit', (event) => {
     if (mainWindow) {
       mainWindow.loadFile(loadingHTML);
     }
-
-    const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
+    const stopScriptPath = path.join(serverDir, 'scripts', 'stop.js');
+    const stopProcess = fork(stopScriptPath, [], { stdio: 'pipe' });
 
     stopProcess.stdout.on('data', (buffer) => {
       log.info('stop stdout:', buffer.toString());
