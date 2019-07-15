@@ -98,7 +98,7 @@ function failedMsg(error) {
  * Get the server package version
  */
 async function checkServerVersion() {
-  // eslint-disable-next-line
+  // eslint-disable-next-line import/no-dynamic-require
   const packageConfig = require(path.join(SERVER_PATH, 'package.json'));
   const packageName = packageConfig.name;
   const packageVersion = packageConfig.version;
