@@ -17,6 +17,8 @@
 
 </div>
 
+![iceworks](https://img.alicdn.com/tfs/TB1YErSafb2gK0jSZK9XXaEgFXa-7244-4970.png)
+
 [English](./README.en-US.md) | 简体中文
 
 ## 特性
@@ -59,7 +61,7 @@ $ iceworks init
 
 |    项目         |    版本                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |一站式的源码研发工作台|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化源码研发工作台|
 | [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |物料开发和管理工具|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置 React 项目构建工具|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|

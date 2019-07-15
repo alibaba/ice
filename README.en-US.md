@@ -28,7 +28,7 @@ English | [简体中文](./README.md)
 - :tophat:**Best Practices**：Project development best practices based on rich experience, including directory results, development debugging, routing configuration, state management, etc.
 - :whale:**Custom material**：Building Private Material System by Rapid Development of Material Developer Tools
 
-more information [ice.work](https://ice.work)。
+more information [ice.work](https://ice.work).
 
 ## Quick start
 
@@ -61,7 +61,8 @@ $ iceworks init
 
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop source code development workbench|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials
+|
 | [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |Devtools for init and develop materials|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Configurable build tool for React project based on webpack|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React hooks|
