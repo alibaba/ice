@@ -81,9 +81,10 @@ class Project implements IProject {
     // for electron 
     const resourcesPath = process['resourcesPath']; // eslint-disable-line
     if (resourcesPath) {
-      path.join(resourcesPath, 'bin');
+      pathEnv.push(path.join(resourcesPath, 'bin'));
     }
 
+    // fallback
     if (os.type() === 'Darwin') {
       pathEnv.push('/usr/local/bin');
     }
