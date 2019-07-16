@@ -37,8 +37,8 @@ function createWindow() {
         mainWindow.webContents.openDevTools({ mode: 'right' });
       }
 
-      try {
-        require(stopScriptPath);
+      try {          
+        require(stopScriptPath); // eslint-disable-line global-require import/no-dynamic-require
       } catch (error) {
         log.warn('stop got error:', error);
       }
@@ -52,7 +52,7 @@ function createWindow() {
 
         mainWindow.webContents.send('log', logInfo);
 
-        if (logInfo.search('midway started on') > 0) {
+        if (logInfo.search('started on') > 0) {
           mainWindow.loadURL(getServerUrl());
         }
       });
