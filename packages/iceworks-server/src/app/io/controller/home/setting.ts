@@ -64,6 +64,14 @@ export default (app) => {
       return storage.get('editor');
     }
 
+    public async setNpmClient(ctx) {
+      storage.set('npmClient', ctx.args.npmClient);
+    }
+
+    public async getNpmClient() {
+      return storage.get('npmClient');
+    }
+
     public async setUser({ args }) {
       const { name, workId, avatarUrl } = args;
       if (workId && name && avatarUrl) {

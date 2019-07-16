@@ -47,6 +47,10 @@ const schema = {
     type: 'string',
     default: '@alifd/theme-iceworks-dark',
   },
+  npmClient: {
+    type: 'string',
+    default: 'npm',
+  },
   material: {
     type: 'array',
     default: [

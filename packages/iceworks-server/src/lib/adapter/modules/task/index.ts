@@ -62,7 +62,7 @@ export default class Task implements ITaskModule {
       // create an ipc channel
       ipc.start();
     }
-
+    const npmClient = this.storage.get('npmClient');
     const eventName = `start.data.${command}`;
     
     try {
@@ -79,7 +79,7 @@ export default class Task implements ITaskModule {
     }
 
     this.process[command] = execa(
-      'npm',
+      npmClient,
       ['run', command === 'dev' ? 'start' : command],
       {
         cwd: this.project.path || process.cwd(),
