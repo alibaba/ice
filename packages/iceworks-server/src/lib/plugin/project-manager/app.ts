@@ -385,9 +385,16 @@ class ProjectManager extends EventEmitter {
   public async deleteProject(params: { projectPath: string; deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);
+
+    // remove project at storage
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
 
+    // remove project panel settings
+    const newPanelSettings = storage.get('panelSettings').filter(({projectPath: project}) => project !== projectPath);
+    storage.set('panelSettings', newPanelSettings);
+
+    // delete project files
     if (deleteFiles) {
       try {
         await trash(projectPath);
