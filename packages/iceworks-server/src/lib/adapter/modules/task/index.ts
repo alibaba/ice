@@ -40,7 +40,7 @@ export default class Task implements ITaskModule {
    * @param args
    */
   public async start(args: ITaskParam, ctx: IContext) {
-    const { i18n } = ctx;
+    const { i18n, logger } = ctx;
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
@@ -68,7 +68,6 @@ export default class Task implements ITaskModule {
       {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
-        shell: true,
         env: Object.assign({}, process.env, env),
       }
     );
@@ -82,18 +81,21 @@ export default class Task implements ITaskModule {
     });
 
     this.process[command].on('close', () => {
-      if (command === 'build' || command === 'lint') {
-        this.process[command] = null;
-        this.status[command] = TASK_STATUS_STOP;
-        ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status[command],
-          chunk: chalk.grey('Task has stopped'),
-        });
-      }
+      this.process[command] = null;
+      this.status[command] = TASK_STATUS_STOP;
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        chunk: chalk.grey('Task has stopped'),
+      });
     });
 
-    this.process[command].on('error', (buffer) => {
-      throw new Error(buffer.toString());
+    this.process[command].on('error', (error) => {
+      // emit adapter.task.error to show message
+      const errMsg = error.toString();
+      logger.error(errMsg);
+      ctx.socket.emit('adapter.task.error', {
+        message: errMsg,
+      });
     });
 
     return this;
@@ -112,21 +114,24 @@ export default class Task implements ITaskModule {
       ipc.stop();
     }
 
-    const { pid } = this.process[command];
-    terminate(pid, (err) => {
-      if (err) {
-        throw err;
-      }
+    // check process if it is been closed
+    if (this.process[command]) {
+      const { pid } = this.process[command];
+      terminate(pid, (err) => {
+        if (err) {
+          throw err;
+        }
 
-      this.status[command] = TASK_STATUS_STOP;
-      this.process[command] = null;
+        this.status[command] = TASK_STATUS_STOP;
+        this.process[command] = null;
 
-      ctx.socket.emit(`adapter.task.${eventName}`, {
-        status: this.status[command],
-        chunk: chalk.grey('Task has stopped'),
+        ctx.socket.emit(`adapter.task.${eventName}`, {
+          status: this.status[command],
+          chunk: chalk.grey('Task has stopped'),
+        });
       });
-    });
-
+    }
+    
     return this;
   }
 
