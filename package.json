@@ -12,7 +12,7 @@
       "pre-push": "npm run lint"
     }
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/runtime": "^7.4.5",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",

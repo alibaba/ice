@@ -1,5 +1,5 @@
 {
-  "name": "iceworks-app",
+  "name": "iceworks",
   "version": "3.0.0",
   "main": "app/index.js",
   "scripts": {
