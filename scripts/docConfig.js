@@ -43,6 +43,31 @@ const docCategories = {
   iceworks: {
     // Iceworks
     title: {},
+    children: [{
+      title: {
+        'zh-cn': '项目管理',
+        'en-us': 'Project management',
+      },
+      dir: 'project',
+    }, {
+      title: {
+        'zh-cn': '工程管理',
+        'en-us': 'Engineering management',
+      },
+      dir: 'project',
+    }, {
+      title: {
+        'zh-cn': '物料市场',
+        'en-us': 'Materials market',
+      },
+      dir: 'material',
+    }, {
+      title: {
+        'zh-cn': '贡献指南',
+        'en-us': 'Contributing',
+      },
+      dir: 'contributing',
+    }],
   },
   materials: {
     // 自定义物料
