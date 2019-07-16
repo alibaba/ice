@@ -1,26 +1,24 @@
-const npmRunPath = require('npm-run-path');
 const path = require('path');
 const pathKey = require('path-key');
 const is = require('electron-is');
 const log = require('electron-log');
 
-const APP_BIN_PATH = path.join(process.resourcesPath, 'bin');
-
 module.exports = function () {
+  const env =  process.env;
   const PATH = pathKey();
-  const env = Object.assign({}, npmRunPath.env());
 
   const pathEnv = [
     env[PATH],
-    APP_BIN_PATH,
   ];
 
+  // for fallback
   if (is.osx()) {
     pathEnv.push('/usr/local/bin');
   }
+  pathEnv.push(path.join(process.resourcesPath, 'bin'));
 
   env[PATH] = pathEnv.join(path.delimiter);
-
+  
   log.info('env[PATH]:', env[PATH]);
 
   return env;
