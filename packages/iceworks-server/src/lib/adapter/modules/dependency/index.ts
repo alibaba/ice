@@ -75,8 +75,12 @@ export default class Dependency implements IDependencyModule {
       const npmClient = this.storage.get('npmClient');
       await execa(npmClient, ['outdated', '--json', '--silent'], { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
-      // the process exit with 1 if got outdated
-      npmOutdated = JSON.parse(error.stdout);
+      if (error.errno) {
+        throw error;
+      } else if (error.stdout) {
+        // the process exit with 1 if got outdated
+        npmOutdated = JSON.parse(error.stdout);
+      }
     }
 
     return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string }]) => ({ package: key, ...value }));
