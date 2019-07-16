@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
 import * as terminate from 'terminate';
+import * as os from 'os';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
@@ -41,6 +42,7 @@ export default class Task implements ITaskModule {
    */
   public async start(args: ITaskParam, ctx: IContext) {
     const { i18n, logger } = ctx;
+    const projectEnv = this.propject.getEnv();
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
@@ -62,13 +64,27 @@ export default class Task implements ITaskModule {
     }
 
     const eventName = `start.data.${command}`;
+    
+    try {
+      const isWindows = os.type === 'Windows_NT';
+      const findCommand = isWindows ? 'where' : 'which';
+      const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
+      const {stdout: npmPath} = await execa(findCommand, ['npm'], { env: projectEnv });
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        chunk: `using node: ${nodePath}\nusing npm: ${npmPath}`,
+      });
+    } catch (error) {
+      // ignore error
+    }
+
     this.process[command] = execa(
       'npm',
       ['run', command === 'dev' ? 'start' : command],
       {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
-        env: Object.assign({}, process.env, env),
+        env: Object.assign({}, projectEnv, env),
       }
     );
 
