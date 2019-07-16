@@ -7,17 +7,16 @@ module.exports = function () {
   const env =  process.env;
   const PATH = pathKey();
 
-  const pathEnv = [
-    env[PATH],
-  ];
+  const envPath = env[PATH].split(path.delimiter);
+  const macOSUserLocalBin = '/usr/local/bin';
 
   // for fallback
-  if (is.osx()) {
-    pathEnv.push('/usr/local/bin');
+  if (is.osx() && envPath.indexOf(macOSUserLocalBin) === -1) {
+    envPath.push(macOSUserLocalBin);
   }
-  pathEnv.push(path.join(process.resourcesPath, 'bin'));
+  envPath.push(path.join(process.resourcesPath, 'bin'));
 
-  env[PATH] = pathEnv.join(path.delimiter);
+  env[PATH] = envPath.join(path.delimiter);
   
   log.info('env[PATH]:', env[PATH]);
 

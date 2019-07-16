@@ -82,21 +82,20 @@ class Project implements IProject {
     const env =  process.env; // npmRunPath.env();
     const PATH = pathKey();
 
-    const pathEnv = [
-      env[PATH],
-    ];
+    const envPath = env[PATH].split(path.delimiter);
 
     // for electron fallback
     const resourcesPath = process['resourcesPath']; // eslint-disable-line
     if (resourcesPath) {
-      if (os.type() === 'Darwin') {
-        pathEnv.push('/usr/local/bin');
+      const macOSUserLocalBin = '/usr/local/bin';
+      if (os.type() === 'Darwin' && envPath.indexOf(macOSUserLocalBin) === -1) {
+        envPath.push(macOSUserLocalBin);
       }
 
-      pathEnv.push(path.join(resourcesPath, 'bin'));
+      envPath.push(path.join(resourcesPath, 'bin'));
     }
 
-    env[PATH] = pathEnv.join(path.delimiter);
+    env[PATH] = envPath.join(path.delimiter);
 
     this.app.logger.info('setEnv.pah:', env[PATH]);
     this.app.logger.info('env.pah:', process.env[PATH]);
