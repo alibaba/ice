@@ -15,8 +15,9 @@ matrix:
           all_branches: true
     - os: osx
       if: branch = iceworks/electron
+      install:
+        - echo "omit default npm install run"
       script:
-        - rm -rf node_modules
         - cd tools/iceworks-app
         - npm install 
         - export CSC_IDENTITY_AUTO_DISCOVERY=false
