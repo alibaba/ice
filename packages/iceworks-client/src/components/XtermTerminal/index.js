@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
 import Icon from '@components/Icon';
 import termManager from '@utils/termManager';
 import useTermTheme from '@hooks/useTermTheme';
@@ -19,6 +20,14 @@ const XtermTerminal = ({ id, name, options }) => {
         currentTerm.writeChunk(`${name}\x1B[0m `);
       }
     }
+
+    const handleResize = debounce(() => { currentTerm.fit(); }, 500);
+    // listen reszie
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const { termTheme } = useTermTheme();
@@ -35,7 +44,7 @@ const XtermTerminal = ({ id, name, options }) => {
         className={styles.clearIcon}
         onClick={() => term.clear(id)}
       />
-      <div ref={xtermRef} />
+      <div ref={xtermRef} className={styles.xtermRef} />
     </div>
   );
 };
