@@ -127,16 +127,16 @@ export default class Page implements IPageModule {
         blockTempDir,
         tarballURL
       );
-
-      await mkdirpAsync(blockDir);
-      await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
-      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
+      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName, tarballURL});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName});
+        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName, tarballURL});
       }
       throw error;
     }
+
+    await mkdirpAsync(blockDir);
+    await mvAsync(path.join(blockTempDir, 'src'), blockDir);
   }
 
   public async getAll(): Promise<IPage[]> {
