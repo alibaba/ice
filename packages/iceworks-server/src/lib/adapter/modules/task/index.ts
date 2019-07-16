@@ -119,7 +119,11 @@ export default class Task implements ITaskModule {
       const { pid } = this.process[command];
       terminate(pid, (err) => {
         if (err) {
-          throw err;
+          const errMsg = err.toString();
+          ctx.logger.error(errMsg);
+          ctx.socket.emit('adapter.task.error', {
+            message: errMsg,
+          });
         }
 
         this.status[command] = TASK_STATUS_STOP;
