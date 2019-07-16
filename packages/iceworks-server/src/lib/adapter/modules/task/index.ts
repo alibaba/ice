@@ -42,7 +42,7 @@ export default class Task implements ITaskModule {
    */
   public async start(args: ITaskParam, ctx: IContext) {
     const { i18n, logger } = ctx;
-    const projectEnv = this.propject.getEnv();
+    const projectEnv = this.project.getEnv();
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
@@ -66,7 +66,7 @@ export default class Task implements ITaskModule {
     const eventName = `start.data.${command}`;
     
     try {
-      const isWindows = os.type === 'Windows_NT';
+      const isWindows = os.type() === 'Windows_NT';
       const findCommand = isWindows ? 'where' : 'which';
       const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
       const {stdout: npmPath} = await execa(findCommand, ['npm'], { env: projectEnv });

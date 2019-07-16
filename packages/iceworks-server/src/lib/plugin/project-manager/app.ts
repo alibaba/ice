@@ -71,8 +71,8 @@ class Project implements IProject {
   }
 
   public getEnv() {
+    const env = npmRunPath.env();
     const PATH = pathKey();
-    const env = Object.assign({}, npmRunPath.env());
 
     const pathEnv = [
       env[PATH],
