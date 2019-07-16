@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
 import * as terminate from 'terminate';
+import * as os from 'os';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
@@ -40,7 +41,8 @@ export default class Task implements ITaskModule {
    * @param args
    */
   public async start(args: ITaskParam, ctx: IContext) {
-    const { i18n } = ctx;
+    const { i18n, logger } = ctx;
+    const projectEnv = this.project.getEnv();
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
@@ -62,14 +64,27 @@ export default class Task implements ITaskModule {
     }
 
     const eventName = `start.data.${command}`;
+    
+    try {
+      const isWindows = os.type() === 'Windows_NT';
+      const findCommand = isWindows ? 'where' : 'which';
+      const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
+      const {stdout: npmPath} = await execa(findCommand, ['npm'], { env: projectEnv });
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        chunk: `using node: ${nodePath}\nusing npm: ${npmPath}`,
+      });
+    } catch (error) {
+      // ignore error
+    }
+
     this.process[command] = execa(
       'npm',
       ['run', command === 'dev' ? 'start' : command],
       {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
-        shell: true,
-        env: Object.assign({}, process.env, env),
+        env: Object.assign({}, projectEnv, env),
       }
     );
 
@@ -82,18 +97,21 @@ export default class Task implements ITaskModule {
     });
 
     this.process[command].on('close', () => {
-      if (command === 'build' || command === 'lint') {
-        this.process[command] = null;
-        this.status[command] = TASK_STATUS_STOP;
-        ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status[command],
-          chunk: chalk.grey('Task has stopped'),
-        });
-      }
+      this.process[command] = null;
+      this.status[command] = TASK_STATUS_STOP;
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        chunk: chalk.grey('Task has stopped'),
+      });
     });
 
-    this.process[command].on('error', (buffer) => {
-      throw new Error(buffer.toString());
+    this.process[command].on('error', (error) => {
+      // emit adapter.task.error to show message
+      const errMsg = error.toString();
+      logger.error(errMsg);
+      ctx.socket.emit('adapter.task.error', {
+        message: errMsg,
+      });
     });
 
     return this;
@@ -112,21 +130,28 @@ export default class Task implements ITaskModule {
       ipc.stop();
     }
 
-    const { pid } = this.process[command];
-    terminate(pid, (err) => {
-      if (err) {
-        throw err;
-      }
+    // check process if it is been closed
+    if (this.process[command]) {
+      const { pid } = this.process[command];
+      terminate(pid, (err) => {
+        if (err) {
+          const errMsg = err.toString();
+          ctx.logger.error(errMsg);
+          ctx.socket.emit('adapter.task.error', {
+            message: errMsg,
+          });
+        }
 
-      this.status[command] = TASK_STATUS_STOP;
-      this.process[command] = null;
+        this.status[command] = TASK_STATUS_STOP;
+        this.process[command] = null;
 
-      ctx.socket.emit(`adapter.task.${eventName}`, {
-        status: this.status[command],
-        chunk: chalk.grey('Task has stopped'),
+        ctx.socket.emit(`adapter.task.${eventName}`, {
+          status: this.status[command],
+          chunk: chalk.grey('Task has stopped'),
+        });
       });
-    });
-
+    }
+    
     return this;
   }
 

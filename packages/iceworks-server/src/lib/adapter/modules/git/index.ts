@@ -1,5 +1,5 @@
 import * as gitPromie from 'simple-git/promise';
-import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../../interface';
+import { IContext, IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../../interface';
 
 export default class Git implements IGitModule {
   public readonly project: IProject;
@@ -40,7 +40,8 @@ export default class Git implements IGitModule {
     return unstageFiles;
   }
 
-  public async getStatus(): Promise<IGitGetStatus> {
+  public async getStatus(params: any, ctx: IContext): Promise<IGitGetStatus> {
+    const { logger } = ctx;
     const isRepository = await this.gitTools.checkIsRepo();
 
     let currentBranch = '';
@@ -66,7 +67,7 @@ export default class Git implements IGitModule {
 
       unstageFiles = this.getUnstagedFiles(gitStatus);
     } catch (err) {
-      console.warn(err);
+      logger.warn(err);
     }
 
     return {

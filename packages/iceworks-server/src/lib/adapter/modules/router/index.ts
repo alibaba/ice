@@ -6,7 +6,7 @@ import generate from '@babel/generator';
 import * as t from '@babel/types';
 
 import formatCodeFromAST from '../../utils/formatCodeFromAST';
-import { IRouter, IRouterModule, IProject, IRouterOptions } from '../../../../interface';
+import { IRouter, IRouterModule, IProject, IRouterOptions, IContext } from '../../../../interface';
 
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const LAYOUT_DIRECTORY = 'layouts';
@@ -51,7 +51,9 @@ export default class Router implements IRouterModule {
     return routerConfigAST;
   }
 
-  public async getAll(): Promise<IRouter[]> {
+  public async getAll(params, ctx: IContext): Promise<IRouter[]> {
+    const { logger } = ctx;
+
     let config = [];
     const routerConfigAST = this.getRouterConfigAST();
 
@@ -67,7 +69,7 @@ export default class Router implements IRouterModule {
         },
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error);
     }
     return config;
   }
@@ -101,12 +103,12 @@ export default class Router implements IRouterModule {
   }
 
   // bulk create routers
-  public async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}): Promise<void>  {
+  public async bulkCreate(params: {data: IRouter[]; options: IRouterOptions}, ctx: IContext): Promise<void>  {
     let { data } = params;
     const { options = {} } = params;
     const { replacement = false, parent } = options;
     const routerConfigAST = this.getRouterConfigAST();
-    const currentData = await this.getAll();
+    const currentData = await this.getAll(undefined, ctx);
 
     if (!replacement) {
       if (parent) {
@@ -127,10 +129,10 @@ export default class Router implements IRouterModule {
     this.setData(data, routerConfigAST);
   }
 
-  public async delete(params: {componentName: string}): Promise<string[]> {
+  public async delete(params: {componentName: string}, ctx: IContext): Promise<string[]> {
     const { componentName } = params;
     const routerConfigAST = this.getRouterConfigAST();
-    const data = await this.getAll();
+    const data = await this.getAll(undefined, ctx);
     this.removePaths = [];
 
     this.setData(this.removeItemByComponent(data, componentName), routerConfigAST);
