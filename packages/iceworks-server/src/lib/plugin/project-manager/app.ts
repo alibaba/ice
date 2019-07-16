@@ -36,7 +36,7 @@ const DEFAULT_ADAPTER = [
 
 interface ISimpleApp {
   logger: any;
-  i18n: II18n
+  i18n: II18n;
 }
 
 class Project implements IProject {
@@ -79,7 +79,7 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    const env =  process.env; //npmRunPath.env();
+    const env =  process.env; // npmRunPath.env();
     const PATH = pathKey();
 
     const pathEnv = [
