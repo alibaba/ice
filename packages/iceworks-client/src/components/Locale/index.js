@@ -1,4 +1,4 @@
-/* eslint camelcase:0 */
+/* eslint @typescript-eslint/camelcase:0 */
 import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider, addLocaleData } from 'react-intl';
@@ -13,8 +13,8 @@ import enUS from '@alifd/next/lib/locale/en-us';
 import zhCN from '@alifd/next/lib/locale/zh-cn';
 
 // 引入 locale 配置文件
-import en_US from '../../locales/en-US';
-import zh_CN from '../../locales/zh-CN';
+import enUSLocale from '../../locales/en-US';
+import zhCNLocale from '../../locales/zh-CN';
 
 // 设置语言包
 addLocaleData([...en, ...zh]);
@@ -26,13 +26,13 @@ export const localeInfos = {
   [LOCAL_ZH_CN]: {
     nextLocale: zhCN,
     appLocale: 'zh',
-    appMessages: zh_CN,
+    appMessages: zhCNLocale,
     label: '中文',
   },
   [LOCAL_EN_US]: {
     nextLocale: enUS,
     appLocale: 'en',
-    appMessages: en_US,
+    appMessages: enUSLocale,
     label: 'English',
   },
 };

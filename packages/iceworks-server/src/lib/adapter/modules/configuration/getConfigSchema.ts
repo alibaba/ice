@@ -53,7 +53,7 @@ export default (ctx: IContext): IConfSchema[] => {
       link: 'https://ice.work/docs/cli/config/config#hash',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: false
+        defaultChecked: false,
       },
     },
     {
@@ -61,7 +61,7 @@ export default (ctx: IContext): IConfSchema[] => {
       link: 'https://ice.work/docs/cli/config/config#minify',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: false
+        defaultChecked: false,
       },
     },
     {
@@ -69,7 +69,7 @@ export default (ctx: IContext): IConfSchema[] => {
       link: 'https://ice.work/docs/cli/config/config#vendor',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: false
+        defaultChecked: false,
       },
     },
   ];
