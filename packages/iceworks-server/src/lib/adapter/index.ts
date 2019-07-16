@@ -39,32 +39,37 @@ export default async (i18n: II18n) => {
     Guide: {
       cover: 'https://img.alicdn.com/tfs/TB1CDlTdEKF3KVjSZFEXXXExFXa-300-300.png',
       isAvailable: true,
-      module: null
-    },
-    Layout: {
-      cover: 'https://img.alicdn.com/tfs/TB1KUD8c4iH3KVjSZPfXXXBiVXa-300-300.png',
-      isAvailable: true,
-      module: Layout
-    },
-    Page: {
-      cover: 'https://img.alicdn.com/tfs/TB1Vl4javBj_uVjSZFpXXc0SXXa-300-300.png',
-      isAvailable: true,
-      module: Page
-    },
-    Router: {
-      cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
-      isAvailable: true,
-      module: Router
-    },
-    Menu: {
-      cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
-      isAvailable: true,
-      module: Menu
+      module: null,
     },
     QuickDev: {
       cover: 'https://img.alicdn.com/tfs/TB1hcJCe.uF3KVjSZK9XXbVtXXa-300-300.png',
       isAvailable: true,
       module: null,
+    },
+    Dependency: {
+      cover: 'https://img.alicdn.com/tfs/TB1nPY8c21H3KVjSZFBXXbSMXXa-300-300.png',
+      isAvailable: true,
+      module: Dependency,
+    },
+    Page: {
+      cover: 'https://img.alicdn.com/tfs/TB1Vl4javBj_uVjSZFpXXc0SXXa-300-300.png',
+      isAvailable: true,
+      module: Page,
+    },
+    Layout: {
+      cover: 'https://img.alicdn.com/tfs/TB1KUD8c4iH3KVjSZPfXXXBiVXa-300-300.png',
+      isAvailable: false,
+      module: Layout,
+    },
+    Router: {
+      cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
+      isAvailable: false,
+      module: Router,
+    },
+    Menu: {
+      cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
+      isAvailable: false,
+      module: Menu,
     },
     QuickBuild: {
       cover: 'https://img.alicdn.com/tfs/TB1P8pAe79E3KVjSZFGXXc19XXa-300-300.png',
@@ -74,37 +79,32 @@ export default async (i18n: II18n) => {
     Git: {
       cover: 'https://img.alicdn.com/tfs/TB1GVb_c79E3KVjSZFGXXc19XXa-300-300.png',
       isAvailable: false,
-      module: Git
+      module: Git,
     },
     OSS: {
       cover: 'https://img.alicdn.com/tfs/TB1mZ.Xc8GE3KVjSZFhXXckaFXa-300-300.png',
       isAvailable: false,
-      module: OSS
+      module: OSS,
     },
     DEF: {
       cover: 'https://img.alicdn.com/tfs/TB1qDkAXMFY.1VjSZFnXXcFHXXa-300-300.png',
       isAvailable: false,
-      module: DEF
+      module: DEF,
     },
     Todo: {
       cover: 'https://img.alicdn.com/tfs/TB1zZJKdEGF3KVjSZFmXXbqPXXa-300-300.png',
       isAvailable: false,
-      module: Todo
-    },
-    Dependency: {
-      cover: 'https://img.alicdn.com/tfs/TB1nPY8c21H3KVjSZFBXXbSMXXa-300-300.png',
-      isAvailable: false,
-      module: Dependency
+      module: Todo,
     },
     Task: {
       cover: '',
       isAvailable: true,
-      module: Task
+      module: Task,
     },
     Configuration: {
       cover: '',
       isAvailable: true,
-      module: Configuration
+      module: Configuration,
     },
   };
 

@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@alifd/next';
-
 import Icon from '@components/Icon';
 import SubMenu from '@components/SubMenu';
 
@@ -50,7 +49,7 @@ const MaterialSubMenu = ({
                 );
               })}
             </div>
-          : null
+            : null
         }
       </div>
       <div className={styles.opts}>

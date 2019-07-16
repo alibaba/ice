@@ -6,6 +6,7 @@ import * as userHome from 'user-home';
 // Note: why not use `import`
 // ref: https://github.com/sindresorhus/conf
 const Conf = require('conf');
+
 const confPath = path.join(userHome, '.iceworks');
 
 if (!fs.existsSync(confPath)) {
@@ -53,8 +54,8 @@ const schema = {
         official: true,
         name: '飞冰物料',
         type: 'react',
-        source: 'http://ice.alicdn.com/pre-assets/materials/react-materials.json'
-      }
+        source: 'http://ice.alicdn.com/assets/materials/react-materials.json',
+      },
     ],
   },
   oss: {

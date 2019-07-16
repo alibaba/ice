@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 3.0.0-beta.4
+- [feat] Start iceworks support to automatically open the browser
+- [feat] iceworks cli supports dynamic update of cores
+- [fix] Select folder to filter unnecessary point files
+- [fix] Switching language error
+- [chore] Recommended scaffold background color optimization
+
+## 3.0.0-beta.3
+- [fix] Installation dependency error
+
+## 3.0.0-beta.2
+- [fix] Fix no project error message
+- [chore] Style optimization
+
 ## 3.0.0-beta.1
 
 - [fix] Fix theme switching error

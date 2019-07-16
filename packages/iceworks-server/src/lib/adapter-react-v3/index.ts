@@ -6,8 +6,38 @@ import getBaseAdapter from '../adapter';
 
 export default async (i18n) => {
   const baseAdapter = await getBaseAdapter(i18n);
+  const {
+    Guide,
+    Layout,
+    Page,
+    QuickDev,
+    QuickBuild,
+    Git,
+    OSS,
+    DEF,
+    Todo,
+    Dependency,
+    Task,
+    Configuration,
+    Router,
+    Menu,
+  } = baseAdapter;
+
   const adapter = {
-    ...baseAdapter
+    Guide,
+    Layout,
+    Page,
+    QuickDev,
+    QuickBuild,
+    Git,
+    OSS,
+    DEF,
+    Todo,
+    Dependency,
+    Task,
+    Configuration,
+    Router,
+    Menu,
   };
 
   const isAliInternal = await checkAliInternal();

@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import * as junk from 'junk';
+
 const readdirAsync = util.promisify(fs.readdir);
 const lstatAsync = util.promisify(fs.lstat);
 const accessAsync = util.promisify(fs.access);
@@ -22,7 +23,7 @@ export default async (directoryPath: string): Promise<string[]> => {
   await Promise.all(files.map(async (filename: string) => {
     const targetPath = path.join(directoryPath, filename);
     const stats = await lstatAsync(targetPath);
-    const isDirectory = stats.isDirectory() && junk.not(filename);
+    const isDirectory = stats.isDirectory() && junk.not(filename) && filename.indexOf('.') !== 0;
 
     if (isDirectory) {
       try {

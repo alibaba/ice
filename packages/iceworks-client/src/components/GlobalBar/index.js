@@ -8,17 +8,17 @@ import { ThemeContext } from '@components/ThemeProvider';
 import socket from '@src/socket';
 import useSocket from '@hooks/useSocket';
 import useTermTheme from '@hooks/useTermTheme';
-import stores from '@stores';
 import showMessage from '@utils/showMessage';
 import { THEMES } from '@src/appConfig';
 import goldlog from '@utils/goldlog';
+import stores from '@stores';
 import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue } = useTermTheme();
-  const projectPath = project.dataSource.path;
+  const projectPath = project.path;
 
   function handleTerminal() {
     globalTerminalStore.trigger();
@@ -85,7 +85,7 @@ const GlobalBar = ({ project, intl }) => {
 
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
 
-  return project.dataSource.name ? (
+  return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
         <Icon
@@ -104,7 +104,7 @@ const GlobalBar = ({ project, intl }) => {
         <div className={styles.leftContent}>
           <div className={styles.item}>
             <FormattedMessage id="iceworks.global.bar.project" />：
-            <span className={styles.projectName}>{project.dataSource.name}</span>
+            <span className={styles.projectName}>{project.name}</span>
           </div>
           <div className={styles.item} onClick={handleTerminal}>
             <Icon type="pc" className={styles.icon} />

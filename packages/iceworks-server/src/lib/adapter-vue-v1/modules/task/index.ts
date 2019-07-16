@@ -4,6 +4,7 @@ import getTaskConfig from './getTaskConfig';
 
 export default class Task extends baseModules.Task {
   public cliConfFilename = 'vue.config.js';
+
   public cliConfPath: string;
 
   public getTaskConfig = getTaskConfig;

@@ -1,4 +1,4 @@
-/** eslint camelcase:0 */
+/* eslint @typescript-eslint/camelcase: 0 */
 
 import Client from './client';
 import { IProject, IDEFModule, IDEFPushParams, IContext } from '../../../../interface';
@@ -13,15 +13,16 @@ const env = isDev ? 'daily' : 'prod';
 
 export default class DEF implements IDEFModule {
   public project: IProject;
+
   public storage: any;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
   }
 
-  async push(params: IDEFPushParams, ctx: IContext): Promise<void> {
+  public async push(params: IDEFPushParams, ctx: IContext): Promise<void> {
     const { target, commitId, branch, repository, empId } = params;
     const client = new Client.Client();
     client.run({
