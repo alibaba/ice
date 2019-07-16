@@ -13,6 +13,8 @@ const readFileAsync = util.promisify(fs.readFile);
 const isDev = process.env.NODE_ENV === 'development';
 
 gulp.task('dist', (done) => {
+  console.log('NODE_ENV is dev: ', isDev);
+
   let target;
   if (os.platform() === 'win32') {
     target = 'win';
@@ -48,14 +50,19 @@ gulp.task('dist', (done) => {
   }
 
   async function getServerCode() {
+    if (fs.existsSync(serverDir)) {
+      shelljs.rm('-rf', [serverName]);
+    }
+    shelljs.mkdir('-p', serverName);
+
     if (isDev) {
-      shelljs.cp('-R', '../../packages/iceworks-server/', './server/');
+      shelljs.cp('-R', '../../packages/iceworks-server/*', './server/');
 
       await execa.shell('npm install', {
         stdio: 'inherit',
         cwd: serverDir,
       });
-      await execa.shell('npm build', {
+      await execa.shell('npm run build', {
         stdio: 'inherit',
         cwd: serverDir,
       });
@@ -70,6 +77,11 @@ gulp.task('dist', (done) => {
   }
 
   async function copyAppFiles() {
+    if (fs.existsSync(buildDir)) {
+      shelljs.rm('-rf', [buildName]);
+    }
+    shelljs.mkdir('-p', buildName);
+
     shelljs.cp('-R', './app/*', `./${buildName}/`);
   }
 
@@ -90,16 +102,11 @@ gulp.task('dist', (done) => {
   }
 
   async function dist() {
-    if (fs.existsSync(buildDir)) {
-      shelljs.rm('-rf', [buildName]);
-    }
-    shelljs.mkdir('-p', buildName);
+    await getServerCode();
 
     await copyAppFiles();
 
     await setPackage();
-
-    await getServerCode();
 
     build();
   }
