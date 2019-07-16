@@ -6,7 +6,7 @@ matrix:
   include:
     - os: linux  
       script:
-        - npm run lint:nofix
+        - npm run lint
       deploy:
         provider: script
         skip_cleanup: true # 避免清空已安装的依赖
