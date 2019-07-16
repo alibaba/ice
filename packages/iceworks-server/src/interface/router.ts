@@ -1,4 +1,4 @@
-import { IBaseModule } from './base';
+import { IBaseModule, IContext } from './base';
 
 export interface IRouterOptions {
   type?: string;
@@ -35,15 +35,15 @@ export interface IRouterModule extends IBaseModule {
   /**
    * get routers
    */
-  getAll(): Promise<IRouter[]>;
+  getAll(params: any, ctx: IContext): Promise<IRouter[]>;
 
   /**
    * set routers
    */
-  bulkCreate(params: {data: IRouter[]; options?: IRouterOptions}): Promise<void>;
+  bulkCreate(params: {data: IRouter[]; options?: IRouterOptions}, ctx: IContext): Promise<void>;
 
   /**
    * delete router by component name
    */
-  delete(params: {componentName: string}): Promise<string[]>;
+  delete(params: {componentName: string}, ctx: IContext): Promise<string[]>;
 }
