@@ -3,7 +3,9 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as mv from 'mv';
+import * as os from 'os';
+import * as npmRunPath from 'npm-run-path';
+import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
@@ -69,7 +71,26 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    return process.env;
+    const PATH = pathKey();
+    const env = Object.assign({}, npmRunPath.env());
+
+    const pathEnv = [
+      env[PATH],
+    ];
+
+    // for electron 
+    const resourcesPath = process['resourcesPath']; // eslint-disable-line
+    if (resourcesPath) {
+      path.join(resourcesPath, 'bin');
+    }
+
+    if (os.type() === 'Darwin') {
+      pathEnv.push('/usr/local/bin');
+    }
+
+    env[PATH] = pathEnv.join(path.delimiter);
+
+    return env;
   }
 
   private interopRequire(id) {
