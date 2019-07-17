@@ -38,12 +38,14 @@ const loadTemplate = async () => {
 
 export default class Page implements IPageModule {
   public readonly project: IProject;
+
   public readonly storage: any;
 
   public readonly path: string;
+
   private readonly componentDirName: string = 'components';
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -86,14 +88,14 @@ export default class Page implements IPageModule {
     Object.keys(blocksDependencies).forEach((packageName) => {
       if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
         filterDependencies.push({
-          [packageName]: blocksDependencies[packageName]
+          [packageName]: blocksDependencies[packageName],
         });
       }
     });
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], false, this.project, ctx.socket, 'page');
+      return await installDependency([{ package: packageName, version }], false, this.project, 'page', ctx);
     }));
   }
 
@@ -125,26 +127,24 @@ export default class Page implements IPageModule {
         blockTempDir,
         tarballURL
       );
-
-      await mkdirpAsync(blockDir);
-      await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
-      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
+      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName, tarballURL});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName});
+        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName, tarballURL});
       }
       throw error;
     }
+
+    await mkdirpAsync(blockDir);
+    await mvAsync(path.join(blockTempDir, 'src'), blockDir);
   }
 
-  async getAll(): Promise<IPage[]> {
+  public async getAll(): Promise<IPage[]> {
     const pages = await this.scanPages(this.path);
     return _.orderBy(pages, 'name', 'asc');
   }
 
-  async getOne(): Promise<any> { }
-
-  async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
+  public async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
     const { socket, i18n } = ctx;
 
@@ -200,9 +200,7 @@ export default class Page implements IPageModule {
     return pageFolderName;
   }
 
-  async bulkCreate(): Promise<any> { }
-
-  async delete(params: {name: string}): Promise<any> {
+  public async delete(params: {name: string}): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
   }
@@ -220,15 +218,13 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  async addBlocks(params: {blocks: IMaterialBlock[]; name?: string; }, ctx: IContext): Promise<void> {
+  public async addBlocks(params: {blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
     await this.downloadBlocksToPage(blocks, name, ctx);
   }
 
-  async addBlock(params: {block: IMaterialBlock, name?: string; }, ctx: IContext): Promise<void> {
+  public async addBlock(params: {block: IMaterialBlock; name?: string }, ctx: IContext): Promise<void> {
     const {block, name} = params;
     await this.downloadBlockToPage(block, name, ctx);
   }
-
-  async update(): Promise<any> { }
 }

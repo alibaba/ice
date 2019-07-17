@@ -6,6 +6,7 @@ import * as userHome from 'user-home';
 // Note: why not use `import`
 // ref: https://github.com/sindresorhus/conf
 const Conf = require('conf');
+
 const confPath = path.join(userHome, '.iceworks');
 
 if (!fs.existsSync(confPath)) {

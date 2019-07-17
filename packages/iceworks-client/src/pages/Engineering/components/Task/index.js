@@ -9,9 +9,9 @@ import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
 import { withErrorBoundary } from '@components/ErrorBoundary';
-import stores from '@stores';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
+import stores from '@stores';
 import TaskModal from '../TaskModal';
 import styles from './index.module.scss';
 

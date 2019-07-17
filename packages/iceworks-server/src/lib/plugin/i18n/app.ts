@@ -15,13 +15,14 @@ function ignoreFile(filePath: string) {
 }
 
 class I18n implements II18n {
-  localeMap: {
-    [key: string]: object
+  private localeMap: {
+    [key: string]: object;
   };
+
   constructor() {
     this.localeMap = {
       'zh-CN': zhCNGlobal,
-      'en-US': enUSGlobal
+      'en-US': enUSGlobal,
     };
   }
 
@@ -33,12 +34,12 @@ class I18n implements II18n {
       return _.includes(file, 'locales') && path.extname(file) === '.json';
     });
 
-    for (const file of localeFiles) {
+    await Promise.all(localeFiles.map(async (file) => {
       const name = path.basename(file, '.json');
       const content = await fs.readJSON(file);
 
       this.localeMap[name] = Object.assign({}, this.localeMap[name], content);
-    }
+    }));
   }
 
   public format(localeKey: string, args?: object): string {

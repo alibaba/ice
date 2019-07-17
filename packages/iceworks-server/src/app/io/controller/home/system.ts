@@ -8,16 +8,16 @@ export default (app) => {
 
   // System capability
   return class SystemController extends Controller {
-    async getPath({ args }) {
+    public async getPath({ args }) {
       return path.join(...args);
     }
 
-    async openFolder(ctx) {
+    public async openFolder(ctx) {
       const { args: { path } } = ctx;
       return await openFolder(path);
     }
 
-    openEditor(ctx) {
+    public openEditor(ctx) {
       const { args: { path }, logger, socket } = ctx;
       const editor = storage.get('editor');
       logger.info('open editor:', path, editor);

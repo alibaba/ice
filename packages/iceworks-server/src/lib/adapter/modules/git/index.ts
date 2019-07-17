@@ -1,13 +1,14 @@
-import { IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../../interface';
 import * as gitPromie from 'simple-git/promise';
+import { IContext, IProject, IGitModule, IGitBranchs, IGitGetLog, IGitGetStatus, IUnstagedFile, IGitSwitchBranchParams, IGitAddAndCommitParams } from '../../../../interface';
 
 export default class Git implements IGitModule {
   public readonly project: IProject;
+
   public storage: any;
 
   private gitTools: any;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: {project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -39,7 +40,8 @@ export default class Git implements IGitModule {
     return unstageFiles;
   }
 
-  public async getStatus(): Promise<IGitGetStatus> {
+  public async getStatus(params: any, ctx: IContext): Promise<IGitGetStatus> {
+    const { logger } = ctx;
     const isRepository = await this.gitTools.checkIsRepo();
 
     let currentBranch = '';
@@ -65,7 +67,7 @@ export default class Git implements IGitModule {
 
       unstageFiles = this.getUnstagedFiles(gitStatus);
     } catch (err) {
-      console.warn(err);
+      logger.warn(err);
     }
 
     return {
@@ -112,7 +114,7 @@ export default class Git implements IGitModule {
     const localBranches = await this.gitTools.branchLocal();
     return {
       localBranches: localBranches.all,
-      originBranches: originBranches.all
+      originBranches: originBranches.all,
     };
   }
 

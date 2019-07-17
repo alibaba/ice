@@ -5,6 +5,7 @@ import { Form, Input, Button, Select } from '@alifd/next';
 import Modal from '@components/Modal';
 import TipIcon from '@components/TipIcon';
 import Progress from '@components/Progress';
+import showMessage from '@utils/showMessage';
 import stores from '@stores';
 import pageStores from '../../stores';
 import styles from './SavePageModal.module.scss';
@@ -26,7 +27,13 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
 
   async function onSave(values, errors) {
     if (!errors) {
-      await onOk(values);
+      await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
+      try {
+        await onOk(values);
+      } catch (error) {
+        showMessage(error);
+      }
+      await progress.hide();
     }
   }
 
@@ -41,7 +48,10 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
     <Modal
       title={<FormattedMessage id="iceworks.project.panel.page.save.title" />}
       visible={on}
-      onCancel={onCancel}
+      onCancel={async () => {
+        await progress.hide();
+        onCancel();
+      }}
       onOk={onSave}
       footer={false}
     >

@@ -5,6 +5,7 @@ export interface ISocket {
 export interface IContext {
   socket: ISocket;
   i18n: II18n;
+  logger: any;
 }
 
 export interface IPanel {

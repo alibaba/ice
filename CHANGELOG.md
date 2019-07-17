@@ -1,6 +1,26 @@
 # CHANGELOG
 
+## 3.0.0-beta.5
+
+- [fix] Unspecified versions will report errors when adding dependencies
+- [fix] Delete panel configuration when deleting project
+- [fix] Display tarball URL when download material got error
+- [fix] Show message when task process error occur
+
+## 3.0.0-beta.4
+
+- [feat] Start iceworks support to automatically open the browser
+- [feat] iceworks cli supports dynamic update of cores
+- [fix] Select folder to filter unnecessary point files
+- [fix] Switching language error
+- [chore] Recommended scaffold background color optimization
+
+## 3.0.0-beta.3
+
+- [fix] Installation dependency error
+
 ## 3.0.0-beta.2
+
 - [fix] Fix no project error message
 - [chore] Style optimization
 

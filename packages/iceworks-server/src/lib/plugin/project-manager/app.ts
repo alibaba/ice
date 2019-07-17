@@ -3,7 +3,9 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as mv from 'mv';
+import * as os from 'os';
+import * as npmRunPath from 'npm-run-path';
+import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
@@ -70,18 +72,38 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    return process.env;
+    const env = npmRunPath.env();
+    const PATH = pathKey();
+
+    const pathEnv = [
+      env[PATH],
+    ];
+
+    // for electron 
+    const resourcesPath = process['resourcesPath']; // eslint-disable-line
+    if (resourcesPath) {
+      pathEnv.push(path.join(resourcesPath, 'bin'));
+    }
+
+    // fallback
+    if (os.type() === 'Darwin') {
+      pathEnv.push('/usr/local/bin');
+    }
+
+    env[PATH] = pathEnv.join(path.delimiter);
+
+    return env;
   }
 
   private interopRequire(id) {
     let mod;
     try {
-      mod = require(id);
+      mod = require(id); // eslint-disable-line
     } catch (error) {
       throw error;
     }
 
-    return mod && mod.__esModule ? mod.default : mod;
+    return mod && mod.__esModule ? mod.default : mod; // eslint-disable-line
   }
 
   public async loadAdapter(i18n: II18n) {
@@ -109,7 +131,7 @@ class Project implements IProject {
 
         this.panels.push({
           name,
-          ..._.omit(config, 'module')
+          ..._.omit(config, 'module'),
         });
       });
 
@@ -168,7 +190,7 @@ class Project implements IProject {
     storage.set('panelSettings', panelSettings);
   }
 
-  public setPanel(params: {name: string; isAvailable: boolean; }): IPanel[] {
+  public setPanel(params: {name: string; isAvailable: boolean }): IPanel[] {
     const {name, isAvailable} = params;
     const panel = this.panels.find(({ name: settingName }) => settingName === name);
     if (panel) {
@@ -178,7 +200,7 @@ class Project implements IProject {
     return this.panels;
   }
 
-  public sortPanels(params: { oldIndex: number; newIndex: number; }): IPanel[] {
+  public sortPanels(params: { oldIndex: number; newIndex: number }): IPanel[] {
     const { oldIndex, newIndex } = params;
     this.panels = arrayMove(this.panels, oldIndex, newIndex);
     this.savePanels();
@@ -202,12 +224,13 @@ interface ICreateParams {
   path: string;
   scaffold: IMaterialScaffold;
   forceCover?: boolean;
-  appId?: string,
-  changeId?: string,
+  appId?: string;
+  changeId?: string;
 }
 
 class ProjectManager extends EventEmitter {
   private projects;
+
   private i18n: II18n;
 
   constructor(i18n: II18n) {
@@ -225,7 +248,7 @@ class ProjectManager extends EventEmitter {
     );
   }
 
-  async ready() {
+  public async ready() {
     await this.i18n.readLocales();
     this.projects = await this.refresh();
   }
@@ -281,7 +304,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Create folder for project
    */
-  private async createProjectFolder(params: { path: string; forceCover?: boolean; }) {
+  private async createProjectFolder(params: { path: string; forceCover?: boolean }) {
     const { path: targetPath, forceCover } = params;
 
     if (!await pathExists(targetPath)) {
@@ -290,7 +313,7 @@ class ProjectManager extends EventEmitter {
 
     // check read and write
     try {
-      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // tslint:disable-line
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // eslint-disable-line  
     } catch (error) {
       error.message = '当前路径没有读写权限，请更换项目路径';
       throw error;
@@ -370,7 +393,7 @@ class ProjectManager extends EventEmitter {
    */
   public async createProject(params: ICreateParams): Promise<void> {
     if (params.appId) {
-      const generate = require('@ali/stark-biz-generator');
+      const generate = require('@ali/stark-biz-generator'); // eslint-disable-line
       generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
     } else {
       await this.createProjectFolder(params);
@@ -382,12 +405,19 @@ class ProjectManager extends EventEmitter {
   /**
    * Delete a project in project list
    */
-  public async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
+  public async deleteProject(params: { projectPath: string; deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);
+
+    // remove project at storage
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
 
+    // remove project panel settings
+    const newPanelSettings = storage.get('panelSettings').filter(({projectPath: project}) => project !== projectPath);
+    storage.set('panelSettings', newPanelSettings);
+
+    // delete project files
     if (deleteFiles) {
       try {
         await trash(projectPath);

@@ -1,15 +1,17 @@
-let Client;
+/* eslint import/no-mutable-exports: 0, global-require: 0 */
+
+let ClientWrap;
 
 try {
-  Client = require('@ali/def-pub-client');
+  ClientWrap = require('@ali/def-pub-client');
 } catch (e) {
-  Client = {
+  ClientWrap = {
     Client: class C {
-      run() {
+      public run() {
         throw new Error('缺少 DEF 客户端依赖');
       }
-    }
+    },
   };
 }
 
-export default Client;
+export default ClientWrap;

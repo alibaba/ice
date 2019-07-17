@@ -5,7 +5,6 @@ import { Select, Input, Loading } from '@alifd/next';
 import uniqBy from 'lodash.uniqby';
 import cx from 'classnames';
 import socket from '@src/socket';
-import stores from '@stores';
 import Modal from '@components/Modal';
 import Icon from '@components/Icon';
 import BlockCard from '@components/BlockCard';
@@ -19,6 +18,7 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
+import stores from '@stores';
 import SavePageModal from './SavePageModal';
 import styles from './BuildPageModal.module.scss';
 
@@ -210,8 +210,7 @@ const BuildPageModal = ({
   const { resource } = dataSource;
   const materialSources = resource.official.concat(resource.custom);
 
-  async function onCloseSaveModal() {
-    await progress.hide();
+  function onCloseSaveModal() {
     setSaveModal(false);
   }
 
@@ -232,12 +231,10 @@ const BuildPageModal = ({
   }
 
   async function onSaveOk(data) {
-    await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
     await onOk({
       blocks: selectedBlocks,
       ...data,
     });
-    await progress.hide();
     setSaveModal(false);
   }
 

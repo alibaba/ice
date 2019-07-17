@@ -151,7 +151,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
                 onChange={onChangeIdChange}
               />
             </FormItem>,
-            ]
+          ]
           : null}
 
         <FormItem

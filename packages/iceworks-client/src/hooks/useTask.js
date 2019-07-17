@@ -9,6 +9,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   const status = (dataSource[type] && dataSource[type].status) || 'stop';
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
+  const taskErrorEventName = `adapter.task.error`;
 
   async function onStart() {
     try {
@@ -43,17 +44,19 @@ const useTask = ({ type, writeLog, writeChunk }) => {
         writeChunk(data.chunk, data.stdType === 'stdout');
       }
     }, [status]);
-  }
 
   useEffect(() => {
     onGetStatus();
   }, []);
 
   // listen start event handle
-  taskEventListener(startEventName);
+  useSocket(startEventName, data => taskEventListener(data), [status]);
 
   // listen stop event handle
-  taskEventListener(stopEventName);
+  useSocket(stopEventName, data => taskEventListener(data), [status]);
+
+  // listen event error
+  useSocket(taskErrorEventName, error => showMessage(error.message));
 
   return {
     isWorking: status === 'working',
