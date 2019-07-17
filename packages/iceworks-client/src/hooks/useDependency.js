@@ -8,7 +8,7 @@ import stores from '@stores';
 
 export const STATUS_RESETING = 'reseting';
 
-function useDependency(diableUseSocket) {
+function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
   const {
     on: onCreateModal,
     setModal: setCreateModal,
@@ -68,11 +68,17 @@ function useDependency(diableUseSocket) {
     await dependenciesStore.reset();
 
     setResetModal(false);
-    globalTerminalStore.show();
+
+    if (showGlobalTerminal) {
+      globalTerminalStore.show();
+    }
   }
 
   if (!diableUseSocket) {
     useSocket('adapter.dependency.reset.data', writeGlobalLog);
+    if (writeChunk) {
+      useSocket('adapter.dependency.reset.data', data => writeChunk(data));
+    }
 
     useSocket('adapter.dependency.reset.exit', (code) => {
       if (code === 0) {

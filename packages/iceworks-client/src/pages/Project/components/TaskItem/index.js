@@ -5,11 +5,24 @@ import { FormattedMessage } from 'react-intl';
 import { Button } from '@alifd/next';
 import Icon from '@components/Icon';
 import TaskButton from '@components/TaskButton';
+import Modal from '@components/Modal';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
 import styles from './index.module.scss';
 
-const TaskItem = ({ title, desc, icon, path, history, isWorking, onStart, onStop }) => {
+const TaskItem = ({
+  title,
+  desc,
+  icon,
+  path,
+  history,
+  isWorking,
+  onStart,
+  onStop,
+  installDependencyVisible,
+  onInstallDependencyCancel,
+  onInstallDependencyOk,
+}) => {
   function handleClick() {
     history.push(path);
   }
@@ -39,6 +52,14 @@ const TaskItem = ({ title, desc, icon, path, history, isWorking, onStart, onStop
           </Button>
         </div>
       </div>
+      <Modal
+        title={<FormattedMessage id="iceworks.project.install.dependencies.title" />}
+        visible={installDependencyVisible}
+        onCancel={onInstallDependencyCancel}
+        onOk={onInstallDependencyOk}
+      >
+        <FormattedMessage id="iceworks.project.install.dependencies.content" />
+      </Modal>
     </Panel>
   );
 };
@@ -56,6 +77,9 @@ TaskItem.propTypes = {
   icon: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
+  installDependencyVisible: PropTypes.bool.isRequired,
+  onInstallDependencyCancel: PropTypes.func.isRequired,
+  onInstallDependencyOk: PropTypes.func.isRequired,
   isWorking: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
