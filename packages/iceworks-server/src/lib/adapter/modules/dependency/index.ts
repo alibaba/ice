@@ -21,11 +21,11 @@ export const install = async (
   }
 ): Promise<void> => {
   const { dependencies, npmClient, isDev, project, namespace, ctx } = params;
-  const { socket, logger } = ctx;
+  const { socket, i18n, logger } = ctx;
   logger.info('dependencies', dependencies);
-  socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
+  socket.emit(`adapter.${namespace}.install.data`, i18n.format('baseAdapter.dependency.reset.startInstall'));
 
-  const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
+  const args = ['install', '--loglevel', 'silly', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
     dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
   );
 
@@ -35,21 +35,26 @@ export const install = async (
     {
       cwd: project.path,
       env: project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     }
   );
 
-  childProcess.stdout.on('data', (buffer) => {
+  const listenFunc = (buffer) => {
     const text = buffer.toString();
     logger.info(`${namespace}.install.data:`, text);
 
     socket.emit(`adapter.${namespace}.install.data`, text);
-  });
+  };
+
+  childProcess.stdout.on('data', listenFunc)
+
+  childProcess.stderr.on('data', listenFunc);
 
   childProcess.on('error', (buffer) => {
     logger.info(`${namespace}.install.error:`, buffer.toString());
   });
 
-  childProcess.on('exit', (code, signal) => {
+  childProcess.on('exit', (code) => {
     socket.emit(`adapter.${namespace}.install.exit`, code);
   });
 };
@@ -82,7 +87,7 @@ export default class Dependency implements IDependencyModule {
 
     try {
       const npmClient = await getStorageNpmClient(this.storage);
-      await execa(npmClient, ['outdated', '--json', '--silent'], { cwd: this.project.path, env: this.project.getEnv() });
+      await execa(npmClient, ['outdated', '--json'], { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
       if (error.errno) {
         throw error;
@@ -183,17 +188,22 @@ export default class Dependency implements IDependencyModule {
     socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.startInstall'));
 
     const npmClient = await getStorageNpmClient(this.storage);
-    const childProcess = execa(npmClient, ['install'], {
+    const childProcess = execa(npmClient, ['install', '--loglevel', 'silly'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     });
 
-    childProcess.stdout.on('data', (buffer) => {
+    const listenFunc = (buffer) => {
       const text = buffer.toString();
       logger.info('reset.data:', text);
 
       socket.emit('adapter.dependency.reset.data', text);
-    });
+    }
+
+    childProcess.stdout.on('data', listenFunc);
+
+    childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
       logger.info('reset.error:', buffer.toString());
@@ -213,17 +223,22 @@ export default class Dependency implements IDependencyModule {
     socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
 
     const npmClient = await getStorageNpmClient(this.storage);
-    const childProcess = execa(npmClient, ['update', packageName, '--silent'], {
+    const childProcess = execa(npmClient, ['update', packageName, '--loglevel', 'silly'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     });
 
-    childProcess.stdout.on('data', (buffer) => {
+    const listenFunc = (buffer) => {
       const text = buffer.toString();
       logger.info('upgrade.data:', text);
 
       socket.emit('adapter.dependency.upgrade.data', text);
-    });
+    }
+
+    childProcess.stdout.on('data', listenFunc);
+
+    childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
       logger.info('upgrade.error:', buffer.toString());

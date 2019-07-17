@@ -5,7 +5,6 @@ import * as path from 'path';
 import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
-import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
 import getStorageNpmClient from '../../../getStorageNpmClient';
 import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
@@ -59,13 +58,10 @@ export default class Task implements ITaskModule {
     let env: object = {};
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
-
-      // create an ipc channel
-      ipc.start();
     }
     const npmClient = await getStorageNpmClient(this.storage);
     const eventName = `start.data.${command}`;
-    
+
     try {
       const isWindows = os.type() === 'Windows_NT';
       const findCommand = isWindows ? 'where' : 'which';
@@ -89,13 +85,17 @@ export default class Task implements ITaskModule {
       }
     );
 
-    this.process[command].stdout.on('data', (buffer) => {
+    const listenFunc = (buffer) => {
       this.status[command] = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         chunk: buffer.toString(),
       });
-    });
+    }
+
+    this.process[command].stderr.on('data', listenFunc);
+
+    this.process[command].stdout.on('data',listenFunc);
 
     this.process[command].on('close', () => {
       this.process[command] = null;
@@ -125,12 +125,6 @@ export default class Task implements ITaskModule {
   public async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
-
-    if (command === 'dev') {
-      // close the server and stop ipc serving
-      ipc.stop();
-    }
-
     // check process if it is been closed
     if (this.process[command]) {
       const { pid } = this.process[command];
@@ -152,7 +146,7 @@ export default class Task implements ITaskModule {
         });
       });
     }
-    
+
     return this;
   }
 
