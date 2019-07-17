@@ -83,10 +83,6 @@ gulp.task('dist', (done) => {
 
     await writeFileAsync(path.join(buildDir, packageJSONFileName), `${JSON.stringify(projectPackageJSON, null, 2)}\n`, 'utf-8');
 
-    await execa.shell('npm install', {
-      stdio: 'inherit',
-      cwd: buildDir,
-    });
   }
 
   async function dist() {

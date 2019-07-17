@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "address": "^1.1.0",
-    "electron": "5.0.1",
+    "electron": "5.0.6",
     "electron-builder": "^21.0.15",
     "gulp": "^3.9.1",
     "ice-npm-utils": "^1.1.0"
