@@ -37,13 +37,11 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     }
   }
 
-  function taskEventListener(eventName) {
-    useSocket(eventName, (data) => {
-      setStatus(type, data.status);
-      if (writeChunk) {
-        writeChunk(data.chunk, data.stdType === 'stdout');
-      }
-    }, [status]);
+  function taskEventListener(data) {
+    setStatus(type, data.status);
+    if (writeChunk) {
+      writeChunk(data.chunk, data.stdType === 'stdout');
+    }
   }
 
   useEffect(() => {
