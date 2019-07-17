@@ -6,7 +6,7 @@ import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
-import getStorageNpmClient from '../../../getStorageNpmClient';
+import getNpmClient from '../../../getNpmClient';
 import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
@@ -59,7 +59,7 @@ export default class Task implements ITaskModule {
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
     }
-    const npmClient = await getStorageNpmClient(this.storage);
+    const npmClient = await getNpmClient();
     const eventName = `start.data.${command}`;
 
     try {

@@ -1,6 +1,7 @@
 import { checkAliInternal } from 'ice-npm-utils';
+import storage from './storage';
 
-const getStorageNpmClient = async (storage: any) => {
+const getNpmClient = async () => {
   let npmClient = storage.get('npmClient');
   if (!npmClient) {
     // set default npm client
@@ -10,4 +11,4 @@ const getStorageNpmClient = async (storage: any) => {
   return npmClient;
 };
 
-export default getStorageNpmClient;
+export default getNpmClient;
