@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as os from 'os';
-// import * as npmRunPath from 'npm-run-path';
+import * as shellPath from 'shell-path';
 import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
@@ -79,26 +79,22 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    const env =  process.env; // npmRunPath.env();
     const PATH = pathKey();
 
-    const envPath = env[PATH].split(path.delimiter);
+    const env = process.env;
+    const envPath = shellPath.sync().split(path.delimiter);
+
+    this.app.logger.info('env.pah:', process.env[PATH]);
 
     // for electron fallback
     const resourcesPath = process['resourcesPath']; // eslint-disable-line
     if (resourcesPath) {
-      const macOSUserLocalBin = '/usr/local/bin';
-      if (os.type() === 'Darwin' && envPath.indexOf(macOSUserLocalBin) === -1) {
-        envPath.push(macOSUserLocalBin);
-      }
-
       envPath.push(path.join(resourcesPath, 'bin'));
     }
 
     env[PATH] = envPath.join(path.delimiter);
 
     this.app.logger.info('setEnv.pah:', env[PATH]);
-    this.app.logger.info('env.pah:', process.env[PATH]);
 
     return env;
   }

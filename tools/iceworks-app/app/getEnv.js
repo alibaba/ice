@@ -1,24 +1,27 @@
 const path = require('path');
 const pathKey = require('path-key');
-const is = require('electron-is');
 const log = require('electron-log');
+const shellPath = require('shell-path');
+const npmRunPath = require('npm-run-path');
 
 module.exports = function () {
-  const env =  process.env;
   const PATH = pathKey();
+  const npmRunPathValue = npmRunPath();
+  const shellPathValue = shellPath.sync();
 
-  const envPath = env[PATH].split(path.delimiter);
-  const macOSUserLocalBin = '/usr/local/bin';
+  log.info('npmRunPath():', npmRunPathValue);
+  log.info('shellPath():', shellPathValue);
+  log.info('process.env.PATH:', process.env[PATH]);
+
+  const env = process.env;
+  const envPath = shellPathValue.split(path.delimiter);
 
   // for fallback
-  if (is.osx() && envPath.indexOf(macOSUserLocalBin) === -1) {
-    envPath.push(macOSUserLocalBin);
-  }
   envPath.push(path.join(process.resourcesPath, 'bin'));
 
   env[PATH] = envPath.join(path.delimiter);
   
-  log.info('env[PATH]:', env[PATH]);
+  log.info('env.PATH:', env[PATH]);
 
   return env;
 };

@@ -6,6 +6,7 @@ const util = require('util');
 const execa = require('execa');
 const { getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const shelljs = require('shelljs');
+const pathExists = require('path-exists');
 
 const cliBuilder = require.resolve('electron-builder/out/cli/cli.js');
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -58,10 +59,13 @@ gulp.task('dist', (done) => {
     if (isDev) {
       shelljs.cp('-R', '../../packages/iceworks-server/*', './server/');
 
-      await execa.shell('npm install', {
-        stdio: 'inherit',
-        cwd: serverDir,
-      });
+      if (!await pathExists(path.join(serverDir, 'node_modules'))) {
+        await execa.shell('npm install', {
+          stdio: 'inherit',
+          cwd: serverDir,
+        });
+      }
+      
       await execa.shell('npm run build', {
         stdio: 'inherit',
         cwd: serverDir,
