@@ -19,7 +19,7 @@ export default async i18n => {
     Task: baseTask,
     Configuration: baseConfiguration,
     Router,
-    Menu
+    Menu,
   } = baseAdapter;
 
   const adapter = {
@@ -37,12 +37,12 @@ export default async i18n => {
     Menu,
     Task: {
       ...baseTask,
-      module: Task
+      module: Task,
     },
     Configuration: {
       ...baseConfiguration,
-      module: Configuration
-    }
+      module: Configuration,
+    },
   };
 
   const isAliInternal = await checkAliInternal();
