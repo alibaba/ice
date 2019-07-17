@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.0.0-beta.6
+
+- [feat] support npm client select #2469
+- [feat] support vue project #2392
+- [feat] improve progress info #2452
+- [feat] dependency check before starting a task #2421
+- [feat] output operation log in iceworks cli #2479
+- [fix] xterm fit current viewport when resize #2477
+
 ## 3.0.0-beta.5
 
 - [fix] Unspecified versions will report errors when adding dependencies
