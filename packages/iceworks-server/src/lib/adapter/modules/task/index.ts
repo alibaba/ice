@@ -58,24 +58,24 @@ export default class Task implements ITaskModule {
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
     }
-
+    const npmClient = this.storage.get('npmClient');
     const eventName = `start.data.${command}`;
 
     try {
       const isWindows = os.type() === 'Windows_NT';
       const findCommand = isWindows ? 'where' : 'which';
       const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
-      const {stdout: npmPath} = await execa(findCommand, ['npm'], { env: projectEnv });
+      const {stdout: npmPath} = await execa(findCommand, [npmClient], { env: projectEnv });
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        chunk: `using node: ${nodePath}\nusing npm: ${npmPath}`,
+        chunk: `using node: ${nodePath}\nusing ${npmClient}: ${npmPath}`,
       });
     } catch (error) {
       // ignore error
     }
 
     this.process[command] = execa(
-      'npm',
+      npmClient,
       ['run', command === 'dev' ? 'start' : command],
       {
         cwd: this.project.path || process.cwd(),

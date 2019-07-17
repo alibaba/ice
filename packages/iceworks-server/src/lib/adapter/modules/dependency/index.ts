@@ -10,7 +10,7 @@ import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISock
 const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (
-  dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, namespace: string, ctx: IContext
+  dependencies: ICreateDependencyParam[], npmClient: string, isDev: boolean, project: IProject, namespace: string, ctx: IContext
 ): Promise<void> => {
   const { socket, i18n, logger } = ctx;
   logger.info('dependencies', dependencies);
@@ -21,7 +21,7 @@ export const install = async (
   );
 
   const childProcess = execa(
-    'npm',
+    npmClient,
     args,
     {
       cwd: project.path,
@@ -78,9 +78,15 @@ export default class Dependency implements IDependencyModule {
 
     try {
       await execa('npm', ['outdated', '--json'], { cwd: this.project.path, env: this.project.getEnv() });
+      const npmClient = this.storage.get('npmClient');
+      await execa(npmClient, ['outdated', '--json'], { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
-      // the process exit with 1 if got outdated
-      npmOutdated = JSON.parse(error.stdout);
+      if (error.errno) {
+        throw error;
+      } else if (error.stdout) {
+        // the process exit with 1 if got outdated
+        npmOutdated = JSON.parse(error.stdout);
+      }
     }
 
     return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string }]) => ({ package: key, ...value }));
@@ -88,12 +94,12 @@ export default class Dependency implements IDependencyModule {
 
   public async create(params: {dependency: ICreateDependencyParam; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependency, idDev } = params;
-    return (await install([dependency], idDev, this.project, 'dependency', ctx))[0];
+    return (await install([dependency], this.storage.get('npmClient'), idDev, this.project, 'dependency', ctx))[0];
   }
 
   public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependencies, idDev } = params;
-    return await install(dependencies, idDev, this.project, 'dependency', ctx);
+    return await install(dependencies, this.storage.get('npmClient'), idDev, this.project, 'dependency', ctx);
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }> {

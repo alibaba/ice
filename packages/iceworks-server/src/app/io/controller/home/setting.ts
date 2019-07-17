@@ -1,5 +1,6 @@
 
 import * as path from 'path';
+import { checkAliInternal } from 'ice-npm-utils';
 import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
 
@@ -62,6 +63,19 @@ export default (app) => {
 
     public async getEditor() {
       return storage.get('editor');
+    }
+
+    public async setNpmClient(ctx) {
+      storage.set('npmClient', ctx.args.npmClient);
+    }
+
+    public async getNpmClient() {
+      let npmClient = storage.get('npmClient');
+      if (!npmClient) {
+        npmClient = await checkAliInternal() ? 'tnpm' : 'npm';
+        storage.set('npmClient', npmClient);
+      }
+      return npmClient;
     }
 
     public async setUser({ args }) {
