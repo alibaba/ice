@@ -23,7 +23,8 @@ const schema = {
     default: {
       workId: '',
       name: '请登录',
-      avatarUrl: 'https://img.alicdn.com/tfs/TB1hjBJXLxj_uVjSZFqXXaboFXa-147-150.jpg',
+      avatarUrl:
+        'https://img.alicdn.com/tfs/TB1hjBJXLxj_uVjSZFqXXaboFXa-147-150.jpg',
       isLogin: false,
     },
   },
@@ -59,6 +60,12 @@ const schema = {
         name: '飞冰物料',
         type: 'react',
         source: 'http://ice.alicdn.com/assets/materials/react-materials.json',
+      },
+      {
+        official: true,
+        name: 'Vue物料',
+        type: 'vue',
+        source: 'http://ice.alicdn.com/assets/materials/vue-materials.json',
       },
     ],
   },

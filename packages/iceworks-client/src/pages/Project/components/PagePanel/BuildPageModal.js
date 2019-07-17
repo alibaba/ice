@@ -205,10 +205,19 @@ const BuildPageModal = ({
   } = useModal();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
+  const [materialSources, setMaterialSources] = useState([]);
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
+  useEffect(() => {
+    material.getResources({ type: project.dataSource.type });
+  }, []);
   const { dataSource } = material;
   const { resource } = dataSource;
-  const materialSources = resource.official.concat(resource.custom);
+  const newMaterialSources = resource.official
+    .concat(resource.custom)
+    .filter(item => item.type === project.dataSource.type);
+  if (newMaterialSources.length !== materialSources.length) {
+    setMaterialSources(newMaterialSources);
+  }
 
   function onCloseSaveModal() {
     setSaveModal(false);

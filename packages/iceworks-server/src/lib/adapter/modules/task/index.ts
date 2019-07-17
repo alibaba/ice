@@ -7,7 +7,13 @@ import * as os from 'os';
 import chalk from 'chalk';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
 import getNpmClient from '../../../getNpmClient';
-import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
+import {
+  ITaskModule,
+  ITaskParam,
+  IProject,
+  IContext,
+  ITaskConf,
+} from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
 const DEFAULT_PORT = '4444';
@@ -31,7 +37,7 @@ export default class Task implements ITaskModule {
 
   public getTaskConfig: (ctx: IContext) => ITaskConf = getTaskConfig;
 
-  constructor(params: {project: IProject; storage: any }) {
+  constructor(params: { project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -46,7 +52,7 @@ export default class Task implements ITaskModule {
     const { i18n, logger } = ctx;
     const projectEnv = this.project.getEnv();
 
-    const nodeModulesPath = path.join(this.project.path, 'node_modules')
+    const nodeModulesPath = path.join(this.project.path, 'node_modules');
     const pathExists = await fs.pathExists(nodeModulesPath);
     if(!pathExists) {
       this.installed = false;
@@ -68,8 +74,12 @@ export default class Task implements ITaskModule {
     try {
       const isWindows = os.type() === 'Windows_NT';
       const findCommand = isWindows ? 'where' : 'which';
-      const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
-      const {stdout: npmPath} = await execa(findCommand, [npmClient], { env: projectEnv });
+      const { stdout: nodePath } = await execa(findCommand, ['node'], {
+        env: projectEnv,
+      });
+      const { stdout: npmPath } = await execa(findCommand, [npmClient], {
+        env: projectEnv,
+      });
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         chunk: `using node: ${nodePath}\nusing ${npmClient}: ${npmPath}`,
@@ -85,36 +95,46 @@ export default class Task implements ITaskModule {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
         env: Object.assign({}, projectEnv, env),
-      }
+      },
     );
 
-    const listenFunc = (buffer) => {
+    this.process[command].stdout.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
+        isStdout: true,
         chunk: buffer.toString(),
       });
-    }
+    });
 
-    this.process[command].stderr.on('data', listenFunc);
-
-    this.process[command].stdout.on('data',listenFunc);
+    this.process[command].stderr.on('data', buffer => {
+      this.status[command] = TASK_STATUS_WORKING;
+      this.logPipe(queue => {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
+          status: this.status[command],
+          isStdout: false,
+          chunk: queue,
+        });
+      }).add(buffer.toString());
+    });
 
     this.process[command].on('close', () => {
       this.process[command] = null;
       this.status[command] = TASK_STATUS_STOP;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
+        isStdout: true,
         chunk: chalk.grey('Task has stopped'),
       });
     });
 
-    this.process[command].on('error', (error) => {
+    this.process[command].on('error', error => {
       // emit adapter.task.error to show message
       const errMsg = error.toString();
       logger.error(errMsg);
       ctx.socket.emit('adapter.task.error', {
         message: errMsg,
+        isStdout: true,
       });
     });
 
@@ -131,7 +151,7 @@ export default class Task implements ITaskModule {
     // check process if it is been closed
     if (this.process[command]) {
       const { pid } = this.process[command];
-      terminate(pid, (err) => {
+      terminate(pid, err => {
         if (err) {
           const errMsg = err.toString();
           ctx.logger.error(errMsg);
@@ -145,6 +165,7 @@ export default class Task implements ITaskModule {
 
         ctx.socket.emit(`adapter.task.${eventName}`, {
           status: this.status[command],
+          isStdout: true,
           chunk: chalk.grey('Task has stopped'),
         });
       });
@@ -153,7 +174,41 @@ export default class Task implements ITaskModule {
     return this;
   }
 
-  public getStatus (args: ITaskParam) {
+  public logPipe(action: any) {
+    const maxTime = 300;
+
+    let queue = '';
+    let size = 0;
+    let time = Date.now();
+    let timeout;
+
+    const add = string => {
+      queue += string;
+      size++;
+
+      if (size === 50 || Date.now() > time + maxTime) {
+        flush();
+      } else {
+        clearTimeout(timeout);
+        timeout = setTimeout(flush, maxTime);
+      }
+    };
+
+    const flush = () => {
+      clearTimeout(timeout);
+      if (!size) return;
+      action(queue);
+      queue = '';
+      size = 0;
+      time = Date.now();
+    };
+
+    return {
+      add,
+    };
+  }
+
+  public getStatus(args: ITaskParam) {
     const { command } = args;
     return this.status[command];
   }
@@ -223,9 +278,8 @@ export default class Task implements ITaskModule {
     const devScriptArray = devScriptContent.split(' ');
     const cli = devScriptArray[0];
     const command = devScriptArray[1];
-
-    let newDevScriptContent =  `${cli} ${command}`;
-    Object.keys(args.options).forEach((key) => {
+    let newDevScriptContent = `${cli} ${command}`;
+    Object.keys(args.options).forEach(key => {
       newDevScriptContent += ` --${key}=${args.options[key]}`;
     });
 
