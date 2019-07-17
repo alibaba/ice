@@ -59,6 +59,8 @@ export default class Task implements ITaskModule {
       return this;
     }
 
+    this.installed = true;
+
     const { command } = args;
     if (this.process[command]) {
       throw new Error(i18n.format('baseAdapter.task.runing'));
