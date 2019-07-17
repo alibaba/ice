@@ -44,6 +44,7 @@ export default {
   'iceworks.setting.general.theme.dark': '深色',
   'iceworks.setting.general.theme.light': '浅色',
   'iceworks.setting.general.editor.title': '编辑器',
+  'iceworks.setting.general.npm.client.title': '包管理工具',
 
   // project
   'iceworks.project.title': '项目管理',
