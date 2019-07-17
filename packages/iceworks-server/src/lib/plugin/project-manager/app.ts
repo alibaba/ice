@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as os from 'os';
-import * as npmRunPath from 'npm-run-path';
+import * as shellPath from 'shell-path';
 import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
@@ -34,6 +34,11 @@ const DEFAULT_ADAPTER = [
   'adapter-vue-v1',
 ];
 
+interface ISimpleApp {
+  logger: any;
+  i18n: II18n;
+}
+
 class Project implements IProject {
   public readonly name: string;
 
@@ -49,11 +54,14 @@ class Project implements IProject {
 
   public adapterName: string;
 
-  constructor(folderPath: string) {
+  private app: ISimpleApp;
+
+  constructor(folderPath: string, app: ISimpleApp) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
     this.type = this.getType();
+    this.app = app;
   }
 
   public getType(): string {
@@ -71,25 +79,22 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    const env = npmRunPath.env();
     const PATH = pathKey();
 
-    const pathEnv = [
-      env[PATH],
-    ];
+    const env = process.env;
+    const envPath = shellPath.sync().split(path.delimiter);
 
-    // for electron 
+    this.app.logger.info('env.pah:', process.env[PATH]);
+
+    // for electron fallback
     const resourcesPath = process['resourcesPath']; // eslint-disable-line
     if (resourcesPath) {
-      pathEnv.push(path.join(resourcesPath, 'bin'));
+      envPath.push(path.join(resourcesPath, 'bin'));
     }
 
-    // fallback
-    if (os.type() === 'Darwin') {
-      pathEnv.push('/usr/local/bin');
-    }
+    env[PATH] = envPath.join(path.delimiter);
 
-    env[PATH] = pathEnv.join(path.delimiter);
+    this.app.logger.info('setEnv.pah:', env[PATH]);
 
     return env;
   }
@@ -105,7 +110,8 @@ class Project implements IProject {
     return mod && mod.__esModule ? mod.default : mod; // eslint-disable-line
   }
 
-  public async loadAdapter(i18n: II18n) {
+  public async loadAdapter() {
+    const i18n = this.app.i18n;
     // reset panels
     this.panels = [];
 
@@ -140,8 +146,8 @@ class Project implements IProject {
     return this.toJSON();
   }
 
-  public async reloadAdapter(i18n: II18n) {
-    const result = await this.loadAdapter(i18n);
+  public async reloadAdapter() {
+    const result = await this.loadAdapter();
     return result;
   }
 
@@ -230,25 +236,25 @@ interface ICreateParams {
 class ProjectManager extends EventEmitter {
   private projects;
 
-  private i18n: II18n;
+  private app: ISimpleApp;
 
-  constructor(i18n: II18n) {
+  constructor(app: ISimpleApp) {
     super();
-    this.i18n = i18n;
+    this.app = app;
   }
 
   private async refresh(): Promise<Project[]> {
     return await Promise.all(
       storage.get('projects').map(async (projectPath) => {
-        const project = new Project(projectPath);
-        await project.loadAdapter(this.i18n);
+        const project = new Project(projectPath, this.app);
+        await project.loadAdapter();
         return project;
       })
     );
   }
 
   public async ready() {
-    await this.i18n.readLocales();
+    await this.app.i18n.readLocales();
     this.projects = await this.refresh();
   }
 
@@ -290,8 +296,8 @@ class ProjectManager extends EventEmitter {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
-      const project = new Project(projectPath);
-      await project.loadAdapter(this.i18n);
+      const project = new Project(projectPath, this.app);
+      await project.loadAdapter();
       this.projects.push(project);
       projects.push(projectPath);
       storage.set('projects', projects);
@@ -444,7 +450,7 @@ class ProjectManager extends EventEmitter {
 
 export default (app) => {
   app.beforeStart(async () => {
-    app.projectManager = new ProjectManager(app.i18n);
+    app.projectManager = new ProjectManager({ i18n: app.i18n, logger: app.logger });
     await app.projectManager.ready();
   });
 };

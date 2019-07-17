@@ -12,7 +12,8 @@
     "electron": "5.0.1",
     "electron-builder": "^21.0.15",
     "gulp": "^3.9.1",
-    "ice-npm-utils": "^1.1.0"
+    "ice-npm-utils": "^1.1.0",
+    "path-exists": "^4.0.0"
   },
   "description": "iceworks desktop app",
   "dependencies": {
@@ -20,10 +21,10 @@
     "electron-is": "^3.0.0",
     "electron-log": "^3.0.6",
     "execa": "^1.0.0",
-    "npm": "^6.10.1",
-    "npm-run-path": "^3.1.0",
     "path-key": "^3.1.0",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.3",
+    "npm-run-path": "^3.1.0",
+    "shell-path": "^2.1.0"
   },
   "author": {
     "name": "Alibaba Group Holding Limited",
