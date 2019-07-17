@@ -264,12 +264,12 @@ const Project = ({ history, intl }) => {
         onOk={onCreateProjectModalOk}
       />
       <Modal
-        title={<FormattedMessage id="iceworks.project.create.init.title" />}
+        title={<FormattedMessage id="iceworks.project.install.dependencies.title" />}
         visible={onResetModal}
         onCancel={onResetModalCancel}
         onOk={onResetModalOk}
       >
-        <FormattedMessage id="iceworks.project.create.init.content" />
+        <FormattedMessage id="iceworks.project.install.dependencies.content" />
       </Modal>
 
       {/* Render Content */}
