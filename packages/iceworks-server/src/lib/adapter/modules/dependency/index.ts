@@ -4,6 +4,7 @@ import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
+import getStorageNpmClient from '../../../getStorageNpmClient';
 
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../../interface';
 
@@ -72,7 +73,7 @@ export default class Dependency implements IDependencyModule {
     let npmOutdated = [];
 
     try {
-      const npmClient = this.storage.get('npmClient');
+      const npmClient = await getStorageNpmClient(this.storage);
       await execa(npmClient, ['outdated', '--json', '--silent'], { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
       if (error.errno) {
@@ -88,12 +89,14 @@ export default class Dependency implements IDependencyModule {
 
   public async create(params: {dependency: ICreateDependencyParam; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependency, idDev } = params;
-    return (await install([dependency], this.storage.get('npmClient'), idDev, this.project, 'dependency', ctx))[0];
+    const npmClient = await getStorageNpmClient(this.storage);
+    return (await install([dependency], npmClient, idDev, this.project, 'dependency', ctx))[0];
   }
 
   public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; idDev?: boolean}, ctx: IContext): Promise<void> {
     const { dependencies, idDev } = params;
-    return await install(dependencies, this.storage.get('npmClient'), idDev, this.project, 'dependency', ctx);
+    const npmClient = await getStorageNpmClient(this.storage);
+    return await install(dependencies, npmClient, idDev, this.project, 'dependency', ctx);
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }> {
@@ -157,7 +160,7 @@ export default class Dependency implements IDependencyModule {
 
     socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.startInstall'));
 
-    const npmClient = this.storage.get('npmClient');
+    const npmClient = await getStorageNpmClient(this.storage);
     const childProcess = execa(npmClient, ['install'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
@@ -187,7 +190,7 @@ export default class Dependency implements IDependencyModule {
 
     socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
 
-    const npmClient = this.storage.get('npmClient');
+    const npmClient = await getStorageNpmClient(this.storage);
     const childProcess = execa(npmClient, ['update', packageName, '--silent'], {
       cwd: this.project.path,
       env: this.project.getEnv(),

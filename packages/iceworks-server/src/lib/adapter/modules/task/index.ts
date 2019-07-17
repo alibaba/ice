@@ -7,6 +7,7 @@ import * as os from 'os';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
+import getStorageNpmClient from '../../../getStorageNpmClient';
 import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
@@ -62,7 +63,7 @@ export default class Task implements ITaskModule {
       // create an ipc channel
       ipc.start();
     }
-    const npmClient = this.storage.get('npmClient');
+    const npmClient = await getStorageNpmClient(this.storage);
     const eventName = `start.data.${command}`;
     
     try {

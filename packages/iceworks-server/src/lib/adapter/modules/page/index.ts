@@ -12,6 +12,7 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
+import getStorageNpmClient from '../../../getStorageNpmClient';
 import getIceVersion from '../../utils/getIceVersion';
 import getTarballURLByMaterielSource from '../../../getTarballURLByMaterielSource';
 import { install as installDependency } from '../dependency';
@@ -95,7 +96,8 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], false, this.project, 'page', ctx);
+      const npmClient = await getStorageNpmClient(this.storage);
+      return await installDependency([{ package: packageName, version }], npmClient, false, this.project, 'page', ctx);
     }));
   }
 
