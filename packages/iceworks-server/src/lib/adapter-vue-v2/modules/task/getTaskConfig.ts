@@ -1,6 +1,6 @@
 import { IConfSchema, IContext, ITaskConf } from '../../../../interface';
 
-export default  (ctx: IContext): ITaskConf => {
+export default (ctx: IContext): ITaskConf => {
   const { i18n } = ctx;
 
   function addLabel(env: string, item): IConfSchema {
@@ -36,7 +36,7 @@ export default  (ctx: IContext): ITaskConf => {
       componentProps: {
         defaultChecked: false,
       },
-    }
+    },
   ];
 
   const build: any = [
@@ -61,9 +61,9 @@ export default  (ctx: IContext): ITaskConf => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true
+        defaultChecked: true,
       },
-    }
+    },
   ];
 
   const lint: any = [];

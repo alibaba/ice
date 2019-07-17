@@ -12,7 +12,7 @@ import {
   ITaskParam,
   IProject,
   IContext,
-  ITaskConf
+  ITaskConf,
 } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
@@ -35,8 +35,7 @@ export default class Task implements ITaskModule {
 
   public getTaskConfig: (ctx: IContext) => ITaskConf = getTaskConfig;
 
-
-  constructor(params: {project: IProject; storage: any }) {
+  constructor(params: { project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -71,12 +70,16 @@ export default class Task implements ITaskModule {
     }
 
     const eventName = `start.data.${command}`;
-    
+
     try {
       const isWindows = os.type() === 'Windows_NT';
       const findCommand = isWindows ? 'where' : 'which';
-      const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
-      const {stdout: npmPath} = await execa(findCommand, ['npm'], { env: projectEnv });
+      const { stdout: nodePath } = await execa(findCommand, ['node'], {
+        env: projectEnv,
+      });
+      const { stdout: npmPath } = await execa(findCommand, ['npm'], {
+        env: projectEnv,
+      });
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         chunk: `using node: ${nodePath}\nusing npm: ${npmPath}`,
@@ -93,7 +96,7 @@ export default class Task implements ITaskModule {
         stdio: ['inherit', 'pipe', 'pipe'],
         shell: true,
         env: Object.assign({}, projectEnv, env),
-      }
+      },
     );
 
     this.process[command].stdout.on('data', buffer => {
@@ -101,7 +104,7 @@ export default class Task implements ITaskModule {
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         stdType: 'stdout',
-        chunk: buffer.toString()
+        chunk: buffer.toString(),
       });
     });
 
@@ -109,7 +112,7 @@ export default class Task implements ITaskModule {
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         stdType: 'stderr',
-        chunk: queue
+        chunk: queue,
       });
     });
 
@@ -127,7 +130,7 @@ export default class Task implements ITaskModule {
       });
     });
 
-    this.process[command].on('error', (error) => {
+    this.process[command].on('error', error => {
       // emit adapter.task.error to show message
       const errMsg = error.toString();
       logger.error(errMsg);
@@ -156,7 +159,7 @@ export default class Task implements ITaskModule {
     // check process if it is been closed
     if (this.process[command]) {
       const { pid } = this.process[command];
-      terminate(pid, (err) => {
+      terminate(pid, err => {
         if (err) {
           const errMsg = err.toString();
           ctx.logger.error(errMsg);
@@ -175,11 +178,11 @@ export default class Task implements ITaskModule {
         });
       });
     }
-    
+
     return this;
   }
 
-  logPipe(action: any) {
+  public logPipe(action: any) {
     const maxTime = 300;
 
     let queue = '';
@@ -210,11 +213,11 @@ export default class Task implements ITaskModule {
 
     return {
       add,
-      flush
+      flush,
     };
   }
 
-  public getStatus (args: ITaskParam) {
+  public getStatus(args: ITaskParam) {
     const { command } = args;
     return this.status[command];
   }
@@ -284,8 +287,8 @@ export default class Task implements ITaskModule {
     const devScriptArray = devScriptContent.split(' ');
     const cli = devScriptArray[0];
     const command = devScriptArray[1];
-    let newDevScriptContent =  `${cli} ${command}`;
-    Object.keys(args.options).forEach((key) => {
+    let newDevScriptContent = `${cli} ${command}`;
+    Object.keys(args.options).forEach(key => {
       newDevScriptContent += ` --${key}=${args.options[key]}`;
     });
 

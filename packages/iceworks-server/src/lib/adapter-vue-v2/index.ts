@@ -8,13 +8,20 @@ export default async i18n => {
   const {
     Guide,
     Layout,
+    Page,
+    QuickDev,
+    QuickBuild,
     Git,
     OSS,
+    DEF,
     Todo,
     Dependency,
     Task: baseTask,
     Configuration: baseConfiguration,
+    Router,
+    Menu
   } = baseAdapter;
+
   const adapter = {
     Guide,
     Layout,
@@ -22,14 +29,20 @@ export default async i18n => {
     OSS,
     Todo,
     Dependency,
+    Page,
+    QuickDev,
+    QuickBuild,
+    DEF,
+    Router,
+    Menu,
     Task: {
       ...baseTask,
-      module: Task,
+      module: Task
     },
     Configuration: {
       ...baseConfiguration,
-      module: Configuration,
-    },
+      module: Configuration
+    }
   };
 
   const isAliInternal = await checkAliInternal();

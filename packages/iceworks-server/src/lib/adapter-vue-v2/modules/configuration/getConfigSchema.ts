@@ -28,16 +28,17 @@ export default (ctx: IContext): IConfSchema[] => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true
+        defaultChecked: true,
       },
-    }
+    },
   ];
 
+  return result.map(
+    (v): IConfSchema => {
+      v.label = i18n.format(`vueAdapter.configuration.${v.name}.label`);
+      v.description = i18n.format(`vueAdapter.configuration.${v.name}.des`);
 
-  return result.map((v): IConfSchema => {
-    v.label = i18n.format(`vueAdapter.configuration.${v.name}.label`);
-    v.description = i18n.format(`vueAdapter.configuration.${v.name}.des`);
-
-    return v;
-  });
+      return v;
+    },
+  );
 };
