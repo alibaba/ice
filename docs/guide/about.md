@@ -15,43 +15,15 @@ cover: https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png
 
 ## 生态
 
-|    项目         |    版本                                 |     文档    |   描述       |
+|    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化源码研发工作台|
-| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |物料开发工具，支持 React&Vue|
-| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置开发构建工具|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
-| [react-materials] | / | [docs][react-materials-docs] |由官方提供的丰富的高质量 React 物料|
-| [vue-materials] | / | [docs][vue-materials-docs] |由社区维护的高质量 Vue 物料|
-
-[iceworks]: https://github.com/alibaba/ice
-[ice-devtools]: https://github.com/ice-lab/ice-devtools
-[ice-scripts]: https://github.com/ice-lab/ice-scripts
-[icestore]: https://github.com/ice-lab/icestore
-[icestark]: https://github.com/ice-lab/icestark
-[react-materials]: https://github.com/ice-lab/react-materials
-[vue-materials]: https://github.com/ice-lab/vue-materials
-
-[iceworks-cli-status]: https://img.shields.io/npm/v/iceworks-cli.svg
-[ice-devtools-status]: https://img.shields.io/npm/v/ice-devtools.svg
-[ice-scripts-status]: https://img.shields.io/npm/v/ice-scripts.svg
-[icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
-[icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
-
-[iceworks-cli-package]: https://npmjs.com/package/iceworks-cli
-[ice-devtools-package]: https://npmjs.com/package/ice-devtools
-[ice-scripts-package]: https://npmjs.com/package/ice-scripts
-[icestore-package]: https://npmjs.com/package/@ice/store
-[icestark-package]: https://npmjs.com/package/@ice/stark
-
-[vue-materials-docs]: https://ice.work/block?type=vue
-[react-materials-docs]: https://ice.work/scaffold
-[iceworks-docs]: https://ice.work/docs/iceworks/about
-[ice-devtools-docs]: https://ice.work/docs/materials/about
-[ice-scripts-docs]: https://ice.work/docs/cli/about
-[icestark-docs]: https://github.com/ice-lab/icestark#icestark
-[icestore-docs]: https://github.com/ice-lab/icestore#icestore
+| [iceworks](https://github.com/alibaba/ice) | [![](https://img.shields.io/npm/v/iceworks-cli.svg)](https://npmjs.com/package/iceworks-cli) | [docs](https://ice.work/docs/iceworks/about) |基于物料的一站式可视化源码研发工作台|
+| [ice-devtools](https://github.com/ice-lab/ice-devtools) | [![](https://img.shields.io/npm/v/ice-devtools.svg)](https://npmjs.com/package/ice-devtools) | [docs](https://ice.work/docs/materials/about) |物料开发工具，支持 React&Vue|
+| [ice-scripts](https://github.com/ice-lab/ice-scripts) | [![](https://img.shields.io/npm/v/ice-scripts.svg)](https://npmjs.com/package/ice-scripts) | [docs](https://ice.work/docs/cli/about) |基于 webpack 的高可配置开发构建工具|
+| [icestore](https://github.com/ice-lab/icestore) | [![](https://img.shields.io/npm/v/@ice/store.svg)](https://npmjs.com/package/@ice/store) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
+| [icestark](https://github.com/ice-lab/icestark) | [![](https://img.shields.io/npm/v/@ice/stark.svg)](https://npmjs.com/package/@ice/stark) | [docs](https://github.com/ice-lab/icestark#icestark) |面向大型应用的微前端解决方案|
+| [react-materials](https://github.com/ice-lab/react-materials) | / | [docs](https://ice.work/scaffold) |由官方提供的丰富的高质量 React 物料|
+| [vue-materials](https://github.com/ice-lab/vue-materials) | / | [docs](https://ice.work/block?type=vue) |由社区维护的高质量 Vue 物料|
 
 ## 常见问题
 
