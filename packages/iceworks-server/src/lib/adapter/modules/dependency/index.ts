@@ -13,7 +13,7 @@ export const install = async (
   dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
 ): Promise<void> => {
   console.log('dependencies', dependencies);
-  socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
+  socket.emit(`adapter.${namespace}.install.data`, 'Installing dependencies...');
 
   const args = ['install', '--loglevel', 'silly', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
     dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
