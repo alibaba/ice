@@ -1,7 +1,7 @@
 ---
 title: 关于飞冰
 order: 1
-cover: https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png
+cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 ---
 
 > 简单而友好的前端研发体系
@@ -17,11 +17,11 @@ cover: https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png
 
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks](https://github.com/alibaba/ice) | [![](https://img.shields.io/npm/v/iceworks-cli.svg)](https://npmjs.com/package/iceworks-cli) | [docs](https://ice.work/docs/iceworks/about) |基于物料的一站式可视化源码研发工作台|
-| [ice-devtools](https://github.com/ice-lab/ice-devtools) | [![](https://img.shields.io/npm/v/ice-devtools.svg)](https://npmjs.com/package/ice-devtools) | [docs](https://ice.work/docs/materials/about) |物料开发工具，支持 React&Vue|
-| [ice-scripts](https://github.com/ice-lab/ice-scripts) | [![](https://img.shields.io/npm/v/ice-scripts.svg)](https://npmjs.com/package/ice-scripts) | [docs](https://ice.work/docs/cli/about) |基于 webpack 的高可配置开发构建工具|
-| [icestore](https://github.com/ice-lab/icestore) | [![](https://img.shields.io/npm/v/@ice/store.svg)](https://npmjs.com/package/@ice/store) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
-| [icestark](https://github.com/ice-lab/icestark) | [![](https://img.shields.io/npm/v/@ice/stark.svg)](https://npmjs.com/package/@ice/stark) | [docs](https://github.com/ice-lab/icestark#icestark) |面向大型应用的微前端解决方案|
+| [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks-cli.svg) | [docs](https://ice.work/docs/iceworks/about) |基于物料的一站式可视化源码研发工作台|
+| [ice-devtools](https://github.com/ice-lab/ice-devtools) | ![](https://img.shields.io/npm/v/ice-devtools.svg) | [docs](https://ice.work/docs/materials/about) |物料开发工具，支持 React&Vue|
+| [ice-scripts](https://github.com/ice-lab/ice-scripts) | ![](https://img.shields.io/npm/v/ice-scripts.svg) | [docs](https://ice.work/docs/cli/about) |基于 webpack 的高可配置开发构建工具|
+| [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
+| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://github.com/ice-lab/icestark#icestark) |面向大型应用的微前端解决方案|
 | [react-materials](https://github.com/ice-lab/react-materials) | / | [docs](https://ice.work/scaffold) |由官方提供的丰富的高质量 React 物料|
 | [vue-materials](https://github.com/ice-lab/vue-materials) | / | [docs](https://ice.work/block?type=vue) |由社区维护的高质量 Vue 物料|
 
