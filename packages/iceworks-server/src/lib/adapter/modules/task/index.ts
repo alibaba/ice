@@ -5,9 +5,15 @@ import * as path from 'path';
 import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
-import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
-import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
+import getNpmClient from '../../../getNpmClient';
+import {
+  ITaskModule,
+  ITaskParam,
+  IProject,
+  IContext,
+  ITaskConf,
+} from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
 const DEFAULT_PORT = '4444';
@@ -58,11 +64,8 @@ export default class Task implements ITaskModule {
     let env: object = {};
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
-
-      // create an ipc channel
-      ipc.start();
     }
-    const npmClient = this.storage.get('npmClient');
+    const npmClient = await getNpmClient();
     const eventName = `start.data.${command}`;
 
     try {
@@ -142,12 +145,6 @@ export default class Task implements ITaskModule {
   public async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
-
-    if (command === 'dev') {
-      // close the server and stop ipc serving
-      ipc.stop();
-    }
-
     // check process if it is been closed
     if (this.process[command]) {
       const { pid } = this.process[command];

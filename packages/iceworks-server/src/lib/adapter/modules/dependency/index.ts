@@ -4,19 +4,28 @@ import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
+import getNpmClient from '../../../getNpmClient';
 
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (
-  dependencies: ICreateDependencyParam[], npmClient: string, isDev: boolean, project: IProject, namespace: string, ctx: IContext
+  params: {
+    dependencies: ICreateDependencyParam[];
+    npmClient: string;
+    isDev: boolean;
+    project: IProject;
+    namespace: string;
+    ctx: IContext;
+  }
 ): Promise<void> => {
-  const { socket, logger } = ctx;
+  const { dependencies, npmClient, isDev, project, namespace, ctx } = params;
+  const { socket, i18n, logger } = ctx;
   logger.info('dependencies', dependencies);
-  socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
+  socket.emit(`adapter.${namespace}.install.data`, i18n.format('baseAdapter.dependency.reset.startInstall'));
 
-  const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
+  const args = ['install', '--loglevel', 'silly', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
     dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
   );
 
@@ -26,21 +35,26 @@ export const install = async (
     {
       cwd: project.path,
       env: project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     }
   );
 
-  childProcess.stdout.on('data', (buffer) => {
+  const listenFunc = (buffer) => {
     const text = buffer.toString();
     logger.info(`${namespace}.install.data:`, text);
 
     socket.emit(`adapter.${namespace}.install.data`, text);
-  });
+  };
+
+  childProcess.stdout.on('data', listenFunc)
+
+  childProcess.stderr.on('data', listenFunc);
 
   childProcess.on('error', (buffer) => {
     logger.info(`${namespace}.install.error:`, buffer.toString());
   });
 
-  childProcess.on('exit', (code, signal) => {
+  childProcess.on('exit', (code) => {
     socket.emit(`adapter.${namespace}.install.exit`, code);
   });
 };
@@ -72,8 +86,8 @@ export default class Dependency implements IDependencyModule {
     let npmOutdated = [];
 
     try {
-      const npmClient = this.storage.get('npmClient');
-      await execa(npmClient, ['outdated', '--json', '--silent'], { cwd: this.project.path, env: this.project.getEnv() });
+      const npmClient = await getNpmClient();
+      await execa(npmClient, ['outdated', '--json'], { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
       if (error.errno) {
         throw error;
@@ -86,14 +100,30 @@ export default class Dependency implements IDependencyModule {
     return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string }]) => ({ package: key, ...value }));
   }
 
-  public async create(params: {dependency: ICreateDependencyParam; idDev?: boolean}, ctx: IContext): Promise<void> {
-    const { dependency, idDev } = params;
-    return (await install([dependency], this.storage.get('npmClient'), idDev, this.project, 'dependency', ctx))[0];
+  public async create(params: {dependency: ICreateDependencyParam; isDev?: boolean}, ctx: IContext): Promise<void> {
+    const { dependency, isDev } = params;
+    const npmClient = await getNpmClient();
+    return (await install({
+      dependencies: [dependency],
+      npmClient,
+      isDev,
+      project: this.project,
+      namespace: 'dependency',
+      ctx,
+    }))[0];
   }
 
-  public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; idDev?: boolean}, ctx: IContext): Promise<void> {
-    const { dependencies, idDev } = params;
-    return await install(dependencies, this.storage.get('npmClient'), idDev, this.project, 'dependency', ctx);
+  public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; isDev?: boolean}, ctx: IContext): Promise<void> {
+    const { dependencies, isDev } = params;
+    const npmClient = await getNpmClient();
+    return await install({
+      dependencies,
+      npmClient,
+      isDev,
+      project: this.project,
+      namespace: 'dependency',
+      ctx,
+    });
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }> {
@@ -157,17 +187,23 @@ export default class Dependency implements IDependencyModule {
 
     socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.startInstall'));
 
-    const childProcess = execa('npm', ['install'], {
+    const npmClient = await getNpmClient();
+    const childProcess = execa(npmClient, ['install', '--loglevel', 'silly'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     });
 
-    childProcess.stdout.on('data', (buffer) => {
+    const listenFunc = (buffer) => {
       const text = buffer.toString();
       logger.info('reset.data:', text);
 
       socket.emit('adapter.dependency.reset.data', text);
-    });
+    }
+
+    childProcess.stdout.on('data', listenFunc);
+
+    childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
       logger.info('reset.error:', buffer.toString());
@@ -186,17 +222,23 @@ export default class Dependency implements IDependencyModule {
 
     socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
 
-    const childProcess = execa('npm', ['update', packageName, '--silent'], {
+    const npmClient = await getNpmClient();
+    const childProcess = execa(npmClient, ['update', packageName, '--loglevel', 'silly'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     });
 
-    childProcess.stdout.on('data', (buffer) => {
+    const listenFunc = (buffer) => {
       const text = buffer.toString();
       logger.info('upgrade.data:', text);
 
       socket.emit('adapter.dependency.upgrade.data', text);
-    });
+    }
+
+    childProcess.stdout.on('data', listenFunc);
+
+    childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
       logger.info('upgrade.error:', buffer.toString());

@@ -1,8 +1,7 @@
-
 import * as path from 'path';
-import { checkAliInternal } from 'ice-npm-utils';
 import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
+import getNpmClient from '../../../../lib/getNpmClient';
 
 export default (app) => {
   const { Controller, i18n } = app;
@@ -70,12 +69,7 @@ export default (app) => {
     }
 
     public async getNpmClient() {
-      let npmClient = storage.get('npmClient');
-      if (!npmClient) {
-        npmClient = await checkAliInternal() ? 'tnpm' : 'npm';
-        storage.set('npmClient', npmClient);
-      }
-      return npmClient;
+      return await getNpmClient();
     }
 
     public async setUser({ args }) {
