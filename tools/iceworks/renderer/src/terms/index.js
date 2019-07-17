@@ -66,7 +66,7 @@ class Terms {
       terms[cwd].fit();
 
       if (typeof terms[cwd].ptyProcess === 'undefined') {
-        this.new(terms[cwd], cwd);
+        this.newPty(terms[cwd], cwd);
       }
 
       setTimeout(() => {
