@@ -49,7 +49,7 @@ const schema = {
   },
   npmClient: {
     type: 'string',
-    default: 'npm',
+    default: '',
   },
   material: {
     type: 'array',
