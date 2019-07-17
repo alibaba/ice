@@ -6,7 +6,13 @@ import * as terminate from 'terminate';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
-import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
+import {
+  ITaskModule,
+  ITaskParam,
+  IProject,
+  IContext,
+  ITaskConf
+} from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
 const DEFAULT_PORT = '4444';
@@ -27,7 +33,7 @@ export default class Task implements ITaskModule {
 
   public getTaskConfig: (ctx: IContext) => ITaskConf = getTaskConfig;
 
-  constructor(params: {project: IProject; storage: any; }) {
+  constructor(params: { project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
@@ -41,9 +47,9 @@ export default class Task implements ITaskModule {
   async start(args: ITaskParam, ctx: IContext) {
     const { i18n } = ctx;
 
-    const nodeModulesPath = path.join(this.project.path, 'node_modules')
+    const nodeModulesPath = path.join(this.project.path, 'node_modules');
     const pathExists = await fs.pathExists(nodeModulesPath);
-    if(!pathExists) {
+    if (!pathExists) {
       throw new Error(i18n.format('baseAdapter.task.install.dependency'));
     }
 
@@ -68,25 +74,30 @@ export default class Task implements ITaskModule {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
         shell: true,
-        env: Object.assign({}, process.env, env),
+        env: Object.assign({}, process.env, env)
       }
     );
 
-    this.process[command].stdout.on('data', (buffer) => {
+    this.process[command].stdout.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        chunk: buffer.toString(),
+        stdType: 'stdout',
+        chunk: buffer.toString()
       });
     });
 
-    this.process[command].stderr.on('data', (buffer) => {
-      console.log(buffer.toString());
-      this.status[command] = TASK_STATUS_WORKING;
+    const errPipe = this.logPipe(queue => {
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        chunk: buffer.toString(),
+        stdType: 'stderr',
+        chunk: queue
       });
+    });
+
+    this.process[command].stderr.on('data', buffer => {
+      this.status[command] = TASK_STATUS_WORKING;
+      errPipe.add(buffer.toString());
     });
 
     this.process[command].on('close', () => {
@@ -95,12 +106,13 @@ export default class Task implements ITaskModule {
         this.status[command] = TASK_STATUS_STOP;
         ctx.socket.emit(`adapter.task.${eventName}`, {
           status: this.status[command],
-          chunk: chalk.grey('Task has stopped'),
+          stdType: 'stdout',
+          chunk: chalk.grey('Task has stopped')
         });
       }
     });
 
-    this.process[command].on('error', (buffer) => {
+    this.process[command].on('error', buffer => {
       throw new Error(buffer.toString());
     });
 
@@ -121,7 +133,7 @@ export default class Task implements ITaskModule {
     }
 
     const { pid } = this.process[command];
-    terminate(pid, (err) => {
+    terminate(pid, err => {
       if (err) {
         throw err;
       }
@@ -131,14 +143,50 @@ export default class Task implements ITaskModule {
 
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        chunk: chalk.grey('Task has stopped'),
+        stdType: 'stdout',
+        chunk: chalk.grey('Task has stopped')
       });
     });
 
     return this;
   }
 
-  getStatus (args: ITaskParam) {
+  logPipe(action: any) {
+    const maxTime = 300;
+
+    let queue = '';
+    let size = 0;
+    let time = Date.now();
+    let timeout;
+
+    const add = string => {
+      queue += string;
+      size++;
+
+      if (size === 50 || Date.now() > time + maxTime) {
+        flush();
+      } else {
+        clearTimeout(timeout);
+        timeout = setTimeout(flush, maxTime);
+      }
+    };
+
+    const flush = () => {
+      clearTimeout(timeout);
+      if (!size) return;
+      action(queue);
+      queue = '';
+      size = 0;
+      time = Date.now();
+    };
+
+    return {
+      add,
+      flush
+    };
+  }
+
+  getStatus(args: ITaskParam) {
     const { command } = args;
     return this.status[command];
   }
@@ -153,7 +201,7 @@ export default class Task implements ITaskModule {
       case 'dev':
         return this.getDevConf(taskConfig);
       case 'build':
-       return getCLIConf(this.cliConfPath, taskConfig.build);
+        return getCLIConf(this.cliConfPath, taskConfig.build);
       case 'lint':
         // @TODO support lint configuration
         return null;
@@ -177,11 +225,11 @@ export default class Task implements ITaskModule {
     }
   }
 
-/**
- * get dev configuration
- * merge the user configuration to return to the new configuration
- * @param projectPath
- */
+  /**
+   * get dev configuration
+   * merge the user configuration to return to the new configuration
+   * @param projectPath
+   */
   private getDevConf(taskConfig: ITaskConf) {
     const pkgContent = this.project.getPackageJSON();
     const devScriptContent = pkgContent.scripts.start;
@@ -209,9 +257,10 @@ export default class Task implements ITaskModule {
     const cli = devScriptArray[0];
     const command = devScriptArray[1];
 
-    let newDevScriptContent =  `${cli} ${command}`;
-    Object.keys(args.options).forEach((key) => {
-      newDevScriptContent = newDevScriptContent + ` --${key}=${args.options[key]}`;
+    let newDevScriptContent = `${cli} ${command}`;
+    Object.keys(args.options).forEach(key => {
+      newDevScriptContent =
+        newDevScriptContent + ` --${key}=${args.options[key]}`;
     });
 
     pkgContent.scripts.start = newDevScriptContent;

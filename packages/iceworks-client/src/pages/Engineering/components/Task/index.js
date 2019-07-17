@@ -33,14 +33,16 @@ const Task = ({ history, intl }) => {
   const { termTheme } = useTermTheme();
 
   function writeLog(taskType) {
-    const msg = intl.formatMessage({ id: `iceworks.task.${taskType}.start.msg` });
+    const msg = intl.formatMessage({
+      id: `iceworks.task.${taskType}.start.msg`,
+    });
     const term = termManager.find('globalTerminal');
     term.writeLog(msg);
   }
 
-  function writeChunk(data) {
+  function writeChunk(data, stdtype) {
     const term = termManager.find(id);
-    term.writeChunk(data);
+    term.writeChunk(data, stdtype === 'stdout');
   }
 
   async function onGetConf() {
@@ -87,7 +89,11 @@ const Task = ({ history, intl }) => {
     onGetConf();
   }, []);
 
-  const { isWorking, onStart, onStop } = useTask({ type, writeLog, writeChunk });
+  const { isWorking, onStart, onStop } = useTask({
+    type,
+    writeLog,
+    writeChunk,
+  });
 
   return (
     <Card
@@ -108,7 +114,13 @@ const Task = ({ history, intl }) => {
         <XtermTerminal
           id={id}
           name={projectStore.dataSource.name}
-          options={{ theme: termTheme }}
+          options={{
+            theme: termTheme,
+            scrollback: 5000,
+            disableStdin: true,
+            useFlowControl: true,
+          }}
+          autoSize
         />
       </div>
 

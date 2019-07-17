@@ -40,7 +40,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     useSocket(eventName, (data) => {
       setStatus(type, data.status);
       if (writeChunk) {
-        writeChunk(data.chunk);
+        writeChunk(data.chunk, data.stdType === 'stdout');
       }
     }, [status]);
   }
