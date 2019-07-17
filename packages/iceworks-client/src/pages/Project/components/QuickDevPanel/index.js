@@ -11,7 +11,7 @@ const QuickDevPanel = ({ intl, title, description }) => {
     writeGlobalLog(msg);
   }
 
-  const { isWorking, onStart, onStop } = useTask({ type: 'dev', writeLog });
+  const task = useTask({ type: 'dev', writeLog });
 
   return (
     <TaskItem
@@ -19,9 +19,7 @@ const QuickDevPanel = ({ intl, title, description }) => {
       desc={description}
       icon="dev"
       path="/task/dev"
-      isWorking={isWorking}
-      onStart={onStart}
-      onStop={onStop}
+      {...task}
     />
   );
 };

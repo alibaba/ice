@@ -3,7 +3,9 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as mv from 'mv';
+import * as os from 'os';
+import * as npmRunPath from 'npm-run-path';
+import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
@@ -30,6 +32,7 @@ const DEFAULT_ADAPTER = [
   'adapter-react-v2',
   'adapter-react-v3',
   'adapter-vue-v1',
+  'adapter-vue-v2',
 ];
 
 class Project implements IProject {
@@ -69,7 +72,27 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    return process.env;
+    const env = npmRunPath.env();
+    const PATH = pathKey();
+
+    const pathEnv = [
+      env[PATH],
+    ];
+
+    // for electron 
+    const resourcesPath = process['resourcesPath']; // eslint-disable-line
+    if (resourcesPath) {
+      pathEnv.push(path.join(resourcesPath, 'bin'));
+    }
+
+    // fallback
+    if (os.type() === 'Darwin') {
+      pathEnv.push('/usr/local/bin');
+    }
+
+    env[PATH] = pathEnv.join(path.delimiter);
+
+    return env;
   }
 
   private interopRequire(id) {
@@ -385,9 +408,16 @@ class ProjectManager extends EventEmitter {
   public async deleteProject(params: { projectPath: string; deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);
+
+    // remove project at storage
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
 
+    // remove project panel settings
+    const newPanelSettings = storage.get('panelSettings').filter(({projectPath: project}) => project !== projectPath);
+    storage.set('panelSettings', newPanelSettings);
+
+    // delete project files
     if (deleteFiles) {
       try {
         await trash(projectPath);

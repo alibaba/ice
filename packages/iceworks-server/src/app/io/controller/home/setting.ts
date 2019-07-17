@@ -1,7 +1,7 @@
-
 import * as path from 'path';
 import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
+import getNpmClient from '../../../../lib/getNpmClient';
 
 export default (app) => {
   const { Controller, i18n } = app;
@@ -62,6 +62,14 @@ export default (app) => {
 
     public async getEditor() {
       return storage.get('editor');
+    }
+
+    public async setNpmClient(ctx) {
+      storage.set('npmClient', ctx.args.npmClient);
+    }
+
+    public async getNpmClient() {
+      return await getNpmClient();
     }
 
     public async setUser({ args }) {

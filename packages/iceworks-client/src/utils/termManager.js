@@ -28,17 +28,17 @@ Terminal.applyAddon(fit);
 Terminal.applyAddon(webLinks);
 
 // format and write the text content of the terminal
-const writeChunkFn = (term) => {
+const writeChunkFn = term => {
   const writeChunk = (data, ln = true) => {
     if (data && data.indexOf('\n') !== -1) {
-      data.split('\n').forEach((value) => writeChunk(value));
+      data.split('\n').forEach(value => writeChunk(value));
       return;
     }
     if (typeof data === 'string') {
       if (ln) {
-        term.writeln(` ${data}`);
+        term.writeln(data);
       } else {
-        term.write(` ${data}`);
+        term.write(data);
       }
     } else {
       term.writeln('');

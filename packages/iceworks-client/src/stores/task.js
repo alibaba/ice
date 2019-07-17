@@ -12,7 +12,8 @@ export default {
   },
 
   async start(type) {
-    await socket.emit('adapter.task.start', { command: type });
+    const { installed } = await socket.emit('adapter.task.start', { command: type });
+    this.dataSource.installed = installed;
   },
 
   async stop(type) {
