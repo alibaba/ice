@@ -5,6 +5,8 @@ import * as path from 'path';
 import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
+import * as pathKey from 'path-key';
+import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
 import getNpmClient from '../../../getNpmClient';
 import {
@@ -84,7 +86,7 @@ export default class Task implements ITaskModule {
       });
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        chunk: `using node: ${nodePath}\nusing ${npmClient}: ${npmPath}`,
+        chunk: `using node: ${nodePath}\nusing npm: ${npmPath}\nprocess.env.PATH: ${projectEnv[pathKey()]}\n`,
       });
     } catch (error) {
       // ignore error
