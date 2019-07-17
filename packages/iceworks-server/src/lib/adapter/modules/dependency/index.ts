@@ -157,7 +157,8 @@ export default class Dependency implements IDependencyModule {
 
     socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.startInstall'));
 
-    const childProcess = execa('npm', ['install'], {
+    const npmClient = this.storage.get('npmClient');
+    const childProcess = execa(npmClient, ['install'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
     });
@@ -186,7 +187,8 @@ export default class Dependency implements IDependencyModule {
 
     socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
 
-    const childProcess = execa('npm', ['update', packageName, '--silent'], {
+    const npmClient = this.storage.get('npmClient');
+    const childProcess = execa(npmClient, ['update', packageName, '--silent'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
     });
