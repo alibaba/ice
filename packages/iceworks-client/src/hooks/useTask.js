@@ -44,6 +44,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
         writeChunk(data.chunk, data.stdType === 'stdout');
       }
     }, [status]);
+  }
 
   useEffect(() => {
     onGetStatus();
