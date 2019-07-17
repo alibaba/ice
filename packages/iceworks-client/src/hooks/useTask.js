@@ -40,7 +40,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   function taskEventListener(data) {
     setStatus(type, data.status);
     if (writeChunk) {
-      writeChunk(data.chunk, data.stdType === 'stdout');
+      writeChunk(data.chunk, data.isStdout);
     }
   }
 

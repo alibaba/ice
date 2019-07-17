@@ -13,7 +13,6 @@ export default async i18n => {
     QuickBuild,
     Git,
     OSS,
-    DEF,
     Todo,
     Dependency,
     Task: baseTask,
@@ -32,7 +31,6 @@ export default async i18n => {
     Page,
     QuickDev,
     QuickBuild,
-    DEF,
     Router,
     Menu,
     Task: {
@@ -44,14 +42,6 @@ export default async i18n => {
       module: Configuration,
     },
   };
-
-  const isAliInternal = await checkAliInternal();
-  const filteredPanels = isAliInternal ? ['OSS'] : ['DEF'];
-  Object.keys(adapter).forEach(name => {
-    if (filteredPanels.indexOf(name) > -1) {
-      delete adapter[name];
-    }
-  });
 
   return adapter;
 };

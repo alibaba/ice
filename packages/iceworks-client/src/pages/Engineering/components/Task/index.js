@@ -42,7 +42,7 @@ const Task = ({ history, intl }) => {
 
   function writeChunk(data, stdtype) {
     const term = termManager.find(id);
-    term.writeChunk(data, stdtype === 'stdout');
+    term.writeChunk(data, isStdout);
   }
 
   async function onGetConf() {

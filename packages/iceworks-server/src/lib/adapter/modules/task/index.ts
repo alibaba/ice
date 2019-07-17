@@ -103,7 +103,7 @@ export default class Task implements ITaskModule {
       this.status[command] = TASK_STATUS_WORKING;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        stdType: 'stdout',
+        isStdout: true,
         chunk: buffer.toString(),
       });
     });
@@ -111,7 +111,7 @@ export default class Task implements ITaskModule {
     const errPipe = this.logPipe(queue => {
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        stdType: 'stderr',
+        isStdout: false,
         chunk: queue,
       });
     });
@@ -126,6 +126,7 @@ export default class Task implements ITaskModule {
       this.status[command] = TASK_STATUS_STOP;
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
+        isStdout: true,
         chunk: chalk.grey('Task has stopped'),
       });
     });
@@ -136,7 +137,7 @@ export default class Task implements ITaskModule {
       logger.error(errMsg);
       ctx.socket.emit('adapter.task.error', {
         message: errMsg,
-        stdType: 'stdout',
+        isStdout: true,
       });
     });
 
@@ -173,7 +174,7 @@ export default class Task implements ITaskModule {
 
         ctx.socket.emit(`adapter.task.${eventName}`, {
           status: this.status[command],
-          stdType: 'stdout',
+          isStdout: true,
           chunk: chalk.grey('Task has stopped'),
         });
       });
