@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useSocket from '@hooks/useSocket';
+import useDependency from '@hooks/useDependency';
 import showMessage from '@utils/showMessage';
 import stores from '@stores';
 
@@ -9,12 +10,20 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   const status = (dataSource[type] && dataSource[type].status) || 'stop';
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
+  const {
+    reset: installDependency,
+    onResetModal: installDependencyVisible,
+    setResetModal: setInstallDependencyVisible,
+  } = useDependency(false, writeChunk, false);
   const taskErrorEventName = `adapter.task.error`;
 
   async function onStart() {
     try {
       writeLog(type);
       await taskStore.start(type);
+      if (!taskStore.dataSource.installed) {
+        setInstallDependencyVisible(true);
+      }
     } catch (error) {
       showMessage(error.message);
     }
@@ -35,6 +44,15 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     } catch (error) {
       showMessage(error.message);
     }
+  }
+
+  async function onInstallDependencyOk() {
+    await installDependency();
+    setInstallDependencyVisible(false);
+  }
+
+  function onInstallDependencyCancel() {
+    setInstallDependencyVisible(false);
   }
 
   function taskEventListener(data) {
@@ -61,6 +79,9 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     isWorking: status === 'working',
     onStart,
     onStop,
+    installDependencyVisible,
+    onInstallDependencyCancel,
+    onInstallDependencyOk,
   };
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import showMessage from '@utils/showMessage';
 import useModal from '@hooks/useModal';
 import useTask from '@hooks/useTask';
@@ -9,6 +9,7 @@ import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
 import { withErrorBoundary } from '@components/ErrorBoundary';
+import Modal from '@components/Modal';
 import termManager from '@utils/termManager';
 import logger from '@utils/logger';
 import stores from '@stores';
@@ -87,7 +88,14 @@ const Task = ({ history, intl }) => {
     onGetConf();
   }, []);
 
-  const { isWorking, onStart, onStop } = useTask({ type, writeLog, writeChunk });
+  const {
+    isWorking,
+    onStart,
+    onStop,
+    installDependencyVisible,
+    onInstallDependencyCancel,
+    onInstallDependencyOk,
+  } = useTask({ type, writeLog, writeChunk });
 
   return (
     <Card
@@ -118,6 +126,15 @@ const Task = ({ history, intl }) => {
         toggleModal={toggleModal}
         onConfirm={onConfirm}
       />
+
+      <Modal
+        title={<FormattedMessage id="iceworks.project.install.dependencies.title" />}
+        visible={installDependencyVisible}
+        onCancel={onInstallDependencyCancel}
+        onOk={onInstallDependencyOk}
+      >
+        <FormattedMessage id="iceworks.project.install.dependencies.content" />
+      </Modal>
     </Card>
   );
 };
