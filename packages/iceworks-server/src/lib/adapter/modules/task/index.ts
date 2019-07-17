@@ -7,13 +7,7 @@ import * as os from 'os';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
-import {
-  ITaskModule,
-  ITaskParam,
-  IProject,
-  IContext,
-  ITaskConf,
-} from '../../../../interface';
+import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
 const DEFAULT_PORT = '4444';

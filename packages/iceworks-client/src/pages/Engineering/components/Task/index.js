@@ -40,7 +40,7 @@ const Task = ({ history, intl }) => {
     term.writeLog(msg);
   }
 
-  function writeChunk(data, stdtype) {
+  function writeChunk(data, isStdout) {
     const term = termManager.find(id);
     term.writeChunk(data, isStdout);
   }
