@@ -261,7 +261,7 @@ export default {
   'iceworks.material.sourceUrl': 'Source URL',
   'iceworks.material.noData': 'No Data',
   'iceworks.material.customMaterial': 'Custom Material',
-  'iceworks.material.officialMaterial': 'Official Material',
+  'iceworks.material.officialMaterial': 'Official recommended material',
   'iceworks.material.name': 'Material name',
   'iceworks.material.delete': 'Delete material',
   'iceworks.material.deleteConfirm': 'Are you sure delete material?',
