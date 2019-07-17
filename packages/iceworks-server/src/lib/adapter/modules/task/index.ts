@@ -48,11 +48,12 @@ export default class Task implements ITaskModule {
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules')
     const pathExists = await fs.pathExists(nodeModulesPath);
-    this.installed = true;
     if(!pathExists) {
       this.installed = false;
       return this;
     }
+
+    this.installed = true;
 
     const { command } = args;
     if (this.process[command]) {
