@@ -4,7 +4,6 @@ import * as detectPort from 'detect-port';
 import * as path from 'path';
 import * as terminate from 'terminate';
 import chalk from 'chalk';
-import * as ipc from './ipc';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
 import { ITaskModule, ITaskParam, IProject, IContext, ITaskConf } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
@@ -56,9 +55,6 @@ export default class Task implements ITaskModule {
     let env: object = {};
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
-
-      // create an ipc channel
-      ipc.start();
     }
 
     const eventName = `start.data.${command}`;
@@ -110,11 +106,6 @@ export default class Task implements ITaskModule {
   public async stop(args: ITaskParam, ctx: IContext) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
-
-    if (command === 'dev') {
-      // close the server and stop ipc serving
-      ipc.stop();
-    }
 
     const { pid } = this.process[command];
     terminate(pid, (err) => {
