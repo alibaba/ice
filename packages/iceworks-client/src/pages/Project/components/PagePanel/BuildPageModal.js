@@ -51,7 +51,6 @@ const MaterialSelect = ({ resources, onSelect }) => {
 
   async function fetchMaterialBlocks(url) {
     const { blocks } = await socket.emit('material.index.getOne', { url });
-    console.log(blocks, url)
     return blocks;
   }
 
