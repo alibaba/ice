@@ -9,6 +9,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   const status = (dataSource[type] && dataSource[type].status) || 'stop';
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
+  const taskErrorEventName = `adapter.task.error`;
 
   async function onStart() {
     try {
@@ -52,6 +53,9 @@ const useTask = ({ type, writeLog, writeChunk }) => {
 
   // listen stop event handle
   useSocket(stopEventName, data => taskEventListener(data), [status]);
+
+  // listen event error
+  useSocket(taskErrorEventName, error => showMessage(error.message));
 
   return {
     isWorking: status === 'working',

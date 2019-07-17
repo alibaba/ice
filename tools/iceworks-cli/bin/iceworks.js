@@ -1,24 +1,22 @@
 #!/usr/bin/env node
-
 const chalk = require('chalk');
 const program = require('commander');
-const pkgData = require('../package');
+const semver = require('semver');
+const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
-async function check() {
-  await checkVersion();
-}
+// check node version
+checkNodeVersion();
 
-// check node version and iceworks version
-check();
+// check iceworks version
+checkIceworksVersion();
 
-program.version(pkgData.version).usage('<command> [options]');
+program.version(packageConfig.version).usage('<command> [options]');
 
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
   program.outputHelp();
-  // eslint-disable-next-line prefer-template
-  console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
+  console.log(` chalk.red('Unknown command ${chalk.yellow(cmd)}.`);
   console.log();
 });
 
@@ -62,9 +60,7 @@ program
 program.on('--help', () => {
   console.log();
   console.log(
-    `  Run ${chalk.cyan(
-      `iceworks <command> --help`
-    )} for detailed usage of given command.`
+    `  Run ${chalk.cyan('iceworks <command> --help')} for detailed usage of given command.`
   );
   console.log();
 });
@@ -102,4 +98,28 @@ function cleanArgs(cmd) {
     }
   }
   return args;
+}
+
+function checkNodeVersion() {
+  if (!semver.satisfies(process.version, packageConfig.engines.node)) {
+    console.log();
+    console.log(
+      chalk.red(
+        `You must upgrade node to ${packageConfig.engines.node} to use iceworks`
+      )
+    );
+    console.log();
+    process.exit(1);
+  }
+}
+
+async function checkIceworksVersion() {
+  const packageName = 'iceworks';
+  const packageVersion = packageConfig.version;
+  const latestVersion = await checkVersion(packageName, packageVersion);
+  if (latestVersion) {
+    console.log(chalk.yellow('\n  A newer version of iceworks-cli is available.\n'));
+    console.log(`  latest:     + ${chalk.green(latestVersion)}`);
+    console.log(`  installed:  + ${chalk.red(packageVersion)} \n`);
+  }
 }

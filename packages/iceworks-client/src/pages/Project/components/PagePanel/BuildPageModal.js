@@ -210,8 +210,7 @@ const BuildPageModal = ({
   const { resource } = dataSource;
   const materialSources = resource.official.concat(resource.custom);
 
-  async function onCloseSaveModal() {
-    await progress.hide();
+  function onCloseSaveModal() {
     setSaveModal(false);
   }
 
@@ -232,12 +231,10 @@ const BuildPageModal = ({
   }
 
   async function onSaveOk(data) {
-    await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
     await onOk({
       blocks: selectedBlocks,
       ...data,
     });
-    await progress.hide();
     setSaveModal(false);
   }
 
