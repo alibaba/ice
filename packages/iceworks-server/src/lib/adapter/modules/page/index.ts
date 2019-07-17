@@ -12,6 +12,7 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
+import getNpmClient from '../../../getNpmClient';
 import getIceVersion from '../../utils/getIceVersion';
 import getTarballURLByMaterielSource from '../../../getTarballURLByMaterielSource';
 import { install as installDependency } from '../dependency';
@@ -95,7 +96,15 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: packageName, version }], false, this.project, ctx.socket, 'page');
+      const npmClient = await getNpmClient();
+      return await installDependency({
+        dependencies: [{ package: packageName, version }],
+        npmClient,
+        isDev: false,
+        project: this.project,
+        namespace: 'page',
+        ctx,
+      });
     }));
   }
 
@@ -127,16 +136,16 @@ export default class Page implements IPageModule {
         blockTempDir,
         tarballURL
       );
-
-      await mkdirpAsync(blockDir);
-      await mvAsync(path.join(blockTempDir, 'src'), blockDir);
     } catch (error) {
-      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName});
+      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName, tarballURL});
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName});
+        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName, tarballURL});
       }
       throw error;
     }
+
+    await mkdirpAsync(blockDir);
+    await mvAsync(path.join(blockTempDir, 'src'), blockDir);
   }
 
   public async getAll(): Promise<IPage[]> {

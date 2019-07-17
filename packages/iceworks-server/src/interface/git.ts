@@ -1,4 +1,4 @@
-import { IBaseModule } from './base';
+import { IBaseModule, IContext } from './base';
 
 export interface IUnstagedFile {
   type: string;
@@ -36,7 +36,7 @@ export interface IGitGetLog {
 }
 
 export interface IGitModule extends IBaseModule {
-  getStatus(): Promise<IGitGetStatus>;
+  getStatus(params: any, ctx: IContext): Promise<IGitGetStatus>;
   init(params: {remoteUrl: string}): Promise<void>;
   setRemote(params: {remoteUrl: string}): Promise<void>;
   checkoutLocalBranch(params: {name: string}): Promise<void>;
