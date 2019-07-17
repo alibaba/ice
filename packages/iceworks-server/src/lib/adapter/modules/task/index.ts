@@ -68,8 +68,12 @@ export default class Task implements ITaskModule {
     try {
       const isWindows = os.type() === 'Windows_NT';
       const findCommand = isWindows ? 'where' : 'which';
-      const {stdout: nodePath} = await execa(findCommand, ['node'], { env: projectEnv });
-      const {stdout: npmPath} = await execa(findCommand, [npmClient], { env: projectEnv });
+      const { stdout: nodePath } = await execa(findCommand, ['node'], {
+        env: projectEnv,
+      });
+      const { stdout: npmPath } = await execa(findCommand, [npmClient], {
+        env: projectEnv,
+      });
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         chunk: `using node: ${nodePath}\nusing ${npmClient}: ${npmPath}`,
@@ -84,7 +88,6 @@ export default class Task implements ITaskModule {
       {
         cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
-        shell: true,
         env: Object.assign({}, projectEnv, env),
       },
     );
@@ -98,17 +101,15 @@ export default class Task implements ITaskModule {
       });
     });
 
-    const errPipe = this.logPipe(queue => {
-      ctx.socket.emit(`adapter.task.${eventName}`, {
-        status: this.status[command],
-        isStdout: false,
-        chunk: queue,
-      });
-    });
-
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      errPipe.add(buffer.toString());
+      this.logPipe(queue => {
+        ctx.socket.emit(`adapter.task.${eventName}`, {
+          status: this.status[command],
+          isStdout: false,
+          chunk: queue,
+        });
+      }).add(buffer.toString());
     });
 
     this.process[command].on('close', () => {
@@ -204,7 +205,6 @@ export default class Task implements ITaskModule {
 
     return {
       add,
-      flush,
     };
   }
 
