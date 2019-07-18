@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.0.0-beta.6
+## 3.0.0-beta.7
 
 - [fix] fixed node environment variable in production
 - [fix] dependency panel optimization
