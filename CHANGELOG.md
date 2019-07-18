@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.0-beta.7
+
+- [fix] fixed node environment variable in production
+- [fix] dependency panel optimization
+- [fix] theme text change
+
 ## 3.0.0-beta.6
 
 - [feat] support npm client select #2469

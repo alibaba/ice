@@ -97,6 +97,12 @@ class Project implements IProject {
 
     this.app.logger.info('setEnv.pah:', env[PATH]);
 
+    // reset NODE_ENV
+    // in egg.js: Generally, before deploying the application, dependencies will be installed with NODE_ENV=production or --production
+    // which will exclude devDependencies because those used in development may increase the size of package released or even create pitfalls that you never expect.
+    // Refs: https://github.com/eggjs/egg-scripts/blob/master/lib/cmd/start.js#L109
+    env.NODE_ENV = 'development'
+
     return env;
   }
 
@@ -319,7 +325,7 @@ class ProjectManager extends EventEmitter {
 
     // check read and write
     try {
-      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // eslint-disable-line  
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // eslint-disable-line
     } catch (error) {
       error.message = '当前路径没有读写权限，请更换项目路径';
       throw error;
@@ -349,7 +355,7 @@ class ProjectManager extends EventEmitter {
   private async generateAbcFile(projectDir: string, iceScriptsVersion: string) {
     // '^2.0.0' -> true
     const latestVersion = /^\^2\./.test(iceScriptsVersion);
-  
+
     const abcData = {
       type: latestVersion ? 'ice-scripts' : 'iceworks',
       builder: latestVersion ? '@ali/builder-ice-scripts' : '@ali/builder-iceworks',

@@ -84,6 +84,7 @@ const GlobalBar = ({ project, intl }) => {
   });
 
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
+  const themeKey = themeValue === 'dark' ? 'light' : 'dark';
 
   return project.name ? (
     <div className={styles.container}>
@@ -123,7 +124,7 @@ const GlobalBar = ({ project, intl }) => {
           </div>
           <div className={styles.item} onClick={handleTheme}>
             <Icon type="zhuti" className={styles.icon} size="small" />
-            <FormattedMessage id={`iceworks.global.bar.theme.${themeValue}`} />
+            <FormattedMessage id={`iceworks.global.bar.theme.${themeKey}`} />
           </div>
           <Balloon
             align="tl"
