@@ -54,7 +54,7 @@ const schema = {
   },
   registry: {
     type: 'string',
-    default: 'http://registry.npmjs.com',
+    default: 'https://registry.npm.taobao.org',
   },
   material: {
     type: 'array',
