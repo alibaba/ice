@@ -3,7 +3,7 @@ import * as fsExtra from 'fs-extra';
 import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as execa from 'execa';
-import * as latestVersion from 'latest-version';
+// import * as latestVersion from 'latest-version';
 import getNpmClient from '../../../getNpmClient';
 
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../../interface';
@@ -81,7 +81,6 @@ export default class Dependency implements IDependencyModule {
     return version;
   }
 
-  // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
     let npmOutdated = [];
 
@@ -142,7 +141,9 @@ export default class Dependency implements IDependencyModule {
           specifyVersion,
           dev,
           localVersion,
-          latestVersion: await latestVersion(packageName),
+
+          // TODO get latestVersion is so slow, so we disable it now
+          // latestVersion: await latestVersion(packageName),
         };
       }));
     };
@@ -157,7 +158,8 @@ export default class Dependency implements IDependencyModule {
       devDependencies = await getAll(packageDevDependencies, true);
     }
 
-    const npmOutdated: INpmOutdatedData[] = await this.getNpmOutdated();
+    // TODO getNpmOutdated is so slow, so we disable it now
+    const npmOutdated: INpmOutdatedData[] = []; // await this.getNpmOutdated();
     npmOutdated.forEach(({ package: _outPackage, wanted }: INpmOutdatedData) => {
       const dependency = dependencies.find(({ package: packageName }) => packageName === _outPackage);
       if (dependency && dependency.localVersion && dependency.localVersion !== wanted) {
