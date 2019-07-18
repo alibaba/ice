@@ -96,10 +96,11 @@ export default class Page implements IPageModule {
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      const npmClient = await getNpmClient();
+      const [npmClient, registry] = await getNpmClient();
       return await installDependency({
         dependencies: [{ package: packageName, version }],
         npmClient,
+        registry,
         isDev: false,
         project: this.project,
         namespace: 'page',

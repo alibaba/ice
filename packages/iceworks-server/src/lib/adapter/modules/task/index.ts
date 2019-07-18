@@ -70,7 +70,7 @@ export default class Task implements ITaskModule {
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
     }
-    const npmClient = await getNpmClient();
+    const [npmClient] = await getNpmClient();
     const eventName = `start.data.${command}`;
 
     try {
@@ -89,7 +89,6 @@ export default class Task implements ITaskModule {
     } catch (error) {
       // ignore error
     }
-
     this.process[command] = execa(
       npmClient,
       ['run', command === 'dev' ? 'start' : command],

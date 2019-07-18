@@ -45,6 +45,8 @@ export default {
   'iceworks.setting.general.theme.light': '浅色',
   'iceworks.setting.general.editor.title': '编辑器',
   'iceworks.setting.general.npm.client.title': '包管理工具',
+  'iceworks.setting.general.custom.registry': '自定义',
+  'iceworks.setting.general.custom.placeholder': '请输入自定义源地址',
 
   // project
   'iceworks.project.title': '项目管理',

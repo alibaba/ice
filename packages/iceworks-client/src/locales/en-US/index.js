@@ -44,6 +44,8 @@ export default {
   'iceworks.setting.general.theme.light': 'Light',
   'iceworks.setting.general.editor.title': 'Editor',
   'iceworks.setting.general.npm.client.title': 'NPM Client',
+  'iceworks.setting.general.custom.registry': 'Customize registry',
+  'iceworks.setting.general.custom.placeholder': 'Please input custom registry',
   'iceworks.setting.title': 'Setting',
 
   // project

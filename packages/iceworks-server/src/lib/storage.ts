@@ -52,6 +52,10 @@ const schema = {
     type: 'string',
     default: '',
   },
+  registry: {
+    type: 'string',
+    default: 'http://registry.npmjs.com',
+  },
   material: {
     type: 'array',
     default: [
