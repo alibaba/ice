@@ -35,19 +35,22 @@ gulp.task('dist', (done) => {
     }
 
     const params = [`--${target}`, '--publish', 'always'];
-    const childProcess = execa(
-      cliBuilder,
-      params,
-      { stdio: 'inherit' }
-    );
-    childProcess.on('close', (code) => {
-      if (code === 0) {
-        console.log('打包完成');
-      } else {
-        console.error('打包失败');
-      }
-      done(code);
-    });
+    let code;
+    try {
+      await execa(
+        cliBuilder,
+        params,
+        { stdio: 'inherit' }
+      );
+      console.log('打包完成');
+      code = 0;
+    } catch (error) {
+      console.log(error);
+      console.error('打包失败');
+      code = 1;
+    }
+ 
+    done(code);
   }
 
   async function getServerCode() {
@@ -60,22 +63,25 @@ gulp.task('dist', (done) => {
       shelljs.cp('-R', '../../packages/iceworks-server/*', './server/');
 
       if (!await pathExists(path.join(serverDir, 'node_modules'))) {
-        await execa.shell('npm install', {
+        await execa('npm', ['install'], {
           stdio: 'inherit',
           cwd: serverDir,
+          env: process.env,
         });
       }
       
-      await execa.shell('npm run build', {
+      await execa('npm', ['run', 'build'], {
         stdio: 'inherit',
         cwd: serverDir,
+        env: process.env,
       });
     } else {
       const tarball = await getNpmTarball('iceworks-server');
       await getAndExtractTarball(serverDir, tarball);
-      await execa.shell('npm install', {
+      await execa('npm', ['install'], {
         stdio: 'inherit',
         cwd: serverDir,
+        env: process.env,
       });
     }
   }
@@ -99,9 +105,10 @@ gulp.task('dist', (done) => {
 
     await writeFileAsync(path.join(buildDir, packageJSONFileName), `${JSON.stringify(projectPackageJSON, null, 2)}\n`, 'utf-8');
 
-    await execa.shell('npm install', {
+    await execa('npm', ['install'], {
       stdio: 'inherit',
       cwd: buildDir,
+      env: process.env,
     });
   }
 
