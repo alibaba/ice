@@ -3,7 +3,7 @@ import * as fsExtra from 'fs-extra';
 import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as execa from 'execa';
-import * as latestVersion from 'latest-version';
+// import * as latestVersion from 'latest-version';
 import getNpmClient from '../../../getNpmClient';
 
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../../interface';
