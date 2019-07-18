@@ -14,7 +14,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     reset: installDependency,
     onResetModal: installDependencyVisible,
     setResetModal: setInstallDependencyVisible,
-  } = useDependency(false, writeChunk, false);
+  } = useDependency(true, writeChunk, false);
   const taskErrorEventName = `adapter.task.error`;
 
   async function onStart() {
