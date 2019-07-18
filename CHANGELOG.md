@@ -2,6 +2,12 @@
 
 ## 3.0.0-beta.6
 
+- [fix] fixed node environment variable in production
+- [fix] dependency panel optimization
+- [fix] theme text change
+
+## 3.0.0-beta.6
+
 - [feat] support npm client select #2469
 - [feat] support vue project #2392
 - [feat] improve progress info #2452
