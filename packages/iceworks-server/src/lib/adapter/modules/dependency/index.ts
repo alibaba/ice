@@ -141,7 +141,9 @@ export default class Dependency implements IDependencyModule {
           specifyVersion,
           dev,
           localVersion,
-          latestVersion: await latestVersion(packageName),
+
+          // TODO get latestVersion is so slow, so we disable it now
+          // latestVersion: await latestVersion(packageName),
         };
       }));
     };
