@@ -50,10 +50,10 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
-        console.log(eventName, `${JSON.stringify(data)}\n`);
+        logger.info(eventName, `${JSON.stringify(data)}\n`);
         callback(null, data);
       } catch (error) {
-        console.error(error);
+        logger.error(error);
         callback({
           code: error.code,
           message: error.message,
