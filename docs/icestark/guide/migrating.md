@@ -13,7 +13,7 @@ $ npm i @ice/stark --save
 
 ## 在框架应用中使用
 
-框架应用主要是对各个子应用的资源 url、渲染位置、`path` 的管理
+框架应用主要是对各个子应用的资源 `url`、渲染位置、`path` 的管理
 注意各个子应用的 `path` 配置不能重复，规则类似 `Route` 的 `path` 配置
 
 ```js
@@ -22,8 +22,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppRouter, AppRoute } from '@ice/stark';
 
-class App extends React.Component {
-  // ...
+class Layout extends React.Component {
+  onRouteChange = (pathname, query) => {
+    console.log(pathname, query);
+  }
+
   render() {
     return (
       <div>
@@ -56,8 +59,9 @@ class App extends React.Component {
 }
 ```
 
-- `AppRouter` 节点即为子应用最终渲染位置
-- `AppRoute` 负责注册子应用的基本信息，`title`、`path`、`url` 为必填项，分别对应子应用渲染时的 `documentTitle`、子应用的`path`、子应用资源发布的 cdn 地址。`basename` 表示子应用内部路由的 `basename` (规则同 `react-router`)
+- `AppRouter` 定位子应用渲染节点
+- `AppRoute` 设置子应用相关配置，`path` 配置有效路由信息、`basename` 配置统一的路由前缀，`url` 配置静态资源路径
+- `icestark` 会按照类似 `react-router` 的路由解析规则，判断当前生效 `path`，加载对应子应用的静态资源，进行渲染
 
 ## 在子应用中使用
 
@@ -95,7 +99,7 @@ class App extends React.Component {
 }
 ```
 
-- icestark 需要跨应用跳转的情况下使用 `AppLink`，标识该跳转可能意味着需要重新加载静态资源
+- icestark 需要跨应用跳转的情况下使用 `AppLink`，表示本次跳转意味着需要重新加载静态资源
 
 ### Router 注入 basename、渲染全局 404
 
@@ -109,6 +113,7 @@ import AboutPage from './pages/About';
 export default class App extends React.Component {
   render() {
     return (
+      // 通过 getBasename 将在框架应用中注册的 basename 注入到子应用中
       <Router basename={getBasename()}>
         <Switch>
           <Route exact path="/" component={HomePage} />

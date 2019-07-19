@@ -3,12 +3,6 @@ title: 快速上手
 order: 1
 ---
 
-icestark 使用前需要根据 UI 结构将系统拆分为框架应用、多个子应用。默认所有应用均采用 `BrowserRouter`。
-
-![UI说明A](https://img.alicdn.com/tfs/TB1xfk7XlWD3KVjSZKPXXap7FXa-2876-1376.jpg)
-
-![UI说明B](https://img.alicdn.com/tfs/TB1YlNbXrus3KVjSZKbXXXqkFXa-2874-1374.jpg)
-
 ## 创建项目
 
 启动 iceworks

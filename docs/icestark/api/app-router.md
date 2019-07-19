@@ -3,7 +3,7 @@ title: AppRouter
 order: 5
 ---
 
-确定子应用渲染节点的组件，包含如下 props 属性
+定位子应用渲染节点，包含如下 props 属性
 
 ## onRouteChange
 
@@ -13,15 +13,15 @@ order: 5
 
 ## NotFoundComponent
 
-- 自定义渲染全局 404 内容，选填
+- 渲染全局 404 内容，选填
 - 类型：`string | ReactNode`
-- 默认值：`-`
+- 默认值：`<div>NotFound</div>`
 
 ## ErrorComponent
 
-- 子应用静态资源加载出错时的展示内容，选填
+- 子应用 `js` 静态资源加载出错时的展示内容，选填
 - 类型：`string | ReactNode`
-- 默认值：`-`
+- 默认值：`<div>js bundle loaded error</div>`
 
 ## LoadingComponent
 

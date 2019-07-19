@@ -7,9 +7,7 @@ order: 11
 
 ## appHistory.push
 
-- 唯一入参，`to`，标识目标路径，同 `Link` 中的 `to` 保持一致 ，必填
-- 类型：`string`
-- 默认值：`-`
+- 类型：`function`
 - 代码示例：
 
 ```js
@@ -31,7 +29,5 @@ export default class SelfLink extends React.Component {
 
 ## appHistory.replace
 
-- 标识目标路径，同 `Link` 中的 `to` 保持一致 ，必填
-- 类型：`string`
-- 默认值：`-`
+- 类型：`function`
 - 代码示例参考 `appHistory.push`

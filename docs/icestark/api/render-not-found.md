@@ -3,7 +3,7 @@ title: renderNotFound
 order: 9
 ---
 
-用于子应用内部需要渲染全局 404 的场景
+子应用触发渲染全局 404 的方法
 
 - 类型：`function`
 - 代码示例：

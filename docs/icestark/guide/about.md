@@ -13,7 +13,7 @@ order: 0
 
 ## 什么是 icestark
 
-[icestark](https://github.com/ice-lab/icestark) 是针对大型中后台多应用共存的解决方案。他可以：
+[icestark](https://github.com/ice-lab/icestark) 是面向大型应用的微前端解决方案。他可以：
 
 - 以路由为基础，模块化方式组合多个 SPA 应用
 - 多个应用间保持仓库独立，实现业务解耦、独立开发部署
@@ -23,10 +23,8 @@ order: 0
 
 ## 应用架构
 
-使用 icestark 方案的应用架构图
+![应用架构](https://img.alicdn.com/tfs/TB1gs02aQT2gK0jSZFkXXcIQFXa-1421-1416.png)
 
-![demo示例](https://img.alicdn.com/tfs/TB1PayIdqWs3KVjSZFxXXaWUXXa-806-820.jpg)
-
-- 使用 icestark 方案的应用，会按照 UI 进行框架应用、子应用的拆分
-- 框架应用：负责子应用的注册，公共内容（Common Header、Common Sidebar、Common Footer等）展示
+- 按照 UI 结构进行框架应用、子应用的拆分
+- 框架应用：负责子应用的注册，公共内容展示（Common Header、Common Sidebar、Common Footer等）
 - 子应用：负责自身业务相关的内容展示
