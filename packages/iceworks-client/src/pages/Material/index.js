@@ -48,12 +48,16 @@ const Material = ({ history, intl }) => {
   const [type, setType] = useState('scaffolds');
   const [currentCategory, setCurrentCategory] = useState(DEFAULT_CATEGORY);
   const [component, setComponent] = useState({});
+  const [getMaterialLoading, setGetMaterialLoading] = useState(false);
 
   async function setCurrent(source) {
     try {
+      setGetMaterialLoading(true);
       await material.setCurrentSource(source);
       await material.getCurrentMaterial();
+      setGetMaterialLoading(false);
     } catch (error) {
+      setGetMaterialLoading(false);
       showMessage(error);
     }
   }
@@ -137,6 +141,7 @@ const Material = ({ history, intl }) => {
       content: (
         <MaterialPanel
           type="scaffolds"
+          getMaterialLoading={getMaterialLoading}
           dataSource={dataSource.currentMaterial}
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
@@ -152,6 +157,7 @@ const Material = ({ history, intl }) => {
       content: (
         <MaterialPanel
           type="blocks"
+          getMaterialLoading={getMaterialLoading}
           dataSource={dataSource.currentMaterial}
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
@@ -164,6 +170,7 @@ const Material = ({ history, intl }) => {
       content: (
         <MaterialPanel
           type="components"
+          getMaterialLoading={getMaterialLoading}
           dataSource={dataSource.currentMaterial}
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
