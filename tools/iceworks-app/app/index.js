@@ -23,7 +23,13 @@ function getServerUrl() {
 }
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1280, height: 800 });
+  mainWindow = new BrowserWindow({ 
+    width: 1280,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -58,7 +64,7 @@ function createWindow() {
 
         mainWindow.webContents.send('log', logInfo);
 
-        if (logInfo.search('midway-mirror started on') > 0) {
+        if (logInfo.search('started on') > 0) {
           mainWindow.loadURL(getServerUrl());
         }
       });
