@@ -1,5 +1,5 @@
 import * as rp from 'request-promise-native';
-import storage from '../../../../lib/storage';
+import storage, { schema } from '../../../../lib/storage';
 
 const isArray = Array.isArray;
 
@@ -13,6 +13,12 @@ const CATEGORY_ALL = '全部';
 export default (app) => {
   return class MaterialController extends app.Controller {
     public async getResources({ args }) {
+      // check if the default official material is the same as the default in db.json
+      const newMaterial = storage
+        .get('material')
+        .filter(item => !item.official)
+        .concat(schema.material.default);
+      storage.set('material', newMaterial);
       const resources = storage.get('material');
 
       if (args && args.type) {
