@@ -6,6 +6,7 @@ const path = require('path');
 const progress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
+const npmConf = require('npm-conf');
 const log = require('./log');
 
 const cacheData = {};
@@ -180,6 +181,8 @@ function isAliNpm(npmName) {
 }
 
 function getNpmRegistry(npmName = '') {
+  const npmConfig = npmConf();
+
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   }
@@ -188,8 +191,14 @@ function getNpmRegistry(npmName = '') {
     return 'https://registry.npm.alibaba-inc.com';
   }
 
-  // TODO: maybe default should be: registry.npm.com
-  return 'https://registry.npm.taobao.org';
+  const configRegistry = npmConfig.get('registry');
+
+  if (configRegistry) {
+    // https://registry.npmjs.com/ -> https://registry.npmjs.com
+    return configRegistry.replace(/\/$/, '');
+  }
+
+  return 'https://registry.npmjs.com';
 }
 
 function getUnpkgHost(npmName = '') {
