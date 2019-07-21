@@ -104,11 +104,8 @@ function getNpmInfo(npm) {
 
   const register = getNpmRegistry(npm);
   const url = `${register}/${npm}`;
-  log.verbose('getNpmInfo start', url);
 
   return request.get(url).then((response) => {
-    log.verbose('getNpmInfo success');
-
     let body;
     try {
       body = JSON.parse(response);
@@ -171,7 +168,6 @@ function getLatestVersion(npm) {
     }
 
     const latestVersion = data['dist-tags'].latest;
-    log.verbose('getLatestVersion result', npm, latestVersion);
     return latestVersion;
   });
 }
@@ -181,8 +177,6 @@ function isAliNpm(npmName) {
 }
 
 function getNpmRegistry(npmName = '') {
-  const npmConfig = npmConf();
-
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   }
@@ -191,6 +185,7 @@ function getNpmRegistry(npmName = '') {
     return 'https://registry.npm.alibaba-inc.com';
   }
 
+  const npmConfig = npmConf();
   const configRegistry = npmConfig.get('registry');
 
   if (configRegistry) {
