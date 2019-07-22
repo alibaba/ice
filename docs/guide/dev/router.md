@@ -14,7 +14,7 @@ order: 4
 
 这样设计的目的主要是分离路由配置信息和路由生成部分，配置和生成进行解耦，有利于在新增路由时只需要关注路由配置，除了顶层路由，其余路由列表都是自动生成，其中关键的就是中心化配置文件 `src/config/routes.js`，它的主要作用是：
 
-- 配置路由相关信息，可以配置对应路由的路径，渲染组件等字段；
+- 配置路由相关信息，可以配置对应路由的路径，重定向，渲染组件等字段；
 - 根据路由配置生成路由数据，并将路由数据挂载到每条路由对应的组件上；
 
 ```js
@@ -54,80 +54,6 @@ const routerConfig = [
 路由配置跟之前版本不同，增加了`路由组`的概念，模板中使用的是 React Router v4 版本，：
 
 > 路由组: 多个页面如果共用一个布局，可以将这几个页面的路由放在某个路由组下，上述配置中有 `children` 字段的都是路由组。
-
-```js
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import React from 'react';
-import path from 'path';
-import routes from '@/config/routes';
-
-const RouteItem = (props) => {
-  const { redirect, path: routePath, component, key } = props;
-  if (redirect) {
-    return (
-      <Redirect
-        exact
-        key={key}
-        from={routePath}
-        to={redirect}
-      />
-    );
-  }
-  return (
-    <Route
-      key={key}
-      component={component}
-      path={routePath}
-    />
-  );
-};
-
-const router = () => {
-  return (
-    <Router>
-      <Switch>
-        {routes.map((route, id) => {
-          const { component: RouteComponent, children, ...others } = route;
-          return (
-            <Route
-              key={id}
-              {...others}
-              component={(props) => {
-                return (
-                  children ? (
-                    <RouteComponent key={id} {...props}>
-                      <Switch>
-                        {children.map((routeChild, idx) => {
-                          const { redirect, path: childPath, component } = routeChild;
-                          return RouteItem({
-                            key: `${id}-${idx}`,
-                            redirect,
-                            path: childPath && path.join(route.path, childPath),
-                            component,
-                          });
-                        })}
-                      </Switch>
-                    </RouteComponent>
-                  ) : (
-                    <>
-                      {RouteItem({
-                        key: id,
-                        ...props,
-                      })}
-                    </>
-                  )
-                );
-              }}
-            />
-          );
-        })}
-      </Switch>
-    </Router>
-  );
-};
-
-export default router;
-```
 
 如果你还不太了解，可以先看看下面几篇推荐的文章：
 
@@ -212,7 +138,7 @@ const router = () => {
 };
 ```
 
-- 对应的布局中的路由实现
+- 对应的布局组件实现
 
 ```js
 // BasicLayout.jsx
