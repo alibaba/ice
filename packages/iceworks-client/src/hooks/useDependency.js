@@ -75,7 +75,8 @@ function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
   }
 
   if (!diableUseSocket) {
-    useSocket('adapter.dependency.reset.data', writeGlobalLog);
+    // use term.writeChunk when dependencies rest, upgrade or install
+    useSocket('adapter.dependency.reset.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
     if (writeChunk) {
       useSocket('adapter.dependency.reset.data', data => writeChunk(data));
     }
@@ -89,7 +90,7 @@ function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
       }
     });
 
-    useSocket('adapter.dependency.upgrade.data', writeGlobalLog);
+    useSocket('adapter.dependency.upgrade.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
 
     useSocket('adapter.dependency.upgrade.exit', (code) => {
       if (code === 0) {
@@ -100,7 +101,7 @@ function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
       }
     });
 
-    useSocket('adapter.dependency.install.data', writeGlobalLog);
+    useSocket('adapter.dependency.install.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
 
     useSocket('adapter.dependency.install.exit', (code) => {
       if (code === 0) {
