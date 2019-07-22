@@ -3,6 +3,7 @@
 ## 1.2.0
 
 - [feat] getNpmRegistry 优先读取 npm config，否则返回 `https://registry.npm.com`
+- [fix] extract tarball consider directory
 
 ## 1.1.2
 
