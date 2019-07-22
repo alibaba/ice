@@ -79,6 +79,8 @@ const schema = {
   },
 };
 
+export { schema };
+
 export default new Conf({
   schema,
   configName: 'db',
