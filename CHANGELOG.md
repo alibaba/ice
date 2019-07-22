@@ -2,13 +2,13 @@
 
 ## 3.0.0-beta.8
 
+- [feat] log info in production environment #2490
+- [feat] feat: add material page loading #2500
 - [fix] redirect to task page when run task #2495
 - [fix] fix vue materials don't appear in material panel #2496
-- [fix] feat: add material page loading #2500
-- [fix] use ice-npm-utils in iceworks-cli #2506
 - [fix] format dependency log #2499
-- [fix] log info in production environment #2490
 - [refactor] use shell path for env #2498
+- [refactor] use ice-npm-utils in iceworks-cli #2506
 
 ## 3.0.0-beta.7
 
