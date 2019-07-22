@@ -18,7 +18,7 @@ const { getNpmLatestSemverVersion } = require('ice-npm-utils');
 
 ### getNpmRegistry(npmName)
 
-Default return `https://registry.npm.taobao.org`
+Default return `https://registry.npm.com`
 
 ### getUnpkgHost(npmName)
 

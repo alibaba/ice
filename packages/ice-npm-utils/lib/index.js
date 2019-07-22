@@ -6,6 +6,7 @@ const path = require('path');
 const progress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
+const npmConf = require('npm-conf');
 const log = require('./log');
 
 const cacheData = {};
@@ -52,6 +53,10 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
       .pipe(zlib.Unzip())
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
+        if (entry.type === 'Directory') {
+          entry.resume();
+          return;
+        }
         const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
@@ -103,11 +108,8 @@ function getNpmInfo(npm) {
 
   const register = getNpmRegistry(npm);
   const url = `${register}/${npm}`;
-  log.verbose('getNpmInfo start', url);
 
   return request.get(url).then((response) => {
-    log.verbose('getNpmInfo success');
-
     let body;
     try {
       body = JSON.parse(response);
@@ -170,7 +172,6 @@ function getLatestVersion(npm) {
     }
 
     const latestVersion = data['dist-tags'].latest;
-    log.verbose('getLatestVersion result', npm, latestVersion);
     return latestVersion;
   });
 }
@@ -188,8 +189,15 @@ function getNpmRegistry(npmName = '') {
     return 'https://registry.npm.alibaba-inc.com';
   }
 
-  // TODO: maybe default should be: registry.npm.com
-  return 'https://registry.npm.taobao.org';
+  const npmConfig = npmConf();
+  const configRegistry = npmConfig.get('registry');
+
+  if (configRegistry) {
+    // https://registry.npmjs.com/ -> https://registry.npmjs.com
+    return configRegistry.replace(/\/$/, '');
+  }
+
+  return 'https://registry.npmjs.com';
 }
 
 function getUnpkgHost(npmName = '') {
