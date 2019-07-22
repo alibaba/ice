@@ -5,6 +5,9 @@ const semver = require('semver');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
+// log local version
+logCLIVersion();
+
 // check node version
 checkNodeVersion();
 
@@ -122,4 +125,14 @@ async function checkIceworksVersion() {
     console.log(`  latest:     + ${chalk.green(latestVersion)}`);
     console.log(`  installed:  + ${chalk.red(packageVersion)} \n`);
   }
+}
+
+function logCLIVersion () {
+  const iceworksCLIVersion = packageConfig.version;
+  // eslint-disable-next-line global-require
+  const iceworksCorePackageConfig = require('../server/package.json');
+  const iceworksCoreVersion = packageConfig.version;
+
+  console.log(chalk.grey('iceworks CLI:', iceworksCLIVersion));
+  console.log(chalk.grey('iceworks Core:', iceworksCoreVersion));
 }

@@ -1,0 +1,3 @@
+exports.logger = {
+  disableConsoleAfterReady: false,
+};

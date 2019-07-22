@@ -60,14 +60,22 @@ async function listen(options) {
     env,
   });
 
+  let started = false;
   child.stdout.on('data', (data) => {
     if (data.toString().indexOf('started on http://127.0.0.1') !== -1) {
       spinner.stop();
       successMsg(url);
       open(url);
+      started = true;
       goldlog('start-server');
+    } else if (started) {
+      console.log(data.toString());
     }
   });
+
+  child.stderr.on('data', (data) => {
+    console.log(data.toString());
+  })
 
   child.on('error', (error) => {
     failedMsg(error);
