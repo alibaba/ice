@@ -69,7 +69,17 @@ export default (app) => {
     }
 
     public async getNpmClient() {
-      return await getNpmClient();
+      const npmClient = await getNpmClient();
+      // get origin value
+      return npmClient[2];
+    }
+
+    public async setRegistry(ctx) {
+      storage.set('registry', ctx.args.registry);
+    }
+
+    public async getRegistry() {
+      return storage.get('registry');
     }
 
     public async setUser({ args }) {
