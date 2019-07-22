@@ -53,6 +53,10 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
       .pipe(zlib.Unzip())
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
+        if (entry.type === 'Directory') {
+          entry.resume();
+          return;
+        }
         const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
