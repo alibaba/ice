@@ -23,7 +23,7 @@ export const install = async (
   const { dependencies, npmClient, isDev, project, namespace, ctx } = params;
   const { socket, i18n, logger } = ctx;
   logger.info('dependencies', dependencies);
-  socket.emit(`adapter.${namespace}.install.data`, i18n.format('baseAdapter.dependency.reset.startInstall'));
+  socket.emit(`adapter.${namespace}.install.data`, { chunk: i18n.format('baseAdapter.dependency.reset.startInstall') });
 
   const args = ['install', '--loglevel', 'silly', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
     dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
@@ -40,10 +40,13 @@ export const install = async (
   );
 
   const listenFunc = (buffer) => {
-    const text = buffer.toString();
-    logger.info(`${namespace}.install.data:`, text);
+    const chunk = buffer.toString();
+    logger.info(`${namespace}.install.data:`, chunk);
 
-    socket.emit(`adapter.${namespace}.install.data`, text);
+    socket.emit(`adapter.${namespace}.install.data`, {
+      chunk,
+      isStdout: true,
+    });
   };
 
   childProcess.stdout.on('data', listenFunc)
@@ -181,13 +184,13 @@ export default class Dependency implements IDependencyModule {
   public async reset(arg: void, ctx: IContext) {
     const { socket, i18n, logger } = ctx;
 
-    socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.clearWait'));
+    socket.emit('adapter.dependency.reset.data', { chunk: i18n.format('baseAdapter.dependency.reset.clearWait') });
 
     await rimrafAsync(this.path);
 
-    socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.clearDone'));
+    socket.emit('adapter.dependency.reset.data', { chunk: i18n.format('baseAdapter.dependency.reset.clearDone') });
 
-    socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.startInstall'));
+    socket.emit('adapter.dependency.reset.data', { chunk: i18n.format('baseAdapter.dependency.reset.startInstall') });
 
     const npmClient = await getNpmClient();
     const childProcess = execa(npmClient, ['install', '--loglevel', 'silly'], {
@@ -197,10 +200,13 @@ export default class Dependency implements IDependencyModule {
     });
 
     const listenFunc = (buffer) => {
-      const text = buffer.toString();
-      logger.info('reset.data:', text);
+      const chunk = buffer.toString();
+      logger.info('reset.data:', chunk);
 
-      socket.emit('adapter.dependency.reset.data', text);
+      socket.emit('adapter.dependency.reset.data', {
+        chunk,
+        isStdout: true,
+      });
     }
 
     childProcess.stdout.on('data', listenFunc);
@@ -222,7 +228,7 @@ export default class Dependency implements IDependencyModule {
     const { package: packageName } = denpendency;
     const { socket, i18n, logger } = ctx;
 
-    socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
+    socket.emit('adapter.dependency.upgrade.data', { chunk: i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}) });
 
     const npmClient = await getNpmClient();
     const childProcess = execa(npmClient, ['update', packageName, '--loglevel', 'silly'], {
@@ -232,10 +238,13 @@ export default class Dependency implements IDependencyModule {
     });
 
     const listenFunc = (buffer) => {
-      const text = buffer.toString();
-      logger.info('upgrade.data:', text);
+      const chunk = buffer.toString();
+      logger.info('upgrade.data:', chunk);
 
-      socket.emit('adapter.dependency.upgrade.data', text);
+      socket.emit('adapter.dependency.upgrade.data', {
+        chunk,
+        isStdout: true,
+      });
     }
 
     childProcess.stdout.on('data', listenFunc);
