@@ -22,6 +22,68 @@ function getServerUrl() {
   return `http://${ip}:${setPort}/`;
 }
 
+async function startServerAndLoad() {
+  if (mainWindow) {
+    mainWindow.loadFile(loadingHTML);
+  }
+
+  if (!isProduction && mainWindow.webContents) {
+    mainWindow.webContents.openDevTools({ mode: 'right' });
+  }
+
+  try {
+    await execa('npm', ['stop'], { cwd: serverDir, env });
+  } catch (error) {
+    log.warn('[run][startServerAndLoad][start-server][stop] got error: ', error);
+  }
+
+  const args = isProduction ? ['start'] : ['run', 'dev'];
+  setPort = await detectPort(setPort);
+  serverProcess = execa('npm', args, {
+    cwd: serverDir,
+    env: {
+      ...env,
+      PORT: setPort,
+    },
+  });
+
+  serverProcess.stdout.on('data', (buffer) => {
+    const logInfo = buffer.toString();
+    log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
+
+    if (mainWindow) {
+      if (mainWindow.webContents) {
+        mainWindow.webContents.send('log', logInfo);
+      }
+      if (logInfo.search('started on') > 0) {
+        mainWindow.loadURL(getServerUrl());
+      }
+    }
+  });
+
+  serverProcess.on('error', (buffer) => {
+    log.error('[run][startServerAndLoad][start-server] error:', buffer.toString());
+    if (mainWindow) {
+      mainWindow.loadFile(errorHTML);
+    }
+  });
+
+  serverProcess.stderr.on('data', (buffer) => {
+    log.error('[run][startServerAndLoad][start-server] stderr:', buffer.toString());
+  });
+
+  serverProcess.on('exit', (code) => {
+    log.error('[run][startServerAndLoad][start-server] exit width:', code);
+
+    if (code === 1) {
+      serverProcess = null;
+      if (mainWindow) {
+        mainWindow.loadFile(errorHTML);
+      }
+    }
+  });
+}
+
 function createWindow() {
   log.info('[run][createWindow]');
 
@@ -44,65 +106,7 @@ function createWindow() {
 
   if (!serverProcess) {
     log.info('[run][createWindow][start-server]');
-    (async () => {
-      mainWindow.loadFile(loadingHTML);
-
-      if (!isProduction && mainWindow.webContents) {
-        mainWindow.webContents.openDevTools({ mode: 'right' });
-      }
-
-      try {
-        await execa('npm', ['stop'], { cwd: serverDir, env });
-      } catch (error) {
-        log.warn('[run][createWindow][start-server][stop] got error: ', error);
-      }
-
-      const args = isProduction ? ['start'] : ['run', 'dev'];
-      setPort = await detectPort(setPort);
-      serverProcess = execa('npm', args, {
-        cwd: serverDir,
-        env: {
-          ...env,
-          PORT: setPort,
-        },
-      });
-
-      serverProcess.stdout.on('data', (buffer) => {
-        const logInfo = buffer.toString();
-        log.info('[run][createWindow][start-server] stdout:', logInfo);
-
-        if (mainWindow) {
-          if (mainWindow.webContents) {
-            mainWindow.webContents.send('log', logInfo);
-          }
-          if (logInfo.search('started on') > 0) {
-            mainWindow.loadURL(getServerUrl());
-          }
-        }
-      });
-
-      serverProcess.on('error', (buffer) => {
-        log.error('[run][createWindow][start-server] error:', buffer.toString());
-        if (mainWindow) {
-          mainWindow.loadFile(errorHTML);
-        }
-      });
-
-      serverProcess.stderr.on('data', (buffer) => {
-        log.error('[run][createWindow][start-server] stderr:', buffer.toString());
-      });
-
-      serverProcess.on('exit', (code) => {
-        log.error('[run][createWindow][start-server] exit width:', code);
-
-        if (code === 1) {
-          serverProcess = null;
-          if (mainWindow) {
-            mainWindow.loadFile(errorHTML);
-          }
-        }
-      });
-    })();
+    startServerAndLoad();
   } else {
     log.info('[run][createWindow][load-server]');
     mainWindow.loadURL(getServerUrl());
