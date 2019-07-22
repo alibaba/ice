@@ -8,7 +8,7 @@ html, body {
 }
 *, *:before, *:after {
   box-sizing: content-box;
-  transform: translate3d(0, 0, 0);
+  /* transform: translate3d(0, 0, 0); */
 }
 .face {
   width: 300px;
@@ -151,7 +151,7 @@ h1 {
 .log-path {
   background-color: #383a41;
   padding: 0 24px;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .log-path:hover .log-text{
