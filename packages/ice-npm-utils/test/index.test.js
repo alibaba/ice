@@ -13,27 +13,18 @@ const {
   getAndExtractTarball,
 } = require('../lib/index');
 
+const defaultRegistry = 'https://registry.npm.taobao.org';
+process.env.REGISTRY = defaultRegistry;
+
 jest.setTimeout(10 * 1000);
 
-test('getNpmRegistry custom registry', () => {
-  const customRegistry = 'https://registry.custom.com';
-
-  process.env.REGISTRY = customRegistry;
-
-  expect(getNpmRegistry('koa')).toBe(customRegistry);
-  expect(getNpmRegistry('@ali/ice-test')).toBe(customRegistry);
-
-  delete process.env.REGISTRY;
-});
-
 test('getNpmRegistry', () => {
-  const defaultRegistry = 'https://registry.npm.taobao.org';
-  const aliRegistry = 'https://registry.npm.alibaba-inc.com';
+  // const aliRegistry = 'https://registry.npm.alibaba-inc.com';
 
   expect(getNpmRegistry('koa')).toBe(defaultRegistry);
-  expect(getNpmRegistry('@ali/ice-test')).toBe(aliRegistry);
-  expect(getNpmRegistry('@alife/ice-test')).toBe(aliRegistry);
-  expect(getNpmRegistry('@alipay/ice-test')).toBe(aliRegistry);
+  // expect(getNpmRegistry('@ali/ice-test')).toBe(aliRegistry);
+  // expect(getNpmRegistry('@alife/ice-test')).toBe(aliRegistry);
+  // expect(getNpmRegistry('@alipay/ice-test')).toBe(aliRegistry);
   expect(getNpmRegistry('@alixxx/ice-test')).toBe(defaultRegistry);
 });
 
@@ -123,19 +114,19 @@ test('checkAliInternal', () => {
 
 test('getNpmTarball', () => {
   return getNpmTarball('ice-npm-utils', '1.0.0').then((tarball) => {
-    expect(tarball).toBe('https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz');
+    expect(tarball).toBe(`${defaultRegistry}/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz`);
   });
 });
 
 test('getNpmTarball should get latest version', () => {
   return getNpmTarball('http').then((tarball) => {
-    expect(tarball).toBe('https://registry.npm.taobao.org/http/download/http-0.0.0.tgz');
+    expect(tarball).toBe(`${defaultRegistry}/http/download/http-0.0.0.tgz`);
   });
 });
 
 test('getAndExtractTarball', () => {
   const tempDir = path.resolve(tmpdir(), 'ice_npm_utils_tarball');
-  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz')
+  return getAndExtractTarball(tempDir, `${defaultRegistry}/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz`)
     .then((files) => {
       rimraf.sync(tempDir);
       expect(files.length > 0).toBe(true);
@@ -147,7 +138,7 @@ test('getAndExtractTarball', () => {
 
 test('getAndExtractTarballWithDir', () => {
   const tempDir = path.resolve(tmpdir(), 'babel_helper_function_name_tarball');
-  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz')
+  return getAndExtractTarball(tempDir, `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`)
     .then((files) => {
       rimraf.sync(tempDir);
       expect(files.length > 0).toBe(true);
