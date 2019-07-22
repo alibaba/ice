@@ -1,28 +1,54 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const address = require('address');
 const execa = require('execa');
 const path = require('path');
+const fs = require('fs');
 const detectPort = require('detect-port');
 const is = require('electron-is');
 const log = require('electron-log');
+const semver = require('semver');
+const shelljs = require('shelljs');
+const { getNpmLatestSemverVersion, getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const getEnv = require('./getEnv');
 
 let mainWindow;
 let serverProcess;
 let setPort = '7001';
+const serverDirName = 'server';
 
 const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
-const serverDir = isProduction ? path.join(__dirname, '..', 'server') : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
+const serverDir = isProduction ? path.join(__dirname, '..', serverDirName) : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
 const loadingHTML = path.join(__dirname, 'loading.html');
 const errorHTML = path.join(__dirname, 'error.html');
+
+
+async function checkVersion(packageName, packageVersion) {
+  try {
+    const latestVersion = await getNpmLatestSemverVersion(packageName, packageVersion);
+    if (semver.lt(packageVersion, latestVersion)) {
+      return latestVersion;
+    }
+  } catch (error) {
+    // ...
+  }
+};
+
+// eslint-disable-next-line import/no-dynamic-require
+const serverPackageJSON = require(path.join(serverDir, 'package.json'));
+
+async function checkServerVersion() {
+  const packageName = serverPackageJSON.name;
+  const packageVersion = serverPackageJSON.version;
+  return isProduction && await checkVersion(packageName, packageVersion);
+}
 
 function getServerUrl() {
   return `http://${ip}:${setPort}/`;
 }
 
-async function startServerAndLoad() {
+async function startServer() {
   if (mainWindow) {
     mainWindow.loadFile(loadingHTML);
   }
@@ -103,12 +129,14 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+}
 
+function windowLoadServer() {
   if (!serverProcess) {
-    log.info('[run][createWindow][start-server]');
-    startServerAndLoad();
+    log.info('[run][loadServer][start-server]');
+    startServer();
   } else {
-    log.info('[run][createWindow][load-server]');
+    log.info('[run][loadServer][load-server]');
     mainWindow.loadURL(getServerUrl());
   }
 }
@@ -144,10 +172,33 @@ function stopServerAndQuit() {
   });
 }
 
+async function downloadServer() {
+  if (fs.existsSync(serverDir)) {
+    shelljs.rm('-rf', [serverDir]);
+  }
+  shelljs.mkdir('-p', serverDir);
+
+  const tarball = await getNpmTarball('iceworks-server');
+  await getAndExtractTarball(serverDir, tarball);
+  await execa('npm', ['install'], {
+    stdio: 'inherit',
+    cwd: serverDir,
+    env: process.env,
+  });
+}
+
 app.on('ready', () => {
   log.info('[event][ready]');
 
   createWindow();
+
+  checkServerVersion()
+    .then((hasNewVersion) => {
+      if (hasNewVersion) {
+        return downloadServer();
+      }
+    })
+    .then(windowLoadServer);
 });
 
 app.on('before-quit', (event) => {
@@ -172,5 +223,6 @@ app.on('activate', () => {
 
   if (mainWindow === null) {
     createWindow();
+    windowLoadServer();
   }
 });
