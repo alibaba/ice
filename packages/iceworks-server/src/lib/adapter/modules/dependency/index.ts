@@ -87,7 +87,7 @@ export default class Dependency implements IDependencyModule {
 
     try {
       const [npmClient, registry] = await getNpmClient();
-      const args = ['outdated', '--json'].concat(registry ? ['--registry', 'registry'] : []);
+      const args = ['outdated', '--json'].concat(registry ? ['--registry', registry] : []);
       await execa(npmClient, args, { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
       if (error.errno) {
