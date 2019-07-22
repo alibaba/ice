@@ -5,15 +5,6 @@ const semver = require('semver');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
-// log local version
-logCLIVersion();
-
-// check node version
-checkNodeVersion();
-
-// check iceworks version
-checkIceworksVersion();
-
 program.version(packageConfig.version).usage('<command> [options]');
 
 // output help information on unknown commands
@@ -72,12 +63,31 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
-if (!process.argv.slice(2).length) {
-  // start web server for iceworks 3.0
-  // eslint-disable-next-line global-require
-  require('../command/start')(cleanArgs());
-}
+(async () => {
+  // log local version
+  logCLIVersion();
 
+  // check node version
+  checkNodeVersion();
+
+  try {
+    // check iceworks version
+    await checkIceworksVersion();
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!process.argv.slice(2).length) {
+    // start web server for iceworks 3.0
+    // eslint-disable-next-line global-require
+    try {
+      await require('../command/start')(cleanArgs());
+    }  catch (err) {
+      console.error(err);
+      process.exit(1);
+    }
+  }
+})();
 
 function camelize(str) {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
@@ -131,7 +141,7 @@ function logCLIVersion () {
   const iceworksCLIVersion = packageConfig.version;
   // eslint-disable-next-line global-require
   const iceworksCorePackageConfig = require('../server/package.json');
-  const iceworksCoreVersion = packageConfig.version;
+  const iceworksCoreVersion = iceworksCorePackageConfig.version;
 
   console.log(chalk.grey('iceworks CLI:', iceworksCLIVersion));
   console.log(chalk.grey('iceworks Core:', iceworksCoreVersion));
