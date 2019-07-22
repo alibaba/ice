@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const address = require('address');
 const execa = require('execa');
 const path = require('path');
@@ -23,6 +23,8 @@ function getServerUrl() {
 }
 
 function createWindow() {
+  log.info('[run][createWindow]');
+
   mainWindow = new BrowserWindow({ 
     width: 1280,
     height: 800,
@@ -30,22 +32,29 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
+
+  // HACK skip window.beforeunload
+  mainWindow.on('close', () => {
+    mainWindow.destroy();
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 
   if (!serverProcess) {
+    log.info('[run][createWindow][start-server]');
     (async () => {
       mainWindow.loadFile(loadingHTML);
 
-      if (!isProduction) {
+      if (!isProduction && mainWindow.webContents) {
         mainWindow.webContents.openDevTools({ mode: 'right' });
       }
 
       try {
         await execa('npm', ['stop'], { cwd: serverDir, env });
       } catch (error) {
-        log.warn('stop got error:', error);
+        log.warn('[run][createWindow][start-server][stop] got error: ', error);
       }
 
       const args = isProduction ? ['start'] : ['run', 'dev'];
@@ -60,26 +69,31 @@ function createWindow() {
 
       serverProcess.stdout.on('data', (buffer) => {
         const logInfo = buffer.toString();
-        log.info('start stdout:', logInfo);
+        log.info('[run][createWindow][start-server] stdout:', logInfo);
 
-        mainWindow.webContents.send('log', logInfo);
-
-        if (logInfo.search('started on') > 0) {
-          mainWindow.loadURL(getServerUrl());
+        if (mainWindow) {
+          if (mainWindow.webContents) {
+            mainWindow.webContents.send('log', logInfo);
+          }
+          if (logInfo.search('started on') > 0) {
+            mainWindow.loadURL(getServerUrl());
+          }
         }
       });
 
       serverProcess.on('error', (buffer) => {
-        log.error('start got error:', buffer.toString());
-        mainWindow.loadFile(errorHTML);
+        log.error('[run][createWindow][start-server] error:', buffer.toString());
+        if (mainWindow) {
+          mainWindow.loadFile(errorHTML);
+        }
       });
 
       serverProcess.stderr.on('data', (buffer) => {
-        log.error('start stderr:', buffer.toString());
+        log.error('[run][createWindow][start-server] stderr:', buffer.toString());
       });
 
       serverProcess.on('exit', (code) => {
-        log.error('start process exit width:', code);
+        log.error('[run][createWindow][start-server] exit width:', code);
 
         if (code === 1) {
           serverProcess = null;
@@ -90,52 +104,68 @@ function createWindow() {
       });
     })();
   } else {
+    log.info('[run][createWindow][load-server]');
     mainWindow.loadURL(getServerUrl());
   }
 }
 
-app.on('ready', createWindow);
+function stopServerAndQuit() {
+  log.info('[run][stopServerAndQuit]');
+
+  // TODO The following call does not take effect
+  if (mainWindow) {
+    mainWindow.loadFile(loadingHTML);
+  }
+
+  const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
+
+  stopProcess.stdout.on('data', (buffer) => {
+    log.info('[run][stopServerAndQuit][stop] stdout:', buffer.toString());
+  });
+
+  stopProcess.on('error', (buffer) => {
+    log.error('[run][stopServerAndQuit][stop] error:', buffer.toString());
+    app.exit();
+  });
+
+  stopProcess.on('exit', (code) => {
+    log.error('[run][stopServerAndQuit][stop] exit width:', code);
+    if (code === 1) {
+      serverProcess.kill();
+      app.exit();
+    } else {
+      serverProcess = null;
+      app.quit();
+    }
+  });
+}
+
+app.on('ready', () => {
+  log.info('[event][ready]');
+
+  createWindow();
+});
 
 app.on('before-quit', (event) => {
+  log.info('[event][before-quit]');
+
   if (serverProcess) {
     event.preventDefault();
-
-    // TODO The following call does not take effect
-    if (mainWindow) {
-      mainWindow.loadFile(loadingHTML);
-    }
-
-    const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
-
-    stopProcess.stdout.on('data', (buffer) => {
-      log.info('stop stdout:', buffer.toString());
-    });
-
-    stopProcess.on('error', (buffer) => {
-      log.error('stop got error:', buffer.toString());
-      app.exit();
-    });
-
-    stopProcess.on('exit', (code) => {
-      log.error('stop process exit width:', code);
-      if (code === 0) {
-        serverProcess.kill();
-        serverProcess = null;
-        app.exit();
-      } else {
-        app.quit();
-      }
-    });
+    stopServerAndQuit();
   }
 });
 
 app.on('window-all-closed', () => {
+  log.info('[event][window-all-closed]');
+
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
 app.on('activate', () => {
+  log.info('[event][activate]');
+
   if (mainWindow === null) {
     createWindow();
   }
