@@ -14,7 +14,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     reset: installDependency,
     onResetModal: installDependencyVisible,
     setResetModal: setInstallDependencyVisible,
-  } = useDependency(true, writeChunk, false);
+  } = useDependency(true, false);
   const taskErrorEventName = `adapter.task.error`;
 
   async function onStart() {
@@ -74,6 +74,8 @@ const useTask = ({ type, writeLog, writeChunk }) => {
 
   // listen event error
   useSocket(taskErrorEventName, error => showMessage(error.message));
+
+  useSocket('adapter.dependency.reset.data', data => writeChunk(data));
 
   return {
     isWorking: status === 'working',

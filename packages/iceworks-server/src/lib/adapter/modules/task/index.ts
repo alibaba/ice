@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
+import * as pathKey from 'path-key';
 import { getCLIConf, setCLIConf, mergeCLIConf } from '../../utils/cliConf';
 import getNpmClient from '../../../getNpmClient';
 import {
@@ -70,7 +71,7 @@ export default class Task implements ITaskModule {
     if (command === 'dev') {
       env = { PORT: await detectPort(DEFAULT_PORT) };
     }
-    const npmClient = await getNpmClient();
+    const [npmClient] = await getNpmClient();
     const eventName = `start.data.${command}`;
 
     try {
@@ -84,12 +85,11 @@ export default class Task implements ITaskModule {
       });
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
-        chunk: `using node: ${nodePath}\nusing ${npmClient}: ${npmPath}`,
+        chunk: `using node: ${nodePath}\nusing npm ${npmClient}: ${npmPath}\nprocess.env.PATH: ${projectEnv[pathKey()]}\n`,
       });
     } catch (error) {
       // ignore error
     }
-
     this.process[command] = execa(
       npmClient,
       ['run', command === 'dev' ? 'start' : command],

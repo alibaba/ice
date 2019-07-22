@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { Button } from '@alifd/next';
+// import { Button } from '@alifd/next';
 import Icon from '@components/Icon';
 import TaskButton from '@components/TaskButton';
 import Modal from '@components/Modal';
@@ -23,8 +23,14 @@ const TaskItem = ({
   onInstallDependencyCancel,
   onInstallDependencyOk,
 }) => {
-  function handleClick() {
+  // NOTE: hidden setting button
+  /* function handleClick() {
     history.push(path);
+  } */
+
+  function handleStart() {
+    history.push(path);
+    onStart();
   }
 
   return (
@@ -43,13 +49,13 @@ const TaskItem = ({
         <div className={styles.taskAction}>
           <TaskButton
             isWorking={isWorking}
-            onStart={onStart}
+            onStart={handleStart}
             onStop={onStop}
           />
-          <Button type="normal" onClick={handleClick} className={styles.settingButton}>
+          {/* <Button type="normal" onClick={handleClick} className={styles.settingButton}>
             <Icon type="settings" className={styles.settingIcon} />
             <FormattedMessage id="iceworks.project.panel.quick.task.setting" />
-          </Button>
+          </Button> */}
         </div>
       </div>
       <Modal

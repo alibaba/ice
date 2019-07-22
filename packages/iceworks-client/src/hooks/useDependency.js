@@ -8,7 +8,7 @@ import stores from '@stores';
 
 export const STATUS_RESETING = 'reseting';
 
-function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
+function useDependency(diableUseSocket, showGlobalTerminal = true) {
   const {
     on: onCreateModal,
     setModal: setCreateModal,
@@ -74,11 +74,9 @@ function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
     }
   }
 
+  // HACK useDependency will be called many times but we don't want to repeat listening
   if (!diableUseSocket) {
-    useSocket('adapter.dependency.reset.data', writeGlobalLog);
-    if (writeChunk) {
-      useSocket('adapter.dependency.reset.data', data => writeChunk(data));
-    }
+    useSocket('adapter.dependency.reset.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
 
     useSocket('adapter.dependency.reset.exit', (code) => {
       if (code === 0) {
@@ -89,7 +87,7 @@ function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
       }
     });
 
-    useSocket('adapter.dependency.upgrade.data', writeGlobalLog);
+    useSocket('adapter.dependency.upgrade.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
 
     useSocket('adapter.dependency.upgrade.exit', (code) => {
       if (code === 0) {
@@ -100,7 +98,7 @@ function useDependency(diableUseSocket, writeChunk, showGlobalTerminal = true) {
       }
     });
 
-    useSocket('adapter.dependency.install.data', writeGlobalLog);
+    useSocket('adapter.dependency.install.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
 
     useSocket('adapter.dependency.install.exit', (code) => {
       if (code === 0) {
