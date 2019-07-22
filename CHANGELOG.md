@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 3.0.0-beta.8
+
+[fix] redirect to task page when run task #2495
+[fix] fix vue materials don't appear in material panel #2496
+[fix] feat: add material page loading #2500
+[fix] use ice-npm-utils in iceworks-cli #2506
+[fix] format dependency log #2499
+[fix] log info in production environment #2490
+[refactor] use shell path for env #2498
+
 ## 3.0.0-beta.6
 
 - [feat] support npm client select #2469
