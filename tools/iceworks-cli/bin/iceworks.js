@@ -79,8 +79,8 @@ program.parse(process.argv);
 
   if (!process.argv.slice(2).length) {
     // start web server for iceworks 3.0
-    // eslint-disable-next-line global-require
     try {
+      // eslint-disable-next-line global-require
       await require('../command/start')(cleanArgs());
     }  catch (err) {
       console.error(err);
