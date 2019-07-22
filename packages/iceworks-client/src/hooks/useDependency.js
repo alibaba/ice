@@ -76,7 +76,7 @@ function useDependency(diableUseSocket, showGlobalTerminal = true) {
 
   // HACK useDependency will be called many times but we don't want to repeat listening
   if (!diableUseSocket) {
-    useSocket('adapter.dependency.reset.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));=======
+    useSocket('adapter.dependency.reset.data', ({ chunk, isStdout }) => writeGlobalLog(chunk, isStdout));
 
     useSocket('adapter.dependency.reset.exit', (code) => {
       if (code === 0) {
