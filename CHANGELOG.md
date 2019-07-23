@@ -3,6 +3,8 @@
 ## 3.0.0-beta.9
 
 - [fix] installation dependency error #2515
+- [fix] get and set work folder error #2520
+- [refactor] specify worker for server #2519
 
 ## 3.0.0-beta.8
 
