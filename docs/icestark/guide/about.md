@@ -23,7 +23,7 @@ order: 0
 
 ## 应用架构
 
-![应用架构](https://img.alicdn.com/tfs/TB1gs02aQT2gK0jSZFkXXcIQFXa-1421-1416.png)
+![应用架构](https://img.alicdn.com/tfs/TB1kbF7bbY1gK0jSZTEXXXDQVXa-1421-1416.png)
 
 - 按照 UI 结构进行框架应用、子应用的拆分
 - 框架应用：负责子应用的注册，公共内容展示（Common Header、Common Sidebar、Common Footer等）
