@@ -22,7 +22,7 @@ const schema = {
     type: 'object',
     default: {
       workId: '',
-      name: '请登录',
+      name: '',
       avatarUrl:
         'https://img.alicdn.com/tfs/TB1hjBJXLxj_uVjSZFqXXaboFXa-147-150.jpg',
       isLogin: false,
