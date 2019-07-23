@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import socket from '@src/socket';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
+import showMessage from '@utils/showMessage';
 import styles from './index.module.scss';
 
 const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
@@ -10,7 +11,12 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
   const { path: workPath, directories = [] } = workFolder;
 
   async function onSetWork(setPath) {
-    setWorkFolder(await socket.emit('home.setting.setWorkFolder', { path: setPath }));
+    try {
+      const result = await socket.emit('home.setting.setWorkFolder', { path: setPath });
+      setWorkFolder(result);
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function onSetParentAsWork() {
