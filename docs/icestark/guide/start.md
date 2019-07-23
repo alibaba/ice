@@ -7,7 +7,7 @@ order: 1
 
 启动 iceworks
 
-![iceworks](https://img.alicdn.com/tfs/TB1SKFucbGYBuNjy0FoXXciBFXa-1964-1424.png)
+![iceworks](https://img.alicdn.com/tfs/TB1bjCGblv0gK0jSZKbXXbK2FXa-2878-1382.png)
 
 选择 icestark 模板
 
@@ -18,13 +18,13 @@ order: 1
 
 ## 调试服务
 
-通过项目管理面板，可执行 **启动调试服务**
+通过启动项目面板，可执行 **运行**
 
-![启动调试](https://img.alicdn.com/tfs/TB1VlrAcntYBeNjy1XdXXXXyVXa-1964-1424.png)
+![启动调试](https://img.alicdn.com/tfs/TB1hGmDbXY7gK0jSZKzXXaikpXa-2876-1368.png)
 
-点击 `启动调试服务` 等待完成后出现服务地址，点击可以预览当前项目。
+点击 `运行` 等待完成后出现服务地址，点击可以预览当前项目。
 
-![demo](https://img.alicdn.com/tfs/TB1BaKaXq1s3KVjSZFtXXaLOpXa-2878-1366.jpg)
+![demo](https://img.alicdn.com/tfs/TB14igtaVT7gK0jSZFpXXaTkpXa-2878-1368.png)
 
 > 上图是 icestark 模板启动后的预览效果
 
