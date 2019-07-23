@@ -25,7 +25,7 @@ export default async (i18n) => {
     Dependency: baseAdapter.Dependency,
     Task: {
       ...baseAdapter.Task,
-      module: Task
+      module: Task,
     },
   };
 
