@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.0-beta.9
+
+- [fix] installation dependency error #2515
+
 ## 3.0.0-beta.8
 
 - [feat] log info in production environment #2490
