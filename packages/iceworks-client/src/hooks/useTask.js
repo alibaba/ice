@@ -75,7 +75,11 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   // listen event error
   useSocket(taskErrorEventName, error => showMessage(error.message));
 
-  useSocket('adapter.dependency.reset.data', data => writeChunk(data));
+  useSocket('adapter.dependency.reset.data', data => {
+    if (writeChunk) {
+      writeChunk(data.chunk, data.isStdout);
+    }
+  });
 
   return {
     isWorking: status === 'working',
