@@ -2,7 +2,6 @@ const { app, BrowserWindow } = require('electron');
 const address = require('address');
 const execa = require('execa');
 const path = require('path');
-const fs = require('fs');
 const detectPort = require('detect-port');
 const is = require('electron-is');
 const log = require('electron-log');
