@@ -25,6 +25,7 @@ export default class Router implements IRouterModule {
 
   public configFilePath = 'config/routes.js';
 
+  // whether import dependency should have prefix such as './' or '@/'
   public noPathPrefix = false;
 
   public removePaths: string[];
@@ -244,6 +245,11 @@ export default class Router implements IRouterModule {
     traverse(routerConfigAST, {
       ImportDeclaration: ({ node, key }) => {
         const { source } = node;
+        // parse import declaration to get directory type (layouts or pages)
+        // support three path types
+        // 1. import xxx from 'pages/xxx';
+        // 2. import xxx from './pages/xxx';
+        // 3. import xxx from '@/pages/xxx';
         const noPrefixReg = /^(layouts|pages)\//;
         const hasPrefixReg = /^(\.|@)\/(layouts|pages)\//;
         const reg = this.noPathPrefix ? noPrefixReg : hasPrefixReg;
@@ -267,6 +273,11 @@ export default class Router implements IRouterModule {
       // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
       VariableDeclaration: ({ node, key }) => {
         const code = generate(node.declarations[0]).code;
+        // parse const declaration to get directory type (layouts or pages)
+        // support three path types
+        // 1. const xxx = React.lazy(() => import('pages/xxx'));
+        // 2. const xxx = React.lazy(() => import('./pages/xxx'));
+        // 3. const xxx = React.lazy(() => import('@/pages/xxx'));
         const noPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
         const hasPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
         const matchLazyReg = this.noPathPrefix ? noPrefixReg : hasPrefixReg;
