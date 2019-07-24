@@ -1,10 +1,13 @@
 const path = require('path');
+const fs = require('fs');
+const userHome = require('user-home');
 const spawn = require('cross-spawn');
 const portfinder = require('portfinder');
 const chalk = require('chalk');
 const ora = require('ora');
 const open = require('open');
 const inquirer = require('inquirer');
+const { checkAliInternal } = require('ice-npm-utils');
 const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
@@ -13,6 +16,7 @@ const SERVER_PATH = path.join(__dirname, '../', 'server');
 const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
 async function start(options = {}) {
+  await dauStat();
   const answers = await checkServerVersion();
   if (answers && answers.update) {
     const child = spawn('node', ['./lib/downloadServer.js'], {
@@ -67,7 +71,7 @@ async function listen(options) {
       successMsg(url);
       open(url);
       started = true;
-      goldlog('start-server');
+
     } else if (started) {
       console.log(data.toString());
     }
@@ -124,6 +128,25 @@ async function checkServerVersion() {
     ]);
 
     return answers;
+  }
+}
+
+async function dauStat() {
+  try {
+    const isAlibaba = await checkAliInternal();
+    const nowtDate = new Date().toDateString();
+    const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
+    const iceworksConfigContent = require(`${iceworksConfigPath}`);
+    const lastDate = iceworksConfigContent.lastDate;
+    if(nowtDate !== lastDate) {
+      iceworksConfigContent.lastDate = nowtDate;
+      fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
+      goldlog('dau', {
+        data: isAlibaba ? 'alibaba' : 'outer',
+      });
+    }
+  } catch () {
+    //
   }
 }
 
