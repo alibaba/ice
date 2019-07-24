@@ -15,14 +15,15 @@ let mainWindow;
 let serverProcess;
 let setPort = '7001';
 const serverDirName = 'server';
+const serverTempDirName = 'server_temp';
 
 const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, '..', serverDirName) : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
+const serferTempDir = path.join(__dirname, '..', serverTempDirName);
 const loadingHTML = path.join(__dirname, 'loading.html');
 const errorHTML = path.join(__dirname, 'error.html');
-
 
 async function checkVersion(packageName, packageVersion) {
   try {
@@ -173,18 +174,28 @@ function stopServerAndQuit() {
 }
 
 async function downloadServer() {
-  if (fs.existsSync(serverDir)) {
-    shelljs.rm('-rf', [serverDir]);
-  }
-  shelljs.mkdir('-p', serverDir);
+  log.info('[run][downloadServer] start');
+  log.info('[run][downloadServer] serferTempDir:', serferTempDir);
 
-  const tarball = await getNpmTarball('iceworks-server');
-  await getAndExtractTarball(serverDir, tarball);
-  await execa('npm', ['install'], {
-    stdio: 'inherit',
-    cwd: serverDir,
-    env: process.env,
-  });
+  let success = false;
+  try {
+    const tarball = await getNpmTarball('iceworks-server');
+    await getAndExtractTarball(serferTempDir, tarball);
+    await execa('npm', ['install'], {
+      stdio: 'inherit',
+      cwd: serferTempDir,
+      env: process.env,
+    });
+    success = true;
+  } catch (error) {
+    log.error('[run][downloadServer] got error:', error);
+  }
+
+  if (success) {
+    log.info('[run][downloadServer] done');
+    shelljs.rm('-rf', [serverDir]);
+    shelljs.mv(serferTempDir, serverDir);
+  }
 }
 
 app.on('ready', () => {
