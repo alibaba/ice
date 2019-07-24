@@ -24,28 +24,22 @@ const serferTempDir = path.join(__dirname, '..', serverTempDirName);
 const loadingHTML = path.join(__dirname, 'public', 'loading.html');
 const errorHTML = path.join(__dirname, 'public', 'error.html');
 
-async function checkVersion(packageName, packageVersion) {
-  try {
-    const latestVersion = await getNpmLatestSemverVersion(packageName, packageVersion);
-    if (semver.lt(packageVersion, latestVersion)) {
-      return latestVersion;
-    }
-  } catch (error) {
-    // ...
-  }
-};
-
 // eslint-disable-next-line import/no-dynamic-require
 const serverPackageJSON = require(path.join(serverDir, 'package.json'));
 
 async function checkServerVersion() {
   const packageName = serverPackageJSON.name;
   const packageVersion = serverPackageJSON.version;
-  return isProduction && await checkVersion(packageName, packageVersion);
-}
-
-function getServerUrl() {
-  return `http://${ip}:${setPort}/`;
+  if (isProduction) {
+    try {
+      const latestVersion = await getNpmLatestSemverVersion(packageName, packageVersion);
+      if (semver.lt(packageVersion, latestVersion)) {
+        return latestVersion;
+      }
+    } catch (error) {
+      // ...
+    }
+  }
 }
 
 function windowLoadError() {
@@ -65,6 +59,12 @@ function windowLoadLoading() {
     } else {
       mainWindow.loadURL('http://localhost:4444/loading.html');
     }
+  }
+}
+
+function windowLoadServer() {
+  if (mainWindow) {
+    mainWindow.loadURL(`http://${ip}:${setPort}/`);
   }
 }
 
@@ -100,7 +100,7 @@ async function startServer() {
         mainWindow.webContents.send('log', logInfo);
       }
       if (logInfo.search('started on') > 0) {
-        mainWindow.loadURL(getServerUrl());
+        windowLoadServer();
       }
     }
   });
@@ -145,13 +145,13 @@ function createWindow() {
   });
 }
 
-function windowLoadServer() {
+function windowStartServer() {
   if (!serverProcess) {
     log.info('[run][loadServer][start-server]');
     startServer();
   } else {
     log.info('[run][loadServer][load-server]');
-    mainWindow.loadURL(getServerUrl());
+    windowLoadServer();
   }
 }
 
@@ -221,7 +221,7 @@ app.on('ready', () => {
         return downloadServer();
       }
     })
-    .then(windowLoadServer);
+    .then(windowStartServer);
 });
 
 app.on('before-quit', (event) => {
@@ -246,6 +246,6 @@ app.on('activate', () => {
 
   if (mainWindow === null) {
     createWindow();
-    windowLoadServer();
+    windowStartServer();
   }
 });
