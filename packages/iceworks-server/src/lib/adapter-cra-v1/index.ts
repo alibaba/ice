@@ -3,7 +3,6 @@
  */
 import { checkAliInternal } from 'ice-npm-utils';
 import getBaseAdapter from '../adapter';
-import Task from './modules/task';
 import Router from './modules/router';
 
 export default async (i18n) => {
@@ -20,13 +19,9 @@ export default async (i18n) => {
     QuickBuild: baseAdapter.QuickBuild,
     Git: baseAdapter.Git,
     OSS: baseAdapter.OSS,
-    DEF: baseAdapter.DEF,
     Todo: baseAdapter.Todo,
     Dependency: baseAdapter.Dependency,
-    Task: {
-      ...baseAdapter.Task,
-      module: Task,
-    },
+    Task: baseAdapter.Task,
     Router: {
       ...baseAdapter.Router,
       module: Router,
@@ -34,7 +29,7 @@ export default async (i18n) => {
   };
 
   const isAliInternal = await checkAliInternal();
-  const filteredPanels = isAliInternal ? ['OSS'] : ['DEF'];
+  const filteredPanels = isAliInternal ? ['OSS'] : [];
   Object.keys(adapter).forEach((name) => {
     if (filteredPanels.indexOf(name) > -1) {
       delete adapter[name];
