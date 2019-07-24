@@ -1,8 +1,12 @@
 import termManager from './termManager';
 
-function writeGlobalLog(msg) {
+function writeGlobalLog(msg, isStdout) {
   const term = termManager.find('globalTerminal');
-  term.writeLog(msg);
+  if (isStdout) {
+    term.writeChunk(msg);
+  } else {
+    term.writeLog(msg);
+  }
 }
 
 export default writeGlobalLog;

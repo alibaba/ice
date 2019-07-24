@@ -1,7 +1,7 @@
 const path = require('path');
 const execa = require('execa');
 const chalk = require('chalk');
-const getTarball = require('./getTarball');
+const { getNpmTarball } = require('ice-npm-utils');
 const extractTarball = require('./extractTarball');
 
 const NPM_NAME = 'iceworks-server';
@@ -13,7 +13,7 @@ const DEST_DIR = path.join(__dirname, '../', 'server');
  * @param {string} destDir target directory
  */
 function downloadServer(npmName, destDir) {
-  return getTarball(npmName)
+  return getNpmTarball(npmName, 'latest')
     .then((url) => {
       return extractTarball(url, destDir);
     })

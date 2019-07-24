@@ -33,6 +33,8 @@ export default (app: Application) => {
     ['home.setting.getEditor', home.setting.getEditor],
     ['home.setting.setNpmClient', home.setting.setNpmClient],
     ['home.setting.getNpmClient', home.setting.getNpmClient],
+    ['home.setting.setRegistry', home.setting.setRegistry],
+    ['home.setting.getRegistry', home.setting.getRegistry],
     ['home.setting.setUser', home.setting.setUser],
     ['home.setting.getUser', home.setting.getUser],
 
