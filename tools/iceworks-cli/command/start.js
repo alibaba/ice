@@ -136,6 +136,7 @@ async function dauStat() {
     const isAlibaba = await checkAliInternal();
     const nowtDate = new Date().toDateString();
     const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
+    // eslint-disable-next-line
     const iceworksConfigContent = require(`${iceworksConfigPath}`);
     const lastDate = iceworksConfigContent.lastDate;
     if(nowtDate !== lastDate) {
@@ -145,9 +146,9 @@ async function dauStat() {
         data: isAlibaba ? 'alibaba' : 'outer',
       });
     }
-  } catch () {
+  } catch (err) {
     //
-  }
+  };
 }
 
 module.exports = (...args) => {
