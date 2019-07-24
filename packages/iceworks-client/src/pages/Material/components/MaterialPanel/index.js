@@ -76,7 +76,7 @@ const MaterialPanel = ({
         <Loading className={styles.loadingWrap} />
       ) : (
         <Row wrap gutter="20">
-          {renderCol(type, currentMaterials, onUse, getMaterialLoading)}
+          {renderCol(type, currentMaterials, onUse)}
         </Row>
       )}
     </div>
