@@ -1,0 +1,34 @@
+{
+  "name": "@icedesign/lite-scaffold",
+  "version": "3.0.2",
+  "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示",
+  "dependencies": {
+    "@alifd/next": "^1.x",
+    "@icedesign/theme": "^1.0.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "ice-plugin-fusion": "^0.1.4",
+    "ice-plugin-moment-locales": "^0.1.0",
+    "ice-plugin-multi-pages": "^0.1.0",
+    "ice-scripts": "^2.0.0"
+  },
+  "scripts": {
+    "start": "ice-scripts dev",
+    "build": "ice-scripts build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "iceworks": {
+    "type": "react",
+    "adapter": "adapter-react-v3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/react-materials/tree/master/scaffolds/ice-design-lite"
+  }
+}

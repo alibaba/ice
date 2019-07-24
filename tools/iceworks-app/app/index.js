@@ -21,8 +21,8 @@ const ip = address.ip();
 const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, '..', serverDirName) : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
 const serferTempDir = path.join(__dirname, '..', serverTempDirName);
-const loadingHTML = path.join(__dirname, 'loading.html');
-const errorHTML = path.join(__dirname, 'error.html');
+const loadingHTML = path.join(__dirname, 'public', 'loading.html');
+const errorHTML = path.join(__dirname, 'public', 'error.html');
 
 async function checkVersion(packageName, packageVersion) {
   try {
@@ -48,10 +48,28 @@ function getServerUrl() {
   return `http://${ip}:${setPort}/`;
 }
 
-async function startServer() {
+function windowLoadError() {
   if (mainWindow) {
-    mainWindow.loadFile(loadingHTML);
+    if (isProduction) {
+      mainWindow.loadFile(errorHTML);
+    } else {
+      mainWindow.loadURL('http://localhost:4444/error.html');
+    }
   }
+}
+
+function windowLoadLoading() {
+  if (mainWindow) {
+    if (isProduction) {
+      mainWindow.loadFile(loadingHTML);
+    } else {
+      mainWindow.loadURL('http://localhost:4444/loading.html');
+    }
+  }
+}
+
+async function startServer() {
+  windowLoadLoading();
 
   if (!isProduction && mainWindow.webContents) {
     mainWindow.webContents.openDevTools({ mode: 'right' });
@@ -89,9 +107,7 @@ async function startServer() {
 
   serverProcess.on('error', (buffer) => {
     log.error('[run][startServerAndLoad][start-server] error:', buffer.toString());
-    if (mainWindow) {
-      mainWindow.loadFile(errorHTML);
-    }
+    windowLoadError();
   });
 
   serverProcess.stderr.on('data', (buffer) => {
@@ -103,9 +119,7 @@ async function startServer() {
 
     if (code === 1) {
       serverProcess = null;
-      if (mainWindow) {
-        mainWindow.loadFile(errorHTML);
-      }
+      windowLoadError();
     }
   });
 }
@@ -145,9 +159,7 @@ function stopServerAndQuit() {
   log.info('[run][stopServerAndQuit]');
 
   // TODO The following call does not take effect
-  if (mainWindow) {
-    mainWindow.loadFile(loadingHTML);
-  }
+  windowLoadLoading();
 
   const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
 
@@ -175,6 +187,7 @@ function stopServerAndQuit() {
 async function downloadServer() {
   log.info('[run][downloadServer] start');
   log.info('[run][downloadServer] serferTempDir:', serferTempDir);
+  windowLoadLoading();
 
   let success = false;
   try {
