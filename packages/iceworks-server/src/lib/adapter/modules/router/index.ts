@@ -25,6 +25,8 @@ export default class Router implements IRouterModule {
 
   public configFilePath = 'config/routes.js';
 
+  public noPathPrefix = false;
+
   public removePaths: string[];
 
   constructor(params: {project: IProject; storage: any }) {
@@ -242,16 +244,22 @@ export default class Router implements IRouterModule {
     traverse(routerConfigAST, {
       ImportDeclaration: ({ node, key }) => {
         const { source } = node;
-        const match = source.value.match(/^(\.|@)\/(layouts|pages)\//);
+        const noPrefixReg = /^(layouts|pages)\//;
+        const hasPrefixReg = /^(\.|@)\/(layouts|pages)\//;
+        const reg = this.noPathPrefix ? noPrefixReg : hasPrefixReg;
+        const idx = this.noPathPrefix ? 1 : 2;
+        const match = source.value.match(reg);
 
-        if (match && match[2]) {
+        if (match && match[idx]) {
           const { specifiers } = node;
           const { name } = specifiers[0].local;
-          existAtSign = match[1] === '@';
+          if (!this.noPathPrefix) {
+            existAtSign = match[idx - 1] === '@';
+          }
           importDeclarations.push({
             index: key,
             name,
-            type: match[2],
+            type: match[idx],
           });
         }
       },
@@ -259,16 +267,19 @@ export default class Router implements IRouterModule {
       // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
       VariableDeclaration: ({ node, key }) => {
         const code = generate(node.declarations[0]).code;
-        const matchLazyReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
+        const noPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
+        const hasPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
+        const matchLazyReg = this.noPathPrefix ? noPrefixReg : hasPrefixReg;
+        const idx = this.noPathPrefix ? 4 : 5;
         const match = code.match(matchLazyReg);
 
-        if (match && match.length > 5) {
+        if (match && match.length > idx) {
           this.existLazy = true;
-          existAtSign = match[4] === '@';
+          existAtSign = match[idx - 1] === '@';
           importDeclarations.push({
             index: key,
             name: match[1],
-            type: match[5],
+            type: match[idx],
           });
         }
       },
@@ -366,7 +377,9 @@ export default class Router implements IRouterModule {
       sign = '.';
     }
     newImports.forEach(({name, type}) => {
-      if (!this.existLazy || type === LAYOUT_DIRECTORY) {
+      if (this.noPathPrefix) {
+        importCode += `import ${name} from '${type}/${name}';\n`;
+      } else if (!this.existLazy || type === LAYOUT_DIRECTORY) {
         // layour or not exist lazy use `import Page from '@/pages/Page'`
         importCode += `import ${name} from '${sign}/${type}/${name}';\n`;
       } else {

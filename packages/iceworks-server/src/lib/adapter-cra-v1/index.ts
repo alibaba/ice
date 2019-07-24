@@ -4,6 +4,7 @@
 import { checkAliInternal } from 'ice-npm-utils';
 import getBaseAdapter from '../adapter';
 import Task from './modules/task';
+import Router from './modules/router';
 
 export default async (i18n) => {
   const baseAdapter = await getBaseAdapter(i18n);
@@ -14,7 +15,6 @@ export default async (i18n) => {
     Guide: baseAdapter.Guide,
     Layout: baseAdapter.Layout,
     Page: baseAdapter.Page,
-    Router: baseAdapter.Router,
     Menu: baseAdapter.Menu,
     QuickDev: baseAdapter.QuickDev,
     QuickBuild: baseAdapter.QuickBuild,
@@ -26,6 +26,10 @@ export default async (i18n) => {
     Task: {
       ...baseAdapter.Task,
       module: Task,
+    },
+    Router: {
+      ...baseAdapter.Router,
+      module: Router,
     },
   };
 
