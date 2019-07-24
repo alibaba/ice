@@ -25,64 +25,61 @@ const MaterialPanel = ({
   const showCategories = categories.length > 1;
 
   function renderCol(materialType, data, eventHandler) {
-    if (!getMaterialLoading) {
-      if (data.length < 1) {
+    if (data.length < 1) {
+      return (
+        <Col span="24">
+          <NoData />
+        </Col>
+      );
+    }
+
+    return data.map(item => {
+      const key = item.source && item.source.npm ? item.source.npm : item.title;
+
+      if (materialType === 'components') {
         return (
-          <Col span="24">
-            <NoData />
+          <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
+            <ComponentCard dataSource={item} onInstall={eventHandler} />
           </Col>
         );
       }
-
-      return data.map(item => {
-        const key =
-          item.source && item.source.npm ? item.source.npm : item.title;
-
-        if (materialType === 'components') {
-          return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
-              <ComponentCard dataSource={item} onInstall={eventHandler} />
-            </Col>
-          );
-        }
-        if (materialType === 'blocks') {
-          return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
-              <LazyLoad height={265} resize scrollContainer=".scollContainer">
-                <BlockCard dataSource={item} />
-              </LazyLoad>
-            </Col>
-          );
-        }
-        if (materialType === 'scaffolds') {
-          return (
-            <Col l="12" s="12" xs="24" xxs="24" key={key}>
-              <ScaffoldCard dataSource={item} onDownload={eventHandler} />
-            </Col>
-          );
-        }
-        return null;
-      });
-    }
-
-    return null;
+      if (materialType === 'blocks') {
+        return (
+          <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
+            <LazyLoad height={265} resize scrollContainer=".scollContainer">
+              <BlockCard dataSource={item} />
+            </LazyLoad>
+          </Col>
+        );
+      }
+      if (materialType === 'scaffolds') {
+        return (
+          <Col l="12" s="12" xs="24" xxs="24" key={key}>
+            <ScaffoldCard dataSource={item} onDownload={eventHandler} />
+          </Col>
+        );
+      }
+      return null;
+    });
   }
 
   return (
-    <Loading visible={getMaterialLoading} className={styles.main}>
-      <div className={styles.materialsPanel}>
-        {showCategories ? (
-          <MaterialCategories
-            dataSource={categories}
-            current={currentCategory}
-            onChange={onCategoryChange}
-          />
-        ) : null}
+    <div className={styles.materialsPanel}>
+      {showCategories ? (
+        <MaterialCategories
+          dataSource={categories}
+          current={currentCategory}
+          onChange={onCategoryChange}
+        />
+      ) : null}
+      {getMaterialLoading ? (
+        <Loading className={styles.loadingWrap} />
+      ) : (
         <Row wrap gutter="20">
           {renderCol(type, currentMaterials, onUse, getMaterialLoading)}
         </Row>
-      </div>
-    </Loading>
+      )}
+    </div>
   );
 };
 
