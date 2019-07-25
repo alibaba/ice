@@ -1,7 +1,6 @@
 const { autoUpdater, BrowserWindow, shell } = require('electron-updater');
 const log = require('electron-log');
-const { Notification } = require('electron');
-const { ipcMain } = require('electron');
+const { ipcMain, Notification } = require('electron');
 const getURL = require('./getURL');
 
 let win = null;
