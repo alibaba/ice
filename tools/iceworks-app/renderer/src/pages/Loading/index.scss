@@ -56,3 +56,13 @@ body {
     height: 54px;
   }
 }
+
+.logs {
+  width: 640px;
+  height: 400px;
+  padding: 12px 8px;
+  margin-top: 48px;
+  background-color: rgba(0, 0, 0, 0.803);
+  color: #fff;
+  overflow-y: auto;
+}

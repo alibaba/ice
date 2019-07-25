@@ -17,10 +17,8 @@ if (!ICE_CONTAINER) {
 const OSS_CDN_DOMAIN = 'https://iceworks.oss-cn-hangzhou.aliyuncs.com';
 
 let ipcRenderer;
-let logger;
 if (isInElectron) {
   const electron = window.require('electron');
-  logger = window.require('electron-log');
   ipcRenderer = electron.ipcRenderer;
 }
 
@@ -104,7 +102,7 @@ function Main() {
           }
         })
         .catch((err) => {
-          logger.info(err);
+          console.info(err);
         });
     }
   };
