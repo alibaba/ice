@@ -37,9 +37,9 @@ function Main() {
       </div>
       <div className="logs">
         {
-          state.logs.map((text) => {
+          state.logs.map((text, index) => {
             return (
-              <div>
+              <div key={index}>
                 {text}
               </div>
             );
