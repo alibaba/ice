@@ -143,7 +143,7 @@ async function dauStat() {
       iceworksConfigContent.lastDate = nowtDate;
       fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
       goldlog('dau', {
-        data: isAlibaba ? 'alibaba' : 'outer',
+        group: isAlibaba ? 'alibaba' : 'outer',
       });
     }
   } catch (err) {
