@@ -1,17 +1,31 @@
 const os = require('os');
 const gulp = require('gulp');
+const gutil = require('gulp-util');
+const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
 const execa = require('execa');
+const co = require('co');
+const oss = require('ali-oss');
 const { getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const shelljs = require('shelljs');
 const pathExists = require('path-exists');
+const writeFile = require('write');
+const appPkg = require('./package.json');
+
+const colors = gutil.colors;
+const isMac = process.platform === 'darwin';
+const isWin32X64 = process.platform === 'win32' && process.arch === 'x64';
+const isLinuxX64 = process.platform === 'linux' && process.arch === 'x64';
+
+const productName = appPkg.productName;
 
 const cliBuilder = require.resolve('electron-builder/out/cli/cli.js');
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const isDev = process.env.NODE_ENV === 'development';
+const distName = 'dist';
 
 gulp.task('dist', (done) => {
   console.log('NODE_ENV is dev: ', isDev);
@@ -23,7 +37,6 @@ gulp.task('dist', (done) => {
     target = 'mac';
   }
   const buildName = 'build';
-  const distName = 'dist';
   const serverName = 'server';
   const rendererName = 'renderer';
   const buildDir = path.join(__dirname, buildName);
@@ -147,4 +160,199 @@ gulp.task('dist', (done) => {
   }
 
   dist();
+});
+
+/**
+ * 上传文件到 oss
+ * @param {*} paths oss 目标路径
+ * @param {*} file 本地文件路径
+ */
+async function getUpload2oss() {
+  gutil.log('Access Key 请在 oss 平台查询');
+  const accessKey = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: '请输入 Access KeyId (默认值读取: process.env.ACCESS_KEY)',
+      default: process.env.ACCESS_KEY || '',
+    },
+    {
+      type: 'input',
+      name: 'secret',
+      message: '请输入 Access Key Secret (默认值读取: process.env.SECRET)',
+      default: process.env.SECRET || '',
+    },
+    {
+      name: 'bucket',
+      type: 'list',
+      choices: ['iceworks', 'iceworks-beta', 'iceworks-next'],
+      message: '请选择 bucket',
+    },
+  ]);
+
+  const iceworksStore = oss({
+    bucket: accessKey.bucket,
+    endpoint: 'oss-cn-hangzhou.aliyuncs.com',
+    accessKeyId: accessKey.id,
+    accessKeySecret: accessKey.secret,
+    time: '120s',
+  });
+
+  return async function(paths, file) {
+    if (!pathExists.sync(file)) {
+      gutil.log(colors.red('不存在文件'), file);
+      return 1;
+    }
+  
+    gutil.log(
+      colors.yellow('开始上传'),
+      path.relative(__dirname, file),
+      '=>',
+      paths.join('/')
+    );
+
+    return co(iceworksStore.put(paths.join('/'), file))
+      .then((object = {}) => {
+        if (object.res && object.res.status === 200) {
+          gutil.log(colors.green('上传成功'), object.url);
+          return 0;
+        }
+        gutil.log(colors.red('上传失败'), file);
+        return 1;
+      })
+      .catch(() => {
+        gutil.log(colors.red('上传失败'), file);
+        return 1;
+      });
+  };
+}
+
+gulp.task('upload-app', async () => {
+  const upload2oss = await getUpload2oss();
+
+  // eslint-disable-next-line global-require
+  const version = require('./build/package.json').version;
+  const distDir = path.join(__dirname, distName);
+
+  let channel = 'latest';
+
+  const versionPatch = version.split('.')[2];
+  if (versionPatch.indexOf('-') !== -1) {
+    channel = versionPatch.split('-')[1];
+  }
+
+  gutil.log('channel', channel);
+
+  let files = [];
+  let platformName = '';
+  if (isMac) {
+    files = [
+      `${productName}-${version}.dmg`,
+      `${productName}-${version}-mac.zip`,
+      `${channel}-mac.yml`,
+    ];
+    platformName = 'mac';
+  } else if (isWin32X64) {
+    files = [`${productName}-setup-${version}.exe`, `${channel}.yml`];
+    platformName = 'win';
+  } else if (isLinuxX64) {
+    files = [
+      `${productName}-amd64-${version}.deb`,
+      `${productName}-x86_64-${version}.AppImage`,
+      `${channel}-linux.yml`,
+    ];
+    platformName = 'linux';
+  }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const name of files) {
+    const filepath = path.join(distDir, name);
+    // eslint-disable-next-line no-await-in-loop
+    const code = await upload2oss([platformName, name], filepath);
+    if (code !== 0) {
+      break;
+    }
+  }
+});
+
+gulp.task('generate-updates', (done) => {
+  const now = gutil.date(new Date(), 'yyyy-mm-dd');
+  const version = appPkg.version;
+
+  const template = {
+    'darwin-x64-prod': {
+      name: 'iceworks',
+      description: 'ICE Desktop Application.',
+      install: `https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/${productName}-${version}.dmg`,
+      version: appPkg.version,
+      releaseDate: now,
+    },
+    'win-x64-prod': {
+      name: 'iceworks',
+      description: 'ICE Desktop Application.',
+      install: encodeURI(
+        `https://iceworks.oss-cn-hangzhou.aliyuncs.com/win/${productName}-setup-${version}.exe`
+      ),
+      version: appPkg.version,
+      releaseDate: now,
+    },
+  };
+
+  writeFile(
+    `./${distName}/updates.js`,
+    `callback(${JSON.stringify(template, null, 2)})`
+  )
+    .then(() => {
+      return writeFile(
+        `./${distName}/updates.json`,
+        JSON.stringify(template, null, 2)
+      );
+    })
+    .then(() => {
+      done();
+    });
+});
+
+/**
+ * 日志文件上传到 oss。
+ * dist/updates.json => oss: `${bucket}/`
+ * changelog/changelog.json => oss: `${bucket}/`
+ * changelog/${verison}.json => oss: `${bucket}/changelog/`
+ * dist/updates.json ==copy=> iceworks-updates.json => oss: `${bucket}/assets/`
+ * changelog/changelog.json ==copy=> iceworks-changelog.json => oss: `${bucket}/assets/`
+ */
+gulp.task('upload', async () => {
+  const upload2oss = await getUpload2oss();
+  // eslint-disable-next-line global-require
+  const version = require('./build/package.json').version;
+  const productNameLowCase = productName.toLowerCase();
+  const filepaths = [
+    {
+      from: `${distName}/updates.json`,
+      to: ['updates.json'],
+    },
+    {
+      from: 'changelog/changelog.json',
+      to: ['changelog.json'],
+    },
+    {
+      from: `changelog/${version}.json`,
+      to: [`changelog/${version}.json`],
+    },
+    {
+      from: `${distName}/updates.json`,
+      to: ['assets', `${productNameLowCase}-updates.json`],
+    },
+    {
+      from: 'changelog/changelog.json',
+      to: ['assets', `${productNameLowCase}-changelog.json`],
+    },
+  ];
+
+  filepaths.forEach(async (filepath) => {
+    const fromDir = path.join(__dirname, filepath.from);
+    const code = await upload2oss(filepath.to, fromDir);
+    if (code !== 0) {
+      gutil.log(colors.red(`${fromDir} => ${filepath.to.join('/')} error`));
+    }
+  });
 });
