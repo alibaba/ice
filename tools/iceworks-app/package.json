@@ -24,6 +24,7 @@
     "electron-updater": "^4.1.2",
     "execa": "^1.0.0",
     "ice-npm-utils": "^1.1.0",
+    "npm": "^6.9.0",
     "npm-run-path": "^3.1.0",
     "path-key": "^3.1.0",
     "semver": "^6.2.0",
