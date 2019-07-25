@@ -143,7 +143,7 @@ class SidebarLayout extends Component {
             <Layout.Main>
               {showTips ? <div className="tips-for-upgrade">
                 iceworks 已推出本地 CLI 版本，请通过 `npm install iceworks -g` 进行使用！
-                <a href="https://www.npmjs.com/package/iceworks" target="_blank">更多详情 ></a>
+                <a href="https://ice.work/docs/iceworks/quick-start" target="_blank">更多详情 ></a>
                 <Icon type="close" className="icon" onClick={() => {
                   this.setState({
                     showTips: false
