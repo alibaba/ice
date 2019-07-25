@@ -9,6 +9,7 @@ const semver = require('semver');
 const shelljs = require('shelljs');
 const { getNpmLatestSemverVersion, getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const getEnv = require('./getEnv');
+const getURL = require('./getURL');
 
 let mainWindow;
 let serverProcess;
@@ -21,8 +22,6 @@ const ip = address.ip();
 const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, '..', serverDirName) : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
 const serferTempDir = path.join(__dirname, '..', serverTempDirName);
-const loadingHTML = path.join(__dirname, 'public', 'loading.html');
-const errorHTML = path.join(__dirname, 'public', 'error.html');
 
 // eslint-disable-next-line import/no-dynamic-require
 const serverPackageJSON = require(path.join(serverDir, 'package.json'));
@@ -44,21 +43,13 @@ async function checkServerVersion() {
 
 function windowLoadError() {
   if (mainWindow) {
-    if (isProduction) {
-      mainWindow.loadFile(errorHTML);
-    } else {
-      mainWindow.loadURL('http://localhost:4444/error.html');
-    }
+    mainWindow.loadURL(getURL('error'));
   }
 }
 
 function windowLoadLoading() {
   if (mainWindow) {
-    if (isProduction) {
-      mainWindow.loadFile(loadingHTML);
-    } else {
-      mainWindow.loadURL('http://localhost:4444/loading.html');
-    }
+    mainWindow.loadURL(getURL('loading'));
   }
 }
 

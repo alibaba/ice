@@ -8,7 +8,9 @@
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
   },
   "devDependencies": {
     "ice-plugin-fusion": "^0.1.4",

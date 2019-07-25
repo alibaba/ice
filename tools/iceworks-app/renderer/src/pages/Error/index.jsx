@@ -2,10 +2,10 @@
 
 import ReactDOM from 'react-dom';
 import React from 'react';
+import isInElectron from '../../utils/isInElectron';
 import '../../global.scss';
 import './index.scss';
 
-const isInElectron = window.require;
 let logPath = '~/Library/Logs/iceworks/log.log';
 let shell;
 if (isInElectron) {
