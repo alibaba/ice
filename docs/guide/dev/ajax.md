@@ -97,37 +97,180 @@ class Demo extends React.Component {
 
 在这些基础功能基础上，axios 支持丰富的请求参数、异常状态码判断、全局处理异常、全局配置请求参数等，具体参见 [axios 文档](https://github.com/axios/axios#axios)。
 
-## 使用 DataBinder 简化状态管理
+## 使用 hooks 简化状态管理
 
-在 React 中使用 axios 时，因为数据是异步的，因此开发者往往需要定义一堆 state 来映射这些数据，这样做一方面管理起来比较麻烦，另一方面也会产生很多重复代码，因此飞冰提供了 [DataBinder](https://ice.work/component/databinder) 组件来解决这个问题，开发者只需要按照约定进行配置，然后在组件中直接使用这些数据即可：
+在异步数据请求中常见的一个需求是显示请求的加载中状态与显示请求的成功失败消息，使用原生的 axios 来实现时开发者往往需要定义相应的 state 来映射这些数据，这样做一方面管理起来比较麻烦，另一方面也会产生很多重复代码，因此对于 React 16.6.0 及以上版本，飞冰封装了一个 useRequest 的 hook 来解决这个问题，代码及使用方法如下：
+
+*提示：对于 React 16.6.0 以下版本的项目建议使用 [DataBinder](https://ice.work/component/databinder)*
+
+以下为 useRequest hook 的代码实现，其中的 `handleResponse` 方法为对 ajax 响应的处理逻辑，需要根据自身业务逻辑自定义：
 
 ```jsx
-import React, { Component } from 'react';
-import DataBinder from '@icedesign/data-binder';
+import { useReducer } from 'react';
+import axios from 'axios';
+import { Message } from '@alifd/next';
 
-@DataBinder({
-  fooData: {
-    url: 'https://www.easy-mock.com/mock/5cc669767a9a541c744c9be7/databinder/success',
-    defaultBindingData: {
-      foo: 'bar'
+/**
+ * 发送 ajax 请求的 hook
+ *
+ * @param {object} options - axios 配置 (https://github.com/axios/axios#request-config)
+ * @return {object}
+ *   @param {object} response - axios 返回值 (https://github.com/axios/axios#response-schema)
+ *   @param {object} error - HTTP 或者用户返回的错误
+ *   @param {boolean} loading - 请求的 loading 状态
+ *   @param {function} request - 发送 ajax 请求的方法
+ */
+export function useRequest(options) {
+  const initialState = {
+    response: null,
+    loading: false,
+    error: null,
+  };
+  const [state, dispatch] = useReducer(requestReducer, initialState);
+
+  /**
+   * 发送 ajax 请求的方法
+   * @param {object} config - 发送请求时的额外 axios 配置 (会与 useRequest 时传入的参数作合并)
+   * @return {object}
+   *   @param {object} response - axios 返回值 (https://github.com/axios/axios#response-schema)
+   *   @param {object} error - HTTP 或者用户返回的错误
+   *   @param {boolean} loading - 请求的 loading 状态
+   */
+  async function request(config) {
+    try {
+      dispatch({
+        type: 'init',
+      });
+
+      const response = await axios({
+        ...options,
+        ...config,
+      });
+
+      const { error } = handleResponse(response);
+
+      if (error) {
+        throw error;
+      } else {
+        dispatch({
+          type: 'success',
+          response,
+        });
+        return state;
+      }
+    } catch (error) {
+      Message.show({
+        type: 'error',
+        title: '错误消息',
+        content: error.message,
+      });
+      dispatch({
+        type: 'error',
+        error,
+      });
+      throw error;
     }
   }
-})
-class App extends Component {
-  componentDidMount() {
-    this.props.updateBindingData('fooData', {
-      params: {
-        key: 'init'
-      }
-    });
-  }
 
-  render() {
-    const { fooData } = this.props.bindingData;
-    const { foo, __loading, __error } = fooData;
+  return {
+    ...state,
+    request,
+  };
+}
 
-    return <div>...</div>;
+/**
+ * 处理请求状态的 reducer 方法
+ * @param {object} state - 旧的状态
+ * @param {object} action - dispatch 的 action 对象
+ * @return {object} 新状态
+ */
+function requestReducer(state, action) {
+  switch (action.type) {
+    case 'init':
+      return {
+        repsonse: null,
+        error: null,
+        loading: true,
+      };
+    case 'success':
+      return {
+        response: action.response,
+        error: null,
+        loading: false,
+      };
+    case 'error':
+      return {
+        response: null,
+        error: action.error,
+        loading: false,
+      };
+    default:
+      return {
+        repsonse: null,
+        error: null,
+        loading: false,
+      };
   }
+}
+
+/**
+ * ajax 响应值自定义处理逻辑，根据业务需求自定义
+ * @param {object} response - ajax 请求返回值
+ * @return {object} 根据状态码返回成功数据或者错误对象
+ */
+function handleResponse(response) {
+  const { data } = response;
+
+  // 响应状态码通常为 status 或者 code，此处根据接口规范自定义
+  if (data.status === 'SUCCESS') {
+    return { data };
+  } else if (data.status === 'NOT_LOGIN') {
+    location.href = '';
+  } else {
+    const error = new Error(data.message || '后端接口异常');
+    return { error };
+  }
+}
+```
+
+以下为使用 useRequest 的代码示例：
+
+```javascript
+import useRequest from './useRequest';
+
+function ListView(props) {
+  const { loading, error, response, request } = useRequest({
+    url: '/api/list',
+    method: 'GET',
+  });
+
+  useEffect(() => {
+    request(); // 发 ajax 请求
+  }, []);
+
+  const loadingView = (
+    <div>
+      载入中...
+    </div>
+  );
+  const errorView = (
+    <div>
+      {error.message}
+    </div>
+  );
+  const listView = error ? errorView : (
+    <div>
+      {response && response.data && response.data.map((item) => {
+        return item.content;
+      })}
+    </div>
+  );
+
+  return (
+    <div>
+      {loading ? loadingView : listView}
+    </div>
+  );
 }
 ```
 
