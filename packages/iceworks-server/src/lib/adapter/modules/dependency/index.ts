@@ -3,43 +3,62 @@ import * as fsExtra from 'fs-extra';
 import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as execa from 'execa';
-import * as latestVersion from 'latest-version';
+// import * as latestVersion from 'latest-version';
+import getNpmClient from '../../../getNpmClient';
 
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 
 export const install = async (
-  dependencies: ICreateDependencyParam[], isDev: boolean, project: IProject, socket: ISocket, namespace: string
+  params: {
+    dependencies: ICreateDependencyParam[];
+    npmClient: string;
+    registry: string;
+    isDev: boolean;
+    project: IProject;
+    namespace: string;
+    ctx: IContext;
+  }
 ): Promise<void> => {
-  console.log('dependencies', dependencies);
-  socket.emit(`adapter.${namespace}.install.data`, '开始安装依赖');
+  const { dependencies, npmClient, registry, isDev, project, namespace, ctx } = params;
+  const { socket, i18n, logger } = ctx;
+  logger.info('dependencies', dependencies);
+  socket.emit(`adapter.${namespace}.install.data`, { chunk: i18n.format('baseAdapter.dependency.reset.startInstall') });
 
-  const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
-    dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
-  );
+  const args = ['install', '--loglevel', 'silly', '--no-package-lock', isDev ? '---save-dev' : '--save']
+    .concat(dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`))
+    .concat(registry ? ['--registry', registry] : []);
 
   const childProcess = execa(
-    'npm',
+    npmClient,
     args,
     {
       cwd: project.path,
       env: project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     }
   );
 
-  childProcess.stdout.on('data', (buffer) => {
-    const text = buffer.toString();
-    console.log(`${namespace}.install.data:`, text);
+  const listenFunc = (buffer) => {
+    const chunk = buffer.toString();
+    logger.info(`${namespace}.install.data:`, chunk);
 
-    socket.emit(`adapter.${namespace}.install.data`, text);
-  });
+    socket.emit(`adapter.${namespace}.install.data`, {
+      chunk,
+      isStdout: true,
+    });
+  };
+
+  childProcess.stdout.on('data', listenFunc)
+
+  childProcess.stderr.on('data', listenFunc);
 
   childProcess.on('error', (buffer) => {
-    console.log(`${namespace}.install.error:`, buffer.toString());
+    logger.info(`${namespace}.install.error:`, buffer.toString());
   });
 
-  childProcess.on('exit', (code, signal) => {
+  childProcess.on('exit', (code) => {
     socket.emit(`adapter.${namespace}.install.exit`, code);
   });
 };
@@ -66,28 +85,51 @@ export default class Dependency implements IDependencyModule {
     return version;
   }
 
-  // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
     let npmOutdated = [];
 
     try {
-      await execa('npm', ['outdated', '--json', '--silent'], { cwd: this.project.path, env: this.project.getEnv() });
+      const [npmClient, registry] = await getNpmClient();
+      const args = ['outdated', '--json'].concat(registry ? ['--registry', registry] : []);
+      await execa(npmClient, args, { cwd: this.project.path, env: this.project.getEnv() });
     } catch (error) {
-      // the process exit with 1 if got outdated
-      npmOutdated = JSON.parse(error.stdout);
+      if (error.errno) {
+        throw error;
+      } else if (error.stdout) {
+        // the process exit with 1 if got outdated
+        npmOutdated = JSON.parse(error.stdout);
+      }
     }
 
     return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string }]) => ({ package: key, ...value }));
   }
 
-  public async create(params: {dependency: ICreateDependencyParam; idDev?: boolean}, ctx: IContext): Promise<void> {
-    const { dependency, idDev } = params;
-    return (await install([dependency], idDev, this.project, ctx.socket, 'dependency'))[0];
+  public async create(params: {dependency: ICreateDependencyParam; isDev?: boolean}, ctx: IContext): Promise<void> {
+    const { dependency, isDev } = params;
+    const [npmClient, registry] = await getNpmClient();
+    return (await install({
+      dependencies: [dependency],
+      npmClient,
+      registry,
+      isDev,
+      project: this.project,
+      namespace: 'dependency',
+      ctx,
+    }))[0];
   }
 
-  public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; idDev?: boolean}, ctx: IContext): Promise<void> {
-    const { dependencies, idDev } = params;
-    return await install(dependencies, idDev, this.project, ctx.socket, 'dependency');
+  public async bulkCreate(params: {dependencies: ICreateDependencyParam[]; isDev?: boolean}, ctx: IContext): Promise<void> {
+    const { dependencies, isDev } = params;
+    const [npmClient, registry] = await getNpmClient();
+    return await install({
+      dependencies,
+      npmClient,
+      registry,
+      isDev,
+      project: this.project,
+      namespace: 'dependency',
+      ctx,
+    });
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[]; devDependencies: IDependency[] }> {
@@ -106,7 +148,9 @@ export default class Dependency implements IDependencyModule {
           specifyVersion,
           dev,
           localVersion,
-          latestVersion: await latestVersion(packageName),
+
+          // TODO get latestVersion is so slow, so we disable it now
+          // latestVersion: await latestVersion(packageName),
         };
       }));
     };
@@ -121,7 +165,8 @@ export default class Dependency implements IDependencyModule {
       devDependencies = await getAll(packageDevDependencies, true);
     }
 
-    const npmOutdated: INpmOutdatedData[] = await this.getNpmOutdated();
+    // TODO getNpmOutdated is so slow, so we disable it now
+    const npmOutdated: INpmOutdatedData[] = []; // await this.getNpmOutdated();
     npmOutdated.forEach(({ package: _outPackage, wanted }: INpmOutdatedData) => {
       const dependency = dependencies.find(({ package: packageName }) => packageName === _outPackage);
       if (dependency && dependency.localVersion && dependency.localVersion !== wanted) {
@@ -141,34 +186,44 @@ export default class Dependency implements IDependencyModule {
   }
 
   public async reset(arg: void, ctx: IContext) {
-    const { socket, i18n } = ctx;
+    const { socket, i18n, logger } = ctx;
 
-    socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.clearWait'));
+    socket.emit('adapter.dependency.reset.data', { chunk: i18n.format('baseAdapter.dependency.reset.clearWait') });
 
     await rimrafAsync(this.path);
 
-    socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.clearDone'));
+    socket.emit('adapter.dependency.reset.data', { chunk: i18n.format('baseAdapter.dependency.reset.clearDone') });
 
-    socket.emit('adapter.dependency.reset.data', i18n.format('baseAdapter.dependency.reset.startInstall'));
+    socket.emit('adapter.dependency.reset.data', { chunk: i18n.format('baseAdapter.dependency.reset.startInstall') });
 
-    const childProcess = execa('npm', ['install'], {
+    const [npmClient, registry] = await getNpmClient();
+    const args = ['install', '--loglevel', 'silly'].concat(registry ? ['--registry', registry] : []);
+    const childProcess = execa(npmClient, args, {
       cwd: this.project.path,
       env: this.project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     });
 
-    childProcess.stdout.on('data', (buffer) => {
-      const text = buffer.toString();
-      console.log('reset.data:', text);
+    const listenFunc = (buffer) => {
+      const chunk = buffer.toString();
+      logger.info('reset.data:', chunk);
 
-      socket.emit('adapter.dependency.reset.data', text);
-    });
+      socket.emit('adapter.dependency.reset.data', {
+        chunk,
+        isStdout: true,
+      });
+    }
+
+    childProcess.stdout.on('data', listenFunc);
+
+    childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
-      console.log('reset.error:', buffer.toString());
+      logger.info('reset.error:', buffer.toString());
     });
 
     childProcess.on('exit', (code, signal) => {
-      console.log('reset.exit:', code, signal);
+      logger.info('reset.exit:', code, signal);
 
       socket.emit('adapter.dependency.reset.exit', code);
     });
@@ -176,28 +231,38 @@ export default class Dependency implements IDependencyModule {
 
   public async upgrade(denpendency: { package: string; isDev?: boolean }, ctx: IContext): Promise<void> {
     const { package: packageName } = denpendency;
-    const { socket, i18n } = ctx;
+    const { socket, i18n, logger } = ctx;
 
-    socket.emit('adapter.dependency.upgrade.data', i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}));
+    socket.emit('adapter.dependency.upgrade.data', { chunk: i18n.format('baseAdapter.dependency.reset.startInstall', {packageName}) });
 
-    const childProcess = execa('npm', ['update', packageName, '--silent'], {
+    const [npmClient, registry] = await getNpmClient();
+    const args = ['update', packageName, '--loglevel', 'silly'].concat(registry ? ['--registry', registry] : []);
+    const childProcess = execa(npmClient, args, {
       cwd: this.project.path,
       env: this.project.getEnv(),
+      stdio: ['inherit', 'pipe', 'pipe'],
     });
 
-    childProcess.stdout.on('data', (buffer) => {
-      const text = buffer.toString();
-      console.log('upgrade.data:', text);
+    const listenFunc = (buffer) => {
+      const chunk = buffer.toString();
+      logger.info('upgrade.data:', chunk);
 
-      socket.emit('adapter.dependency.upgrade.data', text);
-    });
+      socket.emit('adapter.dependency.upgrade.data', {
+        chunk,
+        isStdout: true,
+      });
+    }
+
+    childProcess.stdout.on('data', listenFunc);
+
+    childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
-      console.log('upgrade.error:', buffer.toString());
+      logger.info('upgrade.error:', buffer.toString());
     });
 
     childProcess.on('exit', (code, signal) => {
-      console.log('upgrade.exit:', code, signal);
+      logger.info('upgrade.exit:', code, signal);
 
       socket.emit('adapter.dependency.upgrade.exit', code);
     });

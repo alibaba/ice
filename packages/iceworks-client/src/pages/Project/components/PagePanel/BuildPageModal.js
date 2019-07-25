@@ -205,13 +205,21 @@ const BuildPageModal = ({
   } = useModal();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
+  const [materialSources, setMaterialSources] = useState([]);
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
+  useEffect(() => {
+    material.getResources({ type: project.dataSource.type });
+  }, []);
   const { dataSource } = material;
   const { resource } = dataSource;
-  const materialSources = resource.official.concat(resource.custom);
+  const newMaterialSources = resource.official
+    .concat(resource.custom)
+    .filter(item => item.type === project.dataSource.type);
+  if (newMaterialSources.length !== materialSources.length) {
+    setMaterialSources(newMaterialSources);
+  }
 
-  async function onCloseSaveModal() {
-    await progress.hide();
+  function onCloseSaveModal() {
     setSaveModal(false);
   }
 
@@ -232,12 +240,10 @@ const BuildPageModal = ({
   }
 
   async function onSaveOk(data) {
-    await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
     await onOk({
       blocks: selectedBlocks,
       ...data,
     });
-    await progress.hide();
     setSaveModal(false);
   }
 

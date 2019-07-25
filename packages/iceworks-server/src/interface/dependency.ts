@@ -27,7 +27,7 @@ export interface IDependency {
   /**
    * 最新版本
    */
-  latestVestion?: string;
+  latestVersion?: string;
 
   /**
    * 是否本地依赖 devDependencies ？

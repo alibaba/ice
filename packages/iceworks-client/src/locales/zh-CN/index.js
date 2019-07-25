@@ -44,11 +44,14 @@ export default {
   'iceworks.setting.general.theme.dark': '深色',
   'iceworks.setting.general.theme.light': '浅色',
   'iceworks.setting.general.editor.title': '编辑器',
+  'iceworks.setting.general.npm.client.title': '包管理工具',
+  'iceworks.setting.general.custom.registry': 'npm - 自定义源地址',
+  'iceworks.setting.general.custom.placeholder': '请输入自定义源地址',
 
   // project
   'iceworks.project.title': '项目管理',
-  'iceworks.project.create.init.title': '初始化项目',
-  'iceworks.project.create.init.content': '当前项目依赖尚未安装，安装过程可能需要几分钟，是否立即安装？',
+  'iceworks.project.install.dependencies.title': '安装依赖',
+  'iceworks.project.install.dependencies.content': '当前项目依赖尚未安装，安装过程可能需要几分钟，是否立即安装？',
   'iceworks.project.submenu.opts.openProject': '打开项目',
   'iceworks.project.submenu.opts.createProject': '创建项目',
 
@@ -260,7 +263,7 @@ export default {
   'iceworks.material.sourceUrl': '物料源地址',
   'iceworks.material.noData': '暂无数据',
   'iceworks.material.customMaterial': '自定义物料',
-  'iceworks.material.officialMaterial': '官方物料',
+  'iceworks.material.officialMaterial': '官方推荐物料',
   'iceworks.material.name': '物料名称',
   'iceworks.material.delete': '删除物料',
   'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',

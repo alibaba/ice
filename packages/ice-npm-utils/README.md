@@ -57,7 +57,7 @@ Return `Promise.resolve(allFiles: string[])`
 ### Custom Npm Registry
 
 ```
-process.env.REGISTRY=https://registry.npm.taobao.org
+process.env.REGISTRY=https://registry.npmjs.org
 ```
 
 ### Custom Unpkg Host

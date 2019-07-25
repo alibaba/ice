@@ -60,9 +60,9 @@ export default (app) => {
     }
 
     public async reloadAdapter() {
-      const { projectManager, i18n } = app;
+      const { projectManager } = app;
       const project = await projectManager.getCurrent();
-      const result = await project.reloadAdapter(i18n);
+      const result = await project.reloadAdapter();
       return result;
     }
   };

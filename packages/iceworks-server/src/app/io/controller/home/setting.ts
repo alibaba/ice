@@ -1,15 +1,22 @@
-
 import * as path from 'path';
 import storage from '../../../../lib/storage';
 import scanDirectory from '../../../../lib/scanDirectory';
+import getNpmClient from '../../../../lib/getNpmClient';
 
 export default (app) => {
-  const { Controller, i18n } = app;
+  const { Controller, i18n, logger } = app;
 
   return class HomeController extends Controller {
     public async getWorkFolder() {
       const workFolder = storage.get('workFolder');
-      const directories = await scanDirectory(workFolder);
+      let directories = [];
+      
+      try {
+        directories = await scanDirectory(workFolder);
+      } catch (error) {
+        logger.warn('scanDirectory got error:', error);
+      }
+
       return {
         path: workFolder,
         directories,
@@ -22,9 +29,13 @@ export default (app) => {
 
       const workFolder = storage.get('workFolder');
       const newWorkFolder = path.join(workFolder, setPath);
-      storage.set('workFolder', newWorkFolder);
 
       const directories = await scanDirectory(newWorkFolder);
+      if (!directories.length) {
+        throw new Error(i18n.format('controller.settings.setWorkFolder.error'));
+      }
+      
+      storage.set('workFolder', newWorkFolder);
       return {
         path: newWorkFolder,
         directories,
@@ -32,12 +43,12 @@ export default (app) => {
     }
 
     public async setLocale(ctx) {
-      const { projectManager, i18n, logger } = app;
+      const { projectManager, logger } = app;
       try {
         const project = await projectManager.getCurrent();
 
         // Refresh adapter's locale
-        await project.reloadAdapter(i18n);
+        await project.reloadAdapter();
       } catch (error) {
         logger.error(error);
       }
@@ -62,6 +73,24 @@ export default (app) => {
 
     public async getEditor() {
       return storage.get('editor');
+    }
+
+    public async setNpmClient(ctx) {
+      storage.set('npmClient', ctx.args.npmClient);
+    }
+
+    public async getNpmClient() {
+      const npmClient = await getNpmClient();
+      // get origin value
+      return npmClient[2];
+    }
+
+    public async setRegistry(ctx) {
+      storage.set('registry', ctx.args.registry);
+    }
+
+    public async getRegistry() {
+      return storage.get('registry');
     }
 
     public async setUser({ args }) {

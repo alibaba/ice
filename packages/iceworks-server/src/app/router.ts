@@ -31,6 +31,10 @@ export default (app: Application) => {
     ['home.setting.getTheme', home.setting.getTheme],
     ['home.setting.setEditor', home.setting.setEditor],
     ['home.setting.getEditor', home.setting.getEditor],
+    ['home.setting.setNpmClient', home.setting.setNpmClient],
+    ['home.setting.getNpmClient', home.setting.getNpmClient],
+    ['home.setting.setRegistry', home.setting.setRegistry],
+    ['home.setting.getRegistry', home.setting.getRegistry],
     ['home.setting.setUser', home.setting.setUser],
     ['home.setting.getUser', home.setting.getUser],
 
@@ -48,6 +52,7 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
+        logger.info(eventName, `${JSON.stringify(data)}\n`);
         callback(null, data);
       } catch (error) {
         logger.error(error);

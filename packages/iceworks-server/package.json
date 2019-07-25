@@ -1,6 +1,6 @@
 {
   "name": "iceworks-server",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.9",
   "description": "iceworks server",
   "files": [
     "dist/",
@@ -49,6 +49,7 @@
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
     "simple-git": "^1.113.0",
+    "shell-path": "^2.1.0",
     "tar": "^4.4.8",
     "terminate": "^2.1.2",
     "trash": "^5.2.0",
@@ -59,10 +60,11 @@
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.5.5",
+    "cross-env": "^5.2.0",
     "midway-bin": "1",
     "midway-mock": "1",
-    "tslib": "^1.8.1",
     "ts-node": "^8.0.2",
+    "tslib": "^1.8.1",
     "typescript": "^3.2.0"
   },
   "engines": {
@@ -70,10 +72,10 @@
   },
   "scripts": {
     "postinstall": "node ./scripts/install.js",
-    "start": "egg-scripts start --title=egg-server-iceworks-server --framework=midway-mirror --sticky",
+    "start": "egg-scripts start --title=egg-server-iceworks-server --framework=midway-mirror --workers=1 --sticky",
     "stop": "egg-scripts stop --title=egg-server-iceworks-server",
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
-    "dev": "NODE_ENV=local midway-bin dev --ts --framework=midway-mirror",
+    "dev": "cross-env NODE_ENV=local midway-bin dev --ts --framework=midway-mirror --workers=1",
     "debug": "NODE_ENV=local midway-bin debug --ts",
     "test": "npm run lint && midway-bin test --ts",
     "cov": "midway-bin cov --ts",

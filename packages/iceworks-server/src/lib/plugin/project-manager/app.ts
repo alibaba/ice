@@ -3,7 +3,9 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as mv from 'mv';
+import * as os from 'os';
+import * as shellPath from 'shell-path';
+import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
@@ -30,7 +32,13 @@ const DEFAULT_ADAPTER = [
   'adapter-react-v2',
   'adapter-react-v3',
   'adapter-vue-v1',
+  'adapter-vue-v2',
 ];
+
+interface ISimpleApp {
+  logger: any;
+  i18n: II18n;
+}
 
 class Project implements IProject {
   public readonly name: string;
@@ -47,11 +55,14 @@ class Project implements IProject {
 
   public adapterName: string;
 
-  constructor(folderPath: string) {
+  private app: ISimpleApp;
+
+  constructor(folderPath: string, app: ISimpleApp) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
     this.type = this.getType();
+    this.app = app;
   }
 
   public getType(): string {
@@ -69,7 +80,30 @@ class Project implements IProject {
   }
 
   public getEnv() {
-    return process.env;
+    const PATH = pathKey();
+
+    const env = process.env;
+    const envPath = shellPath.sync().split(path.delimiter);
+
+    this.app.logger.info('env.pah:', process.env[PATH]);
+
+    // for electron fallback
+    const resourcesPath = process['resourcesPath']; // eslint-disable-line
+    if (resourcesPath) {
+      envPath.push(path.join(resourcesPath, 'bin'));
+    }
+
+    env[PATH] = envPath.join(path.delimiter);
+
+    this.app.logger.info('setEnv.pah:', env[PATH]);
+
+    // reset NODE_ENV
+    // in egg.js: Generally, before deploying the application, dependencies will be installed with NODE_ENV=production or --production
+    // which will exclude devDependencies because those used in development may increase the size of package released or even create pitfalls that you never expect.
+    // Refs: https://github.com/eggjs/egg-scripts/blob/master/lib/cmd/start.js#L109
+    env.NODE_ENV = 'development'
+
+    return env;
   }
 
   private interopRequire(id) {
@@ -83,7 +117,8 @@ class Project implements IProject {
     return mod && mod.__esModule ? mod.default : mod; // eslint-disable-line
   }
 
-  public async loadAdapter(i18n: II18n) {
+  public async loadAdapter() {
+    const i18n = this.app.i18n;
     // reset panels
     this.panels = [];
 
@@ -118,8 +153,8 @@ class Project implements IProject {
     return this.toJSON();
   }
 
-  public async reloadAdapter(i18n: II18n) {
-    const result = await this.loadAdapter(i18n);
+  public async reloadAdapter() {
+    const result = await this.loadAdapter();
     return result;
   }
 
@@ -208,25 +243,25 @@ interface ICreateParams {
 class ProjectManager extends EventEmitter {
   private projects;
 
-  private i18n: II18n;
+  private app: ISimpleApp;
 
-  constructor(i18n: II18n) {
+  constructor(app: ISimpleApp) {
     super();
-    this.i18n = i18n;
+    this.app = app;
   }
 
   private async refresh(): Promise<Project[]> {
     return await Promise.all(
       storage.get('projects').map(async (projectPath) => {
-        const project = new Project(projectPath);
-        await project.loadAdapter(this.i18n);
+        const project = new Project(projectPath, this.app);
+        await project.loadAdapter();
         return project;
       })
     );
   }
 
   public async ready() {
-    await this.i18n.readLocales();
+    await this.app.i18n.readLocales();
     this.projects = await this.refresh();
   }
 
@@ -268,8 +303,8 @@ class ProjectManager extends EventEmitter {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
-      const project = new Project(projectPath);
-      await project.loadAdapter(this.i18n);
+      const project = new Project(projectPath, this.app);
+      await project.loadAdapter();
       this.projects.push(project);
       projects.push(projectPath);
       storage.set('projects', projects);
@@ -290,7 +325,7 @@ class ProjectManager extends EventEmitter {
 
     // check read and write
     try {
-      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // eslint-disable-line  
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK); // eslint-disable-line
     } catch (error) {
       error.message = '当前路径没有读写权限，请更换项目路径';
       throw error;
@@ -320,7 +355,7 @@ class ProjectManager extends EventEmitter {
   private async generateAbcFile(projectDir: string, iceScriptsVersion: string) {
     // '^2.0.0' -> true
     const latestVersion = /^\^2\./.test(iceScriptsVersion);
-  
+
     const abcData = {
       type: latestVersion ? 'ice-scripts' : 'iceworks',
       builder: latestVersion ? '@ali/builder-ice-scripts' : '@ali/builder-iceworks',
@@ -385,9 +420,16 @@ class ProjectManager extends EventEmitter {
   public async deleteProject(params: { projectPath: string; deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);
+
+    // remove project at storage
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
 
+    // remove project panel settings
+    const newPanelSettings = storage.get('panelSettings').filter(({projectPath: project}) => project !== projectPath);
+    storage.set('panelSettings', newPanelSettings);
+
+    // delete project files
     if (deleteFiles) {
       try {
         await trash(projectPath);
@@ -415,7 +457,7 @@ class ProjectManager extends EventEmitter {
 
 export default (app) => {
   app.beforeStart(async () => {
-    app.projectManager = new ProjectManager(app.i18n);
+    app.projectManager = new ProjectManager({ i18n: app.i18n, logger: app.logger });
     await app.projectManager.ready();
   });
 };
