@@ -28,12 +28,5 @@ export default async (i18n) => {
     },
   };
 
-  const isAliInternal = await checkAliInternal();
-  const filteredPanels = isAliInternal ? ['OSS'] : [];
-  Object.keys(adapter).forEach((name) => {
-    if (filteredPanels.indexOf(name) > -1) {
-      delete adapter[name];
-    }
-  });
   return adapter;
 };
