@@ -91,7 +91,7 @@ async function startServer() {
   
       if (mainWindow) {
         if (mainWindow.webContents) {
-          mainWindow.webContents.send('log', logInfo);
+          mainWindow.webContents.send('logs', logInfo);
         }
         if (logInfo.search('started on') > 0) {
           windowLoadServer();
