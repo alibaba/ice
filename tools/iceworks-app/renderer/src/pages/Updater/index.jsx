@@ -2,7 +2,7 @@
 
 import ReactDOM from 'react-dom';
 import React, { useEffect, useState } from 'react';
-import request from 'request-promise-native';
+import axios from 'axios';
 import { Button, Progress } from '@alifd/next';
 import isInElectron from '../../utils/isInElectron';
 import '../../global.scss';
@@ -90,20 +90,16 @@ function Main() {
   function fetchVersionLog(meta) {
     if (meta.version) {
       const updateLogUrl = `${OSS_CDN_DOMAIN}/changelog/${meta.version}.json`;
-      request({
-        uri: updateLogUrl,
-        json: true,
-        rejectUnauthorized: false,
-        headers: {
-          'Cache-Control': 'no-cache',
-        },
+      axios({
+        url: updateLogUrl,
+        method:'get',
         timeout: 5000,
       })
         .then((res) => {
-          if (res && res.body && Array.isArray(res.body.log)) {
+          if (res && res.data && Array.isArray(res.data.log)) {
             setState({
               ...state,
-              log: res.body.log,
+              log: res.data.log,
             });
           }
         })
