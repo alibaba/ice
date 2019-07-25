@@ -73,46 +73,47 @@ async function startServer() {
     log.warn('[run][startServerAndLoad][start-server][stop] got error: ', error);
   }
 
-  const args = isProduction ? ['start'] : ['run', 'dev'];
   setPort = await detectPort(setPort);
-  serverProcess = execa('npm', args, {
-    cwd: serverDir,
-    env: {
-      ...env,
-      PORT: setPort,
-    },
-  });
 
-  serverProcess.stdout.on('data', (buffer) => {
-    const logInfo = buffer.toString();
-    log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
-
-    if (mainWindow) {
-      if (mainWindow.webContents) {
-        mainWindow.webContents.send('log', logInfo);
-      }
-      if (logInfo.search('started on') > 0) {
-        windowLoadServer();
-      }
-    }
-  });
-
-  serverProcess.stderr.on('data', (buffer) => {
-    log.error('[run][startServerAndLoad][start-server] stderr:', buffer.toString());
-  });
-
-  serverProcess.on('error', (buffer) => {
-    log.error('[run][startServerAndLoad][start-server] error:', buffer.toString());
-    windowLoadError();
-  });
+  return new Promise((resolve, reject) => {
+    const args = isProduction ? ['start'] : ['run', 'dev'];
+    serverProcess = execa('npm', args, {
+      cwd: serverDir,
+      env: {
+        ...env,
+        PORT: setPort,
+      },
+    });
   
-  serverProcess.on('exit', (code) => {
-    log.error('[run][startServerAndLoad][start-server] exit width:', code);
-
-    if (code === 1) {
-      serverProcess = null;
-      windowLoadError();
-    }
+    serverProcess.stdout.on('data', (buffer) => {
+      const logInfo = buffer.toString();
+      log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
+  
+      if (mainWindow) {
+        if (mainWindow.webContents) {
+          mainWindow.webContents.send('log', logInfo);
+        }
+        if (logInfo.search('started on') > 0) {
+          windowLoadServer();
+          resolve();
+        }
+      }
+    });
+  
+    serverProcess.stderr.on('data', (buffer) => {
+      log.error('[run][startServerAndLoad][start-server] stderr:', buffer.toString());
+    });
+  
+  
+    serverProcess.on('exit', (code) => {
+      log.error('[run][startServerAndLoad][start-server] exit width:', code);
+  
+      if (code === 1) {
+        serverProcess = null;
+        windowLoadError();
+        reject();
+      }
+    });
   });
 }
 
@@ -212,7 +213,7 @@ app.on('ready', () => {
     .then(windowStartServer)
     .then(() => {
       if (isProduction) {
-        autoUpdate();
+        return autoUpdate();
       }
     });
 });
