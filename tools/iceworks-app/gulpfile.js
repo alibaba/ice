@@ -25,9 +25,11 @@ gulp.task('dist', (done) => {
   const buildName = 'build';
   const distName = 'dist';
   const serverName = 'server';
+  const rendererName = 'renderer';
   const buildDir = path.join(__dirname, buildName);
   const distDir = path.join(__dirname, distName);
   const serverDir = path.join(__dirname, serverName);
+  const rendererDir = path.join(__dirname, rendererName);
 
   async function build() {
     if (fs.existsSync(distDir)) {
@@ -95,6 +97,26 @@ gulp.task('dist', (done) => {
     shelljs.cp('-R', './app/*', `./${buildName}/`);
   }
 
+  async function copyRenderFiles() {
+    if (!isDev) {
+      await execa('npm', ['install'], {
+        stdio: 'inherit',
+        cwd: rendererDir,
+        env: process.env,
+      });
+    }
+    
+    await execa('npm', ['run', 'build'], {
+      stdio: 'inherit',
+      cwd: rendererDir,
+      env: process.env,
+    });
+
+    const publicDir = `./${buildName}/public/`;
+    shelljs.mkdir('-p', publicDir);
+    shelljs.cp('-R', `./${rendererName}/build/*`, publicDir);
+  }
+
   async function setPackage() {
     const packageJSONFileName = 'package.json';
     const projectPackageJSONPath = path.join(__dirname, packageJSONFileName);
@@ -116,6 +138,8 @@ gulp.task('dist', (done) => {
     await getServerCode();
 
     await copyAppFiles();
+
+    await copyRenderFiles();
 
     await setPackage();
 

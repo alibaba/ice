@@ -9,6 +9,8 @@ const semver = require('semver');
 const shelljs = require('shelljs');
 const { getNpmLatestSemverVersion, getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const getEnv = require('./getEnv');
+const getURL = require('./getURL');
+const autoUpdate = require('./autoUpdate');
 
 let mainWindow;
 let serverProcess;
@@ -21,19 +23,6 @@ const ip = address.ip();
 const env = getEnv();
 const serverDir = isProduction ? path.join(__dirname, '..', serverDirName) : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
 const serferTempDir = path.join(__dirname, '..', serverTempDirName);
-const loadingHTML = path.join(__dirname, 'loading.html');
-const errorHTML = path.join(__dirname, 'error.html');
-
-async function checkVersion(packageName, packageVersion) {
-  try {
-    const latestVersion = await getNpmLatestSemverVersion(packageName, packageVersion);
-    if (semver.lt(packageVersion, latestVersion)) {
-      return latestVersion;
-    }
-  } catch (error) {
-    // ...
-  }
-};
 
 // eslint-disable-next-line import/no-dynamic-require
 const serverPackageJSON = require(path.join(serverDir, 'package.json'));
@@ -41,17 +30,38 @@ const serverPackageJSON = require(path.join(serverDir, 'package.json'));
 async function checkServerVersion() {
   const packageName = serverPackageJSON.name;
   const packageVersion = serverPackageJSON.version;
-  return isProduction && await checkVersion(packageName, packageVersion);
+  if (isProduction) {
+    try {
+      const latestVersion = await getNpmLatestSemverVersion(packageName, packageVersion);
+      if (semver.lt(packageVersion, latestVersion)) {
+        return latestVersion;
+      }
+    } catch (error) {
+      // ...
+    }
+  }
 }
 
-function getServerUrl() {
-  return `http://${ip}:${setPort}/`;
+function windowLoadError() {
+  if (mainWindow) {
+    mainWindow.loadURL(getURL('error'));
+  }
+}
+
+function windowLoadLoading() {
+  if (mainWindow) {
+    mainWindow.loadURL(getURL('loading'));
+  }
+}
+
+function windowLoadServer() {
+  if (mainWindow) {
+    mainWindow.loadURL(`http://${ip}:${setPort}/`);
+  }
 }
 
 async function startServer() {
-  if (mainWindow) {
-    mainWindow.loadFile(loadingHTML);
-  }
+  windowLoadLoading();
 
   if (!isProduction && mainWindow.webContents) {
     mainWindow.webContents.openDevTools({ mode: 'right' });
@@ -63,50 +73,47 @@ async function startServer() {
     log.warn('[run][startServerAndLoad][start-server][stop] got error: ', error);
   }
 
-  const args = isProduction ? ['start'] : ['run', 'dev'];
   setPort = await detectPort(setPort);
-  serverProcess = execa('npm', args, {
-    cwd: serverDir,
-    env: {
-      ...env,
-      PORT: setPort,
-    },
-  });
 
-  serverProcess.stdout.on('data', (buffer) => {
-    const logInfo = buffer.toString();
-    log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
-
-    if (mainWindow) {
-      if (mainWindow.webContents) {
-        mainWindow.webContents.send('log', logInfo);
-      }
-      if (logInfo.search('started on') > 0) {
-        mainWindow.loadURL(getServerUrl());
-      }
-    }
-  });
-
-  serverProcess.on('error', (buffer) => {
-    log.error('[run][startServerAndLoad][start-server] error:', buffer.toString());
-    if (mainWindow) {
-      mainWindow.loadFile(errorHTML);
-    }
-  });
-
-  serverProcess.stderr.on('data', (buffer) => {
-    log.error('[run][startServerAndLoad][start-server] stderr:', buffer.toString());
-  });
-
-  serverProcess.on('exit', (code) => {
-    log.error('[run][startServerAndLoad][start-server] exit width:', code);
-
-    if (code === 1) {
-      serverProcess = null;
+  return new Promise((resolve, reject) => {
+    const args = isProduction ? ['start'] : ['run', 'dev'];
+    serverProcess = execa('npm', args, {
+      cwd: serverDir,
+      env: {
+        ...env,
+        PORT: setPort,
+      },
+    });
+  
+    serverProcess.stdout.on('data', (buffer) => {
+      const logInfo = buffer.toString();
+      log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
+  
       if (mainWindow) {
-        mainWindow.loadFile(errorHTML);
+        if (mainWindow.webContents) {
+          mainWindow.webContents.send('log', logInfo);
+        }
+        if (logInfo.search('started on') > 0) {
+          windowLoadServer();
+          resolve();
+        }
       }
-    }
+    });
+  
+    serverProcess.stderr.on('data', (buffer) => {
+      log.error('[run][startServerAndLoad][start-server] stderr:', buffer.toString());
+    });
+  
+  
+    serverProcess.on('exit', (code) => {
+      log.error('[run][startServerAndLoad][start-server] exit width:', code);
+  
+      if (code === 1) {
+        serverProcess = null;
+        windowLoadError();
+        reject();
+      }
+    });
   });
 }
 
@@ -131,50 +138,45 @@ function createWindow() {
   });
 }
 
-function windowLoadServer() {
+async function windowStartServer() {
   if (!serverProcess) {
     log.info('[run][loadServer][start-server]');
-    startServer();
+    await startServer();
   } else {
     log.info('[run][loadServer][load-server]');
-    mainWindow.loadURL(getServerUrl());
+    windowLoadServer();
   }
 }
 
-function stopServerAndQuit() {
+async function stopServerAndQuit() {
   log.info('[run][stopServerAndQuit]');
 
   // TODO The following call does not take effect
-  if (mainWindow) {
-    mainWindow.loadFile(loadingHTML);
+  windowLoadLoading();
+
+  let gotError;
+  try {
+    const { stdout, stderr } = await execa('npm', ['stop'], { cwd: serverDir, env });
+    log.info('[run][stopServerAndQuit][stop] stdout:', stdout);
+    log.info('[run][stopServerAndQuit][stop] stderr:', stderr);
+  } catch (error) {
+    log.error('[run][stopServerAndQuit][stop] got error, exit app');
+    gotError = error;
+    serverProcess.kill();
+    app.exit();
   }
 
-  const stopProcess = execa('npm', ['stop'], { cwd: serverDir, env });
-
-  stopProcess.stdout.on('data', (buffer) => {
-    log.info('[run][stopServerAndQuit][stop] stdout:', buffer.toString());
-  });
-
-  stopProcess.on('error', (buffer) => {
-    log.error('[run][stopServerAndQuit][stop] error:', buffer.toString());
-    app.exit();
-  });
-
-  stopProcess.on('exit', (code) => {
-    log.error('[run][stopServerAndQuit][stop] exit width:', code);
-    if (code === 1) {
-      serverProcess.kill();
-      app.exit();
-    } else {
-      serverProcess = null;
-      app.quit();
-    }
-  });
+  if (!gotError) {
+    log.error('[run][stopServerAndQuit][stop] success, quit app');
+    serverProcess = null;
+    app.quit();
+  }
 }
 
 async function downloadServer() {
   log.info('[run][downloadServer] start');
   log.info('[run][downloadServer] serferTempDir:', serferTempDir);
+  windowLoadLoading();
 
   let success = false;
   try {
@@ -208,7 +210,12 @@ app.on('ready', () => {
         return downloadServer();
       }
     })
-    .then(windowLoadServer);
+    .then(windowStartServer)
+    .then(() => {
+      if (isProduction) {
+        return autoUpdate();
+      }
+    });
 });
 
 app.on('before-quit', (event) => {
@@ -233,6 +240,6 @@ app.on('activate', () => {
 
   if (mainWindow === null) {
     createWindow();
-    windowLoadServer();
+    windowStartServer();
   }
 });
