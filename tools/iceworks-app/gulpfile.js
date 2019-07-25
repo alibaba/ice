@@ -267,7 +267,7 @@ gulp.task('upload-app', async () => {
   for (const name of files) {
     const filepath = path.join(distDir, name);
     // eslint-disable-next-line no-await-in-loop
-    const code = await upload2oss([platformName, name], filepath);
+    const code = await upload2oss(['3.0', platformName, name], filepath);
     if (code !== 0) {
       break;
     }

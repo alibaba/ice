@@ -48,7 +48,7 @@
     "publish": [
       {
         "provider": "generic",
-        "url": "https://iceworks.oss-cn-hangzhou.aliyuncs.com/${os}"
+        "url": "https://iceworks.oss-cn-hangzhou.aliyuncs.com/3.0/${os}"
       }
     ],
     "directories": {
