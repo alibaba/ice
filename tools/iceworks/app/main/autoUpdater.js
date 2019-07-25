@@ -1,5 +1,6 @@
 const { ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const semver = require('semver');
 const logger = require('./logger');
 const { createUpdaterWindow } = require('./windowList');
 const sendToWebContents = require('./helper/sendToWebContents');
@@ -28,6 +29,11 @@ autoUpdater.on('checking-for-update', () => {
 });
 
 autoUpdater.on('update-available', (info) => {
+  if (semver.gt(info.version, '3.0.0')) {
+    sendStatusToWindow('update-not-available', info);
+    return;
+  }
+
   if (win) {
     sendStatusToWindow('update-available', info);
   } else {
