@@ -6,7 +6,6 @@ const path = require('path');
 const progress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
-const npmConf = require('npm-conf');
 const log = require('./log');
 
 const cacheData = {};
@@ -189,15 +188,7 @@ function getNpmRegistry(npmName = '') {
     return 'https://registry.npm.alibaba-inc.com';
   }
 
-  const npmConfig = npmConf();
-  const configRegistry = npmConfig.get('registry');
-
-  if (configRegistry) {
-    // https://registry.npmjs.com/ -> https://registry.npmjs.com
-    return configRegistry.replace(/\/$/, '');
-  }
-
-  return 'https://registry.npmjs.com';
+  return 'https://registry.npm.taobao.org';
 }
 
 function getUnpkgHost(npmName = '') {

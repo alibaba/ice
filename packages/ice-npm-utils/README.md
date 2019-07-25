@@ -18,7 +18,7 @@ const { getNpmLatestSemverVersion } = require('ice-npm-utils');
 
 ### getNpmRegistry(npmName)
 
-Default return `https://registry.npm.com`
+Default return `https://registry.npm.taobao.org`
 
 ### getUnpkgHost(npmName)
 
@@ -57,7 +57,7 @@ Return `Promise.resolve(allFiles: string[])`
 ### Custom Npm Registry
 
 ```
-process.env.REGISTRY=https://registry.npm.taobao.org
+process.env.REGISTRY=https://registry.npmjs.org
 ```
 
 ### Custom Unpkg Host
