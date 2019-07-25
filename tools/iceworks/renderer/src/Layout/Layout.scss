@@ -92,3 +92,17 @@
 .iceworks-aside {
   position: relative;
 }
+
+.tips-for-upgrade {
+  position: relative;
+  z-index: 999;
+  padding: 6px 0;
+  text-align: center;
+  background-color: red;
+  color: #fff;
+
+  a {
+    color: #fff!important;
+    text-decoration: underline;
+  }
+}

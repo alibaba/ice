@@ -135,7 +135,13 @@ class SidebarLayout extends Component {
               {isAlibaba && <User />}
             </Layout.Aside>
             {/* 主体内容 */}
-            <Layout.Main>{this.props.children}</Layout.Main>
+            <Layout.Main>
+              <div className="tips-for-upgrade">
+                iceworks 已推出本地 CLI 版本，请通过 `npm install iceworks -g` 进行使用！
+                <a href="https://www.npmjs.com/package/iceworks" target="_blank">更多详情 ></a>
+              </div>
+              {this.props.children}
+            </Layout.Main>
           </Layout.Section>
         </Layout>
       </DocumentTitle>
