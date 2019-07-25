@@ -1,6 +1,6 @@
 ---
 title: 工程方案
-order: 9
+order: 2
 ---
 
 飞冰（ICE）推荐使用 [ice-scripts](/docs/cli/about.md) 作为 React 链路的工程工具。

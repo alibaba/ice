@@ -1,6 +1,6 @@
 ---
 title: 路由设计
-order: 4
+order: 3
 ---
 
 在浏览器支持了 [History API](https://developer.mozilla.org/zh-CN/docs/Web/API/History) 之后，很多网站为了提升用户体验都采用基于 History 的单页面应用（SPA）方式，这种方式在页面切换时几乎不需要等待，页面也不会出现白屏，在用户体验上有非常大的提高。采用 SPA 的方式，所有页面路由都需要在前端代码中定义，在 React 领域我们通常使用 [react-router](https://reacttraining.com/react-router/) 的方案，本文就来介绍如何在 SPA 应用中设计路由。
