@@ -22,16 +22,12 @@ function Main() {
   const [ state, setState ] = useState({ logs: [] });
   useEffect(() => {
     ipcRenderer.on('logs', (e, data) => {
-      console.log('event: logs!!!');
-
       state.logs.push(data);
       setState({
         ...state,
       });
     });
   }, []);
-
-  console.log('state', state);
 
   return (
     <div className="main">

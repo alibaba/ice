@@ -60,6 +60,12 @@ function windowLoadServer() {
   }
 }
 
+function sendLogToWindow(text) {
+  if (mainWindow && mainWindow.webContents) {
+    mainWindow.webContents.send('logs', text);
+  }
+}
+
 async function startServer() {
   windowLoadLoading();
 
@@ -89,14 +95,11 @@ async function startServer() {
       const logInfo = buffer.toString();
       log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
   
-      if (mainWindow) {
-        if (mainWindow.webContents) {
-          mainWindow.webContents.send('logs', logInfo);
-        }
-        if (logInfo.search('started on') > 0) {
-          windowLoadServer();
-          resolve();
-        }
+      sendLogToWindow(logInfo);
+
+      if (logInfo.search('started on') > 0) {
+        windowLoadServer();
+        resolve();
       }
     });
   
@@ -107,12 +110,9 @@ async function startServer() {
   
     serverProcess.on('exit', (code) => {
       log.error('[run][startServerAndLoad][start-server] exit width:', code);
-  
-      if (code === 1) {
-        serverProcess = null;
-        windowLoadError();
-        reject();
-      }
+      serverProcess = null;
+      windowLoadError();
+      reject();
     });
   });
 }
@@ -180,8 +180,17 @@ async function downloadServer() {
 
   let success = false;
   try {
+    sendLogToWindow('> ================== trying to upgrade server code ==================\n');
+    sendLogToWindow('> [upgrade server] Get NPM tarball url...');
+    sendLogToWindow('> [upgrade server] ......');
     const tarball = await getNpmTarball('iceworks-server');
+
+    sendLogToWindow('> [upgrade server] Get and extract tarball...');
+    sendLogToWindow('> [upgrade server] ......');
     await getAndExtractTarball(serferTempDir, tarball);
+
+    sendLogToWindow('> [upgrade server] NPM install...');
+    sendLogToWindow('> [upgrade server] ......');
     await execa('npm', ['install'], {
       stdio: 'inherit',
       cwd: serferTempDir,
@@ -190,10 +199,13 @@ async function downloadServer() {
     success = true;
   } catch (error) {
     log.error('[run][downloadServer] got error:', error);
+    sendLogToWindow('> [upgrade server] Upgrade failure');
   }
 
   if (success) {
     log.info('[run][downloadServer] done');
+    sendLogToWindow('> [upgrade server] Upgrade success');
+
     shelljs.rm('-rf', [serverDir]);
     shelljs.mv(serferTempDir, serverDir);
   }
