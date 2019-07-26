@@ -7,7 +7,7 @@ order: 6
 
 基础界面:
 
-![OSS面板](https://img.alicdn.com/tfs/TB1XPy.akT2gK0jSZPcXXcKkpXa-1048-650.png)
+![OSS面板](https://img.alicdn.com/tfs/TB1ahLebvb2gK0jSZK9XXaEgFXa-2118-630.png)
 
 主要由以下字段组成：
 
@@ -31,7 +31,7 @@ order: 6
 
     刷新完成后可下拉选择 Bucket ：
 
-    ![](https://img.alicdn.com/tfs/TB1i5PXaoT1gK0jSZFrXXcNCXXa-1086-808.png)
+    ![](https://img.alicdn.com/tfs/TB18XbfbAP2gK0jSZPxXXacQpXa-2116-631.png)
 0. 填写存储路径：
 
     例如填写 `static` 则表示将构建资源结果上传到对应 bucket 根目录下的 static 文件夹。
@@ -39,6 +39,6 @@ order: 6
 
     上传成功后将会看到以下提示：
 
-    ![](https://img.alicdn.com/tfs/TB1lszbalr0gK0jSZFnXXbRRXXa-1914-534.png)
+    ![](https://img.alicdn.com/tfs/TB1_bzfbEz1gK0jSZLeXXb9kVXa-1916-508.png)
 
     会罗列出所有上传完成的对象以及 URL。
