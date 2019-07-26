@@ -7,7 +7,8 @@ order: 2
 
 ```bash
 $ npm install iceworks -g
-$ iceworks
+# 查看版本
+$ iceworks -V
 ```
 
 ## 启动 iceworks
@@ -37,7 +38,7 @@ $ iceworks # open http://localhost:4444/
 
 ## 工程管理
 
-在`工程管理`界面，我们可以启动调试服务，并且可以自定义调试配置参数：
+在`工程管理`界面，我们可以启动调试服务，并且可以自定义调试服务的配置参数：
 
 ![工程管理](https://img.alicdn.com/tfs/TB1HpB1d8Kw3KVjSZFOXXarDVXa-2880-1584.png)
 
