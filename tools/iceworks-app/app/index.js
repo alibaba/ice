@@ -15,12 +15,13 @@ const autoUpdate = require('./autoUpdate');
 let mainWindow;
 let serverProcess;
 let setPort = '7001';
-const serverDirName = 'server';
-const serverTempDirName = 'server_temp';
 
 const isProduction = is.production();
 const ip = address.ip();
 const env = getEnv();
+
+const serverDirName = 'server';
+const serverTempDirName = 'server_temp';
 const serverDir = isProduction ? path.join(__dirname, '..', serverDirName) : path.join(__dirname, '..', '..', '..', 'packages', 'iceworks-server');
 const serferTempDir = path.join(__dirname, '..', serverTempDirName);
 
@@ -76,7 +77,7 @@ async function startServer() {
   try {
     await execa('npm', ['stop'], { cwd: serverDir, env });
   } catch (error) {
-    log.warn('[run][startServerAndLoad][start-server][stop] got error: ', error);
+    log.warn('[run][startServer][stop] got error: ', error);
   }
 
   setPort = await detectPort(setPort);
@@ -93,7 +94,7 @@ async function startServer() {
   
     serverProcess.stdout.on('data', (buffer) => {
       const logInfo = buffer.toString();
-      log.info('[run][startServerAndLoad][start-server] stdout:', logInfo);
+      log.info('[run][startServer] stdout:', logInfo);
   
       sendLogToWindow(logInfo);
 
@@ -104,12 +105,12 @@ async function startServer() {
     });
   
     serverProcess.stderr.on('data', (buffer) => {
-      log.error('[run][startServerAndLoad][start-server] stderr:', buffer.toString());
+      log.error('[run][startServer] stderr:', buffer.toString());
     });
   
   
     serverProcess.on('exit', (code) => {
-      log.error('[run][startServerAndLoad][start-server] exit width:', code);
+      log.error('[run][startServer] exit width:', code);
       serverProcess = null;
       windowLoadError();
       reject();
@@ -138,12 +139,10 @@ function createWindow() {
   });
 }
 
-async function windowStartServer() {
+async function startServerAndLoadByWindow() {
   if (!serverProcess) {
-    log.info('[run][loadServer][start-server]');
     await startServer();
   } else {
-    log.info('[run][loadServer][load-server]');
     windowLoadServer();
   }
 }
@@ -222,7 +221,7 @@ app.on('ready', () => {
         return downloadServer();
       }
     })
-    .then(windowStartServer)
+    .then(startServerAndLoadByWindow)
     .then(() => {
       if (isProduction) {
         return autoUpdate();
@@ -252,6 +251,6 @@ app.on('activate', () => {
 
   if (mainWindow === null) {
     createWindow();
-    windowStartServer();
+    startServerAndLoadByWindow();
   }
 });

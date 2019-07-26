@@ -34,24 +34,24 @@ autoUpdater.on('error', (error) => {
 });
 
 // set ipcMain event
-ipcMain.on('updater-set-window-size', (event, { width, height }) => {
+ipcMain.on('updater-setContentSize', (event, { width, height }) => {
   if (win) {
     win.setContentSize(width, height);
   }
 });
-ipcMain.on('updater-check', () => {
+ipcMain.on('updater-checkForUpdates', () => {
   autoUpdater.checkForUpdates().catch((error) => {
     sendStatusToWindow('error', error);
     log.error('Failed handling checkForUpdates:', error);
   });
 });
-ipcMain.on('updater-start', () => {
+ipcMain.on('updater-downloadUpdate', () => {
   autoUpdater.downloadUpdate().catch((error) => {
     sendStatusToWindow('error', error);
     log.error('Failed handling downloadUpdate:', error);
   });
 });
-ipcMain.on('updater-install', () => {
+ipcMain.on('updater-quitAndInstall', () => {
   autoUpdater.quitAndInstall();
 });
 ipcMain.on('updater-close', () => {
@@ -91,7 +91,6 @@ function createWindow() {
       shell.openExternal(url);
     }
   };
-  // 拦截页面上的链接点击后用浏览器打开
   updaterWindow.webContents.on('will-navigate', handleRedirect);
   updaterWindow.webContents.on('new-window', handleRedirect);
 
@@ -99,7 +98,7 @@ function createWindow() {
   updaterWindow.loadURL(getURL('updater'));
 
   return updaterWindow;
-};
+}
 
 function showWindow() {
   if (win) {
@@ -121,7 +120,7 @@ function register() {
   log.info('Updater starting...');
 
   autoUpdater.checkForUpdates().catch((error) => {
-    log.error('Failed handling checkForUpdatesAndNotify:', error);
+    log.error('Failed handling checkForUpdates:', error);
   });
 
   setInterval(() => {
