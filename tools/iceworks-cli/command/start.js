@@ -142,8 +142,13 @@ async function dauStat() {
     if(nowtDate !== lastDate) {
       iceworksConfigContent.lastDate = nowtDate;
       fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
+
+      // eslint-disable-next-line global-require
+      const iceworksCorePackageConfig = require('../server/package.json');
+
       goldlog('dau', {
         group: isAlibaba ? 'alibaba' : 'outer',
+        version: iceworksCorePackageConfig.version,
       });
     }
   } catch (err) {

@@ -29,7 +29,7 @@ function goldlog(action, extraData = {}) {
 
   axios({
     method: 'post',
-    url: 'http://gm.mmstat.com/iceteam.iceworks.log3',
+    url: 'http://gm.mmstat.com/iceteam.iceworks.log',
     data: {
       cache: Math.random(),
       gmkey: 'CLK',
