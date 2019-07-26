@@ -75,6 +75,13 @@ const docCategories = {
       },
       {
         title: {
+          'zh-cn': '进阶指南',
+          'en-us': 'Advanced guide',
+        },
+        dir: 'material',
+      },
+      {
+        title: {
           'zh-cn': '贡献指南',
           'en-us': 'Contributing',
         },

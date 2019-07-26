@@ -26,6 +26,5 @@ order: 3
 在这之外，核心能力是我们对 iceworks 抽象了 Adapter 机制，你可以理解为适配器模式，它允许你根据 [接口定义](#接口定义) 自定义一个 Adapter 进行接入，在框架层面会自动加载 Adapter 进行自配，以此满足定制 iceworks 工作台的能力。更多 Adapter 相关文档：
 
 * [iceworks adapter 设计讨论](https://github.com/alibaba/ice/pull/1935)
-* [adapter 是什么](#adapter是什么)
-* [adapter 开发指南](#adapter最佳实践)
-* [adapter 接口协议](#adapter接口协议)
+* [adapter 是什么](/docs/iceworks/adapter-about.md)
+* [adapter 开发指南](/docs/iceworks/adapter-guide.md)

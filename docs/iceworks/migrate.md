@@ -47,7 +47,7 @@ const routerConfig = [
 ```json
 {
   "iceworks": {
-    "adapter": "adapter-react-v1"
+    "adapter": "adapter-react-v1",
   }
 }
 ```
