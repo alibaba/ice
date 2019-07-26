@@ -21,8 +21,8 @@ if (isInElectron) {
 function Main() {
   const [ state, setState ] = useState({ logs: [] });
   useEffect(() => {
-    ipcRenderer.on('logs', (e, data) => {
-      state.logs.push(data);
+    ipcRenderer.on('log', (e, log) => {
+      state.logs.push(log);
       setState({
         ...state,
       });

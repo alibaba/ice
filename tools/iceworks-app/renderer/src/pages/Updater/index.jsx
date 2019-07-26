@@ -55,7 +55,7 @@ function Main() {
       });
     });
 
-    ipcRenderer.send('updater-check');
+    ipcRenderer.send('updater-checkForUpdates');
 
     return () => {
       ipcRenderer.removeAllListeners('message');
@@ -71,18 +71,18 @@ function Main() {
   }
 
   function onUpdatesFound() {
-    ipcRenderer.send('updater-start');
+    ipcRenderer.send('updater-downloadUpdate');
     setState({ ...state, updating: true });
   }
 
   function onUpdaterInstall() {
-    ipcRenderer.send('updater-install');
+    ipcRenderer.send('updater-quitAndInstall');
   };
 
   function setUpdateWindowSize() {
     const width = document.documentElement.scrollWidth;
     const height = document.documentElement.scrollHeight;
-    ipcRenderer.send('updater-set-window-size', { width, height });
+    ipcRenderer.send('updater-setContentSize', { width, height });
   }
 
   function fetchVersionLog(meta) {

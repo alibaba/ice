@@ -10,7 +10,6 @@
     "pack": "cross-env NODE_ENV=development gulp dist"
   },
   "devDependencies": {
-    "address": "^1.1.0",
     "ali-oss": "^6.1.1",
     "co": "^4.6.0",
     "cross-env": "^5.2.0",
@@ -23,6 +22,7 @@
   },
   "description": "iceworks desktop app",
   "dependencies": {
+    "address": "^1.1.0",
     "app-root-path": "^2.2.1",
     "detect-port": "^1.3.0",
     "electron-is": "^3.0.0",
