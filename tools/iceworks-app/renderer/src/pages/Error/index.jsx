@@ -12,7 +12,7 @@ if (isInElectron) {
   const electron = window.require('electron');
   const remote = electron.remote;
   shell = electron.shell;
-  const log = window.require('electron-log');
+  const log = remote.require('electron-log');
   logPath = log.transports.file.findLogPath(remote.app.getName());
 }
 
