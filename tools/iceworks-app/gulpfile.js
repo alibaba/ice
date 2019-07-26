@@ -15,7 +15,7 @@ const appPkg = require('./package.json');
 
 const cliBuilder = require.resolve('electron-builder/out/cli/cli.js');
 
-const productName = appPkg.productName;
+const productName = appPkg.name;
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
 const isWin32X64 = process.platform === 'win32' && process.arch === 'x64';
