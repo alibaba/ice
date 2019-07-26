@@ -4,7 +4,6 @@
   "main": "app/index.js",
   "scripts": {
     "upload-app": "gulp upload-app",
-    "generate-updates": "gulp generate-updates",
     "upload-logs": "gulp upload-logs",
     "start": "electron app",
     "dist": "cross-env NODE_ENV=production gulp dist",
@@ -20,8 +19,7 @@
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.8",
     "path-exists": "^4.0.0",
-    "inquirer": "^6.5.0",
-    "write": "^1.0.3"
+    "inquirer": "^6.5.0"
   },
   "description": "iceworks desktop app",
   "dependencies": {

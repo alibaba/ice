@@ -11,7 +11,6 @@ const oss = require('ali-oss');
 const { getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const shelljs = require('shelljs');
 const pathExists = require('path-exists');
-const writeFile = require('write');
 const appPkg = require('./package.json');
 
 const colors = gutil.colors;
@@ -162,11 +161,6 @@ gulp.task('dist', (done) => {
   dist();
 });
 
-/**
- * 上传文件到 oss
- * @param {*} paths oss 目标路径
- * @param {*} file 本地文件路径
- */
 async function getUpload2oss() {
   gutil.log('Access Key 请在 oss 平台查询');
   const accessKey = await inquirer.prompt([
@@ -274,77 +268,14 @@ gulp.task('upload-app', async () => {
   }
 });
 
-gulp.task('generate-updates', (done) => {
-  const now = gutil.date(new Date(), 'yyyy-mm-dd');
-  const version = appPkg.version;
-
-  const template = {
-    'darwin-x64-prod': {
-      name: 'iceworks',
-      description: 'ICE Desktop Application.',
-      install: `https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/${productName}-${version}.dmg`,
-      version: appPkg.version,
-      releaseDate: now,
-    },
-    'win-x64-prod': {
-      name: 'iceworks',
-      description: 'ICE Desktop Application.',
-      install: encodeURI(
-        `https://iceworks.oss-cn-hangzhou.aliyuncs.com/win/${productName}-setup-${version}.exe`
-      ),
-      version: appPkg.version,
-      releaseDate: now,
-    },
-  };
-
-  writeFile(
-    `./${distName}/updates.js`,
-    `callback(${JSON.stringify(template, null, 2)})`
-  )
-    .then(() => {
-      return writeFile(
-        `./${distName}/updates.json`,
-        JSON.stringify(template, null, 2)
-      );
-    })
-    .then(() => {
-      done();
-    });
-});
-
-/**
- * 日志文件上传到 oss。
- * dist/updates.json => oss: `${bucket}/`
- * changelog/changelog.json => oss: `${bucket}/`
- * changelog/${verison}.json => oss: `${bucket}/changelog/`
- * dist/updates.json ==copy=> iceworks-updates.json => oss: `${bucket}/assets/`
- * changelog/changelog.json ==copy=> iceworks-changelog.json => oss: `${bucket}/assets/`
- */
-gulp.task('upload', async () => {
+gulp.task('upload-logs', async () => {
   const upload2oss = await getUpload2oss();
   // eslint-disable-next-line global-require
   const version = require('./build/package.json').version;
-  const productNameLowCase = productName.toLowerCase();
   const filepaths = [
-    {
-      from: `${distName}/updates.json`,
-      to: ['updates.json'],
-    },
-    {
-      from: 'changelog/changelog.json',
-      to: ['changelog.json'],
-    },
     {
       from: `changelog/${version}.json`,
       to: [`changelog/${version}.json`],
-    },
-    {
-      from: `${distName}/updates.json`,
-      to: ['assets', `${productNameLowCase}-updates.json`],
-    },
-    {
-      from: 'changelog/changelog.json',
-      to: ['assets', `${productNameLowCase}-changelog.json`],
     },
   ];
 

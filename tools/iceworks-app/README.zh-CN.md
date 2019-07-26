@@ -40,8 +40,7 @@
 
 ### 编写更新日志
 
-- 编写 /changelog 文件夹下的 ${版本号}.json 和 changelog.json；
-- 使用 `npm run generate-updates` 生成的 updates.js 和 updates.json；
+- 编写 /changelog 文件夹下的 ${版本号}.json
 
 ### 执行发布
 
@@ -52,13 +51,3 @@
 
 > **注意** Mac 打包需要有对应的的开发者证书（否则发布后的软件无法正常更新）证书由管理员管理。
 > **注意** 上传过程中需要输入 OSS 的 Access Key Secret。
-
-### 附加说明
-
-几个文件的作用：
-
-1. change/*
-
-    - changelog.json: ice 站点中的 iceworks 更新日志列表数据来源；
-    - ${版本号}.json: Electron 自动更新时显示给用户的「更新日志」数据；
-2. updates.js/updates.json：ice 站点中「下载按钮」的数据来源。
