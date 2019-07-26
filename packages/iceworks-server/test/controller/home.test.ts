@@ -17,14 +17,14 @@ describe('test/app/controller/home.test.ts', () => {
     const cssLinkReg = /<link\shref="(.+)css\/index.css"\srel="stylesheet" \/>/i;
     const faviconLinkReg = /<link\srel="shortcut\sicon"\shref="(.+)favicon.png"\s\/>/i;
     const scriptReg = /<script\ssrc="(.+)js\/index.js"/i;
-    const iceworksConfigScript = /<script>[\s]*window.iceworksConfig/i;
+    const iceworksConfigScriptReg = /<script>[\s]*window.iceworksConfig/i;
     // should load common css
-    assert(cssLinkReg.test(text));
+    assert(text.match(cssLinkReg));
     // should load favicon.png
-    assert(faviconLinkReg.test(text));
+    assert(text.match(faviconLinkReg));
     // should load common js
-    assert(scriptReg.test(text));
+    assert(text.match(scriptReg));
     // should load iceworksConfig
-    assert(iceworksConfigScript.test(text));
+    assert(text.match(iceworksConfigScriptReg));
   });
 });
