@@ -44,7 +44,7 @@ gulp.task('dist', (done) => {
     target = 'mac';
   }
 
-  async function build() {
+  async function buildApp() {
     if (fs.existsSync(distDir)) {
       shelljs.rm('-rf', [distName]);
     }
@@ -101,16 +101,31 @@ gulp.task('dist', (done) => {
     }
   }
 
-  async function copyAppFiles() {
+  async function packAppDir() {
     if (fs.existsSync(buildDir)) {
       shelljs.rm('-rf', [buildName]);
     }
     shelljs.mkdir('-p', buildName);
 
     shelljs.cp('-R', './app/*', `./${buildName}/`);
+
+    const packageJSONFileName = 'package.json';
+    const projectPackageJSONPath = path.join(__dirname, packageJSONFileName);
+    const projectPackageJSON = JSON.parse((await readFileAsync(projectPackageJSONPath)).toString());
+
+    projectPackageJSON.main = './index.js';
+    delete projectPackageJSON.build;
+
+    await writeFileAsync(path.join(buildDir, packageJSONFileName), `${JSON.stringify(projectPackageJSON, null, 2)}\n`, 'utf-8');
+
+    await execa('npm', ['install'], {
+      stdio: 'inherit',
+      cwd: buildDir,
+      env: process.env,
+    });
   }
 
-  async function copyRenderFiles() {
+  async function packRendererDir() {
     if (!isDev) {
       await execa('npm', ['install'], {
         stdio: 'inherit',
@@ -130,33 +145,14 @@ gulp.task('dist', (done) => {
     shelljs.cp('-R', `./${rendererName}/build/*`, publicDir);
   }
 
-  async function setPackage() {
-    const packageJSONFileName = 'package.json';
-    const projectPackageJSONPath = path.join(__dirname, packageJSONFileName);
-    const projectPackageJSON = JSON.parse((await readFileAsync(projectPackageJSONPath)).toString());
-
-    projectPackageJSON.main = './index.js';
-    delete projectPackageJSON.build;
-
-    await writeFileAsync(path.join(buildDir, packageJSONFileName), `${JSON.stringify(projectPackageJSON, null, 2)}\n`, 'utf-8');
-
-    await execa('npm', ['install'], {
-      stdio: 'inherit',
-      cwd: buildDir,
-      env: process.env,
-    });
-  }
-
   async function dist() {
     await getServerCode();
 
-    await copyAppFiles();
+    await packAppDir();
 
-    await copyRenderFiles();
+    await packRendererDir();
 
-    await setPackage();
-
-    build();
+    buildApp();
   }
 
   dist();
