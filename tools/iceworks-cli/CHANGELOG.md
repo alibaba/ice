@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.1
+
+-  [feat] add DAU statistics
+
 ## 3.0.0
 
 - [feat] support `iceworks` to start iceworks-server

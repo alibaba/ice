@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- [feat] getNpmRegistry remove npmconf and default `https://registry.npm.taobao.org`
+
 ## 1.2.0
 
 - [feat] getNpmRegistry 优先读取 npm config，否则返回 `https://registry.npm.com`

@@ -22,6 +22,10 @@ class SidebarLayout extends Component {
     title: PropTypes.string,
   };
 
+  state = {
+    showTips: true
+  }
+
   static defaultProps = {
     // 业务替换为自己的页面标题
     title: 'Iceworks',
@@ -44,6 +48,7 @@ class SidebarLayout extends Component {
 
   render() {
     const { title, className } = this.props;
+    const { showTips } = this.state;
     const isAlibaba = settings.get('isAlibaba');
     return (
       <DocumentTitle title={title}>
@@ -135,7 +140,18 @@ class SidebarLayout extends Component {
               {isAlibaba && <User />}
             </Layout.Aside>
             {/* 主体内容 */}
-            <Layout.Main>{this.props.children}</Layout.Main>
+            <Layout.Main>
+              {showTips ? <div className="tips-for-upgrade">
+                iceworks 已推出本地 CLI 版本，请通过 `npm install iceworks -g` 进行使用！
+                <a href="https://ice.work/docs/iceworks/quick-start" target="_blank">更多详情 ></a>
+                <Icon type="close" className="icon" onClick={() => {
+                  this.setState({
+                    showTips: false
+                  });
+                }} />
+              </div> : null}
+              {this.props.children}
+            </Layout.Main>
           </Layout.Section>
         </Layout>
       </DocumentTitle>
