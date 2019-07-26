@@ -1,25 +1,25 @@
 ---
 title: 依赖管理
-order: 3
+order: 4
 ---
 
-**依赖管理** 面板是对项目所有的依赖进行可视化管理的功能模块。通过可视化的方式，审视你当前项目的依赖信息，快速地重装依赖、升级依赖、添加依赖。
+**依赖管理** 面板是对项目所有的依赖进行可视化管理的功能模块。通过可视化的方式，查看当前项目的依赖信息，提供快速地重装依赖、升级依赖、添加依赖等功能。
 
 ## 查看依赖信息
 
 面板中显示了项目中的 dependencies 和 devDependencies 信息。当依赖项未安装时，则不显示其版本信息：
 
-![未安装依赖时](https://img.alicdn.com/tfs/TB14d55ahz1gK0jSZSgXXavwpXa-1056-658.png)
+![未安装依赖时](https://img.alicdn.com/tfs/TB1tX2XbuH2gK0jSZJnXXaT1FXa-2112-632.png)
 
 当依赖项已安装到项目时，则显示其具体的版本信息：
 
-![已安装依赖](https://img.alicdn.com/tfs/TB1_my5abr1gK0jSZR0XXbP8XXa-1056-656.png)
+![已安装依赖](https://img.alicdn.com/tfs/TB11JG.brr1gK0jSZR0XXbP8XXa-2114-628.png)
 
 > 版本号右边出现“下载按钮”代表此依赖可升级到最新可兼容版本。
 
 ## 重装依赖
 
-点击面板右上角的“下载按钮”即可启动重装依赖，iceworks 将重装所有的项目依赖，包括 dependencies 和 devDependencies 。在重装过程中将输出日志，并不允许对项目进行调试、构建、新建页面等操作。
+点击面板右上角的“下载按钮”即可启动重装依赖，iceworks 将重装所有的项目依赖，包括 dependencies 和 devDependencies 。在重装过程中将输出日志，不支持对项目进行调试、构建、新建页面等操作。
 
 ![重装依赖](https://img.alicdn.com/tfs/TB1AZO2aXT7gK0jSZFpXXaTkpXa-1425-745.gif)
 

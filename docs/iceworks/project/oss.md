@@ -1,6 +1,6 @@
 ---
 title: OSS 发布
-order: 8
+order: 6
 ---
 
 **OSS 发布** 面板提供了一键将构建结果上传到你的阿里云 OSS Bucket 中的能力。

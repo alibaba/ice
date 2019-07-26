@@ -3,15 +3,16 @@ title: 迁移到 3.0 版本
 order: 3
 ---
 
-## 3.0 带来了什么
+## 3.0 新特性
 
-* 更强大的项目管理功能，新增了导航管理、路由管理、Git仓库管理功能
-* 国际化工作台，支持一键切换中英文
-* 支持主题切换，新增深色主题
+* CLI 使用链路：通过 CLI 方式启动本地 Web 工作台，开启全新研发体验；
+* 产品结构升级：「项目管理」、「工程管理」、「物料市场」三大板块助力源码链路研发；
+* 全新用户界面：多主题和多语言，满足开发者的个性化诉求；
+* 可定制化工作台：任何前端项目，无论何种工程工具或项目规范，都可在 iceworks 中集成。
 
 ## 项目迁移方式
 
-如果旧项目根目录**不存在**`ice.config.js`文件，则在`package.json`中增加如下配置
+如果旧项目根目录不存在 `ice.config.js` 文件，则在 `package.json` 中增加如下配置:
 
 ```json
 {
@@ -21,7 +22,7 @@ order: 3
 }
 ```
 
-如果旧项目根目录**存在**`ice.config.js`文件，且 `routerConfig.js` 中无路由分组 (所有路由平铺)，类似如下结构
+如果旧项目根目录存在 `ice.config.js` 文件，且 `routerConfig.js` 中无路由分组 (所有路由平铺)，类似如下结构:
 
 ```javascript
 const routerConfig = [
@@ -41,7 +42,7 @@ const routerConfig = [
 ];
 ```
 
-则在`package.json`中增加如下配置
+则在 `package.json` 中增加如下配置
 
 ```json
 {
@@ -51,7 +52,7 @@ const routerConfig = [
 }
 ```
 
-如果项目根目录**存在**`ice.config.js`文件，且 `routerConfig.js` 中有路由分组（路由有层级关系），类似如下结构
+如果项目根目录存在 `ice.config.js`文件，且 `routerConfig.js` 中有路由分组（路由有层级关系），类似如下结构
 
 ```javascript
 const routerConfig = [
