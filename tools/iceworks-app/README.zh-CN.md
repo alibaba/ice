@@ -2,14 +2,14 @@
 
 ## 开发调试
 
-0. 启动渲染进程:
+0. 启动渲染进程的前端服务:
 
     ```bash
     $ cd tools/iceworks-app/renderer
     $ npm install
     $ npm run start
     ```
-0. 启动 App:
+0. 启动主进程服务:
 
     ```
     $ cd tools/iceworks-app
@@ -24,19 +24,19 @@
 ### 前置准备
 
 - 代码数字签名：
-    - 下载开发者证书（不同平台有不同的证书）；
+    - 获取开发者证书（不同平台有不同的证书）；
     - 配置环境变量（参考：[《electron-builder: Code Signing》](https://www.electron.build/code-signing)）。
 - 设置 DEF 环境变量。
 
 ### 本地验证
 
-- 参考开发调试章节，进行启动调试服务，观察是否启动成功，控制台有无报错；
-- 执行 `npm run pack` 打测试包。
+- 参考开发调试章节，启动调试服务，观察是否启动成功，控制台有无报错；
+- 执行 `npm run pack` 打出测试包，进行测试。
 
 ### 打包
 
 - 更新 /package.json 的版本号；
-- 执行构建，生成安装包：`npm run dist`，将会把安装包生成到 `/dist` 目录。
+- 执行构建，生成安装包：`npm run dist`，该将会把安装包生成到 `/dist` 目录。
 
 ### 编写更新日志
 

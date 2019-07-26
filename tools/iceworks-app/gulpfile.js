@@ -13,21 +13,29 @@ const shelljs = require('shelljs');
 const pathExists = require('path-exists');
 const appPkg = require('./package.json');
 
+const cliBuilder = require.resolve('electron-builder/out/cli/cli.js');
+
+const productName = appPkg.productName;
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
 const isWin32X64 = process.platform === 'win32' && process.arch === 'x64';
 const isLinuxX64 = process.platform === 'linux' && process.arch === 'x64';
-
-const productName = appPkg.productName;
-
-const cliBuilder = require.resolve('electron-builder/out/cli/cli.js');
+const isDev = process.env.NODE_ENV === 'development';
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
-const isDev = process.env.NODE_ENV === 'development';
+
+// code directory
 const distName = 'dist';
+const buildName = 'build';
+const serverName = 'server';
+const rendererName = 'renderer';
+const buildDir = path.join(__dirname, buildName);
+const distDir = path.join(__dirname, distName);
+const serverDir = path.join(__dirname, serverName);
+const rendererDir = path.join(__dirname, rendererName);
 
 gulp.task('dist', (done) => {
-  console.log('NODE_ENV is dev: ', isDev);
+  gutil.log('NODE_ENV is dev: ', isDev);
 
   let target;
   if (os.platform() === 'win32') {
@@ -35,13 +43,6 @@ gulp.task('dist', (done) => {
   } else {
     target = 'mac';
   }
-  const buildName = 'build';
-  const serverName = 'server';
-  const rendererName = 'renderer';
-  const buildDir = path.join(__dirname, buildName);
-  const distDir = path.join(__dirname, distName);
-  const serverDir = path.join(__dirname, serverName);
-  const rendererDir = path.join(__dirname, rendererName);
 
   async function build() {
     if (fs.existsSync(distDir)) {
@@ -56,11 +57,11 @@ gulp.task('dist', (done) => {
         params,
         { stdio: 'inherit' }
       );
-      console.log('打包完成');
+      gutil.log('打包完成');
       code = 0;
     } catch (error) {
-      console.log(error);
-      console.error('打包失败');
+      gutil.log(error);
+      gutil.error('打包失败');
       code = 1;
     }
  
@@ -224,12 +225,10 @@ async function getUpload2oss() {
 gulp.task('upload-app', async () => {
   const upload2oss = await getUpload2oss();
 
-  // eslint-disable-next-line global-require
-  const version = require('./build/package.json').version;
-  const distDir = path.join(__dirname, distName);
+  // eslint-disable-next-line
+  const version = require(`./${buildName}/package.json`).version;
 
   let channel = 'latest';
-
   const versionPatch = version.split('.')[2];
   if (versionPatch.indexOf('-') !== -1) {
     channel = versionPatch.split('-')[1];
