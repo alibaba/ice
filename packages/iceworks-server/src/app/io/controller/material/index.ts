@@ -1,5 +1,6 @@
 import * as rp from 'request-promise-native';
 import storage, { schema } from '../../../../lib/storage';
+import { checkAliInternal } from 'ice-npm-utils';
 
 const isArray = Array.isArray;
 
@@ -13,12 +14,19 @@ const CATEGORY_ALL = '全部';
 export default (app) => {
   return class MaterialController extends app.Controller {
     public async getResources({ args }) {
+      const isAliInternal = await checkAliInternal();
+      let defaultMaterials = schema.material.default;
+      if (isAliInternal) {
+        defaultMaterials = defaultMaterials.filter(item => item.type === 'react');
+      }
+
       // check if the default official material is the same as the default in db.json
       const newMaterial = storage
         .get('material')
         .filter(item => !item.official)
-        .concat(schema.material.default);
+        .concat(defaultMaterials);
       storage.set('material', newMaterial);
+
       const resources = storage.get('material');
 
       if (args && args.type) {

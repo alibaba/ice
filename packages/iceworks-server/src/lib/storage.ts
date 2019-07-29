@@ -67,9 +67,15 @@ const schema = {
       },
       {
         official: true,
-        name: 'Vue物料',
+        name: 'Vue 物料',
         type: 'vue',
         source: 'http://ice.alicdn.com/assets/materials/vue-materials.json',
+      },
+      {
+        official: true,
+        name: 'Cra 物料',
+        type: 'cra',
+        source: 'http://iceworks.oss-cn-hangzhou.aliyuncs.com/assets/cra-materials.json',
       },
     ],
   },
