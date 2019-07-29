@@ -3,18 +3,28 @@ const { app, assert } = require('midway-mock/bootstrap');
 /* tslint:enable */
 
 describe('test/app/controller/home.test.ts', () => {
-
-  it('should assert', async () =>{
-    const pkg = require('../../../package.json');
-    assert(app.config.keys.startsWith(pkg.name));
-    // const ctx = app.mockContext({});
-    // await ctx.service.xx();
+  it('should GET /', () => {
+    return app
+      .httpRequest()
+      .get('/')
+      .expect(200);
   });
 
-  it('should GET /', () => {
-    return app.httpRequest()
-      .get('/')
-      .expect('Welcome to midwayjs!')
-      .expect(200);
+  it('should render index.html', async () => {
+    const result = await app.httpRequest().get('/');
+    const { text } = result;
+
+    const cssLinkReg = /<link\shref="(.+)css\/index.css"\srel="stylesheet" \/>/i;
+    const faviconLinkReg = /<link\srel="shortcut\sicon"\shref="(.+)favicon.png"\s\/>/i;
+    const scriptReg = /<script\ssrc="(.+)js\/index.js"/i;
+    const iceworksConfigScriptReg = /<script>[\s]*window.iceworksConfig/i;
+    // should load common css
+    assert(text.match(cssLinkReg));
+    // should load favicon.png
+    assert(text.match(faviconLinkReg));
+    // should load common js
+    assert(text.match(scriptReg));
+    // should load iceworksConfig
+    assert(text.match(iceworksConfigScriptReg));
   });
 });
