@@ -205,15 +205,18 @@ export default class Router implements IRouterModule {
    *  [{path: '/project/abc'}, {path: '/project'}, {path: '/bbc'}, {path: '/'}]
    */
   private sortData(data: IRouter[]): IRouter[] {
-    return data.sort((beforeItem, item) => {
-      if (beforeItem.children) {
-        beforeItem.children = this.sortData(beforeItem.children);
+    data.forEach((item) => {
+      if (item.children) {
+        item.children = this.sortData(item.children);
       }
+    });
+
+    return data.sort((beforeItem, item) => {
       if (!beforeItem.path) {
         return 1;
       }
       if (!item.path) {
-        return 0;
+        return -1;
       }
       if (beforeItem.path.indexOf(item.path) === 0) {
         return -1;
