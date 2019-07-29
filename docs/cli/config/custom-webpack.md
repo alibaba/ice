@@ -118,3 +118,84 @@ module.exports = {
   }
 }
 ```
+
+## 常见 webpack 定制需求
+
+### 配置 splitChunks
+
+通过配置 splitChunks 实现第三方库分离：
+
+```js
+module.exports = {
+  chainWebpack: (config, { command }) => {
+    config.optimization.splitChunks({ cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/, // 匹配 node_modules 目录·
+        name: 'vendor',
+        chunks: 'all',
+        minChunks: 1,
+      },
+    }});
+  }
+}
+```
+
+### 修改 UglifyJsPlugin
+
+ice-scripts 内置了 `uglifyjs-webpack-plugin` 的实践配置，可以通过定制能力修改默认配置：
+
+```js
+module.exports = {
+  chainWebpack: (config, { command }) => {
+    // 仅在 build 构建下会存在 UglifyJsPlugin
+    if (command === 'build') {
+      // 生成 soruce-map 进行调试
+      config.devtool('source-map');
+      config.optimization
+        .minimizer('UglifyJsPlugin')
+        .tap(([options]) => [
+          {
+            ...options,
+            sourceMap: true,
+          },
+        ]);
+    }
+  }
+}
+```
+
+### 修改 babel 配置
+
+ice-scripts 的 babel 配置同样可以通过 `webpack-chain` 方式进行修改：
+
+```js
+module.exports = {
+  chainWebpack: (config, { command }) => {
+    // 内置 jsx 和 tsx 规则均会使用到 babel 配置
+    ['jsx', 'tsx'].forEach((rule) => {
+      config.module
+        .rule(rule)
+        .use('babel-loader')
+        .tap((options) => {
+          // 添加一条 babel plugin，同理可添加 presets
+          options.plugins.push(require.resolve('babel-plugin-transform-jsx-list'));
+
+          // 修改 babel preset 配置，同理可修改 plugins
+          options.presets = options.presets.map((preset) => {
+            if (Array.isArray(preset)) {
+              const [modulePath, presetOptions] = preset;
+              if (modulePath.indexOf('preset-env') > -1) {
+                return [
+                  modulePath,
+                  { ...presetOptions, modules: false }, // 自定义新的 options
+                ];
+              }
+            }
+            return preset;
+          });
+          return options;
+        });
+    });
+  }
+}
+```
