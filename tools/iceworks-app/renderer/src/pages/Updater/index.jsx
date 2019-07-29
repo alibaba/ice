@@ -44,15 +44,17 @@ function Main() {
         return;
       }
 
-      if (event === 'update-available' || event === 'update-not-available') {
-        fetchVersionLog(meta);
-      }
-
-      setState({
+      const newState = {
         ...state,
         event,
         meta,
-      });
+      };
+
+      setState(newState);
+
+      if (event === 'update-available' || event === 'update-not-available') {
+        fetchVersionLog(newState);
+      }
     });
 
     ipcRenderer.send('updater-checkForUpdates');
@@ -85,7 +87,8 @@ function Main() {
     ipcRenderer.send('updater-setContentSize', { width, height });
   }
 
-  function fetchVersionLog(meta) {
+  function fetchVersionLog(newState) {
+    const { meta } = newState;
     if (meta.version) {
       const updateLogUrl = `${OSS_CDN_DOMAIN}/changelog/${meta.version}.json`;
       axios({
@@ -96,7 +99,7 @@ function Main() {
         .then((res) => {
           if (res && res.data && Array.isArray(res.data.log)) {
             setState({
-              ...state,
+              ...newState,
               log: res.data.log,
             });
           }
