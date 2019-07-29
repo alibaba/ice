@@ -351,6 +351,7 @@ const BuildPageModal = ({
         on={onSaveModal}
         onCancel={onCloseSaveModal}
         onOk={onSaveOk}
+        intl={intl}
         key="saveModal"
       />,
     ]
