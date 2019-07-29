@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, shell } = require('electron');
 const address = require('address');
 const execa = require('execa');
 const path = require('path');
@@ -215,19 +215,143 @@ async function upgradeServer() {
   }
 }
 
-function setMenu() {
-  const template = [];
-  template.unshift({
-    label: 'iceworks',
-    submenu: [
-      {
-        label: '检查更新...',
-        click() {
-          showWindow();
-        },
-      },
-    ],
+function openAboutWindow() {
+  const aboutWindow = new BrowserWindow({
+    width: 280,
+    height: 200,
+    title: '',
+    resizable: false,
+    center: true,
+    show: true,
+    fullscreenable: false,
+    maximizable: false,
+    minimizable: false,
+    frame: true,
+    backgroundColor: '#ECECEC',
+    webPreferences: {
+      backgroundThrottling: false,
+      nodeIntegration: true,
+    },
   });
+
+  aboutWindow.setMenu(null);
+
+  aboutWindow.loadURL(getURL('about'));
+};
+
+function setMenu() {
+  const name = app.getName();
+  const template = [
+    {
+      label: name,
+      submenu: [
+        {
+          label: `关于 ${name}`,
+          click() {
+            openAboutWindow();
+          },
+        },
+        { type: 'separator' },
+        {
+          label: '检查更新...',
+          click() {
+            showWindow();
+          },
+        },
+        { type: 'separator' },
+        { label: '退出 Iceworks', role: 'quit' },
+      ],
+    },
+    {
+      label: '窗口',
+      submenu: [
+        {
+          label: '关闭',
+          role: 'close',
+          accelerator: 'CommandOrControl+W',
+        },
+        {
+          label: '最小化',
+          role: 'minimize',
+          accelerator: 'CommandOrControl+M',
+        },
+        {
+          label: '缩放',
+          role: 'zoom',
+        },
+        {
+          label: '切换全屏',
+          role: 'togglefullscreen',
+          accelerator: is.osx() ? 'Ctrl+Command+F' : 'F11',
+        },
+        { type: 'separator' },
+        {
+          label: '全部置于顶层',
+          role: 'front',
+        },
+      ],
+    },
+    {
+      label: '帮助',
+      submenu: [
+        {
+          label: '文档',
+          click() {
+            shell.openExternal('http://ice.work');
+          },
+        },
+        {
+          label: 'Github',
+          click() {
+            shell.openExternal('https://github.com/alibaba/ice');
+          },
+        },
+        { type: 'separator' },
+        {
+          label: '反馈问题',
+          click() {
+            shell.openExternal(
+              'https://github.com/alibaba/ice/issues/new?labels=iceworks'
+            );
+          },
+        },
+        { type: 'separator' },
+        {
+          label: '查看许可证',
+          click() {
+            shell.openExternal(
+              'https://github.com/alibaba/ice/blob/master/LICENSE'
+            );
+          },
+        },
+        {
+          label: '隐私声明',
+          click() {
+            shell.openExternal(
+              'https://terms.alicdn.com/legal-agreement/terms/suit_bu1_taobao/suit_bu1_taobao201703241622_61002.html'
+            );
+          },
+        },
+        { type: 'separator' },
+        {
+          label: '切换开发人员工具',
+          accelerator: is.osx() ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+          click(item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.toggleDevTools();
+            }
+          },
+        },
+        {
+          label: '查看运行日志',
+          click() {
+            const logPath = log.transports.file.findLogPath(app.getName());
+            shell.showItemInFolder(logPath);
+          },
+        },
+      ],
+    },
+  ];
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 }
