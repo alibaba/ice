@@ -19,12 +19,14 @@ describe('test/app/controller/home.test.ts', () => {
     const scriptReg = /<script\ssrc="(.+)js\/index.js"/i;
     const iceworksConfigScriptReg = /<script>[\s]*window.iceworksConfig/i;
     // should load common css
-    assert(text.match(cssLinkReg));
+    assert.equal(cssLinkReg.test(text), true);
     // should load favicon.png
-    assert(text.match(faviconLinkReg));
+    assert.equal(faviconLinkReg.test(text), true);
     // should load common js
-    assert(text.match(scriptReg));
+    assert.equal(scriptReg.test(text), true);
     // should load iceworksConfig
-    assert(text.match(iceworksConfigScriptReg));
+    assert.equal(iceworksConfigScriptReg.test(text), true);
   });
 });
+
+export {};
