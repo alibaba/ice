@@ -2,9 +2,12 @@ sudo: required
 language: node_js
 node_js:
   - '8'
+install:
+  - npm install codecov -g
 script:
-  - npm run lint
-
+  - npm run ci
+after_script:
+  - codecov
 deploy:
   provider: script
   skip_cleanup: true # 避免清空已安装的依赖
