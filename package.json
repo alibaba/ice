@@ -5,7 +5,7 @@
     "generate:docs": "node ./scripts/generate-docs-database",
     "lint": "eslint --cache --ext .js,.jsx,.ts ./",
     "lint-fix": "npm run lint -- --fix",
-    "cov": "../packages/iceworks-server && npm run cov",
+    "cov": "cd ./packages/iceworks-server && npm run cov",
     "ci": "npm run lint && npm run cov"
   },
   "husky": {
