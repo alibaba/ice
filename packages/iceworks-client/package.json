@@ -1,7 +1,7 @@
 {
   "name": "iceworks-client",
-  "version": "3.0.0",
-  "description": "",
+  "version": "3.0.1",
+  "description": "iceworks client",
   "files": [
     "build"
   ],
