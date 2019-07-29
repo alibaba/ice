@@ -130,7 +130,7 @@ module.exports = {
   chainWebpack: (config, { command }) => {
     config.optimization.splitChunks({ cacheGroups: {
       vendor: {
-        test: /[\\/]node_modules[\\/]/, // 匹配 node_modules 目录·
+        test: /[\\/]node_modules[\\/]/, // 匹配 node_modules 目录
         name: 'vendor',
         chunks: 'all',
         minChunks: 1,
@@ -184,10 +184,12 @@ module.exports = {
           options.presets = options.presets.map((preset) => {
             if (Array.isArray(preset)) {
               const [modulePath, presetOptions] = preset;
+              // 判断指定配置
               if (modulePath.indexOf('preset-env') > -1) {
                 return [
                   modulePath,
-                  { ...presetOptions, modules: false }, // 自定义新的 options
+                  // 自定义新的 options
+                  { ...presetOptions, modules: false },
                 ];
               }
             }
