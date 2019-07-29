@@ -1,6 +1,6 @@
-const { autoUpdater, BrowserWindow, shell } = require('electron-updater');
+const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
-const { ipcMain, Notification } = require('electron');
+const { ipcMain, Notification, BrowserWindow, shell } = require('electron');
 const getURL = require('./getURL');
 
 let win = null;
@@ -16,7 +16,12 @@ autoUpdater.on('update-available', (info) => {
       title: `存在可用更新 (${info.version})`,
       body: '点击进入更新，体验新版',
     });
-    notification.on('click', showWindow);
+    notification.on('click', () => {
+      log.info('notification click');
+      showWindow();
+    });
+
+    log.info('notification show');
     notification.show();
   }
 });
@@ -82,6 +87,7 @@ function createWindow() {
     title: '',
     webPreferences: {
       backgroundThrottling: false,
+      nodeIntegration: true,
     },
   });
 
@@ -101,6 +107,7 @@ function createWindow() {
 }
 
 function showWindow() {
+  log.info('show window...');
   if (win) {
     win.show();
     win.focus();
@@ -129,6 +136,6 @@ function register() {
       log.error('Failed handling checkForUpdates:', error);
     });
   }, 1000 * 60 * 60 * 3);
-}
+};
 
-module.exports = register;
+module.exports = { register, showWindow };
