@@ -1,6 +1,6 @@
 {
   "name": "iceworks-server",
-  "version": "3.0.0-beta.9",
+  "version": "3.0.0",
   "description": "iceworks server",
   "files": [
     "dist/",
@@ -80,8 +80,6 @@
     "debug": "NODE_ENV=local midway-bin debug --ts",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
-    "lint": "tslint --fix -c tslint.json --project .",
-    "lint-nofix": "tslint -c tslint.json --project .",
     "ci": "npm run cov",
     "build": "midway-bin build -c"
   },
