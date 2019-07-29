@@ -77,9 +77,8 @@
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts --framework=midway-mirror --workers=1",
     "debug": "NODE_ENV=local midway-bin debug --ts",
-    "test": "midway-bin test --ts",
-    "cov": "midway-bin cov --ts",
-    "ci": "npm run cov",
+    "test": "midway-bin test --ts --framework=midway-mirror",
+    "cov": "midway-bin cov --ts --framework=midway-mirror",
     "build": "midway-bin build -c"
   },
   "repository": {
