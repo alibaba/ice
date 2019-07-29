@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const address = require('address');
 const execa = require('execa');
 const path = require('path');
@@ -10,7 +10,7 @@ const shelljs = require('shelljs');
 const { getNpmLatestSemverVersion, getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 const getEnv = require('./getEnv');
 const getURL = require('./getURL');
-const autoUpdate = require('./autoUpdate');
+const { register: autoUpdate, showWindow } = require('./autoUpdate');
 
 let mainWindow;
 let serverProcess;
@@ -215,6 +215,23 @@ async function upgradeServer() {
   }
 }
 
+function setMenu() {
+  const template = [];
+  template.unshift({
+    label: 'iceworks',
+    submenu: [
+      {
+        label: '检查更新...',
+        click() {
+          showWindow();
+        },
+      },
+    ],
+  });
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 app.on('ready', () => {
   log.info('[event][ready]');
 
@@ -233,7 +250,7 @@ app.on('ready', () => {
       if (isProduction) {
         return autoUpdate();
       }
-    });
+    }).then(setMenu);
 });
 
 app.on('before-quit', (event) => {
