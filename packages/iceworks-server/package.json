@@ -34,6 +34,7 @@
     "launch-code-editor": "^0.1.0",
     "line-by-line": "^0.1.6",
     "lodash": "^4.17.11",
+    "midway": "^1.10.2",
     "midway-mirror": "^1.8.0",
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
@@ -48,8 +49,8 @@
     "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
-    "simple-git": "^1.113.0",
     "shell-path": "^2.1.0",
+    "simple-git": "^1.113.0",
     "tar": "^4.4.8",
     "terminate": "^2.1.2",
     "trash": "^5.2.0",
@@ -77,8 +78,8 @@
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts --framework=midway-mirror --workers=1",
     "debug": "NODE_ENV=local midway-bin debug --ts",
-    "test": "midway-bin test --ts --framework=midway-mirror",
-    "cov": "midway-bin cov --ts --framework=midway-mirror",
+    "test": "npm install midway && midway-bin test --ts",
+    "cov": "npm install midway && midway-bin cov --ts",
     "build": "midway-bin build -c"
   },
   "repository": {
