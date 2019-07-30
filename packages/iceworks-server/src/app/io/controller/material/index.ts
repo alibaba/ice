@@ -1,6 +1,6 @@
 import * as rp from 'request-promise-native';
-import storage, { schema } from '../../../../lib/storage';
 import { checkAliInternal } from 'ice-npm-utils';
+import storage, { schema } from '../../../../lib/storage';
 
 const isArray = Array.isArray;
 
