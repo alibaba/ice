@@ -29,10 +29,14 @@ export default class RemoteLogger extends Transport {
       qsData.message = message;
     }
 
-    await request({
-      url: remoteUrl,
-      qs: qsData,
-      timeout: 2000,
-    });
+    try {
+      await request({
+        url: remoteUrl,
+        qs: qsData,
+        timeout: 2000,
+      });
+    } catch (err) {
+      // ignore...
+    }
   }
 }

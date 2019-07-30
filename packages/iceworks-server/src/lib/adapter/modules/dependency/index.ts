@@ -206,8 +206,6 @@ export default class Dependency implements IDependencyModule {
 
     const listenFunc = (buffer) => {
       const chunk = buffer.toString();
-      logger.info('reset.data:', chunk);
-
       socket.emit('adapter.dependency.reset.data', {
         chunk,
         isStdout: true,

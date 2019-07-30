@@ -79,9 +79,10 @@ export default (app) => {
     }
 
     public async getRecommendScaffolds() {
-      const material = storage.get('material')[0];
-      const { scaffolds = [] } = await request(material.source);
-      return scaffolds.filter(({ name }) => RECOMMEND_SCAFFOLDS.includes(name));
+      const officialMaterial = schema.material.default[0];
+      const { scaffolds = [] } = await request(officialMaterial.source);
+      const recommendScaffolds = scaffolds.filter(({ name }) => RECOMMEND_SCAFFOLDS.includes(name));
+      return recommendScaffolds;
     }
 
     public async add(ctx) {

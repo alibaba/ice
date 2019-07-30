@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.1
+- [fix] router sort logic #2559
+- [fix] failed to create page #2564
+- [fix] failed to re-install dependencies #2565
+- [fix] show recommend scaffold #2558
+
 ## 3.0.0
 
 - [feat] We’re excited to announce the release of iceworks 3.0.0
