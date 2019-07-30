@@ -1,0 +1,28 @@
+{
+  "name": "iceworks-renderer",
+  "version": "3.0.0",
+  "dependencies": {
+    "@alifd/next": "^1.x",
+    "@icedesign/theme": "^1.0.0",
+    "axios": "^0.19.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "ice-plugin-fusion": "^0.1.4",
+    "ice-plugin-moment-locales": "^0.1.0",
+    "ice-plugin-multi-pages": "^0.1.0",
+    "ice-scripts": "^2.0.0"
+  },
+  "scripts": {
+    "start": "ice-scripts dev",
+    "build": "ice-scripts build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "iceworks": {
+    "type": "react",
+    "adapter": "adapter-react-v3"
+  }
+}

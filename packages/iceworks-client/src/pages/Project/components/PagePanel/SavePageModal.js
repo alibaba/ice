@@ -19,7 +19,7 @@ const formItemLayout = {
   },
 };
 
-const SavePageModal = ({ on, onCancel, onOk }) => {
+const SavePageModal = ({ on, onCancel, onOk, intl }) => {
   const progress = stores.useStore('progress');
   const routerStore = pageStores.useStore('routes');
   const { dataSource: routes } = routerStore;
@@ -27,7 +27,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
 
   async function onSave(values, errors) {
     if (!errors) {
-      await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
+      await progress.show({ statusText: intl.formatMessage({ id: 'iceworks.project.panel.page.create.progress.start' }) });
       try {
         await onOk(values);
       } catch (error) {
@@ -161,6 +161,7 @@ SavePageModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
 export default SavePageModal;

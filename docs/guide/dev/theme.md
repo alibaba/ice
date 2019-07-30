@@ -1,6 +1,6 @@
 ---
 title: 主题配置
-order: 7
+order: 10
 ---
 
 > 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考 [这篇文档](https://www.yuque.com/ice-team/wiki/cur1z3)

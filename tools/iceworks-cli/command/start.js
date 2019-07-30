@@ -1,10 +1,13 @@
 const path = require('path');
+const fs = require('fs');
+const userHome = require('user-home');
 const spawn = require('cross-spawn');
 const portfinder = require('portfinder');
 const chalk = require('chalk');
 const ora = require('ora');
 const open = require('open');
 const inquirer = require('inquirer');
+const { checkAliInternal } = require('ice-npm-utils');
 const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
@@ -76,7 +79,7 @@ async function listen(options) {
       successMsg(url);
       open(url);
       started = true;
-      goldlog('start-server');
+
     } else if (started) {
       console.log(data.toString());
     }
@@ -134,6 +137,31 @@ async function checkServerVersion() {
 
     return answers;
   }
+}
+
+async function dauStat() {
+  try {
+    const isAlibaba = await checkAliInternal();
+    const nowtDate = new Date().toDateString();
+    const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
+    // eslint-disable-next-line
+    const iceworksConfigContent = require(`${iceworksConfigPath}`);
+    const lastDate = iceworksConfigContent.lastDate;
+    if(nowtDate !== lastDate) {
+      iceworksConfigContent.lastDate = nowtDate;
+      fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
+
+      // eslint-disable-next-line global-require
+      const iceworksCorePackageConfig = require('../server/package.json');
+
+      goldlog('dau', {
+        group: isAlibaba ? 'alibaba' : 'outer',
+        version: iceworksCorePackageConfig.version,
+      });
+    }
+  } catch (err) {
+    //
+  };
 }
 
 module.exports = (...args) => {
