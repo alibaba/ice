@@ -281,11 +281,9 @@ class ProjectManager extends EventEmitter {
       (currentItem) => currentItem.path === path
     );
 
-    if (!project) {
-      throw new Error('notfound project');
+    if (project) {
+      return project;
     }
-
-    return project;
   }
 
   /**
