@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import cx from 'classnames';
 import useModal from '@hooks/useModal';
 import UserLoginModal from '../UserLoginModal';
@@ -27,7 +28,7 @@ const User = ({ name, avatarUrl, isLogin, onLogin }) => {
       <div className={styles.avatar}>
         <img src={avatarUrl} alt={name} />
       </div>
-      <div className="user-name">{name}</div>
+      <div className="user-name">{name || <FormattedMessage id="iceworks.global.layout.login" />}</div>
       <UserLoginModal
         on={onLoginModal}
         onCancel={() => setLoginModal(false)}
