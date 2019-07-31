@@ -40,7 +40,7 @@ interface ISimpleApp {
   i18n: II18n;
 }
 
-export class Project implements IProject {
+class Project implements IProject {
   public readonly name: string;
 
   public readonly path: string;
