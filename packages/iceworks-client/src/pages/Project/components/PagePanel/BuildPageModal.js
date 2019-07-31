@@ -197,8 +197,9 @@ const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSo
 });
 
 const BuildPageModal = ({
-  on, onCancel, onOk, existedBlocks, intl,
+  on, onCancel, onOk, page, intl,
 }) => {
+  const { blocks = [] } = page || {};
   const {
     on: onSaveModal,
     setModal: setSaveModal,
@@ -231,8 +232,8 @@ const BuildPageModal = ({
       return;
     }
 
-    // If has exists blocks, it is represented in edit mode
-    if (existedBlocks.length) {
+    // If has page, it is represented in edit mode
+    if (page) {
       await onOk(selectedBlocks);
     } else {
       setSaveModal(true);
@@ -286,10 +287,12 @@ const BuildPageModal = ({
     material.getResources({ type: project.dataSource.type });
   }, []);
 
+  const titleId = page ? 'iceworks.project.panel.page.update.title' : 'iceworks.project.panel.page.create.title';
+
   return (
     [
       <Modal
-        title={<FormattedMessage id="iceworks.project.panel.page.create.title" />}
+        title={<FormattedMessage id={titleId} />}
         visible={on}
         onCancel={onCancel}
         onOk={onCreateOk}
@@ -299,7 +302,7 @@ const BuildPageModal = ({
           <div className={styles.main}>
             <div className={styles.existed}>
               {
-                existedBlocks.map(({ name }, index) => {
+                blocks.map(({ name }, index) => {
                   return (
                     <div key={index} className={styles.item}>
                       {name}
@@ -359,14 +362,14 @@ const BuildPageModal = ({
 };
 
 BuildPageModal.defaultProps = {
-  existedBlocks: [],
+  page: null,
 };
 
 BuildPageModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
-  existedBlocks: PropTypes.array,
+  page: PropTypes.object,
 };
 
 export default injectIntl(BuildPageModal);

@@ -185,7 +185,7 @@ const PagePanel = ({ intl, title, description }) => {
               on={onAddBlocksModal}
               onCancel={() => setAddBlocksModal(false)}
               onOk={addBlocks}
-              existedBlocks={pageEditing.blocks}
+              page={pageEditing}
             /> :
             null
         }
