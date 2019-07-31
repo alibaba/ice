@@ -88,7 +88,8 @@
   },
   "midway-bin-build": {
     "include": [
-      "app/view"
+      "app/view",
+      "lib/adapter/modules/page/template.jsx.ejs"
     ]
   },
   "author": "chenbin92",
