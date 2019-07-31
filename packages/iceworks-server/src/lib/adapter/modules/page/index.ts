@@ -24,9 +24,14 @@ const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
 const mvAsync = util.promisify(mv);
+const DEFAULT_TYPE = 'react';
 
-const loadTemplate = async () => {
-  const fileName = 'template.jsx';
+const loadTemplate = async (type: string) => {
+  let fileName = 'template.jsx';
+  // switch different templetes
+  if (type === 'vue') {
+    fileName = 'template.vue';
+  }
   const filePath = path.join(__dirname, `${fileName}.ejs`);
   const fileStr = await readFileAsync(filePath, 'utf-8');
   const compile = ejs.compile(fileStr);
@@ -46,11 +51,24 @@ export default class Page implements IPageModule {
 
   private readonly componentDirName: string = 'components';
 
-  constructor(params: {project: IProject; storage: any }) {
+  public readonly packagePath: string;
+
+  constructor(params: { project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
     this.path = path.join(this.project.path, 'src', 'pages');
+    this.packagePath = path.join(this.project.path, 'package.json');
+  }
+
+  private getType(): string {
+    const { iceworks = {} } = this.getPackageJSON();
+    const { type = DEFAULT_TYPE } = iceworks;
+    return type;
+  }
+
+  public getPackageJSON() {
+    return JSON.parse(fs.readFileSync(this.packagePath).toString());
   }
 
   private async scanPages(dirPath: string): Promise<IPage[]> {
@@ -182,7 +200,8 @@ export default class Page implements IPageModule {
 
     // create page file
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 90 });
-    const template = await loadTemplate();
+    const type: string = this.getType();
+    const template = await loadTemplate(type);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
         const blockFolderName = block.alias || upperCamelCase(block.name);
