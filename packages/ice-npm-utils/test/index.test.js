@@ -14,7 +14,6 @@ const {
 } = require('../lib/index');
 
 const defaultRegistry = 'https://registry.npm.taobao.org';
-process.env.REGISTRY = defaultRegistry;
 
 jest.setTimeout(10 * 1000);
 
@@ -23,12 +22,9 @@ test('getNpmRegistry', () => {
 
   expect(getNpmRegistry('koa')).toBe(defaultRegistry);
   expect(getNpmRegistry('@alixxx/ice-test')).toBe(defaultRegistry);
-
-  delete process.env.REGISTRY;
   expect(getNpmRegistry('@ali/ice-test')).toBe(aliRegistry);
   expect(getNpmRegistry('@alife/ice-test')).toBe(aliRegistry);
   expect(getNpmRegistry('@alipay/ice-test')).toBe(aliRegistry);
-  process.env.REGISTRY = defaultRegistry;
 });
 
 

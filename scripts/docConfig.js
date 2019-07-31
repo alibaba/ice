@@ -2,73 +2,124 @@
 const docCategories = {
   guide: {
     title: {},
-    children: [{
-      title: {
-        'zh-cn': '开发',
-        'en-us': 'development',
+    children: [
+      {
+        title: {
+          'zh-cn': '开发',
+          'en-us': 'development',
+        },
+        dir: 'dev',
       },
-      dir: 'dev',
-    }, {
-      title: {
-        'zh-cn': '测试',
-        'en-us': 'test',
+      {
+        title: {
+          'zh-cn': '测试',
+          'en-us': 'test',
+        },
+        dir: 'test',
       },
-      dir: 'test',
-    }, {
-      title: {
-        'zh-cn': '发布资源',
-        'en-us': 'publish assets',
+      {
+        title: {
+          'zh-cn': '发布资源',
+          'en-us': 'publish assets',
+        },
+        dir: 'publish',
       },
-      dir: 'publish',
-    }, {
-      title: {
-        'zh-cn': '后端集成',
-        'en-us': 'backend',
+      {
+        title: {
+          'zh-cn': '后端集成',
+          'en-us': 'backend',
+        },
+        dir: 'backend',
       },
-      dir: 'backend',
-    }, {
-      title: {
-        'zh-cn': '产品监控',
-        'en-us': 'monitor',
+      {
+        title: {
+          'zh-cn': '产品监控',
+          'en-us': 'monitor',
+        },
+        dir: 'monitor',
       },
-      dir: 'monitor',
-    }, {
-      title: {
-        'zh-cn': '资源',
-        'en-us': 'resource',
+      {
+        title: {
+          'zh-cn': '资源',
+          'en-us': 'resource',
+        },
+        dir: 'resource',
       },
-      dir: 'resource',
-    }],
+    ],
   },
+
+  // iceworks
   iceworks: {
-    // Iceworks
     title: {},
+    children: [
+      {
+        title: {
+          'zh-cn': '项目管理',
+          'en-us': 'Project management',
+        },
+        dir: 'project',
+      },
+      {
+        title: {
+          'zh-cn': '工程管理',
+          'en-us': 'Engineering management',
+        },
+        dir: 'engineering',
+      },
+      {
+        title: {
+          'zh-cn': '物料市场',
+          'en-us': 'Materials market',
+        },
+        dir: 'material',
+      },
+      {
+        title: {
+          'zh-cn': '进阶指南',
+          'en-us': 'Advanced guide',
+        },
+        dir: 'material',
+      },
+      {
+        title: {
+          'zh-cn': '贡献指南',
+          'en-us': 'Contributing',
+        },
+        dir: 'contributing',
+      },
+    ],
   },
+
+  // 自定义物料
   materials: {
-    // 自定义物料
     title: {},
-    children: [{
-      title: {
-        'zh-cn': '开发指南',
-        'en-us': 'Guide',
+    children: [
+      {
+        title: {
+          'zh-cn': '开发指南',
+          'en-us': 'Guide',
+        },
+        dir: 'guide',
       },
-      dir: 'guide',
-    }, {
-      title: {
-        'zh-cn': '物料模版',
-        'en-us': 'Material template',
+      {
+        title: {
+          'zh-cn': '物料模版',
+          'en-us': 'Material template',
+        },
+        dir: 'template',
       },
-      dir: 'template',
-    }, {
-      title: {
-        'zh-cn': '参考',
-        'en-us': 'Reference',
+      {
+        title: {
+          'zh-cn': '参考',
+          'en-us': 'Reference',
+        },
+        dir: 'reference',
       },
-      dir: 'reference',
-    }],
+    ],
   },
+
+  // ice-scripts 1.x
   'cli-1.x': {
-    // ice-scripts 1.x
     title: {},
     currentVersion: '1.x',
     versions: [{
@@ -78,65 +129,79 @@ const docCategories = {
       value: '2.x',
       path: '/docs/cli/about',
     }],
-    children: [{
-      title: {
-        'zh-cn': '基础指南',
-        'en-us': 'basic',
+    children: [
+      {
+        title: {
+          'zh-cn': '基础指南',
+          'en-us': 'basic',
+        },
+        dir: 'basic',
       },
-      dir: 'basic',
-    }, {
-      title: {
-        'zh-cn': '进阶指南',
-        'en-us': 'advanced',
+      {
+        title: {
+          'zh-cn': '进阶指南',
+          'en-us': 'advanced',
+        },
+        dir: 'advanced',
       },
-      dir: 'advanced',
-    }, {
-      title: {
-        'zh-cn': '常见需求',
-        'en-us': 'others',
+      {
+        title: {
+          'zh-cn': '常见需求',
+          'en-us': 'others',
+        },
+        dir: 'others',
       },
-      dir: 'others',
-    }],
+    ],
   },
+
+  // ice-scripts 2.x
   cli: {
-    // ice-scripts 2.x
     title: {},
     currentVersion: '2.x',
-    versions: [{
-      value: '1.x',
-      path: '/docs/cli-1.x/about',
-    }, {
-      value: '2.x',
-      path: '/docs/cli/about',
-    }],
-    children: [{
-      title: {
-        'zh-cn': '配置指南',
-        'en-us': 'config',
+    versions: [
+      {
+        value: '1.x',
+        path: '/docs/cli-1.x/about',
       },
-      dir: 'config',
-    }, {
-      title: {
-        'zh-cn': '工程能力',
-        'en-us': 'feature',
+      {
+        value: '2.x',
+        path: '/docs/cli/about',
       },
-      dir: 'feature',
-    }, {
-      title: {
-        'zh-cn': '插件列表',
-        'en-us': 'Plugins',
+    ],
+    children: [
+      {
+        title: {
+          'zh-cn': '配置指南',
+          'en-us': 'config',
+        },
+        dir: 'config',
       },
-      dir: 'plugin-list',
-    }, {
-      title: {
-        'zh-cn': '插件开发',
-        'en-us': 'Plguin dev',
+      {
+        title: {
+          'zh-cn': '工程能力',
+          'en-us': 'feature',
+        },
+        dir: 'feature',
       },
-      dir: 'plugin-dev',
-    }],
+      {
+        title: {
+          'zh-cn': '插件列表',
+          'en-us': 'Plugins',
+        },
+        dir: 'plugin-list',
+      },
+      {
+        title: {
+          'zh-cn': '插件开发',
+          'en-us': 'Plguin dev',
+        },
+        dir: 'plugin-dev',
+      },
+    ],
   },
+
+  // 中后台设计理念
   design: {
-    // 中后台设计理念
     title: {},
     children: [
       {
