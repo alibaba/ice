@@ -36,5 +36,7 @@ function goldlog(action, extraData = {}) {
       gokey: encodeURIComponent(gokey),
       logtype: '2',
     },
-  });
+  }).catch(() => {
+    // ignore
+  })
 }
