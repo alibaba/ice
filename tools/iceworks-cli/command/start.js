@@ -16,11 +16,12 @@ const SERVER_PATH = path.join(__dirname, '../', 'server');
 const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
 async function start(options = {}) {
+  await dauStat();
   let answers;
   try {
     answers = await checkServerVersion();
   } catch (error) {
-    console.warn(error);
+    // ignore
   };
   if (answers && answers.update) {
     const child = spawn('node', ['./lib/downloadServer.js'], {
