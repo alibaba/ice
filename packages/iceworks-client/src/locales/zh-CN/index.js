@@ -264,7 +264,7 @@ export default {
   'iceworks.material.sourceUrl': '物料源地址',
   'iceworks.material.noData': '暂无数据',
   'iceworks.material.customMaterial': '自定义物料',
-  'iceworks.material.officialMaterial': '官方推荐物料',
+  'iceworks.material.officialMaterial': '推荐物料',
   'iceworks.material.name': '物料名称',
   'iceworks.material.delete': '删除物料',
   'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',
