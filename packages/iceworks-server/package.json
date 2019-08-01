@@ -1,6 +1,6 @@
 {
   "name": "iceworks-server",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "iceworks server",
   "files": [
     "dist/",
@@ -88,7 +88,8 @@
   },
   "midway-bin-build": {
     "include": [
-      "app/view"
+      "app/view",
+      "lib/adapter/modules/page/template.jsx.ejs"
     ]
   },
   "author": "chenbin92",

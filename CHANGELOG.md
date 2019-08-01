@@ -1,6 +1,16 @@
 # CHANGELOG
 
+## 3.0.2
+
+- [feat] support create-react-app #2399
+- [feat] open page folder in editor #2575
+- [fix] router sort logic (#2559)
+- [fix] copy ejs file to dist #2571
+- [fix] improve some translation #2578
+- [fix] move dir across device #2576 
+
 ## 3.0.1
+
 - [fix] router sort logic #2559
 - [fix] failed to create page #2564
 - [fix] failed to re-install dependencies #2565

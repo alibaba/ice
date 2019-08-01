@@ -1,4 +1,5 @@
 import * as rp from 'request-promise-native';
+import { checkAliInternal } from 'ice-npm-utils';
 import storage, { schema } from '../../../../lib/storage';
 
 const isArray = Array.isArray;
@@ -13,12 +14,19 @@ const CATEGORY_ALL = '全部';
 export default (app) => {
   return class MaterialController extends app.Controller {
     public async getResources({ args }) {
+      const isAliInternal = await checkAliInternal();
+      let defaultMaterials = schema.material.default;
+      if (isAliInternal) {
+        defaultMaterials = defaultMaterials.filter(item => item.type === 'react');
+      }
+
       // check if the default official material is the same as the default in db.json
       const newMaterial = storage
         .get('material')
         .filter(item => !item.official)
-        .concat(schema.material.default);
+        .concat(defaultMaterials);
       storage.set('material', newMaterial);
+
       const resources = storage.get('material');
 
       if (args && args.type) {
@@ -143,14 +151,16 @@ function generateCates(data: any[]) {
   const result = [{name: CATEGORY_ALL, count: data.length }];
   const temp = {};
   for (let i = 0, l = data.length; i < l; i++) {
-    const { categories = [] } = data[i];
-    categories.forEach((catName) => {
-      if (!(catName in temp)) {
-        temp[catName] = 1;
-      } else {
-        temp[catName]++;
-      }
-    });
+    const { categories } = data[i];
+    if (isArray(categories) && categories.length) {
+      categories && categories.forEach((catName) => {
+        if (!(catName in temp)) {
+          temp[catName] = 1;
+        } else {
+          temp[catName]++;
+        }
+      });
+    }
   }
 
   Object.keys(temp).forEach((name) => {
