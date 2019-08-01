@@ -17,7 +17,12 @@ const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
 async function start(options = {}) {
   await dauStat();
-  const answers = await checkServerVersion();
+  let answers;
+  try {
+    answers = await checkServerVersion();
+  } catch (error) {
+    // ignore
+  };
   if (answers && answers.update) {
     const child = spawn('node', ['./lib/downloadServer.js'], {
       stdio: ['pipe'],
@@ -47,7 +52,11 @@ async function listen(options) {
 
   let port = options.port;
   if (!port) {
-    port = await portfinder.getPortPromise();
+    try {
+      port = await portfinder.getPortPromise();
+    } catch (error) {
+      console.error('Could not get a free port:\n', error);
+    }
   }
 
   const opts = { host, port };
