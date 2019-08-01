@@ -146,7 +146,7 @@ export default class Page implements IPageModule {
     }
 
     await mkdirpAsync(blockDir);
-    await mvAsync(path.join(blockTempDir, 'src'), blockDir);
+    await mvAsync(path.join(blockTempDir, 'src'), blockDir, {clobber: false});
   }
 
   public async getAll(): Promise<IPage[]> {
