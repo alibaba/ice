@@ -2,13 +2,14 @@ import { checkAliInternal } from 'ice-npm-utils';
 import getBaseAdapter from '../adapter';
 import Configuration from './modules/configuration';
 import Task from './modules/task';
+import Page from './modules/page';
 
 export default async i18n => {
   const baseAdapter = await getBaseAdapter(i18n);
   const {
     Guide,
     Layout,
-    Page,
+    Page: basePage,
     QuickDev,
     QuickBuild,
     Git,
@@ -28,11 +29,14 @@ export default async i18n => {
     OSS,
     Todo,
     Dependency,
-    Page,
     QuickDev,
     QuickBuild,
     Router,
     Menu,
+    Page: {
+      ...basePage,
+      module: Page,
+    },
     Task: {
       ...baseTask,
       module: Task,
