@@ -220,9 +220,11 @@ export default class Page implements IPageModule {
       .replace(/template/g, 'index')
       .replace(/\.ejs$/g, '');
     const dist = path.join(pageDir, fileName);
+    // parser should be the vue in the vue template
+    const parser = type === DEFAULT_TYPE ? 'babel' : 'vue';
     const rendered = prettier.format(
       fileContent,
-      { singleQuote: true, trailingComma: 'es5', parser: 'babel' }
+      { singleQuote: true, trailingComma: 'es5', parser }
     );
 
     await writeFileAsync(dist, rendered, 'utf-8');
