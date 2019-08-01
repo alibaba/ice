@@ -14,6 +14,7 @@ export default {
   'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考 <a href="https://ice.work/docs/iceworks/migrate" target="_blank">文档</a> 进行适配',
   'iceworks.global.adapter.reload': '刷新重试',
   'iceworks.global.no.project': '未找到项目，请先添加项目',
+  'iceworks.global.layout.login': '请登录',
 
   // quick start
   'iceworks.quickStart.title': '从热门模板开始初始化你的项目',
@@ -263,7 +264,7 @@ export default {
   'iceworks.material.sourceUrl': '物料源地址',
   'iceworks.material.noData': '暂无数据',
   'iceworks.material.customMaterial': '自定义物料',
-  'iceworks.material.officialMaterial': '官方推荐物料',
+  'iceworks.material.officialMaterial': '推荐物料',
   'iceworks.material.name': '物料名称',
   'iceworks.material.delete': '删除物料',
   'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',

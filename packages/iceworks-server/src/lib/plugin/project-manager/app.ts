@@ -28,6 +28,7 @@ const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 const DEFAULT_TYPE = 'react';
 const DEFAULT_ADAPTER = [
+  'adapter-cra-v1',
   'adapter-react-v1',
   'adapter-react-v2',
   'adapter-react-v3',
@@ -280,11 +281,9 @@ class ProjectManager extends EventEmitter {
       (currentItem) => currentItem.path === path
     );
 
-    if (!project) {
-      throw new Error('notfound project');
+    if (project) {
+      return project;
     }
-
-    return project;
   }
 
   /**
