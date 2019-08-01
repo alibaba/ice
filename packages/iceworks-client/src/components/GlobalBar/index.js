@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Balloon } from '@alifd/next';
+import { Balloon, Tab } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -85,11 +85,33 @@ const GlobalBar = ({ project, intl }) => {
 
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
+  const tabs = [
+    { tab: '操作日志', key: 'operation' },
+    { tab: '进程日志', key: 'process' },
+];
 
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-        <Icon
+      <Tab>
+        {tabs.map(tab => (
+          <Tab.Item title={tab.title} key={tab.key}>
+            <Icon
+              type="close"
+              className={styles.closeIcon}
+              onClick={onClose}
+            />
+            <XtermTerminal
+              id="globalTerminal"
+              name={`\n${intl.formatMessage({
+                id: 'iceworks.global.bar.log',
+              })}`}
+              options={{ cols: '100', rows: '17' }}
+            />
+          </Tab.Item>
+        ))}
+      </Tab>
+        {/* <Icon
           type="close"
           className={styles.closeIcon}
           onClick={onClose}
@@ -98,7 +120,7 @@ const GlobalBar = ({ project, intl }) => {
           id="globalTerminal"
           name={`\n${intl.formatMessage({ id: 'iceworks.global.bar.log' })}`}
           options={{ cols: '100', rows: '17' }}
-        />
+        /> */}
       </div>
 
       <div className={styles.globalBar}>

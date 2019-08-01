@@ -273,6 +273,8 @@ export default {
   // global bar
   'iceworks.global.bar.project': '当前项目名称',
   'iceworks.global.bar.log': '日志',
+  'iceworks.global.bar.log.operation': '操作日志',
+  'iceworks.global.bar.log.process': '进程日志',
   'iceworks.global.bar.folder': '文件夹',
   'iceworks.global.bar.editor': '编辑器',
   'iceworks.global.bar.feedback': '反馈',
