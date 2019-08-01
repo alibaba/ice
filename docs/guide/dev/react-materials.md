@@ -1,5 +1,5 @@
 ---
-title: 官方 React 物料
+title: 物料使用
 order: 1
 ---
 
@@ -66,8 +66,8 @@ ReactDOM.render((
 
 模板一般用于初始化项目，初始化项目一般有两种方式：
 
-- 使用 iceworks 创建项目
-- 使用 ice-scripts 通过 init 命令创建项目：`ice init -t ${npmName}`
+- 通过 iceworks 可视化方式创建
+- 通过命令行方式创建：`iceworks init`
 
 ## 区块
 
@@ -77,12 +77,12 @@ ReactDOM.render((
 
 将区块添加到项目里同样也有两种方式：
 
-- 在 iceworks 中点击添加区块
-- 使用 ice-scripts 通过 `add block` 命令添加：
+- 在 iceworks 中可视化添加区块
+- 通过命令行方式添加区块：
 
   ```bash
-  $ cd src/pages/home/components
-  $ ice add block -t @icedesign/document-list-block
+  $ cd src/pages/Home/components
+  $ iceworks add @icedesign/document-list-block
   ```
 
 ## 相关链接

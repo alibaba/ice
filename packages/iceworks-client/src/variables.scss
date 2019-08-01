@@ -1,0 +1,77 @@
+// This file provide theme variables
+
+// Dark Theme
+// use @alifd/theme-iceworks-dark package，it is a dark theme
+// design tokens：https://fusion.design/56717/component/tokens?themeid=9079
+
+// Light Theme
+// use @alifd/theme-iceworks-light package, it is a light theme
+// design tokens：https://fusion.design/56717/component/tokens?themeid=9165
+
+// Both use the same variables
+// There are some major variables below, all sass variables could be found in design tokens
+
+// Note：define variables
+// $brand-color-primary: $color-brand1-9;
+// It can also be：
+// $brand-color-primary: var(--color-brand1-9);
+
+// default color
+$white: $color-white;
+$black: $color-black;
+$transparent: $color-transparent;
+
+// brand color
+$brand-color-primary: $color-brand1-9;
+$brand-color-secondary: $color-brand1-6;
+$brand-color-normal: $color-brand1-1;
+
+// text color
+$text-color-base: $color-text1-4;
+$text-color-primary: $color-text1-2;
+$text-color-secondary: $color-text1-3;
+$text-color-normal: $color-text1-1;
+
+// text font size
+$font-size-base: $font-size-body-2; // 14px;
+$font-size-sm: $font-size-body-1; // 12px;
+$font-size-md: $font-size-subhead; // 16px;
+$font-size-xl: $font-size-title; // 20px;
+$font-size-xxl: $font-size-headline; // 24px;
+$font-size-xxxl: $font-size-display-1; // 36px;
+
+// border color
+$border-color-base: $color-line1-1;
+
+// border radius
+$border-radius-base: $corner-2; // 6px
+$border-radius-large: $corner-3; // 16px
+$border-radius-small: $corner-1; // 16px
+$border-radius-circle: $corner-circle; // 50%
+
+// link color
+$link-color: $color-link-1;
+$link-color-visit: $color-link-2;
+$link-color-hover: $color-link-3;
+
+// state color
+$success-color: $color-success-1;
+$notice-color: $color-notice-2;
+$warning-color: $color-warning-3;
+$error-color: $color-error-4;
+
+// shadow for layers
+$shadow-zero: $shadow-zero;
+$shadow-up: $shadow-3-up;
+$shadow-left: $shadow-3-left;
+$shadow-down: $shadow-3-down;
+$shadow-right: $shadow-3-right;
+
+// disable state color
+$disabled-color: $color-text1-1;
+
+// background color
+$background-color-base: $color-fill1-2;
+$background-color-light: $color-fill1-1;
+$background-color-dark: $color-fill1-3;
+$background-color-deep: $color-fill1-4;

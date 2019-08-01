@@ -1,1 +1,0 @@
-## ice-react-compoent-template

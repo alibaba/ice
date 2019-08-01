@@ -1,5 +1,5 @@
 ---
-title: 官方基础升级 1.x 指南
+title: Fusion 组件升级 1.x 指南
 order: 3
 ---
 
@@ -56,14 +56,18 @@ class App extends React.Component {
 }
 ```
 
-然后通过工程配置将样式里的代码改掉（需要跟上面的 prefix 保持一致）：
+然后通过工程（ice-scripts@2.x）配置将样式里的代码改掉（需要跟上面的 prefix 保持一致）：
 
-```json
-// package.json
-{
-  "themeConfig": {
-    "nextPrefix": "nextfd-"
-  }
+```js
+// ice.config.js
+module.exports = {
+  plugins: [
+    ['ice-plugin-fusion', {
+      themeConfig: {
+        'nextPrefix': 'nextfd-',
+      },
+    }]
+  ]
 }
 ```
 
@@ -71,9 +75,13 @@ class App extends React.Component {
 
 ## 升级 1.x 指南
 
+### 工程迁移 ice-scripts
+
+社区用户无需关心，内部项目如果使用的是 def-ice 链路，请先迁移到 ice-scripts。
+
 ### 升级 react&react-dom
 
-react&react-dom 请升级至 16.x。
+将 react&react-dom 请升级至 16.x。
 
 ### 基础组件 0.x -> 1.x 升级
 

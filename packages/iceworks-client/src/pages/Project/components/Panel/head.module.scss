@@ -1,0 +1,39 @@
+@import '../../../../variables.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: $brand-color-normal;
+  height: 48px;
+  align-items: center;
+  padding: 0 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 4px;
+    z-index: 2;
+  }
+
+  .main {
+    flex: 1;
+  }
+
+  .operation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+
+    .icon {
+      margin-right: 12px;
+      color: $brand-color-primary;
+      cursor: pointer;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

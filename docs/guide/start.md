@@ -7,6 +7,8 @@ order: 2
 
 ## 使用 GUI 方式创建项目
 
+> iceworks@3.0 beta 版本已经发布，欢迎[试用](https://github.com/alibaba/ice/issues/2369)
+
 [iceworks](/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
 
 ### 1. 安装 iceworks
@@ -75,7 +77,7 @@ iceworks 是基于 Electron 开发的桌面端应用，因此首先需要在 [�
 
 ```bash
 $ npm i -g iceworks
-$ iceworks -V
+$ iceworks --help
 ```
 
 ### 2. 初始化项目
@@ -85,7 +87,7 @@ $ mkdir ice-project
 $ cd ice-project
 $ iceworks init
 # 或者基于指定模板创建项目
-$ ice init -t {{npmName}}
+$ iceworks init <npmName>
 ```
 
 执行命令后根据需求选择对应模板即可完成项目的创建

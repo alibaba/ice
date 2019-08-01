@@ -1,0 +1,22 @@
+@import '../../../../variables.scss';
+
+.main {
+  .item {
+    margin-bottom: 12px;
+    .path {
+      margin-bottom: 6px;
+      color: $text-color-secondary;
+      font-size: 14px;
+    }
+
+    .msg {
+      margin-left: 20px;
+      margin-bottom: 4px;
+
+      .msgLine {
+        margin-right: 6px;
+        color: $text-color-secondary;
+      }
+    }
+  }
+}

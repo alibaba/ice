@@ -1,0 +1,4 @@
+{
+  "controller.home.userError": "User information is incorrect, login failed",
+  "controller.settings.setWorkFolder.error": "Access to this directory without permission"
+}

@@ -44,12 +44,20 @@ Default return `npm`
 
 Return `Promise.resolve(isInternal)`
 
+### getNpmTarball(name, version)
+
+Return `Promise.resolve(tarball)`
+
+### getAndExtractTarball(destDir, tarball, progressFunc: () => {})
+
+Return `Promise.resolve(allFiles: string[])`
+
 ## Custom
 
 ### Custom Npm Registry
 
 ```
-process.env.REGISTRY=https://registry.npm.taobao.org
+process.env.REGISTRY=https://registry.npmjs.org
 ```
 
 ### Custom Unpkg Host

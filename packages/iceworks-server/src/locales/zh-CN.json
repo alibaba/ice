@@ -1,0 +1,4 @@
+{
+  "controller.home.userError": "用户信息有误，登录失败",
+  "controller.settings.setWorkFolder.error": "无权限进入该目录"
+}
