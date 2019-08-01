@@ -151,14 +151,16 @@ function generateCates(data: any[]) {
   const result = [{name: CATEGORY_ALL, count: data.length }];
   const temp = {};
   for (let i = 0, l = data.length; i < l; i++) {
-    const { categories = [] } = data[i];
-    categories.forEach((catName) => {
-      if (!(catName in temp)) {
-        temp[catName] = 1;
-      } else {
-        temp[catName]++;
-      }
-    });
+    const { categories } = data[i];
+    if (isArray(categories) && categories.length) {
+      categories && categories.forEach((catName) => {
+        if (!(catName in temp)) {
+          temp[catName] = 1;
+        } else {
+          temp[catName]++;
+        }
+      });
+    }
   }
 
   Object.keys(temp).forEach((name) => {
