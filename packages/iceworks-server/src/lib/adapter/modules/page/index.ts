@@ -24,7 +24,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
 const mvAsync = util.promisify(mv);
-const DEFAULT_TYPE = 'react';
+const defaultType = 'react';
 
 const loadTemplate = async (type: string) => {
   let fileName = 'template.jsx';
@@ -51,24 +51,14 @@ export default class Page implements IPageModule {
 
   private readonly componentDirName: string = 'components';
 
-  public readonly packagePath: string;
+  public readonly type: string;
 
   constructor(params: { project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
     this.path = path.join(this.project.path, 'src', 'pages');
-    this.packagePath = path.join(this.project.path, 'package.json');
-  }
-
-  private getType(): string {
-    const { iceworks = {} } = this.getPackageJSON();
-    const { type = DEFAULT_TYPE } = iceworks;
-    return type;
-  }
-
-  public getPackageJSON() {
-    return JSON.parse(fs.readFileSync(this.packagePath).toString());
+    this.type = defaultType;
   }
 
   private async scanPages(dirPath: string): Promise<IPage[]> {
@@ -200,8 +190,8 @@ export default class Page implements IPageModule {
 
     // create page file
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 90 });
-    const type: string = this.getType();
-    const template = await loadTemplate(type);
+   
+    const template = await loadTemplate(this.type);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
         const blockFolderName = block.alias || upperCamelCase(block.name);
@@ -221,7 +211,7 @@ export default class Page implements IPageModule {
       .replace(/\.ejs$/g, '');
     const dist = path.join(pageDir, fileName);
     // parser should be the vue in the vue template
-    const parser = type === DEFAULT_TYPE ? 'babel' : 'vue';
+    const parser = this.type === defaultType ? 'babel' : 'vue';
     const rendered = prettier.format(
       fileContent,
       { singleQuote: true, trailingComma: 'es5', parser }
