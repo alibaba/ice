@@ -103,7 +103,7 @@ class App extends React.Component {
 }
 ```
 
-- 跨应用跳转的情况下使用 `AppLink`，意味着本次跳转需要重新加载静态资源；子应用内部跳转，仍使用 `Link`
+- 跨应用跳转的情况下使用 `AppLink`，表示本次跳转需要重新加载静态资源；子应用内部跳转，仍使用 `Link`
 
 ### Router 注入 basename、渲染全局 404
 

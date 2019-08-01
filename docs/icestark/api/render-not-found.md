@@ -12,16 +12,22 @@ order: 9
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { renderNotFound, getBasename } from '@ice/stark';
-import HomePage from './pages/Home';
-import AboutPage from './pages/About';
+
+function List() {
+  return <div>List</div>;
+}
+
+function Detail() {
+  return <div>Detail</div>;
+}
 
 export default class App extends React.Component {
   render() {
     return (
       <Router basename={getBasename()}>
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
+          <Route exact path="/" component={List} />
+          <Route path="/detail" component={Detail} />
           <Route
             component={() => {
               // 通知框架应用渲染全局 404
