@@ -8,6 +8,7 @@ import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import showMessage from '@utils/showMessage';
 import goldlog from '@utils/goldlog';
+import socket from '@src/socket';
 import { injectIntl } from 'react-intl';
 import Panel from '../Panel';
 import PanelHead from '../Panel/head';
@@ -52,6 +53,14 @@ const PagePanel = ({ intl, title, description }) => {
   function onAddBlocks(name) {
     setEditingName(name);
     setAddBlocksModal(true);
+  }
+
+  async function onEdit(path) {
+    try {
+      await socket.emit('home.system.openEditor', { path });
+    } catch (error) {
+      showMessage(error);
+    }
   }
 
   async function deletePage() {
@@ -185,7 +194,7 @@ const PagePanel = ({ intl, title, description }) => {
               on={onAddBlocksModal}
               onCancel={() => setAddBlocksModal(false)}
               onOk={addBlocks}
-              existedBlocks={pageEditing.blocks}
+              page={pageEditing}
             /> :
             null
         }
@@ -193,11 +202,12 @@ const PagePanel = ({ intl, title, description }) => {
           dataSource.length ?
             <div>
               <ul>
-                {dataSource.map(({ name, birthtime }) => {
+                {dataSource.map(({ name, birthtime, path }) => {
                   return (
                     <li className={styles.item} key={name}>
                       <strong>{name}</strong>
                       <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
+                      <Icon className={styles.icon} type="edit" size="xs" onClick={async () => await onEdit(path)} />
                       <Icon className={styles.icon} type="new-page" size="xs" onClick={() => onAddBlocks(name)} />
                       <Icon className={styles.icon} type="trash" size="xs" onClick={() => onDelete(name)} />
                     </li>
