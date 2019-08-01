@@ -30,29 +30,33 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-        <div className="header">this is common header</div>
-        <AppRouter onRouteChange={this.onRouteChange}>
+        <div>this is common header</div>
+        <AppRouter
+          onRouteChange={this.onRouteChange}
+          ErrorComponent={<div>js bundle loaded error</div>}
+          NotFoundComponent={<div>NotFound</div>}
+        >
           <AppRoute
-            path={['/', '/home', '/about']}
+            path={['/', '/list', '/detail']}
             basename="/"
             exact
-            title="Index"
+            title="商家平台"
             url={[
-              '//g.alicdn.com/icestark-demo/child/0.1.2/js/index.js',
-              '//g.alicdn.com/icestark-demo/child/0.1.2/css/index.css'
+              '//g.alicdn.com/icestark-demo/child/0.2.1/js/index.js',
+              '//g.alicdn.com/icestark-demo/child/0.2.1/css/index.css',
             ]}
           />
           <AppRoute
-            path="/user"
-            basename="/user"
-            title="User"
+            path="/waiter"
+            basename="/waiter"
+            title="小二平台"
             url={[
-              '//g.alicdn.com/icestark-demo/child2/0.1.2/js/index.js',
-              '//g.alicdn.com/icestark-demo/child2/0.1.2/css/index.css'
+              '//g.alicdn.com/icestark-demo/child2/0.2.1/js/index.js',
+              '//g.alicdn.com/icestark-demo/child2/0.2.1/css/index.css',
             ]}
           />
         </AppRouter>
-        <div className="footer">this is common footer</div>
+        <div>this is common footer</div>
       </div>
     );
   }
@@ -61,7 +65,7 @@ class Layout extends React.Component {
 
 - `AppRouter` 定位子应用渲染节点
 - `AppRoute` 设置子应用相关配置，`path` 配置有效路由信息、`basename` 配置统一的路由前缀，`url` 配置静态资源路径
-- `icestark` 会按照类似 `react-router` 的路由解析规则，判断当前生效 `path`，加载对应子应用的静态资源，进行渲染
+- icestark 会按照 `react-router` 的路由解析规则，判断当前生效 `path`，加载对应子应用的静态资源 `url`，渲染在 `AppRouter` 中
 
 ## 在子应用中使用
 
@@ -92,14 +96,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <AppLink to="/user/home">子应用间跳转使用 AppLink </AppLink>
+        <AppLink to="/waiter/list">子应用间跳转使用 AppLink </AppLink>
       </div>
     );
   }
 }
 ```
 
-- icestark 需要跨应用跳转的情况下使用 `AppLink`，表示本次跳转意味着需要重新加载静态资源
+- 跨应用跳转的情况下使用 `AppLink`，意味着本次跳转需要重新加载静态资源；子应用内部跳转，仍使用 `Link`
 
 ### Router 注入 basename、渲染全局 404
 
@@ -107,8 +111,14 @@ class App extends React.Component {
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { renderNotFound, getBasename } from '@ice/stark';
-import HomePage from './pages/Home';
-import AboutPage from './pages/About';
+
+function List() {
+  return <div>List</div>;
+}
+
+function Detail() {
+  return <div>Detail</div>;
+}
 
 export default class App extends React.Component {
   render() {
@@ -116,8 +126,8 @@ export default class App extends React.Component {
       // 通过 getBasename 将在框架应用中注册的 basename 注入到子应用中
       <Router basename={getBasename()}>
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
+          <Route exact path="/" component={List} />
+          <Route path="/detail" component={Detail} />
           <Route
             component={() => {
               // 通知框架应用渲染全局 404
@@ -131,4 +141,4 @@ export default class App extends React.Component {
 }
 ```
 
-- icestark 不同应用之间的运行环境隔离，因此可以使用多个 react 版本。因此全局 404 使用方式不同于普通的 context、props
+- 子应用通过 `getBasename` 方法获取框架应用中配置的 `basename`，通过 `renderNotFound` 方法触发框架应用渲染 404
