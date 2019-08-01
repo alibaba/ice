@@ -220,6 +220,8 @@ const docCategories = {
       },
     ],
   },
+
+  // icestark
   icestark: {
     // 工作台模式
     title: {},
