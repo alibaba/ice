@@ -24,15 +24,8 @@ const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
 const mvAsync = util.promisify(mv);
-const defaultType = 'react';
 
-const loadTemplate = async (type: string) => {
-  let fileName = 'template.jsx';
-  // switch different templetes
-  if (type === 'vue') {
-    fileName = 'template.vue';
-  }
-  const filePath = path.join(__dirname, `${fileName}.ejs`);
+const loadTemplate = async (fileName: string, filePath: string) => {
   const fileStr = await readFileAsync(filePath, 'utf-8');
   const compile = ejs.compile(fileStr);
   return {
@@ -51,14 +44,20 @@ export default class Page implements IPageModule {
 
   private readonly componentDirName: string = 'components';
 
-  public readonly type: string;
+  public readonly templateFileName: string;
+
+  public readonly templateFilePath: string;
+
+  public readonly prettierParseType: string;
 
   constructor(params: { project: IProject; storage: any }) {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
     this.path = path.join(this.project.path, 'src', 'pages');
-    this.type = defaultType;
+    this.templateFileName = 'template.jsx';
+    this.templateFilePath = path.join(__dirname, `${this.templateFileName}.ejs`);
+    this.prettierParseType = 'babel';
   }
 
   private async scanPages(dirPath: string): Promise<IPage[]> {
@@ -191,7 +190,7 @@ export default class Page implements IPageModule {
     // create page file
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 90 });
    
-    const template = await loadTemplate(this.type);
+    const template = await loadTemplate(this.templateFileName, this.templateFilePath);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
         const blockFolderName = block.alias || upperCamelCase(block.name);
@@ -210,11 +209,9 @@ export default class Page implements IPageModule {
       .replace(/template/g, 'index')
       .replace(/\.ejs$/g, '');
     const dist = path.join(pageDir, fileName);
-    // parser should be the vue in the vue template
-    const parser = this.type === defaultType ? 'babel' : 'vue';
     const rendered = prettier.format(
       fileContent,
-      { singleQuote: true, trailingComma: 'es5', parser }
+      { singleQuote: true, trailingComma: 'es5', parser: this.prettierParseType }
     );
 
     await writeFileAsync(dist, rendered, 'utf-8');
