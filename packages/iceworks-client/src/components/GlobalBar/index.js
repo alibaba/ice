@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Balloon, Tab } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -13,13 +13,16 @@ import { THEMES } from '@src/appConfig';
 import goldlog from '@utils/goldlog';
 import stores from '@stores';
 import styles from './index.module.scss';
+import logger from '@utils/logger';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
+  const [activeKey, changeActiveKey] = useState('process');
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue } = useTermTheme();
   const projectPath = project.path;
 
+  logger.info(themeValue);
   function handleTerminal() {
     globalTerminalStore.trigger();
   }
@@ -51,9 +54,10 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   async function handleTheme() {
-    const currentTheme = (theme === THEMES.dark.themePackage)
-      ? THEMES.light.themePackage
-      : THEMES.dark.themePackage;
+    const currentTheme =
+      theme === THEMES.dark.themePackage
+        ? THEMES.light.themePackage
+        : THEMES.dark.themePackage;
 
     goldlog({
       namespace: 'home',
@@ -77,50 +81,66 @@ const GlobalBar = ({ project, intl }) => {
     globalTerminalStore.hide();
   }
 
-  useSocket('home.system.open.editor.data', (data) => {
+  useSocket('home.system.open.editor.data', data => {
     if (data) {
-      showMessage('打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中');
+      showMessage(
+        '打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中',
+      );
     }
   });
 
-  const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
+  const hiddenClassName = globalTerminalStore.dataSource.show
+    ? ''
+    : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
   const tabs = [
-    { tab: '操作日志', key: 'operation' },
-    { tab: '进程日志', key: 'process' },
-];
+    {
+      title: 'iceworks.global.bar.log.process',
+      key: 'process',
+      id: 'globalProcessLog',
+    },
+    {
+      title: 'iceworks.global.bar.log.operation',
+      key: 'operation',
+      id: 'globalOperationLog',
+    },
+  ];
 
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-      <Tab>
-        {tabs.map(tab => (
-          <Tab.Item title={tab.title} key={tab.key}>
-            <Icon
-              type="close"
-              className={styles.closeIcon}
-              onClick={onClose}
-            />
-            <XtermTerminal
-              id="globalTerminal"
-              name={`\n${intl.formatMessage({
-                id: 'iceworks.global.bar.log',
-              })}`}
-              options={{ cols: '100', rows: '17' }}
-            />
-          </Tab.Item>
-        ))}
-      </Tab>
-        {/* <Icon
-          type="close"
-          className={styles.closeIcon}
-          onClick={onClose}
-        />
-        <XtermTerminal
-          id="globalTerminal"
-          name={`\n${intl.formatMessage({ id: 'iceworks.global.bar.log' })}`}
-          options={{ cols: '100', rows: '17' }}
-        /> */}
+        <Tab
+          style={{
+            background: THEMES[themeValue].termTheme.background,
+            color: THEMES[themeValue].termTheme.background,
+          }}
+          activeKey={activeKey}
+          onChange={key => changeActiveKey(key)}
+        >
+          {tabs.map(tab => (
+            <Tab.Item
+              title={intl.formatMessage({
+                id: tab.title,
+              })}
+              key={tab.key}
+            >
+              <div>
+                <Icon
+                  type="close"
+                  className={styles.closeIcon}
+                  onClick={onClose}
+                />
+                <XtermTerminal
+                  id={tab.id}
+                  name={`\n${intl.formatMessage({
+                    id: tab.title,
+                  })}`}
+                  options={{ cols: '100', rows: '17' }}
+                />
+              </div>
+            </Tab.Item>
+          ))}
+        </Tab>
       </div>
 
       <div className={styles.globalBar}>
