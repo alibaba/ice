@@ -413,7 +413,7 @@ class ProjectManager extends EventEmitter {
     await this.createProjectFolder(params);
 
     if (appId) {
-      const generate = require('@ali/stark-biz-generator');
+      const generate = require('@ali/stark-biz-generator');  // eslint-disable-line
       await generate({ appId, changeId, targetDir: targetPath });
 
     } else {
