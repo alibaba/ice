@@ -35,7 +35,6 @@ order: 2
 @VelocityLayout("/velocity/layout/index.vm")
 public String index(Model model) {
     model.addAttribute(publicPath, jsConfig.get(publicPath));
-    fillUser(model);
     return "index";
 }
 ```
