@@ -110,10 +110,6 @@ const GlobalBar = ({ project, intl }) => {
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
         <Tab
-          style={{
-            background: THEMES[themeValue].termTheme.background,
-            color: THEMES[themeValue].termTheme.background,
-          }}
           activeKey={activeKey}
           onChange={key => changeActiveKey(key)}
         >
