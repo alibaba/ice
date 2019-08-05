@@ -52,9 +52,9 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   async function handleTheme() {
-    const currentTheme = theme === THEMES.dark.themePackage
-        ? THEMES.light.themePackage
-        : THEMES.dark.themePackage;
+    const currentTheme = (theme === THEMES.dark.themePackage)
+      ? THEMES.light.themePackage
+      : THEMES.dark.themePackage;
 
     goldlog({
       namespace: 'home',
