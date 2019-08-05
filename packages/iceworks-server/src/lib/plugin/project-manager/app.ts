@@ -368,10 +368,16 @@ class ProjectManager extends EventEmitter {
    * Generate project
    */
   private async generateProject(params: ICreateParams) {
-    const { path: targetPath, scaffold, name } = params;
+    const { path: targetPath, scaffold } = params;
     const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
     await getAndExtractTarball(targetPath, tarballURL);
+  }
 
+  /**
+   * Process project
+   */
+  private async processProject(params: ICreateParams) {
+    const { path: targetPath, name } = params;
     await rimrafAsync(path.join(targetPath, 'build'));
 
     // rewrite pakcage.json
@@ -392,7 +398,7 @@ class ProjectManager extends EventEmitter {
     await writeFileAsync(packageJSONPath, `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
 
     const isAlibaba = await checkAliInternal();
-    if (isAlibaba ) {
+    if (isAlibaba) {
       await this.generateAbcFile(targetPath, packageJSON.devDependencies['ice-scripts']);
     }
   }
@@ -403,14 +409,19 @@ class ProjectManager extends EventEmitter {
    * TODO create a project by custom scaffold
    */
   public async createProject(params: ICreateParams): Promise<void> {
-    if (params.appId) {
-      const generate = require('@ali/stark-biz-generator'); // eslint-disable-line
-      generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
+    const { appId, changeId, path: targetPath } = params;
+    await this.createProjectFolder(params);
+
+    if (appId) {
+      const generate = require('@ali/stark-biz-generator');
+      await generate({ appId, changeId, targetDir: targetPath });
+
     } else {
-      await this.createProjectFolder(params);
       await this.generateProject(params);
-      await this.addProject(params.path);
     }
+
+    await this.processProject(params);
+    await this.addProject(targetPath);
   }
 
   /**
