@@ -13,16 +13,14 @@ import { THEMES } from '@src/appConfig';
 import goldlog from '@utils/goldlog';
 import stores from '@stores';
 import styles from './index.module.scss';
-import logger from '@utils/logger';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
   const [activeKey, changeActiveKey] = useState('process');
   const { theme, setTheme } = useContext(ThemeContext);
-  const { themeValue } = useTermTheme();
+  const { themeValue, termTheme } = useTermTheme();
   const projectPath = project.path;
 
-  logger.info(themeValue);
   function handleTerminal() {
     globalTerminalStore.trigger();
   }
@@ -131,7 +129,7 @@ const GlobalBar = ({ project, intl }) => {
                   name={`\n${intl.formatMessage({
                     id: tab.title,
                   })}`}
-                  options={{ cols: '100', rows: '17' }}
+                  options={{ cols: '100', rows: '17', theme: termTheme }}
                 />
               </div>
             </Tab.Item>
