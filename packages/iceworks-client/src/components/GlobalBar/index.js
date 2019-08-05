@@ -52,8 +52,7 @@ const GlobalBar = ({ project, intl }) => {
   }
 
   async function handleTheme() {
-    const currentTheme =
-      theme === THEMES.dark.themePackage
+    const currentTheme = theme === THEMES.dark.themePackage
         ? THEMES.light.themePackage
         : THEMES.dark.themePackage;
 
@@ -79,9 +78,9 @@ const GlobalBar = ({ project, intl }) => {
     globalTerminalStore.hide();
   }
 
-  useSocket('home.system.open.editor.data', data => {
+  useSocket('home.system.open.editor.data', (data) => {
     if (data) {
-      showMessage( '打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中');
+      showMessage('打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中');
     }
   });
 
