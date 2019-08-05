@@ -81,15 +81,11 @@ const GlobalBar = ({ project, intl }) => {
 
   useSocket('home.system.open.editor.data', data => {
     if (data) {
-      showMessage(
-        '打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中',
-      );
+      showMessage( '打开编辑器失败，请先手动启动编辑器，或者将编辑器注册到终端命令行中');
     }
   });
 
-  const hiddenClassName = globalTerminalStore.dataSource.show
-    ? ''
-    : styles.hidden;
+  const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
   const tabs = [
     {
@@ -107,10 +103,7 @@ const GlobalBar = ({ project, intl }) => {
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-        <Tab
-          activeKey={activeKey}
-          onChange={key => changeActiveKey(key)}
-        >
+        <Tab activeKey={activeKey} onChange={key => changeActiveKey(key)}>
           {tabs.map(tab => (
             <Tab.Item
               title={intl.formatMessage({
@@ -118,20 +111,18 @@ const GlobalBar = ({ project, intl }) => {
               })}
               key={tab.key}
             >
-              <div>
-                <Icon
-                  type="close"
-                  className={styles.closeIcon}
-                  onClick={onClose}
-                />
-                <XtermTerminal
-                  id={tab.id}
-                  name={`\n${intl.formatMessage({
-                    id: tab.title,
-                  })}`}
-                  options={{ cols: '100', rows: '17', theme: termTheme }}
-                />
-              </div>
+              <Icon
+                type="close"
+                className={styles.closeIcon}
+                onClick={onClose}
+              />
+              <XtermTerminal
+                id={tab.id}
+                name={`\n${intl.formatMessage({
+                  id: tab.title,
+                })}`}
+                options={{ cols: '100', rows: '17', theme: termTheme }}
+              />
             </Tab.Item>
           ))}
         </Tab>
