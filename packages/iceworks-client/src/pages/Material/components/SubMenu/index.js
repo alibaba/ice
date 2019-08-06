@@ -16,8 +16,8 @@ const MaterialSubMenu = ({ data, onChange, onAddMaterial, current, onDelete, onR
     {
       type: 'reload',
       onClick: onRefresh,
-      tip: 'iceworks.material.refresh'
-    }
+      tip: 'iceworks.material.refresh',
+    },
   ];
 
   return (

@@ -37,13 +37,13 @@ const SubMenu = ({ title, operations, children }) => {
 SubMenu.defaultProps = {
   title: '',
   children: null,
-  operations: []
+  operations: [],
 };
 
 SubMenu.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string,
-  operations: PropTypes.array
+  operations: PropTypes.array,
 };
 
 export default SubMenu;
