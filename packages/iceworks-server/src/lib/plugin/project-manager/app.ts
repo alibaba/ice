@@ -73,6 +73,10 @@ class Project implements IProject {
   }
 
   public getPackageJSON() {
+    if (!fs.existsSync(this.packagePath)) {
+      const error: any = new Error('Project\'s package.json file not found in local environment');
+      throw error;
+    }
     return JSON.parse(fs.readFileSync(this.packagePath).toString());
   }
 
@@ -298,6 +302,10 @@ class ProjectManager extends EventEmitter {
    */
   public async getCurrent() {
     const projectPath = storage.get('project');
+    if (!fs.existsSync(projectPath)) {
+      const error: any = new Error('Project not found in local environment');
+      throw error;
+    }
     const project = await this.getProject(projectPath);
     return project;
   }
