@@ -6,6 +6,15 @@ import getNpmClient from '../../../../lib/getNpmClient';
 export default (app) => {
   const { Controller, i18n, logger } = app;
 
+  async function setWorkFolder(newWorkFolder) {
+    const directories = await scanDirectory(newWorkFolder);
+    if (!directories.length) {
+      throw new Error(i18n.format('controller.settings.setWorkFolder.error'));
+    }
+    storage.set('workFolder', newWorkFolder);
+    return directories;
+  }
+
   return class HomeController extends Controller {
     public async getWorkFolder() {
       const workFolder = storage.get('workFolder');
@@ -23,21 +32,28 @@ export default (app) => {
       };
     }
 
-    public async setWorkFolder(ctx) {
+    public async setWorkFolderBySub(ctx) {
       const { args } = ctx;
-      const { path: setPath } = args;
+      const { subDirectory } = args;
 
       const workFolder = storage.get('workFolder');
-      const newWorkFolder = path.join(workFolder, setPath);
+      const newWorkFolder = path.join(workFolder, subDirectory);
+      const directories = await setWorkFolder(newWorkFolder);
 
-      const directories = await scanDirectory(newWorkFolder);
-      if (!directories.length) {
-        throw new Error(i18n.format('controller.settings.setWorkFolder.error'));
-      }
-      
-      storage.set('workFolder', newWorkFolder);
       return {
         path: newWorkFolder,
+        directories,
+      };
+    }
+
+    public async setWorkFolder(ctx) {
+      const { args } = ctx;
+      const { path } = args;
+
+      const directories = await setWorkFolder(path);
+
+      return {
+        path,
         directories,
       };
     }

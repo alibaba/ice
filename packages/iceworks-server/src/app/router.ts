@@ -25,6 +25,7 @@ export default (app: Application) => {
 
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.setting.setWorkFolderBySub', home.setting.setWorkFolderBySub],
     ['home.setting.setLocale', home.setting.setLocale],
     ['home.setting.getLocale', home.setting.getLocale],
     ['home.setting.setTheme', home.setting.setTheme],
