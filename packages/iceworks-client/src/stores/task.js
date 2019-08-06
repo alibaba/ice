@@ -1,7 +1,15 @@
 import socket from '@src/socket';
 
 export default {
-  dataSource: {
+  dataSource: {},
+
+  async refresh() {
+    const result = await socket.emit('adapter.task.getStatus');
+    if (result && result.status) {
+      const { dev: devStatus, buildStatus } = result.status;
+      this.dataSource.dev = { status: devStatus } ;
+      this.dataSource.build = { status: buildStatus };
+    }
   },
 
   setStatus(type, status) {
