@@ -78,7 +78,7 @@ const docCategories = {
           'zh-cn': '进阶指南',
           'en-us': 'Advanced guide',
         },
-        dir: 'material',
+        dir: 'advanced',
       },
       {
         title: {
