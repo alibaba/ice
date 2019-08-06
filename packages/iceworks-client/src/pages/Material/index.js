@@ -62,6 +62,10 @@ const Material = ({ history, intl }) => {
     }
   }
 
+  function refreshMaterials() {
+    fetchData();
+  }
+
   async function fetchData() {
     try {
       await material.getResources();
@@ -204,6 +208,7 @@ const Material = ({ history, intl }) => {
         onChange={handleMenuChange}
         onAddMaterial={() => setMaterialModal(true)}
         onDelete={openDeleteMaterialModal}
+        onRefresh={refreshMaterials}
       />
       <div className={styles.main}>
         <Card title={cardTitle} subTitle={dataSource.currentMaterial.description} contentHeight="100%" className="scollContainer">

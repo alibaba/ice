@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -9,14 +8,20 @@ import SubMenu from '@components/SubMenu';
 import SubMenuItem from './SubMenuItem';
 import styles from './index.module.scss';
 
-const MaterialSubMenu = ({
-  data, onChange, onAddMaterial, current, onDelete,
-}) => {
+const MaterialSubMenu = ({ data, onChange, onAddMaterial, current, onDelete, onRefresh }) => {
   const { official, custom } = data;
   const hasCustomMaterial = custom && custom.length > 0;
 
+  const operations = [
+    {
+      type: 'reload',
+      onClick: onRefresh,
+      tip: 'iceworks.material.refresh'
+    }
+  ];
+
   return (
-    <SubMenu title="iceworks.material.title">
+    <SubMenu title='iceworks.material.title' operations={operations}>
       <div className={styles.itemWrapper}>
         <div style={{ marginBottom: '20px' }}>
           <div className={styles.separator}><FormattedMessage id="iceworks.material.officialMaterial" /></div>

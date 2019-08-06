@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .wrapper {
   width: 240px;
@@ -8,7 +8,33 @@
   display: flex;
   flex-direction: column;
 
-  .title {
-    margin: 15px;
+  .head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 60px;
+
+    .title {
+      margin: 0;
+    }
+
+    .operation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+
+      .icon {
+        margin-right: 12px;
+        color: $brand-color-primary;
+        cursor: pointer;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }

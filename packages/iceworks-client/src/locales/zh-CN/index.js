@@ -271,6 +271,7 @@ export default {
   'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',
   'iceworks.material.sourceUrlTips': '物料源地址是获取物料数据的地址，可以是一个 GET 接口，也可以是一个 JSON 文件的 URL 地址，不可重复',
   'iceworks.material.nameTips': '可自定义物料名称',
+  "iceworks.material.refresh": "刷新物料",
 
   // global bar
   'iceworks.global.bar.project': '当前项目名称',

@@ -271,6 +271,7 @@ export default {
   'iceworks.material.deleteConfirm': 'Are you sure to delete the material?',
   'iceworks.material.sourceUrlTips': 'Material source URL is the URL of the materials data. It can be a API or a URL of a JSON file. It should be unique.',
   'iceworks.material.nameTips': 'You can customize material name',
+  "iceworks.material.refresh": "Refresh materials",
 
   // global bar
   'iceworks.global.bar.project': 'Project Name',
