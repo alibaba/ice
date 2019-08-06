@@ -258,7 +258,7 @@ class ProjectManager extends EventEmitter {
   private async refresh(): Promise<Project[]> {
     return await Promise.all(
       storage.get('projects').filter(projectPath => {
-        if (fs.existsSync(projectPath) && fs.existsSync(projectPath + "./package.json")) {
+        if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
           return true;
         }
         // If current project path or its package.json file does not exist, we delete the project from storage
