@@ -255,7 +255,16 @@ class ProjectManager extends EventEmitter {
     this.app = app;
   }
 
-  private async refresh(projects: []): Promise<Project[]> {
+  private refresh() {
+    return storage.get('projects').map(projectPath => {
+      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
+        return { projectPath, exists: true };
+      }
+      return { projectPath, exists: false };
+    });
+  }
+
+  private async createProjects(projects: []): Promise<Project[]> {
     return await Promise.all(
       projects.map(async ({ projectPath }) => {
         const project = new Project(projectPath, this.app);
@@ -266,14 +275,9 @@ class ProjectManager extends EventEmitter {
   }
 
   public async ready() {
-    const projects = storage.get('projects').map(projectPath => {
-      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
-        return { projectPath, exists: true };
-      }
-      return { projectPath, exists: false };
-    });
     await this.app.i18n.readLocales();
-    this.projects = await this.refresh(projects.filter(({ exists }) => exists));
+    const projects = this.refresh();
+    this.projects = await this.createProjects(projects.filter(({ exists }) => exists));
     // Delete projects that do not exist in local environment
     projects.forEach(({ projectPath, exists }) => {
       if (!exists) {
