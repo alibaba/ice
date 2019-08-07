@@ -275,6 +275,8 @@ export default {
   // global bar
   'iceworks.global.bar.project': 'Project Name',
   'iceworks.global.bar.log': 'Log',
+  'iceworks.global.bar.log.operation': 'Operation Log',
+  'iceworks.global.bar.log.process': 'Process Log',
   'iceworks.global.bar.folder': 'Folder',
   'iceworks.global.bar.editor': 'Editor',
   'iceworks.global.bar.feedback': 'Feedback',

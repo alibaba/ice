@@ -37,7 +37,7 @@ const Task = ({ history, intl }) => {
     const msg = intl.formatMessage({
       id: `iceworks.task.${taskType}.start.msg`,
     });
-    const term = termManager.find('globalTerminal');
+    const term = termManager.find('globalOperationLog');
     term.writeLog(msg);
   }
 

@@ -8,7 +8,7 @@ import TaskItem from '../TaskItem';
 const QuickBuildPanel = ({ intl, title, description }) => {
   function writeLog() {
     const msg = intl.formatMessage({ id: 'iceworks.task.dev.start.msg' });
-    writeGlobalLog(msg);
+    writeGlobalLog(msg, false);
   }
 
   const task = useTask({ type: 'build', writeLog });
