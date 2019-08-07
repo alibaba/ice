@@ -269,7 +269,7 @@ class ProjectManager extends EventEmitter {
       }
     });
     return await Promise.all(
-      projects.filter(({exists}) => exists).map(async ({ projectPath}) => {
+      projects.filter(({ exists }) => exists).map(async ({ projectPath }) => {
         const project = new Project(projectPath, this.app);
         await project.loadAdapter();
         return project;
