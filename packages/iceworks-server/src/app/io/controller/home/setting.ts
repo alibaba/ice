@@ -32,8 +32,7 @@ export default (app) => {
       };
     }
 
-    public async setWorkFolderBySub(ctx) {
-      const { args } = ctx;
+    public async setWorkFolderBySub({ args }) {
       const { subDirectory } = args;
 
       const workFolder = storage.get('workFolder');
@@ -46,8 +45,7 @@ export default (app) => {
       };
     }
 
-    public async setWorkFolder(ctx) {
-      const { args } = ctx;
+    public async setWorkFolder({ args }) {
       const { path } = args;
 
       const directories = await setWorkFolder(path);
