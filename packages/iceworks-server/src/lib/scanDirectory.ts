@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import * as junk from 'junk';
+import * as _ from 'lodash';
 
 const readdirAsync = util.promisify(fs.readdir);
 const lstatAsync = util.promisify(fs.lstat);
@@ -40,5 +41,5 @@ export default async (directoryPath: string): Promise<string[]> => {
       }
     }
   }));
-  return targetFiles;
+  return _.orderBy(targetFiles);
 };

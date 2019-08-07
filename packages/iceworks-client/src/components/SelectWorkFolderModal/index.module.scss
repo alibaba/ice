@@ -6,15 +6,25 @@
   .bar {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    position: relative;
 
-    .icon {
+    .up {
       cursor: pointer;
       color: $brand-color-primary;
     }
 
-    .text {
-      font-size: 14px;
-      margin-left: 14px;
+    .input {
+      margin-left: 4px;
+      width: 100%;
+      padding-right: 20px;
+    }
+
+    .edit {
+      position: absolute;
+      right: 5px;
+      top: 4px;
+      cursor: pointer;
     }
   }
 
