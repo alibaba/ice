@@ -196,7 +196,6 @@ function formatMaterialsByCatrgory(data: any[]) {
 // http request function
 const request = async (uri: string, options = {}) => {
   options = Object.assign(
-    {},
     {
       uri,
       json: true,
