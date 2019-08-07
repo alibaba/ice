@@ -255,21 +255,9 @@ class ProjectManager extends EventEmitter {
     this.app = app;
   }
 
-  private async refresh(): Promise<Project[]> {
-    const projects = storage.get('projects').map(projectPath => {
-      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
-        return { projectPath, exists: true };
-      }
-      return { projectPath, exists: false };
-    });
-    // Delete projects that do not exist in local environment
-    projects.forEach(({projectPath, exists}) => {
-      if (!exists) {
-        this.deleteProject({ projectPath, deleteFiles: false });
-      }
-    });
+  private async refresh(projects: []): Promise<Project[]> {
     return await Promise.all(
-      projects.filter(({ exists }) => exists).map(async ({ projectPath }) => {
+      projects.map(async ({ projectPath }) => {
         const project = new Project(projectPath, this.app);
         await project.loadAdapter();
         return project;
@@ -278,8 +266,20 @@ class ProjectManager extends EventEmitter {
   }
 
   public async ready() {
+    const projects = storage.get('projects').map(projectPath => {
+      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
+        return { projectPath, exists: true };
+      }
+      return { projectPath, exists: false };
+    });
     await this.app.i18n.readLocales();
-    this.projects = await this.refresh();
+    this.projects = await this.refresh(projects.filter(({ exists }) => exists));
+    // Delete projects that do not exist in local environment
+    projects.forEach(({ projectPath, exists }) => {
+      if (!exists) {
+        this.deleteProject({ projectPath, deleteFiles: false });
+      }
+    });
   }
 
   /**
@@ -438,7 +438,7 @@ class ProjectManager extends EventEmitter {
    */
   public async deleteProject(params: { projectPath: string; deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
-    this.projects = this.projects && this.projects.filter(({ path }) => path !== projectPath);
+    this.projects = this.projects.filter(({ path }) => path !== projectPath);
 
     // remove project at storage
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
