@@ -256,15 +256,20 @@ class ProjectManager extends EventEmitter {
   }
 
   private async refresh(): Promise<Project[]> {
-    return await Promise.all(
-      storage.get('projects').filter(projectPath => {
-        if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
-          return true;
-        }
-        // If current project path or its package.json file does not exist, we delete the project from storage
+    const projects = storage.get('projects').map(projectPath => {
+      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
+        return { projectPath, exists: true };
+      }
+      return { projectPath, exists: false };
+    });
+    // Delete projects that do not exist in local environment
+    projects.forEach(({projectPath, exists}) => {
+      if (!exists) {
         this.deleteProject({ projectPath, deleteFiles: false });
-        return false;
-      }).map(async (projectPath) => {
+      }
+    });
+    return await Promise.all(
+      projects.filter(({exists}) => exists).map(async ({ projectPath}) => {
         const project = new Project(projectPath, this.app);
         await project.loadAdapter();
         return project;
@@ -442,11 +447,6 @@ class ProjectManager extends EventEmitter {
     // remove project panel settings
     const newPanelSettings = storage.get('panelSettings').filter(({projectPath: project}) => project !== projectPath);
     storage.set('panelSettings', newPanelSettings);
-
-    // if current project is not in local environment, delete it from storage
-    if (projectPath === storage.get('project')) {
-      storage.set('project', "");
-    }
 
     // delete project files
     if (deleteFiles) {
