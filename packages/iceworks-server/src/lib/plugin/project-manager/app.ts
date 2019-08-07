@@ -29,6 +29,7 @@ const abcJSONFilename = 'abc.json';
 const DEFAULT_TYPE = 'react';
 const DEFAULT_ADAPTER = [
   'adapter-cra-v1',
+  'adapter-react-v0',
   'adapter-react-v1',
   'adapter-react-v2',
   'adapter-react-v3',
