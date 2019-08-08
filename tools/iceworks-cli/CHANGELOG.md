@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.2
+
+- [fix] update iceworks failed #2604
+
 ## 3.0.1
 
 -  [feat] add DAU statistics
