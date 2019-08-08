@@ -90,6 +90,7 @@ export default class Task implements ITaskModule {
     } catch (error) {
       // ignore error
     }
+
     this.process[command] = execa(
       npmClient,
       ['run', command === 'dev' ? 'start' : command],
@@ -212,7 +213,13 @@ export default class Task implements ITaskModule {
 
   public getStatus(args: ITaskParam) {
     const { command } = args;
-    return this.status[command];
+    if (command) {
+      return this.status[command];
+    }
+  }
+
+  public getAllStatus() {
+    return this.status;
   }
 
   /**

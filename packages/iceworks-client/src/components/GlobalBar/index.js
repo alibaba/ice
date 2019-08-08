@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Balloon } from '@alifd/next';
+import { Balloon, Tab } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -16,8 +16,9 @@ import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
+  const [activeKey, changeActiveKey] = useState('process');
   const { theme, setTheme } = useContext(ThemeContext);
-  const { themeValue } = useTermTheme();
+  const { themeValue, termTheme } = useTermTheme();
   const projectPath = project.path;
 
   function handleTerminal() {
@@ -85,20 +86,45 @@ const GlobalBar = ({ project, intl }) => {
 
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
+  const tabs = [
+    {
+      title: 'iceworks.global.bar.log.process',
+      key: 'process',
+      id: 'globalProcessLog',
+    },
+    {
+      title: 'iceworks.global.bar.log.operation',
+      key: 'operation',
+      id: 'globalOperationLog',
+    },
+  ];
 
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-        <Icon
-          type="close"
-          className={styles.closeIcon}
-          onClick={onClose}
-        />
-        <XtermTerminal
-          id="globalTerminal"
-          name={`\n${intl.formatMessage({ id: 'iceworks.global.bar.log' })}`}
-          options={{ cols: '100', rows: '17' }}
-        />
+        <Tab activeKey={activeKey} onChange={key => changeActiveKey(key)}>
+          {tabs.map(tab => (
+            <Tab.Item
+              title={intl.formatMessage({
+                id: tab.title,
+              })}
+              key={tab.key}
+            >
+              <Icon
+                type="close"
+                className={styles.closeIcon}
+                onClick={onClose}
+              />
+              <XtermTerminal
+                id={tab.id}
+                name={`\n${intl.formatMessage({
+                  id: tab.title,
+                })}`}
+                options={{ cols: '100', rows: '17', theme: termTheme }}
+              />
+            </Tab.Item>
+          ))}
+        </Tab>
       </div>
 
       <div className={styles.globalBar}>
