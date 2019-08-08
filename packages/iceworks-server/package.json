@@ -79,7 +79,8 @@
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "ci": "npm run cov",
-    "build": "midway-bin build -c"
+    "build": "midway-bin build -c",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
