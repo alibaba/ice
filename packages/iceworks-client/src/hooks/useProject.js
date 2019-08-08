@@ -126,7 +126,6 @@ function useProject({ panelStores } = {}) {
         await addProject(values.path);
       } else {
         showMessage('创建项目失败');
-        throw error;
       }
     }
     await setCreateProjectLoading(false);
