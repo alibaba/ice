@@ -216,8 +216,10 @@ export default class Task implements ITaskModule {
     if (command) {
       return this.status[command];
     }
+  }
 
-    return { status: this.status };
+  public getAllStatus() {
+    return this.status;
   }
 
   /**
