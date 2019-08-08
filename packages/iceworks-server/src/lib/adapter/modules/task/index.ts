@@ -115,13 +115,6 @@ export default class Task implements ITaskModule {
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      // this.logPipe(queue => {
-      //   ctx.socket.emit(`adapter.task.${eventName}`, {
-      //     status: this.status[command],
-      //     isStdout: false,
-      //     chunk: queue,
-      //   });
-      // }).add(buffer);
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: false,
@@ -183,40 +176,6 @@ export default class Task implements ITaskModule {
     }
 
     return this;
-  }
-
-  public logPipe(action: any) {
-    const maxTime = 300;
-
-    // let queue = '';
-    let size = 0;
-    let time = Date.now();
-    let timeout;
-
-    const add = chunk => {
-      bufferhelper.concat(chunk);
-      size++;
-
-      if (size === 50 || Date.now() > time + maxTime) {
-        flush();
-      } else {
-        clearTimeout(timeout);
-        timeout = setTimeout(flush, maxTime);
-      }
-    };
-
-    const flush = () => {
-      clearTimeout(timeout);
-      if (!size) return;
-      action(bufferhelper.toString());
-      bufferhelper.empty();
-      size = 0;
-      time = Date.now();
-    };
-
-    return {
-      add,
-    };
   }
 
   public getStatus(args: ITaskParam) {
