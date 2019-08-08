@@ -17,12 +17,9 @@ import {
 } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
-const BufferHelper = require('bufferhelper');
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
-
-const bufferhelper = new BufferHelper();
 
 export default class Task implements ITaskModule {
   public project: IProject;
