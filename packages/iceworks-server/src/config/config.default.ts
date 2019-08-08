@@ -36,9 +36,5 @@ export = (appInfo: any) => {
     },
   };
 
-  config.clusterClient = {
-    responseTimeout: 60000,
-  };
-
   return config;
 };
