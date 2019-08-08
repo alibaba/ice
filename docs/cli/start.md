@@ -78,4 +78,16 @@ $ npm run start -- --https
 $ npm run build
 ```
 
+构建服务支持的命令参数：
+
+```bash
+$ ice-scripts build --help
+
+Usage: ice-scripts build [options]
+
+Options:
+  --analyzer             开启构建分析
+  --analyzer-port        设置分析端口号
+```
+
 构建产物默认生成到 `./build` 目录下。
