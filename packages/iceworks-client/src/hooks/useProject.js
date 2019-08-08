@@ -118,7 +118,7 @@ function useProject({ panelStores } = {}) {
   }
 
   async function onCreateProject(values) {
-    await setCreateProjectLoading(true);
+    setCreateProjectLoading(true);
     try {
       await createProject({ scaffold, ...values });
     } catch (error) {
@@ -128,7 +128,7 @@ function useProject({ panelStores } = {}) {
         showMessage('创建项目失败');
       }
     }
-    await setCreateProjectLoading(false);
+    setCreateProjectLoading(false);
   }
 
   async function onChangeProjectPanel(name, isAvailable) {

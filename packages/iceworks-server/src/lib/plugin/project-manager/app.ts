@@ -374,9 +374,9 @@ class ProjectManager extends EventEmitter {
   }
 
   /**
-   * Process project
+   * Format project
    */
-  private async processProject(params: ICreateParams) {
+  private async formatProject(params: ICreateParams) {
     const { path: targetPath, name } = params;
     await rimrafAsync(path.join(targetPath, 'build'));
 
@@ -420,7 +420,7 @@ class ProjectManager extends EventEmitter {
       await this.generateProject(params);
     }
 
-    await this.processProject(params);
+    await this.formatProject(params);
     await this.addProject(targetPath);
   }
 
