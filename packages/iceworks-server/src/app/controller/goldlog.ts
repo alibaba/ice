@@ -1,5 +1,5 @@
 import { controller, provide, post } from 'midway-mirror';
-import * as rp from 'request';
+import * as request from 'request-promise-native';
 
 @provide()
 @controller('/api/goldlog')
@@ -20,7 +20,7 @@ export class GoldlogController {
         }`;
       }, '');
 
-      await rp({
+      await request({
         method: 'post',
         url: 'http://gm.mmstat.com/iceteam.iceworks.log3',
         data: {
