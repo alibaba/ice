@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Input, Button, Select } from '@alifd/next';
@@ -22,8 +22,14 @@ const formItemLayout = {
 const SavePageModal = ({ on, onCancel, onOk, intl }) => {
   const progress = stores.useStore('progress');
   const routerStore = pageStores.useStore('routes');
-  const { dataSource: routes } = routerStore;
-  const pathReg = /^\/([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
+  const { dataSource: routes, refresh } = routerStore;
+  const pathReg = /^\/([a-zA-Z0-9:])([a-zA-Z0-9:_|-]*)((\/)?[a-zA-Z0-9:]+)$/;
+
+  useEffect(() => {
+    (async () => {
+      await refresh();
+    })();
+  }, []);
 
   async function onSave(values, errors) {
     if (!errors) {
@@ -37,12 +43,18 @@ const SavePageModal = ({ on, onCancel, onOk, intl }) => {
     }
   }
 
-  const routerGroups = routes.filter(item => item.children).map(item => {
-    return {
-      label: `${item.path}(${item.component})`,
-      value: item.path,
-    };
-  });
+  const routerGroups = routes
+    .filter(item => item.children)
+    .map(item => {
+      return {
+        label: `${item.path}(${item.component})`,
+        value: item.path,
+      };
+    });
+
+  const defaultRouteGroupValue = routerGroups.filter(route => route.value === '/').length
+    ? '/'
+    : undefined;
 
   return (
     <Modal
@@ -120,6 +132,7 @@ const SavePageModal = ({ on, onCancel, onOk, intl }) => {
               className={styles.select}
               name="routeGroup"
               dataSource={routerGroups}
+              defaultValue={defaultRouteGroupValue}
             />
           </FormItem>
         ) : null}
