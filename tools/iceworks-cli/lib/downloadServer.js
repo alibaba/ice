@@ -27,9 +27,17 @@ function downloadServer(npmName, destDir) {
 }
 
 function install(cwd) {
-  const child = spawn('npm', ['install'], {
+  const child = spawn('npm', ['install', '--loglevel', 'silly'], {
     stdio: ['pipe'],
     cwd,
+  });
+
+  child.stdout.on('data', data => {
+    console.log(data.toString())
+  });
+
+  child.stderr.on('data', data => {
+    console.log(data.toString())
   });
 
   child.on('error', error => {
