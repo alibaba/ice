@@ -32,6 +32,11 @@ function install(cwd) {
     cwd,
   });
 
+  child.on('error', error => {
+    console.log(error);
+    process.exit(1);
+  });
+
   child.on('close', () => {
     console.log('>>> install completed');
   });
