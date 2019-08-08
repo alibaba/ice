@@ -17,9 +17,12 @@ import {
 } from '../../../../interface';
 import getTaskConfig from './getTaskConfig';
 
+const BufferHelper = require('bufferhelper');
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
+
+const bufferhelper = new BufferHelper();
 
 export default class Task implements ITaskModule {
   public project: IProject;
@@ -55,7 +58,7 @@ export default class Task implements ITaskModule {
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules');
     const pathExists = await fs.pathExists(nodeModulesPath);
-    if(!pathExists) {
+    if (!pathExists) {
       this.installed = false;
       return this;
     }
@@ -111,13 +114,18 @@ export default class Task implements ITaskModule {
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      this.logPipe(queue => {
-        ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status[command],
-          isStdout: false,
-          chunk: queue,
-        });
-      }).add(buffer.toString());
+      // this.logPipe(queue => {
+      //   ctx.socket.emit(`adapter.task.${eventName}`, {
+      //     status: this.status[command],
+      //     isStdout: false,
+      //     chunk: queue,
+      //   });
+      // }).add(buffer);
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        isStdout: false,
+        chunk: buffer.toString(),
+      });
     });
 
     this.process[command].on('close', () => {
@@ -179,13 +187,13 @@ export default class Task implements ITaskModule {
   public logPipe(action: any) {
     const maxTime = 300;
 
-    let queue = '';
+    // let queue = '';
     let size = 0;
     let time = Date.now();
     let timeout;
 
-    const add = string => {
-      queue += string;
+    const add = chunk => {
+      bufferhelper.concat(chunk);
       size++;
 
       if (size === 50 || Date.now() > time + maxTime) {
@@ -199,8 +207,8 @@ export default class Task implements ITaskModule {
     const flush = () => {
       clearTimeout(timeout);
       if (!size) return;
-      action(queue);
-      queue = '';
+      action(bufferhelper.toString());
+      bufferhelper.empty();
       size = 0;
       time = Date.now();
     };
