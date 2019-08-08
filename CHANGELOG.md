@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 3.0.3
+
+- [feat] distinguish between operation logs and process logs #2599
+- [feat] add loading effect when creating a project #2614
+- [fix] socket disconnect #2603
+- [fix] create and import project only can choose C disk on Windows #2600
+- [fix] Start Task panel does not refresh when switching between different projects #2465
+- [fix] iceworks-server unable to start if project directory is not present in local environment #2585
+- [fix] upgrade iceworks-server got failed #2604
+- [fix] copy vue ejs file to dist #2589
+
 ## 3.0.2
 
 - [feat] support create-react-app #2399
