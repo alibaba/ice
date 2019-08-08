@@ -19,7 +19,7 @@ const formItemLayout = {
   },
 };
 
-const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
+const CreateProjectModal = ({ on, onCancel, onOk, isBiz, loading }) => {
   const {
     on: onSelectModal,
     setModal: setSelectModal,
@@ -173,7 +173,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
           />
         </FormItem>
         <div className={styles.opts}>
-          <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
+          <FormSubmit onClick={onSave} validate type="primary" className={styles.button} loading={loading}>
             <FormattedMessage id="iceworks.global.button.yes" />
           </FormSubmit>
           <Button onClick={onCancel} className={styles.button}>
@@ -187,6 +187,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
 
 CreateProjectModal.defaultProps = {
   isBiz: false,
+  loading: false,
 };
 
 CreateProjectModal.propTypes = {
@@ -194,6 +195,7 @@ CreateProjectModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
   isBiz: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default CreateProjectModal;

@@ -13,6 +13,8 @@ function useProject({ panelStores } = {}) {
   const {
     on: onCreateProjectModal,
     setModal: setCreateProjectModal,
+    loading: createProjectLoading,
+    setLoading: setCreateProjectLoading,
   } = useModal();
   const {
     on: onOpenProjectModal,
@@ -116,6 +118,7 @@ function useProject({ panelStores } = {}) {
   }
 
   async function onCreateProject(values) {
+    setCreateProjectLoading(true);
     try {
       await createProject({ scaffold, ...values });
     } catch (error) {
@@ -123,9 +126,9 @@ function useProject({ panelStores } = {}) {
         await addProject(values.path);
       } else {
         showMessage('创建项目失败');
-        throw error;
       }
     }
+    setCreateProjectLoading(false);
   }
 
   async function onChangeProjectPanel(name, isAvailable) {
@@ -141,6 +144,8 @@ function useProject({ panelStores } = {}) {
     }) || {};
 
   return {
+    // loading
+    createProjectLoading,
 
     // state
     material: materialStore.dataSource,

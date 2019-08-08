@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as request from 'request';
+import * as request from 'request-promise-native';
 import { Transport } from 'egg-logger';
 
 const remoteUrl = `http://iceworks.cn-hangzhou.log.aliyuncs.com/logstores/iceworks-node-log/track`;
