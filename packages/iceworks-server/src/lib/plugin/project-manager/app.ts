@@ -74,6 +74,10 @@ class Project implements IProject {
   }
 
   public getPackageJSON() {
+    if (!fs.existsSync(this.packagePath)) {
+      const error: any = new Error('Project\'s package.json file not found in local environment');
+      throw error;
+    }
     return JSON.parse(fs.readFileSync(this.packagePath).toString());
   }
 
@@ -252,9 +256,18 @@ class ProjectManager extends EventEmitter {
     this.app = app;
   }
 
-  private async refresh(): Promise<Project[]> {
+  private refresh() {
+    return storage.get('projects').map(projectPath => {
+      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
+        return { projectPath, exists: true };
+      }
+      return { projectPath, exists: false };
+    });
+  }
+
+  private async createProjects(projects: []): Promise<Project[]> {
     return await Promise.all(
-      storage.get('projects').map(async (projectPath) => {
+      projects.map(async ({ projectPath }) => {
         const project = new Project(projectPath, this.app);
         await project.loadAdapter();
         return project;
@@ -264,7 +277,14 @@ class ProjectManager extends EventEmitter {
 
   public async ready() {
     await this.app.i18n.readLocales();
-    this.projects = await this.refresh();
+    const projects = this.refresh();
+    this.projects = await this.createProjects(projects.filter(({ exists }) => exists));
+    // Delete projects that do not exist in local environment
+    projects.forEach(({ projectPath, exists }) => {
+      if (!exists) {
+        this.deleteProject({ projectPath, deleteFiles: false });
+      }
+    });
   }
 
   /**
@@ -292,6 +312,10 @@ class ProjectManager extends EventEmitter {
    */
   public async getCurrent() {
     const projectPath = storage.get('project');
+    if (!fs.existsSync(projectPath)) {
+      const error: any = new Error('Project not found in local environment');
+      throw error;
+    }
     const project = await this.getProject(projectPath);
     return project;
   }
