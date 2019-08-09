@@ -55,7 +55,7 @@ export default class Task implements ITaskModule {
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules');
     const pathExists = await fs.pathExists(nodeModulesPath);
-    if(!pathExists) {
+    if (!pathExists) {
       this.installed = false;
       return this;
     }
@@ -112,7 +112,7 @@ export default class Task implements ITaskModule {
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-       ctx.socket.emit(`adapter.task.${eventName}`, {
+      ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: false,
         chunk: buffer.toString(),
