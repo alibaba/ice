@@ -15,19 +15,53 @@
     box-shadow: 0 -2px 10px rgba(51, 51, 51, 0.35);
     visibility: visible;
 
-    :global {
-      .next-tabs {
-        background-color: $tab-bar-bg;
+    .tabsNavScroll {
+      overflow: hidden;
+      white-space: nowrap;
+      background-color: $tab-bar-bg;
 
-        .next-tabs-tab.active {
-          color: $tab-bar-active;
+      .tabsNav {
+        display: inline-block;
+        position: relative;
+        padding: 0;
+        margin: 0;
+
+        .tab {
+          display: inline-block;
+          position: relative;
+          color: $tab-bar-color;
+
+          .tabInner {
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 12px 16px;
+            font-size: 12px;
+          }
         }
+      }
+    }
+
+    .terminalWrap {
+      position: relative;
+      overflow: hidden;
+      height: 289px;
+
+      .terminal {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
       }
     }
   }
 
   .hidden {
     visibility: hidden;
+  }
+
+  .tabActive {
+    color: $tab-bar-active !important;
+    border-bottom: 2px solid $tab-bar-active;
   }
 
   .closeIcon {

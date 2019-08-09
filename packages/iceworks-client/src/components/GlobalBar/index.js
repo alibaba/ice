@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Balloon, Tab } from '@alifd/next';
+import { Balloon } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -16,7 +16,7 @@ import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
-  const [activeKey, changeActiveKey] = useState('operation');
+  const [activeKey, changeActiveKey] = useState('process');
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue, termTheme } = useTermTheme();
   const projectPath = project.path;
@@ -84,44 +84,63 @@ const GlobalBar = ({ project, intl }) => {
     }
   });
 
+  function termHiddenClassName(key) {
+    if (activeKey === key) {
+      return '';
+    }
+    return styles.hidden;
+  };
+
+  function tabBarActiveClassName(key) {
+    if (activeKey === key) {
+      return styles.tabActive;
+    }
+    return '';
+  }
+
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
-  const tabs = [
-    {
-      title: 'iceworks.global.bar.log.operation',
-      key: 'operation',
-      id: 'globalOperationLog',
-    },
-    {
-      title: 'iceworks.global.bar.log.process',
-      key: 'process',
-      id: 'globalProcessLog',
-    },
-  ];
 
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-        <Tab activeKey={activeKey} onChange={key => changeActiveKey(key)}>
-          {tabs.map(tab => (
-            <Tab.Item
-              title={intl.formatMessage({
-                id: tab.title,
-              })}
-              key={tab.key}
-            >
-              <Icon
-                type="close"
-                className={styles.closeIcon}
-                onClick={onClose}
-              />
-              <XtermTerminal
-                id={tab.id}
-                options={{ cols: '100', rows: '17', theme: termTheme }}
-              />
-            </Tab.Item>
-          ))}
-        </Tab>
+        <div className={styles.tabsNavScroll}>
+          <ul role="tablist" className={styles.tabsNav}>
+            <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('process')}`} onClick={() => changeActiveKey('process')}>
+              <div className={styles.tabInner}>
+                {intl.formatMessage({
+                  id: 'iceworks.global.bar.log.process',
+                })}
+              </div>
+            </li>
+            <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('operation')}`} onClick={() => changeActiveKey('operation')}>
+              <div className={styles.tabInner}>
+                {intl.formatMessage({
+                  id: 'iceworks.global.bar.log.operation',
+                })}
+              </div>
+            </li>
+          </ul>
+          <Icon
+            type="close"
+            className={styles.closeIcon}
+            onClick={onClose}
+          />
+        </div>
+        <div className={styles.terminalWrap}>
+          <div className={`${styles.terminal} ${termHiddenClassName('process')}`}>
+            <XtermTerminal
+              id='globalProcessLog'
+              options={{ cols: '100', rows: '17', theme: termTheme }}
+            />
+          </div>
+          <div className={`${styles.terminal} ${termHiddenClassName('operation')}`}>
+            <XtermTerminal
+              id='globalOperationLog'
+              options={{ cols: '100', rows: '17', theme: termTheme }}
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.globalBar}>
