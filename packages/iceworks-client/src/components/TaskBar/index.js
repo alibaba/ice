@@ -14,7 +14,7 @@ const TaskBar = ({
   onInstall,
   onSetting,
   extra,
-  enableSetting
+  enableSetting,
 }) => {
   return (
     <div className={styles.taskBar}>
