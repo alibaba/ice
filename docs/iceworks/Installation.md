@@ -8,12 +8,15 @@ order: 2
 iceworks 通过 CLI 方式启动本地 Web 工作台，因此需要确保系统安装过 Node.js 和 npm 环境。
 
 #### Node.js 
-可以在终端输入 `node -v` 查看是否已经安装 Node.js，看到类似的输出就说明已经安装过，如果还未安装可以从 [Node.js 官网](https://nodejs.org/en/) 进行下载安装。
+
+在终端中输入以下命令检查是否已安装 Node.js：
 
 ```bash
 $ node -v
 v8.9.4
 ```
+
+如果有版本号输出则代表已安装 Node.js。如果无，则可以参考 [Node.js 官网](https://nodejs.org/en/)  进行下载安装。
 
 #### npm
 
