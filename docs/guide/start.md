@@ -9,9 +9,10 @@ order: 2
 
 > iceworks@3.0 版本已经发布，欢迎[使用](https://github.com/alibaba/ice/issues/2369)
 
-[iceworks](/iceworks) 是一个通过 CLI 方式启动的 GUI 开发工具，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目，让开发者可以零配置的开始一个项目。
+[iceworks](/iceworks) 定位为基于物料的一站式可视化源码研发工作台，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目，让开发者可以零配置的开始一个项目。
 
 ### 1. 安装 iceworks
+
 ```bash
 $ npm install iceworks -g
 # 查看版本
@@ -19,6 +20,7 @@ $ iceworks -V
 ```
 
 ### 启动 iceworks
+
 安装完成后，只需要在命令行执行以下命令，即可在浏览器启动本地化 Web 版本：
 
 ```bash
