@@ -74,7 +74,7 @@ const Project = ({ history, intl }) => {
     onResetModal,
     setResetModal,
   } = useDependency();
-  const [ settingPanelStore, taskStore ] = stores.useStores(['settingPanel', 'project', 'task']);
+  const [ settingPanelStore, taskStore ] = stores.useStores(['settingPanel', 'task']);
   const [
     pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore, todoStore,
   ] = projectStores.useStores([
