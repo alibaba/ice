@@ -16,7 +16,7 @@ import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
-  const [activeKey, changeActiveKey] = useState('process');
+  const [activeKey, changeActiveKey] = useState('operation');
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue, termTheme } = useTermTheme();
   const projectPath = project.path;
@@ -88,14 +88,14 @@ const GlobalBar = ({ project, intl }) => {
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
   const tabs = [
     {
-      title: 'iceworks.global.bar.log.process',
-      key: 'process',
-      id: 'globalProcessLog',
-    },
-    {
       title: 'iceworks.global.bar.log.operation',
       key: 'operation',
       id: 'globalOperationLog',
+    },
+    {
+      title: 'iceworks.global.bar.log.process',
+      key: 'process',
+      id: 'globalProcessLog',
     },
   ];
 
