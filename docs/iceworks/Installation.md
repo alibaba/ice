@@ -5,7 +5,7 @@ order: 2
 
 ## 基础环境
 
-iceworks 通过 CLI 方式启动本地 Web 工作台，因此需要确保系统安装过 Node 和 Npm 环境。
+iceworks 通过 CLI 方式启动本地 Web 工作台，因此需要确保系统安装过 Node.js 和 npm 环境。
 
 #### Node.js 
 可以在终端输入 `node -v` 查看是否已经安装 Node.js，看到类似的输出就说明已经安装过，如果还未安装可以从 [Node.js 官网](https://nodejs.org/en/) 进行下载安装。
@@ -15,9 +15,9 @@ $ node -v
 v8.9.4
 ```
 
-#### Npm
+#### npm
 
-Npm 是随同 Node.js 一起安装的包管理工具，大多数时候我们不需要显示的安装 Npm，可以在终端输入 `npm -v` 查看。
+npm 是随同 Node.js 一起安装的包管理工具，大多数时候我们不需要显示的安装 npm，可以在终端输入 `npm -v` 查看。
 
 ```bash
 $ npm -v

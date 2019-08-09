@@ -1,6 +1,6 @@
 ---
 title: 快速开始
-order: 2
+order: 3
 ---
 
 ## 启动 iceworks
