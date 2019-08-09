@@ -134,7 +134,7 @@ const Project = ({ history, intl }) => {
 
   function onResetModalCancel() {
     setResetModal(false);
-    if (isCreatedProject && projectStore.dataSource.adapterName) {
+    if (isCreatedProject && project.adapterName) {
       history.replace({ createdProject: false });
     }
   }
@@ -145,7 +145,7 @@ const Project = ({ history, intl }) => {
 
   async function onResetModalOk() {
     await reset();
-    if (isCreatedProject && projectStore.dataSource.adapterName) {
+    if (isCreatedProject && project.adapterName) {
       history.replace({ createdProject: false });
     }
   }
@@ -153,7 +153,7 @@ const Project = ({ history, intl }) => {
   async function onCreateProjectModalOk(values) {
     await onCreateProject(values);
 
-    if (projectStore.dataSource.adapterName) {
+    if (project.adapterName) {
       setResetModal(true);
     }
   }
@@ -177,7 +177,7 @@ const Project = ({ history, intl }) => {
   async function wrapRefreshProjects() {
     await refreshProjects();
 
-    if (isCreatedProject && projectStore.dataSource.adapterName) {
+    if (isCreatedProject && project.adapterName) {
       setResetModal(true);
     }
   }
