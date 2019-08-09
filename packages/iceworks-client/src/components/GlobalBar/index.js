@@ -16,7 +16,7 @@ import styles from './index.module.scss';
 
 const GlobalBar = ({ project, intl }) => {
   const [globalTerminalStore] = stores.useStores(['globalTerminal']);
-  const [activeKey, changeActiveKey] = useState('process');
+  const [activeKey, changeActiveKey] = useState('operation');
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue, termTheme } = useTermTheme();
   const projectPath = project.path;
@@ -106,17 +106,17 @@ const GlobalBar = ({ project, intl }) => {
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
         <div className={styles.tabsNavScroll}>
           <ul role="tablist" className={styles.tabsNav}>
-            <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('process')}`} onClick={() => changeActiveKey('process')}>
-              <div className={styles.tabInner}>
-                {intl.formatMessage({
-                  id: 'iceworks.global.bar.log.process',
-                })}
-              </div>
-            </li>
             <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('operation')}`} onClick={() => changeActiveKey('operation')}>
               <div className={styles.tabInner}>
                 {intl.formatMessage({
                   id: 'iceworks.global.bar.log.operation',
+                })}
+              </div>
+            </li>
+            <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('process')}`} onClick={() => changeActiveKey('process')}>
+              <div className={styles.tabInner}>
+                {intl.formatMessage({
+                  id: 'iceworks.global.bar.log.process',
                 })}
               </div>
             </li>
@@ -128,15 +128,15 @@ const GlobalBar = ({ project, intl }) => {
           />
         </div>
         <div className={styles.terminalWrap}>
-          <div className={`${styles.terminal} ${termHiddenClassName('process')}`}>
-            <XtermTerminal
-              id='globalProcessLog'
-              options={{ cols: '100', rows: '17', theme: termTheme }}
-            />
-          </div>
           <div className={`${styles.terminal} ${termHiddenClassName('operation')}`}>
             <XtermTerminal
               id='globalOperationLog'
+              options={{ cols: '100', rows: '17', theme: termTheme }}
+            />
+          </div>
+          <div className={`${styles.terminal} ${termHiddenClassName('process')}`}>
+            <XtermTerminal
+              id='globalProcessLog'
               options={{ cols: '100', rows: '17', theme: termTheme }}
             />
           </div>
