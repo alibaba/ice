@@ -117,9 +117,6 @@ const GlobalBar = ({ project, intl }) => {
               />
               <XtermTerminal
                 id={tab.id}
-                name={`\n${intl.formatMessage({
-                  id: tab.title,
-                })}`}
                 options={{ cols: '100', rows: '17', theme: termTheme }}
               />
             </Tab.Item>
