@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .container {
   position: relative;
@@ -18,6 +18,10 @@
     :global {
       .next-tabs {
         background-color: $tab-bar-bg;
+
+        .next-tabs-tab.active {
+          color: $tab-bar-active;
+        }
       }
     }
   }
