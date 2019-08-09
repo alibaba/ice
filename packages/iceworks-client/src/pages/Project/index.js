@@ -74,7 +74,7 @@ const Project = ({ history, intl }) => {
     onResetModal,
     setResetModal,
   } = useDependency();
-  const [ settingPanelStore, projectStore, taskStore ] = stores.useStores(['settingPanel', 'project', 'task']);
+  const [ settingPanelStore, taskStore ] = stores.useStores(['settingPanel', 'project', 'task']);
   const [
     pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore, todoStore,
   ] = projectStores.useStores([
@@ -116,6 +116,7 @@ const Project = ({ history, intl }) => {
     onOpenProject,
     onCreateProject,
     onChangeProjectPanel,
+    reloadAdapter,
 
     onOpenProjectModal,
     setOpenProjectModal,
@@ -137,10 +138,6 @@ const Project = ({ history, intl }) => {
     if (isCreatedProject && project.adapterName) {
       history.replace({ createdProject: false });
     }
-  }
-
-  async function reloadAdapter() {
-    await projectStore.reloadAdapter();
   }
 
   async function onResetModalOk() {
