@@ -17,7 +17,7 @@ v8.9.4
 
 #### npm
 
-npm 是随同 Node.js 一起安装的包管理工具，大多数时候我们不需要显示的安装 npm，可以在终端输入 `npm -v` 查看。
+npm 是随同 Node.js 一起安装的包管理工具，大多数时候我们不需要显式地安装 npm，可以在终端输入 `npm -v` 检查：
 
 ```bash
 $ npm -v
@@ -26,31 +26,29 @@ $ npm -v
 
 ## 安装 iceworks
 
-iceworks 通过 CLI 进行启动，因此在使用 iceworks 时只需要安装 CLI 工具即可，无需额外的安装成本。
+iceworks 通过 CLI 进行启动，因此在使用 iceworks 时只需要安装 CLI 工具即可：
 
 ```
-# 安装 iceworks
 $ npm install iceworks -g
 
-# 检查是否安装成功
 $ iceworks -V
 3.0.0
 ```
 
 ## 启动 iceworks
 
-安装完成后，只需要在命令行执行以下命令，即可在浏览器启动本地化 Web 版本：
+安装完成后在命令行执行以下命令，即可启动 iceworks：
 ```bash
 $ iceworks # open http://localhost:8000/
 ```
 
-## 常见安装问题
+## 常见问题
 
-#### 安装很慢
+### 安装很慢
 
-问题描述：安装时间很长安装不上
+问题描述：安装非常慢，或者安装超时。
 
-解决方案：推荐使用淘宝镜像源进行下载
+解决方案：使用淘宝镜像源进行下载。
 
 ```bash
 # 查看 registry
@@ -60,7 +58,7 @@ $ npm config get registry
 $ npm confit set registry https://registry.npm.taobao.org 
 ```
 
-#### 安装失败
+### 安装失败
 
 问题描述：提示 `Error：EACCES：permission denied` 类的权限问题：
 
@@ -69,10 +67,10 @@ $ npm confit set registry https://registry.npm.taobao.org
 解决方案：将 npm 默认目录定向到其他具有读写权限的目录
 
 ```bash
-# 在根目录创建新的目录
+# 在用户根目录创建新的文件夹
 $ mkdir ~/.npm-global
 
-# 配置 npm 以使用新的目录路径
+# 设置 npm 使用新的目录路径
 $ npm config set prefix '~/.npm-global'
 
 # 添加环境变量
