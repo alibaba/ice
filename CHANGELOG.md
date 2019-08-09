@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.4
+
+- [fix] fail to run task #2661
+
 ## 3.0.3
 
 - [feat] distinguish between operation logs and process logs #2599
