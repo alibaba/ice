@@ -31,7 +31,7 @@ const DEFPanel = ({ title, description }) => {
       return;
     }
 
-    globalTerminalStore.show();
+    globalTerminalStore.show('process');
 
     if (target === 'daily') {
       await gitStore.push();

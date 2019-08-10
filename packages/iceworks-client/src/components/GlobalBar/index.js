@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Balloon } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -19,6 +19,7 @@ const GlobalBar = ({ project, intl }) => {
   const [activeKey, changeActiveKey] = useState('operation');
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue, termTheme } = useTermTheme();
+  const { dataSource: { show, globalTerminalType } } = globalTerminalStore;
   const projectPath = project.path;
 
   function handleTerminal() {
@@ -98,7 +99,7 @@ const GlobalBar = ({ project, intl }) => {
     return '';
   }
 
-  const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
+  const hiddenClassName = show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
 
   const tabs = [
@@ -114,6 +115,10 @@ const GlobalBar = ({ project, intl }) => {
     },
   ];
 
+  useEffect(() => {
+    changeActiveKey(globalTerminalType);
+  }, [globalTerminalType]);
+
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
@@ -121,6 +126,7 @@ const GlobalBar = ({ project, intl }) => {
           <ul role="tablist" className={styles.tabsNav}>
             {tabs.map(tab => (
               <li
+                key={tab.key}
                 role="tab"
                 className={`${styles.tab} ${tabBarActiveClassName(tab.key)}`}
                 onClick={() => changeActiveKey(tab.key)}
@@ -141,7 +147,7 @@ const GlobalBar = ({ project, intl }) => {
         </div>
         <div className={styles.terminalWrap}>
           {tabs.map(tab => (
-            <div className={`${styles.terminal} ${termHiddenClassName(tab.key)}`}>
+            <div key={tab.key} className={`${styles.terminal} ${termHiddenClassName(tab.key)}`}>
               <XtermTerminal
                 id={tab.id}
                 options={{ cols: '100', rows: '17', theme: termTheme }}
