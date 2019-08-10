@@ -101,25 +101,37 @@ const GlobalBar = ({ project, intl }) => {
   const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
 
+  const tabs = [
+    {
+      title: 'iceworks.global.bar.log.operation',
+      key: 'operation',
+      id: 'globalOperationLog',
+    },
+    {
+      title: 'iceworks.global.bar.log.process',
+      key: 'process',
+      id: 'globalProcessLog',
+    },
+  ];
+
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
         <div className={styles.tabsNavScroll}>
           <ul role="tablist" className={styles.tabsNav}>
-            <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('operation')}`} onClick={() => changeActiveKey('operation')}>
-              <div className={styles.tabInner}>
-                {intl.formatMessage({
-                  id: 'iceworks.global.bar.log.operation',
-                })}
-              </div>
-            </li>
-            <li role="tab" className={`${styles.tab} ${tabBarActiveClassName('process')}`} onClick={() => changeActiveKey('process')}>
-              <div className={styles.tabInner}>
-                {intl.formatMessage({
-                  id: 'iceworks.global.bar.log.process',
-                })}
-              </div>
-            </li>
+            {tabs.map(tab => (
+              <li
+                role="tab"
+                className={`${styles.tab} ${tabBarActiveClassName(tab.key)}`}
+                onClick={() => changeActiveKey(tab.key)}
+              >
+                <div className={styles.tabInner}>
+                  {intl.formatMessage({
+                    id: tab.title,
+                  })}
+                </div>
+              </li>
+            ))}
           </ul>
           <Icon
             type="close"
@@ -128,18 +140,14 @@ const GlobalBar = ({ project, intl }) => {
           />
         </div>
         <div className={styles.terminalWrap}>
-          <div className={`${styles.terminal} ${termHiddenClassName('operation')}`}>
-            <XtermTerminal
-              id='globalOperationLog'
-              options={{ cols: '100', rows: '17', theme: termTheme }}
-            />
-          </div>
-          <div className={`${styles.terminal} ${termHiddenClassName('process')}`}>
-            <XtermTerminal
-              id='globalProcessLog'
-              options={{ cols: '100', rows: '17', theme: termTheme }}
-            />
-          </div>
+          {tabs.map(tab => (
+            <div className={`${styles.terminal} ${termHiddenClassName(tab.key)}`}>
+              <XtermTerminal
+                id={tab.id}
+                options={{ cols: '100', rows: '17', theme: termTheme }}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
