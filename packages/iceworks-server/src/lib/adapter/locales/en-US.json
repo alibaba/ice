@@ -48,7 +48,7 @@
   "baseAdapter.task.dev.host.label": "Service host name",
   "baseAdapter.task.dev.https.label": "Use https",
   "baseAdapter.task.dev.analyzer.label": "Build analysis",
-  "baseAdapter.task.dev.disabled-reload.label": "Hot update",
+  "baseAdapter.task.dev.disabled-reload.label": "Disable hot reload",
   "vueAdapter.task.dev.port.label": "Service port number",
   "vueAdapter.task.dev.host.label": "Service host name",
   "vueAdapter.task.dev.https.label": "Use https",

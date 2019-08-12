@@ -48,7 +48,7 @@
   "baseAdapter.task.dev.host.label": "服务主机名",
   "baseAdapter.task.dev.https.label": "开启 https",
   "baseAdapter.task.dev.analyzer.label": "开启构建分析",
-  "baseAdapter.task.dev.disabled-reload.label": "开启热更新",
+  "baseAdapter.task.dev.disabled-reload.label": "禁止热更新",
   "vueAdapter.task.dev.port.label": "服务端口号",
   "vueAdapter.task.dev.host.label": "服务主机名",
   "vueAdapter.task.dev.https.label": "开启 https",
