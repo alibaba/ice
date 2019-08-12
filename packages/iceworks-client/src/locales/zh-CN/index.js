@@ -78,7 +78,6 @@ export default {
   'iceworks.project.panel.page.update.success': '下载区块成功，请手动在页面中引用。',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
-  'iceworks.project.panel.page.create.error.name.content': '区块名不能重复，请检查',
   'iceworks.project.panel.page.delete.title': '删除页面',
   'iceworks.project.panel.page.delete.content': '确定移除页面 {name} ？',
   'iceworks.project.panel.page.save.title': '填写页面信息',
