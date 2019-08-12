@@ -153,7 +153,6 @@ export default class Page implements IPageModule {
       throw error;
     }
 
-    await mkdirpAsync(blockDir);
     await mvAsync(path.join(blockTempDir, 'src'), blockDir, {clobber: false});
   }
 
