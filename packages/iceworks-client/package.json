@@ -25,7 +25,6 @@
     "history": "^4.9.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
-    "lodash.uniqby": "^4.7.0",
     "loglevel": "^1.6.1",
     "loglevel-plugin-prefix": "^0.8.4",
     "moment": "^2.24.0",
