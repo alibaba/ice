@@ -2,6 +2,10 @@
 
 ## 3.0.5
 
+- [fix] fix cli args not working #2681
+- [fix] fix encode error for log #2686
+- [fix] fix failed to create page #2688
+
 ## 3.0.4
 
 - [fix] fail to run task #2661
