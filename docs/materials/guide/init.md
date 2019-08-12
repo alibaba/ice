@@ -7,7 +7,7 @@ order: 1
 
 ```bash
 # 创建物料文件夹
-$ mkdir my-materilas & cd my-materilas
+$ mkdir my-materials & cd my-materials
 
 # 初始化物料项目
 $ idev init
