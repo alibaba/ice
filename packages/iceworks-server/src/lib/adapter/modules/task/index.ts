@@ -289,7 +289,9 @@ export default class Task implements ITaskModule {
     const command = devScriptArray[1];
     let newDevScriptContent = `${cli} ${command}`;
     Object.keys(args.options).forEach(key => {
-      newDevScriptContent += ` --${key}=${args.options[key]}`;
+      if(args.options[key]) {
+        newDevScriptContent += ` --${key}=${args.options[key]}`;
+      }
     });
 
     pkgContent.scripts.start = newDevScriptContent;
