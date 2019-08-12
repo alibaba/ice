@@ -1,7 +1,6 @@
 const path = require('path');
-const execa = require('execa');
-const chalk = require('chalk');
-const { getNpmTarball } = require('ice-npm-utils');
+const spawn = require('cross-spawn');
+const { getNpmTarball, getNpmRegistry } = require('ice-npm-utils');
 const extractTarball = require('./extractTarball');
 
 const NPM_NAME = 'iceworks-server';
@@ -13,27 +12,41 @@ const DEST_DIR = path.join(__dirname, '../', 'server');
  * @param {string} destDir target directory
  */
 function downloadServer(npmName, destDir) {
+  console.log('>>> start downloading code');
   return getNpmTarball(npmName, 'latest')
     .then((url) => {
       return extractTarball(url, destDir);
     })
     .then((res) => {
       if (res.length) {
-        console.log(chalk.green('[download successful]'));
-        return install(destDir);
+        console.log('>>> download completed');
+        console.log('>>> start installing dependencies');
+        install(destDir);
       }
     })
-    .then((res) => {
-      if (res.code === 0) {
-        console.log(chalk.green('[install successful]'));
-      }
-    });
 }
 
 function install(cwd) {
-  return execa.shell('npm install', {
-    stdio: 'inherit',
+  const child = spawn('npm', ['install', '--loglevel', 'silly', '--registry', getNpmRegistry()], {
+    stdio: ['pipe'],
     cwd,
+  });
+
+  child.stdout.on('data', data => {
+    console.log(data.toString())
+  });
+
+  child.stderr.on('data', data => {
+    console.log(data.toString())
+  });
+
+  child.on('error', error => {
+    console.log(error);
+    process.exit(1);
+  });
+
+  child.on('close', () => {
+    console.log('>>> install completed');
   });
 }
 

@@ -52,7 +52,7 @@ export default (ctx: IContext): ITaskConf => {
       link: '',
       componentName: 'Switch',
       componentProps: {
-        defaultChecked: true,
+        defaultChecked: false,
       },
     },
   ];

@@ -74,6 +74,7 @@ const Project = ({ history, intl }) => {
     onResetModal,
     setResetModal,
   } = useDependency();
+  const [ settingPanelStore, projectStore, taskStore ] = stores.useStores(['settingPanel', 'project', 'task']);
   const [
     pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore, todoStore,
   ] = projectStores.useStores([
@@ -94,9 +95,9 @@ const Project = ({ history, intl }) => {
     Git: gitStore,
     OSS: ossStore,
     Todo: todoStore,
+    Task: taskStore,
   };
   const [isSorting, setIsSorting] = useState(false);
-  const [settingPanelStore, projectStore] = stores.useStores(['settingPanel', 'project']);
 
   const {
     material,

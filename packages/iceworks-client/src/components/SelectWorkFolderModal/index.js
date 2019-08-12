@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import socket from '@src/socket';
+import { Input } from '@alifd/next';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import showMessage from '@utils/showMessage';
@@ -8,19 +9,54 @@ import styles from './index.module.scss';
 
 const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
   const [workFolder, setWorkFolder] = useState({});
-  const { path: workPath, directories = [] } = workFolder;
+  const {path: workPath, directories = [], disabled = true} = workFolder;
 
-  async function onSetWork(setPath) {
+  async function onSetWorkPathBySub(subDirectory) {
     try {
-      const result = await socket.emit('home.setting.setWorkFolder', { path: setPath });
-      setWorkFolder(result);
+      const result = await socket.emit('home.setting.setWorkFolderBySub', { subDirectory });
+      setWorkFolder({
+        ...workFolder,
+        ...result,
+        disabled: true,
+      });
     } catch (error) {
       showMessage(error);
     }
   }
 
-  async function onSetParentAsWork() {
-    await onSetWork('..');
+  async function onSetWorkPath() {
+    try {
+      const result = await socket.emit('home.setting.setWorkFolder', { path: workPath });
+      setWorkFolder({
+        ...workFolder,
+        ...result,
+        disabled: true,
+      });
+    } catch (error) {
+      showMessage(error);
+      setWorkFolder({
+        ...await socket.emit('home.setting.workFolder'),
+        disabled: true,
+      });
+    }
+  }
+
+  async function onSetParentAsWorkPath() {
+    await onSetWorkPathBySub('..');
+  }
+
+  function onSetWorkPathCanEdit() {
+    setWorkFolder({
+      ...workFolder,
+      disabled: false,
+    });
+  }
+
+  function onChangeWorkPath(value) {
+    setWorkFolder({
+      ...workFolder,
+      path: value,
+    });
   }
 
   useEffect(() => {
@@ -41,12 +77,24 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
       <div className={styles.wrap}>
         <div className={styles.bar}>
           <Icon
-            type="arrow-left"
+            type="up-arrow"
             size="small"
-            className={styles.icon}
-            onClick={onSetParentAsWork}
+            className={styles.up}
+            onClick={onSetParentAsWorkPath}
           />
-          <div className={styles.text}>{workPath}</div>
+          <Input 
+            className={styles.input}
+            value={workPath}
+            disabled={disabled}
+            onPressEnter={onSetWorkPath}
+            onChange={onChangeWorkPath}
+          />
+          <Icon
+            type="pencil"
+            size="small"
+            className={styles.edit}
+            onClick={onSetWorkPathCanEdit}
+          />
         </div>
         <div className={styles.list}>
           {directories.map((directory) => {
@@ -55,7 +103,7 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
                 className={styles.item}
                 key={directory}
                 onClick={async () => {
-                  await onSetWork(directory);
+                  await onSetWorkPathBySub(directory);
                 }}
               >
                 <Icon type="folderopen" size="large" />

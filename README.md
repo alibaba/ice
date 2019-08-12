@@ -97,7 +97,7 @@ $ iceworks init
 [iceworks-docs]: https://ice.work/docs/iceworks/about
 [ice-devtools-docs]: https://ice.work/docs/materials/about
 [ice-scripts-docs]: https://ice.work/docs/cli/about
-[icestark-docs]: https://github.com/ice-lab/icestark#icestark
+[icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 
 ## 贡献代码

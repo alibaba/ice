@@ -1,11 +1,11 @@
 import termManager from './termManager';
 
-function writeGlobalLog(msg, isStdout) {
-  const term = termManager.find('globalTerminal');
-  if (isStdout) {
-    term.writeChunk(msg);
-  } else {
-    term.writeLog(msg);
+function writeGlobalLog(msg, isStdout = true) {
+  const logType = isStdout ? 'globalProcessLog' : 'globalOperationLog';
+  const term = termManager.find(logType);
+  if (term) {
+    const writeLogType = isStdout ? 'writeChunk' : 'writeLog';
+    term[writeLogType](msg);
   }
 }
 

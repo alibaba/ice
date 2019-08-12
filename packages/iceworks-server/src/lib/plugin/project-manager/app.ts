@@ -28,6 +28,8 @@ const packageJSONFilename = 'package.json';
 const abcJSONFilename = 'abc.json';
 const DEFAULT_TYPE = 'react';
 const DEFAULT_ADAPTER = [
+  'adapter-cra-v1',
+  'adapter-react-v0',
   'adapter-react-v1',
   'adapter-react-v2',
   'adapter-react-v3',
@@ -72,6 +74,10 @@ class Project implements IProject {
   }
 
   public getPackageJSON() {
+    if (!fs.existsSync(this.packagePath)) {
+      const error: any = new Error('Project\'s package.json file not found in local environment');
+      throw error;
+    }
     return JSON.parse(fs.readFileSync(this.packagePath).toString());
   }
 
@@ -250,9 +256,25 @@ class ProjectManager extends EventEmitter {
     this.app = app;
   }
 
-  private async refresh(): Promise<Project[]> {
+  private async refresh() {
+    const projects = storage.get('projects').map(projectPath => {
+      if (fs.existsSync(projectPath) && fs.existsSync(`${projectPath}/package.json`)) {
+        return { projectPath, exists: true };
+      }
+      return { projectPath, exists: false };
+    });
+    this.projects = await this.createProjects(projects.filter(({ exists }) => exists));
+    // Delete projects that do not exist in local environment
+    projects.forEach(({ projectPath, exists }) => {
+      if (!exists) {
+        this.deleteProject({ projectPath, deleteFiles: false });
+      }
+    });
+  }
+
+  private async createProjects(projects: []): Promise<Project[]> {
     return await Promise.all(
-      storage.get('projects').map(async (projectPath) => {
+      projects.map(async ({ projectPath }) => {
         const project = new Project(projectPath, this.app);
         await project.loadAdapter();
         return project;
@@ -262,7 +284,7 @@ class ProjectManager extends EventEmitter {
 
   public async ready() {
     await this.app.i18n.readLocales();
-    this.projects = await this.refresh();
+    this.refresh();
   }
 
   /**
@@ -280,11 +302,9 @@ class ProjectManager extends EventEmitter {
       (currentItem) => currentItem.path === path
     );
 
-    if (!project) {
-      throw new Error('notfound project');
+    if (project) {
+      return project;
     }
-
-    return project;
   }
 
   /**
@@ -292,6 +312,10 @@ class ProjectManager extends EventEmitter {
    */
   public async getCurrent() {
     const projectPath = storage.get('project');
+    if (!fs.existsSync(projectPath)) {
+      const error: any = new Error('Project not found in local environment');
+      throw error;
+    }
     const project = await this.getProject(projectPath);
     return project;
   }
@@ -369,10 +393,16 @@ class ProjectManager extends EventEmitter {
    * Generate project
    */
   private async generateProject(params: ICreateParams) {
-    const { path: targetPath, scaffold, name } = params;
+    const { path: targetPath, scaffold } = params;
     const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
     await getAndExtractTarball(targetPath, tarballURL);
+  }
 
+  /**
+   * Format project
+   */
+  private async formatProject(params: ICreateParams) {
+    const { path: targetPath, name } = params;
     await rimrafAsync(path.join(targetPath, 'build'));
 
     // rewrite pakcage.json
@@ -393,7 +423,7 @@ class ProjectManager extends EventEmitter {
     await writeFileAsync(packageJSONPath, `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
 
     const isAlibaba = await checkAliInternal();
-    if (isAlibaba ) {
+    if (isAlibaba) {
       await this.generateAbcFile(targetPath, packageJSON.devDependencies['ice-scripts']);
     }
   }
@@ -404,14 +434,19 @@ class ProjectManager extends EventEmitter {
    * TODO create a project by custom scaffold
    */
   public async createProject(params: ICreateParams): Promise<void> {
-    if (params.appId) {
-      const generate = require('@ali/stark-biz-generator'); // eslint-disable-line
-      generate({ appId: params.appId, changeId: params.changeId, targetDir: params.path })
+    const { appId, changeId, path: targetPath } = params;
+    await this.createProjectFolder(params);
+
+    if (appId) {
+      const generate = require('@ali/stark-biz-generator');  // eslint-disable-line
+      await generate({ appId, changeId, targetDir: targetPath });
+
     } else {
-      await this.createProjectFolder(params);
       await this.generateProject(params);
-      await this.addProject(params.path);
     }
+
+    await this.formatProject(params);
+    await this.addProject(targetPath);
   }
 
   /**

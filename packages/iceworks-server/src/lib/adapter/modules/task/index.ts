@@ -90,6 +90,7 @@ export default class Task implements ITaskModule {
     } catch (error) {
       // ignore error
     }
+
     this.process[command] = execa(
       npmClient,
       ['run', command === 'dev' ? 'start' : command],
@@ -111,13 +112,11 @@ export default class Task implements ITaskModule {
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      this.logPipe(queue => {
-        ctx.socket.emit(`adapter.task.${eventName}`, {
-          status: this.status[command],
-          isStdout: false,
-          chunk: queue,
-        });
-      }).add(buffer.toString());
+      ctx.socket.emit(`adapter.task.${eventName}`, {
+        status: this.status[command],
+        isStdout: false,
+        chunk: buffer.toString(),
+      });
     });
 
     this.process[command].on('close', () => {
@@ -176,43 +175,15 @@ export default class Task implements ITaskModule {
     return this;
   }
 
-  public logPipe(action: any) {
-    const maxTime = 300;
-
-    let queue = '';
-    let size = 0;
-    let time = Date.now();
-    let timeout;
-
-    const add = string => {
-      queue += string;
-      size++;
-
-      if (size === 50 || Date.now() > time + maxTime) {
-        flush();
-      } else {
-        clearTimeout(timeout);
-        timeout = setTimeout(flush, maxTime);
-      }
-    };
-
-    const flush = () => {
-      clearTimeout(timeout);
-      if (!size) return;
-      action(queue);
-      queue = '';
-      size = 0;
-      time = Date.now();
-    };
-
-    return {
-      add,
-    };
-  }
-
   public getStatus(args: ITaskParam) {
     const { command } = args;
-    return this.status[command];
+    if (command) {
+      return this.status[command];
+    }
+  }
+
+  public getAllStatus() {
+    return this.status;
   }
 
   /**
@@ -282,7 +253,9 @@ export default class Task implements ITaskModule {
     const command = devScriptArray[1];
     let newDevScriptContent = `${cli} ${command}`;
     Object.keys(args.options).forEach(key => {
-      newDevScriptContent += ` --${key}=${args.options[key]}`;
+      if(args.options[key]) {
+        newDevScriptContent += ` --${key}=${args.options[key]}`;
+      }
     });
 
     pkgContent.scripts.start = newDevScriptContent;

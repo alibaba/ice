@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 3.0.3
+
+- [feat] output installation log #2653
+- [fix] exit process when installation dependencies fail #2647
+- [fix] use cnpm registry when install server deps #2672
+
+## 3.0.2
+
+- [fix] update iceworks failed #2604
+
 ## 3.0.1
 
 -  [feat] add DAU statistics

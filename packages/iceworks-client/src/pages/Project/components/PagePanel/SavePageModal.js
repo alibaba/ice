@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Input, Button, Select } from '@alifd/next';
 import Modal from '@components/Modal';
 import TipIcon from '@components/TipIcon';
 import Progress from '@components/Progress';
-import showMessage from '@utils/showMessage';
 import stores from '@stores';
 import pageStores from '../../stores';
 import styles from './SavePageModal.module.scss';
@@ -19,30 +18,38 @@ const formItemLayout = {
   },
 };
 
-const SavePageModal = ({ on, onCancel, onOk }) => {
+const SavePageModal = ({ on, onCancel, onOk, intl }) => {
   const progress = stores.useStore('progress');
   const routerStore = pageStores.useStore('routes');
-  const { dataSource: routes } = routerStore;
-  const pathReg = /^\/([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/;
+  const { dataSource: routes, refresh } = routerStore;
+  const pathReg = /^\/([a-zA-Z0-9:])([a-zA-Z0-9:_|-]*)((\/)?[a-zA-Z0-9:]+)$/;
+
+  useEffect(() => {
+    (async () => {
+      await refresh();
+    })();
+  }, []);
 
   async function onSave(values, errors) {
     if (!errors) {
-      await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
-      try {
-        await onOk(values);
-      } catch (error) {
-        showMessage(error);
-      }
+      await progress.show({ statusText: intl.formatMessage({ id: 'iceworks.project.panel.page.create.progress.start' }) });
+      await onOk(values);
       await progress.hide();
     }
   }
 
-  const routerGroups = routes.filter(item => item.children).map(item => {
-    return {
-      label: `${item.path}(${item.component})`,
-      value: item.path,
-    };
-  });
+  const routerGroups = routes
+    .filter(item => item.children)
+    .map(item => {
+      return {
+        label: `${item.path}(${item.component})`,
+        value: item.path,
+      };
+    });
+
+  const defaultRouteGroupValue = routerGroups.filter(route => route.value === '/').length
+    ? '/'
+    : undefined;
 
   return (
     <Modal
@@ -120,6 +127,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
               className={styles.select}
               name="routeGroup"
               dataSource={routerGroups}
+              defaultValue={defaultRouteGroupValue}
             />
           </FormItem>
         ) : null}
@@ -161,6 +169,7 @@ SavePageModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
 export default SavePageModal;

@@ -22,6 +22,7 @@ const DEFAULT_CATEGORY = '全部';
 const Material = ({ history, intl }) => {
   const [material] = stores.useStores(['material']);
   const {
+    createProjectLoading,
     scaffold,
     onCreateProjectModal,
     setCreateProjectModal,
@@ -193,6 +194,7 @@ const Material = ({ history, intl }) => {
     <div className={styles.materialPage}>
       <CreateProjectModal
         isBiz={scaffold && scaffold.source && scaffold.source.npm === '@ali/bzb-scaffold'}
+        loading={createProjectLoading}
         on={onCreateProjectModal}
         onCancel={() => setCreateProjectModal(false)}
         onOk={onCreateProject}

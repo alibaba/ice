@@ -27,10 +27,10 @@ module.exports = {
 }
 ```
 
-访问链接中开启 debug 调试，设置 `debug=true` 进行开启
+访问链接中开启 debug 调试，设置 `smartDebug=true` 进行开启
 
 ```
-http://example.com/?debug=true
+http://example.com/?smartDebug=true
 ```
 
 开启后页面将默认加载本地入口脚本 `127.0.0.1:3333/build/js/index.js`，`__webpack_public_path__` 将会变为 `127.0.0.1:3333/build/`。
@@ -42,10 +42,10 @@ http://example.com/?debug=true
 
 * 调试端口：`debugPort`，例如设置调试 8080 端口，`debugPort=8080`，默认端口为：3333
 * 入口脚本路径：`debugPath`，`debugPath=/build/index.js`，页面将加载 `127.0.0.1:8080/build/index.js`
-* 资源输出路径：`outputPath`，`outputPath=dist`，即 runtime 的 publicPath 将会变成 `127.0.0.1:8080/dist/`
+* 资源输出路径：`outputPath`，`outputPath=dist`，即 runtime 的 publicPath 将会变成 `127.0.0.1:8080/dist/`，`outputPath` 默认读取 `ice.config.js` 中的 `outputDir`，如果不需要可以设置为 `outputPath=`
 
 如想加载的入口地址为 `127.0.0.1:8080/dist/index.js`， `__webpack_public_path__`路径为 `127.0.0.1:8080/dist/`，则可以在 url 中进行如下设置：
 
 ```
-http://example.com/?debug=true&debugPort=8080&debugPath=/dist/index.js&outputPath=dist
+http://example.com/?smartDebug=true&debugPort=8080&debugPath=/dist/index.js&outputPath=dist
 ```
