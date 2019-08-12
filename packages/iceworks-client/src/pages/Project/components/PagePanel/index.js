@@ -135,7 +135,7 @@ const PagePanel = ({ intl, title, description }) => {
 
     setAddBlocksModal(false);
 
-    showMessage('添加区块成功', 'success');
+    showMessage(intl.formatMessage({ id: 'iceworks.project.panel.page.update.success' }), 'success');
 
     pagesStore.refresh();
   }
