@@ -1,4 +1,10 @@
-# CHANGELOG
+# CHANGELOG for iceworks
+
+## 3.0.5
+
+- [fix] fix cli args not working #2681
+- [fix] fix encode error for log #2686
+- [fix] fix failed to create page #2688
 
 ## 3.0.4
 
@@ -22,7 +28,7 @@
 - [fix] router sort logic (#2559)
 - [fix] copy ejs file to dist #2571
 - [fix] improve some translation #2578
-- [fix] move dir across device #2576 
+- [fix] move dir across device #2576
 
 ## 3.0.1
 

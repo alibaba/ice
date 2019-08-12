@@ -75,9 +75,9 @@ export default {
   // project page
   'iceworks.project.panel.page.create.title': 'Create Page',
   'iceworks.project.panel.page.update.title': 'Update Page',
+  'iceworks.project.panel.page.update.success': 'Download block was successful, please refer it to the page by manually.',
   'iceworks.project.panel.page.create.progress.start': 'Start create page...',
   'iceworks.project.panel.page.create.builder.empty': 'Select the block from the right',
-  'iceworks.project.panel.page.create.error.name.content': 'The block name must be unique in this page',
   'iceworks.project.panel.page.delete.title': 'Delete Page',
   'iceworks.project.panel.page.delete.content': 'Are you sure to delete {name}?',
   'iceworks.project.panel.page.save.title': 'Page Information',

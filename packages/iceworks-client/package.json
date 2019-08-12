@@ -1,6 +1,6 @@
 {
   "name": "iceworks-client",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "iceworks client",
   "files": [
     "build"
@@ -25,7 +25,6 @@
     "history": "^4.9.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
-    "lodash.uniqby": "^4.7.0",
     "loglevel": "^1.6.1",
     "loglevel-plugin-prefix": "^0.8.4",
     "moment": "^2.24.0",
@@ -40,6 +39,7 @@
     "react-sortable-hoc": "^1.9.1",
     "semver": "^6.1.0",
     "socket.io-client": "^2.2.0",
+    "uppercamelcase": "^3.0.0",
     "url-parse": "^1.4.6",
     "xterm": "^3.12.2"
   },
