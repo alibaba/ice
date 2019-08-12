@@ -78,7 +78,7 @@ const docCategories = {
           'zh-cn': '进阶指南',
           'en-us': 'Advanced guide',
         },
-        dir: 'material',
+        dir: 'advanced',
       },
       {
         title: {
@@ -219,6 +219,31 @@ const docCategories = {
         dir: 'mode',
       },
     ],
+  },
+
+  // icestark
+  icestark: {
+    // 工作台模式
+    title: {},
+    children: [{
+      title: {
+        'zh-cn': '指南',
+        'en-us': 'guide',
+      },
+      dir: 'guide',
+    }, {
+      title: {
+        'zh-cn': 'API',
+        'en-us': 'API',
+      },
+      dir: 'api',
+    }, {
+      title: {
+        'zh-cn': '参考',
+        'en-us': 'Reference',
+      },
+      dir: 'reference',
+    }],
   },
 };
 

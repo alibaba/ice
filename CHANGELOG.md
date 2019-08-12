@@ -1,4 +1,41 @@
-# CHANGELOG
+# CHANGELOG for iceworks
+
+## 3.0.5
+
+- [fix] fix cli args not working #2681
+- [fix] fix encode error for log #2686
+- [fix] fix failed to create page #2688
+
+## 3.0.4
+
+- [fix] fail to run task #2661
+
+## 3.0.3
+
+- [feat] distinguish between operation logs and process logs #2599
+- [feat] add loading effect when creating a project #2614
+- [fix] socket disconnect #2603
+- [fix] create and import project only can choose C disk on Windows #2600
+- [fix] Start Task panel does not refresh when switching between different projects #2465
+- [fix] iceworks-server unable to start if project directory is not present in local environment #2585
+- [fix] upgrade iceworks-server got failed #2604
+- [fix] copy vue ejs file to dist #2589
+
+## 3.0.2
+
+- [feat] support create-react-app #2399
+- [feat] open page folder in editor #2575
+- [fix] router sort logic (#2559)
+- [fix] copy ejs file to dist #2571
+- [fix] improve some translation #2578
+- [fix] move dir across device #2576
+
+## 3.0.1
+
+- [fix] router sort logic #2559
+- [fix] failed to create page #2564
+- [fix] failed to re-install dependencies #2565
+- [fix] show recommend scaffold #2558
 
 ## 3.0.0
 

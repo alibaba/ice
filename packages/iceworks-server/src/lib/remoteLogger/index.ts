@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as request from 'request';
+import * as request from 'request-promise-native';
 import { Transport } from 'egg-logger';
 
 const remoteUrl = `http://iceworks.cn-hangzhou.log.aliyuncs.com/logstores/iceworks-node-log/track`;
@@ -29,10 +29,14 @@ export default class RemoteLogger extends Transport {
       qsData.message = message;
     }
 
-    await request({
-      url: remoteUrl,
-      qs: qsData,
-      timeout: 2000,
-    });
+    try {
+      await request({
+        url: remoteUrl,
+        qs: qsData,
+        timeout: 2000,
+      });
+    } catch (err) {
+      // ignore...
+    }
   }
 }

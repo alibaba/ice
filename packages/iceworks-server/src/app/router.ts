@@ -25,6 +25,7 @@ export default (app: Application) => {
 
     ['home.setting.workFolder', home.setting.getWorkFolder],
     ['home.setting.setWorkFolder', home.setting.setWorkFolder],
+    ['home.setting.setWorkFolderBySub', home.setting.setWorkFolderBySub],
     ['home.setting.setLocale', home.setting.setLocale],
     ['home.setting.getLocale', home.setting.getLocale],
     ['home.setting.setTheme', home.setting.setTheme],
@@ -52,7 +53,7 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
-        logger.info(eventName, `${JSON.stringify(data)}\n`);
+        logger.info(eventName);
         callback(null, data);
       } catch (error) {
         logger.error(error);

@@ -31,6 +31,8 @@ module.exports = {
           'material-card-shadow-color': 'rgba(193, 193, 193, 0.35)',
           'material-card-shadow': '0 0px 3px rgba(193, 193, 193, 0.35)',
           'text-color-inverse': '#e4e4e4',
+          'tab-bar-bg': '#434557',
+          'tab-bar-active': '#fff',
         },
       }, {
         name: '@alifd/theme-iceworks-light',
@@ -43,6 +45,8 @@ module.exports = {
           'material-card-shadow-color': 'rgba(163, 177, 191, 0.35)',
           'material-card-shadow': '0 8px 24px rgba(193, 193, 193, 0.35)',
           'text-color-inverse': '#fff',
+          'tab-bar-bg': '#fff',
+          'tab-bar-active': '#000',
         },
       }],
     }],

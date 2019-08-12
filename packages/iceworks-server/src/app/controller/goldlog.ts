@@ -1,5 +1,5 @@
 import { controller, provide, post } from 'midway-mirror';
-import * as rp from 'request';
+import * as request from 'request-promise-native';
 
 @provide()
 @controller('/api/goldlog')
@@ -20,23 +20,25 @@ export class GoldlogController {
         }`;
       }, '');
 
-      await rp({
-        method: 'post',
-        url: 'http://gm.mmstat.com/iceteam.iceworks.log3',
-        data: {
-          cache: Math.random(),
-          gmkey: 'CLK',
-          gokey: encodeURIComponent(gokey),
-          logtype: '2',
-        },
-      });
-      ctx.body = {
-        success: true,
-      };
-    } else {
-      ctx.body = {
-        success: false,
-      };
+      try {
+        await request({
+          method: 'post',
+          url: 'http://gm.mmstat.com/iceteam.iceworks.log3',
+          data: {
+            cache: Math.random(),
+            gmkey: 'CLK',
+            gokey: encodeURIComponent(gokey),
+            logtype: '2',
+          },
+        });
+      } catch (error) {
+        error.name = 'goldlog-error';
+        ctx.logger.error(error);
+      }
     }
+    
+    ctx.body = {
+      success: true,
+    };
   }
 };

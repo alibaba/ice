@@ -51,11 +51,12 @@ const XtermTerminal = ({ id, name, options }) => {
 
 XtermTerminal.defaultProps = {
   options: {},
+  name: '',
 };
 
 XtermTerminal.propTypes = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   options: PropTypes.object,
 };
 

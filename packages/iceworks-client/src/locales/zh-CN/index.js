@@ -14,6 +14,7 @@ export default {
   'iceworks.global.adapter.description': '当前项目未配置 Adapter，请参考 <a href="https://ice.work/docs/iceworks/migrate" target="_blank">文档</a> 进行适配',
   'iceworks.global.adapter.reload': '刷新重试',
   'iceworks.global.no.project': '未找到项目，请先添加项目',
+  'iceworks.global.layout.login': '请登录',
 
   // quick start
   'iceworks.quickStart.title': '从热门模板开始初始化你的项目',
@@ -73,9 +74,10 @@ export default {
 
   // project page
   'iceworks.project.panel.page.create.title': '创建页面',
+  'iceworks.project.panel.page.update.title': '更新页面',
+  'iceworks.project.panel.page.update.success': '下载区块成功，请手动在页面中引用。',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.create.builder.empty': '请从右侧选择区块',
-  'iceworks.project.panel.page.create.error.name.content': '区块名不能重复，请检查',
   'iceworks.project.panel.page.delete.title': '删除页面',
   'iceworks.project.panel.page.delete.content': '确定移除页面 {name} ？',
   'iceworks.project.panel.page.save.title': '填写页面信息',
@@ -263,7 +265,7 @@ export default {
   'iceworks.material.sourceUrl': '物料源地址',
   'iceworks.material.noData': '暂无数据',
   'iceworks.material.customMaterial': '自定义物料',
-  'iceworks.material.officialMaterial': '官方推荐物料',
+  'iceworks.material.officialMaterial': '推荐物料',
   'iceworks.material.name': '物料名称',
   'iceworks.material.delete': '删除物料',
   'iceworks.material.deleteConfirm': '删除后不可恢复，确定删除物料？',
@@ -273,6 +275,8 @@ export default {
   // global bar
   'iceworks.global.bar.project': '当前项目名称',
   'iceworks.global.bar.log': '日志',
+  'iceworks.global.bar.log.operation': '操作日志',
+  'iceworks.global.bar.log.process': '进程日志',
   'iceworks.global.bar.folder': '文件夹',
   'iceworks.global.bar.editor': '编辑器',
   'iceworks.global.bar.feedback': '反馈',

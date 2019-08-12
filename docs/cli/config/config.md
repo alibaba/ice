@@ -260,9 +260,10 @@ module.exports = {
 
 * 类型：`string`
 * 默认值：`polyfill`
-* Enum: `polyfill|runtime`
 
-注入 babel 运行环境，默认情况下会注入 @babel/polyfill 适合业务项目开发，如果开发类库项目，可以修改为 `runtime`
+默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 `targets` 配置的兼容浏览器进行 polyfill，实现按需添加。
+开发类库项目，可以将配置设置为 `runtime`。
+如果想手动 polyfill，可以将配置设置为 `false`，工程将不会进行自动的 polyfill。
 
 ```js
 // ice.config.js

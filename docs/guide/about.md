@@ -21,7 +21,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 | [ice-devtools](https://github.com/ice-lab/ice-devtools) | ![](https://img.shields.io/npm/v/ice-devtools.svg) | [docs](https://ice.work/docs/materials/about) |物料开发工具，支持 React&Vue|
 | [ice-scripts](https://github.com/ice-lab/ice-scripts) | ![](https://img.shields.io/npm/v/ice-scripts.svg) | [docs](https://ice.work/docs/cli/about) |基于 webpack 的高可配置开发构建工具|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
-| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://github.com/ice-lab/icestark#icestark) |面向大型应用的微前端解决方案|
+| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice.work/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
 | [react-materials](https://github.com/ice-lab/react-materials) | / | [docs](https://ice.work/scaffold) |由官方提供的丰富的高质量 React 物料|
 | [vue-materials](https://github.com/ice-lab/vue-materials) | / | [docs](https://ice.work/block?type=vue) |由社区维护的高质量 Vue 物料|
 

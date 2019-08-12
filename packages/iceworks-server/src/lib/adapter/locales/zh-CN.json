@@ -41,6 +41,7 @@
   "baseAdapter.page.download.requestError": "请求区块 tarball 包失败",
   "baseAdapter.page.download.tarError": "解压区块{blockName}出错，下载地址是：{tarballURL}，请重试",
   "baseAdapter.page.download.tarTimeOut": "解压区块{blockName}超时，下载地址是：{tarballURL}，请重试",
+  "baseAdapter.page.blocks.exist": "区块名不能重复，请检查",
 
   "baseAdapter.task.runing": "服务已启动，请先停止服务再重试",
   "baseAdapter.task.install.dependency": "请先安装依赖后再重试",
@@ -48,7 +49,7 @@
   "baseAdapter.task.dev.host.label": "服务主机名",
   "baseAdapter.task.dev.https.label": "开启 https",
   "baseAdapter.task.dev.analyzer.label": "开启构建分析",
-  "baseAdapter.task.dev.disabled-reload.label": "开启热更新",
+  "baseAdapter.task.dev.disabled-reload.label": "禁止热更新",
   "vueAdapter.task.dev.port.label": "服务端口号",
   "vueAdapter.task.dev.host.label": "服务主机名",
   "vueAdapter.task.dev.https.label": "开启 https",

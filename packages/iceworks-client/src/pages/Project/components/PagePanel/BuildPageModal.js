@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Select, Input, Loading } from '@alifd/next';
-import uniqBy from 'lodash.uniqby';
+import upperCamelCase from 'uppercamelcase';
 import cx from 'classnames';
 import socket from '@src/socket';
 import Modal from '@components/Modal';
 import Icon from '@components/Icon';
 import BlockCard from '@components/BlockCard';
 import ActionStatus from '@components/ActionStatus';
-import showMessage from '@utils/showMessage';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
+import showMessage from '@utils/showMessage';
 import {
   SortableContainer,
   SortableElement,
@@ -197,8 +197,9 @@ const SelectedBlocks = SortableContainer(({ blocks, onNameChange, onDelete, isSo
 });
 
 const BuildPageModal = ({
-  on, onCancel, onOk, existedBlocks, intl,
+  on, onCancel, onOk, page, intl,
 }) => {
+  const { blocks = [] } = page || {};
   const {
     on: onSaveModal,
     setModal: setSaveModal,
@@ -224,34 +225,37 @@ const BuildPageModal = ({
   }
 
   async function onCreateOk() {
-    // check name
-    const hasSameName = uniqBy(selectedBlocks, 'name').length !== selectedBlocks.length;
-    if (hasSameName) {
-      showMessage(intl.formatMessage({ id: 'iceworks.project.panel.page.create.error.name.content' }));
-      return;
-    }
-
-    // If has exists blocks, it is represented in edit mode
-    if (existedBlocks.length) {
-      await onOk(selectedBlocks);
+    // If has page, it is represented in edit mode
+    if (page) {
+      try {
+        await onOk(selectedBlocks);
+      } catch (error) {
+        showMessage(error);
+      }
     } else {
       setSaveModal(true);
     }
   }
 
   async function onSaveOk(data) {
-    await onOk({
-      blocks: selectedBlocks,
-      ...data,
-    });
+    try {
+      await onOk({
+        blocks: selectedBlocks,
+        ...data,
+      });
+    } catch (error) {
+      showMessage(error);
+    }
+    
     setSaveModal(false);
   }
 
-  function generateBlockName(name, count = 0) {
-    const newName = !count ? name : `${name}${count}`;
-    const isConflict = selectedBlocks.some((block) => block.name === newName);
+  function generateBlockName(value, count = 0) {
+    const setName = upperCamelCase(value);
+    const newName = !count ? setName : `${setName}${count}`;
+    const isConflict = blocks.concat(selectedBlocks).some(({ name }) => upperCamelCase(name) === newName);
     if (isConflict) {
-      return generateBlockName(name, count + 1);
+      return generateBlockName(setName, count + 1);
     }
     return newName;
   }
@@ -286,10 +290,12 @@ const BuildPageModal = ({
     material.getResources({ type: project.dataSource.type });
   }, []);
 
+  const titleId = page ? 'iceworks.project.panel.page.update.title' : 'iceworks.project.panel.page.create.title';
+
   return (
     [
       <Modal
-        title={<FormattedMessage id="iceworks.project.panel.page.create.title" />}
+        title={<FormattedMessage id={titleId} />}
         visible={on}
         onCancel={onCancel}
         onOk={onCreateOk}
@@ -299,7 +305,7 @@ const BuildPageModal = ({
           <div className={styles.main}>
             <div className={styles.existed}>
               {
-                existedBlocks.map(({ name }, index) => {
+                blocks.map(({ name }, index) => {
                   return (
                     <div key={index} className={styles.item}>
                       {name}
@@ -351,6 +357,7 @@ const BuildPageModal = ({
         on={onSaveModal}
         onCancel={onCloseSaveModal}
         onOk={onSaveOk}
+        intl={intl}
         key="saveModal"
       />,
     ]
@@ -358,14 +365,14 @@ const BuildPageModal = ({
 };
 
 BuildPageModal.defaultProps = {
-  existedBlocks: [],
+  page: null,
 };
 
 BuildPageModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
-  existedBlocks: PropTypes.array,
+  page: PropTypes.object,
 };
 
 export default injectIntl(BuildPageModal);
