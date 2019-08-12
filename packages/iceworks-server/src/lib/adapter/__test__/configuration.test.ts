@@ -11,13 +11,14 @@ const tmpPath = path.join(__dirname, 'tmp');
 describe('Test adapter configuration module', () => {
   let ctx;
   let configuration;
-  before(() => {
-    getNpmTarball('@icedesign/lite-scaffold', '3.0.5').then((tarball: any) => {
-      const files = getAndExtractTarball(tmpPath, tarball);
-    });
 
+  getNpmTarball('@icedesign/lite-scaffold', '3.0.5').then((tarball: any) => {
+    getAndExtractTarball(tmpPath, tarball);
+  });
+
+  before(() => {
     configuration = new Configuration({ project, storage });
-  })
+  });
 
   beforeEach(() => {
     ctx = app.mockContext({ i18n: app.i18n });
