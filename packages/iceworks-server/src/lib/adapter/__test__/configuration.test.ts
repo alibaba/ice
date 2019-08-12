@@ -1,12 +1,9 @@
 import * as path from 'path';
-import * as rimraf from 'rimraf';
 import Configuration from '../modules/configuration';
-import { project, storage } from './common';
+import { project, storage, tmpPath } from './common';
 import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 
 const { app, assert } = require('midway-mock/bootstrap');
-
-const tmpPath = path.join(__dirname, 'tmp');
 
 describe('Test adapter configuration module', () => {
   let ctx;
@@ -50,9 +47,5 @@ describe('Test adapter configuration module', () => {
         assert.equal(item.componentProps.defaultChecked, true);
       }
     })
-  })
-
-  after(() => {
-    // rimraf.sync(tmpPath);
   })
 })
