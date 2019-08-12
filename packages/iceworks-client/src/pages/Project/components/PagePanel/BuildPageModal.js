@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Select, Input, Loading } from '@alifd/next';
+import upperCamelCase from 'uppercamelcase';
 import cx from 'classnames';
 import socket from '@src/socket';
 import Modal from '@components/Modal';
@@ -249,11 +250,12 @@ const BuildPageModal = ({
     setSaveModal(false);
   }
 
-  function generateBlockName(name, count = 0) {
-    const newName = !count ? name : `${name}${count}`;
-    const isConflict = selectedBlocks.some((block) => block.name === newName);
+  function generateBlockName(value, count = 0) {
+    const setName = upperCamelCase(value);
+    const newName = !count ? setName : `${setName}${count}`;
+    const isConflict = blocks.concat(selectedBlocks).some(({ name }) => upperCamelCase(name) === newName);
     if (isConflict) {
-      return generateBlockName(name, count + 1);
+      return generateBlockName(setName, count + 1);
     }
     return newName;
   }
