@@ -205,12 +205,12 @@ export default class Page implements IPageModule {
     const template = await loadTemplate(this.templateFileName, this.templateFilePath);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
-        const blocksName = this.generateBlockName(block);
+        const blockName = this.generateBlockName(block);
 
         return {
           ...block,
-          className: blocksName,
-          relativePath: `./${this.componentDirName}/${blocksName}`,
+          className: blockName,
+          relativePath: `./${this.componentDirName}/${blockName}`,
         };
       }),
       className: pageFolderName,
