@@ -12,7 +12,6 @@ describe('Test adapter dependency module', () => {
   });
 
   beforeEach(() => {
-    console.log('app.io', app.io);
     ctx = app.mockContext({
       i18n: app.i18n,
       // socket: app.io.sockets,
