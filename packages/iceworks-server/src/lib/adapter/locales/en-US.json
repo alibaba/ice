@@ -41,7 +41,7 @@
   "baseAdapter.page.download.requestError": "Request tarball package failed",
   "baseAdapter.page.download.tarError": "Unpacking block {blockName} error, URL is {tarballURL}, please try again",
   "baseAdapter.page.download.tarTimeOut": "Unpacking block {blockName} timed out, URL is {tarballURL}, please try again",
-  "baseAdapter.page.blocks.exist": "Block name cannot be repeated. Please check.",
+  "baseAdapter.page.blocks.exist": "Block name cannot be repeated, please check.",
 
   "baseAdapter.task.runing": "The task has started. Please stop the task before trying again",
   "baseAdapter.task.install.dependency": "Please try again after installing the dependency",
