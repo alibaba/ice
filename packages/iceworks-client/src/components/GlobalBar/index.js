@@ -86,17 +86,11 @@ const GlobalBar = ({ project, intl }) => {
   });
 
   function termHiddenClassName(key) {
-    if (activeKey === key) {
-      return '';
-    }
-    return styles.hidden;
+    return activeKey === key ? '' : styles.hidden;
   };
 
   function tabBarActiveClassName(key) {
-    if (activeKey === key) {
-      return styles.tabActive;
-    }
-    return '';
+    return activeKey === key ? styles.tabActive : '';
   }
 
   const hiddenClassName = show ? '' : styles.hidden;
