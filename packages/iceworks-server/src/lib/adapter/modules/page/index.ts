@@ -127,7 +127,7 @@ export default class Page implements IPageModule {
     await mkdirpAsync(componentsDir);
 
     const iceVersion: string = getIceVersion(projectPackageJSON);
-    const blockName: string = block.alias || upperCamelCase(block.name);
+    const blockName: string = this.generateBlockFolderName(block);
 
     let tarballURL: string;
     try {
@@ -154,6 +154,14 @@ export default class Page implements IPageModule {
 
     await mkdirpAsync(blockDir);
     await mvAsync(path.join(blockTempDir, 'src'), blockDir, {clobber: false});
+  }
+
+  private generateBlockFolderName(block: IMaterialBlock): string {
+    return block.alias || upperCamelCase(block.name);
+  }
+
+  private generateBlockClassName(block: IMaterialBlock): string {
+    return upperCamelCase(block.alias || block.name);
   }
 
   public async getAll(): Promise<IPage[]> {
@@ -193,8 +201,8 @@ export default class Page implements IPageModule {
     const template = await loadTemplate(this.templateFileName, this.templateFilePath);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
-        const blockFolderName = block.alias || upperCamelCase(block.name);
-        const blockClassName = upperCamelCase(block.alias || block.name);
+        const blockFolderName = this.generateBlockFolderName(block);
+        const blockClassName = this.generateBlockClassName(block);
 
         return {
           ...block,
