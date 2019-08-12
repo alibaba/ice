@@ -27,9 +27,17 @@ function downloadServer(npmName, destDir) {
 }
 
 function install(cwd) {
-  const child = spawn('npm', ['install', '--registry', getNpmRegistry()], {
-    stdio: 'inherit',
+  const child = spawn('npm', ['install', '--loglevel', 'silly', '--registry', getNpmRegistry()], {
+    stdio: ['pipe'],
     cwd,
+  });
+
+  child.stdout.on('data', data => {
+    console.log(data.toString())
+  });
+
+  child.stderr.on('data', data => {
+    console.log(data.toString())
   });
 
   child.on('error', error => {
