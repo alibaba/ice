@@ -1,6 +1,6 @@
 const path = require('path');
 const spawn = require('cross-spawn');
-const { getNpmTarball } = require('ice-npm-utils');
+const { getNpmTarball, getNpmRegistry } = require('ice-npm-utils');
 const extractTarball = require('./extractTarball');
 
 const NPM_NAME = 'iceworks-server';
@@ -27,7 +27,7 @@ function downloadServer(npmName, destDir) {
 }
 
 function install(cwd) {
-  const child = spawn('npm', ['install', '--loglevel', 'silly'], {
+  const child = spawn('npm', ['install', '--loglevel', 'silly', '--registry', getNpmRegistry()], {
     stdio: ['pipe'],
     cwd,
   });
