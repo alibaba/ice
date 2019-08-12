@@ -10,7 +10,6 @@ import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as uniqBy from 'lodash.uniqby';
-import * as kebabCase from 'kebab-case';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
 import getNpmClient from '../../../getNpmClient';
@@ -179,11 +178,9 @@ export default class Page implements IPageModule {
 
     // create page dir
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
-    const pageFolderName = upperCamelCase(name);
-    const pageDir = path.join(this.path, pageFolderName);
+    const pageName = upperCamelCase(name);
+    const pageDir = path.join(this.path, pageName);
     await mkdirpAsync(pageDir);
-
-    const pageName = kebabCase(pageFolderName).replace(/^-/, '');
 
     if (fs.readdirSync(pageDir).length > 0) {
       const error: any = new Error(`${name} 页面已存在，不允许覆盖。`);
@@ -213,7 +210,7 @@ export default class Page implements IPageModule {
           relativePath: `./${this.componentDirName}/${blockName}`,
         };
       }),
-      className: pageFolderName,
+      className: pageName,
       pageName,
     });
     const fileName = template.fileName
@@ -226,7 +223,7 @@ export default class Page implements IPageModule {
     );
 
     await writeFileAsync(dist, rendered, 'utf-8');
-    return pageFolderName;
+    return pageName;
   }
 
   public async delete(params: {name: string}): Promise<any> {
