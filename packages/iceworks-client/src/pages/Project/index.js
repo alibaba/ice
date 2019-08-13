@@ -74,7 +74,7 @@ const Project = ({ history, intl }) => {
     onResetModal,
     setResetModal,
   } = useDependency();
-  const [ settingPanelStore, projectStore, taskStore ] = stores.useStores(['settingPanel', 'project', 'task']);
+  const [ settingPanelStore, taskStore ] = stores.useStores(['settingPanel', 'task']);
   const [
     pagesStore, layoutsStore, gitStore, ossStore, menuStore, routesStore, todoStore,
   ] = projectStores.useStores([
@@ -116,6 +116,7 @@ const Project = ({ history, intl }) => {
     onOpenProject,
     onCreateProject,
     onChangeProjectPanel,
+    reloadAdapter,
 
     onOpenProjectModal,
     setOpenProjectModal,
@@ -134,18 +135,14 @@ const Project = ({ history, intl }) => {
 
   function onResetModalCancel() {
     setResetModal(false);
-    if (isCreatedProject && projectStore.dataSource.adapterName) {
+    if (isCreatedProject && project.adapterName) {
       history.replace({ createdProject: false });
     }
   }
 
-  async function reloadAdapter() {
-    await projectStore.reloadAdapter();
-  }
-
   async function onResetModalOk() {
     await reset();
-    if (isCreatedProject && projectStore.dataSource.adapterName) {
+    if (isCreatedProject && project.adapterName) {
       history.replace({ createdProject: false });
     }
   }
@@ -153,7 +150,7 @@ const Project = ({ history, intl }) => {
   async function onCreateProjectModalOk(values) {
     await onCreateProject(values);
 
-    if (projectStore.dataSource.adapterName) {
+    if (project.adapterName) {
       setResetModal(true);
     }
   }
@@ -177,7 +174,7 @@ const Project = ({ history, intl }) => {
   async function wrapRefreshProjects() {
     await refreshProjects();
 
-    if (isCreatedProject && projectStore.dataSource.adapterName) {
+    if (isCreatedProject && project.adapterName) {
       setResetModal(true);
     }
   }

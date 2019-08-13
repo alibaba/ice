@@ -138,6 +138,10 @@ function useProject({ panelStores } = {}) {
     }
   }
 
+  async function reloadAdapter() {
+    await projectStore.reloadAdapter();
+  }
+
   const projectPreDelete =
     projectsStore.dataSource.find(({ path }) => {
       return path === deleteProjectPath;
@@ -180,6 +184,7 @@ function useProject({ panelStores } = {}) {
     onDeleteProject,
     onSwitchProject,
     onChangeProjectPanel,
+    reloadAdapter,
   };
 }
 
