@@ -96,7 +96,7 @@ describe('Test adapter router module', () => {
 
     const routerConfigs = await router.getAll(undefined, ctx);
     // all routers with be replaced by the above router
-    assert.strictEqual(routerConfigs.length, 1);
+    assert.deepStrictEqual(routerConfigs, params.data);
     const testRouterConfig = routerConfigs.find(item => item.path === '/test');
     assert.strictEqual(testRouterConfig.path, '/test');
     assert.strictEqual(testRouterConfig.component, 'BasicLayout');
@@ -107,21 +107,17 @@ describe('Test adapter router module', () => {
   it('delete router by compoentName', async () => {
     const params = { componentName: 'NotFound' };
     await router.delete(params, ctx);
+
     const routers: IRouter[] = await router.getAll(undefined, ctx);
-    let totalNotFoundComponents = 0;
-    routers.forEach(router => {
-      if (router.component === 'NotFound') {
-        totalNotFoundComponents += 1;
-      }
+    const result = routers.some(router => {
       if (router.children) {
-        router.children.forEach(child => {
-          if (child.component === 'NotFound') {
-            totalNotFoundComponents += 1;
-          }
-        });
-      }
+        return (router.children.some(child => {
+          return child.component === params.componentName;
+        }))
+      };
+      return router.component === params.componentName;
     });
 
-    assert.strictEqual(totalNotFoundComponents, 0);
+    assert.strictEqual(result, false);
   });
 })
