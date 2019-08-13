@@ -23,14 +23,13 @@ async function start(options = {}) {
       throw 'Invalid version specified';
     } else {
       const serverPackageVersion = serverPackageConfig.version;
+      process.env.ICEWORKS_CORE_VERSION = options.version;
       if (serverPackageVersion !== options.version) {
         downloadAndListen(options);
       } else {
         listen(options);
       }
     }
-    process.env.ICEWORKS_CORE_VERSION = options.version;
-    downloadAndListen(options);
   } else {
     process.env.ICEWORKS_CORE_VERSION = 'latest';
     const answers = await checkServerVersion();

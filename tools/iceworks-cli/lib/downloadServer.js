@@ -13,6 +13,7 @@ const DEST_DIR = path.join(__dirname, '../', 'server');
  */
 function downloadServer(npmName, destDir) {
   console.log('>>> start downloading code');
+  console.log('>>> ICEWORKS_CORE_VERSION:', process.env.ICEWORKS_CORE_VERSION);
   const version = process.env.ICEWORKS_CORE_VERSION ? process.env.ICEWORKS_CORE_VERSION : 'latest';
   return getNpmTarball(npmName, version)
     .then((url) => {
