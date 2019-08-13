@@ -3,17 +3,23 @@ title: 自定义物料模版
 order: 5
 ---
 
-ice-devtools 默认集成了三种物料模版：
+ice-devtools 默认集成了两种物料模版：
 
 - [React 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-react-material-template)
 - [Vue 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-vue-material-template)
-- [Angular 标准模版](https://github.com/alibaba/ice/tree/master/templates/ice-angular-material-template)
 
-在 `idev init` 时供开发者选择。
+在 `idev init` 时可以选择使用，同时也可以通过参数使用其他官方物料模板：
 
-当基础物料模版不满足开发者需求时，可根据[《物料模版规范》](/docs/materials/template/standard.md)开发自己的物料模版。
+```bash
+# rax 模板
+$ idev init --template rax-template
+# React TypeScript 模板
+$ idev init --template @icedesign/ice-react-ts-material-template
+# Angular 模板
+$ idev init --template @icedesign/ice-angular-material-template
+```
 
-**对于 React、Vue、Angular 项目，强烈建议在官方标准模版的基础上自定义。**
+当这些物料模版不满足开发者需求时，可根据[《物料模版规范》](/docs/materials/template/standard.md)开发自己的物料模版。**但是我们非常不推荐开发者自定义模板**，因为这会带来非常严重的碎片化版本的问题，因此如果由此需求的话一定要跟飞冰团队沟通，一方面确认自定义的必要性，另一方面我们希望模板能统一维护与迭代，尽量将自定义模板贡献到官方模板来。
 
 ## 物料模版的目录结构
 
