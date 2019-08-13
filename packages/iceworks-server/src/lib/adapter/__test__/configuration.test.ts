@@ -23,7 +23,7 @@ describe('Test adapter configuration module', () => {
   });
 
   it('get CLI conf', async () => {
-    const conf: any[] = await configuration.getCLIConf({}, ctx);
+    const conf: any[] = await configuration.getCLIConf(undefined, ctx);
     assert.notStrictEqual(conf, []);
   })
 
