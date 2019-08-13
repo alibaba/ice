@@ -6,9 +6,10 @@ import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 const { app, assert } = require('midway-mock/bootstrap');
 
 describe('Test adapter configuration module', () => {
-  let ctx;
-  let configuration;
+  let ctx: any;
+  let configuration: any;
 
+  // Specified the stable version 
   getNpmTarball('@icedesign/lite-scaffold', '3.0.5').then((tarball: any) => {
     getAndExtractTarball(tmpPath, tarball);
   });
@@ -23,7 +24,7 @@ describe('Test adapter configuration module', () => {
 
   it('get CLI conf', async () => {
     const conf: any[] = await configuration.getCLIConf({}, ctx);
-    assert(conf.length > 0);
+    assert.notStrictEqual(conf, []);
   })
 
   it('set CLI conf', async () => {
@@ -38,13 +39,13 @@ describe('Test adapter configuration module', () => {
         }
       }
     )
-    const conf: any[] = await configuration.getCLIConf({}, ctx);
+    const conf: any[] = await configuration.getCLIConf(undefined, ctx);
     conf.forEach((item) => {
       if (item.name === 'outputDir') {
-        assert.equal(item.componentProps.placeholder, 'build');
+        assert.strictEqual(item.componentProps.placeholder, 'build');
       }
       if (item.name === 'hash') {
-        assert.equal(item.componentProps.defaultChecked, true);
+        assert.strictEqual(item.componentProps.defaultChecked, true);
       }
     })
   })

@@ -22,16 +22,15 @@ describe('Test adapter router module', () => {
   it('get all routers', async () => {
     const routers: IRouter[] = await router.getAll(undefined, ctx);
     const { children }: IRouter = routers[0];
-    assert.equal(routers.length, 1);
-    assert.equal(children.length, 3);
+    assert.strictEqual(routers.length, 1);
+    assert.strictEqual(children.length, 3);
   });
 
-  it('bulk create routers', async () => {
-    let params;
+  it('bulk create routers without replacement and parent', async () => {
+    let params: object;
     let routerConfigs: IRouter[];
     let testRouterConfig: IRouter;
 
-    // test replacement is false without parent
     params = {
       data: [{
         path: '/test', component: 'BasicLayout', children: [
@@ -49,15 +48,16 @@ describe('Test adapter router module', () => {
     await router.bulkCreate(params, ctx);
 
     routerConfigs = await router.getAll(undefined, ctx);
-    assert.equal(routerConfigs.length, 2);
-    testRouterConfig = routerConfigs[0];
-    assert.equal(testRouterConfig.path, '/test');
-    assert.equal(testRouterConfig.component, 'BasicLayout');
-    assert.equal(testRouterConfig.children[0].path, '/router');
-    assert.equal(testRouterConfig.children[0].component, 'NotFound');
+    assert.strictEqual(routerConfigs.length, 2);
+    testRouterConfig = routerConfigs.find(item => item.path === '/test');
+    assert.strictEqual(testRouterConfig.path, '/test');
+    assert.strictEqual(testRouterConfig.component, 'BasicLayout');
+    assert.strictEqual(testRouterConfig.children[0].path, '/router');
+    assert.strictEqual(testRouterConfig.children[0].component, 'NotFound');
+  });
 
-    // test replacement is false with parent
-    params = {
+  it('bulk create routers without replacement but with parent', async () => {
+    const params = {
       data: [
         { path: '/testRouter', component: 'NotFound' }
       ],
@@ -68,16 +68,17 @@ describe('Test adapter router module', () => {
     };
     await router.bulkCreate(params, ctx);
 
-    routerConfigs = await router.getAll(undefined, ctx);
-    assert.equal(routerConfigs.length, 2);
-    testRouterConfig = routerConfigs[0];
-    assert.equal(testRouterConfig.path, '/test');
-    assert.equal(testRouterConfig.component, 'BasicLayout');
-    assert.equal(testRouterConfig.children[1].path, '/testRouter');
-    assert.equal(testRouterConfig.children[1].component, 'NotFound');
+    const routerConfigs = await router.getAll(undefined, ctx);
+    assert.strictEqual(routerConfigs.length, 2);
+    const testRouterConfig = routerConfigs.find(item => item.path === '/test');
+    assert.strictEqual(testRouterConfig.path, '/test');
+    assert.strictEqual(testRouterConfig.component, 'BasicLayout');
+    assert.strictEqual(testRouterConfig.children[1].path, '/testRouter');
+    assert.strictEqual(testRouterConfig.children[1].component, 'NotFound');
+  });
 
-    // test replacement is true
-    params = {
+  it('bulk create routers with replacement', async () => {
+    const params = {
       data: [{
         path: '/test', component: 'BasicLayout', children: [
           {
@@ -93,18 +94,17 @@ describe('Test adapter router module', () => {
     };
     await router.bulkCreate(params, ctx);
 
-    routerConfigs = await router.getAll(undefined, ctx);
+    const routerConfigs = await router.getAll(undefined, ctx);
     // all routers with be replaced by the above router
-    assert.equal(routerConfigs.length, 1);
-    testRouterConfig = routerConfigs[0];
-    assert.equal(testRouterConfig.path, '/test');
-    assert.equal(testRouterConfig.component, 'BasicLayout');
-    assert.equal(testRouterConfig.children[0].path, '/router');
-    assert.equal(testRouterConfig.children[0].component, 'NotFound');
+    assert.strictEqual(routerConfigs.length, 1);
+    const testRouterConfig = routerConfigs.find(item => item.path === '/test');
+    assert.strictEqual(testRouterConfig.path, '/test');
+    assert.strictEqual(testRouterConfig.component, 'BasicLayout');
+    assert.strictEqual(testRouterConfig.children[0].path, '/router');
+    assert.strictEqual(testRouterConfig.children[0].component, 'NotFound');
   });
 
-  it('delete router', async () => {
-    // delete router by compoentName
+  it('delete router by compoentName', async () => {
     const params = { componentName: 'NotFound' };
     await router.delete(params, ctx);
     const routers: IRouter[] = await router.getAll(undefined, ctx);
@@ -122,6 +122,6 @@ describe('Test adapter router module', () => {
       }
     });
 
-    assert.equal(totalNotFoundComponents, 0);
+    assert.strictEqual(totalNotFoundComponents, 0);
   });
 })

@@ -17,12 +17,12 @@ describe('Test adapter layout module', () => {
   });
 
   it('get all layouts', async () => {
-    const allLayouts: IProjectLayout[] = await layout.getAll({}, ctx);
-    assert(allLayouts.length > 0);
+    const allLayouts: IProjectLayout[] = await layout.getAll(undefined, ctx);
+    assert.notStrictEqual(allLayouts, []);
   })
 
   it('get one layouts', async () => {
     const basicLayout: IProjectLayout = await layout.getOne('BasicLayout', ctx);
-    assert(Object.keys(basicLayout).length > 0);
+    assert.notStrictEqual(basicLayout, {});
   })
 })

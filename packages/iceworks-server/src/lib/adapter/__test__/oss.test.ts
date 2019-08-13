@@ -25,16 +25,16 @@ describe('Test adapter OSS module', () => {
       region: 'oss-cn-shanghai',
     };
     const newConfig = await oss.setConfig(args);
-    assert.equal(newConfig.region, args.region);
+    assert.strictEqual(newConfig.region, args.region);
     const config = await oss.getConfig();
-    assert.equal(config.region, args.region);
+    assert.strictEqual(config.region, args.region);
     // delete test args
     await oss.setConfig({ region: '' });
   });
 
   it('get config', async () => {
     const config = await oss.getConfig();
-    assert.equal(Object.keys(config).length, 2);
+    assert.strictEqual(config.region, '');
   });
 
   it('upload oss', async () => {

@@ -20,8 +20,8 @@ describe('Test adapter dependency module', () => {
 
   it('get all dependencies', async () => {
     const { dependencies, devDependencies } = await dependency.getAll();
-    assert(dependencies.length > 0);
-    assert(devDependencies.length > 0);
+    assert.notStrictEqual(dependencies, []);
+    assert.notStrictEqual(devDependencies, []);
   });
 
   it('create dependency', async () => {

@@ -10,10 +10,11 @@ describe('Test adapter todo module', () => {
 
   it('get todo list', async () => {
     const results = await todo.getList();
-    assert(results.length === 0);
+    assert.strictEqual(results.length, 0);
   });
 
   after(async () => {
-    await util.promisify(rimraf)(tmpPath);
+    const rimrafAsync = util.promisify(rimraf);
+    await rimrafAsync(tmpPath);
   });
 })
