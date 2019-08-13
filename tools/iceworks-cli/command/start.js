@@ -130,7 +130,7 @@ async function checkServerVersion() {
     const answers = await inquirer.prompt([
       {
         type: 'confirm',
-        message: 'A newer version of iceworks core is available',
+        message: `A newer version of iceworks core is available(CHANGELOG: ${chalk.blue('https://github.com/alibaba/ice/blob/master/CHANGELOG.md')})`,
         name: 'update',
         default: false,
       },

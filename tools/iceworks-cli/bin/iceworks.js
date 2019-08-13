@@ -131,8 +131,8 @@ async function checkIceworksVersion() {
   const packageVersion = packageConfig.version;
   const latestVersion = await checkVersion(packageName, packageVersion);
   if (latestVersion) {
-    console.log(chalk.yellow('\n  A newer version of iceworks-cli is available.\n'));
-    console.log(`  latest:     + ${chalk.green(latestVersion)}`);
+    console.log(chalk.yellow(`A newer version of iceworks-cli is available(CHANGELOG: ${chalk.blue('https://github.com/alibaba/ice/blob/master/tools/iceworks-cli/CHANGELOG.md')})`));
+    console.log(`  latest:     + ${chalk.yellow(latestVersion)}`);
     console.log(`  installed:  + ${chalk.red(packageVersion)} \n`);
   }
 }
