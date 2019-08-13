@@ -20,7 +20,7 @@ async function start(options = {}) {
   // backup logic，specify the iceworks-core version
   if (options.command === 'use') {
     if (!semver.valid(options.version)) {
-      throw 'Invalid version specified';
+      throw new Error('Invalid version specified');
     } else {
       const serverPackageVersion = serverPackageConfig.version;
       process.env.ICEWORKS_CORE_VERSION = options.version;
