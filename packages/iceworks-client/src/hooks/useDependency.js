@@ -47,14 +47,14 @@ function useDependency(diableUseSocket, showGlobalTerminal = true) {
 
   async function upgrade(packageName, isDev) {
     dependenciesStore.upgrade({ package: packageName, isDev });
-    globalTerminalStore.show();
+    globalTerminalStore.show('process');
   }
 
   async function bulkCreate(values, force) {
     try {
       await dependenciesStore.bulkCreate(values, force);
       setCreateModal(false);
-      globalTerminalStore.show();
+      globalTerminalStore.show('process');
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
         setCreateValues({ setDependencies: values, incompatibleDependencies: error.info });
@@ -70,7 +70,7 @@ function useDependency(diableUseSocket, showGlobalTerminal = true) {
     setResetModal(false);
 
     if (showGlobalTerminal) {
-      globalTerminalStore.show();
+      globalTerminalStore.show('process');
     }
   }
 
