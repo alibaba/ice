@@ -238,6 +238,7 @@ export default {
   'iceworks.task.start': 'Run Task',
   'iceworks.task.stop': 'Stop Task',
   'iceworks.task.setting': 'Setting',
+  'iceworks.task.install': 'Installing dependencies',
   'iceworks.task.build.title': 'build',
   'iceworks.task.build.desc': 'Compiles and minifies for production',
   'iceworks.task.build.start.msg': 'Run the build project service',

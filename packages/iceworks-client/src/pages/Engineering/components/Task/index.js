@@ -95,6 +95,7 @@ const Task = ({ history, intl }) => {
     onStart,
     onStop,
     installDependencyVisible,
+    installDependency,
     onInstallDependencyCancel,
     onInstallDependencyOk,
   } = useTask({ type, writeLog, writeChunk });
@@ -111,6 +112,7 @@ const Task = ({ history, intl }) => {
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
+        onInstall={installDependency}
         enableSetting={conf.length !== 0}
       />
 

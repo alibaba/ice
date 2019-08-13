@@ -86,6 +86,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
     onStart,
     onStop,
     installDependencyVisible,
+    installDependency,
     onInstallDependencyCancel,
     onInstallDependencyOk,
   };
