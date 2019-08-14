@@ -19,6 +19,8 @@ function useProject({ panelStores } = {}) {
   const {
     on: onOpenProjectModal,
     setModal: setOpenProjectModal,
+    loading: openProjectLoading,
+    setLoading: setOpenProjectLoading,
   } = useModal();
   const {
     on: onDeleteProjectModal,
@@ -69,6 +71,19 @@ function useProject({ panelStores } = {}) {
     }
   }
 
+  async function onAddProject(path) {
+    setOpenProjectLoading(true);
+
+    try {
+      await addProject(path);
+      setOpenProjectModal(false);
+    } catch (err) {
+      showMessage(err);
+    }
+
+    setOpenProjectLoading(false);
+  }
+
   async function addProject(path) {
     await projectsStore.add(path);
     await refreshProjects();
@@ -77,7 +92,6 @@ function useProject({ panelStores } = {}) {
       module: 'project',
       action: 'add-project',
     });
-    setOpenProjectModal(false);
   }
 
   async function deleteProject(params) {
@@ -163,7 +177,6 @@ function useProject({ panelStores } = {}) {
     refreshProjects,
     refreshProject,
     createProject,
-    addProject,
     deleteProject,
     sortProjectPanel,
 
@@ -175,10 +188,13 @@ function useProject({ panelStores } = {}) {
     },
     onOpenProjectModal,
     setOpenProjectModal,
+    openProjectLoading,
+    setOpenProjectLoading,
     onDeleteProjectModal,
     setDeleteProjectModal,
 
     // event handles
+    onAddProject,
     onCreateProject,
     onOpenProject,
     onDeleteProject,
