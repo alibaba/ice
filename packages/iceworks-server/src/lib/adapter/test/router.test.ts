@@ -1,4 +1,4 @@
-import { project, storage } from './common';
+import { getProject, storage } from './common';
 import Router from '../modules/router';
 import { IRouter } from '../../../interface';
 
@@ -8,7 +8,8 @@ describe('Test adapter router module', () => {
   let ctx: any;
   let router: any;
 
-  before(() => {
+  before(async () => {
+    const project = await getProject();
     router = new Router({ project, storage });
   });
 

@@ -1,5 +1,5 @@
 import OSS from '../modules/oss';
-import { project, storage } from './common';
+import { getProject, storage } from './common';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -7,7 +7,8 @@ describe('Test adapter OSS module', () => {
   let ctx: any;
   let oss: any;
 
-  before(() => {
+  before(async () => {
+    const project = await getProject();
     oss = new OSS({ project, storage });
   });
 

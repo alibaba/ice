@@ -1,6 +1,5 @@
-import * as path from 'path';
 import Configuration from '../modules/configuration';
-import { project, storage, tmpPath } from './common';
+import { storage, tmpPath } from './common';
 import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 
 const { app, assert } = require('midway-mock/bootstrap');
@@ -14,7 +13,10 @@ describe('Test adapter configuration module', () => {
     getAndExtractTarball(tmpPath, tarball);
   });
 
-  before(() => {
+  before(async () => {
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     configuration = new Configuration({ project, storage });
   });
 

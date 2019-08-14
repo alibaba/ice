@@ -1,4 +1,4 @@
-import { project, storage } from './common';
+import { getProject, storage } from './common';
 import Page from '../modules/page';
 import { IPage } from '../../../interface';
 
@@ -37,7 +37,12 @@ const mockData = {
 
 describe('Test adapter page module', () => {
   let ctx: any;
-  let page = new Page({ project, storage });
+  let page: any;
+
+  before(async () => {
+    const project = await getProject();
+    page = new Page({ project, storage });
+  });
 
   beforeEach(() => {
     ctx = app.mockContext({

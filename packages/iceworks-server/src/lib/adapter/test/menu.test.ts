@@ -1,4 +1,4 @@
-import { project, storage } from './common';
+import { getProject, storage } from './common';
 import Menu from '../modules/menu';
 
 const { app, assert } = require('midway-mock/bootstrap');
@@ -7,7 +7,8 @@ describe('Test adapter menu module', () => {
   let ctx: any;
   let menu: any;
 
-  before(() => {
+  before(async () => {
+    const project = await getProject();
     menu = new Menu({ project, storage });
   });
 

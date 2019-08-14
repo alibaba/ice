@@ -1,4 +1,4 @@
-import { project, storage } from './common';
+import { getProject, storage } from './common';
 import Layout from '../modules/layout';
 import { IProjectLayout } from '../../../interface';
 
@@ -8,7 +8,8 @@ describe('Test adapter layout module', () => {
   let ctx: any;
   let layout: any;
 
-  before(() => {
+  before(async () => {
+    const project = await getProject();
     layout = new Layout({ project, storage });
   });
 
