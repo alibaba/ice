@@ -37,6 +37,7 @@ const mockData = {
 
 describe('Test adapter page module', () => {
   let ctx: any;
+
   let page: any;
 
   before(async () => {

@@ -6,6 +6,7 @@ const { app, assert } = require('midway-mock/bootstrap');
 
 describe('Test adapter layout module', () => {
   let ctx: any;
+
   let layout: any;
 
   before(async () => {

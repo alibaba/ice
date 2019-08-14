@@ -6,6 +6,7 @@ const { app, assert } = require('midway-mock/bootstrap');
 
 describe('Test adapter configuration module', () => {
   let ctx: any;
+
   let configuration: any;
 
   // Specified the stable version 

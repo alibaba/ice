@@ -4,16 +4,11 @@ import Menu from '../modules/menu';
 const { app, assert } = require('midway-mock/bootstrap');
 
 describe('Test adapter menu module', () => {
-  let ctx: any;
   let menu: any;
 
   before(async () => {
     const project = await getProject();
     menu = new Menu({ project, storage });
-  });
-
-  beforeEach(() => {
-    ctx = app.mockContext();
   });
 
   it('get all menus', async () => {

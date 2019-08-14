@@ -5,6 +5,7 @@ const { app, assert } = require('midway-mock/bootstrap');
 
 describe('Test adapter dependency module', () => {
   let ctx: any;
+
   let dependency: any;
 
   before(async () => {

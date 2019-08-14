@@ -6,6 +6,7 @@ const { app, assert } = require('midway-mock/bootstrap');
 
 describe('Test adapter router module', () => {
   let ctx: any;
+
   let router: any;
 
   before(async () => {
