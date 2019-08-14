@@ -107,10 +107,10 @@ const Project = ({ history, intl }) => {
 
     refreshProjects,
     refreshProjectStore,
-    addProject,
     deleteProject,
     sortProjectPanel,
 
+    onAddProject,
     onSwitchProject,
     onDeleteProject,
     onOpenProject,
@@ -120,6 +120,7 @@ const Project = ({ history, intl }) => {
 
     onOpenProjectModal,
     setOpenProjectModal,
+    openProjectLoading,
     onDeleteProjectModal,
     setDeleteProjectModal,
     onCreateProjectModal,
@@ -248,7 +249,8 @@ const Project = ({ history, intl }) => {
       <SelectWorkFolderModal
         on={onOpenProjectModal}
         onCancel={() => setOpenProjectModal(false)}
-        onOk={addProject}
+        onOk={onAddProject}
+        loading={openProjectLoading}
       />
       <DeleteProjectModal
         on={onDeleteProjectModal}

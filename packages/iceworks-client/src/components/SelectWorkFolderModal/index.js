@@ -7,7 +7,7 @@ import Modal from '@components/Modal';
 import showMessage from '@utils/showMessage';
 import styles from './index.module.scss';
 
-const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
+const SelectWorkFolderModal = ({ on, onCancel, onOk, loading }) => {
   const [workFolder, setWorkFolder] = useState({});
   const {path: workPath, directories = [], disabled = true} = workFolder;
 
@@ -70,9 +70,8 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
       title="打开项目"
       visible={on}
       onCancel={onCancel}
-      onOk={async () => {
-        await onOk(workPath);
-      }}
+      onOk={() => onOk(workPath)}
+      okProps={{loading}}
     >
       <div className={styles.wrap}>
         <div className={styles.bar}>
@@ -117,10 +116,15 @@ const SelectWorkFolderModal = ({ on, onCancel, onOk }) => {
   );
 };
 
+SelectWorkFolderModal.defaultProps = {
+  loading: false,
+};
+
 SelectWorkFolderModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default SelectWorkFolderModal;
