@@ -15,14 +15,16 @@ describe('Test adapter dependency module', () => {
   beforeEach(() => {
     ctx = app.mockContext({
       i18n: app.i18n,
-      // socket: app.io.sockets,
+      socket: app.io,
     });
   });
 
   it('get all dependencies', async () => {
     const { dependencies, devDependencies } = await dependency.getAll();
-    assert.notStrictEqual(dependencies, []);
-    assert.notStrictEqual(devDependencies, []);
+
+    // dependencies and devDependencies should all exist
+    assert.notDeepStrictEqual(dependencies, []);
+    assert.notDeepStrictEqual(devDependencies, []);
   });
 
   it('create dependency', async () => {
@@ -33,12 +35,20 @@ describe('Test adapter dependency module', () => {
       },
       isDev: true,
     }
-    // TODO add socket.io
+    // TODO
     // const result = await dependency.create(params, ctx);
   });
 
   it('bulkCreate dependencies', async () => {
-
+    const params = {
+      dependencies: [{
+        package: "lodash",
+        version: "latest"
+      }],
+      isDev: true,
+    }
+    // TODO installing the dependencies is too slow. 
+    // const result = await dependency.bulkCreate(params, ctx);
   });
 
   it('reset dependencies', async () => {
