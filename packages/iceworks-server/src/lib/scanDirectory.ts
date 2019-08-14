@@ -16,7 +16,7 @@ const accessAsync = util.promisify(fs.access);
  */
 export default async (directoryPath: string): Promise<string[]> => {
   if (! await pathExists(directoryPath)) {
-   throw new Error('Directory is not exist.');
+    throw new Error('Directory is not exist.');
   }
 
   const files = await readdirAsync(directoryPath);
