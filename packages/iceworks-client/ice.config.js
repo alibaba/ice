@@ -34,7 +34,6 @@ module.exports = {
           'tab-bar-bg': '#434557',
           'tab-bar-color': '#B1B1B8',
           'tab-bar-active': '#fff',
-          'progress-line-normal-color': '#fefefe',
         },
       }, {
         name: '@alifd/theme-iceworks-light',
