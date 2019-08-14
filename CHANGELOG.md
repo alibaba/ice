@@ -1,4 +1,6 @@
-# CHANGELOG
+# CHANGELOG for iceworks
+
+## 3.0.5
 
 ## 3.0.4
 
@@ -22,7 +24,7 @@
 - [fix] router sort logic (#2559)
 - [fix] copy ejs file to dist #2571
 - [fix] improve some translation #2578
-- [fix] move dir across device #2576 
+- [fix] move dir across device #2576
 
 ## 3.0.1
 

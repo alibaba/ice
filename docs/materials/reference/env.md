@@ -18,7 +18,7 @@ REGISTRY=https://registry.my-npm.org/
 在初始化物料时，可在命令行指定 `REGISTRY` 参数，该参数将被写入 `.env` 文件，同时，将从指定的 npm registry 下载物料模版。
 
 ```bash
-REGISTRY=http://https://registry.npm.taobao.org/ idev init
+REGISTRY=https://registry.npm.taobao.org/ idev init
 ```
 
 ## 环境变量的优先级

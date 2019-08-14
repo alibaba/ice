@@ -7,69 +7,63 @@ order: 2
 
 ## 使用 GUI 方式创建项目
 
-> iceworks@3.0 beta 版本已经发布，欢迎[试用](https://github.com/alibaba/ice/issues/2369)
+> iceworks@3.0 版本已经发布，欢迎[使用](https://github.com/alibaba/ice/issues/2369)
 
-[iceworks](/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
+[iceworks](/iceworks) 定位为基于物料的一站式可视化源码研发工作台，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
 
-### 1. 安装 iceworks
+### 1. 安装 CLI 工具
 
-iceworks 是基于 Electron 开发的桌面端应用，因此首先需要在 [这里](/iceworks) 下载并安装该应用。
+```bash
+$ npm install iceworks -g
+# 查看版本
+$ iceworks -V
+```
 
-### 2. 创建项目
+### 2. 启动 iceworks
 
-应用启动后，项目列表为空，可通过的【创建项目】新建一个项目。
+安装完成后，只需要在命令行执行以下命令，即可在浏览器启动本地化 Web 版本：
 
-![undefined | center](https://img.alicdn.com/tfs/TB1SKFucbGYBuNjy0FoXXciBFXa-1964-1424.png)
+```bash
+$ iceworks # open http://localhost:8000/
+```
 
-界面会跳转到模板市场，目前提供三种模板进行选择，鼠标移动到指定的模板上，点击【以该模板创建项目】进入项目配置页面。
+### 3. 创建项目
 
-![undefined | center](https://img.alicdn.com/tfs/TB1MKBqcbGYBuNjy0FoXXciBFXa-1964-1424.png)
+如果是第一次使用 iceworks 工作台，可以基于推荐的模板开始快速创建项目，也可以从物料市场选择模板进行此创建项目，这里我们选择基于推荐模板开始创建：
 
-* 新建一个文件夹或者选择已有的空文件夹（避免覆盖原有文件）。
+* 新建一个文件夹或者选择已有的空文件夹（避免覆盖原有文件）;
 * 给项目起一个项目名，以便后续识别。
 
-点击【开始创建项目】即可开始创建
+![创建项目](https://img.alicdn.com/tfs/TB1fF45dWSs3KVjSZPiXXcsiVXa-2878-1572.png)
 
-> 默认会在创建的时候同时安装项目依赖，时间上会相对久一些，也可取消勾选，后续自行安装
+### 4. 项目管理
 
-### 3. 启动调试服务
+项目创建完成后，会自动添加到项目列表中，并打开当前`项目管理`面板，可以看到如下界面：
 
-项目创建完成后，会自动添加到项目列表中，并打开当前项目管理面板。通过项目管理面板，可执行 **启动调试服务** **新建页面** **构建项目** 等操作。
+![项目管理](https://img.alicdn.com/tfs/TB1uKtYd8OD3KVjSZFFXXcn9pXa-2877-1572.png)
 
-![undefined | center](https://img.alicdn.com/tfs/TB1VlrAcntYBeNjy1XdXXXXyVXa-1964-1424.png)
+### 5. 工程管理
 
-点击 `启动调试服务` 等待完成后出现服务地址，点击可以预览当前项目。
+在`工程管理`界面，我们可以启动调试服务，并且可以自定义调试服务的配置参数：
 
-![undefined | center](https://img.alicdn.com/tfs/TB1p6lCceSSBuNjy0FlXXbBpVXa-2562-1590.png)
+![工程管理](https://img.alicdn.com/tfs/TB1HpB1d8Kw3KVjSZFOXXarDVXa-2880-1584.png)
 
-> 上图是一个模板启动后的预览效果。
+### 6. 预览界面
 
-### 4. 新建页面
+点击启动调试服务完成后会自动当打开当前项目的预览界面：
 
-启动调试服务后，可使用新建页面来搭建页面，通过区块的组合完成页面的创建。
+![预览界面](https://img.alicdn.com/tfs/TB1p6lCceSSBuNjy0FlXXbBpVXa-2562-1590.png)
 
-点击「新建页面」按钮，接着会进入选择区块页面：
+### 7. 编辑代码
 
-![undefined | center](https://img.alicdn.com/tfs/TB14dBQch9YBuNjy0FfXXXIsVXa-1908-1368.png)
+在 iceworks 底部，我们提供了一些快捷操作，可以快速打开编辑器，文件夹等操作；目前支持 Visual Studio Code，Sublime Text 和 Atom 等编辑器。
 
-上方列出了当前项目可用的 layout 布局方式，选中任一一个作为新页面的布局。
+### 8. 项目构建
 
-下方列出了当前可选择的 blocks, 点击即可选择该 block 到已选区块列表中。
+点击工程面板的构建项目的 `运行` 按钮，将开发的构建出最终的 js css 等资源。
 
-右侧为选中 block 组合的缩略图预览。
+构建完成后，会在项目目录下生成 `build` 文件夹，里面存在了 `index.html`、 `index.js`、 `index.css` 文件。
 
-选择 layout 以及 block 后，点击右下角生成页面，会提示输入页面名，路由名，可以定义需要的名称，
-
-* 页面名：表示生成的文件名称。
-* 路由名：表示页面的访问地址，可通过 `http://127.0.0.1:4444/#/xxxx` 访问到对应的路由页面。
-
-示例中，创建了 `page16` 访问后即可看到刚搭建的页面了。
-
-![undefined | center](https://img.alicdn.com/tfs/TB1jfVncbSYBuNjSspiXXXNzpXa-1964-1424.png)
-
-### 5. 编辑代码
-
-点击项目面板上「编辑器」按钮即可使用编辑器修改补充代码（也可单独用编辑器打开），修改代码并保存上述的调试页面即会生效。
 
 ## 使用 CLI 方式创建项目
 

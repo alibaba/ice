@@ -29,7 +29,6 @@
     "ice-npm-utils": "^1.1.2",
     "isbinaryfile": "^4.0.1",
     "junk": "^3.1.0",
-    "kebab-case": "^1.0.0",
     "latest-version": "^5.1.0",
     "launch-code-editor": "^0.1.0",
     "line-by-line": "^0.1.6",

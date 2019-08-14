@@ -32,7 +32,7 @@ const ScaffoldCard = ({ dataSource, onDownload }) => {
           : (
             <img
               alt={dataSource.title}
-              src={PLACEHOLDER_IMG}
+              src={dataSource.screenshot || PLACEHOLDER_IMG}
               className={styles.screenshotImg}
             />
           )
