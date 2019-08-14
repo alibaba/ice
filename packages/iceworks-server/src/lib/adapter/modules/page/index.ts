@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as util from 'util';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
@@ -137,7 +138,7 @@ export default class Page implements IPageModule {
     }
 
     const blockDir = path.join(componentsDir, blockName);
-    const blockTempDir = path.join(componentsDir, '.temp');
+    const blockTempDir = path.join(os.tmpdir(), blockName);
     try {
       await getAndExtractTarball(
         blockTempDir,
@@ -151,8 +152,7 @@ export default class Page implements IPageModule {
       throw error;
     }
 
-    await mvAsync(path.join(blockTempDir, 'src'), blockDir);
-    await rimrafAsync(blockTempDir);
+    await mvAsync(path.join(blockTempDir, 'src'), blockDir, {clobber: false});
   }
 
   private generateBlockName(block: {name: string}): string {
