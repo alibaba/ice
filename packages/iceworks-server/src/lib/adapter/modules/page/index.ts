@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
+import * as uniqBy from 'lodash.uniqby';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
 import getNpmClient from '../../../getNpmClient';
@@ -126,7 +127,7 @@ export default class Page implements IPageModule {
     await mkdirpAsync(componentsDir);
 
     const iceVersion: string = getIceVersion(projectPackageJSON);
-    const blockName: string = block.alias || upperCamelCase(block.name);
+    const blockName: string = this.generateBlockName(block);
 
     let tarballURL: string;
     try {
@@ -151,8 +152,15 @@ export default class Page implements IPageModule {
       throw error;
     }
 
-    await mkdirpAsync(blockDir);
     await mvAsync(path.join(blockTempDir, 'src'), blockDir, {clobber: false});
+  }
+
+  private generateBlockName(block: {name: string}): string {
+    return upperCamelCase(block.name);
+  }
+
+  private checkBlocksName(blocks: {name: string}[]): boolean {
+    return uniqBy(blocks.map((block) => ({ name: this.generateBlockName(block) })), 'name').length !== blocks.length;
   }
 
   public async getAll(): Promise<IPage[]> {
@@ -163,6 +171,10 @@ export default class Page implements IPageModule {
   public async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
     const { socket, i18n } = ctx;
+
+    if (this.checkBlocksName(blocks)) {
+      throw new Error(i18n.format('baseAdapter.page.blocks.exist'));
+    }
 
     // create page dir
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
@@ -190,13 +202,12 @@ export default class Page implements IPageModule {
     const template = await loadTemplate(this.templateFileName, this.templateFilePath);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
-        const blockFolderName = block.alias || upperCamelCase(block.name);
-        const blockClassName = upperCamelCase(block.alias || block.name);
+        const blockName = this.generateBlockName(block);
 
         return {
           ...block,
-          className: blockClassName,
-          relativePath: `./${this.componentDirName}/${blockFolderName}`,
+          className: blockName,
+          relativePath: `./${this.componentDirName}/${blockName}`,
         };
       }),
       className: pageName,
@@ -235,6 +246,13 @@ export default class Page implements IPageModule {
 
   public async addBlocks(params: {blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
+    const {i18n } = ctx;
+
+    const existBlocks = await this.getBlocks(name);
+    if (this.checkBlocksName(existBlocks.concat(blocks))) {
+      throw new Error(i18n.format('baseAdapter.page.blocks.exist'));
+    }
+    
     await this.downloadBlocksToPage(blocks, name, ctx);
   }
 

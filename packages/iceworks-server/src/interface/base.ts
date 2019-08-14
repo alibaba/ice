@@ -191,7 +191,6 @@ export interface IMaterialBlock {
   publishTime: string;
   updateTime: string[];
   uid: string[];
-  alias: string[];
 }
 
 export interface IMaterialNpmSource {
