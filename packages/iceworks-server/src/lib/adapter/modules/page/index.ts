@@ -137,7 +137,7 @@ export default class Page implements IPageModule {
     }
 
     const blockDir = path.join(componentsDir, blockName);
-    const blockTempDir = path.join(componentsDir, 'temp');
+    const blockTempDir = path.join(componentsDir, '.temp');
     try {
       await getAndExtractTarball(
         blockTempDir,
