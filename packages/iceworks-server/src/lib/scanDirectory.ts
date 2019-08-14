@@ -15,23 +15,26 @@ const accessAsync = util.promisify(fs.access);
  * @param directoryPath
  */
 export default async (directoryPath: string): Promise<string[]> => {
-  if (!pathExists.sync(directoryPath)) {
-    return [];
+  const isExist = await pathExists(directoryPath)
+  if (!isExist) {
+    throw new Error('Directory is not exist.');
   }
 
   const files = await readdirAsync(directoryPath);
   const targetFiles = [];
   await Promise.all(files.map(async (filename: string) => {
     const targetPath = path.join(directoryPath, filename);
-    let isDirectory = false;
-
+    let stats;
     try {
-      const stats = await lstatAsync(targetPath);
-      isDirectory = stats.isDirectory() && junk.not(filename) && filename.indexOf('.') !== 0;
+      stats = await lstatAsync(targetPath);
     } catch (err) {
       console.warn('lstatAsync got error:', err);
     }
 
+    const isDirectory = stats &&
+      stats.isDirectory() &&
+      junk.not(filename) &&
+      filename.indexOf('.') !== 0;
     if (isDirectory) {
       try {
         await accessAsync(targetPath, fs.constants.R_OK);
@@ -41,5 +44,6 @@ export default async (directoryPath: string): Promise<string[]> => {
       }
     }
   }));
+
   return _.orderBy(targetFiles);
 };
