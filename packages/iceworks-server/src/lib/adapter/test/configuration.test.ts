@@ -1,6 +1,5 @@
 import Configuration from '../modules/configuration';
-import { getProject, storage, tmpPath } from './common';
-import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
+import { getProject, storage } from './common';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -8,11 +7,6 @@ describe('Test adapter configuration module', () => {
   let ctx: any;
 
   let configuration: any;
-
-  // Specified the stable version 
-  getNpmTarball('@icedesign/lite-scaffold', '3.0.5').then((tarball: any) => {
-    getAndExtractTarball(tmpPath, tarball);
-  });
 
   before(async () => {
     const project = await getProject();
