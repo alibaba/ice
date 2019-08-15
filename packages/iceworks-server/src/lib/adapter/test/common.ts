@@ -8,10 +8,10 @@ const { app } = require('midway-mock/bootstrap');
 
 const tmpPath = path.join(__dirname, 'tmp');
 
-const getProject = async () => {
+const getProject = async (path: string = tmpPath) => {
   const projectManager = app.projectManager;
-  await projectManager.addProject(tmpPath);
-  const project = await projectManager.setCurrent(tmpPath);
+  await projectManager.addProject(path);
+  const project = await projectManager.setCurrent(path);
 
   return project;
 }
