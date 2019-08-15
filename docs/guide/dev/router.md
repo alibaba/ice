@@ -245,7 +245,7 @@ import { createBrowserHistory } from 'history';
 export default createBrowserHistory();
 ```
 
-然后在代码中使用相同的history：
+然后在代码中引入并使用相同的history：
 
 ```js
 // /src/router.js
