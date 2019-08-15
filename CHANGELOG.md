@@ -9,6 +9,7 @@
 - [fix] add loading for open project #2707
 - [fix] allow select empty folders as work folder #2706
 - [fix] set progress color for dark #2702
+- [fix] block dependencies need to be installed at the same time when adding blocks #2711
 
 ## 3.0.5
 
