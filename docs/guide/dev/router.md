@@ -226,7 +226,9 @@ export default withRouter(ShowTheLocation);
 
 ### 方法调用：History API
 
-如果不满足第一种方法的使用条件，比如单独抽离的某个方法中，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
+如果不满足第一种方法的使用条件，比如在React组件外部需要使用路由跳转等操作，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
+
+以使用BrowserHistory举例：
 
 首先添加依赖：
 
@@ -234,11 +236,32 @@ export default withRouter(ShowTheLocation);
 $ npm install --save history
 ```
 
-然后在代码中使用：
+创建一个histroy对象
 
 ```js
+// /src/utils/history.js
 import { createBrowserHistory } from 'history';
-const history = createBrowserHistory();
+
+export default createBrowserHistory();
+```
+
+然后在代码中使用相同的history：
+
+```js
+// /src/router.js
+import { Router } from 'react-router-dom';
+import history from './utils/history';
+
+const router = () => (
+  <Router history={history}>
+     {/* your code  */}
+  </Router>
+)
+```
+
+```js
+// /src/utils/request.js
+import history from './history';
 
 export default function checkAuth() {
   ajax('/api/checkAuth').then((res) => {
