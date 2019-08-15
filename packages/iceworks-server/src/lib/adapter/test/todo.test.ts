@@ -13,6 +13,6 @@ describe('Test adapter todo module', () => {
 
   it('get todo list', async () => {
     const results = await todo.getList();
-    assert.deepStrictEqual(results, []);
+    assert(results.length === 0);
   });
 })

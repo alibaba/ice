@@ -54,7 +54,7 @@ describe('Test adapter page module', () => {
 
   it('get all pages', async () => {
     const results: IPage[] = await page.getAll();
-    assert.notDeepStrictEqual(results, []);
+    assert(results.length !== 0);
   });
 
   it('create a page', async () => {
@@ -67,13 +67,14 @@ describe('Test adapter page module', () => {
     await page.delete(deletePage);
 
     const pages: IPage[] = await page.getAll();
-    assert.strictEqual(pages.find(item => item.name === deletePage.name), undefined);
+    const isExist = pages.some(item => item.name === deletePage.name);
+    assert(!isExist);
   });
 
   it('get blocks', async () => {
     const pageName = 'Dashboard';
     const blocks = await page.getBlocks(pageName);
-    assert.deepStrictEqual(blocks, []);
+    assert(blocks.length === 0);
   });
 
   it('create a block', async () => {

@@ -28,13 +28,13 @@ describe('Test adapter task module', () => {
   it('get dev conf', async () => {
     const args = { command: 'dev', options: {} };
     const devConf = await task.getConf(args, ctx);
-    assert.strictEqual(devConf.length, 5);
+    assert(devConf.length === 5);
   });
 
   it('get build conf', async () => {
     const args = { command: 'build', options: {} };
     const buildConf = await task.getConf(args, ctx);
-    assert.strictEqual(buildConf.length, 3);
+    assert(buildConf.length === 3);
   });
 
   it('set dev conf', async () => {
@@ -48,7 +48,7 @@ describe('Test adapter task module', () => {
 
     const devConf = await task.getConf(args, ctx);
     const portConf = devConf.find(item => item.name === 'port');
-    assert.strictEqual(portConf.componentProps.placeholder, '4445');
+    assert(portConf.componentProps.placeholder === '4445');
   });
 
   it('set build conf', async () => {
@@ -62,6 +62,6 @@ describe('Test adapter task module', () => {
 
     const buildConf = await task.getConf(args, ctx);
     const outputDirConf = buildConf.find(item => item.name === 'outputDir');
-    assert.strictEqual(outputDirConf.componentProps.placeholder, 'build');
+    assert(outputDirConf.componentProps.placeholder === 'build');
   });
 });

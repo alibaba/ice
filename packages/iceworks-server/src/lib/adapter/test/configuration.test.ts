@@ -19,7 +19,7 @@ describe('Test adapter configuration module', () => {
 
   it('get CLI conf', async () => {
     const conf: any[] = await configuration.getCLIConf(undefined, ctx);
-    assert.notStrictEqual(conf, []);
+    assert(conf !== []);
   })
 
   it('set CLI conf', async () => {
@@ -37,10 +37,10 @@ describe('Test adapter configuration module', () => {
     const conf: any[] = await configuration.getCLIConf(undefined, ctx);
     conf.forEach((item) => {
       if (item.name === 'outputDir') {
-        assert.strictEqual(item.componentProps.placeholder, 'build');
+        assert(item.componentProps.placeholder === 'build');
       }
       if (item.name === 'hash') {
-        assert.strictEqual(item.componentProps.defaultChecked, true);
+        assert(item.componentProps.defaultChecked === true);
       }
     })
   })

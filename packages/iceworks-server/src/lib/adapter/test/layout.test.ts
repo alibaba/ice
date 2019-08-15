@@ -20,11 +20,11 @@ describe('Test adapter layout module', () => {
 
   it('get all layouts', async () => {
     const allLayouts: IProjectLayout[] = await layout.getAll(undefined, ctx);
-    assert.notStrictEqual(allLayouts, []);
+    assert(allLayouts.length !== 0);
   })
 
   it('get one layouts', async () => {
     const basicLayout: IProjectLayout = await layout.getOne('BasicLayout', ctx);
-    assert.notStrictEqual(basicLayout, {});
+    assert.notDeepStrictEqual(basicLayout, {});
   })
 })

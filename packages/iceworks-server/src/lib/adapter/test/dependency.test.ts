@@ -24,8 +24,8 @@ describe('Test adapter dependency module', () => {
     const { dependencies, devDependencies } = await dependency.getAll();
 
     // dependencies and devDependencies should all exist
-    assert.notDeepStrictEqual(dependencies, []);
-    assert.notDeepStrictEqual(devDependencies, []);
+    assert(dependencies !== []);
+    assert(devDependencies !== []);
   });
 
   it('create dependency', async () => {
