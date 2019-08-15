@@ -64,7 +64,8 @@ export default class Page implements IPageModule {
     const pages = await Promise.all(subDirectories.map(async(dir) => {
       const pagePath = path.join(dirPath, dir);
       const { atime, birthtime, ctime, mtime } = await lstatAsync(pagePath);
-      const blocks = await this.getBlocks(dir);
+      const pageName = path.basename(dir);
+      const blocks = await this.getBlocks(pageName);
       return {
         name: path.basename(pagePath),
         path: pagePath,
@@ -172,10 +173,6 @@ export default class Page implements IPageModule {
     const { name, blocks } = page;
     const { socket, i18n } = ctx;
 
-    if (this.checkBlocksName(blocks)) {
-      throw new Error(i18n.format('baseAdapter.page.blocks.exist'));
-    }
-
     // create page dir
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
     const pageName = upperCamelCase(name);
@@ -188,16 +185,12 @@ export default class Page implements IPageModule {
       throw error;
     }
 
-    // download blocks
+    // add blocks
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.download'), percent: 40 });
-    await this.downloadBlocksToPage(blocks, pageName, ctx);
-
-    // install block dependencies
-    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.installDep'), percent: 80 });
-    await this.installBlocksDependencies(blocks, ctx);
+    await this.addBlocks({ blocks, name: pageName }, ctx);
 
     // create page file
-    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 90 });
+    socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 80 });
    
     const template = await loadTemplate(this.templateFileName, this.templateFilePath);
     const fileContent = template.compile({
@@ -234,7 +227,13 @@ export default class Page implements IPageModule {
   public async getBlocks(name: string): Promise<IProjectBlock[]> {
     const pagePath = path.join(this.path, name);
     const blocksPath = path.join(pagePath, this.componentDirName);
-    const blockDirectroies = await scanDirectory(blocksPath);
+    let blockDirectroies = [];
+    try {
+      blockDirectroies = await scanDirectory(blocksPath);
+    } catch (err) {
+      // ignore error
+    }
+
     const blocks = blockDirectroies.map((blockDir) => {
       return {
         name: blockDir,
@@ -246,18 +245,20 @@ export default class Page implements IPageModule {
 
   public async addBlocks(params: {blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
     const {blocks, name} = params;
-    const {i18n } = ctx;
+    const {i18n} = ctx;
 
     const existBlocks = await this.getBlocks(name);
     if (this.checkBlocksName(existBlocks.concat(blocks))) {
       throw new Error(i18n.format('baseAdapter.page.blocks.exist'));
     }
-    
+
     await this.downloadBlocksToPage(blocks, name, ctx);
+    await this.installBlocksDependencies(blocks, ctx);
   }
 
   public async addBlock(params: {block: IMaterialBlock; name?: string }, ctx: IContext): Promise<void> {
     const {block, name} = params;
     await this.downloadBlockToPage(block, name, ctx);
+    await this.installBlocksDependencies([block], ctx);
   }
 }
