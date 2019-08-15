@@ -12,8 +12,6 @@ const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const fsExistsAsync = util.promisify(fs.exists);
 
-// const remoteUrl = 'https://github.com/luhc228/iceworks-server-test-templete.git';
-
 const mockCommitMsg: IGitAddAndCommitParams = { message: 'feat: add package.json', files: ['package.json'] };
 
 describe('Test adapter git module', () => {
