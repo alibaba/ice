@@ -40,9 +40,10 @@ $ iceworks -V
 
 ## 启动 iceworks
 
-安装完成后在命令行执行以下命令，即可启动 iceworks：
+安装完成后在命令行执行以下命令，即可启动 iceworks，会在默认的浏览器中打开 http://localhost:8000/ 进行访问。
+
 ```bash
-$ iceworks # open http://localhost:8000/
+$ iceworks
 ```
 
 ## 常见问题
