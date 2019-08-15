@@ -92,10 +92,18 @@ describe('Test adapter git module', () => {
     assert(status.tracking === 'origin/master');
   });
 
+  it('get log', async () => {
+    const logs = await git.getLog(['master']);
+
+    assert(logs.all.length === 1);
+    assert(logs.latest.message === mockCommitMsg.message);
+    assert(logs.total === 1);
+  });
+
   it('pull from origin', async () => {
     // mock the second user to use the bare repository
     const tmpRepoPath = path.join(__dirname, "/tmpRepo");
-    mkdirpAsync(tmpRepoPath);
+    await mkdirpAsync(tmpRepoPath);
     gitPromise = simpleGitPromise(tmpRepoPath);
     await gitPromise.init();
     await gitPromise.addRemote('origin', remoteUrl);
@@ -111,14 +119,6 @@ describe('Test adapter git module', () => {
     await git.pull(params);
     const isFileExist = fsExistsAsync(path.join(tmpPath, '/test.js'));
     assert(isFileExist);
-  });
-
-  it('get log', async () => {
-    const logs = await git.getLog(['master']);
-
-    assert(logs.all.length === 2);
-    assert(logs.all[1].message === mockCommitMsg.message);
-    assert(logs.total === 2);
   });
 
   it('checkout local branch', async () => {
