@@ -148,22 +148,18 @@ async function checkServerVersion() {
   const packageName = serverPackageConfig.name;
   const packageVersion = serverPackageConfig.version;
 
-  try {
-    const result = await checkVersion(packageName, packageVersion);
-    if (result) {
-      const answers = await inquirer.prompt([
-        {
-          type: 'confirm',
-          message: 'A newer version of iceworks core is available',
-          name: 'update',
-          default: false,
-        },
-      ]);
+  const result = await checkVersion(packageName, packageVersion);
+  if (result) {
+    const answers = await inquirer.prompt([
+      {
+        type: 'confirm',
+        message: `A newer version of iceworks core is available(CHANGELOG: ${chalk.blue('https://github.com/alibaba/ice/blob/master/CHANGELOG.md')})`,
+        name: 'update',
+        default: false,
+      },
+    ]);
 
-      return answers;
-    }
-  } catch (error) {
-    // ignore error
+    return answers;
   }
 }
 
