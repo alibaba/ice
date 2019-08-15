@@ -1,22 +1,14 @@
 ---
 title: 快速开始
-order: 2
+order: 3
 ---
-
-## 安装工具
-
-```bash
-$ npm install iceworks -g
-# 查看版本
-$ iceworks -V
-```
 
 ## 启动 iceworks
 
 安装完成后，只需要在命令行执行以下命令，即可在浏览器启动本地化 Web 版本：
 
 ```bash
-$ iceworks # open http://localhost:4444/
+$ iceworks # open http://localhost:8000/
 ```
 
 ## 创建项目
