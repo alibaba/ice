@@ -50,6 +50,30 @@ program
     require('../command/addBlock')(options);
   });
 
+program
+  .command('use <version>')
+  .description('specify the iceworks-core version')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('');
+    console.log('Use the available 3.0.0 release')
+    console.log('  $ iceworks use 3.0.0');
+  })
+  .action((version, cmd) => {
+    (async () => {
+      const options = cleanArgs(cmd);
+      options.version = version;
+      try {
+        // eslint-disable-next-line global-require
+        await require('../command/start')(options);
+      }  catch (err) {
+        console.error(err);
+        process.exit(1);
+      }
+    })();
+  })
+
 // add some useful info on help
 program.on('--help', () => {
   console.log();

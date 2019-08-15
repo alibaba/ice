@@ -7,6 +7,7 @@ const chalk = require('chalk');
 const ora = require('ora');
 const open = require('open');
 const inquirer = require('inquirer');
+const semver = require('semver');
 const { checkAliInternal } = require('ice-npm-utils');
 const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
@@ -16,38 +17,60 @@ const SERVER_PATH = path.join(__dirname, '../', 'server');
 const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
 async function start(options = {}) {
-  await dauStat();
-  let answers;
-  try {
-    answers = await checkServerVersion();
-  } catch (error) {
-    // ignore
-  };
-  if (answers && answers.update) {
-    const child = spawn('node', ['./lib/downloadServer.js'], {
-      stdio: ['pipe'],
-      cwd: path.join(__dirname, '../'),
-    });
-
-    child.stdout.on('data', (data) => {
-      console.log(data.toString());
-    });
-
-    child.on('error', (err) => {
-      console.log('update failed:', err);
-    });
-
-    child.on('close', (code) => {
-      if (code === 0) {
+  // backup logic，specify the iceworks-core version
+  if (options.command === 'use') {
+    if (!semver.valid(options.version)) {
+      throw new Error('Invalid version specified');
+    } else {
+      const serverPackageVersion = serverPackageConfig.version;
+      process.env.ICEWORKS_CORE_VERSION = options.version;
+      if (serverPackageVersion !== options.version) {
+        downloadAndListen(options);
+      } else {
         listen(options);
       }
-    });
+    }
   } else {
-    listen(options);
+    process.env.ICEWORKS_CORE_VERSION = 'latest';
+    const answers = await checkServerVersion();
+    if (answers && answers.update) {
+      downloadAndListen(options);
+    } else {
+      listen(options);
+    }
   }
 }
 
+function downloadAndListen(options) {
+  const child = spawn('node', ['./lib/downloadServer.js'], {
+    stdio: ['pipe'],
+    cwd: path.join(__dirname, '../'),
+  });
+
+  child.stdout.on('data', (data) => {
+    console.log(data.toString());
+  });
+
+  child.on('error', (err) => {
+    console.log('update failed:', err);
+  });
+
+  child.on('close', (code) => {
+    if (code === 0) {
+      listen(options);
+    }
+  });
+}
+
 async function listen(options) {
+  // DAU statistics
+  try {
+    await dauStat();
+  } catch (error) {
+    // ignore error
+  }
+
+
   const host = options.host || 'http://127.0.0.1';
 
   let port = options.port;
@@ -125,44 +148,44 @@ async function checkServerVersion() {
   const packageName = serverPackageConfig.name;
   const packageVersion = serverPackageConfig.version;
 
-  const result = await checkVersion(packageName, packageVersion);
-  if (result) {
-    const answers = await inquirer.prompt([
-      {
-        type: 'confirm',
-        message: 'A newer version of iceworks core is available',
-        name: 'update',
-        default: false,
-      },
-    ]);
+  try {
+    const result = await checkVersion(packageName, packageVersion);
+    if (result) {
+      const answers = await inquirer.prompt([
+        {
+          type: 'confirm',
+          message: 'A newer version of iceworks core is available',
+          name: 'update',
+          default: false,
+        },
+      ]);
 
-    return answers;
+      return answers;
+    }
+  } catch (error) {
+    // ignore error
   }
 }
 
 async function dauStat() {
-  try {
-    const isAlibaba = await checkAliInternal();
-    const nowtDate = new Date().toDateString();
-    const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
-    // eslint-disable-next-line
-    const iceworksConfigContent = require(`${iceworksConfigPath}`);
-    const lastDate = iceworksConfigContent.lastDate;
-    if(nowtDate !== lastDate) {
-      iceworksConfigContent.lastDate = nowtDate;
-      fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
+  const isAlibaba = await checkAliInternal();
+  const nowtDate = new Date().toDateString();
+  const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
+  // eslint-disable-next-line
+  const iceworksConfigContent = require(`${iceworksConfigPath}`);
+  const lastDate = iceworksConfigContent.lastDate;
+  if(nowtDate !== lastDate) {
+    iceworksConfigContent.lastDate = nowtDate;
+    fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
 
-      // eslint-disable-next-line global-require
-      const iceworksCorePackageConfig = require('../server/package.json');
+    // eslint-disable-next-line global-require
+    const iceworksCorePackageConfig = require('../server/package.json');
 
-      goldlog('dau', {
-        group: isAlibaba ? 'alibaba' : 'outer',
-        version: iceworksCorePackageConfig.version,
-      });
-    }
-  } catch (err) {
-    //
-  };
+    goldlog('dau', {
+      group: isAlibaba ? 'alibaba' : 'outer',
+      version: iceworksCorePackageConfig.version,
+    });
+  }
 }
 
 module.exports = (...args) => {
