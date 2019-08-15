@@ -61,7 +61,6 @@ program
     console.log('  $ iceworks use 3.0.0');
   })
   .action((version, cmd) => {
-    // eslint-disable-next-line global-require
     (async () => {
       const options = cleanArgs(cmd);
       options.version = version;

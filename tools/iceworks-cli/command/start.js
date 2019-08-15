@@ -64,7 +64,12 @@ function downloadAndListen(options) {
 
 async function listen(options) {
   // DAU statistics
-  await dauStat();
+  try {
+    await dauStat();
+  } catch (error) {
+    // ignore error
+  }
+
 
   const host = options.host || 'http://127.0.0.1';
 
@@ -163,28 +168,24 @@ async function checkServerVersion() {
 }
 
 async function dauStat() {
-  try {
-    const isAlibaba = await checkAliInternal();
-    const nowtDate = new Date().toDateString();
-    const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
-    // eslint-disable-next-line
-    const iceworksConfigContent = require(`${iceworksConfigPath}`);
-    const lastDate = iceworksConfigContent.lastDate;
-    if(nowtDate !== lastDate) {
-      iceworksConfigContent.lastDate = nowtDate;
-      fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
+  const isAlibaba = await checkAliInternal();
+  const nowtDate = new Date().toDateString();
+  const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
+  // eslint-disable-next-line
+  const iceworksConfigContent = require(`${iceworksConfigPath}`);
+  const lastDate = iceworksConfigContent.lastDate;
+  if(nowtDate !== lastDate) {
+    iceworksConfigContent.lastDate = nowtDate;
+    fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
 
-      // eslint-disable-next-line global-require
-      const iceworksCorePackageConfig = require('../server/package.json');
+    // eslint-disable-next-line global-require
+    const iceworksCorePackageConfig = require('../server/package.json');
 
-      goldlog('dau', {
-        group: isAlibaba ? 'alibaba' : 'outer',
-        version: iceworksCorePackageConfig.version,
-      });
-    }
-  } catch (err) {
-    //
-  };
+    goldlog('dau', {
+      group: isAlibaba ? 'alibaba' : 'outer',
+      version: iceworksCorePackageConfig.version,
+    });
+  }
 }
 
 module.exports = (...args) => {
