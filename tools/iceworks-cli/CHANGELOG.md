@@ -2,6 +2,11 @@
 
 ## 3.0.3
 
+- [feat] support switch version #2695
+- [feat] output changlog url when newer version #2692
+
+## 3.0.3
+
 - [feat] output installation log #2653
 - [fix] exit process when installation dependencies fail #2647
 - [fix] use cnpm registry when install server deps #2672
