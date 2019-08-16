@@ -76,11 +76,13 @@
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts --framework=midway-mirror --workers=1",
     "debug": "NODE_ENV=local midway-bin debug --ts",
-    "test": "midway-bin test --ts",
-    "cov": "midway-bin cov --ts",
+    "test": "npm run generateProject && midway-bin test --ts && npm run rmProject",
+    "cov": "npm run generateProject && midway-bin cov --ts && npm run rmProject",
     "ci": "npm run cov",
     "build": "midway-bin build -c",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "generateProject": "node ./scripts/generateProject.js",
+    "rmProject": "node ./scripts/removeProject.js"
   },
   "repository": {
     "type": "git",
