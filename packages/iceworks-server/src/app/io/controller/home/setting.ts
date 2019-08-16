@@ -8,9 +8,6 @@ export default (app) => {
 
   async function setWorkFolder(newWorkFolder) {
     const directories = await scanDirectory(newWorkFolder);
-    if (!directories.length) {
-      throw new Error(i18n.format('controller.settings.setWorkFolder.error'));
-    }
     storage.set('workFolder', newWorkFolder);
     return directories;
   }

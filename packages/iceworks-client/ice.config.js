@@ -32,6 +32,7 @@ module.exports = {
           'material-card-shadow': '0 0px 3px rgba(193, 193, 193, 0.35)',
           'text-color-inverse': '#e4e4e4',
           'tab-bar-bg': '#434557',
+          'tab-bar-color': '#B1B1B8',
           'tab-bar-active': '#fff',
         },
       }, {
@@ -46,7 +47,8 @@ module.exports = {
           'material-card-shadow': '0 8px 24px rgba(193, 193, 193, 0.35)',
           'text-color-inverse': '#fff',
           'tab-bar-bg': '#fff',
-          'tab-bar-active': '#000',
+          'tab-bar-color': '#333',
+          'tab-bar-active': '#5584FF',
         },
       }],
     }],

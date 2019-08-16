@@ -20,8 +20,9 @@ export default class Layout implements ILayoutModule {
 
   private async scanLayout(ctx) {
     const { i18n } = ctx;
+    const layoutDirs = await scanDirectory(this.path);
     return Promise.all(
-      (await scanDirectory(this.path)).map(async (dir) => {
+      layoutDirs.map(async (dir) => {
         const fullPath = path.join(this.path, dir);
         const name = path.basename(fullPath);
         return {

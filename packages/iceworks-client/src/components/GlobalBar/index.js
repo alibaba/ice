@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Balloon, Tab } from '@alifd/next';
+import { Balloon } from '@alifd/next';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
@@ -19,6 +19,7 @@ const GlobalBar = ({ project, intl }) => {
   const [activeKey, changeActiveKey] = useState('operation');
   const { theme, setTheme } = useContext(ThemeContext);
   const { themeValue, termTheme } = useTermTheme();
+  const { dataSource: { show, globalTerminalType } } = globalTerminalStore;
   const projectPath = project.path;
 
   function handleTerminal() {
@@ -84,8 +85,17 @@ const GlobalBar = ({ project, intl }) => {
     }
   });
 
-  const hiddenClassName = globalTerminalStore.dataSource.show ? '' : styles.hidden;
+  function termHiddenClassName(key) {
+    return activeKey === key ? '' : styles.hidden;
+  };
+
+  function tabBarActiveClassName(key) {
+    return activeKey === key ? styles.tabActive : '';
+  }
+
+  const hiddenClassName = show ? '' : styles.hidden;
   const themeKey = themeValue === 'dark' ? 'light' : 'dark';
+
   const tabs = [
     {
       title: 'iceworks.global.bar.log.operation',
@@ -99,29 +109,46 @@ const GlobalBar = ({ project, intl }) => {
     },
   ];
 
+  useEffect(() => {
+    changeActiveKey(globalTerminalType);
+  }, [globalTerminalType]);
+
   return project.name ? (
     <div className={styles.container}>
       <div className={`${styles.globalTerminal} ${hiddenClassName}`}>
-        <Tab activeKey={activeKey} onChange={key => changeActiveKey(key)}>
+        <div className={styles.tabsNavScroll}>
+          <ul role="tablist" className={styles.tabsNav}>
+            {tabs.map(tab => (
+              <li
+                key={tab.key}
+                role="tab"
+                className={`${styles.tab} ${tabBarActiveClassName(tab.key)}`}
+                onClick={() => changeActiveKey(tab.key)}
+              >
+                <div className={styles.tabInner}>
+                  {intl.formatMessage({
+                    id: tab.title,
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+          <Icon
+            type="close"
+            className={styles.closeIcon}
+            onClick={onClose}
+          />
+        </div>
+        <div className={styles.terminalWrap}>
           {tabs.map(tab => (
-            <Tab.Item
-              title={intl.formatMessage({
-                id: tab.title,
-              })}
-              key={tab.key}
-            >
-              <Icon
-                type="close"
-                className={styles.closeIcon}
-                onClick={onClose}
-              />
+            <div key={tab.key} className={`${styles.terminal} ${termHiddenClassName(tab.key)}`}>
               <XtermTerminal
                 id={tab.id}
                 options={{ cols: '100', rows: '17', theme: termTheme }}
               />
-            </Tab.Item>
+            </div>
           ))}
-        </Tab>
+        </div>
       </div>
 
       <div className={styles.globalBar}>

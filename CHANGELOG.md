@@ -1,5 +1,16 @@
 # CHANGELOG for iceworks
 
+## 3.1.0
+
+- [feat] support installation dependencies in the engineering panel #2664
+- [fix] task settings failed #2681
+- [fix] add block failed #2701
+- [fix] encode error for log #2686
+- [fix] add loading for open project #2707
+- [fix] allow select empty folders as work folder #2706
+- [fix] set progress color for dark #2702
+- [fix] block dependencies need to be installed at the same time when adding blocks #2711
+
 ## 3.0.5
 
 - [fix] fix cli args not working #2681

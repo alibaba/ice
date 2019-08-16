@@ -6,7 +6,7 @@ import * as execa from 'execa';
 // import * as latestVersion from 'latest-version';
 import getNpmClient from '../../../getNpmClient';
 
-import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, ISocket, IContext } from '../../../../interface';
+import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IContext } from '../../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 
@@ -55,6 +55,7 @@ export const install = async (
   childProcess.stderr.on('data', listenFunc);
 
   childProcess.on('error', (buffer) => {
+    listenFunc(buffer);
     logger.info(`${namespace}.install.error:`, buffer.toString());
   });
 
@@ -217,6 +218,7 @@ export default class Dependency implements IDependencyModule {
     childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
+      listenFunc(buffer);
       logger.info('reset.error:', buffer.toString());
     });
 
@@ -256,6 +258,7 @@ export default class Dependency implements IDependencyModule {
     childProcess.stderr.on('data', listenFunc);
 
     childProcess.on('error', (buffer) => {
+      listenFunc(buffer);
       logger.info('upgrade.error:', buffer.toString());
     });
 
