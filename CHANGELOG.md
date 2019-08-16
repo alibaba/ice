@@ -1,5 +1,9 @@
 # CHANGELOG for iceworks
 
+## 3.1.1
+
+- [fix] use unpkg asset #2721
+
 ## 3.1.0
 
 - [feat] support installation dependencies in the engineering panel #2664
