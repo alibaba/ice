@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 3.0.5
+- [fix] reset ICEWORKS_CORE_VERSION env # 2720
+
 ## 3.0.4
 
 - [feat] support switch version #2695
