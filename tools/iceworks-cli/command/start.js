@@ -31,7 +31,7 @@ async function start(options = {}) {
       }
     }
   } else {
-    process.env.ICEWORKS_CORE_VERSION = undefined;
+    process.env.ICEWORKS_CORE_VERSION = '';
     const answers = await checkServerVersion();
     if (answers && answers.update) {
       downloadAndListen(options);
