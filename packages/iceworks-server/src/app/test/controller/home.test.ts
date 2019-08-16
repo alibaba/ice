@@ -1,18 +1,11 @@
-/* tslint:disable */
 const { app, assert } = require('midway-mock/bootstrap');
-/* tslint:enable */
 
-describe('test/app/controller/home.test.ts', () => {
-  it('should GET /', () => {
-    return app
-      .httpRequest()
-      .get('/')
-      .expect(200);
-  });
-
-  it('should render index.html', async () => {
+describe('GET /', () => {
+  it('status code should be 200 and should render index.html', async () => {
     const result = await app.httpRequest().get('/');
-    const { text } = result;
+    const { text, status } = result;
+
+    assert.equal(status, 200);
 
     const cssLinkReg = /<link\shref="(.+)css\/index.css"\srel="stylesheet" \/>/i;
     const faviconLinkReg = /<link\srel="shortcut\sicon"\shref="(.+)favicon.png"\s\/>/i;
@@ -29,4 +22,4 @@ describe('test/app/controller/home.test.ts', () => {
   });
 });
 
-export {};
+export { };

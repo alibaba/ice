@@ -1,21 +1,17 @@
 const { app } = require('midway-mock/bootstrap');
 
-describe('test /app/controller/goldlog.test.ts', () => {
-  it('should status 200 and get the request body', () => {
+describe('POST /api/goldlog/record', () => {
+  it('success should be true', () => {
     return app
       .httpRequest()
       .post('/api/goldlog/record')
-      .type('form')
       .send({
         namespace: 'goldlog-test',
         action: 'test',
         data: {},
       })
-      .expect(200)
-      .expect({
-        success: true
+      .expect(200, {
+        success: true,
       });
   });
 });
-
-export {};
