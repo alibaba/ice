@@ -226,9 +226,9 @@ export default withRouter(ShowTheLocation);
 
 ### 方法调用：History API
 
-如果不满足第一种方法的使用条件，比如在React组件外部需要使用路由跳转等操作，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
+如果不满足第一种方法的使用条件，比如在 React 组件外部需要使用路由跳转等操作，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
 
-以使用BrowserHistory举例：
+以使用 BrowserHistory 举例：
 
 首先添加依赖：
 
@@ -236,7 +236,7 @@ export default withRouter(ShowTheLocation);
 $ npm install --save history
 ```
 
-创建一个histroy对象
+创建一个 histroy 对象
 
 ```js
 // /src/utils/history.js
@@ -245,7 +245,7 @@ import { createBrowserHistory } from 'history';
 export default createBrowserHistory();
 ```
 
-然后在代码中引入并使用相同的history：
+然后在代码中引入并使用相同的 history（注意：我们这里是使用的是 Router 而不是 BrowserRouter ，BrowserRouter 会创建自己的 History ，导致不能在 React 组件外部使用 history 跳转路由）：
 
 ```js
 // /src/router.js
