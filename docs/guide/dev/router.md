@@ -228,7 +228,7 @@ export default withRouter(ShowTheLocation);
 
 如果不满足第一种方法的使用条件，比如在 React 组件外部需要使用路由跳转等操作，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
 
-以使用 BrowserHistory 举例：
+以使用 BrowserHistory 举例（该用法需要后端的支持）：
 
 首先添加依赖：
 
