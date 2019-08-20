@@ -1,162 +1,76 @@
 ---
-title: icekit pro 模板升级指南
+title: ICE 研发框架升级指南
 order: 4
 ---
 
-飞冰将前端开发领域的最佳实践集成在 icekit pro 模板中，pro 模板到目前为止发过 3 个版本，每个版本之间的 breaking change 主要在于路由配置方面，以下列出了不同版本间的差异点：
+飞冰将前端开发的最佳实践集成在研发框架中，主要包含目录结构、路由配置、状态管理等相关内容，研发框架截止目前总共有三个版本，这三个版本之间有一些微小的 break change，如需升级请参考本文档。
 
-## 版本差异点
+## 版本差异
 
-### icekit 1.x
-- 路由配置放在 `src/routerConfig` 中
-- 路由配置中只包含页面路由配置，不支持路由按 Layout 分组，所有路由平铺
+### 1.x
 
-```javascript
-const routerConfig = [
-  {
-    path: '/dashboard/monitor',
-    component: Dashboard,
-  },
-  {
-    path: '/chart/general',
-    component: Charts,
-  }
-];
-```
+初始版本，存量项目较多，[示例项目](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.0/)，主要包含一下特点：
 
-- Layout 路由在 `src/router.js` 中
+- 推荐使用 Class Component
+- 构建工具 ice-scripts 有 1.x&2.x 两个版本
+- 路由配置放在 `src/routerConfig.js` 中，路由渲染与 Layout 耦合，不支持路由按 Layout 分组，不支持路由嵌套，相关代码：
+  - 路由配置：[代码](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.0/src/routerConfig.js)
+  - 路由入口：[代码](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.0/src/router.jsx)
+  - 路由渲染：[代码](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.0/src/layouts/BasicLayout/MainRoutes.jsx)
 
-```javascript
-// 按照 Layout 分组路由
-const router = () => {
-  return (
-    <Switch>
-      <Route path="/user" component={UserLayout} />
-      <Route path="/" component={BasicLayout} />
-    </Switch>
-  );
-};
+### 2.x
 
-```
+过渡版本，变更点较多，存量项目较少，[示例项目](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.8/)，主要包含一下特点：
 
-- 重定向路由与未匹配路由定义在 Layout 组件中，例如 BasicLayout 的路由为 `src/layouts/BasicLayout/MainRoutes.js`
+- [兼容]推荐使用 Fuction Component + React Hooks
+- [兼容]通过 `@ice/spec` 收敛 lint 相关配置，统一项目的 lint 命令
+- [兼容]统一将 `@` alias 到 `src/`，方便 `import` 写法
+- [兼容]推荐通过新推出的 [icestore](https://github.com/ice-lab/icestore) 作为状态管理方案
+- [兼容]构建工具统一升级到 ice-scripts@2.x
+- [不兼容]路由配置放在 `src/routerConfig.js` 中，支持通过 Layout 分组，路由嵌套等能力，路由相关代码：
+  - 路由配置：[代码](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.8/src/routerConfig.js)
+  - 路由渲染：[代码](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@2.0.8/src/router.jsx)
 
-```javascript
-  <Switch>
-    {/* 渲染权限路由表 */}
+### 3.x
 
-    {routerData.map(this.renderAuthorizedRoute)}
+最新版本，在 2.x 基础上做了配置文件的收敛，[示例项目](https://unpkg.com/browse/@icedesign/hr-management-admin-scaffold@3.0.4/)，相对 2.x 改动点：
 
-    {/* 路由重定向，嵌套路由默认重定向到当前菜单的第一个路由 */}
-    {redirectData.map((item, index) => {
-      return <Redirect key={index} exact from={item.from} to={item.to} />;
-    })}
-
-    {/* 首页默认重定向到 /dashboard */}
-    <Redirect exact from="/" to="/dashboard/monitor" />
-
-    {/* 未匹配到的路由重定向到 404 */}
-    <Route component={NotFound} />
-  </Switch>
-```
-
-### icekit 2.x
-- 相对于 1.x 对路由配置作了收敛，将 Layout 配置及重定向、未匹配路由全部收敛到 `src/routerConfig.js` 中
-
-```javascript
-const routerConfig = [
-  {
-    path: '/',
-    component: BasicLayout,
-    children: [
-      {
-        path: '/dashboard',
-        component: Dashboard,
-      },
-      {
-        path: '/',
-        redirect: '/dashboard',
-      },
-      {
-        component: NotFound,
-      },
-    ],
-  },
-];
-```
-
-- 路由渲染逻辑全部收敛到 `src/router.jsx` 中
-
-### icekit 3.x
-- 与 2.x 唯一的区别是 `routerConfig` 与 `menuConfig`, `dataSourceConfig` 进一步收敛到 `config` 目录中，目录结构如下：
-
-```markdown
-└── config/                    # 配置信息
-    ├── dataSource.js          # 数据源配置
-    ├── routes.js              # 路由配置
-    └── menu.js                # 导航菜单配置
-```
-
+- [兼容]将 react-router-dom 升级到 5.x 解决 warning 问题
+- [不兼容]将配置文件收敛到 `src/config/` 目录，`routerConfig.js -> config/routes.js`，`menuConfig.js -> config/menu.js`
 
 ## 升级指南
 
-官网上的文档都是基于最新的 3.x 版本目录规范，如果您的项目是基于旧版本的 icekit，请按照以下步骤升级到 3.x 版本：
+### 1.x 升级到 3.x
 
-### 1.x 升级 3.x
-1. 按照 3.x 目录规范将数据源配置、路由配置、导航菜单配置移入 `src/config/` 目录下
+1. 按照 3.x 目录规范将数据源配置、路由配置、导航菜单配置移入 `src/config/` 目录下，并修正引用这些文件的路径
 2. 按照路由设计文档中的[路由配置](/docs/guide/dev/router#路由配置)部分，升级 `src/config/routes.js` 中的路由配置
-3. 按照路由设计文档中[路由生成](/docs/guide/dev/router#具体使用)部分，升级路由渲染逻辑文件 `src/router.jsx`，并将 `src/index.jsx` 中路由调用改成如下方式：
+3. 按照路由设计文档中[路由生成](/docs/guide/dev/router#具体使用)部分，升级路由渲染逻辑文件 `src/router.jsx`
+4. 将 `src/index.jsx` 中路由调用改成如下方式：
 
-	```javascript
-	...
-	import router from './router';
-	...
-	
-	ReactDOM.render(
-	  <LanguageProvider locale={locale}>
-	    {router()}
-	  </LanguageProvider>,
-	  ICE_CONTAINER
-	);
-	```
+  ```javascript
+  // ...
+  import router from './router';
+  // ...
 
-4. 将 Layout 中路由配置部分 `<MainRoutes>` 删除，并替换成 `children`
+  ReactDOM.render(router(), ICE_CONTAINER);
+  ```
 
-	```javascript
-	// 修改前
-	<Layout>
-	  <Header />
-	  <Layout.Section>
-	    <Layout.Main>
-	      <MainRoutes />  
-	    </Layout.Main>
-	  </Layout.Section>
-	  <Footer />
-	</Layout>
-	
-	// 修改后
-	<Layout>
-	  <Header />
-	  <Layout.Section>
-	    <Layout.Main>
-	      {this.props.children}
-	    </Layout.Main>
-	  </Layout.Section>
-	  <Footer />
-	</Layout>
-	
-	```
+4. 将 Layout 中路由相关配置移除，比如 `<MainRoutes>`，然后替换成 `props.children`
 
-5. 将 `src/menuConfig.js` 移入 `config` 目录下，路径为 `src/config/menu.js`
+  ```diff
+  <Layout>
+    <Header />
+    <Layout.Section>
+      <Layout.Main>
+  -	    <MainRoutes />
+  +	    {props.children}
+      </Layout.Main>
+    </Layout.Section>
+    <Footer />
+  </Layout>
+  ```
 
 ### 2.x 升级 3.x
 
-由于 2.x 与 3.x 的唯一区别在于 `config` 目录，因此只需要将 `routerConfig` 与 `menuConfig`, `dataSourceConfig` 移入 `config` 目录中，目录结构如下：
-
-```markdown
-└── config/                    # 配置信息
-    ├── dataSource.js          # 数据源配置
-    ├── routes.js              # 路由配置
-    └── menu.js                # 导航菜单配置
-```
+由于 2.x 与 3.x 的唯一区别在于 `config` 目录，因此只需要将 `routerConfig` 与 `menuConfig`, `dataSourceConfig` 移入 `config` 目录中，同时将引用地方的路径进行修正即可。
 
