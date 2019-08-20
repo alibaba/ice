@@ -245,6 +245,11 @@ const docCategories = {
       dir: 'reference',
     }],
   },
+  store: {
+    // icestore
+    title: {},
+    children: [],
+  },
 };
 
 module.exports = {
