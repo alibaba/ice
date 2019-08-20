@@ -248,7 +248,19 @@ const docCategories = {
   store: {
     // icestore
     title: {},
-    children: [],
+    children: [{
+      title: {
+        'zh-cn': '指南',
+        'en-us': 'guide',
+      },
+      dir: 'guide',
+    }, {
+      title: {
+        'zh-cn': '参考',
+        'en-us': 'Reference',
+      },
+      dir: 'reference',
+    }],
   },
 };
 
