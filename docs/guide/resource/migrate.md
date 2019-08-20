@@ -55,15 +55,15 @@ order: 4
   ReactDOM.render(router(), ICE_CONTAINER);
   ```
 
-4. 将 Layout 中路由相关配置移除，比如 `<MainRoutes>`，然后替换成 `props.children`
+5. 将 Layout 中路由相关配置移除，比如 `<MainRoutes>`，然后替换成 `props.children`
 
   ```diff
   <Layout>
     <Header />
     <Layout.Section>
       <Layout.Main>
-  -	    <MainRoutes />
-  +	    {props.children}
+  -     <MainRoutes />
+  +     {props.children}
       </Layout.Main>
     </Layout.Section>
     <Footer />
