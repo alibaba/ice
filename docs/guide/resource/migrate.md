@@ -47,28 +47,28 @@ order: 4
 3. 按照路由设计文档中[路由生成](/docs/guide/dev/router#具体使用)部分，升级路由渲染逻辑文件 `src/router.jsx`
 4. 将 `src/index.jsx` 中路由调用改成如下方式：
 
-  ```javascript
-  // ...
-  import router from './router';
-  // ...
+```javascript
+// ...
+import router from './router';
+// ...
 
-  ReactDOM.render(router(), ICE_CONTAINER);
-  ```
+ReactDOM.render(router(), ICE_CONTAINER);
+```
 
-4. 将 Layout 中路由相关配置移除，比如 `<MainRoutes>`，然后替换成 `props.children`
+5. 将 Layout 中路由相关配置移除，比如 `<MainRoutes>`，然后替换成 `props.children`
 
-  ```diff
-  <Layout>
-    <Header />
-    <Layout.Section>
-      <Layout.Main>
-  -	    <MainRoutes />
-  +	    {props.children}
-      </Layout.Main>
-    </Layout.Section>
-    <Footer />
-  </Layout>
-  ```
+```diff
+<Layout>
+  <Header />
+  <Layout.Section>
+    <Layout.Main>
+-	    <MainRoutes />
++	    {props.children}
+    </Layout.Main>
+  </Layout.Section>
+  <Footer />
+</Layout>
+```
 
 ### 2.x 升级 3.x
 
