@@ -12,7 +12,7 @@ order: 5
 
 ## 项目迁移方式
 
-因为 ICE 项目研发框架的升级，因此需要通过配置告诉 iceworks 当前项目对应的框架版本（如果想要一并升级框架可参考文档[研发框架升级](/docs/guide/resource/migrate)）：
+因为 ICE 脚手架存在多个不同版本，因此需要通过配置告诉 iceworks 当前项目对应的脚手架版本（如果想要一并升级脚手架可参考文档[脚手架升级](/docs/guide/resource/migrate)）：
 
 如果旧项目根目录不存在 `ice.config.js` 文件，则在 `package.json` 中增加如下配置:
 
