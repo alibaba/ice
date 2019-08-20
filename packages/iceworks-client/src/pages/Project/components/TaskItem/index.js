@@ -17,6 +17,10 @@ const TaskItem = ({
   path,
   history,
   isWorking,
+  taskType,
+  projectType,
+  projectPath,
+  projectUrl,
   onStart,
   onStop,
   installDependencyVisible,
@@ -57,6 +61,19 @@ const TaskItem = ({
             <FormattedMessage id="iceworks.project.panel.quick.task.setting" />
           </Button> */}
         </div>
+        {
+          taskType === 'dev' ?
+            <div className={styles.taskMeta}>
+              <p className={styles.metaItem}>项目路径：{projectPath}</p>
+              <p className={styles.metaItem}>项目类型：{projectType}</p>
+              <p className={styles.metaItem}>访问地址：
+                {
+                  !isWorking ? projectUrl : <a href={projectUrl} target="_blank">{projectUrl}</a>
+                }
+              </p>
+            </div> : null
+        }
+
       </div>
       <Modal
         title={<FormattedMessage id="iceworks.project.install.dependencies.title" />}
@@ -73,6 +90,8 @@ const TaskItem = ({
 
 TaskItem.defaultProps = {
   isWorking: false,
+  projectUrl: '',
+  taskType: '',
   onStart: () => {},
   onStop: () => {},
 };
@@ -87,6 +106,10 @@ TaskItem.propTypes = {
   onInstallDependencyCancel: PropTypes.func.isRequired,
   onInstallDependencyOk: PropTypes.func.isRequired,
   isWorking: PropTypes.bool,
+  projectPath: PropTypes.string.isRequired,
+  taskType: PropTypes.string,
+  projectType: PropTypes.string.isRequired,
+  projectUrl: PropTypes.string,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
 };
