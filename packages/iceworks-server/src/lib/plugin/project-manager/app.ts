@@ -3,7 +3,6 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as os from 'os';
 import * as shellPath from 'shell-path';
 import * as pathKey from 'path-key';
 import * as _ from 'lodash';

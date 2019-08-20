@@ -1,9 +1,11 @@
 export default {
   dataSource: {
     show: false,
+    globalTerminalType: 'operation',
   },
-  async show() {
+  async show(globalTerminalType) {
     this.dataSource.show = true;
+    this.dataSource.globalTerminalType = globalTerminalType;
   },
   async hide() {
     this.dataSource.show = false;

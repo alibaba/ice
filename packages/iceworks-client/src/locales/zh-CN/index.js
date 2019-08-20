@@ -238,6 +238,7 @@ export default {
   'iceworks.task.start': '运行',
   'iceworks.task.stop': '停止',
   'iceworks.task.setting': '设置',
+  'iceworks.task.install': '安装依赖',
   'iceworks.task.build.title': '构建项目',
   'iceworks.task.build.desc': '编译并压缩，用于生产环境',
   'iceworks.task.build.start.msg': '运行构建项目服务',
