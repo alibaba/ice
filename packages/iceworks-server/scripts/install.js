@@ -23,7 +23,7 @@ function installTNPM() {
 
   return execa
     .shell('npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm', {
-      stdio: 'inherit'
+      stdio: 'inherit',
     })
     .then(() => Promise.resolve(true))
     .catch(() => {
