@@ -68,7 +68,7 @@ const TaskItem = ({
               <p className={styles.metaItem}>项目类型：{projectType}</p>
               <p className={styles.metaItem}>访问地址：
                 {
-                  !isWorking ? projectUrl : <a href={projectUrl} target="_blank">{projectUrl}</a>
+                  !isWorking ? projectUrl : <a href={projectUrl} target="_blank" rel="noopener noreferrer">{projectUrl}</a>
                 }
               </p>
             </div> : null
