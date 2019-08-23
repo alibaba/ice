@@ -4,7 +4,7 @@ const util = require('util');
 const { getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
 
 const generateAdapterTestProject = async () => {
-  const tmpPath = path.join(__dirname, '../src/lib/adapter/test/tmp');
+  const tmpPath = path.join(__dirname, '../test/lib/adapter/tmp');
 
   // The stable version should be specified
   const tarball = await getNpmTarball('@icedesign/lite-scaffold', '3.0.5');

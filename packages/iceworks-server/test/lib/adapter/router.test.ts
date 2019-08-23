@@ -1,6 +1,6 @@
-import { getProject, storage } from './common';
-import Router from '../modules/router';
-import { IRouter } from '../../../interface';
+import { tmpPath, storage } from './common';
+import Router from '../../../src/lib/adapter/modules/router';
+import { IRouter } from '../../../src/interface';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -10,7 +10,9 @@ describe('Test adapter router module', () => {
   let router: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     router = new Router({ project, storage });
   });
 

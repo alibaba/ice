@@ -1,5 +1,5 @@
-import OSS from '../modules/oss';
-import { getProject, storage } from './common';
+import OSS from '../../../src/lib/adapter/modules/oss';
+import { tmpPath, storage } from './common';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -9,7 +9,9 @@ describe('Test adapter OSS module', () => {
   let oss: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     oss = new OSS({ project, storage });
   });
 

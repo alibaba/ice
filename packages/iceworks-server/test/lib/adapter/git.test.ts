@@ -3,9 +3,9 @@ import * as path from 'path';
 import * as util from 'util';
 import * as mkdirp from 'mkdirp';
 import * as fs from 'fs';
-import { getProject, storage, tmpPath } from './common';
-import Git from '../modules/git';
-import { IGitAddAndCommitParams } from '../../../interface';
+import { storage, tmpPath } from './common';
+import Git from '../../../src/lib/adapter/modules/git';
+import { IGitAddAndCommitParams } from '../../../src/interface';
 
 const { app, assert } = require('midway-mock/bootstrap');
 const mkdirpAsync = util.promisify(mkdirp);
@@ -23,12 +23,14 @@ describe('Test adapter git module', () => {
 
   let remoteUrl: string;
 
-  const bareRepoPath = path.join(__dirname, '/tmp.git');
+  const bareRepoPath = path.join(__dirname, 'tmp.git');
 
   let gitPromise: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     git = new Git({ project, storage });
 
     gitTools = git.gitTools;

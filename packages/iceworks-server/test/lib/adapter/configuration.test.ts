@@ -1,5 +1,5 @@
-import Configuration from '../modules/configuration';
-import { getProject, storage } from './common';
+import Configuration from '../../../src/lib/adapter/modules/configuration';
+import { tmpPath, storage } from './common';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -9,7 +9,9 @@ describe('Test adapter configuration module', () => {
   let configuration: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     configuration = new Configuration({ project, storage });
   });
 

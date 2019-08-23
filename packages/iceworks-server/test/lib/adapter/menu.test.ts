@@ -1,13 +1,15 @@
-import { getProject, storage } from './common';
-import Menu from '../modules/menu';
+import { tmpPath, storage } from './common';
+import Menu from '../../../src/lib/adapter/modules/menu';
 
-const { assert } = require('midway-mock/bootstrap');
+const { assert, app } = require('midway-mock/bootstrap');
 
 describe('Test adapter menu module', () => {
   let menu: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     menu = new Menu({ project, storage });
   });
 

@@ -1,5 +1,5 @@
-import { getProject, storage } from './common';
-import Dependency from '../modules/dependency';
+import { tmpPath, storage } from './common';
+import Dependency from '../../../src/lib/adapter/modules/dependency';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -9,7 +9,9 @@ describe('Test adapter dependency module', () => {
   let dependency: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     dependency = new Dependency({ project, storage });
   });
 

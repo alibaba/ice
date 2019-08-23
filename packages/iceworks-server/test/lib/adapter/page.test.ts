@@ -1,10 +1,10 @@
-import { getProject, storage } from './common';
-import Page from '../modules/page';
-import { IPage } from '../../../interface';
+import { tmpPath, storage } from './common';
+import Page from '../../../src/lib/adapter/modules/page';
+import { IPage } from '../../../src/interface';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
-const mockData = {
+const mockNewPageDetail = {
   name: 'test1', routePath: '/test', blocks: [
     {
       name: "DetailTable",
@@ -41,7 +41,9 @@ describe('Test adapter page module', () => {
   let page: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     page = new Page({ project, storage });
   });
 
@@ -58,8 +60,8 @@ describe('Test adapter page module', () => {
   });
 
   it('create a page', async () => {
-    // TODO a bug: Error: ENOENT: no such file or directory...
-    // await page.create(newPage, ctx);
+    // TODO: a bug: Error: ENOENT: no such file or directory...
+    // await page.create(mockNewPageDetail, ctx);
   });
 
   it('delete a page', async () => {
@@ -78,14 +80,14 @@ describe('Test adapter page module', () => {
   });
 
   it('create a block', async () => {
-    const params = { blocks: mockData.blocks, name: 'Dashboard' };
-    // TODO a bug: Error: ENOENT: no such file or directory...
+    const params = { blocks: mockNewPageDetail.blocks, name: 'Dashboard' };
+    // TODO: a bug: Error: ENOENT: no such file or directory...
     // await page.addBlocks(params, ctx);
   });
 
   it('bulk create blocks', async () => {
-    const params = { block: mockData.blocks[0], name: 'Dashboard' };
-    // TODO a bug: Error: ENOENT: no such file or directory...
+    const params = { block: mockNewPageDetail.blocks[0], name: 'Dashboard' };
+    // TODO: a bug: Error: ENOENT: no such file or directory...
     // await page.addBlock(params, ctx);
   });
 });

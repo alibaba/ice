@@ -4,7 +4,7 @@ const rimraf = require('rimraf');
 
 const removeAdapterTestProject = async () => {
   const rimrafAsync = util.promisify(rimraf);
-  const adapterTestPath = path.join(__dirname, '../src/lib/adapter/test');
+  const adapterTestPath = path.join(__dirname, '../test/lib/adapter/');
 
   const tmpPath = path.join(adapterTestPath, '/tmp');
   await rimrafAsync(tmpPath);

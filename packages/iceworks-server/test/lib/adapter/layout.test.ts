@@ -1,6 +1,6 @@
-import { getProject, storage } from './common';
-import Layout from '../modules/layout';
-import { IProjectLayout } from '../../../interface';
+import { tmpPath, storage } from './common';
+import Layout from '../../../src/lib/adapter/modules/layout';
+import { IProjectLayout } from '../../../src/interface';
 
 const { app, assert } = require('midway-mock/bootstrap');
 
@@ -10,7 +10,9 @@ describe('Test adapter layout module', () => {
   let layout: any;
 
   before(async () => {
-    const project = await getProject();
+    const projectManager = app.projectManager;
+    await projectManager.addProject(tmpPath);
+    const project = await projectManager.setCurrent(tmpPath);
     layout = new Layout({ project, storage });
   });
 
