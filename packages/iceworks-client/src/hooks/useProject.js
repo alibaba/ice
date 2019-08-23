@@ -30,7 +30,7 @@ function useProject({ panelStores } = {}) {
   // function method
   function refreshProjectStore(name) {
     const panelStore = panelStores[name];
-    if (panelStore) {
+    if (panelStore && panelStore.refresh) {
       panelStore
         .refresh()
         .catch((error) => {

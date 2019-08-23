@@ -6,15 +6,6 @@ export default {
     build: {},
   },
 
-  async refresh() {
-    const result = await socket.emit('adapter.task.getAllStatus');
-    if (result) {
-      const { dev: devStatus, buildStatus } = result;
-      this.dataSource.dev.status = devStatus;
-      this.dataSource.build.status = buildStatus;
-    }
-  },
-
   setStatus(type, status) {
     if (!this.dataSource[type]) {
       this.dataSource[type] = {};
