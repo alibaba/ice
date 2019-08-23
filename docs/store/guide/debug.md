@@ -3,7 +3,7 @@ title: 如何调试
 order: 4
 ---
 
-icestore 基于中间件机制官方提供了 logger 中间件，可以方便地跟踪触发 action 名以及 action 触发前后 state 的 diff 信息，提升调试效率。
+基于 icestore 的中间件机制，官方提供了 logger 能力，可以方便地跟踪触发 action 名以及 action 触发前后 state 的 diff 信息，提升调试效率。
 
 ## 安装
 
@@ -13,7 +13,7 @@ npm install @ice/store-logger --save
 
 ## 使用方式
 
-在注册 store 之前，使用 `applyMiddleware` 方法将 logger 中间件加入到中间件队列中
+在注册 store 之前，使用 `applyMiddleware` 方法将 logger 中间件加入到中间件队列中。
 
 ```javascript
 import todos from './todos';
