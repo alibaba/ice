@@ -1,6 +1,6 @@
 ---
 title: 如何调试
-order: 3
+order: 4
 ---
 
 icestore 基于中间件机制官方提供了 logger 中间件，可以方便地跟踪触发 action 名以及 action 触发前后 state 的 diff 信息，提升调试效率。
