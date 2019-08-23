@@ -5,6 +5,25 @@ order: 2
 
 让我们使用 `icestore` 开发一个简单的 todo 应用，包含以下几个步骤：
 
+## 目录结构组织
+
+对于大多数的中小型项目，推荐将项目所有 store 集中管理在全局的 `src/stores/` 目录下：
+
+```bash
+├── src/
+│   ├── components/
+│   │   └── NotFound/
+│   ├── pages/
+│   │   └── Home
+│   ├── stores/
+│   │   ├── storeA.js
+│   │   ├── storeB.js
+│   │   ├── storeC.js
+│   │   └── index.js
+```
+
+如果项目比较庞大或者更倾向于 store 跟随页面维护，那么可以在每个 page 目录都声明一个 store 示例，但是这种情况建立尽量避免跨页面的 store 调用。
+
 ## 定义 store
 * 首先新建一个 js 文件，在其中定义以对象形式定义 store 对象。
 * 对于函数类型的属性归类为 action（动作），非函数类型归类为 state（状态）。

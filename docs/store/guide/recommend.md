@@ -3,30 +3,11 @@ title: 使用原则
 order: 2
 ---
 
-以下介绍一下使用 `icestore` 推荐的一些最佳实践，以提升状态管理的效率与性能。
-
-## 目录结构组织
-
-对于大多数的中小型项目，推荐将项目所有 store 集中管理在 `src/stores/` 目录下：
-
-```bash
-├── src/
-│   ├── components/
-│   │   └── NotFound/
-│   ├── pages/
-│   │   └── Home
-│   ├── stores/
-│   │   ├── storeA.js
-│   │   ├── storeB.js
-│   │   ├── storeC.js
-│   │   └── index.js
-```
-
-如果项目比较庞大或者更倾向于 store 跟随页面维护，那么可以在每个 page 目录都声明一个 store 示例，但是这种情况建立尽量避免跨页面的 store 调用。
+以下介绍一下使用 `icestore` 的一些基本原则，以提升状态管理的效率与性能。
 
 ## 不要在 action 之外直接修改 state
 
-`icestore` 的架构设计中强制要求对 state 的变更只能在 action 中进行。在 action 之外的对 state 的修改不生效。这个设计的原因是在 action 之外修改 state 将导致 state 变更逻辑散落在 view 中，变更逻辑将会难以追踪和调试。
+`icestore` 的架构设计中强制要求对 state 的变更只能在 action 中进行。`useStore` 的返回值会返回当前 state 的浅拷贝，这有助于防止对于常规数据类型（如 string, number, boolean）的更改，但是对于引用类型（如 object, array）仍能修改，我们不建议通过这种方式直接修改 state，原因是在 action 之外修改 state 将导致 state 变更逻辑散落在 view 中，变更逻辑将会难以追踪和调试。
 
 ```javascript
   // store.js
