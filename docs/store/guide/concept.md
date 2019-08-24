@@ -4,17 +4,18 @@ order: 1
 ---
 
 ## store 定义
-`icestore` 的 store 由 state 与 action 组成，对于一个 store 对象，函数类型属性定义为 action，非函数类型属性定义为 state，例如一个 todo 的 store 如下图所示：
+icestore 的 store 由 state 与 action 组成，对于一个 store 对象，函数类型属性定义为 action，非函数类型属性定义为 state，例如一个 todo 的 store 如下示例：
 
 ```javascript
 // todo.js
 export default {
   dataSource: [], // state
-  
+  editingTodo: '', // state
+
   async fetchData() { // 异步 action
     this.dataSource = fetch('/foo/get');
   },
-  
+
   add(todo) { // 同步 action
     this.dataSource.push(todo);
   },
@@ -26,10 +27,10 @@ state 表示应用的状态，允许定义除函数类型外的任意数据类�
 
 ### action
 
-action 表示改变状态的行为，在 action 中可以通过 this 改变 state，支持定义同步与异步的 action。
+action 表示改变状态的行为，支持定义同步与异步 action，在 action 中可以通过 this 访问到所有的 state 属性并对其进行修改。
 
 ## store 管理器
-新建的 `@ice/store` 实例为 store 管理器，在 store 管理器上可以注册用户定义的多个 store 对象，同时在 view 组件中可以访问 store 管理器提供的 useStore hook。
+新建的 Icestore 对象为 store 管理器，在 store 管理器上可以注册用户定义的多个 store 对象，同时在 view 组件中可以访问 store 管理器上提供的 useStore hook。
 
 ``` javascript
 import Icestore from '@ice/store';
@@ -49,7 +50,7 @@ stores.registerStore('todos', todos); // 通过 namespace 区分不同的 store
 
 ## useStore
 
-`icestore` 提供 useStore hook 供函数式组件使用，可以通过 useStore 的返回值获取 store 中定义的 state 和 action。在 action 被调用后会触发所有 useStore 的组件重新渲染，以保证这些组件使用到的 state 值更新到最新值，从而实现了状态的跨组件共享。
+icestore 提供 useStore hook 供函数式组件使用，可以通过 useStore 的返回值获取 store 中定义的 state 和 action。在 action 被调用后会触发所有 useStore 的组件重新渲染，以保证这些组件使用到的 state 值更新到最新值，从而实现了状态的跨组件共享。
 
 ``` javascript
 
@@ -70,4 +71,4 @@ return (
 ```
 
 
-以上便是使用 `icestore` 需要掌握的核心概念，关于更高阶的一些用法请继续阅读后面的文档。
+以上便是使用 icestore 需要掌握的核心概念，关于更高阶的一些用法请继续阅读后面的文档。

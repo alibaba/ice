@@ -3,7 +3,7 @@ title: 异步状态
 order: 3
 ---
 
-`icestore` 内部集成了对于异步 action 执行状态的记录，方便用户在不增加额外的 state 的前提下访问异步 action 的 loading 与 error 状态，从而使状态的渲染逻辑更简洁。
+icestore 内部集成了对于异步 action 执行状态的记录，方便用户在不增加额外的 state 的前提下访问异步 action 的 loading 与 error 状态，从而使状态的渲染逻辑更简洁。
 
 ## API
 
@@ -21,7 +21,7 @@ order: 3
   - Default: false
 
 ## 使用方式
-useStore 后从 action 上可以实时拿到当前 action 的执行状态，包括 loading (执行中）与 error (执行错误对象)，见以下示例
+调用 useStore 后从 action 的属性上可以实时获取当前 action 的执行状态，包括 loading (执行中）与 error (执行错误对象)，见以下示例
 
 ```javascript
 const todos = store.useStore('todos');
@@ -33,7 +33,7 @@ useEffect(() => {
 
 const loadingView = (
   <div>
-    loading.......
+    loading...
   </div>
 );
 

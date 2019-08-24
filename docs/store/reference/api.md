@@ -3,11 +3,11 @@ title: API
 order: 1
 ---
 
-对于新建的 `icestore` 实例，包括以下公共的 API 方法：
+对于新建的 icestore 实例，包括以下公共的 API 方法：
 
 ### registerStore
 
-将 store 配置注释到全局 store 实例。
+将 store 配置注册到全局 store 实例。
 
 * 参数
   - namespace {string} store 的命名空间
@@ -17,11 +17,11 @@ order: 1
 
 ### applyMiddleware
 
-给所有 store 或者指定 namespace 的 store 注册 middleware，如果不指定第 2 个参数，给所有 store 注册 middleware，如果指定第 2 个参数，则给指定 namespace 的 store 注册 middleware。
+给 store 注册中间件，如指定第二个参数，则注册到对应 namespace 的 store，否则注册到全局，对所有 store 生效。
 
 * 参数
-  - middlewares {array} 待注册的 middleware 数组
-  - namespace {string} store 的命名空间
+  - middlewares {array} 注册的 middleware 数组
+  - namespace {string} store 的命名空间，可选
 * 返回值
   - 无
 
