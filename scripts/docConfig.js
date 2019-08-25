@@ -245,6 +245,23 @@ const docCategories = {
       dir: 'reference',
     }],
   },
+  store: {
+    // icestore
+    title: {},
+    children: [{
+      title: {
+        'zh-cn': '指南',
+        'en-us': 'guide',
+      },
+      dir: 'guide',
+    }, {
+      title: {
+        'zh-cn': '参考',
+        'en-us': 'Reference',
+      },
+      dir: 'reference',
+    }],
+  },
 };
 
 module.exports = {
