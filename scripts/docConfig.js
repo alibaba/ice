@@ -245,7 +245,7 @@ const docCategories = {
       dir: 'reference',
     }],
   },
-  store: {
+  icestore: {
     // icestore
     title: {},
     children: [{
