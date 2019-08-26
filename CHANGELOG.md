@@ -1,5 +1,13 @@
 # CHANGELOG for iceworks
 
+## 3.2.0
+
+- [feat] more tips for router panel #2726
+- [feat] start panel displays project information #2739
+- [feat] automatic installation of tnpm in Alibaba Internal Network Environment #2636
+- [fix] optimizing the prompt form of icons #2725
+- [fix] fix global log panel style #2734
+
 ## 3.1.1
 
 - [fix] use unpkg asset #2721
