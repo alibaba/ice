@@ -79,13 +79,13 @@ $ iceworks init
 [react-materials]: https://github.com/ice-lab/react-materials
 [vue-materials]: https://github.com/ice-lab/vue-materials
 
-[iceworks-cli-status]: https://img.shields.io/npm/v/iceworks-cli.svg
+[iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
 [ice-devtools-status]: https://img.shields.io/npm/v/ice-devtools.svg
 [ice-scripts-status]: https://img.shields.io/npm/v/ice-scripts.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 
-[iceworks-cli-package]: https://npmjs.com/package/iceworks-cli
+[iceworks-cli-package]: https://npmjs.com/package/iceworks
 [ice-devtools-package]: https://npmjs.com/package/ice-devtools
 [ice-scripts-package]: https://npmjs.com/package/ice-scripts
 [icestore-package]: https://npmjs.com/package/@ice/store
