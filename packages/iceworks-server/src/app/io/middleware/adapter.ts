@@ -14,7 +14,7 @@ export default app => {
         ctx.i18n = i18n;
         callback(null, await project.adapter[moduleName][methodName](args, ctx));
       } catch (error) {
-        logger.error(error);
+        logger.error(`adapter[${moduleName}][${methodName}] got error:`, error);
         callback({
           code: error.code,
           message: error.message,
