@@ -44,7 +44,7 @@ function uploadAssetsToOSS(fromPath, toPath, globPatterns) {
 }
 
 // 同步 iceworks-client 静态资源
-const clientFromPath = path.join(process.cwd(), 'packages', 'iceworks-client', 'build');
+const clientFromPath = path.join(__dirname, '..', 'build');
 const clientToPath = 'iceworks-client/assets';
 uploadAssetsToOSS(clientFromPath, clientToPath, '*/**');
 
