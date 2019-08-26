@@ -9,7 +9,7 @@ order: 1
 
 ## 简介
 
-icestore 是基于 React Hooks 实现的轻量级状态管理框架，有以下核心特点：
+[icestore](https://github.com/ice-lab/icestore) 是基于 React Hooks 实现的轻量级状态管理框架，有以下核心特点：
 
 * **极简 API**：只有 5 个 API，简单上手，使用方便，不需要学习 Redux 里的各种概念。
 * **React Hooks**：拥抱 Hooks 的使用体验，支持在函数式组件中使用。
