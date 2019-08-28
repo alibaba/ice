@@ -31,6 +31,10 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 毫无疑问是需要的，我们在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础预发、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](/docs/guide/resource/front-basic.md)，希望能帮助到开发者。
 
+#### 资深前端同学是否适合使用飞冰？
+
+在 GUI 工具基础上，飞冰还提供了 [CLI 版本](/docs/guide/start#使用%20CLI%20方式创建项目)，因此如果你不需要 GUI 的能力，依然可以完全使用 CLI 的链路开发项目，同时使用到飞冰的项目最佳实践、工程工具以及状态管理方案。
+
 #### 飞冰（ICE）的浏览器兼容策略是怎样的？
 
 飞冰官方 React 物料默认使用 React 16+，其需要的最低 IE 版本为 11，如果您需要在以下的版本使用，您可能需要引入一些 polyfill 来支持 `Map`, `Set` 等特性。参考[React 官网说明](https://reactjs.org/blog/2017/09/26/react-v16.0.html#javascript-environment-requirements)。
