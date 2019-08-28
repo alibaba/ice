@@ -29,9 +29,10 @@ describe('Test adapter menu module', () => {
           path: '/test/aside',
         }
       ],
-      // default options is
-      // { replacement = false, type = 'aside' }
-      options: {},
+      options: {
+        replacement: false,
+        type: 'aside'
+      },
     };
     await menu.bulkCreate(params);
     const { asideMenuConfig, headerMenuConfig } = await menu.getAll();
@@ -63,6 +64,37 @@ describe('Test adapter menu module', () => {
     // only one aside menu in headerMenuConfig
     assert(asideMenuConfig.length, 1);
     assert(!headerMenuConfig.some(ele => ele.path === '/test/aside'));
+  });
+
+  it('create aside menu with replacement and children', async () => {
+    const params = {
+      data: [
+        {
+          position: 'aside',
+          id: 'aside-test',
+          name: 'AsideTest',
+          path: '/test/aside',
+          children: [
+            {
+              position: 'aside',
+              id: 'aside-children-test',
+              name: 'AsideChildrenTest',
+              path: '/test/aside/children',
+            }
+          ]
+        }
+      ],
+      options: {
+        replacement: true,
+        type: 'aside'
+      },
+    };
+    await menu.bulkCreate(params);
+    const { asideMenuConfig } = await menu.getAll();
+
+    // exist in asideMenuConfig but not in headerMenuConfig
+    const isAsideMenuExist = asideMenuConfig.some(ele => ele.children[0].path === '/test/aside/children');
+    assert(isAsideMenuExist);
   });
 
   it('create header menu without replacement', async () => {
@@ -114,6 +146,12 @@ describe('Test adapter menu module', () => {
     assert(!isAsideMenuExist);
     assert(headerMenuConfig.length === 1);
   })
+
+  it('delete aside children menu', async () => {
+    await menu.delete({ paths: ['/test/aside/children'] });
+    const { asideMenuConfig } = await menu.getAll();
+    assert(asideMenuConfig[0].children.length === 0);
+  });
 
   it('delete aside menu', async () => {
     await menu.delete({ paths: ['/test/aside'] });
