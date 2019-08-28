@@ -42,7 +42,6 @@ describe('Test adapter router module', () => {
             path: '/router',
             component: 'NotFound',
           }
-
         ]
       }],
       options: {
