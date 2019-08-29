@@ -14,7 +14,7 @@ order: 8
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { getMountNode } from 'icestark';
+import { getMountNode } from '@ice/stark';
 
 import '@alifd/next/reset.scss';
 

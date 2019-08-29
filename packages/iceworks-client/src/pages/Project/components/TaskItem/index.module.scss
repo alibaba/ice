@@ -1,3 +1,5 @@
+@import '../../../../variables.scss';
+
 .taskItem {
   display: flex;
   flex-direction: column;
@@ -16,6 +18,15 @@
 
     .desc {
       margin: 0;
+    }
+  }
+
+  .taskMeta {
+    margin-top: 10px;
+    color: $text-color-normal;
+    font-size: $font-size-base;
+    .metaItem {
+      margin: 4px 0;
     }
   }
 

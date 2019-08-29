@@ -182,10 +182,6 @@ export default class Task implements ITaskModule {
     }
   }
 
-  public getAllStatus() {
-    return this.status;
-  }
-
   /**
    * get the conf of the current task
    * @param args

@@ -4,8 +4,6 @@ import Icon from '@components/Icon';
 import PropTypes from 'prop-types';
 import styles from './index.module.scss';
 
-const { Tooltip } = Balloon;
-
 const TipIcon = (props) => {
   const triggerIcon = (
     <Icon
@@ -16,13 +14,14 @@ const TipIcon = (props) => {
   );
 
   return (
-    <Tooltip
+    <Balloon
       trigger={triggerIcon}
+      closable={false}
       align="b"
       {...props}
     >
       {props.children}
-    </Tooltip>
+    </Balloon>
   );
 };
 

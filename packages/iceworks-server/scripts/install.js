@@ -18,6 +18,21 @@ function installDEF() {
     });
 }
 
+function installTNPM() {
+  console.log('>>> Start install tnpm client...');
+
+  return execa
+    .shell('npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm', {
+      stdio: 'inherit',
+    })
+    .then(() => Promise.resolve(true))
+    .catch(() => {
+      console.log('>>> install tnpm client error \r\n');
+
+      return Promise.resolve(true);
+    })
+}
+
 function installStark() {
   console.log('>>> Start install stark biz generator...');
 
@@ -32,11 +47,7 @@ function checkTNPM() {
     .shell('tnpm -v')
     .then(() => Promise.resolve(true))
     .catch(() => {
-      console.log('>>> Please install tnpm by: \r\n');
-      console.log('`npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm` \r\n');
-      console.log('>>> More infos: https://npm.alibaba-inc.com/  \r\n');
-
-      return Promise.resolve(false);
+      return installTNPM();
     });
 }
 

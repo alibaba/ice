@@ -6,10 +6,11 @@ import stores from '@stores';
 
 const useTask = ({ type, writeLog, writeChunk }) => {
   const taskStore = stores.useStore('task');
-  const { dataSource, setStatus, getStatus } = taskStore;
+  const { dataSource, setStatus, getStatus, getConf } = taskStore;
   const status = (dataSource[type] && dataSource[type].status) || 'stop';
   const startEventName = `adapter.task.start.data.${type}`;
   const stopEventName = `adapter.task.stop.data.${type}`;
+
   const {
     reset: installDependency,
     onResetModal: installDependencyVisible,
@@ -63,7 +64,10 @@ const useTask = ({ type, writeLog, writeChunk }) => {
   }
 
   useEffect(() => {
-    onGetStatus();
+    (async () => {
+      await onGetStatus();
+      await getConf('dev');
+    })();
   }, []);
 
   // listen start event handle
@@ -83,6 +87,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
 
   return {
     isWorking: status === 'working',
+    dataSource,
     onStart,
     onStop,
     installDependencyVisible,

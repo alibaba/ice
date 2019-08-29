@@ -193,7 +193,7 @@ const CreateRouterModal = ({
 
   return (
     <Modal
-      title={<FormattedMessage id={`iceworks.project.panel.router.${modalData.action}.title`} />}
+      title={<FormattedMessage id={`iceworks.project.panel.router.${modalData.action}.title.${!modalData.parent ? 'parent' : 'sub'}`} />}
       visible={on}
       onCancel={onCancel}
       onOk={onSubmit}
