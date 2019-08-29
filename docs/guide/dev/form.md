@@ -10,7 +10,7 @@ order: 8
 ## 特性
 
 - 使用成本低：内部管理表单状态
-- 性能较好：使用观察者模式，性能更好
+- 性能较好：使用观察者模式，输入时只会重新渲染当前操作的组件
 - 可适配不同 UI 组件：支持 Next/Antd/原生/... 表单组件
 - 功能完善：校验、联动、布局等
 
@@ -60,12 +60,3 @@ ReactDOM.render((
   <App />
 ), mountNode);
 ```
-
-## 其他表单方案
-
-针对表单这块，社区也有很多方案，如果需要可以参考：
-
-- Fusion Form 组件：需要结合 field API，使用成本高一些，[文档](/component/form)
-- FormBinder：使用较简单，但是在 UI 以及复杂场景性能方面考虑不够周全，[文档](/component/formbinder)
-- uform: [仓库](https://github.com/alibaba/uform)
-- NoForm: [仓库](https://github.com/alibaba/nopage)
