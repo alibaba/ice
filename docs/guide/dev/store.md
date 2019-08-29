@@ -3,29 +3,13 @@ title: 数据状态管理
 order: 5
 ---
 
-状态管理通常是一个应用最复杂的部分，React 原生提供了 setState, Context 等方式来实现本地与全局状态管理，对于更复杂的业务场景，原生方案也不能完全满足需求，因此社区中产生了大量状态管理框架来解决这个问题，比较有名的诸如 Redux, Mobx，但是这些框架引入了很多概念，有不小的学习成本，而且滥用框架也会带来一定性能上的问题，因此飞冰团队从易用性与性能上出发，基于React Hooks 设计了一款面向React的轻量级的状态管理方案 `icestore`，下面介绍一下 `icestore` 的用法与最佳实践。
-
+状态管理通常是一个应用最复杂的部分，React 原生提供了 setState, Context 等方式来实现本地与全局状态管理，对于更复杂的业务场景，原生方案也不能完全满足需求，因此社区中产生了大量状态管理框架来解决这个问题，比较有名的诸如 Redux, Mobx，但是这些框架引入了很多概念，有不小的学习成本，而且滥用框架也会带来一定性能上的问题，因此飞冰团队从易用性与性能上出发，基于 React Hooks 设计了一款面向 React 的轻量级的状态管理方案 `icestore`，本文介绍 `icestore` 的用法与最佳实践，关于 icestore 更详尽的文档请参考 [这里](/docs/icestore/about)。
 
 ## 安装
 
 ```bash
 $ npm i @ice/store --save
 ```
-
-## 简介
-
-`icestore` 是基于 React Hooks 实现的轻量级状态管理框架，有以下核心特点：
-
-* 极简 API : 只有 3 个 API，真正做到五分钟上手。
-* 单向数据流：与 Redux 一样使用单向数据流，便于状态的追踪与预测。
-* 性能优化：通过多 store 的去中心化设计，减少单个 state 变化触发重新渲染的组件个数，同时改变 state 时做 diff，进一步减少不必要的渲染。
-* 集成异步状态：记录异步 action 的执行状态，简化 view 组件中对于 loading 与 error 状态的渲染逻辑。
-
-`icestore` 数据流示意图如下：  
-
-<img src="https://user-images.githubusercontent.com/5419233/60956252-012f9300-a335-11e9-8667-75490ceb62b1.png" width="400" />
-
-> 如果你的项目 React 版本不支持 Hooks（低于 16.8.0），推荐使用社区成熟的方案 [Redux](https://cn.redux.js.org/) 或者 [Mobx](https://cn.mobx.js.org/)
 
 ## 快速开始
 
@@ -223,14 +207,14 @@ return (
       this.inited = true;
     }
   }
-  
+
   // view.js
   const todos = useStore('todos');
-  
+
   useEffect(() => {
     // bad
     todos.inited = true;
-    
+
     // good
     todos.setInited();
   });
