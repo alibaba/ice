@@ -30,17 +30,14 @@ const asideMenuConfig = [
     name: '文章管理',    // 一级导航名称
     path: '/post',     // 一级导航路径
     icon: 'edit',      // 一级导航图标
-    authority: ''      // 一级导航权限配置
     children: [
       {
         name: '文章列表',     // 二级导航名称
         path: '/post/list'  // 二级导航路径
-        authority: 'admin'  // 二级导航权限配置
       },
       {
         name: '添加文章',
         path: '/post/create'
-        authority: 'admin'
       },
     ],
   }

@@ -3,11 +3,12 @@ title: 权限管理
 order: 9
 ---
 
-对于一个 Web 应用，权限管理是经常会涉及的一个话题，在介绍模板中的权限管理方案之前，我们先来梳理下常见的权限管理包含哪些方面：
+对于一个 Web 应用，权限管理是经常会涉及的一个话题，在介绍权限管理方案之前，我们先来梳理下常见的权限管理包含哪些方面：
 
 - 路由鉴权：当用户访问某个没有权限的页面时跳转到无权限页面
 - 接口鉴权：当用户通过操作调用没有权限的接口时跳转到无权限页面
 - 操作鉴权：页面中的某些按钮或区块针对无权限的用户直接隐藏
+- 菜单鉴权：某些菜单针对无权限的用户直接隐藏（属于操作鉴权的一种）
 
 ## 权限组件
 
@@ -25,6 +26,10 @@ import Exception from '@/components/Exception';
 
 /**
  * Auth Component
+ *
+ * <Auth authorities={['admin']} hidden={true}>
+ *  <Button />
+ * </Auth>
  *
  * @params {array} authorities 允许哪些角色使用
  * @params {boolean} hidden 无权限时是否直接隐藏
@@ -54,7 +59,13 @@ export function Auth({ children, authorities = [], hidden }) {
   }
 };
 
-// HOC 方式使用
+/**
+ * HOC 方式使用
+ *
+ * withAuth({
+ *  authorities: ['admin'],
+ * })(ListPage);
+ */
 export function withAuth(params) => (WrapperedComponent) => {
   return (props) => {
     return (
@@ -70,7 +81,7 @@ export function withAuth(params) => (WrapperedComponent) => {
 
 ### 路由鉴权
 
-可以使用上面的 `withAuth` 控制页面的权限：
+路由鉴权针对页面级组件，直接在组件层面使用上面的 `withAuth` 控制页面的权限：
 
 ```js
 // src/pages/List
@@ -85,11 +96,15 @@ function List() {
   );
 }
 
-// 仅 admin 和 user 的角色可访问该页面
+// 仅 admin 角色可访问该页面
 export default withAuth({
-  authorities: ['admin', 'user'],
+  authorities: ['admin'],
 })(List);
 ```
+
+### 接口鉴权
+
+请参考文档[前后端通信](/docs/guide/dev/ajax)，业务上封装统一的请求方法，与服务端约定接口协议，前端根据状态码判断无权限、未登录等状态，然后跳转到指定页面。
 
 ### 操作鉴权
 
@@ -101,6 +116,6 @@ export default withAuth({
 </Auth>
 ```
 
-### 接口鉴权
+### 菜单鉴权
 
-接口鉴权推荐按照文档[前后端通信](/docs/guide/dev/ajax)，封装统一的业务请求方法，与服务端约定接口协议，前端根据状态码判断无权限、未登录等状态，然后跳转到指定页面。
+TODO

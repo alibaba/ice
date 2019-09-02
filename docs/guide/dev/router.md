@@ -48,7 +48,7 @@ const routerConfig = [
 
 ## 路由渲染
 
-基于开发者的编写的路由配置，我们通过 `src/router.jsx` 将这些路由渲染出来，即转换成使用 react-router 的代码（注意我们默认支持了两层路由嵌套，如需支持更多层级请修改 `src/router.jsx` 这个文件），具体代码如下：
+完成路由配置后，我们通过 `src/router.jsx` 的生成逻辑将这些路由渲染出来，即转换成使用 react-router 的代码（注意我们默认支持了两层路由嵌套，如需支持更多层级请修改 `src/router.jsx` 这个文件），具体代码如下：
 
 ```js
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';

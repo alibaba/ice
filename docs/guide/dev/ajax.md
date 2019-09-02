@@ -24,7 +24,7 @@ async function getUser() {
     const response = await axios.get('/user', {
       // request query
       params: {
-        ID: 12345
+        id: 1
       }
     });
     console.log(response);
@@ -45,7 +45,7 @@ axios.get('/user')
 // 发送 POST 请求
 axios({
   method: 'post',
-  url: '/user/12345',
+  url: '/user',
   // request query
   params: { foo: 'bar' },
   // request body
@@ -56,9 +56,9 @@ axios({
 });
 ```
 
-在这些基础功能基础上，axios 支持丰富的请求参数、异常状态码判断、全局处理异常、全局配置请求参数等，具体参见 [axios 文档](https://github.com/axios/axios#axios)。
+在这些基础功能上，axios 支持对请求进行自定义配置，如请求参数、异常状态码判断、全局处理异常、全局配置请求参数等，具体参见 [axios 文档](https://github.com/axios/axios#axios)。
 
-业务里通常会有请求成功失败的通用逻辑，建议参考下文为业务封装统一的请求方法。
+业务里通常会有请求成功或失败的通用逻辑，建议参考下文为业务封装统一的请求方法。
 
 ## 在 React 组件中请求并渲染数据
 
@@ -104,7 +104,7 @@ function CustomComponent {
 
 ## 简化请求状态
 
-通过上面的例子，会发现每个请求都包含请求成功、加载中、请求异常三个状态，如果每个请求都这样处理就会非常繁琐，因此接下来介绍如何通过封装让业务层无需关心请求过程中的这么多状态。对于 React 16.6.0 以下不支持 Hooks 的项目建议使用组件 [DataBinder](https://ice.work/component/databinder)。
+通过上面的例子，会发现每个请求都包含请求成功、加载中、请求异常三个状态，如果每个请求都这样处理就会非常繁琐，因此接下来介绍如何通过封装让业务层无需关心请求过程中的这么多状态。对于 React 16.8.0 以下不支持 Hooks 的项目建议使用组件 [DataBinder](https://ice.work/component/databinder)。
 
 在业务代码中封装 request 以及 useRequest 的通用方法：
 
@@ -132,7 +132,6 @@ export async function request(options) {
       return { response, data };
     }
   } catch (error) {
-    alert(error.message);
     console.error(error);
     throw error;
   }
@@ -182,7 +181,6 @@ export function useRequest(options) {
         });
       }
     } catch (error) {
-      alert(error.message);
       dispatch({
         type: 'error',
         error,
@@ -287,7 +285,7 @@ function ListView(props) {
   }, []);
 
   return (
-    <div>
+    <>
       {error && <div>{error.message}</div>}
       {loading ? (
         <div>loading....</div>
@@ -296,7 +294,7 @@ function ListView(props) {
           return <div>{item.name}</div>;
         })
       )}
-    </div>
+    </>
   );
 }
 ```

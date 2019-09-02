@@ -3,7 +3,7 @@ title: 代码质量保障
 order: 2
 ---
 
-为了保证代码质量，我们推荐使用 lint 相关的工具对代码进行检测，同时为了降低常规 lint 工具的使用成本，我们封装了 [@ice/spec](https://github.com/ice-lab/spec) 这个小工具。
+为了保证代码质量，我们推荐使用 lint 相关的工具对代码进行检测，同时为了降低常规 lint 工具的使用成本，我们封装了 [@ice/spec](https://github.com/ice-lab/spec) 这个 npm 包。
 
 
 ## 安装依赖
@@ -78,7 +78,7 @@ module.exports = commitlint;
 
 ## 流程保证
 
-为了保证以上检测能力的有效执行，推荐通过在执行 git 命令时（Git hooks）强制运行检测任务来保证，这里推荐 [husky](https://github.com/typicode/husky) 这个工具。首先安转依赖：
+为了保证以上检测能力的有效执行，推荐通过在执行 git 命令时（Git hooks）强制运行检测任务来保证，这里推荐 [husky](https://github.com/typicode/husky) 这个工具。首先安装依赖：
 
 ```bash
 $ npm install husky --save-dev

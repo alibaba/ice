@@ -21,12 +21,12 @@ $ npm i --save-dev ice-scripts
 {
   "scripts": {
     "start": "ice-scripts dev",
-    "build": "ice-scripts build",
+    "build": "ice-scripts build"
   }
 }
 ```
 
-然后执行 `npm start` 即可进行项目开发，开启调试服务后，默认可以访问 `http://localhost:4444` 进行页面预览。修改源码内容后将自动刷新页面。执行 `npm run build` 进行项目构建，构建产物默认输出到 `./build` 目录下。
+然后执行 `npm start` 即可进行项目开发，正常情况下执行命令后自动打开浏览器 `http://localhost:4444` 进行页面预览。修改源码内容后将自动刷新页面。执行 `npm run build` 进行项目构建，构建产物默认输出到 `./build` 目录下。
 
 ## 工程配置
 
