@@ -1,65 +1,58 @@
 ---
-title: 静态资源按需加载
+title: 资源按需加载
 order: 12
 ---
 
 当页面规模、依赖组件达到一定量之后，打包后的文件也会随之增大，但在浏览某个页面的时候并不需要一次性加载所有内容，只需加载当前页面的资源即可，此时可以参考本文档实现静态资源的切割及按需加载。
 
-*提示：React 16.6.0 及以上版本的项目建议使用 [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy)，否则建议使用三方组件库 [react-loadable](https://github.com/jamiebuilds/react-loadable)。*
+*提示：React 16.6.0 及以上版本的项目建议使用 [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy)，否则建议使用三方
+组件库 [react-loadable](https://github.com/jamiebuilds/react-loadable)。*
 
-## React.lazy
+## 原理分析
 
-React 16.6.0 及以上版本提供了动态加载组件的标准化能力 —— [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy) API。
+在构建前端代码时，如果某个文件是用 `React.lazy` 而非普通的 `import` 引入的，那么构建工具会将该文件打包成一个单独的文件，通常类似 `1.js` `2.js` 这种，然后用户访问站点在切换到对应页面时，会动态加载对应的 js 文件然后执行渲染。
 
-**正常加载组件**
-```js
-import OtherComponent from './OtherComponent';
+如果出现加载失败的情况，通常是因为 publicPath 配置的有问题，可以参考[工程配置文档](/docs/cli/config/config#publicPath)。如果是阿里内部开发者，请参考[这篇文档](https://yuque.antfin-inc.com/ice/rdy99p/angwyx)。
 
-function MyComponent() {
-  return (
-    <div>
-      <OtherComponent />
-    </div>
-  );
-}
-```
+## 快速使用
 
-**按需动态加载组件**
+通常情况下，只需要在路由配置的文件里按照页面纬度控制是否需要按需加载即可：
+
 ```diff
-- import OtherComponent from './OtherComponent';
-+ const OtherComponent = React.lazy(() => import('./OtherComponent'));
+import React from 'react';
+import UserLayout from '@/layouts/UserLayout';
+import BasicLayout from '@/layouts/BasicLayout';
 
-function MyComponent() {
-  return (
-    <div>
-      <OtherComponent />
-    </div>
-  );
-}
+- // 不需要按需加载
+- import UserLogin from '@/pages/UserLogin';
++ // 按需加载
++ const UserLogin = React.lazy(() => import('@/pages/UserLogin'));
+
+const routerConfig = [
+  // ...
+];
+
+export default routerConfig;
 ```
 
-## Suspense
+同时在路由渲染的文件里使用 `Suspense` 包裹路由组件，这样在加载页面资源时就可以给用户显示一些加载状态了：
 
-由于网络传输原因，加载组件需要花费一定的时间，为了提升用户体验，一般会加一个 loading 组件平滑过渡。
-React 内置的 `<Suspense>` 组件已为我们实现了此功能。
+```diff
+import React, { Suspense } from 'react';
 
-```js
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import React, { Suspense, lazy } from 'react';
-
-const Home = lazy(() => import('./routes/Home'));
-const About = lazy(() => import('./routes/About'));
-
-const App = () => (
-  <Router>
-    <Suspense fallback={<div>Loading...</div>}>
-      <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-      </Switch>
-    </Suspense>
-  </Router>
-);
+<RouteComponent key={id} {...props}>
++  <Suspense fallback={<div>loading...</div>}>
+    <Switch>
+      {children.map((routeChild, idx) => {
+        const { redirect, path: childPath, component } = routeChild;
+        return RouteItem({
+          key: `${id}-${idx}`,
+          redirect,
+          path: childPath && path.join(route.path, childPath),
+          component,
+        });
+      })}
+    </Switch>
++  </Suspense>
+</RouteComponent>
 ```
-
-`fallback` 属性值为等待组件加载时你想渲染的任何 React 元素。

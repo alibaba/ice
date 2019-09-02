@@ -7,8 +7,6 @@ order: 2
 
 ## 使用 GUI 方式创建项目
 
-> iceworks@3.0 版本已经发布，欢迎[使用](https://github.com/alibaba/ice/issues/2369)
-
 [iceworks](/iceworks) 定位为基于物料的一站式可视化源码研发工作台，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
 
 ### 1. 安装 CLI 工具
@@ -34,7 +32,7 @@ $ iceworks # open http://localhost:8000/
 * 新建一个文件夹或者选择已有的空文件夹（避免覆盖原有文件）;
 * 给项目起一个项目名，以便后续识别。
 
-![创建项目](https://img.alicdn.com/tfs/TB1fF45dWSs3KVjSZPiXXcsiVXa-2878-1572.png)
+![创建项目](https://img.alicdn.com/tfs/TB1YmsodF67gK0jSZPfXXahhFXa-2878-1586.png)
 
 ### 4. 项目管理
 

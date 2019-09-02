@@ -7,35 +7,27 @@ order: 3
 
 ## 路由配置
 
-在模板中，路由与菜单一样也是按照一定的约定进行配置，用来描述路由的结构关系。路由主要分为 路由配置 和 路由生成 两部分：
+在模板中，路由与菜单一样也是按照一定的约定进行配置，用来描述路由的结构关系。路由主要分为 路由配置 和 路由渲染 两部分：
 
-- 路由配置：在 `src/config/routes.js` 中配置路由
-- 路由生成：在 `src/router.js` 中生成路由
+- 路由配置：`src/config/routes.js`
+- 路由生成：`src/router.js`
 
-这样设计的目的主要是分离路由配置信息和路由生成部分，配置和生成进行解耦，有利于在新增路由时只需要关注路由配置，除了顶层路由，其余路由列表都是自动生成，其中关键的就是中心化配置文件 `src/config/routes.js`，它的主要作用是：
-
-- 配置路由相关信息，可以配置对应路由的路径，重定向，渲染组件等字段；
-- 根据路由配置生成路由数据，并将路由数据挂载到每条路由对应的组件上；
+这样设计的目的主要是分离路由配置信息和路由渲染部分，让开发者大多数时候只需要关注路由配置，路由配置协议如下：
 
 ```js
 const routerConfig = [
+  // 分组路由，children 里的路由会将父节点的 component 作为布局组件
   {
     path: '/user',
-    // 路由组的 component 必须是布局组件
     component: UserLayout,
     children: [
       {
         path: '/login',
-        // 路由的 component 必须是页面组件
         component: UserLogin,
       },
       {
-        path: '/register',
-        component: UserRegister,
-      },
-      {
-        // Redirect 重定向
         path: '/',
+        // 重定向
         redirect: '/user/login',
       },
       {
@@ -44,29 +36,19 @@ const routerConfig = [
       },
     ],
   },
+  // 非分组路由
+  {
+    path: '/about',
+    component: About,
+  },
 ];
 ```
 
-## 路由生成
+注意：路由有一个按顺序匹配的规则，从上到下一旦命中路由匹配规则就会停止遍历，因此如果你在最前面配置了 `/` 这样一个路由，则所有的路由都会命中该规则，导致其他路由没有效果，所以在开发时要注意路由的顺序以及 [exact](https://reacttraining.com/react-router/web/api/Route/exact-bool) 属性的使用。
 
-### 基础知识
+## 路由渲染
 
-路由配置跟之前版本不同，增加了`路由组`的概念，模板中使用的是 React Router v4 版本，：
-
-> 路由组: 多个页面如果共用一个布局，可以将这几个页面的路由放在某个路由组下，上述配置中有 `children` 字段的都是路由组。
-
-如果你还不太了解，可以先看看下面几篇推荐的文章：
-
-- [react-router 官网](https://github.com/ReactTraining/react-router)
-- [Migrating from v2/v3 to v4](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/migrating.md)
-- [[译]关于 React Router 4 的一切](https://github.com/xitu/gold-miner/blob/master/TODO/all-about-react-router-4.md)
-- [React Router v4 几乎误我一生](https://zhuanlan.zhihu.com/p/27433116)
-
-### 具体使用
-
-接下来具体看看在模板中我们是如何来实现的；基于路由配置，可以发现每个对应的路由都可以配置一个单独的布局，可以是相同的也可以是不相同的布局，在这种情况下，意味着每个路由入口都包含了一个新的布局，实现如下：
-
-- 主路由入口:
+完成路由配置后，我们通过 `src/router.jsx` 的生成逻辑将这些路由渲染出来，即转换成使用 react-router 的代码（注意我们默认支持了两层路由嵌套，如需支持更多层级请修改 `src/router.jsx` 这个文件），具体代码如下：
 
 ```js
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
@@ -76,20 +58,11 @@ const RouteItem = (props) => {
   const { redirect, path: routePath, component, key } = props;
   if (redirect) {
     return (
-      <Redirect
-        exact
-        key={key}
-        from={routePath}
-        to={redirect}
-      />
+      <Redirect exact key={key} from={routePath} to={redirect} />
     );
   }
   return (
-    <Route
-      key={key}
-      component={component}
-      path={routePath}
-    />
+    <Route key={key} component={component} path={routePath} />
   );
 };
 
@@ -138,37 +111,16 @@ const router = () => {
 };
 ```
 
-- 对应的布局组件实现
+至此，路由设计方案基本分析完成，这里可以总结如下：
 
-```js
-// BasicLayout.jsx
-...
-<Layout>
-  <Header />
-  <Layout.Section>
-    <Layout.Main>
-      {this.props.children}
-    </Layout.Main>
-  </Layout.Section>
-  <Footer />
-</Layout>
-...
-```
-
-在布局组件中，只需要将 `children` 传给 `Main` 就可以了。
-
-至此，模板中的路由设计方案基本分析完成，这里可以总结如下：
-
-- 考虑到每个路由都能配置任意不同的布局，如果多个路由共享一个布局且不希望在切换路由的时候不刷新布局，你可以将这几个路由放在一个路由组下。
-- 路由的真实路径需要将路由组的路径和当前路径拼起来，如果路由配置的路由路径是 `/login`，路由组的路径是 `/user`，那么浏览器需要访问 `/user/login` 才能访问到。
+- 考虑到每个路由都能配置任意不同的布局，如果多个路由共享一个布局且不希望在切换路由的时候刷新布局，你可以将这几个路由放在一个路由组下。
+- 路由组的情况，真实路径需要将路由组的路径和当前路径拼起来，如果路由配置的路由路径是 `/login`，路由组的路径是 `/user`，那么页面的实际路由地址是 `/user/login`
 
 ## 路由跳转
 
 ### 通过 Link 组件跳转
 
-通过 `<Link />` 标签组件跳转，定义 `to` 属性完成路径跳转，等同于点击一个 `<a />` 标签。
-
-引入标签：
+通过 `<Link />` 标签组件可实现路由跳转，使用方式：
 
 ```js
 import { Link } from 'react-router-dom';
@@ -192,7 +144,7 @@ function Demo() {
 }
 ```
 
-### 方法调用：withRouter
+### 通过 withRouter 方法调用实现跳转
 
 如果调用方法的地方在 React 组件内部，可以直接在组件上添加 `withRouter` 的装饰器，然后组件内可以通过 `props` 获取到相关 API：
 
@@ -200,7 +152,6 @@ function Demo() {
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-@withRouter
 function ShowTheLocation(props) {
   const { history, location } = props;
   const handleHistoryPush = () => {
@@ -215,49 +166,28 @@ function ShowTheLocation(props) {
   );
 }
 
-static propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
-
 export default withRouter(ShowTheLocation);
 ```
 
 ### 方法调用：History API
 
-如果不满足第一种方法的使用条件，比如在 React 组件外部需要使用路由跳转等操作，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
-
-以使用 BrowserHistory 举例（该用法需要后端的支持）：
-
-首先添加依赖：
+如果前两种方式都无法实现，比如在 React 组件外部需要使用路由跳转等操作，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要。首先添加依赖：
 
 ```bash
 $ npm install --save history
 ```
 
-创建一个 histroy 对象
+创建一个公共的 histroy 对象：
 
 ```js
 // /src/utils/history.js
+// 这里以 BrowserHistory 为例，如果是 HashHistory 参考文档使用即可
 import { createBrowserHistory } from 'history';
 
 export default createBrowserHistory();
 ```
 
-然后在代码中引入并使用相同的 history（注意：我们这里是使用的是 Router 而不是 BrowserRouter ，BrowserRouter 会创建自己的 History ，导致不能在 React 组件外部使用 history 跳转路由）：
-
-```js
-// /src/router.js
-import { Router } from 'react-router-dom';
-import history from './utils/history';
-
-const router = () => (
-  <Router history={history}>
-     {/* your code  */}
-  </Router>
-)
-```
+然后在代码中引入并使用：
 
 ```js
 // /src/utils/request.js
@@ -271,3 +201,43 @@ export default function checkAuth() {
   });
 }
 ```
+
+## 常见问题
+
+### 为什么浏览器里的地址都带着 `#`？
+
+前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点如下：
+
+|特点\方案|     HashRouter    |   BrowserRouter  |
+|--------|-------------------|-----------------|
+|美观度   |   不好，有 # 号     |     好          |
+|易用性   |   简单             |  中等，需要 server 配合 |
+|依赖 server|    不依赖        | 依赖               |
+|跟锚点功能冲突|   冲突         |  不冲突           |
+|兼容性      |   IE8           |   IE10         |
+
+开发者可以根据自己的实际情况选择对应方案。
+
+### 如何使用 BrowserHistory？
+
+首先在路由渲染部分将最外层由 HashRouter 替换为 BrowserRouter：
+
+```diff
+- import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
++ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+```
+
+本地调试支持，在 `ice.config.js` 中配置 webpack-dev-server 的配置：
+
+```js
+module.exports = {
+  devServer: {
+    historyApiFallback: true,
+  }
+}
+```
+
+线上运行时需要 server 端支持，否则会出现刷新 404 问题，具体方案请参考社区文档：
+
+- [关于 react-router 的 browserHistory 模式](https://github.com/LoeiFy/Recordum/issues/15)
+- [react-router 之 HashRouter & BrowserRouter](https://zzugbb.github.io/passages/react-router%E9%97%AE%E9%A2%98/)

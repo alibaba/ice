@@ -22,8 +22,9 @@ import axios from 'axios';
 async function getUser() {
   try {
     const response = await axios.get('/user', {
+      // request query
       params: {
-        ID: 12345
+        id: 1
       }
     });
     console.log(response);
@@ -33,92 +34,118 @@ async function getUser() {
 }
 
 // Promise 方式调用
-axios.get('/user', {
-    params: {
-      ID: 12345
-    }
-  })
+axios.get('/user')
   .then(function (response) {
-    // handle success
     console.log(response);
   })
   .catch(function (error) {
-    // handle network error
     console.log(error);
-  })
+  });
 
 // 发送 POST 请求
 axios({
   method: 'post',
-  url: '/user/12345',
+  url: '/user',
   // request query
-  params: {
-    foo: 'bar'
-  },
+  params: { foo: 'bar' },
   // request body
   data: {
     firstName: 'Fred',
     lastName: 'Flintstone'
   }
 });
+```
 
-// 在 React 组件中使用
-import React from 'react';
+在这些基础功能上，axios 支持对请求进行自定义配置，如请求参数、异常状态码判断、全局处理异常、全局配置请求参数等，具体参见 [axios 文档](https://github.com/axios/axios#axios)。
 
-class Demo extends React.Component {
-  state = {
-    page: 1,
-    pageSize: 10,
-    total: 0,
-    dataSource: [],
-  }
+业务里通常会有请求成功或失败的通用逻辑，建议参考下文为业务封装统一的请求方法。
 
-  componentDidMount() {
-    this.getData({page: 1, pageSize: 10})
-  }
+## 在 React 组件中请求并渲染数据
 
-  getData(params) {
-    axios({
-      method: 'get',
-      url: '/api/getData',
-      params,
-    }).then(response => {
-      const { page, pageSize, total, dataSource } = res.data.data;
-      this.setState({ page, pageSize, total, dataSource });
-    });
-  }
+请求异步数据并渲染，往往需要在视图上区分不同的视图，比如加载中、接口出错、渲染数据，此处以 Function Component + Hooks 为例：
 
-  render() {
-    const { dataSource, page, pageSize, total } = this.state;
-    return <div>...</div>
-  }
+```js
+import React, { useState } from 'react';
+
+function CustomComponent {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const result = await axios('/list');
+        setData(result.data);
+      } catch (err) {
+        setError(err);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      {error && <div>{error.message}</div>}
+      {
+        loading ? <div>loading...</div> : (
+          (data || []).map((item, idx) => {
+            return <div key={idx}>{item.name}</div>;
+          })
+        )
+      }
+    </>
+  );
 }
 ```
 
-在这些基础功能基础上，axios 支持丰富的请求参数、异常状态码判断、全局处理异常、全局配置请求参数等，具体参见 [axios 文档](https://github.com/axios/axios#axios)。
+## 简化请求状态
 
-## 使用 hooks 简化状态管理
+通过上面的例子，会发现每个请求都包含请求成功、加载中、请求异常三个状态，如果每个请求都这样处理就会非常繁琐，因此接下来介绍如何通过封装让业务层无需关心请求过程中的这么多状态。对于 React 16.8.0 以下不支持 Hooks 的项目建议使用组件 [DataBinder](https://ice.work/component/databinder)。
 
-在异步数据请求中常见的一个需求是显示请求的加载中状态与显示请求的成功失败消息，使用原生的 axios 来实现时开发者往往需要定义相应的 state 来映射这些数据，这样做一方面管理起来比较麻烦，另一方面也会产生很多重复代码，因此对于 React 16.6.0 及以上版本，飞冰封装了一个 useRequest 的 hook 来解决这个问题，代码及使用方法如下：
-
-*提示：对于 React 16.6.0 以下版本的项目建议使用 [DataBinder](https://ice.work/component/databinder)*
-
-以下为 useRequest hook 的代码实现，其中的 `handleResponse` 方法为对 ajax 响应的处理逻辑，需要根据自身业务逻辑自定义：
+在业务代码中封装 request 以及 useRequest 的通用方法：
 
 ```jsx
+// src/utils/request.js
 import { useReducer } from 'react';
 import axios from 'axios';
 import { Message } from '@alifd/next';
 
+// Set baseURL when debugging production url in dev mode
+// axios.defaults.baseURL = '//xxxx.taobao.com';
+
 /**
- * 发送 ajax 请求的 hook
+ * Method to make ajax request
  *
- * @param {object} options - axios 配置 (https://github.com/axios/axios#request-config)
+ * @param {object} options - axios config (https://github.com/axios/axios#request-config)
+ */
+export async function request(options) {
+  try {
+    const response = await axios(options);
+    const { data, error } = handleResponse(response);
+    if (error) {
+      throw error;
+    } else {
+      return { response, data };
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+/**
+ * Hooks to make ajax request
+ *
+ * @param {object} options - axios config (https://github.com/axios/axios#request-config)
  * @return {object}
- *   @param {object} response - axios 返回值 (https://github.com/axios/axios#response-schema)
- *   @param {object} error - HTTP 或者用户返回的错误
- *   @param {boolean} loading - 请求的 loading 状态
- *   @param {function} request - 发送 ajax 请求的方法
+ *   @param {object} response - response of axios (https://github.com/axios/axios#response-schema)
+ *   @param {object} error - HTTP or use defined error
+ *   @param {boolean} loading - loading status of the request
+ *   @param {function} request - function to make the request manually
  */
 export function useRequest(options) {
   const initialState = {
@@ -129,12 +156,8 @@ export function useRequest(options) {
   const [state, dispatch] = useReducer(requestReducer, initialState);
 
   /**
-   * 发送 ajax 请求的方法
-   * @param {object} config - 发送请求时的额外 axios 配置 (会与 useRequest 时传入的参数作合并)
-   * @return {object}
-   *   @param {object} response - axios 返回值 (https://github.com/axios/axios#response-schema)
-   *   @param {object} error - HTTP 或者用户返回的错误
-   *   @param {boolean} loading - 请求的 loading 状态
+   * Method to make request manually
+   * @param {object} config - axios config to shallow merged with options before making request
    */
   async function request(config) {
     try {
@@ -156,23 +179,12 @@ export function useRequest(options) {
           type: 'success',
           response,
         });
-        return {
-          response,
-          error: null,
-          loading: false,
-        };
       }
     } catch (error) {
-      Message.show({
-        type: 'error',
-        title: '错误消息',
-        content: error.message,
-      });
       dispatch({
         type: 'error',
         error,
       });
-      throw error;
     }
   }
 
@@ -183,10 +195,10 @@ export function useRequest(options) {
 }
 
 /**
- * 处理请求状态的 reducer 方法
- * @param {object} state - 旧的状态
- * @param {object} action - dispatch 的 action 对象
- * @return {object} 新状态
+ * Reducer to handle the status of the request
+ * @param {object} state - original status
+ * @param {object} action - action of dispatch
+ * @return {object} new status
  */
 function requestReducer(state, action) {
   switch (action.type) {
@@ -218,14 +230,15 @@ function requestReducer(state, action) {
 }
 
 /**
- * ajax 响应值自定义处理逻辑，根据业务需求自定义
- * @param {object} response - ajax 请求返回值
- * @return {object} 根据状态码返回成功数据或者错误对象
+ * Custom response data handler logic
+ *
+ * @param {object} response - response data returned by request
+ * @return {object} data or error according to status code
  */
 function handleResponse(response) {
   const { data } = response;
-
-  // 响应状态码通常为 status 或者 code，此处根据接口规范自定义
+  // Please modify the status key according to your business logic
+  // normally the key is `status` or `code`
   if (data.status === 'SUCCESS') {
     return { data };
   } else if (data.status === 'NOT_LOGIN') {
@@ -237,43 +250,51 @@ function handleResponse(response) {
 }
 ```
 
-以下为使用 useRequest 的代码示例：
+单独使用 `request` 方法：
+
+```js
+import { request } from '@/utils/request';
+
+async function test() {
+  try {
+    const { response, data } = request({
+       url: '/api/list',
+    });
+    console.log('success', data);
+  } catch(err) {
+    // request 方法已处理异常，通常这里不需要做特殊处理
+    console.error(err);
+  }
+}
+```
+
+在组件中使用 `useRequest` 请求数据并渲染：
 
 ```javascript
-import useRequest from './useRequest';
+import { useRequest } from '@/utils/request';
 
 function ListView(props) {
   const { loading, error, response, request } = useRequest({
     url: '/api/list',
     method: 'GET',
   });
+  const dataSource = response ? response.data.dataSource : [];
 
   useEffect(() => {
-    request(); // 发 ajax 请求
+    request();
   }, []);
 
-  const loadingView = (
-    <div>
-      载入中...
-    </div>
-  );
-  const errorView = (
-    <div>
-      {error.message}
-    </div>
-  );
-  const listView = error ? errorView : (
-    <div>
-      {response && response.data && response.data.map((item) => {
-        return item.content;
-      })}
-    </div>
-  );
-
   return (
-    <div>
-      {loading ? loadingView : listView}
-    </div>
+    <>
+      {error && <div>{error.message}</div>}
+      {loading ? (
+        <div>loading....</div>
+      ) : (
+        data.map(item => {
+          return <div>{item.name}</div>;
+        })
+      )}
+    </>
   );
 }
 ```

@@ -3,16 +3,32 @@ title: 样式方案
 order: 6
 ---
 
-本文介绍了在项目中定义样式的最佳方式。
-
+本文介绍了在项目中使用样式的一些最佳实践。
 
 ## 全局样式
 
-对于整个项目的全局样式，统一定义在 `src/global.scss` 文件中，该文件中默认引入了 CSS Reset 样式，用于清除不同浏览器的内置样式，防止在不同浏览器上显示不一致。
+对于整个项目的全局样式，统一定义在 `src/global.scss` 文件中：
 
 ```scss
-// 载入默认全局样式 normalize
-import '@alifd/next/reset.scss';
+// 引入默认全局样式
+@import '@alifd/next/reset.scss';
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+```
+
+然后在入口脚本 `src/index.jsx` 里引入样式文件即可：
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import './global.scss';
+
+import router from './router';
+
+ReactDOM.render(router(), mountNode);
 ```
 
 ## 局部样式

@@ -9,30 +9,30 @@ order: 0
 ```markdown
 ├── mock/                          # 本地模拟数据
 │   ├── index.js
-├── public/                        # 静态文件，build 时直接输出到根目录
+├── public/                        # 静态文件，构建时会 copy 到 build/ 目录
 │   ├── index.html                 # 应用入口 HTML
 │   └── favicon.png                # Favicon
 ├── src/
 │   ├── components/                # 自定义业务组件
-│   │   └── NotFound/
-│   │       ├── index.jsx     
+│   │   └── Guide/
+│   │       ├── index.jsx
 │   │       └── index.module.scss
 │   ├── layouts/                   # 布局组件
 │   │   └── BasicLayout
 │   │       ├── index.jsx
-│   │       └── index.module.scss  
-│   ├── pages/                     # 业务页面
+│   │       └── index.module.scss
+│   ├── pages/                     # 页面
 │   │   └── Home/                  # Home 页面
 │   │       ├── components/        # 页面级自定义业务组件
-│   │       ├── index.jsx          # 入口文件
+│   │       ├── index.jsx          # 页面入口
 │   │       └── index.module.scss  # css module 样式
 │   ├── config/                    # 配置信息
 │   │   ├── dataSource.js          # 数据源配置
 │   │   ├── routes.js              # 路由配置
 │   │   └── menu.js                # 导航菜单配置
-│   ├── stores/                    # 全局状态管理
+│   ├── stores/                    # [可选]全局状态管理
 │   │   └── user.js
-│   ├── locales/                   # 国际化资源
+│   ├── locales/                   # [可选]国际化资源
 │   │   ├── en-US
 │   │   └── zh-CN
 │   ├── utils/                     # 工具库
@@ -40,7 +40,6 @@ order: 0
 │   ├── global.scss                # 全局样式
 │   ├── router.jsx                 # 路由渲染组件，依赖 config/routes.js
 │   └── index.jsx                  # 应用入口脚本
-├── tests/                         # 测试用例目录
 ├── ice.config.js                  # 项目工程配置，包含插件配置及自定义 `webpack` 配置等
 ├── README.md
 ├── package.json
@@ -51,4 +50,3 @@ order: 0
 ├── .stylelintignore
 └── .stylelintrc.js
 ```
-
