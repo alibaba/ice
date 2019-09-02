@@ -104,12 +104,7 @@ export default class Task implements ITaskModule {
 
     this.process[command].stdout.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      let chunk: string;
-      try {
-        chunk = iconv.decode(buffer, 'gbk');
-      } catch {
-        chunk = buffer.toString();
-      };
+      const chunk: string = iconv.decode(buffer, 'gbk');
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: true,
@@ -119,12 +114,7 @@ export default class Task implements ITaskModule {
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      let chunk: string;
-      try {
-        chunk = iconv.decode(buffer, 'gbk');
-      } catch {
-        chunk = buffer.toString();
-      };
+      const chunk: string = iconv.decode(buffer, 'gbk');
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: false,
