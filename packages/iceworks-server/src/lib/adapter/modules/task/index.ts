@@ -144,12 +144,7 @@ export default class Task implements ITaskModule {
 
     this.process[command].on('error', error => {
       // emit adapter.task.error to show message
-      let errMsg: string;
-      try {
-        errMsg = iconv.decode(error, 'gbk');
-      } catch {
-        errMsg = error.toString();
-      };
+      const errMsg: string = error.toString();
       logger.error(errMsg);
       ctx.socket.emit('adapter.task.error', {
         message: errMsg,
