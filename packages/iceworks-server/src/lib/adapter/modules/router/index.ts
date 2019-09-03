@@ -237,8 +237,6 @@ export default class Router implements IRouterModule {
    * 3. add import if there is no layout or component in the ImportDeclarations
    */
   private changeImportDeclarations(routerConfigAST, data) {
-    // gt v3 exist config catalog
-    const existConfigCatalog = true;
     const importDeclarations = [];
     const removeIndex = [];
     // router import page or layout have @
@@ -386,10 +384,7 @@ export default class Router implements IRouterModule {
      */
     let lazyCode = '';
     let importCode = '';
-    let sign = '@';
-    if (!existConfigCatalog && !existAtSign) {
-      sign = '.';
-    }
+    const sign = '@';
     newImports.forEach(({name, type}) => {
       if (this.noPathPrefix) {
         importCode += `import ${name} from '${type}/${name}';\n`;
