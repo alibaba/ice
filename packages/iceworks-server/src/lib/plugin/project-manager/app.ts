@@ -50,6 +50,8 @@ class Project implements IProject {
 
   public readonly type: string;
 
+  public readonly language: string;
+
   public panels: IPanel[] = [];
 
   public adapter: {[name: string]: IBaseModule} = {};
@@ -63,13 +65,22 @@ class Project implements IProject {
     this.path = folderPath;
     this.packagePath = path.join(this.path, packageJSONFilename);
     this.type = this.getType();
+    this.language = this.getLanguage();
     this.app = app;
   }
 
-  public getType(): string {
+  private getType(): string {
     const { iceworks = {} } = this.getPackageJSON();
     const { type = DEFAULT_TYPE } = iceworks;
     return type;
+  }
+
+  private getLanguage(): string {
+    let language = 'js';
+    if (fs.existsSync(path.join(this.path, 'tsconfig.json'))) {
+      language = 'ts';
+    }
+    return language;
   }
 
   public getPackageJSON() {

@@ -23,7 +23,7 @@ export default class Router implements IRouterModule {
 
   public existLazy: boolean;
 
-  public configFilePath = 'config/routes.js';
+  public configFilePath = 'config/routes';
 
   // whether import dependency should have prefix such as './' or '@/'
   public noPathPrefix = false;
@@ -34,7 +34,7 @@ export default class Router implements IRouterModule {
     const { project, storage } = params;
     this.project = project;
     this.storage = storage;
-    this.path = path.join(this.project.path, 'src', this.configFilePath);
+    this.path = path.join(this.project.path, 'src', `${this.configFilePath}.${this.project.language}`);
   }
 
   private getASTByCode(code: string): any {
@@ -238,7 +238,7 @@ export default class Router implements IRouterModule {
    */
   private changeImportDeclarations(routerConfigAST, data) {
     // gt v3 exist config catalog
-    const existConfigCatalog = this.configFilePath.indexOf('config/') === 0;
+    const existConfigCatalog = true;
     const importDeclarations = [];
     const removeIndex = [];
     // router import page or layout have @
