@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
 import * as iconv from 'iconv-lite';
+import * as iconvJschardet from 'iconv-jschardet';
 import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
@@ -104,17 +105,18 @@ export default class Task implements ITaskModule {
 
     this.process[command].stdout.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      const chunk: string = iconv.decode(buffer, 'gbk');
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: true,
-        chunk,
+        chunk: buffer.toString(),
       });
     });
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
-      const chunk: string = iconv.decode(buffer, 'gbk');
+
+      const encodingType = iconvJschardet.detect(buffer);
+      const chunk: string = encodingType.encoding === 'GB2312' ? iconv.decode(buffer, 'gbk') : buffer.toString();
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: false,
