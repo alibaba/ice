@@ -116,7 +116,7 @@ export default class Page implements IPageModule {
   }
 
   private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<void> {
-    const { i18n } = ctx;
+    const { i18n, logger } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
       this.path,
@@ -137,13 +137,14 @@ export default class Page implements IPageModule {
     }
 
     const blockDir = path.join(componentsDir, blockName);
-    const blockTempDir = path.join(componentsDir, '.temp');
+    const blockTempDir = path.join(componentsDir, `.${blockName}.temp`);
     try {
       await getAndExtractTarball(
         blockTempDir,
         tarballURL
       );
     } catch (error) {
+      logger.error('getAndExtractTarball got error!');
       error.message = i18n.format('baseAdapter.page.download.tarError', { blockName, tarballURL });
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
         error.message = i18n.format('baseAdapter.page.download.tarTimeOut', { blockName, tarballURL });
@@ -170,7 +171,7 @@ export default class Page implements IPageModule {
 
   public async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
-    const { socket, i18n } = ctx;
+    const { socket, i18n, logger } = ctx;
 
     // create page dir
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
@@ -186,7 +187,13 @@ export default class Page implements IPageModule {
 
     // add blocks
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.download'), percent: 40 });
-    await this.addBlocks({ blocks, name: pageName }, ctx);
+    try {
+      await this.addBlocks({ blocks, name: pageName }, ctx);
+    } catch (error) {
+      logger.error('addBlocks got error!');
+      await this.delete({ name: pageName });
+      throw error;
+    }
 
     // create page file
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 80 });
