@@ -5,10 +5,10 @@ import { IProject } from '../../../../interface';
 export default class Router extends baseModules.Router {
   public readonly path: string;
 
-  public configFilePath = 'routerConfig.js';
+  public configFilePath = 'routerConfig';
 
   constructor(params: {project: IProject; storage: any }) {
     super(params);
-    this.path = path.join(this.project.path, 'src', this.configFilePath);
+    this.path = path.join(this.project.path, 'src', `${this.configFilePath}.${this.project.language}`);
   }
 }
