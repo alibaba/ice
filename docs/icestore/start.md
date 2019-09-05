@@ -133,4 +133,4 @@ function Todo() {
 ReactDOM.render(<Todo />, document.getElementById('root'));
 ```
 
-完整示例请参考线上 [sandbox](https://codesandbox.io/s/icestore-hs9fe)。
+完整示例请参考线上 [codesandbox](https://codesandbox.io/s/icestore-hs9fe)。
