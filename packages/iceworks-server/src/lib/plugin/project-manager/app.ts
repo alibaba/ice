@@ -100,6 +100,7 @@ class Project implements IProject {
 
     const env = process.env;
     const envPath = shellPath.sync().split(path.delimiter);
+    envPath.unshift(path.join(this.path, 'node_modules', '.bin'));
 
     this.app.logger.info('env.pah:', process.env[PATH]);
 
