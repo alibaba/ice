@@ -2,6 +2,8 @@ import * as execa from 'execa';
 import * as fs from 'fs-extra';
 import * as detectPort from 'detect-port';
 import * as path from 'path';
+import * as iconv from 'iconv-lite';
+import * as iconvJschardet from 'iconv-jschardet';
 import * as terminate from 'terminate';
 import * as os from 'os';
 import chalk from 'chalk';
@@ -55,7 +57,7 @@ export default class Task implements ITaskModule {
 
     const nodeModulesPath = path.join(this.project.path, 'node_modules');
     const pathExists = await fs.pathExists(nodeModulesPath);
-    if(!pathExists) {
+    if (!pathExists) {
       this.installed = false;
       return this;
     }
@@ -112,10 +114,13 @@ export default class Task implements ITaskModule {
 
     this.process[command].stderr.on('data', buffer => {
       this.status[command] = TASK_STATUS_WORKING;
+
+      const encodingType = iconvJschardet.detect(buffer);
+      const chunk: string = encodingType.encoding === 'GB2312' ? iconv.decode(buffer, 'gbk') : buffer.toString();
       ctx.socket.emit(`adapter.task.${eventName}`, {
         status: this.status[command],
         isStdout: false,
-        chunk: buffer.toString(),
+        chunk,
       });
     });
 
@@ -131,7 +136,7 @@ export default class Task implements ITaskModule {
 
     this.process[command].on('error', error => {
       // emit adapter.task.error to show message
-      const errMsg = error.toString();
+      const errMsg: string = error.toString();
       logger.error(errMsg);
       ctx.socket.emit('adapter.task.error', {
         message: errMsg,
@@ -249,7 +254,7 @@ export default class Task implements ITaskModule {
     const command = devScriptArray[1];
     let newDevScriptContent = `${cli} ${command}`;
     Object.keys(args.options).forEach(key => {
-      if(args.options[key]) {
+      if (args.options[key]) {
         newDevScriptContent += ` --${key}=${args.options[key]}`;
       }
     });
