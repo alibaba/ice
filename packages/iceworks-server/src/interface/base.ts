@@ -35,6 +35,11 @@ export interface IProject {
   readonly type: string;
 
   /**
+   * 项目的编程语言：ts/js/coffee...
+   */
+  readonly language: string;
+
+  /**
    * 项目显示名称
    */
   readonly name: string;

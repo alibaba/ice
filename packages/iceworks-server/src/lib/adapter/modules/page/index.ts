@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as fsExtra from 'fs-extra';
 import * as util from 'util';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as _ from 'lodash';
-import * as mv from 'mv';
 import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as uniqBy from 'lodash.uniqby';
@@ -22,7 +22,6 @@ const mkdirpAsync = util.promisify(mkdirp);
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const lstatAsync = util.promisify(fs.lstat);
-const mvAsync = util.promisify(mv);
 
 const loadTemplate = async (fileName: string, filePath: string) => {
   const fileStr = await readFileAsync(filePath, 'utf-8');
@@ -61,7 +60,7 @@ export default class Page implements IPageModule {
 
   private async scanPages(dirPath: string): Promise<IPage[]> {
     const subDirectories = await scanDirectory(dirPath);
-    const pages = await Promise.all(subDirectories.map(async(dir) => {
+    const pages = await Promise.all(subDirectories.map(async (dir) => {
       const pagePath = path.join(dirPath, dir);
       const { atime, birthtime, ctime, mtime } = await lstatAsync(pagePath);
       const pageName = path.basename(dir);
@@ -117,7 +116,7 @@ export default class Page implements IPageModule {
   }
 
   private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<void> {
-    const { i18n } = ctx;
+    const { i18n, logger } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
       this.path,
@@ -138,29 +137,30 @@ export default class Page implements IPageModule {
     }
 
     const blockDir = path.join(componentsDir, blockName);
-    const blockTempDir = path.join(componentsDir, '.temp');
+    const blockTempDir = path.join(componentsDir, `.${blockName}.temp`);
     try {
       await getAndExtractTarball(
         blockTempDir,
         tarballURL
       );
     } catch (error) {
-      error.message = i18n.format('baseAdapter.page.download.tarError', {blockName, tarballURL});
+      logger.error('getAndExtractTarball got error!');
+      error.message = i18n.format('baseAdapter.page.download.tarError', { blockName, tarballURL });
       if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', {blockName, tarballURL});
+        error.message = i18n.format('baseAdapter.page.download.tarTimeOut', { blockName, tarballURL });
       }
       throw error;
     }
 
-    await mvAsync(path.join(blockTempDir, 'src'), blockDir);
+    await fsExtra.move(path.join(blockTempDir, 'src'), blockDir);
     await rimrafAsync(blockTempDir);
   }
 
-  private generateBlockName(block: {name: string}): string {
+  private generateBlockName(block: { name: string }): string {
     return upperCamelCase(block.name);
   }
 
-  private checkBlocksName(blocks: {name: string}[]): boolean {
+  private checkBlocksName(blocks: { name: string }[]): boolean {
     return uniqBy(blocks.map((block) => ({ name: this.generateBlockName(block) })), 'name').length !== blocks.length;
   }
 
@@ -171,7 +171,7 @@ export default class Page implements IPageModule {
 
   public async create(page: ICreatePageParam, ctx: IContext): Promise<any> {
     const { name, blocks } = page;
-    const { socket, i18n } = ctx;
+    const { socket, i18n, logger } = ctx;
 
     // create page dir
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createMenu'), percent: 10 });
@@ -187,11 +187,17 @@ export default class Page implements IPageModule {
 
     // add blocks
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.download'), percent: 40 });
-    await this.addBlocks({ blocks, name: pageName }, ctx);
+    try {
+      await this.addBlocks({ blocks, name: pageName }, ctx);
+    } catch (error) {
+      logger.error('addBlocks got error!');
+      await this.delete({ name: pageName });
+      throw error;
+    }
 
     // create page file
     socket.emit('adapter.page.create.status', { text: i18n.format('baseAdapter.page.create.createFile'), percent: 80 });
-   
+
     const template = await loadTemplate(this.templateFileName, this.templateFilePath);
     const fileContent = template.compile({
       blocks: blocks.map((block) => {
@@ -219,7 +225,7 @@ export default class Page implements IPageModule {
     return pageName;
   }
 
-  public async delete(params: {name: string}): Promise<any> {
+  public async delete(params: { name: string }): Promise<any> {
     const { name } = params;
     await rimrafAsync(path.join(this.path, name));
   }
@@ -243,9 +249,9 @@ export default class Page implements IPageModule {
     return blocks;
   }
 
-  public async addBlocks(params: {blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
-    const {blocks, name} = params;
-    const {i18n} = ctx;
+  public async addBlocks(params: { blocks: IMaterialBlock[]; name?: string }, ctx: IContext): Promise<void> {
+    const { blocks, name } = params;
+    const { i18n } = ctx;
 
     const existBlocks = await this.getBlocks(name);
     if (this.checkBlocksName(existBlocks.concat(blocks))) {
@@ -256,8 +262,8 @@ export default class Page implements IPageModule {
     await this.installBlocksDependencies(blocks, ctx);
   }
 
-  public async addBlock(params: {block: IMaterialBlock; name?: string }, ctx: IContext): Promise<void> {
-    const {block, name} = params;
+  public async addBlock(params: { block: IMaterialBlock; name?: string }, ctx: IContext): Promise<void> {
+    const { block, name } = params;
     await this.downloadBlockToPage(block, name, ctx);
     await this.installBlocksDependencies([block], ctx);
   }
