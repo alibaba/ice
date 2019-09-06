@@ -54,6 +54,7 @@ Options:
   --analyzer             开启构建分析
   --analyzer-port        设置分析端口号
   --disabled-reload      关闭 hot reload
+  --disabled-mock      关闭 mock 功能
 ```
 
 比如使用 3000 端口启动 dev server
