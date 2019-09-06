@@ -9,7 +9,7 @@ ice-scripts 提供了丰富的功能帮助我们开发 React 项目：完善的�
 
 我们致力于将 ice-scripts 打造为 React 生态下高可配置性、高可用的工程工具。
 
-![架构图](https://img.alicdn.com/tfs/TB1OSVdXbr1gK0jSZFDXXb9yVXa-2844-2133.jpg)
+![架构图](https://img.alicdn.com/tfs/TB1WbZWcW67gK0jSZFHXXa9jVXa-2844-2133.jpg)
 
 ## 特性
 
