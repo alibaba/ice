@@ -4,6 +4,7 @@
 
 - [feat] improving fault tolerance in Page Creation #2785
 - [fix] error deleting page file in typescript project #2783
+- [fix] Menu and Router operations are not available in typescript project #2783
 - [fix] decode for log #2782
 - [fix] no command line tool was found during task execution #2788
 
