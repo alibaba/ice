@@ -1,5 +1,13 @@
 # CHANGELOG for iceworks
 
+## 3.3.0
+
+- [feat] improving fault tolerance in Page Creation #2785
+- [fix] error deleting page file in typescript project #2783
+- [fix] Menu and Router operations are not available in typescript project #2783
+- [fix] decode for log #2782
+- [fix] no command line tool was found during task execution #2788
+
 ## 3.2.0
 
 - [feat] more tips for router panel #2726
