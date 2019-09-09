@@ -1,6 +1,6 @@
 ---
 title: AppRoute
-order: 6
+order: 2
 ---
 
 子应用注册组件，包含如下 props 属性

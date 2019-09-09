@@ -1,6 +1,6 @@
 ---
 title: appHistory
-order: 11
+order: 7
 ---
 
 提供手动切换不同应用的方法。

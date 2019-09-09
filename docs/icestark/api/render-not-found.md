@@ -1,6 +1,6 @@
 ---
 title: renderNotFound
-order: 9
+order: 5
 ---
 
 子应用触发渲染全局 404 的方法

@@ -1,6 +1,6 @@
 ---
 title: AppRouter
-order: 5
+order: 1
 ---
 
 定位子应用渲染节点，包含如下 props 属性
@@ -8,7 +8,7 @@ order: 5
 ## onRouteChange
 
 - 子应用 route 变化时的回调，选填
-- 类型：`Function(pathname, query, type)`
+- 类型：`Function(pathname, query, hash, type)`
 - 默认值：`-`
 
 ## NotFoundComponent

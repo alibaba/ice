@@ -69,7 +69,7 @@ class Layout extends React.Component {
 
 ## 在子应用中使用
 
-icestark 对子应用的代码侵入性极少，只有三方面：
+icestark 对子应用的代码侵入性极少，只有两方面：
 
 ### ReactDOM 渲染节点
 
@@ -84,26 +84,6 @@ ReactDOM.render(<App />, getMountNode());
 ```
 
 - `getMountNode` 方法会判断当前应用的运行环境，如果以子应用方式运行会使用 icestark 内部创建的 dom 节点 / shadowDOM 节点，否则会默认采用`<div id="ice-container"></div>`节点。同时，该方法支持传 DOM 节点作为默认节点。
-
-### 子应用间跳转
-
-```js
-import React from 'react';
-import { AppLink } from '@ice/stark';
-
-class App extends React.Component {
-  // ...
-  render() {
-    return (
-      <div>
-        <AppLink to="/waiter/list">子应用间跳转使用 AppLink </AppLink>
-      </div>
-    );
-  }
-}
-```
-
-- 跨应用跳转的情况下使用 `AppLink`，表示本次跳转需要重新加载静态资源；子应用内部跳转，仍使用 `Link`
 
 ### Router 注入 basename、渲染全局 404
 

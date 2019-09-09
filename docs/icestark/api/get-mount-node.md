@@ -1,6 +1,6 @@
 ---
 title: getMountNode
-order: 8
+order: 4
 ---
 
 根据子应用运行环境，返回子应用渲染节点
