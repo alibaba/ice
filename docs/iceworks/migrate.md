@@ -10,7 +10,7 @@ order: 5
 * 全新用户界面：多主题和多语言，满足开发者的个性化诉求；
 * 可定制化工作台：任何前端项目，无论何种工程工具或项目规范，都可在 iceworks 中集成。
 
-## 项目迁移方式
+## React 项目迁移方式
 
 因为 ICE 脚手架存在多个不同版本，因此需要通过配置告诉 iceworks 当前项目对应的脚手架版本（如果想要一并升级脚手架可参考文档[脚手架升级](/docs/guide/resource/migrate)）：
 
@@ -19,6 +19,7 @@ order: 5
 ```json
 {
   "iceworks": {
+    "type": "react",
     "adapter": "adapter-react-v0"
   }
 }
@@ -49,6 +50,7 @@ const routerConfig = [
 ```json
 {
   "iceworks": {
+    "type": "react",
     "adapter": "adapter-react-v1",
   }
 }
@@ -83,9 +85,35 @@ const routerConfig = [
 ```json
 {
   "iceworks": {
+    "type": "react",
     "adapter": "adapter-react-v2"
   }
 }
 ```
 
 *注意：使用 iceworks 3.0 创建的新项目，adapter版本为 `adapter-react-v3`*
+
+## Vue 项目迁移方式
+
+如果在项目的 `src` 目录下存在 `routerConfig.js` 和 `menuConfig.js`，则在 `package.json` 中增加如下配置
+
+```json
+{
+  "iceworks": {
+    "type": "vue",
+    "adapter": "adapter-vue-v1"
+  }
+}
+```
+
+如果在项目中存在 `src/config` 目录，则在 `package.json` 中增加如下配置
+
+```json
+{
+  "iceworks": {
+    "type": "vue",
+    "adapter": "adapter-vue-v2"
+  }
+}
+```
+*注意：使用 iceworks 3.0 创建的新项目，adapter版本为 `adapter-vue-v2`*
