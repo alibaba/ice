@@ -237,12 +237,6 @@ const docCategories = {
         'en-us': 'API',
       },
       dir: 'api',
-    }, {
-      title: {
-        'zh-cn': '参考',
-        'en-us': 'Reference',
-      },
-      dir: 'reference',
     }],
   },
   icestore: {
