@@ -42,7 +42,7 @@ module.exports = {
 
 ## 修改已有 webpack loader
 
-内置 webpack loader 请参考 [loader 规则命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackLoaders.js)。
+内置 webpack loader 请参考 [loader 规则命名](https://github.com/ice-lab/ice-scripts/blob/master/packages/ice-scripts/lib/config/setWebpackLoaders.js)。
 
 ```js
 // ice.config.js
@@ -84,7 +84,7 @@ module.exports = {
 
 ## 修改已有 webpack 插件
 
-内置 webpack plugin 请参考 [webpack 插件命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackPlugins.js)。
+内置 webpack plugin 请参考 [webpack 插件命名](https://github.com/ice-lab/ice-scripts/blob/master/packages/ice-scripts/lib/config/setWebpackPlugins.js)。
 
 ```js
 // ice.config.js
