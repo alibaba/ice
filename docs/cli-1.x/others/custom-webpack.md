@@ -3,7 +3,7 @@ title: 自定义 webpack 配置使用飞冰物料
 order: 9
 ---
 
-飞冰默认使用 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 作为开发工具，这个开发工具里包含了很多对于组件的定制能力以及我们多年在工程领域的沉淀，同时也通过良好的机制支持业务自定义很多工程能力，因此我们非常不推荐自建 webpack 的方式，如果你在使用 ice-scripts 中遇到任何问题都可以直接反馈给飞冰（ICE）团队支持。
+飞冰默认使用 [ice-scripts](https://github.com/ice-lab/ice-scripts) 作为开发工具，这个开发工具里包含了很多对于组件的定制能力以及我们多年在工程领域的沉淀，同时也通过良好的机制支持业务自定义很多工程能力，因此我们非常不推荐自建 webpack 的方式，如果你在使用 ice-scripts 中遇到任何问题都可以直接反馈给飞冰（ICE）团队支持。
 
 注意，如果是想使用社区的 [create-react-app](https://github.com/facebook/create-react-app) 开发项目：
 
