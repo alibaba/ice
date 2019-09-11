@@ -96,7 +96,7 @@ const SavePageModal = ({ on, onCancel, onOk, intl }) => {
             <span>
               <FormattedMessage id="iceworks.project.panel.page.save.routePath.label" />
               <TipIcon>
-                填写路由路径最终会在 router config 中生成一个路由，不需要自己在配置路由
+                填写路由路径最终会在 router config 中生成一个路由，不需要自己再配置路由
               </TipIcon>
             </span>
           )}
