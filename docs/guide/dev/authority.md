@@ -118,4 +118,39 @@ export default withAuth({
 
 ### 菜单鉴权
 
-TODO
+当需要对某些菜单项进行权限控制，只需在对应的菜单项设置 authorities 属性即可，当前用户的权限如果与 authorities 中指定的权限不匹配，菜单项将不显示。
+
+```js
+// src/config/menu.js
+const headerMenuConfig = [
+  // ...
+  {
+    name: '反馈',
+    path: 'https://github.com/alibaba/ice',
+    external: true,
+    newWindow: true,
+    icon: 'message',
+    authorities: ['admin'], // 当前用户权限为 admin 时显示菜单，否则隐藏
+  },
+];
+
+const asideMenuConfig = [
+  {
+    name: '文章管理',
+    path: '/post',
+    icon: 'edit',
+    authorities: ['admin', 'user'], // 当前用户权限为 admin 或者 user 时显示菜单，否则隐藏
+    children: [
+      {
+        name: '文章列表',
+        path: '/post/list',
+        authorities: ['user'], // 当前用户权限为 user 时显示菜单，否则隐藏
+      },
+      {
+        name: '添加文章',
+        path: '/post/create'
+      },
+    ],
+  }
+];
+```
