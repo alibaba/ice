@@ -1,10 +1,11 @@
 const path = require('path');
 const spawn = require('cross-spawn');
 const { getNpmTarball, getNpmRegistry } = require('ice-npm-utils');
+const userHome = require('user-home');
 const extractTarball = require('./extractTarball');
 
 const NPM_NAME = 'iceworks-server';
-const DEST_DIR = path.join(__dirname, '../', 'server');
+const DEST_DIR = path.join(userHome, NPM_NAME);
 
 /**
  * Download npm package content to the specified directory
@@ -12,7 +13,7 @@ const DEST_DIR = path.join(__dirname, '../', 'server');
  * @param {string} destDir target directory
  */
 function downloadServer(npmName, destDir) {
-  console.log('>>> start downloading code');
+  console.log('>>> start downloading code', destDir);
   console.log('>>> ICEWORKS_CORE_VERSION:', process.env.ICEWORKS_CORE_VERSION);
   const version = process.env.ICEWORKS_CORE_VERSION ? process.env.ICEWORKS_CORE_VERSION : 'latest';
   return getNpmTarball(npmName, version)

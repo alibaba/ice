@@ -12,7 +12,7 @@ const { checkAliInternal } = require('ice-npm-utils');
 const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
-const SERVER_PATH = path.join(__dirname, '../', 'server');
+const SERVER_PATH = path.join(userHome, 'iceworks-server');
 // eslint-disable-next-line import/no-dynamic-require
 const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
@@ -174,8 +174,8 @@ async function dauStat() {
     iceworksConfigContent.lastDate = nowtDate;
     fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
 
-    // eslint-disable-next-line global-require
-    const iceworksCorePackageConfig = require('../server/package.json');
+    // eslint-disable-next-line
+    const iceworksCorePackageConfig = require(serverPackageConfig);
 
     goldlog('dau', {
       group: isAlibaba ? 'alibaba' : 'outer',
