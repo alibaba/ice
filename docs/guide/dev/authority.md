@@ -154,3 +154,30 @@ const asideMenuConfig = [
   }
 ];
 ```
+
+控制菜单项渲染也是使用 `Auth` 组件实现，当菜单项有配置 authorites 属性时，使用 `Auth` 组件包裹，权限不匹配时组件隐藏。
+
+```jsx
+/**
+ * 根据权限决定是否渲染某个表单项
+ * @param {object} item - 菜单项组件
+ * @param {array} authorities - 菜单项允许权限数组
+ * @param {string} key - 当前菜单项的 key
+ * @return {object} 渲染的菜单项
+ */
+function renderAuthItem(item, authorities, key) {
+  if (authorities) {
+    return (
+      <Auth
+        authorities={authorities}
+        hidden
+        key={key}
+      >
+        {item}
+      </Auth>
+    );
+  } else {
+    return item;
+  }
+}
+```
