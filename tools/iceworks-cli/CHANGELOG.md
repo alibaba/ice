@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 3.0.7-beta.0
+- [feat] move iceworks-core to user directory
+
 ## 3.0.6
 - [fix] update node engines to 8.3.0  #2784
 
