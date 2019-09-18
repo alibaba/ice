@@ -5,7 +5,7 @@ const userHome = require('user-home');
 const extractTarball = require('./extractTarball');
 
 const NPM_NAME = 'iceworks-server';
-const DEST_DIR = path.join(userHome, NPM_NAME);
+const DEST_DIR = path.join(userHome, `.${NPM_NAME}`);
 
 /**
  * Download npm package content to the specified directory
