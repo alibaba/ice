@@ -2,8 +2,6 @@
 const chalk = require('chalk');
 const program = require('commander');
 const semver = require('semver');
-const path = require('path');
-const userHome = require('user-home');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
@@ -165,12 +163,5 @@ async function checkIceworksVersion() {
 }
 
 function logCLIVersion () {
-  const iceworksCLIVersion = packageConfig.version;
-  const pkgPath = path.join(userHome, '.iceworks-server', 'package.json')
-  // eslint-disable-next-line
-  const iceworksCorePackageConfig = require(pkgPath);
-  const iceworksCoreVersion = iceworksCorePackageConfig.version;
-
-  console.log(chalk.grey('iceworks CLI:', iceworksCLIVersion));
-  console.log(chalk.grey('iceworks Core:', iceworksCoreVersion, pkgPath));
+  console.log(chalk.grey('iceworks CLI:', packageConfig.version));
 }

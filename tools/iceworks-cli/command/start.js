@@ -13,31 +13,39 @@ const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
 const SERVER_PATH = path.join(userHome, '.iceworks-server');
-// eslint-disable-next-line import/no-dynamic-require
-const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
+
+let serverPackageConfig = {}
 
 async function start(options = {}) {
-  // backup logic，specify the iceworks-core version
-  if (options.command === 'use') {
-    if (!semver.valid(options.version)) {
-      throw new Error('Invalid version specified');
+  try {
+    // eslint-disable-next-line
+    serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
+    console.log(chalk.grey('iceworks Core:', serverPackageConfig.version, SERVER_PATH));
+
+    // backup logic，specify the iceworks-core version
+    if (options.command === 'use') {
+      if (!semver.valid(options.version)) {
+        throw new Error('Invalid version specified');
+      } else {
+        const serverPackageVersion = serverPackageConfig.version;
+        process.env.ICEWORKS_CORE_VERSION = options.version;
+        if (serverPackageVersion !== options.version) {
+          downloadAndListen(options);
+        } else {
+          listen(options);
+        }
+      }
     } else {
-      const serverPackageVersion = serverPackageConfig.version;
-      process.env.ICEWORKS_CORE_VERSION = options.version;
-      if (serverPackageVersion !== options.version) {
+      process.env.ICEWORKS_CORE_VERSION = '';
+      const answers = await checkServerVersion();
+      if (answers && answers.update) {
         downloadAndListen(options);
       } else {
         listen(options);
       }
     }
-  } else {
-    process.env.ICEWORKS_CORE_VERSION = '';
-    const answers = await checkServerVersion();
-    if (answers && answers.update) {
-      downloadAndListen(options);
-    } else {
-      listen(options);
-    }
+  } catch (error) {
+    downloadAndListen(options);
   }
 }
 
@@ -62,14 +70,13 @@ function downloadAndListen(options) {
   });
 }
 
-async function listen(options) {
+async function listen(options = {}) {
   // DAU statistics
   try {
     await dauStat();
   } catch (error) {
     // ignore error
   }
-
 
   const host = options.host || 'http://127.0.0.1';
 
@@ -174,12 +181,9 @@ async function dauStat() {
     iceworksConfigContent.lastDate = nowtDate;
     fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
 
-    // eslint-disable-next-line
-    const iceworksCorePackageConfig = require(serverPackageConfig);
-
     goldlog('dau', {
       group: isAlibaba ? 'alibaba' : 'outer',
-      version: iceworksCorePackageConfig.version,
+      version: serverPackageConfig.version,
     });
   }
 }
