@@ -163,11 +163,5 @@ async function checkIceworksVersion() {
 }
 
 function logCLIVersion () {
-  const iceworksCLIVersion = packageConfig.version;
-  // eslint-disable-next-line global-require
-  const iceworksCorePackageConfig = require('../server/package.json');
-  const iceworksCoreVersion = iceworksCorePackageConfig.version;
-
-  console.log(chalk.grey('iceworks CLI:', iceworksCLIVersion));
-  console.log(chalk.grey('iceworks Core:', iceworksCoreVersion));
+  console.log(chalk.grey('iceworks CLI:', packageConfig.version));
 }

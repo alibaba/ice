@@ -12,32 +12,39 @@ const { checkAliInternal } = require('ice-npm-utils');
 const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
-const SERVER_PATH = path.join(__dirname, '../', 'server');
-// eslint-disable-next-line import/no-dynamic-require
-const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
+const SERVER_PATH = path.join(userHome, '.iceworks-server');
 
 async function start(options = {}) {
-  // backup logic，specify the iceworks-core version
-  if (options.command === 'use') {
-    if (!semver.valid(options.version)) {
-      throw new Error('Invalid version specified');
+  try {
+    // eslint-disable-next-line
+    const packageConfig = require(path.join(SERVER_PATH, 'package.json'));
+    const packageName = packageConfig.name;
+    const packageVersion = packageConfig.version;
+    console.log(chalk.grey('iceworks Core:', packageVersion, SERVER_PATH));
+
+    // backup logic，specify the iceworks-core version
+    if (options.command === 'use') {
+      if (!semver.valid(options.version)) {
+        throw new Error('Invalid version specified');
+      } else {
+        process.env.ICEWORKS_CORE_VERSION = options.version;
+        if (packageVersion !== options.version) {
+          downloadAndListen(options);
+        } else {
+          listen(options);
+        }
+      }
     } else {
-      const serverPackageVersion = serverPackageConfig.version;
-      process.env.ICEWORKS_CORE_VERSION = options.version;
-      if (serverPackageVersion !== options.version) {
+      process.env.ICEWORKS_CORE_VERSION = '';
+      const answers = await checkServerVersion(packageName, packageVersion);
+      if (answers && answers.update) {
         downloadAndListen(options);
       } else {
         listen(options);
       }
     }
-  } else {
-    process.env.ICEWORKS_CORE_VERSION = '';
-    const answers = await checkServerVersion();
-    if (answers && answers.update) {
-      downloadAndListen(options);
-    } else {
-      listen(options);
-    }
+  } catch (error) {
+    downloadAndListen(options);
   }
 }
 
@@ -65,11 +72,10 @@ function downloadAndListen(options) {
 async function listen(options) {
   // DAU statistics
   try {
-    await dauStat();
+    await dauStat(options);
   } catch (error) {
     // ignore error
   }
-
 
   const host = options.host || 'http://127.0.0.1';
 
@@ -144,11 +150,9 @@ function failedMsg(error) {
 /**
  * Get the server package version
  */
-async function checkServerVersion() {
-  const packageName = serverPackageConfig.name;
-  const packageVersion = serverPackageConfig.version;
-
+async function checkServerVersion(packageName, packageVersion) {
   const result = await checkVersion(packageName, packageVersion);
+
   if (result) {
     const answers = await inquirer.prompt([
       {
@@ -174,12 +178,8 @@ async function dauStat() {
     iceworksConfigContent.lastDate = nowtDate;
     fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
 
-    // eslint-disable-next-line global-require
-    const iceworksCorePackageConfig = require('../server/package.json');
-
     goldlog('dau', {
       group: isAlibaba ? 'alibaba' : 'outer',
-      version: iceworksCorePackageConfig.version,
     });
   }
 }
