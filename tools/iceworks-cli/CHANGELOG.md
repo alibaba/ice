@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.0.7-beta.0
+## 3.0.7
 - [feat] move iceworks-core to user directory
 
 ## 3.0.6
