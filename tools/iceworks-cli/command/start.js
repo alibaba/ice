@@ -14,22 +14,24 @@ const checkVersion = require('../lib/checkVersion');
 
 const SERVER_PATH = path.join(userHome, '.iceworks-server');
 
-let serverPackageConfig = {}
-
 async function start(options = {}) {
   try {
     // eslint-disable-next-line
-    serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
-    console.log(chalk.grey('iceworks Core:', serverPackageConfig.version, SERVER_PATH));
+    const packageConfig = require(path.join(SERVER_PATH, 'package.json'));
+    const packageName = packageConfig.name;
+    const packageVersion = packageConfig.version;
+    console.log(chalk.grey('iceworks Core:', packageVersion, SERVER_PATH));
+
+    // eslint-disable-next-line
+    options.packageVersion = packageVersion;
 
     // backup logic，specify the iceworks-core version
     if (options.command === 'use') {
       if (!semver.valid(options.version)) {
         throw new Error('Invalid version specified');
       } else {
-        const serverPackageVersion = serverPackageConfig.version;
         process.env.ICEWORKS_CORE_VERSION = options.version;
-        if (serverPackageVersion !== options.version) {
+        if (packageVersion !== options.version) {
           downloadAndListen(options);
         } else {
           listen(options);
@@ -37,7 +39,7 @@ async function start(options = {}) {
       }
     } else {
       process.env.ICEWORKS_CORE_VERSION = '';
-      const answers = await checkServerVersion();
+      const answers = await checkServerVersion(packageName, packageVersion);
       if (answers && answers.update) {
         downloadAndListen(options);
       } else {
@@ -70,10 +72,10 @@ function downloadAndListen(options) {
   });
 }
 
-async function listen(options = {}) {
+async function listen(options) {
   // DAU statistics
   try {
-    await dauStat();
+    await dauStat(options);
   } catch (error) {
     // ignore error
   }
@@ -151,11 +153,9 @@ function failedMsg(error) {
 /**
  * Get the server package version
  */
-async function checkServerVersion() {
-  const packageName = serverPackageConfig.name;
-  const packageVersion = serverPackageConfig.version;
-
+async function checkServerVersion(packageName, packageVersion) {
   const result = await checkVersion(packageName, packageVersion);
+
   if (result) {
     const answers = await inquirer.prompt([
       {
@@ -170,7 +170,7 @@ async function checkServerVersion() {
   }
 }
 
-async function dauStat() {
+async function dauStat(options) {
   const isAlibaba = await checkAliInternal();
   const nowtDate = new Date().toDateString();
   const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
@@ -183,7 +183,7 @@ async function dauStat() {
 
     goldlog('dau', {
       group: isAlibaba ? 'alibaba' : 'outer',
-      version: serverPackageConfig.version,
+      version: options.packageVersion,
     });
   }
 }
