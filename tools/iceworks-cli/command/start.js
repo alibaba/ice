@@ -12,7 +12,7 @@ const { checkAliInternal } = require('ice-npm-utils');
 const goldlog = require('../lib/goldlog');
 const checkVersion = require('../lib/checkVersion');
 
-const SERVER_PATH = path.join(userHome, 'iceworks-server');
+const SERVER_PATH = path.join(userHome, '.iceworks-server');
 // eslint-disable-next-line import/no-dynamic-require
 const serverPackageConfig = require(path.join(SERVER_PATH, 'package.json'));
 
