@@ -22,9 +22,6 @@ async function start(options = {}) {
     const packageVersion = packageConfig.version;
     console.log(chalk.grey('iceworks Core:', packageVersion, SERVER_PATH));
 
-    // eslint-disable-next-line
-    options.packageVersion = packageVersion;
-
     // backup logic，specify the iceworks-core version
     if (options.command === 'use') {
       if (!semver.valid(options.version)) {
@@ -170,7 +167,7 @@ async function checkServerVersion(packageName, packageVersion) {
   }
 }
 
-async function dauStat(options) {
+async function dauStat() {
   const isAlibaba = await checkAliInternal();
   const nowtDate = new Date().toDateString();
   const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
@@ -183,7 +180,6 @@ async function dauStat(options) {
 
     goldlog('dau', {
       group: isAlibaba ? 'alibaba' : 'outer',
-      version: options.packageVersion,
     });
   }
 }
