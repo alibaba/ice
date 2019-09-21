@@ -9,8 +9,8 @@ const open = require('open');
 const inquirer = require('inquirer');
 const semver = require('semver');
 const { checkAliInternal } = require('ice-npm-utils');
-const goldlog = require('../lib/goldlog');
-const checkVersion = require('../lib/checkVersion');
+const goldlog = require('../../lib/goldlog');
+const checkVersion = require('../../lib/checkVersion');
 
 const SERVER_PATH = path.join(userHome, '.iceworks-server');
 
@@ -49,7 +49,7 @@ async function start(options = {}) {
 }
 
 function downloadAndListen(options) {
-  const child = spawn('node', ['./lib/downloadServer.js'], {
+  const child = spawn('node', ['./downloadServer.js'], {
     stdio: ['pipe'],
     cwd: path.join(__dirname, '../'),
   });

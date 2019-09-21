@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+const path = require('path');
 const chalk = require('chalk');
 const program = require('commander');
 const semver = require('semver');
+const fse = require('fs-extra');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
@@ -10,28 +12,43 @@ program.version(packageConfig.version).usage('<command> [options]');
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
   program.outputHelp();
-  console.log(` chalk.red('Unknown command ${chalk.yellow(cmd)}.`);
+  console.log(chalk.red(`Unknown command ${chalk.yellow(cmd)}`));
   console.log();
 });
 
 program
-  .command('init [npmName]')
-  .description('init project by template')
+  .command('init [type] [npmName]')
+  .description('init project/material/component by template')
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
     console.log('  $ iceworks init');
-    console.log('  $ iceworks init @icedesign/lite-scaffold');
+    console.log('  $ iceworks init component');
+    console.log('  $ iceworks init project @icedesign/lite-scaffold');
   })
-  .action((npmName, cmd) => {
+  .action(async (type, npmName, cmd) => {
+    // 兼容 iceworks init @icedesign/pro-scaffold
+    if (type && ['project', 'material', 'component'].indexOf(type) === -1) {
+      npmName = type;
+      type = 'project';
+    }
+
     const options = cleanArgs(cmd);
     options.npmName = npmName;
-    // eslint-disable-next-line global-require
-    require('../command/init')(options);
+    options.type = type;
+
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/init')(options);
+    }  catch (err) {
+      await fse.remove(path.join(process.cwd(), '.tmp'));
+      console.error(err);
+      process.exit(1);
+    }
   });
 
 program
-  .command('add <npmName>')
+  .command('add [materialType] [npmName]')
   .description('add block to current directory')
   .option(
     '-n, --name <name>',
@@ -40,14 +57,30 @@ program
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
+    console.log('  $ iceworks add');
+    console.log('  $ iceworks add block');
     console.log('  $ iceworks add @icedesign/user-landing-block');
     console.log('  $ iceworks add @icedesign/user-landing-block -n CustomBlock');
   })
-  .action((npmName, cmd) => {
+  .action(async (materialType, npmName, cmd) => {
+    // 兼容 iceworks add @icedesign/block-xxx
+    if (materialType && ['scaffold', 'block', 'component'].indexOf(materialType) === -1) {
+      npmName = materialType;
+      materialType = null;
+    }
+
     const options = cleanArgs(cmd);
+    options.materialType = materialType;
     options.npmName = npmName;
-    // eslint-disable-next-line global-require
-    require('../command/addBlock')(options);
+
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/add')(options);
+    }  catch (err) {
+      await fse.remove(path.join(process.cwd(), '.tmp'));
+      console.error(err);
+      process.exit(1);
+    }
   });
 
 program

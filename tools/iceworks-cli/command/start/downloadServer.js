@@ -2,7 +2,7 @@ const path = require('path');
 const spawn = require('cross-spawn');
 const { getNpmTarball, getNpmRegistry } = require('ice-npm-utils');
 const userHome = require('user-home');
-const extractTarball = require('./extractTarball');
+const extractTarball = require('../../lib/extractTarball');
 
 const NPM_NAME = 'iceworks-server';
 const DEST_DIR = path.join(userHome, `.${NPM_NAME}`);
@@ -17,8 +17,8 @@ function downloadServer(npmName, destDir) {
   console.log('>>> ICEWORKS_CORE_VERSION:', process.env.ICEWORKS_CORE_VERSION);
   const version = process.env.ICEWORKS_CORE_VERSION ? process.env.ICEWORKS_CORE_VERSION : 'latest';
   return getNpmTarball(npmName, version)
-    .then((url) => {
-      return extractTarball(url, destDir);
+    .then((tarballURL) => {
+      return extractTarball({ tarballURL, destDir });
     })
     .then((res) => {
       if (res.length) {
