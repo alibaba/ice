@@ -16,8 +16,7 @@ module.exports = async (options) => {
     return;
   }
 
-  // eslint-disable-next-line
-  const materialPkg = require(path.join(destDir, 'package.json'));
+  const materialPkg = await fse.readJson(path.join(destDir, 'package.json'));
   const { materialConfig, name } = materialPkg;
   const nameParts = name.split('/');
   const npmScope = nameParts[1] ? nameParts[0] : null;

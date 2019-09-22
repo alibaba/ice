@@ -84,6 +84,24 @@ program
   });
 
 program
+  .command('generate')
+  .description('generate material collection data(material.json)')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks generate');
+  })
+  .action(async () => {
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/generate')();
+    }  catch (err) {
+      console.error(err);
+      process.exit(1);
+    }
+  });
+
+program
   .command('use <version>')
   .description('specify the iceworks-core version')
   .on('--help', () => {

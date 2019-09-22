@@ -26,8 +26,7 @@ module.exports = async function({
   log.verbose('initMaterialAndComponent', projectType, template);
 
   const materialDir = await downloadMaterialTemplate({ cwd, template });
-  // eslint-disable-next-line
-  const templatePkg = require(path.join(materialDir, 'package.json'));
+  const templatePkg = await fse.readJson(path.join(materialDir, 'package.json'));
 
   if (projectType === 'material') {
     // 生成根目录文件 package.json/README/lint 等

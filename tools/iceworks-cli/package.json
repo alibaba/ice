@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "bluebird": "^3.5.5",
     "camelcase": "^5.3.1",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
@@ -29,6 +30,7 @@
     "portfinder": "^1.0.20",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
+    "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "semver": "^6.3.0",
     "tar": "^2.0.0",
