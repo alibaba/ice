@@ -24,13 +24,7 @@ module.exports = {
       validateConfigKey(key);
     }
 
-    if (!config) {
-      if (!fse.existsSync(CONFIG_PATH)) {
-        await fse.writeJson(CONFIG_PATH, {});
-      }
-      config = await fse.readJson(CONFIG_PATH);
-      config = config || {};
-    }
+    await this.setupConfig();
 
     const value = key ? config[key] : config;
     log.verbose('config.get success', key, value);
@@ -41,8 +35,21 @@ module.exports = {
   async set(key, value) {
     validateConfigKey(key);
 
+    await this.setupConfig();
+
     config[key] = value;
     await fse.writeJSON(CONFIG_PATH, config);
     log.verbose('config.set success', key, value);
+  },
+
+  // private
+  async setupConfig() {
+    if (!config) {
+      if (!fse.existsSync(CONFIG_PATH)) {
+        await fse.writeJson(CONFIG_PATH, {});
+      }
+      config = await fse.readJson(CONFIG_PATH);
+      config = config || {};
+    }
   },
 }

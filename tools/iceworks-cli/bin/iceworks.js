@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const path = require('path');
 const chalk = require('chalk');
 const program = require('commander');
 const semver = require('semver');
@@ -143,8 +142,36 @@ program
         // eslint-disable-next-line global-require
         await require('../command/start')(options);
       }  catch (err) {
-        console.error(err);
         log.error('iceworks start error', err.message);
+        console.error(err.stack);
+        process.exit(1);
+      }
+    })();
+  })
+
+program
+  .command('config [type] [key] [value]')
+  .description('operate iceworks global config')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('');
+    console.log('Use the available 3.0.0 release')
+    console.log('  $ iceworks config list');
+    console.log('  $ iceworks config get registry');
+    console.log('  $ iceworks config set registry https://registry.npmjs.org');
+  })
+  .action((type, key, value, cmd) => {
+    (async () => {
+      const options = cleanArgs(cmd);
+      options.type = type;
+      options.key = key;
+      options.value = value;
+      try {
+        // eslint-disable-next-line global-require
+        await require('../command/config')(options);
+      }  catch (err) {
+        log.error('iceworks config error', err.message);
         console.error(err.stack);
         process.exit(1);
       }

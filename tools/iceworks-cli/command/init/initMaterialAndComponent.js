@@ -64,7 +64,7 @@ module.exports = async function({
       materialType: 'component',
       projectType: 'component',
     });
-    // TODO: add adapter
+    // XXX: add adapter
   }
 
   // remove temp dir

@@ -29,7 +29,7 @@ module.exports = async function({
     options = await inquirer.prompt(questions);
   }
 
-  // TODO: 补全 ejs 渲染需要的字段
+  // XXX: 补全 ejs 渲染需要的字段
   options.npmName = generateNpmName(options.name, npmScope);
   options.className = options.name;
 
@@ -53,7 +53,7 @@ module.exports = async function({
   );
 
   if (projectType === 'material') {
-    // TODO: delete component eslint
+    // XXX: delete component eslint
   }
 }
 
