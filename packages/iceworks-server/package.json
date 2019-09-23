@@ -64,6 +64,7 @@
     "cross-env": "^5.2.0",
     "midway-bin": "1",
     "midway-mock": "1",
+    "npm-run-all": "^4.1.5",
     "ts-node": "^8.0.2",
     "tslib": "^1.8.1",
     "typescript": "^3.2.0"
@@ -78,15 +79,28 @@
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts --framework=midway-mirror --workers=1",
     "debug": "NODE_ENV=local midway-bin debug --ts",
-    "test": "midway-bin test --ts",
-    "cov": "midway-bin cov --ts",
+    "midway_test": "midway-bin test --ts --framework=midway-mirror",
+    "midway_cov": "midway-bin cov --ts --framework=midway-mirror",
+    "test": "npm-run-all --continue-on-error generate:project midway_test rm:project",
+    "cov": "npm-run-all --continue-on-error generate:project midway_cov rm:project",
     "ci": "npm run cov",
     "build": "midway-bin build -c",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "generate:project": "node ./scripts/generateProject.js",
+    "rm:project": "node ./scripts/removeProject.js"
   },
   "repository": {
     "type": "git",
     "url": ""
+  },
+  "nyc": {
+    "include": [
+      "src/lib/adapter/",
+      "src/app/controller/"
+    ],
+    "extension": [
+      ".ts"
+    ]
   },
   "midway-bin-build": {
     "include": [
