@@ -1,30 +1,31 @@
 const path = require('path');
 const fse = require('fs-extra');
 const chalk = require('chalk');
-const { getUnpkgHost, isAliNpm } = require('ice-npm-utils');
 const request = require('request-promise-native');
-const log = require('../../lib/log');
+const getNpmRegistry = require('../../lib/getNpmRegistry');
+const getUnpkgHost = require('../../lib/getUnpkgHost');
 
-module.exports = async function generateMaterialData(pkgPath, materialType) {
+module.exports = async function generateMaterialData(pkgPath, materialType, materialConfig) {
   const pkg = await fse.readJson(pkgPath);
 
-  const materialConfig = pkg[`${materialType}Config`] || {};
+  const materialItemConfig = pkg[`${materialType}Config`] || {};
   const { name: npmName, version } = pkg;
-  const unpkgHost = getUnpkgHost(npmName);
-  const registry = getRegistry(npmName, pkg);
+  const unpkgHost = await getUnpkgHost(npmName, materialConfig);
+  // 默认情况不能用 taobao 源，因为存在不同步问题
+  const registry = await getNpmRegistry(npmName, materialConfig, pkg.publishConfig, false);
 
   // 检查包是否发布并补全时间
   // log.verbose('getNpmPublishTime start', npmName, version, registry);
   const { created: publishTime, modified: updateTime } = await getNpmPublishTime(npmName, version, registry);
   // log.verbose('getNpmPublishTime success', npmName, version);
 
-  const screenshot = materialConfig.screenshot
-    || materialConfig.snapshot
+  const screenshot = materialItemConfig.screenshot
+    || materialItemConfig.snapshot
     || (hasScreenshot(path.dirname(pkgPath)) ? `${unpkgHost}/${npmName}@${pkg.version}/screenshot.png` : '');
-  const screenshots = materialConfig.screenshots || (screenshot && [screenshot]);
+  const screenshots = materialItemConfig.screenshots || (screenshot && [screenshot]);
   const homepage = pkg.homepage || `${unpkgHost}/${npmName}@${pkg.version}/build/index.html`;
 
-  const {categories: originCategories, category: originCategory} = materialConfig;
+  const {categories: originCategories, category: originCategory} = materialItemConfig;
   // categories 字段：即将废弃，但是展示端还依赖该字段，因此短期内不能删除，同时需要兼容新的物料无 categories 字段
   const categories = originCategories || (originCategory ? [originCategory] : []);
   // category 字段：兼容老的物料无 category 字段
@@ -32,10 +33,10 @@ module.exports = async function generateMaterialData(pkgPath, materialType) {
 
   const materialData = {
     // 允许（但不推荐）自定义单个物料的数据
-    ...materialConfig,
-    name: materialConfig.name,
-    title: materialConfig.title,
-    description: materialConfig.description,
+    ...materialItemConfig,
+    name: materialItemConfig.name,
+    title: materialItemConfig.title,
+    description: materialItemConfig.description,
     homepage,
     categories,
     category,
@@ -54,7 +55,7 @@ module.exports = async function generateMaterialData(pkgPath, materialType) {
     updateTime,
   };
 
-  if (materialConfig === 'block') {
+  if (materialItemConfig === 'block') {
     // iceworks 2.x 依赖该字段，下个版本删除
     materialData.source.sourceCodeDirectory = 'src/';
   }
@@ -64,25 +65,6 @@ module.exports = async function generateMaterialData(pkgPath, materialType) {
 
 function hasScreenshot(cwd) {
   return fse.existsSync(path.join(cwd, 'screenshot.png'));
-}
-
-/**
- * 生成物料数据里的 source.registry 字段；检查物料发布 npm 的信息
- *
- * 这里不使用 ice-npm-utils 里的 getNpmRegistry 原因：
- * 发布到私有 npm，走 env 自定义逻辑
- * 发布到官方 npm，需要走官方源的逻辑，getNpmRegistry 默认是淘宝源，同步官方源有延迟，因此不能用
- */
-function getRegistry(npm, pkg) {
-  let registry = 'https://registry.npmjs.org';
-  if (pkg.publishConfig && pkg.publishConfig.registry) {
-    registry = pkg.publishConfig.registry;
-  } else if (process.env.REGISTRY) {
-    registry = process.env.REGISTRY;
-  } else if (isAliNpm(npm)) {
-    registry = 'https://registry.npm.alibaba-inc.com';
-  }
-  return registry;
 }
 
 /**

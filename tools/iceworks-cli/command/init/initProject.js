@@ -7,12 +7,15 @@
 const path = require('path');
 const fse = require('fs-extra');
 const chalk = require('chalk');
-const { checkAliInternal, getNpmTarball } = require('ice-npm-utils');
+const { checkAliInternal } = require('ice-npm-utils');
+const getNpmTarball = require('../../lib/getNpmTarball');
+const getNpmRegistry = require('../../lib/getNpmRegistry');
 const extractTarball = require('../../lib/extractTarball');
 const log = require('../../lib/log');
 
 module.exports = async ({ npmName, cwd }) => {
-  const tarballURL = await getNpmTarball(npmName, 'latest');
+  const registry = await getNpmRegistry(npmName, null, null, true);
+  const tarballURL = await getNpmTarball(npmName, 'latest', registry);
   await extractTarball({
     tarballURL,
     destDir: cwd,

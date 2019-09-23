@@ -42,7 +42,7 @@ module.exports = async function() {
 
   try {
     materialsData = await BluebirdPromise.map(allMaterials, (materialItem) => {
-      return generateMaterialData(materialItem.pkgPath, materialItem.materialType).then((data) => {
+      return generateMaterialData(materialItem.pkgPath, materialItem.materialType, materialConfig).then((data) => {
         index += 1;
         spinner.text = `generate materials data progress: ${index}/${total}`;
         return data;

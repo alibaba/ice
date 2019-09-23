@@ -12,7 +12,7 @@ module.exports = async (options) => {
   let { materialType, npmName } = options;
 
   if (!materialType && npmName) {
-    await addBlockToProject(options);
+    await addBlockToProject(options, destDir);
     return;
   }
 
@@ -31,7 +31,7 @@ module.exports = async (options) => {
   }
 
   const { template } = materialConfig;
-  const materialDir = await downloadMaterialTemplate(template);
+  const materialDir = await downloadMaterialTemplate(template, materialConfig);
 
   if (!materialType) {
     const answers = await inquirer.prompt([{

@@ -1,18 +1,19 @@
 const path = require('path');
 const fse = require('fs-extra');
 const camelCase = require('camelcase');
-const { getNpmTarball } = require('ice-npm-utils');
 const extractTarball = require('../../lib/extractTarball');
 const log = require('../../lib/log');
 const { TEMP_PATH } = require('../../lib/constants');
+const getNpmTarball = require('../../lib/getNpmTarball');
+const getNpmRegistry = require('../../lib/getNpmRegistry');
 
-module.exports = async (options) => {
+module.exports = async (options, destDir) => {
   const tempDir = TEMP_PATH;
 
   await fse.ensureDir(tempDir);
   try {
-    const blockDirPath = await addBlock(options, tempDir);
-    await fse.removeS(tempDir);
+    const blockDirPath = await addBlock(options, destDir, tempDir);
+    await fse.remove(tempDir);
     log.info('add block success, you can import and use block in your page code', blockDirPath);
   } catch(err) {
     fse.removeSync(tempDir);
@@ -20,9 +21,10 @@ module.exports = async (options) => {
   }
 };
 
-async function addBlock(options, tempDir) {
+async function addBlock(options, destDir, tempDir) {
   // eslint-disable-next-line prefer-const
-  let { npmName, destDir, name: blockDirName } = options;
+  let { npmName, name: blockDirName } = options;
+  log.verbose('addBlockToProject', options);
 
   // download npm block
   if (!blockDirName) {
@@ -40,9 +42,12 @@ async function addBlock(options, tempDir) {
       return Promise.resolve();
     })
     .then(() => {
-      const tarballURL = getNpmTarball(npmName, 'latest');
-      log.verbose('getNpmTarball', tarballURL);
-
+      return getNpmRegistry(npmName, null, null, true);
+    })
+    .then((registry) => {
+      return getNpmTarball(npmName, 'latest', registry);
+    })
+    .then((tarballURL) => {
       return extractTarball({
         tarballURL,
         destDir: tempDir,
