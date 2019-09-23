@@ -25,7 +25,7 @@ module.exports = async function({
 }) {
   log.verbose('initMaterialAndComponent', projectType, template);
 
-  const materialDir = await downloadMaterialTemplate({ cwd, template });
+  const materialDir = await downloadMaterialTemplate(template);
   const templatePkg = await fse.readJson(path.join(materialDir, 'package.json'));
 
   if (projectType === 'material') {

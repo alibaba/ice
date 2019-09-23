@@ -14,9 +14,9 @@ module.exports = async function generateMaterialData(pkgPath, materialType) {
   const registry = getRegistry(npmName, pkg);
 
   // 检查包是否发布并补全时间
-  log.verbose('getNpmPublishTime start', npmName, version, registry);
+  // log.verbose('getNpmPublishTime start', npmName, version, registry);
   const { created: publishTime, modified: updateTime } = await getNpmPublishTime(npmName, version, registry);
-  log.verbose('getNpmPublishTime success', npmName, version);
+  // log.verbose('getNpmPublishTime success', npmName, version);
 
   const screenshot = materialConfig.screenshot
     || materialConfig.snapshot

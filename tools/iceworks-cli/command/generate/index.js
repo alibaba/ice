@@ -10,7 +10,9 @@ const fse = require('fs-extra');
 const glob = require('glob');
 const chalk = require('chalk');
 const BluebirdPromise = require('bluebird');
+const ora = require('ora');
 const log = require('../../lib/log');
+const { DB_PATH } = require('../../lib/constants');
 const generateMaterialData = require('./generateMaterialData');
 
 module.exports = async function() {
@@ -33,11 +35,26 @@ module.exports = async function() {
   const concurrency = Number(process.env.CONCURRENCY) || 30;
   log.info(`generating materials data，total: ${allMaterials.length}，concurrency: ${concurrency}`);
 
-  const materialsData = await BluebirdPromise.map(allMaterials, (materialItem) => {
-    return generateMaterialData(materialItem.pkgPath, materialItem.materialType);
-  }, {
-    concurrency,
-  });
+  const total = allMaterials.length;
+  let index = 0;
+  const spinner = ora(`generate materials data progress: ${index}/${total}`).start();
+  let materialsData;
+
+  try {
+    materialsData = await BluebirdPromise.map(allMaterials, (materialItem) => {
+      return generateMaterialData(materialItem.pkgPath, materialItem.materialType).then((data) => {
+        index += 1;
+        spinner.text = `generate materials data progress: ${index}/${total}`;
+        return data;
+      });
+    }, {
+      concurrency,
+    });
+    spinner.succeed(`materials data generate successfully，start write to ${DB_PATH}...`);
+  } catch(err) {
+    spinner.fail('materials data generate failed!');
+    throw err;
+  }
 
   const blocksData = [];
   const componentsData = [];
@@ -64,13 +81,12 @@ module.exports = async function() {
     scaffolds: scaffoldsData,
   };
 
-  log.info('materials data generate successfully，start write to build/materials.json...');
-  const distFilepath = path.join(cwd, 'build/materials.json');
-
+  const distFilepath = path.join(cwd, DB_PATH);
+  await fse.ensureFile(distFilepath);
   await fse.writeJson(distFilepath, data, { spaces: 2 });
 
   console.log();
-  console.log(chalk.cyan('Success! materials data generated: ./build/materials.json'));
+  console.log(chalk.cyan(`Success! materials data generated: ${DB_PATH}`));
   console.log();
 }
 

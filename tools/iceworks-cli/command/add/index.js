@@ -31,10 +31,7 @@ module.exports = async (options) => {
   }
 
   const { template } = materialConfig;
-  const materialDir = await downloadMaterialTemplate({
-    cwd: destDir,
-    template,
-  });
+  const materialDir = await downloadMaterialTemplate(template);
 
   if (!materialType) {
     const answers = await inquirer.prompt([{

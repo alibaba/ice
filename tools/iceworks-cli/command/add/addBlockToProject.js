@@ -4,9 +4,10 @@ const camelCase = require('camelcase');
 const { getNpmTarball } = require('ice-npm-utils');
 const extractTarball = require('../../lib/extractTarball');
 const log = require('../../lib/log');
+const { TEMP_PATH } = require('../../lib/constants');
 
 module.exports = async (options) => {
-  const tempDir = path.resolve(options.destDir, '.tmp');
+  const tempDir = TEMP_PATH;
 
   await fse.ensureDir(tempDir);
   try {

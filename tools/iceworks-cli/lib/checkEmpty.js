@@ -6,7 +6,7 @@ module.exports = function checkEmpty(dir) {
     fs.readdir(dir, (err, files) => {
       // filter some special files
       files = files.filter((filename) => {
-        return ['node_modules', '.git', '.DS_Store', '.tmp'].indexOf(filename) === -1;
+        return ['node_modules', '.git', '.DS_Store', '.iceworks-tmp'].indexOf(filename) === -1;
       });
       if (files && files.length) {
         return inquirer

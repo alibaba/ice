@@ -1,10 +1,9 @@
-const path = require('path');
 const fse = require('fs-extra');
 const { getNpmTarball } = require('ice-npm-utils');
 const extractTarball = require('../../lib/extractTarball');
+const { TEMP_PATH } = require('../../lib/constants');
 
-module.exports = async({ template, cwd }) => {
-  const TEMP_PATH = path.join(cwd, '.tmp');
+module.exports = async(template) => {
   await fse.emptyDir(TEMP_PATH);
 
   if (isLocalPath(template)) {

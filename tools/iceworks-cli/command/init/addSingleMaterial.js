@@ -131,11 +131,13 @@ function getQuestions(npmScope, cwd) {
         message: 'title',
         default: 'demo component',
         validate: (value) => {
-          value = value.trim();
           if (!value) {
             return 'title cannot be empty';
           }
           return true;
+        },
+        filter(value) {
+          return value.trim();
         },
       },
       {
@@ -151,8 +153,10 @@ function getQuestions(npmScope, cwd) {
         name: 'description',
         message: 'description',
         default: 'intro component',
+        filter(value) {
+          return value.trim();
+        },
         validate: (value) => {
-          value = value.trim();
           if (!value) {
             return 'description cannot be empty';
           }
@@ -177,8 +181,10 @@ function getQuestions(npmScope, cwd) {
         name: 'title',
         message: 'title',
         default: 'demo block',
+        filter(value) {
+          return value.trim();
+        },
         validate: (value) => {
-          value = value.trim();
           if (!value) {
             return 'title cannot be empty';
           }
@@ -198,8 +204,10 @@ function getQuestions(npmScope, cwd) {
         name: 'description',
         message: 'description',
         default: 'intro block',
+        filter(value) {
+          return value.trim();
+        },
         validate: (value) => {
-          value = value.trim();
           if (!value) {
             return 'description cannot be empty';
           }
@@ -230,8 +238,10 @@ function getQuestions(npmScope, cwd) {
         name: 'title',
         message: 'title',
         default: 'demo scaffold',
+        filter(value) {
+          return value.trim();
+        },
         validate: (value) => {
-          value = value.trim();
           if (!value) {
             return 'title cannot be empty';
           }
@@ -251,8 +261,10 @@ function getQuestions(npmScope, cwd) {
         name: 'description',
         message: 'description',
         default: 'intro scaffold',
+        filter(value) {
+          return value.trim();
+        },
         validate: (value) => {
-          value = value.trim();
           if (!value) {
             return 'description cannot be empty';
           }

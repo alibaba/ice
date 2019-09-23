@@ -6,6 +6,8 @@ const semver = require('semver');
 const fse = require('fs-extra');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
+const log = require('../lib/log');
+const { DB_PATH, TEMP_PATH } = require('../lib/constants');
 
 program.version(packageConfig.version).usage('<command> [options]');
 
@@ -41,8 +43,9 @@ program
       // eslint-disable-next-line global-require
       await require('../command/init')(options);
     }  catch (err) {
-      await fse.remove(path.join(process.cwd(), '.tmp'));
-      console.error(err);
+      await fse.remove(TEMP_PATH);
+      log.error('iceworks init error', err.message);
+      console.error(err.stack);
       process.exit(1);
     }
   });
@@ -77,8 +80,9 @@ program
       // eslint-disable-next-line global-require
       await require('../command/add')(options);
     }  catch (err) {
-      await fse.remove(path.join(process.cwd(), '.tmp'));
-      console.error(err);
+      await fse.remove(TEMP_PATH);
+      log.error('iceworks add error', err.message);
+      console.error(err.stack);
       process.exit(1);
     }
   });
@@ -96,7 +100,27 @@ program
       // eslint-disable-next-line global-require
       await require('../command/generate')();
     }  catch (err) {
-      console.error(err);
+      log.error('iceworks generate error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('sync')
+  .description(`Sync materials data(${DB_PATH}) to Fusion Material Center`)
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks sync');
+  })
+  .action(async () => {
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/sync')();
+    }  catch (err) {
+      log.error('iceworks sync error', err.message);
+      console.error(err.stack);
       process.exit(1);
     }
   });
@@ -120,6 +144,8 @@ program
         await require('../command/start')(options);
       }  catch (err) {
         console.error(err);
+        log.error('iceworks start error', err.message);
+        console.error(err.stack);
         process.exit(1);
       }
     })();
@@ -158,7 +184,8 @@ program.parse(process.argv);
       // eslint-disable-next-line global-require
       await require('../command/start')(cleanArgs());
     }  catch (err) {
-      console.error(err);
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
       process.exit(1);
     }
   }
