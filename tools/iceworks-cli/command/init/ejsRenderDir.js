@@ -3,7 +3,7 @@ const glob = require('glob');
 const ejs = require('ejs');
 const fse = require('fs-extra');
 
-module.exports = async function(dir, options) {
+module.exports = async function(dir, options, diableFormatDotFile) {
   return new Promise((resolve, reject) => {
     glob('**', {
       cwd: dir,
@@ -15,7 +15,7 @@ module.exports = async function(dir, options) {
 
       Promise.all(files.map((file) => {
         const filepath = path.join(dir, file);
-        return renderFile(filepath, options);
+        return renderFile(filepath, options, diableFormatDotFile);
       })).then(() => {
         resolve();
       }).catch((err) => {
@@ -25,7 +25,7 @@ module.exports = async function(dir, options) {
   })
 }
 
-function renderFile(filepath, options) {
+function renderFile(filepath, options, diableFormatDotFile) {
   let filename = path.basename(filepath);
 
   return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ function renderFile(filepath, options) {
         fse.removeSync(filepath);
       }
 
-      if (/^_/.test(filename)) {
+      if (!diableFormatDotFile && /^_/.test(filename)) {
         filename = filename.replace(/^_/, '.');
         fse.removeSync(filepath);
       }

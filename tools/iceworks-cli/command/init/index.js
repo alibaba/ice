@@ -4,7 +4,6 @@ const goldlog = require('../../lib/goldlog');
 const checkEmpty = require('../../lib/checkEmpty');
 const initProject = require('./initProject');
 const initMaterialAndComponent = require('./initMaterialAndComponent');
-const getNpmRegistry = require('../../lib/getNpmRegistry');
 
 module.exports = async function(options = {}) {
   const cwd = process.cwd();

@@ -17,43 +17,75 @@ module.exports = async function({
 }) {
   log.verbose('addSingleMaterial args', materialDir, cwd, useDefaultOptions, npmScope, materialType);
 
+  const materialPath = path.join(materialDir, 'template', materialType);
+  if (!fse.existsSync(materialPath)) {
+    log.warn(`当前物料模板不存在 ${materialType} 类型的物料`);
+    return;
+  }
+
   const questions = getQuestions(npmScope, cwd)[materialType];
   let options = {};
 
   if (useDefaultOptions) {
     // inquire
     questions.forEach((item) => {
-      options[item.name] = item.hasOwnProperty('default') ? item.default : item.defaultValue;
+      options[item.name] = item.default;
     });
   } else {
     options = await inquirer.prompt(questions);
   }
 
-  // XXX: 补全 ejs 渲染需要的字段
   options.npmName = generateNpmName(options.name, npmScope);
   options.className = options.name;
+
+  if (materialType === 'component') {
+    options = Object.assign({}, options, {
+      // 补全 rax 组件的几个字段
+      projectName: options.npmName,
+      projectAuthor: 'rax',
+      projectTargets: ['web'],
+      projectFeatures: [],
+    });
+  }
 
   log.verbose('addSingleMaterial options', options);
 
   const targetPath = projectType === 'material' ? path.join(cwd, `${materialType}s`, options.name) : cwd;
-  const materialPath = path.join(materialDir, 'template', materialType);
 
   await fse.ensureDir(targetPath);
   await fse.copy(materialPath, targetPath, {
-    overwrite: false,
-    errorOnExist: (err) => {
-      throw err;
-    },
+    // overwrite: false,
+    // errorOnExist: (err) => {
+    //   throw err;
+    // },
   });
+
+  if (materialType === 'component') {
+    if (options.adaptor) {
+      const templatePath = path.join(__dirname, '../../template/componentAdaptor');
+      await fse.copy(templatePath, cwd);
+    }
+  }
 
   // render ejs
   await ejsRenderDir(
     targetPath,
     options,
+    // scaffold 不将 _xx 转换成 .xx
+    materialType === 'scaffold',
   );
 
-  if (projectType === 'material') {
-    // XXX: delete component eslint
+  if (materialType === 'component' && projectType === 'material') {
+    // 组件有单独开发的链路，有自己的 eslint 文件，在物料集合场景下需要删除掉
+    await Promise.all([
+      '_eslintignore',
+      '_eslintrc.js',
+      '_gitignore',
+      '_stylelintignore',
+      '_stylelintrc.js',
+    ].map((filename) => {
+      return fse.remove(path.join(targetPath, filename));
+    }));
   }
 }
 

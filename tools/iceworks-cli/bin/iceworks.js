@@ -65,7 +65,7 @@ program
     console.log('  $ iceworks add @icedesign/user-landing-block -n CustomBlock');
   })
   .action(async (materialType, npmName, cmd) => {
-    // 兼容 iceworks add @icedesign/block-xxx
+    // 兼容 iceworks add @icedesign/block-test
     if (materialType && ['scaffold', 'block', 'component'].indexOf(materialType) === -1) {
       npmName = materialType;
       materialType = null;
