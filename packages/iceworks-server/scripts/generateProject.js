@@ -1,11 +1,13 @@
 const path = require('path');
 const rimraf = require('rimraf');
 const util = require('util');
-const { getNpmTarball, getAndExtractTarball } = require('ice-npm-utils');
+const { getAndExtractTarball } = require('ice-npm-utils');
 
+const tarball = 'https://registry.npm.taobao.org/@icedesign/lite-scaffold/download/@icedesign/lite-scaffold-3.0.5.tgz';
 const generateAdapterTestProject = async () => {
+  console.log('tarball:', tarball);
   const tmpPath = path.join(__dirname, '../test/lib/adapter/tmp');
-  await getAndExtractTarball(tmpPath, 'https://registry.npm.taobao.org/@icedesign/lite-scaffold/download/@icedesign/lite-scaffold-3.0.5.tgz');
+  await getAndExtractTarball(tmpPath, tarball);
 
   // note: the build files should be removed. If not, it will throw the error.
   const rimrafAsync = util.promisify(rimraf);
