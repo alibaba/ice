@@ -1,10 +1,11 @@
 {
   "name": "iceworks",
-  "version": "3.1.0-0",
+  "version": "3.1.0-2",
   "description": "a simple CLI for iceworks",
   "main": "bin/iceworks.js",
   "bin": {
-    "iceworks": "bin/iceworks.js"
+    "iceworks": "bin/iceworks.js",
+    "ice": "bin/iceworks.js"
   },
   "scripts": {
     "sync": "node ./command/start/downloadServer.js"
