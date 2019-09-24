@@ -24,7 +24,7 @@ export class GoldlogController {
         await request({
           method: 'post',
           url: 'http://gm.mmstat.com/iceteam.iceworks.log3',
-          data: {
+          body: {
             cache: Math.random(),
             gmkey: 'CLK',
             gokey: encodeURIComponent(gokey),
@@ -36,7 +36,7 @@ export class GoldlogController {
         ctx.logger.error(error);
       }
     }
-    
+
     ctx.body = {
       success: true,
     };
