@@ -15,6 +15,8 @@ const generateAdapterTestProject = async () => {
   await rimrafAsync(path.join(tmpPath, '/build'));
 }
 
+console.log('generateAdapterTestProject start');
+
 generateAdapterTestProject()
   .then(() => {
     console.log('generateAdapterTestProject done.');
