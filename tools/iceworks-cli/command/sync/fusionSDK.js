@@ -80,6 +80,7 @@ class FusionSDK {
       return {
         id: site.id,
         name: site.name,
+        url: `${this.fusionHost}/api/v1/sites/${site.id}/materials`,
       };
     } catch(err) {
       if (err.statusCode && (err.statusCode === 403 || err.statusCode === 401)) {

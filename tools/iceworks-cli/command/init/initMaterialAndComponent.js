@@ -12,6 +12,7 @@
  */
 const fse = require('fs-extra');
 const path = require('path');
+const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { checkAliInternal } = require('ice-npm-utils');
 const addSingleMaterial = require('./addSingleMaterial');
@@ -52,9 +53,31 @@ module.exports = async function({
         projectType,
       });
     }));
-  }
+    console.log(`
+      Initialize material successfully!
+      Inside that directory, you can run several commands:
 
-  if (projectType === 'component') {
+        Install dependencies
+      ${chalk.cyan('    npm install')}
+
+        Starts the block development server.
+      ${chalk.cyan('    cd blocks/ExampleBlock')}
+      ${chalk.cyan('    npm install')}
+      ${chalk.cyan('    npm start')}
+
+        Generate materials json.
+      ${chalk.cyan('    npm run generate')}
+
+        You can upload the JSON file to a static web server and put the URL at iceworks settings panel.
+        You will see your materials in iceworks
+
+        We suggest that you can sync the materials json to fusion.design by run:
+      ${chalk.cyan('    npm run sync')}
+
+      Happy hacking!
+    `);
+    console.log();
+  } else if (projectType === 'component') {
     // add component
     await addSingleMaterial({
       materialDir,
@@ -64,6 +87,14 @@ module.exports = async function({
       materialType: 'component',
       projectType: 'component',
     });
+    console.log();
+    console.log('Initialize component successfully.');
+    console.log();
+    console.log('Starts the development server.');
+    console.log();
+    console.log(chalk.cyan('    npm install'));
+    console.log(chalk.cyan('    npm start'));
+    console.log();
   }
 
   // remove temp dir
