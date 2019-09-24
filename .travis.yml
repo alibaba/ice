@@ -3,6 +3,7 @@ language: node_js
 node_js:
   - '8'
 install:
+  - npm install
   - npm install codecov -g
 script:
   - npm run ci
