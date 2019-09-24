@@ -24,6 +24,7 @@ export class GoldlogController {
         await request({
           method: 'post',
           url: 'http://gm.mmstat.com/iceteam.iceworks.log3',
+          json: true,
           body: {
             cache: Math.random(),
             gmkey: 'CLK',
