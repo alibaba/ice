@@ -74,7 +74,7 @@ module.exports = async function({
   if (materialType === 'component') {
     if (options.adaptor) {
       const templatePath = path.join(__dirname, '../../template/componentAdaptor');
-      await fse.copy(templatePath, cwd);
+      await fse.copy(templatePath, targetPath);
     }
   }
 

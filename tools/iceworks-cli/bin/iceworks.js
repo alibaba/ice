@@ -107,7 +107,7 @@ program
 
 program
   .command('sync')
-  .description(`Sync materials data to Fusion Material Center`)
+  .description(`sync materials data to Fusion Material Center`)
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
