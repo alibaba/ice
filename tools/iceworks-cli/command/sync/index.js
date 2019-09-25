@@ -36,11 +36,11 @@ module.exports = async () => {
   const materialsData = await getMaterialData(pkgData, DB_PATH_ABSOLUTE);
 
   const fusionSDK = new FusionSDK({
-    isAliInternal,
+    syncToAli,
   });
 
   // get fusion token
-  const tokenKey = isAliInternal ? TOKEN_ALI_KEY : TOKEN_KEY;
+  const tokenKey = syncToAli ? TOKEN_ALI_KEY : TOKEN_KEY;
   let fusionToken = await config.get(tokenKey);
   if (!fusionToken) {
     fusionToken = await fusionSDK.getToken();
@@ -80,12 +80,19 @@ module.exports = async () => {
   log.verbose('select fusion site success', fusionSite);
 
   // upload data to fusion
-  const materialUrl = await fusionSDK.uploadMaterialsData(fusionToken, fusionSite, materialsData);
-
-  console.log();
-  log.info('物料上传完成，可以在 iceworks 中添加自定义物料使用啦！');
-  log.info('物料地址：', materialUrl);
-  console.log();
+  try {
+    const materialUrl = await fusionSDK.uploadMaterialsData(fusionToken, fusionSite, materialsData);
+    console.log();
+    log.info('物料上传完成，可以在 iceworks 中添加自定义物料使用啦！');
+    log.info('物料地址：', materialUrl);
+    console.log();
+  } catch(err) {
+    if (err.noAuth) {
+      // token 失效，重置掉
+      await config.set(tokenKey, null);
+    }
+    throw err;
+  }
 }
 
 async function getMaterialData(pkgData, materialDataPath) {
