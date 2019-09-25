@@ -6,7 +6,7 @@ const fse = require('fs-extra');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
 const log = require('../lib/log');
-const { DB_PATH, TEMP_PATH } = require('../lib/constants');
+const { TEMP_PATH } = require('../lib/constants');
 
 program.version(packageConfig.version).usage('<command> [options]');
 
@@ -107,7 +107,7 @@ program
 
 program
   .command('sync')
-  .description(`Sync materials data(${DB_PATH}) to Fusion Material Center`)
+  .description(`Sync materials data to Fusion Material Center`)
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
