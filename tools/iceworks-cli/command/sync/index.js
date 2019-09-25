@@ -57,7 +57,16 @@ module.exports = async () => {
   if (materialConfig['fusion-site']) {
     fusionSite = materialConfig['fusion-site'];
   } else {
-    fusionSite = await fusionSDK.getSite(fusionToken);
+    try {
+      fusionSite = await fusionSDK.getSite(fusionToken);
+    } catch(err) {
+      if (err.noAuth) {
+        // token 失效，重置掉
+        await config.set(tokenKey, null);
+      }
+      throw err;
+    }
+
     materialConfig['fusion-site'] = fusionSite;
     pkgData.materialConfig = materialConfig;
     try {

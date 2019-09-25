@@ -3,7 +3,7 @@ const config = require('./config');
 const log = require('./log');
 
 module.exports = async function(npmName, materialConfig, publishConfig, enableUseTaobao) {
-  // 某些场景不能用 taobao 源（同步问题）
+  // 某些场景不能用 taobao 源（generate）
   let registry = enableUseTaobao ? 'https://registry.npm.taobao.org' : 'https://registry.npmjs.org';
   if (publishConfig && publishConfig.registry) {
     registry = publishConfig.registry;

@@ -15,7 +15,6 @@ module.exports = async(template, materialConfig) => {
     await extractTarball({
       tarballURL,
       destDir: TEMP_PATH,
-      disableFormatDotFilename: true,
     });
   }
   return TEMP_PATH;

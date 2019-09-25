@@ -134,20 +134,18 @@ program
     console.log('Use the available 3.0.0 release')
     console.log('  $ iceworks use 3.0.0');
   })
-  .action((version, cmd) => {
-    (async () => {
-      const options = cleanArgs(cmd);
-      options.version = version;
-      try {
-        // eslint-disable-next-line global-require
-        await require('../command/start')(options);
-      }  catch (err) {
-        log.error('iceworks start error', err.message);
-        console.error(err.stack);
-        process.exit(1);
-      }
-    })();
-  })
+  .action(async (version, cmd) => {
+    const options = cleanArgs(cmd);
+    options.version = version;
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/start')(options);
+    }  catch (err) {
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
 
 program
   .command('config [type] [key] [value]')
@@ -161,21 +159,19 @@ program
     console.log('  $ iceworks config get registry');
     console.log('  $ iceworks config set registry https://registry.npmjs.org');
   })
-  .action((type, key, value, cmd) => {
-    (async () => {
-      const options = cleanArgs(cmd);
-      options.type = type;
-      options.key = key;
-      options.value = value;
-      try {
-        // eslint-disable-next-line global-require
-        await require('../command/config')(options);
-      }  catch (err) {
-        log.error('iceworks config error', err.message);
-        console.error(err.stack);
-        process.exit(1);
-      }
-    })();
+  .action(async (type, key, value, cmd) => {
+    const options = cleanArgs(cmd);
+    options.type = type;
+    options.key = key;
+    options.value = value;
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/config')(options);
+    }  catch (err) {
+      log.error('iceworks config error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
   })
 
 // add some useful info on help

@@ -1,37 +1,53 @@
-# 自定义物料初始模板
+# Custom ICE Materials
 
-## 简介
+[Docs](https://ice.work/docs/materials/about).
 
-用于自定义物料，支持自定义区块、布局、模板
+## Install iceworks
 
-## 使用
-
-#### 安装依赖
-
+```bash
+$ npm i -g iceworks
+$ iceworks --help
 ```
+
+## Install Deps
+
+```bash
 $ npm install
 ```
 
-#### 区块预览
+## Develop materials
 
-```
+```bash
+# block
+$ cd blocks/ExampleBlock
+$ npm install
+$ npm run start
+
+# component
 $ cd blocks/ExampleBlock
 $ npm install
 $ npm run start
 ```
 
-#### 模板预览
+## Add new material
 
-```
-$ cd scaffolds/ExampleScaffold
-$ npm install
-$ npm run start
+```bash
+$ iceworks add  # select block|component|scaffold
 ```
 
-## 添加物料
+## Generate materials data
 
+```bash
+$ iceworks generate
 ```
-# 根据提示自定义添加
-# 需要到根目录下添加
-$ ice-devtools add
+
+## Publish materials data
+
+```bash
+# sync to fusion material center
+$ iceworks sync
 ```
+
+## Use materials in iceworks
+
+Add the materials data url to iceworks.

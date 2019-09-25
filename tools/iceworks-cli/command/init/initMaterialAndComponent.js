@@ -1,14 +1,14 @@
 /**
- * download template and init material&component
+ * init material&component
  *
- * material:
- *  1. download npm
- *  2. ask and generate pkg/readme/lint files
- *  3. add component&block(include ask)
+ * init material:
+ *  1. download npm（不转换文件名）
+ *  2. ask and generate pkg/readme/lint files（转换文件名）
+ *  3. add component&block（转换文件名，具体参考 addSingleMaterial）
  *
- * component:
+ * init component:
  *  1. download npm
- *  2. add component(include ask)
+ *  2. add component（转换文件名，具体参考 addSingleMaterial）
  */
 const fse = require('fs-extra');
 const path = require('path');

@@ -84,7 +84,7 @@ class FusionSDK {
       };
     } catch(err) {
       if (err.statusCode && (err.statusCode === 403 || err.statusCode === 401)) {
-        // TODO: 本地 token 失效是否要在这里重置掉
+        err.noAuth = true;
         console.log();
         console.log(`鉴权失败，请前往 ${this.fusionHost} 重新获取 token 或 请站点所有者把你添加为站点成员。`);
         console.log(`token 文档: ${chalk.yellow(`${this.fusionHost}/help.html#/dev-create-site`)}`);

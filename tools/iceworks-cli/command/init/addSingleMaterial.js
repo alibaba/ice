@@ -1,3 +1,19 @@
+/**
+ * material add [block|component|scaffold]:
+ *  1. get options by materialType
+ *  2. 仅 component: add rax options & adaptor
+ *  3. copy and ejsRender，文件名称转换：
+ *    - _package.json -> package.json
+ *    - xxx.js.ejs -> xxx.js
+ *    - _eslintxxx -> .eslintxxx (scaffold 不转换)
+ *  4. 仅 component：remove eslint 相关文件，只有 component/scaffold 会有这些文件（因为有单独开发的需求）
+ *
+ * init component:
+ *  1. get options by materialType
+ *  2. add rax options & adaptor
+ *  3. copy and ejsRender，文件名称转换
+ *
+ */
 const path = require('path');
 const fse = require('fs-extra');
 const inquirer = require('inquirer');
@@ -53,12 +69,7 @@ module.exports = async function({
   const targetPath = projectType === 'material' ? path.join(cwd, `${materialType}s`, options.name) : cwd;
 
   await fse.ensureDir(targetPath);
-  await fse.copy(materialPath, targetPath, {
-    // overwrite: false,
-    // errorOnExist: (err) => {
-    //   throw err;
-    // },
-  });
+  await fse.copy(materialPath, targetPath);
 
   if (materialType === 'component') {
     if (options.adaptor) {
@@ -71,18 +82,18 @@ module.exports = async function({
   await ejsRenderDir(
     targetPath,
     options,
-    // scaffold 不将 _xx 转换成 .xx
+    // scaffold 不将 _eslintxxx 转换成 .eslintxxx
     materialType === 'scaffold',
   );
 
   if (materialType === 'component' && projectType === 'material') {
     // 组件有单独开发的链路，有自己的 eslint 文件，在物料集合场景下需要删除掉
     await Promise.all([
-      '_eslintignore',
-      '_eslintrc.js',
-      '_gitignore',
-      '_stylelintignore',
-      '_stylelintrc.js',
+      '.eslintignore',
+      '.eslintrc.js',
+      '.gitignore',
+      '.stylelintignore',
+      '.stylelintrc.js',
     ].map((filename) => {
       return fse.remove(path.join(targetPath, filename));
     }));

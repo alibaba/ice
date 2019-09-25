@@ -8,6 +8,7 @@ const tar = require('tar');
 
 /**
  * Download tarbar content to the specified directory
+ *
  * @param {string} tarballURL tarball url
  * @param {string} destDir target directory
  */
@@ -15,7 +16,7 @@ module.exports = function extractTarball({
   tarballURL,
   destDir,
   progressFunc = () => {},
-  disableFormatDotFilename = false,
+  formatFilename,
 }) {
   return new Promise((resolve, reject) => {
     const allFiles = [];
@@ -47,7 +48,7 @@ module.exports = function extractTarball({
         const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
-        filename = formatFilename(filename, disableFormatDotFilename);
+        filename = formatFilename ? formatFilename(filename) : filename;
 
         const destPath = path.join(destDir, path.dirname(realPath), filename);
 
@@ -77,44 +78,3 @@ module.exports = function extractTarball({
       });
   });
 };
-
-
-/**
- * 下载 npm 后的文件名处理
- *
- * 1. _package.json -> package.json（仅匹配 package.json）
- * 2. _eslintrc -> .eslintrc（通过 disableFormatDotFilename 开关，按白名单匹配）
- *
- * @param {String} filename
- * @param {Boolean} disableFormatDotFilename
- */
-function formatFilename(filename, disableFormatDotFilename) {
-  if (disableFormatDotFilename) {
-    return filename;
-  }
-
-  if (/^_/.test(filename)) {
-    // _package.json -> package.json
-    if (filename === '_package.json') {
-      filename = 'package.json';
-    } else {
-      // 只转换特定文件，防止误伤
-      const dotFilenames = [
-        '_eslintrc.js',
-        '_eslintrc',
-        '_eslintignore',
-        '_gitignore',
-        '_stylelintrc.js',
-        '_stylelintrc',
-        '_stylelintignore',
-        '_editorconfig',
-      ];
-      if (dotFilenames.indexOf(filename) !== -1) {
-        // _eslintrc.js -> .eslintrc.js
-        filename = filename.replace(/^_/, '.');
-      }
-    }
-  }
-
-  return filename;
-}
