@@ -1,32 +1,30 @@
 const path = require('path');
-const { tmpdir } = require('os');
 const fse = require('fs-extra');
 const camelCase = require('camelcase');
-const downloadNpm = require('../lib/downloadNpm');
-const log = require('../lib/log');
+const extractTarball = require('../../lib/extractTarball');
+const log = require('../../lib/log');
+const { TEMP_PATH } = require('../../lib/constants');
+const getNpmTarball = require('../../lib/getNpmTarball');
+const getNpmRegistry = require('../../lib/getNpmRegistry');
 
-module.exports = (options) => {
-  const destDir = process.cwd();
-  const tempDir = path.resolve(tmpdir(), 'iceworks_temp');
-  options.destDir = destDir;
-  options.tempDir = tempDir;
+module.exports = async (options, destDir) => {
+  const tempDir = TEMP_PATH;
 
-  return fse.ensureDir(tempDir).then(() => {
-    return addBlock(options);
-  }).catch((err) => {
-    fse.removeSync(tempDir);
-    log.error(`add block error: ${err.message}`);
-    console.error(err);
-    process.exit(1);
-  }).then((blockDirPath) => {
-    fse.removeSync(tempDir);
+  await fse.ensureDir(tempDir);
+  try {
+    const blockDirPath = await addBlock(options, destDir, tempDir);
+    await fse.remove(tempDir);
     log.info('add block success, you can import and use block in your page code', blockDirPath);
-  });
+  } catch(err) {
+    fse.removeSync(tempDir);
+    throw err;
+  }
 };
 
-async function addBlock(options = {}) {
-  const { npmName, destDir, tempDir } = options;
-  let { name: blockDirName } = options;
+async function addBlock(options, destDir, tempDir) {
+  // eslint-disable-next-line prefer-const
+  let { npmName, name: blockDirName } = options;
+  log.verbose('addBlockToProject', options);
 
   // download npm block
   if (!blockDirName) {
@@ -44,8 +42,14 @@ async function addBlock(options = {}) {
       return Promise.resolve();
     })
     .then(() => {
-      return downloadNpm({
-        npmName,
+      return getNpmRegistry(npmName, null, null, true);
+    })
+    .then((registry) => {
+      return getNpmTarball(npmName, 'latest', registry);
+    })
+    .then((tarballURL) => {
+      return extractTarball({
+        tarballURL,
         destDir: tempDir,
       });
     })
