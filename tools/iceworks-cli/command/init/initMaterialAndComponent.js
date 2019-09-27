@@ -4,7 +4,7 @@
  * init material:
  *  1. download npm（不转换文件名）
  *  2. ask and generate pkg/readme/lint files（转换文件名）
- *  3. add component&block（转换文件名，具体参考 addSingleMaterial）
+ *  3. add block（转换文件名，具体参考 addSingleMaterial）
  *
  * init component:
  *  1. download npm
@@ -42,8 +42,8 @@ module.exports = async function({
       materialConfig: templatePkg.materialConfig,
     });
 
-    // add block&component
-    await Promise.all(['block', 'component'].map((item) => {
+    // add block
+    await Promise.all(['block'].map((item) => {
       return addSingleMaterial({
         materialDir,
         cwd,
