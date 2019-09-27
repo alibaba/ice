@@ -5,7 +5,7 @@ order: 3
 
 ## React 物料
 
-飞冰（ICE）官方 React 物料（模板/区块/组件），基于 Fusion 组件和 ice-scripts 工程工具。
+飞冰官方开发的 React 物料（模板/区块/组件），基于 Fusion 组件和 ice-scripts 工程工具。
 
 - 物料源地址：http://ice.alicdn.com/assets/materials/react-materials.json
 - 物料源码：https://github.com/ice-lab/react-materials
@@ -21,7 +21,7 @@ order: 3
 
 ## Create React App 物料
 
-在 iceworks 中开发 CRA 的项目：
+使用 iceworks 开发 Create React App 项目：
 
 - 物料源地址：http://ice.alicdn.com/assets/materials/cra-materials.json
 - 物料源码：https://github.com/ice-lab/cra-materials

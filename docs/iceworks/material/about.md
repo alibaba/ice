@@ -45,23 +45,8 @@ iceworks 默认自带了由 ICE 团队提供的海量高质量物料。当官方
 
 ### 开发物料
 
-在实际开发中，很多业务都需要建立自有的物料体系，如定制模版、业务组件等，因此，ICE 团队通过 [ice-devtools](https://ice.work/docs/materials/about) 为开发者提供了便携的自定义物料开发链路。大体研发流程如下：
-
-1. 使用 ice-devtools 初始化物料仓库；
-2. 在本地开发业务组件、区块、定制模版等物料；
-3. 将以上物料发布到 npm；
-4. 使用 ice-devtools 生成物料数据；
-5. 使用 ice-devtools 发布物料数据并生成物料源地址，可选择 unpkg 或 [fusion](https://fusion.design/)（仅限 react 物料）；
-6. 在 iceworks 中添加以上物料源使用。
-
-更多有关物料开发的技术信息，请参考 [《ice-devtools 文档》](https://ice.work/docs/materials/about)。
+在实际开发中，很多业务都需要建立自有的物料体系，如定制模版、业务组件等，因此，ICE 团队通过 [iceworks](https://ice.work/docs/materials/about) 为开发者提供了便携的自定义物料开发链路。更多有关物料开发的技术信息，请参考 [《物料开发文档》](https://ice.work/docs/materials/about)。
 
 ## 推荐物料
 
-### 社区 Vue 物料
-
-社区维护的 Vue 物料（模板/区块/组件），基于 Vue 2.x, Element, Vue CLI 等技术栈，使用 Vue 的用户可自行添加该物料。
-
-- 物料源地址：https://ice.alicdn.com/assets/vue-materials.json
-- 物料源码：https://github.com/ice-lab/vue-materials
-- 物料预览：https://ice.work/scaffold?type=vue
+参考 [物料开发-推荐物料](https://ice.alibaba-inc.com/docs/materials/recommand)

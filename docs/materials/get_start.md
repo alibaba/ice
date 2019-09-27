@@ -3,62 +3,54 @@ title: 快速开发物料
 order: 1
 ---
 
-## 创建物料仓库
+## 安装工具
 
-全局安装 ice-devtools：
+全局安装 iceworks：
 
 ```bash
-$ npm install ice-devtools -g
+$ npm install iceworks -g
 
 # 检查是否安装成功
-$ idev -V
-=> 2.3.1
+$ iceworks -V
+=> 3.1.0
 ```
 
-安装完成后，可通过 `idev` 或 `ice-devtools` 命令使用。
+## 初始化物料项目
 
-创建一个空目录
+创建空目录然后初始化：
 
 ```bash
 $ mkdir custom-material && cd custom-material
+$ iceworks init
+
+# 或者指定模板创建
+$ iceworks init material @icedesign/material-chart-template
+# 模板支持相对路径
+$ iceworks init material ../ice-chart-material-template
 ```
 
-初始化物料
-
-```bash
-$ idev init
-```
-
-根据提示，输入相关信息，选择物料模版，ice-devtools 默认内置了 React/Vue/Angular 三种物料模版，如果需要自定义物料模版，可参考[《自定义物料模版》](/docs/materials/template/custom.md)，在这里，我们选择 React 模版。
-
-之后，ice-devtools 会自动生成 React 物料，并生成示例组件、区块和项目，根据提示执行对应命令即可启动。
-
-![](https://img.alicdn.com/tfs/TB15H9LcEKF3KVjSZFEXXXExFXa-751-483.png)
-
-根据提示，在项目根目录安装依赖后，即可进入开发。ice-devtools 初始化的目录结构如下所示，components、blocks、scaffolds 目录下分别存放组件、区块和项目的源码。ice-devtools 初始化时会自动生成示例物料，如果不需要可将其删除。
+根据提示，在项目根目录安装依赖后，即可进入开发。初始化的目录结构如下所示，默认会生成一个区块和组件：
 
 ```
-├── README.md
 ├── blocks
 │      └── ExampleBlock
 ├── components
 │      └── ExampleComponent
-├── package.json
-└── scaffolds
-    └── ExampleScaffold
+├── README.md
+└── package.json
 ```
 
-## 物料开发与发布
+## 单个物料开发
 
 以区块开发为例，假设我们需要开发一个 ProfileCard 区块用于展示用户信息，我们在项目根目录执行命令：
 
 ```bash
-$ idev add
+$ iceworks add
+# 或者
+$ iceworks add component
 ```
 
-选择 block，根据提示完成 block name 等设置后，在 blocks/ 目录下，将会生成 ProfileCard 目录及初始代码。
-
-根据提示执行以下命令即可开始开发：
+填写信息之后，会在 blocks/ 目录下生成 ProfileCard 目录及初始代码，根据提示执行以下命令即可开始开发：
 
 ```bash
 $ cd blocks/ProfileCard
@@ -66,8 +58,20 @@ $ npm install
 $ npm start
 ```
 
-新增组件和项目同理，其开发过程不再赘述，当我们完成所有物料开发之后，我们需要**先将各个组件、区块、项目发布到 npm 之后**，再生成物料数据，最后将这份数据托管即可使用。
+物料开发完成后，即可通过 npm 发布。
 
-- [物料数据生成](/docs/materials/guide/generate.md)
-- [物料数据托管](/docs/materials/guide/sync.md)
-- [使用物料](/docs/materials/guide/usage.md)
+## 物料数据生成
+
+**将每个物料发布到 npm 之后**，我们即可生成物料集合数据，在根目录下执行以下命令：
+
+```bash
+$ iceworks generate
+```
+
+会生成 `build/materials.json` 文件，这个文件描述了整个物料集合的元数据。
+
+## 物料数据发布与使用
+
+接着我们可以通过 `iceworks sync` 方式将物料数据同步到物料中心，你也可以通过私有的服务托管，同步完成后我们会得到一个 url 可以访问到这些物料数据。
+
+接着在 iceworks GUI 工具中添加自定义物料填入 url 即可在开发项目中使用这些物料。

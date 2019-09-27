@@ -37,7 +37,7 @@
 
 为了支持不同的用户群体，我们提供了 Web 界面和 CLI 两种使用方式，具体如下：
 
-#### Web 界面 [推荐]
+#### GUI 方式 [推荐]
 
 ```bash
 # 安装 CLI 工具
@@ -65,7 +65,6 @@ $ iceworks init
 |    项目         |    版本                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化源码研发工作台|
-| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |物料开发工具，支持 React&Vue|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置开发构建工具|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
@@ -73,7 +72,6 @@ $ iceworks init
 | [vue-materials] | / | [docs][vue-materials-docs] |由社区维护的高质量 Vue 物料|
 
 [iceworks]: https://github.com/alibaba/ice
-[ice-devtools]: https://github.com/ice-lab/ice-devtools
 [ice-scripts]: https://github.com/ice-lab/ice-scripts
 [icestore]: https://github.com/ice-lab/icestore
 [icestark]: https://github.com/ice-lab/icestark
@@ -81,13 +79,11 @@ $ iceworks init
 [vue-materials]: https://github.com/ice-lab/vue-materials
 
 [iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
-[ice-devtools-status]: https://img.shields.io/npm/v/ice-devtools.svg
 [ice-scripts-status]: https://img.shields.io/npm/v/ice-scripts.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 
 [iceworks-cli-package]: https://npmjs.com/package/iceworks
-[ice-devtools-package]: https://npmjs.com/package/ice-devtools
 [ice-scripts-package]: https://npmjs.com/package/ice-scripts
 [icestore-package]: https://npmjs.com/package/@ice/store
 [icestark-package]: https://npmjs.com/package/@ice/stark
@@ -95,7 +91,6 @@ $ iceworks init
 [vue-materials-docs]: https://ice.work/block?type=vue
 [react-materials-docs]: https://ice.work/scaffold
 [iceworks-docs]: https://ice.work/docs/iceworks/about
-[ice-devtools-docs]: https://ice.work/docs/materials/about
 [ice-scripts-docs]: https://ice.work/docs/cli/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore

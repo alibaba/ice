@@ -1,33 +1,57 @@
 ---
 title: 私有化物料
-order: 3
+order: 1
 ---
 
 很多公司会搭建私有的 npm，因此如果需要建设私有化的物料，可以参考这篇文档。
 
-## 物料发布
+## 依赖字段
 
-单个物料请发布到私有 npm 即可。
+针对私有化物料，在物料开发过程中核心会依赖两个字段：npm 源以及 unpkg 服务。
 
-## 物料数据生成
+依赖 npm 源的场景：
 
-### NPM 源
+- `iceworks generate`：需要访问 npm registry 查询每个物料对应的版本是否发布，同时生成对应 `source.registry` 字段
+- `iceworks add`：下载模板或者区块需要访问 npm registry
+- `iceworks init`：下载模板需要访问 npm registry
 
-生成物料数据时会从对应的 npm 源校验每个物料的 npm 版本是否已发布，因此 `idev generate` 时一定要保证 npm 源与物料发布的 npm 源保持一致。generate 时可通过环境变量设置 npm 源，参考 [环境变量](/docs/materials/reference/env)。
+依赖 unpkg 服务的场景：
 
-### UNPKG 服务
+- `iceworks generate`：每个物料的 screenshot 和 homepage 默认通过 unpkg 托管，对应地址：
+  - 截图：`https://unpkg.com/@icedesign/user-landing-block/screenshot.png`
+  - 预览：`https://unpkg.com/@icedesign/user-landing-block@3.0.0/build/index.html`
 
-物料的预览地址和截图地址依赖了 unpkg 服务，比如：
+因此我们推荐在部署私有 npm 的基础上，能部署对应的私有 unpkg 服务，否则会导致物料的截图和预览功能不可用。
 
-- 截图：`https://unpkg.com/@icedesign/user-landing-block/screenshot.png`
-- 预览：`https://unpkg.com/@icedesign/user-landing-block@3.0.0/build/index.html`
+## 配置字段
 
-generate 时每个物料的元数据里会生成 homepage 和 screenshot 字段，这两个字段会根据环境变量里的 `UNPKG` 字段动态生成，可通过环境变量定义。
+### 全局配置
 
-因此我们推荐在部署私有 npm 的基础上，能部署对应的私有 unpkg 服务，否则会导致截图和预览功能不可用。
+```bash
+$ iceworks config set registry https://registry.xxx.com
+$ iceworks config set unpkgHost https://unpkg.xxx.com
+# 确认是否生效
+$ iceworks config list
+```
+
+如此配置之后，在当前电脑执行 iceworks 相关命令都会使用该配置。
+
+### 项目级配置
+
+开发物料集合的场景，也可以在项目级配置该字段，只需要配置根目录 package.json 的 materialConfig 字段即可：
+
+```json
+{
+  "materialConfig": {
+    "type": "react",
+    "registry": "https://registry.xxx.com",
+    "unpkgHost": "https://unpkg.xxx.com"
+  }
+}
+```
+
+如此配置之后，在当前物料源项目执行 iceworks 相关命令会使用该字段。
 
 ## 物料数据托管
 
-生成的物料数据即 `materials.json` 只包含所有物料的元数据，不会有任何代码，因此这份数据放在外部或者内部都可以，推荐直接在根目录将 `build/materials.json` 发布到公有 npm，然后通过 unpkg 服务访问该数据源即可。
-
-
+对于私有的物料数据托管，前文提到的 fusion 物料中心是无法支持的，因此需要自己托管，最简单的方式就是将生成的 `build/materials.json` 发布到私有 npm，然后通过私有的 unpkg 服务拿到对应 url 即可。
