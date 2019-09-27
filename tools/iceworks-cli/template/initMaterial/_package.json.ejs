@@ -1,0 +1,24 @@
+{
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "author": "",
+  "scripts": {
+    "deploy": "npm run generate && npm run sync",
+    "generate": "iceworks generate",
+    "sync": "iceworks sync",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint --cache --ext .js,.jsx ./",
+    "stylelint": "stylelint ./**/*.scss"
+  },
+  "files": ["build"],
+  "devDependencies": {
+    "@ice/spec": "^0.1.1",
+    "eslint": "^6.0.1",
+    "stylelint": "^10.1.0"
+  },
+  "materialConfig": {
+    "template": "<%= template %>",
+    "type": "<%= materialConfig.type %>"
+  }
+}

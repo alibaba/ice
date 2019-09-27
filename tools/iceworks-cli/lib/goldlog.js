@@ -38,5 +38,5 @@ function goldlog(action, extraData = {}) {
     },
   }).catch(() => {
     // ignore
-  })
+  });
 }

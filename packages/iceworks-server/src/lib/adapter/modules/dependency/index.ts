@@ -50,7 +50,7 @@ export const install = async (
     });
   };
 
-  childProcess.stdout.on('data', listenFunc)
+  childProcess.stdout.on('data', listenFunc);
 
   childProcess.stderr.on('data', listenFunc);
 
@@ -211,7 +211,7 @@ export default class Dependency implements IDependencyModule {
         chunk,
         isStdout: true,
       });
-    }
+    };
 
     childProcess.stdout.on('data', listenFunc);
 
@@ -251,7 +251,7 @@ export default class Dependency implements IDependencyModule {
         chunk,
         isStdout: true,
       });
-    }
+    };
 
     childProcess.stdout.on('data', listenFunc);
 

@@ -1,11 +1,13 @@
 const path = require('path');
 const spawn = require('cross-spawn');
-const { getNpmTarball, getNpmRegistry } = require('ice-npm-utils');
 const userHome = require('user-home');
-const extractTarball = require('./extractTarball');
+const getNpmTarball = require('../../lib/getNpmTarball');
+const extractTarball = require('../../lib/extractTarball');
 
 const NPM_NAME = 'iceworks-server';
 const DEST_DIR = path.join(userHome, `.${NPM_NAME}`);
+// 场景比较特殊，不需要走用户自定义的 config
+const REGISTRY = process.env.REGISTRY || 'https://registry.npm.taobao.org';
 
 /**
  * Download npm package content to the specified directory
@@ -16,9 +18,9 @@ function downloadServer(npmName, destDir) {
   console.log('>>> start downloading code', destDir);
   console.log('>>> ICEWORKS_CORE_VERSION:', process.env.ICEWORKS_CORE_VERSION);
   const version = process.env.ICEWORKS_CORE_VERSION ? process.env.ICEWORKS_CORE_VERSION : 'latest';
-  return getNpmTarball(npmName, version)
-    .then((url) => {
-      return extractTarball(url, destDir);
+  return getNpmTarball(npmName, version, REGISTRY)
+    .then((tarballURL) => {
+      return extractTarball({ tarballURL, destDir });
     })
     .then((res) => {
       if (res.length) {
@@ -26,21 +28,21 @@ function downloadServer(npmName, destDir) {
         console.log('>>> start installing dependencies');
         install(destDir);
       }
-    })
+    });
 }
 
 function install(cwd) {
-  const child = spawn('npm', ['install', '--loglevel', 'silly', '--registry', getNpmRegistry()], {
+  const child = spawn('npm', ['install', '--loglevel', 'silly', '--registry', REGISTRY], {
     stdio: ['pipe'],
     cwd,
   });
 
   child.stdout.on('data', data => {
-    console.log(data.toString())
+    console.log(data.toString());
   });
 
   child.stderr.on('data', data => {
-    console.log(data.toString())
+    console.log(data.toString());
   });
 
   child.on('error', error => {

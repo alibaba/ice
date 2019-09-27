@@ -1,0 +1,17 @@
+node_modules
+.DS_Store
+lerna-debug.log
+npm-debug.log
+.happypack
+package-lock.json
+yarn.lock
+yarn-error.log
+coverage/
+.eslintcache
+.vscode/
+.tmp/
+
+build
+blocks/**/lib/
+components/**/lib/
+screenshot.png
