@@ -94,7 +94,7 @@ class FusionSDK {
 
     const uploadMatetial = async (materialData) => {
       const getData = (materialType) => {
-        return materialData.filter(item => item.type === materialType).map(item => `${item.npm}@${item.version}`)
+        return materialData.filter(item => item.type === materialType).map(item => `${item.npm}@${item.version}`);
       };
 
       const data = {
@@ -119,7 +119,7 @@ class FusionSDK {
         );
         throw new Error('物料上传失败');
       }
-    }
+    };
 
     const spinner = ora(`Sync to ${url}, Now: 0/${total}`).start();
     try {

@@ -93,7 +93,7 @@ module.exports = async () => {
     }
     throw err;
   }
-}
+};
 
 async function getMaterialData(pkgData, materialDataPath) {
   const result = [];
@@ -104,7 +104,7 @@ async function getMaterialData(pkgData, materialDataPath) {
       npm: pkgData.name,
       version: pkgData.version,
       type: 'comp',
-    })
+    });
   } else if (pkgData.materialConfig) {
     // material collection
     const data = await fse.readJson(materialDataPath);
@@ -115,7 +115,7 @@ async function getMaterialData(pkgData, materialDataPath) {
           npm: item.source.npm,
           version: item.source.version,
           type: materialType,
-        })
+        });
       });
     });
   } else {

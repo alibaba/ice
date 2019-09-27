@@ -18,4 +18,4 @@ module.exports = async function(npmName, materialConfig) {
   }
 
   return unpkgHost;
-}
+};

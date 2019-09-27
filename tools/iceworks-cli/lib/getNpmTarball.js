@@ -28,4 +28,4 @@ module.exports = async function getNpmTarball(npm, version, registry) {
   }
 
   throw new Error(`${name}@${version} 尚未发布`);
-}
+};

@@ -61,7 +61,7 @@ module.exports = async function generateMaterialData(pkgPath, materialType, mate
   }
 
   return { materialData, materialType };
-}
+};
 
 function hasScreenshot(cwd) {
   return fse.existsSync(path.join(cwd, 'screenshot.png'));

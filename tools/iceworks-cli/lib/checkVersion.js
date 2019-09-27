@@ -7,5 +7,5 @@ module.exports = (packageName, packageVersion) => {
     if (latestVersion && semver.lt(packageVersion, latestVersion)) {
       return Promise.resolve(latestVersion);
     }
-  })
+  });
 };

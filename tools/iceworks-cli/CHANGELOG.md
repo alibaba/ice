@@ -2,13 +2,19 @@
 
 ## 3.1.0
 
+- [feat] support develop materials(ice-devtools)
+- [feat] support `iceworks config`
+
 ## 3.0.7
+
 - [feat] move iceworks-core to user directory
 
 ## 3.0.6
+
 - [fix] update node engines to 8.3.0  #2784
 
 ## 3.0.5
+
 - [fix] reset ICEWORKS_CORE_VERSION env # 2720
 
 ## 3.0.4

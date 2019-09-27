@@ -22,8 +22,8 @@ module.exports = async function(dir, options, diableFormatDotFile) {
         reject(err);
       });
     });
-  })
-}
+  });
+};
 
 function renderFile(filepath, options, diableFormatDotFile) {
   let filename = path.basename(filepath);

@@ -20,7 +20,7 @@ const inquirer = require('inquirer');
 const validateName = require('validate-npm-package-name');
 const uppercamelcase = require('uppercamelcase');
 const log = require('../../lib/log');
-const ejsRenderDir = require('./ejsRenderDir')
+const ejsRenderDir = require('./ejsRenderDir');
 const generateNpmName = require('./generateNpmName');
 
 module.exports = async function({
@@ -98,7 +98,7 @@ module.exports = async function({
       return fse.remove(path.join(targetPath, filename));
     }));
   }
-}
+};
 
 const COMPONENT_CATEGORIES = [
   'Table',

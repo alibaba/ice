@@ -23,4 +23,4 @@ module.exports = async function(npmName, materialConfig, publishConfig, enableUs
 
   log.verbose('getNpmRegistry', registry);
   return registry;
-}
+};

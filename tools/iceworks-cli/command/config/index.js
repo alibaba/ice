@@ -13,4 +13,4 @@ module.exports = async function({ type, key, value }) {
   } else {
     throw new Error('Invalid options');
   }
-}
+};

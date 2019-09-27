@@ -131,7 +131,7 @@ program
     console.log('');
     console.log('Examples:');
     console.log('');
-    console.log('Use the available 3.0.0 release')
+    console.log('Use the available 3.0.0 release');
     console.log('  $ iceworks use 3.0.0');
   })
   .action(async (version, cmd) => {
@@ -154,7 +154,7 @@ program
     console.log('');
     console.log('Examples:');
     console.log('');
-    console.log('Use the available 3.0.0 release')
+    console.log('Use the available 3.0.0 release');
     console.log('  $ iceworks config list');
     console.log('  $ iceworks config get registry');
     console.log('  $ iceworks config set registry https://registry.npmjs.org');
@@ -172,7 +172,7 @@ program
       console.error(err.stack);
       process.exit(1);
     }
-  })
+  });
 
 // add some useful info on help
 program.on('--help', () => {
