@@ -32,7 +32,7 @@ module.exports = async function(options = {}) {
       template: npmName,
     });
   }
-}
+};
 
 /**
  * 选择初始项目类型

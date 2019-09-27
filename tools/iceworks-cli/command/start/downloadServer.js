@@ -28,7 +28,7 @@ function downloadServer(npmName, destDir) {
         console.log('>>> start installing dependencies');
         install(destDir);
       }
-    })
+    });
 }
 
 function install(cwd) {
@@ -38,11 +38,11 @@ function install(cwd) {
   });
 
   child.stdout.on('data', data => {
-    console.log(data.toString())
+    console.log(data.toString());
   });
 
   child.stderr.on('data', data => {
-    console.log(data.toString())
+    console.log(data.toString());
   });
 
   child.on('error', error => {

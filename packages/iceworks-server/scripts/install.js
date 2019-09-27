@@ -30,7 +30,7 @@ function installTNPM() {
       console.log('>>> install tnpm client error \r\n');
 
       return Promise.resolve(true);
-    })
+    });
 }
 
 function installStark() {

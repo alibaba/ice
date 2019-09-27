@@ -14,12 +14,12 @@ const QuickDevPanel = ({ intl, title, description }) => {
 
   const task = useTask({ type: 'dev', writeLog });
   const { project = {} } = useProject();
-  const { path: projectPath, type: projectType } = project
+  const { path: projectPath, type: projectType } = project;
 
   let host;
   let port;
   let protocol;
-  let url = ''
+  let url = '';
 
   const { dataSource: { dev = {} } } = task;
   if (dev.conf && Array.isArray(dev.conf)) {
@@ -36,7 +36,7 @@ const QuickDevPanel = ({ intl, title, description }) => {
       if (name === 'https') {
         protocol = componentProps.defaultChecked ? 'https' : 'http';
       }
-    })
+    });
 
     url = `${protocol}://${host}:${port}`;
   }

@@ -18,7 +18,7 @@ module.exports = async(template, materialConfig) => {
     });
   }
   return TEMP_PATH;
-}
+};
 
 function isLocalPath(filepath) {
   return /^[./]|(^[a-zA-Z]:)/.test(filepath);

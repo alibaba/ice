@@ -119,7 +119,7 @@ async function listen(options) {
 
   child.stderr.on('data', (data) => {
     console.log(data.toString());
-  })
+  });
 
   child.on('error', (error) => {
     failedMsg(error);

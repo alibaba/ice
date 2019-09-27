@@ -88,7 +88,7 @@ module.exports = async function() {
   console.log();
   console.log(chalk.cyan(`Success! materials data generated: ${DB_PATH}`));
   console.log();
-}
+};
 
 /**
  * @param {Path} materialDir
@@ -111,7 +111,7 @@ function globMaterials(materialDir, materialType) {
               pkgPath: path.join(materialDir, item),
               materialType,
             };
-          })
+          });
           resolve(data);
         }
       }

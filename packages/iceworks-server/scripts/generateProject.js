@@ -12,7 +12,7 @@ const generateAdapterTestProject = async () => {
   // note: the build files should be removed. If not, it will throw the error.
   const rimrafAsync = util.promisify(rimraf);
   await rimrafAsync(path.join(tmpPath, '/build'));
-}
+};
 
 console.log('generateAdapterTestProject start');
 

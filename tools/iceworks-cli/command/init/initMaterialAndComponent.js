@@ -99,7 +99,7 @@ module.exports = async function({
 
   // remove temp dir
   await fse.remove(materialDir);
-}
+};
 
 async function initMaterialAsk(cwd) {
   const isInnerNet = await checkAliInternal();
