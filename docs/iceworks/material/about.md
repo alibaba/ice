@@ -45,7 +45,7 @@ iceworks 默认自带了由 ICE 团队提供的海量高质量物料。当官方
 
 ### 开发物料
 
-在实际开发中，很多业务都需要建立自有的物料体系，如定制模版、业务组件等，因此，ICE 团队通过 [iceworks](https://ice.work/docs/materials/about) 为开发者提供了便携的自定义物料开发链路。更多有关物料开发的技术信息，请参考 [《物料开发文档》](https://ice.work/docs/materials/about)。
+在实际开发中，很多业务都需要建立自有的物料体系，如定制模版、业务组件等，因此，ICE 团队通过 [iceworks](https://ice.work/docs/materials/about) 为开发者提供了便携的自定义物料开发链路。更多有关物料开发的相关文档请参考 [《物料开发文档》](https://ice.work/docs/materials/about)。
 
 ## 推荐物料
 

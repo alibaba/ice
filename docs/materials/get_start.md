@@ -20,13 +20,8 @@ $ iceworks -V
 创建空目录然后初始化：
 
 ```bash
-$ mkdir custom-material && cd custom-material
+$ mkdir my-material && cd my-material
 $ iceworks init
-
-# 或者指定模板创建
-$ iceworks init material @icedesign/material-chart-template
-# 模板支持相对路径
-$ iceworks init material ../ice-chart-material-template
 ```
 
 根据提示，在项目根目录安装依赖后，即可进入开发。初始化的目录结构如下所示，默认会生成一个区块和组件：
@@ -47,7 +42,7 @@ $ iceworks init material ../ice-chart-material-template
 ```bash
 $ iceworks add
 # 或者
-$ iceworks add component
+$ iceworks add block
 ```
 
 填写信息之后，会在 blocks/ 目录下生成 ProfileCard 目录及初始代码，根据提示执行以下命令即可开始开发：
