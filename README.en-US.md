@@ -35,7 +35,7 @@ more information [ice.work](https://ice.work).
 
 We provide two ways to use iceworks for different user groups:
 
-#### Web usage [recommend]
+#### GUI usage [recommend]
 
 ```bash
 # Install the CLI tool
@@ -63,7 +63,6 @@ $ iceworks init
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials|
-| [ice-devtools] | [![ice-devtools-status]][ice-devtools-package] | [docs][ice-devtools-docs] |Material development tools, support React&Vue.|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Highly configurable development and build tools based on webpack|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
@@ -71,7 +70,6 @@ $ iceworks init
 | [vue-materials] | / | [docs][vue-materials-docs] |High quality Vue materials maintained by the community|
 
 [iceworks]: https://github.com/alibaba/ice
-[ice-devtools]: https://github.com/ice-lab/ice-devtools
 [ice-scripts]: https://github.com/ice-lab/ice-scripts
 [icestore]: https://github.com/ice-lab/icestore
 [icestark]: https://github.com/ice-lab/icestark
@@ -79,13 +77,11 @@ $ iceworks init
 [vue-materials]: https://github.com/ice-lab/vue-materials
 
 [iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
-[ice-devtools-status]: https://img.shields.io/npm/v/ice-devtools.svg
 [ice-scripts-status]: https://img.shields.io/npm/v/ice-scripts.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 
 [iceworks-cli-package]: https://npmjs.com/package/iceworks
-[ice-devtools-package]: https://npmjs.com/package/ice-devtools
 [ice-scripts-package]: https://npmjs.com/package/ice-scripts
 [icestore-package]: https://npmjs.com/package/@ice/store
 [icestark-package]: https://npmjs.com/package/@ice/stark
@@ -93,7 +89,6 @@ $ iceworks init
 [vue-materials-docs]: https://ice.work/block?type=vue
 [react-materials-docs]: https://ice.work/scaffold
 [iceworks-docs]: https://ice.work/docs/iceworks/about
-[ice-devtools-docs]: https://ice.work/docs/materials/about
 [ice-scripts-docs]: https://ice.work/docs/cli/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore

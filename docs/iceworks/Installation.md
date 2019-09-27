@@ -7,7 +7,7 @@ order: 2
 
 iceworks 通过 CLI 方式启动本地 Web 工作台，因此需要确保系统安装过 Node.js 和 npm 环境。
 
-#### Node.js 
+#### Node.js
 
 在终端中输入以下命令检查是否已安装 Node.js：
 
@@ -55,11 +55,7 @@ $ iceworks
 解决方案：使用淘宝镜像源进行下载。
 
 ```bash
-# 查看 registry
-$ npm config get registry 
-
-# 设置 registry
-$ npm config set registry https://registry.npm.taobao.org 
+$ npm install iceworks -g --registry https://registry.npm.taobao.org
 ```
 
 ### 安装失败

@@ -17,8 +17,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks-cli.svg) | [docs](https://ice.work/docs/iceworks/about) |基于物料的一站式可视化源码研发工作台|
-| [ice-devtools](https://github.com/ice-lab/ice-devtools) | ![](https://img.shields.io/npm/v/ice-devtools.svg) | [docs](https://ice.work/docs/materials/about) |物料开发工具，支持 React&Vue|
+| [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks.svg) | [docs](https://ice.work/docs/iceworks/about) |基于物料的一站式可视化源码研发工作台|
 | [ice-scripts](https://github.com/ice-lab/ice-scripts) | ![](https://img.shields.io/npm/v/ice-scripts.svg) | [docs](https://ice.work/docs/cli/about) |基于 webpack 的高可配置开发构建工具|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
 | [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice.work/docs/icestark/guide/about) |面向大型应用的微前端解决方案|

@@ -8,10 +8,10 @@ order: 3
 生成物料数据只需在物料仓库根目录下执行以下命令即可：
 
 ```bash
-$ idev generate
+$ iceworks generate
 ```
 
-ice-devtools 会遍历所有物料，批量查询每个物料的 npm 信息，并将这些信息结构化后存储到 `build/materials.json` 文件中，这一步需要消耗一定时间，请耐心等待。
+iceworks 会遍历所有物料，批量查询每个物料的 npm 信息，并将这些信息结构化后存储到 `build/materials.json` 文件中，这一步需要消耗一定时间，请耐心等待。
 
 ![](https://img.alicdn.com/tfs/TB1TdCVcEGF3KVjSZFoXXbmpFXa-671-318.png)
 
