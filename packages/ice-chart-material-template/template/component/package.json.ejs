@@ -1,0 +1,46 @@
+{
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "files": [
+    "demo/",
+    "lib/",
+    "build/"
+  ],
+  "main": "lib/index.js",
+  "stylePath": "style.js",
+  "scripts": {
+    "start": "ice-scripts dev",
+    "start:gui": "ice-chart-develop-cli start",
+    "doc": "ice-chart-develop-cli doc",
+    "build": "ice-scripts build && ice-chart-develop-cli build && npm run doc",
+    "prepublishOnly": "ice-chart-develop-cli check && npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "dependencies": {
+    "@alife/bizcharts-plot": "*",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {<%- typeof adaptor !== 'undefined' && adaptor ? '\n    "@alifd/adaptor-generate": "^0.1.3",' : '' %>
+    "@ali/ice-chart-develop-cli": "*",
+    "ice-plugin-component": "^0.1.1",
+    "ice-plugin-moment-locales": "^0.1.0",
+    "ice-plugin-fusion": "^0.1.4",
+    "ice-scripts": "^2.0.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0"
+  },
+  "componentConfig": {
+    "name": "<%= name %>",
+    "title": "<%= title %>",
+    "category": "<%= category %>"
+  }
+}
