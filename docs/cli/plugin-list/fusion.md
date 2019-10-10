@@ -44,6 +44,10 @@ module.exports = {
         primaryColor: '#f60',
         // 覆盖 scss 原始变量
         'font-size-body-1': '14px',
+        // 替换表示图标字体文件路径的变量，路径下应有对应的 iconfont 文件
+        'icon-font-path': '"//g.alicdn.com/icon-font-path"',
+        // 替换表示 Roboto 字体文件路径的变量，路径下应有对应的 roboto 字体文件
+        'font-custom-path': '"//g.alicdn.com/font-path/"',
       },
       // @icedesign/base | @alife/next | @ali/ice -> @alife/next
       uniteBaseComponent: '@alife/next'
