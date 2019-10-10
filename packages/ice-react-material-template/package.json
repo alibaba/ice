@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-react-material-template",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "自定义物料源的初始模板",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/ice-react-material-template"
   },
   "publishConfig": {
     "access": "public"
