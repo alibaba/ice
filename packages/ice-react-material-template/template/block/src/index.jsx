@@ -1,0 +1,20 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import styles from './index.module.scss';
+
+export default function <%= className %>({ value }) {
+  return (
+    <div className={styles.<%= className %>}>
+      <%= name %> {value}
+    </div>
+  );
+}
+
+<%= className %>.propTypes = {
+  value: PropTypes.string,
+};
+
+<%= className %>.defaultProps = {
+  value: 'string data',
+};
