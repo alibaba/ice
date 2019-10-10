@@ -59,22 +59,31 @@ class Layout extends React.Component {
 
 子应用是一个 react/vue/anguler 等流行框架搭建的前端应用（spa、mpa等），以 `AppRoute` 的方式在框架应用中注册，交由 icestark 管理。icestark 并不会主动介入子应用内部的路由逻辑，因此子应用整体的改造成本很低，甚至能做到 0 改动，简单的子应用的代码示例：
 
+> 通过 `getMountNode` 获取 icestark 动态创建的渲染 DOM 节点；也可以通过给 `AppRoute` 配置 `rootId` 通知 icestark 动态创建对应的 DOM 节点，此时子应用内部不再需要配置`getMountNode`，**此时注意不要跟框架应用自己的 DOM 节点 id 重复**
+> 通过 `registerAppLeave` 注册子应用卸载事件，保证 react 组件 unmount 生命周期会被触发
+
 ```js
 // src/index.js
 import ReactDOM from 'react-dom';
-import { getMountNode } from '@ice/stark';
+import { getMountNode, registerAppLeave } from '@ice/stark-app';
 import router from './router';
+
+// make sure the unmount event is triggered
+registerAppLeave(() => {
+  ReactDOM.unmountComponentAtNode(getMountNode());
+});
 
 ReactDOM.render(router(), getMountNode());
 ```
-> 子应用可以通过 `getMountNode` 获取 icestark 动态创建的渲染 DOM 节点
-> 也可以通过给 `AppRoute` 配置 `rootId` 通知 icestark 动态创建对应的 DOM 节点，此时子应用内部不再需要配置`getMountNode`，**此时注意不要跟框架应用自己的 DOM 节点 id 重复**
+
+> 通过 `getBasename` 获取框架应用中配置的 `basename`；通过 `renderNotFound` 触发框架应用渲染全局 404
+> 也可以通过自行约定的方式，去除 `getBasename` 这块的逻辑；自行实现 404，此时子应用内部就不再依赖 `@ice/stark`
 
 ```js
 // src/router.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { renderNotFound, getBasename } from '@ice/stark';
+import { renderNotFound, getBasename } from '@ice/stark-app';
 
 function List() {
   return <div>List</div>;
@@ -103,8 +112,6 @@ export default class App extends React.Component {
   }
 }
 ```
-> 子应用通过 `getBasename` 获取框架应用中配置的 `basename`；通过 `renderNotFound` 触发框架应用渲染全局 404
-> 子应用也可以通过自行约定的方式，去除 `getBasename` 这块的逻辑；自行实现 404，此时子应用内部就不再依赖 `@ice/stark`
 
 ## 设计理念
 

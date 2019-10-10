@@ -233,10 +233,10 @@ const docCategories = {
       dir: 'guide',
     }, {
       title: {
-        'zh-cn': 'API',
-        'en-us': 'API',
+        'zh-cn': '参考',
+        'en-us': 'Reference',
       },
-      dir: 'api',
+      dir: 'reference',
     }],
   },
   icestore: {

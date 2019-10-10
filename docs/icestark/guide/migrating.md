@@ -71,21 +71,29 @@ class Layout extends React.Component {
 
 icestark 对子应用的代码侵入性极少，只有两方面：
 
-### ReactDOM 渲染节点
+### ReactDOM 渲染节点，注册卸载事件
+
+- `getMountNode` 方法会判断当前应用的运行环境，如果以子应用方式运行会使用 icestark 内部创建的 dom 节点 / shadowDOM 节点，否则会默认采用`<div id="ice-container"></div>`节点。同时，该方法支持传 DOM 节点作为默认节点。
+- `registerAppLeave` 注册子应用卸载事件，保证 react 组件 unmount 生命周期会被触发
 
 ```js
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getMountNode } from '@ice/stark';
+import { getMountNode, registerAppLeave } from '@ice/stark-app';
 import App from './App';
+
+// make sure the unmount event is triggered
+registerAppLeave(() => {
+  ReactDOM.unmountComponentAtNode(getMountNode());
+});
 
 ReactDOM.render(<App />, getMountNode());
 ```
 
-- `getMountNode` 方法会判断当前应用的运行环境，如果以子应用方式运行会使用 icestark 内部创建的 dom 节点 / shadowDOM 节点，否则会默认采用`<div id="ice-container"></div>`节点。同时，该方法支持传 DOM 节点作为默认节点。
-
 ### Router 注入 basename、渲染全局 404
+
+- 子应用通过 `getBasename` 方法获取框架应用中配置的 `basename`，通过 `renderNotFound` 方法触发框架应用渲染 404
 
 ```js
 import React from 'react';
@@ -120,5 +128,3 @@ export default class App extends React.Component {
   }
 }
 ```
-
-- 子应用通过 `getBasename` 方法获取框架应用中配置的 `basename`，通过 `renderNotFound` 方法触发框架应用渲染 404
