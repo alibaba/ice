@@ -12,7 +12,8 @@
   "scripts": {
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint": "eslint --cache --ext .js,.jsx ./"
   },
   "license": "MIT",
   "keywords": [
