@@ -5,4 +5,4 @@ Vue.config.productionTip = false;
 
 new Vue({
   render: (h) => h(Block),
-}).$mount('#vue-demo-layout')
+}).$mount('#vue-demo-layout');
