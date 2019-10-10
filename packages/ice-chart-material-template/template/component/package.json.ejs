@@ -11,9 +11,9 @@
   "stylePath": "style.js",
   "scripts": {
     "start": "ice-scripts dev",
-    "start:gui": "ice-chart-develop-cli start",
+    "start:gui": "concurrently \"ice-chart-develop-cli edit\" \"ice-chart-develop-cli start\" ",
     "doc": "ice-chart-develop-cli doc",
-    "build": "ice-scripts build && ice-chart-develop-cli build && npm run doc",
+    "build": "npm run doc && ice-scripts build && ice-chart-develop-cli build",
     "prepublishOnly": "ice-chart-develop-cli check && npm run build"
   },
   "license": "MIT",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {<%- typeof adaptor !== 'undefined' && adaptor ? '\n    "@alifd/adaptor-generate": "^0.1.3",' : '' %>
     "@ali/ice-chart-develop-cli": "*",
+    "concurrently": "^5.0.0",
     "ice-plugin-component": "^0.1.1",
     "ice-plugin-moment-locales": "^0.1.0",
     "ice-plugin-fusion": "^0.1.4",
