@@ -1,6 +1,9 @@
 # CHANGELOG
 
-## 3.1.0
+## 3.1.1
+- [fix] show message when installation dependencies fail
+
+## 3.1.0 
 
 - [feat] support develop materials(ice-devtools)
 - [feat] support `iceworks config`
