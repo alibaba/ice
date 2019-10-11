@@ -2,7 +2,6 @@ const path = require('path');
 const spawn = require('cross-spawn');
 const userHome = require('user-home');
 const chalk = require('chalk');
-const qrcode = require('qrcode-terminal');
 const getNpmTarball = require('../../lib/getNpmTarball');
 const extractTarball = require('../../lib/extractTarball');
 
@@ -63,7 +62,7 @@ function install(cwd) {
       console.log(chalk.green('   2. npm install --registry=https://registry.npm.taobao.org'));
       console.log();
       console.log(chalk.green('   确保依赖正常安装，然后重新启动 iceworks，如还不能正常启动，请通过钉钉群联系我们'));
-      qrcode.generate('https://ice.alicdn.com/assets/images/qrcode.png', {small: true});
+      console.log(chalk.green('   钉钉群：https://ice.alicdn.com/assets/images/qrcode.png'));
       console.log();
       process.exit(1);
     }
