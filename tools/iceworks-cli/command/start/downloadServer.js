@@ -1,6 +1,8 @@
 const path = require('path');
 const spawn = require('cross-spawn');
 const userHome = require('user-home');
+const chalk = require('chalk');
+const qrcode = require('qrcode-terminal');
 const getNpmTarball = require('../../lib/getNpmTarball');
 const extractTarball = require('../../lib/extractTarball');
 
@@ -50,8 +52,21 @@ function install(cwd) {
     process.exit(1);
   });
 
-  child.on('close', () => {
-    console.log('>>> install completed');
+  child.on('close', (code) => {
+    if (code === 0) {
+      console.log('>>> install completed');
+    } else {
+      console.log();
+      console.log(chalk.red('提示：安装依赖失败，可通过以下步骤进行修复。'));
+      console.log();
+      console.log(chalk.green(`   1. cd ${DEST_DIR}`));
+      console.log(chalk.green('   2. npm install --registry=https://registry.npm.taobao.org'));
+      console.log();
+      console.log(chalk.green('   确保依赖正常安装，然后重新启动 iceworks，如还不能正常启动，请通过钉钉群联系我们'));
+      qrcode.generate('https://ice.alicdn.com/assets/images/qrcode.png', {small: true});
+      console.log();
+      process.exit(1);
+    }
   });
 }
 
