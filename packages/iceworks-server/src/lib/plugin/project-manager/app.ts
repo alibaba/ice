@@ -118,7 +118,7 @@ class Project implements IProject {
     // in egg.js: Generally, before deploying the application, dependencies will be installed with NODE_ENV=production or --production
     // which will exclude devDependencies because those used in development may increase the size of package released or even create pitfalls that you never expect.
     // Refs: https://github.com/eggjs/egg-scripts/blob/master/lib/cmd/start.js#L109
-    env.NODE_ENV = 'development'
+    env.NODE_ENV = 'development';
 
     return env;
   }

@@ -3,13 +3,13 @@ title: 物料开发
 order: 2
 ---
 
-物料仓库初始化时会自动生成一些示例的物料，但这些示例一般没有什么实用价值，我们需要添加自己的物料：
+物料仓库初始化时会自动生成一些示例的物料，同时可以通过命令新增物料：
 
 ```bash
-$ idev add
+$ iceworks add
 ```
 
-选择你想开发的物料并填写相关信息，完成后 ice-devtools 会初始化好物料的基础代码。
+选择你想开发的物料并填写相关信息，完成后 iceworks 会初始化好物料的基础代码。
 
 ## 区块开发
 
@@ -45,51 +45,24 @@ npm publish
 
 执行 publish 命令的时会自动执行 `npm run build` 和 `npm run screenshot`。build 命令完成区块的构建任务，而 screenshot 命令作用是生成区块截图，截图被用于 iceworks 展示。当然，你也可以手动截图图片作为截图，只需要截图以 `screenshot.png` 保存在当前目录即可。
 
-> 你可以使用你喜欢的截图工具截图，但我们建议使用 [@ice/screenshot](https://github.com/alibaba/ice/tree/master/packages/ice-screenshot) 工具自动截图。
-
-至此，区块的开发已经结束。
-
 ## 组件开发
 
 组件的开发流程和区块相似，在完成组件的初始化后，在 `components/` 目录下生成了新的组件目录。
 
-组件目录中的 `demo` 目录由一个个的 `md` 文件组成。这些 `md` 是该组件的示例代码及描述，每个示例一个文件，这些 `md` 会在启动开发服务时自动渲染，为组件提供开发预览及文档能力。示例如下：
-
-````
----
-title: Simple Usage
-order: 1
----
-
-本 Demo 演示一行文字的用法。
-
-```jsx
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import ExampleComponent from 'custom-material-example-component';
-
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <ExampleComponent>content</ExampleComponent>
-      </div>
-    );
-  }
-}
-
-ReactDOM.render((
-  <App />
-), mountNode);
 ```
-````
+├── demo                  # 组件 demo
+│      └── usage.md
+├── src                   # 组件源码
+│      ├── main.scss
+│      └── index.js
+├── lib/                  # 构建生成，编译为 ES5 的代码，一般情况无需关心
+├── build/                # 构建生成，用于组件文档/demo 预览，一般情况无需关心
+├── README.md
+└── package.json
+```
 
-组件构建后，组件 ES 风格代码将生成在 `lib/` 目录中。
+整体开发流程与区块基本一致。
 
 ## 项目开发
 
-项目初始化将会生成项目开发所需的基础代码骨架，
-
-项目模版内容请按照物料协议标准进行修改，否则**无法在 icework 中使用**，关于这两个文件的更多信息，可参考[《物料数据协议》](/docs/materials/reference/protocol.md)和[《模版规范》](/docs/materials/template/standard.md)。
-
-而其他流程则和区块没有太多区别，开发完成后需要补充项目截图，完成后正常发布即可。
+项目初始化将会生成项目开发所需的基础代码骨架，整体流程和区块没有太多区别。

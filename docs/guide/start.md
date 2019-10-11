@@ -1,15 +1,15 @@
 ---
-title: 快速创建开发一个 React 项目
+title: 使用 iceworks 创建&开发项目
 order: 2
 ---
 
-飞冰（ICE）本身不限定使用 React/Vue 或其他前端框架，只要选择对应的物料源即可。但是相比其他框架，我们在 React 领域有更多的沉淀，因此整个创建及后续的开发流程都会以 React 为例，其他框架相关知识可自行查看对应文档。
+飞冰（ICE）提供了 iceworks 这个研发工具，支持项目&物料开发，同时针对项目开发，可以选择原始的 CLI 方式，也可以选择功能更加丰富的 GUI 方式。
 
 ## 使用 GUI 方式创建项目
 
 [iceworks](/iceworks) 定位为基于物料的一站式可视化源码研发工作台，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
 
-### 1. 安装 CLI 工具
+### 1. 安装工具
 
 ```bash
 $ npm install iceworks -g
@@ -78,8 +78,8 @@ $ iceworks --help
 $ mkdir ice-project
 $ cd ice-project
 $ iceworks init
-# 或者基于指定模板创建项目
-$ iceworks init <npmName>
+# 或者通过自定义模板创建项目
+$ iceworks init project @vue-materials/admin-lite
 ```
 
 执行命令后根据需求选择对应模板即可完成项目的创建

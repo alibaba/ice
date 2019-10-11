@@ -1,0 +1,22 @@
+{
+  "styleProps": {
+    "title": {
+      "guiType": "group",
+      "description": "图表标题",
+      "valueType": "object",
+      "fields": {
+        "text": {
+        }
+      }
+    }
+  },
+  "dataProps": {
+
+  },
+  "events": {
+
+  },
+  "handlers": {
+
+  }
+}

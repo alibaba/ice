@@ -1,5 +1,9 @@
 # CHANGELOG for iceworks
 
+## 3.4.0
+
+- [fix] Error in request sending parameters for data statistics
+
 ## 3.3.0
 
 - [feat] improving fault tolerance in Page Creation #2785

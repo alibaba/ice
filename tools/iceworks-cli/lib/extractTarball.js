@@ -8,14 +8,16 @@ const tar = require('tar');
 
 /**
  * Download tarbar content to the specified directory
+ *
  * @param {string} tarballURL tarball url
  * @param {string} destDir target directory
  */
-module.exports = function extractTarball(
+module.exports = function extractTarball({
   tarballURL,
   destDir,
-  progressFunc = () => {}
-) {
+  progressFunc = () => {},
+  formatFilename,
+}) {
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
@@ -35,7 +37,6 @@ module.exports = function extractTarball(
         error.data = {
           url: tarballURL,
         };
-        console.error(error);
         reject(error);
       })
       .pipe(zlib.Unzip())
@@ -47,14 +48,7 @@ module.exports = function extractTarball(
         const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
-
-        // _gitignore -> .gitignore
-        // Special logic：_package.json -> package.json
-        if (filename === '_package.json') {
-          filename = filename.replace(/^_/, '');
-        } else {
-          filename = filename.replace(/^_/, '.');
-        }
+        filename = formatFilename ? formatFilename(filename) : filename;
 
         const destPath = path.join(destDir, path.dirname(realPath), filename);
 

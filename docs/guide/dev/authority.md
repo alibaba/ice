@@ -118,4 +118,66 @@ export default withAuth({
 
 ### 菜单鉴权
 
-TODO
+当需要对某些菜单项进行权限控制，只需在对应的菜单项设置 authorities 属性即可，当前用户的权限如果与 authorities 中指定的权限不匹配，菜单项将不显示。
+
+```js
+// src/config/menu.js
+const headerMenuConfig = [
+  // ...
+  {
+    name: '反馈',
+    path: 'https://github.com/alibaba/ice',
+    external: true,
+    newWindow: true,
+    icon: 'message',
+    authorities: ['admin'], // 当前用户权限为 admin 时显示菜单，否则隐藏
+  },
+];
+
+const asideMenuConfig = [
+  {
+    name: '文章管理',
+    path: '/post',
+    icon: 'edit',
+    authorities: ['admin', 'user'], // 当前用户权限为 admin 或者 user 时显示菜单，否则隐藏
+    children: [
+      {
+        name: '文章列表',
+        path: '/post/list',
+        authorities: ['user'], // 当前用户权限为 user 时显示菜单，否则隐藏
+      },
+      {
+        name: '添加文章',
+        path: '/post/create'
+      },
+    ],
+  }
+];
+```
+
+控制菜单项渲染也是使用 `Auth` 组件实现，当菜单项有配置 authorites 属性时，使用 `Auth` 组件包裹，权限不匹配时组件隐藏。
+
+```jsx
+/**
+ * 根据权限决定是否渲染某个表单项
+ * @param {object} item - 菜单项组件
+ * @param {array} authorities - 菜单项允许权限数组
+ * @param {string} key - 当前菜单项的 key
+ * @return {object} 渲染的菜单项
+ */
+function renderAuthItem(item, authorities, key) {
+  if (authorities) {
+    return (
+      <Auth
+        authorities={authorities}
+        hidden
+        key={key}
+      >
+        {item}
+      </Auth>
+    );
+  } else {
+    return item;
+  }
+}
+```

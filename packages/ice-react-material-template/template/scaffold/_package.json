@@ -1,0 +1,57 @@
+{
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    "_editorconfig",
+    "_eslintignore",
+    "_eslintrc.js",
+    "_stylelintignore",
+    "_stylelintrc.js",
+    "ice.config.js",
+    "screenshot.png",
+    "jsconfig.json"
+  ],
+  "scripts": {
+    "start": "ice-scripts dev",
+    "build": "ice-scripts build",
+    "screenshot": "screenshot -l",
+    "prepublishOnly": "npm run build && npm run screenshot",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint --cache --ext .js,.jsx ./",
+    "stylelint": "stylelint ./**/*.scss"
+  },
+  "dependencies": {
+    "@alifd/next": "^1.10.1",
+    "@icedesign/theme": "^1.x",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^5.0.1"
+  },
+  "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
+    "@ice/spec": "^0.1.1",
+    "eslint": "^6.0.1",
+    "stylelint": "^10.1.0",
+    "ice-plugin-fusion": "^0.1.4",
+    "ice-plugin-moment-locales": "^0.1.0",
+    "ice-scripts": "^2.0.0"
+  },
+  "iceworks": {
+    "type": "react",
+    "adapter": "adapter-react-v3"
+  },
+  "scaffoldConfig": {
+    "name": "<%= npmName %>",
+    "title": "<%= title %>",
+    "category": "<%= category %>"
+  }
+}

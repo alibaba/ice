@@ -2,36 +2,55 @@
 const chalk = require('chalk');
 const program = require('commander');
 const semver = require('semver');
+const fse = require('fs-extra');
 const packageConfig = require('../package');
 const checkVersion = require('../lib/checkVersion');
+const log = require('../lib/log');
+const { TEMP_PATH } = require('../lib/constants');
 
 program.version(packageConfig.version).usage('<command> [options]');
 
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
   program.outputHelp();
-  console.log(` chalk.red('Unknown command ${chalk.yellow(cmd)}.`);
+  console.log(chalk.red(`Unknown command ${chalk.yellow(cmd)}`));
   console.log();
 });
 
 program
-  .command('init [npmName]')
-  .description('init project by template')
+  .command('init [type] [npmName]')
+  .description('init project/material/component by template')
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
     console.log('  $ iceworks init');
-    console.log('  $ iceworks init @icedesign/lite-scaffold');
+    console.log('  $ iceworks init component');
+    console.log('  $ iceworks init project @icedesign/lite-scaffold');
   })
-  .action((npmName, cmd) => {
+  .action(async (type, npmName, cmd) => {
+    // 兼容 iceworks init @icedesign/pro-scaffold
+    if (type && ['project', 'material', 'component'].indexOf(type) === -1) {
+      npmName = type;
+      type = 'project';
+    }
+
     const options = cleanArgs(cmd);
     options.npmName = npmName;
-    // eslint-disable-next-line global-require
-    require('../command/init')(options);
+    options.type = type;
+
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/init')(options);
+    }  catch (err) {
+      await fse.remove(TEMP_PATH);
+      log.error('iceworks init error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
   });
 
 program
-  .command('add <npmName>')
+  .command('add [materialType] [npmName]')
   .description('add block to current directory')
   .option(
     '-n, --name <name>',
@@ -40,14 +59,69 @@ program
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
+    console.log('  $ iceworks add');
+    console.log('  $ iceworks add block');
     console.log('  $ iceworks add @icedesign/user-landing-block');
     console.log('  $ iceworks add @icedesign/user-landing-block -n CustomBlock');
   })
-  .action((npmName, cmd) => {
+  .action(async (materialType, npmName, cmd) => {
+    // 兼容 iceworks add @icedesign/block-test
+    if (materialType && ['scaffold', 'block', 'component'].indexOf(materialType) === -1) {
+      npmName = materialType;
+      materialType = null;
+    }
+
     const options = cleanArgs(cmd);
+    options.materialType = materialType;
     options.npmName = npmName;
-    // eslint-disable-next-line global-require
-    require('../command/addBlock')(options);
+
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/add')(options);
+    }  catch (err) {
+      await fse.remove(TEMP_PATH);
+      log.error('iceworks add error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('generate')
+  .description('generate material collection data(material.json)')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks generate');
+  })
+  .action(async () => {
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/generate')();
+    }  catch (err) {
+      log.error('iceworks generate error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('sync')
+  .description(`sync materials data to Fusion Material Center`)
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks sync');
+  })
+  .action(async () => {
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/sync')();
+    }  catch (err) {
+      log.error('iceworks sync error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
   });
 
 program
@@ -57,22 +131,48 @@ program
     console.log('');
     console.log('Examples:');
     console.log('');
-    console.log('Use the available 3.0.0 release')
+    console.log('Use the available 3.0.0 release');
     console.log('  $ iceworks use 3.0.0');
   })
-  .action((version, cmd) => {
-    (async () => {
-      const options = cleanArgs(cmd);
-      options.version = version;
-      try {
-        // eslint-disable-next-line global-require
-        await require('../command/start')(options);
-      }  catch (err) {
-        console.error(err);
-        process.exit(1);
-      }
-    })();
+  .action(async (version, cmd) => {
+    const options = cleanArgs(cmd);
+    options.version = version;
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/start')(options);
+    }  catch (err) {
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('config [type] [key] [value]')
+  .description('operate iceworks global config')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('');
+    console.log('Use the available 3.0.0 release');
+    console.log('  $ iceworks config list');
+    console.log('  $ iceworks config get registry');
+    console.log('  $ iceworks config set registry https://registry.npmjs.org');
   })
+  .action(async (type, key, value, cmd) => {
+    const options = cleanArgs(cmd);
+    options.type = type;
+    options.key = key;
+    options.value = value;
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/config')(options);
+    }  catch (err) {
+      log.error('iceworks config error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
 
 // add some useful info on help
 program.on('--help', () => {
@@ -107,7 +207,8 @@ program.parse(process.argv);
       // eslint-disable-next-line global-require
       await require('../command/start')(cleanArgs());
     }  catch (err) {
-      console.error(err);
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
       process.exit(1);
     }
   }
@@ -163,11 +264,5 @@ async function checkIceworksVersion() {
 }
 
 function logCLIVersion () {
-  const iceworksCLIVersion = packageConfig.version;
-  // eslint-disable-next-line global-require
-  const iceworksCorePackageConfig = require('../server/package.json');
-  const iceworksCoreVersion = iceworksCorePackageConfig.version;
-
-  console.log(chalk.grey('iceworks CLI:', iceworksCLIVersion));
-  console.log(chalk.grey('iceworks Core:', iceworksCoreVersion));
+  console.log(chalk.grey('iceworks CLI:', packageConfig.version));
 }
