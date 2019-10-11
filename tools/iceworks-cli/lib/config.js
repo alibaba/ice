@@ -46,6 +46,7 @@ module.exports = {
   async setupConfig() {
     if (!config) {
       if (!fse.existsSync(CONFIG_PATH)) {
+        await fse.ensureFile(CONFIG_PATH);
         await fse.writeJson(CONFIG_PATH, {});
       }
       config = await fse.readJson(CONFIG_PATH);

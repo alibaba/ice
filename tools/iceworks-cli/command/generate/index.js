@@ -11,6 +11,7 @@ const glob = require('glob');
 const chalk = require('chalk');
 const BluebirdPromise = require('bluebird');
 const ora = require('ora');
+const goldlog = require('../../lib/goldlog');
 const log = require('../../lib/log');
 const { DB_PATH } = require('../../lib/constants');
 const generateMaterialData = require('./generateMaterialData');
@@ -24,6 +25,8 @@ module.exports = async function() {
   if (!materialConfig) {
     throw new Error('Invalid ice materials project, Missing `materialConfig` property in package.json file.');
   }
+
+  goldlog('generate', materialConfig);
 
   const [blocks, components, scaffolds] = await Promise.all(
     ['block', 'component', 'scaffold'].map((item) => {

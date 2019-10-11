@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.1.1
+
+- [fix] show message when installation dependencies fail
+- [fix] init error when haven't `.iceworks` directory
+- [chore] add goldlog for command
+
 ## 3.1.0
 
 - [feat] support develop materials(ice-devtools)
