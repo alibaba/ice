@@ -1,6 +1,7 @@
 const path = require('path');
 const fse = require('fs-extra');
 const inquirer = require('inquirer');
+const goldlog = require('../../lib/goldlog');
 const log = require('../../lib/log');
 const addBlockToProject = require('./addBlockToProject');
 const downloadMaterialTemplate = require('../init/downloadMaterialTemplate');
@@ -10,6 +11,8 @@ module.exports = async (options) => {
   const destDir = process.cwd();
   // eslint-disable-next-line prefer-const
   let { materialType, npmName } = options;
+
+  goldlog('add', { materialType, npmName });
 
   if (!materialType && npmName) {
     await addBlockToProject(options, destDir);

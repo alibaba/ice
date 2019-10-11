@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 const fse = require('fs-extra');
 const { DB_PATH, TOKEN_ALI_KEY, TOKEN_KEY } = require('../../lib/constants');
 const FusionSDK = require('./fusionSDK');
+const goldlog = require('../../lib/goldlog');
 const log = require('../../lib/log');
 const config = require('../../lib/config');
 
@@ -31,6 +32,8 @@ module.exports = async () => {
   if (isAliNpm(name) && !syncToAli) {
     throw new Error(`${name} 为内网项目, 禁止同步到外网`);
   }
+
+  goldlog('sync', materialConfig);
 
   // get materialsData
   const materialsData = await getMaterialData(pkgData, DB_PATH_ABSOLUTE);
