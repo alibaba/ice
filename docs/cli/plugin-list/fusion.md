@@ -52,6 +52,32 @@ module.exports = {
 }
 ```
 
+### 字体变量配置
+
+> 如果希望将 css 中的网络资源本地化，推荐使用 [ice-plugin-css-assets-local](/docs/cli/plugin-list/local.md)
+
+`@alifd/next` 组件库默认引用两类字体，包括图标字体和 robot 基础字体，如果希望定制这些字体的路径，可以参照如下配置：
+
+```js
+module.exports = {
+  plugins: [
+    ['ice-plugin-fusion', {
+      // 主题包
+      themePackage: '@icedesign/theme',
+      themeConfig: {
+        // 替换表示图标字体文件路径的变量，路径下应有对应4个 iconfont 文件
+        'icon-font-path': '"/font/icon-font-path"',
+        // 替换表示 Roboto 字体文件路径的变量，路径下应有对应20个 roboto 字体文件
+        'font-custom-path': '"/font/font-path/"',
+      },
+    }]
+  ]
+}
+```
+
+`/font/icon-font-path` 路径下对应的4个图标字体文件分别为：icon-font.eot、icon-font.woff、icon-font.ttf 和 icon-font.svg。
+`/font/font-path/` 路径下对应的20个字体文件可查看打包下载地址：[robot-font.zip](https://files.alicdn.com/tpsservice/31b61ac0c41fac383a1bffd154674347.zip?spm=a1zcb.12289995.0.0.697e5ab2ioi9Of&file=31b61ac0c41fac383a1bffd154674347.zip)
+
 ### 多主题配置
 
 > 多主题能力在版本 0.1.7 及更高版本中支持。
