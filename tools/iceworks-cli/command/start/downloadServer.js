@@ -15,10 +15,9 @@ const REGISTRY = process.env.REGISTRY || 'https://registry.npm.taobao.org';
  * @param {string} npmName npm package name
  * @param {string} destDir target directory
  */
-module.exports = function downloadServer(version) {
+module.exports = function downloadServer(version = 'latest') {
   const npmName = NPM_NAME;
   const destDir = DEST_DIR;
-  version = version || 'latest';
 
   console.log('>>> start download iceworks-server', version, destDir, REGISTRY);
   return getNpmTarball(npmName, version, REGISTRY)
@@ -56,7 +55,7 @@ module.exports = function downloadServer(version) {
       console.log(err);
       process.exit(1);
     });
-}
+};
 
 function install(cwd) {
   return new Promise((resolve, reject) => {
