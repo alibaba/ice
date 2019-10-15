@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.2
+
+- [chore] show help message when start error
+
 ## 3.1.1
 
 - [fix] show message when installation dependencies fail

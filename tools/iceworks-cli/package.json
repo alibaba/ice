@@ -1,15 +1,13 @@
 {
   "name": "iceworks",
-  "version": "3.1.1",
-  "description": "a simple CLI for iceworks",
+  "version": "3.1.2",
+  "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
     "iceworks": "bin/iceworks.js",
     "ice": "bin/iceworks.js"
   },
-  "scripts": {
-    "sync": "node ./command/start/downloadServer.js"
-  },
+  "scripts": {},
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
