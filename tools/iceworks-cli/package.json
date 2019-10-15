@@ -8,7 +8,6 @@
     "ice": "bin/iceworks.js"
   },
   "scripts": {
-    "sync": "node ./command/start/downloadServer.js"
   },
   "license": "MIT",
   "dependencies": {
