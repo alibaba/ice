@@ -35,6 +35,9 @@ async function exec() {
     const { url, selector, local, timeout } = program;
     const output = program.output || path.join(cwd, 'screenshot.png');
 
+    // compatiable `-s mountNode` to fix: https://github.com/alibaba/ice/issues/2641
+    const formatedSelector = /^(#|\.)/.test(selector) ? `#${formatedSelector}` : selector;
+
     if (!url && !local) {
       console.log(chalk.red('The -u or -l is required! Using the following command:'));
       console.log(chalk.red('screenshot -u https://www.example.com\n'));
@@ -44,9 +47,9 @@ async function exec() {
     if (local) {
       const port = await detect(DEFAULT_PORT);
       const serverPath = local === true ? cwd : local;
-      await screenshotWithLocalServer(serverPath, port, url, selector, output, timeout);
+      await screenshotWithLocalServer(serverPath, port, url, formatedSelector, output, timeout);
     } else {
-      await screenshot(url, selector, output, timeout);
+      await screenshot(url, formatedSelector, output, timeout);
     }
   } catch (err) {
     console.error(err);
