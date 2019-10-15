@@ -15,13 +15,11 @@ function isNotFoundError(error = '') {
 module.exports = async function getPuppeteer() {
   try {
     // get Puppeteer from local node_modules
-    // eslint-disable-next-line global-require
     return require('puppeteer');
   } catch (error) {
     if (isNotFoundError(error.message)) {
       try {
         // get Puppeteer from global node_modules
-        // eslint-disable-next-line global-require
         return require('import-global')('puppeteer');
       } catch (importGlobalErr) {
         // if not found puppeteer from global node_modules
@@ -47,7 +45,6 @@ module.exports = async function getPuppeteer() {
           }
 
           console.log(chalk.green('\nPuppeteer installed.\n'));
-          // eslint-disable-next-line global-require
           return require('import-global')('puppeteer');
         }
         throw Error(importGlobalErr);

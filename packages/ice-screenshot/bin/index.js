@@ -13,6 +13,8 @@ const createServer = require('../utils/createServer');
 const getPuppeteer = require('../utils/getPuppeteer');
 const packageJSON = require('../package.json');
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const cwd = process.cwd();
 const DEFAULT_PORT = 8100;
 
@@ -26,10 +28,11 @@ async function exec() {
       .option('-u, --url <url>', 'The target url or path to local server')
       .option('-l, --local [local]', 'Set up a local server in [local] directory and take screenshot, defaults set up in `./`')
       .option('-s, --selector <selector>', 'Select a element through CSS selector')
+      .option('-t, --timeout <timeout>', 'screenshot with a delay')
       .option('-o, --output <output>', 'Output path')
       .parse(process.argv);
 
-    const { url, selector, local } = program;
+    const { url, selector, local, timeout } = program;
     const output = program.output || path.join(cwd, 'screenshot.png');
 
     if (!url && !local) {
@@ -41,9 +44,9 @@ async function exec() {
     if (local) {
       const port = await detect(DEFAULT_PORT);
       const serverPath = local === true ? cwd : local;
-      await screenshotWithLocalServer(serverPath, port, url, selector, output);
+      await screenshotWithLocalServer(serverPath, port, url, selector, output, timeout);
     } else {
-      await screenshot(url, selector, output);
+      await screenshot(url, selector, output, timeout);
     }
   } catch (err) {
     console.error(err);
@@ -60,7 +63,7 @@ async function exec() {
  * @param {string} selector the target CSS selector
  * @param {string} output output path
  */
-async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, output) {
+async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, output, timeout) {
   targetUrl = targetUrl
     ? `http://127.0.0.1:${port}${targetUrl}`
     : `http://127.0.0.1:${port}/build/index.html`; // default screenshot target
@@ -69,7 +72,7 @@ async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, 
   console.log(chalk.white(`Create local server with port ${port}`));
   console.log(chalk.white(`The screenshot target url: ${targetUrl}`));
 
-  await screenshot(targetUrl, selector, output);
+  await screenshot(targetUrl, selector, output, timeout);
 
   server.close();
 }
@@ -81,7 +84,7 @@ async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, 
  * @param {string} selector screenshot target CSS selector
  * @param {string} output output path
  */
-async function screenshot(url, selector, output) {
+async function screenshot(url, selector, output, timeout) {
   // a terminal spinner
   const spinner = ora('screenshoting ...').start();
 
@@ -103,6 +106,10 @@ async function screenshot(url, selector, output) {
 
     // visit the target url
     await page.goto(url);
+
+    if (timeout) {
+      await sleep(timeout);
+    }
 
     // screenshot a element through CSS selector;
     if (selector) {
