@@ -1,6 +1,6 @@
 {
   "name": "@ice/screenshot",
-  "version": "0.1.4",
+  "version": "0.1.4-2",
   "description": "Take a screenshot of web page",
   "main": "bin/index.js",
   "bin": {
