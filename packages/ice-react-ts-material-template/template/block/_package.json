@@ -16,7 +16,7 @@
   "scripts": {
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
-    "screenshot": "screenshot -l -s \\#mountNode",
+    "screenshot": "screenshot -l -s mountNode",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
