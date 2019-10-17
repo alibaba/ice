@@ -3,28 +3,42 @@ title: 关于 icestark
 order: 1
 ---
 
-## 背景
+## 介绍
 
-大型中后台系统开发，往往涉及到多团队协作的情况。传统 SPA 应用都是基于一个代码仓库，业务逻辑交织，随着业务不断发展，逐渐成为巨石（Monolithic）应用，不利于维护。而为了解决这些问题，往往采用 iframe 做隔离。但 iframe 方案有以下问题：
+icestark 是一个面向大型系统的微前端解决方案，适用于以下业务场景：
 
-- 网页性能，onload 事件延迟和复用连接池问题
-- 用户体验，页面跳转生硬、多滚动条和弹窗的遮罩问题
-- 通讯模式，iframe 需要自定义通讯协议以及安全校验（如 postMessage）
+- 后台比较分散，体验差别大，因为要频繁跳转导致操作效率低，希望能统一收口的一个系统内
+- 单页面应用非常庞大，多人协作成本高，开发/构建时间长，依赖升级回归成本高
+- 系统有二方/三方接入的需求
 
-## 什么是 icestark
+icestark 在保证一个系统的操作体验基础上，实现各个子应用的独立开发和发版，框架应用通过 icestark 管理子应用的注册和渲染，将整个系统彻底解耦。
 
-[icestark](https://github.com/ice-lab/icestark) 是面向大型应用的微前端解决方案，包含以下特性：
+## 特性
 
-- 基于路由，模块化管理多个独立应用
-- 不同应用独立仓库、独立开发与部署
-- 统一管理页面公共内容（Common Header、Common Sidebar 等）
-- 支持应用低成本迁移
-- SPA 用户体验
+- 各个子应用独立开发，通过框架应用统一管理与注册
+- 子应用支持 React/Vue/... 等不同框架
+- 子应用开发流程跟传统的 SPA 应用完全一致，已有应用迁移成本极低
+- 整个系统用户体验好，跟 SPA 应用基本一致
+- 子应用只需发布前端资源 bundle 即可，框架应用通过 bundle 渲染子应用
 
-## 应用架构
+## 架构设计
 
 ![应用架构](https://img.alicdn.com/tfs/TB1bvbieEY1gK0jSZFMXXaWcVXa-1421-1416.png)
 
 - 按照 UI 结构进行框架应用、子应用的拆分
 - 框架应用：负责子应用的注册，公共内容展示（Common Header、Common Sidebar、Common Footer等）
 - 子应用：负责自身业务相关的内容展示
+
+## 使用案例
+
+### 阿里创作者平台
+
+![](https://img.alicdn.com/tfs/TB1Nk4Ljxn1gK0jSZKPXXXvUXXa-1804-1526.png)
+
+### 阿里健康-熙牛医疗云医院信息系统
+
+![](https://img.alicdn.com/tfs/TB1gVFMjCf2gK0jSZFPXXXsopXa-1718-1090.png)
+
+### 淘系小二工作台
+
+![](https://img.alicdn.com/tfs/TB1rKxOjAT2gK0jSZPcXXcKkpXa-1434-1316.png)

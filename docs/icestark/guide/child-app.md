@@ -10,7 +10,7 @@ order: 4
 初始化一个 icestark 的 React 子应用：
 
 ```bash
-$ mkdir icestark-child-app-test
+$ mkdir icestark-child-app-test && cd icestark-child-app-test
 $ iceworks init project @icedesign/stark-child-scaffold
 ```
 
@@ -129,6 +129,18 @@ registerAppLeave(() => {
 ```
 
 ## 其他问题
+
+### 子应用之间如何跳转？
+
+子应用内部跳转直接基于对应 router 提供的 link 组件即可，如果要跳转到其他子应用，则需要使用 `appHistory` API，这里以 React 应用为例：
+
+```jsx
+import { appHistory } from '@ice/stark-app';
+
+<Button type="primary" onClick={() => {
+  appHistory.push('/seller/settings');
+}}>跳转到其他子应用</Button>
+```
 
 ### 子应用 bundle 加载失败？
 

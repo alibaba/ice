@@ -10,7 +10,7 @@ order: 3
 初始化一个 icestark 的框架应用：
 
 ```bash
-$ mkdir icestark-framework-app
+$ mkdir icestark-framework-app && cd icestark-framework-app
 $ iceworks init @icedesign/stark-layout-scaffold
 ```
 
