@@ -12,6 +12,7 @@
   "scripts": {
     "start": "ice-scripts dev",
     "build": "ice-scripts build",
+    "test": "ice-scripts test",
     "prepublishOnly": "npm run build",
     "lint": "eslint --cache --ext .js,.jsx ./"
   },
@@ -31,6 +32,8 @@
     "ice-scripts": "^2.0.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "@ice/spec": "^0.1.1",
     "eslint": "^6.0.1"
   },
