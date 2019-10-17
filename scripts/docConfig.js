@@ -233,12 +233,6 @@ const docCategories = {
       dir: 'guide',
     }, {
       title: {
-        'zh-cn': 'API',
-        'en-us': 'API',
-      },
-      dir: 'api',
-    }, {
-      title: {
         'zh-cn': '参考',
         'en-us': 'Reference',
       },
