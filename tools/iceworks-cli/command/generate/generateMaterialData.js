@@ -36,7 +36,7 @@ module.exports = async function generateMaterialData(pkgPath, materialType, mate
     ...materialItemConfig,
     name: materialItemConfig.name,
     title: materialItemConfig.title,
-    description: materialItemConfig.description,
+    description: pkg.description,
     homepage,
     categories,
     category,
