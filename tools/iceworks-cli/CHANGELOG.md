@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.3
+
+- [fix] 修复生成物料数据时 description 字段缺失问题
+
 ## 3.1.2
 
 - [chore] show help message when start error
