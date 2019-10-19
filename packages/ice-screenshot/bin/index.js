@@ -36,7 +36,7 @@ async function exec() {
     const output = program.output || path.join(cwd, 'screenshot.png');
 
     // compatiable `-s mountNode` to fix: https://github.com/alibaba/ice/issues/2641
-    const formatedSelector = !/^(#|\.)/.test(selector) ? `#${selector}` : selector;
+    const formatedSelector = (selector && !/^(#|\.)/.test(selector)) ? `#${selector}` : selector;
 
     if (!url && !local) {
       console.log(chalk.red('The -u or -l is required! Using the following command:'));

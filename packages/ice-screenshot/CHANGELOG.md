@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- [fix] format selector consider '-s' undefined
+
 ## 0.1.4
 
 - [feat] support `-s mountNode`
