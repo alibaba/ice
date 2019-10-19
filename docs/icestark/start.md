@@ -9,7 +9,7 @@ order: 2
 $ npm i -g iceworks
 ```
 
-## 初始化项目
+## 初始化框架应用
 
 ```bash
 $ mkdir icestark-layout && cd icestark-layout
@@ -61,4 +61,18 @@ $ npm run start
 
 这三个子应用分别通过 React@15、React@16、Vue@2.x 开发实现，示例子应用的代码可以参考 [icestark-child-apps](https://github.com/ice-lab/icestark-child-apps)。
 
-一般情况下，开发者需要将其替换成自己开发的子应用，开发子应用请继续阅读文档。
+## 初始化子应用
+
+```bash
+$ mkdir icestark-child && cd icestark-child
+# 基于 React 的子应用
+$ iceworks init project @icedesign/stark-child-scaffold
+# 安装依赖
+$ npm install
+# 启动服务
+$ npm run start
+```
+
+接着将框架应用里 `src/App.jsx` 注册子应用的部分替换成当前子应用的信息即可。
+
+完整使用请参考「指南」部分文档。

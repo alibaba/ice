@@ -11,12 +11,14 @@ order: 4
 
 ```bash
 $ mkdir icestark-child-app-test && cd icestark-child-app-test
+
+# 基于 React 的子应用
 $ iceworks init project @icedesign/stark-child-scaffold
+# 基于 Vue 的子应用
+$ iceworks init project @vue-materials/icestark-child-app
 ```
 
 初始化出来是一个标准的单页面应用，与传统项目结构基本一致，主要的差异点请参考下文。
-
-> 子应用目前还没有 Vue 模板，可以通过命令 `iceworks init project @vue-materials/admin-lite` 初始化一个标准的 Vue 应用，然后按照下面的文档进行一些简单的改造。
 
 ## 渲染到指定节点
 
@@ -46,11 +48,12 @@ import App from './App.vue';
 import router from './router';
 
 const mountNode = getMountNode(document.getElementById('app'));
-// $mount 的第二个参数 true 需要指定
 const vue = new Vue({
   router,
   render: h => h(App),
-}).$mount(mountNode, true);
+}).$mount();
+// for vue don't replace mountNode
+mountNode.appendChild(vue.$el);
 ```
 
 ## 定义基准路由
