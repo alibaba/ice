@@ -170,7 +170,7 @@ export function useRequest(options) {
         ...config,
       });
 
-      const { error } = handleResponse(response);
+      const { data, error } = handleResponse(response);
 
       if (error) {
         throw error;
@@ -179,12 +179,14 @@ export function useRequest(options) {
           type: 'success',
           response,
         });
+        return { response, data };
       }
     } catch (error) {
       dispatch({
         type: 'error',
         error,
       });
+      throw error;
     }
   }
 
