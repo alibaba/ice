@@ -1,3 +1,5 @@
+[English](./README.en-US.md) | 简体中文
+
 <p align="center">
   <a href="https://ice.work">
     <img alt="飞冰（ICE）" src="https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png" width="96">
@@ -21,14 +23,11 @@
 </div>
 </div>
 
-
-[English](./README.en-US.md) | 简体中文
-
 ## 特性
 
 - :fire:**可视化开发**：通过 GUI 操作简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专有的前端工作台
 - :100:**丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
-- :tophat:**最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结果、开发调试、路由配置、状态管理等
+- :tophat:**最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结构、开发调试、路由配置、状态管理等
 - :whale:**自定义物料**：通过物料开发者工具快速开发构建私有物料体系
 
 更多特性请参考站点 [ice.work](https://ice.work)。
