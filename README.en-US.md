@@ -1,3 +1,5 @@
+English | [简体中文](./README.md)
+
 <p align="center">
   <a href="https://ice.work">
     <img alt="ICE" src="https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png" width="96">
@@ -20,13 +22,11 @@ Simple and friendly front-end R&D system
 </div>
 </div>
 
-English | [简体中文](./README.md)
-
 ## Features
 
 - :fire:**Visual Development**：Simplify front-end engineering complexity through GUI operations, while visually managing different project projects via adapters, customizing proprietary front-end workbench.
 - :100:**Rich materials**：Improve project development efficiency based on material assembly while providing a wide range of React/Vue materials
-- :tophat:**Best Practices**：Project development best practices based on rich experience, including directory results, development debugging, routing configuration, state management, etc.
+- :tophat:**Best Practices**：Project development best practices based on rich experience, including directory structure, development debugging, routing configuration, state management, etc.
 - :whale:**Custom material**：Building Private Material System by Rapid Development of Material Developer Tools
 
 more information [ice.work](https://ice.work).
