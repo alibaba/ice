@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.4
+
+- [fix] fix sync single component error
+
 ## 3.1.3
 
 - [fix] 修复生成物料数据时 description 字段缺失问题

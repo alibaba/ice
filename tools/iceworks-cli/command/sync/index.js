@@ -106,7 +106,7 @@ async function getMaterialData(pkgData, materialDataPath) {
     result.push({
       npm: pkgData.name,
       version: pkgData.version,
-      type: 'comp',
+      type: 'component',
     });
   } else if (pkgData.materialConfig) {
     // material collection
