@@ -202,11 +202,11 @@ module.exports = {
 }
 ```
 
-### 检查 webpack 配置
+### 查看 webpack 配置
 
-`ice-scripts` 中通过 webpack-chain 的方式管理 webpack 配置，如果配置发生变化后可以通过转化 webpack-chain 配置的方式来检查修改内容是否生效。
+`ice-scripts` 中通过 webpack-chain 的方式管理 webpack 配置，如果想要查看具体的 webpack 配置信息，可以参考下面的文档。
 
-#### 检查所有 webpack 配置
+#### 查看所有 webpack 配置
 
 ```js
 const Config = require('webpack-chain');
@@ -218,7 +218,7 @@ module.exports = {
 }
 ```
 
-#### 检查 rule 配置
+#### 查看 rule 配置
 
 ```js
 const Config = require('webpack-chain');
@@ -236,7 +236,7 @@ module.exports = {
 }
 ```
 
-#### 检查 plugin 配置
+#### 查看 plugin 配置
 
 ```js
 const Config = require('webpack-chain');
