@@ -201,3 +201,55 @@ module.exports = {
   }
 }
 ```
+
+### 查看 webpack 配置
+
+`ice-scripts` 中通过 webpack-chain 的方式管理 webpack 配置，如果想要查看具体的 webpack 配置信息，可以参考下面的文档。
+
+#### 查看所有 webpack 配置
+
+```js
+const Config = require('webpack-chain');
+module.exports = {
+  chainWebpack: (config) => {
+    // 通过 Config.toString 的方法输出当前 config 配置
+    console.log(Config.toString(config));
+  }
+}
+```
+
+#### 查看 rule 配置
+
+```js
+const Config = require('webpack-chain');
+module.exports = {
+  chainWebpack: (config) => {
+    // 输出所有定义的 rule 配置
+    console.log(Config.toString(config.module.toConfig().rules));
+
+    // 输出指定 rule 的配置
+    const ruleName = 'scss';
+    console.log(Config.toString(
+      config.module.rule(ruleName).toConfig(),
+    ));
+  }
+}
+```
+
+#### 查看 plugin 配置
+
+```js
+const Config = require('webpack-chain');
+module.exports = {
+  chainWebpack: (config) => {
+    // 输出所有定义的 plugin 配置
+    console.log(Config.toString(config.toConfig().plugins));
+
+    // 输出指定 rule 的配置
+    const pluginName = 'WebpackPluginImport';
+    console.log(Config.toString(
+      config.plugins.get(pluginName).toConfig(),
+    ));
+  }
+}
+```
