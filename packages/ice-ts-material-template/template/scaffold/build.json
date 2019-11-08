@@ -1,0 +1,15 @@
+{
+  "entry": "src/index.ts",
+  "alias": {
+    "@": "./src/"
+  },
+  "plugins": [
+    "build-plugin-ice-app",
+    ["build-plugin-fusion", {
+      "themePackage": "@icedesign/theme"
+    }],
+    ["build-plugin-moment-locales", {
+      "locales": ["zh-cn"]
+    }]
+  ]
+}

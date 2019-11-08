@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "build-plugin-component",
+    "build-plugin-fusion",<%- typeof adaptor !== 'undefined' && adaptor ? '\n    "build-plugin-fusion-cool",' : '' %>
+    ["build-plugin-moment-locales", {
+      "locales": ["zh-cn"]
+    }]
+  ]
+}
