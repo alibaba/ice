@@ -9,5 +9,5 @@
 ```bash
 $ npm install iceworks -g
 $ mkdir material-test && cd material-test
-$ iceworks init material @icedesign/ice-ts-material-template
+$ iceworks init material @icedesign/react-ts-material-template
 ```
