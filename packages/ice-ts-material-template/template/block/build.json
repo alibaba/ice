@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "build-plugin-ice-app",
+    "build-plugin-fusion",
+    "build-plugin-block",
+    ["build-plugin-moment-locales", {
+      "locales": ["zh-cn"]
+    }]
+  ]
+}
