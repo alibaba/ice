@@ -1,0 +1,27 @@
+{
+  "name": "@icedesign/react-ts-material-template",
+  "version": "0.1.1",
+  "description": "物料源模板：React/TypeScript/build-scripts/Fusion",
+  "files": [
+    "template"
+  ],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/ice-ts-material-template"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "materialConfig": {
+    "type": "react"
+  }
+}
