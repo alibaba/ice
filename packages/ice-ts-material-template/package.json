@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/react-ts-material-template",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "物料源模板：React/TypeScript/build-scripts/Fusion",
   "files": [
     "template"
