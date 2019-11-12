@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.5
+
+- [feat] init cmd compatible build-scripts project
+
 ## 3.1.4
 
 - [fix] fix sync single component error

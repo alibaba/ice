@@ -47,34 +47,7 @@ module.exports = async ({ npmName, cwd }) => {
 
   try {
     await fse.remove(path.join(cwd, 'build'));
-
-    const pkgPath = path.join(cwd, 'package.json');
-    const pkgData = fse.readJsonSync(pkgPath);
-    pkgData.devDependencies = pkgData.devDependencies || {};
-
-    log.info('clean package.json...');
-    delete pkgData.files;
-    delete pkgData.publishConfig;
-    delete pkgData.scaffoldConfig;
-    delete pkgData.homepage;
-    if (pkgData.buildConfig) {
-      delete pkgData.buildConfig.output;
-      delete pkgData.buildConfig.localization;
-    }
-    if (pkgData.scripts) {
-      delete pkgData.scripts.screenshot;
-      delete pkgData.scripts.prepublishOnly;
-    }
-
-    fse.writeJSONSync(pkgPath, pkgData, {
-      spaces: 2,
-    });
-
-    const isAliInternal = checkAliInternal();
-    if (isAliInternal) {
-      log.info('generate abc.json...');
-      generateAbcFileSync(cwd, pkgData);
-    }
+    await formatProjectFile(cwd);
   } catch (err) {
     log.warn('formatProject error');
     console.error(err);
@@ -89,30 +62,71 @@ module.exports = async ({ npmName, cwd }) => {
   console.log();
 };
 
-function generateAbcFileSync(projectDir, pkgData) {
+async function formatProjectFile(projectDir) {
   let abcData = {};
+  const abcPath = path.join(projectDir, 'abc.json');
+  const pkgPath = path.join(projectDir, 'package.json');
+  const pkgData = fse.readJsonSync(pkgPath);
+  pkgData.devDependencies = pkgData.devDependencies || {};
 
-  if (pkgData.devDependencies['build-scripts']) {
-    abcData = {
-      type: 'build-scripts',
-      builder: '@ali/builder-build-scripts',
-    };
-  } else if (pkgData.devDependencies['ice-scripts']) {
-    const buildVersion = pkgData.devDependencies['ice-scripts'];
-    // ^1.y.z, ~1.y.z, 1.x
-    const is1X = /^(\^|~|)1\./.test(buildVersion);
-    abcData = {
-      type: 'ice-scripts',
-      builder: is1X ? '@ali/builder-iceworks' : '@ali/builder-ice-scripts',
-    };
+  log.info('clean package.json...');
 
-    if (!is1X) {
-      // TODO: 操作 ice.config.js 加入 ice-plugin-def
-      log.info('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
+  // modify package.json
+  delete pkgData.files;
+  delete pkgData.publishConfig;
+  delete pkgData.scaffoldConfig;
+  delete pkgData.homepage;
+  if (pkgData.buildConfig) {
+    delete pkgData.buildConfig.output;
+    delete pkgData.buildConfig.localization;
+  }
+  if (pkgData.scripts) {
+    delete pkgData.scripts.screenshot;
+    delete pkgData.scripts.prepublishOnly;
+  }
+
+  const isAliInternal = await checkAliInternal();
+  if (isAliInternal) {
+    log.info('generate abc.json...', pkgData.devDependencies);
+    if (pkgData.devDependencies['@alib/build-scripts']) {
+      log.verbose('build-scripts project');
+      abcData = {
+        type: 'ice-app',
+        builder: '@ali/builder-ice-app',
+      };
+      pkgData.devDependencies['@ali/build-plugin-ice-def'] = '^0.1.0';
+
+      // modify build.json
+      const buildJsonPath = path.join(projectDir, 'build.json');
+      const buildData = fse.readJsonSync(buildJsonPath);
+      buildData.plugins = buildData.plugins || [];
+
+      buildData.plugins.push('@ali/build-plugin-ice-def');
+
+      fse.writeJSONSync(buildJsonPath, buildData, {
+        spaces: 2,
+      });
+    } else if (pkgData.devDependencies['ice-scripts']) {
+      log.verbose('ice-scripts project');
+      const buildVersion = pkgData.devDependencies['ice-scripts'];
+      // ^1.y.z, ~1.y.z, 1.x
+      const is1X = /^(\^|~|)1\./.test(buildVersion);
+      abcData = {
+        type: 'ice-scripts',
+        builder: is1X ? '@ali/builder-iceworks' : '@ali/builder-ice-scripts',
+      };
+
+      if (!is1X) {
+        // TODO: 操作 ice.config.js 加入 ice-plugin-def；删除 publicPath
+        log.info('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
+      }
     }
   }
 
-  fse.writeJSONSync(path.resolve(projectDir, 'abc.json'), abcData, {
+  fse.writeJSONSync(pkgPath, pkgData, {
+    spaces: 2,
+  });
+  fse.writeJSONSync(abcPath, abcData, {
     spaces: 2,
   });
 }
