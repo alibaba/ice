@@ -103,6 +103,18 @@ order: 1
 - 类型：`string`
 - 默认值：`icestarkNode`
 
+#### component
+
+- 当路由匹配是直接渲染 react component，渲染后会带上 `location`、`match`、`history` 的 `props`, 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.component](https://reacttraining.com/react-router/web/api/Route/component)，选填
+- 类型：`string | ReactNode`
+- 默认值：`-`
+
+#### render
+
+- 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.render](https://reacttraining.com/react-router/web/api/Route/render-func)，选填
+- 类型：`({location, match, history}) => ReactNode`
+- 默认值：`-`
+
 ### AppLink
 
 提供声明式的，可访问的导航，表示本次跳转需要重新加载静态资源。子应用内部跳转仍然使用 `Link`
@@ -121,7 +133,7 @@ order: 1
 
 #### message
 
-- 表示当前跳转需要弹窗确认，message为提示文案内容，选填
+- 表示当前跳转需要弹窗确认，message 为提示文案内容，选填
 - 类型：`string`
 - 默认值：`-`
 
@@ -177,7 +189,6 @@ export default class SelfLink extends React.Component {
 
 - 类型：`function`
 - 代码示例参考 `appHistory.push`
-
 
 ## @ice/stark-app
 
