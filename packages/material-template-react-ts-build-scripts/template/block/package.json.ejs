@@ -3,7 +3,7 @@
   "version": "<%= version %>",
   "description": "<%= description %>",
   "files": [
-    "src/",
+    "src/!(style.d.ts)",
     "build/",
     "screenshot.png"
   ],
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@alib/build-scripts": "^0.1.3",
     "@ice/screenshot": "^0.1.1",
+    "@types/react": "^16.9.11",
     "build-plugin-block": "^0.1.0",
     "build-plugin-fusion": "^0.1.0",
     "build-plugin-ice-app": "^0.1.0",
