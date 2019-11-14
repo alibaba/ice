@@ -2,7 +2,7 @@
 
 ## 3.4.1
 
-- [fix] Loss of pacakge-json dependency
+- [fix] Loss pacakge-json dependency
 
 
 ## 3.4.0
