@@ -1,5 +1,10 @@
 # CHANGELOG for iceworks
 
+## 3.4.1
+
+- [fix] Loss of pacakge-json dependency
+
+
 ## 3.4.0
 
 - [fix] Error in request sending parameters for data statistics
