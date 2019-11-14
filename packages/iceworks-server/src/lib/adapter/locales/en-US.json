@@ -38,7 +38,7 @@
   "baseAdapter.page.create.download": "Downloading block...",
   "baseAdapter.page.create.installDep": "Installing dependencies of the block...",
   "baseAdapter.page.create.createFile": "Creating page file...",
-  "baseAdapter.page.download.requestError": "Request tarball package failed",
+  "baseAdapter.page.download.requestError": "Request block {blockSourceNpm} tarball package failed",
   "baseAdapter.page.download.tarError": "Unpacking block {blockName} error, URL is {tarballURL}, please try again",
   "baseAdapter.page.download.tarTimeOut": "Unpacking block {blockName} timed out, URL is {tarballURL}, please try again",
   "baseAdapter.page.blocks.exist": "Block name cannot be repeated, please check.",

@@ -132,7 +132,8 @@ export default class Page implements IPageModule {
     try {
       tarballURL = await getTarballURLByMaterielSource(block.source, iceVersion);
     } catch (error) {
-      error.message = i18n.format('baseAdapter.page.download.requestError');
+      logger.error(error);
+      error.message = `${i18n.format('baseAdapter.page.download.requestError', { blockSourceNpm: block.source.npm })}，可手动克隆 ${block.repository}`;
       throw error;
     }
 
