@@ -38,7 +38,7 @@
   "baseAdapter.page.create.download": "正在下载区块...",
   "baseAdapter.page.create.installDep": "正在安装区块依赖...",
   "baseAdapter.page.create.createFile": "正在创建页面文件...",
-  "baseAdapter.page.download.requestError": "请求区块 tarball 包失败",
+  "baseAdapter.page.download.requestError": "请求区块 {blockSourceNpm} 的 tarball 包失败",
   "baseAdapter.page.download.tarError": "解压区块{blockName}出错，下载地址是：{tarballURL}，请重试",
   "baseAdapter.page.download.tarTimeOut": "解压区块{blockName}超时，下载地址是：{tarballURL}，请重试",
   "baseAdapter.page.blocks.exist": "区块名不能重复，请检查",
