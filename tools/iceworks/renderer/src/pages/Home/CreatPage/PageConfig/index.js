@@ -15,7 +15,7 @@ import Progress from '../../../../components/Progress';
 import services from '../../../../services';
 import './index.scss';
 
-const { npm, interaction, scaffolder } = services;
+const { npm, interaction, scaffolder, glodlog } = services;
 const FormItem = Form.Item;
 
 const generatePageName = (pages = []) => {
@@ -87,6 +87,11 @@ class PageConfig extends Component {
           nodeFramework: currentProject.nodeFramework,
         };
         logger.info('createPage config:', config);
+        glodlog.record({
+          type: 'app',
+          action: 'generator-page',
+        });
+
         let createResult;
         if (currentProject.scaffold && currentProject.scaffold.isAvailable()) {
           logger.info('使用 .iceworks 模板新建');

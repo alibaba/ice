@@ -3,9 +3,12 @@ import { observable, action } from 'mobx';
 import pathExists from 'path-exists';
 import { Feedback } from '@icedesign/base';
 import GitTools from '../lib/git-tools';
+import services from '../services';
 
 // store
 import Projects from './projects';
+
+const { glodlog } = services;
 
 class Git {
   @observable gitTools = null;
@@ -92,6 +95,10 @@ class Git {
 
   @action
   async init() {
+    glodlog.record({
+      type: 'app',
+      action: 'git-init',
+    });
     try {
       this.gitIniting = true;
       await this.gitTools.run('init');
@@ -184,6 +191,10 @@ class Git {
 
   @action
   async addRemote(remoteUrl) {
+    glodlog.record({
+      type: 'app',
+      action: 'git-addRemote',
+    });
     try {
       this.gitRemoteAdding = true;
       await this.gitTools.run('addRemote', 'origin', remoteUrl);
@@ -207,6 +218,10 @@ class Git {
 
   @action
   async addAndCommit(files, msg) {
+    glodlog.record({
+      type: 'app',
+      action: 'git-addAndCommit',
+    });
     try {
       this.gitCommitting = true;
       await this.add(files);
@@ -307,6 +322,10 @@ class Git {
 
   @action
   async push() {
+    glodlog.record({
+      type: 'app',
+      action: 'git-push',
+    });
     Feedback.toast.show({
       type: 'loading',
       content: 'Git push',
@@ -323,6 +342,10 @@ class Git {
 
   @action
   async pull() {
+    glodlog.record({
+      type: 'app',
+      action: 'git-pull',
+    });
     Feedback.toast.show({
       type: 'loading',
       content: 'Git pull',

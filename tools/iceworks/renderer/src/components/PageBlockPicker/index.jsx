@@ -21,7 +21,7 @@ import services from '../../services';
 import logger from '../../lib/logger';
 import './index.scss';
 
-const { scaffolder } = services;
+const { scaffolder, glodlog } = services;
 
 // 向页面新增 block 的功能
 // 包括展示现有 page 下的 blocks 以及选择新 block 的管理
@@ -142,6 +142,11 @@ class PageBlockPicker extends Component {
       );
       return false;
     }
+
+    glodlog.record({
+      type: 'app',
+      action: 'add-blocks',
+    });
 
     pageBlockPicker.downloadStart();
     progress.start(true);

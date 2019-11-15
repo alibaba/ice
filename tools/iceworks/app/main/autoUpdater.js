@@ -1,6 +1,5 @@
 const { ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
-const semver = require('semver');
 const logger = require('./logger');
 const { createUpdaterWindow } = require('./windowList');
 const sendToWebContents = require('./helper/sendToWebContents');

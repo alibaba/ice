@@ -18,7 +18,7 @@ import logger from '../../../../lib/logger';
 import Client from './Client';
 import PluginHoc from '../PluginHoc';
 
-const { shared } = services;
+const { shared, glodlog } = services;
 const decoder = new StringDecoder('utf8');
 class ClientEmiter extends EventEmitter {
   constructor() {
@@ -210,6 +210,11 @@ git commit -m 'chore: update
   }
 
   cloudPublish = async (target) => {
+    glodlog.record({
+      type: 'app',
+      action: 'def-push',
+    });
+
     const { projects, git } = this.props;
     const { originRemote, currentBranch, status } = git;
     const user = this.getUserInfo();
