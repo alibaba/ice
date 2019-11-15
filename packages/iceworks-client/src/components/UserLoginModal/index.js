@@ -29,7 +29,7 @@ function UserLoginModal({ on, onCancel, onOk }) {
     return () => {
       window.removeEventListener('message', onMessage);
     };
-  }, []);
+  }, [onMessage]);
 
   return (
     <Modal

@@ -25,5 +25,5 @@ export default function useVisibilityChange(handleVisibilityChange) {
     return () => {
       document.removeEventListener(visibilityChange, handle, false);
     };
-  }, []);
+  }, [handleVisibilityChange]);
 }

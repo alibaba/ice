@@ -34,7 +34,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     onInit();
-  }, []);
+  }, [onInit]);
 
   return (
     <div className={styles.container}>

@@ -14,7 +14,7 @@ export default function useSocket(eventName, callback, initValue = []) {
         socket.removeListener(eventName, callback);
       };
     }
-  }, initValue);
+  }, [callback, eventName]);
 
   return socket;
 }
