@@ -16,7 +16,7 @@ import Icon from '../../../components/Icon';
 import PluginHoc from './PluginHoc';
 import services from '../../../services';
 
-const { alioss } = services;
+const { alioss, glodlog } = services;
 
 const STORE_KEY = 'extension:aliyun:data';
 
@@ -230,6 +230,11 @@ class Aliyun extends Component {
   };
 
   handleUploadOss = () => {
+    glodlog.record({
+      type: 'app',
+      action: 'oss-upload',
+    });
+
     const { currentProject } = this.props.projects;
     let buildDir = '';
     if (fs.existsSync(path.join(currentProject.clientPath, 'dist'))) {
