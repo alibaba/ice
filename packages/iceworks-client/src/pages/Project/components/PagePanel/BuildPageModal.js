@@ -76,7 +76,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
         isLoading: false,
       });
     })();
-  }, [data, setLoading, source]);
+  }, []);
 
   const categoryMaterials = materials[category] || [];
 
@@ -210,7 +210,7 @@ const BuildPageModal = ({
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
   useEffect(() => {
     material.getResources({ type: project.dataSource.type });
-  }, [material, project.dataSource.type]);
+  }, []);
   const { dataSource } = material;
   const { resource } = dataSource;
   const newMaterialSources = resource.official
@@ -246,7 +246,7 @@ const BuildPageModal = ({
     } catch (error) {
       showMessage(error);
     }
-    
+
     setSaveModal(false);
   }
 
@@ -288,7 +288,7 @@ const BuildPageModal = ({
 
   useEffect(() => {
     material.getResources({ type: project.dataSource.type });
-  }, [material, project.dataSource.type]);
+  }, []);
 
   const titleId = page ? 'iceworks.project.panel.page.update.title' : 'iceworks.project.panel.page.create.title';
 
