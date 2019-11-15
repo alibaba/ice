@@ -75,7 +75,7 @@ export default (app) => {
         storage.set('material', newMaterials);
       }
 
-      return {...formatMaterialData(data), name: currentItem.name };
+      return {...formatMaterialData(data), name: currentItem.name, official: currentItem.official };
     }
 
     public async getRecommendScaffolds() {
@@ -120,7 +120,7 @@ export default (app) => {
 
       const materialData = formatMaterialData(data);
 
-      return { resource: storage.get('material'), current: { ...materialData, name } };
+      return { resource: storage.get('material'), current: { ...materialData, name, official: currentItem.official } };
     }
 
     public async delete(ctx) {

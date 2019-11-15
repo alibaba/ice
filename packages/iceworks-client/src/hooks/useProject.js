@@ -103,18 +103,18 @@ function useProject({ panelStores } = {}) {
   }
 
   async function createProject(data) {
-    await projectsStore.create(data);
-    await refreshProjects();
-
     goldlog({
       namespace: 'home',
       module: 'project',
       action: 'create-project',
       data: {
         materialIsOfficial: currentMaterial.official,
-        scaffoldNpm: scaffold.npm,
+        scaffoldSourceNpm: scaffold.source.npm,
       },
     });
+
+    await projectsStore.create(data);
+    await refreshProjects();
     setCreateProjectModal(false);
   }
 

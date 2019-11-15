@@ -84,6 +84,14 @@ const PagePanel = ({ intl, title, description }) => {
   async function createPage(data) {
     const { menuName, routePath, routeGroup } = data;
     logger.info('create page data:', data);
+    goldlog({
+      namespace: 'home',
+      module: 'project',
+      action: 'create-page',
+      data: {
+        blocks: data.blocks.length,
+      },
+    });
 
     await pagesStore.create(data);
 
@@ -121,15 +129,6 @@ const PagePanel = ({ intl, title, description }) => {
     pagesStore.refresh();
     menuStore.refresh();
     routerStore.refresh();
-
-    goldlog({
-      namespace: 'home',
-      module: 'project',
-      action: 'create-page',
-      data: {
-        blocks: data.blocks.length,
-      },
-    });
   }
 
   async function addBlocks(newBlocks) {
