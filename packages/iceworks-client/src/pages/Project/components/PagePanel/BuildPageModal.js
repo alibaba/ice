@@ -76,7 +76,7 @@ const MaterialSelect = ({ resources, onSelect }) => {
         isLoading: false,
       });
     })();
-  }, []);
+  }, [data, setLoading, source]);
 
   const categoryMaterials = materials[category] || [];
 
@@ -209,7 +209,7 @@ const BuildPageModal = ({
   const [progress, material, project] = stores.useStores(['progress', 'material', 'project']);
   useEffect(() => {
     material.getResources({ type: project.dataSource.type });
-  }, []);
+  }, [material, project.dataSource.type]);
   const { dataSource } = material;
   const { resource } = dataSource;
   const newMaterialSources = resource.official
@@ -284,7 +284,7 @@ const BuildPageModal = ({
 
   useEffect(() => {
     material.getResources({ type: project.dataSource.type });
-  }, []);
+  }, [material, project.dataSource.type]);
 
   return (
     [

@@ -28,7 +28,7 @@ const XtermTerminal = ({ id, name, options }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [id, name, options]);
 
   const { termTheme } = useTermTheme();
   const term = termManager.find(id);
