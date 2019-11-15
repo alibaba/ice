@@ -68,7 +68,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
       await onGetStatus();
       await getConf('dev');
     })();
-  }, []);
+  }, [getConf, onGetStatus]);
 
   // listen start event handle
   useSocket(startEventName, data => taskEventListener(data), [status]);

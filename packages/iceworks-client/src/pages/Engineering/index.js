@@ -32,7 +32,7 @@ const Engineering = ({ routes }) => {
 
   useEffect(() => {
     setSubMenuData(getSubMenuData());
-  }, []);
+  }, [getSubMenuData]);
 
   if (!projectStore.dataSource.name) {
     return (

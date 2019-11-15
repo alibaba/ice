@@ -184,7 +184,7 @@ const Project = ({ history, intl }) => {
     logger.info('Project page loaded.');
 
     wrapRefreshProjects();
-  }, []);
+  }, [wrapRefreshProjects]);
 
   useVisibilityChange((hidden) => {
     if (!hidden) {

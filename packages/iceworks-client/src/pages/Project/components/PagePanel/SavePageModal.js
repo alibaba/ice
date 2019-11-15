@@ -28,7 +28,7 @@ const SavePageModal = ({ on, onCancel, onOk, intl }) => {
     (async () => {
       await refresh();
     })();
-  }, []);
+  }, [refresh]);
 
   async function onSave(values, errors) {
     if (!errors) {

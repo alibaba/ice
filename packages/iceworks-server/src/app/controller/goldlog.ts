@@ -56,7 +56,7 @@ export class GoldlogController {
     const isAlibaba = await checkAliInternal();
     const nowtDate = new Date().toDateString();
 
-    let lastDate = storage.get('lastDate');
+    const lastDate = storage.get('lastDate');
     if(nowtDate !== lastDate) {
       storage.set('lastDate', nowtDate);
       record({
@@ -65,7 +65,7 @@ export class GoldlogController {
         action: 'dau',
         data: {
           group: isAlibaba ? 'alibaba' : 'outer',
-        }
+        },
       });
     }
 
