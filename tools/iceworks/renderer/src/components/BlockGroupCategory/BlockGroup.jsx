@@ -5,9 +5,9 @@ import { Button } from '@icedesign/base';
 import Icon from '../Icon';
 import services from '../../services';
 
-const { glodlog } = services;
-
 import './BlockGroup.scss';
+
+const { glodlog } = services;
 
 @inject('blocks', 'blockGroups', 'pageBlockPicker', 'newpage')
 @observer
