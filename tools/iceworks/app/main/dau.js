@@ -9,7 +9,7 @@ module.exports = {
     const currentDate = new Date().toDateString();
     const prevDate = statStorage.get();
     if (prevDate !== currentDate) {
-      logger.debug('dav record');
+      logger.debug('dau record');
       statStorage.set(currentDate);
       glodlog.record({
         type: 'app',

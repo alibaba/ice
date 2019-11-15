@@ -1,6 +1,7 @@
 const Store = require('./Store');
 
 module.exports = {
+  statTermStorage: new Store('stat-term'), // term 统计记录
   statStorage: new Store('stat'), // 统计记录
   recordStorage: new Store('record'), // 项目使用记录
   projectsStorage: new Store('projects'), // 所有项目列表

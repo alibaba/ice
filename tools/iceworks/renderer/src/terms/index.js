@@ -5,8 +5,31 @@ import defaultShell from 'default-shell';
 import pathExists from 'path-exists';
 import services from '../services';
 
-const { pty } = services;
+const { pty, settings, storage, glodlog } = services;
 const { env, isWin } = remote.require('./shared');
+
+const { statTermStorage } = storage;
+
+let recorded;
+function record() {
+  if (recorded) {
+    return;
+  }
+  const isAlibaba = settings.get('isAlibaba');
+  const currentDate = new Date().toDateString();
+  const prevDate = statTermStorage.get();
+  if (prevDate !== currentDate) {
+    recorded = true;
+    statTermStorage.set(currentDate);
+    glodlog.record({
+      type: 'app',
+      action: 'term-dau',
+      data: {
+        group: isAlibaba ? 'alibaba' : 'outer',
+      },
+    });
+  }
+}
 
 window.Terminal.applyAddon(fit);
 // Terminal.applyAddon(webLinks);
@@ -92,6 +115,7 @@ class Terms {
     });
     // todo 禁用命令行输入
     term.on('data', (data) => {
+      record();
       ptyProcess.write(data);
     });
 
