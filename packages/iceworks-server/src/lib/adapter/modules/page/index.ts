@@ -12,6 +12,7 @@ import * as uniqBy from 'lodash.uniqby';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../../../scanDirectory';
 import getNpmClient from '../../../getNpmClient';
+import goldlog from '../../../goldlog';
 import getIceVersion from '../../utils/getIceVersion';
 import getTarballURLByMaterielSource from '../../../getTarballURLByMaterielSource';
 import { install as installDependency } from '../dependency';
@@ -116,6 +117,7 @@ export default class Page implements IPageModule {
   }
 
   private async downloadBlockToPage(block: IMaterialBlock, pageName: string, ctx: IContext): Promise<void> {
+    const blockSourceNpm = block.source.npm;
     const { i18n, logger } = ctx;
     const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
@@ -124,6 +126,14 @@ export default class Page implements IPageModule {
       this.componentDirName
     );
     await mkdirpAsync(componentsDir);
+    await goldlog({
+      namespace: 'adapter',
+      module: 'page',
+      action: 'downloadBlock',
+      data: {
+        block: blockSourceNpm
+      }
+    });
 
     const iceVersion: string = getIceVersion(projectPackageJSON);
     const blockName: string = this.generateBlockName(block);
@@ -133,7 +143,7 @@ export default class Page implements IPageModule {
       tarballURL = await getTarballURLByMaterielSource(block.source, iceVersion);
     } catch (error) {
       logger.error(error);
-      error.message = `${i18n.format('baseAdapter.page.download.requestError', { blockSourceNpm: block.source.npm })}，可手动克隆 ${block.repository}`;
+      error.message = `${i18n.format('baseAdapter.page.download.requestError', { blockSourceNpm })}，可手动克隆 ${block.repository}`;
       throw error;
     }
 
