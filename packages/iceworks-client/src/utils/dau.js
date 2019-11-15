@@ -42,11 +42,11 @@ function handleVisibilityChange() {
 export default function() {
   dau();
 
-  if (typeof document.addEventListener === 'undefined' || typeof document[hidden] === 'undefined') {
-    logger.warn('Require a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.');
-  } else {
+  if (typeof document.addEventListener !== 'undefined') {
     document.addEventListener(visibilityChange, handleVisibilityChange, false);
   }
 
-  window.addEventListener('focus', handleVisibilityChange);
+  if (typeof window.addEventListener !== 'undefined') {
+    window.addEventListener('focus', handleVisibilityChange);
+  }
 };
