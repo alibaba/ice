@@ -3,7 +3,9 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { Button } from '@icedesign/base';
 import Icon from '../Icon';
-import { glodlog } from '../../services';
+import services from '../../services';
+
+const { glodlog } = services;
 
 import './BlockGroup.scss';
 
