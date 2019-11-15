@@ -186,6 +186,8 @@ export default {
    * @param {Object} project 项目 stores 实例
    */
   start(project) {
+    glodlog.record({ type: 'app', action: 'task-start', data: { commond: 'dev' } });
+
     const libraryType = project.getLibraryType();
     if (sessions.startProxy.has(project.fullPath)) {
       project.devStart();
@@ -290,6 +292,7 @@ export default {
    * @param {Object} project 项目 stores 实例
    */
   stop(project) {
+    glodlog.record({ type: 'app', action: 'task-stop', data: { commond: 'dev' } });
     sessions.startProxy.stop(project.fullPath);
     project.devStop();
   },
@@ -298,6 +301,7 @@ export default {
    * @param {Object} project 项目 stores 实例
    */
   build(project) {
+    glodlog.record({ type: 'app', action: 'task-start', data: { commond: 'build' } });
     if (!sessions.buildProxy.has(project.fullPath)) {
       project.buildStart();
       sessions.buildProxy.start(
@@ -336,6 +340,7 @@ export default {
    * deps： string
    */
   npminstall: (project, deps, isDev = false, callback) => {
+    glodlog.record({ type: 'app', action: 'dependency-create' });
     let dependencies = deps.split(/\s+/);
     dependencies = dependencies.filter((d) => !!d.trim());
 
@@ -377,6 +382,7 @@ export default {
    * 依赖全量安装/重装，都是client和server共同执行。
    */
   install: ({ project, reinstall = true }, callback) => {
+    glodlog.record({ type: 'app', action: 'dependency-reset' });
     logger.debug('开始安装', project.fullPath);
     const cwd = project.fullPath;
     const nodeModulesPaths = [];
