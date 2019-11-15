@@ -7,6 +7,7 @@ import useTheme from '@hooks/useTheme';
 import '@alifd/next/reset.scss';
 
 import logger from '@utils/logger';
+import dau from '@utils/dau';
 import socket from '@src/socket';
 import MainLayout from '@layouts/MainLayout/index';
 import { LocaleProvider } from '@components/Locale';
@@ -63,3 +64,5 @@ const App = () => {
 };
 
 ReactDOM.render(<App />, document.getElementById('iceworks'));
+
+dau();
