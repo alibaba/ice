@@ -10,6 +10,8 @@ function useProject({ panelStores } = {}) {
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [scaffold, setScaffold] = useState({});
 
+  const { currentMaterial } = materialStore.dataSource;
+
   const {
     on: onCreateProjectModal,
     setModal: setCreateProjectModal,
@@ -103,11 +105,15 @@ function useProject({ panelStores } = {}) {
   async function createProject(data) {
     await projectsStore.create(data);
     await refreshProjects();
+
     goldlog({
       namespace: 'home',
       module: 'project',
       action: 'create-project',
-      data,
+      data: {
+        materialIsOfficial: currentMaterial.official,
+        scaffoldNpm: scaffold.npm,
+      },
     });
     setCreateProjectModal(false);
   }

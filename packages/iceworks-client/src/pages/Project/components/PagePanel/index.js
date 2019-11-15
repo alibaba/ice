@@ -126,7 +126,9 @@ const PagePanel = ({ intl, title, description }) => {
       namespace: 'home',
       module: 'project',
       action: 'create-page',
-      data,
+      data: {
+        blocks: data.blocks.length,
+      },
     });
   }
 
