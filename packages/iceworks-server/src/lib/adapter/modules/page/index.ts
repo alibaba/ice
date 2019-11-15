@@ -131,8 +131,8 @@ export default class Page implements IPageModule {
       module: 'page',
       action: 'downloadBlock',
       data: {
-        block: blockSourceNpm
-      }
+        block: blockSourceNpm,
+      },
     });
 
     const iceVersion: string = getIceVersion(projectPackageJSON);
