@@ -63,6 +63,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('iceworks'));
-
-dau();
+ReactDOM.render(<App />, document.getElementById('iceworks'), dau);

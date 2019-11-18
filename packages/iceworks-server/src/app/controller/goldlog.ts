@@ -26,11 +26,12 @@ export class GoldlogController {
     const isAlibaba = await checkAliInternal();
     const nowtDate = new Date().toDateString();
 
-    const lastDate = storage.get('lastDate3');
+    const dauKey = 'lastDate3';
+    const lastDate = storage.get(dauKey);
     const locale = storage.get('locale');
     const theme = storage.get('theme');
     if(nowtDate !== lastDate) {
-      storage.set('lastDate', nowtDate);
+      storage.set(dauKey, nowtDate);
       await goldlog({
         namespace: 'home',
         module: 'log',
