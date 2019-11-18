@@ -4,8 +4,8 @@ class AdditionalScaffolds {
   @observable
   activeCategory = '全部';
 
-  constructor(scaffolds, material) {
-    this.material = material || '';
+  constructor(scaffolds, builtIn) {
+    this.builtIn = builtIn;
     this.scaffoldsValue = this.additionalIsNew(scaffolds);
     this.startRecommendScaffolds = this.startRecommendScaffolds(scaffolds);
   }
@@ -13,6 +13,7 @@ class AdditionalScaffolds {
 
   additionalIsNew = (scaffolds) => {
     const sortScaffolds = scaffolds.filter((scaffold) => {
+      scaffold.builtIn = this.builtIn; // hack set builtIn
       return !!scaffold.publishTime;
     });
 

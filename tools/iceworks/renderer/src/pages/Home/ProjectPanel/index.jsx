@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron';
 import loadable from 'react-loadable';
 import React, { Component } from 'react';
 
-import { openInBrowser } from '../../../external';
+import { openInBrowser, openInFinder, openInShell, openInEditor } from '../../../external';
 import ActionButton from './ActionButton';
 import AddPackage from './AddPackage';
 import BuildStatus from './BuildStatus';
@@ -127,19 +127,19 @@ class Project extends Component {
   // 编辑中打开
   handleOpenEditor = () => {
     const { projects } = this.props;
-    editors.open(projects.currentProject.fullPath);
+    openInEditor(projects.currentProject.fullPath);
   };
 
   // 终端中打开
   handleOpenTerminal = () => {
     const { projects } = this.props;
-    shells.open(projects.currentProject.fullPath);
+    openInShell(projects.currentProject.fullPath);
   };
 
   // 文件夹打开
   handleOpenFolder = () => {
     const { projects } = this.props;
-    folder.open(projects.currentProject.fullPath);
+    openInFinder(projects.currentProject.fullPath);
   };
 
   handleToggleProjectSwitch = () => {

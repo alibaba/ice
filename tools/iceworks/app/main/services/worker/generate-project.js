@@ -70,6 +70,20 @@ module.exports = (_options, afterCreateRequest) => {
           group: isAlibaba ? 'alibaba' : 'outer',
         },
       });
+
+      let scaffoldType = 'builtIn';
+      if (isCustomScaffold) {
+        scaffoldType = 'custom';
+      } else if (!scaffold.builtIn) {
+        scaffoldType = 'notBuiltIn';
+      }
+      glodlog.record({
+        type: 'app',
+        action: 'generator-project-new',
+        data: {
+          scaffoldType,
+        },
+      });
       return Promise.resolve();
     });
 };

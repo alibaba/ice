@@ -136,7 +136,7 @@ class Materials {
     const startRecommendMaterials = this.startRecommendMaterials;
     const fn = (data) => {
       const scaffolds = data.scaffolds || [];
-      const { startRecommendScaffolds } = new AdditionalScaffolds(scaffolds);
+      const { startRecommendScaffolds } = new AdditionalScaffolds(scaffolds, true);
       startRecommendMaterials.scaffolds = startRecommendScaffolds || [];
       startRecommendMaterials.loaded = true;
       startRecommendMaterials.error = null;
@@ -187,7 +187,7 @@ class Materials {
 
       // 双向绑定数据
       material.blocks = new AdditionalBlocks(blocks);
-      material.scaffolds = new AdditionalScaffolds(scaffolds, material);
+      material.scaffolds = new AdditionalScaffolds(scaffolds, material.builtIn);
       material.components = new AdditionalComponents(
         components,
         material,

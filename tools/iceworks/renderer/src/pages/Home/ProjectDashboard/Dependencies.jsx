@@ -16,7 +16,7 @@ import logger from '../../../lib/logger';
 import services from '../../../services';
 import PluginHoc from './PluginHoc';
 
-const { npm } = services;
+const { npm, glodlog } = services;
 
 @inject('projects', 'installer')
 @observer
@@ -203,6 +203,7 @@ class Dependencies extends Component {
     const deps = this.state[type];
     const currentProject = projects.currentProject;
 
+    glodlog.record({ type: 'app', action: 'dependency-update' });
     if (!deps[name].installing) {
       deps[name].installing = true;
       this.setState({ [type]: deps });
