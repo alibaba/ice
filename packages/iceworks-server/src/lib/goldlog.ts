@@ -3,12 +3,12 @@ import * as request from 'request-promise-native';
 export default async function(data) {
   try {
     const dataKeyArray = Object.keys(data);
-    const gokey = dataKeyArray.reduce((finnalStr, currentKey, index) => {
+    const gokey = dataKeyArray.reduce((finalStr, currentKey, index) => {
       const currentData =
           typeof data[currentKey] === 'string'
             ? data[currentKey]
             : JSON.stringify(data[currentKey]);
-      return `${finnalStr}${currentKey}=${currentData}${
+      return `${finalStr}${currentKey}=${currentData}${
         dataKeyArray.length - 1 === index ? '' : '&'
       }`;
     }, '');
