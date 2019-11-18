@@ -1,9 +1,12 @@
 # CHANGELOG for iceworks
 
+## 3.4.2
+
+- [refactor] Better user data collection methods
+
 ## 3.4.1
 
 - [fix] Loss pacakge-json dependency
-
 
 ## 3.4.0
 

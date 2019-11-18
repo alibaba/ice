@@ -14,6 +14,10 @@ if (!fs.existsSync(confPath)) {
 }
 
 const schema = {
+  lastDate3: {
+    type: 'string',
+    default: '',
+  },
   workFolder: {
     type: 'string',
     default: userHome,

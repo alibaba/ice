@@ -246,7 +246,7 @@ const BuildPageModal = ({
     } catch (error) {
       showMessage(error);
     }
-    
+
     setSaveModal(false);
   }
 

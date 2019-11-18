@@ -145,6 +145,10 @@ async function startIceworks(options) {
     console.log();
     process.exit(1);
   });
+
+  process.on('SIGINT', () => {
+    goldlog('stop');
+  });
 }
 
 /**
@@ -169,19 +173,9 @@ async function checkServerVersion(packageName, packageVersion) {
 
 async function dauStat() {
   const isAlibaba = await checkAliInternal();
-  const nowtDate = new Date().toDateString();
-  const iceworksConfigPath = path.join(userHome, '.iceworks', 'db.json');
-  // eslint-disable-next-line
-  const iceworksConfigContent = require(`${iceworksConfigPath}`);
-  const lastDate = iceworksConfigContent.lastDate;
-  if(nowtDate !== lastDate) {
-    iceworksConfigContent.lastDate = nowtDate;
-    fs.writeFileSync(iceworksConfigPath, JSON.stringify(iceworksConfigContent, null, 2));
-
-    goldlog('dau', {
-      group: isAlibaba ? 'alibaba' : 'outer',
-    });
-  }
+  goldlog('start', {
+    group: isAlibaba ? 'alibaba' : 'outer',
+  });
 }
 
 module.exports = (...args) => {
