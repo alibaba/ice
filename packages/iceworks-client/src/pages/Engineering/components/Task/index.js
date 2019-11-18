@@ -88,7 +88,7 @@ const Task = ({ history, intl }) => {
 
   useEffect(() => {
     onGetConf();
-  }, [onGetConf]);
+  }, []);
 
   const {
     isWorking,

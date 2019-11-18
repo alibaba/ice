@@ -64,7 +64,7 @@ const useTask = ({ type, writeLog, writeChunk }) => {
 
   useEffect(() => {
     onGetStatus();
-  }, [onGetStatus]);
+  }, []);
 
   // listen start event handle
   useSocket(startEventName, data => taskEventListener(data), [status]);

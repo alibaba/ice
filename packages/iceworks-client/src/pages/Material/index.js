@@ -187,7 +187,7 @@ const Material = ({ history, intl }) => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   return (
     <div className={styles.materialPage}>

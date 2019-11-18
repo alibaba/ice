@@ -73,7 +73,7 @@ const CreateProjectModal = ({ on, onCancel, onOk, isBiz }) => {
         workFolder,
       });
     })();
-  }, [data]);
+  }, []);
 
   return (
     <Modal

@@ -48,7 +48,7 @@ const ActionStatus = (props) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [error]);
+  }, [error && error.content]);
 
   if (!loadingVisible && !errorVisible) {
     return null;

@@ -49,7 +49,7 @@ const Configuration = () => {
 
   useEffect(() => {
     onGetCLIConf();
-  }, [onGetCLIConf]);
+  }, []);
 
   return (
     <Card title={<FormattedMessage id="iceworks.engineer.config.title" />} contentHeight="100%">
