@@ -39,7 +39,7 @@ export class GoldlogController {
           group: isAlibaba ? 'alibaba' : 'outer',
           locale,
           theme,
-          version: packageJSON.version
+          version: packageJSON.version,
         },
       });
     }
