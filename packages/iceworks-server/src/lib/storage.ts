@@ -14,7 +14,7 @@ if (!fs.existsSync(confPath)) {
 }
 
 const schema = {
-  lastDate: {
+  lastDate3: {
     type: 'string',
     default: '',
   },

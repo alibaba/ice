@@ -3,6 +3,7 @@ import storage from '../../lib/storage';
 import goldlog from '../../lib/goldlog';
 
 const { checkAliInternal } = require('ice-npm-utils');
+const packageJSON = require('../../../package.json');
 
 @provide()
 @controller('/api/goldlog')
@@ -25,7 +26,7 @@ export class GoldlogController {
     const isAlibaba = await checkAliInternal();
     const nowtDate = new Date().toDateString();
 
-    const lastDate = storage.get('lastDate');
+    const lastDate = storage.get('lastDate3');
     const locale = storage.get('locale');
     const theme = storage.get('theme');
     if(nowtDate !== lastDate) {
@@ -38,6 +39,7 @@ export class GoldlogController {
           group: isAlibaba ? 'alibaba' : 'outer',
           locale,
           theme,
+          version: packageJSON.version
         },
       });
     }
