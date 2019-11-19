@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.6
+
+- [refactor] count the number of GUI starts and stops
+
 ## 3.1.5
 
 - [feat] init cmd compatible build-scripts project
