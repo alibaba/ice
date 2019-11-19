@@ -1,4 +1,5 @@
 import { checkAliInternal } from 'ice-npm-utils';
+const packageJSON = require('../../../package.json');
 
 export default function() {
   return async function client(ctx, next) {
@@ -15,6 +16,7 @@ export default function() {
       socketUrl: `//127.0.0.1:${process.env.PORT}/`,
       apiUrl: `//127.0.0.1:${process.env.PORT}/api/`,
       isAliInternal: await checkAliInternal(),
+      clientVersion: packageJSON.version.split('.').join(''),
     };
 
     await next();
