@@ -1,4 +1,5 @@
 import { checkAliInternal } from 'ice-npm-utils';
+
 const packageJSON = require('../../../package.json');
 
 export default function() {
