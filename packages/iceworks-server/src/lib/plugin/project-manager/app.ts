@@ -258,7 +258,7 @@ interface ICreateParams {
 }
 
 class ProjectManager extends EventEmitter {
-  private projects;
+  private projects = [];
 
   private app: ISimpleApp;
 
