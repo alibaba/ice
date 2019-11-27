@@ -1,3 +1,3 @@
 export default {
-  name: '我的名字'
-}
+  name: '我的名字',
+};

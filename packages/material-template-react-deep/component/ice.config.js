@@ -5,7 +5,7 @@ module.exports = {
     ['ice-plugin-fusion', {
       themePackage: '@alife/theme-97',
       nextLibDir: 'lib',
-      style: false
+      style: false,
     }],
     'ice-plugin-component',
     ['ice-plugin-moment-locales', {

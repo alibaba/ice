@@ -16,7 +16,7 @@ class Deep<%= className %> extends React.Component<IProps> {
 
   render() {
     return (
-      <div className="deep-<%= npmName %>">Hello <%= className %></div>
+      <div className="deep-<%= npmName %>">Hello <%= className %></div>;
     );
   }
 }
