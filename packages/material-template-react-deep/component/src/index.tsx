@@ -20,5 +20,5 @@ class Deep<%= className %> extends React.Component<IProps> {
     );
   }
 }
-export default ConfigProvider.config(Deep<%= className %>, {})
+export default ConfigProvider.config(Deep<%= className %>, {});
 
