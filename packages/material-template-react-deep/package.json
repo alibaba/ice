@@ -1,0 +1,27 @@
+{
+  "name": "@ali/deep-template",
+  "version": "1.1.0",
+  "description": "自定义物料源的初始模板",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "template"
+  ],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
+  "author": "qili.taoqili",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.alibaba-inc.com/deep/deep-template"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  },
+  "materialConfig": {
+    "type": "react"
+  }
+}

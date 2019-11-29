@@ -19,5 +19,7 @@
     "skipLibCheck": true
   },
   "include": ["src/*.ts", "src/*.tsx"], // 需要编译的文件目录
-  "exclude": ["node_modules", "build", "public"] // 排除编译的文件目录
+  "exclude": ["node_modules", "build",
+    "public"
+  ] // 排除编译的文件目录
 }
