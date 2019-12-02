@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './index.module.scss';
 
 export default function <%= className %>({ value }) {
   return (
-    <div className={styles.<%= className %>}>
+    <div className={styles.container}>
       <%= name %> {value}
     </div>
   );
@@ -16,5 +16,5 @@ export default function <%= className %>({ value }) {
 };
 
 <%= className %>.defaultProps = {
-  value: 'string data',
+  value: 'block',
 };
