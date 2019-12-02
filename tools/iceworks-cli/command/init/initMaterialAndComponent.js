@@ -123,6 +123,7 @@ async function initMaterialAsk(cwd) {
       choices: [
         '@ali',
         '@alife',
+        '@kaola',
       ],
     },
   ]) : await inquirer.prompt([

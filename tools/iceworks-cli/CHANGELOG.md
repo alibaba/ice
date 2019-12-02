@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.7
+
+- [chore] internal scope add `@kaola`
+
 ## 3.1.6
 
 - [refactor] count the number of GUI starts and stops
