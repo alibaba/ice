@@ -1,13 +1,9 @@
-# ice-ts-material-template
+## React 模板
 
-## 简介
+### 特性
 
-用于 iceworks init 初始化时的物料仓库模板，使用 React/TypeScript/build-scripts/Fusion
+- React/Fusion/ts/build-scripts
 
-## 使用
+### 维护者
 
-```bash
-$ npm install iceworks -g
-$ mkdir material-test && cd material-test
-$ iceworks init material @icedesign/react-ts-material-template
-```
+@ICE 团队
