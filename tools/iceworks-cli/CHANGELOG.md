@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.1.9
+
+- [feat] ejsRender material add npmScope and kebabCaseName options
+- [feat] add ali publishConfig after add single material
+
 ## 3.1.8
 
 - [feat] ask scope when init single component
