@@ -7,8 +7,11 @@ order: 1
 
 ````jsx
 import React, { Component } from 'react';
-import { ConfigProvider } from '@alifd/next';
+import { ConfigProvider } from '@ali/deep';
 import <%= className %> from '<%= npmScope %><%= npmScope ? '/' : '' %>deep-<%= kebabCaseName %>';
+
+// 本业务组件代码中如果有依赖任何deep下组件，请手动在此引入对应组件的style
+import '@ali/deep/lib/button/style'
 
 class App extends Component {
   constructor(props) {
