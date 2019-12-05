@@ -1,8 +1,9 @@
 import React from 'react';
-import { ConfigProvider } from '@alifd/next';
+import { ConfigProvider, Button } from '@ali/deep';
 import PropTypes from 'vision-types';
 
 interface IProps {
+  deepPrefix: string
 }
 
 class Deep<%= className %> extends React.Component<IProps> {
@@ -15,10 +16,14 @@ class Deep<%= className %> extends React.Component<IProps> {
   }
 
   render() {
+    const { deepPrefix } = this.props;
     return (
-      <div className="deep-<%= npmName %>">Hello <%= className %></div>;
+      <div className={`${deepPrefix}<%= kebabCaseName %>`}>
+        Hello <%= className %>
+        <Button type={'primary'}>确定</Button>
+      </div>
     );
   }
 }
-export default ConfigProvider.config(Deep<%= className %>, {});
 
+export default ConfigProvider.config(Deep<%= className %>, {});
