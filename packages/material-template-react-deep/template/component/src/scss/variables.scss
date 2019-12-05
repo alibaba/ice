@@ -1,0 +1,22 @@
+/* write style here */
+@import '~@alifd/next/variables.scss';
+
+// 必须设置，请严格遵循该包含default的写法。
+$css-prefix: 'next-' !default;
+$deep-css-prefix: 'deep-' !default;
+
+// 使用到的主题扩展变量,内置默认值
+$color-fill1-5: #BBC3CC !default;
+$color-fill1-6: #A5AFBC !default;
+$color-fill1-7: #79889B !default;
+$color-fill1-8: #4C6079 !default;
+$color-fill1-9: #1F3858 !default;
+
+// default for theme-97
+$color-brand1-2: #FFF0E5 !default;
+$color-brand1-3: #FFF7F0 !default;
+
+// default for theme-254
+//$color-brand1-2: #E5F1FD !default;
+//$color-brand1-3: #F0F7FF !default;
+
