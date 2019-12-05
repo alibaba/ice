@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.1.8
+
+- [feat] ask scope when init single component
+
 ## 3.1.7
 
 - [chore] internal scope add `@kaola`

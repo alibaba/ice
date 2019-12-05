@@ -176,7 +176,7 @@ function getLatestVersion(npm) {
 }
 
 function isAliNpm(npmName) {
-  return /^(@alife|@ali|@alipay)\//.test(npmName);
+  return /^(@alife|@ali|@alipay|@kaola)\//.test(npmName);
 }
 
 function getNpmRegistry(npmName = '') {
