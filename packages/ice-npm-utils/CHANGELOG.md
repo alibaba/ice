@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+
+- [feat] isAliNpm add `@kaola`
+
 ## 1.3.0
 
 - [feat] getNpmRegistry remove npmconf and default `https://registry.npm.taobao.org`

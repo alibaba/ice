@@ -47,6 +47,7 @@ test('getUnpkgHost', () => {
   expect(getUnpkgHost('@ali/ice-test')).toBe(aliRegistry);
   expect(getUnpkgHost('@alife/ice-test')).toBe(aliRegistry);
   expect(getUnpkgHost('@alipay/ice-test')).toBe(aliRegistry);
+  expect(getUnpkgHost('@kaola/ice-test')).toBe(aliRegistry);
   expect(getUnpkgHost('@alixxx/ice-test')).toBe(defaultRegistry);
 });
 
@@ -100,6 +101,7 @@ test('getNpmClient', () => {
   expect(getNpmClient('@ali/ice-test')).toBe(ali);
   expect(getNpmClient('@alife/ice-test')).toBe(ali);
   expect(getNpmClient('@alipay/ice-test')).toBe(ali);
+  expect(getNpmClient('@kaola/ice-test')).toBe(ali);
   expect(getNpmClient('@alixxx/ice-test')).toBe(defaultData);
 });
 

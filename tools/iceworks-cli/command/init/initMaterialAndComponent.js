@@ -28,12 +28,11 @@ module.exports = async function({
 
   const materialDir = await downloadMaterialTemplate(template);
   const templatePkg = await fse.readJson(path.join(materialDir, 'package.json'));
+  const { npmScope, projectName, description } = await initMaterialAsk(cwd, projectType);
 
   if (projectType === 'material') {
     // 生成根目录文件 package.json/README/lint 等
-    const { npmScope, projectName, description } = await initMaterialAsk(cwd);
     const npmName = generateNpmName(projectName, npmScope);
-
     const templatePath = path.join(__dirname, '../../template/initMaterial');
     await fse.copy(templatePath, cwd);
     await ejsRenderDir(cwd, {
@@ -83,7 +82,7 @@ module.exports = async function({
       materialDir,
       cwd,
       useDefaultOptions: false,
-      npmScope: '',
+      npmScope,
       materialType: 'component',
       projectType: 'component',
     });
@@ -101,8 +100,13 @@ module.exports = async function({
   await fse.remove(materialDir);
 };
 
-async function initMaterialAsk(cwd) {
+async function initMaterialAsk(cwd, projectType) {
   const isInnerNet = await checkAliInternal();
+  const result = {
+    npmScope: '',
+    projectName: '',
+    description: '',
+  };
 
   const { forInnerNet } = await (isInnerNet
     ? inquirer.prompt([
@@ -133,23 +137,29 @@ async function initMaterialAsk(cwd) {
       name: 'npmScope',
     },
   ]);
+  result.npmScope = npmScope;
 
-  const { projectName, description } = await inquirer.prompt([
-    {
-      type: 'input',
-      message: 'materials name',
-      name: 'projectName',
-      default: path.basename(cwd),
-      require: true,
-    },
-    {
-      name: 'description',
-      type: 'string',
-      label: 'description',
-      message: 'description',
-      default: 'This is a ice material project',
-    },
-  ]);
+  // 初始化单个组件无需关心
+  if (projectType === 'material') {
+    const { projectName, description } = await inquirer.prompt([
+      {
+        type: 'input',
+        message: 'materials name',
+        name: 'projectName',
+        default: path.basename(cwd),
+        require: true,
+      },
+      {
+        name: 'description',
+        type: 'string',
+        label: 'description',
+        message: 'description',
+        default: 'This is a ice material project',
+      },
+    ]);
+    result.projectName = projectName;
+    result.description = description;
+  }
 
-  return { npmScope, projectName, description };
+  return result;
 }
