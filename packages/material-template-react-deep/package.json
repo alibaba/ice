@@ -19,7 +19,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/material-template-react-deep"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "access": "public"
   },
   "materialConfig": {
     "type": "react"
