@@ -8,7 +8,7 @@ order: 1
 ````jsx
 import React, { Component } from 'react';
 import { ConfigProvider } from '@alifd/next';
-import <%= className %> from '<%= npmName %>';
+import <%= className %> from '<%= npmScope %><%= npmScope ? '/' : '' %>deep-<%= kebabCaseName %>';
 
 class App extends Component {
   constructor(props) {

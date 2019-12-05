@@ -1,7 +1,7 @@
-const kebabCase = require('kebab-case');
+const decamelize = require('decamelize');
 
 module.exports = function(name, npmScope) {
-  // WebkitTransform -> @ice/webkit-transform
-  name = kebabCase(name).replace(/^-/, '');
+  // WebkitTransform -> webkit-transform
+  name = decamelize(name, '-');
   return npmScope ? `${npmScope}/${name}` : name;
 };

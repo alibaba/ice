@@ -17,8 +17,10 @@
 const path = require('path');
 const fse = require('fs-extra');
 const inquirer = require('inquirer');
+const decamelize = require('decamelize');
 const validateName = require('validate-npm-package-name');
 const uppercamelcase = require('uppercamelcase');
+const { isAliNpm } = require('ice-npm-utils');
 const log = require('../../lib/log');
 const ejsRenderDir = require('./ejsRenderDir');
 const generateNpmName = require('./generateNpmName');
@@ -51,8 +53,14 @@ module.exports = async function({
     options = await inquirer.prompt(questions);
   }
 
-  options.npmName = generateNpmName(options.name, npmScope);
+  // @ali
+  options.npmScope = npmScope;
+  // TestComponent
   options.className = options.name;
+  // test-component
+  options.kebabCaseName = decamelize(options.name, '-');
+  // @ali/test-component
+  options.npmName = generateNpmName(options.name, npmScope);
 
   if (materialType === 'component') {
     options = Object.assign({}, options, {
@@ -85,6 +93,16 @@ module.exports = async function({
     // scaffold 不将 _eslintxxx 转换成 .eslintxxx
     materialType === 'scaffold',
   );
+
+  if (isAliNpm(options.npmName)) {
+    // 追加 publishConfig
+    const pkgPath = path.join(targetPath, 'package.json');
+    const pkgData = await fse.readJson(pkgPath);
+    pkgData.pubslishConfig = {
+      registry: 'https://registry.npm.alibaba-inc.com',
+    };
+    await fse.writeJson(pkgPath, pkgData, { spaces: 2 });
+  }
 
   if (materialType === 'component' && projectType === 'material') {
     // 组件有单独开发的链路，有自己的 eslint 文件，在物料集合场景下需要删除掉
