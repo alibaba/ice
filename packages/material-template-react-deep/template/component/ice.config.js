@@ -12,8 +12,8 @@ module.exports = {
         'libraryName': '@ali/deep',
         'libraryDirectory': 'lib',
         'camel2DashComponentName': true,
-        'style': false
-      }
+        'style': false,
+      },
     ]],
     'ice-plugin-component',
     ['ice-plugin-moment-locales', {
