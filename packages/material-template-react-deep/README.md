@@ -1,9 +1,10 @@
-## React 模板
+## Deep 模板
 
 ### 特性
 
 - React/Fusion/ts/ice-scripts
+- 国际化/主题变量
 
 ### 维护者
 
-@ICE 团队
+@褚天
