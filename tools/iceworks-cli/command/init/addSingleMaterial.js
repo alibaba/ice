@@ -17,6 +17,7 @@
 const path = require('path');
 const fse = require('fs-extra');
 const inquirer = require('inquirer');
+const decamelize = require('decamelize');
 const validateName = require('validate-npm-package-name');
 const uppercamelcase = require('uppercamelcase');
 const log = require('../../lib/log');
@@ -51,8 +52,14 @@ module.exports = async function({
     options = await inquirer.prompt(questions);
   }
 
-  options.npmName = generateNpmName(options.name, npmScope);
+  // @ali
+  options.npmScope = npmScope;
+  // TestComponent
   options.className = options.name;
+  // test-component
+  options.kebabCaseName = decamelize(options.name, '-');
+  // @ali/test-component
+  options.npmName = generateNpmName(options.name, npmScope);
 
   if (materialType === 'component') {
     options = Object.assign({}, options, {
