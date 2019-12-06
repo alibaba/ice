@@ -71,6 +71,14 @@ module.exports = async function({
       projectFeatures: [],
     });
   }
+  if (materialType === 'scaffold') {
+    options = Object.assign({}, options, {
+      // 补全 rax 模板的几个字段
+      projectFeatures: [],
+      scaffoldType: 'lite',
+      projectAuthor: '',
+    });
+  }
 
   log.verbose('addSingleMaterial options', options);
 
