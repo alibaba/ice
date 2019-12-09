@@ -3,7 +3,7 @@ title: 版本升级
 order: 2
 ---
 
-icestore 目前共发布了 3 个大版本，不同版本间的非兼容性更新主要在于 action 返回值这块，为便于演示，首先我们假定某个项目的目录结构如下：
+icestore 目前共发布了 4 个大版本，为便于演示不同版本之间的差异，首先我们假定某个项目的目录结构如下：
 
 ```bash
 ├── src/
@@ -92,6 +92,23 @@ useEffect(() => {
 });
 ```
 
+## 0.4.x
+
+* 提供了对 Typescript 的支持，新增 registerStores API，一次性注册多个 Store
+* 由于 Typescript 支持的需要，useStore/useStores/getState API 通过 registerStores 返回值来取，同时 useStores 的返回值从数组变成对象
+* 考虑到向下兼容，原 icestore 实例上的 useStore/useStores/getState 这几个 API 设为 deprecated，在下个版本中将删除
+
+```
+// stores/index.ts
+
+const stores = icestore.registerStores({todos});
+export default stores;
+
+// home/index.tsx
+import stores from './stores';
+const {todos} = stores.useStores(['todos']);
+```
+
 ## 升级指南
 
 由于上面所述的非兼容性变更，请按以下方式升级到最新版本：
@@ -122,4 +139,43 @@ const newA = fooStore.a; // 获取更新后的 a 值
 const newA = fooStore.updateA(3); // 通过 action 返回值拿最新的 a 值
 const { a } = stores.getState('foo'); // 通过 getState API 拿最新的 a 值
 
+```
+
+### 0.3.x -> 0.4.x
+
+可平滑升级，代码不需要改动，但是为了 Typescript 编程体验与未来版本考虑，建议使用新的 registerStores API 来注册与 useStore，升级方式如下：
+
+1. 使用 registerStores 来替代原来的 registerStore API 注册 store，同时将 registerStores 的返回值 export 出去而不是 export icestore 实例
+
+```javascript
+// 变更前
+// stores/index.ts
+icestore.registerStore('todos', todos);
+icestore.registerStore('foo', foo);
+export default icestore;
+
+// 变更后
+// stores/index.ts
+
+const stores = icestore.registerStores({
+  todos,
+  foo,
+});
+export default stores;
+```
+
+2. 检查是否使用到 useStores API，如果有用到，将返回值从数组改成对象
+
+```javascript
+// 变更前
+// home/index.tsx
+import stores from './stores';
+
+const [todos, foo] = stores.useStores();
+
+// 变更后
+// home/index.tsx
+import stores from './stores';
+
+const {todos, foo} = stores.useStores();
 ```
