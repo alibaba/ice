@@ -3,7 +3,7 @@ import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import * as shellPath from 'shell-path';
+import * as shellEnv from 'shell-env';
 import * as pathKey from 'path-key';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
@@ -99,18 +99,19 @@ class Project implements IProject {
     const PATH = pathKey();
 
     const env = process.env;
-    const envPath = shellPath.sync().split(path.delimiter);
-    envPath.unshift(path.join(this.path, 'node_modules', '.bin'));
+    const shellEnvPath = shellEnv.sync().PATH;
+    const shellEnvPathArr = (typeof shellEnvPath === 'string') ? shellEnvPath.split(path.delimiter) : [];
+    shellEnvPathArr.unshift(path.join(this.path, 'node_modules', '.bin'));
 
-    this.app.logger.info('env.pah:', process.env[PATH]);
+    this.app.logger.info('env.pah:', env[PATH]);
 
     // for electron fallback
     const resourcesPath = process['resourcesPath']; // eslint-disable-line
     if (resourcesPath) {
-      envPath.push(path.join(resourcesPath, 'bin'));
+      shellEnvPathArr.push(path.join(resourcesPath, 'bin'));
     }
 
-    env[PATH] = envPath.join(path.delimiter);
+    env[PATH] = shellEnvPathArr.join(path.delimiter);
 
     this.app.logger.info('setEnv.pah:', env[PATH]);
 
