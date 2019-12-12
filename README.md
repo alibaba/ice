@@ -102,7 +102,7 @@ $ iceworks init
 
 | 钉钉群                               | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
-|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /> | [issues]     | [gitter]|
+| [![二维码](https://ice.alicdn.com/assets/images/qrcodex150.png)](https://ice.alicdn.com/assets/images/qrcode.png) | [issues]     | [gitter]|
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
