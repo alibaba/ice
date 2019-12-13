@@ -3,7 +3,7 @@
 ## 3.4.3
 
 - [feat] Add client version
-- [fix] Aet default value for projects
+- [fix] Set default value for projects
 - [fix] Environment variable PATH is empty
 - [refactor] Using CND QR Code
 
