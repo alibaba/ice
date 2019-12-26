@@ -25,8 +25,7 @@ $ npm i --save-dev build-plugin-fusion
 - `themePackage`：Fusion 组件主题包配置，如果设置为数组则启动多主题能力
 - `themeConfig`：主题配置，通过设置 sass 变量对现有主题进行覆盖
 - `uniteBaseComponent`：如果项目里依赖了多个不同名称的基础包，可以通过 uniteBaseComponent 来统一基础包，减少重复的代码
-- `nextPrefix`：Fusion 组件样式 prefix，一般情况下需要配合入口代码的 ConfigProvider 使用，可以将所有的 className 改掉
-- `importOptions`：同 babel-plugin-import 参数，默认为 { style: true, libraryDirectory: 'es'} 根据用户设置项将进行合并
+- `nextLibDir`：加载 Fusion 组件的目录，默认为 es
 
 ### 基础用法
 
