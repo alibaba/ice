@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 3.2.0
+
 ## 3.1.10
 
 - [fix] typo error: pubslishConfig -> publishConfig
