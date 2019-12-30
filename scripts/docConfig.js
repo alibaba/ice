@@ -48,9 +48,29 @@ const docCategories = {
     ],
   },
 
-  // iceworks
+  // iceworks 4.x
   iceworks: {
     title: {},
+    currentVersion: '4.x',
+    versions: [{
+      value: '3.x',
+      path: '/docs/iceworks-3.x/about',
+    }, {
+      value: '4.x',
+      path: '/docs/iceworks/about',
+    }],
+    children: [],
+  },
+  'iceworks-3.x': {
+    title: {},
+    currentVersion: '3.x',
+    versions: [{
+      value: '3.x',
+      path: '/docs/iceworks-3.x/about',
+    }, {
+      value: '4.x',
+      path: '/docs/iceworks/about',
+    }],
     children: [
       {
         title: {
