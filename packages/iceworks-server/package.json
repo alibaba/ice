@@ -1,6 +1,6 @@
 {
   "name": "iceworks-server",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "description": "iceworks server",
   "files": [
     "dist/",
@@ -50,7 +50,7 @@
     "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
-    "shell-path": "^2.1.0",
+    "shell-env": "^3.0.0",
     "simple-git": "^1.113.0",
     "tar": "^4.4.8",
     "terminate": "^2.1.2",

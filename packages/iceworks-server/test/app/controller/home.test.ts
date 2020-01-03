@@ -7,9 +7,9 @@ describe('GET /', () => {
 
     assert.equal(status, 200);
 
-    const cssLinkReg = /<link\shref="(.+)css\/index.css"\srel="stylesheet" \/>/i;
+    const cssLinkReg = /<link\shref="(.+)css\/index.css(.+)"\srel="stylesheet" \/>/i;
     const faviconLinkReg = /<link\srel="shortcut\sicon"\shref="(.+)favicon.png"\s\/>/i;
-    const scriptReg = /<script\ssrc="(.+)js\/index.js"/i;
+    const scriptReg = /<script\ssrc="(.+)js\/index.js(.+)"/i;
     const iceworksConfigScriptReg = /<script>[\s]*window.iceworksConfig/i;
     // should load common css
     assert.equal(cssLinkReg.test(text), true);
