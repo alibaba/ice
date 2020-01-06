@@ -7,7 +7,7 @@ order: 3
 
 ![安装](https://img.alicdn.com/tfs/TB11esus1H2gK0jSZJnXXaT1FXa-960-600.gif)
 
-> 已 macOS 为例
+> 以 macOS 为例。
 
 1. 下载安装包；
 2. 双击下载的 .dmg 文件；
