@@ -9,7 +9,7 @@ order: 3
 
 > 以 macOS 为例。
 
-1. 下载安装包；
+1. 下载[安装包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg)；
 2. 双击下载的 .dmg 文件；
 3. 拖动 iceworks 的图标到 `Applications` 文件夹；
 4. 点击**应用程序**文件夹，双击 `iceworks` 启动。

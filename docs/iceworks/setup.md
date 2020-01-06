@@ -9,14 +9,14 @@ iceworks 是轻量的，在大多数硬件和软件平台版本上都可以运�
 
 ## macOS
 
-1. 下载 iceworks 的 macOS 安装包；
+1. 下载 iceworks 的 [macOS 安装包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg)；
 2. 双击下载的 .dmg 文件；
 3. 拖动 iceworks 的图标到 `Applications` 文件夹。
 
 ## Windows
 
-1. 下载 iceworks 的 Windows 安装包；
-2. 下载完成后，点击 `iceworks.exe` 执行安装，您将需要等待几分钟时间；
+1. 下载 iceworks 的 [Windows 安装包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/win/iceworks-setup.exe)；
+2. 下载完成后，点击 .exe 文件执行安装，您将需要等待几分钟时间；
 3. iceworks 将默认安装在 `C:\users\{username}\AppData\Local\Programs\iceworks`。
 
 ## 更新策略
