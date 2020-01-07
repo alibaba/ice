@@ -63,7 +63,7 @@ $ iceworks init
 
 |    项目         |    版本                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |面向企业级中后台应用的 IDE|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |面向企业级中后台领域的 IDE|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置开发构建工具|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
