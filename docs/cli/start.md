@@ -7,7 +7,7 @@ order: 2
 
 ## 创建项目
 
-> 也可通过 iceworks GUI 工具进行初始化
+> 也可通过 iceworks IDE 进行初始化
 
 全局安装 `iceworks` CLI 工具：
 
