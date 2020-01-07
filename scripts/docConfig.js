@@ -19,7 +19,7 @@ const docCategories = {
       },
       {
         title: {
-          'zh-cn': '发布与集成资源',
+          'zh-cn': '发布与集成',
           'en-us': 'publish assets',
         },
         dir: 'publish',
