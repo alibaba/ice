@@ -11,7 +11,7 @@ ICE 已经提供了组件、物料、构建工具和常用的前端方案帮助�
 
 iceworks 就是在这样的背景下产生的，面向企业级中后台应用的 IDE(Integrated Development Environment, 集成开发环境)，目标是让构建企业级中后台应用更轻松更快速。
 
-![iceworks 工作台](https://img.alicdn.com/tfs/TB1vrlutoT1gK0jSZFhXXaAtVXa-2880-1754.png)
+![iceworks 工作台](https://img.alicdn.com/tfs/TB1p7batkT2gK0jSZPcXXcKkpXa-3080-1954.png)
 
 ## 特性
 
