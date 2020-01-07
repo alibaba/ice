@@ -9,7 +9,7 @@ ICE 已经提供了组件、物料、构建工具和常用的前端方案帮助�
 
 不管您有多熟练，您仍然会觉得花了一半的时间在代码编辑器和开发人员文档之间来回切换：我应该使用哪个组件？正确的语法是什么？为什么这个样式没有生效？等等……更不用说管理工程环境或者弄清楚如何与新的后端服务集成之类的事情了。
 
-iceworks 就是在这样的背景下产生的，面向企业级中后台应用的 IDE(Integrated Development Environment, 集成开发环境)，目标是让构建企业级中后台应用更轻松更快速。
+iceworks 就是在这样的背景下产生的，面向企业级中后台领域的 IDE(Integrated Development Environment, 集成开发环境)，目标是让构建企业级中后台应用更轻松更快速。
 
 ![iceworks 工作台](https://img.alicdn.com/tfs/TB1p7batkT2gK0jSZPcXXcKkpXa-3080-1954.png)
 
