@@ -27,9 +27,9 @@ const docCategories = {
       {
         title: {
           'zh-cn': '工程构建',
-          'en-us': 'build',
+          'en-us': 'builder',
         },
-        dir: 'build',
+        dir: 'builder',
       },
       {
         title: {
