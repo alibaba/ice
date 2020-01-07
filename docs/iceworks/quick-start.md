@@ -3,85 +3,53 @@ title: 快速开始
 order: 3
 ---
 
-## 启动 iceworks
+## 安装 iceworks
 
-安装完成后，只需要在命令行执行以下命令，即可在浏览器启动本地化 Web 版本：
+![安装](https://img.alicdn.com/tfs/TB11esus1H2gK0jSZJnXXaT1FXa-960-600.gif)
 
-```bash
-$ iceworks # open http://localhost:8000/
-```
+> 以 macOS 为例。
+
+1. 下载[安装包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg)；
+2. 双击下载的 .dmg 文件；
+3. 拖动 iceworks 的图标到 `Applications` 文件夹；
+4. 点击**应用程序**文件夹，双击 `iceworks` 启动。
 
 ## 创建项目
 
-如果是第一次使用 iceworks 工作台，可以基于推荐的模板开始快速创建项目，也可以从物料市场选择模板进行此创建项目，这里我们选择基于推荐模板开始创建：
+![创建项目](https://img.alicdn.com/tfs/TB1oOcps9f2gK0jSZFPXXXsopXa-2000-1600.gif)
 
-* 新建一个文件夹或者选择已有的空文件夹（避免覆盖原有文件）;
-* 给项目起一个项目名，以便后续识别。
+1. 点击 **+** 号按钮；
+2. 选择模板；
+3. 填写项目信息；
+4. 点击**进入工作台**按钮。
 
-![创建项目](https://img.alicdn.com/tfs/TB1fF45dWSs3KVjSZPiXXcsiVXa-2878-1572.png)
+## 启动调试
 
+![启动调试](https://img.alicdn.com/tfs/TB18dsss1L2gK0jSZFmXXc7iXXa-960-600.gif)
 
-## 项目管理
+1. 在**我的项目**中点击项目卡片中的**编辑**按钮进入工作台；
+2. 点击导航栏上的**启动**按钮，首次启动将自动安装依赖，启动成功将在浏览器打开调试页面；
+3. 打开资源管理器内 `src/page/**/*.jsx` 文件，光标定位到需要插入物料的位置；
+3. 点击右侧活动栏的**展开**按钮打开**物料面板**，**点击物料**插入到光标位置。
 
-项目创建完成后，会自动添加到项目列表中，并打开当前`项目管理`面板，可以看到如下界面：
+## 初始化仓库
 
-![项目管理](https://img.alicdn.com/tfs/TB1uKtYd8OD3KVjSZFFXXcn9pXa-2877-1572.png)
+![初始化仓库](https://img.alicdn.com/tfs/TB1gR7Ss4n1gK0jSZKPXXXvUXXa-960-600.gif)
 
+1. 点击左侧活动栏上的**源代码管理**按钮，在左侧边栏将打开源代码管理面板；
+2. 点击**初始化仓库**，选择当前项目名初始化一个 Git 仓库；
+3. 暂存所有更改，输入提交信息并提交；
+4. 拷贝远程仓库 URL；
+5. 通过 `⇧⌘P` 唤起命令面板，输入 **Git: 添加远程库**；
+6. 输入远程库名称和 URL；
+7. 点击源代码管理面板右上角的 `...` 查看更多操作，点击**发布分支**将分支发布到远程仓库。
 
-## 工程管理
+## 发布
 
-在`工程管理`界面，我们可以启动调试服务，并且可以自定义调试服务的配置参数：
+> 仅适用于阿里内部，需要手动在 DEF 研发平台[创建应用](https://work.def.alibaba-inc.com/apply/new)，关联上一步初始化的仓库。
 
-![工程管理](https://img.alicdn.com/tfs/TB1HpB1d8Kw3KVjSZFOXXarDVXa-2880-1584.png)
+![发布](https://img.alicdn.com/tfs/TB1X9SKtoH1gK0jSZSyXXXtlpXa-960-600.gif)
 
-
-## 预览界面
-
-点击启动调试服务完成后会自动当打开当前项目的预览界面：
-
-![预览界面](https://img.alicdn.com/tfs/TB1p6lCceSSBuNjy0FlXXbBpVXa-2562-1590.png)
-
-## 进入开发调试
-
-在 iceworks 底部，我们提供了一些快捷操作，可以快速打开编辑器，文件夹等操作；目前支持 Visual Studio Code，Sublime Text 3，WebStorm 和 Atom 等编辑器，推荐使用 Visual Studio Code，如果你的电脑中未安装请先安装。打开编辑器我们可以看到目录结果如下：
-
-```
-├── mock/                        # 本地模拟数据
-│   ├── index.js
-├── public/                      # 静态文件，build时直接输出到根目录
-│   ├── index.html               # HTML文件
-│   └── favicon.png              # Favicon
-├── src/
-│   ├── components/              # 自定义业务组件
-│     ├── NotFound/              # NotFound 组件
-│     │   ├── index.jsx          
-│     │   └── index.module.scss  
-│   ├── layouts/                 # 布局组件
-│   ├── pages/                   # 业务页面
-│     ├── Home/                  # Home 页面
-│     │   ├── components/        # 页面级自定义业务组件
-│     │   ├── index.jsx          # 入口文件
-│     │   └── index.module.scss  # css module样式
-│   ├── config/                  # 配置信息
-│   │   ├── dataSource.js        # 数据源配置
-│   │   ├── routes.js            # 路由配置
-│   │   └── menu.js              # 导航菜单配置
-│   ├── stores/                  # 全局状态管理
-│   ├── locales/                 # 国际化资源
-│   ├── utils/                   # 工具库
-│   │   └── request.js           # 通用的数据源请求方法
-│   ├── global.scss              # 全局样式
-│   ├── router.jsx               # 路由渲染组件，依赖 config/routes.js
-│   └── index.jsx                # 入口脚本
-├── tests/                       # 测试工具
-├── ice.config.js                # 项目配置，包含插件配置及自定义webpack配置等
-├── jsconfig.json
-├── README.md
-└── package.json
-```
-
-## 打包发布
-
-点击工程面板的构建项目的 `运行` 按钮，将开发的构建出最终的 js css 等资源。
-
-构建完成后，会在项目目录下生成 `build` 文件夹，里面存在了 `index.html`、 `index.js`、 `index.css` 文件。使用你熟悉的方式，上传到对应的 cdn 服务器。
+1. 在导航栏上的左侧点击**请登录**；
+2. 在源代码管理面板将本地代码改动提交到远程仓库；
+3. 在导航栏上的右侧点击**发布**。

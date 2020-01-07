@@ -8,7 +8,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 ## 特性
 
-- **可视化开发**：通过 GUI 操作简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专有的前端工作台
+- **可视化开发**：通过 IDE 简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专属的前端工作台
 - **丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
 - **最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结构、开发调试、路由配置、状态管理等
 - **自定义物料**：通过物料开发者工具快速开发构建私有物料体系
@@ -17,8 +17,8 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks.svg) | [docs](https://ice.work/docs/iceworks/about) |基于物料的一站式可视化源码研发工作台|
-| [ice-scripts](https://github.com/ice-lab/ice-scripts) | ![](https://img.shields.io/npm/v/ice-scripts.svg) | [docs](https://ice.work/docs/cli/about) |基于 webpack 的高可配置开发构建工具|
+| [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks.svg) | [docs](https://ice.work/docs/iceworks/about) |面向企业级中后台领域的 IDE|
+| [ice-scripts](https://github.com/ice-lab/ice-scripts) | ![](https://img.shields.io/npm/v/ice-scripts.svg) | [docs](https://ice.work/docs/guide/dev/build) |基于 webpack 的高可配置开发构建工具|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
 | [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice.work/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
 | [react-materials](https://github.com/ice-lab/react-materials) | / | [docs](https://ice.work/scaffold) |由官方提供的丰富的高质量 React 物料|
@@ -28,11 +28,11 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 #### 使用飞冰是否需要具备一定的前端基础？
 
-毫无疑问是需要的，我们在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础预发、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](/docs/guide/resource/front-basic.md)，希望能帮助到开发者。
+毫无疑问是需要的，我们在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础语法、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](/docs/guide/resource/front-basic.md)，希望能帮助到开发者。
 
 #### 资深前端同学是否适合使用飞冰？
 
-在 GUI 工具基础上，飞冰还提供了 [CLI 版本](/docs/guide/start#使用%20CLI%20方式创建项目)，因此如果你不需要 GUI 的能力，依然可以完全使用 CLI 的链路开发项目，同时使用到飞冰的项目最佳实践、工程工具以及状态管理方案。
+在 IDE 基础上，飞冰还提供了 [CLI 版本](/docs/guide/start#使用%20CLI%20方式创建项目)，因此如果你不需要 IDE 的能力，依然可以完全使用 CLI 的链路开发项目，同时使用到飞冰的项目最佳实践、工程工具以及状态管理方案。
 
 #### 飞冰（ICE）的浏览器兼容策略是怎样的？
 

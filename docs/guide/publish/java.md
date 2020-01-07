@@ -1,6 +1,6 @@
 ---
 title: 在 Java 应用中集成
-order: 2
+order: 4
 ---
 
 本文讲解如何在 Java 服务中集成前端资源，我们以 Spring Boot 为例。
