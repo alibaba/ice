@@ -85,11 +85,11 @@ Options:
 
 `ice-scripts` 通过 `ice.config.js` 文件支持项目配置，支持基础配置、插件配置以及自定义 webpack 配置三种模式。
 
-### 基础配置
+## 基础配置
 
 基础配置涵盖了常见 webpack 定制场景，方便开发者快速设置项目工程配置。
 
-#### entry
+### entry
 
 * 类型：`string`
 * 默认值：`src/index.js`
@@ -117,7 +117,7 @@ module.exports = {
 
 多 entry 的情况构建时会额外生成 vendor.js/css，需要自行在 html 里引入（public 目录会自动引入），也可以通过设置下面的 `vendor` 禁止生成 vendor 文件。
 
-#### alias
+### alias
 
 * 类型：`object`
 * 默认值：`{}`
@@ -159,7 +159,7 @@ module.exports = {
 
 通过上述的配置来指定 `@/` 引用相对于 `baseUrl` 的路径映射，可以快速定位引用模块，从而提升项目开发的体验。
 
-#### define
+### define
 
 * 类型：`object`
 * 默认值：`{}`
@@ -183,7 +183,7 @@ module.exports = {
 console.log(ASSETS_VERSION);
 ```
 
-#### publicPath
+### publicPath
 
 * 类型：`string`
 * 默认值：`/`
@@ -198,7 +198,7 @@ module.exports = {
 }
 ```
 
-#### devPublicPath
+### devPublicPath
 
 * 类型：`string`
 * 默认值：`/`
@@ -212,7 +212,7 @@ module.exports = {
 }
 ```
 
-#### hash
+### hash
 
 * 类型：`boolean` | `string`
 * 默认值：`false`
@@ -227,7 +227,7 @@ module.exports = {
 }
 ```
 
-#### outputDir
+### outputDir
 
 * 类型：`string`
 * 默认值：`build`
@@ -242,7 +242,7 @@ module.exports = {
 }
 ```
 
-#### vendor
+### vendor
 
 * 类型：`boolean`
 * 默认值：`true`
@@ -256,7 +256,7 @@ module.exports = {
 }
 ```
 
-#### externals
+### externals
 
 * 类型：`object`
 * 默认值：`{}`
@@ -305,7 +305,7 @@ module.exports = {
 </html>
 ```
 
-#### devServer
+### devServer
 
 * 类型：`object`
 
@@ -332,7 +332,7 @@ module.exports = {
 
 完成上述修改后，本地开发就可以使用 BrowserRouter 了。
 
-#### proxy
+### proxy
 
 * 类型：`object`
 * 默认值：`{}`
@@ -356,7 +356,7 @@ module.exports = {
 
 更多接口代理，详见[接口代理](/docs/guide/dev/proxy.md)
 
-#### injectBabel
+### injectBabel
 
 * 类型：`string`
 * 默认值：`polyfill`
@@ -372,7 +372,7 @@ module.exports = {
 }
 ```
 
-#### minify
+### minify
 
 * 类型：`boolean`
 * 默认值：`true`
@@ -386,7 +386,7 @@ module.exports = {
 }
 ```
 
-#### outputAssetsPath
+### outputAssetsPath
 
 * 类型：`object`
 * 默认值：`{ js: 'js', css: 'css' }`
@@ -404,7 +404,7 @@ module.exports = {
 }
 ```
 
-#### targets
+### targets
 
 * 类型：`object`
 * 默认值：`last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4`
@@ -421,7 +421,7 @@ module.exports = {
 }
 ```
 
-### 插件配置
+## 插件配置
 
 插件用于封装一些常见场景，通过 `plugins` 字段来配置插件列表：
 
@@ -447,7 +447,7 @@ module.exports = {
 
 ice-scripts 有丰富的插件生态，业务可以按需选择，[插件列表](/docs/guide/resource/plugin-list)。
 
-### 自定义 webpack 配置
+## 自定义 webpack 配置
 
 ice-scripts 内部的基础 webpack 配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过 webpack 配置链式操作的 API，并可以定义具体 loader 规则和 webpack 插件的名称，可以让开发者更加细粒度修改 webpack 配置。
 
