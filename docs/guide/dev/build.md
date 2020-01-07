@@ -445,6 +445,8 @@ module.exports = {
 }
 ```
 
+ice-scripts 有丰富的插件生态，业务可以按需选择，[插件列表](/docs/guide/resource/plugin-list)。
+
 ### 自定义 webpack 配置
 
 ice-scripts 内部的基础 webpack 配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过 webpack 配置链式操作的 API，并可以定义具体 loader 规则和 webpack 插件的名称，可以让开发者更加细粒度修改 webpack 配置。
@@ -466,3 +468,5 @@ module.exports = {
   }
 }
 ```
+
+更复杂的场景请参考 [修改 webpack 配置](/docs/guide/resource/plugin-dev#修改 webpack 配置)。
