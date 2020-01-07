@@ -19,17 +19,10 @@ const docCategories = {
       },
       {
         title: {
-          'zh-cn': '发布资源',
+          'zh-cn': '发布与集成资源',
           'en-us': 'publish assets',
         },
         dir: 'publish',
-      },
-      {
-        title: {
-          'zh-cn': '后端集成',
-          'en-us': 'backend',
-        },
-        dir: 'backend',
       },
       {
         title: {
