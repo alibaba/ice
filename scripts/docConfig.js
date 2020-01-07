@@ -26,6 +26,13 @@ const docCategories = {
       },
       {
         title: {
+          'zh-cn': '工程构建',
+          'en-us': 'build',
+        },
+        dir: 'build',
+      },
+      {
+        title: {
           'zh-cn': '产品监控',
           'en-us': 'monitor',
         },
