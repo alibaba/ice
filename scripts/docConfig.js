@@ -52,13 +52,15 @@ const docCategories = {
       value: '4.x',
       path: '/docs/iceworks/about',
     }],
-    children: [{
-      title: {
-        'zh-cn': '指南',
-        'en-us': 'Guide',
+    children: [
+      {
+        title: {
+          'zh-cn': '指南',
+          'en-us': 'Guide',
+        },
+        dir: 'guide',
       },
-      dir: 'guide',
-    },],
+    ],
   },
   'iceworks-3.x': {
     title: {},
