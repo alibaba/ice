@@ -18,7 +18,7 @@ Simple and friendly front-end R&D system
 <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 
 <div align="center">
-  <img src="https://img.alicdn.com/tfs/TB12869ai_1gK0jSZFqXXcpaXXa-2898-1988.png" width="1000" />
+  <img src="https://img.alicdn.com/tfs/TB1lMLdtXY7gK0jSZKzXXaikpXa-2763-1449.png" width="1000" />
 </div>
 </div>
 
@@ -35,15 +35,15 @@ more information [ice.work](https://ice.work).
 
 We provide two ways to use iceworks for different user groups:
 
-#### GUI usage [recommend]
+#### IDE usage [recommend]
 
-```bash
-# Install the CLI tool
-$ npm install iceworks -g
+> Take macOS as an example.
 
-# Run iceworks
-$ iceworks  # Open the browser： http://127.0.0.1:8000
-```
+1. Download [iceworks IDE for macOS](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg);
+2. Double-click on the downloaded archive to expand the contents;
+3. Drag iceworks to the Applications folder, making it available in the Launchpad;
+4. Open the Applications folder then double-click to run iceworks;
+5. Click the `+` button on the Welcome page to start creating the project.
 
 #### CLI usage
 
@@ -62,7 +62,7 @@ $ iceworks init
 
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |IDE for enterprise application|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Highly configurable development and build tools based on webpack|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
