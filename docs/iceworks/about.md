@@ -41,5 +41,41 @@ iceworks 中提供了基于可视化搭建生成本地区块的功能。大部�
 - [搭建物料](/docs/iceworks/guide/visual)：通过可视化方式搭建本地物料；
 - [工程管理](/docs/iceworks/guide/engineering)：调试、构建应用及对应用的工程配置进行可视化设置；
 - [代码编辑](/docs/iceworks/guide/editor)：在 iceworks 的开发工作台进行代码编辑；
-- [版本控制](/docs/iceworks/guide/versioncontrol)：了解 iceworks 强大的源代码管理支持，以及其如何和发布平台进行关联；
 - [设置](/docs/iceworks/guide/settings)：根据您的喜好定制 iceworks。
+
+## 发行策略
+
+自 4.x 版本发布后，我们将参考 [Node.js Release](https://nodejs.org/en/about/releases/) 规范发行策略：
+
+| 版本  | 状态       | 发布时间    | 活跃 LTS 开始 | 维护 LTS 开始 | 终止维护时间  |
+| :--: | :---:      | :---:      | :---:       | :---:        | :---:       |
+| 2.x | **维护 LTS** | 2018-05-04 | 2019-06-01 | 2019-10-01 | 2020-01-31  |
+| 3.x | **活跃 LTS** | 2019-07-08 | 2019-10-01 | 2020-01-01 | 2020-04-31  |
+| 4.x | **当前版本**  | 2019-01-01 | 2020-04-31 | 2020-10-31 |             |
+
+## 常见问题
+
+- 你们会不会支持 Linux 平台？
+
+    短期内不会。这是一个比较小众的需求，我们暂时没有精力进行支持。
+- iceworks 未来会不会支持网页版本？
+
+    对外部不会，在内部我们将通过 DEF 平台支持 WebIDE。
+- 会不会提供插件开发，插件市场等功能？
+
+    针对于企业定制研发流程，将以类似 [Extension Packs](https://code.visualstudio.com/blogs/2017/03/07/extension-pack-roundup) 的方式进行支持。
+- 你们会不会把一些功能做成 VS Code 插件？
+
+    不会。我们对于研发流程、工程环境的定制、集成程度未来会越来越高。但我们将会保障与 VS Code 一致的代码编辑体验及部分插件的兼容。
+- iceworks 未来会不会内置开发环境？
+
+    会。我期望开发者只需要下载一个 IDE，在 IDE 中完成整个开发链路的流转。
+- 你们的更新策略是怎样的？
+
+    每个月初会制定一次迭代计划，在月末进行更新，iceworks 将会自动升级，不需要开发者进行额外的操作。
+- 代码什么时候开源？
+   
+    预计是在 2020 年中旬。
+- 如何反馈问题或意见？
+
+    请提交 [issue](https://github.com/alibaba/ice/issues/new?labels=iceworks%204.0) 或扫描[二维码](https://ice.alicdn.com/assets/images/qrcode.png)加入飞冰社区钉钉群。
