@@ -9,7 +9,7 @@ ICE 已经提供了组件、物料、构建工具和常用的前端方案帮助�
 
 不管您有多熟练，您仍然会觉得花了一半的时间在代码编辑器和开发人员文档之间来回切换：我应该使用哪个组件？正确的语法是什么？为什么这个样式没有生效？等等……更不用说管理工程环境或者弄清楚如何与新的后端服务集成之类的事情了。
 
-iceworks 目标就是帮助您更轻松更快地构建企业级中后台应用。
+iceworks 就是在这样的背景下产生的，面向企业级中后台应用的 IDE(Integrated Development Environment, 集成开发环境)，目标是让构建企业级中后台应用更轻松更快速。
 
 ![iceworks 工作台](https://img.alicdn.com/tfs/TB1vrlutoT1gK0jSZFhXXaAtVXa-2880-1754.png)
 
@@ -55,27 +55,34 @@ iceworks 中提供了基于可视化搭建生成本地区块的功能。大部�
 
 ## 常见问题
 
-- 你们会不会支持 Linux 平台？
+### 你们会不会支持 Linux 平台？
 
-    短期内不会。这是一个比较小众的需求，我们暂时没有精力进行支持。
-- iceworks 未来会不会支持网页版本？
+短期内不会。这是一个比较小众的需求，我们暂时没有精力进行支持。
 
-    对外部不会，在内部我们将通过 DEF 平台支持 WebIDE。
-- 会不会提供插件开发，插件市场等功能？
+### iceworks 未来会不会支持网页版本？
 
-    针对于企业定制研发流程，将以类似 [Extension Packs](https://code.visualstudio.com/blogs/2017/03/07/extension-pack-roundup) 的方式进行支持。
-- 你们会不会把一些功能做成 VS Code 插件？
+对外部不会，在内部我们将通过 DEF 平台支持 WebIDE。
 
-    不会。我们对于研发流程、工程环境的定制、集成程度未来会越来越高。但我们将会保障与 VS Code 一致的代码编辑体验及部分插件的兼容。
-- iceworks 未来会不会内置开发环境？
+### 会不会提供插件开发，插件市场等功能？
 
-    会。我期望开发者只需要下载一个 IDE，在 IDE 中完成整个开发链路的流转。
-- 你们的更新策略是怎样的？
+针对于企业定制研发流程，将以类似 [Extension Packs](https://code.visualstudio.com/blogs/2017/03/07/extension-pack-roundup) 的方式进行支持。
 
-    每个月初会制定一次迭代计划，在月末进行更新，iceworks 将会自动升级，不需要开发者进行额外的操作。
-- 代码什么时候开源？
+### 你们会不会把一些功能做成 VS Code 插件？
+
+不会。我们对于研发流程、工程环境的定制、集成程度未来会越来越高。但我们将会保障与 VS Code 一致的代码编辑体验及部分插件的兼容。
+
+### iceworks 未来会不会内置开发环境？
+
+会。我期望开发者只需要下载一个 IDE，在 IDE 中完成整个开发链路的流转。
+
+### 你们的更新策略是怎样的？
+
+每个月初会制定一次迭代计划，在月末进行更新，iceworks 将会自动升级，不需要开发者进行额外的操作。
+
+### 代码什么时候开源？
    
-    预计是在 2020 年中旬。
-- 如何反馈问题或意见？
+预计是在 2020 年中旬。
 
-    请提交 [issue](https://github.com/alibaba/ice/issues/new?labels=iceworks%204.0) 或扫描[二维码](https://ice.alicdn.com/assets/images/qrcode.png)加入飞冰社区钉钉群。
+### 如何反馈问题或意见？
+
+请提交 [issue](https://github.com/alibaba/ice/issues/new?labels=iceworks%204.0) 或扫描[二维码](https://ice.alicdn.com/assets/images/qrcode.png)加入飞冰社区钉钉群。
