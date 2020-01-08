@@ -67,6 +67,13 @@ const docCategories = {
         },
         dir: 'guide',
       },
+      {
+        title: {
+          'zh-cn': '进阶',
+          'en-us': 'Advanced',
+        },
+        dir: 'advanced',
+      },
     ],
   },
   'iceworks-3.x': {
