@@ -52,7 +52,7 @@ We provide two ways to use iceworks for different user groups:
 $ npm install iceworks -g
 
 # New project
-$ mkdir iceapp & cd iceapp
+$ mkdir iceapp && cd iceapp
 
 # Initialize the project with a template
 $ iceworks init
