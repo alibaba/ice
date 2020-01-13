@@ -14,6 +14,8 @@ order: 3
 3. 拖动 iceworks 的图标到 `Applications` 文件夹；
 4. 点击**应用程序**文件夹，双击 `iceworks` 启动。
 
+> 更详细内容请参考[《安装 iceworks》](/docs/iceworks/setup)。
+
 ## 创建项目
 
 ![创建项目](https://img.alicdn.com/tfs/TB1oOcps9f2gK0jSZFPXXXsopXa-2000-1600.gif)
