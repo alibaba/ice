@@ -7,7 +7,7 @@ iceworks 包含了启动页和工作台两个界面。启动页主要用于进�
 
 ## 启动页
 
-![启动页](https://img.alicdn.com/tfs/TB1yoQ4tQY2gK0jSZFgXXc5OFXa-2100-1794.png)
+![启动页](https://img.alicdn.com/tfs/TB1yoQ4tQY2gK0jSZFgXXc5OFXa-2100-1794.png)
 
 启动页由以下几个部分组成：
 
