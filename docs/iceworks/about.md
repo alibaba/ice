@@ -36,6 +36,7 @@ iceworks 中提供了基于可视化搭建生成本地区块的能力。大部�
 - [安装 iceworks](/docs/iceworks/setup)：为您的系统安装 iceworks；
 - [快速开始](/docs/iceworks/quick-start)：一个从安装 iceworks 到发布应用的完整流程示例；
 - [升级到 4.0 版本](/docs/iceworks/migrate)：介绍老项目如何在 iceworks 4.0 中使用；
+- [用户界面](/docs/iceworks/guide/user-interface)：为您介绍 iceworks 的界面组成；
 - [项目管理](/docs/iceworks/guide/project)：项目的创建、导入和删除；
 - [物料管理](/docs/iceworks/guide/material)：管理物料源并使用物料进行开发； 
 - [搭建物料](/docs/iceworks/guide/visual)：通过可视化方式搭建本地物料；
