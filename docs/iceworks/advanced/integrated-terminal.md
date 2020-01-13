@@ -8,7 +8,7 @@ order: 3
 打开终端的几种方式：
 
 - 使用键盘快捷键：`⌃`\`；
-- 点击编辑器下发的「终端」按钮。
+- 点击编辑器下方的「终端」按钮。
 
 ![终端](https://img.alicdn.com/tfs/TB1plrPtND1gK0jSZFsXXbldVXa-1490-530.png)
 
