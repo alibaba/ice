@@ -53,7 +53,7 @@
 $ npm install iceworks -g
 
 # 新建目录
-$ mkdir iceapp & cd iceapp
+$ mkdir iceapp && cd iceapp
 
 # 通过模板初始化项目
 $ iceworks init
