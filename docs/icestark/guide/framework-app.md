@@ -89,7 +89,7 @@ export default class App extends React.Component {
 
 针对 html 包含页面信息/逻辑较重的场景，比如 `jQuery`/`Kissy`/`angular` 等框架，支持通过 `entry`/`entryContent` 注册子应用。
 
-entry 对应 html url, icestark 对 entry 的处理包含以下步骤：
+`entry` 对应 html url, icestark 对 `entry` 的处理包含以下步骤：
 - 通过 `window.fetch` 获取
 - 解析 html ，解析出所有 js 资源包括 `inline` 和 `external` 两种类型，如果 `external` 类型是相对路径，根据 `entry` 地址进行补齐，然后按顺序存储；遇到 `external` 的相对路径的 css 资源，同理按照 `entry` 进行补齐
 - 将处理后的 html 内容塞入 icestark 动态创建的节点
