@@ -83,6 +83,54 @@ export default class App extends React.Component {
 }
 ```
 
+### 通过 entry/entryContent 注册子应用
+
+#### entry
+
+针对 html 包含页面信息/逻辑较重的场景，比如 `jQuery`/`Kissy`/`angular` 等框架，支持通过 `entry`/`entryContent` 注册子应用。
+
+entry 对应 html url, icestark 对 entry 的处理包含以下步骤：
+- 通过 `window.fetch` 获取
+- 解析 html ，解析出所有 js 资源包括 `inline` 和 `external` 两种类型，如果 `external` 类型是相对路径，根据 `entry` 地址进行补齐，然后按顺序存储；遇到 `external` 的相对路径的 css 资源，同理按照 `entry` 进行补齐
+- 将处理后的 html 内容塞入 icestark 动态创建的节点
+- 依次通过创建 `script` 标签按顺序引入 js 资源
+
+```jsx
+// src/App.jsx
+import React from 'react';
+import { AppRouter, AppRoute } from '@ice/stark';
+import NotFound from '@/components/NotFound';
+import PageLoading from '@/components/PageLoading';
+import BasicLayout from '@/layouts/BasicLayout';
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <BasicLayout>
+        <AppRouter
+          NotFoundComponent={NotFound}
+          LoadingComponent={PageLoading}
+        >
+          <AppRoute
+            path={['/', '/home', '/about']}
+            basename="/"
+            exact
+            title="通用页面"
+            entry="//unpkg.com/icestark-child-common/build/index.html"
+          />
+        </AppRouter>
+      </BasicLayout>
+    );
+  }
+}
+```
+
+#### entryContent
+
+当需要使用 entry 入口，同时 html url 不支持跨域访问的情况，建议通过封装的 `AppRoute` 组件，自定义请求获取 html 内容，配置 `entryContent`, 参考示例可见**子应用容器定制/应用级别权限校验**。
+
+`entryContent` 对 html 解析同 `entry` 一致，仅去掉 `fetch` 过程。
+
 ### 子应用注册通过数据驱动
 
 在某些场景下，我们的子应用可能通过一些配置平台注册，这时候可以将所有子应用的信息通过全局变量存放在 html 中，然后前端通过该数据注册子应用：
@@ -179,9 +227,6 @@ export default class App extends React.Component {
         <AppRouter
           NotFoundComponent={NotFound}
           LoadingComponent={PageLoading}
-          onRouteChange={this.handleRouteChange}
-          onAppLeave={this.handleAppLeave}
-          onAppEnter={this.handleAppEnter}
         >
           {/* 注意：path/url/entry 等配置信息配置在组件外层，AppRouter 的直接子元素上 */}
           <AuthAppRoute
