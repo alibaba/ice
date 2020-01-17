@@ -67,6 +67,18 @@ order: 1
 - 类型：`string | string[]`
 - 默认值：`-`
 
+#### entry
+
+- 子应用对应的 html 入口，当渲染子应用时，会通过 `window.fetch` 将 html 内容获取过来，然后 `append` 至动态创建的节点，选填。**entry > entryContent > url**
+- 类型：`string`
+- 默认值：`-`
+
+#### entryContent
+
+- 直接配置子应用的 html 内容（需要用 html 入口且不支持跨域获取资源场景）。当渲染子应用时，会 `append` 至动态创建的节点，选填。**entry > entryContent > url**
+- 类型：`string`
+- 默认值：`-`
+
 #### title
 
 - 子应用渲染时展示的 documentTitle ，选填
@@ -103,6 +115,18 @@ order: 1
 - 类型：`string`
 - 默认值：`icestarkNode`
 
+#### component
+
+- 当路由匹配是直接渲染 react component，渲染后会带上 `location`、`match`、`history` 的 `props`, 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.component](https://reacttraining.com/react-router/web/api/Route/component)，选填
+- 类型：`string | ReactNode`
+- 默认值：`-`
+
+#### render
+
+- 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.render](https://reacttraining.com/react-router/web/api/Route/render-func)，选填
+- 类型：`({location, match, history}) => ReactNode`
+- 默认值：`-`
+
 ### AppLink
 
 提供声明式的，可访问的导航，表示本次跳转需要重新加载静态资源。子应用内部跳转仍然使用 `Link`
@@ -121,7 +145,7 @@ order: 1
 
 #### message
 
-- 表示当前跳转需要弹窗确认，message为提示文案内容，选填
+- 表示当前跳转需要弹窗确认，message 为提示文案内容，选填
 - 类型：`string`
 - 默认值：`-`
 
@@ -181,6 +205,13 @@ export default class SelfLink extends React.Component {
 
 ## @ice/stark-app
 
+### isInIcestark
+
+判断当前运行环境，是否运行在 icestark 环境中，返回值类型：boolean
+
+- 类型：`function`
+- 示例代码详见 `registerAppLeave`
+
 ### getBasename
 
 配置子应用 `React Router` 中的 `basename` 参数的方法，根据 `AppRoute` 中的 `basename` 或者 `path` 配置生成最终结果
@@ -235,6 +266,13 @@ export default class SelfLink extends React.Component {
 - 类型：`function`
 - 代码示例参考 `appHistory.push`
 
+### registerAppEnter
+
+提供快速注册当前应用加载前的回调事件
+
+- 类型：`function`
+- 示例代码详见 `registerAppLeave`
+
 ### registerAppLeave
 
 提供快速注册当前应用卸载前的回调事件
@@ -245,13 +283,19 @@ export default class SelfLink extends React.Component {
 ```javascript
 // src/index.js
 import ReactDOM from 'react-dom';
-import { getMountNode, registerAppLeave } from '@ice/stark-app';
+import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
 import router from './router';
 
-// make sure the unmount event is triggered
-registerAppLeave(() => {
-  ReactDOM.unmountComponentAtNode(getMountNode());
-});
-
-ReactDOM.render(router(), getMountNode());
+if (isInIcestark()) {
+  const mountNode = getMountNode();
+  registerAppEnter(() => {
+    ReactDOM.render(router(), getMountNode());
+  });
+  // make sure the unmount event is triggered
+  registerAppLeave(() => {
+    ReactDOM.unmountComponentAtNode(getMountNode());
+  });
+} else {
+  ReactDOM.render(router(), document.getElementById('ice-container'));
+}
 ```

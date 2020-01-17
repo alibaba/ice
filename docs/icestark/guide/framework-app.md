@@ -125,6 +125,81 @@ export default class App extends React.Component {
 }
 ```
 
+### 子应用容器定制/应用级别权限校验
+
+我们支持对 `AppRoute` 再进行二次封装，统一处理容器定制/权限校验等场景
+
+```jsx
+// src/components/AuthAppRoute.js
+import React, { useState, useEffect } from 'react';
+import { AppRoute } from '@ice/stark';
+
+export default function AuthAppRoute(props) {
+  const [loading, setLoading] = useState(true);
+  const [hasAuth, setHasAuth] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHasAuth(true);
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  if (loading) {
+    return <div>wait for a moment</div>;
+  }
+
+  if (!hasAuth) {
+    return <div>No access!</div>;
+  }
+
+  // 注意要将 ...others 透传给 AppRoute
+  const { className, style, ...others } = props;
+  return (
+    <div className={className} style={style}>
+      <AppRoute {...others} />
+    </div>
+  );
+}
+```
+
+```jsx
+// src/App.jsx
+import React from 'react';
+import { AppRouter, AppRoute } from '@ice/stark';
+import NotFound from '@/components/NotFound';
+import PageLoading from '@/components/PageLoading';
+import BasicLayout from '@/layouts/BasicLayout';
+import AuthAppRoute from '@/components/AuthAppRoute';
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <BasicLayout>
+        <AppRouter
+          NotFoundComponent={NotFound}
+          LoadingComponent={PageLoading}
+          onRouteChange={this.handleRouteChange}
+          onAppLeave={this.handleAppLeave}
+          onAppEnter={this.handleAppEnter}
+        >
+          {/* 注意：path/url/entry 等配置信息配置在组件外层，AppRouter 的直接子元素上 */}
+          <AuthAppRoute
+            path={['/', '/message', '/about']}
+            exact
+            title="主页"
+            url={[
+              '//unpkg.com/icestark-child-common/build/js/index.js',
+              '//unpkg.com/icestark-child-common/build/css/index.css',
+            ]}
+          />
+        </AppRouter>
+      </BasicLayout>
+    );
+  }
+}
+```
+
 ## 开发整体 Layout
 
 框架应用的 Layout 即整个系统的 Layout，这个 Layout 除了静态展示外，也可以通过 `onRouteChange()` 响应到路由变化，然后根据路由变化展示不同的形态，具体参考 `src/App.jsx` 即可。
