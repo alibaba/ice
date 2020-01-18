@@ -1,5 +1,12 @@
 # CHANGELOG for iceworks
 
+## 3.4.3
+
+- [feat] Add client version
+- [fix] Set default value for projects
+- [fix] Environment variable PATH is empty
+- [refactor] Using CND QR Code
+
 ## 3.4.2
 
 - [refactor] Better user data collection methods

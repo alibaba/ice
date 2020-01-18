@@ -19,17 +19,17 @@ const docCategories = {
       },
       {
         title: {
-          'zh-cn': '发布资源',
+          'zh-cn': '发布与集成',
           'en-us': 'publish assets',
         },
         dir: 'publish',
       },
       {
         title: {
-          'zh-cn': '后端集成',
-          'en-us': 'backend',
+          'zh-cn': '工程构建',
+          'en-us': 'builder',
         },
-        dir: 'backend',
+        dir: 'builder',
       },
       {
         title: {
@@ -48,9 +48,44 @@ const docCategories = {
     ],
   },
 
-  // iceworks
+  // iceworks 4.x
   iceworks: {
     title: {},
+    currentVersion: '4.x',
+    versions: [{
+      value: '3.x',
+      path: '/docs/iceworks-3.x/about',
+    }, {
+      value: '4.x',
+      path: '/docs/iceworks/about',
+    }],
+    children: [
+      {
+        title: {
+          'zh-cn': '指南',
+          'en-us': 'Guide',
+        },
+        dir: 'guide',
+      },
+      {
+        title: {
+          'zh-cn': '进阶',
+          'en-us': 'Advanced',
+        },
+        dir: 'advanced',
+      },
+    ],
+  },
+  'iceworks-3.x': {
+    title: {},
+    currentVersion: '3.x',
+    versions: [{
+      value: '3.x',
+      path: '/docs/iceworks-3.x/about',
+    }, {
+      value: '4.x',
+      path: '/docs/iceworks/about',
+    }],
     children: [
       {
         title: {

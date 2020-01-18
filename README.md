@@ -19,13 +19,13 @@
 <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 
 <div align="center">
-  <img src="https://img.alicdn.com/tfs/TB1kvL9aoT1gK0jSZFrXXcNCXXa-2924-1988.png" width="1000" />
+  <img src="https://img.alicdn.com/tfs/TB1lMLdtXY7gK0jSZKzXXaikpXa-2763-1449.png" width="1000" />
 </div>
 </div>
 
 ## 特性
 
-- :fire:**可视化开发**：通过 GUI 操作简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专有的前端工作台
+- :fire:**可视化开发**：通过 IDE 简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专属的前端工作台
 - :100:**丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
 - :tophat:**最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结构、开发调试、路由配置、状态管理等
 - :whale:**自定义物料**：通过物料开发者工具快速开发构建私有物料体系
@@ -34,26 +34,26 @@
 
 ## 快速开始
 
-为了支持不同的用户群体，我们提供了 Web 界面和 CLI 两种使用方式，具体如下：
+为了支持不同的用户群体，我们提供了 IDE 和 CLI 两种使用方式，具体如下：
 
-#### GUI 方式 [推荐]
+#### 使用 IDE [推荐]
 
-```bash
-# 安装 CLI 工具
-$ npm install iceworks -g
+> 以 macOS 平台为例。
 
-# 通过浏览器打开页面
-$ iceworks  # 通过浏览器打开 http://127.0.0.1:8000
-```
+1. 下载 [iceworks IDE for macOS](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg)；
+2. 双击下载的 .dmg 文件；
+3. 拖动 iceworks 的图标到 `Applications` 文件夹；
+4. 进入应用程序文件夹，双击 iceworks 启动；
+5. 在 iceworks 的欢迎界面点击 `+` 号按钮开始创建项目。
 
-#### 命令行工具
+#### 使用命令行工具
 
 ```bash
 # 安装 CLI 工具
 $ npm install iceworks -g
 
 # 新建目录
-$ mkdir iceapp & cd iceapp
+$ mkdir iceapp && cd iceapp
 
 # 通过模板初始化项目
 $ iceworks init
@@ -63,7 +63,7 @@ $ iceworks init
 
 |    项目         |    版本                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化源码研发工作台|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |面向企业级中后台领域的 IDE|
 | [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置开发构建工具|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
@@ -102,7 +102,7 @@ $ iceworks init
 
 | 钉钉群                               | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
-|<img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /> | [issues]     | [gitter]|
+| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice

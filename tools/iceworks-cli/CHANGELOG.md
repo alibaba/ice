@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.2.0
+
+## 3.1.10
+
+- [fix] typo error: pubslishConfig -> publishConfig
+
 ## 3.1.9
 
 - [feat] ejsRender material add npmScope and kebabCaseName options

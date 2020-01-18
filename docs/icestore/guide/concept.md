@@ -34,18 +34,22 @@ action 表示改变状态的行为，支持定义同步与异步 action，在 ac
 
 ``` javascript
 import Icestore from '@ice/store';
-const stores = new Icestore(); // 初始化 store 管理器实例
+const storeManager = new Icestore(); // 初始化 store 管理器实例
 ```
 
 <img src="https://user-images.githubusercontent.com/5419233/63601116-6e526b80-c5f7-11e9-9e69-cad4f37e1f2c.png" width="350" />
 
 
-## registerStore
+## registerStores
 
 store 对象定义好后，通过 registerStore 将 store 对象注册到全局的 store 管理器实例上，允许注册多个 store。
 
 ``` javascript
-stores.registerStore('todos', todos); // 通过 namespace 区分不同的 store
+const stores = storeManager.registerStores({
+  todos,
+}); // 通过 namespace 区分不同的 store
+
+export default stores;
 ```
 
 ## useStore
@@ -55,12 +59,16 @@ icestore 提供 useStore hook 供函数式组件使用，可以通过 useStore �
 ``` javascript
 
 // viewA.jsx
+import stores from './stores';
+
 const { fetchData } = stores.useStore('todo'); // 通过 namespace 访问注册的 store
 useEffect(() => {
   fetchData(); //  action 调用后触发组件 viewA 和 viewB 重新渲染
 }, []);
 
 // viewB.jsx
+import stores from './stores';
+
 const { dataSource } = stores.useStore('todo'); // viewA 组件中的 fetchData action 调用后触发 viewB 组件重新渲染，dataSource 值更新到最新
 
 return (

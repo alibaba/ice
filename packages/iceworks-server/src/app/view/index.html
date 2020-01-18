@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1" />
     <meta name="viewport" content="width=device-width" />
-    <link href="{{ clientPath }}css/index.css" rel="stylesheet" />
+    <link href="{{ clientPath }}css/index.css?v={{clientVersion}}" rel="stylesheet" />
     <link rel="shortcut icon" href="{{ clientPath }}favicon.png" />
     <title>iceworks</title>
   </head>
@@ -18,6 +18,6 @@
         isAliInternal: {{isAliInternal}},
       };
     </script>
-    <script src="{{ clientPath }}js/index.js"></script>
+    <script src="{{ clientPath }}js/index.js?v={{clientVersion}}"></script>
   </body>
 </html>

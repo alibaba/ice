@@ -1,6 +1,6 @@
 ---
 title: 在 HTML 托管服务中集成
-order: 3
+order: 5
 ---
 
 本文讲解如何在 HTML 托管服务中集成前端资源，我们以 [surge](http://surge.sh/) 为例。

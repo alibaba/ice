@@ -85,7 +85,7 @@ module.exports = async function({
     // 追加 publishConfig
     const pkgPath = path.join(targetPath, 'package.json');
     const pkgData = await fse.readJson(pkgPath);
-    pkgData.pubslishConfig = {
+    pkgData.publishConfig = {
       registry: 'https://registry.npm.alibaba-inc.com',
     };
     await fse.writeJson(pkgPath, pkgData, { spaces: 2 });

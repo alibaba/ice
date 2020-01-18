@@ -66,9 +66,11 @@ import todos from './todos';
 import Store from '@ice/store';
 
 const storeManager = new Store();
-storeManager.registerStore('todos', todos);
+const stores = storeManager.registerStores({
+  todos
+});
 
-export default storeManager;
+export default stores;
 ```
 
 ## State 与 View 绑定
@@ -133,4 +135,7 @@ function Todo() {
 ReactDOM.render(<Todo />, document.getElementById('root'));
 ```
 
-完整示例请参考线上 [codesandbox](https://codesandbox.io/s/icestore-hs9fe)。
+完整示例请参考线上 [codesandbox](https://codesandbox.io/s/icestore-ltpuo)。
+
+## Typescript 支持
+icestore 提供了完整的 Typescript 类型定义，在 VSCode 中能获得完整的类型推导的提示，示例请参考该线上 [CodeSandbox](https://codesandbox.io/s/icestore-ts-gduqw) 示例。
