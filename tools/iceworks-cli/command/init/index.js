@@ -90,7 +90,7 @@ async function selectTemplate(type) {
       npmName: '@icedesign/ice-vue-material-template',
       description: 'Vue material template',
     }, {
-      npmName: 'rax-template',
+      npmName: '@icedesign/template-rax',
       description: 'Rax material template',
     }, {
       npmName: '@icedesign/ice-react-ts-material-template',
@@ -101,7 +101,7 @@ async function selectTemplate(type) {
       description: 'React component template',
       default: true,
     }, {
-      npmName: 'rax-template',
+      npmName: '@icedesign/template-rax',
       description: 'Rax component template',
     }, {
       npmName: '@icedesign/ice-react-ts-material-template',
