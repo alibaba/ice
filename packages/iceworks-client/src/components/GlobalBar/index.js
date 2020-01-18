@@ -195,7 +195,7 @@ const GlobalBar = ({ project, intl }) => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://img.alicdn.com/tfs/TB1q_oaQgTqK1RjSZPhXXXfOFXa-993-1280.png"
+                  href="https://ice.alicdn.com/assets/images/qrcode.png"
                   style={{ display: 'block', marginBottom: '5px' }}
                 >
                   <FormattedMessage id="iceworks.global.bar.feedback.join" />

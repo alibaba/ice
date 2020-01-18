@@ -149,7 +149,7 @@ import { appHistory } from '@ice/stark-app';
 
 > 注意：这个问题跟 icestark 无关
 
-前端应用如果做了按需加载，按需加载的 bundle 默认是根据当前域名拼接地址，如果前端资源部署在非当前域名（比如 CDN）下，则需要通过手动配置 publicPath 来实现，具体参考[文档](https://ice.alibaba-inc.com/docs/cli/config/config#publicPath)。阿里内部同学请参考[这篇文档](/docs/cli/feature/cloud-build)。
+前端应用如果做了按需加载，按需加载的 bundle 默认是根据当前域名拼接地址，如果前端资源部署在非当前域名（比如 CDN）下，则需要通过手动配置 publicPath 来实现，具体参考[文档](/docs/guide/dev/build#publicPath)。阿里内部同学请参考[这篇文档](https://yuque.antfin-inc.com/ice/rdy99p/syvuzh)。
 
 ### 子应用开发时请求本地 Mock 接口？
 

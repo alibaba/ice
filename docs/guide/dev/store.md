@@ -71,9 +71,11 @@ import todos from './todos';
 import Store from '@ice/store';
 
 const storeManager = new Store();
-storeManager.registerStore('todos', todos);
+const stores = storeManager.registerStores({
+  todos
+});
 
-export default storeManager;
+export default stores;
 ```
 
 ## 视图绑定
@@ -138,4 +140,4 @@ function Todo() {
 ReactDOM.render(<Todo />, document.getElementById('root'));
 ```
 
-完整示例请参考线上 [codesandbox](https://codesandbox.io/s/icestore-hs9fe)。
+完整示例请参考线上 [codesandbox](https://codesandbox.io/s/icestore-ts-gduqw)。
