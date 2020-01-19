@@ -1,18 +1,15 @@
 /**
  * material add [block|component|scaffold]:
  *  1. get options by materialType
- *  2. 仅 component: add rax options & adaptor
- *  3. copy and ejsRender，文件名称转换：
+ *  2. copy and ejsRender，文件名称转换：
  *    - _package.json -> package.json
  *    - xxx.js.ejs -> xxx.js
  *    - _eslintxxx -> .eslintxxx (scaffold 不转换)
- *  4. 仅 component：remove eslint 相关文件，只有 component/scaffold 会有这些文件（因为有单独开发的需求）
+ *  3. 仅 component：remove eslint 相关文件，只有 component/scaffold 会有这些文件（因为有单独开发的需求）
  *
  * init component:
  *  1. get options by materialType
- *  2. add rax options & adaptor
- *  3. copy and ejsRender，文件名称转换
- *
+ *  2. copy and ejsRender，文件名称转换
  */
 const path = require('path');
 const fse = require('fs-extra');
@@ -61,16 +58,6 @@ module.exports = async function({
   options.kebabCaseName = decamelize(options.name, '-');
   // @ali/test-component
   options.npmName = generateNpmName(options.name, npmScope);
-
-  if (materialType === 'component') {
-    options = Object.assign({}, options, {
-      // 补全 rax 组件的几个字段
-      projectName: options.npmName,
-      projectAuthor: 'rax',
-      projectTargets: ['web'],
-      projectFeatures: [],
-    });
-  }
 
   log.verbose('addSingleMaterial options', options);
 
