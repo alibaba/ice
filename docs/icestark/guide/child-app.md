@@ -98,22 +98,27 @@ export default new Router({
 });
 ```
 
-## 子应用卸载
-
-icestark 目前的架构设计下，切换子应用时无法触发子应用的卸载（unmount）事件，因此我们提供了 `registerAppLeave(fn)` API 帮助子应用在应用切换时主动触发自身的卸载事件。
+## 子应用入口适配
 
 React 项目：
 
 ```jsx
 import ReactDOM from 'react-dom';
-import { getMountNode, registerAppLeave } from '@ice/stark-app';
+import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
 import router from './router';
 
-registerAppLeave(() => {
-  ReactDOM.unmountComponentAtNode(getMountNode());
-});
-
-ReactDOM.render(router(), getMountNode());
+if (isInIcestark()) {
+  const mountNode = getMountNode();
+  registerAppEnter(() => {
+    ReactDOM.render(router(), getMountNode());
+  });
+  // 注意务必保留 unmountComponentAtNode, 否则切换子应用时无法触发子应用的卸载（unmount）事件
+  registerAppLeave(() => {
+    ReactDOM.unmountComponentAtNode(getMountNode());
+  });
+} else {
+  ReactDOM.render(router(), document.getElementById('ice-container'));
+}
 ```
 
 Vue 项目：
@@ -121,21 +126,32 @@ Vue 项目：
 ```js
 // 应用入口文件 src/main.js
 import Vue from 'vue';
-import { registerAppLeave } from '@ice/stark-app';
+import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
 
-const vue = new Vue(...);
+if (isInIcestark()) {
+  let vue;
+  const mountNode = getMountNode();
+  registerAppEnter(() => {
+    vue = new Vue(...).$mount();
+    // for vue don't replace mountNode
+    mountNode.innerHTML = '';
+    mountNode.appendChild(vue.$el);
+  });
 
-// trigger unmount manually
-registerAppLeave(() => {
-  vue.$destroy();
-});
+  // make sure the unmount event is triggered
+  registerAppLeave(() => {
+    vue && vue.$destroy();
+  });
+} else {
+  const vue = new Vue(...);
+}
 ```
 
 ## 其他问题
 
 ### 子应用之间如何跳转？
 
-子应用内部跳转直接基于对应 router 提供的 link 组件即可，如果要跳转到其他子应用，则需要使用 `appHistory` API，这里以 React 应用为例：
+子应用内部跳转直接基于对应 router 提供的 link 组件即可，如果要跳转到其他子应用，可以使用 `appHistory` API，这里以 React 应用为例：
 
 ```jsx
 import { appHistory } from '@ice/stark-app';
