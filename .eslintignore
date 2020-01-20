@@ -12,24 +12,4 @@ coverage/
 **/*-min.js
 **/*.min.js
 
-templates
-
-# 忽略 packages 部分包
-# packages/ice-npm-utils
-packages/clean-css-parallel
-packages/css-prefix-plugin
-packages/eslint-config-ice
-packages/extract-css-assets-webpack-plugin
-packages/koa-generator
-packages/props-schema-generator
-packages/uglify-parallel
-packages/webpack-dev-mock
-packages/webpack-plugin-import
-packages/ice-layout-builder
-packages/ice-skin-loader
-packages/ice-template-builder
-packages/iceworks-scaffolder
-
-# temp ignore
-tools/iceworks
-tools/ice-devtools
+packages/generate-project/lib
