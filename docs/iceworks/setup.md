@@ -29,7 +29,8 @@ iceworks 每月发布一个新版本，其中包含新功能和重要的错误�
 
 - [Git](https://git-scm.com/download)：iceworks 内置了对使用 Git 的代码版本控制的支持，但要求单独安装 Git；
 - [Node.js（包括 npm）](https://nodejs.org/)：用于构建和运行 JavaScript 应用程序的跨平台运行时；
-- [TypeScript](https://www.typescriptlang.org/)：用于将 TypeScript 转换为 JavaScript 的编译器。
+- [tnpm](https://npm.alibaba-inc.com/)：应用于阿里内部环境的 npm，用于安装和发布内部包；
+- （可选）[TypeScript](https://www.typescriptlang.org/)：用于将 TypeScript 转换为 JavaScript 的编译器；
 
 ## 常见问题
 
