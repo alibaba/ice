@@ -1,0 +1,6 @@
+{
+  "sourcemap": true,
+  "plugins": [
+    "build-plugin-icestark"
+  ]
+}
