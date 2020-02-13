@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+jspm_packages
+
+# Only keep yarn.lock in the root
+package-lock.json
+*/**/yarn.lock
+
+# Logs
+*.log
+
+# Packages
+packages/*/lib/
+
+# temp folder .ice
+examples/*/.ice
+
+.eslintcache
+docs/.vuepress/dist/
+
+build
