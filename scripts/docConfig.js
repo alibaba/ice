@@ -2,6 +2,32 @@
 const docCategories = {
   guide: {
     title: {},
+    currentVersion: '1.x',
+    versions: [{
+      value: '1.x',
+      path: '/docs/guide/about',
+    }, {
+      value: '0.x',
+      path: '/docs/guide-0.x/about',
+    }],
+    children: [{
+      title: {
+        'zh-cn': '开发',
+        'en-us': 'development',
+      },
+      dir: 'dev',
+    }],
+  },
+  'guide-0.x': {
+    title: {},
+    currentVersion: '0.x',
+    versions: [{
+      value: '1.x',
+      path: '/docs/guide/about',
+    }, {
+      value: '0.x',
+      path: '/docs/guide-0.x/about',
+    }],
     children: [
       {
         title: {

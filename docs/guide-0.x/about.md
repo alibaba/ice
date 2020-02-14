@@ -4,8 +4,6 @@ order: 1
 cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 ---
 
-> icejs wakaka
-
 > 简单而友好的前端研发体系
 
 ## 特性
