@@ -1,6 +1,6 @@
 {
   "name": "ice-npm-utils",
-  "version": "1.3.1",
+  "version": "1.4.0-0",
   "description": "npm utils for ice",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -14,6 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@types/npmlog": "^4.1.2",
     "mkdirp": "^0.5.1",
     "npmlog": "^4.1.2",
     "request": "^2.88.0",
@@ -33,9 +34,14 @@
   },
   "jest": {
     "coverageDirectory": "./coverage/",
+    "testPathIgnorePatterns": [
+      "lib/"
+    ],
     "collectCoverage": true,
     "preset": "ts-jest",
-    "setupFilesAfterEnv": ["jest-extended"]
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ]
   },
   "publishConfig": {
     "access": "public"

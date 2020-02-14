@@ -6,7 +6,7 @@ const path = require('path');
 const progress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
-const log = require('./log');
+import log from './log';
 
 const cacheData = {};
 
@@ -35,7 +35,19 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
 /**
  * 获取 tar 并将其解压到指定的文件夹
  */
-function getAndExtractTarball(destDir: string, tarball: string, progressFunc = (state) => {}): Promise<string[]> {
+function getAndExtractTarball(
+  destDir: string,
+  tarball: string,
+  progressFunc = (state) => {},
+  formatFilename = (filename: string): string => {
+    // 为了兼容
+    if (filename === '_package.json') {
+      return filename.replace(/^_/, '');
+    } else {
+      return filename.replace(/^_/, '.');
+    }
+  }
+): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
@@ -59,14 +71,7 @@ function getAndExtractTarball(destDir: string, tarball: string, progressFunc = (
         const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
-
-        // _gitignore -> .gitignore
-        // Special logic：_package.json -> package.json
-        if (filename === '_package.json') {
-          filename = filename.replace(/^_/, '');
-        } else {
-          filename = filename.replace(/^_/, '.');
-        }
+        filename = formatFilename(filename);
 
         const destPath = path.join(destDir, path.dirname(realPath), filename);
         const dirToBeCreate = path.dirname(destPath);
@@ -239,4 +244,5 @@ export {
   checkAliInternal,
   getNpmTarball,
   getAndExtractTarball,
+  log,
 };

@@ -17,3 +17,4 @@ build
 .tmp/
 
 packages/generate-project/lib
+packages/ice-npm-utils/lib
