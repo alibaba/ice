@@ -1,7 +1,9 @@
-const path = require('path');
-const { tmpdir } = require('os');
+import 'jest-extended';
+import * as path from 'path';
+import { tmpdir } from 'os';
 const rimraf = require('rimraf');
-const {
+
+import {
   getNpmRegistry,
   getUnpkgHost,
   getNpmLatestSemverVersion,
@@ -11,7 +13,7 @@ const {
   checkAliInternal,
   getNpmTarball,
   getAndExtractTarball,
-} = require('../lib/index');
+} from '../index';
 
 const defaultRegistry = 'https://registry.npm.taobao.org';
 
@@ -110,6 +112,7 @@ test('checkAliInternal', () => {
   return checkAliInternal().then((internal) => {
     console.log('checkAliInternal', internal);
     expect(internal).toBeBoolean();
+    // expect().toBeInstanceOf();
   });
 });
 

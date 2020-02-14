@@ -9,4 +9,4 @@ npmlog.level = logLevel;
 // log.verbose: 调试日志
 // log.info
 // log.error
-module.exports = npmlog;
+export default npmlog;

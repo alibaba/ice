@@ -13,8 +13,8 @@ const cacheData = {};
 /**
  * 获取指定 npm 包版本的 tarball
  */
-function getNpmTarball(npm, version) {
-  return getNpmInfo(npm).then((json) => {
+function getNpmTarball(npm: string, version?: string, registry?: string): Promise<string> {
+  return getNpmInfo(npm, registry).then((json: any) => {
     if (!semver.valid(version)) {
       version = json['dist-tags'].latest;
     }
@@ -35,7 +35,7 @@ function getNpmTarball(npm, version) {
 /**
  * 获取 tar 并将其解压到指定的文件夹
  */
-function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
+function getAndExtractTarball(destDir: string, tarball: string, progressFunc = (state) => {}): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
@@ -100,12 +100,12 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
 /**
  * 从 register 获取 npm 的信息
  */
-function getNpmInfo(npm) {
+function getNpmInfo(npm: string, registry?: string): Promise<any> {
   if (cacheData[npm]) {
     return Promise.resolve(cacheData[npm]);
   }
 
-  const register = getNpmRegistry(npm);
+  const register = registry || getNpmRegistry(npm);
   const url = `${register}/${npm}`;
 
   return request.get(url).then((response) => {
@@ -124,8 +124,8 @@ function getNpmInfo(npm) {
 /**
  * 获取某个 npm 的所有版本号
  */
-function getVersions(npm) {
-  return getNpmInfo(npm).then((body) => {
+function getVersions(npm: string, registry?: string): Promise<string[]> {
+  return getNpmInfo(npm, registry).then((body: any) => {
     const versions = Object.keys(body.versions);
     return versions;
   });
@@ -137,7 +137,7 @@ function getVersions(npm) {
  * @param {String} baseVersion 指定的基准 version
  * @param {Array} versions
  */
-function getLatestSemverVersion(baseVersion, versions) {
+function getLatestSemverVersion(baseVersion: string, versions: string[]): string {
   versions = versions
     .filter((version) => semver.satisfies(version, `^${baseVersion}`))
     .sort((a, b) => {
@@ -152,8 +152,8 @@ function getLatestSemverVersion(baseVersion, versions) {
  * @param {String} npm 包名
  * @param {String} baseVersion 指定的基准 version
  */
-function getNpmLatestSemverVersion(npm, baseVersion) {
-  return getVersions(npm).then((versions) => {
+function getNpmLatestSemverVersion(npm: string, baseVersion: string, registry?: string): Promise<string> {
+  return getVersions(npm, registry).then((versions) => {
     return getLatestSemverVersion(baseVersion, versions);
   });
 }
@@ -163,8 +163,8 @@ function getNpmLatestSemverVersion(npm, baseVersion) {
  *
  * @param {String} npm
  */
-function getLatestVersion(npm) {
-  return getNpmInfo(npm).then((data) => {
+function getLatestVersion(npm, registry?: string): Promise<string> {
+  return getNpmInfo(npm, registry).then((data) => {
     if (!data['dist-tags'] || !data['dist-tags'].latest) {
       log.error('没有 latest 版本号', data);
       return Promise.reject(new Error('Error: 没有 latest 版本号'));
@@ -175,11 +175,11 @@ function getLatestVersion(npm) {
   });
 }
 
-function isAliNpm(npmName) {
+function isAliNpm(npmName?: string): boolean {
   return /^(@alife|@ali|@alipay|@kaola)\//.test(npmName);
 }
 
-function getNpmRegistry(npmName = '') {
+function getNpmRegistry(npmName: string = ''): string {
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   }
@@ -191,7 +191,7 @@ function getNpmRegistry(npmName = '') {
   return 'https://registry.npm.taobao.org';
 }
 
-function getUnpkgHost(npmName = '') {
+function getUnpkgHost(npmName: string = ''): string {
   if (process.env.UNPKG) {
     return process.env.UNPKG;
   }
@@ -203,7 +203,7 @@ function getUnpkgHost(npmName = '') {
   return 'https://unpkg.com';
 }
 
-function getNpmClient(npmName = '') {
+function getNpmClient(npmName: string = ''): string {
   if (process.env.NPM_CLIENT) {
     return process.env.NPM_CLIENT;
   }
@@ -215,7 +215,7 @@ function getNpmClient(npmName = '') {
   return 'npm';
 }
 
-function checkAliInternal() {
+function checkAliInternal(): Promise<boolean> {
   return request({
     url: 'https://ice.alibaba-inc.com/check.node',
     timeout: 3 * 1000,
@@ -228,7 +228,7 @@ function checkAliInternal() {
   });
 }
 
-module.exports = {
+export {
   getLatestVersion,
   getNpmLatestSemverVersion,
   getNpmRegistry,
