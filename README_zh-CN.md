@@ -73,7 +73,7 @@ $ npm start
 [icestark]: https://github.com/ice-lab/icestark
 [icestore]: https://github.com/ice-lab/icestore
 
-[icejs-status]: https://img.shields.io/npm/v/icejs.svg
+[icejs-status]: https://img.shields.io/npm/v/ice.js.svg
 [iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
