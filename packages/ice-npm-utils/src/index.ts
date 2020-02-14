@@ -1,3 +1,5 @@
+import log from './log';
+
 const request = require('request-promise');
 const semver = require('semver');
 const fs = require('fs');
@@ -6,7 +8,6 @@ const path = require('path');
 const progress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
-import log from './log';
 
 const cacheData = {};
 

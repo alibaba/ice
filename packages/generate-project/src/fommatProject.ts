@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import {
-  checkAliInternal, log
+  checkAliInternal, log,
 } from 'ice-npm-utils';
 
 export async function formatProject(projectDir: string): Promise<void> {
@@ -72,11 +72,9 @@ export async function formatProject(projectDir: string): Promise<void> {
     if (!is1X) {
       // TODO: 操作 ice.config.js 加入 ice-plugin-def；删除 publicPath
       log.info('', 'If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
-    } else {
-      if (pkgData.buildConfig) {
-        delete pkgData.buildConfig.output;
-        delete pkgData.buildConfig.localization;
-      }
+    } else if (pkgData.buildConfig) {
+      delete pkgData.buildConfig.output;
+      delete pkgData.buildConfig.localization;
     }
   }
 

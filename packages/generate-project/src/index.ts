@@ -1,6 +1,6 @@
 import * as chalk from 'chalk';
 import {
-  isAliNpm, getNpmTarball, getAndExtractTarball, log
+  isAliNpm, getNpmTarball, getAndExtractTarball, log,
 } from 'ice-npm-utils';
 import { formatProject } from './fommatProject';
 

@@ -13,3 +13,4 @@ coverage/
 **/*.min.js
 
 packages/generate-project/lib
+packages/ice-npm-utils/lib
