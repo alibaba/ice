@@ -13,15 +13,15 @@ English | [简体中文](./README_zh-CN.md)
 ## Features
 
 - 🐒 **Engineering**：Out of the box support for ES6+、 TypeScripts、Less、Sass、 CSS Modules，etc
-- 🦊 **routing**：Powerful Routing System, supports configured routing and conventions routing
-- 🐯 **state management**：Built-in icestore, lightweight state management solution based on React Hooks.
+- 🦊 **Routing**：Powerful Routing System, supports configured routing and conventions routing
+- 🐯 **State management**：Built-in icestore, lightweight state management solution based on React Hooks
 - 🐶 **Logger**：Built-in logger solution, it's a flexible abstraction over using `console.log` as well
 - 🐱 **Helpers**：Built-in helpers, provide some useful utility functions
-- 🦁 **Application configuration**：provide powerful and extensible application configuration function，support multiple Environment Configuration
+- 🦁 **Application configuration**：Provide powerful and extensible application configuration function，support multiple Environment Configuration
 - 🐴 **Hooks**：Provide Hooks APIs such as useApp and usePage, etc
 - 🐌 **Plugin system**：The plugin system provides rich features and allow the community to build reusable solutions
-- 🐘 **typescript**：Support typescript
-- 🐂 **Modern**：Support SPA、SSR、 MPA and Micro-frontend
+- 🐘 **TypeScript**：Support typescript
+- 🐂 **Modern**：Support SPA、SSR、MPA and Micro-frontend
 
 Learn more at <https://ice.work/docs/guide/about>.
 
@@ -34,7 +34,6 @@ $ npm init ice <YourProjectName>
 ```
 
 `npm init <initializer>` is available in npm 6+
-
 
 Start local server to launch project:
 
