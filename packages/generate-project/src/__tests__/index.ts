@@ -1,5 +1,14 @@
-import { add } from '..';
+import * as path from 'path';
+import * as fs from 'fs-extra';
+import { downloadAndGenerateProject } from '..';
 
-it('add', () => {
-  expect(add(1, 2)).toBe(3);
+test('downloadAndGenerateProject', async () => {
+  const projectDir = path.resolve(__dirname, 'tmp');
+
+  await fs.remove(projectDir);
+  await fs.ensureDir(projectDir);
+
+  await downloadAndGenerateProject(projectDir, '@alifd/fusion-design-pro');
+
+  await fs.remove(projectDir);
 });

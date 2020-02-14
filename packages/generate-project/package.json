@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/generate-project",
-  "version": "1.0.0",
+  "version": "1.0.0-0",
   "description": "generator project",
   "files": [
     "lib/"
@@ -9,7 +9,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "test": "NODE_ENV=unittest jest",
+    "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
+    "watch": "tsc -w",
     "prepublishOnly": "npm run build"
   },
   "publishConfig": {
@@ -18,11 +19,19 @@
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
+    "testPathIgnorePatterns": [
+      "lib/",
+      "__tests__/tmp/"
+    ],
     "preset": "ts-jest"
   },
   "dependencies": {
+    "chalk": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "ice-npm-utils": "^1.4.0-0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^8.0.1",
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
     "ts-jest": "^24.2.0",
