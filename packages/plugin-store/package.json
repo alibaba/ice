@@ -1,0 +1,31 @@
+{
+  "name": "build-plugin-ice-store",
+  "version": "1.0.1",
+  "description": "builtin `icestore` in icejs",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice/ice.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@ice/store": "1.0.0-beta.0",
+    "fs-readdir-recursive": "^1.1.0",
+    "recursive-readdir": "^2.2.2"
+  }
+}

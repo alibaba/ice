@@ -1,0 +1,9 @@
+{
+  "router": {
+    "ignorePaths": ["stores", "components"]
+  },
+  "ignoreHtmlTemplate": true,
+  "plugins": [
+    "../../packages/plugin-request"
+  ]
+}

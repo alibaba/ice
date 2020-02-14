@@ -1,0 +1,31 @@
+{
+  "name": "build-plugin-ice-core",
+  "version": "1.0.1",
+  "description": "the core plugin for icejs.",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "chokidar": "^3.3.1",
+    "ejs": "^3.0.1",
+    "fs-extra": "^8.1.0",
+    "globby": "^11.0.0",
+    "react-error-boundary": "^1.2.5",
+    "react-router-dom": "^5.1.2"
+  },
+  "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "build-plugin-ice-router",
+  "version": "1.0.1",
+  "description": "build-plugin-ice-router",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.13",
+    "@types/fs-extra": "^8.0.1",
+    "@types/glob": "^7.1.1",
+    "@types/node": "^12.12.12",
+    "typescript": "^3.7.2"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "gitHead": "6bbf8de986f2e6d4820c2dc7f92fa87d917b23f7"
+}

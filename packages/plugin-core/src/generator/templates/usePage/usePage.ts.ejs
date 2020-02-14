@@ -1,0 +1,14 @@
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
+<%- usePageImports %>
+
+function <%= usePageName %>() {
+  return {
+    history: useHistory(),
+    location: useLocation(),
+    params: useParams(),
+    match: useRouteMatch(),
+    <%= usePageExports %>
+  }
+}
+
+export default <%= usePageName %>
