@@ -1,4 +1,3 @@
-import * as fs from 'fs-extra';
 import * as ora from 'ora';
 import {
   isAliNpm, getNpmTarball, getAndExtractTarball, log,
@@ -14,8 +13,6 @@ export {
 export async function downloadAndGenerateProject(
   projectDir: string, npmName: string, version?: string, registry?: string
 ): Promise<void> {
-  await fs.ensureDir(projectDir);
-
   registry = registry || await getNpmRegistry(npmName);
   const tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
 
