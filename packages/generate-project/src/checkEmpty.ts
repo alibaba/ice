@@ -10,7 +10,7 @@ export default async function checkEmpty(dir: string): Promise<boolean | string[
     ].indexOf(filename) === -1;
   });
   if (files.length && files.length > 0) {
-    return files;
+    return false;
   } else {
     return true;
   }
