@@ -1,15 +1,13 @@
 const inquirer = require('inquirer');
+const { downloadAndGenerateProject } = require('@iceworks/generate-project');
 const log = require('../../lib/log');
 const goldlog = require('../../lib/goldlog');
 const checkEmpty = require('../../lib/checkEmpty');
-const initProject = require('./initProject');
 const initMaterialAndComponent = require('./initMaterialAndComponent');
+const getNpmRegistry = require('../../lib/getNpmRegistry');
 
 module.exports = async function(options = {}) {
   const cwd = process.cwd();
-  const go = await checkEmpty(cwd);
-  if (!go) process.exit(1);
-
   let { npmName, type } = options;
   log.verbose('iceworks init options', options);
 
@@ -20,11 +18,23 @@ module.exports = async function(options = {}) {
     npmName = await selectTemplate(type);
   }
 
+  if (type !== 'project') {
+    // downloadAndGenerateProject 会做 checkEmpty 的逻辑
+    const go = await checkEmpty(cwd);
+    if (!go) process.exit(1);
+  }
+
   goldlog('init', { npmName, type });
   log.verbose('iceworks init', type, npmName);
 
   if (type === 'project') {
-    await initProject({ npmName, cwd });
+    const registry = await getNpmRegistry(npmName, null, null, true);
+    await downloadAndGenerateProject(
+      cwd,
+      npmName,
+      'latest',
+      registry,
+    );
   } else {
     await initMaterialAndComponent({
       cwd,
