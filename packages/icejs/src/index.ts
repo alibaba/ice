@@ -8,7 +8,8 @@ const builtInPlugins = [
   'build-plugin-ice-store',
   'build-plugin-ice-helpers',
   'build-plugin-ice-logger',
-  'build-plugin-ice-config'
+  'build-plugin-ice-config',
+  'build-plugin-ice-request'
 ];
 
 export = builtInPlugins;
