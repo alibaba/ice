@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/generate-project",
-  "version": "1.0.0-3",
+  "version": "1.0.0",
   "description": "generator project",
   "files": [
     "lib/"
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "ice-npm-utils": "^1.4.0-0",
+    "ice-npm-utils": "^1.4.0",
     "ora": "^4.0.3"
   },
   "devDependencies": {
