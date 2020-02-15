@@ -23,7 +23,8 @@
     "build-plugin-ice-logger": "^1.0.2",
     "build-plugin-ice-router": "^1.0.2",
     "build-plugin-ice-store": "^1.0.2",
-    "build-plugin-react-app": "^1.0.2"
+    "build-plugin-react-app": "^1.0.2",
+    "build-plugin-ice-request": "^1.0.2"
   },
   "engines": {
     "node": ">=8.6.0",
