@@ -1,17 +1,19 @@
+const chalk = require('chalk');
 const inquirer = require('inquirer');
+const { downloadAndGenerateProject } = require('@iceworks/generate-project');
 const log = require('../../lib/log');
 const goldlog = require('../../lib/goldlog');
 const checkEmpty = require('../../lib/checkEmpty');
-const initProject = require('./initProject');
 const initMaterialAndComponent = require('./initMaterialAndComponent');
+const getNpmRegistry = require('../../lib/getNpmRegistry');
 
 module.exports = async function(options = {}) {
   const cwd = process.cwd();
-  const go = await checkEmpty(cwd);
-  if (!go) process.exit(1);
-
   let { npmName, type } = options;
   log.verbose('iceworks init options', options);
+
+  const go = await checkEmpty(cwd);
+  if (!go) process.exit(1);
 
   if (!options.type) {
     type = await selectType();
@@ -24,7 +26,21 @@ module.exports = async function(options = {}) {
   log.verbose('iceworks init', type, npmName);
 
   if (type === 'project') {
-    await initProject({ npmName, cwd });
+    const registry = await getNpmRegistry(npmName, null, null, true);
+    await downloadAndGenerateProject(
+      cwd,
+      npmName,
+      'latest',
+      registry,
+    );
+    console.log();
+    console.log('Initialize project successfully.');
+    console.log();
+    console.log('Starts the development server.');
+    console.log();
+    console.log(chalk.cyan('    npm install'));
+    console.log(chalk.cyan('    npm start'));
+    console.log();
   } else {
     await initMaterialAndComponent({
       cwd,
@@ -72,15 +88,18 @@ async function selectTemplate(type) {
   // 针对不同 init 类型的内置模板
   const typeToTemplates = {
     project: [{
-      npmName: '@icedesign/lite-scaffold',
-      description: 'Lite template，A lightweight and simple template.',
+      npmName: '@alifd/scaffold-lite',
+      description: 'A lightweight TypeScript template.',
       default: true,
     }, {
-      npmName: '@icedesign/ts-scaffold',
-      description: 'TypeScript template，Built-in support for TypeScript.',
+      npmName: '@alifd/scaffold-lite-js',
+      description: 'A lightweight JavaScript template.',
     }, {
-      npmName: '@icedesign/pro-scaffold',
-      description: 'Pro template，Integrated rich features such as charts, lists, forms, etc.',
+      npmName: '@alifd/fusion-design-pro',
+      description: 'Pro TypeScript template，Integrated rich features such as charts, lists, forms, etc.',
+    }, {
+      npmName: '@alifd/fusion-design-pro-js',
+      description: 'Pro JavaScript template，Integrated rich features such as charts, lists, forms, etc.',
     }],
     material: [{
       npmName: '@icedesign/ice-react-material-template',
