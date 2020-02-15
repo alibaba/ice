@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { downloadAndGenerateProject } = require('@iceworks/generate-project');
 const log = require('../../lib/log');
@@ -11,17 +12,14 @@ module.exports = async function(options = {}) {
   let { npmName, type } = options;
   log.verbose('iceworks init options', options);
 
+  const go = await checkEmpty(cwd);
+  if (!go) process.exit(1);
+
   if (!options.type) {
     type = await selectType();
   }
   if (!options.npmName) {
     npmName = await selectTemplate(type);
-  }
-
-  if (type !== 'project') {
-    // downloadAndGenerateProject 会做 checkEmpty 的逻辑
-    const go = await checkEmpty(cwd);
-    if (!go) process.exit(1);
   }
 
   goldlog('init', { npmName, type });
@@ -35,6 +33,14 @@ module.exports = async function(options = {}) {
       'latest',
       registry,
     );
+    console.log();
+    console.log('Initialize project successfully.');
+    console.log();
+    console.log('Starts the development server.');
+    console.log();
+    console.log(chalk.cyan('    npm install'));
+    console.log(chalk.cyan('    npm start'));
+    console.log();
   } else {
     await initMaterialAndComponent({
       cwd,

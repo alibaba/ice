@@ -1,4 +1,3 @@
-import * as chalk from 'chalk';
 import * as fs from 'fs-extra';
 import * as ora from 'ora';
 import {
@@ -15,13 +14,7 @@ export {
 export async function downloadAndGenerateProject(
   projectDir: string, npmName: string, version?: string, registry?: string
 ): Promise<void> {
-
   await fs.ensureDir(projectDir);
-  const go = await checkEmpty(projectDir);
-
-  if (!go) {
-    process.exit(1);
-  }
 
   registry = registry || await getNpmRegistry(npmName);
   const tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
@@ -37,7 +30,7 @@ export async function downloadAndGenerateProject(
     },
     formatFilename,
   );
-  spinner.succeed('download npm tarball successful!');
+  spinner.succeed('download npm tarball successfully.');
 
   try {
     await formatProject(projectDir);
@@ -45,15 +38,6 @@ export async function downloadAndGenerateProject(
     log.warn('', 'formatProject error');
     console.log(err);
   }
-
-  console.log();
-  console.log('Initialize project successfully.');
-  console.log();
-  console.log('Starts the development server.');
-  console.log();
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
-  console.log();
 };
 
 async function getNpmRegistry(npmName: string): Promise<string> {
