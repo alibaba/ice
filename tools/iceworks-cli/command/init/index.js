@@ -88,15 +88,18 @@ async function selectTemplate(type) {
   // 针对不同 init 类型的内置模板
   const typeToTemplates = {
     project: [{
-      npmName: '@icedesign/lite-scaffold',
-      description: 'Lite template，A lightweight and simple template.',
+      npmName: '@alifd/scaffold-lite',
+      description: '[TypeScript]A lightweight template.',
       default: true,
     }, {
-      npmName: '@icedesign/ts-scaffold',
-      description: 'TypeScript template，Built-in support for TypeScript.',
+      npmName: '@alifd/scaffold-lite-js',
+      description: '[JavaScript]A lightweight template.',
     }, {
-      npmName: '@icedesign/pro-scaffold',
-      description: 'Pro template，Integrated rich features such as charts, lists, forms, etc.',
+      npmName: '@alifd/fusion-design-pro',
+      description: '[TypeScript]Pro template，Integrated rich features such as charts, lists, forms, etc.',
+    }, {
+      npmName: '@alifd/fusion-design-pro-js',
+      description: '[JavaScript]Pro template，Integrated rich features such as charts, lists, forms, etc.',
     }],
     material: [{
       npmName: '@icedesign/ice-react-material-template',
