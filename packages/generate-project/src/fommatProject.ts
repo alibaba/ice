@@ -28,7 +28,8 @@ export default async function formatProject(projectDir: string): Promise<void> {
     delete pkgData.scripts.prepublishOnly;
   }
 
-  if (pkgData.devDependencies['@alib/build-scripts']) {
+  const buildJsonPath = path.join(projectDir, 'build.json');
+  if (fse.existsSync(buildJsonPath)) {
     log.verbose('formatProject', 'build-scripts project');
 
     const buildJsonPath = path.join(projectDir, 'build.json');
