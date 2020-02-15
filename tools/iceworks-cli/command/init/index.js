@@ -89,17 +89,17 @@ async function selectTemplate(type) {
   const typeToTemplates = {
     project: [{
       npmName: '@alifd/scaffold-lite',
-      description: '[TypeScript]A lightweight template.',
+      description: 'A lightweight TypeScript template.',
       default: true,
     }, {
       npmName: '@alifd/scaffold-lite-js',
-      description: '[JavaScript]A lightweight template.',
+      description: 'A lightweight JavaScript template.',
     }, {
       npmName: '@alifd/fusion-design-pro',
-      description: '[TypeScript]Pro template，Integrated rich features such as charts, lists, forms, etc.',
+      description: 'Pro TypeScript template，Integrated rich features such as charts, lists, forms, etc.',
     }, {
       npmName: '@alifd/fusion-design-pro-js',
-      description: '[JavaScript]Pro template，Integrated rich features such as charts, lists, forms, etc.',
+      description: 'Pro JavaScript template，Integrated rich features such as charts, lists, forms, etc.',
     }],
     material: [{
       npmName: '@icedesign/ice-react-material-template',
