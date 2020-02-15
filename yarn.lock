@@ -1411,14 +1411,13 @@
   resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.0.0-beta.0.tgz#c29130a94536c9a57a9377f15837a52010298aa3"
   integrity sha1-wpEwqUU2yaV6k3fxWDelIBApiqM=
 
-"@iceworks/generate-project@^1.0.0-1":
-  version "1.0.0-1"
-  resolved "https://registry.yarnpkg.com/@iceworks/generate-project/-/generate-project-1.0.0-1.tgz#4f3a7caf1c2f35082901f30ef31b98bba5d1328c"
-  integrity sha512-Q6QuCNpbp7flI5Sq0iJGfnFgeq59k957zR0Zolr2dfGyQVFQRtdVqwzVSB/ybrzM9OkR70bJEr8HZt2d2mizIA==
+"@iceworks/generate-project@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@iceworks/generate-project/download/@iceworks/generate-project-1.0.0.tgz#da34a52e23d4e1717ec97e115b2fc456bcaf619e"
+  integrity sha1-2jSlLiPU4XF+yX4RWy/EVryvYZ4=
   dependencies:
-    chalk "^3.0.0"
     fs-extra "^8.1.0"
-    ice-npm-utils "^1.4.0-0"
+    ice-npm-utils "^1.4.0"
     ora "^4.0.3"
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
@@ -6921,10 +6920,10 @@ husky@^3.1.0:
     run-node "^1.0.0"
     slash "^3.0.0"
 
-ice-npm-utils@^1.4.0-0:
-  version "1.4.0-0"
-  resolved "https://registry.yarnpkg.com/ice-npm-utils/-/ice-npm-utils-1.4.0-0.tgz#ad82a8de506f0a5fc1ff2a4d1cc14a5edbc79d64"
-  integrity sha512-DkIxzFjCYObMP05M1prJ6ihkKK7D2jbNs4AA603idQ9c3qLkDcBEWYt0z50xMvS4uSf/2nq9g/4YVxXdXUlXaA==
+ice-npm-utils@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.4.0.tgz#bd33e6172cab7c37db375efe68e283b159b37652"
+  integrity sha1-vTPmFyyrfDfbN17+aOKDsVmzdlI=
   dependencies:
     "@types/npmlog" "^4.1.2"
     mkdirp "^0.5.1"
