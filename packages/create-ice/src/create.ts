@@ -48,16 +48,16 @@ export default async function create(dirPath: string, templateName: string, dirn
 async function selectTemplate(): Promise<string> {
   const templates: ITemplate[] = [{
     npmName: '@alifd/scaffold-lite',
-    description: '[TypeScript]A lightweight template.',
+    description: 'A lightweight TypeScript template.',
   }, {
     npmName: '@alifd/scaffold-lite-js',
-    description: '[JavaScript]A lightweight template.',
+    description: 'A lightweight JavaScript template.',
   }, {
     npmName: '@alifd/fusion-design-pro',
-    description: '[TypeScript]Pro template，Integrated rich features such as charts, lists, forms, etc.',
+    description: 'Pro TypeScript template，Integrated rich features such as charts, lists, forms, etc.',
   }, {
     npmName: '@alifd/fusion-design-pro-js',
-    description: '[JavaScript]Pro template，Integrated rich features such as charts, lists, forms, etc.',
+    description: 'Pro JavaScript template，Integrated rich features such as charts, lists, forms, etc.',
   }];
   const defaultTemplate = templates[0];
 
