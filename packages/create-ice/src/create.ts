@@ -1,6 +1,6 @@
 import * as inquirer from 'inquirer';
 import * as fs from 'fs-extra';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { downloadAndGenerateProject, checkEmpty } from '@iceworks/generate-project';
 
 interface ITemplate {
