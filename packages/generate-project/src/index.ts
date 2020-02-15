@@ -1,25 +1,43 @@
 import * as chalk from 'chalk';
+import * as fs from 'fs-extra';
+import * as ora from 'ora';
 import {
   isAliNpm, getNpmTarball, getAndExtractTarball, log,
 } from 'ice-npm-utils';
-import { formatProject } from './fommatProject';
+import formatProject from './fommatProject';
+import checkEmpty from './checkEmpty';
 
 export {
   formatProject,
+  checkEmpty,
 };
 
-export async function downloadAndGenerateProject(projectDir: string, npmName: string, registry?: string): Promise<void> {
+export async function downloadAndGenerateProject(
+  projectDir: string, npmName: string, version?: string, registry?: string
+): Promise<void> {
+
+  await fs.ensureDir(projectDir);
+  const go = await checkEmpty(projectDir);
+
+  if (!go) {
+    process.exit(1);
+  }
+
   registry = registry || await getNpmRegistry(npmName);
-  const tarballURL = await getNpmTarball(npmName, 'latest', registry);
+  const tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
 
   log.verbose('download tarballURL', tarballURL);
 
+  const spinner = ora(`download npm tarball start`).start();
   await getAndExtractTarball(
     projectDir,
     tarballURL,
-    () => {},
+    (state) => {
+      spinner.text = `download npm tarball progress: ${Math.floor(state.percent*100)}%`;
+    },
     formatFilename,
   );
+  spinner.succeed('download npm tarball successful!');
 
   try {
     await formatProject(projectDir);

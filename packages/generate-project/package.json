@@ -28,7 +28,8 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "fs-extra": "^8.1.0",
-    "ice-npm-utils": "^1.4.0-0"
+    "ice-npm-utils": "^1.4.0-0",
+    "ora": "^4.0.3"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.1",

@@ -4,7 +4,7 @@ import {
   checkAliInternal, log,
 } from 'ice-npm-utils';
 
-export async function formatProject(projectDir: string): Promise<void> {
+export default async function formatProject(projectDir: string): Promise<void> {
   await fse.remove(path.join(projectDir, 'build'));
 
   let abcData = {};
