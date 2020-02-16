@@ -12,11 +12,18 @@ const docCategories = {
     }],
     children: [{
       title: {
-        'zh-cn': '开发',
+        'zh-cn': '基础指南',
         'en-us': 'development',
       },
-      dir: 'dev',
-    }],
+      dir: 'basic',
+    },
+    {
+      title: {
+        'zh-cn': '插件',
+        'en-us': 'plugins',
+      },
+      dir: 'framework',
+    },],
   },
   'guide-0.x': {
     title: {},
@@ -31,17 +38,17 @@ const docCategories = {
     children: [
       {
         title: {
-          'zh-cn': '基础指南',
+          'zh-cn': '开发',
           'en-us': 'development',
         },
-        dir: 'basic',
+        dir: 'guide',
       },
       {
         title: {
-          'zh-cn': '插件',
-          'en-us': 'plugins',
+          'zh-cn': '发布',
+          'en-us': 'publish',
         },
-        dir: 'framework',
+        dir: 'publish',
       },
       {
         title: {
