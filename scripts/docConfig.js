@@ -31,10 +31,17 @@ const docCategories = {
     children: [
       {
         title: {
-          'zh-cn': '开发',
+          'zh-cn': '基础指南',
           'en-us': 'development',
         },
-        dir: 'dev',
+        dir: 'basic',
+      },
+      {
+        title: {
+          'zh-cn': '插件',
+          'en-us': 'plugins',
+        },
+        dir: 'framework',
       },
       {
         title: {
