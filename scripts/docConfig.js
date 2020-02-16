@@ -12,10 +12,17 @@ const docCategories = {
     }],
     children: [{
       title: {
-        'zh-cn': '开发',
-        'en-us': 'development',
+        'zh-cn': '基础教程',
+        'en-us': 'Basic Guide',
       },
-      dir: 'dev',
+      dir: 'basic',
+    },
+    {
+      title: {
+        'zh-cn': '框架扩展',
+        'en-us': 'Framework',
+      },
+      dir: 'framework',
     }],
   },
   'guide-0.x': {
@@ -31,24 +38,17 @@ const docCategories = {
     children: [
       {
         title: {
-          'zh-cn': '基础指南',
+          'zh-cn': '开发',
           'en-us': 'development',
         },
-        dir: 'basic',
+        dir: 'dev',
       },
       {
         title: {
-          'zh-cn': '插件',
-          'en-us': 'plugins',
+          'zh-cn': '工程构建',
+          'en-us': 'Builder',
         },
-        dir: 'framework',
-      },
-      {
-        title: {
-          'zh-cn': '测试',
-          'en-us': 'test',
-        },
-        dir: 'test',
+        dir: 'builder',
       },
       {
         title: {
@@ -56,13 +56,6 @@ const docCategories = {
           'en-us': 'publish assets',
         },
         dir: 'publish',
-      },
-      {
-        title: {
-          'zh-cn': '后端集成',
-          'en-us': 'backend',
-        },
-        dir: 'backend',
       },
       {
         title: {
