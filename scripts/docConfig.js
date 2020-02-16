@@ -45,17 +45,24 @@ const docCategories = {
       },
       {
         title: {
-          'zh-cn': '工程构建',
-          'en-us': 'Builder',
+          'zh-cn': '测试',
+          'en-us': 'test',
         },
-        dir: 'builder',
+        dir: 'test',
       },
       {
         title: {
-          'zh-cn': '发布资源',
+          'zh-cn': '发布与集成',
           'en-us': 'publish assets',
         },
         dir: 'publish',
+      },
+      {
+        title: {
+          'zh-cn': '工程构建',
+          'en-us': 'builder',
+        },
+        dir: 'builder',
       },
       {
         title: {
