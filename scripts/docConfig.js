@@ -23,7 +23,7 @@ const docCategories = {
         'en-us': 'plugins',
       },
       dir: 'framework',
-    },],
+    }],
   },
   'guide-0.x': {
     title: {},
