@@ -1,6 +1,6 @@
 {
   "name": "create-ice",
-  "version": "0.9.2",
+  "version": "1.0.3",
   "description": "npm init ice",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -21,10 +21,10 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@iceworks/generate-project": "^1.0.0-1",
+    "@iceworks/generate-project": "^1.0.0",
     "chalk": "^3.0.0",
     "fs-extra": "^8.1.0",
-    "ice-npm-utils": "^1.4.0-0",
+    "ice-npm-utils": "^1.4.0",
     "inquirer": "^7.0.4"
   },
   "publishConfig": {
