@@ -15,9 +15,6 @@ const wrapperComponent = (PageComponent) => {
     }
     return <PageComponent />
   }
-
-  StoreWrapperedComponent.pageConfig = PageComponent.pageConfig
-  StoreWrapperedComponent.getInitialProps = PageComponent.getInitialProps
   return StoreWrapperedComponent
 }
 
