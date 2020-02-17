@@ -102,11 +102,11 @@ export default class Generator {
       const pageModelsDir = path.join(pageNameDir, 'models')
 
       // example: src/pages/*/model.ts
-      const pageModelFile = path.join(pageNameDir, `models.${this.projectType}`)
+      const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`)
 
       if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
         pageModels.push(pageName)
-        const renderData = this.getPageModels(pageName, pageModelsDir, path.join(pageNameDir, 'models'))
+        const renderData = this.getPageModels(pageName, pageModelsDir, path.join(pageNameDir, 'model'))
         this.renderFile(this.modelsTemplatePath, targetPath, renderData)
 
         const exportName = 'store'

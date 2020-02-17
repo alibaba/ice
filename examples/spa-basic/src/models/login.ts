@@ -1,15 +1,9 @@
 export default {
   state: {
-    count: 0
+    login: {}
   },
 
-  reducers: {
-    add: () => {}
-  },
-
-  effects: {
-    async refresh: () => {
-
-    }
+  actions: {
+    login: async () => {}
   }
 };

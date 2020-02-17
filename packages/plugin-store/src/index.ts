@@ -27,7 +27,7 @@ export default async (api) => {
 
   gen.render()
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /models\/.*|models.*/, () => {
+    applyMethod('watchFileChange', /models\/.*|model.*/, () => {
       gen.render()
     });
   });

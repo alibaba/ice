@@ -1,15 +1,9 @@
 export default {
   state: {
-    count: 0
+    userInfo: {}
   },
 
-  reducers: {
-    add: () => {}
-  },
-
-  effects: {
-    async refresh: () => {
-
-    }
+  actions: {
+    getUserInfo: async () => {}
   }
 };

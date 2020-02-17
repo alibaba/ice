@@ -1,9 +1,9 @@
 export default {
   state: {
-    items: []
+    todos: []
   },
 
   actions: {
-    getItems: async () => {}
+    getTodos: async () => {}
   }
 };
