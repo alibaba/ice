@@ -1,8 +1,12 @@
 import { createStore } from '@ice/store'
 <%- importStr %>
 
+<% if (isSingleModel) { %>
+const model = { default: <%- modelsStr %> }
+const store = createStore(model)
+<%} else { %>
 const models = { <%- modelsStr %> }
-
 const store = createStore(models)
+<% } %>
 
 export default store
