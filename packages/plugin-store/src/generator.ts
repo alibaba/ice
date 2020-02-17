@@ -54,12 +54,14 @@ export default class Generator {
       })
 
       return {
+        isSingleModel: false,
         importStr,
         modelsStr
       }
     }
 
     return {
+      isSingleModel: true,
       importStr: `import ${pageName} from '${pageModelFile}';`,
       modelsStr: pageName
     }
@@ -81,7 +83,7 @@ export default class Generator {
       modelsStr += `${model},`
     })
 
-    this.renderFile(this.modelsTemplatePath, targetPath, { importStr, modelsStr })
+    this.renderFile(this.modelsTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false })
     const exportName = 'store'
     this.applyMethod('removeUseAppExport', exportName)
     this.applyMethod('addUseAppExport', { source: './appModels', exportName })
@@ -102,11 +104,11 @@ export default class Generator {
       const pageModelsDir = path.join(pageNameDir, 'models')
 
       // example: src/pages/*/model.ts
-      const pageModelFile = path.join(pageNameDir, `models.${this.projectType}`)
+      const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`)
 
       if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
         pageModels.push(pageName)
-        const renderData = this.getPageModels(pageName, pageModelsDir, path.join(pageNameDir, 'models'))
+        const renderData = this.getPageModels(pageName, pageModelsDir, path.join(pageNameDir, 'model'))
         this.renderFile(this.modelsTemplatePath, targetPath, renderData)
 
         const exportName = 'store'
