@@ -51,4 +51,36 @@ const View = () => {
 }
 ```
 
+### Config
+
+Set global `initialstates` to `src/app.ts`:
+
+```ts
+import { createApp } from 'ice'
+
+const appConfig = {
+  // Set global initialstates
+  store: {
+    initialStates: {}
+  }
+}
+```
+
+Set page `initialstates` to `src/pages/*/index.tsx`:
+
+```ts
+const HomePage = () => {
+  return (
+    <>
+      <h2>HomePage</h2>
+    </>
+  )
+}
+
+HomePage.pageConfig = {
+  // Set page initialstates
+  initialstates: {}
+}
+```
+
 [More](https://github.com/ice-lab/icestore)
