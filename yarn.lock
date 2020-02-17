@@ -1406,10 +1406,13 @@
     path-to-regexp "^1.7.0"
     url-parse "^1.1.9"
 
-"@ice/store@1.0.0-beta.0":
-  version "1.0.0-beta.0"
-  resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.0.0-beta.0.tgz#c29130a94536c9a57a9377f15837a52010298aa3"
-  integrity sha1-wpEwqUU2yaV6k3fxWDelIBApiqM=
+"@ice/store@1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.0.0-beta.2.tgz#ad199d264fc7015a1ecaf4382bb7f7f4c4c1dee0"
+  integrity sha1-rRmdJk/HAVoeyvQ4K7f39MTB3uA=
+  dependencies:
+    is-promise "^2.1.0"
+    lodash.transform "^4.6.0"
 
 "@iceworks/generate-project@^1.0.0":
   version "1.0.0"
@@ -8534,6 +8537,11 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
+
+lodash.transform@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npm.taobao.org/lodash.transform/download/lodash.transform-4.6.0.tgz#12306422f63324aed8483d3f38332b5f670547a0"
+  integrity sha1-EjBkIvYzJK7YSD0/ODMrX2cFR6A=
 
 lodash.unescape@4.0.1:
   version "4.0.1"

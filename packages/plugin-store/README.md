@@ -13,7 +13,7 @@ src
 └── pages
     ├── About
     │   ├── index.tsx
-    │   └── models.ts     // single models
+    │   └── model.ts     // single model
     ├── Dashboard
     │   ├── analysis.tsx
     │   ├── index.tsx
@@ -32,11 +32,7 @@ export default {
     user: {}
   },
 
-  reducers: {
-    setUserInfo: () => {}
-  },
-
-  effects: {
+  actions: {
     getUserInfo: async () => {}
   }
 };
