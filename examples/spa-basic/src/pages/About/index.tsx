@@ -2,9 +2,11 @@ import React from 'react'
 import { Link, useApp, useAboutPage } from 'ice'
 
 const Child = () => {
-  const app = useApp()
-  const page = useAboutPage()
-  console.log('render about child', { app, page });
+  const { store: appStore } = useApp()
+  const { store: pageStore } = useAboutPage()
+  const [userState, useActions] = appStore.useModel('user')
+  const [pageState, pageActions] = pageStore.useModel('default')
+  console.log('render about child', { userState, useActions, pageState, pageActions });
   return (
     <div>
       Child
