@@ -1406,10 +1406,10 @@
     path-to-regexp "^1.7.0"
     url-parse "^1.1.9"
 
-"@ice/store@1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.0.0-beta.2.tgz#ad199d264fc7015a1ecaf4382bb7f7f4c4c1dee0"
-  integrity sha1-rRmdJk/HAVoeyvQ4K7f39MTB3uA=
+"@ice/store@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.0.0.tgz#25a7a413efd7b48a2a22c0d723e2e160c527d9a2"
+  integrity sha1-JaekE+/XtIoqIsDXI+LhYMUn2aI=
   dependencies:
     is-promise "^2.1.0"
     lodash.transform "^4.6.0"
