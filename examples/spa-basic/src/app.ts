@@ -29,6 +29,17 @@ const appConfig = {
       'appId': 'default-id',
       'sercet': 'hahjhjhj'
     }
+  },
+  store: {
+    initialStates: {
+      user: {
+        name: 'taoxiaobao',
+        age: 21
+      },
+      login: {
+        isLogin: true
+      }
+    }
   }
 };
 

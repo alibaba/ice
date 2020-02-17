@@ -13,7 +13,7 @@ src
 └── pages
     ├── About
     │   ├── index.tsx
-    │   └── models.ts     // single models
+    │   └── model.ts     // single model
     ├── Dashboard
     │   ├── analysis.tsx
     │   ├── index.tsx
@@ -32,11 +32,7 @@ export default {
     user: {}
   },
 
-  reducers: {
-    setUserInfo: () => {}
-  },
-
-  effects: {
+  actions: {
     getUserInfo: async () => {}
   }
 };
@@ -52,6 +48,38 @@ const View = () => {
   const { store } = useApp()
   const [state, actions] =  store.useModel('user')
   // do something...
+}
+```
+
+### Config
+
+Set global `initialstates` to `src/app.ts`:
+
+```ts
+import { createApp } from 'ice'
+
+const appConfig = {
+  // Set global initialstates
+  store: {
+    initialStates: {}
+  }
+}
+```
+
+Set page `initialstates` to `src/pages/*/index.tsx`:
+
+```ts
+const HomePage = () => {
+  return (
+    <>
+      <h2>HomePage</h2>
+    </>
+  )
+}
+
+HomePage.pageConfig = {
+  // Set page initialstates
+  initialstates: {}
 }
 ```
 
