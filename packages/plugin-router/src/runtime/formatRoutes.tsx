@@ -38,7 +38,5 @@ export function wrapperPage(PageComponent) {
     return <PageComponent {...props} />;
   }
 
-  RouterWrapperedPage.pageConfig = pageConfig;
-  RouterWrapperedPage.getInitialProps = PageComponent.getInitialProps;
   return RouterWrapperedPage;
 }
