@@ -1,5 +1,5 @@
 {
-  "name": "ice",
+  "name": "icejs",
   "private": true,
   "workspaces": [
     "packages/*"
