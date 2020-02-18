@@ -2,28 +2,12 @@
 
 > Define application config in icejs
 
-## Install
+## Usage
 
-```bash
-$ npm i --save build-plugin-ice-config
-```
-
-Add plugin to `build.json`:
-
-```json
-{
-  "plugins": [
-    "build-plugin-ice-config"
-  ]
-}
-```
-
-Set runtime options to `src/app.ts`:
+Set runtime options to `src/config.[t|j]s`:
 
 ```ts
-import { createApp } from 'ice';
-
-const appConfig = {
+const config = {
   config: {
     // only working in development environment
     dev: {
@@ -33,14 +17,14 @@ const appConfig = {
     prod: {
 
     },
-    // common configuration working in production environment and development environment
-    common: {
+    // default configuration working in production environment and development environment
+    default: {
       appId: 'secret'
     }
   }
 };
 
-createApp(appConfig);
+export default config;
 ```
 
 Set `mode` options to `package.json`:
@@ -55,20 +39,9 @@ Set `mode` options to `package.json`:
 ## Usage
 
 ```ts
-import { useApp } from 'ice'
-
-const View = () => {
-  const { config } = useApp()
-  // console.log(config)
-}
-```
-
-or
-
-```ts
 import { config } from 'ice'
 
-// console.log(config)
+console.log(config)
 ```
 
 ## License
