@@ -3,7 +3,7 @@ import * as fse from 'fs-extra'
 import * as chokidar from 'chokidar';
 import * as globby from 'globby'
 import Generator from './generator'
-import UsePageGenerator from './generator/usePageGenerator'
+import PageGenerator from './generator/pageGenerator'
 import getPages from './utils/getPages'
 
 const ICE_ALIAS = ['ice']
@@ -87,25 +87,25 @@ export default (api) => {
     }
   })
 
-  const usePageGenerator = new UsePageGenerator({
+  const pageGenerator = new PageGenerator({
     rootDir,
     generator,
-    templatePath: path.join(__dirname, './generator/templates/usePage/usePage.ts.ejs'),
+    templatePath: path.join(__dirname, './generator/templates/page/index.ts.ejs'),
     targetPath: iceTempPath,
   });
 
   async function renderIce() {
-    usePageGenerator.render();
+    pageGenerator.render();
     await generator.render();
   }
 
   // register utils method
   registerMethod('getPages', getPages);
 
-  // registerMethod for modify usePage
-  registerMethod('addUsePageExport', usePageGenerator.addUsePageExport);
-  registerMethod('removeUsePageExport', usePageGenerator.removeUsePageExport);
-  // usePageGenerator.addUsePageExport('Index', { exportName: 'store', source: './store' });
+  // registerMethod for modify page
+  registerMethod('addPageExport', pageGenerator.addPageExport);
+  registerMethod('removePageExport', pageGenerator.removePageExport);
+  // pageGenerator.addPageExport('Index', { exportName: 'store', source: './store' });
 
   // registerMethod for add export
   const regsiterKeys = ['addUseAppExport', 'addIceExport'];

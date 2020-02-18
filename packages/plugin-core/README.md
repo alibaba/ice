@@ -59,9 +59,9 @@ export default async function ({
   applyMethod('addUseAppExport');
   applyMethod('removeUseAppExport');
 
-  // modify .ice/pages/*/usePage.ts
-  applyMethod('addUsePageExport');
-  applyMethod('removeUsePageExport');
+  // modify .ice/pages/*/index.ts
+  applyMethod('addPageExport');
+  applyMethod('removePageExport');
 
   // get src/pages/*
   const pages = applyMethod('getPages', rootDir);
