@@ -31,6 +31,9 @@
       ],
       "ice": [
         ".ice/index.ts"
+      ],
+      "ice/*": [
+        ".ice/pages/*"
       ]
     }
   }

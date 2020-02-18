@@ -6,8 +6,6 @@ import Generator from './generator'
 import PageGenerator from './generator/pageGenerator'
 import getPages from './utils/getPages'
 
-const ICE_ALIAS = ['ice']
-
 export default (api) => {
   const { onHook, onGetWebpackConfig, registerMethod, context, getAllPlugin, setValue, modifyUserConfig } = api
   const { rootDir, command } = context;
@@ -31,10 +29,10 @@ export default (api) => {
   // modify entry to src/app
   modifyUserConfig('entry', 'src/app');
 
+
   onGetWebpackConfig((config: any) => {
-    ICE_ALIAS.forEach(i => {
-      config.resolve.alias.set(i, path.join(iceTempPath));
-    });
+    config.resolve.alias.set('ice$', path.join(iceTempPath, 'index.ts'));
+    config.resolve.alias.set('ice', path.join(iceTempPath, 'pages'));
 
     // default alias of @/
     config.resolve.alias.set('@', path.join(rootDir, 'src'));
