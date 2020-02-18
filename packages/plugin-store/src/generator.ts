@@ -85,8 +85,8 @@ export default class Generator {
 
     this.renderFile(this.modelsTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false })
     const exportName = 'store'
-    this.applyMethod('removeUseAppExport', exportName)
-    this.applyMethod('addUseAppExport', { source: './appModels', exportName })
+    this.applyMethod('removeIceExport', exportName)
+    this.applyMethod('addIceExport', { source: './appModels', exportName })
   }
 
   private renderPageModels() {
@@ -112,8 +112,8 @@ export default class Generator {
         this.renderFile(this.modelsTemplatePath, targetPath, renderData)
 
         const exportName = 'store'
-        this.applyMethod('removeUsePageExport', pageName, exportName)
-        this.applyMethod('addUsePageExport', pageName, { source: './models', exportName })
+        this.applyMethod('removePageExport', pageName, exportName)
+        this.applyMethod('addPageExport', pageName, { source: './models', exportName })
       }
     })
 
