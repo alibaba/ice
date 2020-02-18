@@ -15,20 +15,23 @@
 - 🐒 **工程**：开箱即用的工程配置，支持 ES6+、TypeScript、样式方案（Less/Sass/CSS Modules）等
 - 🦊 **路由**：默认使用配置式路由，同时支持约定式路由
 - 🐯 **数据流**：内置集成 icestore，基于 React Hooks 的轻量级状态管理方案
+- 🐦 **环境配置**：内置集成 config， 支持多环境变量的配置
 - 🐶 **日志**：内置集成 logger，类似 `console.log` 的统一日志方案
 - 🐱 **工具函数**：内置集成 helper，提供常用的工具函数
-- 🦁 **应用配置**：内置集成 config，支持多环境配置
-- 🐴 **Hooks**：提供应用级别 useApp 和页面级别 usePage 等 Hooks API
+- 🦁 **应用配置**：提供强大的和可扩展的应用程序配置
+- 🐴 **Hooks**：提供 useModel、useHistory 等 Hooks API
 - 🐌 **插件体系**：提供插件机制，可以扩展框架的核心功能
 - 🐘 **typescript**：默认使用 typescript 
 - 🐂**Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
 
 ## 快速开始
 
+### 使用模板创建项目
+
 创建项目
 
 ```bash
-$ npm init ice <YourProjectName>
+$ npm init ice <project-name>
 ```
 
 `npm init <initializer>` 需要 npm 6+ 版本
@@ -36,10 +39,68 @@ $ npm init ice <YourProjectName>
 启动项目
 
 ```bash
-$ cd <YourProjectName>
+$ cd <project-name>
 $ npm install
-$ npm run start
+$ npm run start # running on http://localhost:3333.
 ```
+
+### 从头开始新建项目
+
+如果不使用 icejs 提供的模板，也可以从头开始新建一个 icejs 应用项目，过程非常简单，如下所示：
+
+安装依赖 `icejs`, `react` 和 `react-dom`:
+
+```bash
+$ mkdir <project-name> && cd <project-name>
+$ npm install ice.js react react-dom
+```
+
+打开 `package.json` 并在复制以下内容：
+
+```json
+{
+  "name": "project-name",
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "dependencies": {
+    "ice.js": "^1.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
+```
+
+新建一个 `pages` 目录, 然后创建你的第一个页面 `pages/index.jsx` 文件，内容如下：
+
+```jsx
+import React from 'react'
+
+const HomePage = () => {
+  return <div>Welcome to icejs!</div>
+}
+
+export default HomePage
+```
+
+配置你的应用信息如路由，以及其他更多的配置项在 `src/app.js` 文件，但它是可选的，内容如下：
+
+```js
+import { createApp } from 'ice'
+
+const appConfig = {
+  router: {
+    type: 'browser',
+  },
+
+  // more...
+}
+
+createApp(appConfig)
+```
+
+最后，运行 `npm run start` 启动项目，启动完成后会自动打开浏览器访问 [http://localhost:3333](http://localhost:3333) .
 
 ## 贡献代码
 
