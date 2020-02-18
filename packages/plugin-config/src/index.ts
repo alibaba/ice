@@ -11,10 +11,10 @@ const plugin: IPlugin = async (api): Promise<void> => {
   async function generateConfig() {
     const exportName = 'config'
     const filePath = path.join(rootDir,configFile)
-    const distPath =  path.join(getValue('ICE_TEMP'), 'config')
+    const distPath =  path.join(getValue('ICE_TEMP'), 'config.ts')
     if (fse.existsSync(filePath)) {
-      const srcPath = path.join(__dirname, '..', 'config')
-      
+      const srcPath = path.join(__dirname, '..', 'config', 'index.ts')
+
       await fse.copy(srcPath, distPath)
       // add to ice exports
       applyMethod('addIceExport', { source: `./config`, exportName })
