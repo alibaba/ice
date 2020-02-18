@@ -1,4 +1,6 @@
-import { createApp, APP_MODE } from 'ice'
+import { createApp, APP_MODE, config } from 'ice'
+
+console.log('app config', config);
 
 const appConfig = {
   app: {
@@ -15,19 +17,6 @@ const appConfig = {
           return config
         }
       }
-    }
-  },
-  config: {
-    dev: {
-      appId: 'dev-id',
-      API_URL: 'http://localhost:3333'
-    },
-    build: {
-      API_URL: 'http://github.com/api'
-    },
-    default: {
-      'appId': 'default-id',
-      'sercet': 'hahjhjhj'
     }
   },
   store: {
