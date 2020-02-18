@@ -17,8 +17,6 @@ export default class UsePageGenerator {
 
   private pageExports: {[key: string]: IExportData[]};
 
-  private iceExports: string[];
-
   private rerender: boolean;
 
   constructor({ generator, rootDir, templatePath, targetPath }: {
@@ -32,7 +30,6 @@ export default class UsePageGenerator {
     this.templatePath = templatePath;
     this.targetPath = targetPath;
     this.rootDir = rootDir;
-    this.iceExports = [];
     this.rerender = false;
   }
 
@@ -41,16 +38,16 @@ export default class UsePageGenerator {
     const { importStr, exportStr } = generateExports(exportList);
 
     return {
-      usePageImports: importStr,
-      usePageExports: exportStr,
+      pageImports: importStr,
+      pageExports: exportStr,
     }
   }
 
-  public addUsePageExport = (pageName: string, exportData: IExportData|IExportData[]) => {
+  public addPageExport = (pageName: string, exportData: IExportData|IExportData[]) => {
     if (!this.pageExports[pageName]) {
       this.pageExports[pageName] = [];
     }
-    checkExportData(this.pageExports[pageName], exportData, 'addUsePageExport');
+    checkExportData(this.pageExports[pageName], exportData, 'addPageExport');
     this.pageExports[pageName] = [
       ...this.pageExports[pageName],
       ...(Array.isArray(exportData) ? exportData : [exportData]),
@@ -60,7 +57,7 @@ export default class UsePageGenerator {
     }
   }
 
-  public removeUsePageExport = (pageName: string, removeExportName: string|string[]) => {
+  public removePageExport = (pageName: string, removeExportName: string|string[]) => {
     this.pageExports[pageName] = removeExportData(this.pageExports[pageName] || [], removeExportName);
     if (this.rerender) {
       this.render();
@@ -69,20 +66,10 @@ export default class UsePageGenerator {
 
   public render() {
     this.rerender = true;
-    // clear remove iceExports before rerender
-    if (this.iceExports.length) {
-      this.iceExports.forEach((removeExportName) => {
-        this.generator.removeExport('addIceExport', removeExportName);
-      });
-      this.iceExports = [];
-    }
     const pages = getPages(this.rootDir);
     pages.forEach((name) => {
-      const source = `./pages/${name}/usePage`;
-      const usePageName = `use${name}Page`;
-      this.generator.addExport('addIceExport', { exportName: usePageName, source });
-      this.iceExports.push(usePageName);
-      const renderData = { ...this.getPageExport(name), usePageName };
+      const source = `./pages/${name}/index`;
+      const renderData = { ...this.getPageExport(name) };
       this.generator.renderFile(this.templatePath, path.join(this.targetPath, `${source}.ts`), renderData);
     });
   }
