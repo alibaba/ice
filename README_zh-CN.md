@@ -25,10 +25,12 @@
 
 ## 快速开始
 
+### 使用模板创建项目
+
 创建项目
 
 ```bash
-$ npm init ice <YourProjectName>
+$ npm init ice <project-name>
 ```
 
 `npm init <initializer>` 需要 npm 6+ 版本
@@ -36,10 +38,68 @@ $ npm init ice <YourProjectName>
 启动项目
 
 ```bash
-$ cd <YourProjectName>
+$ cd <project-name>
 $ npm install
-$ npm run start
+$ npm run start # running on http://localhost:3333.
 ```
+
+### 从头开始新建项目
+
+如果不使用 icejs 提供的模板，也可以从头开始新建一个 icejs 应用项目，过程非常简单，如下所示：
+
+安装依赖 `icejs`, `react` 和 `react-dom`:
+
+```bash
+$ mkdir <project-name> && cd <project-name>
+$ npm install ice.js react react-dom
+```
+
+打开 `package.json` 并在复制以下内容：
+
+```json
+{
+  "name": "project-name",
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "dependencies": {
+    "ice.js": "^1.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
+```
+
+新建一个 `pages` 目录, 然后创建你的第一个页面 `pages/index.jsx` 文件，内容如下：
+
+```jsx
+import React from 'react'
+
+const HomePage = () => {
+  return <div>Welcome to icejs!</div>
+}
+
+export default HomePage
+```
+
+配置你的应用信息如路由，以及其他更多的配置项在 `src/app.js` 文件，但它是可选的，内容如下：
+
+```js
+import { createApp } from 'ice'
+
+const appConfig = {
+  router: {
+    type: 'browser',
+  },
+
+  // more...
+}
+
+createApp(appConfig)
+```
+
+最后，运行 `npm run start` 启动项目，启动完成后会自动打开浏览器访问 [http://localhost:3333](http://localhost:3333) .
 
 ## 贡献代码
 
