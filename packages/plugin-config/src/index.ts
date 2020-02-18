@@ -4,25 +4,40 @@ import { IPlugin } from '@alib/build-scripts'
 
 const plugin: IPlugin = async (api): Promise<void> => {
   const { context, getValue, applyMethod, onGetWebpackConfig, registerCliOption } = api
+  const { commandArgs, command, rootDir } = context
 
-  const srcPath = path.join(__dirname, '..', 'config')
-  const distPath =  path.join(getValue('ICE_TEMP'), 'config')
-  await fse.copy(srcPath, distPath)
+  const configFile = `src/config.${getValue('PROJECT_TYPE')}`
 
-  const exportName = 'config'
+  async function generateConfig() {
+    const exportName = 'config'
+    const filePath = path.join(rootDir,configFile)
+    const distPath =  path.join(getValue('ICE_TEMP'), 'config')
+    if (fse.existsSync(filePath)) {
+      const srcPath = path.join(__dirname, '..', 'config')
+      
+      await fse.copy(srcPath, distPath)
+      // add to ice exports
+      applyMethod('addIceExport', { source: `./config`, exportName })
+    } else {
+      // remove config file
+      applyMethod('removeIceExport', exportName)
+      fse.removeSync(distPath)
+    }
+  }
 
-  // add to useApp exports
-  applyMethod('addUseAppExport', { source: `./config`, exportName })
-
-  // add to ice exports
-  // applyMethod('addIceExport', { source: `./config`, exportName })
+  generateConfig()
+  if (command === 'start') {
+    // watch folder config file is remove or added
+    applyMethod('watchFileChange', configFile, async (event: string) => {
+      if (event === 'unlink' || event === 'add') {
+        await generateConfig()
+      }
+    })
+  }
 
   registerCliOption({ name: 'mode', commands: ['start', 'build'] })
 
   onGetWebpackConfig((config) => {
-    // add alias for module.ts use $ice/config
-    config.resolve.alias.set('$ice/config', distPath);
-    const { commandArgs, command } = context
     const appMode = commandArgs.mode || command;
 
     const defineVariables = { 'process.env.APP_MODE': JSON.stringify(appMode) }
