@@ -15,10 +15,11 @@ English | [简体中文](./README_zh-CN.md)
 - 🐒 **Engineering**：Out of the box support for ES6+、 TypeScripts、Less、Sass、 CSS Modules，etc
 - 🦊 **Routing**：Powerful Routing System, supports configured routing and conventions routing
 - 🐯 **State management**：Built-in icestore, lightweight state management solution based on React Hooks
+- 🐦 **Config**：Modes and Environment Variables configuration in the config file
 - 🐶 **Logger**：Built-in logger solution, it's a flexible abstraction over using `console.log` as well
 - 🐱 **Helpers**：Built-in helpers, provide some useful utility functions
-- 🦁 **Application configuration**：Provide powerful and extensible application configuration function，support multiple Environment Configuration
-- 🐴 **Hooks**：Provide Hooks APIs such as useApp and usePage, etc
+- 🦁 **Application configuration**：Provide powerful and extensible application configuration
+- 🐴 **Hooks**：Provide Hooks APIs such as useModel and useHistory, etc
 - 🐌 **Plugin system**：The plugin system provides rich features and allow the community to build reusable solutions
 - 🐘 **TypeScript**：Support typescript
 - 🐂 **Modern**：Support SPA、SSR、MPA and Micro-frontend
@@ -27,10 +28,12 @@ Learn more at <https://ice.work/docs/guide/about>.
 
 ## Quick start
 
-Create a new ice project using create-ice:
+### Setup
+
+We recommend creating a new icejs app using create-ice, which sets up everything automatically for you. To create a project, run:
 
 ```bash
-$ npm init ice <YourProjectName>
+$ npm init ice <project-name>
 ```
 
 `npm init <initializer>` is available in npm 6+
@@ -38,12 +41,68 @@ $ npm init ice <YourProjectName>
 Start local server to launch project:
 
 ```bash
-$ cd <YourProjectName>
+$ cd <project-name>
 $ npm install
-$ npm run start
+$ npm run start # running on http://localhost:3333.
 ```
 
 It's as simple as that!
+
+### Manual Setup
+
+icejs is really easy to get started with. Install `icejs`, `react` and `react-dom` in your project:
+
+```bash
+$ mkdir <project-name> && cd <project-name>
+$ npm install ice.js react react-dom
+```
+
+Open `package.json` and add the following scripts:
+
+```json
+{
+  "name": "project-name",
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "dependencies": {
+    "ice.js": "^1.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
+```
+
+Create the `pages` directory, then create the first page in `pages/index.jsx`:
+
+```jsx
+import React from 'react'
+
+const HomePage = () => {
+  return <div>Welcome to icejs!</div>
+}
+
+export default HomePage
+```
+
+Configure an application information in the `src/app.js` file, but it is optional:
+
+```js
+import { createApp } from 'ice'
+
+const appConfig = {
+  router: {
+    type: 'browser',
+  },
+
+  // more...
+}
+
+createApp(appConfig)
+```
+
+Finally, To start developing your application run `npm run start`. The application is now running on [http://localhost:3333](http://localhost:3333).
 
 ## Contributing
 
