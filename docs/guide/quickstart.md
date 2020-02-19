@@ -5,7 +5,7 @@ order: 3
 
 icejs 支持通过命令行和 GUI 工具两种方式快速创建项目。
 
-## 命令行 
+## 命令行
 
 **初始化项目**
 
@@ -21,7 +21,7 @@ $ yarn create ice <projectName>
 
 可以根据实际情况选择 TypeScript 和 JavaScript 模板，其中各包含一个轻量的 Lite 和功能完善的 Pro 模板：
 
-```
+```bash
 ? Please select a template (Use arrow keys)
 ❯ A lightweight TypeScript template.
   A lightweight JavaScript template.
@@ -41,7 +41,7 @@ Starts the development server.
     npm install
     npm start
 
-✨  Done in 1339.46s
+✨  Done
 ```
 
 **启动项目**
@@ -58,11 +58,9 @@ $ npm start
 
 执行上述命令后，会自动打开浏览器窗口访问 [http://localhost:3333](http://localhost:3333，)，这时应该看到默认的页面。
 
-## iceworks 工具
+## iceworks IDE
 
-除了 iceworks CLI 命令行，也可以使用 iceworks 工具可视化的创建项目。
-
-详见 [iceworks 快速开始](https://ice.work/docs/iceworks/quick-start)
+除了 CLI 命令行的方式，也可以使用 iceworks IDE 可视化的创建项目，详见 [iceworks 快速开始](https://ice.work/docs/iceworks/quick-start)。
 
 
 

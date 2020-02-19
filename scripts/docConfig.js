@@ -12,15 +12,15 @@ const docCategories = {
     }],
     children: [{
       title: {
-        'zh-cn': '基础指南',
-        'en-us': 'development',
+        'zh-cn': '基础教程',
+        'en-us': 'Basic Guide',
       },
       dir: 'basic',
     },
     {
       title: {
-        'zh-cn': '插件',
-        'en-us': 'plugins',
+        'zh-cn': '框架扩展',
+        'en-us': 'Framework',
       },
       dir: 'framework',
     }],
@@ -41,6 +41,7 @@ const docCategories = {
           'zh-cn': '开发',
           'en-us': 'development',
         },
+<<<<<<< HEAD
         dir: 'guide',
       },
       {
@@ -49,6 +50,9 @@ const docCategories = {
           'en-us': 'publish',
         },
         dir: 'publish',
+=======
+        dir: 'dev',
+>>>>>>> 14f8cc18f4a8dae9c734c12235a0c2c785606c4c
       },
       {
         title: {
@@ -59,17 +63,17 @@ const docCategories = {
       },
       {
         title: {
-          'zh-cn': '发布资源',
+          'zh-cn': '发布与集成',
           'en-us': 'publish assets',
         },
         dir: 'publish',
       },
       {
         title: {
-          'zh-cn': '后端集成',
-          'en-us': 'backend',
+          'zh-cn': '工程构建',
+          'en-us': 'builder',
         },
-        dir: 'backend',
+        dir: 'builder',
       },
       {
         title: {

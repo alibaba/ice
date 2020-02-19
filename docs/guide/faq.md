@@ -5,19 +5,7 @@ order: 4
 
 ## 与 Next.js 有什么区别?
 
-Next.js 定位与 React 服务端框架，而 icejs 则定位于 React 通用型框架，支持 SPA、SSR、MPA、Serverless、微前端等流行的应用类型。
-
-## 与 Nuxt.js 有什么区别?
-
-icejs 在框架设计上一定程度上借鉴了 Nuxt.js 的思想，它好比是 Nuxt.js 之于 Vue， icejs 之于 React。
-
-## 与 UmiJS 有什么区别?
-
-UmiJS 的核心是工程和路由约定式的能力，以及配合其周边生态的 dva、antd、antd-pro 的解决方案形成完整的体系。而 icejs 除了工程能力和约定式路由之外，更多的是向 nuxt.js 学习，提供了基于框架级别的全局 API、数据请求、状态管理、日志等核心功能，同时遵循 「约定优先配置」的原则，严格区分工程插件和应用插件去扩展定制框架的能力。
-
-## 与 build-script 有什么区别?
-
-build-scripts 是一个基于 Webpack 的工程工具，其核心是基于 webpack 的封装和插件内核能力。而 icejs 更多的解决的是编码开发时的能力，诸如框架层面的数据流方案、数据请求方案、路由方案等等。
+Next.js 以 SSR 出道，相对来讲比较轻量，而 icejs 则定位于 React 通用型框架，在框架设计上借鉴了 Nuxt.js 的一些思想，内聚了更多的能力以及最佳实践，同时也支持 SPA、SSR、MPA、微前端等流行的应用类型。
 
 ## 与脚手架有什么区别？
 
