@@ -4,7 +4,9 @@ const appConfig = {
   app: {
     rootId: 'ice-container'
   },
-  loglevel: 'warn',
+  logger: {
+    level: 'warn'
+  },
   icestark: {
     type: 'child',
   },

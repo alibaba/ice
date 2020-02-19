@@ -4,15 +4,17 @@ import { ConfigProvider } from '@alifd/next';
 
 const appConfig = {
   app: {
-    rootId: 'ice-container'
+    rootId: 'ice-container',
+    addProvider: ({ children }) => (
+      <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>
+    ),
   },
-  loglevel: 'warn',
+  logger: {
+    level: 'warn'
+  },
   router: {
     type: 'browser',
   },
-  addProvider: ({ children }) => (
-    <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>
-  ),
   icestark: {
     type: 'framework',
     getApps: async () => {
