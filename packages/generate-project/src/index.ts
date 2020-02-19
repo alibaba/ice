@@ -61,7 +61,7 @@ function formatFilename(filename) {
     '_stylelintrc',
     '_stylelintignore',
     '_editorconfig',
-    '_prettierrc',
+    '_prettierrc.js',
     '_prettierignore',
   ];
   if (dotFilenames.indexOf(filename) !== -1) {
