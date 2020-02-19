@@ -1,10 +1,7 @@
 import React from 'react'
-import { Link, useApp } from 'ice'
+import { Link } from 'ice'
 
 const Dashboard = () => {
-  const app = useApp()
-  console.log('render dashboard', { app })
-
   return (
     <>
       <h2>Dashboard Page...</h2>

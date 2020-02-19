@@ -19,7 +19,7 @@ interface IRenderFile {
   (templatePath: string, targetDir: string, extraData?: IRenderData): void;
 }
 
-const API_MAP = ['addEntryImports', 'addEntryCode', 'addUseAppExport', 'addIceExport'];
+const API_MAP = ['addEntryImports', 'addEntryCode', 'addIceExport'];
 
 export default class Generator {
   public templateDir: string;
@@ -43,7 +43,6 @@ export default class Generator {
     this.rerender = false;
   }
 
-  // addUseAppExport
   public addExport = (registerKey ,exportData: IExportData|IExportData[]) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
@@ -53,7 +52,6 @@ export default class Generator {
     }
   }
 
-  // removeUseAppExport
   public removeExport = (registerKey: string, removeExportName: string|string[]) => {
     const exportList = this.contentRegistration[registerKey] || [];
     this.contentRegistration[registerKey] = removeExportData(exportList, removeExportName);
@@ -93,7 +91,6 @@ export default class Generator {
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.projectRoot});
     this.renderData = {
       ...this.renderData,
-      ...this.getExportStr('addUseAppExport', ['useAppImports', 'useAppExports']),
       ...this.getExportStr('addIceExport', ['iceImports', 'iceExports']),
       globalStyle: globalStyles.length && globalStyles[0],
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),

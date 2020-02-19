@@ -42,10 +42,9 @@ export default {
 ### With Component
 
 ```ts
-import { useApp } from 'ice'
+import { store } from 'ice/Home'
 
 const View = () => {
-  const { store } = useApp()
   const [state, actions] =  store.useModel('user')
   // do something...
 }
