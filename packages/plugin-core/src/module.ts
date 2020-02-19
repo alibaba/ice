@@ -1,7 +1,6 @@
 const module = ({ addProvider, appConfig }) => {
-  const { addProvider: Provider } = appConfig || {};
-  if (Provider) {
-    addProvider(Provider);
+  if (appConfig.app && appConfig.app.addProvider) {
+    addProvider(appConfig.app.addProvider)
   }
 }
 

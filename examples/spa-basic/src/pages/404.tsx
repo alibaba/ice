@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link, useApp } from 'ice'
+import { Link } from 'ice'
 
 const Home = (props) => {
-  const app = useApp()
-  console.log('render 404', props, app);
+  console.log('render 404', props);
 
   return (
     <>

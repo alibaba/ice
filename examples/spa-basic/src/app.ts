@@ -7,6 +7,9 @@ const appConfig = {
     rootId: 'ice-container'
   },
   loglevel: APP_MODE === 'build' ? 'error' : 'debug',
+  logger: {
+    level: APP_MODE === 'build' ? 'error' : 'debug',
+  },
   request: {
     timeout: 5000,
     // baseURL: '/abc',
