@@ -1,9 +1,8 @@
 import logger from '$ice/logger';
 
 const module = ({ appConfig }) => {
-  const { loglevel } = appConfig;
-  if (loglevel) {
-    logger.setLevel(loglevel);
+  if (appConfig.logger && appConfig.logger.level) {
+    logger.setLevel(appConfig.logger.level)
   }
 }
 
