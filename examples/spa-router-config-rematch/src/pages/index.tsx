@@ -1,15 +1,10 @@
 import React from 'react'
-import { Link, useApp, useIndexPage, helpers } from 'ice'
+import { Link, helpers } from 'ice'
 
 console.log('helpers from ice', helpers);
 
 const Home = (props) => {
-  const app = useApp()
-  const page = useIndexPage()
-
   console.log('Home props', props);
-  console.log('render home', { app, page });
-
   return (
     <>
       <h2>Home Page...{props.a}</h2>

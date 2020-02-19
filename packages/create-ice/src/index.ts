@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 import * as path from 'path';
 import { log } from 'ice-npm-utils';
+import * as fs from 'fs-extra'
 import create from './create';
+
+const pkgContent = fs.readJSONSync(path.join(__dirname, '..', 'package.json'))
+console.log('create-ice version:', pkgContent.version);
 
 (async function() {
   const args = process.argv;

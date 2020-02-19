@@ -1,10 +1,7 @@
 import React from 'react'
-import { Link, useApp, useAboutPage } from 'ice'
+import { Link } from 'ice'
 
 const Child = () => {
-  const app = useApp()
-  const page = useAboutPage()
-  console.log('render about child', { app, page });
   return (
     <div>
       Child
@@ -13,10 +10,6 @@ const Child = () => {
 }
 
 const About = () => {
-  const app = useApp()
-  const page = useAboutPage()
-  console.log('render about', { app, page })
-
   return (
     <>
       <h2>About Page</h2>

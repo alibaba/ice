@@ -55,10 +55,6 @@ export default async function ({
   applyMethod('addIceExport');
   applyMethod('removeIceExport');
 
-  // modify .ice/useApp.ts
-  applyMethod('addUseAppExport');
-  applyMethod('removeUseAppExport');
-
   // modify .ice/pages/*/index.ts
   applyMethod('addPageExport');
   applyMethod('removePageExport');

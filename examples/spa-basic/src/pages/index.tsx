@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useApp, helpers, logger, config } from 'ice'
+import { Link, helpers, logger, config } from 'ice'
 
 logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);
@@ -11,10 +11,8 @@ logger.debug('=== debug ===');
 logger.trace('=== trace ===');
 
 const Home = (props) => {
-  const app = useApp()
 
   logger.info('Home props', props);
-  logger.info('render home app', app)
   logger.info('render home config.appId', config.appId);
 
   // const { data, error, loading, request: fetchRepo } = useRequest({ url: '/api/repo' })
