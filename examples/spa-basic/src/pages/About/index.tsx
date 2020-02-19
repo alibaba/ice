@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useApp, store as appStore } from 'ice'
+import { Link, store as appStore } from 'ice'
 import { store as pageStore } from 'ice/About'
 
 const Child = () => {
@@ -14,9 +14,6 @@ const Child = () => {
 }
 
 const About = () => {
-  const app = useApp()
-  console.log('render about', { app })
-
   return (
     <>
       <h2>About Page</h2>
