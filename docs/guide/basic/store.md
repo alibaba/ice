@@ -13,9 +13,9 @@ order: 5
 src
 ├── models               // 全局状态：通常会有多个 model
 |   ├── foo.ts
-│   └── user.ts
+│   └── user.ts
 └── pages
-├── Home
+|   ├── Home
 |   │   ├── index.tsx
 |   │   └── model.ts     // 页面级状态：通常只有一个 model
 |   ├── Dashboard
