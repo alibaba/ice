@@ -5,7 +5,7 @@ order: 5
 
 大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了请求功能，基于社区主流的 axios 进行封装，提供了 request 和 useRequest Hooks 方法。
 
-## request 
+## request
 
 request 基于 axios 进行封装，在使用上与 axios 保持一致，使用方式如下：
 
@@ -25,7 +25,7 @@ async function getList() {
 
 useRequest 基于 React Hooks 进行封装，因此需要确保 React 版本在 v16.8.0 以上，在组件中使用 `useRequest` 请求数据并渲染：
 
-```ts
+```jsx
 import { useRequest } from 'ice';
 
 function ListView(props) {
@@ -65,9 +65,6 @@ const appConfig = {
   request: {
     // ref: https://github.com/axios/axios#request-config
     baseURL: '/api',
-
-    timeout: 1000,
-
     // ref: https://github.com/axios/axios#interceptors
     interceptors: {
       request: {

@@ -1,6 +1,6 @@
 ---
 title: 日志
-order: 8
+order: 11
 ---
 
 前端应用中常见的使用最多的毋庸置疑是 `console.log`，然而很多时候我们只希望在开发环境中打印日志，在生产环境中则不打印日志，或者设置日志的级别，避免生产环境的调试日志在生产环境中出现，这便是框架内置提供的日志功能的初衷。
@@ -20,20 +20,37 @@ order: 8
 ## 使用
 
 ```tsx
-import { logger } from 'ice'
+import { logger } from 'ice';
 
-logger
+logger.info('xxx');
 ```
 
 ## 配置
+
+在 `src/config.ts` 中根据不同环境配置 loglevel:
 
-设置 logger 的 level，如下在生产环境中日志级别 warn，而在非生产环境中则为 error。
-
-```ts
-import { APP_MODE } from 'ice'
-
-const appConfig = {
-  // set loglevel
-  loglevel: APP_MODE === 'production' ? 'warn' : 'error'
+```js
+export default {
+  default: {
+    logLevel: 'warn'
+  },
+  production: {
+    logLevel: 'error'
+  }
 }
+```
+
+在 `src/app.ts` 中将配置的 loglevel 传递给 logger：
+
+```js
+import { createApp, config } from 'ice';
+
+// 用于配置
+const appConfig = {
+  logger: {
+    level: config.loglevel
+  }
+};
+
+createApp(appConfig);
 ```

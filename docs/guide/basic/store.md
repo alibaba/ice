@@ -17,11 +17,11 @@ src
 └── pages
 ├── Home
 |   │   ├── index.tsx
-|   │   └── model.ts     // 页面状态：通常只有一个 model
+|   │   └── model.ts     // 页面级状态：通常只有一个 model
 |   ├── Dashboard
 |   │   ├── index.tsx
 │   |   └── model.ts
-└── app.ts               // 应用入口脚本
+└── app.ts
 ```
 
 ## 状态声明
@@ -29,16 +29,37 @@ src
 状态定义方式如下：
 
 ```ts
-// src/models/user.ts
-export default {
+// src/models/todos.ts
+const todos = {
   state: {
-    user: {}
+    dataSource: [],
   },
-
   actions: {
-    fetchUserInfo: async () => {}
-  }
+    async fetch(prevState, actions) {
+      await delay(1000);
+      const dataSource = [
+        { name: 'react' },
+        { name: 'vue', done: true},
+        { name: 'angular' },
+      ];
+      return {
+        ...prevState,
+        dataSource,
+      }
+    },
+    add(prevState, todo) {
+      return {
+        ...prevState,
+        dataSource: [
+          ...prevState.dataSource,
+          todo,
+        ]
+      };
+    },
+  },
 };
+
+export default todos;
 ```
 
 ## 视图绑定状态
@@ -47,18 +68,17 @@ export default {
 
 ```tsx
 // pages/Home/index.jsx
-import { useApp, useHomePage as usePage } from 'ice';
+import { store as appStore } from 'ice';
+import { store as pageStore } from 'ice/Home';
 
 const HomePage = () => {
   // 全局状态：model 名称即文件名称 user.ts -> user
-  const { store } = useApp();
-  const [ userState, userAction ] = store.useModel('user');
+  const [ userState, userAction ] = appStore.useModel('todos');
 
   // 页面状态：一个 model 的情况 model 名称约定为 default
-  const { store: pageStore } = usePage();
   const [ pageState, pageAction ] = pageStore.useModel('default');
 
-  // 页面状态：多个 model 的情况，model 名称与全局状态一致
+  // 页面状态：多个 model 的情况，model 名称即文件名
   const { store: pageStore } = usePage();
   const [ fooState, fooAction ] = pageStore.useModel('foo');
 

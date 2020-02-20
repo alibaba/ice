@@ -1,15 +1,15 @@
 ---
-title: 工程配置
-order: 10
+title: 工程能力
+order: 4
 ---
 
-框架的工程能力基于 webpack 进行封装，默认的配置涵盖了大部分使用场景，可通过 `build.json` 来覆盖默认的配置。
+icejs 基于 build-scripts，因此工程使用方式与 build-scripts 完全一致。
 
 ## 开发调试
 
-默认情况下，项目的 `package.json` 会配置以下命令：
+默认情况下，项目的 package.json 会配置以下命令：
 
-```ts
+```json
 {
   "scripts": {
     "start": "icejs start",
@@ -18,112 +18,61 @@ order: 10
 }
 ```
 
-在项目目录下 `npm start` 即可进行开发调试，正常情况下执行命令后自动打开浏览器 [http://localhost:3333 ](http://localhost:3333) 进行页面预览，修改源码后浏览器会自动刷新页面。执行 `npm run build` 进行项目构建，构建产物默认输出到 `./build` 目录下
+执行 `npm start` 即可进行项目开发，正常情况下执行命令后自动打开浏览器 `http://localhost:3333` 进行页面预览，修改源码后浏览器会自动刷新页面。执行 `npm run build` 进行项目构建，构建产物默认输出到 `./build` 目录下。
 
+## 命令行介绍
 
-## 工程任务
+icejs 提供了 start/build 两个核心命令供开发者使用。
 
-框架默认提供了 start、build、test 三个核心命令供开发者使用，且支持命令行参数。
+> 在使用 `npm run start` 命令时，如需传入参数请按照这个格式 `npm run start -- --https`
 
 ### start
 
 ```bash
-icejs start --help
+$ icejs start --help
 
-icejs start [options]
+Usage: icejs start [options]
 
-Options: 
-  -p, --port <port>      服务端口号
+Options:
+	-p, --port <port>      服务端口号
   -h, --host <host>      服务主机名
-  --https                支持开启 https
+  --https								 支持开启 https
   --analyzer             支持开启构建分析
-  --analyzer-port        
-  --disable-reload       
+  --analyzer-port
+  --disable-reload
   --disable-mock
-  --config <config>      自定义配置文件路径（仅支持 json）
 ```
 
 ### build
 
 ```bash
-icejs build --help
+$ icejs build --help
 
-icejs build [options]
+Usage: icejs build [options]
 
 Options:
-  --analyzer             同 start
+	--analyzer             同 start
   --analyzer-port        同 start
   --config <config>      同 start
 ```
 
-### test
+## 工程构建配置
 
-```bash
-icejs test --help
-
-icejs test [options]
-
-Options:
-  --config <config>      同 start
-```
-
-test 命令支持将所有 `--jest` 开头的参数透传给 jest，如下：
-
-```bash
-# Jest CLI 参数 --config=<path>
-icejs test --jest-config=<path>
-
-# Jest CLI 参数 --watchAll
-icejs test --jest-watchAll
-```
-
-## 工程配置
-
-
-工程构建相关配置统一配置在项目根目录的 `build.json` 文件中，主要包含如下配置：
+工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，`build.json` 中包含基础配置和插件配置两部分，当下支持的基础配置项如下：
 
 #### entry
 
-- 类型： `string`  | `object`  | `array`
-- 默认值：src/index.js
+- 类型： `string`  | `object`  | `array` 
+- 默认值：src/app.[t|j]s
 
-默认会以 `src/index.js` 文件作为项目入口文件，如果需要改变默认的入口文件，可以自行修改 `build.json` 即可：
-
-```json
-{
-	"entry": "src/app.js"
-}
-```
-
-如果你的项目是多页应用，希望有多个入口文件，那么可以这样配置：
-
-```javascript
-{
-  "entry": {
-    "dashboard": "src/pages/dashboard/index.js",
-    "about": "src/pages/about/index.js"
-  }
-}
-```
-
-多 entry 的情况构建时默认会额外生成 vendor.js/css，需要自行在 html 里引入（public 目录会自动引入），也可以通过设置 `vendor` 配置禁止生成 vendor 文件。
+icejs 中一般不允许修改该配置。
 
 #### alias
 
-- 类型： `object`
-- 默认值： `{}`
+- 类型： `object` 
+- 默认值： `` 
 
-创建 `import` 或 `require` 的别名，使模块应用变得更加简单。 配置 webpack 的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias) 属性，默认以相对项目根目录进行配置
-
-```json
-{
-	"alias": {
-  	"@": "./src/"
-  }
-}
-```
-
-替换「在导入时使用相对路径」这种方式 :
+在 icejs 默认配置了 `{ "@": "./src/" }` 的规则，因此项目大多数时候不需要配置，配置完成后则可以更加简单的导入模块了：
 
 ```javascript
 -import CustomTips from '../../../components/CustomTips';
@@ -132,10 +81,10 @@ icejs test --jest-watchAll
 
 #### publicPath
 
-- 类型： `string`
-- 默认值： `/`
+- 类型： `string` 
+- 默认值： `/` 
 
-配置 webpack 的 [output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath) 属性。 仅在运行 `build-scripts build` 时生效。
+配置 webpack 的 [output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath) 属性。 仅在运行 `build` 命令时生效。
 
 ```json
 {
@@ -145,10 +94,10 @@ icejs test --jest-watchAll
 
 #### devPublicPath
 
-- 类型： `string`
-- 默认值： `/`
+- 类型： `string` 
+- 默认值： `/` 
 
-同 `publicPath` 仅在执行 `build-scripts start` 时生效
+同 `publicPath` 仅在执行 `start` 时生效
 
 ```json
 {
@@ -156,10 +105,10 @@ icejs test --jest-watchAll
 }
 ```
 
-#### devServer
+#### sourcemap
 
-- 类型： `object`
-- 默认值： `{}`
+- 类型： `boolean` 
+- 默认值： `false` 
 
 #### externals
 
@@ -177,11 +126,10 @@ icejs test --jest-watchAll
 ```
 
 说明：key 表示依赖包名，如： `bizcharts`。 value 表示引用 CDN 后的全局变量名，如: `BizCharts`
-
 > 参考：[https://github.com/alibaba/BizCharts](https://github.com/alibaba/BizCharts)
 
 
-将 CDN 文件添加到
+将 CDN 文件添加到 `public/index.html` 中：
 
 ```html
 <!DOCTYPE html>
@@ -284,7 +232,6 @@ icejs test --jest-watchAll
 - 默认值：`{}`
 
 配置 webpack 的 [devServer.proxy](https://webpack.js.org/configuration/dev-server/#devserverproxy) 属性。
-
 > 建议使用 `proxy` 来设置代理而不要修改 webpack 的 `devServer.proxy`
 
 
@@ -301,10 +248,16 @@ icejs test --jest-watchAll
 
 > 代理的每一项配置都可以通过 enable 字段来快速开关代理配置
 
+#### devServer
+
+- 类型： `object` 
+- 默认值： `{}` 
+
+注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。
 
 #### targets
 
-- 类型： `string` | `object`
+- 类型： `string` | `object` 
 - 默认值：`last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4`
 
 配置 @babel/preset-env 的 [targets](https://babeljs.io/docs/en/babel-preset-env#targets)，配置浏览器最低版本，新配置的 `targets` 会覆盖默认值。
@@ -341,76 +294,10 @@ icejs test --jest-watchAll
 - 类型：`string`
 - 默认值：`''`
 
+
 #### libraryExport
 
 - 类型：`string`
 - 默认值：`''`
 
 上面这些选项即当下支持的所有基础配置，如果不能满足需求可以选择使用插件或者自定义配置能力，具体请参考「工程方案」相关章节。
-
-## 根据环境区分配置
-
-通过 build-plugin-env-config 插件可以根据不同环境配置不同的参数。
-
-### 区分 start/build
-
-直接通过 build-scripts 内置的 `NODE_ENV` 环境变量即可区分：
-
-```json
-{
-  "entry": "src/index.jsx",
-  // ...
-  "plugins": [
-    "build-plugin-ice-app",
-    ["build-plugin-env-config", {
-      "envKey": "NODE_ENV",
-      // 对应 start
-      "development": {
-
-      },
-      // 对应 build
-      "production": {
-        "entry": "src/index.tsx",
-      }
-    }]
-  ]
-}
-```
-
-### 区分多个 build 环境
-
-在 package.json 中指定多个 build scripts 并通过环境变量区分：
-
-```json
-{
-  "scripts": {
-    "build:local": "BUILD_ENV=local build-scripts build",
-    "build:test": "BUILD_ENV=test build-scripts build",
-    "build:daily": "BUILD_ENV=daily build-scripts build",
-  }
-}
-```
-
-在 build.json 根据指定的环境变量区分配置：
-
-```json
-{
-  "entry": "src/index.jsx",
-  // ...
-  "plugins": [
-    "build-plugin-rax-app",
-    ["build-plugin-env-config", {
-      "envKey": "BUILD_ENV",
-      "local": {
-
-      },
-      "test": {
-        "entry": "src/index.tsx",
-      },
-      "test": {
-        "daily": "src/index.tsx",
-      }
-    }]
-  ]
-}
-```
