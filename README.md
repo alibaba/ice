@@ -8,7 +8,7 @@ English | [简体中文](./README_zh-CN.md)
   <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 </p>
 
-> A universal framework based on react.js
+> A universal framework based on React.js
 
 ## Features
 
