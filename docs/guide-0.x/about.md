@@ -18,6 +18,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks.svg) | [docs](https://ice.work/docs/iceworks/about) |面向企业级中后台领域的 IDE|
+| [ice-scripts](https://github.com/ice-lab/ice-scripts) | ![](https://img.shields.io/npm/v/ice-scripts.svg) | [docs](https://ice.work/docs/guide/dev/build) |基于 webpack 的高可配置开发构建工具|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
 | [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice.work/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
 | [react-materials](https://github.com/ice-lab/react-materials) | / | [docs](https://ice.work/scaffold) |由官方提供的丰富的高质量 React 物料|
@@ -42,14 +43,6 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 Fusion 组件和 Antd 组件本身是解决类似问题的，飞冰始于淘宝内部的业务场景，在最开始的阶段 Fusion 对这些业务做了非常多的支持，因此飞冰默认使用的是 Fusion 组件，在此基础上，Fusion 组件的可定制性（主题配置）高于 Antd，这在面向多样性的业务场景时显得非常重要。
 
 当然在飞冰的体系里你依然可以选择使用 Antd 的组件，甚至你可以发起建设基于 Antd 的物料。
-
-#### icejs 与 Next.js 有什么区别?
-
-Next.js 以 SSR 出道，相对来讲比较轻量，而 icejs 则定位于 React 通用型框架，在框架设计上借鉴了 Nuxt.js 的一些思想，内聚了更多的能力以及最佳实践，同时也支持 SPA、SSR、MPA、微前端等流行的应用类型。
-
-#### icejs 与脚手架有什么区别？
-
-诸如社区前几年有太多的 React 脚手架，这些脚手架多是一些方案的组合，基于脚手架创建项目后，90% 的开发者会基于脚手架定制符合业务的脚手架，与原有脚手架失去了粘性或者说几乎不会再用。究其原因如下：1）脚手架的组合的方案不是开发者需要的，可以随时被替换掉。2）当脚手架被初始化项目之后，两者是分离的无法升级。 3）脚手架的能力是有限的无法持续扩展出新的能力。
 
 ## 谁在使用
 

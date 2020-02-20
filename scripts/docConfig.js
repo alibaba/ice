@@ -2,13 +2,53 @@
 const docCategories = {
   guide: {
     title: {},
+    currentVersion: '1.x',
+    versions: [{
+      value: '1.x',
+      path: '/docs/guide/about',
+    }, {
+      value: '0.x',
+      path: '/docs/guide-0.x/about',
+    }],
+    children: [{
+      title: {
+        'zh-cn': '基础指南',
+        'en-us': 'Basic Guide',
+      },
+      dir: 'basic',
+    },
+    {
+      title: {
+        'zh-cn': '进阶指南',
+        'en-us': 'Advanced guide',
+      },
+      dir: 'advance',
+    }],
+  },
+  'guide-0.x': {
+    title: {},
+    currentVersion: '0.x',
+    versions: [{
+      value: '1.x',
+      path: '/docs/guide/about',
+    }, {
+      value: '0.x',
+      path: '/docs/guide-0.x/about',
+    }],
     children: [
       {
         title: {
           'zh-cn': '开发',
           'en-us': 'development',
         },
-        dir: 'dev',
+        dir: 'guide',
+      },
+      {
+        title: {
+          'zh-cn': '发布',
+          'en-us': 'publish',
+        },
+        dir: 'publish',
       },
       {
         title: {
@@ -48,44 +88,9 @@ const docCategories = {
     ],
   },
 
-  // iceworks 4.x
+  // iceworks
   iceworks: {
     title: {},
-    currentVersion: '4.x',
-    versions: [{
-      value: '3.x',
-      path: '/docs/iceworks-3.x/about',
-    }, {
-      value: '4.x',
-      path: '/docs/iceworks/about',
-    }],
-    children: [
-      {
-        title: {
-          'zh-cn': '指南',
-          'en-us': 'Guide',
-        },
-        dir: 'guide',
-      },
-      {
-        title: {
-          'zh-cn': '进阶',
-          'en-us': 'Advanced',
-        },
-        dir: 'advanced',
-      },
-    ],
-  },
-  'iceworks-3.x': {
-    title: {},
-    currentVersion: '3.x',
-    versions: [{
-      value: '3.x',
-      path: '/docs/iceworks-3.x/about',
-    }, {
-      value: '4.x',
-      path: '/docs/iceworks/about',
-    }],
     children: [
       {
         title: {
