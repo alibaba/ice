@@ -1,5 +1,5 @@
 ---
-title: 页面组件
+title: 页面配置
 order: 8
 ---
 

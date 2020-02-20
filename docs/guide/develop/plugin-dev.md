@@ -1,6 +1,7 @@
 ---
 title: 插件开发
 order: 1
+hidden: true
 ---
 
 模块化的插件机制是框架的核心能力之一，它不但可以保证框架核心的足够精简和稳定，还可以通过插件对运行时和编译时的能力进行封装复用，以及生态的形成。
@@ -33,7 +34,7 @@ order: 1
 module.exports = (pluginAPI, options) => {
   // 第一项参数为插件 pluginAPI 提供的能力
   // 第一项参数 options 为插件自定义参数
-  const { 
+  const {
     context,
     log,
     onHook,
@@ -50,12 +51,12 @@ module.exports = (pluginAPI, options) => {
 
 ```ts
 const module = (moduleApi) => {
-  const { 
+  const {
     appConfig,
     addProvider,
     modifyRoutes,
     wrapperRouteComponent
-    ...rest 
+    ...rest
   } = pluginAPI;
 }
 
@@ -145,7 +146,7 @@ module.exports = ({getValue}) => {
 // 场景一：所有 webpack 任务
 module.exports = ({onGetConfig, registerTask}) => {
   registerTask('default', webpackConfig);
-  
+
   onGetWebpackConfig((config) => {
     config.entry('xxx');
   });
@@ -154,11 +155,11 @@ module.exports = ({onGetConfig, registerTask}) => {
 module.exports = ({onGetConfig, registerTask}) => {
   registerTask('web', webpackConfigWeb);
   registerTask('weex', webpackConfigWeex);
-  
+
   onGetWebpackConfig('web'，(config) => {
     config.entry('xxx');
   });
-  
+
   onGetWebpackConfig('weex'，(config) => {
     config.entry('xxx');
   });

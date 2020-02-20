@@ -1,6 +1,6 @@
 ---
 title: 数据请求
-order: 5
+order: 4
 ---
 
 大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了请求功能，基于社区主流的 axios 进行封装，提供了 request 和 useRequest Hooks 方法。

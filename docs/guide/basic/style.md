@@ -1,6 +1,6 @@
 ---
 title: 样式方案
-order: 7
+order: 9
 ---
 
 icejs 在工程能力上基本支持了所有社区主流样式方案，包括 Sass、Less、CSS Modules、Stylus 等方案，而作为框架配套的模板我们推荐使用 [CSS Modules](https://github.com/css-modules/css-modules) 方案。
