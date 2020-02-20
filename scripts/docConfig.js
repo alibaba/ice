@@ -41,7 +41,6 @@ const docCategories = {
           'zh-cn': '开发',
           'en-us': 'development',
         },
-<<<<<<< HEAD
         dir: 'guide',
       },
       {
@@ -50,9 +49,6 @@ const docCategories = {
           'en-us': 'publish',
         },
         dir: 'publish',
-=======
-        dir: 'dev',
->>>>>>> 14f8cc18f4a8dae9c734c12235a0c2c785606c4c
       },
       {
         title: {
