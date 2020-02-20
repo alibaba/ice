@@ -12,17 +12,17 @@ const docCategories = {
     }],
     children: [{
       title: {
-        'zh-cn': '基础教程',
+        'zh-cn': '基础指南',
         'en-us': 'Basic Guide',
       },
       dir: 'basic',
     },
     {
       title: {
-        'zh-cn': '框架扩展',
-        'en-us': 'Framework',
+        'zh-cn': '进阶指南',
+        'en-us': 'Advanced guide',
       },
-      dir: 'framework',
+      dir: 'advance',
     }],
   },
   'guide-0.x': {
