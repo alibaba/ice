@@ -144,7 +144,7 @@ $ npm start
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
 
-[icejs-docs]: https://ice.work/docs/icejs/about
+[icejs-docs]: https://ice.work/docs/guide/intro
 [iceworks-docs]: https://ice.work/docs/iceworks/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
