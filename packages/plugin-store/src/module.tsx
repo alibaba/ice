@@ -13,7 +13,7 @@ const wrapperComponent = (PageComponent) => {
     if (PageStore) {
       return (
         <PageStore.Provider initialStates={initialStates}>
-          <PageComponent {...(props)}/>
+          <PageComponent {...props}/>
         </PageStore.Provider>
       )
     }
