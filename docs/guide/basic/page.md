@@ -3,9 +3,23 @@ title: 页面组件
 order: 8
 ---
 
-React 核心特点之一就是通过组件化构成复杂的 UI 界面，如下图所示页面均是由不同的组件组合而成，这很好的解决了页面之间的复用和对一个大型应用进行划分。
+框架为页面级组件提供了一些特殊的配置项，让页面级组件可以快速拥有一些能力，只需要在页面组件上声明 `pageConfig` 属性即可：
 
-在实际开发过程中，除了组件之外构成视图的还有页面配置等内容，框架为页面提供了一些特殊的配置项，进一步对这些进行了约定和规范。
+```jsx
+// src/pages/Home/index.tsx
+import React from 'react',
+
+const Home = () => {
+  return <div>Home</div>;
+};
+
+Home.pageConfig = {
+  title: '',
+  scrollTop: ''
+};
+
+export default Home;
+```
 
 ## 页面标题
 
@@ -43,19 +57,3 @@ HomePage.pageConfig = {
 }
 ```
 
-## 页面初始数据
-
-`getInitialProps`: 用于设置页面的初始数据。
-
-```tsx
-const HomePage = () => {
-  return (
-    // jsx code...
-  )
-}
-
-HomePage.getInitialProps = async () => {
-  const data = await { a: 1 }
-  return data
-}
-```

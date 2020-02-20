@@ -1,5 +1,5 @@
 ---
-title: 日志
+title: 日志打印
 order: 11
 ---
 

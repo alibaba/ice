@@ -60,14 +60,14 @@ Options:
 
 工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，`build.json` 中包含基础配置和插件配置两部分，当下支持的基础配置项如下：
 
-#### entry
+### entry
 
 - 类型： `string`  | `object`  | `array` 
 - 默认值：src/app.[t|j]s
 
 icejs 中一般不允许修改该配置。
 
-#### alias
+### alias
 
 - 类型： `object` 
 - 默认值： `` 
@@ -79,7 +79,7 @@ icejs 中一般不允许修改该配置。
 +import CustomTips from '@/components/CustomTips';
 ```
 
-#### publicPath
+### publicPath
 
 - 类型： `string` 
 - 默认值： `/` 
@@ -92,7 +92,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### devPublicPath
+### devPublicPath
 
 - 类型： `string` 
 - 默认值： `/` 
@@ -105,12 +105,12 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### sourcemap
+### sourcemap
 
 - 类型： `boolean` 
 - 默认值： `false` 
 
-#### externals
+### externals
 
 - 类型：`object`
 - 默认值：`{}`
@@ -150,7 +150,7 @@ icejs 中一般不允许修改该配置。
 </html>
 ```
 
-#### hash
+### hash
 
 - 类型：`boolean` | `string`
 - 默认值：`false`
@@ -171,7 +171,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### injectBabel
+### injectBabel
 
 - 类型：`string`
 - 默认值：`polyfill`
@@ -184,7 +184,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### minify
+### minify
 
 - 类型：`boolean`
 - 默认值：`true`
@@ -197,7 +197,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### outputAssetsPath
+### outputAssetsPath
 
 - 类型：`object`
 - 默认值：`{ js: 'js', css: 'css' }`
@@ -213,7 +213,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### outputDir
+### outputDir
 
 - 类型：`string`
 - 默认值：`build`
@@ -226,7 +226,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### proxy
+### proxy
 
 - 类型：`object`
 - 默认值：`{}`
@@ -248,14 +248,14 @@ icejs 中一般不允许修改该配置。
 
 > 代理的每一项配置都可以通过 enable 字段来快速开关代理配置
 
-#### devServer
+### devServer
 
 - 类型： `object` 
 - 默认值： `{}` 
 
 注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。
 
-#### targets
+### targets
 
 - 类型： `string` | `object` 
 - 默认值：`last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4`
@@ -271,7 +271,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### vendor
+### vendor
 
 - 类型：`boolean`
 - 默认值：`true`
@@ -284,18 +284,18 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-#### libraryTarget
+### libraryTarget
 
 - 类型：`string`
 - 默认值：`''`
 
-#### library
+### library
 
 - 类型：`string`
 - 默认值：`''`
 
 
-#### libraryExport
+### libraryExport
 
 - 类型：`string`
 - 默认值：`''`

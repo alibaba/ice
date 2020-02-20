@@ -1,6 +1,6 @@
 ---
-title: Helpers
-order: 9
+title: 帮助函数
+order: 10
 ---
 
 icejs 内置了一些帮助函数，开发者可以直接使用
