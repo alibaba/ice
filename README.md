@@ -24,8 +24,6 @@ English | [简体中文](./README_zh-CN.md)
 - 🐘 **TypeScript**：Support typescript
 - 🐂 **Modern**：Support SPA、SSR、MPA and Micro-frontend
 
-Learn more at <https://ice.work/docs/guide/about>.
-
 ## Quick start
 
 ### Setup
@@ -146,7 +144,7 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
 
-[icejs-docs]: https://ice.work/docs/icejs/about
+[icejs-docs]: https://ice.work/docs/guide/intro
 [iceworks-docs]: https://ice.work/docs/iceworks/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
