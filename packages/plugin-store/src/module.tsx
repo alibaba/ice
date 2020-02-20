@@ -7,17 +7,17 @@ const wrapperComponent = (PageComponent) => {
   if (PageComponent.pageConfig && PageComponent.pageConfig.initialStates) {
     initialStates = PageComponent.pageConfig.initialStates
   }
-  const StoreWrapperedComponent = () => {
+  const StoreWrapperedComponent = (props) => {
     const pageComponentName = PageComponent.name
     const PageStore = PageStores[pageComponentName]
     if (PageStore) {
       return (
         <PageStore.Provider initialStates={initialStates}>
-          <PageComponent />
+          <PageComponent {...(props)}/>
         </PageStore.Provider>
       )
     }
-    return <PageComponent />
+    return <PageComponent {...props} />
   }
   return StoreWrapperedComponent
 }
