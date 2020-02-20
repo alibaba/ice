@@ -41,21 +41,7 @@ const docCategories = {
           'zh-cn': '开发',
           'en-us': 'development',
         },
-        dir: 'guide',
-      },
-      {
-        title: {
-          'zh-cn': '发布',
-          'en-us': 'publish',
-        },
-        dir: 'publish',
-      },
-      {
-        title: {
-          'zh-cn': '测试',
-          'en-us': 'test',
-        },
-        dir: 'test',
+        dir: 'dev',
       },
       {
         title: {
