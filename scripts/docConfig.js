@@ -23,14 +23,14 @@ const docCategories = {
         'en-us': 'Advanced guide',
       },
       dir: 'advance',
-    }],
+    },
     {
       title: {
         'zh-cn': '资源',
         'en-us': 'resource',
       },
       dir: 'resource',
-    },
+    }],
   },
   'guide-0.x': {
     title: {},
