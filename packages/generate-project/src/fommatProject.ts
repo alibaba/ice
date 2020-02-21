@@ -18,15 +18,17 @@ export default async function formatProject(projectDir: string): Promise<void> {
   log.info('', 'clean package.json...');
 
   // modify package.json
+  pkgData.private = true;
+  pkgData.originTemplate = pkgData.name;
   delete pkgData.files;
   delete pkgData.publishConfig;
   delete pkgData.scaffoldConfig;
   delete pkgData.homepage;
-  pkgData.originTemplate = pkgData.name;
   if (pkgData.scripts) {
     delete pkgData.scripts.screenshot;
     delete pkgData.scripts.prepublishOnly;
   }
+  delete pkgData.devDependencies['@ice/screenshot'];
 
   const buildJsonPath = path.join(projectDir, 'build.json');
   if (fse.existsSync(buildJsonPath)) {
