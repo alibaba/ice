@@ -28,6 +28,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
     delete pkgData.scripts.screenshot;
     delete pkgData.scripts.prepublishOnly;
   }
+  delete pkgData.devDependencies['@ice/screenshot'];
 
   const buildJsonPath = path.join(projectDir, 'build.json');
   if (fse.existsSync(buildJsonPath)) {
