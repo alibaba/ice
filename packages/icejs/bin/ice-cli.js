@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const program = require('commander');
-const checkNodeVersion = require('@alib/build-scripts/dist/utils/checkNodeVersion');
+const checkNodeVersion = require('@alib/build-scripts/lib/utils/checkNodeVersion');
 const packageInfo = require('../package.json');
 const build = require('./build');
 const start = require('./start');
