@@ -3,7 +3,7 @@ const detect = require('detect-port');
 const inquirer = require('inquirer');
 const parse = require('yargs-parser');
 const { start } = require('@alib/build-scripts');
-const log = require('@alib/build-scripts/dist/utils/log');
+const log = require('@alib/build-scripts/lib/utils/log');
 const builtInPlugins = require('../lib/index');
 
 const rawArgv = parse(process.argv.slice(2), {
