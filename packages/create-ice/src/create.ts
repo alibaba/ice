@@ -1,7 +1,9 @@
 import * as inquirer from 'inquirer';
 import * as fs from 'fs-extra';
-import chalk from 'chalk';
 import { downloadAndGenerateProject, checkEmpty } from '@iceworks/generate-project';
+
+// eslint-disable-next-line
+const chalk = require('chalk');
 
 interface ITemplate {
   npmName: string;
