@@ -27,7 +27,5 @@ export default async function(targetPath, templatePath, storesDir) {
     storesString,
   });
 
-  console.log('store.ts content', content);
-
   fse.writeFileSync(targetPath, content, 'utf-8');
 }

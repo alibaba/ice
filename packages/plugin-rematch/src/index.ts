@@ -20,21 +20,23 @@ export default async function ({
 
   handleStoresDirChange(targetPath, templatePath, storesDir, applyMethod);
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /stores\/.*/, (event, filepath) => {
-      console.log('wacthFileChange', filepath);
-      handleStoresDirChange(targetPath, templatePath, storesDir, applyMethod);
+    applyMethod('watchFileChange', /stores\/.*/, (event, filePath) => {
+      if (event === 'unlink' || event === 'add') {
+        console.log(`[stores ${event}]`, filePath);
+        handleStoresDirChange(targetPath, templatePath, storesDir, applyMethod);
+      }
     });
   });
 }
 
 async function handleStoresDirChange(targetPath, templatePath, storesDir, applyMethod) {
-  console.log('handleStoresDirChange', targetPath, templatePath)
-
   // 生成 .ice/store.ts
   await generateStore(targetPath, templatePath, storesDir);
 
   // .ice/index.ts: export connect for view
   // import { connect } from 'react-redux';
   // export { connect }
+  // remove connect before add in case of dir change
+  applyMethod('removeIceExport', 'connect');
   applyMethod('addIceExport', { source: 'react-redux', specifier: '{ connect }', exportName: 'connect' });
 }
