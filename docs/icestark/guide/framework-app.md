@@ -5,20 +5,26 @@ order: 3
 
 框架应用负责整个系统的 Layout 设计以及所有子应用的管理注册，框架应用必须基于 React。
 
-## 通过模板初始化
-
-初始化一个 icestark 的框架应用：
+我们推荐直接基于模板创建框架应用：
 
 ```bash
-$ mkdir icestark-framework-app && cd icestark-framework-app
-$ iceworks init @icedesign/stark-layout-scaffold
+$ npm init ice icestark-framework @icedesign/stark-layout-scaffold
 ```
 
-## 注册子应用信息
+此模板使用了 icejs，对 icestark 的接入做了大量优化，因此直接参考[icejs 接入微前端](/docs/guide/advance/icestark.md)文档即可。
 
-通过 `@ice/stark` 提供的 `AppRouter/AppRoute` 来管理注册子应用，这跟 react-router 的 API 设计非常相像。
+## 改造已有 React 应用
+
+安装依赖：
+
+```bash
+$ npm i --save @ice/stark
+```
+
+通过 `AppRouter/AppRoute` 来管理注册子应用：
 
 ```jsx
+// src/App.jsx
 import React from 'react';
 import { AppRouter, AppRoute } from '@ice/stark';
 import NotFound from '@/components/NotFound';
@@ -36,12 +42,6 @@ export default class App extends React.Component {
       pathname,
     });
   }
-  handleAppLeave = (appConfig) => {
-    console.log('handleAppLeavel', appConfig);
-  }
-  handleAppEnter = (appConfig) => {
-    console.log('handleAppEnter', appConfig);
-  }
 
   render() {
     const { pathname } = this.state;
@@ -52,24 +52,9 @@ export default class App extends React.Component {
           NotFoundComponent={NotFound}
           LoadingComponent={PageLoading}
           onRouteChange={this.handleRouteChange}
-          onAppLeave={this.handleAppLeave}
-          onAppEnter={this.handleAppEnter}
         >
           <AppRoute
-            path={['/', '/message', '/about']}
-            basename="/"
-            exact
-            title="通用页面"
-            url={[
-              '//unpkg.com/icestark-child-common/build/js/index.js',
-              '//unpkg.com/icestark-child-common/build/css/index.css',
-              // 'http://localhost:5555/js/index.js',
-              // 'http://localhost:5555/css/index.css',
-            ]}
-          />
-          <AppRoute
             path="/seller"
-            basename="/seller"
             title="商家平台"
             url={[
               '//unpkg.com/icestark-child-seller/build/js/index.js',
@@ -83,7 +68,7 @@ export default class App extends React.Component {
 }
 ```
 
-### 通过 entry/entryContent 注册子应用
+## 子应用配置字段
 
 #### entry
 
@@ -95,45 +80,15 @@ export default class App extends React.Component {
 - 将处理后的 html 内容塞入 icestark 动态创建的节点
 - 依次通过创建 `script` 标签按顺序引入 js 资源
 
-```jsx
-// src/App.jsx
-import React from 'react';
-import { AppRouter, AppRoute } from '@ice/stark';
-import NotFound from '@/components/NotFound';
-import PageLoading from '@/components/PageLoading';
-import BasicLayout from '@/layouts/BasicLayout';
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <BasicLayout>
-        <AppRouter
-          NotFoundComponent={NotFound}
-          LoadingComponent={PageLoading}
-        >
-          <AppRoute
-            path={['/', '/home', '/about']}
-            basename="/"
-            exact
-            title="通用页面"
-            entry="//unpkg.com/icestark-child-common/build/index.html"
-          />
-        </AppRouter>
-      </BasicLayout>
-    );
-  }
-}
-```
-
 #### entryContent
 
 当需要使用 entry 入口，同时 html url 不支持跨域访问的情况，建议通过封装的 `AppRoute` 组件，自定义请求获取 html 内容，配置 `entryContent`, 参考示例可见**子应用容器定制/应用级别权限校验**。
 
 `entryContent` 对 html 解析同 `entry` 一致，仅去掉 `fetch` 过程。
 
-### 子应用注册通过数据驱动
+## 子应用注册通过数据驱动
 
-在某些场景下，我们的子应用可能通过一些配置平台注册，这时候可以将所有子应用的信息通过全局变量存放在 html 中，然后前端通过该数据注册子应用：
+在很多场景下，我们的子应用可能通过一些配置平台注册，这时候可以将所有子应用的信息通过全局变量存放在 html 中，然后前端通过该数据注册子应用：
 
 ```jsx
 // src/App.jsx
@@ -142,32 +97,21 @@ import { AppRouter, AppRoute } from '@ice/stark';
 
 export default class App extends React.Component {
   render() {
-    const { pathname } = this.state;
-
     return (
-      <div>
-        <AppRouter
-          NotFoundComponent={NotFound}
-          LoadingComponent={PageLoading}
-          onRouteChange={this.handleRouteChange}
-          onAppLeave={this.handleAppLeave}
-          onAppEnter={this.handleAppEnter}
-        >
-          {
-            (window.appConfig || []).map((item) => {
-              return (
-                <AppRoute
-                  key={idx}
-                  path={item.path}
-                  basename={item.basename}
-                  title={item.title}
-                  url={item.url}
-                />
-              );
-            })
-          }
-        </AppRouter>
-      </div>
+      <AppRouter>
+        {
+          (window.appConfig || []).map((item) => {
+            return (
+              <AppRoute
+                key={idx}
+                path={item.path}
+                title={item.title}
+                url={item.url}
+              />
+            );
+          })
+        }
+      </AppRouter>
     );
   }
 }
