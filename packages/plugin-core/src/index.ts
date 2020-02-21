@@ -56,7 +56,7 @@ export default (api) => {
       const excludes = runtimeModules.map(modulePath => {
         // add default node_modules
         if (modulePath.includes('node_modules')) {
-          return process.platform === 'win32' ? modulePath.replace(/\\/g, '\\\\') : modulePath;
+          return process.platform === 'win32' ? modulePath.split(path.sep).join('/') : modulePath;
         }
         return false;
 
