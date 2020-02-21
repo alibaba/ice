@@ -105,7 +105,7 @@ import urlParse from 'url-parse';
 const urlData = urlParse('https://example.com/foo/bar', true);
 ```
 
-同时，我们整理了一些 [常用的社区包](/docs/guide-0.x/resource/npms.md)，方便开发者查找。
+同时，我们整理了一些 [常用的社区包](/docs/guide/resource/npms.md)，方便开发者查找。
 
 ### npm 版本管理
 

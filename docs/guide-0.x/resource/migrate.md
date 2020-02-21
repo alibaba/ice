@@ -43,8 +43,8 @@ order: 4
 ### 1.x 升级到 3.x
 
 1. 按照 3.x 目录规范将数据源配置、路由配置、导航菜单配置移入 `src/config/` 目录下，并修正引用这些文件的路径
-2. 按照路由设计文档中的[路由配置](/docs/guide/dev/router#路由配置)部分，升级 `src/config/routes.js` 中的路由配置
-3. 按照路由设计文档中[路由生成](/docs/guide/dev/router#具体使用)部分，升级路由渲染逻辑文件 `src/router.jsx`
+2. 按照路由设计文档中的[路由配置](/docs/guide-0.x/dev/router#路由配置)部分，升级 `src/config/routes.js` 中的路由配置
+3. 按照路由设计文档中[路由生成](/docs/guide-0.x/dev/router#具体使用)部分，升级路由渲染逻辑文件 `src/router.jsx`
 4. 将 `src/index.jsx` 中路由调用改成如下方式：
 
 ```javascript
