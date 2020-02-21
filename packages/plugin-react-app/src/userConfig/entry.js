@@ -14,7 +14,8 @@ const resolveEntryPath = (entry, rootDir) => {
 // entry: string | array
 // entry : { [name]: string | array }
 module.exports = (config, value, context) => {
-  const { rootDir } = context;
+  const { rootDir, command, userConfig } = context;
+  const ignoreHtmlTemplate = command === 'build' && userConfig.ignoreHtmlTemplate
   let entry;
   if (Array.isArray(value) || typeof value === 'string') {
     entry = {
@@ -27,10 +28,12 @@ module.exports = (config, value, context) => {
   const entryNames = Object.keys(entry);
   const isMultiEntry = entryNames.length > 1;
   let pluginConfig = {};
-  if (isMultiEntry && config.plugins.get('HtmlWebpackPlugin')) {
+  if (config.plugins.get('HtmlWebpackPlugin')) {
     pluginConfig = { ...config.plugin('HtmlWebpackPlugin').get('args')[0] };
-    // remove default HtmlWebpackPlugin
-    config.plugins.delete('HtmlWebpackPlugin');
+    if (isMultiEntry || ignoreHtmlTemplate) {
+      // remove default HtmlWebpackPlugin
+      config.plugins.delete('HtmlWebpackPlugin');
+    }
   }
   const ignoreFiles = ['index.html'];
   // generate multiple html file
@@ -39,7 +42,7 @@ module.exports = (config, value, context) => {
     const entryValue = resolveEntryPath(entry[entryName], rootDir);
     entry[entryName] = typeof entryValue === 'string' ? [entryValue] : entryValue;
 
-    if (isMultiEntry) {
+    if (isMultiEntry && !ignoreHtmlTemplate) {
       const pluginKey = `HtmlWebpackPlugin_${entryName}`;
       const filename = `${entryName}.html`;
       const htmlPluginOption = {
