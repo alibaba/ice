@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const parse = require('yargs-parser');
 const { build } = require('@alib/build-scripts');
-const log = require('@alib/build-scripts/dist/utils/log');
+const log = require('@alib/build-scripts/lib/utils/log');
 const builtInPlugins = require('../lib/index');
 
 module.exports = async () => {
