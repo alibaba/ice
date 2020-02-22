@@ -23,7 +23,7 @@ export default (api) => {
   // get runtime module
   const runtimeModules = plugins.map(({ pluginPath }) => {
     const modulePath = path.join(path.dirname(pluginPath), 'module.js');
-    return fse.existsSync(modulePath) ? modulePath : false;
+    return fse.existsSync(modulePath) ? modulePath.split(path.sep).join('/') : false;
   }).filter(Boolean);
 
   // modify entry to src/app
@@ -56,7 +56,7 @@ export default (api) => {
       const excludes = runtimeModules.map(modulePath => {
         // add default node_modules
         if (modulePath.includes('node_modules')) {
-          return process.platform === 'win32' ? modulePath.replace(/\\/g, '\\\\') : modulePath;
+          return process.platform === 'win32' ? modulePath.split(path.sep).join('/') : modulePath;
         }
         return false;
 
