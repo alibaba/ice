@@ -5,8 +5,12 @@
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
   "license": "MIT",
+  "files": [
+    "bin",
+    "lib"
+  ],
   "bin": {
-    "icejs": "/bin/ice-cli.js"
+    "icejs": "./bin/ice-cli.js"
   },
   "main": "lib/index.js",
   "publishConfig": {
