@@ -23,7 +23,7 @@ export default (api) => {
   // get runtime module
   const runtimeModules = plugins.map(({ pluginPath }) => {
     const modulePath = path.join(path.dirname(pluginPath), 'module.js');
-    return fse.existsSync(modulePath) ? modulePath : false;
+    return fse.existsSync(modulePath) ? modulePath.split(path.sep).join('/') : false;
   }).filter(Boolean);
 
   // modify entry to src/app
