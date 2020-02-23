@@ -3,66 +3,34 @@ title: 接入微前端
 order: 5
 ---
 
-icejs 的项目可以快速接入微前端 icestark，让一个普通应用快速变成一个微前端框架应用。除了本文档你也可以直接基于我们封装好的脚手架进行项目的创建：
+基于 icejs 的插件机制，我们封装了 build-plugin-icestark 插件，这个插件可以大大降低接入微前端方案的成本。
+
+## 框架应用
+
+通过物料模板快速创建一个微前端的子应用：
 
 ```bash
-# 创建框架应用
-$ npm init ice icestark-layout @icedesign/stark-layout-scaffold
-
-# 创建子应用
-$ npm init ice icestark-child @icedesign/stark-child-scaffold
+$ npm init ice icestark-framework @icedesign/stark-layout-scaffold
+$ cd icestark-framework
+$ npm instal
+$ npm start
 ```
 
-## 引入插件
-
-安装依赖：
-
-```bash
-$ npm i --save-dev build-plugin-icestark
-```
-
-在 `build.json` 中引入插件：
+该模板默认在 `build.json` 里引入了插件 `build-plugin-icestark`：
 
 ```json
 {
-  "plugins": [
+  "plugins": {
     "build-plugin-icestark"
-  ]
+  }
 }
 ```
 
-## 成为子应用
-
-一个 icejs 的 SPA 应用可以快速变成 icestark 的子应用，在应用入口 `src/app.ts` 中配置 icestark 的运行时依赖：
-
-```diff
-import { createApp } from 'ice'
-
-const appConfig = {
-  app: {
-    rootId: 'ice-container',
-  },
-  router: {
-+    type: 'browser',
-  },
-  icestark: {
-+    type: 'child',
-  },
-};
-
-createApp(appConfig)
-```
-
-## 成为框架应用
-
-> 框架应用建议通过模板来创建，不建议自己手动改，因为模板里针对框架需求做了很多定制
-
-如果想将应用改为框架应用，则需要在应用入口 `src/app.ts` 中配置 icestark 的运行时依赖：
+同时我们需要在应用入口 `src/app.ts` 中配置框架应用的一些运行时信息：
 
 ```diff
 import { createApp } from 'ice'
 +import NotFound from '@/components/NotFound';
-+import PageLoading from '@/components/PageLoading';
 +import BasicLayout from '@/layouts/BasicLayout';
 
 const appConfig = {
@@ -88,7 +56,6 @@ const appConfig = {
 +    },
 +    appRouter: {
 +      NotFoundComponent: NotFound,
-+      LoadingComponent: PageLoading,
 +    },
   },
 };
@@ -96,6 +63,46 @@ const appConfig = {
 createApp(appConfig)
 ```
 
-此处 `getApp()` 参数即获取所有的子应用，每个子应用的信息遵循 icestark 的约定即可。
+`appConfig.icestark` 完整的配置项说明：
 
-> 关于 icestark 更多的使用请参考 [icetark 文档](/docs/icestark/about)
+- type: string, framework|child
+- Layout: Component, 系统对应的布局组件
+- getApps: function，获取所有子应用数据，单个子应用的完整配置字段请参考 icestark 文档
+- appRouter:
+  - NotFoundComponent: 404 组件
+  - LoadingComponent: 应用切换时的 Loading 组件
+
+## 子应用
+
+通过物料模板快速创建一个微前端的子应用：
+
+``` bash
+# 创建子应用
+$ npm init ice icestark-child @icedesign/stark-child-scaffold
+$ cd icestark-child
+$ npm instal
+$ npm start
+```
+
+同框架应用一样，子应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了子应用相关的信息：
+
+```diff
+import { createApp } from 'ice'
+
+const appConfig = {
+  app: {
+    rootId: 'ice-container',
+  },
+  router: {
++    type: 'browser',
+  },
+  icestark: {
++    type: 'child',
+  },
+};
+
+createApp(appConfig)
+```
+
+只需要这么简单，你的 SPA 应用就可以变成微前端的子应用了。
+
