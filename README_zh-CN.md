@@ -55,7 +55,7 @@ $ mkdir <project-name> && cd <project-name>
 $ npm install ice.js react react-dom
 ```
 
-打开 `package.json` 并在复制以下内容：
+打开 `package.json` 并复制以下内容：
 
 ```json
 {
