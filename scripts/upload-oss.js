@@ -36,6 +36,10 @@ if (branch === 'master' || /docs/.test(branch)) {
 
   Promise.all(promiseQueue).then(() => {
     console.log('upload success');
+  }).catch(err => {
+    console.error('upload error');
+    console.error(err);
+    process.exit(1);
   });
 } else {
   console.log('当前分支非 master/docs*, 不执行文档同步脚本');
