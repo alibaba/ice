@@ -7,7 +7,7 @@ icejs 内置集成了 icestore 状态管理方案，并在此基础上进一步�
 
 ## 目录约定
 
-icestore 支持 **全局状态** 和 **页面状态** 两种纬度：
+icejs 支持 **全局状态** 和 **页面状态** 两种纬度：
 
 - 全局状态：应用级别，整个应用都可以使用
 - 页面状态：只针对单个页面，比如 `src/pages/Home`，仅在 `Home/` 中可以被使用
@@ -169,7 +169,7 @@ export default {
 useModel 相关的 API 基于 React 的 Hooks 能力，仅能在 Function Component 中使用，通过 `withModel` API 可以实现在 Class Component 中使用：
 
 ```js
-import store from 'ice';
+import { store } from 'ice';
 
 class TodoList extends React.Component {
   render() {

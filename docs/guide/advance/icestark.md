@@ -12,7 +12,7 @@ order: 5
 ```bash
 $ npm init ice icestark-framework @icedesign/stark-layout-scaffold
 $ cd icestark-framework
-$ npm instal
+$ npm install
 $ npm start
 ```
 
@@ -80,7 +80,7 @@ createApp(appConfig)
 # 创建子应用
 $ npm init ice icestark-child @icedesign/stark-child-scaffold
 $ cd icestark-child
-$ npm instal
+$ npm install
 $ npm start
 ```
 
@@ -106,3 +106,4 @@ createApp(appConfig)
 
 只需要这么简单，你的 SPA 应用就可以变成微前端的子应用了。
 
+关于微前端的更多内容，请查看文档 [icestark](https://ice.work/docs/icestark/about)。
