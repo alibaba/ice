@@ -5,7 +5,7 @@ import * as globby from 'globby'
 import Generator from './generator'
 import PageGenerator from './generator/pageGenerator'
 import getPages from './utils/getPages'
-import formatWinPath from './utils/formatWinPath'
+import formatPath from './utils/formatPath'
 
 export default (api) => {
   const { onHook, onGetWebpackConfig, registerMethod, context, getAllPlugin, setValue, modifyUserConfig } = api
@@ -24,7 +24,7 @@ export default (api) => {
   // get runtime module
   const runtimeModules = plugins.map(({ pluginPath }) => {
     const modulePath = path.join(path.dirname(pluginPath), 'module.js');
-    return fse.existsSync(modulePath) ? formatWinPath(modulePath) : false;
+    return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
   }).filter(Boolean);
 
   // modify entry to src/app
@@ -57,7 +57,7 @@ export default (api) => {
       const excludes = runtimeModules.map(modulePath => {
         // add default node_modules
         if (modulePath.includes('node_modules')) {
-          return process.platform === 'win32' ? formatWinPath(modulePath) : modulePath;
+          return formatPath(modulePath);
         }
         return false;
 
@@ -100,7 +100,7 @@ export default (api) => {
 
   // register utils method
   registerMethod('getPages', getPages);
-  registerMethod('formatWinPath', formatWinPath);
+  registerMethod('formatPath', formatPath);
 
   // registerMethod for modify page
   registerMethod('addPageExport', pageGenerator.addPageExport);
