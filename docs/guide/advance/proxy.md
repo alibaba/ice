@@ -25,9 +25,9 @@ order: 2
 ```js
 {
   "proxy": {
-	'/**': {
+	  "/**": {
       "enable": true,
-      "target": 'http://127.0.0.1:6001'
+      "target": "http://127.0.0.1:6001"
     }
   }
 }
