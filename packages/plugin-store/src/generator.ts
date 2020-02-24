@@ -42,7 +42,7 @@ export default class Generator {
     if (fse.pathExistsSync(pageModelsDir)) {
       const pageModels = recursiveReaddir(pageModelsDir).map(item => path.parse(item))
 
-      pageModelsDir = pageModelsDir.split(path.sep).join('/')
+      pageModelsDir = this.applyMethod('formatWinPath', pageModelsDir)
 
       let importStr = ''
       let modelsStr = ''
@@ -75,7 +75,7 @@ export default class Generator {
 
     let models = []
     if (fse.pathExistsSync(appModelsDir)) {
-      appModelsDir = appModelsDir.split(path.sep).join('/')
+      appModelsDir = this.applyMethod('formatWinPath', appModelsDir)
       models = fse.readdirSync(appModelsDir).map(item => path.parse(item).name)
     }
 
