@@ -2,7 +2,7 @@
 const parse = require('yargs-parser');
 const { build } = require('@alib/build-scripts');
 const log = require('@alib/build-scripts/lib/utils/log');
-const builtInPlugins = require('../lib/index');
+const getBuiltInPlugins = require('../lib/index');
 
 module.exports = async () => {
   process.env.NODE_ENV = 'production';
@@ -14,7 +14,7 @@ module.exports = async () => {
   try {
     await build({
       args: { ...rawArgv },
-      plugins: builtInPlugins,
+      getBuiltInPlugins,
     });
   } catch (err) {
     log.error(err.message);
