@@ -4,7 +4,7 @@ const inquirer = require('inquirer');
 const parse = require('yargs-parser');
 const { start } = require('@alib/build-scripts');
 const log = require('@alib/build-scripts/lib/utils/log');
-const builtInPlugins = require('../lib/index');
+const getBuiltInPlugins = require('../lib/index');
 
 const rawArgv = parse(process.argv.slice(2), {
   configuration: { 'strip-dashed': true },
@@ -33,13 +33,13 @@ const defaultPort = parseInt(DEFAULT_PORT, 10);
 
   process.env.NODE_ENV = 'development';
   rawArgv.port = parseInt(newPort, 10);
-  
+
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
     const devServer = await start({
       args: { ...rawArgv },
-      plugins: builtInPlugins,
+      getBuiltInPlugins,
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
