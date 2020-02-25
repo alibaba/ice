@@ -81,6 +81,7 @@ module.exports = ({
       .use(webpack.HotModuleReplacementPlugin);
   }
   registerTask('web', config);
+
   // sort config key to make sure entry config is always excute before injectBabel
   const configKeys = Object.keys(defaultConfig).sort();
   // register user config

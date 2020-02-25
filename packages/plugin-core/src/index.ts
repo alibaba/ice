@@ -8,7 +8,7 @@ import getPages from './utils/getPages'
 import formatPath from './utils/formatPath'
 
 export default (api) => {
-  const { onHook, onGetWebpackConfig, registerMethod, context, getAllPlugin, setValue, modifyUserConfig } = api
+  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api
   const { rootDir, command } = context;
 
   const iceTempPath = path.join(rootDir, '.ice');
@@ -97,6 +97,12 @@ export default (api) => {
     pageGenerator.render();
     await generator.render();
   }
+
+  // register store in build.json
+  registerUserConfig({
+    name: 'store',
+    validation: 'boolean',
+  });
 
   // register utils method
   registerMethod('getPages', getPages);
