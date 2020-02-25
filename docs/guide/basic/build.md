@@ -289,15 +289,106 @@ icejs 中一般不允许修改该配置。
 - 类型：`string`
 - 默认值：`''`
 
+配置 webpack 的 [output.libraryTarget](https://webpack.js.org/configuration/output/#outputlibrarytarget) 属性。
+
 ### library
 
 - 类型：`string`
 - 默认值：`''`
 
+配置 webpack 的 [output.library](https://webpack.js.org/configuration/output/#outputlibrary) 属性。
 
 ### libraryExport
 
 - 类型：`string`
 - 默认值：`''`
+
+配置 webpack 的 [output.libraryExport](https://webpack.js.org/configuration/output/#outputlibraryexport) 属性。
+
+### compileDependencies
+
+- 类型：`array`
+- 默认值：`[]`
+
+默认情况下 babel-loader 会忽略所有 node_modules 目录下的所有文件。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。
+
+比如想编译 node_modules 下的 @alifd/next 依赖，可以进行如下设置：
+
+```json
+{
+  "compileDependencies": ["@alifd/next"]
+}
+```
+
+### cssLoaderOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 css-loader 提供快捷配置，将与默认配置进行浅合并。
+
+### lessLoaderOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 less-loader 提供快捷配置，将与默认配置进行浅合并。
+
+### sassLoaderOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 sass-loader 提供快捷配置，将与默认配置进行浅合并。
+
+### postcssrc
+
+- 类型：`boolean`
+- 默认值：`false`
+
+开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。
+
+### terserOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。
+
+### babelPlugins
+
+- 类型：`array`
+- 默认值：`[]`
+
+为 babel-loader 的配置追加额外的 babel plugin。
+
+### babelPresets
+
+- 类型：`array`
+- 默认值：`[]`
+
+为 babel-loader 的配置追加额外的 babel preset。如果配置 preset 与内置相同，则优先使用 babelPresets 中的配置内容。
+
+### modeConfig
+
+- 类型：`object`
+- 默认值：`{}`
+
+根据不同的 APP_MODE 定义不同的构建配置。
+
+比如执行 `npm start -- --mode dev` 和 `npm start -- --mode prod` 将分别使用 `modeConfig` 中定义的 `dev` 和 `prod` 中的配置：
+
+```json
+{
+  "modeConfig": {
+    "dev": {
+      "vendor": false
+    },
+    "prod": {
+      "vendor": true
+    }
+  }
+}
+```
 
 上面这些选项即当下支持的所有基础配置，如果不能满足需求可以选择使用插件或者自定义配置能力，具体请参考「工程方案」相关章节。
