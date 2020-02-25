@@ -12,7 +12,7 @@ English | [简体中文](./README_zh-CN.md)
 
 ## Features
 
-- 🐒 **Engineering**：Out of the box support for ES6+、 TypeScripts、Less、Sass、 CSS Modules，etc
+- 🐒 **Engineering**：Out of the box support for ES6+、TypeScript、Less、Sass、 CSS Modules，etc
 - 🦊 **Routing**：Powerful Routing System, supports configured routing and conventions routing
 - 🐯 **State management**：Built-in icestore, lightweight state management solution based on React Hooks
 - 🐦 **Config**：Modes and Environment Variables configuration in the config file
@@ -21,7 +21,7 @@ English | [简体中文](./README_zh-CN.md)
 - 🦁 **Application configuration**：Provide powerful and extensible application configuration
 - 🐴 **Hooks**：Provide Hooks APIs such as useModel and useHistory, etc
 - 🐌 **Plugin system**：The plugin system provides rich features and allow the community to build reusable solutions
-- 🐘 **TypeScript**：Support typescript
+- 🐘 **TypeScript**：Support TypeScript
 - 🐂 **Modern**：Support SPA、SSR、MPA and Micro-frontend
 
 ## Quick start

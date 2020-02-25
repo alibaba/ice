@@ -21,7 +21,7 @@
 - 🦁 **应用配置**：提供强大的和可扩展的应用程序配置
 - 🐴 **Hooks**：提供 useModel、useHistory 等 Hooks API
 - 🐌 **插件体系**：提供插件机制，可以扩展框架的核心功能
-- 🐘 **typescript**：默认使用 typescript 
+- 🐘 **TypeScript**：默认使用 TypeScript 
 - 🐂**Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
 
 ## 快速开始
