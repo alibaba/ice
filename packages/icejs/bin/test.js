@@ -2,7 +2,7 @@
 const parse = require('yargs-parser');
 const { test } = require('@alib/build-scripts');
 const log = require('@alib/build-scripts/lib/utils/log');
-const builtInPlugins = require('../lib/index');
+const getBuiltInPlugins = require('../lib/index');
 
 module.exports = async () => {
   process.env.NODE_ENV = 'test';
@@ -27,7 +27,7 @@ module.exports = async () => {
   try {
     await test({
       args: { ...rawArgv, jestArgv },
-      plugins: builtInPlugins,
+      getBuiltInPlugins,
     });
   } catch (err) {
     log.error(err.message);

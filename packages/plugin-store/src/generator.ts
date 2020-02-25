@@ -64,7 +64,7 @@ export default class Generator {
 
     return {
       isSingleModel: true,
-      importStr: `import ${pageName} from '${pageModelFile}';`,
+      importStr: `import ${pageName} from '${this.applyMethod('formatPath', pageModelFile)}';`,
       modelsStr: pageName
     }
   }
