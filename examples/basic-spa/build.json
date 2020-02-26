@@ -3,5 +3,10 @@
     "ignorePaths": ["stores", "components"]
   },
   "ignoreHtmlTemplate": true,
-  "plugins": []
+  "plugins": [],
+  "modeConfig": {
+    "prod": {
+      "ignoreHtmlTemplate": false
+    }
+  }
 }
