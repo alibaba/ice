@@ -5,119 +5,47 @@ order: 4
 
 本文介绍如何从零开发一个子应用，同时已有应用迁移也可以参考本文档。
 
-## 通过模板初始化
+## 创建子应用
 
-初始化一个 icestark 的 React 子应用：
+React 项目（基于 icejs）：
 
 ```bash
-$ mkdir icestark-child-app-test && cd icestark-child-app-test
-
-# 基于 React 的子应用
-$ iceworks init project @icedesign/stark-child-scaffold
-# 基于 Vue 的子应用
-$ iceworks init project @vue-materials/icestark-child-app
-```
-
-初始化出来是一个标准的单页面应用，与传统项目结构基本一致，主要的差异点请参考下文。
-
-## 渲染到指定节点
-
-框架应用会为子应用自动分配一个 DOM 节点，因此子应用需要通过 `getMountNode()` API 获取到对应节点并渲染进去。
-
-React 项目：
-
-```jsx
-// 项目入口文件 src/index.jsx
-import ReactDOM from 'react-dom';
-import { getMountNode } from '@ice/stark-app';
-
-import router from './router';
-
-// 子应用单独运行时渲染到 #app 节点下
-const mountNode = getMountNode(document.getElementById('root'));
-ReactDOM.render(router(), mountNode);
+$ npm init ice icestark-child @icedesign/stark-child-scaffold
 ```
 
 Vue 项目：
 
-```js
-// 项目入口文件 src/main.js
-import Vue from 'vue';
-import { getMountNode } from '@ice/stark-app';
-import App from './App.vue';
-import router from './router';
-
-const mountNode = getMountNode(document.getElementById('app'));
-const vue = new Vue({
-  router,
-  render: h => h(App),
-}).$mount();
-// for vue don't replace mountNode
-mountNode.appendChild(vue.$el);
+```bash
+$ npm init ice icestark-child @vue-materials/icestark-child-app
 ```
 
-## 定义基准路由
+## 已有项目改造为子应用
 
-正常情况下，注册子应用时会为每个子应用分配一个基准路由比如 `/seller`，当前子应用的所有路由需要定义在基准路由之下，社区常见的路由库都可以通过参数非常简单的实现该功能。子应用可以通过 `getBasename()` API 获取自身的基准路由。
+如果你的项目基于 icejs，请参考文档 [icejs 接入微前端](/docs/guide/advance/icestark.md)，接入步骤非常简单。如果不是 icejs 的项目那么请参考下面的流程。
 
-React 项目中使用 react-router：
+### 1. 应用入口适配
 
-```js
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import React from 'react';
-import { getBasename } from '@ice/stark-app';
-import routes from '@/config/routes';
+当应用在微前端环境里渲染时，需要关注两个点：
 
-export default () => {
-  return (
-    <Router basename={getBasename()}>
-      <Switch>
-        {routes.map((route, id) => {
-          // ...
-        })}
-      </Switch>
-    </Router>
-  );
-};
-```
-
-Vue 项目中使用 vue-router：
-
-```js
-import Vue from 'vue';
-import Router from 'vue-router';
-import { getBasename } from '@ice/stark-app';
-import routes from '@/config/routes';
-
-Vue.use(Router);
-
-export default new Router({
-  routes,
-  mode: 'history',
-  base: getBasename(),
-});
-```
-
-## 子应用入口适配
+1. 通过 `getMountNode()` 动态获取渲染节点
+2. 注册应用自身的声明周期
 
 React 项目：
 
 ```jsx
 import ReactDOM from 'react-dom';
 import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
-import router from './router';
+import App from './App';
 
 if (isInIcestark()) {
-  const mountNode = getMountNode();
   registerAppEnter(() => {
     ReactDOM.render(router(), getMountNode());
   });
-  // 注意务必保留 unmountComponentAtNode, 否则切换子应用时无法触发子应用的卸载（unmount）事件
   registerAppLeave(() => {
     ReactDOM.unmountComponentAtNode(getMountNode());
   });
 } else {
-  ReactDOM.render(router(), document.getElementById('ice-container'));
+  ReactDOM.render(<App />, document.getElementById('ice-container'));
 }
 ```
 
@@ -147,6 +75,45 @@ if (isInIcestark()) {
 }
 ```
 
+### 2. 定义基准路由
+
+正常情况下，注册子应用时会为每个子应用分配一个基准路由比如 `/seller`，当前子应用的所有路由需要定义在基准路由之下，社区常见的路由库都可以通过参数非常简单的实现该功能。子应用可以通过 `getBasename()` API 获取自身的基准路由。
+
+React 项目中使用 react-router：
+
+```js
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { getBasename } from '@ice/stark-app';
+
+export default () => {
+  return (
+    <Router basename={getBasename()}>
+      <Switch>
+        // ...
+      </Switch>
+    </Router>
+  );
+};
+```
+
+Vue 项目中使用 vue-router：
+
+```js
+import Vue from 'vue';
+import Router from 'vue-router';
+import { getBasename } from '@ice/stark-app';
+import routes from '@/config/routes';
+
+Vue.use(Router);
+
+export default new Router({
+  routes,
+  mode: 'history',
+  base: getBasename(),
+});
+```
+
 ## 其他问题
 
 ### 子应用之间如何跳转？
@@ -163,13 +130,11 @@ import { appHistory } from '@ice/stark-app';
 
 ### 子应用 bundle 加载失败？
 
-> 注意：这个问题跟 icestark 无关
-
-前端应用如果做了按需加载，按需加载的 bundle 默认是根据当前域名拼接地址，如果前端资源部署在非当前域名（比如 CDN）下，则需要通过手动配置 publicPath 来实现，具体参考[文档](/docs/guide/dev/build#publicPath)。阿里内部同学请参考[这篇文档](https://yuque.antfin-inc.com/ice/rdy99p/syvuzh)。
+前端应用如果做了按需加载，按需加载的 bundle 默认是根据当前域名拼接地址，如果前端资源部署在非当前域名（比如 CDN）下，则需要通过手动配置 publicPath 来实现，具体参考[文档](/docs/guide/dev/build#publicPath)。
 
 ### 子应用开发时请求本地 Mock 接口？
 
-通用情况下，代码中的接口请求地址都是写成类似 `/api/xxx` 的相对地址，请求时会根据当前域名进行拼接，如果想请求非当前域名的接口地址，可以通过 `axios.defaults.baseURL` 来实现：
+通常情况下，代码中的接口请求地址都是写成类似 `/api/xxx` 的相对地址，请求时会根据当前域名进行拼接，如果想请求非当前域名的接口地址，可以通过 `axios.defaults.baseURL` 来实现：
 
 ```js
 // src/utils/request.js

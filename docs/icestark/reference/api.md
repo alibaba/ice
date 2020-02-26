@@ -33,12 +33,6 @@ order: 1
 - 类型：`string | ReactNode`
 - 默认值：`-`
 
-#### useShadow
-
-- 是否开启 shadowRoot 隔离 css，选填
-- 类型：`boolean`
-- 默认：`false`
-
 #### onAppEnter
 
 - 子应用渲染前的回调，选填
@@ -53,11 +47,11 @@ order: 1
 
 ### AppRoute
 
-子应用注册组件，包含如下 props 属性
+子应用注册组件，包含如下 props 属性：
 
 #### path
 
-- path-to-regexp@^1.7.0 可以理解的任何有效 URL 路径或路径数组，参考 [Route.path](https://reacttraining.com/react-router/web/api/Route/path-string-string)，比如默认域名为`www.icestark.com`，`path` 设置为 `/user`，表示当访问 `www.icestark.com/user` 时，渲染此应用，必填
+- 定义子应用匹配哪些路由，比如默认域名为`www.icestark.com`，`path` 设置为 `/user`，表示当访问 `www.icestark.com/user` 时，渲染此应用，必填
 - 类型：`string | string[]`
 - 默认值：`-`
 
@@ -79,17 +73,29 @@ order: 1
 - 类型：`string`
 - 默认值：`-`
 
+#### component
+
+- 当路由匹配是直接渲染 react component，渲染后会带上 `location`、`match`、`history` 的 `props`, 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.component](https://reacttraining.com/react-router/web/api/Route/component)，选填
+- 类型：`string | ReactNode`
+- 默认值：`-`
+
+#### render
+
+- 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.render](https://reacttraining.com/react-router/web/api/Route/render-func)，选填
+- 类型：`({location, match, history}) => ReactNode`
+- 默认值：`-`
+
 #### title
 
 - 子应用渲染时展示的 documentTitle ，选填
 - 类型：`string`
 - 默认值：`-`
 
-#### basename
+#### cache
 
-- 子应用运行时，透传给 `React Router` 的 `basename`，选填，如果不填，默认会从 `path` 中获取
-- 类型：`string`
-- 默认值：`-`
+- 切换应用时缓存该应用资源，再次渲染时无需重复加载执行，请谨慎使用该能力，因为这会增加应用样式等冲突的概率，并可能引入内存问题。另外目前仅入口通过 url 属性配置支持该能力。
+- 类型：`boolean`
+- 默认值：false
 
 #### exact
 
@@ -114,18 +120,6 @@ order: 1
 - 子应用默认加载的 DOM 节点的 id，选填
 - 类型：`string`
 - 默认值：`icestarkNode`
-
-#### component
-
-- 当路由匹配是直接渲染 react component，渲染后会带上 `location`、`match`、`history` 的 `props`, 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.component](https://reacttraining.com/react-router/web/api/Route/component)，选填
-- 类型：`string | ReactNode`
-- 默认值：`-`
-
-#### render
-
-- 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.render](https://reacttraining.com/react-router/web/api/Route/render-func)，选填
-- 类型：`({location, match, history}) => ReactNode`
-- 默认值：`-`
 
 ### AppLink
 

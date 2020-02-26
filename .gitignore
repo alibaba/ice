@@ -10,21 +10,11 @@ yarn.lock
 yarn-error.log
 tempDir
 coverage/
-
 .eslintcache
 databases
 build
 .vscode/
-tools/ice-scripts/lib/ICE_CA
 .tmp/
 
-npmrc
-tools/extract-css-assets-webpack-plugin/test/actual/
-tools/extract-css-assets-webpack-plugin/lib/
-
-# iceworks
-!tools/iceworks/**/yarn.lock
-!tools/iceworks/build
-tools/iceworks/out
-tools/iceworks/dist
-tools/iceworks/renderer/src/datacenter/data
+packages/generate-project/lib
+packages/ice-npm-utils/lib
