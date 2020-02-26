@@ -22,8 +22,18 @@ module.exports = ({
   log,
 }) => {
   const { command, rootDir, webpack, commandArgs, pkg } = context;
-
+  const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
+  modifyUserConfig((userConfig) => {
+    const { modeConfig = {} } = userConfig;
+    return modeConfig[appMode] || {};
+  });
+  // register user config without configWebpack
+  registerUserConfig({
+    name: 'modeConfig',
+    validation: 'object',
+    defaultValue: {},
+  });
 
   // modify user config to keep excute order
   modifyUserConfig((userConfig) => {
@@ -46,6 +56,7 @@ module.exports = ({
   // DefinePlugin
   const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
+    'process.env.APP_MODE': JSON.stringify(appMode),
   };
   config
     .plugin('DefinePlugin')
