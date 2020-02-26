@@ -1,16 +1,11 @@
-## 问题描述
+**Do you want to request a *feature* or report a *bug*?**
 
-<!-- 可以输入具体的操作步骤，能帮助我们更快的解决您的问题 -->
+**What is the current behavior?**
 
-* icejs 版本：
-* Node 版本：
-* 系统环境：
+**If the current behavior is a bug, please provide the steps to reproduce and if possible a minimal demo of the problem.
 
+* icejs version：
+* Node verson：
+* Platform：
 
-## 错误信息
-
-<!-- 可以输入发生的错误信息，可以是截图或者文字描述 -->
-
-## 预期行为
-
-<!-- 可以输入预期的行为结果，可以是截图或者文字描述 -->
+**What is the expected behavior?**
