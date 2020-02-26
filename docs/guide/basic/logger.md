@@ -10,10 +10,10 @@ order: 11
 框架日志分为 NONE，DEBUG，INFO，WARN 和 ERROR 5 个级别，别在不同的场景下使用：
 
 * `logger.trace(msg)`：输出一个堆栈跟踪
-* `loger.debug(msg)`：输出一个调试日志
-* `loger.info(msg)`：输出一个信息日志
-* `loger.warn(msg)`：输出一个警告日志
-* `loger.error(msg)`：输出一个错误日志
+* `logger.debug(msg)`：输出一个调试日志
+* `logger.info(msg)`：输出一个信息日志
+* `logger.warn(msg)`：输出一个警告日志
+* `logger.error(msg)`：输出一个错误日志
 
 更多 API 详见：[loglevel](https://github.com/pimterry/loglevel)
 

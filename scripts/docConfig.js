@@ -26,6 +26,13 @@ const docCategories = {
     },
     {
       title: {
+        'zh-cn': '插件开发',
+        'en-us': 'Develop',
+      },
+      dir: 'develop',
+    },
+    {
+      title: {
         'zh-cn': '资源',
         'en-us': 'resource',
       },

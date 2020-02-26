@@ -34,9 +34,9 @@ $ icejs start --help
 Usage: icejs start [options]
 
 Options:
-	-p, --port <port>      服务端口号
+  -p, --port <port>      服务端口号
   -h, --host <host>      服务主机名
-  --https								 支持开启 https
+  --https                支持开启 https
   --analyzer             支持开启构建分析
   --analyzer-port
   --disable-reload
@@ -51,14 +51,23 @@ $ icejs build --help
 Usage: icejs build [options]
 
 Options:
-	--analyzer             同 start
+  --analyzer             同 start
   --analyzer-port        同 start
   --config <config>      同 start
 ```
 
 ## 工程构建配置
 
-工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，`build.json` 中包含基础配置和插件配置两部分，当下支持的基础配置项如下：
+工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，配置方式：
+
+```json
+{
+  "alias": {},
+  "publicPath": "",
+}
+```
+
+当下支持的基础配置项如下：
 
 ### entry
 
@@ -88,7 +97,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"publicPath": "https://cdn.example.com/assets/"
+  "publicPath": "https://cdn.example.com/assets/"
 }
 ```
 
@@ -101,7 +110,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"devPublicPath": "http://127.0.0.1/"
+  "devPublicPath": "http://127.0.0.1/"
 }
 ```
 
@@ -159,7 +168,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"hash": true
+  "hash": true
 }
 ```
 
@@ -167,7 +176,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"hash": "contenthash"
+  "hash": "contenthash"
 }
 ```
 
@@ -180,7 +189,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"injectBabel": false
+  "injectBabel": false
 }
 ```
 
@@ -193,7 +202,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"minify": false
+  "minify": false
 }
 ```
 
@@ -206,8 +215,8 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"outputAssetsPath": {
-  	"js": "js-dist",
+  "outputAssetsPath": {
+    "js": "js-dist",
     "css": "css-dist"
   }
 }
@@ -222,7 +231,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"outputDir": "dist"
+  "outputDir": "dist"
 }
 ```
 
@@ -280,7 +289,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"vendor": false
+  "vendor": false
 }
 ```
 
@@ -289,15 +298,137 @@ icejs 中一般不允许修改该配置。
 - 类型：`string`
 - 默认值：`''`
 
+配置 webpack 的 [output.libraryTarget](https://webpack.js.org/configuration/output/#outputlibrarytarget) 属性。
+
 ### library
 
 - 类型：`string`
 - 默认值：`''`
 
+配置 webpack 的 [output.library](https://webpack.js.org/configuration/output/#outputlibrary) 属性。
 
 ### libraryExport
 
 - 类型：`string`
 - 默认值：`''`
 
-上面这些选项即当下支持的所有基础配置，如果不能满足需求可以选择使用插件或者自定义配置能力，具体请参考「工程方案」相关章节。
+配置 webpack 的 [output.libraryExport](https://webpack.js.org/configuration/output/#outputlibraryexport) 属性。
+
+### compileDependencies
+
+- 类型：`array`
+- 默认值：`[]`
+
+默认情况下 babel-loader 会忽略所有 node_modules 目录下的所有文件。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。
+
+比如想编译 node_modules 下的 @alifd/next 依赖，可以进行如下设置：
+
+```json
+{
+  "compileDependencies": ["@alifd/next"]
+}
+```
+
+注意：配置为 `"compileDependencies": [""]` 等同于不忽略 `node_modules`。
+
+### cssLoaderOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 css-loader 提供快捷配置，将与默认配置进行浅合并。
+
+### lessLoaderOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 less-loader 提供快捷配置，将与默认配置进行浅合并。
+
+### sassLoaderOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 sass-loader 提供快捷配置，将与默认配置进行浅合并。
+
+### postcssrc
+
+- 类型：`boolean`
+- 默认值：`false`
+
+开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。
+
+### terserOptions
+
+- 类型：`object`
+- 默认值：`{}`
+
+为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。
+
+### babelPlugins
+
+- 类型：`array`
+- 默认值：`[]`
+
+为 babel-loader 的配置追加额外的 babel plugin。
+
+### babelPresets
+
+- 类型：`array`
+- 默认值：`[]`
+
+为 babel-loader 的配置追加额外的 babel preset。如果配置 preset 与内置相同，则优先使用 babelPresets 中的配置内容。
+
+### ignoreHtmlTemplate
+
+- 类型：`boolean`
+- 默认值：`false`
+
+开启后，在 `build` 构建时，将移除所有内置 html-webpack-plugin 设置，不再生成 html 文件。
+
+## 根据环境区分工程配置
+
+与运行时配置相同，通过 `--mode` 参数区分环境，参考[文档](docs/guide/basic/config)，然后在 `build.json` 中就可以通过 `modeConfig` 来根据环境区分配置了：
+
+```json
+{
+  "alias": {},
+  "modeConfig": {
+    "dev": {
+      "define": {},
+      "vendor": false
+    },
+    "prod": {
+      "define": {},
+      "vendor": true
+    }
+  }
+}
+```
+
+## 自定义配置
+
+如果基础配置和已有插件都无法支持业务需求，可以通过自定义配置来实现，自定义配置同时也是一个 webpack 插件。
+
+首先新建 `build.plugin.js` 文件作为一个自定义插件，然后写入以下代码：
+
+```js
+module.exports = ({ context, onGetWebpackConfig }) => {
+  onGetWebpackConfig((config) => {
+  });
+}
+```
+
+插件内部代码写法可以参考文档 [通过插件定制工程能力](/docs/guide/develop/plugin-build.md)。
+
+最后在 `build.json` 里引入自定义插件即可：
+
+```json
+{
+  "plugins": [
+    "build-plugin-ice-app",
+    "./build.plugin.js"
+  ]
+}
+```
