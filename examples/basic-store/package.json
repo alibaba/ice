@@ -1,14 +1,14 @@
 {
-  "name": "example-icestark-child",
-  "description": "icestark child",
+  "name": "example-basic-store",
+  "description": "store management with icejs",
   "dependencies": {
-    "ice.js": "^1.0.11",
+    "ice.js": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4"
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.5"
   },
   "scripts": {
     "start": "icejs start",
