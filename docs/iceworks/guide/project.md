@@ -44,11 +44,14 @@ order: 1
 
 ![](https://img.alicdn.com/tfs/TB1arQ0s7L0gK0jSZFAXXcA9pXa-2000-1600.png)
 
-## 打开项目
+## 导入项目
 
-除了新建项目之外，也可以从本地打开已有的项目。
+除了新建项目之外，也可以将本地已有的项目导入到 iceworks 进行开发。
 
 ![](https://img.alicdn.com/tfs/TB1feQ3s4D1gK0jSZFyXXciOVXa-2000-1600.png)
+
+* 克隆 Github 或 Gitlab 远程仓库到本地；
+* 点击启动页右上角的「打开项目」把本地项目导入到 iceworks。
 
 ## 删除项目
 

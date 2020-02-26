@@ -9,7 +9,6 @@ order: 4
 
 同时，通过对工程的配置项进行抽象并可视化展示管理，可直接在 iceworks 工作台操作配置项，对应的配置改动会自动写入到项目的工程配置文件中。
 
-
 ## 工程任务
 
 工程任务本质上对应的是 ice-scripts 提供的基础命令能力。主要包括 **启动调试服务**、**构建项目** 操作。
@@ -48,12 +47,12 @@ order: 4
 ### 语法检查
 
 
-运行语法检查，对应项目 `package.json` 中 scripts 配置下的 `npm run eslint` 命令。
+执行语法检查，对应项目 `package.json` 中 scripts 配置下的 `npm run eslint` 命令。
 
 ![eslint](https://img.alicdn.com/tfs/TB1UfkYs4D1gK0jSZFKXXcJrVXa-2880-1754.png)
 
 ### 测试
 
-运行测试用力，对应项目 `package.json` 中 scripts 配置下的 `npm run test` 命令。
+执行测试用例，对应项目 `package.json` 中 scripts 配置下的 `npm run test` 命令。
 
 ![test](https://img.alicdn.com/tfs/TB1czAUs9f2gK0jSZFPXXXsopXa-2880-1754.png)
