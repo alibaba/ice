@@ -3,6 +3,7 @@ export interface IRouterOptions {
   ignoreRoutes?: IgnoreOptions;
   ignorePaths?: IgnoreOptions;
   configPath?: string;
+  lazy?: boolean;
 }
 
 export interface ICollectItem {

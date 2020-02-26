@@ -39,6 +39,8 @@ interface RouterProps {
   // for MemoryRouter
   initialEntries?: string[];
   initialIndex?: number;
+  lazy?: boolean;
+  fallback?: React.ReactNode;
 };
 
 interface RoutesProps {
@@ -46,18 +48,24 @@ interface RoutesProps {
 };
 
 export function Router(props: RouterProps) {
-  const { type = 'hash', routes, ...others } = props;
+  const { type = 'hash', routes, lazy, fallback, ...others } = props;
   const typeToComponent = {
     hash: HashRouter,
     browser: BrowserRouter,
     // for test case
     memory: MemoryRouter,
   };
+
   const RouterComponent: React.ComponentType<any> = typeToComponent[type];
 
   return (
     <RouterComponent {...others}>
-      <Routes routes={routes} />
+      {lazy?
+        <React.Suspense fallback={fallback || <div>Loading...</div>}>
+          <Routes routes={routes} />
+        </React.Suspense>
+        : <Routes routes={routes} />
+      }
     </RouterComponent>
   );
 }
