@@ -95,6 +95,83 @@ log.verbose('debug');
 log.error('exit');
 ```
 
+## 扩展 API
+
+除了以上由 build-scripts 内置支持的 API，我们还通过 icejs 对插件 API 做了扩展，扩展的 API 需要通过以下方式调用：
+
+```js
+module.exports = ({ applyMethod }) => {
+  // 第一个参数对应 API 名称，第二个参数对应 API 参数
+  applyMethod('addIceExport', { source: `./config`, exportName });
+}
+```
+
+目前扩展的 API 仅支持同步调用。
+
+### addIceExport
+
+向 `ice` 里注册模块，实现 `import { foo } from 'ice';` 的能力：
+
+```js
+// 实现 import { request } from 'ice'; request 由插件的 `./request/request` 文件实现
+applyMethod('addIceExport', { source: './request/request', exportName: 'request' })
+```
+
+### removeIceExport
+
+与 `addIceExport` 对应：
+
+```js
+this.applyMethod('removeIceExport', 'store');
+```
+
+### addPageExport
+
+向 `ice/Home` 里注册模块，实现 `import { foo } from 'ice/Home'`，目前主要用于页面级状态管理的实现：
+
+```js
+this.applyMethod('addPageExport', 'Home', { source: './models', 'store' })
+```
+
+一般情况下需要循环向每个页面添加。
+
+### removePageExport
+
+与 `addPageExport` 对应
+
+### getPages
+
+获取 `src/pages` 下的一级页面列表：
+
+```js
+// ['Home', 'About']
+const pages = this.applyMethod('getPages', this.rootDir);
+```
+
+### watchFileChange
+
+监听 `src` 下的文件变化：
+
+```js
+applyMethod('watchFileChange', 'src/config.*', async (event: string) => {
+  if (event === 'unlink' || event === 'add') {
+    // do something
+  }
+});
+```
+
+### watchFileChange
+
+监听 `src` 下的文件变化：
+
+```js
+applyMethod('watchFileChange', 'src/config.*', async (event: string) => {
+  if (event === 'unlink' || event === 'add') {
+    // do something
+  }
+});
+```
+
 ## 插件参数
 
 用户可以在 `build.json` 中指定插件参数：
@@ -146,4 +223,11 @@ module.exports = ({ setValue }) => {
 module.exports = ({getValue}) => {
   const value = getValue('key'); // 123
 }
+```
+
+同时在 icejs 中也内置了几个变量：
+
+```js
+const projectType = getValue('PROJECT_TYPE'); // ts|js
+const iceDirPath = getValue('ICE_TEMP');  // 对应 .ice 的路径
 ```
