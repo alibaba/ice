@@ -320,6 +320,8 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
+注意：配置为 `"compileDependencies": [""]` 等同于不忽略 `node_modules`。
+
 ### cssLoaderOptions
 
 - 类型：`object`
