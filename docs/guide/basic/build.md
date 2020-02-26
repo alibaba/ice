@@ -34,9 +34,9 @@ $ icejs start --help
 Usage: icejs start [options]
 
 Options:
-	-p, --port <port>      服务端口号
+  -p, --port <port>      服务端口号
   -h, --host <host>      服务主机名
-  --https								 支持开启 https
+  --https                支持开启 https
   --analyzer             支持开启构建分析
   --analyzer-port
   --disable-reload
@@ -51,14 +51,23 @@ $ icejs build --help
 Usage: icejs build [options]
 
 Options:
-	--analyzer             同 start
+  --analyzer             同 start
   --analyzer-port        同 start
   --config <config>      同 start
 ```
 
 ## 工程构建配置
 
-工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，`build.json` 中包含基础配置和插件配置两部分，当下支持的基础配置项如下：
+工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，配置方式：
+
+```json
+{
+  "alias": {},
+  "publicPath": "",
+}
+```
+
+当下支持的基础配置项如下：
 
 ### entry
 
@@ -88,7 +97,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"publicPath": "https://cdn.example.com/assets/"
+  "publicPath": "https://cdn.example.com/assets/"
 }
 ```
 
@@ -101,7 +110,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"devPublicPath": "http://127.0.0.1/"
+  "devPublicPath": "http://127.0.0.1/"
 }
 ```
 
@@ -159,7 +168,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"hash": true
+  "hash": true
 }
 ```
 
@@ -167,7 +176,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"hash": "contenthash"
+  "hash": "contenthash"
 }
 ```
 
@@ -180,7 +189,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"injectBabel": false
+  "injectBabel": false
 }
 ```
 
@@ -193,7 +202,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"minify": false
+  "minify": false
 }
 ```
 
@@ -206,8 +215,8 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"outputAssetsPath": {
-  	"js": "js-dist",
+  "outputAssetsPath": {
+    "js": "js-dist",
     "css": "css-dist"
   }
 }
@@ -222,7 +231,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"outputDir": "dist"
+  "outputDir": "dist"
 }
 ```
 
@@ -280,7 +289,7 @@ icejs 中一般不允许修改该配置。
 
 ```json
 {
-	"vendor": false
+  "vendor": false
 }
 ```
 
