@@ -9,7 +9,7 @@ import formatPath from './utils/formatPath'
 
 export default (api) => {
   const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api
-  const { rootDir, command } = context;
+  const { rootDir, command, userConfig } = context;
 
   const iceTempPath = path.join(rootDir, '.ice');
   setValue('ICE_TEMP', iceTempPath);
@@ -76,6 +76,15 @@ export default (api) => {
         .add(matchExclude);
     });
   })
+
+  const buildConfig = {}
+  const BUILD_CONFIG_MAP = ['router', 'store']
+  Object.keys(userConfig).forEach(key => {
+    if (BUILD_CONFIG_MAP.includes(key)) {
+      buildConfig[key] = userConfig[key]
+    }
+  })
+
   // check global style file
   const generator = new Generator({
     projectRoot: rootDir,
@@ -83,6 +92,7 @@ export default (api) => {
     templateDir: path.join(__dirname, './generator/templates/app'),
     defaultData: {
       runtimeModules,
+      buildConfig: JSON.stringify(buildConfig)
     }
   })
 

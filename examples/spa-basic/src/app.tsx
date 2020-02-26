@@ -1,3 +1,4 @@
+import React from 'react'
 import { createApp, APP_MODE, config } from 'ice'
 
 console.log('app config', config);
@@ -5,6 +6,9 @@ console.log('app config', config);
 const appConfig = {
   app: {
     rootId: 'ice-container'
+  },
+  router: {
+    fallback: <div>loading...</div>
   },
   logger: {
     level: APP_MODE === 'build' ? 'error' : 'debug',
@@ -14,9 +18,9 @@ const appConfig = {
     // baseURL: '/abc',
     interceptors: {
       response: {
-        onConfig: (conf) => {
-          console.log('interceptors response:', conf)
-          return conf
+        onConfig: (config) => {
+          console.log('interceptors response:', config)
+          return config
         }
       }
     }

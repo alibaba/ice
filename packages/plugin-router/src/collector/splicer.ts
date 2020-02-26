@@ -19,10 +19,11 @@ interface IPlayload {
  * @param {*} payload
  * @param {*} collect
  */
-function loopSplice(payload: IPlayload, collect: ICollectItem[]) {
+function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) {
   const indent = payload.indent;
   const indentTabs = fillTabWith(indent);
   const indentTabsSub1 = fillTabWith(indent - 1);
+  const { lazy } = routerOptions;
 
   // add 2 space per loop
   payload.indent += 2;
@@ -41,7 +42,11 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[]) {
     } = item;
     // collect imports
     if (!payload.nestImportsNames.includes(component)) {
-      payload.nestImports.push(`import ${component} from '${filePath}';\n`);
+      let nestImportsData = `import ${component} from '${filePath}';\n`;
+      if (lazy) {
+        nestImportsData = `const ${component} = lazy(() => import(/* webpackChunkName: '${component}' */ '${filePath}'));\n`;
+      }
+      payload.nestImports.push(nestImportsData);
       // record component exists
       payload.nestImportsNames.push(component);
     }
@@ -56,7 +61,7 @@ ${indentTabs}{
       payload.nestSlice.push(`,
   ${indentTabs}children: `);
       // loop children
-      loopSplice(payload, children);
+      loopSplice(payload, children, routerOptions);
       // children field end
       payload.nestSlice.push(`,`);
     }
@@ -69,10 +74,16 @@ ${indentTabs}},`)
   payload.nestSlice.push(`\n${indentTabsSub1}]`);
 }
 
-export default function splicer(routesCollect: ICollectItem[]) {
+export default function splicer(routesCollect: ICollectItem[], routerOptions) {
+  const { lazy } = routerOptions;
   // loop data
   const payload: IPlayload = { nestImports: [], nestImportsNames: [], nestSlice: [], indent: 1 };
   // init loop
-  loopSplice(payload, routesCollect);
-  return `${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
+  loopSplice(payload, routesCollect, routerOptions);
+
+  let data = `${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
+  if (lazy) {
+    data = `import { lazy } from 'react';\n${data}`
+  }
+  return data;
 }
