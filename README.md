@@ -34,20 +34,6 @@
 
 ## 快速开始
 
-为了支持不同的用户群体，我们提供了 IDE 和 CLI 两种使用方式，具体如下：
-
-#### 使用 IDE [推荐]
-
-> 以 macOS 平台为例。
-
-1. 下载 [iceworks IDE for macOS](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg)；
-2. 双击下载的 .dmg 文件；
-3. 拖动 iceworks 的图标到 `Applications` 文件夹；
-4. 进入应用程序文件夹，双击 iceworks 启动；
-5. 在 iceworks 的欢迎界面点击 `+` 号按钮开始创建项目。
-
-#### 使用命令行工具
-
 ```bash
 # 安装 CLI 工具
 $ npm install iceworks -g

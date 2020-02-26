@@ -33,20 +33,6 @@ more information [ice.work](https://ice.work).
 
 ## Quick start
 
-We provide two ways to use iceworks for different user groups:
-
-#### IDE usage [recommend]
-
-> Take macOS as an example.
-
-1. Download [iceworks IDE for macOS](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg);
-2. Double-click on the downloaded archive to expand the contents;
-3. Drag iceworks to the Applications folder, making it available in the Launchpad;
-4. Open the Applications folder then double-click to run iceworks;
-5. Click the `+` button on the Welcome page to start creating the project.
-
-#### CLI usage
-
 ```bash
 # Install the CLI tool
 $ npm install iceworks -g
