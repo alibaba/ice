@@ -7,5 +7,7 @@ If the current behavior is a bug, please provide the steps to reproduce and if p
 * icejs version：
 * Node verson：
 * Platform：
+* `build.json`：
+* `src/app.(ts|js)`：
 
 **What is the expected behavior?**
