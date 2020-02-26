@@ -34,48 +34,37 @@ more information [ice.work](https://ice.work).
 ## Quick start
 
 ```bash
-# Install the CLI tool
-$ npm install iceworks -g
-
-# New project
-$ mkdir iceapp && cd iceapp
-
-# Initialize the project with a template
-$ iceworks init
+$ npm init ice <project-name>
 ```
+
+`npm init <initializer>` is available in npm 6+
 
 ## Ecosystem
 
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |IDE for enterprise application|
-| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |Highly configurable development and build tools based on webpack|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
-| [react-materials] | / | [docs][react-materials-docs] |High quality and abundant React materials provided by the authorities|
-| [vue-materials] | / | [docs][vue-materials-docs] |High quality Vue materials maintained by the community|
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
 
+[icejs]: https://github.com/ice-lab/icejs
 [iceworks]: https://github.com/alibaba/ice
-[ice-scripts]: https://github.com/ice-lab/ice-scripts
-[icestore]: https://github.com/ice-lab/icestore
 [icestark]: https://github.com/ice-lab/icestark
-[react-materials]: https://github.com/ice-lab/react-materials
-[vue-materials]: https://github.com/ice-lab/vue-materials
+[icestore]: https://github.com/ice-lab/icestore
 
+[icejs-status]: https://img.shields.io/npm/v/ice.js.svg
 [iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
-[ice-scripts-status]: https://img.shields.io/npm/v/ice-scripts.svg
-[icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
+[icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 
+[icejs-package]: https://npmjs.com/package/ice.js
 [iceworks-cli-package]: https://npmjs.com/package/iceworks
-[ice-scripts-package]: https://npmjs.com/package/ice-scripts
-[icestore-package]: https://npmjs.com/package/@ice/store
 [icestark-package]: https://npmjs.com/package/@ice/stark
+[icestore-package]: https://npmjs.com/package/@ice/store
 
-[vue-materials-docs]: https://ice.work/block?type=vue
-[react-materials-docs]: https://ice.work/scaffold
+[icejs-docs]: https://ice.work/docs/guide/intro
 [iceworks-docs]: https://ice.work/docs/iceworks/about
-[ice-scripts-docs]: https://ice.work/docs/cli/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 

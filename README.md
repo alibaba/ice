@@ -35,48 +35,40 @@
 ## 快速开始
 
 ```bash
-# 安装 CLI 工具
-$ npm install iceworks -g
-
-# 新建目录
-$ mkdir iceapp && cd iceapp
-
-# 通过模板初始化项目
-$ iceworks init
+npm init ice <project-name>
 ```
+
+`npm init <initializer>` 需要 npm 6+ 版本
 
 ## 生态
 
-|    项目         |    版本                                 |     文档    |   描述       |
+
+## 生态
+
+|    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |面向企业级中后台领域的 IDE|
-| [ice-scripts] | [![ice-scripts-status]][ice-scripts-package] | [docs][ice-scripts-docs] |基于 webpack 的高可配置开发构建工具|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |基于 React.js 的通用框架|
+| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化开发工作台|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
-| [react-materials] | / | [docs][react-materials-docs] |由官方提供的丰富的高质量 React 物料|
-| [vue-materials] | / | [docs][vue-materials-docs] |由社区维护的高质量 Vue 物料|
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
 
+[icejs]: https://github.com/ice-lab/icejs
 [iceworks]: https://github.com/alibaba/ice
-[ice-scripts]: https://github.com/ice-lab/ice-scripts
-[icestore]: https://github.com/ice-lab/icestore
 [icestark]: https://github.com/ice-lab/icestark
-[react-materials]: https://github.com/ice-lab/react-materials
-[vue-materials]: https://github.com/ice-lab/vue-materials
+[icestore]: https://github.com/ice-lab/icestore
 
+[icejs-status]: https://img.shields.io/npm/v/ice.js.svg
 [iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
-[ice-scripts-status]: https://img.shields.io/npm/v/ice-scripts.svg
-[icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
+[icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 
+[icejs-package]: https://npmjs.com/package/ice.js
 [iceworks-cli-package]: https://npmjs.com/package/iceworks
-[ice-scripts-package]: https://npmjs.com/package/ice-scripts
-[icestore-package]: https://npmjs.com/package/@ice/store
 [icestark-package]: https://npmjs.com/package/@ice/stark
+[icestore-package]: https://npmjs.com/package/@ice/store
 
-[vue-materials-docs]: https://ice.work/block?type=vue
-[react-materials-docs]: https://ice.work/scaffold
+[icejs-docs]: https://ice.work/docs/guide/intro
 [iceworks-docs]: https://ice.work/docs/iceworks/about
-[ice-scripts-docs]: https://ice.work/docs/cli/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 
