@@ -1,7 +1,6 @@
 {
   "router": {
-    "ignorePaths": ["stores", "components"],
-    "lazy": true
+    "ignorePaths": ["stores", "components"]
   },
   "ignoreHtmlTemplate": true,
   "plugins": [],

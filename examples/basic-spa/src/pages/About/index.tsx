@@ -18,7 +18,7 @@ const About = () => {
     <>
       <h2>About Page</h2>
       <Child />
-      <Link to="/about">About</Link><br />
+      <Link to="/dashboard">dashboard</Link><br />
       <Link to="/">Home</Link>
     </>
   )
