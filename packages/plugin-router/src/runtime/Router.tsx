@@ -12,6 +12,14 @@ import {
   RouteComponentProps,
 } from 'react-router-dom';
 
+type IImport = Promise<{
+  default: React.ComponentType<any>;
+}>;
+
+interface IRouteWrapper {
+  (props: any): React.ComponentType<any>;
+}
+
 export interface RouteItemProps extends DefaultRouteProps {
   children?: RouteItemProps[];
   // disable string[]
@@ -19,9 +27,9 @@ export interface RouteItemProps extends DefaultRouteProps {
   // for rediect ability
   redirect?: string;
 
-  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IImport;
 
-  RouteWrapper?: React.ComponentType;
+  routeWrappers?: IRouteWrapper[];
 };
 
 interface RouterProps {
@@ -47,8 +55,34 @@ interface RoutesProps {
   routes: RouteItemProps[];
 };
 
+function isPromise(obj) {
+  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+}
+
+function wrapperRoute(component, routerWrappers) {
+  return (routerWrappers || []).reduce((acc, curr) => {
+    const compose = curr(acc)
+    if (acc.pageConfig) {
+      compose.pageConfig = acc.pageConfig
+    }
+    if (acc.getInitialProps) {
+      compose.getInitialProps = acc.getInitialProps
+    }
+    return compose;
+  }, component);
+}
+
+function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
+  return isPromise(component) ? React.lazy(() => (component as IImport).then((m) => {
+    if (routerWrappers && routerWrappers.length) {
+      m.default = wrapperRoute(m.default, routerWrappers);
+    }
+    return m;
+  })) : wrapperRoute(component, routerWrappers);
+}
+
 export function Router(props: RouterProps) {
-  const { type = 'hash', routes, lazy, fallback, ...others } = props;
+  const { type = 'hash', routes, fallback, ...others } = props;
   const typeToComponent = {
     hash: HashRouter,
     browser: BrowserRouter,
@@ -60,12 +94,9 @@ export function Router(props: RouterProps) {
 
   return (
     <RouterComponent {...others}>
-      {lazy?
-        <React.Suspense fallback={fallback || <div>Loading...</div>}>
-          <Routes routes={routes} />
-        </React.Suspense>
-        : <Routes routes={routes} />
-      }
+      <React.Suspense fallback={fallback || <div>Loading...</div>}>
+        <Routes routes={routes} />
+      </React.Suspense>
     </RouterComponent>
   );
 }
@@ -81,41 +112,38 @@ function Routes({ routes }: RoutesProps) {
             const { redirect, ...others } = route;
             return <Redirect key={id} from={route.path} to={redirect} {...others} />;
           } else {
-            const { RouteWrapper, component, ...others } = route;
-            if (RouteWrapper) {
-              const RouteComponent = component;
+            const { routeWrappers, component, ...others } = route;
+            if (routeWrappers) {
+              const RouteComponent = getRouteComponent(component, routeWrappers);
               return (
                 <Route
                   key={id}
                   {...others}
                   render={(props: RouteComponentProps) => {
                     return (
-                      <RouteWrapper {...others} {...props}>
-                        <RouteComponent {...props} />
-                      </RouteWrapper>
+                      <RouteComponent {...props} />
                     );
                   }}
                 />
               );
             } else {
-              return <Route key={id} component={component} {...others} />;
+              const routeComponent = getRouteComponent(component);
+              return <Route key={id} component={routeComponent} {...others} />;
             }
           }
         } else {
-          const { component: LayoutComponent, children, RouteWrapper, ...others } = route;
+          const { component, children, ...others } = route;
+          const LayoutComponent = getRouteComponent(component);
           const RenderComponent = (props: RouteComponentProps) => (
             <LayoutComponent {...props}>
               <Routes routes={children} />
             </LayoutComponent>
           );
-          const ComponentWithWrapper = RouteWrapper ? (props: RouteComponentProps) => (
-            <RouteWrapper {...others} {...props}><RenderComponent {...props} /></RouteWrapper>
-          ) : RenderComponent;
           return (
             <Route
               key={id}
               {...others}
-              component={ComponentWithWrapper}
+              component={RenderComponent}
             />
           );
         }
