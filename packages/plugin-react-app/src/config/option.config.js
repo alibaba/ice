@@ -21,4 +21,8 @@ module.exports = {
     module: false,
     commands: ['start'],
   },
+  'mode': {
+    module: false,
+    commands: ['start', 'build'],
+  }
 };

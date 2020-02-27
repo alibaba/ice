@@ -56,4 +56,12 @@ module.exports = {
   },
   ignoreHtmlTemplate: 'boolean',
   sourcemap: 'boolean',
+  terserOptions: 'object',
+  cssLoaderOptions:'object',
+  lessLoaderOptions: 'object',
+  sassLoaderOptions: 'object',
+  postcssrc: 'boolean',
+  compileDependencies: 'array',
+  babelPlugins: 'array',
+  babelPresets: 'array',
 };

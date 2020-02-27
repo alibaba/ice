@@ -13,7 +13,7 @@ import walker from './collector/walker';
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
 const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
-const plugin: IPlugin =  ({ context,onGetWebpackConfig, getValue, applyMethod, registerUserConfig }) => { 
+const plugin: IPlugin =  ({ context,onGetWebpackConfig, getValue, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
   // [enum] js or ts
   const projectType = getValue('PROJECT_TYPE');
@@ -21,7 +21,7 @@ const plugin: IPlugin =  ({ context,onGetWebpackConfig, getValue, applyMethod, r
   const iceTempPath = getValue('ICE_TEMP');
   const routersTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
-  const { configPath } = routerOptions;
+  const { configPath, lazy } = routerOptions;
   const routeConfigPath = configPath
     ? path.join(rootDir, configPath)
     : path.join(rootDir, `src/routes.${projectType}`);

@@ -52,12 +52,15 @@ class RuntimeModule {
 
   public appConfig: any;
 
+  public buildConfig: any;
+
   public modifyDOMRender: IDOMRender|null;
 
-  constructor(appConfig) {
+  constructor(appConfig, buildConfig) {
     this.renderRouter = () => () => <div>No route</div>;
     this.AppProvider = [];
     this.appConfig = appConfig;
+    this.buildConfig = buildConfig;
     this.modifyDOMRender = null;
     this.modifyRoutesRegistration = [];
     this.wrapperRouteRegistration = [];
@@ -74,7 +77,7 @@ class RuntimeModule {
 
     if (modules && modules.length) {
       modules.forEach((module) => {
-        if (module) module.default({ ...runtimeAPI, appConfig: this.appConfig });
+        if (module) module.default({ ...runtimeAPI, appConfig: this.appConfig, buildConfig: this.buildConfig });
       })
     }
   }
@@ -117,16 +120,7 @@ class RuntimeModule {
       if (item.children) {
         item.children = this.wrapperRoutes(item.children);
       } else if (item.component) {
-        item.component = this.wrapperRouteRegistration.reduce((acc, curr) => {
-          const compose = curr(acc)
-          if (acc.pageConfig) {
-            compose.pageConfig = acc.pageConfig
-          }
-          if (acc.getInitialProps) {
-            compose.getInitialProps = acc.getInitialProps
-          }
-          return compose;
-        }, item.component);
+        item.routeWrappers = this.wrapperRouteRegistration;
       }
       return item;
     });

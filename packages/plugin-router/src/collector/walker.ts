@@ -119,7 +119,7 @@ export default function walker({
   // amend collects
   amender(rootDir, routersTempPath, routesCollect);
   // generate splices
-  let routesSplices = splicer(routesCollect);
+  let routesSplices = splicer(routesCollect, routerOptions);
   // output into .tmp
   fse.outputFileSync(routersTempPath, routesSplices);
   routesSplices = null;

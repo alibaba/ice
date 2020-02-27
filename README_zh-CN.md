@@ -21,7 +21,7 @@
 - 🦁 **应用配置**：提供强大的和可扩展的应用程序配置
 - 🐴 **Hooks**：提供 useModel、useHistory 等 Hooks API
 - 🐌 **插件体系**：提供插件机制，可以扩展框架的核心功能
-- 🐘 **typescript**：默认使用 typescript 
+- 🐘 **TypeScript**：默认使用 TypeScript 
 - 🐂**Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
 
 ## 快速开始
@@ -101,6 +101,16 @@ createApp(appConfig)
 ```
 
 最后，运行 `npm run start` 启动项目，启动完成后会自动打开浏览器访问 [http://localhost:3333](http://localhost:3333) .
+
+## 项目示例
+
+- [hello-world](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/hello-world)
+- [basic-spa](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/basic-spa)
+- [basic-store](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/basic-store)
+- [basic-request](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/basic-request)
+- [icestark-child](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/icestark-child)
+- [icestark-layout](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/icestark-layout)
+- [with-fusion-design](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/with-fusion-design)
 
 ## 贡献代码
 

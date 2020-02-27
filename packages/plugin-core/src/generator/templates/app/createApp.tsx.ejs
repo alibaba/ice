@@ -15,7 +15,7 @@ const defaultAppConfig = {
 
 function createApp(customConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig)
-  const runtime = new RuntimeModule(appConfig)
+  const runtime = new RuntimeModule(appConfig, <%- buildConfig %>)
   <% if (runtimeModules.length) {%>
   runtime.loadModlues([<% runtimeModules.forEach((modulePath) => { %>require('<%= modulePath %>'),<% }); %>])
   <% } %>
@@ -31,7 +31,7 @@ function renderApp(runtime) {
   const appMountNode = mountNode || document.getElementById(rootId)
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
-  
+
   function App() {
     const appContent = (
       <AppRouter />
