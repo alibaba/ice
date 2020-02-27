@@ -1,0 +1,12 @@
+{
+  "router": {
+    "ignorePaths": ["stores", "components"]
+  },
+  "ignoreHtmlTemplate": true,
+  "plugins": [],
+  "modeConfig": {
+    "prod": {
+      "ignoreHtmlTemplate": false
+    }
+  }
+}

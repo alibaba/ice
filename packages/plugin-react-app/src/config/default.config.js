@@ -46,4 +46,12 @@ module.exports = {
   libraryExport: '',
   ignoreHtmlTemplate: false,
   sourcemap: false,
+  terserOptions: {},
+  cssLoaderOptions: {},
+  lessLoaderOptions: {},
+  sassLoaderOptions: {},
+  postcssrc: false,
+  compileDependencies: [],
+  babelPlugins: [],
+  babelPresets: [],
 };

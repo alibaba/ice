@@ -11,7 +11,9 @@ import { APP_MODE } from 'ice'
 
 const appConfig = {
   // set loglevel
-  loglevel: APP_MODE === 'development' ? 'error' : 'warn'
+  logger: {
+    level: APP_MODE === 'development' ? 'error' : 'warn'
+  }
 }
 ```
 

@@ -3,8 +3,8 @@ import * as fse from 'fs-extra'
 import { IPlugin } from '@alib/build-scripts'
 
 const plugin: IPlugin = async (api): Promise<void> => {
-  const { context, getValue, applyMethod, onGetWebpackConfig, registerCliOption } = api
-  const { commandArgs, command, rootDir } = context
+  const { context, getValue, applyMethod } = api
+  const { command, rootDir } = context
 
   const configFile = `src/config.${getValue('PROJECT_TYPE')}`
 
@@ -34,17 +34,6 @@ const plugin: IPlugin = async (api): Promise<void> => {
       }
     })
   }
-
-  registerCliOption({ name: 'mode', commands: ['start', 'build'] })
-
-  onGetWebpackConfig((config) => {
-    const appMode = commandArgs.mode || command;
-
-    const defineVariables = { 'process.env.APP_MODE': JSON.stringify(appMode) }
-    config
-      .plugin('DefinePlugin')
-      .tap((args) => [Object.assign({}, ...args, defineVariables)]);
-  });
 };
 
 export default plugin
