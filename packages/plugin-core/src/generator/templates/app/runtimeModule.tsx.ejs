@@ -120,16 +120,7 @@ class RuntimeModule {
       if (item.children) {
         item.children = this.wrapperRoutes(item.children);
       } else if (item.component) {
-        item.component = this.wrapperRouteRegistration.reduce((acc, curr) => {
-          const compose = curr(acc)
-          if (acc.pageConfig) {
-            compose.pageConfig = acc.pageConfig
-          }
-          if (acc.getInitialProps) {
-            compose.getInitialProps = acc.getInitialProps
-          }
-          return compose;
-        }, item.component);
+        item.routeWrappers = this.wrapperRouteRegistration;
       }
       return item;
     });
