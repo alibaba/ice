@@ -6,7 +6,7 @@ const Home = (props) => {
 
   return (
     <>
-      <h2>404040404 Page...</h2>
+      <h2>404 Page...</h2>
       <Link to="/">home</Link><br />
       <Link to="/about">About</Link><br />
       <Link to="/dashboard">Dashboard</Link>
