@@ -44,7 +44,7 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) 
     if (!payload.nestImportsNames.includes(component)) {
       let nestImportsData = `import ${component} from '${filePath}';\n`;
       if (lazy) {
-        nestImportsData = `const ${component} = lazy(() => import(/* webpackChunkName: '${component}' */ '${filePath}'));\n`;
+        nestImportsData = `const ${component} = import(/* webpackChunkName: '${component}' */ '${filePath}');\n`;
       }
       payload.nestImports.push(nestImportsData);
       // record component exists
@@ -75,15 +75,10 @@ ${indentTabs}},`)
 }
 
 export default function splicer(routesCollect: ICollectItem[], routerOptions) {
-  const { lazy } = routerOptions;
   // loop data
   const payload: IPlayload = { nestImports: [], nestImportsNames: [], nestSlice: [], indent: 1 };
   // init loop
   loopSplice(payload, routesCollect, routerOptions);
 
-  let data = `${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
-  if (lazy) {
-    data = `import { lazy } from 'react';\n${data}`
-  }
-  return data;
+  return `${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
 }
