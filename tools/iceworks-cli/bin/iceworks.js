@@ -125,29 +125,6 @@ program
   });
 
 program
-  .command('use <version>')
-  .description('specify the iceworks-core version')
-  .on('--help', () => {
-    console.log('');
-    console.log('Examples:');
-    console.log('');
-    console.log('Use the available 3.0.0 release');
-    console.log('  $ iceworks use 3.0.0');
-  })
-  .action(async (version, cmd) => {
-    const options = cleanArgs(cmd);
-    options.version = version;
-    try {
-      // eslint-disable-next-line global-require
-      await require('../command/start')(options);
-    }  catch (err) {
-      log.error('iceworks start error', err.message);
-      console.error(err.stack);
-      process.exit(1);
-    }
-  });
-
-program
   .command('config [type] [key] [value]')
   .description('operate iceworks global config')
   .on('--help', () => {
@@ -187,32 +164,16 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
-(async () => {
-  // log local version
-  logCLIVersion();
 
-  // check node version
-  checkNodeVersion();
+// log local version
+logCLIVersion();
 
-  try {
-    // check iceworks version
-    await checkIceworksVersion();
-  } catch (error) {
-    console.log(error);
-  }
+// check node version
+checkNodeVersion();
 
-  if (!process.argv.slice(2).length) {
-    // start web server for iceworks 3.0
-    try {
-      // eslint-disable-next-line global-require
-      await require('../command/start')(cleanArgs());
-    }  catch (err) {
-      log.error('iceworks start error', err.message);
-      console.error(err.stack);
-      process.exit(1);
-    }
-  }
-})();
+if (!process.argv.slice(2).length) {
+  program.help()
+}
 
 function camelize(str) {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
