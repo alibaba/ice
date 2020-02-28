@@ -307,6 +307,54 @@ import {
 } from 'ice';
 ```
 
+## 按需加载
+
+### 配置式路由
+
+在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `import()` 语法引入组件即可： 
+
+```diff
+// src/routes.ts
+- import UserLogin from '@/pages/UserLogin';
++ const UserLogin = import('@/pages/UserLogin');
+
+const routerConfig = [
+  {
+    path: '/login',
+    component: UserLogin,
+  },
+]
+```
+
+### 约定式路由
+
+在约定式路由中如果需要开启按需加载，只需要在 `build.json` 中的 router 选项配置 lazy 属性即可：
+
+```diff
+// build.json
+{
+  "router": {
++    "lazy": true
+  }
+}
+```
+
+### fallback
+
+当组件动态加载过程中或者组件渲染失败时，可以通过 fallback 属性设置提示：
+
+```diff
+import { createApp } from 'ice'
+
+const appConfig = {
+  router: {
++    fallback: <div>loading...</div>
+  }
+}
+
+createApp(appConfig)
+```
+
 ## 常见问题
 
 ### 路由带着 `#` 号？
