@@ -21,7 +21,7 @@ icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单�
 ```
 
 * [ice-scripts@1.x 插件列表](https://ice.alibaba-inc.com/docs/cli/plugin-list/fusion)
-* [icejs 插件列表](https://ice.work/docs/guide/develop/plugin-dev)
+* [icejs 插件列表](https://ice.work/docs/guide/develop/plugin-list)
 
 ### 修改配置文件
 
