@@ -132,6 +132,8 @@ createApp(appConfig);
 icejs 规范和强约束了项目的目录结构，因此只需要按照规范就行编辑即可，不在需要额外的引用
 
 - 删除 `src/router.jsx` 文件
-- 移动 `src/config/routes.js` 路由配置至 `src/router.js` 中
+- 移动 `src/config/routes.js` 路由配置至 `src/routes.js` 中
 - 在 `.gitignore` 中新增 `.ice/` 目录
 - 在根目录下新建 `tsconfig.json` 文件，[配置详见](https://github.com/ice-lab/icejs/blob/master/examples/basic-spa/tsconfig.json)
+- 如果项目存在 `src/models/*`、`src/pages/*/model.js` 或者 `src/pages/*/models/*` 的目录文件，需要在 `build.json` 中配置 `store: fasle`
+- 如果你的项目已经使用 icestore 且版本小于 1.0.0 版本，可以选择按需升级或者在 `build.json` 中配置 `store: fasle` 关闭内置的方案
