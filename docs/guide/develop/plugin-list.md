@@ -33,7 +33,7 @@ Options：
 
 ```json
 {
-  plugins: [
+  "plugins": [
     ["build-plugin-fusion", {
       "themePackage": "@icedesign/theme",
       "nextPrefix": "nextfd-",
@@ -48,7 +48,7 @@ Options：
 ```json
 
 {
-  plugins: [
+  "plugins": [
     ["build-plugin-fusion", {
       "themeConfig": {
         "primaryColor": "#f60",
