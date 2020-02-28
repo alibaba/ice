@@ -214,7 +214,7 @@ logCLIVersion();
 checkNodeVersion();
 
 if (!process.argv.slice(2).length) {
-  program.help()
+  program.help();
 }
 
 function camelize(str) {
