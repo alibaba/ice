@@ -134,3 +134,4 @@ icejs 规范和强约束了项目的目录结构，因此只需要按照规范�
 - 删除 `src/router.jsx` 文件
 - 移动 `src/config/routes.js` 路由配置至 `src/router.js` 中
 - 在 `.gitignore` 中新增 `.ice/` 目录
+- 在根目录下新建 `tsconfig.json` 文件，[配置详见](https://github.com/ice-lab/icejs/blob/master/examples/basic-spa/tsconfig.json)
