@@ -19,7 +19,7 @@ program.arguments('<command>').action((cmd) => {
 
 program
   .command('start')
-  .description('Start and open the iceworks')
+  .description('start and open the iceworks')
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
