@@ -18,6 +18,26 @@ program.arguments('<command>').action((cmd) => {
 });
 
 program
+  .command('start')
+  .description('Start and open the iceworks')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('');
+    console.log('  $ iceworks start');
+  })
+  .action(async (version, cmd) => {
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/start')();
+    }  catch (err) {
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
   .command('init [type] [npmName]')
   .description('init project/material/component by template')
   .on('--help', () => {
@@ -125,6 +145,29 @@ program
   });
 
 program
+  .command('use <version>')
+  .description('specify the iceworks-core version')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('');
+    console.log('Use the available 3.0.0 release');
+    console.log('  $ iceworks use 3.0.0');
+  })
+  .action(async (version, cmd) => {
+    const options = cleanArgs(cmd);
+    options.version = version;
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/start')(options);
+    }  catch (err) {
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
   .command('config [type] [key] [value]')
   .description('operate iceworks global config')
   .on('--help', () => {
@@ -164,7 +207,6 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
-
 // log local version
 logCLIVersion();
 
@@ -172,7 +214,7 @@ logCLIVersion();
 checkNodeVersion();
 
 if (!process.argv.slice(2).length) {
-  program.help();
+  program.help()
 }
 
 function camelize(str) {
