@@ -104,13 +104,13 @@ Finally, To start developing your application run `npm run start`. The applicati
 
 ## Examples
 
-- [hello-world](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/hello-world)
-- [basic-spa](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/basic-spa)
-- [basic-store](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/basic-store)
-- [basic-request](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/basic-request)
-- [icestark-child](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/icestark-child)
-- [icestark-layout](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/icestark-layout)
-- [with-fusion-design](https://codesandbox.io/s/github/ice-lab/icejs/tree/feat/awesome-examples/examples/with-fusion-design)
+- [hello-world](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/hello-world)
+- [basic-spa](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-spa)
+- [basic-store](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-store)
+- [basic-request](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-request)
+- [icestark-child](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/icestark-child)
+- [icestark-layout](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/icestark-layout)
+- [with-fusion-design](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/with-fusion-design)
 
 ## Contributing
 
