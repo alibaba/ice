@@ -214,6 +214,10 @@ logCLIVersion();
 checkNodeVersion();
 
 if (!process.argv.slice(2).length) {
+  console.log();
+  console.log(chalk.cyan('If you want to start iceworks web page, please use `iceworks start`'));
+  console.log();
+
   program.help();
 }
 
