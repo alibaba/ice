@@ -11,7 +11,7 @@ test('downloadAndGenerateProject build-scripts', async () => {
   const projectDir = path.resolve(tmpPath, 'build-scripts');
   await fs.ensureDir(projectDir);
 
-  await downloadAndGenerateProject(projectDir, '@alifd/fusion-design-pro');
+  await downloadAndGenerateProject(projectDir, '@alifd/scaffold-lite');
   // await fs.remove(projectDir);
 });
 

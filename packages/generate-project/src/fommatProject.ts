@@ -56,8 +56,10 @@ export default async function formatProject(projectDir: string): Promise<void> {
       const pluginName = typeof item === 'string' ? item : item[0];
       return pluginName === 'build-plugin-fusion-material';
     });
-    buildData.plugins.splice(index, 1);
-    delete pkgData.devDependencies['build-plugin-fusion-material'];
+    if (index !== -1) {
+      buildData.plugins.splice(index, 1);
+      delete pkgData.devDependencies['build-plugin-fusion-material'];
+    }
 
     fse.writeJSONSync(buildJsonPath, buildData, {
       spaces: 2,
