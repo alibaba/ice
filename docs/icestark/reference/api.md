@@ -45,6 +45,12 @@ order: 1
 - 类型：`Function(appConfig)`
 - 默认值：`-`
 
+#### basename
+
+- 子应用路由匹配统一添加 basename，选填
+- 类型：`string`
+- 默认值：`''`
+
 ### AppRoute
 
 子应用注册组件，包含如下 props 属性：
@@ -142,6 +148,12 @@ order: 1
 - 表示当前跳转需要弹窗确认，message 为提示文案内容，选填
 - 类型：`string`
 - 默认值：`-`
+
+#### hashType
+
+- 当前跳转以 `hash` 路由形式进行跳转，选填
+- 类型：`boolean`
+- 默认值：`false`
 
 代码示例：
 
