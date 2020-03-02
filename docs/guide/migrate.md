@@ -58,10 +58,11 @@ module.exports = {
 icejs 默认入口文件为 `app.(js|ts)`，因此不需要在单独配置：
 
 ```json
+{
   "plugins": [
     ["build-plugin-fusion", {
       "themePackage": "@icedesign/theme"
-    }]
+    }],
     "./build.plugin.js"
   ]
 }
