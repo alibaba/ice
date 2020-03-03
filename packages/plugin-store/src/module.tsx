@@ -27,20 +27,18 @@ export default ({ addProvider, wrapperRouteComponent, appConfig }) => {
   wrapperRouteComponent(wrapperComponent);
 
   const StoreProvider = ({children}) => {
-    if (AppStore) {
-      let initialStates = {}
-      if (appConfig.store && appConfig.store.initialStates) {
-        initialStates = appConfig.store.initialStates
-      }
-      return (
-        <AppStore.Provider initialStates={initialStates}>
-          {children}
-        </AppStore.Provider>
-      )
-    } else {
-      return <div>{children}</div>
+    let initialStates = {}
+    if (appConfig.store && appConfig.store.initialStates) {
+      initialStates = appConfig.store.initialStates
     }
+    return (
+      <AppStore.Provider initialStates={initialStates}>
+        {children}
+      </AppStore.Provider>
+    )
   }
 
-  addProvider(StoreProvider)
+  if (AppStore) {
+    addProvider(StoreProvider)
+  }
 }
