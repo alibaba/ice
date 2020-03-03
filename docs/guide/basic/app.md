@@ -18,6 +18,9 @@ const appConfig = {
   app: {
     rootId: 'ice-container'
   },
+  // 状态管理配置
+  store: {
+  },
   // 路由配置
   router: {
   },
@@ -42,8 +45,13 @@ import { createApp } from 'ice';
 
 const appConfig = {
   app: {
+    // 可选，根节点 id，默认为 ice-container
     rootId: 'ice-container',
+
+    // 可选，根节点 DOM 元素
     mountNode: document.getElementById('#ice-container'),
+
+    // 可选，自定义添加 Provider
     addProvider: (children) => {
       return <ConfigProvider>{children}</ConfigProvider>;
     }
