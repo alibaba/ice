@@ -21,7 +21,7 @@ const plugin: IPlugin =  ({ context,onGetWebpackConfig, getValue, applyMethod, r
   const iceTempPath = getValue('ICE_TEMP');
   const routersTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
-  const { configPath, lazy } = routerOptions;
+  const { configPath } = routerOptions;
   const routeConfigPath = configPath
     ? path.join(rootDir, configPath)
     : path.join(rootDir, `src/routes.${projectType}`);
