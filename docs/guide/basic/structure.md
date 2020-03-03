@@ -28,27 +28,27 @@ icejs 的默认应用目录架构提供了良好的代码分层结构，适用�
 └── tsconfig.json
 ```
 
-## .ice
+## .ice/
 
 运行 icejs 项目时默认生成的临时目录，该目录不需要进行 git 提交。
 
-## build
+## build/
 
 运行 `npm run build` 后的构建产物目录。
 
-## mock
+## mock/
 
 本地模拟数据的目录。[详见](https://ice.work/docs/guide/advance/mock)
 
-## public
+## public/
 
 静态资源目录，默认包含 `index.html` 和 `favicon.png`。
 
-## src
+## src/
 
 源码目录
 
-### components
+### components/
 
 项目通用的组件目录，推荐的目录形式如下：
 
@@ -59,7 +59,7 @@ Guide/
   └── __tests__          # 就近测试用例
 ```
 
-### layouts
+### layouts/
 
 项目的布局文件目录，布局通常包含导航配置，布局组件，样式三部分，推荐的目录形式如下：
 
@@ -70,7 +70,7 @@ BasicLayout/
   └── index.module.scss
 ```
 
-### models
+### models/
 
 项目的全局数据模型目录，通常包含多个 model 文件，推荐的目录形式如下。[详见](https://ice.work/docs/guide/basic/store)
 
@@ -81,7 +81,7 @@ models/
 ```
 
 
-### pages
+### pages/
 
 项目的页面文件目录，页面通常包含数据模型，页面组件、样式三部分，推荐的目录形式如下。
 
