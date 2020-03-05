@@ -1,8 +1,3 @@
-/**
- * @file build-plugin-router.
- * @author tony7lee
- */
-
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin } from '@alib/build-scripts'
@@ -26,6 +21,11 @@ const plugin: IPlugin =  ({ context,onGetWebpackConfig, getValue, applyMethod, r
     ? path.join(rootDir, configPath)
     : path.join(rootDir, `src/routes.${projectType}`);
   const hasRouteFile = fse.existsSync(routeConfigPath);
+
+  // copy types
+  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types.ts'));
+  applyMethod('addIceTypesExport', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+
   // modify webpack config
   onGetWebpackConfig((config) => {
     // add alias

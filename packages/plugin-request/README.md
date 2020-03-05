@@ -26,9 +26,7 @@ import { createApp } from 'ice';
 const appConfig = {
   request: {
     // ref: https://github.com/axios/axios#request-config
-    config: {
-
-    },
+    ...config,
     // ref: https://github.com/axios/axios#interceptors
     interceptors: {
       request: {

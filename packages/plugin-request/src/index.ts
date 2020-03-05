@@ -14,6 +14,9 @@ export default async function (api) {
   applyMethod('addIceExport', { source: './request/request', exportName: 'request' })
   applyMethod('addIceExport', { source: './request/useRequest', exportName: 'useRequest' })
 
+  // add iceTypes exports
+  applyMethod('addIceTypesExport', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
+
   onGetWebpackConfig((config) => {
     // add alias for module.ts use $ice/axiosInstance
     config.resolve.alias.set('$ice/axiosInstance', path.join(distPath, 'axiosInstance.ts'))

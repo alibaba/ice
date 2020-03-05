@@ -6,8 +6,12 @@ const plugin: IPlugin = async ({ getValue, applyMethod, onGetWebpackConfig }): P
   const exportName = 'logger';
   const distPath =  path.join(getValue('ICE_TEMP'), exportName);
   await fse.copy(path.join(__dirname, `../${exportName}`), distPath);
-  // add exports
+  // add ice exports
   applyMethod('addIceExport', { source: `./${exportName}`, exportName });
+
+  // add iceTypes exports
+  applyMethod('addIceTypesExport', { source: `./${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });
+
   onGetWebpackConfig((config) => {
     // add alias for module.ts use $ice/logger
     config.resolve.alias.set('$ice/logger', distPath);

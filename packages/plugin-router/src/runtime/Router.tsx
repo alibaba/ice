@@ -8,52 +8,10 @@ import {
   Route,
   Redirect,
 
-  RouteProps as DefaultRouteProps,
-  RouteComponentProps,
+  RouteComponentProps
 } from 'react-router-dom';
+import { RoutesProps, RouterProps, IImport, IRouteWrapper } from '../types'
 
-type IImport = Promise<{
-  default: React.ComponentType<any>;
-}>;
-
-interface IRouteWrapper {
-  (props: any): React.ComponentType<any>;
-}
-
-export interface RouteItemProps extends DefaultRouteProps {
-  children?: RouteItemProps[];
-  // disable string[]
-  path?: string;
-  // for rediect ability
-  redirect?: string;
-
-  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IImport;
-
-  routeWrappers?: IRouteWrapper[];
-};
-
-interface RouterProps {
-  // custom props
-  routes: RouteItemProps[];
-  type?: 'hash' | 'browser' | 'memory';
-  // common props for BrowserRouter&HashRouter&MemoryRouter
-  basename?: string;
-  getUserConfirmation?: ((message: string, callback: (ok: boolean) => void) => void);
-  forceRefresh?: boolean;
-  // for BrowserRouter
-  keyLength?: number;
-  // for HashRouter
-  hashType?: 'slash' | 'noslash' | 'hashbang';
-  // for MemoryRouter
-  initialEntries?: string[];
-  initialIndex?: number;
-  lazy?: boolean;
-  fallback?: React.ReactNode;
-};
-
-interface RoutesProps {
-  routes: RouteItemProps[];
-};
 
 function isPromise(obj) {
   return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
