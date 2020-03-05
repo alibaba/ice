@@ -48,7 +48,7 @@ It's as simple as that!
 
 ### Manual Setup
 
-icejs is really easy to get started with. Install `icejs`, `react` and `react-dom` in your project:
+icejs is really easy to get started with. Install `ice.js`, `react` and `react-dom` in your project:
 
 ```bash
 $ mkdir <project-name> && cd <project-name>
