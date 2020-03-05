@@ -290,16 +290,14 @@ icejs 的路由能力基于 react-router，因此你也可以获取到 react-rou
 ```js
 import {
   Link,
-  NavLink,
-  Prompt,
-
-  withRouter,
-  matchPath,
-
   useHistory,
   useLocation,
   useParams,
-  useRouteMatch
+  useRouteMatch,
+  withRouter,
+  matchPath,
+  NavLink,
+  Prompt,
 } from 'ice';
 ```
 
