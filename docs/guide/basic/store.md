@@ -17,7 +17,7 @@ icejs 支持 **全局状态** 和 **页面状态** 两种纬度：
 ```md
 src
 ├── models               // 全局状态：通常会有多个 model
-|   ├── foo.ts
+|   ├── counter.ts
 │   └── user.ts
 └── pages
 |   ├── Home
@@ -34,37 +34,20 @@ src
 状态定义方式如下：
 
 ```ts
-// src/models/todos.ts
-const todos = {
-  state: {
-    dataSource: [],
+// src/models/counter.ts
+export default {
+  state: 0,
+  reducers: {
+    increment:(prevState) => prevState + 1,
+    decrement:(prevState) => prevState - 1,
   },
-  actions: {
-    async fetch(prevState, actions) {
+  effects: {
+    async decrementAsync(state, payload, actions) {
       await delay(1000);
-      const dataSource = [
-        { name: 'react' },
-        { name: 'vue', done: true},
-        { name: 'angular' },
-      ];
-      return {
-        ...prevState,
-        dataSource,
-      }
+      actions.decrement();
     },
-    add(prevState, todo) {
-      return {
-        ...prevState,
-        dataSource: [
-          ...prevState.dataSource,
-          todo,
-        ]
-      };
-    },
-  },
+  }
 };
-
-export default todos;
 ```
 
 ## 视图绑定状态
@@ -77,14 +60,13 @@ import { store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
 
 const HomePage = () => {
-  // 全局状态：model 名称即文件名称 user.ts -> user
-  const [ userState, userAction ] = appStore.useModel('todos');
+  // 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
+  const [ counterState, counterAction ] = appStore.useModel('counter');
 
-  // 页面状态：一个 model 的情况 model 名称约定为 default
+  // 页面状态：一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
   const [ pageState, pageAction ] = pageStore.useModel('default');
 
-  // 页面状态：多个 model 的情况，model 名称即文件名
-  const { store: pageStore } = usePage();
+  // 页面状态：多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
   const [ fooState, fooAction ] = pageStore.useModel('foo');
 
   return (
@@ -107,7 +89,7 @@ const HomePage = () => {
 import { store } from 'ice';
 
 function FunctionComponent() {
-  const actions = store.useModelActions('todos');
+  const actions = store.useModelActions('counter');
 
   useEffect(() => {
     actions.fetch();
@@ -117,21 +99,21 @@ function FunctionComponent() {
 
 ### 异步 Action 状态
 
-通过 `useModelActions` API 即可获取到异步 action 的 loading 和 error 状态：
+通过 `useModelEffectsState` API 即可获取到异步 action 的 loading 和 error 状态：
 
 ```js
 import { store } from 'ice';
 
 function FunctionComponent() {
-  const [state, actions] = store.useModel('todos');
-  const actionsState = store.useModelActionsState('todos');
+  const [state, actions] = store.useModel('counter');
+  const actionsState = store.useModelEffectsState('counter');
 
   useEffect(() => {
-    actions.add();
+    actions.decrementAsync();
   }, []);
 
-  actionsState.add.isLoading;
-  actionsState.add.error;
+  actionsState.decrementAsync.isLoading;
+  actionsState.decrementAsync.error;
 }
 ```
 
@@ -140,22 +122,22 @@ function FunctionComponent() {
 action 方法第三和第四个参数分别可以拿到当前 model 以及全局 model 的所有 actions：
 
 ```tsx
-// src/models/tasks
-import { user }  from './user';
+// src/models/todo.ts
+import { counter }  from './counter';
 
 export default {
   state: [],
   actions: {
     async refresh() {
-      return await fetch('/tasks');
+      return await fetch('/todos');
     },
-    async add(prevState, task, actions, globalActions) {
-      await fetch('/tasks/add', task);
+    async add(prevState, payload, actions, globalActions) {
+      await fetch('/todos/add', payload);
 
-      // Retrieve user information after adding tasks
-      await globalActions.user.refresh();
+      // 调用 counter 模型的 decrementAsync 方法
+      await globalActions.counter.decrementAsync();
 
-      // Retrieve todos after adding tasks
+      // 调用当前模型的 refresh 方法
       await actions.refresh();
 
       return { ...prevState };
@@ -186,4 +168,6 @@ export default store.withModel('todos')(TodoList);
 // export default withModel('user')(withModel('todos')(TodoList));
 ```
 
-同时，也可以使用 `withModelActions` 以及 `withModelActionsState` API。
+同时，也可以使用 `withModelActions` 以及 `withModelEffectsState` API。
+
+[更多详见 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
