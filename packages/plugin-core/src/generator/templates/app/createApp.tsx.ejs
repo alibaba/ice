@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as deepmerge from 'deepmerge'
 import RuntimeModule from './runtimeModule'
+import { IAppConfig } from './types'
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 const defaultAppConfig = {
@@ -13,7 +14,7 @@ const defaultAppConfig = {
   }
 }
 
-function createApp(customConfig) {
+function createApp(customConfig: IAppConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig)
   const runtime = new RuntimeModule(appConfig, <%- buildConfig %>)
   <% if (runtimeModules.length) {%>
