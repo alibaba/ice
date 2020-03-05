@@ -1,6 +1,4 @@
-import { createApp, APP_MODE, config } from 'ice'
-
-console.log('app config', config);
+import { createApp, APP_MODE } from 'ice'
 
 const appConfig = {
   app: {
@@ -18,17 +16,6 @@ const appConfig = {
           console.log('interceptors response:', conf)
           return conf
         }
-      }
-    }
-  },
-  store: {
-    initialStates: {
-      user: {
-        name: 'taoxiaobao',
-        age: 21
-      },
-      login: {
-        isLogin: true
       }
     }
   }
