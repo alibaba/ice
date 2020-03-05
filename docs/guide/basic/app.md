@@ -12,21 +12,23 @@ order: 2
 ```ts
 import { createApp } from 'ice';
 
-// 用于配置
+// 应用配置
 const appConfig = {
   // 启动项配置
-  app: {
-    rootId: 'ice-container'
-  },
+  app: { },
+
+  // 状态管理配置
+  store: { },
+
   // 路由配置
-  router: {
-  },
+  router: { },
+
   // 请求配置
-  request: {
-  },
+  request: { },
+
   // 日志配置
-  logger: {
-  }
+  logger: { }
+
   // ...其他更多配置
 };
 
@@ -42,8 +44,13 @@ import { createApp } from 'ice';
 
 const appConfig = {
   app: {
+    // 可选，根节点 id，默认为 ice-container
     rootId: 'ice-container',
+
+    // 可选，根节点 DOM 元素
     mountNode: document.getElementById('#ice-container'),
+
+    // 可选，自定义添加 Provider
     addProvider: (children) => {
       return <ConfigProvider>{children}</ConfigProvider>;
     }

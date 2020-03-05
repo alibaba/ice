@@ -3,6 +3,15 @@ title: 迁移到 icejs
 order: 4
 ---
 
+## 为什么要迁移到 icejs
+
+只需要添加一个 icejs 依赖，即可拥有以下功能：
+
+* 基于 build-scripts 实现，且完全兼容 ice-scripts@2.x 的配置能力，更好的构建体验
+* 内置支持基于 icestore 的状态管理方案，使用更简单更友好
+* 内置支持基于 axios 的数据请求方案，以及日志、工具函数等功能
+* 丰富的插件支持，通过插件可快速接入和编写 SPA、MPA、微前端、SSR 等应用类型
+
 ## 从 ice-scripts@2.x 迁移
 
 ### 修改 package.json 
