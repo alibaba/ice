@@ -193,7 +193,7 @@ export default [
 在 `src/app.ts` 中，我们可以配置路由的类型和基础路径等路由信息，具体配置如下：
 
 ```jsx
-import { createApp } from 'ice'
+import { createApp } from 'ice';
 
 const appConfig = {
   router: {
@@ -272,7 +272,7 @@ const routerConfig = [
 当组件动态加载过程中或者组件渲染失败时，可以通过 fallback 属性设置提示：
 
 ```diff
-import { createApp } from 'ice'
+import { createApp } from 'ice';
 
 const appConfig = {
   router: {
@@ -280,7 +280,7 @@ const appConfig = {
   }
 }
 
-createApp(appConfig)
+createApp(appConfig);
 ```
 
 ## 路由 API
@@ -313,7 +313,7 @@ import { Link } from 'ice';
 function Demo() {
   return (
     <div>
-      <Link to="/courses?sort=name" />
+      <Link to='/courses?sort=name' />
 
       {/* 可以携带额外的数据 `state` 到路由中。 */}
       <Link
@@ -329,19 +329,42 @@ function Demo() {
 }
 ```
 
-### NavLink
+### useHistory
 
-NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件匹配时可以添加 active 属性。
+useHistory hook 用于获取导航的 history 实例。
 
-```jsx
-<NavLink to="/faq" activeClassName="selected">
-  FAQs
-</NavLink>
+
+```js
+mport { useHistory } from 'ice';
+
+function HomeButton() {
+  const history = useHistory();
+
+  function handleClick() {
+    history.push('/home);
+  }
+
+  return (
+    <button type='button' onClick={handleClick}>
+      Go home
+    </button>
+  );
+}
 ```
 
-### Prompt
+### useLocation
 
-在离开页面路由跳转时，自定义拦截组件。
+useLocation hook 返回代表当前 URL 的 location 对象。可以像 useState 一样使用它，只要 URL 更改，它就会返回一个新位置。
+
+### useParams
+
+useParams hook 返回 URL 参数的 key/value 的对象。 使用它来访问当前 <Route> 的 match.params。
+
+### useRouteMatch
+
+useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主要用于在不实际渲染 <Route> 的情况下访问匹配数据。
+
+[更多使用示例](https://reacttraining.com/react-router/web/example/basic)
 
 ### withRouter
 
@@ -373,51 +396,28 @@ export default withRouter(ShowTheLocation);
 判断当前 URL 是否匹配。
 
 ```js
-import { matchPath } from "ice";
+import { matchPath } from 'ice';
 
-const match = matchPath("/users/123", {
-  path: "/users/:id",
+const match = matchPath('/users/123', {
+  path: '/users/:id',
   exact: true,
   strict: false
 });
 ```
 
-### useHistory
+### NavLink
 
-useHistory hook 用于获取导航的 history 实例。
+NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件匹配时可以添加 active 属性。
 
-
-```js
-mport { useHistory } from "ice";
-
-function HomeButton() {
-  let history = useHistory();
-
-  function handleClick() {
-    history.push("/home");
-  }
-
-  return (
-    <button type="button" onClick={handleClick}>
-      Go home
-    </button>
-  );
-}
+```jsx
+<NavLink to='/faq' activeClassName='selected'>
+  FAQs
+</NavLink>
 ```
 
-### useLocation
+### Prompt
 
-useLocation hook 返回代表当前 URL 的 location 对象。可以像 useState 一样使用它，只要 URL 更改，它就会返回一个新位置。
-
-### useParams
-
-useParams hook 返回 URL 参数的 key/value 的对象。 使用它来访问当前 <Route> 的 match.params。
-
-### useRouteMatch
-
-useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主要用于在不实际渲染 <Route> 的情况下访问匹配数据。
-
-[更多使用示例](https://reacttraining.com/react-router/web/example/basic)
+在离开页面路由跳转时，自定义拦截组件。
 
 ## 常见问题
 
@@ -440,7 +440,7 @@ useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主�
 本地开发时，只需要在 `src/app.ts` 中增加以下配置即可：
 
 ```diff
-import { createApp } from 'ice'
+import { createApp } from 'ice';
 
 const appConfig = {
   router: {
