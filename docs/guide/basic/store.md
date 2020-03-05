@@ -23,7 +23,7 @@ src
 |   ├── Home
 |   │   ├── index.tsx
 |   │   └── model.ts     // 页面级状态：通常只有一个 model
-|   ├── Dashboard
+|   ├── About
 |   │   ├── index.tsx
 │   |   └── model.ts
 └── app.ts
@@ -35,15 +35,25 @@ src
 
 ```ts
 // src/models/counter.ts
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+
 export default {
-  state: 0,
-  reducers: {
-    increment:(prevState) => prevState + 1,
-    decrement:(prevState) => prevState - 1,
+  state: {
+    count: 0
   },
+
+  reducers: {
+    increment: (prevState) => {
+      return { count: prevState.count + 1 }
+    },
+    decrement: (prevState) => {
+      return { count: prevState.count - 1 }
+    }
+  },
+
   effects: {
-    async decrementAsync(state, payload, actions) {
-      await delay(1000);
+    decrementAsync: async (state, payload, actions) => {
+      await delay(10);
       actions.decrement();
     },
   }
@@ -60,18 +70,20 @@ import { store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
 
 const HomePage = () => {
-  // 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
-  const [ counterState, counterAction ] = appStore.useModel('counter');
+  // 1. 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
+  const [ counterState, counterActions ] = appStore.useModel('counter')
 
-  // 页面状态：一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
-  const [ pageState, pageAction ] = pageStore.useModel('default');
+  // 2. 页面状态：一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
+  // const [ pageState, pageAction ] = pageStore.useModel('default');
 
-  // 页面状态：多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
-  const [ fooState, fooAction ] = pageStore.useModel('foo');
+  // 3. 页面状态：多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
+  // const [ fooState, fooAction ] = pageStore.useModel('foo');
 
   return (
     <>
-      // jsx code
+      <button type="button" onClick={counterActions.increment}>+</button>
+      <span>{counterState.count}</span>
+      <button type="button" onClick={counterActions.decrementAsync}>-</button>
     </>
   );
 }
@@ -89,11 +101,9 @@ const HomePage = () => {
 import { store } from 'ice';
 
 function FunctionComponent() {
+  // 只调用 increment 方法
   const actions = store.useModelActions('counter');
-
-  useEffect(() => {
-    actions.fetch();
-  }, []);
+  actions.increment();
 }
 ```
 
@@ -122,28 +132,37 @@ function FunctionComponent() {
 action 方法第三和第四个参数分别可以拿到当前 model 以及全局 model 的所有 actions：
 
 ```tsx
-// src/models/todo.ts
-import { counter }  from './counter';
-
+// src/models/user.ts
 export default {
-  state: [],
-  actions: {
-    async refresh() {
-      return await fetch('/todos');
+  state: {
+    name: '',
+    id: ''
+  },
+
+  reducers: {
+    update: (prevState, payload) => {
+      return {
+        ...prevState,
+        ...payload,
+      };
     },
-    async add(prevState, payload, actions, globalActions) {
-      await fetch('/todos/add', payload);
+  },
 
-      // 调用 counter 模型的 decrementAsync 方法
-      await globalActions.counter.decrementAsync();
+  effects: {
+    getUserInfo: async (prevState, payload, actions, globalActions) => {
 
-      // 调用当前模型的 refresh 方法
-      await actions.refresh();
+      // 调用 counter 模型的 decrement 方法
+      globalActions.counter.decrement();
 
-      return { ...prevState };
+      // 调用当前模型的 update 方法
+      actions.update({
+        name: 'taobao',
+        id: '123',
+      });
     },
-  }
+  },
 };
+
 ```
 
 ### 在 Class Component 中使用
@@ -170,4 +189,5 @@ export default store.withModel('todos')(TodoList);
 
 同时，也可以使用 `withModelActions` 以及 `withModelEffectsState` API。
 
-[更多详见 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
+* [完整示例代码](https://github.com/ice-lab/icejs/tree/master/examples/basic-store)
+* [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
