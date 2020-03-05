@@ -1,5 +1,5 @@
 import Home from '@/pages/Home';
-import Counter from '@/pages/Counter';
+import About from '@/pages/About';
 
 export default [
   {
@@ -8,7 +8,7 @@ export default [
     component: Home
   },
   {
-    path: '/counter',
-    component: Counter
+    path: '/about',
+    component: About
   }
 ]

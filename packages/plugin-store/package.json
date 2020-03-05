@@ -24,7 +24,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@ice/store": "^1.0.0",
+    "@ice/store": "1.1.0-beta-0",
     "fs-readdir-recursive": "^1.1.0",
     "recursive-readdir": "^2.2.2"
   }

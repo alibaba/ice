@@ -1,33 +1,22 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, store as appStore } from 'ice'
 import { store as pageStore } from 'ice/Home'
 
 const Home = () => {
-  const [appState, appActions] = appStore.useModel('user')
+  const [counterState, counterActions] = appStore.useModel('counter')
   const [pageState] = pageStore.useModel('default')
-
-  useEffect(() => {
-    const fetch = async () => {
-      appActions.getUserInfo()
-    }
-    fetch()
-  }, [])
 
   return (
     <>
       <h2>{pageState.title}</h2>
 
       <div>
-        <strong>userName：</strong>
-        {appState.dataSource.userName}
+        <button type="button" onClick={counterActions.increment}>+</button>
+        <span>{counterState.count}</span>
+        <button type="button" onClick={counterActions.decrementAsync}>-</button>
       </div>
 
-      <div>
-        <strong>age：</strong>
-        {appState.dataSource.age}
-      </div>
-
-      <Link to="/counter">counter</Link>
+      <Link to="/about">about</Link>
     </>
   )
 };

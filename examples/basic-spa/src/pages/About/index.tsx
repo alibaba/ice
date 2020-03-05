@@ -1,11 +1,7 @@
 import React from 'react'
-import { Link, store as appStore } from 'ice'
-import { store as pageStore } from 'ice/About'
+import { Link } from 'ice'
 
 const Child = () => {
-  const [userState, useActions] = appStore.useModel('user')
-  const [pageState, pageActions] = pageStore.useModel('default')
-  console.log('render about child', { userState, useActions, pageState, pageActions });
   return (
     <div>
       Child
