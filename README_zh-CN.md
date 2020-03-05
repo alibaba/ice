@@ -48,7 +48,7 @@ $ npm run start # running on http://localhost:3333.
 
 如果不使用 icejs 提供的模板，也可以从头开始新建一个 icejs 应用项目，过程非常简单，如下所示：
 
-安装依赖 `icejs`, `react` 和 `react-dom`:
+安装依赖 `ice.js`, `react` 和 `react-dom`:
 
 ```bash
 $ mkdir <project-name> && cd <project-name>
