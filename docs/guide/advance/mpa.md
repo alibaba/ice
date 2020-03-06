@@ -75,7 +75,8 @@ createApp(appConfig);
   └── tsconfig.json
 ```
 
+关于状态管理的更多内容，请查看文档 [状态管理](https://ice.work/docs/guide/basic/store)
+
 只需要这么简单，你的 SPA 应用就可以变成 MPA 应用了。
 
-* 关于状态管理的更多内容，请查看文档 [状态管理](https://ice.work/docs/guide/basic/store)
 * MPA 项目示例 [详见](https://github.com/ice-lab/icejs/tree/master/examples/basic-mpa)
