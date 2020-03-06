@@ -12,7 +12,8 @@ MPA 应用以页面为维度进行划分，每个页面目录下面可单独配�
 ```diff
   ├── public/
 + │   ├── dashboard.html      # dashboard 页面 HTML
-+ │   ├── home.html           # home 页面 HTML
++ │   ├── index.html          # 未配置页面名称对应的 HTML 会默认使用 index.html
+
   │   └── favicon.png         # Favicon
   ├── src/                    # 源码
   │    ├── Dashboard/         # Dashboard 页面
