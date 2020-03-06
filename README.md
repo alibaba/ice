@@ -107,6 +107,7 @@ Finally, To start developing your application run `npm run start`. The applicati
 - [hello-world](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/hello-world)
 - [basic-spa](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-spa)
 - [basic-store](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-store)
+- [basic-mpa](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-mpa)
 - [basic-request](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/basic-request)
 - [icestark-child](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/icestark-child)
 - [icestark-layout](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/icestark-layout)

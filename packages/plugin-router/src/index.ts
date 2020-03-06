@@ -8,18 +8,24 @@ import walker from './collector/walker';
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
 const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
-const plugin: IPlugin =  ({ context,onGetWebpackConfig, getValue, applyMethod, registerUserConfig }) => {
+const plugin: IPlugin = ({ context, onGetWebpackConfig, getValue, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
   // [enum] js or ts
+  const isMpa = userConfig.mpa;
   const projectType = getValue('PROJECT_TYPE');
   // .tmp path
   const iceTempPath = getValue('ICE_TEMP');
   const routersTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
   const { configPath } = routerOptions;
-  const routeConfigPath = configPath
+  let routeConfigPath = configPath
     ? path.join(rootDir, configPath)
     : path.join(rootDir, `src/routes.${projectType}`);
+  if (isMpa) {
+    // if is mpa use empty router file
+    fse.writeFileSync(routersTempPath, 'export default [];', 'utf-8');
+    routeConfigPath = routersTempPath
+  }
   const hasRouteFile = fse.existsSync(routeConfigPath);
 
   // copy types
