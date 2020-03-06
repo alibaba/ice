@@ -237,7 +237,7 @@ createApp(appConfig);
 
 ## 按需加载
 
-### 配置式路由
+### 配置式
 
 在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `import()` 语法引入组件即可： 
 
@@ -254,7 +254,7 @@ const routerConfig = [
 ]
 ```
 
-### 约定式路由
+### 约定式
 
 在约定式路由中如果需要开启按需加载，只需要在 `build.json` 中的 router 选项配置 lazy 属性即可：
 
@@ -333,7 +333,7 @@ useHistory hook 用于获取导航的 history 实例。
 
 
 ```js
-mport { useHistory } from 'ice';
+import { useHistory } from 'ice';
 
 function HomeButton() {
   const history = useHistory();
