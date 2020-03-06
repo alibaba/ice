@@ -10,7 +10,7 @@ logger.error('=== error ===');
 logger.debug('=== debug ===');
 logger.trace('=== trace ===');
 
-const Home = (props) => {
+export default function Home(props) {
 
   logger.info('Home props', props);
   logger.info('render home config.appId', config.appId);
@@ -40,5 +40,3 @@ Home.getInitialProps = async () => {
 Home.pageConfig = {
   title: 'Home Page',
 };
-
-export default Home

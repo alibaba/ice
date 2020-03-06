@@ -6,6 +6,13 @@ export * from './types'
 
 export const APP_MODE = process.env.APP_MODE;
 
+export function lazy(dynamicImport) {
+  return {
+    '__LAZY__': true,
+    dynamicImport,
+  };
+}
+
 <% if (iceExports) { %>
 export {
 <%- iceExports %>

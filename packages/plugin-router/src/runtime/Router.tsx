@@ -10,12 +10,7 @@ import {
 
   RouteComponentProps
 } from 'react-router-dom';
-import { RoutesProps, RouterProps, IImport, IRouteWrapper } from '../types'
-
-
-function isPromise(obj) {
-  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
-}
+import { RoutesProps, RouterProps, IRouteWrapper, IDynamicImportComponent  } from '../types'
 
 function wrapperRoute(component, routerWrappers) {
   return (routerWrappers || []).reduce((acc, curr) => {
@@ -31,9 +26,10 @@ function wrapperRoute(component, routerWrappers) {
 }
 
 function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
-  return isPromise(component) ? React.lazy(() => (component as IImport).then((m) => {
+  const { __LAZY__, dynamicImport }: IDynamicImportComponent = component;
+  return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
     if (routerWrappers && routerWrappers.length) {
-      m.default = wrapperRoute(m.default, routerWrappers);
+      return { ...m, default: wrapperRoute(m.default, routerWrappers) }
     }
     return m;
   })) : wrapperRoute(component, routerWrappers);
