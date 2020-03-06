@@ -75,7 +75,7 @@ createApp(appConfig);
   └── tsconfig.json
 ```
 
-关于状态管理的更多内容，请查看文档 [状态管理](/docs/guide/basic/store)
+关于状态管理的更多内容，请查看文档 [状态管理](/docs/guide/basic/store.md)
 
 只需要这么简单，你的 SPA 应用就可以变成 MPA 应用了。
 
