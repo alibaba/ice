@@ -1,0 +1,28 @@
+{
+  "name": "build-plugin-ice-mpa",
+  "version": "1.0.0",
+  "description": "enable mpa project for icejs framework",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice/ice.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.16"
+  }
+}
