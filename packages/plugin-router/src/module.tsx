@@ -7,7 +7,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
   const { router = {} } = appConfig;
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
-    return formatRoutes(defaultRoutes, '');
+    return formatRoutes(router.routes || defaultRoutes, '');
   });
   wrapperRouteComponent(wrapperPage);
   if (router.modifyRoutes) {

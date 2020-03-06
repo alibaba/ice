@@ -1,3 +1,66 @@
+import {
+  RouteProps as DefaultRouteProps,
+  RouteComponentProps,
+} from 'react-router-dom';
+
+export interface IDynamicImportComponent {
+  __LAZY__: boolean;
+  dynamicImport: () => Promise<{ default: React.ComponentType<any> }>;
+}
+
+export interface IRouteWrapper {
+  (props: any): React.ComponentType<any>;
+}
+
+export interface RouteItemProps extends DefaultRouteProps {
+  children?: RouteItemProps[];
+  // disable string[]
+  path?: string;
+  // for rediect ability
+  redirect?: string;
+
+  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IDynamicImportComponent;
+
+  routeWrappers?: IRouteWrapper[];
+};
+
+export interface RouterProps {
+  // custom props
+  routes: RouteItemProps[];
+  type?: 'hash' | 'browser' | 'memory';
+  // common props for BrowserRouter&HashRouter&MemoryRouter
+  basename?: string;
+  getUserConfirmation?: ((message: string, callback: (ok: boolean) => void) => void);
+  forceRefresh?: boolean;
+  // for BrowserRouter
+  keyLength?: number;
+  // for HashRouter
+  hashType?: 'slash' | 'noslash' | 'hashbang';
+  // for MemoryRouter
+  initialEntries?: string[];
+  initialIndex?: number;
+  fallback?: React.ReactNode;
+};
+
+interface IModifyFn {
+  (routes: RouteItemProps[]): RouteItemProps[];
+}
+
+export interface IModifyRoutes {
+  (modifyFn: IModifyFn): void;
+}
+
+export interface IAppRouterProps {
+  type?: 'hash' | 'browser' | 'memory';
+  basename?: string;
+  modifyRoutes?: IModifyRoutes;
+  fallback?: React.ReactNode;
+}
+
+export interface RoutesProps {
+  routes: RouteItemProps[];
+};
+
 export interface IRouterOptions {
   caseSensitive?: boolean;
   ignoreRoutes?: IgnoreOptions;

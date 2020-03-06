@@ -75,11 +75,10 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
       modifyRoutes(removeRootLayout);
     }
     const frameworkRouter = (routes) => () => {
-      const [appInfo, setAppInfo] = useState({
-        pathname: '',
-        appEnter: {},
-        appLeave: {}
-      });
+      const [appPathname, setAppPathname] = useState('');
+      const [appEnter, setAppEnter] = useState({});
+      const [appLeave, setAppLeave] = useState({});
+
       const [apps, setApps] = useState(null);
       const routerProps = {
         type,
@@ -98,25 +97,22 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
       }, []);
 
       function handleRouteChange(pathname) {
-        setAppInfo({
-          ...appInfo,
-          pathname,
-        });
+        setAppPathname(pathname);
       }
     
       function handleAppLeave(config) {
-        setAppInfo({
-          ...appInfo,
-          appLeave: config,
-        });
+        setAppLeave(config);
       }
     
       function handleAppEnter(config) {
-        setAppInfo({
-          ...appInfo,
-          appEnter: config,
-        });
+        setAppEnter(config);
       }
+
+      const appInfo = {
+        pathname: appPathname,
+        appEnter,
+        appLeave,
+      };
   
       return (
         <BasicLayout {...appInfo}>

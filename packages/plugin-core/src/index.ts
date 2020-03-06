@@ -124,7 +124,7 @@ export default (api) => {
   // pageGenerator.addPageExport('Index', { exportName: 'store', source: './store' });
 
   // registerMethod for add export
-  const regsiterKeys = ['addIceExport'];
+  const regsiterKeys = ['addIceExport', 'addIceTypesExport'];
   regsiterKeys.forEach((registerKey) => {
     registerMethod(registerKey, (exportData) => {
       generator.addExport(registerKey, exportData);

@@ -1,7 +1,9 @@
-const Dashboard = import('@/pages/Dashboard');
-const Home = import('@/pages/Home');
-const About = import('@/pages/About');
-const Notfound = import('@/pages/NotFound');
+import { lazy } from 'ice';
+
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const Home = lazy(() => import('@/pages/Home'));
+const About = lazy(() => import('@/pages/About'));
+const Notfound = lazy(() => import('@/pages/NotFound'));
 
 export default [
   {

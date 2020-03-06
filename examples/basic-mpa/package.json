@@ -1,0 +1,20 @@
+{
+  "name": "exmaple-basic-mpa",
+  "description": "",
+  "dependencies": {
+    "ice.js": "^1.0.11",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
