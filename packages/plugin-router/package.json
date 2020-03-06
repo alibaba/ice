@@ -25,7 +25,8 @@
     "typescript": "^3.7.2"
   },
   "files": [
-    "lib"
+    "lib",
+    "src/types"
   ],
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
