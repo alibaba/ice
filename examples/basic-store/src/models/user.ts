@@ -1,15 +1,28 @@
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+
 export default {
   state: {
-    dataSource: {}
+    name: '',
+    id: ''
   },
 
-  actions: {
-    async getUserInfo(prevState) {
-      const dataSource = { userName: 'taobao', age: 21 };
+  reducers: {
+    update: (prevState, payload) => {
       return {
         ...prevState,
-        dataSource,
-      }
+        ...payload,
+      };
     },
-  }
+  },
+
+  effects: {
+    getUserInfo: async (prevState, payload, actions, globalActions) => {
+      globalActions.counter.decrement();
+      await delay(1000);
+      actions.update({
+        name: 'taobao',
+        id: '123',
+      });
+    },
+  },
 };

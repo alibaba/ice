@@ -44,7 +44,7 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) 
     if (!payload.nestImportsNames.includes(component)) {
       let nestImportsData = `import ${component} from '${filePath}';\n`;
       if (lazy) {
-        nestImportsData = `const ${component} = import(/* webpackChunkName: '${component}' */ '${filePath}');\n`;
+        nestImportsData = `import {lazy} from 'ice';\n const ${component} = lazy(() => import(/* webpackChunkName: '${component}' */ '${filePath}'));\n`;
       }
       payload.nestImports.push(nestImportsData);
       // record component exists

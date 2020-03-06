@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-router",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "build-plugin-ice-router",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -25,7 +25,8 @@
     "typescript": "^3.7.2"
   },
   "files": [
-    "lib"
+    "lib",
+    "src/types"
   ],
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"

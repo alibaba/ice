@@ -8,56 +8,9 @@ import {
   Route,
   Redirect,
 
-  RouteProps as DefaultRouteProps,
-  RouteComponentProps,
+  RouteComponentProps
 } from 'react-router-dom';
-
-type IImport = Promise<{
-  default: React.ComponentType<any>;
-}>;
-
-interface IRouteWrapper {
-  (props: any): React.ComponentType<any>;
-}
-
-export interface RouteItemProps extends DefaultRouteProps {
-  children?: RouteItemProps[];
-  // disable string[]
-  path?: string;
-  // for rediect ability
-  redirect?: string;
-
-  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IImport;
-
-  routeWrappers?: IRouteWrapper[];
-};
-
-interface RouterProps {
-  // custom props
-  routes: RouteItemProps[];
-  type?: 'hash' | 'browser' | 'memory';
-  // common props for BrowserRouter&HashRouter&MemoryRouter
-  basename?: string;
-  getUserConfirmation?: ((message: string, callback: (ok: boolean) => void) => void);
-  forceRefresh?: boolean;
-  // for BrowserRouter
-  keyLength?: number;
-  // for HashRouter
-  hashType?: 'slash' | 'noslash' | 'hashbang';
-  // for MemoryRouter
-  initialEntries?: string[];
-  initialIndex?: number;
-  lazy?: boolean;
-  fallback?: React.ReactNode;
-};
-
-interface RoutesProps {
-  routes: RouteItemProps[];
-};
-
-function isPromise(obj) {
-  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
-}
+import { RoutesProps, RouterProps, IRouteWrapper, IDynamicImportComponent  } from '../types'
 
 function wrapperRoute(component, routerWrappers) {
   return (routerWrappers || []).reduce((acc, curr) => {
@@ -73,9 +26,10 @@ function wrapperRoute(component, routerWrappers) {
 }
 
 function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
-  return isPromise(component) ? React.lazy(() => (component as IImport).then((m) => {
+  const { __LAZY__, dynamicImport }: IDynamicImportComponent = component;
+  return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
     if (routerWrappers && routerWrappers.length) {
-      m.default = wrapperRoute(m.default, routerWrappers);
+      return { ...m, default: wrapperRoute(m.default, routerWrappers) }
     }
     return m;
   })) : wrapperRoute(component, routerWrappers);

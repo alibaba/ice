@@ -8,7 +8,8 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-helpers',
     'build-plugin-ice-logger',
     'build-plugin-ice-config',
-    'build-plugin-ice-request'
+    'build-plugin-ice-request',
+    'build-plugin-ice-mpa'
   ]
 
   return builtInPlugins.filter(plugin => {

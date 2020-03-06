@@ -1,10 +1,15 @@
+import React from 'react'
+<%- iceTypesImports %>
 
-export interface IConfigInterface {
-  router?: {};
-  request?: {};
-  store? : {};
-  utils?: {};
-  config?: {};
-  logger?: {};
-  modules?: [];
+export interface IApp {
+  rootId?: string;
+  mountNode?: HTMLElement;
+  addProvider?: ({ children }: { children: React.ReactNode }) => React.ComponentType
 }
+
+<% if (iceTypesExports) { %>
+export interface IAppConfig {
+app?: IApp
+<%- iceTypesExports %>
+}
+<% } %>
