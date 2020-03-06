@@ -239,12 +239,13 @@ createApp(appConfig);
 
 ### 配置式
 
-在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `import()` 语法引入组件即可： 
+在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `lazy` 方法引入组件即可： 
 
 ```diff
 // src/routes.ts
 - import UserLogin from '@/pages/UserLogin';
-+ const UserLogin = import('@/pages/UserLogin');
++ import { lazy } from 'ice';
++ const UserLogin = lazy(() => import('@/pages/UserLogin'));
 
 const routerConfig = [
   {
