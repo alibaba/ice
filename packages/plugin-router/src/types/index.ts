@@ -3,9 +3,10 @@ import {
   RouteComponentProps,
 } from 'react-router-dom';
 
-export type IImport = Promise<{
-  default: React.ComponentType<any>;
-}>;
+export interface IDynamicImportComponent {
+  __LAZY__: boolean;
+  dynamicImport: () => Promise<{ default: React.ComponentType<any> }>;
+}
 
 export interface IRouteWrapper {
   (props: any): React.ComponentType<any>;
@@ -18,7 +19,7 @@ export interface RouteItemProps extends DefaultRouteProps {
   // for rediect ability
   redirect?: string;
 
-  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IImport;
+  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IDynamicImportComponent;
 
   routeWrappers?: IRouteWrapper[];
 };
