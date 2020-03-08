@@ -1,11 +1,11 @@
 {
   "name": "iceworks",
-  "version": "3.1.13",
+  "version": "3.1.14-0",
   "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
-    "iceworks": "bin/iceworks.js",
-    "ice": "bin/iceworks.js"
+    "iceworks": "./bin/iceworks.js",
+    "ice": "./bin/iceworks.js"
   },
   "scripts": {},
   "license": "MIT",
