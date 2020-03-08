@@ -3,7 +3,6 @@ import * as path from 'path'
 import * as fse from 'fs-extra'
 import * as _glob from 'glob'
 import * as pify from 'pify'
-import * as spawn from 'cross-spawn'
 
 const glob = pify(_glob)
 
