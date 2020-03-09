@@ -100,6 +100,12 @@ ReactDOM.render((
 ), mountNode);
 ````
 
+// 书写 demo 样式
+````css
+.ttt {
+  background: red;
+}
+````
 ```
 
 ## 组件工程配置
@@ -181,6 +187,17 @@ build-plugin-component 支持多个参数的配置。
 
 构建生成的 `build/index.html` 是将组件 demo 以及 README 构建到一个页面里，借助 unpkg 等服务可以作为组件的文档使用，[示例](https://unpkg.alibaba-inc.com/browse/@icedesign/balloon-confirm@1.0.6/build/index.html) 。
 
-构建该目录会加长 `npm run build` 的时间，如不需要可通过 `--skip-demo` 的命令行参数关闭。
+注意：构建 `build` 会加长 `npm run build` 的时间，如不需要可通过 `--skip-demo` 的命令行参数关闭。
 
 ### style.js 文件说明
+
+为了解决组件的样式加载问题，同时为了隔离脚本和样式，因此针对组件自身以及依赖的样式我们会单独构建一个 style.js 的文件：
+
+```js
+require('@alifd/next/lib/form/style');
+require('@alifd/next/lib/button/style');
+require('@icedesign/balloon-confirm/lib/style');
+require('./index.scss');
+```
+
+项目中我们通过内置插件会自动引入该 style.js，如果没有用 ICE 的工程工具则需要手动引入对应的 style.js 文件。
