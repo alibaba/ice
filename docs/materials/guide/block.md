@@ -1,19 +1,13 @@
 ---
-title: 物料开发
-order: 2
+title: 区块开发
+order: 3
 ---
 
-物料仓库初始化时会自动生成一些示例的物料，同时可以通过命令新增物料：
+新增区块开发，可以通过 `iceworks` 命令添加：
 
 ```bash
-$ iceworks add
+$ iceworks add block
 ```
-
-选择你想开发的物料并填写相关信息，完成后 iceworks 会初始化好物料的基础代码。
-
-## 区块开发
-
-我们以区块开发为例：
 
 ![](https://img.alicdn.com/tfs/TB14nyLcwKG3KVjSZFLXXaMvXXa-1470-960.png)
 
@@ -44,25 +38,3 @@ npm publish
 ```
 
 执行 publish 命令的时会自动执行 `npm run build` 和 `npm run screenshot`。build 命令完成区块的构建任务，而 screenshot 命令作用是生成区块截图，截图被用于 iceworks 展示。当然，你也可以手动截图图片作为截图，只需要截图以 `screenshot.png` 保存在当前目录即可。
-
-## 组件开发
-
-组件的开发流程和区块相似，在完成组件的初始化后，在 `components/` 目录下生成了新的组件目录。
-
-```
-├── demo                  # 组件 demo
-│      └── usage.md
-├── src                   # 组件源码
-│      ├── main.scss
-│      └── index.js
-├── lib/                  # 构建生成，编译为 ES5 的代码，一般情况无需关心
-├── build/                # 构建生成，用于组件文档/demo 预览，一般情况无需关心
-├── README.md
-└── package.json
-```
-
-整体开发流程与区块基本一致。
-
-## 项目开发
-
-项目初始化将会生成项目开发所需的基础代码骨架，整体流程和区块没有太多区别。
