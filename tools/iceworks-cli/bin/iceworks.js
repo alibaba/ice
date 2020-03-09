@@ -18,6 +18,26 @@ program.arguments('<command>').action((cmd) => {
 });
 
 program
+  .command('start')
+  .description('start and open the iceworks')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('');
+    console.log('  $ iceworks start');
+  })
+  .action(async (version, cmd) => {
+    try {
+      // eslint-disable-next-line global-require
+      await require('../command/start')();
+    }  catch (err) {
+      log.error('iceworks start error', err.message);
+      console.error(err.stack);
+      process.exit(1);
+    }
+  });
+
+program
   .command('init [type] [npmName]')
   .description('init project/material/component by template')
   .on('--help', () => {
@@ -187,32 +207,19 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
-(async () => {
-  // log local version
-  logCLIVersion();
+// log local version
+logCLIVersion();
 
-  // check node version
-  checkNodeVersion();
+// check node version
+checkNodeVersion();
 
-  try {
-    // check iceworks version
-    await checkIceworksVersion();
-  } catch (error) {
-    console.log(error);
-  }
+if (!process.argv.slice(2).length) {
+  console.log();
+  console.log(chalk.cyan('If you want to start iceworks web page, please use `iceworks start`'));
+  console.log();
 
-  if (!process.argv.slice(2).length) {
-    // start web server for iceworks 3.0
-    try {
-      // eslint-disable-next-line global-require
-      await require('../command/start')(cleanArgs());
-    }  catch (err) {
-      log.error('iceworks start error', err.message);
-      console.error(err.stack);
-      process.exit(1);
-    }
-  }
-})();
+  program.help();
+}
 
 function camelize(str) {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
