@@ -17,13 +17,13 @@ icejs 支持 **全局状态** 和 **页面状态** 两种纬度：
 ```md
 src
 ├── models               // 全局状态：通常会有多个 model
-|   ├── foo.ts
+|   ├── counter.ts
 │   └── user.ts
 └── pages
 |   ├── Home
 |   │   ├── index.tsx
 |   │   └── model.ts     // 页面级状态：通常只有一个 model
-|   ├── Dashboard
+|   ├── About
 |   │   ├── index.tsx
 │   |   └── model.ts
 └── app.ts
@@ -34,37 +34,30 @@ src
 状态定义方式如下：
 
 ```ts
-// src/models/todos.ts
-const todos = {
-  state: {
-    dataSource: [],
-  },
-  actions: {
-    async fetch(prevState, actions) {
-      await delay(1000);
-      const dataSource = [
-        { name: 'react' },
-        { name: 'vue', done: true},
-        { name: 'angular' },
-      ];
-      return {
-        ...prevState,
-        dataSource,
-      }
-    },
-    add(prevState, todo) {
-      return {
-        ...prevState,
-        dataSource: [
-          ...prevState.dataSource,
-          todo,
-        ]
-      };
-    },
-  },
-};
+// src/models/counter.ts
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
-export default todos;
+export default {
+  state: {
+    count: 0
+  },
+
+  reducers: {
+    increment: (prevState) => {
+      return { count: prevState.count + 1 }
+    },
+    decrement: (prevState) => {
+      return { count: prevState.count - 1 }
+    }
+  },
+
+  effects: {
+    decrementAsync: async (state, payload, actions) => {
+      await delay(10);
+      actions.decrement();
+    },
+  }
+};
 ```
 
 ## 视图绑定状态
@@ -77,19 +70,20 @@ import { store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
 
 const HomePage = () => {
-  // 全局状态：model 名称即文件名称 user.ts -> user
-  const [ userState, userAction ] = appStore.useModel('todos');
+  // 1. 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
+  const [ counterState, counterActions ] = appStore.useModel('counter')
 
-  // 页面状态：一个 model 的情况 model 名称约定为 default
-  const [ pageState, pageAction ] = pageStore.useModel('default');
+  // 2. 页面状态：一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
+  // const [ pageState, pageAction ] = pageStore.useModel('default');
 
-  // 页面状态：多个 model 的情况，model 名称即文件名
-  const { store: pageStore } = usePage();
-  const [ fooState, fooAction ] = pageStore.useModel('foo');
+  // 3. 页面状态：多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
+  // const [ fooState, fooAction ] = pageStore.useModel('foo');
 
   return (
     <>
-      // jsx code
+      <button type="button" onClick={counterActions.increment}>+</button>
+      <span>{counterState.count}</span>
+      <button type="button" onClick={counterActions.decrementAsync}>-</button>
     </>
   );
 }
@@ -107,31 +101,29 @@ const HomePage = () => {
 import { store } from 'ice';
 
 function FunctionComponent() {
-  const actions = store.useModelActions('todos');
-
-  useEffect(() => {
-    actions.fetch();
-  }, []);
+  // 只调用 increment 方法
+  const actions = store.useModelActions('counter');
+  actions.increment();
 }
 ```
 
 ### 异步 Action 状态
 
-通过 `useModelActions` API 即可获取到异步 action 的 loading 和 error 状态：
+通过 `useModelEffectsState` API 即可获取到异步 action 的 loading 和 error 状态：
 
 ```js
 import { store } from 'ice';
 
 function FunctionComponent() {
-  const [state, actions] = store.useModel('todos');
-  const actionsState = store.useModelActionsState('todos');
+  const [state, actions] = store.useModel('counter');
+  const actionsState = store.useModelEffectsState('counter');
 
   useEffect(() => {
-    actions.add();
+    actions.decrementAsync();
   }, []);
 
-  actionsState.add.isLoading;
-  actionsState.add.error;
+  actionsState.decrementAsync.isLoading;
+  actionsState.decrementAsync.error;
 }
 ```
 
@@ -140,28 +132,37 @@ function FunctionComponent() {
 action 方法第三和第四个参数分别可以拿到当前 model 以及全局 model 的所有 actions：
 
 ```tsx
-// src/models/tasks
-import { user }  from './user';
-
+// src/models/user.ts
 export default {
-  state: [],
-  actions: {
-    async refresh() {
-      return await fetch('/tasks');
+  state: {
+    name: '',
+    id: ''
+  },
+
+  reducers: {
+    update: (prevState, payload) => {
+      return {
+        ...prevState,
+        ...payload,
+      };
     },
-    async add(prevState, task, actions, globalActions) {
-      await fetch('/tasks/add', task);
+  },
 
-      // Retrieve user information after adding tasks
-      await globalActions.user.refresh();
+  effects: {
+    getUserInfo: async (prevState, payload, actions, globalActions) => {
 
-      // Retrieve todos after adding tasks
-      await actions.refresh();
+      // 调用 counter 模型的 decrement 方法
+      globalActions.counter.decrement();
 
-      return { ...prevState };
+      // 调用当前模型的 update 方法
+      actions.update({
+        name: 'taobao',
+        id: '123',
+      });
     },
-  }
+  },
 };
+
 ```
 
 ### 在 Class Component 中使用
@@ -186,4 +187,7 @@ export default store.withModel('todos')(TodoList);
 // export default withModel('user')(withModel('todos')(TodoList));
 ```
 
-同时，也可以使用 `withModelActions` 以及 `withModelActionsState` API。
+同时，也可以使用 `withModelActions` 以及 `withModelEffectsState` API。
+
+* [完整示例代码](https://github.com/ice-lab/icejs/tree/master/examples/basic-store)
+* [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)

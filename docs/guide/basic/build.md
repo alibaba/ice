@@ -38,9 +38,10 @@ Options:
   -h, --host <host>      服务主机名
   --https                支持开启 https
   --analyzer             支持开启构建分析
-  --analyzer-port
-  --disable-reload
-  --disable-mock
+  --analyzer-port        支持定制构建分析端口
+  --disable-reload       禁用热更新模块
+  --disable-mock         禁用 mock 服务
+  --disable-open         禁止浏览器默认打开行为
 ```
 
 ### build

@@ -22,7 +22,7 @@ module.exports = {
 
   // 2. 插件配置
   plugins: [
-    ['ice-plugins-fusion', { themePackage: '@icedesign/theme' }],
+    ['ice-plugin-fusion', { themePackage: '@icedesign/theme' }],
   ],
 
   // 3. 自定义 webpack 配置
