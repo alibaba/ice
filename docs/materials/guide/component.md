@@ -72,7 +72,7 @@ export default function ExampleComponent(props) {
 
 每个 demo 的形式如下：
 
-```
+`````
 ---
 title: Simple Usage
 order: 1
@@ -106,7 +106,7 @@ ReactDOM.render((
   background: red;
 }
 ````
-```
+`````
 
 ## 组件工程配置
 
