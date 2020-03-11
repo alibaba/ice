@@ -12,11 +12,11 @@ import getPackages from './fn/getPackages';
   const args = process.argv;
   const action = args[2];
   const name = args[3];
-  const workspacePackages = await getPackages();
+  const { packageNames }  = await getPackages();
 
-  // console.log(`npm owner ${action} ${name} to ${workspacePackages.join(',')}...`);
+  // console.log(`npm owner ${action} ${name} to ${packageNames.join(',')}...`);
 
-  workspacePackages.forEach((npmName) => {
+  packageNames.forEach((npmName) => {
     console.log(`\nnpm owner ${action} ${name || ''} ${npmName}: `);
     // https://www.npmjs.cn/cli/owner/
     const params = action === 'ls' ? ['owner', action, npmName] : ['owner', action, name, npmName];

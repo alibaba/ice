@@ -2,9 +2,52 @@
 
 Hi! I’m really excited that you are interested in contributing to ICE. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
+- [Setup Environment](#setup-environment)
+- [Run Examples](#run-examples)
+- [Publish Packages](publish-packages)
 - [Pull Request Guidelines](#pull-request-guidelines)
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
 - [Git Commit Specific](#git-commit-specific)
+
+## Setup Environment
+
+clone repo and initialize the setup environment：
+
+```bash
+# 1. clone and setup
+$ git clone git@github.com:ice-lab/icejs.git
+$ cd icejs && npm run setup
+
+# 2. watch packages
+$ npm run watch
+```
+
+## Run Examples
+
+We provide a lot of examples, you can run the examples：
+
+```bash
+$ cd examples/basic-spa
+$ npm link ../../packages/icejs
+$ npm start
+```
+
+## Publish Packages
+
+When you need to release, you can execute the command：
+
+```bash
+$ npm run publish
+# 1. ✔️ ✔️ ✔️ Checking the working tree status...
+# 2. 📦 📦 📦 Building packages...
+# 3. ⚡ ⚡ ⚡ Update package version automatically...
+# 4. 🚀 🚀 🚀 Start publishing...
+# 5. 🔖 🔖 🔖 Commit & Create tag'...
+# 6. 💡 💡 💡 Start syncing...
+```
+
+* When you need to release a latest version, the tag will be created automatically, running `npm publish` will tag your package with the `latest` dist-tag.
+* To publish a package with the `beta` dist-tag, you can choose to release rc、beta、alpha versions, the tag will not be created.
 
 ## Pull Request Guidelines
 
