@@ -1,20 +1,22 @@
-import { createApp, APP_MODE } from 'ice'
+import { createApp, APP_MODE, IAppConfig } from 'ice'
 
-const appConfig = {
+const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container'
   },
   logger: {
     level: APP_MODE === 'build' ? 'error' : 'debug',
   },
+  router: {
+    type: 'hash'
+  },
   request: {
     timeout: 5000,
-    // baseURL: '/abc',
+    baseURL: '/',
     interceptors: {
-      response: {
-        onConfig: (conf) => {
-          console.log('interceptors response:', conf)
-          return conf
+      request: {
+        onConfig: (config) => {
+          return config
         }
       }
     }

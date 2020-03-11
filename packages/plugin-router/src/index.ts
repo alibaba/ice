@@ -29,8 +29,8 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, getValue, applyMethod, r
   const hasRouteFile = fse.existsSync(routeConfigPath);
 
   // copy types
-  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types.ts'));
-  applyMethod('addIceTypesExport', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'types/router.ts'));
+  applyMethod('addIceTypesExport', { source: './types/router', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
 
   // modify webpack config
   onGetWebpackConfig((config) => {

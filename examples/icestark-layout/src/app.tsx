@@ -1,8 +1,8 @@
-import { createApp } from 'ice'
+import { createApp, IAppConfig } from 'ice'
 import * as React from 'react';
 import { ConfigProvider } from '@alifd/next';
 
-const appConfig = {
+const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     addProvider: ({ children }) => (
@@ -16,7 +16,7 @@ const appConfig = {
     type: 'browser',
   },
   icestark: {
-    type: 'framework',
+    type: 'framework11',
     getApps: async () => {
       const apps = await new Promise((resolve) => {
         setTimeout(() => {
