@@ -52,6 +52,7 @@ export interface IModifyRoutes {
 
 export interface IAppRouterProps {
   type?: 'hash' | 'browser' | 'memory';
+  routes?: RouteItemProps[];
   basename?: string;
   modifyRoutes?: IModifyRoutes;
   fallback?: React.ReactNode;
