@@ -143,6 +143,21 @@ import axios from 'axios';
 axios.defaults.baseURL = '//127.0.0.1:4444';
 ```
 
+如果子应用使用 icejs 研发框架提供的数据请求方案，则只需通过配置 `appConfig`：
+
+```js
+import { createApp } from 'ice';
+
+const appConfig = {
+  ...
+  request: {
+    baseURL: '//127.0.0.1:4444',
+  }
+};
+
+createApp(appConfig);
+```
+
 > 由于开发调试过程中框架应用和子应用的域名或者端口不一致，非 icejs 研发框架的工程可能会有跨域问题，工程修改可以参考[devServer 配置](https://github.com/ice-lab/icejs/blob/bf2b0a6d7834f0d3897f0216be8195fff9eadbed/packages/plugin-react-app/src/config/default.config.js#L21)
 
 ### 子应用本地开发如何调试？
