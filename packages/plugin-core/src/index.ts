@@ -49,7 +49,7 @@ export default (api) => {
       const aliasPath = searchFolder
         ? require.resolve(depName, { paths: [searchFolder]})
         : require.resolve(depName);
-      config.resolve.alias.set(depName, aliasPath);
+      config.resolve.alias.set(depName, path.dirname(aliasPath));
     });
 
     // add babel exclude for node_modules module file
