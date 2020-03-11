@@ -134,7 +134,7 @@ import { appHistory } from '@ice/stark-app';
 
 ### 子应用开发时请求本地 Mock 接口？
 
-通常情况下，代码中的接口请求地址都是写成类似 `/api/xxx` 的相对地址，请求时会根据当前域名进行拼接，如果想请求非当前域名的接口地址，可以通过 `axios.defaults.baseURL` 来实现：
+通常情况下，代码中的接口请求地址都是写成类似 `/api/xxx` 的相对地址，请求时会根据当前域名进行拼接，如果子应用嵌入框架应用进行开发，在域名变化后依旧想使用子应用的 Mock 接口或者代理配置，可以设置 `baseURL` 来请求非当前域名的接口地址，比如 `axios` 可以通过 `axios.defaults.baseURL` 来实现：
 
 ```js
 // src/utils/request.js
@@ -142,6 +142,23 @@ import axios from 'axios';
 
 axios.defaults.baseURL = '//127.0.0.1:4444';
 ```
+
+如果子应用使用 icejs 研发框架提供的数据请求方案，则只需通过配置 `appConfig`：
+
+```js
+import { createApp } from 'ice';
+
+const appConfig = {
+  ...
+  request: {
+    baseURL: '//127.0.0.1:4444',
+  }
+};
+
+createApp(appConfig);
+```
+
+> 由于开发调试过程中框架应用和子应用的域名或者端口不一致，非 icejs 研发框架的工程可能会有跨域问题，工程修改可以参考[devServer 配置](https://github.com/ice-lab/icejs/blob/bf2b0a6d7834f0d3897f0216be8195fff9eadbed/packages/plugin-react-app/src/config/default.config.js#L21)
 
 ### 子应用本地开发如何调试？
 
@@ -187,3 +204,5 @@ export default class App extends React.Component {
   }
 }
 ```
+
+> 如果子应用是开启按需加载，为了让子应用资源能够正确加载，需要在开启本地服务的时候设置 `publicPath`，如果子应用基于 icejs 进行开发，可以参考[配置](/docs/guide/basic/build#devPublicPath)。

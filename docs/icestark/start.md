@@ -26,7 +26,7 @@ $ npm start
 
 ```bash
 # 基于 React 的子应用
-$ npm init icestark-child @icedesign/stark-child-scaffold
+$ npm init ice icestark-child @icedesign/stark-child-scaffold
 $ cd icestark-child
 # 安装依赖
 $ npm install
