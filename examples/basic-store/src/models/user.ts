@@ -7,7 +7,7 @@ export default {
   },
 
   reducers: {
-    update: (prevState, payload) => {
+    update (prevState, payload) {
       return {
         ...prevState,
         ...payload,
@@ -16,7 +16,7 @@ export default {
   },
 
   effects: {
-    getUserInfo: async (prevState, payload, actions, globalActions) => {
+    async getUserInfo (prevState, payload, actions, globalActions) {
       globalActions.counter.decrement();
       await delay(1000);
       actions.update({
