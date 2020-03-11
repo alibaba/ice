@@ -115,20 +115,6 @@ createApp(appConfig)
 
 ## 贡献代码
 
-```bash
-# 1. clone and setup
-$ git clone git@github.com:ice-lab/icejs.git
-$ cd icejs && npm run setup
-
-# 2. watch packages
-$ npm run watch
-
-# 3. run example
-$ cd examples/spa-basic
-$ npm link ../../packages/icejs
-$ npm start
-```
-
 贡献代码请参考 [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 ## 生态

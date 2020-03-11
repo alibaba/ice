@@ -115,20 +115,6 @@ Finally, To start developing your application run `npm run start`. The applicati
 
 ## Contributing
 
-```bash
-# 1. clone and setup
-$ git clone git@github.com:ice-lab/icejs.git
-$ cd icejs && npm run setup
-
-# 2. watch packages
-$ npm run watch
-
-# 3. run example
-$ cd examples/spa-basic
-$ npm link ../../packages/icejs
-$ npm start
-```
-
 Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 ## Ecosystem
