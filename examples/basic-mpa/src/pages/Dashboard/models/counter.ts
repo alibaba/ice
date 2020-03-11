@@ -1,18 +1,23 @@
-const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
   state: {
     count: 0
   },
 
-  actions: {
-    increment(prevState) {
+  reducers: {
+    increment (prevState) {
       return { count: prevState.count + 1 }
     },
-
-    async decrement(prevState) {
-      await delay(10);
+    decrement (prevState) {
       return { count: prevState.count - 1 }
-    },
+    }
   },
+
+  effects: {
+    async decrementAsync (state, payload, actions) {
+      await delay(10);
+      actions.decrement();
+    },
+  }
 };

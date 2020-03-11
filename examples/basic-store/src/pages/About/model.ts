@@ -4,7 +4,7 @@ export default {
   },
 
   reducers: {
-    update: (prevState, payload) => {
+    update (prevState, payload) {
       return {
         ...prevState,
         ...payload,
@@ -13,7 +13,7 @@ export default {
   },
 
   effects: {
-    getPageTitle: async (prevState, payload, actions) => {
+    async getPageTitle (prevState, payload, actions) {
       actions.update({
         title: 'About Page'
       });
