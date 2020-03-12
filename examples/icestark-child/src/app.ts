@@ -1,6 +1,6 @@
-import { createApp } from 'ice'
+import { createApp, IAppConfig } from 'ice'
 
-const appConfig = {
+const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container'
   },
@@ -8,7 +8,7 @@ const appConfig = {
     level: 'warn'
   },
   icestark: {
-    type: 'child',
+    type: 'child'
   },
 };
 

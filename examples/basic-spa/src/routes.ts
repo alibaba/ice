@@ -7,11 +7,6 @@ const Notfound = lazy(() => import('@/pages/NotFound'));
 
 export default [
   {
-    path: '/',
-    exact: true,
-    component: Home
-  },
-  {
     path: '/dashboard',
     exact: true,
     component: Dashboard
@@ -22,8 +17,12 @@ export default [
     component: About
   },
   {
-    path: '*',
+    path: '/',
     exact: true,
+    component: Home
+  },
+  {
+    path: '*',
     component: Notfound
   },
 ];

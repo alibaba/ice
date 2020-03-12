@@ -8,7 +8,7 @@ export default function BasicLayout({
   return (
     <div style={{minHeight: '100vh'}}>
       <section>
-        Headerxxx
+        Header
         {children}
       </section>
     </div>

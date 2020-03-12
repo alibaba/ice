@@ -22,6 +22,26 @@
     webpack-dev-server "^3.7.2"
     yargs-parser "^14.0.0"
 
+"@alib/build-scripts@^0.1.16":
+  version "0.1.17"
+  resolved "https://registry.npm.taobao.org/@alib/build-scripts/download/@alib/build-scripts-0.1.17.tgz#d38b3abcd10db44e823132447b99c715c6acf22f"
+  integrity sha1-04s6vNENtE6CMTJEe5nHFcas8i8=
+  dependencies:
+    address "^1.1.0"
+    camelcase "^5.3.1"
+    chalk "^2.4.1"
+    commander "^2.19.0"
+    deepmerge "^4.0.0"
+    detect-port "^1.3.0"
+    fs-extra "^8.1.0"
+    jest "^24.9.0"
+    lodash "^4.17.15"
+    npmlog "^4.1.2"
+    react-dev-utils "^9.0.4"
+    webpack "^4.27.1"
+    webpack-dev-server "^3.7.2"
+    yargs-parser "^14.0.0"
+
 "@alifd/fusion-collector@^1.2.5":
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/@alifd/fusion-collector/-/fusion-collector-1.2.5.tgz#7684dde8e7193b0df313671e285f33f26e0eae67"
@@ -1406,10 +1426,10 @@
     path-to-regexp "^1.7.0"
     url-parse "^1.1.9"
 
-"@ice/store@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.0.0.tgz#25a7a413efd7b48a2a22c0d723e2e160c527d9a2"
-  integrity sha1-JaekE+/XtIoqIsDXI+LhYMUn2aI=
+"@ice/store@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/@ice/store/download/@ice/store-1.1.0.tgz#23e58ae75cf6d4a164fedddec75f87bb54ecbafc"
+  integrity sha1-I+WK51z21KFk/t3ex1+Hu1Tsuvw=
   dependencies:
     is-promise "^2.1.0"
     lodash.transform "^4.6.0"
@@ -8717,11 +8737,6 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.npmjs.org/markdown-escapes/-/markdown-escapes-1.0.3.tgz#6155e10416efaafab665d466ce598216375195f5"
   integrity sha512-XUi5HJhhV5R74k8/0H2oCbCiYf/u4cO/rX8tnGkRvrqhsr5BRNU6Mg0yt/8UIx1iIS8220BNJsDb7XnILhLepw==
 
-markdown-it-task-lists@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/markdown-it-task-lists/-/markdown-it-task-lists-2.1.1.tgz#f68f4d2ac2bad5a2c373ba93081a1a6848417088"
-  integrity sha512-TxFAc76Jnhb2OUu+n3yz9RMu4CwGfaT788br6HhEDlvWfdeJcLUsxk1Hgw2yJio0OXsxv7pyIPmvECY7bMbluA==
-
 markdown-table@^1.1.0:
   version "1.1.3"
   resolved "https://registry.npmjs.org/markdown-table/-/markdown-table-1.1.3.tgz#9fcb69bcfdb8717bfd0398c6ec2d93036ef8de60"
@@ -11976,6 +11991,13 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
+
+simple-git@^1.132.0:
+  version "1.132.0"
+  resolved "https://registry.npmjs.org/simple-git/-/simple-git-1.132.0.tgz#53ac4c5ec9e74e37c2fd461e23309f22fcdf09b1"
+  integrity sha512-xauHm1YqCTom1sC9eOjfq3/9RKiUA9iPnxBbrY2DdL8l4ADMu0jjM5l5lphQP5YWNqAL2aXC/OeuQ76vHtW5fg==
+  dependencies:
+    debug "^4.0.1"
 
 simple-swizzle@^0.2.2:
   version "0.2.2"

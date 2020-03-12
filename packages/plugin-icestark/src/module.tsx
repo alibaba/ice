@@ -11,35 +11,13 @@ import {
 import { Router } from '$ice/Router';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
-
-interface IAppRouter {
-  ErrorComponent?: React.ComponentType;
-  LoadingComponent?: React.ComponentType;
-  NotFoundComponent?: React.ComponentType;
-  shouldAssetsRemove?: (
-    assetUrl?: string,
-    element?: HTMLElement | HTMLLinkElement | HTMLStyleElement | HTMLScriptElement,
-  ) => boolean;
-}
-
-interface IGetApps {
-  (): AppConfig[]|Promise<AppConfig[]>;
-}
-
-interface IConfig {
-  type: 'framework' | 'child';
-  getApps?: IGetApps;
-  appRouter?: IAppRouter;
-  removeRoutesLayout: boolean;
-  AppRoute?: React.ComponentType;
-  Layout?: React.ComponentType;
-}
+import { IIceStark } from './types'
 
 const { useEffect, useState } = React;
 
 const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
   const { icestark, router } = appConfig;
-  const { type: appType } = (icestark || {}) as IConfig;
+  const { type: appType } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
@@ -70,7 +48,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
       return <Router {...routerProps} />;
     });
   } else if (appType === 'framework') {
-    const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IConfig;
+    const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
@@ -99,11 +77,11 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
       function handleRouteChange(pathname) {
         setAppPathname(pathname);
       }
-    
+
       function handleAppLeave(config) {
         setAppLeave(config);
       }
-    
+
       function handleAppEnter(config) {
         setAppEnter(config);
       }
@@ -113,7 +91,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
         appEnter,
         appLeave,
       };
-  
+
       return (
         <BasicLayout {...appInfo}>
           {apps && (

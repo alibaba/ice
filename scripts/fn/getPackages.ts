@@ -6,8 +6,9 @@ import * as pify from 'pify'
 
 const glob = pify(_glob)
 
-export default async function getWorkspacePackages() {
-  const packages = []
+export default async function getPackages() {
+  const packageNames = []
+  const packageDirs = []
   const rootPkgPath = path.join(__dirname, '../../package.json');
   const rootPkgContent = fse.readJSONSync(rootPkgPath);
 
@@ -16,12 +17,13 @@ export default async function getWorkspacePackages() {
     for (const dir of dirs) {
       if (fse.existsSync(path.resolve(dir, 'package.json'))) {
         const pkgContent = fse.readJSONSync(path.resolve(dir, 'package.json'))
-        packages.push(pkgContent.name)
+        packageNames.push(pkgContent.name)
+        packageDirs.push(path.resolve(dir))
       } else {
         console.warn('Invalid workspace package:', dir)
       }
     }
   }
 
-  return packages
+  return { packageNames, packageDirs }
 }
