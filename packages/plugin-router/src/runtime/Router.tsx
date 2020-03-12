@@ -26,7 +26,7 @@ function wrapperRoute(component, routerWrappers) {
 }
 
 function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
-  const { __LAZY__, dynamicImport }: IDynamicImportComponent = component;
+  const { __LAZY__, dynamicImport }: IDynamicImportComponent = component || {};
   return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
     if (routerWrappers && routerWrappers.length) {
       return { ...m, default: wrapperRoute(m.default, routerWrappers) }
@@ -81,8 +81,8 @@ function Routes({ routes }: RoutesProps) {
                 />
               );
             } else {
-              const routeComponent = getRouteComponent(component);
-              return <Route key={id} component={routeComponent} {...others} />;
+              const RouteComponent = getRouteComponent(component);
+              return <Route key={id} component={RouteComponent} {...others} />;
             }
           }
         } else {

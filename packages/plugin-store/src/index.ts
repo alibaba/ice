@@ -12,8 +12,8 @@ export default async (api) => {
   const pageModelsTemplatePath = path.join(templatePath, 'pageModels.ts.ejs')
   const projectType = getValue('PROJECT_TYPE')
 
-  await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(targetPath, 'store/types.ts'))
-  applyMethod('addIceTypesExport', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' })
+  await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(targetPath, './types/store.ts'))
+  applyMethod('addIceTypesExport', { source: './types/store', specifier: '{ IStore }', exportName: 'store?: IStore' })
 
   onGetWebpackConfig(config => {
     config.resolve.alias.set('$ice/appModels', path.join(targetPath, 'appModels.ts'))

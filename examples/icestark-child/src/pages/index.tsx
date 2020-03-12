@@ -1,17 +1,7 @@
 import React from 'react'
-import { Link, useIndexPage, helpers, logger } from 'ice'
-
-console.log('helpers from ice', helpers);
-console.log('logger from ice', logger);
-
-logger.info('=== info ===');
-logger.warn('=== warn ===');
+import { Link } from 'ice'
 
 const Home = (props) => {
-  const page = useIndexPage()
-
-  console.log('Home props', props);
-  console.log('render home', { page });
   return (
     <>
       <h2>Home Page...{props.a}</h2>
@@ -22,11 +12,11 @@ const Home = (props) => {
 }
 
 Home.getInitialProps = async () => {
-  return {a: 1}
+  return { a: 1 }
 };
 
 Home.pageConfig = {
-  title: 'hahah'
+  title: 'Home Page'
 };
 
 export default Home

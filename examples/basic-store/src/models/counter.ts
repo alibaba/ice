@@ -6,16 +6,16 @@ export default {
   },
 
   reducers: {
-    increment: (prevState) => {
+    increment (prevState) {
       return { count: prevState.count + 1 }
     },
-    decrement: (prevState) => {
+    decrement (prevState) {
       return { count: prevState.count - 1 }
     }
   },
 
   effects: {
-    decrementAsync: async (state, payload, actions) => {
+    async decrementAsync (state, payload, actions) {
       await delay(10);
       actions.decrement();
     },
