@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-request",
-  "version": "1.0.16-alpha.0",
+  "version": "1.0.16",
   "description": "request for build-plugin-ice-request",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-mpa",
-  "version": "1.0.16-alpha.0",
+  "version": "1.0.16",
   "description": "enable mpa project for icejs framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",

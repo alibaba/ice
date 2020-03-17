@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-store",
-  "version": "1.0.16-alpha.0",
+  "version": "1.0.16",
   "description": "builtin `icestore` in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
