@@ -43,8 +43,8 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) 
     // collect imports
     if (!payload.nestImportsNames.includes(component)) {
       let nestImportsData = `import ${component} from '${filePath}';\n`;
-      if (lazy) {
-        nestImportsData = `import {lazy} from 'ice';\n const ${component} = lazy(() => import(/* webpackChunkName: '${component}' */ '${filePath}'));\n`;
+      if (lazy && !children) {
+        nestImportsData = `const ${component} = lazy(() => import(/* webpackChunkName: '${component}' */ '${filePath}'));\n`;
       }
       payload.nestImports.push(nestImportsData);
       // record component exists
@@ -79,6 +79,9 @@ export default function splicer(routesCollect: ICollectItem[], routerOptions) {
   const payload: IPlayload = { nestImports: [], nestImportsNames: [], nestSlice: [], indent: 1 };
   // init loop
   loopSplice(payload, routesCollect, routerOptions);
-
-  return `${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
+  let importAhead = '';
+  if (routerOptions.lazy) {
+    importAhead = 'import { lazy } from \'ice\';\n';
+  }
+  return `${importAhead}${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
 }

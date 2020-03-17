@@ -60,6 +60,7 @@ export interface IAppRouterProps {
 
 export interface RoutesProps {
   routes: RouteItemProps[];
+  fallback?: React.ReactNode;
 };
 
 export interface IRouterOptions {

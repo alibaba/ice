@@ -11,6 +11,10 @@ export default function formatRoutes(routes, parentPath) {
       const joinPath = path.join(parentPath || '', item.path);
       // react-router: path=/project/ not match /project
       item.path = joinPath === '/' ? '/' : joinPath.replace(/\/$/, '');
+      const itemComponent = item.component;
+      if (itemComponent) {
+        itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
+      }
     }
     return item;
   });

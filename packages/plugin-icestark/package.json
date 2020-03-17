@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-icestark",
-  "version": "1.0.15",
+  "version": "1.0.16-alpha.0",
   "description": "Easy use `icestark` in icejs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",

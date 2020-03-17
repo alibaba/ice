@@ -48,14 +48,12 @@ export function Router(props: RouterProps) {
 
   return (
     <RouterComponent {...others}>
-      <React.Suspense fallback={fallback || <div>Loading...</div>}>
-        <Routes routes={routes} />
-      </React.Suspense>
+      <Routes routes={routes} fallback={fallback}/>
     </RouterComponent>
   );
 }
 
-function Routes({ routes }: RoutesProps) {
+function Routes({ routes, fallback }: RoutesProps) {
   return (
     <Switch>
       {routes.map((route, id) => {
@@ -67,23 +65,20 @@ function Routes({ routes }: RoutesProps) {
             return <Redirect key={id} from={route.path} to={redirect} {...others} />;
           } else {
             const { routeWrappers, component, ...others } = route;
-            if (routeWrappers) {
-              const RouteComponent = getRouteComponent(component, routeWrappers);
-              return (
-                <Route
-                  key={id}
-                  {...others}
-                  render={(props: RouteComponentProps) => {
-                    return (
+            const RouteComponent = getRouteComponent(component, routeWrappers || []);
+            return (
+              <Route
+                key={id}
+                {...others}
+                render={(props: RouteComponentProps) => {
+                  return (
+                    <React.Suspense fallback={fallback || <div>loading</div>}>
                       <RouteComponent {...props} />
-                    );
-                  }}
-                />
-              );
-            } else {
-              const RouteComponent = getRouteComponent(component);
-              return <Route key={id} component={RouteComponent} {...others} />;
-            }
+                    </React.Suspense>
+                  );
+                }}
+              />
+            );
           }
         } else {
           const { component, children, ...others } = route;
