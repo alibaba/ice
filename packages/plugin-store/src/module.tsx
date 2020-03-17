@@ -3,16 +3,13 @@ import AppStore from '$ice/appModels'
 import PageStores from '$ice/pageModels'
 
 const wrapperComponent = (PageComponent) => {
-  let initialStates = {}
-  if (PageComponent.pageConfig && PageComponent.pageConfig.initialStates) {
-    initialStates = PageComponent.pageConfig.initialStates
-  }
+  const { pageConfig = {} } = PageComponent
   const StoreWrapperedComponent = (props) => {
-    const pageComponentName = PageComponent.name
+    const pageComponentName = pageConfig.componentName
     const PageStore = PageStores[pageComponentName]
     if (PageStore) {
       return (
-        <PageStore.Provider initialStates={initialStates}>
+        <PageStore.Provider initialStates={pageConfig.initialStates}>
           <PageComponent {...props}/>
         </PageStore.Provider>
       )

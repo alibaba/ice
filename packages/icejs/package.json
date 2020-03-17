@@ -1,6 +1,6 @@
 {
   "name": "ice.js",
-  "version": "1.0.15",
+  "version": "1.0.16-alpha.0",
   "description": "command line interface and builtin plugin for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -21,15 +21,15 @@
   },
   "dependencies": {
     "@alib/build-scripts": "^0.1.13",
-    "build-plugin-ice-config": "1.0.15",
-    "build-plugin-ice-core": "1.0.15",
-    "build-plugin-ice-helpers": "1.0.15",
-    "build-plugin-ice-logger": "1.0.15",
-    "build-plugin-ice-mpa": "1.0.15",
-    "build-plugin-ice-request": "1.0.15",
-    "build-plugin-ice-router": "1.0.15",
-    "build-plugin-ice-store": "1.0.15",
-    "build-plugin-react-app": "1.0.15"
+    "build-plugin-ice-config": "1.0.16-alpha.0",
+    "build-plugin-ice-core": "1.0.16-alpha.0",
+    "build-plugin-ice-helpers": "1.0.16-alpha.0",
+    "build-plugin-ice-logger": "1.0.16-alpha.0",
+    "build-plugin-ice-mpa": "1.0.16-alpha.0",
+    "build-plugin-ice-request": "1.0.16-alpha.0",
+    "build-plugin-ice-router": "1.0.16-alpha.0",
+    "build-plugin-ice-store": "1.0.16-alpha.0",
+    "build-plugin-react-app": "1.0.16-alpha.0"
   },
   "engines": {
     "node": ">=8.6.0",
