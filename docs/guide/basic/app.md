@@ -51,7 +51,7 @@ const appConfig = {
     mountNode: document.getElementById('#ice-container'),
 
     // 可选，自定义添加 Provider
-    addProvider: (children) => {
+    addProvider: ({ children }) => {
       return <ConfigProvider>{children}</ConfigProvider>;
     }
   },
