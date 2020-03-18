@@ -43,16 +43,16 @@ export default {
   },
 
   reducers: {
-    increment (prevState) {
+    increment(prevState) {
       return { count: prevState.count + 1 }
     },
-    decrement (prevState) {
+    decrement(prevState) {
       return { count: prevState.count - 1 }
     }
   },
 
   effects: {
-    async decrementAsync (state, payload, actions) {
+    async decrementAsync(state, payload, actions) {
       await delay(10);
       actions.decrement();
     },
@@ -140,7 +140,7 @@ export default {
   },
 
   reducers: {
-    update (prevState, payload) {
+    update(prevState, payload) {
       return {
         ...prevState,
         ...payload,
@@ -149,7 +149,7 @@ export default {
   },
 
   effects: {
-    async getUserInfo (prevState, payload, actions, globalActions) {
+    async getUserInfo(prevState, payload, actions, globalActions) {
 
       // 调用 counter 模型的 decrement 方法
       globalActions.counter.decrement();
