@@ -3,5 +3,6 @@ export interface IInitialStates {
 }
 
 export interface IStore {
-  initialStates: IInitialStates;
+  initialStates?: IInitialStates;
+  getInitialStates?: (initialData) => IInitialStates;
 }

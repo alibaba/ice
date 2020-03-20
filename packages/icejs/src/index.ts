@@ -4,7 +4,6 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-core',
     'build-plugin-react-app',
     'build-plugin-ice-router',
-    'build-plugin-ice-store',
     'build-plugin-ice-helpers',
     'build-plugin-ice-logger',
     'build-plugin-ice-config',
@@ -12,12 +11,15 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-mpa'
   ]
 
-  return builtInPlugins.filter(plugin => {
-    if (plugin === 'build-plugin-ice-store' && userConfig.store === false) {
-      return false
-    }
-    return true
-  })
+  if (userConfig.ssr) {
+    builtInPlugins.push('build-plugin-ice-ssr')
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
+    builtInPlugins.push('build-plugin-ice-store')
+  }
+
+  return builtInPlugins
 }
 
 export = getBuiltInPlugins

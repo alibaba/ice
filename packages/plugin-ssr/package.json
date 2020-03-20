@@ -1,0 +1,34 @@
+{
+  "name": "build-plugin-ice-ssr",
+  "version": "1.1.0-alpha.2",
+  "description": "ssr plugin",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice/ice.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "build-scripts-config": "^0.1.6",
+    "cheerio": "^1.0.0-rc.3",
+    "ejs": "^3.0.1",
+    "html-minifier": "^4.0.0",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

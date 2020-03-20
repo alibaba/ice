@@ -20,14 +20,15 @@ const wrapperComponent = (PageComponent) => {
 }
 
 
-export default ({ addProvider, wrapperRouteComponent, appConfig }) => {
+export default ({ addProvider, wrapperRouteComponent, appConfig, context }) => {
   wrapperRouteComponent(wrapperComponent);
 
   const StoreProvider = ({children}) => {
-    let initialStates = {}
-    if (appConfig.store && appConfig.store.initialStates) {
-      initialStates = appConfig.store.initialStates
-    }
+    const storeConfig = appConfig.store || {}
+    const initialStates = storeConfig.getInitialStates
+      ? storeConfig.getInitialStates(context && context.initialData)
+      : storeConfig.initialStates || {}
+
     return (
       <AppStore.Provider initialStates={initialStates}>
         {children}

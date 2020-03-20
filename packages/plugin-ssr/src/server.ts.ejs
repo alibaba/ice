@@ -1,0 +1,41 @@
+import * as cheerio from 'cheerio'
+import { matchPath } from 'ice'
+import { createAppWithSSR, getAppConfig } from './createApp'
+import routes from '@/routes'
+import '@/app'
+
+// appConfig set by: import '@/app'
+const appConfig = getAppConfig()
+
+const serverRender = async ({ pathname, initialData, htmlTemplate }) => {
+
+  if (!initialData) {
+    initialData = appConfig.app && appConfig.app.getInitialData ? await appConfig.app.getInitialData() : {}
+  }
+
+  const PageComponent = getComponentByPath(routes, pathname)
+  const pageInitialProps = PageComponent && PageComponent.getInitialProps ? await PageComponent.getInitialProps() : {}
+
+  const bundleContent = createAppWithSSR(appConfig, { pathname, pageInitialProps, initialData })
+  const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__')
+  $('#ice-container').append(bundleContent)
+  $('head').append(`<script>
+    window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
+    window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
+  </script>`)
+  const html = $.html()
+  return html
+}
+
+function getComponentByPath(routes, currPath)  {
+  function findMatchRoute(routeList) {
+    const matchedRoute = routeList.find(route => {
+      return matchPath(currPath, route);
+    });
+    return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
+  }
+  const matchedRoute = findMatchRoute(routes);
+  return matchedRoute && matchedRoute.component;
+}
+
+export default serverRender

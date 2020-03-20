@@ -1,4 +1,5 @@
 import { useReducer } from 'react'
+import { AxiosRequestConfig } from 'axios'
 import axiosInstance from './axiosInstance'
 
 /**
@@ -11,7 +12,7 @@ import axiosInstance from './axiosInstance'
  *   @param {boolean} loading - loading status of the request
  *   @param {function} request - function to make the request manually
  */
-function useRequest(options) {
+function useRequest(options: AxiosRequestConfig) {
   const initialState = {
     data: null,
     loading: false,
@@ -23,7 +24,7 @@ function useRequest(options) {
    * Method to make request manually
    * @param {object} config - axios config to shallow merged with options before making request
    */
-  async function request(config) {
+  async function request(config?: AxiosRequestConfig) {
     try {
       dispatch({
         type: 'init'

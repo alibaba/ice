@@ -4,7 +4,8 @@ import React from 'react'
 export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
-  addProvider?: ({ children }: { children: React.ReactNode }) => React.ComponentType
+  addProvider?: ({ children }: { children: React.ReactNode }) => React.ComponentType;
+  getInitialData?: () => Promise<any>;
 }
 
 <% if (iceTypesExports) { %>

@@ -27,9 +27,10 @@ export default (api) => {
     return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
   }).filter(Boolean);
 
-  // modify entry to src/app
-  modifyUserConfig('entry', 'src/app');
-
+  if (!userConfig.entry) {
+    // modify default entry to src/app
+    modifyUserConfig('entry', 'src/app');
+  }
 
   onGetWebpackConfig((config: any) => {
     config.resolve.alias.set('ice$', path.join(iceTempPath, 'index.ts'));
@@ -37,6 +38,14 @@ export default (api) => {
 
     // default alias of @/
     config.resolve.alias.set('@', path.join(rootDir, 'src'));
+
+    const defineVariables = {
+      'process.env.__IS_SERVER__': false,
+      'process.env.__SSR_ENABLED__': userConfig.ssr
+    };
+    config
+      .plugin('DefinePlugin')
+      .tap(([args]) => [{ ...args, ...defineVariables }]);
 
     // add alias of basic dependencies
     const basicDependencies = [
@@ -78,7 +87,7 @@ export default (api) => {
   })
 
   const buildConfig = {}
-  const BUILD_CONFIG_MAP = ['router', 'store']
+  const BUILD_CONFIG_MAP = ['router', 'store', 'ssr']
   Object.keys(userConfig).forEach(key => {
     if (BUILD_CONFIG_MAP.includes(key)) {
       buildConfig[key] = userConfig[key]
@@ -111,6 +120,12 @@ export default (api) => {
   // register store in build.json
   registerUserConfig({
     name: 'store',
+    validation: 'boolean',
+  });
+
+  // register ssr in build.json
+  registerUserConfig({
+    name: 'ssr',
     validation: 'boolean',
   });
 
