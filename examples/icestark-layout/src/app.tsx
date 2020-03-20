@@ -16,7 +16,7 @@ const appConfig: IAppConfig = {
     type: 'browser',
   },
   icestark: {
-    type: 'framework11',
+    type: 'framework',
     getApps: async () => {
       const apps = await new Promise((resolve) => {
         setTimeout(() => {

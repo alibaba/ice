@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as path from 'path';
+import { matchPath } from 'react-router-dom';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 export default function formatRoutes(routes, parentPath) {
   return routes.map((item) => {
@@ -20,27 +21,59 @@ export default function formatRoutes(routes, parentPath) {
   });
 }
 
+export function wrapperPageWithSSR(context, routes) {
+  const pageInitialProps = { ...context.pageInitialProps }
+  const WrapperPageFn = () => {
+    const ServerWrapperedPage = (props) => {
+      const MatchedPageComponent = getComponentByPath(routes, context.pathname)
+      return <MatchedPageComponent {...props}  {...pageInitialProps}  />;
+    }
+    return ServerWrapperedPage
+  }
+  return WrapperPageFn;
+}
+
+
 export function wrapperPage(PageComponent) {
   const { pageConfig } = PageComponent;
   const { title, scrollToTop } = pageConfig || {};
-  const globalWindow: any = window;
-
-  if (!pageConfig) {
-    return PageComponent;
-  }
 
   const RouterWrapperedPage = (props) => {
+    const [data, setData] = useState((window as any).__ICE_PAGE_PROPS__);
     useEffect(() => {
       if (title) {
         document.title = title;
       }
+
       if (scrollToTop) {
-        globalWindow.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+      }
+
+      // When enter the page for the first time, need to use window.__ICE_PAGE_PROPS__ as props
+      // And don't need to re-request to switch routes
+      // Set the data to null after use, otherwise other pages will use
+      if ((window as any).__ICE_PAGE_PROPS__) {
+        (window as any).__ICE_PAGE_PROPS__ = null
+      } else if (PageComponent.getInitialProps) {
+        // When the server does not return data, the client calls getinitialprops
+        (async () => {
+          const result = await PageComponent.getInitialProps();
+          setData(result);
+        })()
       }
     }, []);
-
-    return <PageComponent {...props} />;
+    return <PageComponent  {...Object.assign({}, props, data)} />;
   }
-
   return RouterWrapperedPage;
+}
+
+function getComponentByPath(routes, currPath)  {
+  function findMatchRoute(routeList) {
+    const matchedRoute = routeList.find(route => {
+      return matchPath(currPath, route);
+    });
+    return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
+  }
+  const matchedRoute = findMatchRoute(routes);
+  return matchedRoute && matchedRoute.component;
 }

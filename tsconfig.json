@@ -11,6 +11,7 @@
     { "path": "packages/plugin-icestark" },
     { "path": "packages/plugin-config" },
     { "path": "packages/plugin-mpa" },
+    { "path": "packages/plugin-ssr" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" }
   ]

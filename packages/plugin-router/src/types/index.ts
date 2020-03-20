@@ -24,6 +24,16 @@ export interface RouteItemProps extends DefaultRouteProps {
   routeWrappers?: IRouteWrapper[];
 };
 
+export interface IRenderRouteProps extends DefaultRouteProps {
+  children?: IRenderRouteProps[];
+  // disable string[]
+  path?: string;
+  // for rediect ability
+  redirect?: string;
+
+  component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+}
+
 export interface RouterProps {
   // custom props
   routes: RouteItemProps[];
@@ -59,7 +69,7 @@ export interface IAppRouterProps {
 }
 
 export interface RoutesProps {
-  routes: RouteItemProps[];
+  routes: IRenderRouteProps[];
   fallback?: React.ReactNode;
 };
 

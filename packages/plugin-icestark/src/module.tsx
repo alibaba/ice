@@ -90,6 +90,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
         pathname: appPathname,
         appEnter,
         appLeave,
+        updateApps: setApps,
       };
 
       return (

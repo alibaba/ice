@@ -1,14 +1,25 @@
 import React, { useEffect } from 'react'
-import { useRequest } from 'ice'
+import { useRequest, request } from 'ice'
 
 const Home = () => {
-  const { data, error, loading, request: fetchRepo } = useRequest({ url: '/api/repo' })
+  // 1. useRequest hook
+  const { data, loading, request: fetchRepo } = useRequest({ url: '/repo' })
 
   useEffect(() => {
     fetchRepo()
-  }, [])
 
-  console.log(data)
+    // 2. requse.get alias
+    request.get('/user').then(res => console.log('get:', res))
+
+    // 3. requse.post alias
+    request.post('/users/123').then(res => console.log('post:', res))
+
+    // 4. requse.delete alias
+    request.delete('/user/123').then(res => console.log('delete:', res))
+
+    // 5. request method
+    request({ url: '/user'}).then((res) => {console.log('request:', res)})
+  }, [])
 
   return (
     <div>

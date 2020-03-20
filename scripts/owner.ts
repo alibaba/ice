@@ -14,7 +14,7 @@ import getPackages from './fn/getPackages';
   const name = args[3];
   const { packageNames }  = await getPackages();
 
-  // console.log(`npm owner ${action} ${name} to ${packageNames.join(',')}...`);
+  console.log(`npm owner ${action} ${name} to ${packageNames.join(',')}...`);
 
   packageNames.forEach((npmName) => {
     console.log(`\nnpm owner ${action} ${name || ''} ${npmName}: `);
