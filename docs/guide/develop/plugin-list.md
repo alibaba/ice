@@ -11,7 +11,7 @@ icejs 基于工程构建工具 build-scripts，提供了丰富的插件用于提
 
 ## plugin-antd
 
-`build-plugin-antd` 插件为项目中使用 antd 组件提供按需加载和主题定制的能力，详细使用可参考 [使用 Antd 组件](/docs/guide/advance/antd.md)
+`build-plugin-antd` 插件为项目中使用 antd 组件提供按需加载和主题定制的能力，详细使用可参考 [使用 antd 组件](/docs/guide/advance/antd.md)
 
 ## plugin-modular-import
 
@@ -116,7 +116,7 @@ $ npm i --save-dev build-plugin-load-assets
 
 dev 命令和 build 命令 加载相同 assets 资源
 
-```json 
+```json
 {
   "plugins": [
     ["build-plugin-load-assets", {
