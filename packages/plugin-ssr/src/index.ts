@@ -3,7 +3,6 @@ import * as fse from 'fs-extra'
 import * as ejs from 'ejs'
 import { minify } from 'html-minifier';
 import { getWebpackConfig } from 'build-scripts-config'
-import * as nodeExternals from 'webpack-node-externals'
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook } = api
@@ -57,11 +56,12 @@ const plugin = async (api): Promise<void> => {
       .filename(serverFilename)
       .publicPath('/')
       .libraryTarget('commonjs2')
-
-    config.externals([
-      nodeExternals()
-    ])
-
+    
+    // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
+    // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
+    // TODO: support options to enable nodeExternals
+    // empty externals added by config external
+    config.externals([]);
     if (command === 'start') {
       config.devServer
         .hot(true)
