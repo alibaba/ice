@@ -28,7 +28,6 @@
     "build-scripts-config": "^0.1.6",
     "cheerio": "^1.0.0-rc.3",
     "ejs": "^3.0.1",
-    "html-minifier": "^4.0.0",
-    "webpack-node-externals": "^1.7.2"
+    "html-minifier": "^4.0.0"
   }
 }
