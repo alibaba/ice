@@ -76,8 +76,10 @@ const plugin = async (api): Promise<void> => {
         const pattern = /^\/?((?!\.(js|css|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf|ico)).)*$/;
         app.get(pattern, async (req, res) => {
           const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8')
+          const requirePath = path.join(serverDir, serverFilename);
+          delete require.cache[requirePath];
           // eslint-disable-next-line
-          const serverRender = require(path.join(serverDir, serverFilename))
+          const serverRender = require(requirePath)
           const html = await serverRender.default({ pathname: req.path, htmlTemplate })
           console.log(`\n${html}\n`)
           res.send(html)
