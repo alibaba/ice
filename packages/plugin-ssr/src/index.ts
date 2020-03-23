@@ -68,8 +68,11 @@ const plugin = async (api): Promise<void> => {
         .writeToDisk((filePath) => {
           return /(server\/index\.js|index.html)$/.test(filePath)
         })
-
-      config.devServer.set('before', (app) => {
+      const originalDevServeBefore = config.devServer.get('before');
+      config.devServer.set('before', (app, server) => {
+        if (typeof originalDevServeBefore === 'function') {
+          originalDevServeBefore(app, server);
+        }
         const pattern = /^\/?((?!\.(js|css|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf|ico)).)*$/;
         app.get(pattern, async (req, res) => {
           const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8')
