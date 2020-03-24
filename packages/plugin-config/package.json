@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-config",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Define application config in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -26,7 +26,7 @@
   },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498",
   "dependencies": {
-    "fs-extra": "^9.0.0"
+    "fs-extra": "^8.1.0"
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.18",
