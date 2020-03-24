@@ -10,12 +10,20 @@ const appConfig = getAppConfig()
 const serverRender = async ({ pathname, initialData, htmlTemplate }) => {
 
   if (!initialData) {
-    initialData = appConfig.app && appConfig.app.getInitialData ? await appConfig.app.getInitialData() : {}
+    const getInitialData = appConfig.app && appConfig.app.getInitialData
+    if (getInitialData) {
+      console.log('[SSR]', 'getting initial data of app');
+    }
+    initialData = getInitialData ? await getInitialData() : {}
   }
 
   const PageComponent = getComponentByPath(routes, pathname)
-  const pageInitialProps = PageComponent && PageComponent.getInitialProps ? await PageComponent.getInitialProps() : {}
-
+  const getInitialProps = PageComponent && PageComponent.getInitialProps;
+  if (getInitialProps) {
+    console.log('[SSR]', 'getting initial props of page component');
+  }
+  const pageInitialProps = getInitialProps ? await getInitialProps() : {}
+  console.log('[SSR]', 'generating html content');
   const bundleContent = createAppWithSSR(appConfig, { pathname, pageInitialProps, initialData })
   const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__')
   $('#ice-container').append(bundleContent)
