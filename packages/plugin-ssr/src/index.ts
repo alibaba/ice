@@ -3,7 +3,6 @@ import * as fse from 'fs-extra'
 import * as ejs from 'ejs'
 import { minify } from 'html-minifier';
 import { getWebpackConfig } from 'build-scripts-config'
-import * as nodeExternals from 'webpack-node-externals'
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook } = api
@@ -31,6 +30,8 @@ const plugin = async (api): Promise<void> => {
 
     config.target('node')
 
+    config.name('ssr')
+
     config
       .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [{
@@ -57,27 +58,61 @@ const plugin = async (api): Promise<void> => {
       .filename(serverFilename)
       .publicPath('/')
       .libraryTarget('commonjs2')
+    
+    // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
+    // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
+    // TODO: support options to enable nodeExternals
+    // empty externals added by config external
+    config.externals([]);
 
-    config.externals([
-      nodeExternals()
-    ])
-
+    async function serverRender(res, req) {
+      const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8')
+      console.log('[SSR]', 'start server render');
+      const requirePath = path.join(serverDir, serverFilename);
+      delete require.cache[requirePath];
+      // eslint-disable-next-line
+      const serverRender = require(requirePath)
+      const html = await serverRender.default({ pathname: req.path, htmlTemplate })
+      console.log('[SSR]', `output html content\n${html}\n`);
+      res.send(html)
+    }
     if (command === 'start') {
       config.devServer
         .hot(true)
         .writeToDisk((filePath) => {
           return /(server\/index\.js|index.html)$/.test(filePath)
         })
-
-      config.devServer.set('before', (app) => {
+      let serverReady = false;
+      let httpResponseQueue = [];
+      const originalDevServeBefore = config.devServer.get('before');
+      config.devServer.set('before', (app, server) => {
+        if (typeof originalDevServeBefore === 'function') {
+          originalDevServeBefore(app, server);
+        }
+        let compilerDoneCount = 0;
+        server.compiler.compilers.forEach((compiler) => {
+          compiler.hooks.done.tap('ssrServer', () => {
+            compilerDoneCount++;
+            // wait until all compiler is done
+            if (compilerDoneCount === server.compiler.compilers.length) {
+              serverReady = true;
+              httpResponseQueue.forEach(([req, res]) => {
+                serverRender(res, req);
+              });
+              // empty httpResponseQueue
+              httpResponseQueue = [];
+            }
+          });
+        })
+        
         const pattern = /^\/?((?!\.(js|css|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf|ico)).)*$/;
         app.get(pattern, async (req, res) => {
-          const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8')
-          // eslint-disable-next-line
-          const serverRender = require(path.join(serverDir, serverFilename))
-          const html = await serverRender.default({ pathname: req.path, htmlTemplate })
-          console.log(`\n${html}\n`)
-          res.send(html)
+          if (serverReady) {
+            serverRender(res, req);
+          } else {
+            console.log('[SSR]', 'pending request until server is ready');
+            httpResponseQueue.push([req, res]);
+          }
         });
       });
     }

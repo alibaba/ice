@@ -7,7 +7,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchRepo()
-
+    
+    request('/user').then(res => console.log('get:', res))
     // 2. requse.get alias
     request.get('/user').then(res => console.log('get:', res))
 
