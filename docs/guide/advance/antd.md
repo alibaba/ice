@@ -1,5 +1,5 @@
 ---
-title: 使用 Antd 组件
+title: 使用 antd 组件
 order: 5
 ---
 
@@ -26,9 +26,6 @@ $ npm install build-plugin-antd --save-dev
     ["build-plugin-antd", {
       "themeConfig": {
         "primary-color": "#1DA57A"
-      },
-      "importOptions": {
-        "libraryDirectory": "lib"
       }
     }]
   ]

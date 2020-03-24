@@ -7,7 +7,7 @@ order: 4
 
 ## request
 
-request 基于 axios 进行封装，在使用上与 axios 基本保持一致（除不支持 [Request method aliases](https://github.com/axios/axios#request-method-aliases) 之外），使用方式如下：
+request 基于 axios 进行封装，在使用上与 axios 保持一致，使用方式如下：
 
 ```ts
 import { request } from 'ice'
@@ -47,7 +47,7 @@ function ListView(props) {
       {loading ? (
         <div>loading....</div>
       ) : (
-        data.map(item => {
+        dataSource.map(item => {
           return <div>{item.name}</div>;
         })
       )}

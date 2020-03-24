@@ -3,9 +3,7 @@ title: 快速开始
 order: 3
 ---
 
-icejs 支持通过命令行和 GUI 工具两种方式快速创建项目。
-
-## 命令行
+> 如果是阿里内部开发者，请参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/gsfp6h)，可直接打通内部流程。
 
 **初始化项目**
 
@@ -57,10 +55,3 @@ $ npm start
 ```
 
 执行上述命令后，会自动打开浏览器窗口访问 [http://localhost:3333](http://localhost:3333，)，这时应该看到默认的页面。
-
-## iceworks IDE
-
-除了 CLI 命令行的方式，也可以使用 iceworks IDE 可视化的创建项目，详见 [iceworks 快速开始](https://ice.work/docs/iceworks/quick-start)。
-
-
-
