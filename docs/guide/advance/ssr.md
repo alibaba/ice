@@ -29,7 +29,7 @@ icejs 支持服务端渲染（即 SSR）能力，开发者可以按需一键开�
 
 在 `src/app.ts` 中可通过 `getInitialData` 获取全局数据：
 
-```ts
+```diff
 import { createApp, request } from 'ice';
 
 const appConfig = {
@@ -55,7 +55,7 @@ createApp(appConfig);
 
 定义完全局初始数据后，接下来需要在业务代码中使用这些数据，应用级的 `initialData` 通常通过全局 store 的 `initialStates` 来使用：
 
-```ts
+```diff
 import { createApp } from 'ice';
 
 const appConfig = {
@@ -68,7 +68,7 @@ const appConfig = {
 +     // 可按需选择需要作为 initialStates 的数据
 +     return initialData;
 +   }
-+ }
+  }
 };
 
 createApp(appConfig);
@@ -84,17 +84,17 @@ SEO 场景下，需要访问每个页面时都能够返回实际的 DOM 节点�
 
 在页面级组件中通过 `Component.getInitialProps` 来获取页面初始数据：
 
-```ts
+```diff
 import { request } from 'ice';
 
 function Home({ stars }) {
   return <div>icejs stars: {stars}</div>;
 }
 
-Home.getInitialProps = async () => {
-  const res = await request.get('https://api.github.com/repos/ice-lab/icejs');
-  return { stars: res.data.stargazers_count };
-}
++Home.getInitialProps = async () => {
++  const res = await request.get('https://api.github.com/repos/ice-lab/icejs');
++  return { stars: res.data.stargazers_count };
++}
 
 export default Home;
 ```

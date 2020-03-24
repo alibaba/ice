@@ -47,7 +47,7 @@ function ListView(props) {
       {loading ? (
         <div>loading....</div>
       ) : (
-        data.map(item => {
+        dataSource.map(item => {
           return <div>{item.name}</div>;
         })
       )}
