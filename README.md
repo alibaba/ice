@@ -42,9 +42,6 @@ npm init ice <project-name>
 
 ## 生态
 
-
-## 生态
-
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |基于 React.js 的通用框架|
