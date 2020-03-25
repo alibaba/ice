@@ -230,7 +230,7 @@ createApp(appConfig);
 
 **options**:
 
-- **configFile**: 仅配置式路由，类型 `string`，默认值 `'src/routes.[t|j]s'`，自定义配置式路由文件的地址
+- **configPath**: 仅配置式路由，类型 `string`，默认值 `'src/routes.[t|j]s'`，自定义配置式路由文件的地址
 - **caseSensitive**: 仅约定式路由，类型 `boolean`，默认值 `false`， 根据文件名转换为路由时是否大小写敏感
 - **ignoreRoutes**: 仅约定式路由，类型 `string[]`，默认值 `[]`，忽略指定路由的生成
 - **ignorePaths**: 仅约定式路由，类型 `string[]`，默认值 `['components']`，生成路由时忽略指定目录
