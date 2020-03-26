@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, helpers, logger, config } from 'ice'
+import React from 'react';
+import { Link, helpers, logger, config } from 'ice';
 
 logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);
@@ -15,18 +15,9 @@ export default function Home(props) {
   logger.info('Home props', props);
   logger.info('render home config.appId', config.appId);
 
-  // const { data, error, loading, request: fetchRepo } = useRequest({ url: '/api/repo' })
-  // logger.info('useRequest:', { data, error, loading, fetchRepo })
-
-  // useEffect(() => {
-  //   (async function () {
-  //     await fetchRepo()
-  //   }())
-  // }, [])
-
   return (
     <>
-      <h2>Home Page...{props.a}</h2>
+      <h2>Home Page...{props.count}</h2>
       <Link to="/about">About</Link><br />
       <Link to="/dashboard">Dashboard</Link>
     </>
@@ -34,7 +25,7 @@ export default function Home(props) {
 }
 
 Home.getInitialProps = async () => {
-  return {a: 1}
+  return { count: 1 };
 };
 
 Home.pageConfig = {
