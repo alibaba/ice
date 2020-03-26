@@ -58,7 +58,7 @@ const plugin = async (api): Promise<void> => {
       .filename(serverFilename)
       .publicPath('/')
       .libraryTarget('commonjs2');
-    
+
     // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
     // TODO: support options to enable nodeExternals
@@ -104,7 +104,7 @@ const plugin = async (api): Promise<void> => {
             }
           });
         });
-        
+
         const pattern = /^\/?((?!\.(js|css|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf|ico)).)*$/;
         app.get(pattern, async (req, res) => {
           if (serverReady) {
@@ -119,16 +119,17 @@ const plugin = async (api): Promise<void> => {
 
     if (command === 'build') {
       config.optimization.minimize(false);
-      onHook('after.build.compile', () => {
-        const serverFilePath = path.join(serverDir, serverFilename);
-        const htmlFilePath = path.join(buildDir, 'index.html');
-        const bundle = fse.readFileSync(serverFilePath, 'utf-8');
-        const html = fse.readFileSync(htmlFilePath, 'utf-8');
-        const minifedHtml = minify(html, { collapseWhitespace: true, });
-        const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
-        fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
-      });
     }
+  });
+
+  onHook('after.build.compile', () => {
+    const serverFilePath = path.join(serverDir, serverFilename);
+    const htmlFilePath = path.join(buildDir, 'index.html');
+    const bundle = fse.readFileSync(serverFilePath, 'utf-8');
+    const html = fse.readFileSync(htmlFilePath, 'utf-8');
+    const minifedHtml = minify(html, { collapseWhitespace: true, });
+    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
+    fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
   });
 };
 
