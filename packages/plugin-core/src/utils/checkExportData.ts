@@ -9,7 +9,7 @@ function checkExportData(currentList, exportData, apiName) {
         `);
       }
     });
-  })
+  });
 }
 
 export default checkExportData;

@@ -1,13 +1,13 @@
-import axiosInstance from '$ice/axiosInstance'
+import axiosInstance from '$ice/axiosInstance';
 
 const module = ({ appConfig }) => {
   if (appConfig.request) {
-    const { request = {} } = appConfig
-    const { interceptors = {}, ...requestOptions } = request
+    const { request = {} } = appConfig;
+    const { interceptors = {}, ...requestOptions } = request;
 
     Object.keys(requestOptions).forEach(key => {
-      axiosInstance.defaults[key] = requestOptions[key]
-    })
+      axiosInstance.defaults[key] = requestOptions[key];
+    });
 
     // Add a request interceptor
     if (interceptors.request) {
@@ -25,6 +25,6 @@ const module = ({ appConfig }) => {
       );
     }
   }
-}
+};
 
-export default module
+export default module;

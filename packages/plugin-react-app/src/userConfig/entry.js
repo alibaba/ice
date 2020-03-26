@@ -15,7 +15,7 @@ const resolveEntryPath = (entry, rootDir) => {
 // entry : { [name]: string | array }
 module.exports = (config, value, context) => {
   const { rootDir, command, userConfig } = context;
-  const ignoreHtmlTemplate = command === 'build' && userConfig.ignoreHtmlTemplate
+  const ignoreHtmlTemplate = command === 'build' && userConfig.ignoreHtmlTemplate;
   let entry;
   if (Array.isArray(value) || typeof value === 'string') {
     entry = {

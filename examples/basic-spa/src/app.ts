@@ -1,4 +1,4 @@
-import { createApp, APP_MODE, IAppConfig } from 'ice'
+import { createApp, APP_MODE, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -16,11 +16,11 @@ const appConfig: IAppConfig = {
     interceptors: {
       request: {
         onConfig: (config) => {
-          return config
+          return config;
         }
       }
     }
   }
 };
 
-createApp(appConfig)
+createApp(appConfig);

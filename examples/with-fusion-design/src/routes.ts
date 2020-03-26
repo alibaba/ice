@@ -1,4 +1,4 @@
-import Home from '@/pages/Home'
+import Home from '@/pages/Home';
 
 export default [
   {
@@ -6,4 +6,4 @@ export default [
     exact: true,
     component: Home
   }
-]
+];

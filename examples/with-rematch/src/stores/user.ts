@@ -9,8 +9,8 @@ export default {
   },
   effects: (dispatch) => ({
     async updateStarsAsync(count) {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      dispatch.user.updateStars(count)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      dispatch.user.updateStars(count);
     },
   }),
 };

@@ -1,8 +1,8 @@
 import Layout from '@/layouts';
-import Dashboard from '@/pages/Dashboard'
-import Home from '@/pages/Home'
-import About from '@/pages/About'
-import Notfound from '@/pages/NotFound'
+import Dashboard from '@/pages/Dashboard';
+import Home from '@/pages/Home';
+import About from '@/pages/About';
+import Notfound from '@/pages/NotFound';
 
 export default [
   {

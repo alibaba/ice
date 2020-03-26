@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import * as utils from 'axios/lib/utils'
-import axiosInstance from './axiosInstance'
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import * as utils from 'axios/lib/utils';
+import axiosInstance from './axiosInstance';
 
 export interface IRequestProps {
   get: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
@@ -19,13 +19,13 @@ interface IRequest extends IRequestProps {
 
 const request = async function (options) {
   try {
-    const response = await axiosInstance(options)
-    return response.data
+    const response = await axiosInstance(options);
+    return response.data;
   } catch (error) {
-    console.error(error)
-    throw error
+    console.error(error);
+    throw error;
   }
-}
+};
 
 // Provide aliases for supported request methods
 utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
@@ -47,4 +47,4 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   };
 });
 
-export default request as IRequest
+export default request as IRequest;

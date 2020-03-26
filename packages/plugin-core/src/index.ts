@@ -1,14 +1,14 @@
-import * as path from 'path'
-import * as fse from 'fs-extra'
+import * as path from 'path';
+import * as fse from 'fs-extra';
 import * as chokidar from 'chokidar';
-import * as globby from 'globby'
-import Generator from './generator'
-import PageGenerator from './generator/pageGenerator'
-import getPages from './utils/getPages'
-import formatPath from './utils/formatPath'
+import * as globby from 'globby';
+import Generator from './generator';
+import PageGenerator from './generator/pageGenerator';
+import getPages from './utils/getPages';
+import formatPath from './utils/formatPath';
 
 export default (api) => {
-  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api
+  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api;
   const { rootDir, command, userConfig } = context;
 
   const iceTempPath = path.join(rootDir, '.ice');
@@ -84,15 +84,15 @@ export default (api) => {
         .exclude.clear()
         .add(matchExclude);
     });
-  })
+  });
 
-  const buildConfig = {}
-  const BUILD_CONFIG_MAP = ['router', 'store', 'ssr']
+  const buildConfig = {};
+  const BUILD_CONFIG_MAP = ['router', 'store', 'ssr'];
   Object.keys(userConfig).forEach(key => {
     if (BUILD_CONFIG_MAP.includes(key)) {
-      buildConfig[key] = userConfig[key]
+      buildConfig[key] = userConfig[key];
     }
-  })
+  });
 
   // check global style file
   const generator = new Generator({
@@ -103,7 +103,7 @@ export default (api) => {
       runtimeModules,
       buildConfig: JSON.stringify(buildConfig)
     }
-  })
+  });
 
   const pageGenerator = new PageGenerator({
     rootDir,
@@ -146,7 +146,7 @@ export default (api) => {
     });
     registerMethod(registerKey.replace('add', 'remove'), (removeExportName) => {
       generator.removeExport(registerKey, removeExportName);
-    })
+    });
   });
 
   // watch src folder
@@ -192,10 +192,10 @@ export default (api) => {
     registerMethod(apiName, (code, position = 'after') => {
       const { apiKey } = registerAPIs[apiName];
       generator[apiKey](apiName, code, position);
-    })
+    });
   });
 
   onHook(`before.${command}.run`, async () => {
     await renderIce();
-  })
-}
+  });
+};

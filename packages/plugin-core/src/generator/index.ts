@@ -1,7 +1,7 @@
-import * as path from 'path'
-import * as fse from 'fs-extra'
-import * as globby from 'globby'
-import * as ejs from 'ejs'
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as globby from 'globby';
+import * as ejs from 'ejs';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
@@ -84,7 +84,7 @@ export default class Generator {
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
-    }
+    };
   }
 
   public parseRenderData() {

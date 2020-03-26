@@ -1,9 +1,9 @@
-import { createApp, IAppConfig } from 'ice'
+import { createApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
     getInitialData: async () => {
-      return { user: { name: 'Jack Ma', id: '01' } }
+      return { user: { name: 'Jack Ma', id: '01' } };
     }
   },
   router: {
@@ -11,9 +11,9 @@ const appConfig: IAppConfig = {
   },
   store: {
     getInitialStates: (initialData) => {
-      return initialData
+      return initialData;
     }
   }
 };
 
-createApp(appConfig)
+createApp(appConfig);
