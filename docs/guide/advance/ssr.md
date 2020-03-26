@@ -147,3 +147,7 @@ icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端
 - initialData: 选填，如果不填写，服务端则会调用前端声明的 `getInitialData` 方法，但如果**对性能追求比较极致**，服务端则可以自行获取对应数据并通过 `initialData` 传入。（调用前端的 getInitialData 一般会发起 HTTP 请求，但是服务端有可能通过缓存/数据库来查询，速度会快一点）
 
 以上即 icejs SSR 能力的使用说明，如遇到相关问题，欢迎给我们提 issue。
+
+## 其他
+
+- 在开发环境下 `getInitialData` 和 `getInitialProps` 方法中 mock 请求时不能写相对路径，否则服务端渲染时始终会去请求同一地址。
