@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { IPlugin } from '@alib/build-scripts'
+import { IPlugin } from '@alib/build-scripts';
 import { IRouterOptions } from './types';
 import walker from './collector/walker';
 
@@ -24,7 +24,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, getValue, applyMethod, r
   if (isMpa) {
     // if is mpa use empty router file
     fse.writeFileSync(routersTempPath, 'export default [];', 'utf-8');
-    routeConfigPath = routersTempPath
+    routeConfigPath = routersTempPath;
   }
   const hasRouteFile = fse.existsSync(routeConfigPath);
 
@@ -64,6 +64,6 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, getValue, applyMethod, r
       });
     }
   }
-}
+};
 
 export default plugin;

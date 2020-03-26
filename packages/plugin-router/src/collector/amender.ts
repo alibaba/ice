@@ -126,5 +126,5 @@ export default function amender(
 ) {
   addDefaultLayout(rootDir, routersTempPath, routesCollect);
   addDefault404(rootDir, routersTempPath, routesCollect);
-  loopAmend('', routesCollect)
+  loopAmend('', routesCollect);
 }

@@ -1,5 +1,5 @@
-import * as path from 'path'
-import * as fse from 'fs-extra'
+import * as path from 'path';
+import * as fse from 'fs-extra';
 
 function getPages(rootDir: string): string[] {
   const pagesPath = path.join(rootDir, 'src/pages');

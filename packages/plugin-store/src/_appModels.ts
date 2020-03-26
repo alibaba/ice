@@ -1,7 +1,7 @@
-import { createStore } from '@ice/store'
+import { createStore } from '@ice/store';
 
-const models = {}
+const models = {};
 
-const store = createStore(models)
+const store = createStore(models);
 
-export default store
+export default store;

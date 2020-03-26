@@ -1,4 +1,4 @@
-import * as path from 'path'
+import * as path from 'path';
 import Generator from './index';
 import getPages from '../utils/getPages';
 import generateExports from '../utils/generateExports';
@@ -40,7 +40,7 @@ export default class UsePageGenerator {
     return {
       pageImports: importStr,
       pageExports: exportStr,
-    }
+    };
   }
 
   public addPageExport = (pageName: string, exportData: IExportData|IExportData[]) => {

@@ -1,4 +1,4 @@
-import config from '@/config'
+import config from '@/config';
 
 interface Config {
   readonly [propName: string]: any;
@@ -7,6 +7,6 @@ interface Config {
 const userConfig: Config = {
   ...(config.default || {}),
   ...(config[process.env.APP_MODE] || {}),
-}
+};
 
-export default userConfig
+export default userConfig;
