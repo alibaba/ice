@@ -1,3 +1,4 @@
+import React from 'react';
 import { createApp, APP_MODE, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
@@ -8,7 +9,8 @@ const appConfig: IAppConfig = {
     level: APP_MODE === 'build' ? 'error' : 'debug',
   },
   router: {
-    type: 'hash'
+    type: 'hash',
+    fallback: <div>加载中...</div>
   },
   request: {
     timeout: 5000,
