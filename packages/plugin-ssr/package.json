@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "build-scripts-config": "^0.1.6",
+    "chalk": "^3.0.0",
     "cheerio": "^1.0.0-rc.3",
     "ejs": "^3.0.1",
     "html-minifier": "^4.0.0"
