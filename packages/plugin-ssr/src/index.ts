@@ -5,7 +5,7 @@ import { minify } from 'html-minifier';
 import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
-  const { context, registerTask, getValue, onGetWebpackConfig, onHook } = api;
+  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log } = api;
   const { rootDir, command, webpack, userConfig } = context;
   const ICE_TEMP = getValue('ICE_TEMP');
   const ssrEntry = path.join(ICE_TEMP, 'server.ts');
@@ -72,7 +72,11 @@ const plugin = async (api): Promise<void> => {
       delete require.cache[requirePath];
       // eslint-disable-next-line
       const serverRender = require(requirePath)
-      const html = await serverRender.default({ pathname: req.path, htmlTemplate });
+      const { html, errors } = await serverRender.default({ pathname: req.path, htmlTemplate });
+      if (errors.length > 0) {
+        log.error('[SSR] Server side rendering error, downgraded to client side rendering');
+        log.error(`\n${errors.join('\n')}`);
+      }
       console.log('[SSR]', `output html content\n${html}\n`);
       res.send(html);
     }
