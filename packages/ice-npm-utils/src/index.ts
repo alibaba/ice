@@ -9,8 +9,6 @@ const progress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
 
-const cacheData = {};
-
 /**
  * 获取指定 npm 包版本的 tarball
  */
@@ -107,10 +105,6 @@ function getAndExtractTarball(
  * 从 register 获取 npm 的信息
  */
 function getNpmInfo(npm: string, registry?: string): Promise<any> {
-  if (cacheData[npm]) {
-    return Promise.resolve(cacheData[npm]);
-  }
-
   const register = registry || getNpmRegistry(npm);
   const url = `${register}/${npm}`;
 
@@ -122,7 +116,6 @@ function getNpmInfo(npm: string, registry?: string): Promise<any> {
       return Promise.reject(error);
     }
 
-    cacheData[npm] = body;
     return body;
   });
 }
