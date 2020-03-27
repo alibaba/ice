@@ -3,9 +3,8 @@ import * as fse from 'fs-extra';
 
 export default async function (api) {
   const { getValue, applyMethod, onGetWebpackConfig } = api;
-  const ICE_TEMP = getValue('ICE_TEMP');
   const srcPath = path.join(__dirname, '..', 'request');
-  const distPath = path.join(ICE_TEMP, 'request');
+  const distPath = path.join(getValue('ICE_TEMP'), 'request');
 
   // move requst to .ice/request
   await fse.copy(srcPath, distPath);
