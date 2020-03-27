@@ -53,6 +53,9 @@ module.exports = ({
 
   const mode = command === 'start' ? 'development' : 'production';
   const config = getWebpackConfig(mode);
+  // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
+  // in case of registerUserConfig will be excute before onGetWebpackConfig
+  
   // DefinePlugin
   const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),

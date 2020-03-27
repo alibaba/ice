@@ -6,7 +6,7 @@ import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log } = api;
-  const { rootDir, command, webpack, userConfig } = context;
+  const { rootDir, command, webpack, userConfig, commandArgs } = context;
   const ICE_TEMP = getValue('ICE_TEMP');
   const ssrEntry = path.join(ICE_TEMP, 'server.ts');
   // Note: Compatible plugins to modify configuration
@@ -22,6 +22,12 @@ const plugin = async (api): Promise<void> => {
 
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);
+  // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config
+  webpackConfig
+    .plugin('DefinePlugin')
+    .use(webpack.DefinePlugin, [{
+      'process.env.APP_MODE': JSON.stringify(commandArgs.mode || command),
+    }]);
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
@@ -34,10 +40,7 @@ const plugin = async (api): Promise<void> => {
 
     config
       .plugin('DefinePlugin')
-      .use(webpack.DefinePlugin, [{
-        'process.env.__IS_SERVER__': true
-      }])
-      .end();
+      .tap(([args]) => [{ ...args, 'process.env.__IS_SERVER__': true }]);
 
     config.plugins.delete('MiniCssExtractPlugin');
     ['scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'].forEach((rule) => {
