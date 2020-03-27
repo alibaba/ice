@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-const Router = () => {
+// eslint-disable-next-line
+const Router = ({ type, routes, basename }) => {
   return (<div />);
 };
 
