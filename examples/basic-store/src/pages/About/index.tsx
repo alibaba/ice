@@ -11,10 +11,10 @@ const About = () => {
     const fetchData = async () => {
       await pageActions.getPageTitle();
       await userActions.getUserInfo();
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, [pageActions, userActions]);
 
   return (
     <>
@@ -31,7 +31,7 @@ const About = () => {
 
       <Link to="/">home</Link>
     </>
-  )
+  );
 };
 
 export default About;

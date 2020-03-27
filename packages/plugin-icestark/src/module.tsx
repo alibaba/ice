@@ -11,7 +11,7 @@ import {
 import { Router } from '$ice/Router';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
-import { IIceStark } from './types'
+import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
@@ -37,7 +37,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }
-      })
+      });
     });
     setRenderRouter((routes) => () => {
       const routerProps = {
@@ -120,9 +120,9 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
           )}
         </BasicLayout>
       );
-    }
+    };
     setRenderRouter(frameworkRouter);
   }
-}
+};
 
 export default module;

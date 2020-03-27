@@ -1,13 +1,13 @@
-import React from 'react'
-import { Link } from 'ice'
+import React from 'react';
+import { Link } from 'ice';
 
 const Child = () => {
   return (
     <div>
       Child
     </div>
-  )
-}
+  );
+};
 
 const About = () => {
   return (
@@ -17,7 +17,7 @@ const About = () => {
       <Link to="/about">About</Link><br />
       <Link to="/">Home</Link>
     </>
-  )
-}
+  );
+};
 
-export default About
+export default About;
