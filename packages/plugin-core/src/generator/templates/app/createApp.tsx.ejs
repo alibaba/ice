@@ -82,7 +82,7 @@ function renderApp(config: IAppConfig, context: IContext) {
     if (modifyDOMRender) {
       return modifyDOMRender({ App, appMountNode })
     } else {
-      return ReactDOM[process.env.__SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode)
+      return ReactDOM[window.__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode)
     }
   }
 }

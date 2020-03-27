@@ -75,10 +75,10 @@ const plugin = async (api): Promise<void> => {
       delete require.cache[requirePath];
       // eslint-disable-next-line
       const serverRender = require(requirePath)
-      const { html, errors } = await serverRender.default({ pathname: req.path, htmlTemplate });
-      if (errors.length > 0) {
+      const { html, error } = await serverRender.default({ pathname: req.path, htmlTemplate });
+      if (error) {
         log.error('[SSR] Server side rendering error, downgraded to client side rendering');
-        log.error(`\n${errors.join('\n')}`);
+        log.error(error);
       }
       console.log('[SSR]', `output html content\n${html}\n`);
       res.send(html);

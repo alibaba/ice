@@ -10,59 +10,50 @@ const chalk = require('chalk');
 const appConfig = getAppConfig();
 
 const serverRender = async ({ context, pathname, initialData, htmlTemplate }) => {
-  let errors = [];
-  if (!initialData) {
-    const getInitialData = appConfig.app && appConfig.app.getInitialData;
-    if (getInitialData) {
-      console.log('[SSR]', 'getting initial data of app');
-      try {
-        initialData = await getInitialData();
-      } catch (error) {
-        error.name = 'getInitialDataError';
-        errors.push(error);
-        logError('[SSR] get initial data error');
-      }
-    }
-  }
-
-  const PageComponent = getComponentByPath(routes, pathname);
-  const getInitialProps = PageComponent && PageComponent.getInitialProps;
+  const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__');
 
   let pageInitialProps;
-  if (getInitialProps) {
-    console.log('[SSR]', 'getting initial props of page component');
-    try {
-      pageInitialProps = await getInitialProps();
-    } catch (error) {
-      error.name = 'getInitialPropsError';
-      errors.push(error);
-      logError('[SSR] get page data error');
-    }
-  }
+  let error;
 
-  console.log('[SSR]', 'generating html content');
-  const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__');
   try {
-    if (!errors.length) {
-      const bundleContent = createAppWithSSR(appConfig, {
-        staticContext: context,
-        pathname,
-        initialData,
-        pageInitialProps
-      });
-      $('#ice-container').append(bundleContent);
-      $('head').append(`<script>
-        window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
-        window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-      </script>`)
+    // get initial data
+    if (!initialData) {
+      const getInitialData = appConfig.app && appConfig.app.getInitialData;
+      if (getInitialData) {
+        console.log('[SSR]', 'getting initial data of app');
+        initialData = await getInitialData();
+      }
     }
-  } catch (error) {
-    error.name = 'genHtmlErrorError';
-    errors.push(error);
+
+    // get page initial props
+    const PageComponent = getComponentByPath(routes, pathname);
+    const getInitialProps = PageComponent && PageComponent.getInitialProps;
+    if (getInitialProps) {
+      console.log('[SSR]', 'getting initial props of page component');
+      pageInitialProps = await getInitialProps();
+    }
+
+    // generate bundle content and register global variables in html
+    console.log('[SSR]', 'generating html content');
+    const bundleContent = createAppWithSSR(appConfig, {
+      staticContext: context,
+      pathname,
+      initialData,
+      pageInitialProps
+    });
+    $('#ice-container').append(bundleContent);
+    $('head').append(`<script>
+      window.__ICE_SSR_ENABLED__=true;
+      window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
+      window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
+    </script>`)
+  } catch (e) {
+    error = e;
     logError('[SSR] generate html template error');
   }
+
   const html = $.html();
-  return { html, errors };
+  return { html, error };
 }
 
 function getComponentByPath(routes, currPath)  {
