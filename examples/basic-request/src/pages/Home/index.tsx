@@ -22,7 +22,8 @@ const Home = () => {
 
     // 6. request method
     request({ url: '/user'}).then((res) => {console.log('request:', res);});
-  }, [fetchRepo]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>
