@@ -50,15 +50,10 @@ async function publish() {
     }
   });
 
-  log(`5. 🔖 🔖 🔖 Commit${isLatestVersion ? ' & Create tag' : ''}...`)
+  log(`5. 🔖 🔖 🔖 Commit changes...`)
   await run(`git commit --all -m v${newVersion}`)
+  await run('git push')
 
-  if (isLatestVersion) {
-    await run(`git tag v${newVersion}`)
-    await run('git push origin master --tags')
-  } else {
-    await run('git push')
-  }
   log(`\n\n 🎉 🎉 🎉 Published successfully...`)
 
   log('6. 💡 💡 💡 Start syncing...')
