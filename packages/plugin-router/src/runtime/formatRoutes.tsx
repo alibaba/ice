@@ -22,14 +22,14 @@ export default function formatRoutes(routes, parentPath) {
 }
 
 export function wrapperPageWithSSR(context, routes) {
-  const pageInitialProps = { ...context.pageInitialProps }
+  const pageInitialProps = { ...context.pageInitialProps };
   const WrapperPageFn = () => {
     const ServerWrapperedPage = (props) => {
-      const MatchedPageComponent = getComponentByPath(routes, context.pathname)
+      const MatchedPageComponent = getComponentByPath(routes, context.pathname);
       return <MatchedPageComponent {...props}  {...pageInitialProps}  />;
-    }
-    return ServerWrapperedPage
-  }
+    };
+    return ServerWrapperedPage;
+  };
   return WrapperPageFn;
 }
 
@@ -53,17 +53,17 @@ export function wrapperPage(PageComponent) {
       // And don't need to re-request to switch routes
       // Set the data to null after use, otherwise other pages will use
       if ((window as any).__ICE_PAGE_PROPS__) {
-        (window as any).__ICE_PAGE_PROPS__ = null
+        (window as any).__ICE_PAGE_PROPS__ = null;
       } else if (PageComponent.getInitialProps) {
         // When the server does not return data, the client calls getinitialprops
         (async () => {
           const result = await PageComponent.getInitialProps();
           setData(result);
-        })()
+        })();
       }
     }, []);
     return <PageComponent  {...Object.assign({}, props, data)} />;
-  }
+  };
   return RouterWrapperedPage;
 }
 

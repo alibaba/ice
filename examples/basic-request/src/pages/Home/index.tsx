@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react'
-import { useRequest, request } from 'ice'
+import React, { useEffect } from 'react';
+import { useRequest, request } from 'ice';
 
 // 1. request in outside
-request('/user').then(res => console.log('request in outside:', res))
+request('/user').then(res => console.log('request in outside:', res));
 
 const Home = () => {
   // 2. useRequest hook
-  const { data, loading, request: fetchRepo } = useRequest({ url: '/repo' })
+  const { data, loading, request: fetchRepo } = useRequest({ url: '/repo' });
 
   useEffect(() => {
-    fetchRepo()
+    fetchRepo();
 
     // 3. requse.get alias
-    request.get('/user').then(res => console.log('get:', res))
+    request.get('/user').then(res => console.log('get:', res));
 
     // 4. requse.post alias
-    request.post('/users/123').then(res => console.log('post:', res))
+    request.post('/users/123').then(res => console.log('post:', res));
 
     // 5. requse.delete alias
-    request.delete('/user/123').then(res => console.log('delete:', res))
+    request.delete('/user/123').then(res => console.log('delete:', res));
 
     // 6. request method
-    request({ url: '/user'}).then((res) => {console.log('request:', res)})
-  }, [])
+    request({ url: '/user'}).then((res) => {console.log('request:', res);});
+  }, [fetchRepo]);
 
   return (
     <div>
@@ -37,7 +37,7 @@ const Home = () => {
           </>
       }
     </div>
-  )
+  );
 };
 
 export default Home;

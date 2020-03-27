@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { connect } from 'ice'
+import * as React from 'react';
+import { connect } from 'ice';
 
 const Home = (props) => {
   const { userState, userAction } = props;
@@ -13,7 +13,7 @@ const Home = (props) => {
       </div>
     </>
   );
-}
+};
 
 const mapState = models => ({
   userState: models.user,

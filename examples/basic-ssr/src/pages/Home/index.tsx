@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Link, logger, store as appStore } from 'ice'
-import styles from './index.module.scss'
+import React, { useState, useEffect } from 'react';
+import { Link, logger, store as appStore } from 'ice';
+import styles from './index.module.scss';
 
 export default function Home(props) {
   logger.info('Home props', props);
@@ -30,5 +30,5 @@ export default function Home(props) {
 }
 
 Home.getInitialProps = async () => {
-  return { title: 'Home Page...' }
+  return { title: 'Home Page...' };
 };

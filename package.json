@@ -15,7 +15,7 @@
     "sync": "ts-node ./scripts/sync.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "clean": "lerna clean --yes && rimraf packages/*/lib",
-    "lint": "eslint --cache --ext .js,.jsx,.ts ./",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix"
   },
   "husky": {

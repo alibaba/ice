@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, logger } from 'ice'
+import React from 'react';
+import { Link, logger } from 'ice';
 
 const Home = (props) => {
   logger.info('render 404', props);
@@ -12,6 +12,6 @@ const Home = (props) => {
       <Link to="/dashboard">dashboard</Link>
     </>
   );
-}
+};
 
-export default Home
+export default Home;

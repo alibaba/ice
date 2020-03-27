@@ -11,16 +11,16 @@ import {
 
   RouteComponentProps
 } from 'react-router-dom';
-import { RoutesProps, RouterProps, IRouteWrapper, IDynamicImportComponent, RouteItemProps, IRenderRouteProps } from '../types'
+import { RoutesProps, RouterProps, IRouteWrapper, IDynamicImportComponent, RouteItemProps, IRenderRouteProps } from '../types';
 
 function wrapperRoute(component, routerWrappers) {
   return (routerWrappers || []).reduce((acc, curr) => {
-    const compose = curr(acc)
+    const compose = curr(acc);
     if (acc.pageConfig) {
-      compose.pageConfig = acc.pageConfig
+      compose.pageConfig = acc.pageConfig;
     }
     if (acc.getInitialProps) {
-      compose.getInitialProps = acc.getInitialProps
+      compose.getInitialProps = acc.getInitialProps;
     }
     return compose;
   }, component);
@@ -30,7 +30,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
   const { __LAZY__, dynamicImport }: IDynamicImportComponent = component || {};
   return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
     if (routerWrappers && routerWrappers.length) {
-      return { ...m, default: wrapperRoute(m.default, routerWrappers) }
+      return { ...m, default: wrapperRoute(m.default, routerWrappers) };
     }
     return m;
   })) : wrapperRoute(component, routerWrappers);
