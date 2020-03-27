@@ -25,18 +25,7 @@ export default (api) => {
   const runtimeModules = plugins.map(({ pluginPath }) => {
     const modulePath = path.join(path.dirname(pluginPath), 'module.js');
     return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
-  })
-    .filter(Boolean)
-    .map(pluginPath => {
-      const pkgPath = path.join(pluginPath, '../../package.json');
-      const { pluginConfig } = fse.readJSONSync(pkgPath);
-      return {
-        key: pluginConfig && pluginConfig.beforeLoad ? 1 : 0,
-        path: pluginPath
-      };
-    }).sort((a, b) => {
-      return b.key - a.key;
-    });
+  }).filter(Boolean);
 
   if (!userConfig.entry) {
     // modify default entry to src/app
@@ -73,10 +62,10 @@ export default (api) => {
 
     // add babel exclude for node_modules module file
     const matchExclude = (filepath) => {
-      const excludes = runtimeModules.map(runtimeModule => {
+      const excludes = runtimeModules.map(modulePath => {
         // add default node_modules
-        if (runtimeModule.path.includes('node_modules')) {
-          return formatPath(runtimeModule.path);
+        if (modulePath.includes('node_modules')) {
+          return formatPath(modulePath);
         }
         return false;
 

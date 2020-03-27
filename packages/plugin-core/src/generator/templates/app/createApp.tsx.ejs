@@ -59,10 +59,12 @@ function createApp(customConfig: IAppConfig) {
   }
 }
 
-
 function renderApp(config: IAppConfig, context: IContext) {
   const runtime = new RuntimeModule(config, <%- buildConfig %>, context)
-  <% if (runtimeModules.length) {%><% runtimeModules.forEach((runtimeModule) => { %><% if(runtimeModule){ %>runtime.loadModlue(require('<%= runtimeModule.path %>'));<% } %><% }) %><% } %>
+  <% if (runtimeModules.length) {%>
+  runtime.loadModlues([<% runtimeModules.forEach((modulePath) => { %>require('<%= modulePath %>'),<% }); %>])
+  <% } %>
+
   const { appConfig, modifyDOMRender } = runtime
   const { rootId, mountNode } = appConfig.app
   const AppProvider = runtime.composeAppProvider();
