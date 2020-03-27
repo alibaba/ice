@@ -51,8 +51,7 @@ export default (api) => {
     config.resolve.alias.set('@', path.join(rootDir, 'src'));
 
     const defineVariables = {
-      'process.env.__IS_SERVER__': false,
-      'process.env.__SSR_ENABLED__': userConfig.ssr
+      'process.env.__IS_SERVER__': false
     };
     config
       .plugin('DefinePlugin')

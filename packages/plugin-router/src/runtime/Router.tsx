@@ -83,9 +83,9 @@ function Routes({ routes, fallback }: RoutesProps) {
           } else {
             const { component: RouteComponent, ...others } = route;
             // React does not currently support Suspense when components are being server-side rendered
-            // process.env.__IS_SERVER__ = React.RenderToString()
-            // process.env.__SSR_ENABLED__ = React.hydrate()
-            const RenderComponent = process.env.__IS_SERVER__ || process.env.__SSR_ENABLED__
+            // process.env.__IS_SERVER__: React.RenderToString()
+            // window.__ICE_SSR_ENABLED__: React.hydrate()
+            const RenderComponent = process.env.__IS_SERVER__ || (window as any).__ICE_SSR_ENABLED__
               ? (props: RouteComponentProps) => <RouteComponent {...props} />
               : (props: RouteComponentProps) => {
                 return (
@@ -93,7 +93,7 @@ function Routes({ routes, fallback }: RoutesProps) {
                     <RouteComponent {...props} />
                   </React.Suspense>
                 );
-              }
+              };
 
             return (
               <Route
