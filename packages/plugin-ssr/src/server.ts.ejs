@@ -7,7 +7,7 @@ import '@/app'
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig()
 
-const serverRender = async ({ pathname, initialData, htmlTemplate }) => {
+const serverRender = async ({ context, pathname, initialData, htmlTemplate }) => {
 
   if (!initialData) {
     const getInitialData = appConfig.app && appConfig.app.getInitialData
@@ -24,7 +24,12 @@ const serverRender = async ({ pathname, initialData, htmlTemplate }) => {
   }
   const pageInitialProps = getInitialProps ? await getInitialProps() : {}
   console.log('[SSR]', 'generating html content');
-  const bundleContent = createAppWithSSR(appConfig, { pathname, pageInitialProps, initialData })
+  const bundleContent = createAppWithSSR(appConfig, {
+    staticContext: context,
+    pathname,
+    initialData,
+    pageInitialProps
+  })
   const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__')
   $('#ice-container').append(bundleContent)
   $('head').append(`<script>
