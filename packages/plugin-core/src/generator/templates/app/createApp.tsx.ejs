@@ -38,8 +38,11 @@ function createApp(customConfig: IAppConfig) {
   }
 
   // client side rendering
-  let initialData = {};
-  let pageInitialProps = {};
+  // load module to run before createApp ready
+  loadStaticModules(appConfig)
+
+  let initialData = {}
+  let pageInitialProps = {}
 
   // ssr enabled and the server has returned data
   if (window.__ICE_APP_DATA__) {
@@ -60,13 +63,10 @@ function createApp(customConfig: IAppConfig) {
 }
 
 function renderApp(config: IAppConfig, context: IContext) {
-  const runtime = new RuntimeModule(config, <%- buildConfig %>, context);
-  <% if (runtimeModules.length) {%>
-  runtime.loadModlues([<% runtimeModules.forEach((modulePath) => { %>require('<%= modulePath %>'),<% }); %>])
-  <% } %>
-
-  const { appConfig, modifyDOMRender } = runtime;
-  const { rootId, mountNode } = appConfig.app;
+  const runtime = new RuntimeModule(config, <%- buildConfig %>, context)
+  loadModlues(runtime);
+  const { appConfig, modifyDOMRender } = runtime
+  const { rootId, mountNode } = appConfig.app
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
 
@@ -89,8 +89,33 @@ function renderApp(config: IAppConfig, context: IContext) {
   }
 }
 
+function loadModlues(runtime) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(!runtimeModule.staticModule){ %>
+        runtime.loadModlue(require('<%= runtimeModule.path %>'));
+      <% } %>
+    <% }) %>
+  <% } %>
+}
+
+function loadStaticModules(appConfig: IAppConfig) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(runtimeModule.staticModule){ %>
+        require('<%= runtimeModule.path %>').default({appConfig});
+      <% } %>
+    <% }) %>
+  <% } %>
+}
+
 function getAppConfig() {
   return appConfigData;
 }
 
-export { createApp, getAppConfig, createAppWithSSR };
+export {
+  createApp,
+  createAppWithSSR,
+  getAppConfig,
+  loadStaticModules
+}
