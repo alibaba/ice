@@ -13,15 +13,16 @@ MPA 应用以页面为维度进行划分，每个页面目录下面可单独配�
   ├── public/
 + │   ├── dashboard.html      # dashboard 页面 HTML
 + │   ├── index.html          # 未配置页面名称对应的 HTML 会默认使用 index.html
-
   │   └── favicon.png         # Favicon
-  ├── src/pages               # 源码
-  │    ├── Dashboard/         # Dashboard 页面
-+ │    │   ├── app.js         # 页面配置入口
-  │    │   └── index.jsx      # 页面组件入口
-  │    └──  Home/
-+ │         ├── app.js
-  │         └── index.jsx
+  ├── src/                    # 源码
+  │   ├── layouts/            # 布局
+  │   └── pages/              # 页面
+  │        ├── Dashboard/     # Dashboard 页面
++ │        │     ├── app.js    # 页面配置入口
+  │        │     └── index.jsx      # 页面组件入口
+  │        └── Home/
++ │             ├── app.js
+  │             └──index.jsx
   ├── build.json
   ├── package.json
   └── tsconfig.json
@@ -74,6 +75,8 @@ createApp(appConfig);
   ├── package.json
   └── tsconfig.json
 ```
+
+> 注意：如果 layouts 中有状态管理需求，可以使用全局 models 的组织形式，但请不要在全局 models 管理页面的状态，否则会引起不必要的代码打包。
 
 关于状态管理的更多内容，请查看文档 [状态管理](/docs/guide/basic/store.md)
 
