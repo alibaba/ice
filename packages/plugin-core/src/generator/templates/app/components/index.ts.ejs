@@ -21,4 +21,4 @@ export {
   useLocation,
   useParams,
   useRouteMatch
-} from 'react-router-dom'
+} from 'react-router-dom';
