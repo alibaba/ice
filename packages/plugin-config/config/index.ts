@@ -6,7 +6,7 @@ interface Config {
 
 const userConfig: Config = {
   ...(config.default || {}),
-  ...(config[process.env.APP_MODE] || {}),
+  ...(config[(window && window.__app_mode__) || process.env.APP_MODE] || {}),
 };
 
 export default userConfig;

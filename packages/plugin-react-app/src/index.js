@@ -60,6 +60,7 @@ module.exports = ({
   const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
     'process.env.APP_MODE': JSON.stringify(appMode),
+    'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
   config
     .plugin('DefinePlugin')

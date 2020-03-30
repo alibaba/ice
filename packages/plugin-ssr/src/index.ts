@@ -27,6 +27,7 @@ const plugin = async (api): Promise<void> => {
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [{
       'process.env.APP_MODE': JSON.stringify(commandArgs.mode || command),
+      'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
     }]);
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
