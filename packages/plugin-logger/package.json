@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-logger",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "builtin logger in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",

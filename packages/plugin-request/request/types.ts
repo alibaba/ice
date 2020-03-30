@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 export interface IInterceptorRequest {
   onConfig?: (config: AxiosRequestConfig) => AxiosRequestConfig;

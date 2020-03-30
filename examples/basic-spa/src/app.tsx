@@ -1,4 +1,5 @@
-import { createApp, APP_MODE, IAppConfig } from 'ice'
+import React from 'react';
+import { createApp, APP_MODE, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -8,7 +9,8 @@ const appConfig: IAppConfig = {
     level: APP_MODE === 'build' ? 'error' : 'debug',
   },
   router: {
-    type: 'hash'
+    type: 'hash',
+    fallback: <div>加载中...</div>
   },
   request: {
     timeout: 5000,
@@ -16,11 +18,11 @@ const appConfig: IAppConfig = {
     interceptors: {
       request: {
         onConfig: (config) => {
-          return config
+          return config;
         }
       }
     }
   }
 };
 
-createApp(appConfig)
+createApp(appConfig);

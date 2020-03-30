@@ -2,4 +2,4 @@ const stores = {};
 
 export {
   stores,
-}
+};

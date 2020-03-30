@@ -1,38 +1,63 @@
-import * as cheerio from 'cheerio'
-import { matchPath } from 'ice'
-import { createAppWithSSR, getAppConfig } from './createApp'
-import routes from '@/routes'
-import '@/app'
+import * as cheerio from 'cheerio';
+import { matchPath } from 'ice';
+import { createAppWithSSR, getAppConfig, loadStaticModules } from './createApp';
+import routes from '@/routes';
+import '@/app';
+
+const chalk = require('chalk');
 
 // appConfig set by: import '@/app'
-const appConfig = getAppConfig()
+const appConfig = getAppConfig();
 
-const serverRender = async ({ pathname, initialData, htmlTemplate }) => {
+const serverRender = async ({ context, pathname, initialData, htmlTemplate }) => {
+  // get html template
+  const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__');
 
-  if (!initialData) {
-    const getInitialData = appConfig.app && appConfig.app.getInitialData
-    if (getInitialData) {
-      console.log('[SSR]', 'getting initial data of app');
+  // load module to run before createApp ready
+  loadStaticModules(appConfig);
+
+  let pageInitialProps;
+  let error;
+
+  try {
+    // get initial data
+    if (!initialData) {
+      const getInitialData = appConfig.app && appConfig.app.getInitialData;
+      if (getInitialData) {
+        console.log('[SSR]', 'getting initial data of app');
+        initialData = await getInitialData();
+      }
     }
-    initialData = getInitialData ? await getInitialData() : {}
+
+    // get page initial props
+    const PageComponent = getComponentByPath(routes, pathname);
+    const getInitialProps = PageComponent && PageComponent.getInitialProps;
+    if (getInitialProps) {
+      console.log('[SSR]', 'getting initial props of page component');
+      pageInitialProps = await getInitialProps();
+    }
+
+    // generate bundle content and register global variables in html
+    console.log('[SSR]', 'generating html content');
+    const bundleContent = createAppWithSSR(appConfig, {
+      staticContext: context,
+      pathname,
+      initialData,
+      pageInitialProps
+    });
+    $('#ice-container').append(bundleContent);
+    $('head').append(`<script>
+      window.__ICE_SSR_ENABLED__=true;
+      window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
+      window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
+    </script>`)
+  } catch (e) {
+    error = e;
+    logError('[SSR] generate html template error');
   }
 
-  const PageComponent = getComponentByPath(routes, pathname)
-  const getInitialProps = PageComponent && PageComponent.getInitialProps;
-  if (getInitialProps) {
-    console.log('[SSR]', 'getting initial props of page component');
-  }
-  const pageInitialProps = getInitialProps ? await getInitialProps() : {}
-  console.log('[SSR]', 'generating html content');
-  const bundleContent = createAppWithSSR(appConfig, { pathname, pageInitialProps, initialData })
-  const $ = cheerio.load(htmlTemplate || '__ICE_SERVER_HTML_TEMPLATE__')
-  $('#ice-container').append(bundleContent)
-  $('head').append(`<script>
-    window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
-    window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-  </script>`)
-  const html = $.html()
-  return html
+  const html = $.html();
+  return { html, error };
 }
 
 function getComponentByPath(routes, currPath)  {
@@ -46,4 +71,11 @@ function getComponentByPath(routes, currPath)  {
   return matchedRoute && matchedRoute.component;
 }
 
-export default serverRender
+function logError(msg) {
+  console.log(
+    chalk.red('ERR!'),
+    chalk.magenta(msg),
+  );
+}
+
+export default serverRender;

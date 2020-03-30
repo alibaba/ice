@@ -1,9 +1,9 @@
-import { createStore } from '@ice/store'
+import { createStore } from '@ice/store';
 
-const Dashboard = createStore({})
+const Dashboard = createStore({});
 
-const About = createStore({})
+const About = createStore({});
 
-const PageModles = { Dashboard, About }
+const PageModles = { Dashboard, About };
 
-export default PageModles
+export default PageModles;

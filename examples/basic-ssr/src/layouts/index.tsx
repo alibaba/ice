@@ -1,5 +1,5 @@
-import * as React from 'react'
-import styles from './index.module.scss'
+import * as React from 'react';
+import styles from './index.module.scss';
 
 const Layout = ({ children }) => {
   return (
@@ -7,9 +7,9 @@ const Layout = ({ children }) => {
       <h2 className={styles.title}>SSR</h2>
       <main className={styles.main}>
         {children}
-        </main>
+      </main>
     </div>
   );
-}
+};
 
 export default Layout;

@@ -9,17 +9,17 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-config',
     'build-plugin-ice-request',
     'build-plugin-ice-mpa'
-  ]
+  ];
 
   if (userConfig.ssr) {
-    builtInPlugins.push('build-plugin-ice-ssr')
+    builtInPlugins.push('build-plugin-ice-ssr');
   }
 
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
-    builtInPlugins.push('build-plugin-ice-store')
+    builtInPlugins.push('build-plugin-ice-store');
   }
 
-  return builtInPlugins
-}
+  return builtInPlugins;
+};
 
 export = getBuiltInPlugins

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'ice'
+import React from 'react';
+import { Link } from 'ice';
 
 const Home = (props) => {
   return (
@@ -9,14 +9,14 @@ const Home = (props) => {
       <Link to="/dashboard">Dashboard</Link>
     </>
   );
-}
+};
 
 Home.getInitialProps = async () => {
-  return { a: 1 }
+  return { a: 1 };
 };
 
 Home.pageConfig = {
   title: 'Home Page'
 };
 
-export default Home
+export default Home;

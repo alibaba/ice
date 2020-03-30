@@ -108,7 +108,7 @@ export default function walker({
         ...pageConfig,
         component: layoutName,
         isLayoutLike
-      }
+      };
       layoutMap[routePath] = pageConfig;
     } else {
       routesMap[routePath] = pageConfig;

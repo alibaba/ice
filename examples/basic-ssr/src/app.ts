@@ -1,19 +1,23 @@
-import { createApp, IAppConfig } from 'ice'
+import { createApp, IAppConfig, config, request } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
     getInitialData: async () => {
-      return { user: { name: 'Jack Ma', id: '01' } }
+      const res = await request('/user');
+      return res;
     }
   },
   router: {
     type: 'browser'
   },
+  request: {
+    baseURL: config.baseURL
+  },
   store: {
     getInitialStates: (initialData) => {
-      return initialData
+      return initialData.data;
     }
   }
 };
 
-createApp(appConfig)
+createApp(appConfig);
