@@ -1,26 +1,29 @@
-import React, { useEffect } from 'react'
-import { useRequest, request } from 'ice'
+import React, { useEffect } from 'react';
+import { useRequest, request } from 'ice';
+
+// 1. request in outside
+request('/user').then(res => console.log('request in outside:', res));
 
 const Home = () => {
-  // 1. useRequest hook
-  const { data, loading, request: fetchRepo } = useRequest({ url: '/repo' })
+  // 2. useRequest hook
+  const { data, loading, request: fetchRepo } = useRequest({ url: '/repo' });
 
   useEffect(() => {
-    fetchRepo()
-    
-    request('/user').then(res => console.log('get:', res))
-    // 2. requse.get alias
-    request.get('/user').then(res => console.log('get:', res))
+    fetchRepo();
 
-    // 3. requse.post alias
-    request.post('/users/123').then(res => console.log('post:', res))
+    // 3. requse.get alias
+    request.get('/user').then(res => console.log('get:', res));
 
-    // 4. requse.delete alias
-    request.delete('/user/123').then(res => console.log('delete:', res))
+    // 4. requse.post alias
+    request.post('/users/123').then(res => console.log('post:', res));
 
-    // 5. request method
-    request({ url: '/user'}).then((res) => {console.log('request:', res)})
-  }, [])
+    // 5. requse.delete alias
+    request.delete('/user/123').then(res => console.log('delete:', res));
+
+    // 6. request method
+    request({ url: '/user'}).then((res) => {console.log('request:', res);});
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>
@@ -35,7 +38,7 @@ const Home = () => {
           </>
       }
     </div>
-  )
+  );
 };
 
 export default Home;

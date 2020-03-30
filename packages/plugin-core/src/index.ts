@@ -1,14 +1,14 @@
-import * as path from 'path'
-import * as fse from 'fs-extra'
+import * as path from 'path';
+import * as fse from 'fs-extra';
 import * as chokidar from 'chokidar';
-import * as globby from 'globby'
-import Generator from './generator'
-import PageGenerator from './generator/pageGenerator'
-import getPages from './utils/getPages'
-import formatPath from './utils/formatPath'
+import * as globby from 'globby';
+import Generator from './generator';
+import PageGenerator from './generator/pageGenerator';
+import getPages from './utils/getPages';
+import formatPath from './utils/formatPath';
 
 export default (api) => {
-  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api
+  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api;
   const { rootDir, command, userConfig } = context;
 
   const iceTempPath = path.join(rootDir, '.ice');
@@ -25,7 +25,17 @@ export default (api) => {
   const runtimeModules = plugins.map(({ pluginPath }) => {
     const modulePath = path.join(path.dirname(pluginPath), 'module.js');
     return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
-  }).filter(Boolean);
+  })
+    .filter(Boolean)
+    .map(pluginPath => {
+      const pkgPath = path.join(pluginPath, '../../package.json');
+      const { pluginConfig } = fse.readJSONSync(pkgPath);
+      const staticModule = (pluginConfig && pluginConfig.staticModule) || false;
+      return {
+        staticModule,
+        path: pluginPath
+      };
+    });
 
   if (!userConfig.entry) {
     // modify default entry to src/app
@@ -40,8 +50,7 @@ export default (api) => {
     config.resolve.alias.set('@', path.join(rootDir, 'src'));
 
     const defineVariables = {
-      'process.env.__IS_SERVER__': false,
-      'process.env.__SSR_ENABLED__': userConfig.ssr
+      'process.env.__IS_SERVER__': false
     };
     config
       .plugin('DefinePlugin')
@@ -63,10 +72,10 @@ export default (api) => {
 
     // add babel exclude for node_modules module file
     const matchExclude = (filepath) => {
-      const excludes = runtimeModules.map(modulePath => {
+      const excludes = runtimeModules.map(runtimeModule => {
         // add default node_modules
-        if (modulePath.includes('node_modules')) {
-          return formatPath(modulePath);
+        if (runtimeModule.path.includes('node_modules')) {
+          return formatPath(runtimeModule.path);
         }
         return false;
 
@@ -84,15 +93,15 @@ export default (api) => {
         .exclude.clear()
         .add(matchExclude);
     });
-  })
+  });
 
-  const buildConfig = {}
-  const BUILD_CONFIG_MAP = ['router', 'store', 'ssr']
+  const buildConfig = {};
+  const BUILD_CONFIG_MAP = ['router', 'store', 'ssr'];
   Object.keys(userConfig).forEach(key => {
     if (BUILD_CONFIG_MAP.includes(key)) {
-      buildConfig[key] = userConfig[key]
+      buildConfig[key] = userConfig[key];
     }
-  })
+  });
 
   // check global style file
   const generator = new Generator({
@@ -103,7 +112,7 @@ export default (api) => {
       runtimeModules,
       buildConfig: JSON.stringify(buildConfig)
     }
-  })
+  });
 
   const pageGenerator = new PageGenerator({
     rootDir,
@@ -146,7 +155,7 @@ export default (api) => {
     });
     registerMethod(registerKey.replace('add', 'remove'), (removeExportName) => {
       generator.removeExport(registerKey, removeExportName);
-    })
+    });
   });
 
   // watch src folder
@@ -192,10 +201,10 @@ export default (api) => {
     registerMethod(apiName, (code, position = 'after') => {
       const { apiKey } = registerAPIs[apiName];
       generator[apiKey](apiName, code, position);
-    })
+    });
   });
 
   onHook(`before.${command}.run`, async () => {
     await renderIce();
-  })
-}
+  });
+};

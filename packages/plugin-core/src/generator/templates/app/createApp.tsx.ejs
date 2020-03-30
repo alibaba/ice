@@ -1,9 +1,9 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
-import * as deepmerge from 'deepmerge'
-import RuntimeModule from './runtimeModule'
-import { IAppConfig } from './types'
+import * as deepmerge from 'deepmerge';
+import RuntimeModule from './runtimeModule';
+import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export interface IContext {
@@ -14,57 +14,57 @@ export interface IContext {
 
 const defaultAppConfig = {
   app: {
-    rootId: 'ice-container',
+    rootId: 'ice-container'
   },
   router: {
-    type: 'hash',
+    type: 'hash'
   }
 }
 
 function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
-  const appConfig = deepmerge(defaultAppConfig, customConfig)
-  appConfig.router.type = 'static'
-  return renderApp(appConfig, context)
+  const appConfig = deepmerge(defaultAppConfig, customConfig);
+  appConfig.router.type = 'static';
+  return renderApp(appConfig, context);
 }
 
-let appConfigData = {}
+let appConfigData = {};
 function createApp(customConfig: IAppConfig) {
-  const appConfig = deepmerge(defaultAppConfig, customConfig)
+  const appConfig = deepmerge(defaultAppConfig, customConfig);
 
   // pass appConfig to the server
   if (process.env.__IS_SERVER__) {
-    appConfigData = appConfig
-    return
+    appConfigData = appConfig;
+    return;
   }
 
   // client side rendering
+  // load module to run before createApp ready
+  loadStaticModules(appConfig)
+
   let initialData = {}
   let pageInitialProps = {}
 
   // ssr enabled and the server has returned data
   if (window.__ICE_APP_DATA__) {
-    initialData = window.__ICE_APP_DATA__
-    pageInitialProps = window.__ICE_PAGE_PROPS__
-    renderApp(appConfig, { initialData, pageInitialProps })
+    initialData = window.__ICE_APP_DATA__;
+    pageInitialProps = window.__ICE_PAGE_PROPS__;
+    renderApp(appConfig, { initialData, pageInitialProps });
   } else {
     // ssr not enabled, or SSR is enabled but the server does not return data
     if (appConfig.app.getInitialData) {
       (async() => {
-        initialData = await appConfig.app.getInitialData()
-        renderApp(appConfig, { initialData, pageInitialProps })
-      })()
+        initialData = await appConfig.app.getInitialData();
+        renderApp(appConfig, { initialData, pageInitialProps });
+      })();
     } else {
-      renderApp(appConfig)
+      renderApp(appConfig);
     }
   }
 }
 
 function renderApp(config: IAppConfig, context: IContext) {
   const runtime = new RuntimeModule(config, <%- buildConfig %>, context)
-  <% if (runtimeModules.length) {%>
-  runtime.loadModlues([<% runtimeModules.forEach((modulePath) => { %>require('<%= modulePath %>'),<% }); %>])
-  <% } %>
-
+  loadModlues(runtime);
   const { appConfig, modifyDOMRender } = runtime
   const { rootId, mountNode } = appConfig.app
   const AppProvider = runtime.composeAppProvider();
@@ -78,19 +78,44 @@ function renderApp(config: IAppConfig, context: IContext) {
   }
 
   if (process.env.__IS_SERVER__) {
-    return ReactDOMServer.renderToString(<App />)
+    return ReactDOMServer.renderToString(<App />);
   } else {
-    const appMountNode = mountNode || document.getElementById(rootId)
+    const appMountNode = mountNode || document.getElementById(rootId);
     if (modifyDOMRender) {
-      return modifyDOMRender({ App, appMountNode })
+      return modifyDOMRender({ App, appMountNode });
     } else {
-      return ReactDOM[process.env.__SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode)
+      return ReactDOM[window.__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
     }
   }
 }
 
-function getAppConfig() {
-  return appConfigData
+function loadModlues(runtime) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(!runtimeModule.staticModule){ %>
+        runtime.loadModlue(require('<%= runtimeModule.path %>'));
+      <% } %>
+    <% }) %>
+  <% } %>
 }
 
-export { createApp, getAppConfig, createAppWithSSR }
+function loadStaticModules(appConfig: IAppConfig) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(runtimeModule.staticModule){ %>
+        require('<%= runtimeModule.path %>').default({appConfig});
+      <% } %>
+    <% }) %>
+  <% } %>
+}
+
+function getAppConfig() {
+  return appConfigData;
+}
+
+export {
+  createApp,
+  createAppWithSSR,
+  getAppConfig,
+  loadStaticModules
+}

@@ -30,36 +30,36 @@ export function getJsFilePathsIn(filePath: string) {
 }
 
 export function isDynamicPath(str: string) {
-  return typeof str === 'string' && /^\$\w+/.test(str)
+  return typeof str === 'string' && /^\$\w+/.test(str);
 }
 
 export function transformDynamicPath(str: string) {
-  return str.replace(/^\$/, ':')
+  return str.replace(/^\$/, ':');
 }
 
 export function isOptionalDynamicPath(str: string) {
-  return typeof str === 'string' && /^\$\w+\$$/.test(str)
+  return typeof str === 'string' && /^\$\w+\$$/.test(str);
 }
 
 export function transformOptionalDynamicPath(str: string) {
-  return transformDynamicPath(str).replace(/\$$/, '?')
+  return transformDynamicPath(str).replace(/\$$/, '?');
 }
 
 export function isNestFileName(str: string) {
-  return typeof str === 'string' && /^_\w+/.test(str)
+  return typeof str === 'string' && /^_\w+/.test(str);
 }
 
 export function upperCaseFirst(str: string) {
-  if (typeof str !== 'string') return ''
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  if (typeof str !== 'string') return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export function transformComponentName(str: string) {
-  return str.replace(/-/g, '$$$')
+  return str.replace(/-/g, '$$$');
 }
 
 export function fillTabWith(count: number) {
-  return new Array(count).fill('  ').join('')
+  return new Array(count).fill('  ').join('');
 }
 
 export function formatPathForWin(strPath: string) {

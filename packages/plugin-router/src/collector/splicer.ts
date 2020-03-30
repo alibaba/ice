@@ -67,7 +67,7 @@ ${indentTabs}{
     }
     // nest object end
     payload.nestSlice.push(`
-${indentTabs}},`)
+${indentTabs}},`);
 
   });
   // nest the array end
@@ -83,5 +83,5 @@ export default function splicer(routesCollect: ICollectItem[], routerOptions) {
   if (routerOptions.lazy) {
     importAhead = 'import { lazy } from \'ice\';\n';
   }
-  return `${importAhead}${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`
+  return `${importAhead}${payload.nestImports.join('')}\nexport default ${payload.nestSlice.join('')};`;
 }

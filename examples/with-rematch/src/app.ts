@@ -1,4 +1,4 @@
-import { createApp } from 'ice'
+import { createApp } from 'ice';
 
 const appConfig = {
   app: {
@@ -6,4 +6,4 @@ const appConfig = {
   }
 };
 
-createApp(appConfig)
+createApp(appConfig);

@@ -6,7 +6,7 @@ module.exports = (config, ignoreHtmlTemplate, context) => {
       // delete multi HtmlWebpackPlugin
       Object.keys(entry).forEach((entryKey) => {
         config.plugins.delete(`HtmlWebpackPlugin_${entryKey}`);
-      })
+      });
     } else {
       config.plugins.delete('HtmlWebpackPlugin');
     }

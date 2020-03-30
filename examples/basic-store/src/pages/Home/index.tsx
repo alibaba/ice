@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link, store as appStore } from 'ice'
-import { store as pageStore } from 'ice/Home'
+import React from 'react';
+import { Link, store as appStore } from 'ice';
+import { store as pageStore } from 'ice/Home';
 
 const Home = () => {
-  const [counterState, counterActions] = appStore.useModel('counter')
-  const [pageState] = pageStore.useModel('default')
+  const [counterState, counterActions] = appStore.useModel('counter');
+  const [pageState] = pageStore.useModel('default');
 
   return (
     <>
@@ -18,7 +18,7 @@ const Home = () => {
 
       <Link to="/about">about</Link>
     </>
-  )
+  );
 };
 
 export default Home;

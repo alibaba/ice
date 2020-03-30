@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Link, logger, store as appStore } from 'ice'
-import styles from './index.module.scss'
+import React, { useState, useEffect } from 'react';
+import { request, Link, logger, store as appStore } from 'ice';
+import styles from './index.module.scss';
 
 export default function Home(props) {
   logger.info('Home props', props);
@@ -18,8 +18,9 @@ export default function Home(props) {
     <>
       <h2 className={styles.title}>{props.title}</h2>
       <div>
-        <div><strong>Name：</strong>{userState.name}</div>
+        <div><strong>name：</strong>{userState.name}</div>
         <div><strong>id：</strong>{userState.id}</div>
+        <div><strong>address：</strong>{props.profile && props.profile.address}</div>
         <div><strong>data：</strong>{dataSource.join(' ')}</div>
       </div>
       <br />
@@ -30,5 +31,6 @@ export default function Home(props) {
 }
 
 Home.getInitialProps = async () => {
-  return { title: 'Home Page...' }
+  const res = await request('/profile');
+  return { ...res.data, title: 'Home Page...' };
 };

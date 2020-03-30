@@ -1,6 +1,6 @@
-import { useReducer } from 'react'
-import { AxiosRequestConfig } from 'axios'
-import axiosInstance from './axiosInstance'
+import { useReducer } from 'react';
+import { AxiosRequestConfig } from 'axios';
+import axiosInstance from './axiosInstance';
 
 /**
  * Hooks to make ajax request
@@ -18,7 +18,7 @@ function useRequest(options: AxiosRequestConfig) {
     loading: false,
     error: null
   };
-  const [state, dispatch] = useReducer(requestReducer, initialState)
+  const [state, dispatch] = useReducer(requestReducer, initialState);
 
   /**
    * Method to make request manually
@@ -33,19 +33,19 @@ function useRequest(options: AxiosRequestConfig) {
       const response = await axiosInstance({
         ...options,
         ...config
-      })
+      });
 
       dispatch({
         type: 'success',
         data: response.data
-      })
-      return response.data
+      });
+      return response.data;
     } catch (error) {
       dispatch({
         type: 'error',
         error
-      })
-      throw error
+      });
+      throw error;
     }
   }
 
@@ -68,13 +68,13 @@ function requestReducer(state, action) {
         data: null,
         error: null,
         loading: true
-      }
+      };
     case 'success':
       return {
         data: action.data,
         error: null,
         loading: false
-      }
+      };
     case 'error':
       return {
         data: null,
@@ -86,8 +86,8 @@ function requestReducer(state, action) {
         data: null,
         error: null,
         loading: false
-      }
+      };
   }
 }
 
-export default useRequest
+export default useRequest;

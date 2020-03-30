@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button } from '@alifd/next'
+import React from 'react';
+import { Button } from '@alifd/next';
 
 const Dashboard = () => {
   return (
@@ -9,7 +9,7 @@ const Dashboard = () => {
       <Button type="secondary">secondary</Button>
       <Button type="normal">Normal</Button>
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
