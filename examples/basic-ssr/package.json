@@ -11,7 +11,7 @@
     "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "icejs start",
+    "start": "icejs start --mode dev",
     "build": "icejs build --mode prod"
   },
   "engines": {

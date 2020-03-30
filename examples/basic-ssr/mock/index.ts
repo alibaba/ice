@@ -1,11 +1,22 @@
 module.exports = {
+  'GET /api/user': {
+    status: 'SUCCESS',
+    data: {
+      user: {
+        name: 'Jack Ma',
+        id: 10001,
+      }
+    },
+  },
   'GET /api/profile': {
     status: 'SUCCESS',
     data: {
-      name: '淘小宝',
-      department: '技术部',
-      avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
-      userid: 10001,
+      profile: {
+        id: 10001,
+        name: 'Jack Ma',
+        edu: 'Hangzhou Normal University',
+        address: 'Hangzhou'
+      }
     },
   },
 };

@@ -69,7 +69,7 @@ class RuntimeModule {
     this.wrapperRouteRegistration = [];
   }
 
-  public loadModlues(modules) {
+  public loadModlue(module) {
     const runtimeAPI = {
       setRenderRouter: this.setRenderRouter,
       addProvider: this.addProvider,
@@ -78,16 +78,12 @@ class RuntimeModule {
       wrapperRouteComponent: this.wrapperRouteComponent,
     }
 
-    if (modules && modules.length) {
-      modules.forEach((module) => {
-        if (module) module.default({
-          ...runtimeAPI,
-          appConfig: this.appConfig,
-          buildConfig: this.buildConfig,
-          context: this.context
-        });
-      })
-    }
+    if (module) module.default({
+      ...runtimeAPI,
+      appConfig: this.appConfig,
+      buildConfig: this.buildConfig,
+      context: this.context
+    });
   }
 
   public setRenderRouter = (renderRouter) => {

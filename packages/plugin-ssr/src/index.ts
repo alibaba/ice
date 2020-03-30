@@ -39,6 +39,10 @@ const plugin = async (api): Promise<void> => {
 
     config.name('ssr');
 
+    config.module
+      .rule('polyfill')
+      .include.add(ssrEntry);
+
     config
       .plugin('DefinePlugin')
       .tap(([args]) => [{ ...args, 'process.env.__IS_SERVER__': true }]);
@@ -124,10 +128,6 @@ const plugin = async (api): Promise<void> => {
         });
       });
     }
-
-    if (command === 'build') {
-      config.optimization.minimize(false);
-    }
   });
 
   onHook('after.build.compile', () => {
@@ -135,7 +135,7 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifedHtml = minify(html, { collapseWhitespace: true, });
+    const minifedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: "'" });
     const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
   });
