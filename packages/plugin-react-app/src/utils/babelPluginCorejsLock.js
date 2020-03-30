@@ -9,7 +9,7 @@ module.exports = ({ types }, { fileList }) => {
         const entryFile = fileList.find((filePath) => {
           // filePath may not have an extension
           return filePath.includes((state.filename || '').replace(/\.[^/.]+$/, ''));
-        })
+        });
         if (entryFile) {
           const { node } = nodePath;
           if (node.source.value.startsWith('core-js/')) {
@@ -19,4 +19,4 @@ module.exports = ({ types }, { fileList }) => {
       },
     },
   };
-}
+};
