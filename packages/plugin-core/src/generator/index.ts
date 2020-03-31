@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import * as ejs from 'ejs';
+import * as prettier from 'prettier';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
@@ -129,7 +130,11 @@ export default class Generator {
   public renderFile: IRenderFile = (templatePath, targetPath, extraData = {}) => {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
     const content = ejs.render(templateContent, {...this.renderData, ...extraData});
+    const formattedContent = prettier.format(content, {
+      parser: 'typescript',
+      singleQuote: true
+    });
     fse.ensureDirSync(path.dirname(targetPath));
-    fse.writeFileSync(targetPath, content, 'utf-8');
+    fse.writeFileSync(targetPath, formattedContent, 'utf-8');
   }
 }
