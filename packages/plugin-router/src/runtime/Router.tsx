@@ -107,7 +107,7 @@ function Routes({ routes, fallback }: RoutesProps) {
           const { component: LayoutComponent, children, ...others } = route;
           const RenderComponent = (props: RouteComponentProps) => (
             <LayoutComponent {...props}>
-              <Routes routes={children} />
+              <Routes routes={children} fallback={fallback} />
             </LayoutComponent>
           );
           return (
