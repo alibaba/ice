@@ -1,10 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
-import * as deepmerge from 'deepmerge';
 import RuntimeModule from './runtimeModule';
 import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
+
+// https://github.com/TehShrike/deepmerge#include
+const merge = require('deepmerge');
 
 export interface IContext {
   initialData: any;
