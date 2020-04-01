@@ -73,19 +73,19 @@ src/pages
 ```ts
 export default [
   {
-    path: '/dashboard',
+    path: '/about',
     exact: true,
-    component: PageDashboard
+    component: PageAbout
   },
   {
-    path: '/home/a',
+    path: '/dashboard/a',
     exact: true,
-    component: PageHomeA
+    component: PageDashboardA
   },
   {
-    path: '/home/b',
+    path: '/dashboard/b',
     exact: true,
-    component: PageHomeB
+    component: PageDashboardB
   }
 ]
 ```
