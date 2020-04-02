@@ -1,3 +1,4 @@
+import * as React from 'react';
 <%- iceImports %>
 
 export * from './components';
@@ -6,11 +7,15 @@ export * from './types';
 
 export const APP_MODE = (typeof window !== 'undefined' && window.__app_mode__) || process.env.APP_MODE;
 
-export function lazy(dynamicImport) {
-  return {
-    '__LAZY__': true,
-    dynamicImport
-  };
+export function lazy(dynamicImport, isRouteComponent?: Boolean): any {
+  if (isRouteComponent) {
+    return {
+      __LAZY__: true,
+      dynamicImport,
+    };
+  } else {
+    return React.lazy(dynamicImport);
+  }
 }
 
 <% if (iceExports) { %>
