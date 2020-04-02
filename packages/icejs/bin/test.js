@@ -6,13 +6,15 @@ const getBuiltInPlugins = require('../lib/index');
 
 module.exports = async () => {
   process.env.NODE_ENV = 'test';
-  const rawArgv = parse(process.argv.slice(3));
+  const rawArgv = parse(process.argv.slice(3), {
+    configuration: { 'strip-dashed': true },
+  });
   const jestArgv = {};
   // get jest options
   Object.keys(rawArgv).forEach(key => {
-    if (key.indexOf('jest-') === 0) {
+    if (key.indexOf('jest') === 0) {
       // transform jest-config to config
-      const jestKey = key.replace('jest-', '');
+      const jestKey = key.replace('jest', '');
       jestArgv[`${jestKey[0].toLowerCase()}${jestKey.slice(1)}`] = rawArgv[key];
       delete rawArgv[key];
     }
