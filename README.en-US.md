@@ -60,7 +60,7 @@ $ npm init ice <project-name>
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
 [formily-status]: https://img.shields.io/npm/v/@formily/react.svg
-[formily]: https://github.com/alibaba/formily
+[formily-status]: https://img.shields.io/npm/v/@formily/react.svg
 
 [icejs-package]: https://npmjs.com/package/ice.js
 [iceworks-cli-package]: https://npmjs.com/package/iceworks
@@ -68,13 +68,11 @@ $ npm init ice <project-name>
 [icestore-package]: https://npmjs.com/package/@ice/store
 [formily-package]: https://npmjs.com/package/@formily/react
 
-
 [icejs-docs]: https://ice.work/docs/guide/intro
 [iceworks-docs]: https://ice.work/docs/iceworks/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
-
 
 ## Contributing
 
