@@ -48,26 +48,31 @@ npm init ice <project-name>
 | [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |基于物料的一站式可视化开发工作台|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |面向大型应用的微前端解决方案|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |基于 React Hooks 的轻量级状态管理方案|
+| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] |能力完备性能出众的表单解决方案|
 
 [icejs]: https://github.com/ice-lab/icejs
 [iceworks]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
 [icestore]: https://github.com/ice-lab/icestore
+[formily]: https://github.com/alibaba/formily
 
 [icejs-status]: https://img.shields.io/npm/v/ice.js.svg
 [iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
+[formily-status]: https://img.shields.io/npm/v/@formily/react.svg
 
 [icejs-package]: https://npmjs.com/package/ice.js
 [iceworks-cli-package]: https://npmjs.com/package/iceworks
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
+[formily-package]: https://npmjs.com/package/@formily/react
 
 [icejs-docs]: https://ice.work/docs/guide/intro
 [iceworks-docs]: https://ice.work/docs/iceworks/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
+[formily-docs]: https://formilyjs.org/
 
 ## 贡献代码
 
