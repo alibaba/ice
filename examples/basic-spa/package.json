@@ -12,7 +12,8 @@
   },
   "scripts": {
     "start": "icejs start --mode dev",
-    "build": "icejs build --mode prod"
+    "build": "icejs build --mode prod",
+    "test": "icejs test --jest-watchAll"
   },
   "engines": {
     "node": ">=8.0.0"
