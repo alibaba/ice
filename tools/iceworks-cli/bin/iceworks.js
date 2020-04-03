@@ -129,7 +129,7 @@ program
   .command('sync')
   .description(`sync materials data to Fusion Material Center`)
   .option(
-    '-e, --env <daily>',
+    '-e, --env <env>',
     'Specify fusion env, support daily|pre|prod'
   )
   .on('--help', () => {
