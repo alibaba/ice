@@ -1,13 +1,7 @@
 import React from 'react';
-import { Link } from 'ice';
+import { Link, lazy } from 'ice';
 
-const Child = () => {
-  return (
-    <div>
-      Child
-    </div>
-  );
-};
+const Child = lazy(() => import('./components/Child'));
 
 const About = () => {
   return (

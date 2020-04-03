@@ -8,7 +8,7 @@ import walker from './collector/walker';
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
 const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
-const plugin: IPlugin = ({ context, onGetWebpackConfig, getValue, applyMethod, registerUserConfig }) => {
+const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
   // [enum] js or ts
   const isMpa = userConfig.mpa;
@@ -31,12 +31,14 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, getValue, applyMethod, r
   // copy types
   fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'types/router.ts'));
   applyMethod('addIceTypesExport', { source: './types/router', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
-
+  const routeFile = hasRouteFile ? routeConfigPath : routersTempPath;
+  // add babel plugins for ice lazy
+  modifyUserConfig('babelPlugins', [...(userConfig.babelPlugins as [] || []), [require.resolve('./babelPluginLazy'), { routeFile }]]);
   // modify webpack config
   onGetWebpackConfig((config) => {
     // add alias
     TEM_ROUTER_SETS.forEach(i => {
-      config.resolve.alias.set(i, hasRouteFile ? routeConfigPath : routersTempPath);
+      config.resolve.alias.set(i, routeFile);
     });
     // alias for runtime/Router
     config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
