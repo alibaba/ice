@@ -127,6 +127,7 @@ async function initMaterialAsk(cwd, projectType) {
       choices: [
         '@ali',
         '@alife',
+        '@alipay',
         '@kaola',
       ],
     },

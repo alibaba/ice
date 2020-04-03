@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- [chore] remove cacheData for server use
+
 ## 1.3.1
 
 - [feat] isAliNpm add `@kaola`
