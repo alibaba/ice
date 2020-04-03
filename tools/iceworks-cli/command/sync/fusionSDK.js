@@ -8,7 +8,23 @@ const log = require('../../lib/log');
 class FusionSDK {
   constructor(options) {
     this.syncToAli = options.syncToAli;
-    this.fusionHost = this.syncToAli ? 'https://fusion.alibaba-inc.com' : 'https://fusion.design';
+
+    const envToInternalHost = {
+      daily: 'https://fusion.alibaba.net',
+      pre: 'https://pre-fusion.alibaba-inc.com',
+      prod: 'https://fusion.alibaba-inc.com',
+    };
+    const envToOutHost = {
+      daily: 'https://fusion.taobao.net',
+      pre: 'https://pre-www.fusion.design',
+      prod: 'https://fusion.design',
+    };
+
+    if (this.syncToAli) {
+      this.fusionHost = envToInternalHost[options.env] || envToIntenalHost[options.prod];
+    } else {
+      this.fusionHost = envToOutHost[options.env] || envToOutHost[options.prod];
+    }
   }
 
   async getToken() {

@@ -128,15 +128,21 @@ program
 program
   .command('sync')
   .description(`sync materials data to Fusion Material Center`)
+  .option(
+    '-e, --env <daily>',
+    'Specify fusion env, support daily|pre|prod'
+  )
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
     console.log('  $ iceworks sync');
+    console.log('  $ iceworks sync --env daily');
   })
-  .action(async () => {
+  .action(async (cmd) => {
+    const options = cleanArgs(cmd);
     try {
       // eslint-disable-next-line global-require
-      await require('../command/sync')();
+      await require('../command/sync')(options);
     }  catch (err) {
       log.error('iceworks sync error', err.message);
       console.error(err.stack);
