@@ -6,7 +6,8 @@ interface Config {
 
 const userConfig: Config = {
   ...(config.default || {}),
-  ...(config[((typeof window !== 'undefined') && window.__app_mode__) || process.env.APP_MODE] || {}),
+  // webpack will automatically convert global to window when target is web
+  ...(config[(global as any).__app_mode__ || process.env.APP_MODE] || {}),
 };
 
 export default userConfig;
