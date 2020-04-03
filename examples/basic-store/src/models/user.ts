@@ -15,14 +15,13 @@ export default {
     },
   },
 
-  effects: {
-    async getUserInfo (prevState, payload, actions, globalActions) {
-      globalActions.counter.decrement();
+  effects: () => ({
+    async getUserInfo () {
       await delay(1000);
-      actions.update({
+      this.update({
         name: 'taobao',
         id: '123',
       });
     },
-  },
+  }),
 };

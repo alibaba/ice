@@ -4,6 +4,6 @@ const Dashboard = createStore({});
 
 const About = createStore({});
 
-const PageModles = { Dashboard, About };
+const PageStores = { Dashboard, About };
 
-export default PageModles;
+export default PageStores;

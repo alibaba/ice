@@ -12,11 +12,11 @@ export default {
     },
   },
 
-  effects: {
-    async getPageTitle (prevState, payload, actions) {
-      actions.update({
+  effects: () => ({
+    async getPageTitle () {
+      this.update({
         title: 'About Page'
       });
     },
-  },
+  }),
 };
