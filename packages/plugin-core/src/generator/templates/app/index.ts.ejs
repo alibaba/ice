@@ -5,7 +5,7 @@ export { createApp, history } from './createApp';
 export * from './types';
 export * from './lazy';
 
-export const APP_MODE = (typeof window !== 'undefined' && window.__app_mode__) || process.env.APP_MODE;
+export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 
 <% if (iceExports) { %>
 export {
