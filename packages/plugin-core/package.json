@@ -20,6 +20,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@types/history": "^4.7.5",
     "chokidar": "^3.3.1",
     "deepmerge": "^4.2.2",
     "ejs": "^3.0.1",

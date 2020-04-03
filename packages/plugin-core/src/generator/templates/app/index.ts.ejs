@@ -1,7 +1,7 @@
 <%- iceImports %>
 
 export * from './components';
-export * from './createApp';
+export { createApp, history } from './createApp';
 export * from './types';
 
 export const APP_MODE = (typeof window !== 'undefined' && window.__app_mode__) || process.env.APP_MODE;

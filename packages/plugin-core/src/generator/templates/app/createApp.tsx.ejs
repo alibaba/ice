@@ -1,13 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
+import { createBrowserHistory, createHashHistory, createMemoryHistory } from 'history';
 import deepmerge from 'deepmerge';
 import RuntimeModule from './runtimeModule';
 import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
-
-// https://github.com/TehShrike/deepmerge#include
-const merge = require('deepmerge');
 
 export interface IContext {
   initialData: any;
@@ -30,9 +28,33 @@ function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
   return renderApp(appConfig, context);
 }
 
-let appConfigData = {};
+function createHistory(type: string, basename: string) {
+  const histories = {
+    hash: createHashHistory,
+    browser: createBrowserHistory,
+    memory: createMemoryHistory
+  };
+  // Note: only support createHashHistory and createBrowserHistory parameters
+  // https://github.com/ReactTraining/history/blob/master/modules/createBrowserHistory.js#L37
+  // https://github.com/ReactTraining/history/blob/master/modules/createHashHistory.js#L58
+  // https://github.com/ReactTraining/history/blob/master/modules/createMemoryHistory.js#L13
+  const props = (type === 'hash' || type === 'browser') ? { basename } : {};
+  return histories[type](props);
+}
+
+let appConfigData: IAppConfig = {};
+
+// provide history instance
+// can be used in the application through history.push()
+let history: History;
+
 function createApp(customConfig: IAppConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig);
+
+  // get history instance
+  const { type, basename, history: customHistory } = appConfig.router;
+  history = customHistory || createHistory(type, basename);
+  appConfig.router.history = history;
 
   // pass appConfig to the server
   if (process.env.__IS_SERVER__) {
@@ -120,5 +142,6 @@ export {
   createApp,
   createAppWithSSR,
   getAppConfig,
-  loadStaticModules
+  loadStaticModules,
+  history
 }
