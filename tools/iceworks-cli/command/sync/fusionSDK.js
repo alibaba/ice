@@ -21,7 +21,7 @@ class FusionSDK {
     };
 
     if (this.syncToAli) {
-      this.fusionHost = envToInternalHost[options.env] || envToIntenalHost[options.prod];
+      this.fusionHost = envToInternalHost[options.env] || envToInternalHost[options.prod];
     } else {
       this.fusionHost = envToOutHost[options.env] || envToOutHost[options.prod];
     }
