@@ -37,7 +37,7 @@ export interface IRenderRouteProps extends DefaultRouteProps {
 export interface RouterProps {
   // custom props
   routes: RouteItemProps[];
-  type?: 'hash' | 'browser' | 'memory';
+  type?: 'hash' | 'browser' | 'memory' | 'static';
   // common props for BrowserRouter&HashRouter&MemoryRouter
   basename?: string;
   getUserConfirmation?: ((message: string, callback: (ok: boolean) => void) => void);
