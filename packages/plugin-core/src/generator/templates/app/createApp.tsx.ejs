@@ -51,11 +51,6 @@ let history: History;
 function createApp(customConfig: IAppConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig);
 
-  // get history instance
-  const { type, basename, history: customHistory } = appConfig.router;
-  history = customHistory || createHistory(type, basename);
-  appConfig.router.history = history;
-
   // pass appConfig to the server
   if (process.env.__IS_SERVER__) {
     appConfigData = appConfig;
@@ -63,6 +58,11 @@ function createApp(customConfig: IAppConfig) {
   }
 
   // client side rendering
+  // get history instance
+  const { type, basename, history: customHistory } = appConfig.router;
+  history = customHistory || createHistory(type, basename);
+  appConfig.router.history = history;
+
   // load module to run before createApp ready
   loadStaticModules(appConfig)
 
