@@ -129,12 +129,16 @@ export default class Generator {
 
   public renderFile: IRenderFile = (templatePath, targetPath, extraData = {}) => {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    const content = ejs.render(templateContent, {...this.renderData, ...extraData});
-    const formattedContent = prettier.format(content, {
-      parser: 'typescript',
-      singleQuote: true
-    });
+    let content = ejs.render(templateContent, {...this.renderData, ...extraData});
+    try {
+      content = prettier.format(content, {
+        parser: 'typescript',
+        singleQuote: true
+      });
+    } catch (error) {
+      console.error(error);
+    }
     fse.ensureDirSync(path.dirname(targetPath));
-    fse.writeFileSync(targetPath, formattedContent, 'utf-8');
+    fse.writeFileSync(targetPath, content, 'utf-8');
   }
 }
