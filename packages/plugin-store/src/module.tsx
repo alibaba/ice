@@ -1,6 +1,6 @@
 import * as React from 'react';
-import AppStore from '$ice/appModels';
-import PageStores from '$ice/pageModels';
+import AppStore from '$ice/appStore';
+import PageStores from '$ice/pageStores';
 
 const wrapperComponent = (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
@@ -9,7 +9,7 @@ const wrapperComponent = (PageComponent) => {
     const PageStore = PageStores[pageComponentName];
     if (PageStore) {
       return (
-        <PageStore.Provider initialStates={pageConfig.initialStates}>
+        <PageStore.Provider initialState={pageConfig.initialStates}>
           <PageComponent {...props}/>
         </PageStore.Provider>
       );
@@ -18,7 +18,6 @@ const wrapperComponent = (PageComponent) => {
   };
   return StoreWrapperedComponent;
 };
-
 
 export default ({ addProvider, wrapperRouteComponent, appConfig, context }) => {
   wrapperRouteComponent(wrapperComponent);
@@ -30,7 +29,7 @@ export default ({ addProvider, wrapperRouteComponent, appConfig, context }) => {
       : storeConfig.initialStates || {};
 
     return (
-      <AppStore.Provider initialStates={initialStates}>
+      <AppStore.Provider initialState={initialStates}>
         {children}
       </AppStore.Provider>
     );

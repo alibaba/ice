@@ -48,6 +48,8 @@ export default (api) => {
 
     // default alias of @/
     config.resolve.alias.set('@', path.join(rootDir, 'src'));
+    config.resolve.alias.set('$ice/appConfig', path.join(iceTempPath, 'appConfig.ts'));
+
 
     const defineVariables = {
       'process.env.__IS_SERVER__': false

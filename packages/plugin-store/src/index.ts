@@ -8,8 +8,9 @@ export default async (api) => {
 
   const targetPath = getValue('ICE_TEMP');
   const templatePath = path.join(__dirname, 'template');
-  const modelsTemplatePath = path.join(templatePath, 'models.ts.ejs');
-  const pageModelsTemplatePath = path.join(templatePath, 'pageModels.ts.ejs');
+  const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
+  const pageStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
+  const pageStoresTemplatePath = path.join(templatePath, 'pageStores.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
   await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(targetPath, './types/store.ts'));
@@ -26,13 +27,14 @@ export default async (api) => {
       ]);
     }
 
-    config.resolve.alias.set('$ice/appModels', path.join(targetPath, 'appModels.ts'));
-    config.resolve.alias.set('$ice/pageModels', path.join(targetPath, 'pageModels.ts'));
+    config.resolve.alias.set('$ice/appStore', path.join(targetPath, 'appStore.ts'));
+    config.resolve.alias.set('$ice/pageStores', path.join(targetPath, 'pageStores.ts'));
   });
 
   const gen = new Generator({
-    modelsTemplatePath,
-    pageModelsTemplatePath,
+    appStoreTemplatePath,
+    pageStoreTemplatePath,
+    pageStoresTemplatePath,
     targetPath,
     rootDir,
     applyMethod,

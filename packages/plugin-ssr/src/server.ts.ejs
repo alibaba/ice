@@ -1,8 +1,9 @@
+import '@/app';
 import * as cheerio from 'cheerio';
 import { matchPath } from 'ice';
-import { createAppWithSSR, getAppConfig, loadStaticModules } from './createApp';
+import { createAppWithSSR, loadStaticModules } from './createApp';
+import { getAppConfig } from './appConfig';
 import routes from '@/routes';
-import '@/app';
 
 const chalk = require('chalk');
 

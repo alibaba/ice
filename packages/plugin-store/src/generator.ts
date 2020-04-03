@@ -12,9 +12,11 @@ export interface IExportData {
 export default class Generator {
   private rootDir: string
 
-  private modelsTemplatePath: string
+  private appStoreTemplatePath: string
 
-  private pageModelsTemplatePath: string
+  private pageStoreTemplatePath: string
+
+  private pageStoresTemplatePath: string
 
   private targetPath: string
 
@@ -22,17 +24,27 @@ export default class Generator {
 
   private applyMethod: Function
 
-  constructor({ rootDir, modelsTemplatePath, pageModelsTemplatePath, targetPath, applyMethod, projectType }: {
+  constructor({
+    rootDir,
+    appStoreTemplatePath,
+    pageStoreTemplatePath,
+    pageStoresTemplatePath,
+    targetPath,
+    applyMethod,
+    projectType
+  }: {
     rootDir: string;
-    modelsTemplatePath: string;
-    pageModelsTemplatePath: string;
+    appStoreTemplatePath: string;
+    pageStoreTemplatePath: string;
+    pageStoresTemplatePath: string;
     targetPath: string;
     projectType: string;
     applyMethod: Function;
   }) {
     this.rootDir = rootDir;
-    this.modelsTemplatePath = modelsTemplatePath;
-    this.pageModelsTemplatePath = pageModelsTemplatePath;
+    this.appStoreTemplatePath = appStoreTemplatePath;
+    this.pageStoreTemplatePath = pageStoreTemplatePath;
+    this.pageStoresTemplatePath = pageStoresTemplatePath;
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
@@ -69,38 +81,38 @@ export default class Generator {
     };
   }
 
-  private renderAppModels() {
-    let appModelsDir = path.join(this.rootDir, 'src', 'models');
-    const targetPath = path.join(this.targetPath, 'appModels.ts');
+  private renderAppStore() {
+    const sourceFilename = 'appStore';
+    const exportName = 'store';
+    const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
-    let models = [];
+    let appModelsDir = path.join(this.rootDir, 'src', 'models');
+    let appModels = [];
     if (fse.pathExistsSync(appModelsDir)) {
       appModelsDir = this.applyMethod('formatPath', appModelsDir);
-      models = fse.readdirSync(appModelsDir).map(item => path.parse(item).name);
+      appModels = fse.readdirSync(appModelsDir).map(item => path.parse(item).name);
     }
 
     let importStr = '';
     let modelsStr = '';
-    models.forEach((model) => {
+    appModels.forEach((model) => {
       importStr += `\nimport ${model} from '${appModelsDir}/${model}';`;
       modelsStr += `${model},`;
     });
 
-    this.renderFile(this.modelsTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false });
-    const exportName = 'store';
+    this.renderFile(this.appStoreTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false });
     this.applyMethod('removeIceExport', exportName);
-    this.applyMethod('addIceExport', { source: './appModels', exportName });
+    this.applyMethod('addIceExport', { source: `./${sourceFilename}`, exportName });
   }
 
-  private renderPageModels() {
+  private renderPageStores() {
     const pages = this.applyMethod('getPages', this.rootDir);
-    const pageModels = [];
+    const pageStores = [];
 
-    // generate .ice/pages/*/models.ts
+    // generate .ice/pages/*/store.ts
     pages.forEach(pageName => {
-      const source = `./pages/${pageName}/models.ts`;
-      const targetPath = path.join(this.targetPath, source);
-
+      const sourceFilename = 'store';
+      const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
       const pageNameDir = path.join(this.rootDir, 'src', 'pages', pageName);
 
       // example: src/pages/*/models/*
@@ -110,31 +122,33 @@ export default class Generator {
       const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`);
 
       if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
-        pageModels.push(pageName);
-        const renderData = this.getPageModels(pageName, pageModelsDir, path.join(pageNameDir, 'model'));
-        this.renderFile(this.modelsTemplatePath, targetPath, renderData);
+        pageStores.push(pageName);
+
+        const pageModelFilePath = path.join(pageNameDir, 'model');
+        const renderData = this.getPageModels(pageName, pageModelsDir, pageModelFilePath);
+        this.renderFile(this.pageStoreTemplatePath, targetPath, renderData);
 
         const exportName = 'store';
         this.applyMethod('removePageExport', pageName, exportName);
-        this.applyMethod('addPageExport', pageName, { source: './models', exportName });
+        this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
       }
     });
 
-    // generate .ice/pageModels.ts
-    this.generatePageModelsIndex(pageModels);
+    // generate .ice/pageStores.ts
+    this.generatePageStores(pageStores);
   }
 
-  private generatePageModelsIndex(pageModels: string[]) {
-    const targetPath = path.join(this.targetPath, 'pageModels.ts');
+  private generatePageStores(pageStores: string[]) {
+    const targetPath = path.join(this.targetPath, 'pageStores.ts');
 
-    let importPageModelStr = '';
-    let pageModelStr = '';
-    pageModels.forEach(pageModel => {
-      importPageModelStr += `\nimport ${pageModel} from './pages/${pageModel}/models';`;
-      pageModelStr += `${pageModel},`;
+    let importPageStoreStr = '';
+    let pageStoreStr = '';
+    pageStores.forEach(name => {
+      importPageStoreStr += `\nimport ${name} from './pages/${name}/store';`;
+      pageStoreStr += `${name},`;
     });
 
-    this.renderFile(this.pageModelsTemplatePath, targetPath, { importPageModelStr, pageModelStr });
+    this.renderFile(this.pageStoresTemplatePath, targetPath, { importPageStoreStr, pageStoreStr });
   }
 
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
@@ -145,7 +159,7 @@ export default class Generator {
   }
 
   public render() {
-    this.renderAppModels();
-    this.renderPageModels();
+    this.renderAppStore();
+    this.renderPageStores();
   }
 }

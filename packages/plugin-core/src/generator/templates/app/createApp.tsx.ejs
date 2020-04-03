@@ -4,6 +4,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { createBrowserHistory, createHashHistory, createMemoryHistory } from 'history';
 import deepmerge from 'deepmerge';
 import RuntimeModule from './runtimeModule';
+import { setAppConfig } from './appConfig';
 import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
@@ -42,8 +43,6 @@ function createHistory(type: string, basename: string) {
   return histories[type](props);
 }
 
-let appConfigData: IAppConfig = {};
-
 // provide history instance
 // can be used in the application through history.push()
 let history: History;
@@ -51,9 +50,10 @@ let history: History;
 function createApp(customConfig: IAppConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig);
 
-  // pass appConfig to the server
+  // set appConfig to application life cycle
+  setAppConfig(appConfig);
+
   if (process.env.__IS_SERVER__) {
-    appConfigData = appConfig;
     return;
   }
 
@@ -64,10 +64,10 @@ function createApp(customConfig: IAppConfig) {
   appConfig.router.history = history;
 
   // load module to run before createApp ready
-  loadStaticModules(appConfig)
+  loadStaticModules(appConfig);
 
-  let initialData = {}
-  let pageInitialProps = {}
+  let initialData = {};
+  let pageInitialProps = {};
 
   // ssr enabled and the server has returned data
   if (window.__ICE_APP_DATA__) {
@@ -134,14 +134,9 @@ function loadStaticModules(appConfig: IAppConfig) {
   <% } %>
 }
 
-function getAppConfig() {
-  return appConfigData;
-}
-
 export {
   createApp,
   createAppWithSSR,
-  getAppConfig,
   loadStaticModules,
   history
 }
