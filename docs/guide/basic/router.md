@@ -401,7 +401,7 @@ useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主�
 
 ### withRouter
 
-通过 withRouter 方法调用实现跳转；如果调用方法的地方在 React 组件内部，可以直接在组件上添加 `withRouter` 的装饰器，然后组件内可以通过 `props` 获取到相关 API：
+通过在组件上添加 `withRouter` 装饰器，可以在组件内获取到路由的 `history`、`location`、`match` 对象。
 
 ```javascript
 import React from 'react';
