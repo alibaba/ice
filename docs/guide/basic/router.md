@@ -194,6 +194,9 @@ export default [
 
 ```jsx
 import { createApp } from 'ice';
+import { createBrowserHistory } from 'history'
+
+const history = createBrowserHistory();
 
 const appConfig = {
   router: {
@@ -202,7 +205,8 @@ const appConfig = {
     fallback: <div>loading...</div>
     modifyRoutes: (routes) => {
       return routes;
-    }
+    },
+    history: createBrowserHistory()
   }
 };
 
@@ -215,6 +219,7 @@ createApp(appConfig);
 - basename: 路由基准地址
 - fallback: 开启按需加载时配置 fallback UI
 - modifyRoutes: 动态修改路由
+- history: 自定义创建 history 对象，[详见](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
 
 ### 构建配置
 
@@ -291,6 +296,7 @@ icejs 的路由能力基于 react-router，因此你也可以获取到 react-rou
 ```js
 import {
   Link,
+  history,
   useHistory,
   useLocation,
   useParams,
@@ -306,7 +312,7 @@ import {
 
 通过 `<Link />` 标签组件可实现路由跳转，使用方式：
 
-```javascript
+```js
 import { Link } from 'ice';
 
 function Demo() {
@@ -328,9 +334,37 @@ function Demo() {
 }
 ```
 
+### history
+
+获取当前使用的路由实例对象。
+
+```js
+import { history } from 'ice';
+
+// 用于获取 history 栈里的实体个数
+console.log(history.length);
+
+// 用于获取 history 跳转的动作，有 PUSH、REPLACE 和 POP 三种类型
+console.log(history.action);
+
+// 用于获取 location 对象，包含 pathname、search 和 hash
+console.log(history.location);
+
+// 用于路由跳转
+history.push('/home');
+
+// 用于路由替换
+history.replace('/home');
+
+// 用于跳转到上一个路由
+history.goBack();
+```
+
+更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+
 ### useHistory
 
-useHistory hook 用于获取导航的 history 实例。
+useHistory hook 用于获取 history 实例。
 
 
 ```js
