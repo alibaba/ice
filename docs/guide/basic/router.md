@@ -454,7 +454,7 @@ NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件
 
 ## 常见问题
 
-### 路由带着 `#` 号？
+### 路由类型
 
 前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点如下：
 
