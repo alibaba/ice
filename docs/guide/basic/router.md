@@ -344,7 +344,7 @@ import { history } from 'ice';
 // 用于获取 history 栈里的实体个数
 console.log(history.length);
 
-// 用于获取 history 跳转的动作，有 PUSH、REPLACE 和 POP 三种类型
+// 用于获取 history 跳转的动作，包含 PUSH、REPLACE 和 POP 三种类型
 console.log(history.action);
 
 // 用于获取 location 对象，包含 pathname、search 和 hash
