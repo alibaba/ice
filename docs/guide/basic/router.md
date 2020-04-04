@@ -206,7 +206,7 @@ const appConfig = {
     modifyRoutes: (routes) => {
       return routes;
     },
-    history: createBrowserHistory()
+    history
   }
 };
 
