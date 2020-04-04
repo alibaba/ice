@@ -102,8 +102,8 @@ import { store } from 'ice';
 
 function FunctionComponent() {
   // 只调用 increment 方法
-  const actions = store.useModelDispatchers('counter');
-  actions.increment();
+  const dispatchers = store.useModelDispatchers('counter');
+  dispatchers.increment();
 }
 ```
 
@@ -129,7 +129,7 @@ function FunctionComponent() {
 
 ### 模型联动
 
-在 effects 中的 action 方法中可以通过 `dispatch[modelName][action]` 拿到其他模型所定义的方法：
+在 effects 中的 action 方法中可以通过 `dispatch[model][action]` 拿到其他模型所定义的方法：
 
 ```tsx
 // src/models/user.ts
