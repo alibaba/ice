@@ -14,22 +14,22 @@ import { createApp } from 'ice';
 
 // 应用配置
 const appConfig = {
-  // 启动项配置
+  // 启动项配置：https://ice.work/docs/guide/basic/app#启动项配置
   app: { },
 
-  // 状态管理配置
-  store: { },
-
-  // 路由配置
+  // 路由配置：https://ice.work/docs/guide/basic/router#路由配置
   router: { },
 
-  // 请求配置
+  // 请求配置：https://ice.work/docs/guide/basic/request#请求配置
   request: { },
 
-  // 日志配置
+  // 状态管理配置：https://ice.work/docs/guide/basic/store#状态管理配置
+  store: { },
+
+  // 日志配置：https://ice.work/docs/guide/basic/logger#配置
   logger: { }
 
-  // ...其他更多配置
+  // ...其他更多自定义插件配置
 };
 
 createApp(appConfig);

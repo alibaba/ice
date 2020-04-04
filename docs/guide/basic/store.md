@@ -193,6 +193,24 @@ export default store.withModel('todos')(TodoList);
 * [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
 
+## 状态管理配置
+
+```ts
+import { createApp } from 'ice';
+
+const appConfig = {
+  store: {
+    // 初始状态配置（可选）
+    initialStates: {};
+  
+    // 获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为参数（可选）
+    getInitialStates?: (initialData) => {};
+  }
+};
+
+createApp(appConfig);
+```
+
 ## 版本变更说明
 
 * icejs 1.1.3 to 1.1.4
