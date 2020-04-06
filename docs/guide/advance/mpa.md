@@ -1,5 +1,5 @@
 ---
-title: MPA 多页应用
+title: 多页应用 MPA
 order: 1
 ---
 

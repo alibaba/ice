@@ -44,10 +44,10 @@ export default {
 
   reducers: {
     increment (prevState) {
-      return { count: prevState.count + 1 };
+      prevState.count += 1;
     },
     decrement (prevState) {
-      return { count: prevState.count - 1 };
+      prevState.count -= 1;
     }
   },
 
@@ -90,6 +90,26 @@ const HomePage = () => {
 ```
 
 大部分情况下，按照上面两个步骤的操作就可以在项目里正常的使用状态管理能力了。
+
+## 配置参数
+
+```ts
+import { createApp } from 'ice';
+
+const appConfig = {
+  store: {
+    // 可选，初始化状态
+    initialStates: {};
+
+    // 可选：获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为入参
+    getInitialStates: (initialData) => {
+      return initialData;
+    };
+  }
+};
+
+createApp(appConfig);
+```
 
 ## 高阶能力
 
@@ -192,27 +212,6 @@ export default store.withModel('todos')(TodoList);
 * [完整示例代码](https://github.com/ice-lab/icejs/tree/master/examples/basic-store)
 * [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
-
-## 状态管理配置
-
-```ts
-import { createApp } from 'ice';
-
-const appConfig = {
-  store: {
-    // 初始状态配置（可选）
-    initialStates: {};
-  
-    // 获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为参数（可选）
-    getInitialStates?: (initialData) => {};
-  }
-};
-
-createApp(appConfig);
-```
-
 ## 版本变更说明
 
-* icejs 1.1.3 to 1.1.4
-
-*  该版本变更中对 API 进行了调整，在控制台可能会看到一些关于 store 模型定义的警告，为此你可以参考 [升级指南](https://github.com/ice-lab/icestore/blob/master/docs/upgrade-guidelines.zh-CN.md) 进行迁移。
+如果在控制台看到关于 store 的警告信息，可以参考 [升级指南](https://github.com/ice-lab/icestore/blob/master/docs/upgrade-guidelines.zh-CN.md) 进行迁移。
