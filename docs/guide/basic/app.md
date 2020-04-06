@@ -58,7 +58,7 @@ createApp(appConfig);
 
 ## 其他配置项
 
-- [路由配置](/docs/guide/basic/router#路由配置]
+- [路由配置](/docs/guide/basic/router#路由配置)
 - [请求配置](/docs/guide/basic/request#请求配置)
 - [状态管理配置](/docs/guide/basic/store#配置参数)
 - [日志配置](/docs/guide/basic/logger#配置)
