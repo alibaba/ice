@@ -205,6 +205,10 @@ const history = createMemoryHistory();
 
 ## 其他
 
+### lazy
+
+用于代码懒加载。[详见](https://ice.work/docs/guide/advance/code-splitting)
+
 ### logger
 
 用于日志打印。[详见](https://ice.work/docs/guide/basic/logger)
