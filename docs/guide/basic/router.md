@@ -194,6 +194,9 @@ export default [
 
 ```jsx
 import { createApp } from 'ice';
+import { createBrowserHistory } from 'history'
+
+const history = createBrowserHistory();
 
 const appConfig = {
   router: {
@@ -202,7 +205,8 @@ const appConfig = {
     fallback: <div>loading...</div>
     modifyRoutes: (routes) => {
       return routes;
-    }
+    },
+    history
   }
 };
 
@@ -215,6 +219,7 @@ createApp(appConfig);
 - basename: 路由基准地址
 - fallback: 开启按需加载时配置 fallback UI
 - modifyRoutes: 动态修改路由
+- history: 自定义创建 history 对象，[详见](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
 
 ### 构建配置
 
@@ -291,6 +296,7 @@ icejs 的路由能力基于 react-router，因此你也可以获取到 react-rou
 ```js
 import {
   Link,
+  history,
   useHistory,
   useLocation,
   useParams,
@@ -306,7 +312,7 @@ import {
 
 通过 `<Link />` 标签组件可实现路由跳转，使用方式：
 
-```javascript
+```js
 import { Link } from 'ice';
 
 function Demo() {
@@ -328,9 +334,37 @@ function Demo() {
 }
 ```
 
+### history
+
+获取当前使用的路由实例对象。
+
+```js
+import { history } from 'ice';
+
+// 用于获取 history 栈里的实体个数
+console.log(history.length);
+
+// 用于获取 history 跳转的动作，包含 PUSH、REPLACE 和 POP 三种类型
+console.log(history.action);
+
+// 用于获取 location 对象，包含 pathname、search 和 hash
+console.log(history.location);
+
+// 用于路由跳转
+history.push('/home');
+
+// 用于路由替换
+history.replace('/home');
+
+// 用于跳转到上一个路由
+history.goBack();
+```
+
+更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+
 ### useHistory
 
-useHistory hook 用于获取导航的 history 实例。
+useHistory hook 用于获取 history 实例。
 
 
 ```js
@@ -367,7 +401,7 @@ useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主�
 
 ### withRouter
 
-通过 withRouter 方法调用实现跳转；如果调用方法的地方在 React 组件内部，可以直接在组件上添加 `withRouter` 的装饰器，然后组件内可以通过 `props` 获取到相关 API：
+通过在组件上添加 `withRouter` 装饰器，可以在组件内获取到路由的 `history`、`location`、`match` 对象。
 
 ```javascript
 import React from 'react';
@@ -420,7 +454,7 @@ NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件
 
 ## 常见问题
 
-### 路由带着 `#` 号？
+### 路由类型
 
 前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点如下：
 

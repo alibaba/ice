@@ -43,20 +43,20 @@ export default {
   },
 
   reducers: {
-    increment(prevState) {
-      return { count: prevState.count + 1 }
+    increment (prevState) {
+      return { count: prevState.count + 1 };
     },
-    decrement(prevState) {
-      return { count: prevState.count - 1 }
+    decrement (prevState) {
+      return { count: prevState.count - 1 };
     }
   },
 
-  effects: {
-    async decrementAsync(state, payload, actions) {
+  effects: () => ({
+    async decrementAsync () {
       await delay(10);
-      actions.decrement();
+      this.decrement();
     },
-  }
+  }),
 };
 ```
 
@@ -71,19 +71,19 @@ import { store as pageStore } from 'ice/Home';
 
 const HomePage = () => {
   // 1. 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
-  const [ counterState, counterActions ] = appStore.useModel('counter')
+  const [ counterState, counterDispatchers ] = appStore.useModel('counter')
 
   // 2. 页面状态：一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
-  // const [ pageState, pageAction ] = pageStore.useModel('default');
+  // const [ pageState, pageDispatchers ] = pageStore.useModel('default');
 
   // 3. 页面状态：多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
-  // const [ fooState, fooAction ] = pageStore.useModel('foo');
+  // const [ fooState, fooDispatchers ] = pageStore.useModel('foo');
 
   return (
     <>
-      <button type="button" onClick={counterActions.increment}>+</button>
+      <button type="button" onClick={counterDispatchers.increment}>+</button>
       <span>{counterState.count}</span>
-      <button type="button" onClick={counterActions.decrementAsync}>-</button>
+      <button type="button" onClick={counterDispatchers.decrementAsync}>-</button>
     </>
   );
 }
@@ -95,41 +95,41 @@ const HomePage = () => {
 
 ### 仅使用 Action 不使用 State
 
-有些时候组件中只需要触发 action 不需要依赖对应的数据状态，此时可以使用 `useModelActions` API：
+有些时候组件中只需要触发 action 不需要依赖对应的数据状态，此时可以使用 `useModelDispatchers` API：
 
 ```js
 import { store } from 'ice';
 
 function FunctionComponent() {
   // 只调用 increment 方法
-  const actions = store.useModelActions('counter');
-  actions.increment();
+  const dispatchers = store.useModelDispatchers('counter');
+  dispatchers.increment();
 }
 ```
 
 ### 异步 Action 状态
 
-通过 `useModelEffectsState` API 即可获取到异步 action 的 loading 和 error 状态：
+通过 `useModelEffectsState` API 即可获取到异步请求的 loading 和 error 状态：
 
 ```js
 import { store } from 'ice';
 
 function FunctionComponent() {
-  const [state, actions] = store.useModel('counter');
-  const actionsState = store.useModelEffectsState('counter');
+  const [state, dispatchers] = store.useModel('counter');
+  const effectsState = store.useModelEffectsState('counter');
 
   useEffect(() => {
-    actions.decrementAsync();
+    dispatchers.decrementAsync();
   }, []);
 
-  actionsState.decrementAsync.isLoading;
-  actionsState.decrementAsync.error;
+  effectsState.decrementAsync.isLoading;
+  effectsState.decrementAsync.error;
 }
 ```
 
-### Action 联动
+### 模型联动
 
-action 方法第三和第四个参数分别可以拿到当前 model 以及全局 model 的所有 actions：
+在 effects 中的 action 方法中可以通过 `dispatch[model][action]` 拿到其他模型所定义的方法：
 
 ```tsx
 // src/models/user.ts
@@ -148,19 +148,19 @@ export default {
     },
   },
 
-  effects: {
-    async getUserInfo(prevState, payload, actions, globalActions) {
+  effects: (dispatch) => ({
+    async getUserInfo(payload, rootState) {
 
       // 调用 counter 模型的 decrement 方法
-      globalActions.counter.decrement();
+      dispatch.counter.decrement();
 
       // 调用当前模型的 update 方法
-      actions.update({
+      this.update({
         name: 'taobao',
         id: '123',
       });
     },
-  },
+  }),
 };
 
 ```
@@ -175,10 +175,10 @@ import { store } from 'ice';
 class TodoList extends React.Component {
   render() {
     const { todos } = this.props;
-    const [ state, actions ] = todos;
+    const [ state, dispatchers ] = todos;
 
     state.todos;
-    actions.add({ /* ... */});
+    dispatchers.add({ /* ... */});
   }
 }
 
@@ -187,7 +187,32 @@ export default store.withModel('todos')(TodoList);
 // export default withModel('user')(withModel('todos')(TodoList));
 ```
 
-同时，也可以使用 `withModelActions` 以及 `withModelEffectsState` API。
+同时，也可以使用 `withModelDispatchers` 以及 `withModelEffectsState` API。
 
 * [完整示例代码](https://github.com/ice-lab/icejs/tree/master/examples/basic-store)
 * [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
+
+
+## 状态管理配置
+
+```ts
+import { createApp } from 'ice';
+
+const appConfig = {
+  store: {
+    // 初始状态配置（可选）
+    initialStates: {};
+  
+    // 获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为参数（可选）
+    getInitialStates?: (initialData) => {};
+  }
+};
+
+createApp(appConfig);
+```
+
+## 版本变更说明
+
+* icejs 1.1.3 to 1.1.4
+
+*  该版本变更中对 API 进行了调整，在控制台可能会看到一些关于 store 模型定义的警告，为此你可以参考 [升级指南](https://github.com/ice-lab/icestore/blob/master/docs/upgrade-guidelines.zh-CN.md) 进行迁移。

@@ -1,6 +1,6 @@
 ---
 title: MPA 多页应用
-order: 7
+order: 1
 ---
 
 icejs 默认的应用类型是 SPA 单页应用，但在某些业务场景下存在 MPA 多页应用的诉求，基于此 icejs 内置提供了 MPA 的方案。
