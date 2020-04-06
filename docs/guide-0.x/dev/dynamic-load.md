@@ -12,7 +12,7 @@ order: 12
 
 在构建前端代码时，如果某个文件是用 `React.lazy` 而非普通的 `import` 引入的，那么构建工具会将该文件打包成一个单独的文件，通常类似 `1.js` `2.js` 这种，然后用户访问站点在切换到对应页面时，会动态加载对应的 js 文件然后执行渲染。
 
-如果出现加载失败的情况，通常是因为 publicPath 配置的有问题，可以参考[工程配置文档](/docs/guide/dev/build#publicPath)。如果是阿里内部开发者，请参考[这篇文档](https://yuque.antfin-inc.com/ice/rdy99p/angwyx)。
+如果出现加载失败的情况，通常是因为 publicPath 配置的有问题，可以参考[工程配置文档](/docs/guide-0.x/dev/build#publicPath)。如果是阿里内部开发者，请参考[这篇文档](https://yuque.antfin-inc.com/ice/rdy99p/angwyx)。
 
 ## 快速使用
 

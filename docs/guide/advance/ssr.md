@@ -1,5 +1,5 @@
 ---
-title: 服务端渲染
+title: 服务端渲染 SSR
 order: 2
 ---
 

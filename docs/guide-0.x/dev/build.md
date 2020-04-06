@@ -354,7 +354,7 @@ module.exports = {
 }
 ```
 
-更多接口代理，详见[接口代理](/docs/guide/dev/proxy.md)
+更多接口代理，详见[接口代理](/docs/guide-0.x/dev/proxy.md)
 
 ### injectBabel
 
@@ -445,7 +445,7 @@ module.exports = {
 }
 ```
 
-ice-scripts 有丰富的插件生态，业务可以按需选择，[插件列表](/docs/guide/build/plugin-list)。
+ice-scripts 有丰富的插件生态，业务可以按需选择，[插件列表](/docs/guide-0.x/build/plugin-list)。
 
 ## 自定义 webpack 配置
 
@@ -469,4 +469,4 @@ module.exports = {
 }
 ```
 
-更复杂的场景请参考 [修改 webpack 配置](/docs/guide/build/plugin-dev#修改 webpack 配置)。
+更复杂的场景请参考 [修改 webpack 配置](/docs/guide-0.x/build/plugin-dev#修改 webpack 配置)。

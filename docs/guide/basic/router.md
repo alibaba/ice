@@ -238,52 +238,7 @@ createApp(appConfig);
 
 ## 按需加载
 
-### 配置式
-
-在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `lazy` 方法引入组件即可：
-
-```diff
-// src/routes.ts
-+ import { lazy } from 'ice';
-- import UserLogin from '@/pages/UserLogin';
-+ const UserLogin = lazy(() => import('@/pages/UserLogin'));
-
-const routerConfig = [
-  {
-    path: '/login',
-    component: UserLogin,
-  },
-]
-```
-
-### 约定式
-
-在约定式路由中如果需要开启按需加载，只需要在 `build.json` 中的 router 选项配置 lazy 属性即可：
-
-```diff
-// build.json
-{
-  "router": {
-+    "lazy": true
-  }
-}
-```
-
-### fallback
-
-当组件动态加载过程中或者组件渲染失败时，可以通过 fallback 属性设置提示：
-
-```diff
-import { createApp } from 'ice';
-
-const appConfig = {
-  router: {
-+    fallback: <div>loading...</div>
-  }
-}
-
-createApp(appConfig);
-```
+参考 [代码分割](/docs/guide/advance/code-splitting) 。
 
 ## 路由 API
 
@@ -450,9 +405,9 @@ NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件
 
 ## 常见问题
 
-### 路由类型
+### HashHistory 与 BrowserHistory
 
-前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点如下：
+前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点：
 
 | 特点\\方案 | HashRouter | BrowserRouter |
 | --- | --- | --- |
@@ -464,7 +419,7 @@ NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件
 
 开发者可以根据自己的实际情况选择对应方案。
 
-### 如何启用 `BrowserRouter` ？
+### 如何使用 BrowserRouter
 
 本地开发时，只需要在 `src/app.ts` 中增加以下配置即可：
 

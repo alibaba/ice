@@ -7,6 +7,8 @@ order: 5
 
 ## 基于路由代码分割
 
+推荐以路由纬度分割代码，每个路由对应的代码会生成一个独立的 js 和 css。
+
 ### 配置式路由
 
 在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `lazy` 方法引入组件即可：
@@ -61,15 +63,15 @@ const appConfig = {
 createApp(appConfig);
 ```
 
-### 非路由中代码分割
+## 非路由代码分割
 
-除了路由中进行代码分割，有时候我们在其他地方如页面中也想更小粒度的进行代分割，也可以使用 `lazy` 方法引入对应的组件：
+除了路由纬度，我们也可以做一些更小粒度比如组件级别的代码分割：
 
 ```ts
 import { lazy } from 'ice';
 import React, { Suspense } from 'react';
 
-const OtherComponent = lazy(() => import('./OtherComponent'));
+const OtherComponent = lazy(() => import('@/components/RichEditor'));
 
 function MyComponent() {
   return (
