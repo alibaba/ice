@@ -2,6 +2,7 @@ import {
   RouteProps as DefaultRouteProps,
   RouteComponentProps,
 } from 'react-router-dom';
+import { History } from 'history';
 
 export interface IDynamicImportComponent {
   __LAZY__: boolean;
@@ -66,6 +67,7 @@ export interface IAppRouterProps {
   basename?: string;
   modifyRoutes?: IModifyRoutes;
   fallback?: React.ReactNode;
+  history?: History;
 }
 
 export interface RoutesProps {

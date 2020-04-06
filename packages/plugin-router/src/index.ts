@@ -28,9 +28,16 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   }
   const hasRouteFile = fse.existsSync(routeConfigPath);
 
+  // copy templates and export react-router-dom/history apis to ice
+  const routerTemplatesPath = path.join(__dirname, '../templates');
+  const routerTargetPath =  path.join(iceTempPath, 'router');
+  fse.ensureDirSync(routerTargetPath);
+  fse.copySync(routerTemplatesPath, routerTargetPath);
+  applyMethod('addIceExport', { source: './router' });
+
   // copy types
-  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'types/router.ts'));
-  applyMethod('addIceTypesExport', { source: './types/router', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types.ts'));
+  applyMethod('addIceTypesExport', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
   const routeFile = hasRouteFile ? routeConfigPath : routersTempPath;
   // add babel plugins for ice lazy
   modifyUserConfig('babelPlugins', [...(userConfig.babelPlugins as [] || []), [require.resolve('./babelPluginLazy'), { routeFile }]]);
@@ -42,6 +49,13 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     });
     // alias for runtime/Router
     config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
+
+    // alias for runtime/history
+    config.resolve.alias.set('$ice/history', path.join(__dirname, '../templates/history'));
+
+    // alias for react-router-dom
+    const routerName = 'react-router-dom';
+    config.resolve.alias.set(routerName, require.resolve(routerName));
 
     // config historyApiFallback for router type browser
     config.devServer.set('historyApiFallback', true);

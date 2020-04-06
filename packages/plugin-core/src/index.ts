@@ -61,8 +61,7 @@ export default (api) => {
     // add alias of basic dependencies
     const basicDependencies = [
       ['react', rootDir],
-      ['react-dom', rootDir],
-      'react-router-dom',
+      ['react-dom', rootDir]
     ];
     basicDependencies.forEach((dep: string[]|string): void => {
       const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
