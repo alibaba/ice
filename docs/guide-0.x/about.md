@@ -18,9 +18,9 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks.svg) | [docs](https://ice.work/docs/iceworks/about) |面向企业级中后台领域的 IDE|
-| [icejs](https://github.com/ice-lab/icejs) | ![](https://img.shields.io/npm/v/ice.js.svg) | [docs](https://ice.work/docs/guide/intro) |基于 React.js 的通用框架|
+| [icejs](https://github.com/ice-lab/icejs) | ![](https://img.shields.io/npm/v/ice.js.svg) | [docs](https://ice.work/docs/guide-0.x/intro) |基于 React.js 的通用框架|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |基于 React Hooks 的轻量级状态管理方案|
-| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice.work/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
+| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice.work/docs/icestark/guide-0.x/about) |面向大型应用的微前端解决方案|
 
 ## 常见问题
 
@@ -30,7 +30,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 #### 资深前端同学是否适合使用飞冰？
 
-在 IDE 基础上，飞冰还提供了 [CLI 版本](/docs/guide/start#使用%20CLI%20方式创建项目)，因此如果你不需要 IDE 的能力，依然可以完全使用 CLI 的链路开发项目，同时使用到飞冰的项目最佳实践、工程工具以及状态管理方案。
+在 IDE 基础上，飞冰还提供了 [CLI 版本](/docs/guide-0.x/start#使用%20CLI%20方式创建项目)，因此如果你不需要 IDE 的能力，依然可以完全使用 CLI 的链路开发项目，同时使用到飞冰的项目最佳实践、工程工具以及状态管理方案。
 
 #### 飞冰（ICE）的浏览器兼容策略是怎样的？
 

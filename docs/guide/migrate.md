@@ -3,7 +3,22 @@ title: 迁移到 icejs
 order: 4
 ---
 
-## 为什么要迁移到 icejs
+## 为什么要升级到 icejs
+
+飞冰的脚手架从 ice-scripts@1.x 到 ice-scripts@2.x 到 icejs 经过了三个大的版本变化，这里简单讲述下为什么要做这些版本的变化。
+
+从 ice-scripts 1.x 到 2.x 的核心变化及原因：
+
+- 引入 webpack-chain：满足开发者多样的工程定制需求
+- 引入插件机制：明确核心包的职责，更好的保证稳定性，同时基于插件机制扩展生态
+- 配置方式从 `buildConfig/themeConfig` 标准化成 `ice.config.js`：配置更加标准聚合
+
+从 ice-scripts@2.x 升级到 icejs：
+
+- 从脚手架模式转变到研发框架模式：更多的规范与最佳实践，降低用户选择成本、版本管理成本
+- 构建工具从 ice-scripts 演变为 build-scripts：
+- 配置文件从 `ice.config.js` 转变为 `build.json`：通过 build-scripts 统一阿里内部的构建体系，不仅是服务于飞冰（ICE）
+
 
 只需要添加一个 icejs 依赖，即可拥有以下功能：
 
@@ -14,7 +29,7 @@ order: 4
 
 ## 从 ice-scripts@2.x 迁移
 
-### 修改 package.json 
+### 修改 package.json
 
 icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单独依赖 ice-scripts，同时相关插件也进行了一次重构优化。
 
