@@ -28,12 +28,12 @@ icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单�
 
 ```diff
 {
-- "ice-scripts": "^2.0.0",
-- "ice-plugin-fusion": "^0.1.4",
-- "ice-plugin-moment-locales": "^0.1.0",
-+ "ice.js": "^1.0.0"
-+ "build-plugin-fusion": "^0.1.0",
-+ "build-plugin-moment-locales": "^0.1.0",
+-  "ice-scripts": "^2.0.0",
+-  "ice-plugin-fusion": "^0.1.4",
+-  "ice-plugin-moment-locales": "^0.1.0",
++  "ice.js": "^1.0.0"
++  "build-plugin-fusion": "^0.1.0",
++  "build-plugin-moment-locales": "^0.1.0",
 }
 ```
 
