@@ -35,13 +35,19 @@ export default class Generator {
 
   private projectRoot: string;
 
-  constructor({ projectRoot, targetDir, templateDir, defaultData }) {
+  private log: any;
+
+  private showPrettierError: boolean;
+
+  constructor({ projectRoot, targetDir, templateDir, defaultData, log }) {
     this.projectRoot = projectRoot;
     this.templateDir = templateDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
     this.contentRegistration = {};
     this.rerender = false;
+    this.log = log;
+    this.showPrettierError = true;
   }
 
   public addExport = (registerKey ,exportData: IExportData|IExportData[]) => {
@@ -136,7 +142,10 @@ export default class Generator {
         singleQuote: true
       });
     } catch (error) {
-      console.error(error);
+      if (this.showPrettierError) {
+        this.log.warn(`Prettier format error: ${error.message}`);
+        this.showPrettierError = false;
+      }
     }
     fse.ensureDirSync(path.dirname(targetPath));
     fse.writeFileSync(targetPath, content, 'utf-8');

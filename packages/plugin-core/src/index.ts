@@ -8,7 +8,7 @@ import getPages from './utils/getPages';
 import formatPath from './utils/formatPath';
 
 export default (api) => {
-  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api;
+  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
   const { rootDir, command, userConfig } = context;
 
   const iceTempPath = path.join(rootDir, '.ice');
@@ -113,7 +113,8 @@ export default (api) => {
     defaultData: {
       runtimeModules,
       buildConfig: JSON.stringify(buildConfig)
-    }
+    },
+    log
   });
 
   const pageGenerator = new PageGenerator({
