@@ -30,9 +30,3 @@ order: 2
 - 🐌 **插件体系**：提供插件机制，可以扩展框架的核心功能
 - 🐘 **typescript**：默认使用 typescript
 - 🐂**Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
-
-## 架构
-
-下面一张是关于 icejs 框架设计的架构图：
-
-![architecture](https://img.alicdn.com/tfs/TB1mA02cIKfxu4jSZPfXXb3dXXa-2487-1380.png)

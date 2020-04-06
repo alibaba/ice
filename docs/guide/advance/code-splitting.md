@@ -25,6 +25,13 @@ const routerConfig = [
 ]
 ```
 
+默认生成的 chunk 是按照 `[index]` 作为 chunk 名称，但我们可以通过 webpackChunkName 指定每个 chunk 来自哪个文件，以便于查看和调试：
+
+```diff
+const UserLogin = lazy(() => import('@/pages/UserLogin'));
++ const UserLogin = lazy(() => import(/* webpackChunkName: `${name}` */'@/pages/UserLogin'));
+```
+
 ### 约定式路由
 
 在约定式路由中如果需要开启按需加载，只需要在 `build.json` 中的 router 选项配置 lazy 属性即可：

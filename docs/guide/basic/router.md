@@ -194,9 +194,6 @@ export default [
 
 ```jsx
 import { createApp } from 'ice';
-import { createBrowserHistory } from 'history'
-
-const history = createBrowserHistory();
 
 const appConfig = {
   router: {
@@ -205,8 +202,7 @@ const appConfig = {
     fallback: <div>loading...</div>
     modifyRoutes: (routes) => {
       return routes;
-    },
-    history
+    }
   }
 };
 
@@ -401,7 +397,7 @@ useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主�
 
 ### withRouter
 
-通过在组件上添加 `withRouter` 装饰器，可以在组件内获取到路由的 `history`、`location`、`match` 对象。
+通过在 Class 组件上添加 `withRouter` 装饰器，可以获取到路由的 `history`、`location`、`match` 对象。
 
 ```javascript
 import React from 'react';
