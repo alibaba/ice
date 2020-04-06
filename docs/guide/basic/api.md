@@ -97,15 +97,54 @@ function HomeButton() {
 
 ### useLocation
 
-useLocation hook 返回代表当前 URL 的 location 对象。可以像 useState 一样使用它，只要 URL 更改，它就会返回一个新位置。
+useLocation hook 返回当前 URL 的 `location` 对象。
+
+```ts
+import { useLocation } from 'ice';
+
+function Home() {
+  const location = useLocation();
+  return (
+    <>
+      <p>location: {JSON.stringify(location)}</p>
+    </>
+  );
+};
+```
 
 ### useParams
 
-useParams hook 返回 URL 参数的 key/value 的对象。 使用它来访问当前 <Route> 的 match.params。
+useParams hook 返回 URL 参数的 `parmas` 对象。
+
+```ts
+import { useParams } from 'ice';
+
+function Home() {
+  const params = useParams();
+  return (
+    <>
+      <p>params: {JSON.stringify(params)}</p>
+    </>
+  );
+};
+```
 
 ### useRouteMatch
 
-useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主要用于在不实际渲染 <Route> 的情况下访问匹配数据。
+useRouteMatch hook 返回当前路由的匹配信息。
+
+```ts
+import { useRouteMatch } from 'ice';
+
+function Home() {
+  const match = useRouteMatch();
+  return (
+    <>
+      <p>match: {JSON.stringify(match)}</p>
+    </>
+  );
+};
+```
 
 ### withRouter
 
