@@ -19,6 +19,15 @@ const appConfig: IAppConfig = {
   },
   router: {
     // ...
+  },
+  store: {
+    // ...
+  },
+  request: {
+    // ...
+  },
+  logger: {
+    // ...
   }
 };
 
