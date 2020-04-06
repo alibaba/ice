@@ -15,7 +15,7 @@ order: 12
 
 ### APP_MODE
 
-设置应用环境。[详见](https://ice.work/docs/guide/basic/config)
+设置设置应用环境。[详见](https://ice.work/docs/guide/basic/config)
 
 ## 路由
 
@@ -45,33 +45,32 @@ function Demo() {
 }
 ```
 
-### history
+### NavLink
 
-获取当前使用的路由实例对象。
+NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件匹配时可以添加 active 属性。
 
-```js
-import { history } from 'ice';
-
-// 用于获取 history 栈里的实体个数
-console.log(history.length);
-
-// 用于获取 history 跳转的动作，包含 PUSH、REPLACE 和 POP 三种类型
-console.log(history.action);
-
-// 用于获取 location 对象，包含 pathname、search 和 hash
-console.log(history.location);
-
-// 用于路由跳转
-history.push('/home');
-
-// 用于路由替换
-history.replace('/home');
-
-// 用于跳转到上一个路由
-history.goBack();
+```jsx
+<NavLink to='/faq' activeClassName='selected'>
+  FAQs
+</NavLink>
 ```
 
-更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+### Prompt
+
+在离开页面路由跳转时，自定义拦截组件。
+
+```ts
+import { Prompt } from 'ice';
+
+const PromptMessage = () => {
+  return (
+    <>
+      {/* 用户离开页面时给出曲儿提示 */}
+      <Prompt message="你确定要离开吗？" />
+    </>
+  );
+};
+```
 
 ### useHistory
 
@@ -107,8 +106,6 @@ useParams hook 返回 URL 参数的 key/value 的对象。 使用它来访问当
 ### useRouteMatch
 
 useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主要用于在不实际渲染 <Route> 的情况下访问匹配数据。
-
-[更多使用示例](https://reacttraining.com/react-router/web/example/basic)
 
 ### withRouter
 
@@ -149,19 +146,33 @@ const match = matchPath('/users/123', {
 });
 ```
 
-### NavLink
+### history
 
-NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件匹配时可以添加 active 属性。
+获取当前使用的路由实例对象。
 
-```jsx
-<NavLink to='/faq' activeClassName='selected'>
-  FAQs
-</NavLink>
+```js
+import { history } from 'ice';
+
+// 用于获取 history 栈里的实体个数
+console.log(history.length);
+
+// 用于获取 history 跳转的动作，包含 PUSH、REPLACE 和 POP 三种类型
+console.log(history.action);
+
+// 用于获取 location 对象，包含 pathname、search 和 hash
+console.log(history.location);
+
+// 用于路由跳转
+history.push('/home');
+
+// 用于路由替换
+history.replace('/home');
+
+// 用于跳转到上一个路由
+history.goBack();
 ```
 
-### Prompt
-
-在离开页面路由跳转时，自定义拦截组件。
+更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
 
 ### createHashHistory
 
