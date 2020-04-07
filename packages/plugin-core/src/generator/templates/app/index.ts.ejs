@@ -1,17 +1,10 @@
 <%- iceImports %>
 
-export * from './components';
-export * from './createApp';
+export { createApp, history } from './createApp';
 export * from './types';
+export * from './lazy';
 
-export const APP_MODE = (typeof window !== 'undefined' && window.__app_mode__) || process.env.APP_MODE;
-
-export function lazy(dynamicImport) {
-  return {
-    '__LAZY__': true,
-    dynamicImport
-  };
-}
+export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 
 <% if (iceExports) { %>
 export {

@@ -12,11 +12,11 @@ export default {
     },
   },
 
-  effects: {
-    async getPageTitle (prevState, payload, actions) {
-      actions.update({
+  effects: (dispatch) => ({
+    async getPageTitle () {
+      dispatch.default.update({
         title: 'About Page'
       });
     },
-  },
+  }),
 };

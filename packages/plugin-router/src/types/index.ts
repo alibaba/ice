@@ -2,6 +2,7 @@ import {
   RouteProps as DefaultRouteProps,
   RouteComponentProps,
 } from 'react-router-dom';
+import { History } from 'history';
 
 export interface IDynamicImportComponent {
   __LAZY__: boolean;
@@ -37,7 +38,7 @@ export interface IRenderRouteProps extends DefaultRouteProps {
 export interface RouterProps {
   // custom props
   routes: RouteItemProps[];
-  type?: 'hash' | 'browser' | 'memory';
+  type?: 'hash' | 'browser' | 'memory' | 'static';
   // common props for BrowserRouter&HashRouter&MemoryRouter
   basename?: string;
   getUserConfirmation?: ((message: string, callback: (ok: boolean) => void) => void);
@@ -66,6 +67,7 @@ export interface IAppRouterProps {
   basename?: string;
   modifyRoutes?: IModifyRoutes;
   fallback?: React.ReactNode;
+  history?: History;
 }
 
 export interface RoutesProps {

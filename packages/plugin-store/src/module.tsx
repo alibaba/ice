@@ -1,6 +1,6 @@
 import * as React from 'react';
-import AppStore from '$ice/appModels';
-import PageStores from '$ice/pageModels';
+import AppStore from '$ice/appStore';
+import PageStores from '$ice/pageStores';
 
 const wrapperComponent = (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
@@ -18,7 +18,6 @@ const wrapperComponent = (PageComponent) => {
   };
   return StoreWrapperedComponent;
 };
-
 
 export default ({ addProvider, wrapperRouteComponent, appConfig, context }) => {
   wrapperRouteComponent(wrapperComponent);

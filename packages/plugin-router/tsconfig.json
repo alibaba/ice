@@ -6,6 +6,9 @@
     "outDir": "lib",
     "paths": {
       "$ice/routes": ["./src/runtime/_routes"]
-    }
-  }
+    },
+  },
+  "exclude": [
+    "templates"
+  ]
 }
