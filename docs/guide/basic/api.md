@@ -282,7 +282,7 @@ appConfig 的类型定义。
 ```diff
 +import { createApp, IAppConfig } from 'ice';
 
-+const appConfig:IAppConfig {
++const appConfig: IAppConfig {
 
 }
 
@@ -299,7 +299,7 @@ createApp();
 const model = {
   state: [],
   reducers: {},
-+  effects: (dispatch: IRootDispatch) => ({
++ effects: (dispatch: IRootDispatch) => ({
 
   })
 };
