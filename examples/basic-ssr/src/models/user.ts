@@ -15,13 +15,13 @@ export default {
     },
   },
 
-  effects: {
-    async getUserInfo (prevState, payload, actions) {
+  effects: (dispatch) => ({
+    async getUserInfo () {
       await delay(1000);
-      actions.update({
+      dispatch.user.update({
         name: 'taobao',
         id: '123',
       });
     },
-  },
+  }),
 };

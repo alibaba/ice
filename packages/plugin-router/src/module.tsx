@@ -1,6 +1,6 @@
 import * as React from 'react';
 import defaultRoutes from '$ice/routes';
-import { Router } from './runtime/Router';
+import { IceRouter } from './runtime/Router';
 import formatRoutes, { wrapperPage, wrapperPageWithSSR } from './runtime/formatRoutes';
 
 const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context }) => {
@@ -30,7 +30,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
       routerProps = Object.assign({}, routerProps, { location: pathname, context: staticContext });
     }
 
-    return <Router {...routerProps} />;
+    return <IceRouter {...routerProps} />;
   };
   setRenderRouter(renderRouter);
 };

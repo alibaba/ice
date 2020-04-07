@@ -1,3 +1,5 @@
+import { IRootDispatch } from 'ice';
+
 export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
@@ -15,14 +17,13 @@ export default {
     },
   },
 
-  effects: {
-    async getUserInfo (prevState, payload, actions, globalActions) {
-      globalActions.counter.decrement();
+  effects: (dispatch: IRootDispatch) => ({
+    async getUserInfo () {
       await delay(1000);
-      actions.update({
+      dispatch.user.update({
         name: 'taobao',
         id: '123',
       });
     },
-  },
+  }),
 };

@@ -1,9 +1,7 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0, react/jsx-filename-extension: 0, no-shadow: 0, @typescript-eslint/no-explicit-any:0 */
 import * as React from 'react';
 import {
-  HashRouter,
-  BrowserRouter,
-  MemoryRouter,
+  Router,
   StaticRouter,
   Switch,
   Route,
@@ -50,17 +48,10 @@ function parseRoutes(routes: RouteItemProps[]) {
   });
 }
 
-export function Router(props: RouterProps) {
-  const { type = 'hash', routes, fallback, ...others } = props;
-  const typeToComponent = {
-    hash: HashRouter,
-    browser: BrowserRouter,
-    static: StaticRouter,
-    // for test case
-    memory: MemoryRouter,
-  };
+export function IceRouter(props: RouterProps) {
+  const { type, routes, fallback, ...others } = props;
+  const RouterComponent = type === 'static' ? StaticRouter : Router;
 
-  const RouterComponent: React.ComponentType<any> = typeToComponent[type];
   // parse routes before render
   const parsedRoutes = parseRoutes(routes);
   return (
@@ -107,7 +98,7 @@ function Routes({ routes, fallback }: RoutesProps) {
           const { component: LayoutComponent, children, ...others } = route;
           const RenderComponent = (props: RouteComponentProps) => (
             <LayoutComponent {...props}>
-              <Routes routes={children} />
+              <Routes routes={children} fallback={fallback} />
             </LayoutComponent>
           );
           return (

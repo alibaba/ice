@@ -1,4 +1,5 @@
 {
+  "name": "ice.js",
   "private": true,
   "workspaces": [
     "packages/*"

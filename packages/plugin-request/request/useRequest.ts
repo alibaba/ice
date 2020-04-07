@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useCallback } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import axiosInstance from './axiosInstance';
 
@@ -24,7 +24,7 @@ function useRequest(options: AxiosRequestConfig) {
    * Method to make request manually
    * @param {object} config - axios config to shallow merged with options before making request
    */
-  async function request(config?: AxiosRequestConfig) {
+  const request = useCallback(async (config?: AxiosRequestConfig) => {
     try {
       dispatch({
         type: 'init'
@@ -47,7 +47,8 @@ function useRequest(options: AxiosRequestConfig) {
       });
       throw error;
     }
-  }
+    // eslint-disable-next-line
+  }, []);
 
   return {
     ...state,

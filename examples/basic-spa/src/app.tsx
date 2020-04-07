@@ -9,6 +9,7 @@ const appConfig: IAppConfig = {
     level: APP_MODE === 'build' ? 'error' : 'debug',
   },
   router: {
+    basename: '/ice',
     type: 'hash',
     fallback: <div>加载中...</div>
   },

@@ -8,7 +8,7 @@ import getPages from './utils/getPages';
 import formatPath from './utils/formatPath';
 
 export default (api) => {
-  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig } = api;
+  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
   const { rootDir, command, userConfig } = context;
 
   const iceTempPath = path.join(rootDir, '.ice');
@@ -48,6 +48,8 @@ export default (api) => {
 
     // default alias of @/
     config.resolve.alias.set('@', path.join(rootDir, 'src'));
+    config.resolve.alias.set('$ice/appConfig', path.join(iceTempPath, 'appConfig.ts'));
+
 
     const defineVariables = {
       'process.env.__IS_SERVER__': false
@@ -59,8 +61,7 @@ export default (api) => {
     // add alias of basic dependencies
     const basicDependencies = [
       ['react', rootDir],
-      ['react-dom', rootDir],
-      'react-router-dom',
+      ['react-dom', rootDir]
     ];
     basicDependencies.forEach((dep: string[]|string): void => {
       const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
@@ -111,7 +112,8 @@ export default (api) => {
     defaultData: {
       runtimeModules,
       buildConfig: JSON.stringify(buildConfig)
-    }
+    },
+    log
   });
 
   const pageGenerator = new PageGenerator({

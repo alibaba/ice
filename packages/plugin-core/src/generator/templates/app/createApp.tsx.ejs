@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
-import * as deepmerge from 'deepmerge';
+import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from '$ice/history';
+import deepmerge from 'deepmerge';
 import RuntimeModule from './runtimeModule';
+import { setAppConfig } from './appConfig';
 import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
@@ -27,22 +29,45 @@ function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
   return renderApp(appConfig, context);
 }
 
-let appConfigData = {};
+function createHistory(type: string, basename: string) {
+  const histories = {
+    hash: createHashHistory,
+    browser: createBrowserHistory,
+    memory: createMemoryHistory
+  };
+  // Note: only support createHashHistory and createBrowserHistory parameters
+  // https://github.com/ReactTraining/history/blob/master/modules/createBrowserHistory.js#L37
+  // https://github.com/ReactTraining/history/blob/master/modules/createHashHistory.js#L58
+  // https://github.com/ReactTraining/history/blob/master/modules/createMemoryHistory.js#L13
+  const props = (type === 'hash' || type === 'browser') ? { basename } : {};
+  return histories[type](props);
+}
+
+// provide history instance
+// can be used in the application through history.push()
+let history: History;
+
 function createApp(customConfig: IAppConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig);
 
-  // pass appConfig to the server
+  // set appConfig to application life cycle
+  setAppConfig(appConfig);
+
   if (process.env.__IS_SERVER__) {
-    appConfigData = appConfig;
     return;
   }
 
   // client side rendering
-  // load module to run before createApp ready
-  loadStaticModules(appConfig)
+  // get history instance
+  const { type, basename, history: customHistory } = appConfig.router;
+  history = customHistory || createHistory(type, basename);
+  appConfig.router.history = history;
 
-  let initialData = {}
-  let pageInitialProps = {}
+  // load module to run before createApp ready
+  loadStaticModules(appConfig);
+
+  let initialData = {};
+  let pageInitialProps = {};
 
   // ssr enabled and the server has returned data
   if (window.__ICE_APP_DATA__) {
@@ -109,13 +134,9 @@ function loadStaticModules(appConfig: IAppConfig) {
   <% } %>
 }
 
-function getAppConfig() {
-  return appConfigData;
-}
-
 export {
   createApp,
   createAppWithSSR,
-  getAppConfig,
-  loadStaticModules
+  loadStaticModules,
+  history
 }

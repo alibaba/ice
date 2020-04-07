@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import * as ejs from 'ejs';
+import * as prettier from 'prettier';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
@@ -34,13 +35,19 @@ export default class Generator {
 
   private projectRoot: string;
 
-  constructor({ projectRoot, targetDir, templateDir, defaultData }) {
+  private log: any;
+
+  private showPrettierError: boolean;
+
+  constructor({ projectRoot, targetDir, templateDir, defaultData, log }) {
     this.projectRoot = projectRoot;
     this.templateDir = templateDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
     this.contentRegistration = {};
     this.rerender = false;
+    this.log = log;
+    this.showPrettierError = true;
   }
 
   public addExport = (registerKey ,exportData: IExportData|IExportData[]) => {
@@ -128,7 +135,18 @@ export default class Generator {
 
   public renderFile: IRenderFile = (templatePath, targetPath, extraData = {}) => {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    const content = ejs.render(templateContent, {...this.renderData, ...extraData});
+    let content = ejs.render(templateContent, {...this.renderData, ...extraData});
+    try {
+      content = prettier.format(content, {
+        parser: 'typescript',
+        singleQuote: true
+      });
+    } catch (error) {
+      if (this.showPrettierError) {
+        this.log.warn(`Prettier format error: ${error.message}`);
+        this.showPrettierError = false;
+      }
+    }
     fse.ensureDirSync(path.dirname(targetPath));
     fse.writeFileSync(targetPath, content, 'utf-8');
   }
