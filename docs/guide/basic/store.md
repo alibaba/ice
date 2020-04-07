@@ -35,7 +35,9 @@ src
 
 ```ts
 // src/models/counter.ts
-export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+import { IRootDispatch } from 'ice';
+
+const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
   state: {
@@ -51,10 +53,10 @@ export default {
     }
   },
 
-  effects: () => ({
+  effects: (dispatch: IRootDispatch) => ({
     async decrementAsync () {
       await delay(10);
-      this.decrement();
+      dispatch.counter.decrement();
     },
   }),
 };
@@ -65,7 +67,7 @@ export default {
 定义好全局状态和页面级状态后，在视图中即可获取定义好的数据：
 
 ```tsx
-// pages/Home/index.jsx
+// pages/Home/index.tsx
 import { store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
 
@@ -101,7 +103,7 @@ const appConfig = {
     // 可选，初始化状态
     initialStates: {};
 
-    // 可选：获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为入参
+    // 可选，获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为入参
     getInitialStates: (initialData) => {
       return initialData;
     };
@@ -117,7 +119,7 @@ createApp(appConfig);
 
 有些时候组件中只需要触发 action 不需要依赖对应的数据状态，此时可以使用 `useModelDispatchers` API：
 
-```js
+```ts
 import { store } from 'ice';
 
 function FunctionComponent() {
@@ -131,7 +133,7 @@ function FunctionComponent() {
 
 通过 `useModelEffectsState` API 即可获取到异步请求的 loading 和 error 状态：
 
-```js
+```ts
 import { store } from 'ice';
 
 function FunctionComponent() {
@@ -152,6 +154,8 @@ function FunctionComponent() {
 在 effects 中的 action 方法中可以通过 `dispatch[model][action]` 拿到其他模型所定义的方法：
 
 ```tsx
+import { IRootDispatch } from 'ice';
+
 // src/models/user.ts
 export default {
   state: {
@@ -168,14 +172,14 @@ export default {
     },
   },
 
-  effects: (dispatch) => ({
+  effects: (dispatch: IRootDispatch) => ({
     async getUserInfo(payload, rootState) {
 
       // 调用 counter 模型的 decrement 方法
       dispatch.counter.decrement();
 
       // 调用当前模型的 update 方法
-      this.update({
+      dispatch.user.update({
         name: 'taobao',
         id: '123',
       });
@@ -189,7 +193,7 @@ export default {
 
 useModel 相关的 API 基于 React 的 Hooks 能力，仅能在 Function Component 中使用，通过 `withModel` API 可以实现在 Class Component 中使用：
 
-```js
+```ts
 import { store } from 'ice';
 
 class TodoList extends React.Component {
