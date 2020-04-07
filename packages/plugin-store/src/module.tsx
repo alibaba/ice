@@ -9,7 +9,7 @@ const wrapperComponent = (PageComponent) => {
     const PageStore = PageStores[pageComponentName];
     if (PageStore) {
       return (
-        <PageStore.Provider initialState={pageConfig.initialStates}>
+        <PageStore.Provider initialStates={pageConfig.initialStates}>
           <PageComponent {...props}/>
         </PageStore.Provider>
       );
@@ -29,7 +29,7 @@ export default ({ addProvider, wrapperRouteComponent, appConfig, context }) => {
       : storeConfig.initialStates || {};
 
     return (
-      <AppStore.Provider initialState={initialStates}>
+      <AppStore.Provider initialStates={initialStates}>
         {children}
       </AppStore.Provider>
     );
