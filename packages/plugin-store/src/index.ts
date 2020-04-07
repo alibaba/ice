@@ -13,8 +13,10 @@ export default async (api) => {
   const pageStoresTemplatePath = path.join(templatePath, 'pageStores.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
-  await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(targetPath, './types/store.ts'));
-  applyMethod('addIceTypesExport', { source: './types/store', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  await fse.copy(path.join(__dirname, '..', 'src/types'), path.join(targetPath, './store'));
+  // TODO: 考虑合并为一个
+  applyMethod('addIceTypesExport', { source: './store', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  applyMethod('addIceTypesExport', { source: './store/icestore' });
 
   onGetWebpackConfig(config => {
     if (command === 'build') {
