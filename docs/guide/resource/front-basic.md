@@ -123,9 +123,3 @@ npm 遵循 [semver 版本规范](https://semver.org/lang/zh-CN/)，每个 npm �
   }
 }
 ```
-
-## 构建流程
-
-JavaScript 的语言标准一直在发展，但是总会有一些老版本的浏览器无法支持这些语法，为了保证开发者可以使用最新的 JavaScript 标准，前端社区诞生了诸如 Babel, Webpack, Rollup 这些工具构建代码。开发者只需要在 src 目录下按照最新的语言标准以及工程实践书写代码，上线前对代码执行构建任务生成一个 bundle.js 的文件，页面引入这个 bundle.js 即可运行。
-
-为了降低构建的配置成本，我们开发了 ice-scripts 这个工具，用户只需要按照文档执行 `dev` `build` 命令即可。

@@ -7,15 +7,25 @@ order: 12
 
 ### createApp
 
-用于创建渲染整个应用。[详见](https://ice.work/docs/guide/basic/app)
+用于创建渲染整个应用。[详见](/docs/guide/basic/app)
+
+### IAppConfig
+
+appConfig 的类型定义
 
 ### config
 
-用于根据环境区分运行时配置。[详见](https://ice.work/docs/guide/basic/config)
+获取应用运行时配置。[详见](/docs/guide/basic/config)
 
 ### APP_MODE
 
-设置设置应用环境。[详见](https://ice.work/docs/guide/basic/config)
+获取应用环境。[详见](/docs/guide/basic/config)
+
+## 状态管理
+
+### store
+
+应用级别的 store 实例。[详见](/docs/guide/basic/store)
 
 ## 路由
 
@@ -187,7 +197,7 @@ const match = matchPath('/users/123', {
 
 ### history
 
-获取当前使用的路由实例对象。
+获取应用的路由实例。
 
 ```js
 import { history } from 'ice';
@@ -247,22 +257,22 @@ const history = createMemoryHistory();
 
 ### request
 
-用于数据请求的方法。[详见](https://ice.work/docs/guide/basic/request#request)
+用于数据请求的方法。[详见](/docs/guide/basic/request#request)
 
 ### useRequest
 
-用于数据请求的 hooks。[详见](https://ice.work/docs/guide/basic/request#useRequest)
+用于数据请求的 hooks。[详见](/docs/guide/basic/request#useRequest)
 
-## 其他
+## 工具方法
 
 ### lazy
 
-用于代码懒加载。[详见](https://ice.work/docs/guide/advance/code-splitting)
+用于代码懒加载。[详见](/docs/guide/advance/code-splitting)
 
 ### logger
 
-用于日志打印。[详见](https://ice.work/docs/guide/basic/logger)
+用于日志打印。[详见](/docs/guide/basic/logger)
 
 ### helpers
 
-用于提供常用的帮助函数。[详见](https://ice.work/docs/guide/basic/helpers)
+用于提供常用的帮助函数。[详见](/docs/guide/basic/helpers)

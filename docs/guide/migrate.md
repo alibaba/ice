@@ -5,14 +5,14 @@ order: 4
 
 ## 为什么要升级到 icejs
 
-飞冰的脚手架从 ice-scripts@1.x 到 ice-scripts@2.x 到 icejs 经过了三个大的版本变化，这些版本变化都是结合我们的业务实践以及用户诉求不断演进的，在能力和规范性上都在不断提高，核心的一些差别：
+飞冰的脚手架从 `ice-scripts@1.x` 到 `ice-scripts@2.x` 到 icejs 经过了三个大的版本变化，这些版本变化都是结合我们的业务实践以及用户诉求不断演进的，在能力和规范性上都在不断提高，核心的一些差别：
 
 |      纬度\版本     |    icejs 1.x    |  ice-scripts 2.x   |  ice-scripts 1.x  |
 |-------------------|-------------------|-------------------|-------------------|
 |  定位             |   研发框架        |       构建工具       |     构建工具        |
 |  配置文件         |  build.json      |      ice.config.js  |  package.json(buildConfig) |
 |  发布时间         |   2020.02        |      2019.06       |     2018.02        |
-|  可渐进升级性      |   好            |       差             |     差            |
+|  可渐进升级性      |   好            |      不好             |    不好            |
 |  插件能力         |   工程+运行时     |       工程           |       无          |
 |  工程配置         |   强             |       强           |        弱          |
 |  运行时配置       |   默认支持         |       默认不支持     |    默认不支持     |
@@ -20,9 +20,9 @@ order: 4
 
 > 可渐进升级性「好」意味着整体设计较为稳定，未来的版本变化用户可以低成本的渐进升级
 
-## 从 ice-scripts@2.x 迁移
+## 从 ice-scripts 2.x 迁移
 
-### 修改 package.json
+### 1. 修改 package.json
 
 icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单独依赖 ice-scripts，同时相关插件也进行了一次重构优化。
 
@@ -40,7 +40,7 @@ icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单�
 * [ice-scripts@1.x 插件列表](https://ice.alibaba-inc.com/docs/cli/plugin-list/fusion)
 * [icejs 插件列表](https://ice.work/docs/guide/develop/plugin-list)
 
-### 1. 修改配置文件
+### 2. 修改配置文件
 
 icejs 提供 `build.json` 文件用于工程配置，因此需要将 `ice.config.js` 配置迁移到 `build.json` 中，具体如下:
 
@@ -103,7 +103,7 @@ module.exports = ({  onGetWebpackConfig }) => {
 
 最后删除 `ice.config.js` 配置文件。
 
-### 2. 修改应用入口文件
+### 3. 修改应用入口文件
 
 将原有应用入口为 `src/index.js` 需要修改为 `src/app.js`，具体修改如下：
 
@@ -141,7 +141,7 @@ createApp(appConfig);
 
 最后，删除 `src/index.js` 文件
 
-### 其他文件修改
+### 4. 其他文件修改
 
 icejs 规范和强约束了项目的目录结构，因此只需要按照规范就行编辑即可，不在需要额外的引用
 
