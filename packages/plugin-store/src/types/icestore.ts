@@ -1,4 +1,4 @@
-import { RootDispatch, RootState } from '$ice/appStore';
+import * as types from '$ice/appStore';
 
-export type IRootDispatch = RootDispatch;
-export type IRootState = RootState;
+export type IRootDispatch = types.IRootDispatch;
+export type IRootState = types.IRootState;
