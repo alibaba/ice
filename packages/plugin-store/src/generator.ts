@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as ejs from 'ejs';
 import * as recursiveReaddir from 'fs-readdir-recursive';
+import * as prettier from 'prettier';
 
 export interface IExportData {
   specifier?: string;
@@ -153,7 +154,15 @@ export default class Generator {
 
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    const content = ejs.render(templateContent, {...extraData});
+    let content = ejs.render(templateContent, {...extraData});
+    try {
+      content = prettier.format(content, {
+        parser: 'typescript',
+        singleQuote: true
+      });
+    } catch (error) {
+      // ignore error
+    }
     fse.ensureDirSync(path.dirname(targetPath));
     fse.writeFileSync(targetPath, content, 'utf-8');
   }

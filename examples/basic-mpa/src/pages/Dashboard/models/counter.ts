@@ -14,10 +14,10 @@ export default {
     }
   },
 
-  effects: {
-    async decrementAsync (state, payload, actions) {
+  effects: (dispatch) => ({
+    async decrementAsync () {
       await delay(10);
-      actions.decrement();
+      dispatch.counter.decrement();
     },
-  }
+  }),
 };
