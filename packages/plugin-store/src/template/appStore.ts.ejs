@@ -1,11 +1,20 @@
 <% if (importStr) { %>
-import { createStore, IcestoreRootState, IcestoreDispatch } from '@ice/store';
+import { createStore, IcestoreRootState, IcestoreDispatch, Models } from '@ice/store';
 <%- importStr %>
 
-const models = { <%- modelsStr %> };
-const store = createStore(models);
+interface AppModel extends Models {
+  <% modelsStr.split(',').forEach(function(model){ %>
+    <% if (model) { %>
+      <%- model %>: typeof <%- model %>;
+    <% } %>
+  <% }); %>
+}
+
+const appModel: AppModel = { <%- modelsStr %> };
+
+const store = createStore(appModel);
 export default store;
-export type Store = typeof store;
-export type RootDispatch = IcestoreDispatch<typeof models>;
-export type RootState = IcestoreRootState<typeof models>;
+
+export type RootDispatch = IcestoreDispatch<typeof appModel>;
+export type RootState = IcestoreRootState<typeof appModel>;
 <% } %>
