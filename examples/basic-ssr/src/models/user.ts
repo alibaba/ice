@@ -15,10 +15,10 @@ export default {
     },
   },
 
-  effects: () => ({
+  effects: (dispatch) => ({
     async getUserInfo () {
       await delay(1000);
-      this.update({
+      dispatch.user.update({
         name: 'taobao',
         id: '123',
       });

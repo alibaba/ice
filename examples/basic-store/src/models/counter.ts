@@ -1,3 +1,5 @@
+import { IRootDispatch } from 'ice';
+
 export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
@@ -14,10 +16,10 @@ export default {
     }
   },
 
-  effects: () => ({
+  effects: (dispatch: IRootDispatch) => ({
     async decrementAsync () {
       await delay(10);
-      this.decrement();
+      dispatch.counter.decrement();
     },
   }),
 };
