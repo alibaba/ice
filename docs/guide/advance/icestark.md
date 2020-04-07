@@ -1,9 +1,9 @@
 ---
-title: 接入微前端
-order: 6
+title: 微前端 icestark
+order: 3
 ---
 
-基于 icejs 的插件机制，我们封装了 build-plugin-icestark 插件，这个插件可以大大降低接入微前端方案的成本。
+基于 icejs 的插件机制，我们封装了 `build-plugin-icestark` 插件，这个插件可以大大降低接入微前端方案的成本。
 
 ## 框架应用
 
