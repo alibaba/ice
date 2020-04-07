@@ -5,7 +5,6 @@ const models = {};
 const store = createStore(models);
 
 export default store;
-export type Store = typeof store;
-export type RootDispatch = IcestoreDispatch<typeof models>;
-export type RootState = IcestoreRootState<typeof models>;
+export type IRootDispatch = IcestoreDispatch<typeof models>;
+export type IRootState = IcestoreRootState<typeof models>;
 

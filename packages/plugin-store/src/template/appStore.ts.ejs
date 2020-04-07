@@ -15,6 +15,6 @@ const appModel: AppModel = { <%- modelsStr %> };
 const store = createStore(appModel);
 export default store;
 
-export type RootDispatch = IcestoreDispatch<typeof appModel>;
-export type RootState = IcestoreRootState<typeof appModel>;
+export type IRootDispatch = IcestoreDispatch<typeof appModel>;
+export type IRootState = IcestoreRootState<typeof appModel>;
 <% } %>
