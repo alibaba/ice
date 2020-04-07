@@ -69,7 +69,3 @@ icestark 内置了基于 `@ice/sandbox` 的沙箱隔离，通过 `sandbox` 属�
   ]}
 />
 ```
-
-### Web Worker（方案试验中）
-
-利用 Web Worker 为 JS 创造多线程环境的能力，将第三方 JS 放入 Worker 线程在后台运行，但目前 Web Worker 存在这一些限制，比如 DOM 限制、通信联系等，我们也将积极探索 Web Worker 在微前端的场景下对于 JS 隔离的应用。
