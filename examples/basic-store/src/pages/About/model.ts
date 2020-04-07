@@ -12,9 +12,9 @@ export default {
     },
   },
 
-  effects: () => ({
+  effects: (dispatch) => ({
     async getPageTitle () {
-      this.update({
+      dispatch.default.update({
         title: 'About Page'
       });
     },

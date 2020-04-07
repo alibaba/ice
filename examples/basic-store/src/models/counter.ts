@@ -18,10 +18,8 @@ export default {
 
   effects: (dispatch: IRootDispatch) => ({
     async decrementAsync () {
-      // dispatch.user.getUserInfo();
-      dispatch.user.getUserInfo();
       await delay(10);
-      this.decrement();
+      dispatch.counter.decrement();
     },
   }),
 };
