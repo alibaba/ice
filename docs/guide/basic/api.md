@@ -278,3 +278,49 @@ const history = createMemoryHistory();
 ### IAppConfig
 
 appConfig 的类型定义。
+
+```diff
++import { createApp, IAppConfig } from 'ice';
+
++const appConfig:IAppConfig {
+
+}
+
+createApp();
+```
+
+### IRootDispatch
+
+状态管理中全局模型 dispatch 的类型。
+
+```diff
++import { IRootDispatch } from 'ice';
+
+const model = {
+  state: [],
+  reducers: {},
++  effects: (dispatch: IRootDispatch) => ({
+
+  })
+};
+```
+
+
+### IRootState
+
+状态管理中全局模型的 rootState 的类型。
+
+```diff
++import { IRootState } from 'ice';
+
+const model = {
+  state: [],
+  reducers: {},
+  effects: (dispatch) => ({
++   like(playload, rootState: IRootState) {
+
+    }
+  })
+};
+```
+
