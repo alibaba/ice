@@ -9,10 +9,6 @@ order: 12
 
 用于创建渲染整个应用。[详见](/docs/guide/basic/app)
 
-### IAppConfig
-
-appConfig 的类型定义
-
 ### config
 
 获取应用运行时配置。[详见](/docs/guide/basic/config)
@@ -276,3 +272,9 @@ const history = createMemoryHistory();
 ### helpers
 
 用于提供常用的帮助函数。[详见](/docs/guide/basic/helpers)
+
+## 类型
+
+### IAppConfig
+
+appConfig 的类型定义。
