@@ -1,7 +1,11 @@
 <% if (importStr) { %>
-import { createStore } from '@ice/store';
+import { createStore, IcestoreRootState, IcestoreDispatch } from '@ice/store';
 <%- importStr %>
+
 const models = { <%- modelsStr %> };
 const store = createStore(models);
 export default store;
+export type Store = typeof store;
+export type RootDispatch = IcestoreDispatch<typeof models>;
+export type RootState = IcestoreRootState<typeof models>;
 <% } %>
