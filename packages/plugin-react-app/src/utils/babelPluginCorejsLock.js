@@ -12,7 +12,8 @@ module.exports = ({ types }, { fileList }) => {
         });
         if (entryFile) {
           const { node } = nodePath;
-          if (node.source.value.startsWith('core-js/')) {
+          // only replace core-js/modules/xxx added by @babel/preset-env
+          if (node.source.value.startsWith('core-js/modules')) {
             node.source.value = node.source.value.replace('core-js/', `${coreJSPath}/`);
           }
         }
