@@ -8,7 +8,8 @@ import {
   registerAppLeave,
   getBasename,
 } from '@ice/stark-app';
-import { Router } from '$ice/Router';
+import { IceRouter } from '$ice/Router';
+import { createHashHistory, createBrowserHistory } from '$ice/history';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IIceStark } from './types';
@@ -19,10 +20,13 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
   const { icestark, router } = appConfig;
   const { type: appType } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
+
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
   if (appType === 'child') {
+    const history = createHistory(type, getBasename());
+
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
@@ -42,13 +46,15 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     setRenderRouter((routes) => () => {
       const routerProps = {
         type,
-        basename: getBasename(),
         routes,
+        basename: getBasename(),
+        history
       };
-      return <Router {...routerProps} />;
+      return <IceRouter {...routerProps} />;
     });
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
+    const history = createHistory(type, basename);
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
@@ -60,8 +66,9 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
       const [apps, setApps] = useState(null);
       const routerProps = {
         type,
-        basename,
         routes,
+        basename,
+        history
       };
       const BasicLayout = Layout || DefaultLayout;
       const RenderAppRoute = CustomAppRoute || AppRoute;
@@ -113,7 +120,9 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
               {routes && routes.length && (
                 <RenderAppRoute
                   path="/"
-                  component={<Router {...routerProps} />}
+                  render={() => {
+                    return <IceRouter {...routerProps} />;
+                  }}
                 />
               )}
             </AppRouter>
@@ -124,5 +133,13 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     setRenderRouter(frameworkRouter);
   }
 };
+
+function createHistory(type: string, basename: string) {
+  const histories = {
+    hash: createHashHistory,
+    browser: createBrowserHistory,
+  };
+  return histories[type]({basename});
+}
 
 export default module;
