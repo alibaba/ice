@@ -1,5 +1,6 @@
 export {
   createBrowserHistory,
   createHashHistory,
-  createMemoryHistory
+  createMemoryHistory,
+  History
 } from 'history';
