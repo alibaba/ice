@@ -9,7 +9,7 @@ import {
   getBasename,
 } from '@ice/stark-app';
 import { IceRouter } from '$ice/Router';
-import { createHashHistory, createBrowserHistory, History } from '$ice/history';
+import { createHashHistory, createBrowserHistory } from '$ice/history';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IIceStark } from './types';
@@ -19,13 +19,13 @@ const { useEffect, useState } = React;
 const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
   const { icestark, router } = appConfig;
   const { type: appType } = (icestark || {}) as IIceStark;
-  const { type, basename, modifyRoutes: runtimeModifyRoutes, history: customHistory } = router;
+  const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
   if (appType === 'child') {
-    const history = createHistory(type, getBasename(), customHistory);
+    const history = createHistory(type, getBasename());
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
@@ -54,7 +54,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     });
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
-    const history = createHistory(type, basename, customHistory);
+    const history = createHistory(type, basename);
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
@@ -134,10 +134,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
   }
 };
 
-function createHistory(type: string, basename: string, history: History) {
-  if (history) {
-    return history;
-  }
+function createHistory(type: string, basename: string) {
   const histories = {
     hash: createHashHistory,
     browser: createBrowserHistory,
