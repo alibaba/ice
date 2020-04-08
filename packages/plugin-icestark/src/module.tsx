@@ -116,7 +116,9 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
               {routes && routes.length && (
                 <RenderAppRoute
                   path="/"
-                  component={<IceRouter {...routerProps} history={history} />}
+                  render={() => {
+                    return <IceRouter {...routerProps} history={history} />;
+                  }}
                 />
               )}
             </AppRouter>
