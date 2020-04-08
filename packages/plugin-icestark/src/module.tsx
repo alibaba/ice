@@ -8,7 +8,8 @@ import {
   registerAppLeave,
   getBasename,
 } from '@ice/stark-app';
-import { Router } from '$ice/Router';
+import { IceRouter } from '$ice/Router';
+import { createHashHistory, createBrowserHistory } from '$ice/history';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IIceStark } from './types';
@@ -18,7 +19,9 @@ const { useEffect, useState } = React;
 const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
   const { icestark, router } = appConfig;
   const { type: appType } = (icestark || {}) as IIceStark;
-  const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
+  const { type, basename, modifyRoutes: runtimeModifyRoutes, history: customHistory } = router;
+  const history = customHistory || createHistory(type, basename);
+
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
@@ -45,7 +48,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
         basename: getBasename(),
         routes,
       };
-      return <Router {...routerProps} />;
+      return <IceRouter {...routerProps} history={history} />;
     });
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
@@ -113,7 +116,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
               {routes && routes.length && (
                 <RenderAppRoute
                   path="/"
-                  component={<Router {...routerProps} />}
+                  component={<IceRouter {...routerProps} history={history} />}
                 />
               )}
             </AppRouter>
@@ -124,5 +127,13 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     setRenderRouter(frameworkRouter);
   }
 };
+
+function createHistory(type: string, basename: string) {
+  const histories = {
+    hash: createHashHistory,
+    browser: createBrowserHistory,
+  };
+  return histories[type]({basename});
+}
 
 export default module;
