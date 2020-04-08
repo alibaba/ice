@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 // eslint-disable-next-line
-const Router = ({ type, routes, basename }) => {
+const IceRouter = ({ type, routes, basename, history }) => {
   return (<div />);
 };
 
-export { Router };
+export { IceRouter };

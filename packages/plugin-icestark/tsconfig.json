@@ -6,6 +6,7 @@
     "outDir": "lib",
     "paths": {
       "$ice/Router": ["./src/runtime/_Router"],
+      "$ice/history": ["./src/runtime/_history"],
       "$ice/Layout": ["./src/runtime/Layout"]
     }
   }
