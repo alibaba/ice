@@ -24,7 +24,7 @@ async function publish() {
     process.exit(0)
   }
 
-  log('2. 📦 📦 📦 building packages...')
+  log('2. 📦 📦 📦 Building packages...')
   await run('npm run build')
 
   log('3. ⚡ ⚡ ⚡ Update package version automatically...')
