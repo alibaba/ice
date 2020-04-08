@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-config",
-  "version": "1.1.5-alpha.5",
+  "version": "1.1.5",
   "description": "Define application config in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
