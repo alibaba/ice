@@ -259,6 +259,16 @@ const history = createMemoryHistory();
 
 用于数据请求的 hooks。[详见](/docs/guide/basic/request#useRequest)
 
+## 错误边界
+
+### ErrorBoundary
+
+用于错误边界的组件。[详见](/docs/guide/basic/error-boundaries#ErrorBoundary)
+
+### withErrorBoundary
+
+用于错误边界的高阶方法。[详见](/docs/guide/basic/error-boundaries#withErrorBoundary)
+
 ## 工具方法
 
 ### lazy
