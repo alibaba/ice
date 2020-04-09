@@ -11,7 +11,7 @@ order: 6
 
 icejs 中默认在应用的根组件上添加了 `ErrorBoundary` 组件，当应用子组件抛出的错误符合补获条件而其自身并未进行处理时，则进入应用的错误边界逻辑作为最后兜底的方案。如下图为补获错误时的备用 UI。
 
-![](https://img.alicdn.com/tfs/TB19vuyBrY1gK0jSZTEXXXDQVXa-923-618.png)
+![](https://img.alicdn.com/tfs/TB1rNezBAL0gK0jSZFxXXXWHVXa-2880-1754.png)
 
 同时，我们也可以通过自 `ErrorBoundaryFallback` 和 `onErrorBoundaryHander` 进行自定义：
 

@@ -58,7 +58,15 @@ const appConfig = {
     getInitialData: async() => {
       const result = await request();
       return result;
-    }
+    },
+
+    // 可选，自定义错误边界的 fallback UI
+    ErrorBoundaryFallback: <div>渲染错误</div>,
+
+    // 可选，自定义错误的处理事件
+    onErrorBoundaryHander: (error, componentStack) {
+      // Do something with the error
+    },
   },
 };
 
