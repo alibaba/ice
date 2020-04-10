@@ -8,29 +8,30 @@ const goldlog = require('../../lib/goldlog');
 const log = require('../../lib/log');
 const config = require('../../lib/config');
 
-module.exports = async () => {
+module.exports = async (options) => {
   const cwd = process.cwd();
   const DB_PATH_ABSOLUTE = path.join(cwd, DB_PATH);
   const pkgPath = path.join(cwd, 'package.json');
   const pkgData = await fse.readJson(pkgPath);
   const { name, materialConfig = {} } = pkgData;
-
-  const isAliInternal = await checkAliInternal();
   let syncToAli = false;
 
-  if (isAliInternal) {
-    const { forAli } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        message: '您正处于阿里巴巴内网环境，是否需要同步到内部站点？',
-        name: 'forAli',
-      },
-    ]);
-    syncToAli = forAli;
-  }
-
-  if (isAliNpm(name) && !syncToAli) {
-    throw new Error(`${name} 为内网项目, 禁止同步到外网`);
+  if (isAliNpm(name)) {
+    // 内部物料源只允许同步到内部
+    syncToAli = true;
+  } else {
+    // 外部物料源：内网环境询问下；外网环境直接同步到外部
+    const isAliInternal = await checkAliInternal();
+    if (isAliInternal) {
+      const { forAli } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          message: '您正处于阿里巴巴内网环境，是否需要同步到内部站点？',
+          name: 'forAli',
+        },
+      ]);
+      syncToAli = forAli;
+    }
   }
 
   goldlog('sync', materialConfig);
@@ -40,6 +41,7 @@ module.exports = async () => {
 
   const fusionSDK = new FusionSDK({
     syncToAli,
+    env: options.env,
   });
 
   // get fusion token

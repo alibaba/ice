@@ -125,7 +125,7 @@ test('getNpmTarball', () => {
 
 test('getNpmTarball should get latest version', () => {
   return getNpmTarball('http').then((tarball) => {
-    expect(tarball).toBe(`${defaultRegistry}/http/download/http-0.0.0.tgz`);
+    expect(tarball).toBe(`${defaultRegistry}/http/download/http-0.0.1-security.tgz`);
   });
 });
 

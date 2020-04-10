@@ -1,6 +1,6 @@
 ---
 title: 使用 Fusion 组件
-order: 4
+order: 9
 ---
 
 项目开发中如果使用 `@alifd/next` 作为基础 UI 组件，可以通过 `build-plugin-fusion` 插件实现组件按需加载和样式主题等相关能力，飞冰官方的模板都是基于 Fusion 组件的，因此一般不需要开发者再手动引入。

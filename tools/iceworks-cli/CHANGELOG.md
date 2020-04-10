@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.2.0
+
+- [feat] support `iceworks sync --env daily/pre/prod`
+- [chore] optimize sync check internal
+- [chore] add `es` to material gitignore
+
 ## 3.1.10
 
 - [fix] typo error: pubslishConfig -> publishConfig

@@ -3,40 +3,48 @@ title: 迁移到 icejs
 order: 4
 ---
 
-## 为什么要迁移到 icejs
+## 为什么要升级到 icejs
 
-只需要添加一个 icejs 依赖，即可拥有以下功能：
+飞冰的脚手架从 `ice-scripts@1.x` 到 `ice-scripts@2.x` 到 icejs 经过了三个大的版本变化，这些版本变化都是结合我们的业务实践以及用户诉求不断演进的，在能力和规范性上都在不断提高，核心的一些差别：
 
-* 基于 build-scripts 实现，且完全兼容 ice-scripts@2.x 的配置能力，更好的构建体验
-* 内置支持基于 icestore 的状态管理方案，使用更简单更友好
-* 内置支持基于 axios 的数据请求方案，以及日志、工具函数等功能
-* 丰富的插件支持，通过插件可快速接入和编写 SPA、MPA、微前端、SSR 等应用类型
+|      纬度\版本     |    icejs 1.x    |  ice-scripts 2.x   |  ice-scripts 1.x  |
+|-------------------|-------------------|-------------------|-------------------|
+|  定位             |   研发框架        |       构建工具       |     构建工具        |
+|  配置文件         |  build.json      |      ice.config.js  |  package.json(buildConfig) |
+|  发布时间         |   2020.02        |      2019.06       |     2018.02        |
+|  可渐进升级性      |   好            |      不好             |    不好            |
+|  插件能力         |   工程+运行时     |       工程           |       无          |
+|  工程配置         |   强             |       强           |        弱          |
+|  运行时配置       |   默认支持         |       默认不支持     |    默认不支持     |
+|  SSR            |   支持             |       不支持        |      不支持     |
 
-## 从 ice-scripts@2.x 迁移
+> 可渐进升级性「好」意味着整体设计较为稳定，未来的版本变化用户可以低成本的渐进升级
 
-### 修改 package.json 
+## 从 ice-scripts 2.x 迁移
+
+### 1. 修改 package.json
 
 icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单独依赖 ice-scripts，同时相关插件也进行了一次重构优化。
 
 ```diff
 {
-- "ice-scripts": "^2.0.0",
-- "ice-plugin-fusion": "^0.1.4",
-- "ice-plugin-moment-locales": "^0.1.0",
-+ "ice.js": "^1.0.0"
-+ "build-plugin-fusion": "^0.1.0",
-+ "build-plugin-moment-locales": "^0.1.0",
+-  "ice-scripts": "^2.0.0",
+-  "ice-plugin-fusion": "^0.1.4",
+-  "ice-plugin-moment-locales": "^0.1.0",
++  "ice.js": "^1.0.0"
++  "build-plugin-fusion": "^0.1.0",
++  "build-plugin-moment-locales": "^0.1.0",
 }
 ```
 
 * [ice-scripts@1.x 插件列表](https://ice.alibaba-inc.com/docs/cli/plugin-list/fusion)
 * [icejs 插件列表](https://ice.work/docs/guide/develop/plugin-list)
 
-### 修改配置文件
+### 2. 修改配置文件
 
 icejs 提供 `build.json` 文件用于工程配置，因此需要将 `ice.config.js` 配置迁移到 `build.json` 中，具体如下:
 
-1. 假设你的 `ice.config.js` 配置如下：
+假设你的 `ice.config.js` 配置如下：
 
 ```ts
 const path = require('path');
@@ -62,9 +70,7 @@ module.exports = {
 };
 ```
 
-2. 新建 `build.json` 文件：
-
-icejs 默认入口文件为 `app.(js|ts)`，因此不需要在单独配置：
+新建 `build.json` 文件：（icejs 默认入口文件为 `app.(js|ts)`，因此不需要单独配置 entry）
 
 ```json
 {
@@ -77,11 +83,9 @@ icejs 默认入口文件为 `app.(js|ts)`，因此不需要在单独配置：
 }
 ```
 
-3. 新建 `build.plugin.js` 文件：
+然后新建 `build.plugin.js` 文件，将自定义的 chainWebpack 配置移到新建的 `build.plugin.js` 中:
 
-将自定义的 chainWebpack 配置移到新建的 `build.plugin.js` 中:
-
-```ts
+```js
 module.exports = ({  onGetWebpackConfig }) => {
   onGetWebpackConfig((config) => {
      ['jsx', 'tsx'].forEach((rule) => {
@@ -97,13 +101,13 @@ module.exports = ({  onGetWebpackConfig }) => {
 }
 ```
 
-4. 删除 `ice.config.js` 配置文件
+最后删除 `ice.config.js` 配置文件。
 
-### 修改应用入口文件
+### 3. 修改应用入口文件
 
 将原有应用入口为 `src/index.js` 需要修改为 `src/app.js`，具体修改如下：
 
-1. 假设你的 `src/index.js` 文件内容如下：
+假设你的 `src/index.js` 文件内容如下：
 
 ```tsx
 import React from 'react';
@@ -121,7 +125,7 @@ if (!ICE_CONTAINER) {
 ReactDOM.render(router(), ICE_CONTAINER);
 ```
 
-2. 新建 `src/app.js` 文件：
+新建 `src/app.js` 文件：
 
 ```ts
 import { createApp } from 'ice';
@@ -135,9 +139,9 @@ const appConfig = {
 createApp(appConfig);
 ```
 
-3. 删除 `src/index.js` 文件
+最后，删除 `src/index.js` 文件
 
-### 其他文件修改
+### 4. 其他文件修改
 
 icejs 规范和强约束了项目的目录结构，因此只需要按照规范就行编辑即可，不在需要额外的引用
 

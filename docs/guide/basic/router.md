@@ -215,6 +215,7 @@ createApp(appConfig);
 - basename: 路由基准地址
 - fallback: 开启按需加载时配置 fallback UI
 - modifyRoutes: 动态修改路由
+- history: 自定义创建 history 对象，[详见](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
 
 ### 构建配置
 
@@ -237,192 +238,13 @@ createApp(appConfig);
 
 ## 按需加载
 
-### 配置式
-
-在配置式路由中如果需要开启按需加载，只需要在路由文件中通过 `lazy` 方法引入组件即可：
-
-```diff
-// src/routes.ts
-+ import { lazy } from 'ice';
-- import UserLogin from '@/pages/UserLogin';
-+ const UserLogin = lazy(() => import('@/pages/UserLogin'));
-
-const routerConfig = [
-  {
-    path: '/login',
-    component: UserLogin,
-  },
-]
-```
-
-### 约定式
-
-在约定式路由中如果需要开启按需加载，只需要在 `build.json` 中的 router 选项配置 lazy 属性即可：
-
-```diff
-// build.json
-{
-  "router": {
-+    "lazy": true
-  }
-}
-```
-
-### fallback
-
-当组件动态加载过程中或者组件渲染失败时，可以通过 fallback 属性设置提示：
-
-```diff
-import { createApp } from 'ice';
-
-const appConfig = {
-  router: {
-+    fallback: <div>loading...</div>
-  }
-}
-
-createApp(appConfig);
-```
-
-## 路由 API
-
-icejs 的路由能力基于 react-router，因此你也可以获取到 react-router 支持的其他路由 API：
-
-```js
-import {
-  Link,
-  useHistory,
-  useLocation,
-  useParams,
-  useRouteMatch,
-  withRouter,
-  matchPath,
-  NavLink,
-  Prompt,
-} from 'ice';
-```
-
-### Link
-
-通过 `<Link />` 标签组件可实现路由跳转，使用方式：
-
-```javascript
-import { Link } from 'ice';
-
-function Demo() {
-  return (
-    <div>
-      <Link to='/courses?sort=name' />
-
-      {/* 可以携带额外的数据 `state` 到路由中。 */}
-      <Link
-        to={{
-          pathname: '/courses',
-          search: '?sort=name',
-          hash: '#the-hash',
-          state: { fromDashboard: true },
-        }}
-      />
-    </div>
-  )
-}
-```
-
-### useHistory
-
-useHistory hook 用于获取导航的 history 实例。
-
-
-```js
-import { useHistory } from 'ice';
-
-function HomeButton() {
-  const history = useHistory();
-
-  function handleClick() {
-    history.push('/home);
-  }
-
-  return (
-    <button type='button' onClick={handleClick}>
-      Go home
-    </button>
-  );
-}
-```
-
-### useLocation
-
-useLocation hook 返回代表当前 URL 的 location 对象。可以像 useState 一样使用它，只要 URL 更改，它就会返回一个新位置。
-
-### useParams
-
-useParams hook 返回 URL 参数的 key/value 的对象。 使用它来访问当前 <Route> 的 match.params。
-
-### useRouteMatch
-
-useRouteMatch hook 尝试以与 <Route> 相同的方式匹配当前URL。它主要用于在不实际渲染 <Route> 的情况下访问匹配数据。
-
-[更多使用示例](https://reacttraining.com/react-router/web/example/basic)
-
-### withRouter
-
-通过 withRouter 方法调用实现跳转；如果调用方法的地方在 React 组件内部，可以直接在组件上添加 `withRouter` 的装饰器，然后组件内可以通过 `props` 获取到相关 API：
-
-```javascript
-import React from 'react';
-import { withRouter } from 'ice';
-
-function ShowTheLocation(props) {
-  const { history, location } = props;
-  const handleHistoryPush = () => {
-    history.push('/new-path');
-  };
-
-  return (
-    <div>
-      <div>当前路径： {location.pathname}</div>
-      <button onClick={handleHistoryPush}>点击跳转新页面</button>
-    </div>
-  );
-}
-
-export default withRouter(ShowTheLocation);
-```
-
-### matchPath
-
-判断当前 URL 是否匹配。
-
-```js
-import { matchPath } from 'ice';
-
-const match = matchPath('/users/123', {
-  path: '/users/:id',
-  exact: true,
-  strict: false
-});
-```
-
-### NavLink
-
-NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件匹配时可以添加 active 属性。
-
-```jsx
-<NavLink to='/faq' activeClassName='selected'>
-  FAQs
-</NavLink>
-```
-
-### Prompt
-
-在离开页面路由跳转时，自定义拦截组件。
+参考 [代码分割](/docs/guide/advance/code-splitting) 。
 
 ## 常见问题
 
-### 路由带着 `#` 号？
+### HashHistory 与 BrowserHistory
 
-前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点如下：
+前端路由通常有两种实现方式：HashHistory 和 BrowserHistory，路由都带着 `#` 说明使用的是 HashHistory。这两种方式优缺点：
 
 | 特点\\方案 | HashRouter | BrowserRouter |
 | --- | --- | --- |
@@ -434,7 +256,7 @@ NavLink 组件的用法和 Link 组件基本相同，区别在于 NavLink 组件
 
 开发者可以根据自己的实际情况选择对应方案。
 
-### 如何启用 `BrowserRouter` ？
+### 如何使用 BrowserRouter
 
 本地开发时，只需要在 `src/app.ts` 中增加以下配置即可：
 

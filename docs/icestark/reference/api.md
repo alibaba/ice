@@ -127,6 +127,31 @@ order: 1
 - 类型：`string`
 - 默认值：`icestarkNode`
 
+#### sandbox
+
+- 子应用开启沙箱运行环境
+- 类型：`boolean | Sandbox`
+- 默认值：`false`
+
+`icestark` 内置 `@ice/sandbox` 作为沙箱执行依赖，开发者可以通过传入自定义的沙箱实现，作为子应用的执行沙箱：
+
+```js
+class CustomSanbox {
+  constructor() {}
+  // 实现在沙箱环境执行代码的方法
+  execScriptInSandbox(script) {}
+  // 实现清理沙箱的方法
+  clear() {}
+}
+
+// 将实例化的沙箱传入 AppRoute
+const sandbox = new CustomSanbox();
+<AppRoute
+  sanbox={sandbox}
+  ...
+/>
+```
+
 ### AppLink
 
 提供声明式的，可访问的导航，表示本次跳转需要重新加载静态资源。子应用内部跳转仍然使用 `Link`
