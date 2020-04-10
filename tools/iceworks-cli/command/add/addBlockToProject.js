@@ -1,6 +1,10 @@
 const path = require('path');
 const fse = require('fs-extra');
 const camelCase = require('camelcase');
+const readFiles = require('fs-readdir-recursive');
+const pkgDir = require('pkg-dir');
+const glob = require('glob');
+const transfromTsToJs = require('sylvanas');
 const extractTarball = require('../../lib/extractTarball');
 const log = require('../../lib/log');
 const { TEMP_PATH } = require('../../lib/constants');
@@ -59,7 +63,26 @@ async function addBlock(options, destDir, tempDir) {
     })
     .then(() => {
       log.info('copy block src files to dest blockDir');
-      return fse.copy(path.join(tempDir, 'src'), blockDirPath, {
+
+      const blockType = getBlockType(tempDir);
+      const projectType = getProjectType(blockDirPath);
+      const blockSourceSrcPath = path.join(tempDir, 'src');
+
+      log.verbose('blockType: ', blockType, 'projectType: ', projectType);
+
+      if (blockType === 'ts' && projectType === 'js') {
+        // transfrom ts to js
+        const files = glob.sync('**/*.@(ts|tsx)', {
+          cwd: blockSourceSrcPath,
+        });
+        log.verbose('transfrom ts to js', files);
+        transfromTsToJs(files, {
+          cwd: blockSourceSrcPath,
+          outDir: blockSourceSrcPath,
+          action: 'overwrite',
+        });
+      }
+      return fse.copy(blockSourceSrcPath, blockDirPath, {
         overwrite: false,
         errorOnExist: true,
       });
@@ -67,4 +90,26 @@ async function addBlock(options, destDir, tempDir) {
     .then(() => {
       return blockDirPath;
     });
+}
+
+function getBlockType(blockDirPath) {
+  const files = readFiles(path.join(blockDirPath, 'src'));
+
+  const index = files.findIndex(item => {
+    return /\.ts(x)/.test(item);
+  });
+
+  return index >= 0 ? 'ts' : 'js';
+}
+
+function getProjectType(destDir) {
+  const projectDir = pkgDir.sync(destDir);
+
+  log.verbose('projectDir: ', projectDir);
+
+  const hasTsconfig = fse.existsSync(path.join(projectDir, 'tsconfig.json'));
+  const hasAppJs = fse.existsSync(path.join(projectDir, 'src/app.js'));
+
+  // icejs 都有 tsconfig，因此需要通过 src/app.js 进一步区分
+  return (hasTsconfig && !hasAppJs) ? 'ts' : 'js';
 }
