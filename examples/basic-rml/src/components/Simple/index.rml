@@ -1,0 +1,83 @@
+<script>
+import { useState, useCallback } from 'react';
+
+export default function (props) {
+  const [foo, setFoo] = useState(true);
+  const handleClick = useCallback((evt) => {
+    setFoo(!foo);
+  }, [foo]);
+
+  return {
+    color: 'yellow',
+    handleClick,
+    foo,
+    fn: () => 'hello world',
+  };
+}
+</script>
+
+<style lang="scss" module>
+.container {
+  .strong {
+    font-weight: bold;
+  }
+}
+
+:global {
+  .container {
+    background: grey;
+  }
+}
+</style>
+
+<div className=":container container">
+  <div>
+    <span>插值：</span>
+    <span>{ "插值" }</span>
+  </div>
+  <div>
+    <span>字符串拼接：</span>
+    <span>{ foo + '!!!' }</span>
+    <span>{ `${foo}???` }</span>
+  </div>
+  <div>
+    <span>变量：</span>
+    <span>{color}</span>
+  </div>
+  <div>
+    <span>二元表达式：</span>
+    <span>{foo && '你好'}</span>
+  </div>
+  <div>
+    <span>三元表达式：</span>
+    <span>{foo ?  '显示' : '不显示'}</span>
+  </div>
+  <div>
+    <span>表达式：</span>
+    <span>{ fn(1) }</span >
+  </div>
+  <div>
+    <span>样式：</span>
+    <span className="strong">Class</span>，
+    <span style={{"color": "yellow"}}>行内</span>
+  </div>
+  <div>
+    <span>属性表达式：</span>
+    {/* <span style={{color: color}}>
+      对象
+    </span>*/}
+    <span data-id={ foo ? color : 'undefined' }>
+      计算
+    </span>
+    {/* <button type="primary" onClick={function() {
+      alert(1);
+    }}>
+      点击
+    </button> */}
+  </div>
+  <div>
+    <button type="primary" onClick={handleClick}>
+      切换
+    </button>
+  </div>
+</div>
