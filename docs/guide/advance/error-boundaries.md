@@ -34,55 +34,27 @@ createApp(appConfig);
 
 ## 组件错误边界
 
-错误边界的粒度可以是应用级别，也有可能是组件级别，因此 icejs 也提供了 `ErrorBoundary` 组件和 `withErrorBoundary` 的高阶方法，用于自行处理错误边界的情况。
+错误边界的粒度可以是应用级别，也有可能是组件级别，因此 icejs 也提供了 `ErrorBoundary` 组件，用于自行处理错误边界的情况。
 
 ### ErrorBoundary
 
 错误边界组件，用法如下：
 
 ```tsx
-import ErrorBoundary from 'ice';
+import { ErrorBoundary } from 'ice';
 
-// 错误处理事件
-const myErrorHandler = (error: Error, componentStack: string) => {
-  // Do something with the error
-};
-
-// 错误 fallback UI
-const MyFallbackComponent = ({ componentStack, error }) => (
-  <div>
-    <p><strong>Oops! An error occured!</strong></p>
-    <p>Here’s what we know…</p>
-    <p><strong>Error:</strong> {error.toString()}</p>
-    <p><strong>Stacktrace:</strong> {componentStack}</p>
-  </div>
-);
-
-<ErrorBoundary
-  Fallback={MyFallbackComponent}
-  onError={myErrorHandler}
->
-  <ComponentThatMayError />
-</ErrorBoundary>
-```
-
-### withErrorBoundary
-
-错误边界的高阶方法，用法如下：
-
-```ts
-import { withErrorBoundary } from 'ice';
-
-const ComponentWithErrorBoundary = withErrorBoundary(
-  // 必须，需要被包装的组件
-  Component,
-  // 可选，自定义 fallback UI
-  Fallback,
-  // 可选，自定义错误处理事件
-  onError: (error, componentStack) => {
-    // Do something with the error
-  },
-);
+export default function Todo() {
+  return (
+    <ErrorBoundary
+      {/* 默认使用全局配置的 ErrorBoundaryFallback */}
+      Fallback={<div>error</div>}
+      {/* 默认使用全局配置的 onErrorBoundaryHander */}
+      onError={myErrorHandler}
+    >
+      <TodoList />
+    </ErrorBoundary>
+  );
+}
 ```
 
 ## 其他
