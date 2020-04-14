@@ -1,5 +1,5 @@
 ---
-title: 根据环境区分配置
+title: 环境配置
 order: 7
 ---
 
@@ -110,7 +110,7 @@ if (/pre.example.com/.test(location.host)) {
 export default {
   default: {},
   daily: {},
-  daily: {},
+  pre: {},
   prod: {}
 };
 ```
