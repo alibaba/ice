@@ -1,5 +1,5 @@
 ---
-title: 使用 Fusion 组件
+title: 使用 fusion 组件
 order: 9
 ---
 
@@ -26,23 +26,20 @@ $ npm install build-plugin-fusion --save-dev
 ```json
 {
   "plugins": [
-    ["build-plugin-fusion", {
-      "themePackage": "@icedesign/theme",
-      "nextPrefix": "nextfd-",
-      "uniteBaseComponent": "@alife/next"
-    }]
+    ["build-plugin-fusion", {}]
   ]
 }
 ```
 
-修改主题变量，注意不能跟主题包功能同时使用，[原因](https://github.com/alibaba/ice/pull/1435#issuecomment-460055905)：
+修改主题变量：
+
+> 注意：不能跟主题包功能同时使用，[原因](https://github.com/alibaba/ice/pull/1435#issuecomment-460055905)
 
 ```json
 {
   "plugins": [
     ["build-plugin-fusion", {
       "themeConfig": {
-        "primaryColor": "#f60",
         "font-size-body-1": "14px"
       }
     }]

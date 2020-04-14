@@ -56,4 +56,3 @@ HomePage.pageConfig = {
   scrollToTop: true
 }
 ```
-

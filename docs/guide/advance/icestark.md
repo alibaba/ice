@@ -106,4 +106,4 @@ createApp(appConfig)
 
 只需要这么简单，你的 SPA 应用就可以变成微前端的子应用了。
 
-关于微前端的更多内容，请查看文档 [icestark](https://ice.work/docs/icestark/about)。
+关于微前端的更多内容，请查看文档 [icestark](/docs/icestark/about)。
