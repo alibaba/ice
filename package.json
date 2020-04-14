@@ -16,6 +16,7 @@
     "publish": "ts-node ./scripts/publish.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "owner": "ts-node ./scripts/owner.ts",
+    "dependency:check": "ts-node ./scripts/dependency-check.ts",
     "clean": "lerna clean --yes && rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix"
@@ -42,7 +43,8 @@
     "rimraf": "^3.0.0",
     "simple-git": "^1.132.0",
     "ts-node": "^8.6.1",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "dependency-check": "^4.1.0"
   },
   "dependencies": {
     "core-js": "^3.6.4"
