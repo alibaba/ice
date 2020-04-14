@@ -1,5 +1,5 @@
 ---
-title: 页面配置
+title: 页面组件
 order: 8
 ---
 
@@ -56,4 +56,3 @@ HomePage.pageConfig = {
   scrollToTop: true
 }
 ```
-
