@@ -1,6 +1,6 @@
 ---
 title: 工程配置
-order: 7
+order: 6
 ---
 
 icejs 基于 build-scripts，因此工程使用方式与 build-scripts 完全一致。
@@ -390,23 +390,7 @@ icejs 中一般不允许修改该配置。
 
 ## 根据环境区分工程配置
 
-与运行时配置相同，通过 `--mode` 参数区分环境，参考[文档](docs/guide/basic/config)，然后在 `build.json` 中就可以通过 `modeConfig` 来根据环境区分配置了：
-
-```json
-{
-  "alias": {},
-  "modeConfig": {
-    "dev": {
-      "define": {},
-      "vendor": false
-    },
-    "prod": {
-      "define": {},
-      "vendor": true
-    }
-  }
-}
-```
+参考 [区分不同环境](/docs/guide/basic/mode.md)。
 
 ## 自定义配置
 

@@ -38,7 +38,7 @@ icejs 的默认应用目录架构提供了良好的代码分层结构，适用�
 
 ## mock/
 
-本地模拟数据的目录。[详见](https://ice.work/docs/guide/advance/mock)
+本地模拟数据的目录。[详见](/docs/guide/advance/mock)
 
 ## public/
 
@@ -72,7 +72,7 @@ BasicLayout/
 
 ### models/
 
-项目的全局数据模型目录，通常包含多个 model 文件，推荐的目录形式如下。[详见](https://ice.work/docs/guide/basic/store)
+项目的全局数据模型目录，通常包含多个 model 文件，推荐的目录形式如下。[详见](/docs/guide/basic/store)
 
 ```md
 models/
@@ -94,23 +94,23 @@ Home/                    # Home 页面
 
 ### app.ts
 
-项目的入口文件，用于对应用进行全局配置，包括路由、运行环境、请求、日志等。[详见](https://ice.alibaba-inc.com/docs/guide/basic/app)
+项目的入口文件，用于对应用进行全局配置，包括路由、运行环境、请求、日志等。[详见](/docs/guide/basic/app)
 
-### config.ts 
+### config.ts
 
-项目的环境配置，用于根据不同环境进行区分配置。[详见](https://ice.alibaba-inc.com/docs/guide/basic/config#%E6%A0%B9%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE)
+项目的环境配置，用于根据不同环境进行区分配置。[详见](/docs/guide/basic/config#%E6%A0%B9%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE)
 
 ### global.scss
 
-全局的样式配置，框架默认会引入该文件。[详见](https://ice.alibaba-inc.com/docs/guide/basic/style)
+全局的样式配置，框架默认会引入该文件。[详见](/docs/guide/basic/style)
 
-### routes.ts 
+### routes.ts
 
-应用的路由配置文件。[详见](https://ice.alibaba-inc.com/docs/guide/basic/router)
+应用的路由配置文件。[详见](/docs/guide/basic/router)
 
 ## build.json
 
-应用的工程配置文件。[详见](https://ice.work/docs/guide/basic/build)
+应用的工程配置文件。[详见](/docs/guide/basic/build)
 
 ## package.json
 
