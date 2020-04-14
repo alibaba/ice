@@ -31,7 +31,7 @@ $ npm install build-plugin-fusion --save-dev
 }
 ```
 
-修改主题变：
+修改主题变量：
 
 > 注意：不能跟主题包功能同时使用，[原因](https://github.com/alibaba/ice/pull/1435#issuecomment-460055905)
 
