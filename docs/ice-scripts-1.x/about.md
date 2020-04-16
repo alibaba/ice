@@ -3,8 +3,6 @@ title: 关于 ice-scripts
 order: 1
 ---
 
-> ice-scripts@2.0.0 版本已发布，在可配置与定制性上做了很多提升，[迁移文档](/docs/cli/migrate.md)。
-
 [ice-scripts](https://github.com/ice-lab/ice-scripts) 是飞冰（ICE）React 链路的工程工具，类似 Vue CLI 之于 Vue 的关系。ice-scripts 提供了丰富的功能帮助我们开发 React 项目：
 
 - 完善的命令行工具

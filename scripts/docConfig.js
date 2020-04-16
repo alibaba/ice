@@ -2,14 +2,6 @@
 const docCategories = {
   guide: {
     title: {},
-    currentVersion: '1.x',
-    versions: [{
-      value: '1.x',
-      path: '/docs/guide/about',
-    }, {
-      value: '0.x',
-      path: '/docs/guide-0.x/about',
-    }],
     children: [{
       title: {
         'zh-cn': '基础指南',
@@ -41,14 +33,6 @@ const docCategories = {
   },
   'guide-0.x': {
     title: {},
-    currentVersion: '0.x',
-    versions: [{
-      value: '1.x',
-      path: '/docs/guide/about',
-    }, {
-      value: '0.x',
-      path: '/docs/guide-0.x/about',
-    }],
     children: [
       {
         title: {
@@ -154,109 +138,6 @@ const docCategories = {
           'en-us': 'Reference',
         },
         dir: 'reference',
-      },
-    ],
-  },
-
-  // ice-scripts 1.x
-  'cli-1.x': {
-    title: {},
-    currentVersion: '1.x',
-    versions: [{
-      value: '1.x',
-      path: '/docs/cli-1.x/about',
-    }, {
-      value: '2.x',
-      path: '/docs/cli/about',
-    }],
-    children: [
-      {
-        title: {
-          'zh-cn': '基础指南',
-          'en-us': 'basic',
-        },
-        dir: 'basic',
-      },
-      {
-        title: {
-          'zh-cn': '进阶指南',
-          'en-us': 'advanced',
-        },
-        dir: 'advanced',
-      },
-      {
-        title: {
-          'zh-cn': '常见需求',
-          'en-us': 'others',
-        },
-        dir: 'others',
-      },
-    ],
-  },
-
-  // ice-scripts 2.x
-  cli: {
-    title: {},
-    currentVersion: '2.x',
-    versions: [
-      {
-        value: '1.x',
-        path: '/docs/cli-1.x/about',
-      },
-      {
-        value: '2.x',
-        path: '/docs/cli/about',
-      },
-    ],
-    children: [
-      {
-        title: {
-          'zh-cn': '配置指南',
-          'en-us': 'config',
-        },
-        dir: 'config',
-      },
-      {
-        title: {
-          'zh-cn': '工程能力',
-          'en-us': 'feature',
-        },
-        dir: 'feature',
-      },
-      {
-        title: {
-          'zh-cn': '插件列表',
-          'en-us': 'Plugins',
-        },
-        dir: 'plugin-list',
-      },
-      {
-        title: {
-          'zh-cn': '插件开发',
-          'en-us': 'Plguin dev',
-        },
-        dir: 'plugin-dev',
-      },
-    ],
-  },
-
-  // 中后台设计理念
-  design: {
-    title: {},
-    children: [
-      {
-        title: {
-          'zh-cn': '视觉',
-          'en-us': 'vision',
-        },
-        dir: 'vision',
-      },
-      {
-        title: {
-          'zh-cn': '设计模式',
-          'en-us': 'mode',
-        },
-        dir: 'mode',
       },
     ],
   },

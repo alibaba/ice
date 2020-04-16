@@ -55,8 +55,6 @@ module.exports = ({ chainWepack }) => {
 }
 ```
 
-更多 webpack-chain 用法，参考 [自定义 webpack 配置](/docs/cli/config/custom-webpack.md)
-
 ### log
 
 通过 `log` 向插件提供统一的日志输出方法

@@ -11,6 +11,7 @@ order: 4
 |-------------------|-------------------|-------------------|-------------------|
 |  定位             |   研发框架        |       构建工具       |     构建工具        |
 |  配置文件         |  build.json      |      ice.config.js  |  package.json(buildConfig) |
+|  文档地址  |[访问](/docs/guide/about)|[访问](/docs/guide-0.x/about)|[访问](https://github.com/alibaba/ice/tree/master/docs/ice-scripts-1.x)|
 |  发布时间         |   2020.02        |      2019.06       |     2018.02        |
 |  可渐进升级性      |   好            |      不好             |    不好            |
 |  插件能力         |   工程+运行时     |       工程           |       无          |
@@ -37,7 +38,7 @@ icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单�
 }
 ```
 
-* [ice-scripts@1.x 插件列表](/docs/cli/plugin-list/fusion)
+* [ice-scripts@2.x 插件列表](/docs/guide-0.x/builder/plugin-list)
 * [icejs 插件列表](/docs/guide/develop/plugin-list)
 
 ### 2. 修改配置文件
