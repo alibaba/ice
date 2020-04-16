@@ -52,7 +52,7 @@ module.exports = {
 
 ### 字体变量配置
 
-> 如果希望将 css 中的网络资源本地化，推荐使用 [ice-plugin-css-assets-local](/docs/cli/plugin-list/local.md)
+> 如果希望将 css 中的网络资源本地化，推荐使用 [ice-plugin-css-assets-local](/docs/guide-0.x/builder/plugin-list#plugin-css-assets-local.md)
 
 `@alifd/next` 组件库默认引用两类字体，包括图标字体和 robot 基础字体，如果希望定制这些字体的路径，可以参照如下配置：
 
