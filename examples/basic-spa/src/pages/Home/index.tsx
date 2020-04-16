@@ -29,5 +29,5 @@ Home.getInitialProps = async () => {
 };
 
 Home.pageConfig = {
-  title: 'Home Page',
+  title: 'Home Page'
 };
