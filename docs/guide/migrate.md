@@ -11,6 +11,7 @@ order: 4
 |-------------------|-------------------|-------------------|-------------------|
 |  定位             |   研发框架        |       构建工具       |     构建工具        |
 |  配置文件         |  build.json      |      ice.config.js  |  package.json(buildConfig) |
+|  文档地址  |[访问](/docs/guide/about)|[方案](/docs/guide-0.x/about)|[方案](https://github.com/alibaba/ice/tree/master/docs/ice-scripts-1.x)|
 |  发布时间         |   2020.02        |      2019.06       |     2018.02        |
 |  可渐进升级性      |   好            |      不好             |    不好            |
 |  插件能力         |   工程+运行时     |       工程           |       无          |

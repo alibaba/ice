@@ -7,25 +7,24 @@ order: 2
 
 ## 创建项目
 
-> 也可通过 iceworks IDE 进行初始化
+> 支持 CLI 和 IDE 两种方式创建，此处演示 CLI 用法
 
-全局安装 `iceworks` CLI 工具：
+安装 CLI 工具：
 
 ```bash
 $ npm install iceworks -g
-$ iceworks --help
 ```
 
-创建项目：
+创建一个空目录：
 
 ```bash
-# 创建一个空的项目目录
 $ mkdir iceapp && cd iceapp
+```
 
-# 根据已有模板创建项目
+初始化项目：
+
+```bash
 $ iceworks init
-# 安装依赖
-$ npm install
 ```
 
 完成项目初始化后既可以开始开始项目调试开发和项目构建。
@@ -43,9 +42,9 @@ $ npm start
 调试服务支持的命令参数：
 
 ```bash
-$ ice-scripts dev --help
+$ ice dev --help
 
-Usage: ice-scripts dev [options]
+Usage: ice-dev [options]
 
 Options:
   -p, --port <port>      服务端口号
@@ -54,15 +53,14 @@ Options:
   --analyzer             开启构建分析
   --analyzer-port        设置分析端口号
   --disabled-reload      关闭 hot reload
-  --disabled-mock      关闭 mock 功能
+  --project-type <type>  项目类型, node|web (default: "web")
+  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
 ```
 
 比如使用 3000 端口启动 dev server
 
 ```bash
 $ npm run start -- -p 3000
-# 或者
-$ ice-scripts dev -p 3000
 ```
 
 比如开启 https
@@ -71,7 +69,7 @@ $ ice-scripts dev -p 3000
 $ npm run start -- --https
 ```
 
-## 构建代码
+### ice build
 
 构建项目代码：
 
@@ -79,16 +77,20 @@ $ npm run start -- --https
 $ npm run build
 ```
 
-构建服务支持的命令参数：
+构建产物默认生成到 `./build` 目录下。
 
-```bash
-$ ice-scripts build --help
+```plain
+$ ice build --help
 
-Usage: ice-scripts build [options]
+Usage: ice-build [options]
 
 Options:
-  --analyzer             开启构建分析
-  --analyzer-port        设置分析端口号
+  --debug                debug 模式下不压缩
+  --hash                 构建后的资源带 hash 版本
+  --sourcemap <type>     构建后的资源带 sourcemap 文件
+  --project-type <type>  项目类型, node|nodejs|web
+  -s, --skip-install     跳过安装依赖
+  --skip-demo            跳过构建 build/index.html 的环节
+  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime
+  -h, --help             output usage information
 ```
-
-构建产物默认生成到 `./build` 目录下。
