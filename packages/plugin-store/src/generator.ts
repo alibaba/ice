@@ -4,10 +4,12 @@ import * as ejs from 'ejs';
 import * as recursiveReaddir from 'fs-readdir-recursive';
 import * as prettier from 'prettier';
 
-export interface IExportData {
-  specifier?: string;
-  source: string;
-  exportName: string;
+export interface IRenderPageParams {
+  pageName: string;
+  pageNameDir: string;
+  pageModelsDir: string;
+  pageModelFile: string;
+  pageComponentFiles: [];
 }
 
 export default class Generator {
@@ -16,8 +18,6 @@ export default class Generator {
   private appStoreTemplatePath: string
 
   private pageStoreTemplatePath: string
-
-  private pageStoresTemplatePath: string
 
   private targetPath: string
 
@@ -29,7 +29,6 @@ export default class Generator {
     rootDir,
     appStoreTemplatePath,
     pageStoreTemplatePath,
-    pageStoresTemplatePath,
     targetPath,
     applyMethod,
     projectType
@@ -45,13 +44,12 @@ export default class Generator {
     this.rootDir = rootDir;
     this.appStoreTemplatePath = appStoreTemplatePath;
     this.pageStoreTemplatePath = pageStoreTemplatePath;
-    this.pageStoresTemplatePath = pageStoresTemplatePath;
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
   }
 
-  private getPageModels (pageName: string, pageModelsDir: string, pageModelFile: string) {
+  private getPageModels(pageName: string, pageModelsDir: string, pageModelFile: string) {
     if (fse.pathExistsSync(pageModelsDir)) {
       const pageModels = recursiveReaddir(pageModelsDir).map(item => path.parse(item));
 
@@ -82,8 +80,19 @@ export default class Generator {
     };
   }
 
+  private getComponentModels(componentFiles: []) {
+    const componentModels = [];
+    componentFiles.forEach(componentFile => {
+      const parsedPath = path.parse(componentFile);
+      if (parsedPath.name === 'model') {
+        componentModels.push(parsedPath);
+      }
+    });
+    return componentModels;
+  }
+
   private renderAppStore() {
-    const sourceFilename = 'appStore';
+    const sourceFilename = 'store/index';
     const exportName = 'store';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
@@ -106,50 +115,72 @@ export default class Generator {
     this.applyMethod('addIceExport', { source: `./${sourceFilename}`, exportName });
   }
 
-  private renderPageStores() {
-    const pages = this.applyMethod('getPages', this.rootDir);
-    const pageStores = [];
-
-    // generate .ice/pages/*/store.ts
-    pages.forEach(pageName => {
+  private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile }: IRenderPageParams) {
+    if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       const sourceFilename = 'store';
+      const exportName = 'store';
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
-      const pageNameDir = path.join(this.rootDir, 'src', 'pages', pageName);
 
-      // example: src/pages/*/models/*
-      const pageModelsDir = path.join(pageNameDir, 'models');
+      const pageModelFilePath = path.join(pageNameDir, 'model');
+      const renderData = this.getPageModels(pageName, pageModelsDir, pageModelFilePath);
+      this.renderFile(this.pageStoreTemplatePath, targetPath, renderData);
 
-      // example: src/pages/*/model.ts
-      const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`);
-
-      if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
-        pageStores.push(pageName);
-
-        const pageModelFilePath = path.join(pageNameDir, 'model');
-        const renderData = this.getPageModels(pageName, pageModelsDir, pageModelFilePath);
-        this.renderFile(this.pageStoreTemplatePath, targetPath, renderData);
-
-        const exportName = 'store';
-        this.applyMethod('removePageExport', pageName, exportName);
-        this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
-      }
-    });
-
-    // generate .ice/pageStores.ts
-    this.generatePageStores(pageStores);
+      this.applyMethod('removePageExport', pageName, exportName);
+      this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
+    }
   }
 
-  private generatePageStores(pageStores: string[]) {
-    const targetPath = path.join(this.targetPath, 'pageStores.ts');
+  private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageComponentFiles }: IRenderPageParams) {
+    const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, `${pageName}.tsx`);
+    const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
-    let importPageStoreStr = '';
-    let pageStoreStr = '';
-    pageStores.forEach(name => {
-      importPageStoreStr += `\nimport ${name} from './pages/${name}/store';`;
-      pageStoreStr += `${name},`;
+    const pageComponentRenderData = {
+      pageComponentImport: `import ${pageName} from '${pageComponentSourcePath}'` ,
+      pageComponentExport: pageName,
+      hasPageStore: false,
+      hasComponentStore: false
+    };
+
+    if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
+      pageComponentRenderData.hasPageStore = true;
+    }
+
+    if (this.getComponentModels(pageComponentFiles).length) {
+      pageComponentRenderData.hasComponentStore = true;
+    }
+
+    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath , pageComponentRenderData);
+  }
+
+  private renderComponentStore(pageName: string, componentDir: string, componentFiles: []) {
+    const componentModels = this.getComponentModels(componentFiles);
+
+    let importStr = '';
+    let modelsStr = '';
+    componentModels.forEach(componentModel => {
+      importStr += `\nimport ${componentModel.dir} from '${componentDir}/${componentModel.dir}/${componentModel.name}'`;
+      modelsStr += `${componentModel.dir},`;
     });
 
-    this.renderFile(this.pageStoresTemplatePath, targetPath, { importPageStoreStr, pageStoreStr });
+    const templatePath = path.join(__dirname, './template/componentStore.ts.ejs');
+    const targetPath = path.join(this.targetPath, `pages/${pageName}/componentStore.ts`);
+    componentFiles.forEach(componentFile => {
+      const parsedPath = path.parse(componentFile);
+      if (parsedPath.name === 'model') {
+        this.renderFile(templatePath, targetPath, { importStr, modelsStr });
+      }
+    });
+  }
+
+  private renderComponentModel(pageName: string, componentDir: string, componentFiles: []) {
+    const componentModels = this.getComponentModels(componentFiles);
+    const templatePath = path.join(__dirname, './template/componentModel.ts.ejs');
+
+    componentModels.forEach(componentModel => {
+      const targetPath = path.join(this.targetPath, `pages/${pageName}/components/${componentModel.dir}/${componentModel.base}`);
+      this.renderFile(templatePath, targetPath, { modelName: componentModel.dir });
+    });
   }
 
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
@@ -168,7 +199,34 @@ export default class Generator {
   }
 
   public render() {
+    // generate .ice/store/index.ts
     this.renderAppStore();
-    this.renderPageStores();
+
+    const pages = this.applyMethod('getPages', this.rootDir);
+    pages.forEach(pageName => {
+      const pageNameDir = path.join(this.rootDir, 'src', 'pages', pageName);
+      const pageComponentDir = path.join(pageNameDir, 'components');
+      const pageComponentFiles = recursiveReaddir(pageComponentDir);
+
+      // e.g: src/pages/${pageName}/models/*
+      const pageModelsDir = path.join(pageNameDir, 'models');
+
+      // e.g: src/pages/${pageName}/model.ts
+      const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`);
+
+      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageComponentFiles };
+
+      // generate .ice/pages/${pageName}/store.ts
+      this.renderPageStore(params);
+
+      // generate .ice/pages/${pageName}/${pageName}.tsx
+      this.renderPageComponent(params);
+
+      // generate .ice/pages/${pageName}/componentStore.ts
+      this.renderComponentStore(pageName, pageComponentDir, pageComponentFiles);
+
+      // generate .ice/pages/${pageName}/components/${componentName}/model.ts
+      this.renderComponentModel(pageName, pageComponentDir, pageComponentFiles);
+    });
   }
 }

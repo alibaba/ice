@@ -1,0 +1,25 @@
+// .ice/pages/components/Todo/store.ts
+import store from '../../componentStore'
+
+const modelName = '<%= modelName %>';
+
+export default {
+  useValue() {
+    return store.useModel(modelName)
+  },
+  useState() {
+    return store.useModelState(modelName)
+  },
+  useDispatchers() {
+    return store.useModelDispatchers(modelName)
+  },
+  getValue() {
+    return store.getModel(modelName)
+  },
+  getState() {
+    return store.getModelState(modelName)
+  },
+  getDispatchers() {
+    return store.getModelDispatchers(modelName)
+  }
+}

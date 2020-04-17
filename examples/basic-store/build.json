@@ -1,0 +1,6 @@
+{
+  "plugins": [],
+  "router": {
+    "lazy": false
+  }
+}

@@ -1,13 +1,12 @@
-// eslint-disable-next-line no-unused-vars
-module.exports = ({ types }, { routeFile }) => {
+module.exports = ({ types }, { routesPath }) => {
   let hasLazyImport = false;
   let importName = '';
   return {
     visitor: {
       ImportDeclaration(nodePath, state) {
         // only transform route files
-        const isRouteConfig = routeFile === state.filename;
-        if (isRouteConfig) {
+        const isRoutesFile = routesPath === state.filename;
+        if (isRoutesFile) {
           const { node } = nodePath;
           if (types.isStringLiteral(node.source, { value: 'ice'})) {
             node.specifiers.forEach((importSpecifier) => {
@@ -24,8 +23,8 @@ module.exports = ({ types }, { routeFile }) => {
       },
       CallExpression(nodePath, state) {
         // only transform route files
-        const isRouteConfig = routeFile === state.filename;
-        if (isRouteConfig) {
+        const isRoutesFile = routesPath === state.filename;
+        if (isRoutesFile) {
           const { node } = nodePath;
           if (
             // case import * as xxx from 'ice'; xxx.lazy
