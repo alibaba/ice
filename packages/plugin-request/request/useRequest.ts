@@ -24,11 +24,10 @@ interface Result<D = any> {
  */
 function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
   const initialState = {
-    response: null,
     data: null,
-    loading: false,
+    response: null,
     error: null,
-    status: 'init',
+    loading: false
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
 
