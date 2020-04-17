@@ -6,7 +6,7 @@ import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
 import { IExportData } from '../types';
 
-export default class UsePageGenerator {
+export default class PageGenerator {
   private generator: Generator;
 
   private templatePath: string;

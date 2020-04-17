@@ -5,8 +5,7 @@
     "rootDir": "src",
     "outDir": "lib",
     "paths": {
-      "$ice/appStore": ["./src/_appStore"],
-      "$ice/pageStores": ["./src/_pageStores"]
+      "$ice/store": ["./src/_store"]
     }
   },
 }

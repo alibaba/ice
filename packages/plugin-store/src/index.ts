@@ -4,8 +4,8 @@ import * as ejs from 'ejs';
 import Generator from './generator';
 
 export default async (api) => {
-  const { context, getValue, onHook, applyMethod, onGetWebpackConfig } = api;
-  const { rootDir, command } = context;
+  const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
+  const { rootDir, command, userConfig } = context;
 
   const targetPath = getValue('ICE_TEMP');
   const templatePath = path.join(__dirname, 'template');
@@ -15,8 +15,7 @@ export default async (api) => {
   const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
-  // copy types/index.ts to .ice/store/index.ts
-  await fse.copy(path.join(__dirname, '..', 'src/types'), path.join(targetPath, './store'));
+  // set IStore to IAppConfig
   applyMethod('addIceTypesExport', { source: './store', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
   // render template/types.ts.ejs to .ice/store/types.ts
@@ -26,6 +25,24 @@ export default async (api) => {
   fse.ensureFileSync(typesTargetPath);
   fse.writeFileSync(typesTargetPath, content, 'utf-8');
   applyMethod('addIceTypesExport', { source: './store/types' });
+
+  // add babel plugins for ice lazy
+  const { configPath } = userConfig.router || {};
+  const { routesPath } = applyMethod('getRoutes', {
+    rootDir,
+    tempDir: targetPath,
+    configPath,
+    projectType
+  });
+  modifyUserConfig('babelPlugins',
+    [
+      ...(userConfig.babelPlugins as [] || []),
+      [
+        require.resolve('./babelPluginReplacePath'),
+        { routesPath, alias: userConfig.alias }
+      ]
+    ]
+  );
 
   onGetWebpackConfig(config => {
     if (command === 'build') {
@@ -38,8 +55,7 @@ export default async (api) => {
       ]);
     }
 
-    config.resolve.alias.set('$ice/appStore', path.join(targetPath, 'appStore.ts'));
-    config.resolve.alias.set('$ice/pageStores', path.join(targetPath, 'pageStores.ts'));
+    config.resolve.alias.set('$ice/store', path.join(targetPath, 'store', 'index.ts'));
   });
 
   const gen = new Generator({

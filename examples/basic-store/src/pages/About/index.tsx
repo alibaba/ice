@@ -34,4 +34,8 @@ const About = () => {
   );
 };
 
+About.pageConfig = {
+  title: 'About'
+};
+
 export default About;

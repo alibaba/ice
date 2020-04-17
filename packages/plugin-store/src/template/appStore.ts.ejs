@@ -1,20 +1,28 @@
 <% if (importStr) { %>
-import { createStore, IcestoreRootState, IcestoreDispatch, Models } from '@ice/store';
-<%- importStr %>
+  import { createStore, IcestoreRootState, IcestoreDispatch, Models } from '@ice/store';
+  <%- importStr %>
 
-interface AppModel extends Models {
-  <% modelsStr.split(',').forEach(function(model){ %>
-    <% if (model) { %>
-      <%- model %>: typeof <%- model %>;
-    <% } %>
-  <% }); %>
+  interface AppModel extends Models {
+    <% modelsStr.split(',').forEach(function(model){ %>
+      <% if (model) { %>
+        <%- model %>: typeof <%- model %>;
+      <% } %>
+    <% }); %>
+  }
+
+  const appModel: AppModel = { <%- modelsStr %> };
+  const store = createStore(appModel);
+  export default store;
+
+  export type IRootDispatch = IcestoreDispatch<typeof appModel>;
+  export type IRootState = IcestoreRootState<typeof appModel>;
+<% } %>
+
+interface IInitialStates {
+  [key: string]: any;
 }
 
-const appModel: AppModel = { <%- modelsStr %> };
-
-const store = createStore(appModel);
-export default store;
-
-export type IRootDispatch = IcestoreDispatch<typeof appModel>;
-export type IRootState = IcestoreRootState<typeof appModel>;
-<% } %>
+export interface IStore {
+  initialStates?: IInitialStates;
+  getInitialStates?: (initialData) => IInitialStates;
+}
