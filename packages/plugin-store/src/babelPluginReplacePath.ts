@@ -2,6 +2,8 @@ import * as path from 'path';
 
 module.exports = ({ types: t }, { routesPath, alias }) => {
   const regex = /src\/pages\/\w+(.tsx|.jsx)?(\/index(.tsx|.jsx)?)?/;
+  const isConventionRouting = /\.ice\/routes\.ts/.test(routesPath);
+
   return {
     visitor: {
       ImportDeclaration(nodePath, state) {
@@ -9,25 +11,25 @@ module.exports = ({ types: t }, { routesPath, alias }) => {
         if (isRoutesFile) {
           let value = nodePath.node.source.value;
           if (typeof value === 'string') {
-            // 配置式路由
-            // default alias: import Home from '@/pages/Home';
-            // custom alias: import Home from '$pages/Home';
-            // relative path: import Home from '../pages/Home'
-            const matchedPagePath = matchRelativePath(routesPath, value) || matchAliasPath(alias, value);
-            if (matchedPagePath && regex.test(matchedPagePath)) {
-              const [, , pageName] = matchedPagePath.split('/');
-              // replace to: import Home from 'ice/Home/Home'
-              value = `ice/${pageName}/${pageName}`;
-              replaceWith(t, nodePath, value);
-            }
-
             // 约定式路由
             // e.g: import Home from '../src/pages/Home/index.tsx';
-            if (value.startsWith('../src/pages')) {
-              const [, , pageName] = value.split('/');
+            if (isConventionRouting && value.startsWith('../src/pages')) {
+              const [, , , pageName] = value.split('/');
               // replace to: import Home from './pages/Home/Home'
               value = `./pages/${pageName}/${pageName}`;
               replaceWith(t, nodePath, value);
+            } else {
+              // 配置式路由
+              // default alias: import Home from '@/pages/Home';
+              // custom alias: import Home from '$pages/Home';
+              // relative path: import Home from '../pages/Home'
+              const matchedPagePath = matchRelativePath(routesPath, value) || matchAliasPath(alias, value);
+              if (matchedPagePath && regex.test(matchedPagePath)) {
+                const [, , pageName] = matchedPagePath.split('/');
+                // replace to: import Home from 'ice/Home/Home'
+                value = `ice/${pageName}/${pageName}`;
+                replaceWith(t, nodePath, value);
+              }
             }
           }
         }
@@ -41,25 +43,25 @@ module.exports = ({ types: t }, { routesPath, alias }) => {
             for (let i = 0; i < args.length; i++) {
               let value = args[i].value;
               if (typeof value === 'string') {
-                // 配置式路由
-                // default alias: const Home = lazy(() => import('@/pages/Home'));
-                // custom alias: const Home = lazy(() => import('$pages/home));
-                // relative path: const Home = lazy(() => import('../pages/Home'));
-                const matchedPagePath = matchRelativePath(routesPath, value) || matchAliasPath(alias, value);
-                if (matchedPagePath && regex.test(matchedPagePath)) {
-                  const [, , pageName] = matchedPagePath.split('/');
-                  // replace to: const Home =lazy (() => import('ice/Home/Home'));
-                  value = `ice/${pageName}/${pageName}`;
-                  args[i].value = value;
-                }
-
                 // 约定式路由
                 // e.g: const Home = lazy(() => import(/* webpackChunkName: 'Home' */ '../src/pages/Home/index.tsx'));
-                if (value.startsWith('../src/pages')) {
-                  const [, , pageName] = value.split('/');
+                if (isConventionRouting && value.startsWith('../src/pages')) {
+                  const [, , , pageName] = value.split('/');
                   // replace to: import Home from './pages/Home/Home'
                   value = `./pages/${pageName}/${pageName}`;
                   args[i].value = value;
+                } else {
+                  // 配置式路由
+                  // default alias: const Home = lazy(() => import('@/pages/Home'));
+                  // custom alias: const Home = lazy(() => import('$pages/home));
+                  // relative path: const Home = lazy(() => import('../pages/Home'));
+                  const matchedPagePath = matchRelativePath(routesPath, value) || matchAliasPath(alias, value);
+                  if (matchedPagePath && regex.test(matchedPagePath)) {
+                    const [, , pageName] = matchedPagePath.split('/');
+                    // replace to: const Home =lazy (() => import('ice/Home/Home'));
+                    value = `ice/${pageName}/${pageName}`;
+                    args[i].value = value;
+                  }
                 }
               }
             }
