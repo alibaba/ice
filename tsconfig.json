@@ -5,6 +5,7 @@
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },
     { "path": "packages/plugin-request" },
+    { "path": "packages/plugin-service" },
     { "path": "packages/plugin-logger" },
     { "path": "packages/plugin-rematch" },
     { "path": "packages/plugin-store" },
