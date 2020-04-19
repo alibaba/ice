@@ -5,49 +5,19 @@ import * as React from 'react';
   import store from './store';
 <% } %>
 
-<% if(hasComponentStore) { %>
-  import componentStore from './componentStore';
-<% } %>
-
 const PageComponentName = <%= pageComponentExport %>;
 
-<% if(hasPageStore || hasComponentStore) { %>
-  let PageProvider = null;
-  let ComponentProvider = null;
-
-  <% if(hasPageStore) { %>
-    PageProvider = store.Provider;
-  <% } %>
-
-  <% if(hasComponentStore) { %>
-    ComponentProvider = componentStore.Provider;
-  <% } %>
-
-  const StoreWrapperedPage = () => getComponent(PageProvider, ComponentProvider);
-  StoreWrapperedPage.pageConfig = PageComponentName.pageConfig || {};
-  export default StoreWrapperedPage;
-<% } else { %>
-  export default PageComponentName;
-<% } %>
-
-function getComponent(PageProvider, ComponentProvider) {
-  if (PageProvider && ComponentProvider) {
-    return (
-      <PageProvider>
-        <ComponentProvider>
-          <PageComponentName />
-        </ComponentProvider>
-      </PageProvider>
-    )
-  } else if (PageProvider) {
+<% if(hasPageStore) { %>
+  const PageProvider = store.Provider;
+  const StoreWrapperedPage = () => {
     return (
       <PageProvider>
         <PageComponentName />
       </PageProvider>
     )
-  } else if (ComponentProvider) (
-    <ComponentProvider>
-      <PageComponentName />
-    </ComponentProvider>
-  )
-}
+  }
+  StoreWrapperedPage.pageConfig = PageComponentName.pageConfig || {};
+  export default StoreWrapperedPage;
+<% } else { %>
+  export default PageComponentName;
+<% } %>
