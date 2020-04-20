@@ -17,6 +17,10 @@ order: 12
 
 获取应用环境。[详见](/docs/guide/basic/config)
 
+### ErrorBoundary
+
+用于错误边界的组件。[详见](/docs/guide/basic/error-boundaries#ErrorBoundary)
+
 ## 状态管理
 
 ### store
