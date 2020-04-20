@@ -1,26 +1,7 @@
 import * as React from 'react';
-import AppStore from '$ice/appStore';
-import PageStores from '$ice/pageStores';
+import AppStore from '$ice/store';
 
-const wrapperComponent = (PageComponent) => {
-  const { pageConfig = {} } = PageComponent;
-  const StoreWrapperedComponent = (props) => {
-    const pageComponentName = pageConfig.componentName;
-    const PageStore = PageStores[pageComponentName];
-    if (PageStore) {
-      return (
-        <PageStore.Provider initialStates={pageConfig.initialStates}>
-          <PageComponent {...props}/>
-        </PageStore.Provider>
-      );
-    }
-    return <PageComponent {...props} />;
-  };
-  return StoreWrapperedComponent;
-};
-
-export default ({ addProvider, wrapperRouteComponent, appConfig, context }) => {
-  wrapperRouteComponent(wrapperComponent);
+export default ({ addProvider, appConfig, context }) => {
 
   const StoreProvider = ({children}) => {
     const storeConfig = appConfig.store || {};

@@ -1,0 +1,23 @@
+import * as React from 'react';
+<%- pageComponentImport %>
+
+<% if(hasPageStore) { %>
+  import store from './store';
+<% } %>
+
+const PageComponentName = <%= pageComponentExport %>;
+
+<% if(hasPageStore) { %>
+  const PageProvider = store.Provider;
+  const StoreWrapperedPage = () => {
+    return (
+      <PageProvider>
+        <PageComponentName />
+      </PageProvider>
+    )
+  }
+  StoreWrapperedPage.pageConfig = PageComponentName.pageConfig || {};
+  export default StoreWrapperedPage;
+<% } else { %>
+  export default PageComponentName;
+<% } %>

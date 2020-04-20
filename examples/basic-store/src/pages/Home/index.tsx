@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
 
-const Home = () => {
+export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');
   const [pageState] = pageStore.useModel('default');
 
@@ -20,5 +20,3 @@ const Home = () => {
     </>
   );
 };
-
-export default Home;
