@@ -20,6 +20,8 @@ import { createApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
+    // 是否开启 ErrorBoundary，默认为 false
+    errorBoundary: true
     // 自定义错误边界的 fallback UI
     ErrorBoundaryFallback: <div>渲染错误</div>,
     // 自定义错误的处理事件
@@ -32,9 +34,24 @@ const appConfig: IAppConfig = {
 createApp(appConfig);
 ```
 
+## 页面错误边界
+
+除了应用级别配置错误边界，也可以对每个页面进行配置：
+
+```tsx
+const HomePage = () => {
+  return <>Home</>
+}
+
+HomePage.pageConfig = {
+  // 当前页面开启 ErrorBoundary，默认为 false
+  errorBoundary: true
+}
+```
+
 ## 组件错误边界
 
-错误边界的粒度可以是应用级别，也有可能是组件级别，因此 icejs 也提供了 `ErrorBoundary` 组件，用于自行处理错误边界的情况。
+错误边界的粒度可以是应用级别，页面级别，也有可能是组件级别，因此 icejs 也提供了 `ErrorBoundary` 组件，用于自行处理错误边界的情况。
 
 ### ErrorBoundary
 
