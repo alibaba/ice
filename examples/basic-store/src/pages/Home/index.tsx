@@ -4,7 +4,7 @@ import { store as pageStore } from 'ice/Home';
 import Todo from './components/Todo';
 import List from './components/List';
 
-const Home = () => {
+export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');
   const [pageState] = pageStore.useModel('default');
 
@@ -25,5 +25,3 @@ const Home = () => {
     </>
   );
 };
-
-export default Home;

@@ -5,7 +5,7 @@ import Generator from './generator';
 
 export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
-  const { rootDir, command, userConfig } = context;
+  const { rootDir, userConfig } = context;
 
   const targetPath = getValue('ICE_TEMP');
   const templatePath = path.join(__dirname, 'template');
@@ -45,16 +45,6 @@ export default async (api) => {
   );
 
   onGetWebpackConfig(config => {
-    if (command === 'build') {
-      config.optimization.minimizer('TerserPlugin').tap(([args]) => [
-        {
-          ...args,
-          // eslint-disable-next-line
-          terserOptions: { ...args.terserOptions, keep_classnames: true, keep_fnames: true }
-        },
-      ]);
-    }
-
     config.resolve.alias.set('$ice/store', path.join(targetPath, 'store', 'index.ts'));
   });
 
