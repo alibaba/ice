@@ -18,7 +18,6 @@ interface Result<D = any> {
  *   @param {object} data - data in axios response
  *   @param {object} response - response of axios (https://github.com/axios/axios#response-schema)
  *   @param {object} error - HTTP or use defined error
- *   @param {string} status - status for request
  *   @param {boolean} loading - loading status of the request
  *   @param {function} request - function to make the request manually
  */
