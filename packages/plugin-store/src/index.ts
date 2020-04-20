@@ -70,7 +70,7 @@ export default async (api) => {
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /models\/.*|model.*/, () => {
+    applyMethod('watchFileChange', /models\/.*|model.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
       gen.render();
     });
   });
