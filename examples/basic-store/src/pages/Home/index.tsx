@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
-import Todo from './components/Todo';
-import List from './components/List';
 
 export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');
@@ -17,9 +15,6 @@ export default () => {
         <span>{counterState.count}</span>
         <button type="button" onClick={counterActions.decrementAsync}>-</button>
       </div>
-
-      <Todo />
-      <List />
 
       <Link to="/about">about</Link>
     </>
