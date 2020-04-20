@@ -236,6 +236,12 @@ createApp(appConfig);
 - **ignoreRoutes**: 仅约定式路由，类型 `string[]`，默认值 `[]`，忽略指定路由的生成
 - **ignorePaths**: 仅约定式路由，类型 `string[]`，默认值 `['components']`，生成路由时忽略指定目录
 
+
+## 路由跳转
+
+- React 组件内部：使用 [Link 组件](/docs/guide/basic/api#Link) 或 [useHistory](/docs/guide/basic/api#useHistory) API
+- 非 React 组件内部：使用 [history API](/docs/guide/basic/api#history)
+
 ## 按需加载
 
 参考 [代码分割](/docs/guide/advance/code-splitting) 。

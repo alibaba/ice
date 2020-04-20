@@ -9,8 +9,8 @@ icejs 内置集成了 icestore 状态管理方案，并在此基础上进一步�
 
 icejs 支持 **全局状态** 和 **页面状态** 两种纬度：
 
-- 全局状态：应用级别，整个应用都可以使用
-- 页面状态：只针对单个页面，比如 `src/pages/Home`，仅在 `Home/` 中可以被使用
+- 应用状态：应用级别，整个应用都可以使用
+- 页面状态：页面级状态，只能在对应页面消费，通常用在偏复杂的业务场景
 
 目录组织如下：
 
@@ -25,7 +25,9 @@ src
 |   │   └── model.ts     // 页面级状态：通常只有一个 model
 |   ├── About
 |   │   ├── index.tsx
-│   |   └── model.ts
+|   │   ├── models       // 页面级状态：也可以有多个 model
+|   │   |   ├── user.ts
+|   │   |   └── counter.ts
 └── app.ts
 ```
 
@@ -64,28 +66,50 @@ export default {
 
 ## 视图绑定状态
 
-定义好全局状态和页面级状态后，在视图中即可获取定义好的数据：
+定义好状态之后，就可以在 View 中消费使用状态了，在使用上应用级状态和页面级状态有一些差异。
+
+### 应用状态
+
+通过 `import { store } from 'ice'` 获取 store 实例：
+
+```tsx
+// pages/About/index.tsx
+import { store } from 'ice';
+
+const AboutPage = () => {
+  // 1. 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
+  const [ counterState, counterDispatchers ] = store.useModel('counter')
+
+  return (
+    <>
+      <span>{counterState.count}</span>
+      <button type="button" onClick={counterDispatchers.increment}>+</button>
+      <button type="button" onClick={counterDispatchers.decrementAsync}>-</button>
+    </>
+  );
+}
+```
+
+### 页面状态
+
+通过 `import { store } from 'ice/pageName'` 获取 store 实例：
 
 ```tsx
 // pages/Home/index.tsx
-import { store as appStore } from 'ice';
 import { store as pageStore } from 'ice/Home';
 
 const HomePage = () => {
-  // 1. 全局状态：model 名称即文件名称，如 src/models/counter.ts -> counter
-  const [ counterState, counterDispatchers ] = appStore.useModel('counter')
+  // 1. 一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
+  const [ pageState, pageDispatchers ] = pageStore.useModel('default');
 
-  // 2. 页面状态：一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
-  // const [ pageState, pageDispatchers ] = pageStore.useModel('default');
-
-  // 3. 页面状态：多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
+  // 2. 多个 model 的情况，model 名称即文件名，如 src/pages/*/models/foo.ts -> foo
   // const [ fooState, fooDispatchers ] = pageStore.useModel('foo');
 
   return (
     <>
-      <button type="button" onClick={counterDispatchers.increment}>+</button>
-      <span>{counterState.count}</span>
-      <button type="button" onClick={counterDispatchers.decrementAsync}>-</button>
+      <span>{pageState.count}</span>
+      <button type="button" onClick={pageDispatchers.increment}>+</button>
+      <button type="button" onClick={pageDispatchers.decrementAsync}>-</button>
     </>
   );
 }
