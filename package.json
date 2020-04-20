@@ -15,6 +15,7 @@
     "build": "ts-node ./scripts/build.ts",
     "publish": "ts-node ./scripts/publish.ts",
     "sync": "ts-node ./scripts/sync.ts",
+    "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
     "clean": "lerna clean --yes && rimraf packages/*/lib",
