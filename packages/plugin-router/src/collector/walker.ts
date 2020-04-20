@@ -39,7 +39,7 @@ function ignorePath(checkPath: string, ignoreOptions: IgnoreOptions) {
 export default function walker({
   rootDir,
   routerOptions,
-  routersTempPath,
+  routesTempPath,
   pagesDir,
 }) {
   const { ignoreRoutes, ignorePaths = ['components'], caseSensitive } = routerOptions;
@@ -84,7 +84,7 @@ export default function walker({
     const layoutName = `Layout${dirArrUpper}`;
     const filePath = formatPathForWin(
       path.relative(
-        path.dirname(routersTempPath),
+        path.dirname(routesTempPath),
         path.join(pagesDir, pageFilePath)
       )
     );
@@ -117,10 +117,10 @@ export default function walker({
   });
 
   // amend collects
-  amender(rootDir, routersTempPath, routesCollect);
+  amender(rootDir, routesTempPath, routesCollect);
   // generate splices
   let routesSplices = splicer(routesCollect, routerOptions);
   // output into .tmp
-  fse.outputFileSync(routersTempPath, routesSplices);
+  fse.outputFileSync(routesTempPath, routesSplices);
   routesSplices = null;
 }

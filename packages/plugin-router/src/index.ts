@@ -11,26 +11,41 @@ const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
   // [enum] js or ts
-  const isMpa = userConfig.mpa;
   const projectType = getValue('PROJECT_TYPE');
+
   // .tmp path
   const iceTempPath = getValue('ICE_TEMP');
-  const routersTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
-  const { configPath } = routerOptions;
-  let routeConfigPath = configPath
-    ? path.join(rootDir, configPath)
-    : path.join(rootDir, `src/routes.${projectType}`);
+  let { configPath } = routerOptions;
+
+  const isMpa = userConfig.mpa;
+  const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
+  // if is mpa use empty router file
   if (isMpa) {
-    // if is mpa use empty router file
-    fse.writeFileSync(routersTempPath, 'export default [];', 'utf-8');
-    routeConfigPath = routersTempPath;
+    fse.writeFileSync(routesTempPath, 'export default [];', 'utf-8');
+    configPath = routesTempPath;
   }
-  const hasRouteFile = fse.existsSync(routeConfigPath);
+
+  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
+    rootDir,
+    tempDir: iceTempPath,
+    configPath,
+    projectType
+  });
+
+  // add babel plugins for ice lazy
+  modifyUserConfig('babelPlugins',
+    [
+      ...(userConfig.babelPlugins as [] || []),
+      [
+        require.resolve('./babelPluginLazy'),
+        { routesPath }
+      ]
+    ]);
 
   // copy templates and export react-router-dom/history apis to ice
   const routerTemplatesPath = path.join(__dirname, '../templates');
-  const routerTargetPath =  path.join(iceTempPath, 'router');
+  const routerTargetPath = path.join(iceTempPath, 'router');
   fse.ensureDirSync(routerTargetPath);
   fse.copySync(routerTemplatesPath, routerTargetPath);
   applyMethod('addIceExport', { source: './router' });
@@ -38,14 +53,12 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   // copy types
   fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types.ts'));
   applyMethod('addIceTypesExport', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
-  const routeFile = hasRouteFile ? routeConfigPath : routersTempPath;
-  // add babel plugins for ice lazy
-  modifyUserConfig('babelPlugins', [...(userConfig.babelPlugins as [] || []), [require.resolve('./babelPluginLazy'), { routeFile }]]);
+
   // modify webpack config
   onGetWebpackConfig((config) => {
     // add alias
     TEM_ROUTER_SETS.forEach(i => {
-      config.resolve.alias.set(i, routeFile);
+      config.resolve.alias.set(i, routesPath);
     });
     // alias for runtime/Router
     config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
@@ -68,10 +81,10 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   });
 
   // do not watch folder pages when route config is exsits
-  if (!hasRouteFile) {
+  if (!isConfigRoutes) {
     const routerMatch = 'src/pages';
     const pagesDir = path.join(rootDir, routerMatch);
-    const walkerOptions = { rootDir, routerOptions, routersTempPath, pagesDir };
+    const walkerOptions = { rootDir, routerOptions, routesTempPath, pagesDir };
     walker(walkerOptions);
     if (command === 'start') {
       // watch folder change when dev

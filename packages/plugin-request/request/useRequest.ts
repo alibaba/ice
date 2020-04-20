@@ -1,22 +1,32 @@
 import { useReducer, useCallback } from 'react';
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from './axiosInstance';
+
+interface Result<D = any> {
+  response: AxiosResponse<D>;
+  data: D;
+  error: Error | undefined;
+  loading: boolean;
+  request: (config?: AxiosRequestConfig) => Promise<void>;
+}
 
 /**
  * Hooks to make ajax request
  *
  * @param {object} options - axios config (https://github.com/axios/axios#request-config)
  * @return {object}
- *   @param {object} data - response of axios (https://github.com/axios/axios#response-schema)
+ *   @param {object} data - data in axios response
+ *   @param {object} response - response of axios (https://github.com/axios/axios#response-schema)
  *   @param {object} error - HTTP or use defined error
  *   @param {boolean} loading - loading status of the request
  *   @param {function} request - function to make the request manually
  */
-function useRequest(options: AxiosRequestConfig) {
+function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
   const initialState = {
     data: null,
-    loading: false,
-    error: null
+    response: null,
+    error: null,
+    loading: false
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
 
@@ -27,7 +37,7 @@ function useRequest(options: AxiosRequestConfig) {
   const request = useCallback(async (config?: AxiosRequestConfig) => {
     try {
       dispatch({
-        type: 'init'
+        type: 'loading'
       });
 
       const response = await axiosInstance({
@@ -36,8 +46,9 @@ function useRequest(options: AxiosRequestConfig) {
       });
 
       dispatch({
-        type: 'success',
-        data: response.data
+        type: 'loaded',
+        data: response.data,
+        response,
       });
       return response.data;
     } catch (error) {
@@ -64,30 +75,29 @@ function useRequest(options: AxiosRequestConfig) {
  */
 function requestReducer(state, action) {
   switch (action.type) {
-    case 'init':
+    case 'loading':
       return {
         data: null,
+        response: null,
         error: null,
-        loading: true
+        loading: true,
       };
-    case 'success':
+    case 'loaded':
       return {
         data: action.data,
+        response: action.response,
         error: null,
-        loading: false
+        loading: false,
       };
     case 'error':
       return {
         data: null,
+        response: null,
         error: action.error,
-        loading: false
+        loading: false,
       };
     default:
-      return {
-        data: null,
-        error: null,
-        loading: false
-      };
+      throw new Error();
   }
 }
 

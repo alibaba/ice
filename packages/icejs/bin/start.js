@@ -11,7 +11,7 @@ const rawArgv = parse(process.argv.slice(2));
 const scriptPath = require.resolve('./child-process-start.js');
 const configPath = path.resolve(rawArgv.config || 'build.json');
 
-const inspectRegExp = /^--(inspect(?:-brk)?)(?:=(?:[^:]+:)?(\d+))?$/;
+const inspectRegExp = /^--(inspect(?:-brk)?)(?:=(?:([^:]+):)?(\d+))?$/;
 
 function modifyInspectArgv(argv) {
   return Promise.all(
@@ -24,7 +24,7 @@ function modifyInspectArgv(argv) {
       const [_, command, ip, port = 9229] = matchResult;
       const nPort = +port;
       const newPort = await detect(nPort);
-      return `--${command}=${ip || ''}${newPort}`;
+      return `--${command}=${ip ? `${ip}:` : ''}${newPort}`;
     })
   );
 }

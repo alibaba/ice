@@ -49,6 +49,19 @@ $ npm run publish
 * When you need to release a latest version, the tag will be created automatically, running `npm publish` will tag your package with the `latest` dist-tag.
 * To publish a package with the `beta` dist-tag, you can choose to release rc、beta、alpha versions, the tag will not be created.
 
+## Rollback Packages
+
+When a serious bug occurs in the production environment, you can backtrack the package version：
+
+```bash
+# rollback packages
+$ npm run rollback <version>
+
+# sync packages
+$ npm run sync
+```
+
+
 ## Pull Request Guidelines
 
 - Only code that's ready for release should be committed to the master branch. All development should be done in dedicated branches.

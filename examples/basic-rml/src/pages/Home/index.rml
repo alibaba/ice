@@ -1,0 +1,12 @@
+<script>
+export default function() {
+  return {};
+}
+</script>
+<style>
+
+</style>
+
+<import default="Simple" from="@/components/Simple/index.rml" />
+
+<Simple />
