@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { Link, store as appStore  } from 'ice';
 import { store as pageStore } from 'ice/About';
 
-const About = () => {
+const About = (props) => {
+  console.log(props);
   const [userState, userActions] = appStore.useModel('user');
   const [pageState, pageActions] = pageStore.useModel('default');
   const actionsState = appStore.useModelEffectsState('user');

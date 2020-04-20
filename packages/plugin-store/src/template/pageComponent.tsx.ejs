@@ -9,10 +9,10 @@ const PageComponentName = <%= pageComponentExport %>;
 
 <% if(hasPageStore) { %>
   const PageProvider = store.Provider;
-  const StoreWrapperedPage = () => {
+  const StoreWrapperedPage = (props) => {
     return (
       <PageProvider>
-        <PageComponentName />
+        <PageComponentName {...props} />
       </PageProvider>
     )
   }
