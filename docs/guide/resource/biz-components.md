@@ -7,7 +7,7 @@ order: 3
 
 > 注意：只是不推荐增量业务使用，存量项目中依然可以继续使用，如果组件存在缺陷也可以反馈给飞冰团队。
 
-|  npm 包名 | 显示名称 | 说明  |  文档地址（fusion@1.x）  |  文档地址（fusion@0.x）  |
+|  npm 包名 | 显示名称 | 说明  |  文档地址（fusion1.x 版本）  |  文档地址（fusion0.x 版本）  |
 |---------|----------|------|-------------------------|-----------------------|
 |@icedesign/balloon-confirm|BalloonConfirm|建议使用 Balloon|[文档](https://unpkg.com/@icedesign/balloon-confirm@1.0.6/build/index.html)|[文档](https://unpkg.com/@icedesign/balloon-confirm@0.1.9/build/index.html)|
 |@icedesign/container|Container|建议直接使用 div|[文档](https://unpkg.com/@icedesign/container@1.0.5/build/index.html)|[文档](https://unpkg.com/browse/@icedesign/container@0.1.10/README.md)|
