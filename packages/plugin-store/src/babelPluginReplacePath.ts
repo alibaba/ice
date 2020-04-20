@@ -1,7 +1,10 @@
 import * as path from 'path';
 
 module.exports = ({ types: t }, { routesPath, alias }) => {
-  const regex = /src\/pages\/\w+(.tsx|.jsx)?(\/index(.tsx|.jsx)?)?/;
+  // match:
+  // src/pages/home  | src/pages/home/index | src/pages/home/index(.tsx|.jsx)
+  // src/pages/index | src/pages/home/index(.tsx|.jsx)
+  const regex = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?))?$)/;
   const isConventionRouting = /\.ice\/routes\.ts/.test(routesPath);
 
   return {

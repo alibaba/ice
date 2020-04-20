@@ -10,7 +10,7 @@ function getPages(rootDir: string): string[] {
     })
     .map((page) => {
       const { name } = path.parse(page);
-      return name.replace(/^\S/,(s) => s.toUpperCase());
+      return name;
     }) : [];
 }
 
