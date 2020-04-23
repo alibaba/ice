@@ -65,5 +65,6 @@ module.exports = {
   babelPresets: 'array',
   eslint: (val) => {
     return validation('eslint', val, 'boolean|object');
-  }
+  },
+  progressBar: 'object'
 };
