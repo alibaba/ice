@@ -11,10 +11,21 @@ const resolveEntryPath = (entry, rootDir) => {
   return '';
 };
 
+const addHotDevClient = (entry) => {
+  const webpackDevClientEntry = require.resolve('react-dev-utils/webpackHotDevClient');
+  const hotEntries = {};
+
+  Object.keys(entry).forEach((key) => {
+    hotEntries[key] = [webpackDevClientEntry, ...entry[key]];
+  });
+
+  return hotEntries;
+};
+
 // entry: string | array
 // entry : { [name]: string | array }
 module.exports = (config, value, context) => {
-  const { rootDir, command, userConfig } = context;
+  const { rootDir, command, userConfig, commandArgs } = context;
   const ignoreHtmlTemplate = command === 'build' && userConfig.ignoreHtmlTemplate;
   let entry;
   if (Array.isArray(value) || typeof value === 'string') {
@@ -73,6 +84,10 @@ module.exports = (config, value, context) => {
     }]]);
   }
 
+  // add webpackHotDevClient when execute command is start and enable HMR
+  if (!commandArgs.disableReload && command === 'start') {
+    entry = addHotDevClient(entry);
+  }
   // remove default entry then add new enrty to webpack config
   config.entryPoints.clear();
   config.merge({ entry });
