@@ -1,8 +1,9 @@
 import { lazy } from 'ice';
 
+import Layout from '@/layouts/index';
 // import Home from '@/pages/Home';
 // import About from '@/pages/About';
-import Layout from '@/layouts/index';
+// import NotFound from '@/pages/NotFound';
 
 const Home = lazy(() => import('@/pages/Home'));
 const About =lazy(() => import('@/pages/About'));
