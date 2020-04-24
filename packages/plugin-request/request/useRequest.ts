@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from 'react';
+import { useReducer, useRef, useCallback } from 'react';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from './axiosInstance';
 
@@ -10,10 +10,12 @@ interface Result<D = any> {
   request: (config?: AxiosRequestConfig) => Promise<void>;
 }
 
+type Noop = (...args: any[]) => any;
+
 /**
  * Hooks to make ajax request
  *
- * @param {object} options - axios config (https://github.com/axios/axios#request-config)
+ * @param {object|function} options - axios config (https://github.com/axios/axios#request-config)
  * @return {object}
  *   @param {object} data - data in axios response
  *   @param {object} response - response of axios (https://github.com/axios/axios#response-schema)
@@ -21,7 +23,7 @@ interface Result<D = any> {
  *   @param {boolean} loading - loading status of the request
  *   @param {function} request - function to make the request manually
  */
-function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
+function useRequest<D = any>(options: AxiosRequestConfig|Noop): Result<D> {
   const initialState = {
     data: null,
     response: null,
@@ -34,16 +36,21 @@ function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
    * Method to make request manually
    * @param {object} config - axios config to shallow merged with options before making request
    */
-  const request = useCallback(async (config?: AxiosRequestConfig) => {
+  const request = usePersistFn(async (config?: AxiosRequestConfig) => {
     try {
       dispatch({
         type: 'loading'
       });
 
-      const response = await axiosInstance({
-        ...options,
-        ...config
-      });
+      let response;
+      if (typeof options === 'function') {
+        response = await options(config);
+      } else {
+        response = await axiosInstance({
+          ...options,
+          ...config
+        });
+      }
 
       dispatch({
         type: 'loaded',
@@ -58,8 +65,7 @@ function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
       });
       throw error;
     }
-    // eslint-disable-next-line
-  }, []);
+  });
 
   return {
     ...state,
@@ -99,6 +105,19 @@ function requestReducer(state, action) {
     default:
       throw new Error();
   }
+}
+
+/**
+ * Hooks for persistent functions
+ * @param {function} fn - function should be persistent
+ * @return {function} persistent function
+ */
+function usePersistFn<T extends Noop>(fn: T) {
+  const ref = useRef<any>(() => {
+    throw new Error('Cannot call function while rendering.');
+  });
+  ref.current = fn;
+  return useCallback(((...args) => ref.current(...args)) as T, [ref]);
 }
 
 export default useRequest;
