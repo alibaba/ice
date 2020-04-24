@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'ice';
 
-const Home = () => {
+const NotFound = () => {
   return (
     <>
       <h2>404 Page...</h2>
@@ -11,4 +11,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export { NotFound };
