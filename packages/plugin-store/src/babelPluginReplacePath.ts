@@ -10,20 +10,23 @@ module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
       ImportDeclaration(nodePath, state) {
         const isRoutesFile = (routesPath === state.filename);
         if (isRoutesFile) {
-          const { source } = nodePath.node;
-          if (t.isStringLiteral(source)) {
-            const { value } = source;
-            // 约定式路由：
-            // e.g: import Home from '../src/pages/Home/index.tsx';
-            // e.g: import Index from '../src/pages/index.tsx;
-            // 配置式路由：
-            // default alias: import Home from '@/pages/Home';
-            // custom alias: import Home from '$pages/Home';
-            // relative path: import Home from '../pages/Home'
-            const newValue = formatPagePath({ routesPath, value, alias, applyMethod });
-            // replace to: import Home from 'ice/pages/Home'
-            if (newValue) {
-              replaceWith(t, nodePath, newValue);
+          const { source, specifiers } = nodePath.node;
+          // issue: https://github.com/ice-lab/icejs/issues/271
+          if (t.isImportDefaultSpecifier(specifiers[0]) && specifiers.length === 1) {
+            if (t.isStringLiteral(source)) {
+              const { value } = source;
+              // 约定式路由：
+              // e.g: import Home from '../src/pages/Home/index.tsx';
+              // e.g: import Index from '../src/pages/index.tsx;
+              // 配置式路由：
+              // default alias: import Home from '@/pages/Home';
+              // custom alias: import Home from '$pages/Home';
+              // relative path: import Home from '../pages/Home'
+              const newValue = formatPagePath({ routesPath, value, alias, applyMethod });
+              // replace to: import Home from 'ice/pages/Home'
+              if (newValue) {
+                replaceWith(t, nodePath, newValue);
+              }
             }
           }
         }
