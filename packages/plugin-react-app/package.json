@@ -16,8 +16,8 @@
     "@alifd/fusion-collector": "^1.2.5",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "build-scripts-config": "^0.1.0",
+    "console-clear": "^1.1.1",
     "copy-webpack-plugin": "^5.0.4",
-    "progress-bar-webpack-plugin": "^2.1.0",
     "core-js": "^3.3.1",
     "eslint-loader": "^4.0.0",
     "fs-extra": "^8.1.0",
@@ -28,7 +28,8 @@
     "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-mock": "^0.1.5"
+    "webpack-dev-mock": "^0.1.5",
+    "webpackbar": "^4.0.0"
   },
   "devDependencies": {
     "webpack": "^4.41.1"

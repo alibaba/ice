@@ -4,6 +4,8 @@ const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const openBrowser = require('react-dev-utils/openBrowser');
+const consoleClear = require('console-clear');
+const chalk = require('chalk');
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
 const optionConfig = require('./config/option.config');
@@ -98,6 +100,8 @@ module.exports = ({
     config.plugin('HotModuleReplacementPlugin')
       .use(webpack.HotModuleReplacementPlugin);
   }
+
+  config.name('web');
   registerTask('web', config);
 
   // sort config key to make sure entry config is always excute before injectBabel
@@ -145,6 +149,14 @@ module.exports = ({
   onGetWebpackConfig((chainConfig) => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
+  });
+
+  onHook('after.start.compile', async({ url }) => {
+    consoleClear(true);
+
+    console.log(chalk.green('Starting the development server at:'));
+    console.log('   ', chalk.underline.white(url));
+    console.log();
   });
 
   if (command === 'test') {
