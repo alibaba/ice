@@ -16,7 +16,6 @@
     "@alifd/fusion-collector": "^1.2.5",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "build-scripts-config": "^0.1.0",
-    "console-clear": "^1.1.1",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.3.1",
     "eslint-loader": "^4.0.0",

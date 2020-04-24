@@ -6,12 +6,12 @@ module.exports = (config, webpackbarOptions) => {
       .plugins
       .delete('SimpleProgressPlugin');
     config
-    .plugin('WebpackBar')
-      .use(WebpackBar)
-      .tap(([args]) => [{
-        ...args,
-        ...webpackbarOptions
-      }]);
+      .plugin('WebpackBar')
+        .use(WebpackBar)
+        .tap(([args]) => [{
+          ...args,
+          ...webpackbarOptions
+        }]);
   }
 };
 
