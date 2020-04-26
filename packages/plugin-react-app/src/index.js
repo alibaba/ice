@@ -73,6 +73,9 @@ module.exports = ({
     .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [defineVariables])
       .end()
+    .plugin('friendly-error')
+      .use(require.resolve('friendly-errors-webpack-plugin'))
+      .end()
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
         .use(HtmlWebpackPlugin, [{
