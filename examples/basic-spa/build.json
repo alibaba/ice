@@ -5,5 +5,9 @@
     "prod": {
       "ignoreHtmlTemplate": false
     }
+  },
+  "eslintLoaderOptions": {
+    "disable": false,
+    "quiet": true
   }
 }
