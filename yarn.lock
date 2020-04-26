@@ -2449,7 +2449,7 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/history@^4.7.5":
+"@types/history@*", "@types/history@^4.7.5":
   version "4.7.5"
   resolved "https://registry.npm.taobao.org/@types/history/download/@types/history-4.7.5.tgz#527d20ef68571a4af02ed74350164e7a67544860"
   integrity sha1-Un0g72hXGkrwLtdDUBZOemdUSGA=
@@ -2531,6 +2531,23 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
+
+"@types/react-router-dom@^5.1.4":
+  version "5.1.4"
+  resolved "https://registry.npm.alibaba-inc.com/@types/react-router-dom/download/@types/react-router-dom-5.1.4.tgz#8d3e0306df74af301cc896309e7d4758f1a4bf71"
+  integrity sha1-jT4DBt90rzAcyJYwnn1HWPGkv3E=
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+    "@types/react-router" "*"
+
+"@types/react-router@*":
+  version "5.1.5"
+  resolved "https://registry.npm.alibaba-inc.com/@types/react-router/download/@types/react-router-5.1.5.tgz#7b2f9b7cc3d350e92664c4e38c0ef529286fe628"
+  integrity sha1-ey+bfMPTUOkmZMTjjA71KShv5ig=
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.9.19":
   version "16.9.34"
