@@ -6,6 +6,7 @@ interface IParams {
   tempDir: string;
   configPath: string;
   projectType: string;
+  isMpa: boolean;
 }
 
 interface IResult {
@@ -13,7 +14,14 @@ interface IResult {
   isConfigRoutes: boolean;
 }
 
-function getRoutes({ rootDir, tempDir, configPath, projectType }: IParams): IResult {
+function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa }: IParams): IResult {
+  // if is mpa use empty router file
+  if (isMpa) {
+    const routesTempPath = path.join(tempDir, 'routes.ts');
+    fse.writeFileSync(routesTempPath, 'export default [];', 'utf-8');
+    configPath = routesTempPath;
+  }
+
   const routesPath = configPath
     ? path.join(rootDir, configPath)
     : path.join(rootDir, `src/routes.${projectType}`);
