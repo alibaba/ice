@@ -25,6 +25,7 @@
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.5",
     "@types/node": "^12.12.12",
+    "@types/react-router-dom": "^5.1.4",
     "typescript": "^3.7.2"
   },
   "files": [
