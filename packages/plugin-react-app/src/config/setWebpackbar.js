@@ -7,7 +7,15 @@ module.exports = (config) => {
       .delete('SimpleProgressPlugin')
       .end()
       .plugin('WebpackBar')
-        .use(WebpackBar);
+        .use(WebpackBar)
+        .tap((args) => {
+          return [
+            ...args,
+            {
+              name: 'client'
+            }
+          ];
+        });
   }
 };
 

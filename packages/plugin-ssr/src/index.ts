@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as ejs from 'ejs';
+import * as WebpackBar from 'webpackbar';
 import { minify } from 'html-minifier';
 import { getWebpackConfig } from 'build-scripts-config';
 
@@ -60,6 +61,23 @@ const plugin = async (api): Promise<void> => {
           }));
       }
     });
+
+    if (config.plugins.get('SimpleProgressPlugin')) {
+      config
+        .plugins
+        .delete('SimpleProgressPlugin')
+        .end()
+        .plugin('WebpackBar')
+        .use(WebpackBar)
+        .tap((args) => {
+          return [
+            ...args,
+            {
+              name: 'server'
+            }
+          ];
+        });
+    }
 
     config.output
       .path(serverDir)
@@ -122,7 +140,6 @@ const plugin = async (api): Promise<void> => {
           if (serverReady) {
             serverRender(res, req);
           } else {
-            console.log('[SSR]', 'pending request until server is ready');
             httpResponseQueue.push([req, res]);
           }
         });
