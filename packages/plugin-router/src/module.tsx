@@ -1,7 +1,7 @@
 import * as React from 'react';
 import defaultRoutes from '$ice/routes';
 import { IceRouter } from './runtime/Router';
-import formatRoutes, { wrapperPage, wrapperPageWithSSR } from './runtime/formatRoutes';
+import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 
 const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context }) => {
   const { router: appConfigRouter = {} } = appConfig;
@@ -11,7 +11,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
   });
 
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPage;
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes, appConfig) : wrapperPageWithCSR(appConfig);
   wrapperRouteComponent(wrapperPageFn);
   if (appConfigRouter.modifyRoutes) {
     modifyRoutes(appConfigRouter.modifyRoutes);
