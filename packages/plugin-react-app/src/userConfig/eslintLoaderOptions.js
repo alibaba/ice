@@ -1,9 +1,9 @@
 const path = require('path');
 
-module.exports = (config, eslintLoaderOptions) => {
+module.exports = (config, eslintLoaderOptions, { rootDir }) => {
   const { disable, ...args } = eslintLoaderOptions;
   if (!disable) {
-    const appSrc = path.join(process.cwd(), 'src');
+    const appSrc = path.join(rootDir, 'src');
     config.module
       .rule('eslint')
       .test(/\.(jsx?|tsx?)$/)
@@ -12,7 +12,7 @@ module.exports = (config, eslintLoaderOptions) => {
         .end()
       .enforce('pre')
       .use('eslint')
-        .loader('eslint-loader')
+        .loader(require.resolve('eslint-loader'))
         .tap((options) => ({
             cache: true,
             eslintPath: require.resolve('eslint'),
