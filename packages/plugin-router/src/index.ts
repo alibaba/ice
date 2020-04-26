@@ -16,21 +16,15 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   // .tmp path
   const iceTempPath = getValue('ICE_TEMP');
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
-  let { configPath } = routerOptions;
-
-  const isMpa = userConfig.mpa;
+  const { configPath } = routerOptions;
+  const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
-  // if is mpa use empty router file
-  if (isMpa) {
-    fse.writeFileSync(routesTempPath, 'export default [];', 'utf-8');
-    configPath = routesTempPath;
-  }
-
   const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
     rootDir,
     tempDir: iceTempPath,
     configPath,
-    projectType
+    projectType,
+    isMpa
   });
 
   // add babel plugins for ice lazy
