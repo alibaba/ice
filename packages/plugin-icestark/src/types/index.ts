@@ -21,4 +21,6 @@ export interface IIceStark {
   removeRoutesLayout?: boolean;
   AppRoute?: React.ComponentType;
   Layout?: React.ComponentType;
+  registerAppEnter?: (mountNode: HTMLElement, App: React.ComponentType, resolve: (value?: unknown) => void) => void;
+  registerAppLeave?: (mountNode: HTMLElement) => void;
 }
