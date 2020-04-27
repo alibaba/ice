@@ -135,6 +135,7 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
+    // eslint-disable-next-line quotes
     const minifedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: "'" });
     const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');

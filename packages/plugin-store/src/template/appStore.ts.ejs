@@ -1,5 +1,5 @@
 <% if (importStr) { %>
-  import { createStore, IcestoreRootState, IcestoreDispatch, Models } from '@ice/store';
+  import { createStore, Models } from '@ice/store';
   <%- importStr %>
 
   interface AppModel extends Models {
@@ -12,17 +12,7 @@
 
   const appModel: AppModel = { <%- modelsStr %> };
   const store = createStore(appModel);
+
+  export { appModel };
   export default store;
-
-  export type IRootDispatch = IcestoreDispatch<typeof appModel>;
-  export type IRootState = IcestoreRootState<typeof appModel>;
 <% } %>
-
-interface IInitialStates {
-  [key: string]: any;
-}
-
-export interface IStore {
-  initialStates?: IInitialStates;
-  getInitialStates?: (initialData) => IInitialStates;
-}

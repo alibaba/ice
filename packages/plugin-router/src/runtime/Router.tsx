@@ -9,7 +9,9 @@ import {
 
   RouteComponentProps
 } from 'react-router-dom';
-import { RoutesProps, RouterProps, IRouteWrapper, IDynamicImportComponent, RouteItemProps, IRenderRouteProps } from '../types';
+import { RoutesProps, RouterProps } from '../types/router';
+import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types/base';
+import { IRouterConfig } from '../types';
 
 function wrapperRoute(component, routerWrappers) {
   return (routerWrappers || []).reduce((acc, curr) => {
@@ -37,7 +39,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
 function parseRoutes(routes: RouteItemProps[]) {
   return routes.map((route) => {
     const { children, component, routeWrappers, ...others } = route;
-    const parsedRoute: IRenderRouteProps = { ...others };
+    const parsedRoute: IRouterConfig = { ...others };
     if (component) {
       parsedRoute.component = getRouteComponent(component, children ? [] : routeWrappers);
     }
@@ -50,15 +52,17 @@ function parseRoutes(routes: RouteItemProps[]) {
 
 export function IceRouter(props: RouterProps) {
   const { type, routes, fallback, ...others } = props;
-  const RouterComponent = type === 'static' ? StaticRouter : Router;
-
   // parse routes before render
   const parsedRoutes = parseRoutes(routes);
-  return (
-    <RouterComponent {...others}>
-      <Routes routes={parsedRoutes} fallback={fallback}/>
-    </RouterComponent>
-  );
+
+  const children = <Routes routes={parsedRoutes} fallback={fallback} />;
+  return type === 'static' ?
+    <StaticRouter {...others}>
+      {children}
+    </StaticRouter> :
+    <Router {...others}>
+      {children}
+    </Router>;
 }
 
 function Routes({ routes, fallback }: RoutesProps) {

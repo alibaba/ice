@@ -4,7 +4,8 @@ import { createApp, APP_MODE, IAppConfig } from 'ice';
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
-    errorBoundary: true
+    errorBoundary: true,
+    parseSearchParams: true
   },
   logger: {
     level: APP_MODE === 'build' ? 'error' : 'debug',

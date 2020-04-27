@@ -11,9 +11,10 @@ module.exports = {
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
+    logLevel: 'silent',
     hot: true,
     publicPath: '/',
-    quiet: true,
+    quiet: false,
     watchOptions: {
       ignored: /node_modules/,
       aggregateTimeout: 600,
@@ -54,4 +55,5 @@ module.exports = {
   compileDependencies: [],
   babelPlugins: [],
   babelPresets: [],
+  eslint: true
 };

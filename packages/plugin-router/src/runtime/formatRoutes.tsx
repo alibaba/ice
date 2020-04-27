@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as path from 'path';
+import * as queryString from 'query-string';
 import { matchPath } from 'react-router-dom';
 
 const { useEffect, useState } = React;
@@ -21,12 +22,14 @@ export default function formatRoutes(routes, parentPath) {
   });
 }
 
-export function wrapperPageWithSSR(context, routes) {
+export function wrapperPageWithSSR(context, routes, appConfig) {
   const pageInitialProps = { ...context.pageInitialProps };
+  const { app: { parseSearchParams } } = appConfig;
   const WrapperPageFn = () => {
     const ServerWrapperedPage = (props) => {
+      const searchParams = getSearchParams(parseSearchParams, props.location.search);
       const MatchedPageComponent = getComponentByPath(routes, context.pathname);
-      return <MatchedPageComponent {...props}  {...pageInitialProps}  />;
+      return <MatchedPageComponent {...Object.assign({}, props, pageInitialProps, searchParams)} />;
     };
     return ServerWrapperedPage;
   };
@@ -34,37 +37,42 @@ export function wrapperPageWithSSR(context, routes) {
 }
 
 
-export function wrapperPage(PageComponent) {
-  const { pageConfig } = PageComponent;
-  const { title, scrollToTop } = pageConfig || {};
+export function wrapperPageWithCSR(appConfig) {
+  const wrapperPage = (PageComponent) => {
+    const { app: { parseSearchParams } } = appConfig;
+    const { pageConfig } = PageComponent;
+    const { title, scrollToTop } = pageConfig || {};
 
-  const RouterWrapperedPage = (props) => {
-    const [data, setData] = useState((window as any).__ICE_PAGE_PROPS__);
-    useEffect(() => {
-      if (title) {
-        document.title = title;
-      }
+    const RouterWrapperedPage = (props) => {
+      const searchParams = getSearchParams(parseSearchParams, props.location.search);
+      const [data, setData] = useState((window as any).__ICE_PAGE_PROPS__);
+      useEffect(() => {
+        if (title) {
+          document.title = title;
+        }
 
-      if (scrollToTop) {
-        window.scrollTo(0, 0);
-      }
+        if (scrollToTop) {
+          window.scrollTo(0, 0);
+        }
 
-      // When enter the page for the first time, need to use window.__ICE_PAGE_PROPS__ as props
-      // And don't need to re-request to switch routes
-      // Set the data to null after use, otherwise other pages will use
-      if ((window as any).__ICE_PAGE_PROPS__) {
-        (window as any).__ICE_PAGE_PROPS__ = null;
-      } else if (PageComponent.getInitialProps) {
-        // When the server does not return data, the client calls getinitialprops
-        (async () => {
-          const result = await PageComponent.getInitialProps();
-          setData(result);
-        })();
-      }
-    }, []);
-    return <PageComponent  {...Object.assign({}, props, data)} />;
+        // When enter the page for the first time, need to use window.__ICE_PAGE_PROPS__ as props
+        // And don't need to re-request to switch routes
+        // Set the data to null after use, otherwise other pages will use
+        if ((window as any).__ICE_PAGE_PROPS__) {
+          (window as any).__ICE_PAGE_PROPS__ = null;
+        } else if (PageComponent.getInitialProps) {
+          // When the server does not return data, the client calls getinitialprops
+          (async () => {
+            const result = await PageComponent.getInitialProps();
+            setData(result);
+          })();
+        }
+      }, []);
+      return <PageComponent { ...Object.assign({}, props, data, searchParams) } />;
+    };
+    return RouterWrapperedPage;
   };
-  return RouterWrapperedPage;
+  return wrapperPage;
 }
 
 function getComponentByPath(routes, currPath)  {
@@ -76,4 +84,11 @@ function getComponentByPath(routes, currPath)  {
   }
   const matchedRoute = findMatchRoute(routes);
   return matchedRoute && matchedRoute.component;
+}
+
+function getSearchParams(parseSearchParams, locationSearch) {
+  if (parseSearchParams) {
+    const searchParams = queryString.parse(locationSearch);
+    return { searchParams };
+  }
 }

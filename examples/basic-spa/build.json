@@ -5,5 +5,9 @@
     "prod": {
       "ignoreHtmlTemplate": false
     }
+  },
+  "eslint": {
+    "disable": false,
+    "quiet": true
   }
 }

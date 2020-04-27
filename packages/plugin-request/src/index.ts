@@ -8,14 +8,14 @@ export default async function (api) {
 
   // move requst to .ice/request
   await fse.copy(srcPath, distPath);
-
+  await fse.copy(path.join(__dirname, 'types'), path.join(distPath, 'types'));
   // .ice/index.ts:
   // export * from './request';
   applyMethod('addIceExport', { source: './request/request', exportName: 'request' });
   applyMethod('addIceExport', { source: './request/useRequest', exportName: 'useRequest' });
 
   // add iceTypes exports
-  applyMethod('addIceTypesExport', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
+  applyMethod('addIceAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
 
   onGetWebpackConfig((config) => {
     // add alias for module.ts use $ice/axiosInstance
