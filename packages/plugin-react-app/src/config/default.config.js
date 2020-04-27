@@ -11,9 +11,10 @@ module.exports = {
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
+    noInfo: true,
     hot: true,
     publicPath: '/',
-    quiet: true,
+    quiet: false,
     watchOptions: {
       ignored: /node_modules/,
       aggregateTimeout: 600,
