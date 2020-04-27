@@ -13,6 +13,6 @@ const chalk = require('chalk');
     });
   });
 })().catch((e) => {
-  console.log(chalk.red(`\n ⚠️  ⚠️  ⚠️  依赖检查失败\n\n`), e);
+  console.log(chalk.red('\n ⚠️  ⚠️  ⚠️  依赖检查失败\n\n'), e);
   process.exit(128);
 });

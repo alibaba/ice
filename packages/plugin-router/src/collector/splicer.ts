@@ -29,7 +29,7 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) 
   payload.indent += 2;
 
   // nest the array stucture
-  payload.nestSlice.push(`[`);
+  payload.nestSlice.push('[');
   // run loop
   collect.forEach(item => {
     const {
@@ -63,7 +63,7 @@ ${indentTabs}{
       // loop children
       loopSplice(payload, children, routerOptions);
       // children field end
-      payload.nestSlice.push(`,`);
+      payload.nestSlice.push(',');
     }
     // nest object end
     payload.nestSlice.push(`

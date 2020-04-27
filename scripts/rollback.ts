@@ -16,6 +16,6 @@ const chalk = require('chalk');
     console.log();
   });
 })().catch((e) => {
-  console.log(chalk.red(`\n ⚠️  ⚠️  ⚠️  rollback failed\n\n`), e);
+  console.log(chalk.red('\n ⚠️  ⚠️  ⚠️  rollback failed\n\n'), e);
   process.exit(128);
 });
