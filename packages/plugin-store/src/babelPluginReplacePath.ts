@@ -1,14 +1,14 @@
 import * as path from 'path';
 
 // match:
-// eg: src/pages/home | src/pages/home/index(.tsx|.jsx) | src/pages/index(.tsx|jsx)
-const pathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?))?$)/;
+// eg: src/pages/home | src/pages/home/index | src/pages/home/index(.tsx|.jsx) | src/pages/index(.tsx|jsx)
+const pathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
 
 module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
   return {
     visitor: {
       ImportDeclaration(nodePath, state) {
-        const isRoutesFile = (routesPath === state.filename);
+        const isRoutesFile = routesPath.includes(state.filename);
         if (isRoutesFile) {
           const { source, specifiers } = nodePath.node;
           // issue: https://github.com/ice-lab/icejs/issues/271
@@ -22,7 +22,7 @@ module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
               // default alias: import Home from '@/pages/Home';
               // custom alias: import Home from '$pages/Home';
               // relative path: import Home from '../pages/Home'
-              const newValue = formatPagePath({ routesPath, value, alias, applyMethod });
+              const newValue = formatPagePath({ routesPath: state.filename, value, alias, applyMethod });
               // replace to: import Home from 'ice/pages/Home'
               if (newValue) {
                 replaceWith(t, nodePath, newValue);
@@ -33,7 +33,7 @@ module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
       },
 
       CallExpression(nodePath, state) {
-        const isRoutesFile = (routesPath === state.filename);
+        const isRoutesFile = routesPath.includes(state.filename);
         if (isRoutesFile) {
           if (t.isImport(nodePath.node.callee)) {
             const args = nodePath.node.arguments;
@@ -46,7 +46,7 @@ module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
                 // default alias: const Home = lazy(() => import('@/pages/Home'));
                 // custom alias: const Home = lazy(() => import('$pages/home));
                 // relative path: const Home = lazy(() => import('../pages/Home'));
-                const newValue = formatPagePath({ routesPath, value, alias, applyMethod });
+                const newValue = formatPagePath({ routesPath: state.filename, value, alias, applyMethod });
                 // replace to: const Home =lazy (() => import('ice/Home/Home'));
                 if (newValue) {
                   args[i].value = newValue;
@@ -120,7 +120,6 @@ function formatPagePath({ routesPath, value, alias, applyMethod }: IGetConfigRou
       const [, , pageName] = matchedPagePath.split('/');
       newValue = pageName ? `ice/${pageName}/${pageName}` : '';
     }
-
     return newValue;
   }
 }
