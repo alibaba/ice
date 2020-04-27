@@ -158,11 +158,11 @@ function Home() {
 
 ### useSearchParams
 
-useSearchParams hook 用于函数组件中解析查询参数。
+useSearchParams hook 用于非路由的函数组件中解析查询参数。
 
 假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
 
-```ts
+```tsx
 import { useSearchParams } from 'ice';
 
 function Home() {
@@ -174,11 +174,11 @@ function Home() {
 
 ### withSearchParams
 
-通过在 Class 组件上添加 `withSearchParams` 装饰器，可以获取到当前 URL 的查询参数对象。
+通过在 Class 组件上添加 `withSearchParams` 装饰器，可以获取到当前 URL 的查询参数对象，一般用于非路由的 Class 组件。
 
 假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
 
-```ts
+```tsx
 import { withSearchParams } from 'ice';
 
 @withSearchParams

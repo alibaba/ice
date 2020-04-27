@@ -41,25 +41,23 @@ MPA 应用以页面为维度进行划分，每个页面目录下面可单独配�
 
 ## 路由配置
 
-开启 MPA 插件后，约定式逻辑失效，需要手动配置 MPA 应用的路由：
+开启 MPA 插件后，约定式路由逻辑失效，需要手动配置 MPA 应用的路由：
 
 配置如下：
 
 ```ts
-// src/pages/*/routes.js
+// src/pages/Dashboard/routes.js
 + import Dashboard from './index';
 
-import Index from './index';
-
-export default [{ path: '/', component: Index }];
+export default [{ path: '/', component: Dashboard }];
 ```
 
 ## 应用入口
 
-配置完路由后在应用入口 `app.js` 中进行引入即可，更多配置[详见](https://ice.work/docs/guide/basic/app):
+配置完路由后在应用入口 `app.js` 中进行引入即可，更多配置[详见](/docs/guide/basic/app):
 
 ```ts
-// src/pages/*/app.js
+// src/pages/Dashboard/app.js
 import { createApp } from 'ice';
 + import routes from './routes';
 
