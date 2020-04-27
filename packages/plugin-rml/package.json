@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-rml",
-  "version": "1.2.0-alpha.0",
+  "version": "1.2.0-alpha.1",
   "description": "RML loader for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
