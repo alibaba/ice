@@ -17,7 +17,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
       await fse.copy(srcPath, distPath);
       // add to ice exports
-      applyMethod('addIceExport', { source: `./config`, exportName });
+      applyMethod('addIceExport', { source: './config', exportName });
     } else {
       // remove config file
       applyMethod('removeIceExport', exportName);

@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
-    "@ice/spec": "^0.1.9",
+    "@ice/spec": "^1.0.0",
     "eslint": "^6.8.0",
     "esm": "^3.2.25",
     "execa": "^4.0.0",
