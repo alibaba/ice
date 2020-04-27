@@ -63,5 +63,7 @@ module.exports = {
   compileDependencies: 'array',
   babelPlugins: 'array',
   babelPresets: 'array',
-  eslintLoaderOptions: 'object'
+  eslint: (val) => {
+    return validation('eslint', val, 'boolean|object');
+  }
 };
