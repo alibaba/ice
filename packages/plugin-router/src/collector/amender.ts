@@ -10,7 +10,7 @@ import {
   formatPathForWin,
   transformComponentName,
 } from '../utils';
-import { ICollectItem } from '../types';
+import { ICollectItem } from '../types/collector';
 
 /**
  * loop amend

@@ -5,7 +5,10 @@ const commonRules = {
   "no-underscore-dangle": 0,
   "class-methods-use-this": 0,
   "no-param-reassign": 0,
-  "comma-dangle": 0
+  "comma-dangle": 0,
+  "prefer-object-spread": 0,
+  // TODO: open rule indent, consider of  MemberExpression
+  "indent": 0,
 };
 
 const jsRules = deepmerge(eslint, {

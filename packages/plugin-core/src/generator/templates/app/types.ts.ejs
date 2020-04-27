@@ -1,4 +1,5 @@
 import React from 'react';
+<%- iceIAppConfigTypesImports %>
 <%- iceTypesImports %>
 
 export interface IApp {
@@ -6,11 +7,17 @@ export interface IApp {
   mountNode?: HTMLElement;
   addProvider?: ({ children }: { children: React.ReactNode }) => React.ComponentType;
   getInitialData?: () => Promise<any>;
+  ErrorBoundaryFallback?: React.ReactElement,
+  onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
+  <% if (iceIAppConfigTypesImports) { %>
+  <%- iceIAppTypes %>
+  <% } %>
+  [key: string]: any;
 }
 
-<% if (iceTypesExports) { %>
+<% if (iceIAppConfigTypesImports) { %>
 export interface IAppConfig {
 app?: IApp
-<%- iceTypesExports %>
+<%- iceIAppConfigTypesExports %>
 }
 <% } %>

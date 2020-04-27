@@ -18,7 +18,7 @@ const { useEffect, useState } = React;
 
 const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
   const { icestark, router } = appConfig;
-  const { type: appType } = (icestark || {}) as IIceStark;
+  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
 
   if (runtimeModifyRoutes) {
@@ -30,13 +30,22 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
-          const mountNode = getMountNode();
           registerAppEnter(() => {
-            ReactDOM.render(<App />, mountNode, resolve);
+            const mountNode = getMountNode();
+            if (enterRegistration) {
+              enterRegistration(mountNode, App, resolve);
+            } else {
+              ReactDOM.render(<App />, mountNode, resolve);
+            }
           });
           // make sure the unmount event is triggered
           registerAppLeave(() => {
-            ReactDOM.unmountComponentAtNode(mountNode);
+            const mountNode = getMountNode();
+            if (leaveRegistration) {
+              leaveRegistration(mountNode);
+            } else {
+              ReactDOM.unmountComponentAtNode(mountNode);
+            }
           });
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);

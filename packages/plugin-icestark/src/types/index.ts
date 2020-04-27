@@ -1,18 +1,4 @@
-import { AppConfig } from '@ice/stark';
-
-export interface IAppRouter {
-  ErrorComponent?: React.ComponentType;
-  LoadingComponent?: React.ComponentType;
-  NotFoundComponent?: React.ComponentType;
-  shouldAssetsRemove?: (
-    assetUrl?: string,
-    element?: HTMLElement | HTMLLinkElement | HTMLStyleElement | HTMLScriptElement,
-  ) => boolean;
-}
-
-export interface IGetApps {
-  (): AppConfig[]|Promise<AppConfig[]>;
-}
+import { IGetApps, IAppRouter } from './base';
 
 export interface IIceStark {
   type: 'framework' | 'child';
@@ -21,4 +7,6 @@ export interface IIceStark {
   removeRoutesLayout?: boolean;
   AppRoute?: React.ComponentType;
   Layout?: React.ComponentType;
+  registerAppEnter?: (mountNode: HTMLElement, App: React.ComponentType, resolve: (value?: unknown) => void) => void;
+  registerAppLeave?: (mountNode: HTMLElement) => void;
 }

@@ -16,7 +16,7 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
 
   // set IStore to IAppConfig
-  applyMethod('addIceTypesExport', { source: './store', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  applyMethod('addIceAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
   // render template/types.ts.ejs to .ice/store/types.ts
   const typesTemplateContent = fse.readFileSync(typesTemplatePath, 'utf-8');
@@ -28,18 +28,34 @@ export default async (api) => {
 
   // add babel plugins for ice lazy
   const { configPath } = userConfig.router || {};
-  const { routesPath } = applyMethod('getRoutes', {
+  const { mpa: isMpa } = userConfig;
+  let { routesPath } = applyMethod('getRoutes', {
     rootDir,
     tempDir: targetPath,
     configPath,
-    projectType
+    projectType,
+    isMpa
   });
+
+  if (isMpa) {
+    const routesFile = `routes.${projectType}`;
+    const pagesPath = path.join(rootDir, 'src', 'pages');
+    const pages = applyMethod('getPages', rootDir);
+    const pagesRoutePath = pages.map(pageName => {
+      return path.join(pagesPath, pageName, routesFile);
+    });
+    routesPath = pagesRoutePath;
+  }
   modifyUserConfig('babelPlugins',
     [
       ...(userConfig.babelPlugins as [] || []),
       [
         require.resolve('./babelPluginReplacePath'),
-        { routesPath, alias: userConfig.alias, applyMethod }
+        {
+          routesPath,
+          alias: userConfig.alias,
+          applyMethod
+        }
       ]
     ]
   );

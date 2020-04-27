@@ -25,7 +25,6 @@ module.exports = {
   modules: 'array',
   devServer: 'object',
   entry: (val) => {
-    
     // entry: string | array
     // entry : { [name]: string | array }
     return validation('entry', val, 'string|array|object');
@@ -64,4 +63,7 @@ module.exports = {
   compileDependencies: 'array',
   babelPlugins: 'array',
   babelPresets: 'array',
+  eslint: (val) => {
+    return validation('eslint', val, 'boolean|object');
+  }
 };

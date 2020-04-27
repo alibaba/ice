@@ -4,7 +4,7 @@ import getPages from '../utils/getPages';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
-import { IExportData } from '../types';
+import { IExportData } from '../types/base';
 
 export default class PageGenerator {
   private generator: Generator;
@@ -15,7 +15,7 @@ export default class PageGenerator {
 
   private rootDir: string;
 
-  private pageExports: {[key: string]: IExportData[]};
+  private pageExports: { [key: string]: IExportData[] };
 
   private rerender: boolean;
 
@@ -43,7 +43,7 @@ export default class PageGenerator {
     };
   }
 
-  public addPageExport = (pageName: string, exportData: IExportData|IExportData[]) => {
+  public addPageExport = (pageName: string, exportData: IExportData | IExportData[]) => {
     if (!this.pageExports[pageName]) {
       this.pageExports[pageName] = [];
     }
@@ -57,7 +57,7 @@ export default class PageGenerator {
     }
   }
 
-  public removePageExport = (pageName: string, removeExportName: string|string[]) => {
+  public removePageExport = (pageName: string, removeExportName: string | string[]) => {
     this.pageExports[pageName] = removeExportData(this.pageExports[pageName] || [], removeExportName);
     if (this.rerender) {
       this.render();
