@@ -13,7 +13,7 @@ export interface IRouteWrapper {
   (props: any): React.ComponentType<any>;
 }
 
-export interface RouteItemProps extends DefaultRouteProps {
+export interface RouteItemProps extends Omit<DefaultRouteProps, 'component'> {
   children?: RouteItemProps[];
   // disable string[]
   path?: string;
