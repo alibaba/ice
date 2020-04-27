@@ -158,35 +158,32 @@ function Home() {
 
 ### useSearchParams
 
-useSearchParams hook 用于非路由的函数组件中解析查询参数。
+用于在非路由函数组件中解析 url 参数。
 
 假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
 
 ```tsx
+// src/components/Example
 import { useSearchParams } from 'ice';
 
-function Home() {
+function Example() {
   const searchParams = useSearchParams()
-  // console.log(searchParams) 
-  // { foo: 'bar' }
+  // console.log(searchParams); => { foo: 'bar' }
 }
 ```
 
 ### withSearchParams
 
-通过在 Class 组件上添加 `withSearchParams` 装饰器，可以获取到当前 URL 的查询参数对象，一般用于非路由的 Class 组件。
-
-假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
+与 `useSearchParams` 对应，用在 Class Component 中。
 
 ```tsx
 import { withSearchParams } from 'ice';
 
 @withSearchParams
-class Home extends React.Component {
-  public render() {
+class Example extends React.Component {
+  render() {
     const { searchParams } = this.props;
-    // console.log(searchParams);
-    // { foo: bar }
+    // console.log(searchParams); => { foo: bar }
     return (
       <>Foo</>
     );
@@ -339,7 +336,7 @@ createApp();
 +import { IRouterConfig } from 'ice';
 
 +const routerConfig: IRouterConfig = [
-  
+
 ];
 
 export default routerConfig;

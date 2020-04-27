@@ -238,13 +238,12 @@ createApp(appConfig);
 
 ## 路由组件参数
 
-对于路由组件可通过 `props` 获取到如下属性。
+对于路由组件，可通过 `props` 获取到如下属性：
 
-- `match`：当前路由和 URL match 后的对象，包含 `path`、`url`、`params`、`isExact` 属性
 - `location`：当前路由的 location 对象，包含 `pathname`、`search`、`hash`、`state` 属性
 - `history`：详见 [history api](/docs/guide/basic/api#history)
-- `searchParams`：当前 URL 的查询参数对象（需要开启 [parseSearchParams](/docs/guide/basic/app#启动项配置)）
-
+- `searchParams`：当前 URL 的查询参数对象（需要开启 [parseSearchParams](/docs/guide/basic/app#配置项)）
+- `match`：当前路由和 URL match 后的对象，包含 `path`、`url`、`params`、`isExact` 属性
 
 ## 路由跳转
 
