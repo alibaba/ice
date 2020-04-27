@@ -6,7 +6,7 @@ import * as prettier from 'prettier';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
-import { IExportData } from '../types';
+import { IExportData } from '../types/base';
 
 interface IRenderData {
   [key: string]: any;
@@ -20,7 +20,7 @@ interface IRenderFile {
   (templatePath: string, targetDir: string, extraData?: IRenderData): void;
 }
 
-const API_MAP = ['addEntryImports', 'addEntryCode', 'addIceExport', 'addIceTypesExport'];
+const API_MAP = ['addEntryImports', 'addEntryCode', 'addIceExport', 'addIceTypesExport', 'addIceAppConfigTypes'];
 
 export default class Generator {
   public templateDir: string;
@@ -50,7 +50,7 @@ export default class Generator {
     this.showPrettierError = true;
   }
 
-  public addExport = (registerKey ,exportData: IExportData|IExportData[]) => {
+  public addExport = (registerKey, exportData: IExportData | IExportData[]) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
     this.addContent(registerKey, exportData);
@@ -59,7 +59,7 @@ export default class Generator {
     }
   }
 
-  public removeExport = (registerKey: string, removeExportName: string|string[]) => {
+  public removeExport = (registerKey: string, removeExportName: string | string[]) => {
     const exportList = this.contentRegistration[registerKey] || [];
     this.contentRegistration[registerKey] = removeExportData(exportList, removeExportName);
     if (this.rerender) {
@@ -86,20 +86,22 @@ export default class Generator {
 
   private getExportStr(registerKey, dataKeys) {
     const exportList = this.contentRegistration[registerKey] || [];
-    const { importStr, exportStr } = generateExports(exportList);
-    const [importStrKey, exportStrKey] = dataKeys;
+    const { importStr, exportStr, extraStr } = generateExports(exportList);
+    const [importStrKey, exportStrKey, extraStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
+      [extraStrKey]: extraStr,
     };
   }
 
   public parseRenderData() {
-    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.projectRoot});
+    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.projectRoot });
     this.renderData = {
       ...this.renderData,
       ...this.getExportStr('addIceExport', ['iceImports', 'iceExports']),
       ...this.getExportStr('addIceTypesExport', ['iceTypesImports', 'iceTypesExports']),
+      ...this.getExportStr('addIceAppConfigTypes', ['iceIAppConfigTypesImports', 'iceIAppConfigTypesExports', 'iceIAppTypes']), // add types to the AppConfig & IApp
       globalStyle: globalStyles.length && globalStyles[0],
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
@@ -118,7 +120,7 @@ export default class Generator {
 
   public async render() {
     this.rerender = true;
-    const ejsTemplates = await globby(['**/*'], { cwd: this.templateDir});
+    const ejsTemplates = await globby(['**/*'], { cwd: this.templateDir });
     this.parseRenderData();
     ejsTemplates.forEach((template) => {
       const templatePath = path.join(this.templateDir, template);
@@ -135,7 +137,7 @@ export default class Generator {
 
   public renderFile: IRenderFile = (templatePath, targetPath, extraData = {}) => {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    let content = ejs.render(templateContent, {...this.renderData, ...extraData});
+    let content = ejs.render(templateContent, { ...this.renderData, ...extraData });
     try {
       content = prettier.format(content, {
         parser: 'typescript',

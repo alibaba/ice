@@ -2,7 +2,7 @@
  * @file nest.
  * @author tony7lee
  */
-import { ICollectItem } from '../types';
+import { ICollectItem } from '../types/collector';
 
 /**
  * recursive nest loop for layout page

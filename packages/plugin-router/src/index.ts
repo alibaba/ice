@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin } from '@alib/build-scripts';
-import { IRouterOptions } from './types';
+import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 
 // compatible with $ice/routes
@@ -45,9 +45,12 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   applyMethod('addIceExport', { source: './router' });
 
   // copy types
-  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types.ts'));
-  applyMethod('addIceTypesExport', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
-
+  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));
+  fse.copySync(path.join(__dirname, '../src/types/base.ts'), path.join(iceTempPath, 'router/types/base.ts'));
+  // set IAppRouterProps to IAppConfig
+  applyMethod('addIceAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+  // export IRouterConfig to the public
+  applyMethod('addIceTypesExport', { source: './router/types' });
   // modify webpack config
   onGetWebpackConfig((config) => {
     // add alias

@@ -64,10 +64,10 @@ export default (api) => {
       ['react', rootDir],
       ['react-dom', rootDir]
     ];
-    basicDependencies.forEach((dep: string[]|string): void => {
+    basicDependencies.forEach((dep: string[] | string): void => {
       const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
       const aliasPath = searchFolder
-        ? require.resolve(depName, { paths: [searchFolder]})
+        ? require.resolve(depName, { paths: [searchFolder] })
         : require.resolve(depName);
       config.resolve.alias.set(depName, path.dirname(aliasPath));
     });
@@ -152,7 +152,7 @@ export default (api) => {
   // pageGenerator.addPageExport('Index', { exportName: 'store', source: './store' });
 
   // registerMethod for add export
-  const regsiterKeys = ['addIceExport', 'addIceTypesExport'];
+  const regsiterKeys = ['addIceExport', 'addIceTypesExport', 'addIceAppConfigTypes'];
   regsiterKeys.forEach((registerKey) => {
     registerMethod(registerKey, (exportData) => {
       generator.addExport(registerKey, exportData);

@@ -14,7 +14,3 @@ export interface IInterceptors {
   request?: IInterceptorRequest;
   response?: IInterceptorResponse;
 }
-
-export interface IRequest extends AxiosRequestConfig {
-  interceptors?: IInterceptors;
-}
