@@ -8,10 +8,15 @@ const appConfig: IAppConfig = {
     baseURL: '/api',
     interceptors: {
       response: {
+        // 可选的
         onConfig: (config) => {
           console.log({history});
           return config;
         },
+        // 可选的
+        onError: (error) => {
+          return Promise.reject(error);
+        }
       },
     }
   }
