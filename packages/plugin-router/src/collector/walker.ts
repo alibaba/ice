@@ -5,7 +5,7 @@
 
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { IIgore, IgnoreOptions, IgnoreType } from '../types';
+import { IIgore, IgnoreOptions, IgnoreType } from '../types/collector';
 import {
   getPagePaths,
   upperCaseFirst,

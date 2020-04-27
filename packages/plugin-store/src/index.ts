@@ -16,7 +16,7 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
 
   // set IStore to IAppConfig
-  applyMethod('addIceTypesExport', { source: './store', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  applyMethod('addIceAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
   // render template/types.ts.ejs to .ice/store/types.ts
   const typesTemplateContent = fse.readFileSync(typesTemplatePath, 'utf-8');

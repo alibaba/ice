@@ -18,7 +18,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
   });
 
   await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(iceTempPath, 'types/icestark.ts'));
-  applyMethod('addIceTypesExport', { source: './types/icestark', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  applyMethod('addIceAppConfigTypes', { source: './types/icestark', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
 };
 
 export default plugin;

@@ -4,7 +4,7 @@
  */
 
 import { fillTabWith } from '../utils';
-import { ICollectItem } from '../types';
+import { ICollectItem } from '../types/collector';
 
 interface IPlayload {
   nestImports: string[];
