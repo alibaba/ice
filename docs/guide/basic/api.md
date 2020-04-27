@@ -156,6 +156,44 @@ function Home() {
 };
 ```
 
+### useSearchParams
+
+useSearchParams hook 用于函数组件中解析查询参数。
+
+假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
+
+```ts
+import { useSearchParams } from 'ice';
+
+function Home() {
+  const searchParams = useSearchParams()
+  // console.log(searchParams) 
+  // { foo: 'bar' }
+}
+```
+
+### withSearchParams
+
+通过在 Class 组件上添加 `withSearchParams` 装饰器，可以获取到当前 URL 的查询参数对象。
+
+假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
+
+```ts
+import { withSearchParams } from 'ice';
+
+@withSearchParams
+class Home extends React.Component {
+  public render() {
+    const { searchParams } = this.props;
+    // console.log(searchParams);
+    // { foo: bar }
+    return (
+      <>Foo</>
+    );
+  }
+}
+```
+
 ### withRouter
 
 通过在 Class 组件上添加 `withRouter` 装饰器，可以获取到路由的 `history`、`location`、`match` 对象。
