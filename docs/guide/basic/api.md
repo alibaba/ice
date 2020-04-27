@@ -293,6 +293,20 @@ appConfig 的类型定义。
 createApp();
 ```
 
+### IRouterConfig
+
+路由配置的类型定义。
+
+```diff
++import { IRouterConfig } from 'ice';
+
++const routerConfig: IRouterConfig = [
+  
+];
+
+export default routerConfig;
+```
+
 ### IRootDispatch
 
 状态管理中全局模型 dispatch 的类型。
