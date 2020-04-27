@@ -14,7 +14,7 @@ export default (api) => {
 
   const iceTempPath = path.join(rootDir, '.ice');
   setValue('ICE_TEMP', iceTempPath);
-  const tsEntryFiles = globby.sync(['src/app.@(ts?(x))'], { cwd: rootDir });
+  const tsEntryFiles = globby.sync(['src/app.@(ts?(x))', 'src/pages/*/app.@(ts?(x))'], { cwd: rootDir });
   const projectType = tsEntryFiles.length ? 'ts' : 'js';
   setValue('PROJECT_TYPE', projectType);
 
