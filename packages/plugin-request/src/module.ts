@@ -12,16 +12,16 @@ const module = ({ appConfig }) => {
     // Add a request interceptor
     if (interceptors.request) {
       axiosInstance.interceptors.request.use(
-        interceptors.request.onConfig || function(){},
-        interceptors.request.onError || function() {}
+        interceptors.request.onConfig || function(config){ return config; },
+        interceptors.request.onError || function(error) { return Promise.reject(error); }
       );
     }
 
     // Add a response interceptor
     if (interceptors.response) {
       axiosInstance.interceptors.response.use(
-        interceptors.response.onConfig || function(){},
-        interceptors.response.onError || function(){}
+        interceptors.response.onConfig || function(response){ return response; },
+        interceptors.response.onError || function(error){ return Promise.reject(error); }
       );
     }
   }
