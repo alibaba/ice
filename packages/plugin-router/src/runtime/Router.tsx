@@ -50,7 +50,7 @@ function parseRoutes(routes: RouteItemProps[]) {
 
 export function IceRouter(props: RouterProps) {
   const { type, routes, fallback, ...others } = props;
-  const RouterComponent = type === 'static' ? StaticRouter : Router;
+  const RouterComponent: any = type === 'static' ? StaticRouter : Router;
 
   // parse routes before render
   const parsedRoutes = parseRoutes(routes);

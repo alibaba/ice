@@ -2534,7 +2534,7 @@
 
 "@types/react-router-dom@^5.1.4":
   version "5.1.4"
-  resolved "https://registry.npm.alibaba-inc.com/@types/react-router-dom/download/@types/react-router-dom-5.1.4.tgz#8d3e0306df74af301cc896309e7d4758f1a4bf71"
+  resolved "https://registry.npm.taobao.org/@types/react-router-dom/download/@types/react-router-dom-5.1.4.tgz#8d3e0306df74af301cc896309e7d4758f1a4bf71"
   integrity sha1-jT4DBt90rzAcyJYwnn1HWPGkv3E=
   dependencies:
     "@types/history" "*"
@@ -2543,7 +2543,7 @@
 
 "@types/react-router@*":
   version "5.1.5"
-  resolved "https://registry.npm.alibaba-inc.com/@types/react-router/download/@types/react-router-5.1.5.tgz#7b2f9b7cc3d350e92664c4e38c0ef529286fe628"
+  resolved "https://registry.npm.taobao.org/@types/react-router/download/@types/react-router-5.1.5.tgz#7b2f9b7cc3d350e92664c4e38c0ef529286fe628"
   integrity sha1-ey+bfMPTUOkmZMTjjA71KShv5ig=
   dependencies:
     "@types/history" "*"
