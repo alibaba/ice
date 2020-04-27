@@ -6,7 +6,7 @@
       "ignoreHtmlTemplate": false
     }
   },
-  "eslintLoaderOptions": {
+  "eslint": {
     "disable": false,
     "quiet": true
   }

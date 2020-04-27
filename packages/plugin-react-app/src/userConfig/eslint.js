@@ -1,7 +1,10 @@
 const path = require('path');
 
-module.exports = (config, eslintLoaderOptions, { rootDir }) => {
-  const { disable, ...args } = eslintLoaderOptions;
+module.exports = (config, eslint, { rootDir }) => {
+  if (typeof eslint === 'boolean' && eslint === false) {
+    return config;
+  }
+  const { disable, ...args } = eslint;
   if (!disable) {
     const appSrc = path.join(rootDir, 'src');
     config.module
