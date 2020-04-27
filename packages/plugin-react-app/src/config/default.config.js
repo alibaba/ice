@@ -11,7 +11,7 @@ module.exports = {
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
-    noInfo: true,
+    logLevel: 'silent',
     hot: true,
     publicPath: '/',
     quiet: false,
