@@ -55,5 +55,5 @@ module.exports = {
   compileDependencies: [],
   babelPlugins: [],
   babelPresets: [],
-  eslint: true
+  eslint: false
 };

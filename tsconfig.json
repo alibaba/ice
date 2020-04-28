@@ -13,7 +13,6 @@
     { "path": "packages/plugin-config" },
     { "path": "packages/plugin-mpa" },
     { "path": "packages/plugin-ssr" },
-    { "path": "packages/plugin-rml" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" }
   ]
