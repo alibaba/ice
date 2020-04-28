@@ -388,6 +388,29 @@ icejs 中一般不允许修改该配置。
 
 开启后，在 `build` 构建时，将移除所有内置 html-webpack-plugin 设置，不再生成 html 文件。
 
+### eslint
+
+- 类型：`boolean` | `object`
+- 默认值：`true`
+
+默认开启 eslint 代码检测，如需关闭配置为 `false` 即可。
+
+```json
+{
+  "eslint": false
+}
+```
+
+配置 eslint 相关选项，详见 [eslint-loader](https://github.com/webpack-contrib/eslint-loader)。
+
+```json
+{
+  "eslint": {
+    "quiet": true
+  }
+}
+```
+
 ## 根据环境区分工程配置
 
 参考 [区分不同环境](/docs/guide/basic/mode.md)。

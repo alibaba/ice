@@ -114,7 +114,7 @@ $ npm i --save-dev build-plugin-load-assets
 
 ### 基础使用
 
-dev 命令和 build 命令 加载相同 assets 资源
+start 命令和 build 命令 加载相同 assets 资源
 
 ```json
 {
@@ -139,7 +139,7 @@ dev 命令和 build 命令 加载相同 assets 资源
   "plugins": [
     ["build-plugin-load-assets", {
       "assets": {
-        "dev": ["https://unpkg.com/react@16.7.0/umd/react.development.js", "https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"],
+        "start": ["https://unpkg.com/react@16.7.0/umd/react.development.js", "https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"],
         "build": ["https://unpkg.com/react@16.7.0/umd/react.production.min.js", "https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"]
       }
     }]

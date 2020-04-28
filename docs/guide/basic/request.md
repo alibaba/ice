@@ -20,12 +20,62 @@ async function getList() {
     console.log(data);
   } catch (error) {
     console.error(error);
+  }
 }
 ```
 
+> 注意：request API 当前并未返回整个 response，如有需求可先在 issue 中反馈
+
+常用使用方式：
+
+```js
+request(RequestConfig);
+
+request.get('/user', RequestConfig);
+request.post('/user', data, RequestConfig);
+```
+
+RequestConfig:
+
+```js
+{
+  url: '/user',
+  // `method` is the request method to be used when making the request
+  method: 'get', // default
+  // `headers` are custom headers to be sent
+  headers: {'X-Requested-With': 'XMLHttpRequest'},
+  // `params` are the URL parameters to be sent with the request
+  // Must be a plain object or a URLSearchParams object
+  params: {
+    ID: 12345
+  },
+  // `data` is the data to be sent as the request body
+  // Only applicable for request methods 'PUT', 'POST', and 'PATCH'
+  data: {
+    firstName: 'Fred'
+  },
+  // `timeout` specifies the number of milliseconds before the request times out.
+  // If the request takes longer than `timeout`, the request will be aborted.
+  timeout: 1000, // default is `0` (no timeout)
+  // `withCredentials` indicates whether or not cross-site Access-Control requests
+  // should be made using credentials
+  withCredentials: false, // default
+  // `responseType` indicates the type of data that the server will respond with
+  // options are: 'arraybuffer', 'document', 'json', 'text', 'stream'
+  responseType: 'json', // default
+  // `validateStatus` defines whether to resolve or reject the promise for a given
+  // HTTP response status code. If `validateStatus` returns `true` the promise will be resolved; otherwise, the promise will be rejected.
+  validateStatus: function (status) {
+    return status >= 200 && status < 300; // default
+  },
+}
+```
+
+更完整的配置请参考：https://github.com/axios/axios#request-config
+
 ## useRequest
 
-useRequest 基于 React Hooks 进行封装，因此需要确保 React 版本在 v16.8.0 以上，在组件中使用 `useRequest` 请求数据并渲染：
+useRequest 用在 Function Component，使用 useRequest 可以极大的简化对请求状态（错误/loading）的管理：
 
 ```jsx
 import { useRequest } from 'ice';
@@ -38,7 +88,10 @@ function ListView(props) {
   const dataSource = data ? data.dataSource : [];
 
   useEffect(() => {
-    request();
+    // 实际请求配置会跟 useRequest 的参数合并
+    request({
+      params: { a: 1 }
+    });
   }, []);
 
   return (
@@ -47,7 +100,7 @@ function ListView(props) {
       {loading ? (
         <div>loading....</div>
       ) : (
-        dataSource.map(item => {
+        (dataSource || []).map(item => {
           return <div>{item.name}</div>;
         })
       )}
@@ -58,24 +111,44 @@ function ListView(props) {
 
 ## 请求配置
 
-在实际项目中通常需要对请求进行全局统一的封装，例如配置请求的 baseURL、拦截请求和响应、取消请求等等，这时只需要在应用的的 appConfig 中进行配置即可。
+在实际项目中通常需要对请求进行全局统一的封装，例如配置请求的 baseURL、统一 header、拦截请求和响应等等，这时只需要在应用的的 appConfig 中进行配置即可。
 
 ```js
 import { createApp } from 'ice';
 
 const appConfig = {
   request: {
-    // ref: https://github.com/axios/axios#request-config
     baseURL: '/api',
-    // ref: https://github.com/axios/axios#interceptors
+    headers: {},
+    // ...RequestConfig 其他参数
+
+    // 拦截器
     interceptors: {
       request: {
-        onConfig: (config) => {},
-        onError: (error) => {}
+        onConfig: (config) => {
+          // 发送请求前：可以对 RequestConfig 做一些统一处理
+          config.headers = { a: 1 };
+          return config;
+        },
+        onError: (error) => {
+          return Promise.reject(error);
+        }
       },
       response: {
-        onConfig: (config) => {},
-        onError: (error) => {}
+        onConfig: (response) => {
+          // 请求成功：可以做全局的 toast 展示，或者对 response 做一些格式化
+          if (!response.data.status !== 1) {
+            alert('请求失败');
+          }
+          return response;
+        },
+        onError: (error) => {
+          // 请求出错：服务端返回错误状态码
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          return Promise.reject(error);
+        }
       },
     }
   }
@@ -84,13 +157,33 @@ const appConfig = {
 createApp(appConfig);
 ```
 
-更多使用详见：[axios](https://github.com/axios/axios)
+## 异常处理
+
+无论是拦截器里的错误参数，还是 request/useRequest 返回的错误对象，都符合以下类型：
+
+```js
+{
+  // 服务端返回错误状态码时则存在该字段
+  response: {
+    data: {},
+    status: {},
+    headers: {}
+  },
+  // 服务端未返回结构时则存在该字段
+  request: XMLHttpRequest,
+  // 一定存在，即 RequestConfig
+  config: {
+  },
+  // 一定存在
+  message: ''
+}
+```
 
 ## 高阶指南
 
 ### Mock 接口
 
-项目开发初期，后端接口可能还没开发好或不够稳定，此时前端可以通过 Mock 的方式来模拟接口，参考文档 [本地 Mock 能力](/docs/advace/mock)。
+项目开发初期，后端接口可能还没开发好或不够稳定，此时前端可以通过 Mock 的方式来模拟接口，参考文档 [本地 Mock 能力](/docs/advance/mock)。
 
 ### 使用真实的后端接口调试前端代码
 

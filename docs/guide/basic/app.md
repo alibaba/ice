@@ -49,6 +49,9 @@ const appConfig = {
     // 可选，根节点 DOM 元素，更灵活的 rootId
     mountNode: document.getElementById('#ice-container'),
 
+    // 可选，是否解析路由组件的查询参数
+    parseSearchParams: true
+
     // 可选，自定义添加 Provider
     addProvider: ({ children }) => {
       return <ConfigProvider>{children}</ConfigProvider>;

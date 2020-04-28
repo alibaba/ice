@@ -11,15 +11,16 @@ MPA 应用以页面为维度进行划分，每个页面目录下面可单独配�
 
 ```diff
   ├── public/
-+ │   ├── dashboard.html      # dashboard 页面 HTML
-+ │   ├── index.html          # 未配置页面名称对应的 HTML 会默认使用 index.html
-  │   └── favicon.png         # Favicon
-  ├── src/                    # 源码
-  │   ├── layouts/            # 布局
-  │   └── pages/              # 页面
-  │        ├── Dashboard/     # Dashboard 页面
-+ │        │     ├── app.js    # 页面配置入口
-  │        │     └── index.jsx      # 页面组件入口
++ │   ├── dashboard.html        # dashboard 页面 HTML
++ │   ├── index.html            # 未配置页面名称对应的 HTML 会默认使用 index.html
+  │   └── favicon.png           # Favicon
+  ├── src/                      # 源码
+  │   ├── layouts/              # 布局
+  │   └── pages/                # 页面
+  │        ├── Dashboard/       # Dashboard 页面
++ │        │     ├── app.js     # 页面配置入口
+  │        │     ├── routes.js  # 路由配置入口
+  │        │     └── index.jsx  # 页面组件入口
   │        └── Home/
 + │             ├── app.js
   │             └──index.jsx
@@ -40,17 +41,29 @@ MPA 应用以页面为维度进行划分，每个页面目录下面可单独配�
 
 ## 路由配置
 
-开启 MPA 插件后，默认添加路由（包括配置/约定）的逻辑失效，需要手动配置 MPA 应用的路由，在 MPA 场景下一般路由配置比较简单可以直接在 `app.js` 中进行配置：
+开启 MPA 插件后，约定式路由逻辑失效，需要手动配置 MPA 应用的路由：
 
 配置如下：
 
 ```ts
-import { createApp } from 'ice';
+// src/pages/Dashboard/routes.js
 + import Dashboard from './index';
+
+export default [{ path: '/', component: Dashboard }];
+```
+
+## 应用入口
+
+配置完路由后在应用入口 `app.js` 中进行引入即可，更多配置[详见](/docs/guide/basic/app):
+
+```ts
+// src/pages/Dashboard/app.js
+import { createApp } from 'ice';
++ import routes from './routes';
 
 const appConfig = {
 + router: {
-+   routes: [{ path: '/', component: Dashboard }]
++   routes
 + }
 };
 

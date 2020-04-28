@@ -156,6 +156,41 @@ function Home() {
 };
 ```
 
+### useSearchParams
+
+用于在非路由函数组件中解析 url 参数。
+
+假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
+
+```tsx
+// src/components/Example
+import { useSearchParams } from 'ice';
+
+function Example() {
+  const searchParams = useSearchParams()
+  // console.log(searchParams); => { foo: 'bar' }
+}
+```
+
+### withSearchParams
+
+与 `useSearchParams` 对应，用在 Class Component 中。
+
+```tsx
+import { withSearchParams } from 'ice';
+
+@withSearchParams
+class Example extends React.Component {
+  render() {
+    const { searchParams } = this.props;
+    // console.log(searchParams); => { foo: bar }
+    return (
+      <>Foo</>
+    );
+  }
+}
+```
+
 ### withRouter
 
 通过在 Class 组件上添加 `withRouter` 装饰器，可以获取到路由的 `history`、`location`、`match` 对象。
@@ -291,6 +326,20 @@ appConfig 的类型定义。
 }
 
 createApp();
+```
+
+### IRouterConfig
+
+路由配置的类型定义。
+
+```diff
++import { IRouterConfig } from 'ice';
+
++const routerConfig: IRouterConfig = [
+
+];
+
+export default routerConfig;
 ```
 
 ### IRootDispatch
