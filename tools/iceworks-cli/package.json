@@ -38,6 +38,7 @@
     "semver": "^6.3.0",
     "sylvanas": "^0.4.3",
     "tar": "^2.0.0",
+    "typescript": "^3.8.3",
     "uppercamelcase": "^3.0.0",
     "user-home": "^2.0.0",
     "validate-npm-package-name": "^3.0.0",
