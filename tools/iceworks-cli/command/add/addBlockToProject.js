@@ -108,8 +108,8 @@ function getProjectType(destDir) {
   log.verbose('projectDir: ', projectDir);
 
   const hasTsconfig = fse.existsSync(path.join(projectDir, 'tsconfig.json'));
-  const hasAppJs = fse.existsSync(path.join(projectDir, 'src/app.js'));
+  const hasAppJs = fse.existsSync(path.join(projectDir, 'src/app.js')) || fse.existsSync(path.join(projectDir, 'src/app.jsx'));
 
-  // icejs 都有 tsconfig，因此需要通过 src/app.js 进一步区分
+  // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
   return (hasTsconfig && !hasAppJs) ? 'ts' : 'js';
 }
