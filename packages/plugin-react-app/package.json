@@ -24,7 +24,7 @@
     "lodash": "^4.17.15",
     "mkcert": "^1.2.0",
     "path-exists": "^4.0.0",
-    "react-dev-utils": "^9.1.0",
+    "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-mock": "^0.1.5"
