@@ -5,6 +5,7 @@ const appConfig: IAppConfig = {
     rootId: 'ice-container',
   },
   request: {
+    returnResponse: true,
     baseURL: '/api',
     interceptors: {
       response: {
