@@ -45,8 +45,10 @@ async function addBlock(options, destDir, tempDir) {
       }
       return Promise.resolve();
     })
-    .then(() => {
-      return getNpmRegistry(npmName, null, null, true);
+    .then(async () => {
+      const materialPkg = await fse.readJson(path.join(destDir, 'package.json'));
+      const { materialConfig } = materialPkg;
+      return getNpmRegistry(npmName, materialConfig, null, true);
     })
     .then((registry) => {
       return getNpmTarball(npmName, 'latest', registry);
