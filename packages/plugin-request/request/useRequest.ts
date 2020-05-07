@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from 'react';
+import { useReducer, useCallback, useRef } from 'react';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from './axiosInstance';
 
@@ -39,7 +39,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
    * Method to make request manually
    * @param {object} config - axios config to shallow merged with options before making request
    */
-  const request = useCallback(async (config?: AxiosRequestConfig) => {
+  const request = usePersistFn(async (config?: AxiosRequestConfig) => {
     try {
       dispatch({
         type: 'loading',
@@ -69,8 +69,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
       });
       throw error;
     }
-    // eslint-disable-next-line
-  }, []);
+  });
 
   return {
     ...state,
@@ -117,6 +116,14 @@ function requestReducer(state, action) {
     default:
       throw new Error();
   }
+}
+
+function usePersistFn<T extends Noop>(fn: T) {
+  const ref = useRef<any>(() => {
+    throw new Error('Cannot call function while rendering.');
+  });
+  ref.current = fn;
+  return useCallback(((...args) => ref.current(...args)) as T, [ref]);
 }
 
 export default useRequest;
