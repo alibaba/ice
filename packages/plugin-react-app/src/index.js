@@ -4,6 +4,7 @@ const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const openBrowser = require('react-dev-utils/openBrowser');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
 const optionConfig = require('./config/option.config');
@@ -179,12 +180,33 @@ module.exports = ({
   }
 
   if (command === 'start') {
-    onHook('after.start.devServer', ({ urls }) => {
-      console.log();
-      console.log(chalk.green(' Starting the development server at:'));
-      console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
-      console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
-      console.log();
+    onHook('after.start.compile', ({ urls, stats }) => {
+      const statsJson = stats.toJson({
+        all: false,
+        errors: true,
+        warnings: true,
+        timings: true,
+      });
+      const messages = formatWebpackMessages(statsJson);
+      const isSuccessful = !messages.errors.length && !messages.warnings.length;
+      if (isSuccessful) {
+        console.log();
+        console.log(chalk.green(' Starting the development server at:'));
+        console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
+        console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
+        console.log();
+
+        console.log(stats.toString({
+          errors: false,
+          warnings: false,
+          colors: true,
+          assets: true,
+          chunks: false,
+          entrypoints: false,
+          modules: false,
+          timings: false
+        }));
+      }
     });
   }
 
