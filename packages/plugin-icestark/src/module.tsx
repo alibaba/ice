@@ -63,22 +63,26 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     });
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
-    const history = createHistory(type, basename);
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
+    const RootApp = ({ routes }) => {
+      const [routerHistory] = useState(createHistory(type, basename));
+      const routerProps = {
+        type,
+        routes,
+        basename,
+        history: routerHistory,
+      };
+      return <IceRouter {...routerProps} />;
+    };
+
     const frameworkRouter = (routes) => () => {
       const [appPathname, setAppPathname] = useState('');
       const [appEnter, setAppEnter] = useState({});
       const [appLeave, setAppLeave] = useState({});
 
       const [apps, setApps] = useState(null);
-      const routerProps = {
-        type,
-        routes,
-        basename,
-        history
-      };
       const BasicLayout = Layout || DefaultLayout;
       const RenderAppRoute = CustomAppRoute || AppRoute;
 
@@ -130,7 +134,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
                 <RenderAppRoute
                   path="/"
                   render={() => {
-                    return <IceRouter {...routerProps} />;
+                    return <RootApp routes={routes} />;
                   }}
                 />
               )}
