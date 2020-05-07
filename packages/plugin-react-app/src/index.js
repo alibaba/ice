@@ -11,6 +11,9 @@ const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
 const setWebpackbar = require('./config/setWebpackbar');
 
+// eslint-disable-next-line
+const chalk = require('chalk');
+
 module.exports = ({
   onGetWebpackConfig,
   onGetJestConfig,
@@ -69,12 +72,17 @@ module.exports = ({
     'process.env.APP_MODE': JSON.stringify(appMode),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
+
   config
     .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [defineVariables])
       .end()
     .plugin('friendly-error')
-      .use(require.resolve('friendly-errors-webpack-plugin'))
+      .use(require.resolve('friendly-errors-webpack-plugin'), [
+        {
+          clearConsole: false,
+        }
+      ])
       .end()
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
@@ -167,6 +175,16 @@ module.exports = ({
         // defaultJestConfig.moduleNameMapper already combine jestConfig.moduleNameMapper
         moduleNameMapper: defaultJestConfig.moduleNameMapper,
       };
+    });
+  }
+
+  if (command === 'start') {
+    onHook('after.start.devServer', ({ urls }) => {
+      console.log();
+      console.log(chalk.green(' Starting the development server at:'));
+      console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
+      console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
+      console.log();
     });
   }
 
