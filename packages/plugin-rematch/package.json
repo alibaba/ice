@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-rematch",
-  "version": "1.2.1",
+  "version": "1.2.2-alpha.0",
   "description": "Easy use `rematch` in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
