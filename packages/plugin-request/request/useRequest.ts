@@ -6,7 +6,7 @@ interface Result<D = any> {
   data: D;
   error: Error | undefined;
   loading: boolean;
-  request: (...args: any[]) => any;
+  request: (config?: AxiosRequestConfig) => Promise<void>;
 }
 
 type Noop = (...args: any[]) => any;
@@ -19,7 +19,6 @@ type Noop = (...args: any[]) => any;
  *   @param {object} data - data in axios response
  *   @param {object} error - HTTP or use defined error
  *   @param {boolean} loading - loading status of the request
- *   @param {object} response - response of axios (https://github.com/axios/axios#response-schema)
  *   @param {function} request - function to make the request manually
  */
 function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
@@ -42,11 +41,11 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
         type: 'loading'
       });
 
-      let response;
+      let data;
       if (typeof options === 'function') {
-        response = await options(config);
+        data = await options(config);
       } else {
-        response = await customRequest({
+        data = await customRequest({
           ...options,
           ...config
         });
@@ -54,7 +53,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
 
       dispatch({
         type: 'success',
-        data: response
+        data
       });
     } catch (error) {
       dispatch({
