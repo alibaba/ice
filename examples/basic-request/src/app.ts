@@ -1,17 +1,16 @@
-import { createApp, IAppConfig, history } from 'ice';
+import { createApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
   },
   request: {
-    returnResponse: true,
+    returnResponse: false,
     baseURL: '/api',
     interceptors: {
       response: {
         // 可选的
         onConfig: (config) => {
-          console.log({history});
           return config;
         },
         // 可选的

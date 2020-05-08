@@ -59,7 +59,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
 
       dispatch({
         type: 'success',
-        data: response,
+        data: returnResponse ? response.data : response,
         response: returnResponse ? response : null
       });
     } catch (error) {
