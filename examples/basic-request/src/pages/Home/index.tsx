@@ -30,18 +30,18 @@ const BuiltInRequestDemo1 = () => {
 
 const BuiltInRequestDemo2 = () => {
   console.clear();
-  const { request: fetchUser2, ...rest2 } = useRequest(service.getUser);
-  console.log('通过 Service + useRequest 调用:', {...rest2});
+  const { request: fetchUser, ...rest } = useRequest(service.getUser);
+  console.log('通过 Service + useRequest 调用:', {...rest});
 
   return (
-    <button type='button' onClick={fetchUser2}>通过 Service + useRequest 调用</button>
+    <button type='button' onClick={fetchUser}>通过 Service + useRequest 调用</button>
   )
 }
 
 const CustomRequestDemo = () => {
   console.clear();
-  const { data, loading, request: fetchRepo } = useRequest(service.getRepo);
-  console.log('自定义请求进行调用:', data);
+  const { data, loading, error, request: fetchRepo } = useRequest(service.getRepo);
+  console.log('自定义请求进行调用:', { data, loading, error });
   useEffect(() => {
     fetchRepo();
   }, [fetchRepo]);
