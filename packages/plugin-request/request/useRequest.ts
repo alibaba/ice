@@ -1,14 +1,12 @@
 import { useReducer, useCallback, useRef } from 'react';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import axiosInstance from './axiosInstance';
+import { AxiosRequestConfig } from 'axios';
 import customRequest from './request';
 
 interface Result<D = any> {
   data: D;
-  response?: AxiosResponse<D>;
   error: Error | undefined;
   loading: boolean;
-  request: (config?: AxiosRequestConfig) => Promise<void>;
+  request: (...args: any[]) => any;
 }
 
 type Noop = (...args: any[]) => any;
@@ -25,14 +23,12 @@ type Noop = (...args: any[]) => any;
  *   @param {function} request - function to make the request manually
  */
 function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
-  const { returnResponse } = axiosInstance.defaults;
   const initialState = Object.assign(
     {
       data: null,
       error: null,
       loading: false,
     },
-    returnResponse ? { response: null } : null
   );
   const [state, dispatch] = useReducer(requestReducer, initialState);
 
@@ -43,8 +39,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
   const request = usePersistFn(async (config?: AxiosRequestConfig) => {
     try {
       dispatch({
-        type: 'loading',
-        response: returnResponse ? {} : null
+        type: 'loading'
       });
 
       let response;
@@ -59,13 +54,11 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
 
       dispatch({
         type: 'success',
-        data: returnResponse ? response.data : response,
-        response: returnResponse ? response : null
+        data: response
       });
     } catch (error) {
       dispatch({
         type: 'error',
-        response: returnResponse ? {} : null,
         error
       });
       throw error;
@@ -85,35 +78,25 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
  * @return {object} new status
  */
 function requestReducer(state, action) {
-  const response = action.response ? { response: action.response } : null;
   switch (action.type) {
     case 'loading':
-      return Object.assign(
-        {
-          data: null,
-          error: null,
-          loading: true,
-        },
-        response
-      )
+      return {
+        data: null,
+        error: null,
+        loading: true,
+      }
     case 'success':
-      return Object.assign(
-        {
-          data: action.data,
-          error: null,
-          loading: false,
-        },
-        response
-      )
+      return {
+        data: action.data,
+        error: null,
+        loading: false,
+      }
     case 'error':
-      return Object.assign(
-        {
-          data: null,
-          error: action.error,
-          loading: false,
-        },
-        response
-      )
+      return {
+        data: null,
+        error: action.error,
+        loading: false,
+      }
     default:
       throw new Error();
   }

@@ -2,6 +2,6 @@ import { AxiosRequestConfig } from 'axios';
 import { IInterceptors } from './base';
 
 export interface IRequest extends AxiosRequestConfig {
-  returnResponse?: boolean;
+  withFullResponse?: boolean;
   interceptors?: IInterceptors;
 }
