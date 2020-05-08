@@ -118,7 +118,7 @@ function formatPagePath({ routesPath, value, alias, applyMethod }: IGetConfigRou
       newValue = value.replace(/\.{2}\/src\/pages/, './pages/index');
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `ice/${pageName}/${pageName}` : '';
+      newValue = pageName ? `ice/${pageName}/${pageName}.tsx` : '';
     }
     return newValue;
   }
