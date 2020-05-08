@@ -13,9 +13,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
@@ -26,6 +23,13 @@
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",
     "prettier": "^2.0.2"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
   },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
 }
