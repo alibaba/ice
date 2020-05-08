@@ -18,6 +18,8 @@
     "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
+    "upload-oss": "node scripts/upload-oss.js",
+    "generate:docs": "node ./scripts/generate-docs-database.js",
     "clean": "lerna clean --yes && rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix"
@@ -31,6 +33,8 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@ice/spec": "^1.0.0",
+    "ali-oss": "^6.7.0",
+    "dependency-check": "^4.1.0",
     "eslint": "^6.8.0",
     "esm": "^3.2.25",
     "execa": "^4.0.0",
@@ -38,14 +42,15 @@
     "glob": "^7.1.6",
     "husky": "^3.1.0",
     "lerna": "^3.16.4",
+    "mark-twain": "^2.0.3",
+    "nodejieba": "^2.4.1",
     "npm-run-all": "^4.1.5",
     "nsfw": "1.2.6",
     "pify": "^4.0.1",
     "rimraf": "^3.0.0",
     "simple-git": "^1.132.0",
     "ts-node": "^8.6.1",
-    "typescript": "^3.7.4",
-    "dependency-check": "^4.1.0"
+    "typescript": "^3.7.4"
   },
   "dependencies": {
     "core-js": "^3.6.4"
