@@ -1,6 +1,7 @@
 import { useReducer, useCallback, useRef } from 'react';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from './axiosInstance';
+import customRequest from './request';
 
 interface Result<D = any> {
   data: D;
@@ -50,7 +51,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
       if (typeof options === 'function') {
         response = await options(config);
       } else {
-        response = await axiosInstance({
+        response = await customRequest({
           ...options,
           ...config
         });
@@ -58,7 +59,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
 
       dispatch({
         type: 'success',
-        data: response.data,
+        data: response,
         response: returnResponse ? response : null
       });
     } catch (error) {
