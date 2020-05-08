@@ -18,7 +18,7 @@
     "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
-    "upload-oss": "node scripts/upload-oss.js",
+    "upload:oss": "node scripts/upload-oss.js",
     "generate:docs": "node ./scripts/generate-docs-database.js",
     "clean": "lerna clean --yes && rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
