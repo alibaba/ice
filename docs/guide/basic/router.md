@@ -51,6 +51,45 @@ export default routerConfig;
 
 > 注意：路由有一个按顺序匹配的规则，从上到下一旦命中路由匹配规则就会停止遍历，因此如果你在最前面配置了 / 这样一个路由，则所有的路由都会命中该规则，导致其他路由没有效果，所以在开发时要注意路由的顺序以及 exact 属性的使用。
 
+### 动态路由
+
+在某些场景下可能需要动态指定路由，使用方式如下：
+
+* 动态路由配置
+
+```ts
+import UserInfo from '@/pages/UserInfo';
+
+// src/routes.ts
+const routerConfig = [
+  {
+    path: '/user/:id',
+    exact: true,
+    component: UserInfo,
+  }
+]
+```
+
+* 动态路由跳转
+
+```tsx
+import { Link } from 'ice';
+export default = () => {
+  return (
+    <Link to='/user/123'>go</Link>
+  )
+}
+```
+
+* 获取动态路由参数
+```tsx
+import { useParams } from 'ice';
+export default = () => {
+  const { id } = useParams();
+  // console.log(id) // 123
+}
+```
+
 ## 约定式路由
 
 顾名思义，约定式路由会根据项目的目录结构自动生成路由配置，无需开发者手动配置。约定式路由虽然不需要用户手动配置，但因为路由配置本身存在很多规则，因此约定式路由也需要约定一系列的目录结构设计，这本身也有一定的学习成本。
