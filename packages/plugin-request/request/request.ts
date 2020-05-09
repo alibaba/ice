@@ -20,6 +20,10 @@ interface IRequest extends IRequestProps {
 const request = async function (options) {
   try {
     const response = await axiosInstance(options);
+    // @ts-ignore
+    if (axiosInstance.defaults.withFullResponse || options.withFullResponse) {
+      return response;
+    }
     return response.data;
   } catch (error) {
     console.error(error);
