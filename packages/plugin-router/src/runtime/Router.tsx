@@ -14,7 +14,13 @@ import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types
 import { IRouterConfig } from '../types';
 
 function wrapperRoute(component, routerWrappers) {
-  return (routerWrappers || []).reduce((acc, curr) => {
+  let mergedRouteWrappers = routerWrappers || [];
+  const wrappers = (component && component.pageConfig && Array.isArray(component.pageConfig.wrappers)) ? component.pageConfig.wrappers : [];
+  if (wrappers.length) {
+    mergedRouteWrappers = routerWrappers.concat(wrappers);
+  }
+
+  return (mergedRouteWrappers).reduce((acc, curr) => {
     const compose = curr(acc);
     if (acc.pageConfig) {
       compose.pageConfig = acc.pageConfig;
@@ -39,13 +45,10 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
 function parseRoutes(routes: RouteItemProps[]) {
   return routes.map((route) => {
     const { children, component, routeWrappers, ...others } = route;
-    let mergedRouteWrappers = routeWrappers;
-    if (route.wrappers && route.wrappers.length) {
-      mergedRouteWrappers = routeWrappers.concat(route.wrappers);
-    }
+
     const parsedRoute: IRouterConfig = { ...others };
     if (component) {
-      parsedRoute.component = getRouteComponent(component, children ? [] : mergedRouteWrappers);
+      parsedRoute.component = getRouteComponent(component, children ? [] : routeWrappers);
     }
     if (children) {
       parsedRoute.children = parseRoutes(children);
