@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/icejs.git"
+    "url": "git@github.com:alibaba/ice.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

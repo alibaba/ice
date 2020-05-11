@@ -16,9 +16,11 @@
     "@alifd/fusion-collector": "^1.2.5",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "build-scripts-config": "^0.1.0",
+    "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.3.1",
     "eslint-loader": "^4.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "^3.2.0",
     "lodash": "^4.17.15",
@@ -27,10 +29,15 @@
     "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-mock": "^0.1.5"
+    "webpack-dev-mock": "^0.1.5",
+    "webpackbar": "^4.0.0"
   },
   "devDependencies": {
     "webpack": "^4.41.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
   },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
 }

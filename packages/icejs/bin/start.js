@@ -59,6 +59,7 @@ const onUserChange = () => {
 };
 
 module.exports = () => {
+  process.env.DISABLE_STATS = true;
   restartProcess();
 
   const watcher = chokidar.watch(configPath, {

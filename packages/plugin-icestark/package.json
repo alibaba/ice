@@ -30,6 +30,10 @@
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
+  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   }
