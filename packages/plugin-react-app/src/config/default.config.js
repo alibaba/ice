@@ -55,7 +55,5 @@ module.exports = {
   compileDependencies: [],
   babelPlugins: [],
   babelPresets: [],
-  eslintLoaderOptions: {
-    disable: false
-  }
+  eslint: false
 };
