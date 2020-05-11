@@ -10,8 +10,8 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
     compress: true,
-    clientLogLevel: 'none',
     logLevel: 'silent',
+    clientLogLevel: 'none',
     hot: true,
     publicPath: '/',
     quiet: false,
