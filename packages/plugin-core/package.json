@@ -27,5 +27,9 @@
     "globby": "^11.0.0",
     "prettier": "^2.0.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
+  },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
 }
