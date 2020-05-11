@@ -11,6 +11,8 @@ module.exports = {
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
+    // Use 'ws' instead of 'sockjs-node' on server since webpackHotDevClient is using native websocket
+    transportMode: 'ws',
     logLevel: 'silent',
     hot: true,
     publicPath: '/',
