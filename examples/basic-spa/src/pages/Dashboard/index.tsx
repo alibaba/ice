@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useSearchParams, withSearchParams } from 'ice';
-import wrapperPage from '@/components/WrapperPage';
 
 @withSearchParams
 class Foo extends React.PureComponent {
@@ -34,8 +33,7 @@ const Dashboard = (props) => {
 
 
 Dashboard.pageConfig = {
-  title: 'Dashboard Page',
-  wrappers: [wrapperPage]
+  title: 'Dashboard Page'
 };
 
 export default Dashboard;
