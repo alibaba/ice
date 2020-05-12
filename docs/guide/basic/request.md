@@ -39,6 +39,7 @@ RequestConfig:
 
 ```js
 {
+  // `url` is the server URL that will be used for the request
   url: '/user',
   // `method` is the request method to be used when making the request
   method: 'get', // default
@@ -68,6 +69,8 @@ RequestConfig:
   validateStatus: function (status) {
     return status >= 200 && status < 300; // default
   },
+  // should be made return full response
+  withFullResponse: 'false',
 }
 ```
 
@@ -178,6 +181,9 @@ import { createApp } from 'ice';
 
 const appConfig = {
   request: {
+    // 可选的，全局设置 request 是否返回 response 对象，默认为 false
+    withFullResponse: 'false',
+
     baseURL: '/api',
     headers: {},
     // ...RequestConfig 其他参数
