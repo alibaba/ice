@@ -15,7 +15,7 @@ import { request } from 'ice'
 async function getList() {
   try {
     const data = await request({
-      url: '/api/list'
+      url: '/api/user'
     });
     console.log(data);
   } catch (error) {
@@ -75,22 +75,32 @@ RequestConfig:
 
 ## useRequest
 
-useRequest 用在 Function Component，使用 useRequest 可以极大的简化对请求状态（错误/loading）的管理：
+* 可以用在 Function Component，使用 useRequest 可以极大的简化对请求状态（error/loading）的管理。
+* 可以接收一个 `Object` 或者是 `(...args)=> any` 作为参数。
+
+### 对象参数
+
+**函数签名：**
+
+```ts
+const { data, loading, error, request } = useRequest(options: AxiosRequestConfig)
+```
+
+**示例代码：**
 
 ```jsx
 import { useRequest } from 'ice';
 
-function ListView(props) {
+export default = (props) => {
   const { data, loading, error, request } = useRequest({
-    url: '/api/list',
+    url: '/api/user',
     method: 'GET',
   });
-  const dataSource = data ? data.dataSource : [];
 
   useEffect(() => {
     // 实际请求配置会跟 useRequest 的参数合并
     request({
-      params: { a: 1 }
+      params: { id: 1 }
     });
   }, []);
 
@@ -100,7 +110,57 @@ function ListView(props) {
       {loading ? (
         <div>loading....</div>
       ) : (
-        (dataSource || []).map(item => {
+        (data || []).map(item => {
+          return <div>{item.name}</div>;
+        })
+      )}
+    </>
+  );
+}
+```
+
+### 函数参数
+
+**函数签名：**
+
+```ts
+const { data, loading, error, request } = useRequest((...args: any[]) => any);
+```
+
+**示例代码：**
+
+* 定义 Service 接口
+
+```ts
+import { request } from 'ice';
+export default {
+  async getUser(id: number) {
+    return await request(`/api/user/${id}`)
+  },
+}
+```
+
+* 消费 Service 接口
+
+```ts
+import { useRequest } from 'ice';
+import service from '@/service';
+
+export default = (props) => {
+  const { data, loading, error, request } = useRequest(service.getUser);
+
+  useEffect(() => {
+    // 传入接口的参数
+    request(1);
+  }, []);
+
+  return (
+    <>
+      {error && <div>{error.message}</div>}
+      {loading ? (
+        <div>loading....</div>
+      ) : (
+        (data || []).map(item => {
           return <div>{item.name}</div>;
         })
       )}
