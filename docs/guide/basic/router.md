@@ -16,6 +16,7 @@ icejs 提供了 **配置式路由** 和 **约定式路由** 两种方案，默�
 import UserLayout from '@/Layouts/UserLayout';
 import UserLogin from '@/pages/UserLogin';
 import NotFound from '@/components/NotFound';
+import wrapperPage from '@/components/WrapperPage';
 
 const routerConfig = [
   // 分组路由，children 里的路由会将父节点的 component 作为布局组件
@@ -27,6 +28,8 @@ const routerConfig = [
         path: '/login',
         exact: true,
         component: UserLogin,
+        // 配置路由的高阶组件
+        wrappers: [wrapperPage]
       },
       {
         path: '/',
