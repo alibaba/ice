@@ -11,17 +11,15 @@ interface IResult<D = any> {
 type IOptionFn = (...args: any[]) => any;
 type IOptionType = IOptionFn | AxiosRequestConfig;
 
-interface IServiceResult<T extends IOptionFn> extends IResult {
-  request: (...args: Parameters<T>) => void;
-}
-
 interface IOptionResult extends IResult {
   request: (args?: AxiosRequestConfig) => void;
 }
 
-type IUseRequest = <T extends IOptionType>(options: T) => T extends IOptionFn
-  ? IServiceResult<T>
-  : IOptionResult;
+interface IServiceResult<T extends IOptionFn> extends IResult {
+  request: (...args: Parameters<T>) => void;
+}
+
+type IUseRequest = <T extends IOptionType>(options: T) => T extends IOptionFn ? IServiceResult<T> : IOptionResult;
 
 /**
  * Hooks to make ajax request
@@ -121,14 +119,5 @@ function usePersistFn<T extends IOptionFn>(fn: T) {
   ref.current = fn;
   return useCallback(((...args) => ref.current(...args)) as T, [ref]);
 }
-
-// const requestCallback = (name: number, type: string) => {
-//   console.log(name, type)
-// };
-
-// const { request: a } = auseRequest<typeof requestCallback>(requestCallback);
-// const { request: b } = auseRequest<AxiosRequestConfig>({ url: '/api' });
-// a(1, '1');
-// b();
 
 export default useRequest;
