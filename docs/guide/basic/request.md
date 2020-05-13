@@ -3,9 +3,112 @@ title: 数据请求
 order: 4
 ---
 
-大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了请求功能，基于社区主流的 axios 进行封装，提供了 request 和 useRequest Hooks 方法。
+大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了请求功能，基于社区主流的 axios 进行，简化和规范，提供了 request 和 useRequest Hooks 方法。
 
-## request
+## 基础规范
+
+在 icejs 框架中，约定和规范了一套从 UI 交互到请求服务端数据的完整方案，主要流程如下：
+
+* `service`：约定数据请求统一管理在 services 目录下，包含全局/页面/组件级别三种；
+* `model`：约定数据请求统一在 models 里进行调用；
+* `view`：最终在视图里通过调用 models 的 effect 触发数据请求和交互。
+
+## 目录约定
+
+目录组织如下：
+
+```diff
+ src
+ ├── models
++├── services                       // 定义全局数据请求
++│   └── user.ts
+ └── pages
+ |   ├── Home
+ |   │   ├── models 
++|   │   ├── services               // 定义页面级数据请求
++|   │   |    └── repo.ts
+ |   │   ├── components
+ |   │   |    └── Todo
+ |   |   │    |    ├── index.tsx
+ |   |   │    |    ├── model.ts
++|   |   │    |    └── service.ts   // 定义组件级数据请求
+ |   │   └── index.tsx
+ |   ├── About
+ |   │   ├── services
+ |   │   ├── components
+ |   │   └── index.tsx
+ └── app.ts
+```
+
+## 定义 service
+
+通过调用 request 定义数据请求如下：
+
+```ts
+import { request } from 'ice';
+
+export default {
+  async getUser() {
+    return await request('/api/user')
+  },
+
+   async getRepo(id) {
+    return await customFetch(`/api/repo/${id}`)
+  }
+}
+```
+
+## 消费 service
+
+在模型中调用定义好的 services：
+
+```ts
+import userService from '@/services/user';
+
+// src/models/user.ts
+export default {
+  state: {
+    name: 'taoxiaobao',
+    age: 20,
+  },
+  reducers: {
+    update(prevState, payload) {
+      return {...prevState, ...payload}
+    }
+  },
+  effects: (dispatch) => {
+    async fetchUserInfo() {
+      const data = await userService.getUser();
+      dispatch.user.update(data);
+    }
+  }
+}
+```
+
+* 在视图中调用模型方法：
+
+```ts
+import React, { useEffect } from 'react';
+import { store } from 'ice';
+
+const HomePage = () => {
+  // 调用上一步定义的 user 模型
+  const [ userState, userDispatchers ] = store.useModel('user');
+
+  useEffect(() => {
+    // 调用上一步定义的 user 模型的 fetchUserInfo 方法
+    userDispatchers.fetchUserInfo();
+  }, []);
+
+  return (
+    <>Home</>
+  );
+}
+```
+
+## API
+
+### request
 
 request 基于 axios 进行封装，在使用上与 axios 保持一致，使用方式如下：
 
@@ -24,7 +127,7 @@ async function getList() {
 }
 ```
 
-> 注意：request API 当前并未返回整个 response，如有需求可先在 issue 中反馈
+> 注意：request API 默认并未返回整个 response，如需返回可以设置 withFullResponse 属性
 
 常用使用方式：
 
@@ -76,103 +179,71 @@ RequestConfig:
 
 更完整的配置请参考：https://github.com/axios/axios#request-config
 
-## useRequest
+### useRequest
 
 * 可以用在 Function Component，使用 useRequest 可以极大的简化对请求状态（error/loading）的管理。
 * 可以接收一个 `Object` 或者是 `(...args)=> any` 作为参数。
 
-### 对象参数
-
-**函数签名：**
+#### 传入对象作为参数
 
 ```ts
-const { data, loading, error, request } = useRequest(options: AxiosRequestConfig)
+const { data, loading, error, request } = useRequest(options: RequestConfig);
 ```
 
-**示例代码：**
+使用示例：
 
-```jsx
+```ts
 import { useRequest } from 'ice';
 
-export default = (props) => {
-  const { data, loading, error, request } = useRequest({
-    url: '/api/user',
-    method: 'GET',
+export default function HomePage() {
+  const { data, error, isLoading, request } = useRequest({
+    url: '/api/getRepo',
+    params: {
+      id: 123
+    }
   });
 
   useEffect(() => {
-    // 实际请求配置会跟 useRequest 的参数合并
-    request({
-      params: { id: 1 }
-    });
+    request();
   }, []);
 
+
   return (
-    <>
-      {error && <div>{error.message}</div>}
-      {loading ? (
-        <div>loading....</div>
-      ) : (
-        (data || []).map(item => {
-          return <div>{item.name}</div>;
-        })
-      )}
-    </>
+    <>Home</>
   );
 }
 ```
 
-### 函数参数
-
-**函数签名：**
+#### 传入函数作为参数
 
 ```ts
 const { data, loading, error, request } = useRequest((...args: any[]) => any);
 ```
 
-**示例代码：**
-
-* 定义 Service 接口
+使用示例：
 
 ```ts
-import { request } from 'ice';
-export default {
-  async getUser(id: number) {
-    return await request(`/api/user/${id}`)
-  },
-}
-```
-
-* 消费 Service 接口
-
-```ts
+// src/pages/Home/index.tsx
 import { useRequest } from 'ice';
-import service from '@/service';
+import services from '@/services';
 
-export default = (props) => {
-  const { data, loading, error, request } = useRequest(service.getUser);
+export default function HomePage() {
+  const { data, error, isLoading, request } = useRequest(services.getRepo);
 
   useEffect(() => {
-    // 传入接口的参数
-    request(1);
+    // 动态传入参数
+    const id = 123;
+    request(id);
   }, []);
 
+
   return (
-    <>
-      {error && <div>{error.message}</div>}
-      {loading ? (
-        <div>loading....</div>
-      ) : (
-        (data || []).map(item => {
-          return <div>{item.name}</div>;
-        })
-      )}
-    </>
+    <>Home</>
   );
 }
 ```
 
-## 请求配置
+### 请求配置
 
 在实际项目中通常需要对请求进行全局统一的封装，例如配置请求的 baseURL、统一 header、拦截请求和响应等等，这时只需要在应用的的 appConfig 中进行配置即可。
 
