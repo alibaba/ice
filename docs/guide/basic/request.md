@@ -3,11 +3,11 @@ title: 数据请求
 order: 4
 ---
 
-大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了请求功能，基于社区主流的 axios 进行，简化和规范，提供了 request 和 useRequest Hooks 方法。
+大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了数据请求功能，更进一步简化了应用的数据请求流程，基于此提供了 request 和 useRequest Hooks 方法。
 
 ## 基础规范
 
-在 icejs 框架中，约定和规范了一套从 UI 交互到请求服务端数据的完整方案，主要流程如下：
+在 icejs 框架中，约定和规范了一套从 UI 交互到请求服务端数据的完整方案，主要流程：
 
 * `service`：约定数据请求统一管理在 services 目录下，包含全局/页面/组件级别三种；
 * `model`：约定数据请求统一在 models 里进行调用；
@@ -49,11 +49,11 @@ import { request } from 'ice';
 
 export default {
   async getUser() {
-    return await request('/api/user')
+    return await request('/api/user');
   },
 
    async getRepo(id) {
-    return await customFetch(`/api/repo/${id}`)
+    return await customFetch(`/api/repo/${id}`);
   }
 }
 ```
@@ -69,11 +69,11 @@ import userService from '@/services/user';
 export default {
   state: {
     name: 'taoxiaobao',
-    age: 20,
+    age: 20
   },
   reducers: {
     update(prevState, payload) {
-      return {...prevState, ...payload}
+      return { ...prevState, ...payload };
     }
   },
   effects: (dispatch) => {
