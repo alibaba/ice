@@ -127,7 +127,7 @@ const HomePage = () => {
 }
 ```
 
-### 在模型中调用 service
+### 在视图中调用 service
 
 * `service`：约定数据请求统一管理在 services 目录下；
 * `view`：最终在视图里通过 useRequest 直接调用 service 触发数据请求。
