@@ -6,7 +6,8 @@ async function customFetch (url) {
 }
 
 export default {
-  async getRepo() {
+  async getRepo(id: number) {
+    console.log(id);
     return await customFetch('/api/repo')
   },
 
