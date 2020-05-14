@@ -38,10 +38,14 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
 
 function parseRoutes(routes: RouteItemProps[]) {
   return routes.map((route) => {
-    const { children, component, routeWrappers, ...others } = route;
+    const { children, component, routeWrappers, wrappers, ...others } = route;
+    let mergedRouteWrappers = routeWrappers;
+    if (wrappers && wrappers.length) {
+      mergedRouteWrappers = routeWrappers.concat(route.wrappers);
+    }
     const parsedRoute: IRouterConfig = { ...others };
     if (component) {
-      parsedRoute.component = getRouteComponent(component, children ? [] : routeWrappers);
+      parsedRoute.component = getRouteComponent(component, children ? [] : mergedRouteWrappers);
     }
     if (children) {
       parsedRoute.children = parseRoutes(children);

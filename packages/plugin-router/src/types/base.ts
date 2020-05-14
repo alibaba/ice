@@ -29,5 +29,9 @@ export interface RouteItemProps extends Omit<DefaultRouteProps, 'component'> {
 
   component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | IDynamicImportComponent;
 
+  // built-in route wrappers
   routeWrappers?: IRouteWrapper[];
+
+  // custom route wrappers
+  wrappers?: IRouteWrapper[];
 };

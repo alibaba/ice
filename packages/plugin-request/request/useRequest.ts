@@ -1,56 +1,75 @@
-import { useReducer, useCallback } from 'react';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import axiosInstance from './axiosInstance';
+import { useReducer, useCallback, useRef } from 'react';
+import { AxiosRequestConfig } from 'axios';
+import customRequest from './request';
 
-interface Result<D = any> {
-  response: AxiosResponse<D>;
+export interface IAxiosRequestConfig extends AxiosRequestConfig {
+  withFullResponse?: boolean;
+}
+
+interface IResult<D = any> {
   data: D;
   error: Error | undefined;
   loading: boolean;
-  request: (config?: AxiosRequestConfig) => Promise<void>;
 }
+
+type IOptionFn = (...args: any[]) => any;
+type IOptionType = IOptionFn | IAxiosRequestConfig;
+
+interface IOptionResult extends IResult {
+  request: (args?: IAxiosRequestConfig) => void;
+}
+
+interface IServiceResult<T extends IOptionFn> extends IResult {
+  request: (...args: Parameters<T>) => void;
+}
+
+type IUseRequest = <T extends IOptionType>(options: T) => T extends IOptionFn ? IServiceResult<T> : IOptionResult;
 
 /**
  * Hooks to make ajax request
  *
- * @param {object} options - axios config (https://github.com/axios/axios#request-config)
+ * @param {object} options - axios config (https://github.com/axios/axios#request-config) or Promise
  * @return {object}
  *   @param {object} data - data in axios response
- *   @param {object} response - response of axios (https://github.com/axios/axios#response-schema)
  *   @param {object} error - HTTP or use defined error
  *   @param {boolean} loading - loading status of the request
  *   @param {function} request - function to make the request manually
  */
-function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
-  const initialState = {
-    data: null,
-    response: null,
-    error: null,
-    loading: false
-  };
+const useRequest = function (options) {
+  const initialState = Object.assign(
+    {
+      data: null,
+      error: null,
+      loading: false,
+    },
+  );
   const [state, dispatch] = useReducer(requestReducer, initialState);
 
   /**
    * Method to make request manually
    * @param {object} config - axios config to shallow merged with options before making request
    */
-  const request = useCallback(async (config?: AxiosRequestConfig) => {
+  const request = usePersistFn(async (args) => {
     try {
       dispatch({
         type: 'loading'
       });
 
-      const response = await axiosInstance({
-        ...options,
-        ...config
-      });
+      let data;
+      if (typeof options === 'function') {
+        // @ts-ignore
+        data = await options(args);
+      } else {
+        data = await customRequest({
+          ...options,
+          ...args
+        });
+      }
 
       dispatch({
-        type: 'loaded',
-        data: response.data,
-        response,
+        type: 'success',
+        data
       });
-      return response.data;
     } catch (error) {
       dispatch({
         type: 'error',
@@ -58,14 +77,13 @@ function useRequest<D = any>(options: AxiosRequestConfig): Result<D> {
       });
       throw error;
     }
-    // eslint-disable-next-line
-  }, []);
+  });
 
   return {
     ...state,
     request
   };
-}
+} as IUseRequest;
 
 /**
  * Reducer to handle the status of the request
@@ -78,27 +96,32 @@ function requestReducer(state, action) {
     case 'loading':
       return {
         data: null,
-        response: null,
         error: null,
         loading: true,
-      };
-    case 'loaded':
+      }
+    case 'success':
       return {
         data: action.data,
-        response: action.response,
         error: null,
         loading: false,
-      };
+      }
     case 'error':
       return {
         data: null,
-        response: null,
         error: action.error,
         loading: false,
-      };
+      }
     default:
       throw new Error();
   }
+}
+
+function usePersistFn<T extends IOptionFn>(fn: T) {
+  const ref = useRef<any>(() => {
+    throw new Error('Cannot call function while rendering.');
+  });
+  ref.current = fn;
+  return useCallback(((...args) => ref.current(...args)) as T, [ref]);
 }
 
 export default useRequest;

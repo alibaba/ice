@@ -4,11 +4,16 @@ const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const openBrowser = require('react-dev-utils/openBrowser');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
 const optionConfig = require('./config/option.config');
 const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
+const setWebpackbar = require('./config/setWebpackbar');
+
+// eslint-disable-next-line
+const chalk = require('chalk');
 
 module.exports = ({
   onGetWebpackConfig,
@@ -53,11 +58,11 @@ module.exports = ({
 
   const mode = command === 'start' ? 'development' : 'production';
   const config = getWebpackConfig(mode);
-  // set webpack name
-  config.name('Client');
-
   // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
+
+  // set webpackbar
+  setWebpackbar(config);
 
   // DefinePlugin
   const defineVariables = {
@@ -65,9 +70,17 @@ module.exports = ({
     'process.env.APP_MODE': JSON.stringify(appMode),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
+
   config
     .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [defineVariables])
+      .end()
+    .plugin('friendly-error')
+      .use(require.resolve('friendly-errors-webpack-plugin'), [
+        {
+          clearConsole: false,
+        }
+      ])
       .end()
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
@@ -98,6 +111,8 @@ module.exports = ({
     config.plugin('HotModuleReplacementPlugin')
       .use(webpack.HotModuleReplacementPlugin);
   }
+
+  config.name('web');
   registerTask('web', config);
 
   // sort config key to make sure entry config is always excute before injectBabel
@@ -158,6 +173,38 @@ module.exports = ({
         // defaultJestConfig.moduleNameMapper already combine jestConfig.moduleNameMapper
         moduleNameMapper: defaultJestConfig.moduleNameMapper,
       };
+    });
+  }
+
+  if (command === 'start') {
+    onHook('after.start.compile', ({ urls, stats }) => {
+      const statsJson = stats.toJson({
+        all: false,
+        errors: true,
+        warnings: true,
+        timings: true,
+      });
+      const messages = formatWebpackMessages(statsJson);
+      // 包含错误时不打印 localUrl 和 assets 信息
+      const isSuccessful = !messages.errors.length;
+      if (isSuccessful) {
+        console.log(stats.toString({
+          errors: false,
+          warnings: false,
+          colors: true,
+          assets: true,
+          chunks: false,
+          entrypoints: false,
+          modules: false,
+          timings: false
+        }));
+
+        console.log();
+        console.log(chalk.green(' Starting the development server at:'));
+        console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
+        console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
+        console.log();
+      }
     });
   }
 
