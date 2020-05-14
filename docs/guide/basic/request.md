@@ -3,15 +3,7 @@ title: 数据请求
 order: 4
 ---
 
-大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。框架内置提供了数据请求功能，更进一步简化了应用的数据请求流程，基于此提供了 request 和 useRequest Hooks 方法。
-
-## 基础规范
-
-在 icejs 框架中，约定和规范了一套从 UI 交互到请求服务端数据的完整方案，主要流程：
-
-* `service`：约定数据请求统一管理在 services 目录下，包含全局/页面/组件级别三种；
-* `model`：约定数据请求统一在 models 里进行调用；
-* `view`：最终在视图里通过调用 models 的 effect 触发数据请求和交互。
+大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。在 icejs 框架中内置约定和规范了一套从 UI 交互到请求服务端数据的完整方案，更进一步简化了应用的数据请求流程，基于此提供了 request 和 useRequest Hooks 方法。
 
 ## 目录约定
 
@@ -48,17 +40,46 @@ order: 4
 import { request } from 'ice';
 
 export default {
+  // 简单场景
   async getUser() {
     return await request('/api/user');
   },
 
-   async getRepo(id) {
-    return await customFetch(`/api/repo/${id}`);
+  // 参数场景
+  async getRepo(id) {
+    return await request(`/api/repo/${id}`);
+  },
+
+  // 格式化返回值
+  async getDetail(params) {
+    const data = await request({
+      url: `/api/detail`;
+      params,
+    });
+
+    return data.map(item => {
+      return {
+        ...item,
+        price: item.oldPrice,
+        text: item.status === '1' ? '确定' : '取消'
+      };
+    });
   }
 }
 ```
 
 ## 消费 service
+
+消费 service 主要有两种方式：
+
+* 通过模型调用 service
+* 通过视图调用 service
+
+### 通过模型调用 service
+
+* `service`：约定数据请求统一管理在 services 目录下；
+* `model`：约定数据请求统一在 models 里进行调用；
+* `view`：最终在视图里通过调用 models 的 effect 触发数据请求。
 
 在模型中调用定义好的 services：
 
@@ -99,6 +120,32 @@ const HomePage = () => {
     // 调用上一步定义的 user 模型的 fetchUserInfo 方法
     userDispatchers.fetchUserInfo();
   }, []);
+
+  return (
+    <>Home</>
+  );
+}
+```
+
+### 通过视图调用 service
+
+* `service`：约定数据请求统一管理在 services 目录下；
+* `view`：最终在视图里通过 useRequest 直接调用 service 触发数据请求。
+
+```ts
+import React, { useEffect } from 'react';
+import { useRequest } from 'ice';
+import userService from '@/services/user';
+
+export default function HomePage() {
+  // 调用 service
+  const { data, error, isLoading, request } = useRequest(userService.getUser);
+
+  useEffect(() => {
+    // 触发数据请求
+    request();
+  }, []);
+
 
   return (
     <>Home</>
