@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    [
+      "../../packages/plugin-fast-refresh/lib/index.js",
+      {
+        "reactRefresh": false
+      }
+    ]
+  ]
+}
