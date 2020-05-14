@@ -185,14 +185,9 @@ module.exports = ({
         timings: true,
       });
       const messages = formatWebpackMessages(statsJson);
-      const isSuccessful = !messages.errors.length && !messages.warnings.length;
+      // 包含错误时不打印 localUrl 和 assets 信息
+      const isSuccessful = !messages.errors.length;
       if (isSuccessful) {
-        console.log();
-        console.log(chalk.green(' Starting the development server at:'));
-        console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
-        console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
-        console.log();
-
         console.log(stats.toString({
           errors: false,
           warnings: false,
@@ -203,6 +198,12 @@ module.exports = ({
           modules: false,
           timings: false
         }));
+
+        console.log();
+        console.log(chalk.green(' Starting the development server at:'));
+        console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
+        console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
+        console.log();
       }
     });
   }
