@@ -2,6 +2,10 @@ import { useReducer, useCallback, useRef } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import customRequest from './request';
 
+export interface IAxiosRequestConfig extends AxiosRequestConfig {
+  withFullResponse?: boolean;
+}
+
 interface IResult<D = any> {
   data: D;
   error: Error | undefined;
@@ -9,10 +13,10 @@ interface IResult<D = any> {
 }
 
 type IOptionFn = (...args: any[]) => any;
-type IOptionType = IOptionFn | AxiosRequestConfig;
+type IOptionType = IOptionFn | IAxiosRequestConfig;
 
 interface IOptionResult extends IResult {
-  request: (args?: AxiosRequestConfig) => void;
+  request: (args?: IAxiosRequestConfig) => void;
 }
 
 interface IServiceResult<T extends IOptionFn> extends IResult {
