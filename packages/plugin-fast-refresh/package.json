@@ -5,7 +5,7 @@
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "homepage": "https://github.com/alibaba/ice#readme",
   "license": "ISC",
-  "main": "lib/plugin-fast-refresh.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
