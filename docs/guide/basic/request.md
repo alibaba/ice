@@ -72,16 +72,16 @@ export default {
 
 消费 service 主要有两种方式：
 
-* 通过模型调用 service
-* 通过视图调用 service
+* 在模型中调用 service：`service` -> `model` -> `view`
+* 在视图中调用 service：`service` -> `view`
 
-### 通过模型调用 service
+### 在模型中调用 service
 
 * `service`：约定数据请求统一管理在 services 目录下；
 * `model`：约定数据请求统一在 models 里进行调用；
-* `view`：最终在视图里通过调用 models 的 effect 触发数据请求。
+* `view`：最终在视图里通过调用 models 的 effects 的方法触发数据请求。
 
-在模型中调用定义好的 services：
+在模型中调用定义好的 service：
 
 ```ts
 import userService from '@/services/user';
@@ -113,11 +113,11 @@ import React, { useEffect } from 'react';
 import { store } from 'ice';
 
 const HomePage = () => {
-  // 调用上一步定义的 user 模型
+  // 调用定义的 user 模型
   const [ userState, userDispatchers ] = store.useModel('user');
 
   useEffect(() => {
-    // 调用上一步定义的 user 模型的 fetchUserInfo 方法
+    // 调用 user 模型中的 fetchUserInfo 方法
     userDispatchers.fetchUserInfo();
   }, []);
 
@@ -127,7 +127,7 @@ const HomePage = () => {
 }
 ```
 
-### 通过视图调用 service
+### 在模型中调用 service
 
 * `service`：约定数据请求统一管理在 services 目录下；
 * `view`：最终在视图里通过 useRequest 直接调用 service 触发数据请求。
@@ -174,8 +174,6 @@ async function getList() {
 }
 ```
 
-> 注意：request API 默认并未返回整个 response，如需返回可以设置 withFullResponse 属性
-
 常用使用方式：
 
 ```js
@@ -214,17 +212,42 @@ RequestConfig:
   // `responseType` indicates the type of data that the server will respond with
   // options are: 'arraybuffer', 'document', 'json', 'text', 'stream'
   responseType: 'json', // default
-  // `validateStatus` defines whether to resolve or reject the promise for a given
-  // HTTP response status code. If `validateStatus` returns `true` the promise will be resolved; otherwise, the promise will be rejected.
-  validateStatus: function (status) {
-    return status >= 200 && status < 300; // default
-  },
   // should be made return full response
-  withFullResponse: 'false',
+  withFullResponse: false,
 }
 ```
 
-更完整的配置请参考：https://github.com/axios/axios#request-config
+更完整的配置请 [参考](https://github.com/axios/axios#request-config)
+
+request 默认只返回服务端响应的数据，并未返回整个 response，如需返回可以设置 `withFullResponse` 属性，完整的 response 返回格式如下：
+
+Response Schema：
+
+```ts
+{
+  // `data` is the response that was provided by the server
+  data: {},
+
+  // `status` is the HTTP status code from the server response
+  status: 200,
+
+  // `statusText` is the HTTP status message from the server response
+  statusText: 'OK',
+
+  // `headers` the HTTP headers that the server responded with
+  // All header names are lower cased and can be accessed using the bracket notation.
+  // Example: `response.headers['content-type']`
+  headers: {},
+
+  // `config` is the config that was provided to `axios` for the request
+  config: {},
+
+  // `request` is the request that generated this response
+  // It is the last ClientRequest instance in node.js (in redirects)
+  // and an XMLHttpRequest instance in the browser
+  request: {}
+}
+```
 
 ### useRequest
 
@@ -300,7 +323,7 @@ import { createApp } from 'ice';
 const appConfig = {
   request: {
     // 可选的，全局设置 request 是否返回 response 对象，默认为 false
-    withFullResponse: 'false',
+    withFullResponse: false,
 
     baseURL: '/api',
     headers: {},
