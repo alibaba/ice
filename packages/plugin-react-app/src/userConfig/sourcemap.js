@@ -1,6 +1,6 @@
-module.exports = (config, sourcemap, context) => {
+module.exports = (config, sourceMap, context) => {
   const { command } = context;
-  if (command === 'build' && sourcemap) {
+  if (command === 'build' && sourceMap) {
     config.devtool('source-map');
     config.optimization
       .minimizer('TerserPlugin')
