@@ -29,8 +29,7 @@
     "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-mock": "^0.1.5",
-    "webpackbar": "^4.0.0"
+    "webpack-dev-mock": "^0.1.5"
   },
   "devDependencies": {
     "webpack": "^4.41.1"

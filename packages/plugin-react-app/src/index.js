@@ -10,7 +10,6 @@ const validation = require('./config/validation');
 const optionConfig = require('./config/option.config');
 const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
-const setWebpackbar = require('./config/setWebpackbar');
 
 // eslint-disable-next-line
 const chalk = require('chalk');
@@ -61,9 +60,6 @@ module.exports = ({
   // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
 
-  // set webpackbar
-  setWebpackbar(config);
-
   // DefinePlugin
   const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
@@ -72,6 +68,19 @@ module.exports = ({
   };
 
   config
+    .plugin('SimpleProgressPlugin')
+      .tap(([args]) => {
+        return [{
+          ...args,
+          progressOptions: {
+            clear: true,
+            callback: () => {
+              console.log()
+            }
+          }
+        }];
+      })
+      .end()
     .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [defineVariables])
       .end()
@@ -188,16 +197,18 @@ module.exports = ({
       // 包含错误时不打印 localUrl 和 assets 信息
       const isSuccessful = !messages.errors.length;
       if (isSuccessful) {
-        console.log(stats.toString({
-          errors: false,
-          warnings: false,
-          colors: true,
-          assets: true,
-          chunks: false,
-          entrypoints: false,
-          modules: false,
-          timings: false
-        }));
+        if (!commandArgs.disableAssets) {
+          console.log(stats.toString({
+            errors: false,
+            warnings: false,
+            colors: true,
+            assets: true,
+            chunks: false,
+            entrypoints: false,
+            modules: false,
+            timings: false
+          }));
+        }
 
         console.log();
         console.log(chalk.green(' Starting the development server at:'));
