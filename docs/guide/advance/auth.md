@@ -58,11 +58,11 @@ const Home = () => {
 Home.pageConfig = {
   // 可选
   // 配置准入权限，若不配置则代表所有角色都可以访问
-  roles: ['guest', 'admin'],
+  role: ['guest', 'admin'],
 
   // 可选
-  // 自定义准入权限，与 roles 配置项二选一即可，同时配置优先级则高于 roles 配置项
-  setRoles: (roles) => { return true; }
+  // 自定义准入权限，与 role 配置项二选一即可，同时配置优先级则高于 role 配置项
+  setRole: (role) => { return true; }
 };
 ```
 

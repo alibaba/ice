@@ -1,11 +1,11 @@
 import * as React from 'react';
 import AuthStore from '$ice/authStore';
 
-const getPageConfigRole = (pageConfig, roles) => {
-  if (pageConfig.roles) {
-    return pageConfig.roles;
+const getPageConfigRole = (pageConfig, role) => {
+  if (pageConfig.role) {
+    return pageConfig.role;
   } else if (pageConfig.setRole && (typeof pageConfig.setRole === 'function')) {
-    return pageConfig.setRole(roles);
+    return pageConfig.setRole(role);
   }
 }
 

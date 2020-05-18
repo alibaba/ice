@@ -53,7 +53,7 @@ const HomePage = () => {
 };
 
 HomePage.pageConfig = {
-  // roles: ['admin']
+  // role: ['admin']
   setRole: () => {
     return ['admin'];
   }
