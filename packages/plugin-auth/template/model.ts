@@ -4,9 +4,6 @@ export default {
   },
 
   reducers: {
-    getRole (state) {
-      return state;
-    },
     setRole (state, payload) {
       return payload
     }
