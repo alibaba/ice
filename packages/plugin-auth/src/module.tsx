@@ -9,14 +9,14 @@ const getPageConfigRole = (pageConfig, roles) => {
   }
 }
 
-const wrapperComponentFn = (roles, authConfig) => (PageComponent) => {
+const wrapperComponentFn = (initialRole, authConfig) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
   const AuthWrapperedComponent = (props) => {
-    const pageConfigRole = getPageConfigRole(pageConfig, roles);
+    const pageConfigRole = getPageConfigRole(pageConfig, initialRole);
     if (Array.isArray(pageConfigRole)) {
-      const hasRole = roles.filter(role => pageConfigRole.includes(role))
+      const hasRole = initialRole.filter(role => pageConfigRole.includes(role))
       if (!hasRole.length) {
-        return authConfig.NoAuthFallback ? authConfig.NoAuthFallback : null;
+        return authConfig.noAuthFallback ? authConfig.noAuthFallback : null;
       }
     }
     return <PageComponent {...props} />;
@@ -25,19 +25,24 @@ const wrapperComponentFn = (roles, authConfig) => (PageComponent) => {
 }
 
 export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {
+  const initialData = context ? context.initialData : null;
   const authConfig = appConfig.auth || {};
-  const initialData = authConfig.setRole
-    ? authConfig.setRole(context && context.initialData)
-    : null;
+
+  let initialRole = null;
+  if (authConfig.setRole) {
+    initialRole = authConfig.setRole(initialData);
+  } else if (initialData && initialData.role) {
+    initialRole = initialRole.role;
+  }
 
   const AuthStoreProvider = ({children}) => {
     return (
-      <AuthStore.Provider initialStates={{ role: initialData }}>
+      <AuthStore.Provider initialStates={{ role: initialRole }}>
         {children}
       </AuthStore.Provider>
     );
   };
 
   addProvider(AuthStoreProvider);
-  wrapperRouteComponent(wrapperComponentFn(initialData, authConfig));
+  wrapperRouteComponent(wrapperComponentFn(initialRole, authConfig));
 };

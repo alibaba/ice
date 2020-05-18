@@ -37,7 +37,7 @@ const appConfig: IAppConfig = {
     },
 
     // 可选，配置无权限时的视图组件，默认为 null
-    NoAuthFallback: <div>无权限</div>
+    noAuthFallback: <div>无权限</div>
   }
 };
 
