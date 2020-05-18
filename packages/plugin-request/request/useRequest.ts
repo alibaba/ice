@@ -70,6 +70,7 @@ const useRequest = function (options) {
         type: 'success',
         data
       });
+      return data;
     } catch (error) {
       dispatch({
         type: 'error',
