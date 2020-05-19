@@ -14566,6 +14566,13 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
+webpack-plugin-import@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.npm.taobao.org/webpack-plugin-import/download/webpack-plugin-import-0.2.6.tgz#3b5029b6b869cfbd1308eaf9d2cfacf18948b590"
+  integrity sha1-O1Aptrhpz70TCOr50s+s8YlItZA=
+  dependencies:
+    loader-utils "^1.1.0"
+
 webpack-simple-progress-plugin@0.0.4:
   version "0.0.4"
   resolved "https://registry.npm.taobao.org/webpack-simple-progress-plugin/download/webpack-simple-progress-plugin-0.0.4.tgz#c4829137429cb673dfc6a61a262b955c35cc7ba2"

@@ -30,6 +30,7 @@
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-mock": "^0.1.5",
+    "webpack-plugin-import": "^0.2.6",
     "webpackbar": "^4.0.0"
   },
   "devDependencies": {
