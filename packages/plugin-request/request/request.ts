@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as utils from 'axios/lib/utils';
-import axiosInstance from './axiosInstance';
+import createAxiosInstance from './createAxiosInstance';
 
 export interface IRequestProps {
   get: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
@@ -17,8 +17,14 @@ interface IRequest extends IRequestProps {
   (url: string, config?: AxiosRequestConfig): any;
 }
 
+/**
+ * 请求体，返回 response.data | response
+ * @param options 请求配置 https://github.com/axios/axios#request-config
+ */
 const request = async function (options) {
   try {
+    const instanceName = options.name ? options.name : 'default';
+    const axiosInstance = createAxiosInstance()[instanceName];
     const response = await axiosInstance(options);
     // @ts-ignore
     if (axiosInstance.defaults.withFullResponse || options.withFullResponse) {

@@ -1,7 +1,10 @@
 import { AxiosRequestConfig } from 'axios';
 import { IInterceptors } from './base';
 
-export interface IRequest extends AxiosRequestConfig {
+interface ICustomRequest extends AxiosRequestConfig {
+  name?: string;
   withFullResponse?: boolean;
   interceptors?: IInterceptors;
 }
+
+export type IRequest = ICustomRequest | ICustomRequest[];
