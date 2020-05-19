@@ -1,22 +1,22 @@
 ---
 title: 权限管理
-order: 16
+order: 7
 ---
 
 对于一个 Web 应用，权限管理是经常会涉及的需求之一，通常包含以下几种常见的权限管理类型：
 
 - 页面权限：当用户访问某个没有权限的页面时跳转到无权限页面；
-- 操作权限：页面中的某些按钮或区块针对无权限的用户直接隐藏；
+- 操作权限：页面中的某些按钮或组件针对无权限的用户直接隐藏；
 - 菜单权限：某些菜单针对无权限的用户直接隐藏（属于操作鉴权的一种）；
 - 接口权限：当用户通过操作调用没有权限的接口时跳转到无权限页面。
 
 ## 初始化权限数据
 
-大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。在 icejs 框架中约定通过 `getInitialData` 从服务端获取初始化的权限数据，并且约定返回格式为 `role: []string` 的形式。
+大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。在 icejs 框架中约定通过 `getInitialData` 从服务端异步获取初始化的权限数据，并且约定返回格式为 `role: string[]` 的形式。
 
-> 如果服务端返回的格式不符合 `role: []string` 的形式，则可通过 auth 配置项的 setRole API 对返回的数据进行处理。
+> 如果服务端返回的格式不符合 `role: string[]` 的形式，则可通过 auth 配置项的 setRole 方法对返回的数据进行处理。
 
-```ts
+```tsx
 import { createApp, request, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
@@ -48,7 +48,7 @@ createApp(appConfig);
 
 页面权限通常也称之为路由权限，如需对某些页面进行权限控制只需在页面组件的 `pageConfig` 中配置准入权限即可。
 
-```ts
+```tsx
 import React from 'react';
 
 const Home = () => {
@@ -68,11 +68,12 @@ Home.pageConfig = {
 
 ## 操作权限
 
-在某些场景下，如某个组件中要根据角色判断是否有操作权限，我们可以通过 useRole Hooks 在组件中获取权限数据，同时也可以更新权限数据。
+在某些场景下，如某个组件中要根据角色判断是否有操作权限，我们可以通过 `useRole` Hooks 在组件中获取权限数据，同时也可以更新权限数据。
 
 ### 获取权限数据
 
-```ts
+```tsx
+import React from 'react';
 import { useRole } from 'ice';
 
 function RoleList() {
@@ -90,7 +91,8 @@ function RoleList() {
 
 ### 设置权限数据
 
-```ts
+```tsx
+import React from 'react';
 import { useRole } from 'ice';
 
 function Foo() {
@@ -119,7 +121,89 @@ function Foo() {
 }
 ```
 
+### 自定义权限组件
+
+通过获取到的权限数据，通常我们可以自定义封装权限组件。
+
+```ts
+import React from 'react';
+import { useRole } from 'ice';
+import NoAuth from '@/components/NoAuth';
+
+function Auth({ children, role = [] }) {
+  // 获取当前的 role 权限数据
+  const [currRole] = useRole();
+
+  // 判断是否有权限
+  const hasAuth = currRole.filter(item => role.includes(item)).length;
+
+  if (hasAuth) {
+    // 有权限时直接渲染内容
+    return children;
+  } else {
+    // 无权限时显示指定 UI
+    return <NoAuth />
+  }
+};
+
+export default Auth;
+```
+
+使用如下：
+
+```tsx
+function Foo () {
+  return (
+    <Auth role={['admin']}>
+      <Button>删除</Button>
+    </Auth>
+  )
+}
+```
+
 ## 菜单鉴权
+
+当需要对某些菜单项进行权限控制时，我们可以在菜单项中设置 role 属性，然后通过对比当前用户的权限和菜单配置的权限是否匹配，如果未匹配则隐藏菜单项。
+
+* 菜单配置
+
+```ts
+const menuConfig = [
+  {
+    name: '文章管理',
+    path: '/post',
+    icon: 'edit',
+    role: ['admin', 'guest'],  // 当前用户权限为 admin 或者 guest 时显示菜单，否则隐藏
+    children: [
+      {
+        name: '文章列表',
+        path: '/post/list'
+      },
+      {
+        name: '添加文章',
+        path: '/post/create',
+        role: ['admin'],        // 当前用户权限为 admin 时显示菜单，否则隐藏
+      },
+    ],
+  }
+];
+```
+
+* 权限检查
+
+在渲染菜单时进行权限判断，示例代码如下：
+
+```ts
+function renderMenuItem() {
+  return menuConfig.map((menuItem, index) => {
+    return (
+      <Auth role={menuItem.role} key={index}>
+        {menuItem.name}
+      </Auth>
+    )
+  })
+}
+```
 
 ## 接口鉴权
 
