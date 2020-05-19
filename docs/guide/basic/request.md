@@ -364,6 +364,57 @@ const appConfig = {
 createApp(appConfig);
 ```
 
+### 多个请求配置
+
+在某些复杂场景的应用中，我们也可以配置多个请求，每个配置请求都是单一的实例对象。
+
+```ts
+import { createApp } from 'ice';
+
+const appConfig = {
+  request: [
+    {
+      // 配置 request 实例名称，如果不配默认使用内置的 request 实例
+      name: 'default'
+      baseURL: '/api',
+      // ...RequestConfig 其他参数
+
+    },
+    {
+      // 配置 request 实例名称
+      name: 'request2'
+      baseURL: '/api2',
+      // ...RequestConfig 其他参数
+    }
+  ]
+};
+
+createApp(appConfig);
+```
+
+使用示例：
+
+```ts
+import { request } from 'ice';
+
+export default {
+  // 使用默认的请求方法，即调用 /api/user 接口
+  async getUser() {
+    return await request({
+      url: '/user',
+    });
+  },
+
+  // 使用自定义的 request 请求方法，即调用接口 /api2/user
+  async getRepo(id) {
+    return await request({
+      name: 'request2',
+      url: `/repo/${id}`,
+    });
+  },
+}
+```
+
 ## 异常处理
 
 无论是拦截器里的错误参数，还是 request/useRequest 返回的错误对象，都符合以下类型：
