@@ -53,6 +53,12 @@ module.exports = ({
         delete userConfig[configKey];
       }
     });
+    // migrate sourcemap to sourceMap
+    if (Object.prototype.hasOwnProperty.call(newConfig, 'sourcemap') && !newConfig.sourceMap) {
+      newConfig.sourceMap = newConfig.sourcemap;
+    }
+    delete newConfig.sourcemap;
+
     return newConfig;
   });
 

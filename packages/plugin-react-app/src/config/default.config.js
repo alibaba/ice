@@ -48,7 +48,7 @@ module.exports = {
   library: '',
   libraryExport: '',
   ignoreHtmlTemplate: false,
-  sourcemap: false,
+  sourceMap: false,
   terserOptions: {},
   cssLoaderOptions: {},
   lessLoaderOptions: {},
