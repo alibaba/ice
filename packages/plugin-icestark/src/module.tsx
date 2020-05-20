@@ -9,14 +9,13 @@ import {
   getBasename,
 } from '@ice/stark-app';
 import { IceRouter } from '$ice/Router';
-import { createHashHistory, createBrowserHistory } from '$ice/history';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
+const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, createHistory }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
@@ -146,13 +145,5 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
     setRenderRouter(frameworkRouter);
   }
 };
-
-function createHistory(type: string, basename: string) {
-  const histories = {
-    hash: createHashHistory,
-    browser: createBrowserHistory,
-  };
-  return histories[type]({basename});
-}
 
 export default module;
