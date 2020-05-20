@@ -54,7 +54,7 @@ module.exports = {
     return validation('library', val, 'string|array');
   },
   ignoreHtmlTemplate: 'boolean',
-  sourcemap: 'boolean',
+  sourceMap: 'boolean',
   terserOptions: 'object',
   cssLoaderOptions:'object',
   lessLoaderOptions: 'object',

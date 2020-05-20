@@ -3,6 +3,7 @@ const path = require('path');
 const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackPluginImport = require('webpack-plugin-import');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
@@ -52,6 +53,12 @@ module.exports = ({
         delete userConfig[configKey];
       }
     });
+    // migrate sourcemap to sourceMap
+    if (Object.prototype.hasOwnProperty.call(newConfig, 'sourcemap') && !newConfig.sourceMap) {
+      newConfig.sourceMap = newConfig.sourcemap;
+    }
+    delete newConfig.sourcemap;
+
     return newConfig;
   });
 
@@ -93,19 +100,19 @@ module.exports = ({
       .end()
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
-        .use(HtmlWebpackPlugin, [{
-          inject: true,
-          templateParameters: {
-            NODE_ENV: process.env.NODE_ENV,
-          },
-          favicon: getFilePath([
-            path.join(rootDir, 'public/favicon.ico'),
-            path.join(rootDir, 'public/favicon.png'),
-          ]),
-          template: path.resolve(rootDir, 'public/index.html'),
-          minify: false,
-        }])
-        .end()
+      .use(HtmlWebpackPlugin, [{
+        inject: true,
+        templateParameters: {
+          NODE_ENV: process.env.NODE_ENV,
+        },
+        favicon: getFilePath([
+          path.join(rootDir, 'public/favicon.ico'),
+          path.join(rootDir, 'public/favicon.png'),
+        ]),
+        template: path.resolve(rootDir, 'public/index.html'),
+        minify: false,
+      }])
+      .end()
     // CopyWebpackPlugin
     .plugin('CopyWebpackPlugin')
       .use(CopyWebpackPlugin, [[
@@ -113,6 +120,14 @@ module.exports = ({
           from: path.resolve(rootDir, 'public'),
           to: path.resolve(rootDir, defaultConfig.outputDir),
           ignore: ['index.html'],
+        },
+      ]])
+    // WebpackPluginImport
+    .plugin('WebpackPluginImport')
+      .use(WebpackPluginImport, [[
+        {
+          libraryName: /@ali\/ice-.*/,
+          stylePath: 'style.js',
         },
       ]]);
   if (mode === 'development') {
