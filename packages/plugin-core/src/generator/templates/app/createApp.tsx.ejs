@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
-import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from '$ice/history';
 import deepmerge from 'deepmerge';
 import RuntimeModule from './runtimeModule';
 import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
+import { createHistory } from './history';
 import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
@@ -30,24 +30,6 @@ function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
   return renderApp(appConfig, context);
 }
 
-function createHistory(type: string, basename: string) {
-  const histories = {
-    hash: createHashHistory,
-    browser: createBrowserHistory,
-    memory: createMemoryHistory
-  };
-  // Note: only support createHashHistory and createBrowserHistory parameters
-  // https://github.com/ReactTraining/history/blob/master/modules/createBrowserHistory.js#L37
-  // https://github.com/ReactTraining/history/blob/master/modules/createHashHistory.js#L58
-  // https://github.com/ReactTraining/history/blob/master/modules/createMemoryHistory.js#L13
-  const props = (type === 'hash' || type === 'browser') ? { basename } : {};
-  return histories[type](props);
-}
-
-// provide history instance
-// can be used in the application through history.push()
-let history: History;
-
 function createApp(customConfig: IAppConfig) {
   const appConfig = deepmerge(defaultAppConfig, customConfig);
 
@@ -61,7 +43,7 @@ function createApp(customConfig: IAppConfig) {
   // client side rendering
   // get history instance
   const { type, basename, history: customHistory } = appConfig.router;
-  history = customHistory || createHistory(type, basename);
+  const history = customHistory || createHistory(type, basename);
   appConfig.router.history = history;
 
   // load module to run before createApp ready
@@ -145,6 +127,5 @@ function loadStaticModules(appConfig: IAppConfig) {
 export {
   createApp,
   createAppWithSSR,
-  loadStaticModules,
-  history
+  loadStaticModules
 }
