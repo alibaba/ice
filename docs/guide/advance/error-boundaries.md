@@ -64,7 +64,7 @@ export default function Todo() {
   return (
     <ErrorBoundary
       {/* 自定义错误边界的 fallback UI */}
-      Fallback={<div>error</div>}
+      Fallback={() => <div>渲染错误</div>}
       {/* 自定义错误的处理事件 */}
       onError={myErrorHandler}
     >
