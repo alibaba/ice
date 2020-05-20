@@ -6,7 +6,7 @@ const module = ({ appConfig }) => {
     // 支持配置多实例
     if (Object.prototype.toString.call(requestConfig) === '[object Array]') {
       requestConfig.forEach(requestItem => {
-        const instanceName = requestItem.name ? requestItem.name : 'default';
+        const instanceName = requestItem.instanceName ? requestItem.instanceName : 'default';
         if (instanceName) {
           const axiosInstance = createAxiosInstance(instanceName)[instanceName];
           setAxiosInstance(requestItem, axiosInstance);

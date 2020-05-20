@@ -23,7 +23,7 @@ interface IRequest extends IRequestProps {
  */
 const request = async function (options) {
   try {
-    const instanceName = options.name ? options.name : 'default';
+    const instanceName = options.instanceName ? options.instanceName : 'default';
     const axiosInstance = createAxiosInstance()[instanceName];
     const response = await axiosInstance(options);
     // @ts-ignore

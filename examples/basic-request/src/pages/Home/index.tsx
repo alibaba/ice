@@ -41,11 +41,11 @@ const BuiltInRequestDemo2 = () => {
 const BuiltInRequestDemo3 = () => {
   console.clear();
   async function fetchUser1() {
-    const data = await request({ url: '/user', name: 'request2' });
+    const data = await request({ url: '/user', instanceName: 'request2' });
     console.log('多实例 + 直接调用 request：', data);
   }
 
-  const { request: fetchUser2, ...rest } = useRequest({url: '/user', name: 'request2'})
+  const { request: fetchUser2, ...rest } = useRequest({url: '/user', instanceName: 'request2'})
   console.log('多实例 + 调用 useRequest：', {...rest})
 
   return (

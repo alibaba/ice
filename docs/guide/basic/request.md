@@ -214,6 +214,8 @@ RequestConfig:
   responseType: 'json', // default
   // should be made return full response
   withFullResponse: false,
+  // request instance name
+  instanceName
 }
 ```
 
@@ -374,15 +376,13 @@ import { createApp } from 'ice';
 const appConfig = {
   request: [
     {
-      // 配置 request 实例名称，如果不配默认使用内置的 request 实例
-      name: 'default'
       baseURL: '/api',
       // ...RequestConfig 其他参数
 
     },
     {
-      // 配置 request 实例名称
-      name: 'request2'
+      // 配置 request 实例名称，如果不配默认使用内置的 request 实例
+      instanceName: 'request2'
       baseURL: '/api2',
       // ...RequestConfig 其他参数
     }
@@ -408,7 +408,7 @@ export default {
   // 使用自定义的 request 请求方法，即调用接口 /api2/user
   async getRepo(id) {
     return await request({
-      name: 'request2',
+      instanceName: 'request2',
       url: `/repo/${id}`,
     });
   },

@@ -44,7 +44,7 @@ const appConfig: IAppConfig = {
       }
     },
     {
-      name: 'request2',
+      instanceName: 'request2',
       baseURL: '/api2'
     }
   ]

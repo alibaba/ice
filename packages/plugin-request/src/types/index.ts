@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { IInterceptors } from './base';
 
 interface ICustomRequest extends AxiosRequestConfig {
-  name?: string;
+  instanceName?: string;
   withFullResponse?: boolean;
   interceptors?: IInterceptors;
 }
