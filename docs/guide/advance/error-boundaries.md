@@ -23,7 +23,7 @@ const appConfig: IAppConfig = {
     // 是否开启 ErrorBoundary，默认为 false
     errorBoundary: true
     // 自定义错误边界的 fallback UI
-    ErrorBoundaryFallback: <div>渲染错误</div>,
+    ErrorBoundaryFallback: () => <div>渲染错误</div>,
     // 自定义错误的处理事件
     onErrorBoundaryHander: (error: Error, componentStack: string) {
       // Do something with the error
@@ -63,9 +63,9 @@ import { ErrorBoundary } from 'ice';
 export default function Todo() {
   return (
     <ErrorBoundary
-      {/* 默认使用全局配置的 ErrorBoundaryFallback */}
+      {/* 自定义错误边界的 fallback UI */}
       Fallback={<div>error</div>}
-      {/* 默认使用全局配置的 onErrorBoundaryHander */}
+      {/* 自定义错误的处理事件 */}
       onError={myErrorHandler}
     >
       <TodoList />
