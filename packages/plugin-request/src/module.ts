@@ -2,7 +2,7 @@ import createAxiosInstance from '$ice/createAxiosInstance';
 
 const module = ({ appConfig }) => {
   if (appConfig.request) {
-    const { request: requestConfig } = appConfig;
+    const { request: requestConfig = {} } = appConfig;
     // 支持配置多实例
     if (Object.prototype.toString.call(requestConfig) === '[object Array]') {
       requestConfig.forEach(requestItem => {
