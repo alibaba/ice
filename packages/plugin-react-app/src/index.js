@@ -122,6 +122,7 @@ module.exports = ({
           ignore: ['index.html'],
         },
       ]])
+      .end()
     // WebpackPluginImport
     .plugin('WebpackPluginImport')
       .use(WebpackPluginImport, [[
