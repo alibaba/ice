@@ -82,7 +82,7 @@ module.exports = ({
           progressOptions: {
             clear: true,
             callback: () => {
-              console.log()
+              console.log();
             }
           }
         }];

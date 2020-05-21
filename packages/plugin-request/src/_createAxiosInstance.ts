@@ -6,7 +6,7 @@ const axiosInstance = {
 
 // eslint-disable-next-line
 function createAxiosInstance(instanceName?: string) {
-  return axiosInstance
+  return axiosInstance;
 }
 
 export default createAxiosInstance;
