@@ -7,8 +7,8 @@ const appConfig: IAppConfig = {
       // 模拟服务端返回的数据
       const data = {
         role: 'admin',
-        star: true,
-        follow: true
+        starPermission: true,
+        followPermission: true
       };
 
       // 约定权限必须返回一个 auth 对象
@@ -17,8 +17,8 @@ const appConfig: IAppConfig = {
         auth: {
           admin: data.role === 'admin',
           guest: data.role === 'guest',
-          starRepo: data.star,
-          followRepo: data.follow
+          starRepo: data.starPermission,
+          followRepo: data.followPermission
         }
       }
     },

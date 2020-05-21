@@ -19,12 +19,11 @@ export default async function (api) {
   });
 
   // 导出接口
-  // import { useRole } from 'ice';
+  // import { useAuth, withAuth } from 'ice';
   applyMethod('addIceExport', { source: './auth' });
 
   // 设置类型
   // export interface IAppConfig {
-  //   ...
   //   auth?: IAuth;
   // }
   applyMethod('addIceAppConfigTypes', { source: './auth/types', specifier: '{ IAuth }', exportName: 'auth?: IAuth' });

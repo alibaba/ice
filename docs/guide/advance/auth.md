@@ -22,7 +22,7 @@ const appConfig: IAppConfig = {
     getInitialData: async () => {
       // 模拟服务端返回的数据
       const data = await request('/api/auth');
-      const { role, star, follow } = data;
+      const { role, starPermission, followPermission } = data;
 
       // 约定权限必须返回一个 auth 对象
       // 返回的每个值对应一条权限
@@ -30,8 +30,8 @@ const appConfig: IAppConfig = {
         auth: {
           admin: role === 'admin',
           guest: role === 'guest',
-          starRepo: star,
-          followRepo: follow
+          starRepo: starPermission,
+          followRepo: followPermission
         }
       }
     },
@@ -138,7 +138,7 @@ export default Auth;
 ```tsx
 function Foo () {
   return (
-    <Auth authKey={'star'}>
+    <Auth authKey={'starRepo'}>
       <Button type="button">Star</Button>
     </Auth>
   )
