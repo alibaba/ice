@@ -1,14 +1,8 @@
-import { useRole } from 'ice';
-
-function Auth({ children, role = [] }) {
-  const [currRole] = useRole();
-
-  const hasAuth = currRole.filter(item => role.includes(item)).length
-
+function Auth({ children, hasAuth, fallback }) {
   if (hasAuth) {
     return children;
   } else {
-    return null
+    return fallback || null
   }
 };
 

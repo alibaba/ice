@@ -1,24 +1,18 @@
 /* eslint jsx-a11y/aria-role: 0 */
 import React from 'react';
-import { useRole, withRole } from 'ice';
+import { useAuth, withAuth } from 'ice';
 import Auth from '@/components/Auth';
 
-@withRole
+@withAuth
 class Demo1 extends React.PureComponent {
   public render() {
-    const { role } = this.props;
-    console.log(this.props);
+    const {auth} = this.props;
     return (
       <div>
         <h3>Class 组件演示：</h3>
         <div>
           <span>权限列表：</span>
-          {role.map((r, i) => {
-            return <span key={i} style={{marginRight: '5px'}}>{r}</span>
-          })}
-          <Auth role={['admin']}>
-            <button type="button">Admin 权限</button>
-          </Auth>
+          <code>{JSON.stringify(auth)}</code>
         </div>
       </div>
     )
@@ -26,14 +20,26 @@ class Demo1 extends React.PureComponent {
 }
 
 const Demo2 = () => {
-  const [role, setRole]= useRole();
+  const [auth, setAuth]= useAuth();
 
-  function updateRole() {
-    setRole(['guest']);
+  function addAuth() {
+    setAuth({
+      deleteRepo: true
+    });
   }
 
-  function deleteRole() {
-    setRole([]);
+  function resetAuth() {
+    setAuth({
+      followRepo: true,
+      starRepo: true,
+    });
+  }
+
+  function deleteAuth() {
+    setAuth({
+      starRepo: false,
+      followRepo: false
+    })
   }
 
   return (
@@ -42,16 +48,22 @@ const Demo2 = () => {
         <h3>函数组件演示：</h3>
         <div>
           <span>权限列表：</span>
-          {role.map((r, i) => {
-            return <span key={i} style={{marginRight: '5px'}}>{r}</span>
-          })}
-          <Auth role={['guest']}>
-            <button type="button">Guest 权限</button>
-          </Auth>
+          <code>{JSON.stringify(auth)}</code>
         </div>
       </div>
-      <button type="button" onClick={updateRole}>更新权限</button>
-      <button type="button" onClick={deleteRole}>删除权限</button>
+      <Auth hasAuth={auth.starRepo}>
+        <button type="button">Star</button>
+      </Auth>
+      <Auth hasAuth={auth.followRepo}>
+        <button type="button">Follow</button>
+      </Auth>
+      <Auth hasAuth={auth.deleteRepo}>
+        <button type="button">Delete</button>
+      </Auth>
+      <hr />
+      <button type="button" onClick={resetAuth}>重置权限</button>
+      <button type="button" onClick={addAuth}>添加权限</button>
+      <button type="button" onClick={deleteAuth}>删除权限</button>
     </div>
   )
 }
@@ -67,10 +79,7 @@ const HomePage = () => {
 };
 
 HomePage.pageConfig = {
-  // role: ['admin']
-  setRole: () => {
-    return ['admin'];
-  }
+  auth: ['admin']
 }
 
 export default HomePage;

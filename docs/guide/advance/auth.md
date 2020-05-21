@@ -12,32 +12,34 @@ order: 7
 
 ## 初始化权限数据
 
-大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。在 icejs 框架中约定通过 `getInitialData` 从服务端异步获取初始化的权限数据，并且约定返回格式为 `role: string[]` 的形式。
+大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。在 icejs 框架中约定通过 `getInitialData` 从服务端异步获取初始化的权限数据，并且约定最终返回格式为 `{auth: {[key: string]: boolean }}` 的形式。
 
-> 如果服务端返回的格式不符合 `role: string[]` 的形式，则可通过 auth 配置项的 setRole 方法对返回的数据进行处理。
 
 ```tsx
 import { createApp, request, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
-    // 通过 getInitialData 异步获取权限数据
     getInitialData: async () => {
-      const role = await request('/api/role');
-      return { role }
-    }
+      // 模拟服务端返回的数据
+      const data = await request('/api/auth');
+      const { role, star, follow } = data;
+
+      // 约定权限必须返回一个 auth 对象
+      // 返回的每个值对应一条权限
+      return {
+        auth: {
+          admin: role === 'admin',
+          guest: role === 'guest',
+          starRepo: star,
+          followRepo: follow
+        }
+      }
+    },
   },
   auth: {
-    // 可选
-    // 设置初始化的权限数据
-    // 如果设置了 getInitialData，则该函数的参数为 getInitialData 的返回值
-    setRole: (initialData) => {
-      // 对 getInitialData 获取的权限数据进行格式化处理后返回
-      return initialData.role
-    },
-
-    // 可选，配置无权限时的视图组件，默认为 null
-    noAuthFallback: <div>无权限</div>
+    // 可选的，设置无权限时的展示组件，默认为 null
+    NoAuthFallback: <div>没有权限...</div>,
   }
 };
 
@@ -56,34 +58,27 @@ const Home = () => {
 };
 
 Home.pageConfig = {
-  // 可选
-  // 配置准入权限，若不配置则代表所有角色都可以访问
-  role: ['guest', 'admin'],
-
-  // 可选
-  // 自定义准入权限，与 role 配置项二选一即可，同时配置优先级则高于 role 配置项
-  setRole: (role) => { return true; }
+  // 可选，配置准入权限，若不配置则代表所有角色都可以访问
+  auth: ['admin'],
 };
 ```
 
 ## 操作权限
 
-在某些场景下，如某个组件中要根据角色判断是否有操作权限，我们可以通过 `useRole` Hooks 在组件中获取权限数据，同时也可以更新权限数据。
+在某些场景下，如某个组件中要根据角色判断是否有操作权限，我们可以通过 `useAuth` Hooks 在组件中获取权限数据，同时也可以更新初始的权限数据。
 
 ### 获取权限数据
 
 ```tsx
 import React from 'react';
-import { useRole } from 'ice';
+import { useAuth } from 'ice';
 
-function RoleList() {
-  const [role] = useRole();
+function Foo() {
+  const [auth] = useAuth();
   return (
     <>
-      当前用户角色：
-      {role.map((r, i) => {
-        return <span key={i}>{r}</span>
-      })}
+      当前用户权限数据：
+      <code>{JSON.stringify(auth)}</code>
     </>
   );
 }
@@ -93,29 +88,21 @@ function RoleList() {
 
 ```tsx
 import React from 'react';
-import { useRole } from 'ice';
+import { useAuth } from 'ice';
 
 function Foo() {
-  const [role, setRole] = useRole();
+  const [auth, setAuth] = useAuth();
 
   // 更新权限
-  function updateRole() {
-    setRole(['user']);
-  }
-
-  // 删除权限
-  function deleteRole() {
-    setRole([]);
+  function updateAuth() {
+    setAuth({ starRepo: false, followRepo: false });
   }
 
   return (
     <>
       当前用户角色：
-      {role.map((r, i) => {
-        return <span key={i}>{r}</span>
-      })}
-      <button type="button" onClick={updateRole}>更新权限</button>
-      <button type="button" onClick={deleteRole}>删除权限</button>
+      <code>{JSON.stringify(auth)}</code>
+      <button type="button" onClick={updateAuth}>更新权限</button>
     </>
   );
 }
@@ -123,26 +110,24 @@ function Foo() {
 
 ### 自定义权限组件
 
-通过获取到的权限数据，通常我们可以自定义封装权限组件。
+对于操作类权限，通常我们可以自定义封装权限组件，以便更新粒度的控制权限和复用。
 
 ```ts
 import React from 'react';
-import { useRole } from 'ice';
+import { useAuth } from 'ice';
 import NoAuth from '@/components/NoAuth';
 
-function Auth({ children, role = [] }) {
-  // 获取当前的 role 权限数据
-  const [currRole] = useRole();
-
+function Auth({ children, authKey, fallback }) {
+  const [auth] = useAuth();
   // 判断是否有权限
-  const hasAuth = currRole.filter(item => role.includes(item)).length;
+  const hasAuth = auth[authKey];
 
+  // 有权限时直接渲染内容
   if (hasAuth) {
-    // 有权限时直接渲染内容
     return children;
   } else {
     // 无权限时显示指定 UI
-    return <NoAuth />
+    return fallback || NoAuth
   }
 };
 
@@ -154,54 +139,10 @@ export default Auth;
 ```tsx
 function Foo () {
   return (
-    <Auth role={['admin']}>
-      <Button>删除</Button>
+    <Auth authKey={'star'}>
+      <Button type="button">Star</Button>
     </Auth>
   )
-}
-```
-
-## 菜单鉴权
-
-当需要对某些菜单项进行权限控制时，我们可以在菜单项中设置 role 属性，然后通过对比当前用户的权限和菜单配置的权限是否匹配，如果未匹配则隐藏菜单项。
-
-* 菜单配置
-
-```ts
-const menuConfig = [
-  {
-    name: '文章管理',
-    path: '/post',
-    icon: 'edit',
-    role: ['admin', 'guest'],  // 当前用户权限为 admin 或者 guest 时显示菜单，否则隐藏
-    children: [
-      {
-        name: '文章列表',
-        path: '/post/list'
-      },
-      {
-        name: '添加文章',
-        path: '/post/create',
-        role: ['admin'],        // 当前用户权限为 admin 时显示菜单，否则隐藏
-      },
-    ],
-  }
-];
-```
-
-* 权限检查
-
-在渲染菜单时进行权限判断，示例代码如下：
-
-```ts
-function renderMenuItem() {
-  return menuConfig.map((menuItem, index) => {
-    return (
-      <Auth role={menuItem.role} key={index}>
-        {menuItem.name}
-      </Auth>
-    )
-  })
 }
 ```
 
@@ -211,24 +152,24 @@ function renderMenuItem() {
 
 ## API
 
-### useRole
+### useAuth
 
 用于在函数组件中获取和设置权限数据的 Hooks。
 
 ```ts
-const [role, setRole] = useRole();
+const [auth, setAuth] = useAuth();
 ```
 
 示例：
 
 ```tsx
 import React from 'react';
-import { useRole } from 'ice';
+import { useAuth } from 'ice';
 
 function Foo() {
-  const [role, setRole] = useRole();
-  // role：当前权限列表数据
-  // setRole：设置当前权限列表数据
+  const [auth, setAuth] = useAuth();
+  // auth：当前权限列表数据
+  // setAuth：设置当前权限列表数据
 
   return (
     <>Foo</>
@@ -236,12 +177,12 @@ function Foo() {
 }
 ```
 
-### withRole
+### withAuth
 
 用于在 Class 组件中获取和设置权限数据的高阶函数。
 
 ```ts
-withRole(Component)
+withAuth(Component)
 ```
 
 示例：
@@ -251,14 +192,14 @@ import React from 'react';
 
 Class Foo extends React.Component {
   render() {
-    const { role, setRole } = this.props;
-    // role：当前权限列表数据
-    // setRole：设置当前权限列表数据
+    const { auth, setAuth } = this.props;
+    // auth：当前权限列表数据
+    // setAuth：设置当前权限列表数据
     return (
       <>Foo</>
     )
   }
 }
 
-export default withRole(Foo)
+export default withAuth(Foo)
 ``

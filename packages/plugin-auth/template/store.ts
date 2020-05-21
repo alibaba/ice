@@ -2,7 +2,7 @@ import { createStore } from '@ice/store';
 import model from './model';
 
 const store = createStore({
-  role: model
+  auth: model
 });
 
 export default store;

@@ -1,11 +1,14 @@
 export default {
   state: {
-    role: []
+    auth: {}
   },
 
   reducers: {
-    setRole (state, payload) {
-      return payload
+    setAuth (state, payload) {
+      return {
+        ...state,
+        ...payload
+      }
     }
   }
 };

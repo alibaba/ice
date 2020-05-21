@@ -1,23 +1,17 @@
 import * as React from 'react';
 import AuthStore from '$ice/authStore';
 
-const getPageConfigRole = (pageConfig, role) => {
-  if (pageConfig.setRole && (typeof pageConfig.setRole === 'function')) {
-    return pageConfig.setRole(role);
-  } else if (pageConfig.role) {
-    return pageConfig.role;
-  }
-}
-
-const wrapperComponentFn = (initialRole, authConfig) => (PageComponent) => {
+const wrapperComponentFn = (authConfig) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
+  const [auth] = AuthStore.useModel('auth');
+
   const AuthWrapperedComponent = (props) => {
-    const pageConfigRole = getPageConfigRole(pageConfig, initialRole);
-    if (Array.isArray(pageConfigRole)) {
-      const hasRole = initialRole.filter(role => pageConfigRole.includes(role))
-      if (!hasRole.length) {
-        return authConfig.noAuthFallback ? authConfig.noAuthFallback : null;
-      }
+    const pageConfigAuth = pageConfig.auth;
+    const hasAuth = Array.isArray(pageConfigAuth)
+      ? Object.keys(auth).filter(item => pageConfigAuth.includes(item) ? auth[item] : false).length
+      : false;
+    if (!hasAuth) {
+      return authConfig.NoAuthFallback ? authConfig.NoAuthFallback : null;
     }
     return <PageComponent {...props} />;
   };
@@ -25,24 +19,18 @@ const wrapperComponentFn = (initialRole, authConfig) => (PageComponent) => {
 }
 
 export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {
-  const initialData = context ? context.initialData : null;
+  const initialData = context ? context.initialData : {};
+  const initialAuth = initialData.auth || {} ;
   const authConfig = appConfig.auth || {};
-
-  let initialRole = null;
-  if (authConfig.setRole) {
-    initialRole = authConfig.setRole(initialData);
-  } else if (initialData && initialData.role) {
-    initialRole = initialRole.role;
-  }
 
   const AuthStoreProvider = ({children}) => {
     return (
-      <AuthStore.Provider initialStates={{ role: initialRole }}>
+      <AuthStore.Provider initialStates={{ auth: initialAuth }}>
         {children}
       </AuthStore.Provider>
     );
   };
 
   addProvider(AuthStoreProvider);
-  wrapperRouteComponent(wrapperComponentFn(initialRole, authConfig));
+  wrapperRouteComponent(wrapperComponentFn(authConfig));
 };

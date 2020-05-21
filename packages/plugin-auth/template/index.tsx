@@ -2,24 +2,24 @@ import React from 'react';
 import store from './store';
 
 // 函数组件支持 hooks 用法
-function useRole() {
-  const [role, { setRole }] = store.useModel('role');
+function useAuth() {
+  const [auth, { setAuth }] = store.useModel('auth');
   return [
-    role,
-    setRole
+    auth,
+    setAuth
   ]
 }
 
 // class 组件支持 Hoc 用法
-function withRole(Component) {
+function withAuth(Component) {
   const AuthWrappered = props => {
-    const [role, setRole] = useRole();
-    return <Component {...Object.assign({}, props, {role, setRole})} />;
+    const [auth, setAuth] = useAuth();
+    return <Component {...Object.assign({}, props, { auth, setAuth })} />;
   };
   return AuthWrappered;
 }
 
 export {
-  useRole,
-  withRole
+  useAuth,
+  withAuth
 }
