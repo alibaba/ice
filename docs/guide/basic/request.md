@@ -215,7 +215,7 @@ RequestConfig:
   // should be made return full response
   withFullResponse: false,
   // request instance name
-  instanceName
+  instanceName: 'request2'
 }
 ```
 
