@@ -97,12 +97,12 @@ export default {
       return { ...prevState, ...payload };
     }
   },
-  effects: (dispatch) => {
+  effects: (dispatch) => ({
     async fetchUserInfo() {
       const data = await userService.getUser();
       dispatch.user.update(data);
     }
-  }
+  })
 }
 ```
 
