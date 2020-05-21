@@ -57,7 +57,9 @@ const appConfig = {
       return <ConfigProvider>{children}</ConfigProvider>;
     },
 
-    // 可选，常用于 SSR 场景
+    // 可选，常用于 SSR 场景或者异步获取数据请求的场景
+    // 如果返回字段中包含 initialStates 字段将会作为状态管理 store 的初始值
+    // 如果返回字段中包含 auth 字段将会作为权限管理 auth 的初始值
     getInitialData: async() => {
       const result = await request();
       return result;
