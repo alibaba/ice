@@ -9,6 +9,11 @@ module.exports = {
     age: '21'
   },
 
+  'GET /api2/user': {
+    name: 'taobao',
+    age: '18'
+  },
+
   'DELETE /api/user/123': {
     user: 123
   },

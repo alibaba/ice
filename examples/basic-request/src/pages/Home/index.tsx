@@ -16,7 +16,7 @@ const BuiltInRequestDemo1 = () => {
   }
 
   const { request: fetchUser3, ...rest } = useRequest({url: '/user'});
-  console.log('直接调用 useRequest:', {...rest});
+  console.log('直接调用 useRequest：', {...rest});
 
   return (
     <>
@@ -35,6 +35,24 @@ const BuiltInRequestDemo2 = () => {
 
   return (
     <button type='button' onClick={fetchUser}>通过 Service + useRequest 调用</button>
+  )
+}
+
+const BuiltInRequestDemo3 = () => {
+  console.clear();
+  async function fetchUser1() {
+    const data = await request({ url: '/user', instanceName: 'request2' });
+    console.log('多实例 + 直接调用 request：', data);
+  }
+
+  const { request: fetchUser2, ...rest } = useRequest({url: '/user', instanceName: 'request2'})
+  console.log('多实例 + 调用 useRequest：', {...rest})
+
+  return (
+    <>
+      <button type='button' onClick={fetchUser1}>多实例演示 + request 调用</button>
+      <button type='button' onClick={fetchUser2}>多实例演示 + useRequest 调用</button>
+    </>
   )
 }
 
@@ -69,6 +87,7 @@ const Home = () => {
       <small>请打开控制台进行调试</small>
       <BuiltInRequestDemo1 />
       <BuiltInRequestDemo2 />
+      <BuiltInRequestDemo3 />
       <CustomRequestDemo />
     </div>
   );

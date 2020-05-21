@@ -18,7 +18,7 @@ export default async function (api) {
   applyMethod('addIceAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
 
   onGetWebpackConfig((config) => {
-    // add alias for module.ts use $ice/axiosInstance
-    config.resolve.alias.set('$ice/axiosInstance', path.join(distPath, 'axiosInstance.ts'));
+    // add alias for module.ts use $ice/createAxiosInstance
+    config.resolve.alias.set('$ice/createAxiosInstance', path.join(distPath, 'createAxiosInstance.ts'));
   });
 }
