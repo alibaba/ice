@@ -8,7 +8,7 @@ order: 11
 ## 插件安装
 
 ```bash
-$ npm install build-plugin-antd --save-dev
+$ npm install babel-plugin-import --save-dev
 ```
 
 ## 插件配置
