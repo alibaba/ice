@@ -11,7 +11,7 @@ const module = ({ appConfig }) => {
           const axiosInstance = createAxiosInstance(instanceName)[instanceName];
           setAxiosInstance(requestItem, axiosInstance);
         }
-      })
+      });
     } else {
       // 配置单一实例
       const axiosInstance = createAxiosInstance().default;

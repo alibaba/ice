@@ -25,8 +25,8 @@ const BuiltInRequestDemo1 = () => {
       <button type='button' onClick={fetchUser2}>调用 request + withFullResponse</button>
       <button type='button' onClick={fetchUser3}>直接调用 useRequest</button>
     </>
-  )
-}
+  );
+};
 
 const BuiltInRequestDemo2 = () => {
   console.clear();
@@ -35,8 +35,8 @@ const BuiltInRequestDemo2 = () => {
 
   return (
     <button type='button' onClick={fetchUser}>通过 Service + useRequest 调用</button>
-  )
-}
+  );
+};
 
 const BuiltInRequestDemo3 = () => {
   console.clear();
@@ -45,16 +45,16 @@ const BuiltInRequestDemo3 = () => {
     console.log('多实例 + 直接调用 request：', data);
   }
 
-  const { request: fetchUser2, ...rest } = useRequest({url: '/user', instanceName: 'request2'})
-  console.log('多实例 + 调用 useRequest：', {...rest})
+  const { request: fetchUser2, ...rest } = useRequest({url: '/user', instanceName: 'request2'});
+  console.log('多实例 + 调用 useRequest：', {...rest});
 
   return (
     <>
       <button type='button' onClick={fetchUser1}>多实例演示 + request 调用</button>
       <button type='button' onClick={fetchUser2}>多实例演示 + useRequest 调用</button>
     </>
-  )
-}
+  );
+};
 
 const CustomRequestDemo = () => {
   console.clear();
@@ -77,8 +77,8 @@ const CustomRequestDemo = () => {
           </div>
       }
     </div>
-  )
-}
+  );
+};
 
 const Home = () => {
   return (

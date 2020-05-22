@@ -99,19 +99,19 @@ function requestReducer(state, action) {
         data: null,
         error: null,
         loading: true,
-      }
+      };
     case 'success':
       return {
         data: action.data,
         error: null,
         loading: false,
-      }
+      };
     case 'error':
       return {
         data: null,
         error: action.error,
         loading: false,
-      }
+      };
     default:
       throw new Error();
   }
