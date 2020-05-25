@@ -1,10 +1,6 @@
 import * as ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
-interface IPluginOptions {
-  reactRefresh: boolean;
-}
-
-export default async function (api, pluginOptions: IPluginOptions) {
+export default async function (api) {
   const { onGetWebpackConfig, registerUserConfig } = api;
 
   registerUserConfig({
@@ -16,9 +12,11 @@ export default async function (api, pluginOptions: IPluginOptions) {
     const isDevelopment = process.env.NODE_ENV === 'development';
 
     // DO NOT apply the plugin in production mode!
-    if (isDevelopment && pluginOptions && pluginOptions.reactRefresh) {
+    if (isDevelopment) {
       config.plugin('ReactRefreshWebpackPlugin')
-        .use(new ReactRefreshWebpackPlugin());
+        .use(new ReactRefreshWebpackPlugin({
+          overlay: false
+        }));
 
       ['jsx', 'tsx'].forEach((rule) => {
         config.module
