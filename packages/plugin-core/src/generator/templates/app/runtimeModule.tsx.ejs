@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createHistory } from './history';
 
 interface IRenderParams {
   App: React.ComponentType;
@@ -76,6 +77,7 @@ class RuntimeModule {
       addDOMRender: this.addDOMRender,
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
+      createHistory
     }
 
     if (module) module.default({

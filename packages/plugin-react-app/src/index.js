@@ -3,6 +3,7 @@ const path = require('path');
 const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackPluginImport = require('webpack-plugin-import');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
@@ -10,7 +11,6 @@ const validation = require('./config/validation');
 const optionConfig = require('./config/option.config');
 const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
-const setWebpackbar = require('./config/setWebpackbar');
 
 // eslint-disable-next-line
 const chalk = require('chalk');
@@ -53,6 +53,12 @@ module.exports = ({
         delete userConfig[configKey];
       }
     });
+    // migrate sourcemap to sourceMap
+    if (Object.prototype.hasOwnProperty.call(newConfig, 'sourcemap') && !newConfig.sourceMap) {
+      newConfig.sourceMap = newConfig.sourcemap;
+    }
+    delete newConfig.sourcemap;
+
     return newConfig;
   });
 
@@ -60,9 +66,6 @@ module.exports = ({
   const config = getWebpackConfig(mode);
   // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
-
-  // set webpackbar
-  setWebpackbar(config);
 
   // DefinePlugin
   const defineVariables = {
@@ -72,31 +75,37 @@ module.exports = ({
   };
 
   config
+    .plugin('SimpleProgressPlugin')
+      .tap(([args]) => {
+        return [{
+          ...args,
+          progressOptions: {
+            clear: true,
+            callback: () => {
+              console.log();
+            }
+          }
+        }];
+      })
+      .end()
     .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [defineVariables])
       .end()
-    .plugin('friendly-error')
-      .use(require.resolve('friendly-errors-webpack-plugin'), [
-        {
-          clearConsole: false,
-        }
-      ])
-      .end()
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
-        .use(HtmlWebpackPlugin, [{
-          inject: true,
-          templateParameters: {
-            NODE_ENV: process.env.NODE_ENV,
-          },
-          favicon: getFilePath([
-            path.join(rootDir, 'public/favicon.ico'),
-            path.join(rootDir, 'public/favicon.png'),
-          ]),
-          template: path.resolve(rootDir, 'public/index.html'),
-          minify: false,
-        }])
-        .end()
+      .use(HtmlWebpackPlugin, [{
+        inject: true,
+        templateParameters: {
+          NODE_ENV: process.env.NODE_ENV,
+        },
+        favicon: getFilePath([
+          path.join(rootDir, 'public/favicon.ico'),
+          path.join(rootDir, 'public/favicon.png'),
+        ]),
+        template: path.resolve(rootDir, 'public/index.html'),
+        minify: false,
+      }])
+      .end()
     // CopyWebpackPlugin
     .plugin('CopyWebpackPlugin')
       .use(CopyWebpackPlugin, [[
@@ -105,11 +114,29 @@ module.exports = ({
           to: path.resolve(rootDir, defaultConfig.outputDir),
           ignore: ['index.html'],
         },
+      ]])
+      .end()
+    // WebpackPluginImport
+    .plugin('WebpackPluginImport')
+      .use(WebpackPluginImport, [[
+        {
+          libraryName: /@ali\/ice-.*/,
+          stylePath: 'style.js',
+        },
       ]]);
   if (mode === 'development') {
     // set hot reload plugin
-    config.plugin('HotModuleReplacementPlugin')
-      .use(webpack.HotModuleReplacementPlugin);
+    config
+      .plugin('HotModuleReplacementPlugin')
+        .use(webpack.HotModuleReplacementPlugin)
+        .end()
+      .plugin('friendly-error')
+        .use(require.resolve('friendly-errors-webpack-plugin'), [
+          {
+            clearConsole: false,
+          }
+        ])
+      .end();
   }
 
   config.name('web');
@@ -188,16 +215,18 @@ module.exports = ({
       // 包含错误时不打印 localUrl 和 assets 信息
       const isSuccessful = !messages.errors.length;
       if (isSuccessful) {
-        console.log(stats.toString({
-          errors: false,
-          warnings: false,
-          colors: true,
-          assets: true,
-          chunks: false,
-          entrypoints: false,
-          modules: false,
-          timings: false
-        }));
+        if (!commandArgs.disableAssets) {
+          console.log(stats.toString({
+            errors: false,
+            warnings: false,
+            colors: true,
+            assets: true,
+            chunks: false,
+            entrypoints: false,
+            modules: false,
+            timings: false
+          }));
+        }
 
         console.log();
         console.log(chalk.green(' Starting the development server at:'));

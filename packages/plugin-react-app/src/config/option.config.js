@@ -24,5 +24,9 @@ module.exports = {
   'mode': {
     module: false,
     commands: ['start', 'build'],
-  }
+  },
+  'disable-assets': {
+    module: false,
+    commands: ['start'],
+  },
 };
