@@ -7,7 +7,7 @@ function useAuth() {
   return [
     auth,
     setAuth
-  ]
+  ];
 }
 
 // class 组件支持 Hoc 用法
@@ -22,4 +22,4 @@ function withAuth(Component) {
 export {
   useAuth,
   withAuth
-}
+};

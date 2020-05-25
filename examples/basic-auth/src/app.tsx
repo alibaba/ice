@@ -20,7 +20,7 @@ const appConfig: IAppConfig = {
           starRepo: data.starPermission,
           followRepo: data.followPermission
         }
-      }
+      };
     },
   },
   auth: {

@@ -8,7 +8,7 @@ export default {
       return {
         ...state,
         ...payload
-      }
+      };
     }
   }
 };
