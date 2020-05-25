@@ -1,12 +1,7 @@
 import * as ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 export default async function (api) {
-  const { onGetWebpackConfig, registerUserConfig } = api;
-
-  registerUserConfig({
-    name: 'reactRefresh',
-    validation: 'boolean',
-  });
+  const { onGetWebpackConfig } = api;
 
   onGetWebpackConfig((config) => {
     const isDevelopment = process.env.NODE_ENV === 'development';
