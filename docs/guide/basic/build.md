@@ -42,6 +42,7 @@ Options:
   --disable-reload       禁用热更新模块
   --disable-mock         禁用 mock 服务
   --disable-open         禁止浏览器默认打开行为
+  --disable-assets       禁止 webpack assets 的输出
 ```
 
 ### build
