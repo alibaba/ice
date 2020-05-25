@@ -16,7 +16,7 @@ const wrapperComponentFn = (authConfig) => (PageComponent) => {
     return <PageComponent {...props} />;
   };
   return AuthWrapperedComponent;
-}
+};
 
 export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {
   const initialData = context ? context.initialData : {};

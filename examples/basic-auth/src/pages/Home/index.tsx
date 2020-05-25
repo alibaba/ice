@@ -15,7 +15,7 @@ class Demo1 extends React.PureComponent {
           <code>{JSON.stringify(auth)}</code>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -39,7 +39,7 @@ const Demo2 = () => {
     setAuth({
       starRepo: false,
       followRepo: false
-    })
+    });
   }
 
   return (
@@ -65,8 +65,8 @@ const Demo2 = () => {
       <button type="button" onClick={addAuth}>添加权限</button>
       <button type="button" onClick={deleteAuth}>删除权限</button>
     </div>
-  )
-}
+  );
+};
 
 const HomePage = () => {
   return (
@@ -80,6 +80,6 @@ const HomePage = () => {
 
 HomePage.pageConfig = {
   auth: ['admin']
-}
+};
 
 export default HomePage;
