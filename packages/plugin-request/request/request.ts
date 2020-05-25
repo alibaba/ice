@@ -25,6 +25,9 @@ const request = async function (options) {
   try {
     const instanceName = options.instanceName ? options.instanceName : 'default';
     const axiosInstance = createAxiosInstance()[instanceName];
+    if (!(typeof axiosInstance === 'function')) {
+      throw new Error(`unknown ${instanceName} in request method`);
+    }
     const response = await axiosInstance(options);
     // @ts-ignore
     if (axiosInstance.defaults.withFullResponse || options.withFullResponse) {
