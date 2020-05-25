@@ -71,30 +71,6 @@ export default (api) => {
         : require.resolve(depName);
       config.resolve.alias.set(depName, path.dirname(aliasPath));
     });
-
-    // add babel exclude for node_modules module file
-    const matchExclude = (filepath) => {
-      const excludes = runtimeModules.map(runtimeModule => {
-        // add default node_modules
-        if (runtimeModule.path.includes('node_modules')) {
-          return formatPath(runtimeModule.path);
-        }
-        return false;
-
-      }).filter(Boolean);
-      const matchReg = excludes.length ? new RegExp(excludes.join('|')) : null;
-      if (matchReg && matchReg.test(filepath)) {
-        return false;
-      }
-      // exclude node_modules as default
-      return /node_modules/.test(filepath);
-    };
-    ['jsx', 'tsx'].forEach((rule) => {
-      config.module
-        .rule(rule)
-        .exclude.clear()
-        .add(matchExclude);
-    });
   });
 
   const buildConfig = {};
