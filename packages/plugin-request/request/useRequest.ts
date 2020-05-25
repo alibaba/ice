@@ -2,14 +2,28 @@ import { useReducer, useCallback, useRef } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import customRequest from './request';
 
-interface Result<D = any> {
+export interface IAxiosRequestConfig extends AxiosRequestConfig {
+  withFullResponse?: boolean;
+}
+
+interface IResult<D = any> {
   data: D;
   error: Error | undefined;
   loading: boolean;
-  request: (config?: AxiosRequestConfig) => Promise<void>;
 }
 
-type Noop = (...args: any[]) => any;
+type IOptionFn = (...args: any[]) => any;
+type IOptionType = IOptionFn | IAxiosRequestConfig;
+
+interface IOptionResult extends IResult {
+  request: (args?: IAxiosRequestConfig) => void;
+}
+
+interface IServiceResult<T extends IOptionFn> extends IResult {
+  request: (...args: Parameters<T>) => void;
+}
+
+type IUseRequest = <T extends IOptionType>(options: T) => T extends IOptionFn ? IServiceResult<T> : IOptionResult;
 
 /**
  * Hooks to make ajax request
@@ -21,7 +35,7 @@ type Noop = (...args: any[]) => any;
  *   @param {boolean} loading - loading status of the request
  *   @param {function} request - function to make the request manually
  */
-function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
+const useRequest = function (options) {
   const initialState = Object.assign(
     {
       data: null,
@@ -35,7 +49,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
    * Method to make request manually
    * @param {object} config - axios config to shallow merged with options before making request
    */
-  const request = usePersistFn(async (config?: AxiosRequestConfig) => {
+  const request = usePersistFn(async (args) => {
     try {
       dispatch({
         type: 'loading'
@@ -43,11 +57,12 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
 
       let data;
       if (typeof options === 'function') {
-        data = await options(config);
+        // @ts-ignore
+        data = await options(args);
       } else {
         data = await customRequest({
           ...options,
-          ...config
+          ...args
         });
       }
 
@@ -55,6 +70,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
         type: 'success',
         data
       });
+      return data;
     } catch (error) {
       dispatch({
         type: 'error',
@@ -68,7 +84,7 @@ function useRequest<D = any>(options: AxiosRequestConfig | Noop): Result<D> {
     ...state,
     request
   };
-}
+} as IUseRequest;
 
 /**
  * Reducer to handle the status of the request
@@ -83,25 +99,25 @@ function requestReducer(state, action) {
         data: null,
         error: null,
         loading: true,
-      }
+      };
     case 'success':
       return {
         data: action.data,
         error: null,
         loading: false,
-      }
+      };
     case 'error':
       return {
         data: null,
         error: action.error,
         loading: false,
-      }
+      };
     default:
       throw new Error();
   }
 }
 
-function usePersistFn<T extends Noop>(fn: T) {
+function usePersistFn<T extends IOptionFn>(fn: T) {
   const ref = useRef<any>(() => {
     throw new Error('Cannot call function while rendering.');
   });

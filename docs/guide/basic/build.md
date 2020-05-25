@@ -115,7 +115,7 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
-### sourcemap
+### sourceMap
 
 - 类型： `boolean` 
 - 默认值： `false` 

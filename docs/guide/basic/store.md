@@ -127,6 +127,7 @@ const appConfig = {
     // 可选，初始化状态
     initialStates: {};
 
+    // 已废弃
     // 可选，获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为入参
     getInitialStates: (initialData) => {
       return initialData;

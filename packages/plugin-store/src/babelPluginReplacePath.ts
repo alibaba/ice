@@ -114,8 +114,9 @@ function formatPagePath({ routesPath, value, alias, applyMethod }: IGetConfigRou
   const matchedPagePath = matchRelativePath(routesPath, value, applyMethod) || matchAliasPath(alias, value, applyMethod);
   if (matchedPagePath && pathRegExp.test(matchedPagePath)) {
     let newValue = '';
-    if (/src\/pages\/index(.tsx|.jsx?)$/.test(value)) {
-      newValue = value.replace(/\.{2}\/src\/pages/, './pages/index');
+    // Note：过滤掉 pages 目录下的单文件形式
+    if (/src\/pages\/\w+(.tsx|.jsx?)$/.test(value)) {
+      return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
       newValue = pageName ? `ice/${pageName}/${pageName}.tsx` : '';
