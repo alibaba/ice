@@ -91,13 +91,6 @@ module.exports = ({
     .plugin('DefinePlugin')
       .use(webpack.DefinePlugin, [defineVariables])
       .end()
-    .plugin('friendly-error')
-      .use(require.resolve('friendly-errors-webpack-plugin'), [
-        {
-          clearConsole: false,
-        }
-      ])
-      .end()
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
       .use(HtmlWebpackPlugin, [{
@@ -133,8 +126,17 @@ module.exports = ({
       ]]);
   if (mode === 'development') {
     // set hot reload plugin
-    config.plugin('HotModuleReplacementPlugin')
-      .use(webpack.HotModuleReplacementPlugin);
+    config
+      .plugin('HotModuleReplacementPlugin')
+        .use(webpack.HotModuleReplacementPlugin)
+        .end()
+      .plugin('friendly-error')
+        .use(require.resolve('friendly-errors-webpack-plugin'), [
+          {
+            clearConsole: false,
+          }
+        ])
+      .end();
   }
 
   config.name('web');
