@@ -1,7 +1,7 @@
 module.exports = (config, compileDependencies) => {
   const matchExclude = (filepath) => {
     // compile build-plugin module for default
-    const deps = [/build-plugin.*moudle/].concat(compileDependencies).map(dep => {
+    const deps = [/build-plugin.*module/].concat(compileDependencies).map(dep => {
       if (dep instanceof RegExp) {
         return dep.source;
       } else if (typeof dep === 'string') {
