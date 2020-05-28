@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@ahooksjs/use-request@^0.1.0-0":
+  version "0.1.0-0"
+  resolved "https://registry.npmjs.org/@ahooksjs/use-request/-/use-request-0.1.0-0.tgz#7031b99f6e3a94e9f254037cb56a37022576205f"
+  integrity sha512-Ez8x77IbIL08GUgmGkAt/QbeuxCM4mi88RgrZc8ouDtZ3pvWsNzvYv9dV8ZXRuih5w+jn8/1Z8Y2loGAfiyOPA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
 "@alib/build-scripts@^0.1.13", "@alib/build-scripts@^0.1.16", "@alib/build-scripts@^0.1.18":
   version "0.1.18"
   resolved "https://registry.npm.taobao.org/@alib/build-scripts/download/@alib/build-scripts-0.1.18.tgz#42812724067eb2885a5e140c245a5446307d7cac"
@@ -9069,6 +9077,11 @@ lodash.templatesettings@^4.0.0:
   integrity sha1-5IExDwSdPPbUfpEq0JMTsVTw+zM=
   dependencies:
     lodash._reinterpolate "^3.0.0"
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.transform@^4.6.0:
   version "4.6.0"

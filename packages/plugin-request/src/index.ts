@@ -11,8 +11,9 @@ export default async function (api) {
   await fse.copy(path.join(__dirname, 'types'), path.join(distPath, 'types'));
   // .ice/index.ts:
   // export * from './request';
+  // export * from './useRequest';
   applyMethod('addIceExport', { source: './request/request', exportName: 'request' });
-  applyMethod('addIceExport', { source: './request/useRequest', exportName: 'useRequest' });
+  applyMethod('addIceExport', { source: './request/useRequest', specifier: '{ useRequest }',  exportName: 'useRequest' });
 
   // add iceTypes exports
   applyMethod('addIceAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
