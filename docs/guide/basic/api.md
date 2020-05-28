@@ -94,7 +94,7 @@ function HomeButton() {
   const history = useHistory();
 
   function handleClick() {
-    history.push('/home);
+    history.push('/home');
   }
 
   return (
