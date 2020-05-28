@@ -45,9 +45,9 @@ function useRequest<R = any, Item = any, U extends Item = any>(
 ): IcePaginatedResult<Item>
 function useRequest(service: any, options: any = {}) {
   const { run, ...rest } = useBaseRequest(service, {
-    ...options,
     manual: true,
-    requestMethod: () => request(service)
+    requestMethod: () => request(service),
+    ...options,
   });
   return {
     request: run,

@@ -9,6 +9,6 @@
     }
   },
   "exclude": [
-    "request/*"
+    "template/*"
   ]
 }
