@@ -125,6 +125,9 @@ module.exports = ({
         },
       ]]);
   if (mode === 'development') {
+    // disable build-scripts stats output
+    process.env.DISABLE_STATS = true;
+
     // set hot reload plugin
     config
       .plugin('HotModuleReplacementPlugin')
