@@ -2,6 +2,13 @@ import * as createTestServer from 'create-test-server';
 import { act, renderHook } from '@testing-library/react-hooks';
 import useRequest from '../template/useRequest';
 
+const MOCK_DATA = {
+  data: {
+    repo: 'alibaba/ice',
+    url: 'https://github.com/alibaba/ice'
+  }
+};
+
 describe('with useRequest', () => {
   let server;
 
@@ -69,5 +76,37 @@ describe('with useRequest', () => {
     expect(errorCallback).toHaveBeenCalled();
 
     unmount();
+  });
+
+  it('with object should work', async () => {
+    server.get('/repo', (req, res) => {
+      res.send(MOCK_DATA);
+    });
+
+    const { result, waitForNextUpdate } = renderHook(() => useRequest({ url: `${server.url}/repo` }, {
+      manual: false
+    }))
+    await waitForNextUpdate();
+    expect(result.current.data).toEqual(MOCK_DATA);
+    expect(result.current.loading).toEqual(false);
+    expect(result.current.error).toEqual(undefined);
+  });
+
+  it('with string should work', async () => {
+    server.get('/repo', (req, res) => {
+      res.send(MOCK_DATA);
+    });
+
+    const { result, waitForNextUpdate } = renderHook(() => useRequest(`${server.url}/repo`, {
+      manual: true,
+    }))
+    act(() => {
+      result.current.request();
+    });
+    await waitForNextUpdate();
+    expect(result.current.data).toEqual(MOCK_DATA);
+    expect(result.current.loading).toEqual(false);
+    expect(result.current.error).toEqual(undefined);
+    console.log(result.current);
   });
 });

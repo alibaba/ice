@@ -14,7 +14,7 @@ describe('with request', () => {
   beforeAll(async () => {
     server = await createTestServer();
 
-    server.get('/user', (req, res) => {
+    server.get('/repo', (req, res) => {
       res.send(MOCK_DATA);
     });
   });
@@ -28,13 +28,13 @@ describe('with request', () => {
   });
 
   it('request alias should work', async () => {
-    const data = await request.get(`${server.url}/user`);
+    const data = await request.get(`${server.url}/repo`);
     expect(data).toEqual(MOCK_DATA);
   });
 
   it('request receive an object parameter should work', async () => {
     const data = await request({
-      url: `${server.url}/user`
+      url: `${server.url}/repo`
     });
     expect(data).toEqual(MOCK_DATA);
   });
@@ -42,7 +42,7 @@ describe('with request', () => {
   it('request withFullResponse should work', async () => {
     // @ts-ignore
     const data = await request({
-      url: `${server.url}/user`,
+      url: `${server.url}/repo`,
       withFullResponse: true
     });
     expect(data.status).toEqual(200);
