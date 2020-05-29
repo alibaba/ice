@@ -36,10 +36,11 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@ice/spec": "^1.0.0",
+    "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.2.1",
-    "jest": "^25.4.0",
-    "codecov": "^3.6.5",
     "ali-oss": "^6.7.0",
+    "codecov": "^3.6.5",
+    "create-test-server": "^3.0.1",
     "dependency-check": "^4.1.0",
     "eslint": "^6.8.0",
     "esm": "^3.2.25",
@@ -47,6 +48,7 @@
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "husky": "^3.1.0",
+    "jest": "^25.4.0",
     "lerna": "^3.16.4",
     "mark-twain": "^2.0.3",
     "nodejieba": "^2.4.1",
@@ -55,8 +57,8 @@
     "pify": "^4.0.1",
     "rimraf": "^3.0.0",
     "simple-git": "^1.132.0",
-    "ts-node": "^8.6.1",
     "ts-jest": "^25.4.0",
+    "ts-node": "^8.6.1",
     "typescript": "^3.7.4"
   },
   "dependencies": {
