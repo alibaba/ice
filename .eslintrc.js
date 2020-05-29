@@ -38,4 +38,7 @@ module.exports = {
       files: ['**/*.ts', '**/*.tsx'],
     },
   ],
+  env: {
+    "jest": true
+  }
 };
