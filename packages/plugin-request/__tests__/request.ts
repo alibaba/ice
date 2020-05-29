@@ -27,19 +27,19 @@ describe('with request', () => {
     expect(request).toBeDefined();
   });
 
-  test('request alias should work', async () => {
+  it('request alias should work', async () => {
     const data = await request.get(`${server.url}/user`);
     expect(data).toEqual(MOCK_DATA);
   });
 
-  test('request receive an object parameter should work', async () => {
+  it('request receive an object parameter should work', async () => {
     const data = await request({
       url: `${server.url}/user`
     });
     expect(data).toEqual(MOCK_DATA);
   });
 
-  test('request withFullResponse should work', async () => {
+  it('request withFullResponse should work', async () => {
     // @ts-ignore
     const data = await request({
       url: `${server.url}/user`,
