@@ -11,6 +11,8 @@ export interface IRenderPageParams {
   pageModelFile: string;
 }
 
+const ignoreRegex = /^[._]/;
+
 export default class Generator {
   private rootDir: string
 
@@ -50,7 +52,9 @@ export default class Generator {
 
   private getPageModels(pageName: string, pageModelsDir: string, pageModelFile: string) {
     if (fse.pathExistsSync(pageModelsDir)) {
-      const pageModels = recursiveReaddir(pageModelsDir).map(item => path.parse(item));
+      const pageModels = recursiveReaddir(pageModelsDir)
+        .map(item => path.parse(item))
+        .filter(pageModel => !ignoreRegex.test(pageModel));
 
       pageModelsDir = this.applyMethod('formatPath', pageModelsDir);
 
@@ -88,7 +92,9 @@ export default class Generator {
     let appModels = [];
     if (fse.pathExistsSync(appModelsDir)) {
       appModelsDir = this.applyMethod('formatPath', appModelsDir);
-      appModels = fse.readdirSync(appModelsDir).map(item => path.parse(item).name);
+      appModels = fse.readdirSync(appModelsDir)
+        .map(item => path.parse(item).name)
+        .filter(appModel => !ignoreRegex.test(appModel));
     }
 
     let importStr = '';
