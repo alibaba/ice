@@ -1,4 +1,4 @@
-name: Report Coverage
+name: CI
 
 on: [push]
 
@@ -14,9 +14,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
-          npm install
-          npm run test
-          npm run coverage
+      - run: npm run setup
+      - run: npm run dependency:check
+      - run: npm run lint
+      - run: npm run test
         env:
           CI: true
