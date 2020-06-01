@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    [
+      "build-plugin-prerender",
+      {
+        "routes": [
+          "/",
+          "/about",
+          "/dashboard"
+        ]
+      }
+    ]
+  ]
+}
