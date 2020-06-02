@@ -34,11 +34,15 @@ module.exports = ({
     return modeConfig[appMode] || {};
   });
   // register user config without configWebpack
-  registerUserConfig({
+  [{
     name: 'modeConfig',
     validation: 'object',
     defaultValue: {},
-  });
+  }, {
+    name: 'disableRuntime',
+    validation: 'boolean',
+    defaultValue: false
+  }].forEach((item) => registerUserConfig(item));
 
   // modify user config to keep excute order
   modifyUserConfig((userConfig) => {
