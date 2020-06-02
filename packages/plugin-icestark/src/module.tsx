@@ -18,7 +18,7 @@ const { useEffect, useState } = React;
 const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, createHistory }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
-  const { type, basename, modifyRoutes: runtimeModifyRoutes } = router;
+  const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
@@ -56,7 +56,8 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
         type,
         routes,
         basename: getBasename(),
-        history
+        history,
+        fallback
       };
       return <IceRouter {...routerProps} />;
     });
@@ -72,6 +73,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
         routes,
         basename,
         history: routerHistory,
+        fallback
       };
       return <IceRouter {...routerProps} />;
     };
