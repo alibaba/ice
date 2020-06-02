@@ -14,6 +14,7 @@ const appConfig: IAppConfig = {
   },
   router: {
     type: 'browser',
+    fallback: <div>加载中...</div>
   },
   icestark: {
     type: 'framework',
