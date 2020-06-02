@@ -41,7 +41,7 @@ module.exports = ({
   }, {
     name: 'disableRuntime',
     validation: 'boolean',
-    defaultValue: true
+    defaultValue: false
   }].forEach((item) => registerUserConfig(item));
 
   // modify user config to keep excute order
