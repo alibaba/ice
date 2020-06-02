@@ -1,5 +1,5 @@
 {
   "plugins": [
-    "../../packages/plugin-auth"
+    "build-plugin-ice-auth"
   ]
 }
