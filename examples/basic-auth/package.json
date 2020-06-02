@@ -4,7 +4,8 @@
   "dependencies": {
     "ice.js": "^1.0.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "build-plugin-ice-auth": "^1.4.1"
   },
   "devDependencies": {
     "@types/react": "^16.9.20",
