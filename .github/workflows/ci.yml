@@ -18,5 +18,6 @@ jobs:
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
+      - run: npm run coverage
         env:
           CI: true
