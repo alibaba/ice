@@ -14,7 +14,7 @@ export default async function (api) {
   // export * from './request';
   // export * from './useRequest';
   applyMethod('addIceExport', { source: './request/request', exportName: 'request' });
-  applyMethod('addIceExport', { source: './request/useRequest',  exportName: 'useRequest' });
+  applyMethod('addIceExport', { source: './request/useRequest', exportName: 'useRequest' });
 
   // add iceTypes exports
   applyMethod('addIceAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });

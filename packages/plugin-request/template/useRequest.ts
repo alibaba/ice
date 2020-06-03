@@ -1,6 +1,5 @@
 /* eslint @typescript-eslint/no-empty-interface: 0 */
-import useBaseRequest from '@ahooksjs/use-request';
-import { BaseOptions, BasePaginatedOptions, BaseResult, CombineService, LoadMoreFormatReturn, LoadMoreOptions, LoadMoreOptionsWithFormat, LoadMoreParams, OptionsWithFormat, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams } from '@ahooksjs/use-request/lib/types';
+import useBaseRequest, { BaseOptions, BasePaginatedOptions, BaseResult, CombineService, LoadMoreFormatReturn, LoadMoreOptions, LoadMoreOptionsWithFormat, LoadMoreParams, OptionsWithFormat, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams } from '@ahooksjs/use-request';
 import request from './request';
 
 type OmitBaseResult<R, P extends any[]> = Omit<BaseResult<R, P>, 'run'>;
@@ -45,11 +44,17 @@ function useRequest<R = any, Item = any, U extends Item = any>(
 ): IcePaginatedResult<Item>
 function useRequest(service: any, options: any = {}) {
   const { run, ...rest } = useBaseRequest(service, {
+    // Note：
+    // ahooks/useRequest manual 默认为 false 即自动请求
+    // icejs/useRequest 默认为手动请求
+    // 避免发生 breakchange 这里将 manual 默认改为 true
     manual: true,
+    // 默认使用 request 作为请求方法
     requestMethod: () => request(service),
     ...options,
   });
   return {
+    // 修改 ahooks/useRequest 的返回值 run 为 request
     request: run,
     ...rest
   };

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ahooksjs/use-request@^0.1.0-0":
-  version "0.1.0-0"
-  resolved "https://registry.npmjs.org/@ahooksjs/use-request/-/use-request-0.1.0-0.tgz#7031b99f6e3a94e9f254037cb56a37022576205f"
-  integrity sha512-Ez8x77IbIL08GUgmGkAt/QbeuxCM4mi88RgrZc8ouDtZ3pvWsNzvYv9dV8ZXRuih5w+jn8/1Z8Y2loGAfiyOPA==
+"@ahooksjs/use-request@^1.0.0":
+  version "1.0.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@ahooksjs/use-request/download/@ahooksjs/use-request-1.0.0-beta.2.tgz#44a75baa8b152cce1cac7a194f97b8df900564b1"
+  integrity sha1-RKdbqosVLM4crHoZT5e435AFZLE=
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
