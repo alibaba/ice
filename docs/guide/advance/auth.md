@@ -9,6 +9,27 @@ order: 7
 - 操作权限：页面中的某些按钮或组件针对无权限的用户直接隐藏；
 - 接口权限：当用户通过操作调用没有权限的接口时跳转到无权限页面。
 
+## 使用权限插件
+
+### 安装
+
+```bash
+# 安装权限插件
+$ npm install build-plugin-ice-auth --save-dev
+```
+
+### 配置
+
+在 `build.json` 中配置权限插件
+
+```json
+{
+  "plugins": [
+    "build-plugin-ice-auth"
+  ]
+}
+```
+
 ## 初始化权限数据
 
 大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。在 icejs 框架中约定通过 `getInitialData` 从服务端异步获取初始化的权限数据，并且约定最终返回格式为 `{auth: {[key: string]: boolean }}` 的形式。

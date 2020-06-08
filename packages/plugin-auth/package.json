@@ -14,7 +14,8 @@
     "fs-extra": "^8.1.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "template"
   ],
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
