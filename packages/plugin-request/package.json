@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "request"
+    "request",
+    "template"
   ],
   "dependencies": {
     "@ahooksjs/use-request": "^1.0.0",
