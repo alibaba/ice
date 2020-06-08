@@ -15,6 +15,7 @@
     "request"
   ],
   "dependencies": {
+    "@ahooksjs/use-request": "^1.0.0",
     "axios": "^0.19.2",
     "fs-extra": "^8.1.0"
   },

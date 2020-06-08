@@ -6,16 +6,16 @@ const BuiltInRequestDemo1 = () => {
   console.clear();
 
   async function fetchUser1() {
-    const data = await request({url: '/user' });
+    const data = await request({ url: '/user' });
     console.log('直接调用 request：', data);
   }
 
   async function fetchUser2() {
-    const data = await request({url: '/user', withFullResponse: true });
+    const data = await request({ url: '/user', withFullResponse: true });
     console.log('调用 request + withFullResponse：', data);
   }
 
-  const { request: fetchUser3, ...rest } = useRequest({url: '/user'});
+  const { request: fetchUser3, ...rest } = useRequest({ url: '/user' });
   console.log('直接调用 useRequest：', {...rest});
 
   return (
@@ -45,7 +45,7 @@ const BuiltInRequestDemo3 = () => {
     console.log('多实例 + 直接调用 request：', data);
   }
 
-  const { request: fetchUser2, ...rest } = useRequest({url: '/user', instanceName: 'request2'});
+  const { request: fetchUser2, ...rest } = useRequest({ url: '/user', instanceName: 'request2' });
   console.log('多实例 + 调用 useRequest：', {...rest});
 
   return (
