@@ -1,4 +1,8 @@
 const getBuiltInPlugins = (userConfig) => {
+  if (userConfig.disableRuntime) {
+    return ['build-plugin-react-app'];
+  }
+
   // built-in plugins for icejs
   const builtInPlugins = [
     'build-plugin-ice-core',

@@ -7,9 +7,12 @@ const wrapperComponentFn = (authConfig) => (PageComponent) => {
 
   const AuthWrapperedComponent = (props) => {
     const pageConfigAuth = pageConfig.auth;
+    if(pageConfigAuth && !Array.isArray(pageConfigAuth)) {
+      throw new Error('pageConfig.auth must be an array');
+    }
     const hasAuth = Array.isArray(pageConfigAuth)
       ? Object.keys(auth).filter(item => pageConfigAuth.includes(item) ? auth[item] : false).length
-      : false;
+      : true;
     if (!hasAuth) {
       return authConfig.NoAuthFallback ? authConfig.NoAuthFallback : null;
     }

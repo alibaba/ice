@@ -412,6 +412,19 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
+### disableRuntime
+
+- 类型：`boolean`
+- 默认值：`false`
+
+禁用运行时的能力，如需关闭配置为 `true` 即可。
+
+```json
+{
+  "disableRuntime": true
+}
+```
+
 ## 根据环境区分工程配置
 
 参考 [区分不同环境](/docs/guide/basic/mode.md)。

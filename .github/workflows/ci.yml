@@ -4,21 +4,20 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x]
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm run setup
-    - run: npm run lint
-    - run: npm run dependency:check
-      env:
-        CI: true
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm run setup
+      - run: npm run dependency:check
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run coverage
+        env:
+          CI: true

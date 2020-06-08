@@ -34,11 +34,15 @@ module.exports = ({
     return modeConfig[appMode] || {};
   });
   // register user config without configWebpack
-  registerUserConfig({
+  [{
     name: 'modeConfig',
     validation: 'object',
     defaultValue: {},
-  });
+  }, {
+    name: 'disableRuntime',
+    validation: 'boolean',
+    defaultValue: false
+  }].forEach((item) => registerUserConfig(item));
 
   // modify user config to keep excute order
   modifyUserConfig((userConfig) => {
@@ -64,6 +68,9 @@ module.exports = ({
 
   const mode = command === 'start' ? 'development' : 'production';
   const config = getWebpackConfig(mode);
+  // 1M = 1024 KB = 1048576 B
+  config.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
+
   // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
 
@@ -125,6 +132,9 @@ module.exports = ({
         },
       ]]);
   if (mode === 'development') {
+    // disable build-scripts stats output
+    process.env.DISABLE_STATS = true;
+
     // set hot reload plugin
     config
       .plugin('HotModuleReplacementPlugin')
