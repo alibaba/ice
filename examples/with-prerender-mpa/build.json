@@ -1,0 +1,25 @@
+{
+  "mpa": true,
+  "plugins": [
+    [
+      "build-plugin-prerender",
+      {
+        "routes": [
+          "/home",
+          "/dashboard"
+        ],
+        "minify": {
+          "collapseBooleanAttributes": true,
+          "collapseWhitespace": true,
+          "decodeEntities": true,
+          "keepClosingSlash": true,
+          "sortAttributes": true
+        },
+        "renderer": {
+          "headless": false,
+          "maxConcurrentRoutes": 4
+        }
+      }
+    ]
+  ]
+}
