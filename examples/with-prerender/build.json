@@ -7,7 +7,17 @@
           "/",
           "/about",
           "/dashboard"
-        ]
+        ],
+        "minify": {
+          "collapseBooleanAttributes": true,
+          "collapseWhitespace": true,
+          "decodeEntities": true,
+          "keepClosingSlash": true,
+          "sortAttributes": true
+        },
+        "renderer": {
+          "headless": false
+        }
       }
     ]
   ]
