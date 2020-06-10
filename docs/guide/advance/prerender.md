@@ -3,7 +3,7 @@ title: 构建时预渲染 Prerender
 order: 5
 ---
 
-在某些业务场景下，我们常常需要更好的 SEO ，提高首页加载速度等等。我们封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
+在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，因此，封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
 
 ## 安装插件
 
@@ -11,11 +11,33 @@ order: 5
 $ npm install build-plugin-prerender --save-dev
 ```
 
+如果在安装依赖时遇到下载 Chromium 过慢时，可修改 npm 的puppeteer_download_host 为淘宝源，具体方法如下
+
+```bash
+npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
+```
 ## 工程配置
 
 ### 在 SPA 中使用 Prerender
 
-在 build.json 中引入 `build-plugin-prerender` 并配置
+项目目录结构
+
+```markdown
+├── build.json
+├── package.json
+├── public
+|  ├── favicon.png
+|  └── index.html
+├── src
+|  ├── app.ts
+|  ├── pages
+|  |  ├── About # About 页面
+|  |  ├── Dashboard # Dashboard 页面
+|  |  └── Home # Home 页面
+|  └── routes.ts
+```
+
+在 build.json 中引入 `build-plugin-prerender` 并配置, 其中 `routes` 为需要渲染的路由
 
 ```json
 {
@@ -34,43 +56,39 @@ $ npm install build-plugin-prerender --save-dev
 }
 ```
 
-项目目录结构
-
-```
-├── build.json
-├── package.json
-├── public
-|  ├── favicon.png
-|  └── index.html
-├── src
-|  ├── app.ts
-|  ├── pages
-|  |  ├── About
-|  |  |  └── index.tsx
-|  |  ├── Dashboard
-|  |  |  └── index.tsx
-|  |  └── Home
-|  |     └── index.tsx
-|  └── routes.ts
-```
-
 运行 `npm run build`，得到的构建产物如下：
 
-```
+```markdown
 ├── build
 |  ├── about
-|  |  └── index.html
+|  |  └── index.html   # 预渲染得到的 HTML
 |  ├── dashboard
-|  |  └── index.html
+|  |  └── index.html   # 预渲染得到的 HTML
 |  ├── favicon.png
 |  ├── index.html
 |  └── js
 |     └── index.js
 ```
 
-使用 [http-server](https://www.npmjs.com/package/http-server) 访问 http://localhost:8080/dashboard， 可在本地预览构建后的效果。
+通过静态服务启动，通过预渲染后的 HTML 截图如下
+
+![prerender-html](https://img.alicdn.com/tfs/TB1FsArJGL7gK0jSZFBXXXZZpXa-1211-557.png)
 
 ### 在 MPA 中使用 Prerender
+
+项目目录结构
+
+```markdown
+├── build.json
+├── package.json
+├── public
+|  ├── dashboard.html
+|  └── index.html
+├── src
+|  └── pages
+|     ├── Dashboard # Dashboard 页面
+|     └── Home # Home 页面
+```
 
 首先确保在 `build.json` 中开启 MPA 应用配置，`build-plugin-prerender` 配置字段同上
 
@@ -91,29 +109,9 @@ $ npm install build-plugin-prerender --save-dev
 }
 ```
 
-项目目录结构
-
-```
-├── build.json
-├── package.json
-├── public
-|  ├── dashboard.html
-|  └── index.html
-├── src
-|  └── pages
-|     ├── Dashboard
-|     |  ├── app.ts
-|     |  ├── index.tsx
-|     |  ├── models
-|     |  └── routes.ts
-|     └── Home
-|        ├── app.ts
-|        └── index.tsx
-```
-
 运行 `npm run build`，得到的构建产物如下：
 
-```
+```markdown
 ├── build
 |  ├── dashboard
 |  |  └── index.html
@@ -133,44 +131,33 @@ $ npm install build-plugin-prerender --save-dev
 
 ## 进阶用法
 
-压缩生成的 HTML
+### 压缩生成的 HTML
+- collapseBooleanAttributes: `boolean`, 是否省略节点上的 `Boolean` 属性
+- collapseWhitespace: `boolean`, 是否折叠有助于文档树中文本节点的空白
 
+### 渲染配置
+- maxConcurrentRoute: `number`, 并行渲染的路由数量
+- headless: `boolean`, 当构建时预渲染是否显示浏览器进行调试
+
+示例: 
 ```json
 {
+  "mpa": true,
   "plugins": [
     [
       "build-plugin-prerender",
       {
         "routes": [
-			"/"
+          "/home",
+          "/dashboard"
         ],
         "minify": {
-        	"collapseBooleanAttributes": true,
-        	"collapseWhitespace": true,
-        	"decodeEntities": true,
-        	"keepClosingSlash": true,
-        	"sortAttributes": true
-        }
-      }
-    ]
-  ]
-}
-```
-
-增加限制并行渲染的路由数量：
-
-```json
-{
-  "plugins": [
-    [
-      "build-plugin-prerender",
-      {
-        "routes": [
-			"/"
-        ],
+          "collapseBooleanAttributes": false,
+          "collapseWhitespace": false,
+        },
         "renderer": {
-            "maxConcurrentRoutes": 4,
-        }  
+          "maxConcurrentRoutes": 4
+        }
       }
     ]
   ]

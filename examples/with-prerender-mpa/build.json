@@ -9,11 +9,8 @@
           "/dashboard"
         ],
         "minify": {
-          "collapseBooleanAttributes": true,
-          "collapseWhitespace": true,
-          "decodeEntities": true,
-          "keepClosingSlash": true,
-          "sortAttributes": true
+          "collapseBooleanAttributes": false,
+          "collapseWhitespace": false
         },
         "renderer": {
           "maxConcurrentRoutes": 4
