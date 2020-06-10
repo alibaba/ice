@@ -53,7 +53,7 @@ $ npm install build-plugin-prerender --save-dev
 - routes: string[]，需要预渲染的路由。默认是 `['/']`。
 
 - minify: object, 压缩生成的 HTML 文件。默认是 `{}`。
-- render: object, 目前默认使用 [PuppeteerRenderer](https://github.com/JoshTheDerf/prerenderer/tree/master/renderers/renderer-puppeteer), 可传入相应的字段配置。默认是 `{}`。
+- render: object, renderer 字段配置。目前默认使用 [PuppeteerRenderer](https://github.com/JoshTheDerf/prerenderer/tree/master/renderers/renderer-puppeteer)。默认是 `{}`。
 
 具体的配置可参考 https://www.npmjs.com/package/prerender-spa-plugin/v/3.4.0
 
