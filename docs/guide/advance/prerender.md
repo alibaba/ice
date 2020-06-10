@@ -3,7 +3,7 @@ title: 构建时预渲染 Prerender
 order: 5
 ---
 
-在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，因此，封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
+在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，因此，我们封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
 
 ## 安装插件
 
