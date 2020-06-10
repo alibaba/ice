@@ -4,26 +4,23 @@ import * as  PrerenderSPAPlugin from 'prerender-spa-plugin';
 
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 
-const plugin: IPlugin = ({ context, applyMethod, onGetWebpackConfig }, options) => {
+const plugin: IPlugin = ({ context, onGetWebpackConfig }, options) => {
   const { rootDir, userConfig } = context;
   const outputDir = (userConfig.outputDir || 'build') as string;
   const { routes = ['/'], minify = {}, renderer = {} }: any = options;
 
   onGetWebpackConfig((config) => {
     if (userConfig.mpa) {
-      const pages = applyMethod('getPages', rootDir);
-      const prerenderPages = pages.filter((page) => {
-        return routes.find(route => route.replace('/', '') === page.toLocaleLowerCase());
-      });
-      prerenderPages.forEach((page: string) => {
-        const entryName = page.toLocaleLowerCase();
+      routes.forEach((route: string) => {
+        const entryName = route.replace('/', '');
+
         config.plugin(`HtmlWebpackPlugin_${entryName}`).tap((args) => {
           return [{ ...args[0], filename: `${entryName}/index.html` }];
         })
           .end()
           .plugin(`PrerenderSPAPlugin_${entryName}`).use(PrerenderSPAPlugin, [{
             staticDir: path.join(rootDir, outputDir),
-            routes: [`/${entryName}`],
+            routes: [route],
             indexPath: path.join(rootDir, outputDir, `/${entryName}/index.html`),
             minify,
             renderer: new Renderer(renderer)
