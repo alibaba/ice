@@ -42,6 +42,7 @@ Options:
   --disable-reload       禁用热更新模块
   --disable-mock         禁用 mock 服务
   --disable-open         禁止浏览器默认打开行为
+  --disable-assets       禁止 webpack assets 的输出
 ```
 
 ### build
@@ -408,6 +409,19 @@ icejs 中一般不允许修改该配置。
   "eslint": {
     "quiet": true
   }
+}
+```
+
+### disableRuntime
+
+- 类型：`boolean`
+- 默认值：`false`
+
+禁用运行时的能力，如需关闭配置为 `true` 即可。
+
+```json
+{
+  "disableRuntime": true
 }
 ```
 

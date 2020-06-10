@@ -139,7 +139,7 @@ import userService from '@/services/user';
 
 export default function HomePage() {
   // 调用 service
-  const { data, error, isLoading, request } = useRequest(userService.getUser);
+  const { data, error, loading, request } = useRequest(userService.getUser);
 
   useEffect(() => {
     // 触发数据请求
@@ -253,67 +253,89 @@ Response Schema：
 
 ### useRequest
 
-* 可以用在 Function Component，使用 useRequest 可以极大的简化对请求状态（error/loading）的管理。
-* 可以接收一个 `Object` 或者是 `(...args)=> any` 作为参数。
+用在函数式组件中，使用 useRequest 可以极大的简化对请求状态的管理。
 
-#### 传入对象作为参数
-
-```ts
-const { data, loading, error, request } = useRequest(options: RequestConfig);
-```
-
-使用示例：
+#### API
 
 ```ts
-import { useRequest } from 'ice';
-
-export default function HomePage() {
-  const { data, error, isLoading, request } = useRequest({
-    url: '/api/getRepo',
-    params: {
-      id: 123
-    }
-  });
-
-  useEffect(() => {
-    request();
-  }, []);
-
-
-  return (
-    <>Home</>
-  );
-}
+const {
+  // 请求返回的数据，默认为 undefined
+  data,
+  // 请求抛出的异常，默认为 undefined
+  error,
+  // 请求状态
+  loading,
+  // 手动触发请求，参数会传递给 service
+  request,
+  // 当次执行请求的参数数组
+  params,
+  // 取消当前请求，如果有轮询，停止
+  cancel,
+  // 使用上一次的 params，重新执行请求
+  refresh,
+  // 直接修改 data	
+  mutate,
+  // 默认情况下，新请求会覆盖旧请求。如果设置了 fetchKey，则可以实现多个请求并行，fetches 存储了多个请求的状态
+  fetches
+} = useRequest(service, {
+  // 默认为 true 即需要手动执行请求
+  manual,
+   // 初始化的 data	
+  initialData,
+  // 请求成功时触发，参数为 data 和 params
+  onSuccess,
+  // 请求报错时触发，参数为 error 和 params
+  onError,
+  // 格式化请求结果	
+  formatResult,
+  // 请求唯一标识
+  cacheKey,
+  // 设置显示 loading 的延迟时间，避免闪烁
+  loadingDelay,
+  // 默认参数	
+  defaultParams,
+  // 轮询间隔，单位为毫秒	
+  pollingInterval
+  // 在页面隐藏时，是否继续轮询，默认为 true，即不会停止轮询
+  pollingWhenHidden,
+  // 根据 params，获取当前请求的 key
+  fetchKey,
+  // 在屏幕重新获取焦点或重新显示时，是否重新发起请求。默认为 false，即不会重新发起请求
+  refreshOnWindowFocus,
+  // 屏幕重新聚焦，如果每次都重新发起请求，不是很好，我们需要有一个时间间隔，在当前时间间隔内，不会重新发起请求，需要配置 refreshOnWindowFocus 使用
+  focusTimespan,
+  // 防抖间隔, 单位为毫秒，设置后，请求进入防抖模式
+  debounceInterval,
+  // 节流间隔, 单位为毫秒，设置后，请求进入节流模式。	
+  throttleInterval,
+  // 只有当 ready 为 true 时，才会发起请求	
+  ready,
+  // 在 manual = false 时，refreshDeps 变化，会触发请求重新执行	
+  refreshDeps
+});
 ```
 
-#### 传入函数作为参数
+#### 常用使用方式
 
 ```ts
-const { data, loading, error, request } = useRequest((...args: any[]) => any);
+// 用法 1：传入字符串
+const { data, error, loading } = useRequest('/api/repo');
+
+// 用法 2：传入配置对象
+const { data, error, loading } = useRequest({
+  url: '/api/repo',
+  method: 'get',
+});
+
+// 用法 3：传入 service 函数
+const { data, error, loading, request } = useRequest((id) => ({
+  url: '/api/repo',
+  method: 'get',
+  data: { id },
+});
 ```
 
-使用示例：
-
-```ts
-// src/pages/Home/index.tsx
-import { useRequest } from 'ice';
-import services from '@/services';
-
-export default function HomePage() {
-  const { data, error, isLoading, request } = useRequest(services.getRepo);
-
-  useEffect(() => {
-    // 动态传入参数
-    const id = 123;
-    request(id);
-  }, []);
-
-
-  return (
-    <>Home</>
-  );
-}
-```
+更多使用方式详见 [ahooks/useRequest](https://ahooks.js.org/zh-CN/hooks/async)
 
 ### 请求配置
 
@@ -378,7 +400,6 @@ const appConfig = {
     {
       baseURL: '/api',
       // ...RequestConfig 其他参数
-
     },
     {
       // 配置 request 实例名称，如果不配默认使用内置的 request 实例

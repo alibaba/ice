@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-auth",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -14,7 +14,8 @@
     "fs-extra": "^8.1.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "template"
   ],
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
