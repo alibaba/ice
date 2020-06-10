@@ -4,7 +4,7 @@
 
 ## Usage
 
-### use in SPA
+### in SPA
 
 `build.json`:
 
@@ -53,7 +53,7 @@ Run `npm run build`
    └── index.js
 ```
 
-### use in MPA
+### in MPA
 
 ```json
 {
