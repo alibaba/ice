@@ -1,15 +1,9 @@
 ---
 title: 构建时预渲染 Prerender
-order: 17
+order: 5
 ---
 
-在 ToC 的业务场景下，我们常常需要更好的 seo，提高首页加载速度等等。但在某些业务场景下，使用 SSR 比较重，比如：
-
-- 静态站点类应用
-- 静态营销类页面
-- ...
-
-我们基于 [prerender-spa-plugin](https://www.npmjs.com/package/prerender-spa-plugin/v/3.4.0), 封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
+在某些业务场景下，我们常常需要更好的 SEO ，提高首页加载速度等等。我们封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
 
 ## 安装插件
 
@@ -33,41 +27,45 @@ $ npm install build-plugin-prerender --save-dev
           "/",
           "/about",
           "/dashboard"
-        ],
-        "minify": {
-          "collapseBooleanAttributes": true,
-          "collapseWhitespace": true,
-          "decodeEntities": true,
-          "keepClosingSlash": true,
-          "sortAttributes": true
-        },
-        "renderer": {
-          "headless": false
-        }
+        ]
       }
     ]
   ]
 }
 ```
 
-- routes: string[]，需要预渲染的路由。默认是 `['/']`。
+项目目录结构
 
-- minify: object, 压缩生成的 HTML 文件。默认是 `{}`。
-- render: object, renderer 字段配置。目前默认使用 [PuppeteerRenderer](https://github.com/JoshTheDerf/prerenderer/tree/master/renderers/renderer-puppeteer)。默认是 `{}`。
-
-具体的配置可参考 https://www.npmjs.com/package/prerender-spa-plugin/v/3.4.0
+```
+├── build.json
+├── package.json
+├── public
+|  ├── favicon.png
+|  └── index.html
+├── src
+|  ├── app.ts
+|  ├── pages
+|  |  ├── About
+|  |  |  └── index.tsx
+|  |  ├── Dashboard
+|  |  |  └── index.tsx
+|  |  └── Home
+|  |     └── index.tsx
+|  └── routes.ts
+```
 
 运行 `npm run build`，得到的构建产物如下：
 
 ```
-├── about
-|  └── index.html
-├── dashboard
-|  └── index.html
-├── favicon.png
-├── index.html
-└── js
-   └── index.js
+├── build
+|  ├── about
+|  |  └── index.html
+|  ├── dashboard
+|  |  └── index.html
+|  ├── favicon.png
+|  ├── index.html
+|  └── js
+|     └── index.js
 ```
 
 使用 [http-server](https://www.npmjs.com/package/http-server) 访问 http://localhost:8080/dashboard， 可在本地预览构建后的效果。
@@ -86,12 +84,72 @@ $ npm install build-plugin-prerender --save-dev
         "routes": [
           "/about",
           "/dashboard"
+        ]
+      }
+    ]
+  ]
+}
+```
+
+项目目录结构
+
+```
+├── build.json
+├── package.json
+├── public
+|  ├── dashboard.html
+|  └── index.html
+├── src
+|  └── pages
+|     ├── Dashboard
+|     |  ├── app.ts
+|     |  ├── index.tsx
+|     |  ├── models
+|     |  └── routes.ts
+|     └── Home
+|        ├── app.ts
+|        └── index.tsx
+```
+
+运行 `npm run build`，得到的构建产物如下：
+
+```
+├── build
+|  ├── dashboard
+|  |  └── index.html
+|  ├── home
+|  |  └── index.html
+|  └── js
+|     ├── dashboard.js
+|     ├── home.js
+|     └── vendor.js
+```
+
+## 插件参数
+
+- routes: `string[]`，需要预渲染的路由。默认是 `['/']`。
+- minify: `object`, 压缩生成的 HTML 文件。默认是 `{ collapseBooleanAttributes: true,collapseWhitespace : true}`。
+- render: `object`, renderer 字段配置。目前默认使用 [PuppeteerRenderer](https://github.com/JoshTheDerf/prerenderer/tree/master/renderers/renderer-puppeteer)。默认是 `{}`。
+
+## 进阶用法
+
+压缩生成的 HTML
+
+```json
+{
+  "plugins": [
+    [
+      "build-plugin-prerender",
+      {
+        "routes": [
+			"/"
         ],
         "minify": {
-          ...
-        },
-        "renderer": {
-          ...
+        	"collapseBooleanAttributes": true,
+        	"collapseWhitespace": true,
+        	"decodeEntities": true,
+        	"keepClosingSlash": true,
+        	"sortAttributes": true
         }
       }
     ]
@@ -99,16 +157,24 @@ $ npm install build-plugin-prerender --save-dev
 }
 ```
 
-运行 `npm run build`，得到的构建产物如下：
+增加限制并行渲染的路由数量：
 
-```
-├── dashboard
-|  └── index.html
-├── home
-|  └── index.html
-└── js
-   ├── dashboard.js
-   ├── home.js
-   └── vendor.js
+```json
+{
+  "plugins": [
+    [
+      "build-plugin-prerender",
+      {
+        "routes": [
+			"/"
+        ],
+        "renderer": {
+            "maxConcurrentRoutes": 4,
+        }  
+      }
+    ]
+  ]
+}
 ```
 
+更多的参数配置可参考 [prerender-spa-plugin](https://github.com/chrisvfritz/prerender-spa-plugin)

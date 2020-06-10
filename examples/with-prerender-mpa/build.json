@@ -16,7 +16,6 @@
           "sortAttributes": true
         },
         "renderer": {
-          "headless": false,
           "maxConcurrentRoutes": 4
         }
       }
