@@ -427,7 +427,7 @@ icejs 中一般不允许修改该配置。
 
 ## 根据环境区分工程配置
 
-参考 [区分不同环境](/docs/guide/basic/mode.md)。
+参考 [区分不同环境](/docs/guide/basic/config.md)。
 
 ## 自定义配置
 
