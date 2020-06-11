@@ -36,6 +36,7 @@ Usage: icejs start [options]
 Options:
   -p, --port <port>      服务端口号
   -h, --host <host>      服务主机名
+  --config <config>      指定配置文件
   --https                支持开启 https
   --analyzer             支持开启构建分析
   --analyzer-port        支持定制构建分析端口
@@ -60,12 +61,43 @@ Options:
 
 ## 工程构建配置
 
-工程构建相关的配置都收敛在项目根目录的 `build.json` 文件中，配置方式：
+工程构建相关的配置默认都收敛在项目根目录的 `build.json` 文件中，配置方式：
 
 ```json
 {
   "alias": {},
   "publicPath": "",
+}
+```
+
+如果希望使用 JS 类型的配置文件，则需要在 npm scripts 中指定配置文件：
+
+```json
+{
+  "scripts": {
+    "start": "icejs start --config build.config.js",
+    "build": "icejs build --config build.config.js"
+  }
+}
+```
+
+`build.config.js` 中通过 JS 模块的方式指定配置：
+
+```js
+module.exports = {
+  define: {
+    env: process.env.NODE_ENV,
+  },
+  plugins: [
+    ['build-plugin-fusion', {
+      themePackage: '@icedesign/theme',
+    }],
+    (api) => {
+      api.onGetWebpackConfig((config) => {
+        config.entry('src/index.js');
+      });
+    },
+  ],
 }
 ```
 
@@ -338,21 +370,21 @@ icejs 中一般不允许修改该配置。
 - 类型：`object`
 - 默认值：`{}`
 
-为 css-loader 提供快捷配置，将与默认配置进行浅合并。
+为 css-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [css-loader options](https://webpack.js.org/loaders/css-loader/#options)。
 
 ### lessLoaderOptions
 
 - 类型：`object`
 - 默认值：`{}`
 
-为 less-loader 提供快捷配置，将与默认配置进行浅合并。
+为 less-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [less-loader options](https://webpack.js.org/loaders/less-loader/#options)。
 
 ### sassLoaderOptions
 
 - 类型：`object`
 - 默认值：`{}`
 
-为 sass-loader 提供快捷配置，将与默认配置进行浅合并。
+为 sass-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [sass-loader options](https://webpack.js.org/loaders/sass-loader/#options)。
 
 ### postcssrc
 
@@ -366,7 +398,7 @@ icejs 中一般不允许修改该配置。
 - 类型：`object`
 - 默认值：`{}`
 
-为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。
+为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [terser options](https://webpack.js.org/plugins/terser-webpack-plugin/)
 
 ### babelPlugins
 

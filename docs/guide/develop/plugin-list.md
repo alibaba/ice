@@ -214,3 +214,28 @@ $ npm i -save-dev build-plugin-fast-refresh
   ]
 }
 ```
+
+## build-plugin-webpack5（实验性）
+
+> 用于 icejs 在使用 webpack5 能力上的兼容处理，目前 webpack 5 还未正式发布，请谨慎使用该插件
+
+### 体验 webpack 5
+
+Install:
+
+```bash
+$ npm i --save-dev build-plugin-webpack5 webpack@next
+```
+
+`build.json` 修改如下：
+
+```diff
+{
++  "customWebpack": true,
+  "plugins": [
++    "build-plugin-webpack5"
+  ]
+}
+```
+
+> 通过 `customWebpack` 配置的开启，工程中使用 webpack 的版本将会以项目中依赖的 webpack 版本为准
