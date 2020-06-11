@@ -11,14 +11,14 @@ order: 5
 $ npm install build-plugin-prerender --save-dev
 ```
 
-如果在安装依赖时遇到下载 Chromium 过慢时，可修改 npm 的puppeteer_download_host 为淘宝源，具体方法如下
+如果在安装依赖时遇到下载 Chromium 过慢时，可修改 npm 的 puppeteer_download_host 为淘宝源，具体方法如下：
 
 ```bash
 npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 ```
 ## 工程配置
 
-### 在 SPA 中使用 Prerender
+### 在 SPA 中
 
 项目目录结构
 
@@ -31,9 +31,9 @@ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 ├── src
 |  ├── app.ts
 |  ├── pages
-|  |  ├── About # About 页面
-|  |  ├── Dashboard # Dashboard 页面
-|  |  └── Home # Home 页面
+|  |  ├── About         # About 页面
+|  |  ├── Dashboard     # Dashboard 页面
+|  |  └── Home          # Home 页面
 |  └── routes.ts
 ```
 
@@ -70,11 +70,11 @@ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 |     └── index.js
 ```
 
-通过静态服务启动，通过预渲染后的 HTML 截图如下
+通过静态服务启动，通过预渲染后的 HTML 截图如下：
 
-![prerender-html](https://img.alicdn.com/tfs/TB1FsArJGL7gK0jSZFBXXXZZpXa-1211-557.png)
+![prerender-html](https://img.alicdn.com/tfs/TB1kihJJYj1gK0jSZFOXXc7GpXa-1364-738.png)
 
-### 在 MPA 中使用 Prerender
+### 在 MPA 中
 
 项目目录结构
 
@@ -86,8 +86,8 @@ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 |  └── index.html
 ├── src
 |  └── pages
-|     ├── Dashboard # Dashboard 页面
-|     └── Home # Home 页面
+|     ├── Dashboard    # Dashboard 页面
+|     └── Home         # Home 页面
 ```
 
 首先确保在 `build.json` 中开启 MPA 应用配置，`build-plugin-prerender` 配置字段同上
