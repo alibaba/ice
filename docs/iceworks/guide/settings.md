@@ -1,6 +1,6 @@
 ---
 title: 设置
-order: 7
+order: 4
 ---
 
 iceworks 为设置提供了两个不同的作用域：

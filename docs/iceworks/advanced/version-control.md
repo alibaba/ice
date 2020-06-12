@@ -1,6 +1,6 @@
 ---
 title: 源代码管理(Git)
-order: 2
+order: 0
 ---
 
 iceworks 集成了源代码控制，并默认支持 Git。

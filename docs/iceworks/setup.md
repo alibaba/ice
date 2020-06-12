@@ -1,5 +1,5 @@
 ---
-title: 安装 iceworks
+title: 安装
 order: 2
 ---
 
