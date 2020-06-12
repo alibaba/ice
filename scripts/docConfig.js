@@ -78,38 +78,24 @@ const docCategories = {
     children: [
       {
         title: {
-          'zh-cn': '项目管理',
-          'en-us': 'Project management',
+          'zh-cn': '使用指南',
+          'en-us': 'Guide',
         },
-        dir: 'project',
+        dir: 'guide',
       },
       {
         title: {
-          'zh-cn': '工程管理',
-          'en-us': 'Engineering management',
+          'zh-cn': '插件列表',
+          'en-us': 'Extensions',
         },
-        dir: 'engineering',
+        dir: 'extensions',
       },
       {
         title: {
-          'zh-cn': '物料市场',
-          'en-us': 'Materials market',
-        },
-        dir: 'material',
-      },
-      {
-        title: {
-          'zh-cn': '进阶指南',
-          'en-us': 'Advanced guide',
+          'zh-cn': '高级教程',
+          'en-us': 'Advanced',
         },
         dir: 'advanced',
-      },
-      {
-        title: {
-          'zh-cn': '贡献指南',
-          'en-us': 'Contributing',
-        },
-        dir: 'contributing',
       },
     ],
   },
