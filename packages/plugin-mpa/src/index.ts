@@ -12,12 +12,14 @@ const plugin: IPlugin = ({ context, registerUserConfig, modifyUserConfig }) => {
         .filter(page => !/^[._]/.test(page))
         .map(page => path.parse(page).name)
       : [];
-    const mpaEntry = {};
-    pages.forEach((pageName) => {
+    const mpaEntry = pages.reduce((acc, pageName) => {
       const entryName = pageName.toLocaleLowerCase();
       const pageEntry = getPageEntry(rootDir, pageName);
-      mpaEntry[entryName] = `src/pages/${pageName}/${pageEntry}`;
-    });
+      return {
+        ...acc,
+        [entryName]: `src/pages/${pageName}/${pageEntry}`
+      };
+    }, {});
     // modify entry
     modifyUserConfig('entry', mpaEntry);
   }
@@ -32,13 +34,9 @@ function getPageEntry(rootDir, pageName) {
   const pagePath = path.join(rootDir, 'src', 'pages', pageName);
   const pageRootFiles = fs.readdirSync(pagePath);
 
-  let pageEntry = 'index';
-  pageRootFiles.forEach(file => {
-    if (/^app(.tsx?|.jsx?)$/.test(file)) {
-      pageEntry = 'app';
-    }
+  return pageRootFiles.find(file => {
+    return /^app\.(t|j)sx?$/.test(file) ? 'app' : 'index';
   });
-  return pageEntry;
 }
 
 export default plugin;
