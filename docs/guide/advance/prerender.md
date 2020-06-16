@@ -165,3 +165,17 @@ $ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 ```
 
 更多的参数配置可参考 [prerender-spa-plugin](https://github.com/chrisvfritz/prerender-spa-plugin)
+
+## 部署到 Nginx
+
+前端项目部署到 Nginx 时，可以在 Nginx 配置下加入以下内容，使得访问预渲染的路由时，可以获取到经过预渲染后的 HTML。
+
+```nginx
+location / {
+    root   www/web;
+    index  index.html index.htm;
+  + try_files $uri $uri/ /index.html;
+}
+```
+
+
