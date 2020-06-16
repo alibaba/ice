@@ -14,7 +14,7 @@ $ npm install build-plugin-prerender --save-dev
 如果在安装依赖时遇到下载 Chromium 过慢时，可修改 npm 的 puppeteer_download_host 为淘宝源，具体方法如下：
 
 ```bash
-npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
+$ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 ```
 ## 工程配置
 
