@@ -1,55 +1,45 @@
 ---
-title: 安装 iceworks
+title: 安装
 order: 2
 ---
 
-iceworks 是一个免费的 IDE，可以运行在 macOS 和 Windows 操作系统上。您只需要下载一个安装包，几分钟内完成安装，然后就可以使用。
+Iceworks 是一个用于构建前端应用的 IDE 套件，运行在 [Visual Studio Code](https://code.visualstudio.com/)（以下简称 VS Code） 之上。
 
-iceworks 是轻量的，在大多数硬件和软件平台版本上都可以运行。您可以在下面的**常见问题**了解 iceworks 的系统要求，以检查您的计算机配置。
+VS Code 非常轻量，在大多数硬件和操作系统（macOS、 Windows 和 Linux）上都可以运行，具备非常好的兼容性。要使用 Iceworks ，您需要先安装 VS Code。
 
-## macOS
+## 安装 VS Code
 
-1. 下载 iceworks 的 [macOS 安装包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/iceworks-setup.dmg)；
-2. 双击下载的 .dmg 文件；
-3. 拖动 iceworks 的图标到 `Applications` 文件夹。
+### macOS
 
-## Windows
+- 下载 VS Code 的 [macOS 安装包](https://go.microsoft.com/fwlink/?LinkID=534106)；
+- 打开浏览器的下载列表并找到下载的存档文件；
+- 双击下载的存档文件进行解压；
+- 拖动 `Visual Studio Code.app` 图标到 `Applications` 文件夹。
 
-1. 下载 iceworks 的 [Windows 安装包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/win/iceworks-setup.exe)；
-2. 下载完成后，点击 .exe 文件执行安装，您将需要等待几分钟时间；
-3. iceworks 将默认安装在 `C:\users\{username}\AppData\Local\Programs\iceworks`。
+### Windows
 
-## 更新策略
+- 下载 VS Code 的 [Windows 安装包](https://go.microsoft.com/fwlink/?LinkID=534107)；
+- 下载完成后，点击 (VSCodeUserSetup-{version}.exe) 文件执行安装，您将需要等待几分钟时间；
+- VS Code 将默认安装在 `C:\users\{username}\AppData\Local\Programs\Microsoft VS Code`。
 
-iceworks 每月发布一个新版本，其中包含新功能和重要的错误修复。大多数平台都支持自动更新，当新版本可用时，iceworks 将会自动安装它（您不需要做任何事情来获取最新的版本）。
+关于 VS Code 安装的更多说明，请查阅[《VS Code 官方文档》](https://code.visualstudio.com/docs/setup/setup-overview)。
 
-## 其他环境
+## 安装 Iceworks
 
-尽管在未来我们会集成这部分的环境，但是在现在，您可能仍需手动下载和安装：
+### 通过 VS Code 插件商店
 
-- [Git](https://git-scm.com/download)：iceworks 内置了对使用 Git 的代码版本控制的支持，但要求单独安装 Git；
-- [Node.js（包括 npm）](https://nodejs.org/)：用于构建和运行 JavaScript 应用程序的跨平台运行时；
-- [tnpm](https://npm.alibaba-inc.com/)：应用于阿里内部环境的 npm，用于安装和发布内部包；
-- （可选）[TypeScript](https://www.typescriptlang.org/)：用于将 TypeScript 转换为 JavaScript 的编译器；
+- 点击 VS Code 活动栏上的「插件商店图标」；
+- 在输入框中输入「iceworks」进行搜索；
+- 点击第一个「iceworks」选项；
+- 在打开的 Iceworks Pack 页面上点击「安装」。
 
-## 常见问题
+![安装 Iceworks Pack](https://img.alicdn.com/tfs/TB1FWaiKKT2gK0jSZFvXXXnFXXa-960-600.gif)
 
-### iceworks 有多大？
+### 通过 VS Code Pack 网页
 
-iceworks 安装包 <150mb，磁盘占用空间为 700mb。我们将持续优化使其更加轻量。
+- 打开 VS Code 套件市场中的 [Iceworks 页面](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)；
+- 点击页面上的「安装」（install）按钮；
+- 允许浏览器打开 VS Code；
+- 在 VS Code 的 Iceworks Pack 页面点击「安装」。
 
-### 安装 iceworks 对系统有什么要求？
-
-iceworks 应该很容易在今天的硬件上运行，我们建议的最低电脑配置：
-
-- 1.6 GHz 或更快的处理器；
-- 2 GB 的内存。
-
-我们在以下的系统上进行过测试：
-
-- macOS Catalina;
-- Windows 10 (64-bit).
-
-### 我怎么知道我用的是哪个版本的 iceworks ？
-
-在启动页的菜单上选择 **iceworks** > **关于 iceworks**。
+![安装 Iceworks Pack](https://img.alicdn.com/tfs/TB1XSy3a8Bh1e4jSZFhXXcC9VXa-960-600.gif)

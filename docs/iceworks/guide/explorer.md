@@ -1,17 +1,19 @@
 ---
 title: 资源管理器
-order: 1
+order: 2
 ---
+
+Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 资源管理器的基本功能。
 
 资源管理器用于浏览、打开和管理项目中的所有文件和文件夹。
 
-打开工作台后，项目的文件夹内容将显示在资源管理器中。在这里你可以做很多事情：
+打开 VS Code 后，项目的文件夹内容将显示在资源管理器中。在这里你可以做很多事情，如：
 
 - 创建、删除和重命名文件和文件夹；
 - 使用拖放功能移动文件和文件夹；
 - 使用右键菜单查看所有操作选项。
 
-> 您可以将文件从外部拖放到资源管理器中，iceworks 将复制它们到项目中。
+> 您可以将文件从外部拖放到资源管理器中，VS Code 将复制它们到项目中。
 
 ![右键菜单](https://img.alicdn.com/tfs/TB1CgNatVY7gK0jSZKzXXaikpXa-636-1014.png)
 
@@ -29,7 +31,7 @@ order: 1
 
 您可以在“打开的编辑器”视图中逐个关闭文件，也可以关闭掉一个编辑器组，或者关闭所有的文件。
 
-![打开的编辑器](https://img.alicdn.com/tfs/TB14KlbtVY7gK0jSZKzXXaikpXa-960-600.gif)
+![打开的编辑器](https://img.alicdn.com/tfs/TB1l9eZKpY7gK0jSZKzXXaikpXa-876-548.png)
 
 ## 大纲视图
 
