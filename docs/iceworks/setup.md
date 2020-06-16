@@ -3,7 +3,7 @@ title: 安装
 order: 2
 ---
 
-Iceworks 是一个用于构建多端应用的 IDE 套件，运行上 [Visual Studio Code](https://code.visualstudio.com/)（以下简称 VS Code） 之上。
+Iceworks 是一个用于构建前端应用的 IDE 套件，运行上 [Visual Studio Code](https://code.visualstudio.com/)（以下简称 VS Code） 之上。
 
 VS Code 非常轻量，在大多数硬件和操作系统（macOS、 Windows 和 Linux）上都可以运行，具备非常好的兼容性。要使用 Iceworks ，您需要先安装 VS Code。
 
