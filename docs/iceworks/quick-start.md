@@ -20,7 +20,7 @@ order: 3
 
 ## 使用
 
-一、在 VS Code 中 新建窗口（`⇧⌘P`）
+一、在 VS Code 中点击菜单栏上的「文件」选项，再点击「新建窗口」（快捷键：`⇧⌘N`）
 
 ![新建窗口](https://img.alicdn.com/tfs/TB1blgMJNz1gK0jSZSgXXavwpXa-1024-768.png)
 
