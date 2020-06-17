@@ -3,7 +3,7 @@ title: 构建时预渲染 Prerender
 order: 5
 ---
 
-在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，因此，我们封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
+在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，基于此 icejs 提供了构建时预渲染（Prerender）方案。
 
 ## 安装插件
 
@@ -16,6 +16,7 @@ $ npm install build-plugin-prerender --save-dev
 ```bash
 $ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 ```
+
 ## 工程配置
 
 ### 在 SPA 中
@@ -23,11 +24,6 @@ $ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 项目目录结构
 
 ```markdown
-├── build.json
-├── package.json
-├── public
-|  ├── favicon.png
-|  └── index.html
 ├── src
 |  ├── app.ts
 |  ├── pages
@@ -37,7 +33,7 @@ $ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 |  └── routes.ts
 ```
 
-在 build.json 中引入 `build-plugin-prerender` 并配置, 其中 `routes` 为需要渲染的路由
+在 build.json 中引入 `build-plugin-prerender` 并配置, 其中 `routes` 为需要渲染的路由。
 
 ```json
 {
@@ -79,8 +75,6 @@ $ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 项目目录结构
 
 ```markdown
-├── build.json
-├── package.json
 ├── public
 |  ├── dashboard.html
 |  └── index.html
@@ -125,19 +119,19 @@ $ npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 
 ## 插件参数
 
-- routes: `string[]`，需要预渲染的路由。默认是 `['/']`。
-- minify: `object`, 压缩生成的 HTML 文件。默认是 `{ collapseBooleanAttributes: true,collapseWhitespace : true}`。
+- routes: `string[]`，需要预渲染的路由。默认是 `['/']`；
+- minify: `object`, 压缩生成的 HTML 文件。默认是 `{ collapseBooleanAttributes: true,collapseWhitespace : true}`；
 - render: `object`, renderer 字段配置。目前默认使用 [PuppeteerRenderer](https://github.com/JoshTheDerf/prerenderer/tree/master/renderers/renderer-puppeteer)。默认是 `{}`。
 
 ## 进阶用法
 
 ### 压缩生成的 HTML
-- collapseBooleanAttributes: `boolean`, 是否省略节点上的 `Boolean` 属性
-- collapseWhitespace: `boolean`, 是否折叠有助于文档树中文本节点的空白
+- collapseBooleanAttributes: `boolean`, 是否省略节点上的 `Boolean` 属性；
+- collapseWhitespace: `boolean`, 是否折叠有助于文档树中文本节点的空白。
 
 ### 渲染配置
-- maxConcurrentRoute: `number`, 并行渲染的路由数量
-- headless: `boolean`, 当构建时预渲染是否显示浏览器进行调试
+- maxConcurrentRoute: `number`, 并行渲染的路由数量；
+- headless: `boolean`, 当构建时预渲染是否显示浏览器进行调试。
 
 示例: 
 ```json
