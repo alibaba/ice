@@ -3,7 +3,7 @@ title: 构建时预渲染 Prerender
 order: 5
 ---
 
-在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，因此，我们封装 `build-plugin-prerender` 插件，方便在 icejs 中使用构建时预渲染（Prerender）。
+在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，基于此 icejs 提供了构建时预渲染（Prerender）方案。
 
 ## 安装插件
 
@@ -18,11 +18,6 @@ $ npm install build-plugin-prerender --save-dev
 项目目录结构
 
 ```markdown
-├── build.json
-├── package.json
-├── public
-|  ├── favicon.png
-|  └── index.html
 ├── src
 |  ├── app.ts
 |  ├── pages
@@ -32,7 +27,7 @@ $ npm install build-plugin-prerender --save-dev
 |  └── routes.ts
 ```
 
-在 build.json 中引入 `build-plugin-prerender` 并配置, 其中 `routes` 为需要渲染的路由
+在 build.json 中引入 `build-plugin-prerender` 并配置, 其中 `routes` 为需要渲染的路由。
 
 ```json
 {
@@ -74,8 +69,6 @@ $ npm install build-plugin-prerender --save-dev
 项目目录结构
 
 ```markdown
-├── build.json
-├── package.json
 ├── public
 |  ├── dashboard.html
 |  └── index.html
