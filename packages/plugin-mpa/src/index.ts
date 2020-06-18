@@ -15,7 +15,7 @@ const plugin: IPlugin = ({ context, registerUserConfig, modifyUserConfig }) => {
     const mpaEntry = pages.reduce((acc, pageName) => {
       const entryName = pageName.toLocaleLowerCase();
       const pageEntry = getPageEntry(rootDir, pageName);
-      if (!pageEntry) return;
+      if (!pageEntry) return acc;
       return {
         ...acc,
         [entryName]: `src/pages/${pageName}/${pageEntry}`
