@@ -15,6 +15,7 @@ const plugin: IPlugin = ({ context, registerUserConfig, modifyUserConfig }) => {
     const mpaEntry = pages.reduce((acc, pageName) => {
       const entryName = pageName.toLocaleLowerCase();
       const pageEntry = getPageEntry(rootDir, pageName);
+      if (!pageEntry) return;
       return {
         ...acc,
         [entryName]: `src/pages/${pageName}/${pageEntry}`
@@ -33,9 +34,12 @@ const plugin: IPlugin = ({ context, registerUserConfig, modifyUserConfig }) => {
 function getPageEntry(rootDir, pageName) {
   const pagePath = path.join(rootDir, 'src', 'pages', pageName);
   const pageRootFiles = fs.readdirSync(pagePath);
+  const appRegexp = /^app\.(t|j)sx?$/;
+  const indexRegexp = /^index\.(t|j)sx?$/;
 
   return pageRootFiles.find(file => {
-    return /^app\.(t|j)sx?$/.test(file) ? 'app' : 'index';
+    // eslint-disable-next-line
+    return appRegexp.test(file) ? 'app' : indexRegexp.test(file) ? 'index' : null;
   });
 }
 
