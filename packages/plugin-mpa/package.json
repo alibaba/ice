@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.16"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0"
   }
 }
