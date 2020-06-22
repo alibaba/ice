@@ -1,5 +1,6 @@
 import React from 'react';
 <%- iceIAppConfigTypesImports %>
+<%- iceIAppConfigAppTypesImports %>
 <%- iceTypesImports %>
 
 export interface IApp {
@@ -9,8 +10,8 @@ export interface IApp {
   getInitialData?: () => Promise<any>;
   ErrorBoundaryFallback?: React.ComponentType,
   onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
-  <% if (iceIAppConfigTypesImports) { %>
-  <%- iceIAppTypes %>
+  <% if (iceIAppConfigAppTypesImports) { %>
+  <%- iceIAppConfigAppTypesExports %>
   <% } %>
   [key: string]: any;
 }
