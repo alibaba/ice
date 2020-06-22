@@ -1,6 +1,6 @@
 ---
 title: 错误边界 Error Boundaries
-order: 6
+order: 7
 ---
 
 当某个组件出现 JavaScript 错误时不应该影响整个应用的渲染，为了解决这个问题，我们可以通过错误边界（Error Boundaries）进行处理。
