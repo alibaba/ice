@@ -192,6 +192,33 @@ http://example.com/?smartDebug=true
 http://example.com/?smartDebug=true&debugPort=8080&debugPath=/dist/index.js&outputPath=dist
 ```
 
+## build-plugin-jsx-plus
+
+该插件支持了一种 JSX 扩展语法 JSX+，它能帮助业务开发者更爽更快地书写 JSX。JSX+ 不是一种新的概念，它是 JSX 基础上的扩展指令概念。
+
+- JSX 虽然语法灵活，但是大量的花括号 + JS 语法导致了上下文切换和代码可读性的下降，JSX+ 的指令很好的解决了这个问题
+- JSX 本质是 JS 表达式，在运行时阶段才可以计算出真实的 DOM 结构，JSX+ 引入了一部分静态模板特性可以满足编译优化
+- 不新创造实体，指令在社区中是已经被广泛接受的概念，对开发者更友好，语法糖的表达更简单
+- 统一一套 JSX+ 类似概念的语法规范，减少已存在和潜在的重复建设
+
+Install:
+
+```bash
+$ npm i --save-dev build-plugin-jsx-plus
+```
+
+### 基础用法
+
+```json
+{
+  "plugins": [
+    "build-plugin-jsx-plus"
+  ]
+}
+```
+
+详细使用请参考 [jsx-plus](https://github.com/jsx-plus/jsx-plus/blob/master/README.zh_CN.md)
+
 ## build-plugin-fast-refresh（实验性）
 
 > 体验优化的实验性插件，可根据实际情况按需使用。
