@@ -7,7 +7,7 @@ function useAuth() {
   return [
     auth,
     setAuth
-  ];
+  ] as [Record<string, boolean>, typeof setAuth];
 }
 
 // class 组件支持 Hoc 用法
