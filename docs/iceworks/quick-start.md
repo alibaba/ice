@@ -12,7 +12,7 @@ order: 3
   - 拖动 `Visual Studio Code.app` 图标到 `Applications` 文件夹。
 - 安装 Iceworks
   - 打开 VS Code 套件市场中的 [Iceworks 页面](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)；
-  - 点击页面上的[「安装」（install）](vscode:extension/iceworks-team.iceworks)按钮；
+  - 点击页面上的「安装」（install）按钮；
   - 允许浏览器打开 VS Code；
   - 在 VS Code 中点击「安装」。
 
