@@ -26,7 +26,15 @@ English | [简体中文](./README_zh-CN.md)
 
 ## Quick start
 
-### Setup
+### Setup by Iceworks
+
+We recommend creating a new icejs app using [Iceworks Application Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator):
+
+![create icejs app](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+
+> See [Setup Iceworks](https://ice.work/docs/iceworks/setup) for more details.
+
+### Setup by CLI
 
 We recommend creating a new icejs app using create-ice, which sets up everything automatically for you. To create a project, run:
 

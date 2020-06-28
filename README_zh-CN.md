@@ -26,7 +26,15 @@
 
 ## 快速开始
 
-### 使用模板创建项目
+### 使用 Iceworks 创建项目
+
+我们推荐你安装 [Iceworks 创建应用插件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)，然后通过该插件的引导进行项目的创建：
+
+![创建应用](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+
+> 参考[《安装 Iceworks》](https://ice.work/docs/iceworks/setup)了解更多细节。
+
+### 使用 CLI 创建项目
 
 创建项目
 
