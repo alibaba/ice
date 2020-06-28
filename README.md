@@ -26,7 +26,15 @@ English | [简体中文](./README_zh-CN.md)
 
 ## Quick start
 
-### Setup
+### Setup by Iceworks
+
+We recommend creating a new icejs app using [Iceworks Application Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator):
+
+![create icejs app](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+
+> See [Quick start by Iceworks](https://ice.work/docs/iceworks/quick-start) for more details.
+
+### Setup by CLI
 
 We recommend creating a new icejs app using create-ice, which sets up everything automatically for you. To create a project, run:
 
@@ -123,29 +131,29 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
+| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | Universal Application Development Pack for VS Code |
 
-[icejs]: https://github.com/ice-lab/icejs
-[iceworks]: https://github.com/alibaba/ice
+[icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
 [icestore]: https://github.com/ice-lab/icestore
+[iceworks]: https://github.com/ice-lab/iceworks
 
 [icejs-status]: https://img.shields.io/npm/v/ice.js.svg
-[iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
+[iceworks-status]: https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg
 
 [icejs-package]: https://npmjs.com/package/ice.js
-[iceworks-cli-package]: https://npmjs.com/package/iceworks
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
+[iceworks-package]: https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks
 
 [icejs-docs]: https://ice.work/docs/guide/intro
-[iceworks-docs]: https://ice.work/docs/iceworks/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
+[iceworks-docs]: https://ice.work/docs/iceworks/about
 
 ## Community
 

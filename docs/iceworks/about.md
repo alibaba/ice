@@ -3,6 +3,8 @@ title: 概述
 order: 1
 ---
 
+![Iceworks](https://img.alicdn.com/tfs/TB1DMWoKFT7gK0jSZFpXXaTkpXa-2763-1449.png)
+
 如果您是在企业环境中构建前端应用，那么您应该已经遇到了要开发的应用数量与团队交付能力之间日渐扩大的鸿沟。一些团队有多达 20~30 个应用需要开发。
 
 ICE 已经提供了组件、物料、构建工具和常用的前端方案帮助您更好地构建前端应用。但是，这里面依然有不低的学习成本和使用成本。
@@ -30,7 +32,7 @@ Iceworks 提供了官方模板帮助您快速创建一个前端应用，结合 V
 - [安装 Iceworks](/docs/iceworks/setup)：如何为您的系统安装 Iceworks；
 - [快速开始](/docs/iceworks/quick-start)：一个从安装到使用的完整流程示例；
 - [用户界面](/docs/iceworks/guide/user-interface)：为您介绍 VS Code 的界面组成；
-- [创建项目](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：如何使用 Iceworks 进行项目创建和导入；
+- [创建应用](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：如何使用 Iceworks 进行应用创建和项目导入；
 - [代码编辑](/docs/iceworks/guide/editor)：如何在 VS Code 中进行代码编辑；
 - [设置](/docs/iceworks/guide/settings)：根据您的喜好定制 VS Code。
 

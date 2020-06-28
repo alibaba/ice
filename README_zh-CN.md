@@ -26,7 +26,15 @@
 
 ## 快速开始
 
-### 使用模板创建项目
+### 使用 Iceworks 创建项目
+
+我们推荐你安装 [Iceworks 创建应用插件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)，然后通过该插件的引导进行项目的创建：
+
+![创建应用](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+
+> 参考[《Iceworks 快速开始》](https://ice.work/docs/iceworks/quick-start)了解更多细节。
+
+### 使用 CLI 创建项目
 
 创建项目
 
@@ -122,30 +130,30 @@ createApp(appConfig)
 
 |    Project         |    Version                                 |     Docs    |   Description       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
-| [iceworks]     | [![iceworks-cli-status]][iceworks-cli-package] | [docs][iceworks-docs] |One-stop visual source code development workbench based on materials|
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Lightweight state management solution based on React Hooks|
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
+| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | 基于 VS Code 的多端研发套件 |
 
 [icejs]: https://github.com/ice-lab/icejs
-[iceworks]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
 [icestore]: https://github.com/ice-lab/icestore
+[iceworks]: https://github.com/ice-lab/iceworks
 
 [icejs-status]: https://img.shields.io/npm/v/ice.js.svg
-[iceworks-cli-status]: https://img.shields.io/npm/v/iceworks.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
+[iceworks-status]: https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg
 
 [icejs-package]: https://npmjs.com/package/ice.js
-[iceworks-cli-package]: https://npmjs.com/package/iceworks
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
+[iceworks-package]: https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks
 
 [icejs-docs]: https://ice.work/docs/guide/intro
-[iceworks-docs]: https://ice.work/docs/iceworks/about
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
+[iceworks-docs]: https://ice.work/docs/iceworks/about
 
 ## 社区
 

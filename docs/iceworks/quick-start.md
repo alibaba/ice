@@ -28,7 +28,7 @@ order: 3
 
 ![点击图标](https://img.alicdn.com/tfs/TB1G2cValBh1e4jSZFhXXcC9VXa-1024-768.png)
 
-三、点击「创建项目」按钮，开始创建多端应用
+三、点击「创建应用」按钮，开始创建多端应用
 
 ![创建项目](https://img.alicdn.com/tfs/TB1Y4oSJUY1gK0jSZFCXXcwqXXa-1024-768.png)
 
