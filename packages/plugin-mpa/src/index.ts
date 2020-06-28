@@ -37,7 +37,8 @@ const plugin: IPlugin = ({ context, registerUserConfig, registerCliOption, modif
     const finalEntries = {};
     if (commandArgs.mpaEntry) {
       const arr = commandArgs.mpaEntry.split(',');
-      arr.forEach((entryName) => {
+      arr.forEach((pageName) => {
+        const entryName = pageName.toLocaleLowerCase();
         if (entries[entryName]) {
           finalEntries[entryName] = entries[entryName];
         }
