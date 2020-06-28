@@ -23,7 +23,7 @@ order: 4
 
 ## 从 ice-scripts 2.x 迁移
 
-### 1. 修改 package.json
+### 1. 修改 package.json 依赖
 
 icejs 基于 build-scripts 内置了工程开发构建能力，不在需要单独依赖 ice-scripts，同时相关插件也进行了一次重构优化。
 
@@ -152,3 +152,181 @@ icejs 规范和强约束了项目的目录结构，因此只需要按照规范�
 - 在根目录下新建 `tsconfig.json` 文件，[配置详见](https://github.com/ice-lab/icejs/blob/master/examples/basic-spa/tsconfig.json)
 - 如果项目存在 `src/models/*`、`src/pages/*/model.js` 或者 `src/pages/*/models/*` 的目录文件，需要在 `build.json` 中配置 `store: false`
 - 如果你的项目已经使用 icestore 且版本小于 1.0.0 版本，可以选择按需升级或者在 `build.json` 中配置 `store: false` 关闭内置的方案
+
+## 从 ice-scripts 1.x 迁移
+
+### 1. 修改 package.json 依赖
+
+icejs 支持了 ice-scripts 工程开发构建能力，不在需要单独依赖 ice-scripts，修改为 ice.js 即可。
+
+```diff
+{
+-  "ice-scripts": "^1.0.0",
++  "ice.js": "^1.0.0"
+}
+```
+
+### 2. 修改配置文件
+
+icejs 提供 `build.json` 文件用于工程配置，因此需要将 `.webpackrc.js` 配置迁移到 `build.json` 中，假设你的 `.webpackrc.js` 配置如下：
+
+```js
+module.exports = {
+  entry: 'src/index.js',
+  rules: [
+    {
+      test: /\.s[ac]ss$/i,
+      use: [
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+          },
+        },
+      ],
+    },
+  ]
+};
+```
+
+新建 `build.json` 文件
+
+```diff
+{
++  "entry": "src/index.js"
+}
+```
+
+然后新建 `build.plugin.js` 文件，将自定义的插件配置移到新建的 `build.plugin.js` 中：
+
+```js
+module.exports = ({  onGetWebpackConfig }) => {
+  onGetWebpackConfig((config) => {
+    ['scss'].forEach((rule) => {
+      if (config.module.rules.get(rule)) {
+        config.module
+          .rule(rule)
+          .use('css-loader')
+          .tap((options) => ({
+            ...options,
+            sourceMap: true
+          }));
+      }
+  });
+}
+```
+
+同时将自定义的插件引入到 `build.json` 中，最后删除 `.webpackrc.js` 配置文件。
+
+```diff
+{
+  "entry": "src/index.js",
++ "plugins": [
++   "./build.plugin.js"
++ ]
+}
+```
+
+### 3. 禁用运行时能力
+
+由于 icejs 相比 ice-scripts 除了提供工程能力外，还提供了运行时扩展的能力，因此对于 ice-scripts 的项目提供了禁用运行时能力的功能，确保最小化的升级和只使用工程能力。
+
+在 `build.json` 中配置 disableRuntime 选项即可：
+
+```diff
+{
+  "entry": "src/index.js",
+  "plugins": [
+    "./build.plugin.js"
+  ],
++ "disableRuntime": true
+}
+```
+
+### 更新主题配置
+
+如果你的 `package.json` 中存在 `buildConfig` 和 `themeConfig` 配置，则需要将该配置移置 `build.json` 文件中。
+
+```json
+"buildConfig": {
+  "theme": "@icedesign/skin",
+  "localization": false
+},
+"themeConfig": {
+  "primaryColor": "#908ce1"
+},
+```
+
+更新后的 `build.json`  如下：
+
+```diff
+{
+  "entry": "src/index.js",
+  "plugins": [
++   [
++     "build-plugin-fusion", {
++       "themePackage": "@icedesign/skin",
++       "themeConfig": {
++         "primaryColor": "#908ce1"
++       }
++     }
++   ],
+    "./build.plugin.js"
+  ],
+  "disableRuntime": true
+}
+```
+
+### 更新 proxyConfig
+
+如果你的 `package.json` 中存在 `proxyConfig` 配置，则需要将该配置移置 `build.json` 文件中，并将 `proxyConfig` 更新为 `proxy` 。
+
+```json
+"proxyConfig": {
+  "/api/**": {
+    "enable": true,
+    "target": "pre-faraday.alibaba-inc.com"
+  }
+}
+```
+
+更新后的 build.json  项如下。
+
+```diff
+{
+  "entry": "src/index.js",
+  "plugins": [
+    [
+      "build-plugin-fusion", {
+        "themePackage": "@icedesign/skin",
+        "themeConfig": {
+          "primaryColor": "#908ce1"
+        }
+      }
+    ],
+    "./build.plugin.js"
+  ],
+  "disableRuntime": true,
++ "proxy": {
++   "/api/**": {
++     "enable": true,
++     "target": "pre-faraday.alibaba-inc.com"
++   }
+  }
+}
+```
+
+### 更新 scripts 脚本
+
+最后将 `package.json` 中启动项目的脚本替换如下：
+
+```diff
+"scripts": {
+-   "start": "ice dev",
++   "start": "icejs start",
+-   "build": "ice build",
++   "build": "icejs build"
+}
+```
+
+通过以上步骤即可基于 `ice-scripts@1.x` 升级到 `ice.js`，如果还存在其他配置或者升级失败，可以通过飞冰社区群与我们联系。
