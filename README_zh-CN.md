@@ -32,7 +32,7 @@
 
 ![创建应用](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
 
-> 参考[《安装 Iceworks》](https://ice.work/docs/iceworks/setup)了解更多细节。
+> 参考[《Iceworks 快速开始》](https://ice.work/docs/iceworks/quick-start)了解更多细节。
 
 ### 使用 CLI 创建项目
 

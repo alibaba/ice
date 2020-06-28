@@ -32,7 +32,7 @@ We recommend creating a new icejs app using [Iceworks Application Creator](https
 
 ![create icejs app](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
 
-> See [Setup Iceworks](https://ice.work/docs/iceworks/setup) for more details.
+> See [Quick start by Iceworks](https://ice.work/docs/iceworks/quick-start) for more details.
 
 ### Setup by CLI
 
