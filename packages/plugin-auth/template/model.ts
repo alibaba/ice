@@ -1,7 +1,5 @@
 export default {
-  state: {
-    auth: {}
-  },
+  state: {},
 
   reducers: {
     setAuth (state, payload) {
