@@ -108,58 +108,136 @@ ReactDOM.render((
 ````
 `````
 
+如果开发者希望在 js 或者 ts 文件中维护 Demo 中的代码，可以通过约定的组件引入外部的代码：
+
+`````
+---
+title: Simple Usage
+order: 1
+---
+
+本 demo 演示一行文字的用法。
+
+````jsx
+<DemoCode src="path/to/code.js" />
+````
+`````
+
+工程上将自动将路径中的源码获取，并展示在 Demo 预览页面中。通过上述的方式开发 Demo 可以享受编辑器带来的代码提示、语法高亮等便捷功能。
+
 ## 组件工程配置
 
 build-plugin-component 支持多个参数的配置。
+
+默认组件开发工程需要在 `build.json` 中引入 `build-plugin-component`:
+```json
+{
+  "plugins": [
+    "build-plugin-component"
+  ]
+}
+```
+
 
 ### basicComponents
 
 - 类型： array
 - 默认值：[]
 
-如果业务组件开发依赖了非 antd 或者 @alifd/next 的基础 UI 库，可以通过 basicComponents 进行设置，组件构建时将默认设置 babel-plugin-import 进行分包加载，并在生成的 `style.js` 中引入相应的样式资源
+如果业务组件开发依赖了非 antd 或者 @alifd/next 的基础 UI 库，可以通过 basicComponents 进行设置，组件构建时将默认设置 babel-plugin-import 进行分包加载，并在生成的 `style.js` 中引入相应的样式资源。
+
+### babelPlugins
+
+- 类型：array
+- 默认值：[]
+
+业务组件通过 babel 进行编译时需要增加额外的 babel plugin 处理，可以通过 babelPlugins 进行设置。
+
+#### 示例
+
+通过配置 babel-plugin-add-module-exports 增加组件 default 的导出：
+
+```json
+{
+  "babelPlugins": [
+    ["babel-plugin-add-module-exports", { "addDefaultProperty": true }]
+  ],
+  "plugins": [
+    "build-plugin-component"
+  ]
+}
+```
+
+> 注意 babelPlugins 仅影响 es/lib 目录构建产物，如需要修改 demo 预览时的 babel 配置，请通过 webpack-chain 形式进行自定义
+
+### demoTemplate
+
+- 类型：array | string
+- 默认值：`template-component-demo`
+
+插件内置了 npm 包 `template-component-demo` 作为组件开发及构建时的 demo 预览，可以通过指定 `demoTemplate` 对进行自定义。
+
+demo 预览组件默认接受如下参数：
+- `readmeData`：readme.md 文件中的解析数据
+- `demoData`：demo 文件夹下 markdowm 内容解析的数据
+- `env`：当前运行环境 `development|production`
+- `templateProps`：模版自定义参数，可以通过设置 `"demoTemplate": ["template-component-demo", { "platform": "h5" }]` 的方式为模版定义参数
+
+### devServer
+
+- 类型：object
+- 默认值：`{ hot: true, disableHostCheck: true, clientLogLevel: 'silent' }`
+
+同 [webpack devServer 配置](https://webpack.js.org/configuration/dev-server/)，自定义配置将会与默认配置合并。
 
 ### filename
 
 - 类型： string
 - 默认值：无
 
-如果打包 library 到 dist 目录，用来配置打包文件的名字
+如果打包 library 到 dist 目录，用来配置打包文件的名字。
 
 ### library
 
 - 类型： string
 - 默认值：空
 
-如果打包 library 到 dist 目录，用来配置 library 名字
+如果打包 library 到 dist 目录，用来配置 library 名字。
 
 ### libraryExport
 
 - 类型： string
 - 默认值：空
 
-如果打包 library 到 dist 目录，用来配置 library 出口配型，如可配置 default，对应的组件出口为 export default MyComponent
+如果打包 library 到 dist 目录，用来配置 library 出口配型，如可配置 default，对应的组件出口为 export default MyComponent。
 
 ### libraryTarget
 
 - 类型： string
 - 默认值：空
 
-如果打包 library 到 dist 目录，用来配置 library 的类型，如 umd、amd 等
+如果打包 library 到 dist 目录，用来配置 library 的类型，如 umd、amd 等。
 
 ### sourceMap
 
 - 类型： boolean
 - 默认值：false
 
-如果打包 library 到 dist 目录，用来配置是否产出 sourceMap 文件
+如果打包 library 到 dist 目录，用来配置是否产出 sourceMap 文件。
+
+### minify
+
+- 类型：boolean
+- 默认：false
+
+如果打包 library 到 dist 目录，配置打包文件是否压缩。
 
 ### externals
 
 - 类型： plain object
 - 默认值：
 
-如果打包 library 到 dist 目录，用来配置是否需要外部 externals，用来避免三方包被打包
+如果打包 library 到 dist 目录，用来配置是否需要外部 externals，用来避免三方包被打包。
 
 ## 常见问题
 
@@ -169,14 +247,10 @@ build-plugin-component 支持多个参数的配置。
 
 ```json
 {
+  "library": "ExampleComponent",
+  "libraryTarget": "umd",
   "plugins": [
-    [
-      "build-plugin-component",
-      {
-        "library": "ExampleComponent",
-        "libraryTarget": "umd"
-      }
-    ]
+    "build-plugin-component"
   ]
 }
 ```
