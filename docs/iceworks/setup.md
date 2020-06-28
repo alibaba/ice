@@ -31,7 +31,7 @@ VS Code 非常轻量，在大多数硬件和操作系统（macOS、 Windows 和 
 - 点击 VS Code 活动栏上的「插件商店图标」；
 - 在输入框中输入「iceworks」进行搜索；
 - 点击第一个「iceworks」选项；
-- 在打开的 Iceworks Pack 页面上点击「安装」。
+- 在打开的 Iceworks Pack 页面上点击[「安装」](vscode:extension/iceworks-team.iceworks)。
 
 ![安装 Iceworks Pack](https://img.alicdn.com/tfs/TB1FWaiKKT2gK0jSZFvXXXnFXXa-960-600.gif)
 
