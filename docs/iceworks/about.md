@@ -30,7 +30,7 @@ Iceworks 提供了官方模板帮助您快速创建一个前端应用，结合 V
 - [安装 Iceworks](/docs/iceworks/setup)：如何为您的系统安装 Iceworks；
 - [快速开始](/docs/iceworks/quick-start)：一个从安装到使用的完整流程示例；
 - [用户界面](/docs/iceworks/guide/user-interface)：为您介绍 VS Code 的界面组成；
-- [创建项目](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：如何使用 Iceworks 进行项目创建和导入；
+- [创建应用](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：如何使用 Iceworks 进行应用创建和项目的导入；
 - [代码编辑](/docs/iceworks/guide/editor)：如何在 VS Code 中进行代码编辑；
 - [设置](/docs/iceworks/guide/settings)：根据您的喜好定制 VS Code。
 
