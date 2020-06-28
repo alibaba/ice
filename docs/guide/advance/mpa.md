@@ -93,6 +93,20 @@ createApp(appConfig);
 
 关于状态管理的更多内容，请查看文档 [状态管理](/docs/guide/basic/store.md)
 
+## 其他
+
+### 指定入口
+
+默认 MPA 应用在开发阶段会启动所有页面，如果你只想调试某个页面，可以通过指定 `--mpa-entry` 来启动。
+
+通过命令行参数指定启动的页面：
+
+```bash
+"scripts": {
+  "start": "icejs start --mpa-entry dashboard",
+}
+```
+
 只需要这么简单，你的 SPA 应用就可以变成 MPA 应用了。
 
 * MPA 项目示例 [详见](https://github.com/ice-lab/icejs/tree/master/examples/basic-mpa)
