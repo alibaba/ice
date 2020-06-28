@@ -5,6 +5,22 @@ order: 3
 
 > 如果是阿里内部开发者，请参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/gsfp6h)，可直接打通内部流程。
 
+## 使用 Iceworks
+
+**安装 Iceworks**
+
+![安装](https://img.alicdn.com/tfs/TB1FWaiKKT2gK0jSZFvXXXnFXXa-960-600.gif)
+
+**初始化项目**
+
+![创建](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+
+**启动项目**
+
+![启动](https://img.alicdn.com/tfs/TB1jDa9L7T2gK0jSZFkXXcIQFXa-960-600.gif)
+
+## 使用 CLI
+
 **初始化项目**
 
 可以选择使用 npm 或者 yarn 工具进行项目初始化，如下输入项目名即可：
