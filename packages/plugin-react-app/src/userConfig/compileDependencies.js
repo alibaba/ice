@@ -1,5 +1,9 @@
 module.exports = (config, compileDependencies) => {
   const matchExclude = (filepath) => {
+    // exclude the core-js for that it will fail to run in IE  
+    if (filepath.match(/core-js/)) {
+      return true;
+    };
     // compile build-plugin module for default
     const deps = [/build-plugin.*module/].concat(compileDependencies).map(dep => {
       if (dep instanceof RegExp) {

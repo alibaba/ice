@@ -54,7 +54,17 @@ module.exports = {
   lessLoaderOptions: {},
   sassLoaderOptions: {},
   postcssrc: false,
-  compileDependencies: [],
+  // default support IE11
+  compileDependencies: [
+    'ansi-regex',
+    'ansi-styles',
+    'chalk',
+    'query-string',
+    'react-dev-utils',
+    'split-on-first',
+    'strict-uri-encode',
+    'strip-ansi'
+  ],
   babelPlugins: [],
   babelPresets: [],
   eslint: false
