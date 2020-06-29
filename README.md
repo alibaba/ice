@@ -30,7 +30,7 @@ English | [简体中文](./README_zh-CN.md)
 
 We recommend creating a new icejs app using [Iceworks Application Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator):
 
-![create icejs app](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+![create icejs app](https://img.alicdn.com/tfs/TB1gQcRL4v1gK0jSZFFXXb0sXXa-1024-766.gif)
 
 > See [Quick start by Iceworks](https://ice.work/docs/iceworks/quick-start) for more details.
 
