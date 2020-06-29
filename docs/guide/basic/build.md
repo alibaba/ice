@@ -353,7 +353,7 @@ icejs 中一般不允许修改该配置。
 - 类型：`array`
 - 默认值：`[]`
 
-默认情况下 babel-loader 会忽略所有 node_modules 目录下的所有文件。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。
+默认情况下 babel-loader 会编译相关模块以兼容 IE11。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。
 
 比如想编译 node_modules 下的 @alifd/next 依赖，可以进行如下设置：
 
