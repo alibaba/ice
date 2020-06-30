@@ -37,7 +37,7 @@ module.exports = (config, value, context) => {
   }
 
   const entryNames = Object.keys(entry);
-  const isMultiEntry = entryNames.length > 1;
+  const isMultiEntry = entryNames.length > 1 || userConfig.mpa;
   let pluginConfig = {};
   if (config.plugins.get('HtmlWebpackPlugin')) {
     pluginConfig = { ...config.plugin('HtmlWebpackPlugin').get('args')[0] };
