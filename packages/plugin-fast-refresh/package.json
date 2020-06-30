@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-fast-refresh",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A Webpack plugin to enable Fast Refresh (also previously known as Hot Reloading) for React",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "homepage": "https://github.com/alibaba/ice#readme",

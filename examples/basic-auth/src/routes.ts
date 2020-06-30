@@ -1,4 +1,6 @@
-import Home from '@/pages/Home';
+import { lazy } from 'ice';
+
+const Home = lazy(() => import('@/pages/Home'));
 
 export default [
   {

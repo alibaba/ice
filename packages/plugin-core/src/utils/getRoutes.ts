@@ -20,6 +20,10 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa }: IParams
     const routesTempPath = path.join(tempDir, 'routes.ts');
     fse.writeFileSync(routesTempPath, 'export default [];', 'utf-8');
     configPath = routesTempPath;
+    return {
+      routesPath: configPath,
+      isConfigRoutes: true
+    };
   }
 
   const routesPath = configPath
