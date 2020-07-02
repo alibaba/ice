@@ -424,13 +424,13 @@ icejs 中一般不允许修改该配置。
 ### eslint
 
 - 类型：`boolean` | `object`
-- 默认值：`true`
+- 默认值：`false`
 
-默认开启 eslint 代码检测，如需关闭配置为 `false` 即可。
+默认关闭 eslint 代码检测，如需开启配置为 `true` 即可。
 
 ```json
 {
-  "eslint": false
+  "eslint": true
 }
 ```
 
@@ -454,6 +454,19 @@ icejs 中一般不允许修改该配置。
 ```json
 {
   "disableRuntime": true
+}
+```
+
+### tsChecker
+
+- 类型：`boolean`
+- 默认值：`false`
+
+默认关闭 TypeScript 类型检测，如需开启配置为 `true` 即可。
+
+```json
+{
+  "tsChecker": true
 }
 ```
 
