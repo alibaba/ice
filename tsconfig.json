@@ -15,8 +15,8 @@
     { "path": "packages/plugin-prerender" },
     { "path": "packages/plugin-auth" },
     { "path": "packages/plugin-ssr" },
+    { "path": "packages/plugin-miniapp" },
     { "path": "packages/plugin-fast-refresh" },
-    { "path": "packages/plugin-auth" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" }
   ]
