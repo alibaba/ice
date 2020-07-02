@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
 const optionConfig = require('./config/option.config');
@@ -132,13 +131,7 @@ module.exports = ({
           stylePath: 'style.js',
         },
       ]])
-      .end()
-    .plugin('fork-ts-checker-webpack-plugin')
-      .use(ForkTsCheckerWebpackPlugin)
-      .tap(() => [{
-        async: false,
-        formatter: 'codeframe',
-      }]);
+      .end();
   if (mode === 'development') {
     // disable build-scripts stats output
     process.env.DISABLE_STATS = true;
