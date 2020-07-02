@@ -24,6 +24,8 @@ export default (api) => {
   const plugins = getAllPlugin();
   // get runtime module
   const runtimeModules = plugins.map(({ pluginPath }) => {
+    // compatible with function plugin
+    if (!pluginPath) return false;
     const modulePath = path.join(path.dirname(pluginPath), 'module.js');
     return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
   })
