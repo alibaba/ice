@@ -6,7 +6,7 @@ import { History } from 'history';
 import { RouteItemProps, IModifyRoutes } from './base';
 
 export interface IAppRouterProps {
-  type?: 'hash' | 'browser' | 'memory';
+  type?: 'hash' | 'browser' | 'memory' | 'static';
   routes?: RouteItemProps[];
   basename?: string;
   modifyRoutes?: IModifyRoutes;
