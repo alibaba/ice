@@ -130,7 +130,8 @@ module.exports = ({
           libraryName: /@ali\/ice-.*/,
           stylePath: 'style.js',
         },
-      ]]);
+      ]])
+      .end();
   if (mode === 'development') {
     // disable build-scripts stats output
     process.env.DISABLE_STATS = true;

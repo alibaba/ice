@@ -57,5 +57,6 @@ module.exports = {
   compileDependencies: [],
   babelPlugins: [],
   babelPresets: [],
-  eslint: false
+  eslint: false,
+  tsChecker: false
 };

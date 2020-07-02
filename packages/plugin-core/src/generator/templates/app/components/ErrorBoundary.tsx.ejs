@@ -14,7 +14,7 @@ interface IErrorInfo {
 };
 
 interface IState {
-  error?: Error;
+  error?: Error | null;
   info?: IErrorInfo;
 };
 
@@ -25,7 +25,9 @@ class ErrorBoundary extends React.Component<IProps, IState> {
 
   state = {
     error: null,
-    info: null
+    info: {
+      componentStack: ''
+    }
   };
 
   componentDidCatch(error: Error, info: IErrorInfo): void {
@@ -33,8 +35,8 @@ class ErrorBoundary extends React.Component<IProps, IState> {
 
     if (typeof onError === 'function') {
       try {
-        // istanbul ignore next: Ignoring ternary; can’t reproduce missing info in test environment.
-        onError.call(this, error, info ? info.componentStack : '');
+        // can’t reproduce missing info in development environment.
+        onError.call(this, error, info.componentStack);
       } catch (ignoredError) {
         // ignored error
       }
@@ -49,13 +51,10 @@ class ErrorBoundary extends React.Component<IProps, IState> {
     const { error, info } = this.state;
 
     // render fallback UI if there is error
-    if (error !== null) {
+    if (error !== null && typeof Fallback === 'function') {
       return (
         <Fallback
-          componentStack={
-            // istanbul ignore next: Ignoring ternary; can’t reproduce missing info in test environment.
-            info ? info.componentStack : ''
-          }
+          componentStack={info.componentStack}
           error={error}
         />
       );

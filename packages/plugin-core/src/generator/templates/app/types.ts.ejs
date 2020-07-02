@@ -22,3 +22,11 @@ app?: IApp
 <%- iceIAppConfigTypesExports %>
 }
 <% } %>
+
+declare global {
+  interface Window {
+    __ICE_SSR_ENABLED__: any;
+    __ICE_APP_DATA__: any;
+    __ICE_PAGE_PROPS__: any;
+  }
+}

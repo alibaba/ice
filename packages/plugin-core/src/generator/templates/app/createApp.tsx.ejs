@@ -10,9 +10,9 @@ import { IAppConfig } from './types';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export interface IContext {
-  initialData: any;
-  pageInitialProps: any;
-  pathname: string;
+  initialData?: any;
+  pageInitialProps?: any;
+  pathname?: string;
 }
 
 const defaultAppConfig = {
@@ -42,7 +42,7 @@ function createApp(customConfig: IAppConfig) {
 
   // client side rendering
   // get history instance
-  const { type, basename, history: customHistory } = appConfig.router;
+  const { type, basename = '', history: customHistory } = appConfig.router;
   const history = customHistory || createHistory(type, basename);
   appConfig.router.history = history;
 
@@ -61,6 +61,7 @@ function createApp(customConfig: IAppConfig) {
     // ssr not enabled, or SSR is enabled but the server does not return data
     if (appConfig.app.getInitialData) {
       (async() => {
+        // @ts-ignore
         initialData = await appConfig.app.getInitialData();
         renderApp(appConfig, { initialData, pageInitialProps });
       })();
@@ -70,7 +71,7 @@ function createApp(customConfig: IAppConfig) {
   }
 }
 
-function renderApp(config: IAppConfig, context: IContext) {
+function renderApp(config: IAppConfig, context?: IContext) {
   const runtime = new RuntimeModule(config, <%- buildConfig %>, context)
   loadModlues(runtime);
   const { appConfig, modifyDOMRender } = runtime
