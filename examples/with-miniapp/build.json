@@ -1,0 +1,7 @@
+{
+  "plugins": [
+    "../../packages/plugin-miniapp/lib/index.js"
+  ],
+  "minify": false,
+  "disableRuntime": true
+}

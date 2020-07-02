@@ -1,0 +1,11 @@
+{
+  "routes": [
+    {
+      "path": "/home",
+      "source": "pages/Home/index"
+    }
+  ],
+  "window": {
+    "title": "Mini App"
+  }
+}
