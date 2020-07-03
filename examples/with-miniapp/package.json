@@ -15,7 +15,7 @@
     "miniapp-history": "^0.1.2"
   },
   "scripts": {
-    "start": "icejs start",
+    "start": "icejs start --disable-reload=true --disable-open=true",
     "build": "icejs build"
   },
   "engines": {

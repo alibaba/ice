@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as MiniAppRuntimePlugin from 'rax-miniapp-runtime-webpack-plugin';
 import * as MiniAppConfigPlugin from 'rax-miniapp-config-webpack-plugin';
 import * as getAppConfig from 'build-plugin-rax-app/lib/config/miniapp/getAppConfig';
-import WrapChunkPlugin from './wrapchunkPlugin';
 
 const EntryLoader = require.resolve('./MiniAppEntryLoader');
 
@@ -30,15 +29,12 @@ module.exports = (api) => {
     }
 
     config.output
-      .filename('common/[name].js')
+      .filename(`${TARGET}/common/[name].js`)
       .library('createApp')
       .libraryExport('default')
       .libraryTarget('window');
 
     config.devtool('none');
-
-    // @ts-ignore
-    config.plugin('WrapChunkPlugin').use(new WrapChunkPlugin());
 
     // Clear entry
     config.entryPoints.clear();
@@ -61,7 +57,6 @@ module.exports = (api) => {
           type: 'runtime',
           appConfig,
           outputPath: buildDir,
-          target: TARGET,
           getAppConfig,
           nativeConfig: {},
         }
@@ -71,7 +66,6 @@ module.exports = (api) => {
       .use(MiniAppRuntimePlugin, [
         {
           ...appConfig,
-          target: TARGET,
           config: {},
           usingComponents,
           nativeLifeCycleMap,
@@ -79,6 +73,15 @@ module.exports = (api) => {
           command
         }
       ]);
+
+    if (config.plugins.get('MiniCssExtractPlugin')) {
+      config.plugin('MiniCssExtractPlugin').tap((args) => [
+        {
+          ...args,
+          filename: `${TARGET}/[name].css`,
+        }
+      ]);
+    }
 
     // remove default HtmlWebpackPlugin
     config.plugins.delete('HtmlWebpackPlugin');
