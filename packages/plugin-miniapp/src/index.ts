@@ -55,6 +55,7 @@ module.exports = (api) => {
       .use(MiniAppConfigPlugin, [
         {
           type: 'runtime',
+          target: TARGET,
           appConfig,
           outputPath: buildDir,
           getAppConfig,
