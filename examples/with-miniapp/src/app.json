@@ -3,6 +3,10 @@
     {
       "path": "/home",
       "source": "pages/Home/index"
+    },
+    {
+      "path": "about",
+      "source": "pages/About/index"
     }
   ],
   "window": {

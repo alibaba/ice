@@ -17,8 +17,14 @@ module.exports = function() {
     document.body.appendChild(container);
     const mountNode = document.getElementById('iceapp');
 
+    const comProps = {
+      history: window.history,
+      location: window.history.location,
+      ...window.__pageProps
+    };
+
     export default function createApp() {
-      ReactDOM.render(<Component />, mountNode);
+      ReactDOM.render(<Component {...comProps} />, mountNode);
     }
   `;
   const { code } = babel.transformSync(source, {
