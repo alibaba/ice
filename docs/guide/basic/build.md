@@ -39,7 +39,7 @@ Options:
   --config <config>      指定配置文件
   --https                支持开启 https
   --analyzer             支持开启构建分析
-  --analyzer-port        支持定制构建分析端口
+  --analyzer-port <port> 支持定制构建分析端口
   --disable-reload       禁用热更新模块
   --disable-mock         禁用 mock 服务
   --disable-open         禁止浏览器默认打开行为
@@ -55,7 +55,7 @@ Usage: icejs build [options]
 
 Options:
   --analyzer             同 start
-  --analyzer-port        同 start
+  --analyzer-port <port> 同 start
   --config <config>      同 start
 ```
 
