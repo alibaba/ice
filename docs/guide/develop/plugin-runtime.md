@@ -3,7 +3,7 @@ title: 通过插件定制运行时能力
 order: 3
 ---
 
-插件运行时能力通过 `src/module.ts` 定义，结构如下
+插件运行时能力通过 `src/runtime.ts` 定义，结构如下
 
 ```javascript
 export default ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes }) => {
