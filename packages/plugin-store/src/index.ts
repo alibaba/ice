@@ -21,7 +21,8 @@ export default async (api) => {
   // render template/types.ts.ejs to .ice/store/types.ts
   const typesTemplateContent = fse.readFileSync(typesTemplatePath, 'utf-8');
   const typesTargetPath = path.join(targetPath, 'store', 'types.ts');
-  const content = ejs.render(typesTemplateContent);
+  const hasAppModels = fse.pathExistsSync(path.join(rootDir, 'src', 'models'));
+  const content = ejs.render(typesTemplateContent, { hasAppModels });
   fse.ensureFileSync(typesTargetPath);
   fse.writeFileSync(typesTargetPath, content, 'utf-8');
   applyMethod('addIceTypesExport', { source: './store/types' });

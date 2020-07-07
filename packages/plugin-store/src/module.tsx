@@ -26,7 +26,7 @@ export default ({ addProvider, appConfig, context }) => {
     );
   };
 
-  if (AppStore) {
+  if (AppStore && AppStore.Provider) {
     addProvider(StoreProvider);
   }
 };
