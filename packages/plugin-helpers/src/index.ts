@@ -10,7 +10,7 @@ export default async function ({
   const distPath = path.join(getValue('ICE_TEMP'), 'helpers');
 
   onGetWebpackConfig((config: any) => {
-    // add alias for module.ts use $ice/helpers
+    // add alias for runtime.ts use $ice/helpers
     config.resolve.alias.set('$ice/helpers', distPath);
   });
 
