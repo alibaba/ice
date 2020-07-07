@@ -25,7 +25,7 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 这里以 ts 为例，实际上也可以通过 js 编写插件。插件核心有两个文件：
 
 1. `index.ts`：通常用于做一些工程相关的事情，比如更改 webpack 配置、构建结束后执行一些其他任务等
-2. `module.ts`：实现一些运行时能力，比如 config/request 插件
+2. `runtime.ts`：实现一些运行时能力，比如 config/request 插件。注意: 旧版本的`module.ts`暂时兼容，但在未来不受支持。
 
 下面也会按照这两个纬度来分别介绍。
 
@@ -37,9 +37,9 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 
 ## 运行时能力定制
 
-运行时能力以 `module.ts` 为入口，通过浏览器打开页面时会执行 `src/app.ts` 中的 `createApp()` 方法，这个方法会加载并执行所有插件的 `module.ts`。
+运行时能力以 `runtime.ts` 为入口，通过浏览器打开页面时会执行 `src/app.ts` 中的 `createApp()` 方法，这个方法会加载并执行所有插件的 `runtime.ts`。
 
-关于 `module.ts` 应该如何书写请参考下一个章节的文档 [通过插件定制运行时能力](/docs/guide/develop/plugin-runtime.md)。
+关于 `runtime.ts` 应该如何书写请参考下一个章节的文档 [通过插件定制运行时能力](/docs/guide/develop/plugin-runtime.md)。
 
 ## 示例插件
 
