@@ -69,4 +69,4 @@ $ iceworks generate
 
 接着我们可以通过 `iceworks sync` 方式将物料数据同步到物料中心，你也可以通过私有的服务托管，同步完成后我们会得到一个 url 可以访问到这些物料数据。
 
-接着在 iceworks IDE 中添加自定义物料填入 URL 即可在开发项目中使用这些物料。
+接着在 iceworks VS Code 插件中添加自定义物料填入 URL 即可在开发项目中使用这些物料。

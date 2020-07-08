@@ -19,12 +19,7 @@ order: 4
  |   │   ├── models 
 +|   │   ├── services               // 定义页面级数据请求
 +|   │   |    └── repo.ts
- |   │   ├── components
- |   │   |    └── Todo
- |   |   │    |    ├── index.tsx
- |   |   │    |    ├── model.ts
-+|   |   │    |    └── service.ts   // 定义组件级数据请求
- |   │   └── index.tsx
+ |   │   └── components
  |   ├── About
  |   │   ├── services
  |   │   ├── components
@@ -488,7 +483,7 @@ const appConfig = {
 };
 ```
 
-结合[运行时配置](/docs/guide/basic/config)即可实现不同环境使用不同的 baseURL：
+结合[环境配置](/docs/guide/basic/config)即可实现不同环境使用不同的 baseURL：
 
 ```js
 // src/config.ts
