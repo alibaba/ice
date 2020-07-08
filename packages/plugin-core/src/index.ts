@@ -149,10 +149,11 @@ export default (api) => {
     chokidar.watch(path.join(rootDir, 'src'), {
       ignoreInitial: true,
     }).on('all', (event, filePath) => {
+      const posixFilePath = filePath.split(path.sep).join('/');
       watchEvents.forEach(([pattern, action]) => {
-        if (pattern instanceof RegExp && pattern.test(filePath)) {
+        if (pattern instanceof RegExp && pattern.test(posixFilePath)) {
           action(event, filePath);
-        } else if (typeof pattern === 'string' && filePath.includes(pattern)) {
+        } else if (typeof pattern === 'string' && posixFilePath.includes(pattern)) {
           action(event, filePath);
         }
       });
