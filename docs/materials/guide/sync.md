@@ -40,3 +40,5 @@ order: 6
 ```javascript
 `https://unpkg.com/${packageName}@latest/build/materials.json`
 ```
+
+不管是将物料数据托管到 fusign.design 还是 unpkg，本质上都是通过 HTTP GET 请求获取物料数据，因此，除了以上方式，你也可以将物料数据的 JSON 文件放到你的 CDN 或某个后端接口上使用。

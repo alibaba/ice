@@ -10,12 +10,17 @@ $ cd my-materials
 $ iceworks add component
 ```
 
-同时你也可以在单个仓库中开发业务组件，按照下面的方式初始化即可：
+有些场景下可能需要在单独仓库中开发业务组件，即一个仓库一个业务组件，可以按照下面这个方式：
 
 ```bash
-$ mkdir my-component && cd my-component
+# 新建组件文件夹
+$ mkdir my-component & cd my-component
+
+# 初始化
 $ iceworks init component
 ```
+
+> 如果是阿里内部的同学并且想接入 DEF 发布 npm 包，可以参考文档 [组件开发接入 DEF](https://yuque.alibaba-inc.com/ice/rdy99p/gbekwv)
 
 ## 组件开发调试
 
@@ -32,6 +37,7 @@ $ npm start -- --watch
 
 ```
 ├── demo                  # 组件 demo
+│      ├── simple.md
 │      └── usage.md
 ├── src                   # 组件源码
 │      ├── index.scss
@@ -127,17 +133,19 @@ order: 1
 
 ## 组件工程配置
 
-build-plugin-component 支持多个参数的配置。
+默认组件开发工程需要在 `build.json` 中引入 `build-plugin-component`：
 
-默认组件开发工程需要在 `build.json` 中引入 `build-plugin-component`:
 ```json
 {
   "plugins": [
-    "build-plugin-component"
+    ["build-plugin-component", {
+      // ...options
+    }]
   ]
 }
 ```
 
+插件支持的配置参数如下：
 
 ### basicComponents
 

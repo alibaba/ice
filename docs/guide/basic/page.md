@@ -59,4 +59,4 @@ HomePage.pageConfig = {
 
 ## 页面埋点
 
-参考 [页面埋点](/docs/guider/advance/statistical.md)。
+参考 [页面埋点](/docs/guide/advance/statistical.md)。
