@@ -28,7 +28,7 @@ $ npm i --save-dev build-plugin-modular-import
 ```json
 {
   "plugins": [
-    ["ice-plugin-modular-import", [{
+    ["build-plugin-modular-import", [{
       "libraryName": "lodash",
       "libraryDirectory": "",
       "camel2DashComponentName": false
