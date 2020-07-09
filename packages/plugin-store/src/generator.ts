@@ -76,10 +76,11 @@ export default class Generator {
       };
     }
 
+    const pageComponentName = `Page${pageName}`;
     return {
       isSingleModel: true,
-      importStr: `import ${pageName} from '${this.applyMethod('formatPath', pageModelFile)}';`,
-      modelsStr: pageName
+      importStr: `import ${pageComponentName} from '${this.applyMethod('formatPath', pageModelFile)}';`,
+      modelsStr: pageComponentName
     };
   }
 
@@ -129,9 +130,10 @@ export default class Generator {
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, `${pageName}.tsx`);
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
+    const pageComponentName = `Page${pageName}`;
     const pageComponentRenderData = {
-      pageComponentImport: `import ${pageName} from '${pageComponentSourcePath}'` ,
-      pageComponentExport: pageName,
+      pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'` ,
+      pageComponentExport: pageComponentName,
       hasPageStore: false,
     };
 
