@@ -160,18 +160,6 @@ applyMethod('watchFileChange', 'src/config.*', async (event: string) => {
 });
 ```
 
-### watchFileChange
-
-监听 `src` 下的文件变化：
-
-```js
-applyMethod('watchFileChange', 'src/config.*', async (event: string) => {
-  if (event === 'unlink' || event === 'add') {
-    // do something
-  }
-});
-```
-
 ## 插件参数
 
 用户可以在 `build.json` 中指定插件参数：
