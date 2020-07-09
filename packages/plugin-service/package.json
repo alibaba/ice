@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-service",
-  "version": "1.6.3-alpha.1",
+  "version": "1.6.3",
   "description": "service pulgin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/ice-lab/icejs#readme",
