@@ -1,0 +1,30 @@
+{
+  "name": "build-plugin-circular-dependency",
+  "version": "1.6.2",
+  "description": "Detect modules with circular dependencies for ice.js project",
+  "keywords": [
+    "plugin",
+    "ice.js"
+  ],
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/alibaba/ice#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "dependencies": {
+    "@alib/build-scripts": "^0.1.24",
+    "circular-dependency-plugin": "^5.2.0"
+  }
+}

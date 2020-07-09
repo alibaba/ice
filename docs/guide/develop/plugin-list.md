@@ -266,3 +266,25 @@ $ npm i --save-dev build-plugin-webpack5 webpack@next
 ```
 
 > 通过 `customWebpack` 配置的开启，工程中使用 webpack 的版本将会以项目中依赖的 webpack 版本为准
+
+## build-plugin-circular-dependency
+
+用于检测项目中是否存在循环依赖，基于 [circular-dependency-plugin](https://github.com/aackerman/circular-dependency-plugin)
+
+### 使用
+
+安装
+
+``` bash
+$ npm install --save-dev build-plugin-circular-dependency
+```
+
+编辑 `build.json`，添加插件
+
+```diff
+{
+  "plugins": [
++    "build-plugin-circulalr-dependency"
+  ]
+}
+```
