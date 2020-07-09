@@ -84,8 +84,11 @@ describe('with useRequest', () => {
     });
 
     const { result, waitForNextUpdate } = renderHook(() => useRequest({ url: `${server.url}/repo` }, {
-      manual: false
+      manual: true
     }))
+    act(() => {
+      result.current.request();
+    });
     await waitForNextUpdate();
     expect(result.current.data).toEqual(MOCK_DATA);
     expect(result.current.loading).toEqual(false);
