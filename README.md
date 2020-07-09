@@ -28,7 +28,7 @@ English | [简体中文](./README_zh-CN.md)
 
 ### Setup by Iceworks
 
-We recommend creating a new icejs app using [Iceworks Application Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator):
+We recommend creating a new icejs app using [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks):
 
 ![create icejs app](https://img.alicdn.com/tfs/TB1gQcRL4v1gK0jSZFFXXb0sXXa-1024-766.gif)
 
