@@ -130,7 +130,7 @@ export default class Generator {
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
     const pageComponentRenderData = {
-      pageComponentImport: `import ${pageName} from '${pageComponentSourcePath}'` ,
+      pageComponentImport: `import Page${pageName} from '${pageComponentSourcePath}'` ,
       pageComponentExport: pageName,
       hasPageStore: false,
     };
