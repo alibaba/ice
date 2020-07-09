@@ -60,21 +60,6 @@ describe('with useRequest', () => {
     });
     expect(result.current.loading).toEqual(true);
 
-    jest.useRealTimers();
-    await waitForNextUpdate();
-    expect(result.current.error).toEqual(new Error('fail'));
-    expect(result.current.loading).toEqual(false);
-    expect(errorCallback).toHaveBeenCalled();
-    act(() => {
-      result.current.request(1);
-    });
-
-    jest.useRealTimers();
-    await waitForNextUpdate();
-    expect(result.current.data).toEqual('success');
-    expect(result.current.loading).toEqual(false);
-    expect(errorCallback).toHaveBeenCalled();
-
     unmount();
   });
 
@@ -84,8 +69,11 @@ describe('with useRequest', () => {
     });
 
     const { result, waitForNextUpdate } = renderHook(() => useRequest({ url: `${server.url}/repo` }, {
-      manual: false
+      manual: true
     }))
+    act(() => {
+      result.current.request();
+    });
     await waitForNextUpdate();
     expect(result.current.data).toEqual(MOCK_DATA);
     expect(result.current.loading).toEqual(false);

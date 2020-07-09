@@ -20,6 +20,8 @@ const test = require('./test');
     .description('build project')
     .allowUnknownOption()
     .option('--config <config>', 'use custom config')
+    .option('--analyzer', 'use webpack-bundle-analyzer')
+    .option('--analyzer-port <port>', 'webpack-bundle-analyzer port', '9000')
     .action(build);
 
   program
@@ -29,6 +31,13 @@ const test = require('./test');
     .option('--config <config>', 'use custom config')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
     .option('-p, --port <port>', 'dev server port')
+    .option('--https', 'use https protocol')
+    .option('--analyzer', 'use webpack-bundle-analyzer')
+    .option('--analyzer-port <port>', 'webpack-bundle-analyzer port', '9000')
+    .option('--disable-reload', 'disable hot-loader module')
+    .option('--disable-mock', 'diable mock service')
+    .option('--disable-open', 'disable automatically open browser')
+    .option('--disable-assets', 'disable the output of webpack assets')
     .action(start);
 
   program
