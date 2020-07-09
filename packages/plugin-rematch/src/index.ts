@@ -14,7 +14,7 @@ export default async function ({
   const storesDir = path.join(rootDir, 'src/stores');
 
   onGetWebpackConfig((config: any) => {
-    // add alias for module.ts use $ice/helpers
+    // add alias for runtime.ts use $ice/helpers
     config.resolve.alias.set('$ice/store', targetPath);
   });
 

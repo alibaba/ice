@@ -26,8 +26,16 @@ export default (api) => {
   const runtimeModules = plugins.map(({ pluginPath }) => {
     // compatible with function plugin
     if (!pluginPath) return false;
-    const modulePath = path.join(path.dirname(pluginPath), 'module.js');
-    return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
+    // NOTE: module.js will be discarded in future.
+    let modulePath = path.join(path.dirname(pluginPath), 'runtime.js');
+    if(!fse.existsSync(modulePath)){
+      modulePath = path.join(path.dirname(pluginPath), 'module.js');
+      if(!fse.existsSync(modulePath)){
+        return false;
+      }
+      console.log('WARN: module.ts(x) will not be supported in the future. Please rename as runtime.ts(x)');
+    }
+    return formatPath(modulePath);
   })
     .filter(Boolean)
     .map(pluginPath => {
@@ -149,10 +157,11 @@ export default (api) => {
     chokidar.watch(path.join(rootDir, 'src'), {
       ignoreInitial: true,
     }).on('all', (event, filePath) => {
+      const posixFilePath = filePath.split(path.sep).join('/');
       watchEvents.forEach(([pattern, action]) => {
-        if (pattern instanceof RegExp && pattern.test(filePath)) {
+        if (pattern instanceof RegExp && pattern.test(posixFilePath)) {
           action(event, filePath);
-        } else if (typeof pattern === 'string' && filePath.includes(pattern)) {
+        } else if (typeof pattern === 'string' && posixFilePath.includes(pattern)) {
           action(event, filePath);
         }
       });

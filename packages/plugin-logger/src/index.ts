@@ -14,7 +14,7 @@ const plugin: IPlugin = async ({ getValue, applyMethod, onGetWebpackConfig }): P
   applyMethod('addIceAppConfigTypes', { source: `./${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });
 
   onGetWebpackConfig((config) => {
-    // add alias for module.ts use $ice/logger
+    // add alias for runtime.ts use $ice/logger
     config.resolve.alias.set('$ice/logger', distPath);
   });
 };
