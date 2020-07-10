@@ -308,10 +308,6 @@ const history = createMemoryHistory();
 
 用于日志打印。[详见](/docs/guide/basic/logger)
 
-### helpers
-
-用于提供常用的帮助函数。[详见](/docs/guide/basic/helpers)
-
 ## 类型
 
 ### IAppConfig
