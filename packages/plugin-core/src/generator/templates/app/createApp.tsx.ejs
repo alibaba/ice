@@ -109,7 +109,7 @@ function loadModules(runtime) {
   <% if (runtimeModules.length) {%>
     <% runtimeModules.forEach((runtimeModule) => { %>
       <% if(!runtimeModule.staticModule){ %>
-        runtime.loadModlue(require('<%= runtimeModule.path %>'));
+        runtime.loadModule(require('<%= runtimeModule.path %>'));
       <% } %>
     <% }) %>
   <% } %>
