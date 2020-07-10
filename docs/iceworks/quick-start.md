@@ -20,22 +20,18 @@ order: 3
 
 ## 使用
 
-一、在 VS Code 中点击菜单栏上的「文件」选项，再点击「新建窗口」（快捷键：`⇧⌘N`）
+**第一步**：点击活动栏上的 Iceworks 图标，打开侧边栏：
 
-![新建窗口](https://img.alicdn.com/tfs/TB1blgMJNz1gK0jSZSgXXavwpXa-1024-768.png)
+![](https://img.alicdn.com/tfs/TB1uH75LVT7gK0jSZFpXXaTkpXa-1024-768.png_790x10000.jpg)
 
-二、点击活动栏上的 Iceworks 图标，打开侧边栏
+**第二步**：点击 Iceworks 侧边栏上的「创建应用」按钮，唤起多端应用的创建流程：
 
-![点击图标](https://img.alicdn.com/tfs/TB1G2cValBh1e4jSZFhXXcC9VXa-1024-768.png)
+![](https://img.alicdn.com/tfs/TB1hQA6LYr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
 
-三、点击「创建应用」按钮，开始创建多端应用
+**第三步**：应用创建完成，在 Iceworks 侧边栏上进行 npm 脚本执行、生成页面、创建组件等操作：
 
-![创建项目](https://img.alicdn.com/tfs/TB1Y4oSJUY1gK0jSZFCXXcwqXXa-1024-768.png)
+![](https://img.alicdn.com/tfs/TB1M4oPLYj1gK0jSZFuXXcrHpXa-2048-1536.png_790x10000.jpg)
 
-四、创建项目完成，在 Iceworks 侧边栏中进行 npm 脚本执行、创建页面、创建组件等操作
+**第四步**：更多能力，可以在命名面板中搜索「Iceworks」关键字获取：
 
-![侧边栏](https://img.alicdn.com/tfs/TB1hScTJKH2gK0jSZJnXXaT1FXa-1024-768.png)
-
-五、更多能力，可以在命名面板中搜索 `Iceworks` 获取
-
-![提供命名](https://img.alicdn.com/tfs/TB16h7PJFP7gK0jSZFjXXc5aXXa-1024-768.png)
+![](https://img.alicdn.com/tfs/TB1kD7FLVT7gK0jSZFpXXaTkpXa-2048-1536.png_790x10000.jpg)
