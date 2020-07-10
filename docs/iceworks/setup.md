@@ -46,7 +46,7 @@ VS Code 非常轻量，在大多数硬件和操作系统（macOS、 Windows 和 
 
 ### 通过 zip 压缩包安装
 
-若您无法通过上述2种方式安装 Iceworks ，请下载 [zip 压缩包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/vscode-extensions/release/Iceworks.zip) 。
+若您无法通过上述 2 种方式安装 Iceworks ，请下载 [zip 压缩包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/vscode-extensions/release/Iceworks.zip) 。
 
 解压 zip 包后：
 
