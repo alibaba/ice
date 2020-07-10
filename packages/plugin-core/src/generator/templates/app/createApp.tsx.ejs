@@ -73,7 +73,7 @@ function createApp(customConfig: IAppConfig) {
 
 function renderApp(config: IAppConfig, context?: IContext) {
   const runtime = new RuntimeModule(config, <%- buildConfig %>, context)
-  loadModlues(runtime);
+  loadModules(runtime);
   const { appConfig, modifyDOMRender } = runtime
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app
   const AppProvider = runtime.composeAppProvider();
@@ -105,7 +105,7 @@ function renderApp(config: IAppConfig, context?: IContext) {
   }
 }
 
-function loadModlues(runtime) {
+function loadModules(runtime) {
   <% if (runtimeModules.length) {%>
     <% runtimeModules.forEach((runtimeModule) => { %>
       <% if(!runtimeModule.staticModule){ %>
