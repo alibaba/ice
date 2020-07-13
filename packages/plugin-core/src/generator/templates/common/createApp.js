@@ -1,18 +1,13 @@
-import { render, createElement, Fragment } from 'rax';
-import { Navigation, TabBar } from 'rax-pwa';
-import { useRouter } from 'rax-use-router';
-import UniversalDriver from 'driver-universal';
-import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
-import { emit, addAppLifeCyle } from './appCycles';
+import { addAppLifeCyle } from './appCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
-
-// eslint-disable-next-line
-const DEFAULE_ROOT_ID = document.getElementById('root');
+import RuntimeModule from './runtimeModule';
+import loadRuntimeModules from './loadRuntimeModlues';
 
 let launched = false;
 
-function _handleDynamicConfig(config) {
+function _handleDynamicConfig(config, env) {
   if (config.dynamicConfig) {
+    const { isWeChatMiniProgram, isByteDanceMicroApp, isMiniApp } = env;
     const { onLaunch, onShow, onError, onHide, onTabItemClick } = config;
     // multi-end valid lifecycle
     // Add app lanuch callback
@@ -47,53 +42,6 @@ function _handleDynamicConfig(config) {
   return config;
 }
 
-function _isNullableComponent(component) {
-  return !component || Array.isArray(component) && component.length === 0;
-}
-
-function _matchInitialComponent(fullpath, routes) {
-  let initialComponent = null;
-  for (let i = 0, l = routes.length; i < l; i++) {
-    if (fullpath === routes[i].path || routes[i].regexp && routes[i].regexp.test(fullpath)) {
-      initialComponent = routes[i].component;
-      if (typeof initialComponent === 'function') initialComponent = initialComponent();
-      break;
-    }
-  }
-
-  return Promise.resolve(initialComponent);
-}
-
-function App(props) {
-  const { appConfig, history, routes, pageProps, InitialComponent } = props;
-  const { component } = useRouter(() => ({ history, routes, InitialComponent }));
-
-  // Return null directly if not matched
-  if (_isNullableComponent(component)) return null;
-
-  // TODO
-  // if (isSSR) {}
-
-  if (isWeb) {
-    return createElement(
-      Navigation,
-      Object.assign(
-        { appConfig, component, history, location: history.location, routes, InitialComponent },
-        pageProps
-      )
-    );
-  }
-
-  return createElement(
-    Fragment,
-    {},
-    createElement(component, Object.assign({ history, location: history.location, routes, InitialComponent }, pageProps)),
-    createElement(TabBar, { history, config: appConfig.tabBar })
-  );
-
-}
-
-
 function createApp(staticConfig, dynamicConfig = {}, options = {}) {
   if (launched) throw new Error('Error: runApp can only be called once.');
   if (dynamicConfig && Object.prototype.toString.call(dynamicConfig) !== '[object Object]') {
@@ -102,40 +50,22 @@ function createApp(staticConfig, dynamicConfig = {}, options = {}) {
 
   launched = true;
 
-  const { routes, rootId = DEFAULE_ROOT_ID } = staticConfig;
-  const pageProps = _handleDynamicConfig(dynamicConfig);
-  const { history } = options;
+  const runtime = new RuntimeModule(staticConfig);
+  loadRuntimeModules(runtime);
 
-  // Set custom driver
+  // const AppProvider = runtime.composeAppProvider();
+  // const AppRouter = runtime.getAppRouter();
 
-  // Set history
+  // const { routes, rootId = DEFAULE_ROOT_ID } = staticConfig;
+  // const { history, driver, env, methods } = options;
+  // const { createElement, render } = methods;
+  const { env } = options;
+  const pageProps = _handleDynamicConfig(dynamicConfig, env);
 
-  let _initialComponent;
-  return _matchInitialComponent(history.location.pathname, routes)
-    .then(initialComponent => {
-      _initialComponent = initialComponent;
-      const appInstance = createElement(App, {
-        appConfig: staticConfig,
-        history,
-        routes,
-        pageProps,
-        InitialComponent: _initialComponent
-      });
-
-      // TODO：
-      // if (shell) { }
-
-      // Emit app launch cycle
-      emit('launch');
-
-      if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
-
-      return render(
-        appInstance,
-        rootId,
-        { driver: UniversalDriver }
-      );
-    });
+  return {
+    runtime,
+    pageProps
+  };
 };
 
 export default createApp;

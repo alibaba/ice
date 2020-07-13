@@ -1,8 +1,7 @@
-export { runApp } from './runApp';
+import runApp from './runApp';
 <%- iceImports %>
 
-<% if (iceExports) { %>
-  export {
-    <%- iceExports %>
-  }
-<% } %>
+export {
+  runApp,
+  <%- iceExports %>
+}

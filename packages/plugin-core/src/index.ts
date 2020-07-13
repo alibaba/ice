@@ -2,6 +2,8 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as chokidar from 'chokidar';
 import * as globby from 'globby';
+import * as ejs from 'ejs';
+import * as prettier from 'prettier';
 import Generator from './generator';
 import PageGenerator from './generator/pageGenerator';
 import getPages from './utils/getPages';
@@ -87,9 +89,10 @@ export default (api, options) => {
     }
   });
 
-  fse.copySync(
+  renderFiles(
     path.join(__dirname, './generator/templates/common'),
-    path.join(iceTempPath, 'common')
+    path.join(iceTempPath, 'common'),
+    { runtimeModules }
   );
 
   const { targets = [] } = userConfig;
@@ -208,3 +211,34 @@ export default (api, options) => {
     await renderIce();
   });
 };
+
+
+async function renderFiles(templateDir, targetDir, extraData) {
+  const ejsTemplates = await globby(['**/*'], { cwd: templateDir });
+  ejsTemplates.forEach((template) => {
+    const templatePath = path.join(templateDir, template);
+    const targetPath = path.join(targetDir, template);
+    const renderExt = '.ejs';
+    if (path.extname(template) === renderExt) {
+      renderFile(templatePath, targetPath.replace(renderExt, ''), extraData);
+    } else {
+      fse.ensureDirSync(path.dirname(targetPath));
+      fse.copyFileSync(templatePath, targetPath);
+    }
+  });
+}
+
+function renderFile (templatePath, targetPath, extraData = {}) {
+  const templateContent = fse.readFileSync(templatePath, 'utf-8');
+  let content = ejs.render(templateContent, { ...extraData });
+  try {
+    content = prettier.format(content, {
+      parser: 'typescript',
+      singleQuote: true
+    });
+  } catch (error) {
+    //
+  }
+  fse.ensureDirSync(path.dirname(targetPath));
+  fse.writeFileSync(targetPath, content, 'utf-8');
+}

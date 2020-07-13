@@ -2,17 +2,20 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
 import deepmerge from 'deepmerge';
-import RuntimeModule from './common/runtimeModule';
+import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 // import { ErrorBoundary } from './components';
+// import { setAppConfig } from './appConfig';
 import { createHistory } from './history';
-// import { IAppConfig } from './types';
+import { IAppConfig } from './types';
+import createApp from './common/createApp';
+
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
-// export interface IContext {
-//   initialData?: any;
-//   pageInitialProps?: any;
-//   pathname?: string;
-// }
+export interface IContext {
+  initialData?: any;
+  pageInitialProps?: any;
+  pathname?: string;
+}
 
 const defaultAppConfig = {
   app: {
@@ -23,15 +26,17 @@ const defaultAppConfig = {
   }
 }
 
-function createAppWithSSR(customConfig, context) {
+function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
   const appConfig = deepmerge(defaultAppConfig, customConfig);
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }
 
-function runApp(customConfig) {
-  const appConfig = deepmerge(defaultAppConfig, customConfig);
+function runApp(staticConfig, dynamicConfig = {}) {
+  const appConfig = deepmerge(defaultAppConfig, staticConfig);
 
+  // set appConfig to application life cycle
+  // setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
     return;
   }
@@ -43,8 +48,7 @@ function runApp(customConfig) {
   appConfig.router.history = history;
 
   // load module to run before createApp ready
-  loadStaticModules(appConfig);
-
+  // loadStaticModules(appConfig);
   let initialData = {};
   let pageInitialProps = {};
 
@@ -67,18 +71,24 @@ function runApp(customConfig) {
   }
 }
 
-function renderApp(config, context) {
-  const runtime = new RuntimeModule(config, <%- buildConfig %>, context)
-  loadModlues(runtime);
+function renderApp(staticConfig: IAppConfig, dynamicConfig: any, context?: IContext) {
+  const options = { env: { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } };
+  const { runtime } = createApp(staticConfig, dynamicConfig, options);
   const { appConfig, modifyDOMRender } = runtime
-  const { rootId, mountNode } = appConfig.app
+  const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
 
   function App() {
     const appRouter = <AppRouter />;
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
-
+    // if (errorBoundary) {
+    //   return (
+    //     <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+    //       {rootApp}
+    //     </ErrorBoundary>
+    //   )
+    // }
     return rootApp;
   }
 
@@ -94,28 +104,10 @@ function renderApp(config, context) {
   }
 }
 
-function loadModlues(runtime) {
-  <% if (runtimeModules.length) {%>
-    <% runtimeModules.forEach((runtimeModule) => { %>
-      <% if(!runtimeModule.staticModule){ %>
-        runtime.loadModlue(require('<%= runtimeModule.path %>'));
-      <% } %>
-    <% }) %>
-  <% } %>
-}
-
-function loadStaticModules(appConfig) {
-  <% if (runtimeModules.length) {%>
-    <% runtimeModules.forEach((runtimeModule) => { %>
-      <% if(runtimeModule.staticModule){ %>
-        require('<%= runtimeModule.path %>').default({appConfig});
-      <% } %>
-    <% }) %>
-  <% } %>
-}
+export default runApp;
 
 export {
-  runApp,
+  createApp,
   createAppWithSSR,
-  loadStaticModules
+  // loadStaticModules
 }
