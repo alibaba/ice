@@ -1,0 +1,9 @@
+{
+  "sourcemap": true,
+  "router": {
+    "lazy": true
+  },
+  "plugins": [
+    "build-plugin-icestark"
+  ]
+}

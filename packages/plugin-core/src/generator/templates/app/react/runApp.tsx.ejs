@@ -4,7 +4,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import deepmerge from 'deepmerge';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 // import { ErrorBoundary } from './components';
-// import { setAppConfig } from './appConfig';
+import { setAppConfig } from './appConfig';
 import { createHistory } from './history';
 import { IAppConfig } from './types';
 import createApp from './common/createApp';
@@ -36,7 +36,7 @@ function runApp(staticConfig, dynamicConfig = {}) {
   const appConfig = deepmerge(defaultAppConfig, staticConfig);
 
   // set appConfig to application life cycle
-  // setAppConfig(appConfig);
+  setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
     return;
   }
@@ -104,10 +104,8 @@ function renderApp(staticConfig: IAppConfig, dynamicConfig: any, context?: ICont
   }
 }
 
-export default runApp;
-
 export {
-  createApp,
+  runApp,
   createAppWithSSR,
   // loadStaticModules
 }

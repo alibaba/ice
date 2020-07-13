@@ -1,7 +1,15 @@
-import runApp from './runApp';
 <%- iceImports %>
 
+export { runApp } from './runApp';
+export { history } from './history';
+export * from './types';
+export * from './lazy';
+export * from './components';
+
+export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
+
+<% if (iceExports) { %>
 export {
-  runApp,
-  <%- iceExports %>
+<%- iceExports %>
 }
+<% } %>

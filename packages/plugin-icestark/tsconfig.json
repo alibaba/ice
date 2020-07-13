@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "lib",
+    "paths": {
+      "$ice/Router": ["./src/runtime/_Router"],
+      "$ice/Layout": ["./src/runtime/Layout"]
+    }
+  }
+}

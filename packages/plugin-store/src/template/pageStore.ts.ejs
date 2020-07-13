@@ -1,0 +1,16 @@
+<% if (importStr) { %>
+import { createStore } from '@ice/store';
+<%- importStr %>
+<% } %>
+
+<% if (importStr && isSingleModel) { %>
+const model = { default: <%- modelsStr %> }
+const store = createStore(model);
+export default store;
+<% } %>
+
+<% if (importStr && !isSingleModel) { %>
+const models = { <%- modelsStr %> }
+const store = createStore(models);
+export default store;
+<% } %>

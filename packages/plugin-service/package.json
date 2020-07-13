@@ -1,0 +1,31 @@
+{
+  "name": "build-plugin-ice-service",
+  "version": "1.6.3",
+  "description": "service pulgin",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/ice-lab/icejs#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "lodash.merge": "^4.6.2",
+    "lodash.transform": "^4.6.0"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ice-lab/icejs/issues"
+  }
+}

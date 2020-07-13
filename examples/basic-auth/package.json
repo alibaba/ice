@@ -1,0 +1,21 @@
+{
+  "name": "example-basic-auth",
+  "description": "auth management with icejs",
+  "dependencies": {
+    "ice.js": "^1.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "build-plugin-ice-auth": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.5"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

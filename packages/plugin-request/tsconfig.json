@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "lib",
+    "paths": {
+      "$ice/createAxiosInstance": ["./src/_createAxiosInstance"]
+    }
+  },
+  "exclude": [
+    "template/*",
+    "__tests__/*"
+  ]
+}

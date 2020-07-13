@@ -1,0 +1,7 @@
+{
+  "plugins": [],
+  "router": {
+    "lazy": false
+  },
+  "tsChecker": true
+}

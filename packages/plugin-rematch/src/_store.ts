@@ -1,0 +1,5 @@
+const stores = {};
+
+export {
+  stores,
+};
