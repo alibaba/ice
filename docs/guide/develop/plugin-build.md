@@ -5,8 +5,15 @@ order: 2
 
 插件工程能力通过 `src/index.ts` 定义，结构如下
 
+## 类型
+
+接口类型通过以下方法引入：
 ```javascript
-module.exports = ({ context, onGetWebpackConfig, log, onHook }, options) => {
+import { IPlugin } from '@alib/build-scripts';
+```
+
+```javascript
+module.exports = ({ context, onGetWebpackConfig, log, onHook, ... }, options) => {
   // 第一项参数为插件 API 提供的能力
   // options：插件自定义参数
 };
@@ -40,6 +47,19 @@ module.exports = ({onGetWebpackConfig, registerTask}) => {
     config.entry('xxx');
   });
 }
+```
+
+### onGetJestConfig
+
+通过 `onGetJestConfig` 获取 jest 配置，可对配置进行自定义修改：
+
+```javascript
+module.exports = ({onGetJestConfig}) => {
+    onGetJestConfig((jestConfig) => {
+        const modifiedJestConfig = modify(jestConfig);
+        return modifiedJestConfig;
+    });
+};
 ```
 
 ### onHook
@@ -93,6 +113,85 @@ module.exports = ({ onHook }) => {
 log.info('start');
 log.verbose('debug');
 log.error('exit');
+```
+
+### registerUserConfig
+
+为用户配置文件 `build.json` 中添加自定义字段。
+
+```javascript
+module.exports = ({registerUserConfig}) => {
+  registerUserConfig({
+    name: 'custom-key',
+    validation: 'boolean' // 可选，支持类型有 string, number, array, object, boolean
+  });
+};
+```
+
+### registerClioption
+
+为命令行启动添加自定义参数。
+
+```javascript
+module.exports = ({registerClioption}) => {
+  registerCliOption({
+    name: 'custom-option', // 参数名
+    commands: ['start'], // 命令
+    configWebpack: (arg) => {} // 可选，arg 为命令行参数对应值
+  });
+};
+```
+
+### registerMethod
+
+注册自定义方法。通过 `applyMethod` 调用。
+
+```javascript
+module.exports = ({registerMethod}) => {
+  registerMethod(name, func); // name, func 分别为方法名和方法
+};
+```
+
+### modifyUserConfig
+
+修改用户配置文件。
+
+```javascript
+module.exports = ({modifyUserConfig}) => {
+  modifyUserConfig(key, value); // key, value 分别为用户配置文件键值对
+};
+```
+
+### registerTask
+
+添加 webpack 配置，配置为 webpack-chain 形式。
+
+```javascript
+module.exports = ({registerTask}) => {
+  registerTask(name, config); // name: Task名, config: webpack-chain 形式的配置
+};
+```
+
+### getAllTask
+
+获取所有 webpack 配置名称。
+
+```javascript
+module.exports = ({getAllTask}) => {
+  const alltasks = getAlltask();
+};
+```
+
+### getAllPlugin
+
+获取所有插件。
+
+```javascript
+module.exports = ({getAllPlugin}) => {
+  // 获取所有插件数组
+  // 类型：() => [{pluginPath, options, name}]
+  const plugins = getAllPlugin(); ，[]
+}
 ```
 
 ## 扩展 API

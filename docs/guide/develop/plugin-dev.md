@@ -3,7 +3,7 @@ title: 插件开发指南
 order: 1
 ---
 
-icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上也完整继承了 build-scrtips。除了通过插件定制工程能力以外，icejs 还为插件扩展了运行时定制的能力，这让插件拥有更多的想象空间。
+icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上也完整继承了 build-scripts。除了通过插件定制工程能力以外，icejs 还为插件扩展了运行时定制的能力，这让插件拥有更多的想象空间。
 
 插件机制是 icejs 的核心之一，当前 icejs 的基础能力都是通过插件来实现。插件机制不但可以保证框架核心足够精简和稳定，还可以通过插件对运行时和编译时的能力进行封装复用，最终打造一个完整的生态。
 
@@ -15,17 +15,15 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 .
 ├── src
 │   ├── index.[t,j]s    # 插件工程入口
-│   └── module.[t,j]s   # 插件编译时入口
-├── lib/               # 编译目录
-├── package.json
-├── README.md
-└── tsconfig.json
+│   └── runtime.[t,j]s  # 插件编译时入口
+├── package.json        # npm 包配置
+└── README.md           # 说明文档
 ```
 
-这里以 ts 为例，实际上也可以通过 js 编写插件。插件核心有两个文件：
+这里以 ts 为例，实际上也可以通过 js 编写插件。 ts 最终应编译为 js 以发布 npm 包。插件核心有两个文件：
 
-1. `index.ts`：通常用于做一些工程相关的事情，比如更改 webpack 配置、构建结束后执行一些其他任务等
-2. `runtime.ts`：实现一些运行时能力，比如 config/request 插件。注意: 旧版本的`module.ts`暂时兼容，但在未来不受支持。
+1. `index.ts`：通常用于做一些工程相关的事情，比如更改 webpack 配置、构建结束后执行一些其他任务等。需保证该文件作为 npm 包入口。
+2. `runtime.ts`：实现一些运行时能力，比如 config/request 插件。注意: 旧版本的`module.ts`暂时兼容，但在未来不受支持。需保证该文件与 `index.ts` 位于同一目录下。
 
 下面也会按照这两个纬度来分别介绍。
 
@@ -41,6 +39,12 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 
 关于 `runtime.ts` 应该如何书写请参考下一个章节的文档 [通过插件定制运行时能力](/docs/guide/develop/plugin-runtime.md)。
 
+## 单元测试
+
+使用 [Jest](https://github.com/facebook/jest) 进行单元测试。
+
+示例: https://github.com/alibaba/ice/tree/master/packages/plugin-request/__tests__
+
 ## 示例插件
 
-官方插件代码：https://github.com/ice-lab/icejs/tree/master/packages
+官方插件代码：https://github.com/alibaba/ice/tree/master/packages
