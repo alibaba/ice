@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
 import deepmerge from 'deepmerge';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
-// import { ErrorBoundary } from './components';
+import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
 import { createHistory } from './history';
 import { IAppConfig } from './types';
@@ -72,7 +72,7 @@ function runApp(staticConfig, dynamicConfig = {}) {
 }
 
 function renderApp(staticConfig: IAppConfig, dynamicConfig: any, context?: IContext) {
-  const options = { env: { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } };
+  const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const { runtime } = createApp(staticConfig, dynamicConfig, options);
   const { appConfig, modifyDOMRender } = runtime
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app
@@ -82,13 +82,13 @@ function renderApp(staticConfig: IAppConfig, dynamicConfig: any, context?: ICont
   function App() {
     const appRouter = <AppRouter />;
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
-    // if (errorBoundary) {
-    //   return (
-    //     <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
-    //       {rootApp}
-    //     </ErrorBoundary>
-    //   )
-    // }
+    if (errorBoundary) {
+      return (
+        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+          {rootApp}
+        </ErrorBoundary>
+      )
+    }
     return rootApp;
   }
 

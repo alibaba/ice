@@ -4,6 +4,7 @@ import { useRouter } from 'rax-use-router';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 import { createMemoryHistory, createHashHistory, createBrowserHistory } from 'history';
+import pathRedirect from './pathRedirect';
 import { emit } from './common/appCycles';
 import createApp from './common/createApp';
 
@@ -38,7 +39,7 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
-  const { appConfig, history, routes, pageProps, InitialComponent, env } = props;
+  const { appConfig, history, routes, pageProps, InitialComponent } = props;
   const { component } = useRouter(() => ({ history, routes, InitialComponent }));
   // Return null directly if not matched
   if (_isNullableComponent(component)) return null;
@@ -64,7 +65,7 @@ function App(props) {
   );
 }
 
-function runApp(staticConfig, dynamicConfig) {
+function runApp(staticConfig, dynamicConfig = {}) {
   // Set history
   if (typeof staticConfig.history !== 'undefined') {
     history = staticConfig.history;
@@ -85,16 +86,11 @@ function runApp(staticConfig, dynamicConfig) {
   }
 
   const { routes } = staticConfig;
+  // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
+  pathRedirect(history, routes);
 
-  const { pageProps, runtime } = createApp(staticConfig, dynamicConfig, {
-    env: {
-      isWeb,
-      isMiniApp,
-      isWeChatMiniProgram,
-      isByteDanceMicroApp
-    }
-  });
-  const AppProvider = runtime.composeAppProvider();
+  const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
+  const { runtime, pageProps } = createApp(staticConfig, dynamicConfig, options);
 
   let _initialComponent;
   return _matchInitialComponent(history.location.pathname, routes)
@@ -108,6 +104,7 @@ function runApp(staticConfig, dynamicConfig) {
         InitialComponent: _initialComponent
       };
 
+      const AppProvider = runtime.composeAppProvider();
       const RootComponent = () => {
         if (AppProvider) {
           return (
