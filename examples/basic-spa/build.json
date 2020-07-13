@@ -1,14 +1,11 @@
 {
-  "ignoreHtmlTemplate": true,
-  "plugins": [],
-  "modeConfig": {
-    "prod": {
-      "ignoreHtmlTemplate": false
-    }
+  "entry": "src/app.tsx",
+  "alias": {
+    "@": "src"
   },
+  "plugins": [],
   "eslint": {
     "disable": false,
     "quiet": true
-  },
-  "tsChecker": true
+  }
 }

@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "../../packages/plugin-miniapp/lib/index.js"
+  ],
+  "minify": false,
+  "injectBabel": false,
+  "appType": ["miniapp"]
+}

@@ -1,31 +1,14 @@
-const getBuiltInPlugins = (userConfig) => {
-  if (userConfig.disableRuntime) {
-    return [
-      'build-plugin-react-app',
-      'build-plugin-ice-mpa'
-    ];
-  }
-
+const getBuiltInPlugins = () => {
   // built-in plugins for icejs
   const builtInPlugins = [
-    'build-plugin-ice-core',
+    [
+      'build-plugin-ice-core', {
+        'framework': 'react'
+      }
+    ],
     'build-plugin-react-app',
-    'build-plugin-ice-router',
-    'build-plugin-ice-helpers',
-    'build-plugin-ice-logger',
-    'build-plugin-ice-config',
-    'build-plugin-ice-request',
-    'build-plugin-ice-mpa'
+    'build-plugin-ice-router'
   ];
-
-  if (userConfig.ssr) {
-    builtInPlugins.push('build-plugin-ice-ssr');
-  }
-
-  if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
-    builtInPlugins.push('build-plugin-ice-store');
-  }
-
   return builtInPlugins;
 };
 

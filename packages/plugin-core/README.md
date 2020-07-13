@@ -23,7 +23,7 @@ createApp(appConfig)
 
 - alias `ice` -> `.ice/index`
 - alias `@` -> `src`
-- alias `react/react-dom/react-router-dom`, ensure all runtime.ts use the same package
+- alias `react/react-dom/react-router-dom`, ensure all module.ts use the same package
 
 ## Generate `.ice`
 
@@ -73,7 +73,7 @@ export default async function ({
 
 ## Support APIs for module of plugin
 
-`plugin/src/runtime.ts`:
+`plugin/src/module.ts`:
 
 ```js
 export default ({

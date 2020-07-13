@@ -8,11 +8,12 @@ import getPages from './utils/getPages';
 import getRoutes from './utils/getRoutes';
 import formatPath from './utils/formatPath';
 
-export default (api) => {
+export default (api, options) => {
+  const { framework } = options;
   const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
   const { rootDir, command, userConfig } = context;
-
-  const iceTempPath = path.join(rootDir, '.ice');
+  const tempDir = framework === 'rax' ? 'rax' : 'ice';
+  const iceTempPath = path.join(rootDir, `.${tempDir}`);
   setValue('ICE_TEMP', iceTempPath);
   const tsEntryFiles = globby.sync(['src/app.@(ts?(x))', 'src/pages/*/app.@(ts?(x))'], { cwd: rootDir });
   const projectType = tsEntryFiles.length ? 'ts' : 'js';
@@ -26,16 +27,8 @@ export default (api) => {
   const runtimeModules = plugins.map(({ pluginPath }) => {
     // compatible with function plugin
     if (!pluginPath) return false;
-    // NOTE: module.js will be discarded in future.
-    let modulePath = path.join(path.dirname(pluginPath), 'runtime.js');
-    if(!fse.existsSync(modulePath)){
-      modulePath = path.join(path.dirname(pluginPath), 'module.js');
-      if(!fse.existsSync(modulePath)){
-        return false;
-      }
-      console.log('WARN: module.ts(x) will not be supported in the future. Please rename as runtime.ts(x)');
-    }
-    return formatPath(modulePath);
+    const modulePath = path.join(path.dirname(pluginPath), 'module.js');
+    return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
   })
     .filter(Boolean)
     .map(pluginPath => {
@@ -48,39 +41,42 @@ export default (api) => {
       };
     });
 
-  if (!userConfig.entry) {
-    // modify default entry to src/app
-    modifyUserConfig('entry', 'src/app');
-  }
+  // Config key 'entry' is not supported
+  // if (!userConfig.entry) {
+  //   // modify default entry to src/app
+  //   modifyUserConfig('entry', 'src/app');
+  // }
 
   onGetWebpackConfig((config: any) => {
-    config.resolve.alias.set('ice$', path.join(iceTempPath, 'index.ts'));
-    config.resolve.alias.set('ice', path.join(iceTempPath, 'pages'));
+    const aliasName = framework === 'rax' ? 'raxapp' : 'ice';
+    config.resolve.alias.set(`${aliasName}$`, path.join(iceTempPath, 'index.js'));
+    // config.resolve.alias.set('ice', path.join(iceTempPath, 'pages'));
+    // config.resolve.alias.set('raxapp', path.join(iceTempPath, 'pages'));
 
     // default alias of @/
-    config.resolve.alias.set('@', path.join(rootDir, 'src'));
-    config.resolve.alias.set('$ice/appConfig', path.join(iceTempPath, 'appConfig.ts'));
-    config.resolve.alias.set('$ice/components', path.join(iceTempPath, 'components'));
+    // config.resolve.alias.set('@', path.join(rootDir, 'src'));
+    // config.resolve.alias.set('$ice/appConfig', path.join(iceTempPath, 'appConfig.ts'));
+    // config.resolve.alias.set('$ice/components', path.join(iceTempPath, 'components'));
 
-    const defineVariables = {
-      'process.env.__IS_SERVER__': false
-    };
-    config
-      .plugin('DefinePlugin')
-      .tap(([args]) => [{ ...args, ...defineVariables }]);
+    // const defineVariables = {
+    //   'process.env.__IS_SERVER__': false
+    // };
+    // config
+    //   .plugin('DefinePlugin')
+    //   .tap(([args]) => [{ ...args, ...defineVariables }]);
 
     // add alias of basic dependencies
-    const basicDependencies = [
-      ['react', rootDir],
-      ['react-dom', rootDir]
-    ];
-    basicDependencies.forEach((dep: string[] | string): void => {
-      const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
-      const aliasPath = searchFolder
-        ? require.resolve(depName, { paths: [searchFolder] })
-        : require.resolve(depName);
-      config.resolve.alias.set(depName, path.dirname(aliasPath));
-    });
+    // const basicDependencies = [
+    //   ['react', rootDir],
+    //   ['react-dom', rootDir]
+    // ];
+    // basicDependencies.forEach((dep: string[] | string): void => {
+    //   const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
+    //   const aliasPath = searchFolder
+    //     ? require.resolve(depName, { paths: [searchFolder] })
+    //     : require.resolve(depName);
+    //   config.resolve.alias.set(depName, path.dirname(aliasPath));
+    // });
   });
 
   const buildConfig = {};
@@ -91,27 +87,35 @@ export default (api) => {
     }
   });
 
-  // check global style file
+  fse.copySync(
+    path.join(__dirname, './generator/templates/common'),
+    path.join(iceTempPath, 'common')
+  );
+
+  const { targets = [] } = userConfig;
   const generator = new Generator({
     projectRoot: rootDir,
     targetDir: iceTempPath,
-    templateDir: path.join(__dirname, './generator/templates/app'),
+    templateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
     defaultData: {
+      framework,
+      // miniapp: targets.includes('miniapp'),
+      // web: targets.includes('web'),
       runtimeModules,
       buildConfig: JSON.stringify(buildConfig)
     },
     log
   });
 
-  const pageGenerator = new PageGenerator({
-    rootDir,
-    generator,
-    templatePath: path.join(__dirname, './generator/templates/page/index.ts.ejs'),
-    targetPath: iceTempPath,
-  });
+  // const pageGenerator = new PageGenerator({
+  //   rootDir,
+  //   generator,
+  //   templatePath: path.join(__dirname, './generator/templates/page/index.ts.ejs'),
+  //   targetPath: iceTempPath,
+  // });
 
   async function renderIce() {
-    pageGenerator.render();
+    // pageGenerator.render();
     await generator.render();
   }
 
@@ -127,14 +131,20 @@ export default (api) => {
     validation: 'boolean',
   });
 
+  // register ssr in build.json
+  // registerUserConfig({
+  //   name: 'targets',
+  //   validation: 'array',
+  // });
+
   // register utils method
   registerMethod('getPages', getPages);
   registerMethod('formatPath', formatPath);
   registerMethod('getRoutes', getRoutes);
 
   // registerMethod for modify page
-  registerMethod('addPageExport', pageGenerator.addPageExport);
-  registerMethod('removePageExport', pageGenerator.removePageExport);
+  // registerMethod('addPageExport', pageGenerator.addPageExport);
+  // registerMethod('removePageExport', pageGenerator.removePageExport);
   // pageGenerator.addPageExport('Index', { exportName: 'store', source: './store' });
 
   // registerMethod for add export
@@ -157,11 +167,10 @@ export default (api) => {
     chokidar.watch(path.join(rootDir, 'src'), {
       ignoreInitial: true,
     }).on('all', (event, filePath) => {
-      const posixFilePath = filePath.split(path.sep).join('/');
       watchEvents.forEach(([pattern, action]) => {
-        if (pattern instanceof RegExp && pattern.test(posixFilePath)) {
+        if (pattern instanceof RegExp && pattern.test(filePath)) {
           action(event, filePath);
-        } else if (typeof pattern === 'string' && posixFilePath.includes(pattern)) {
+        } else if (typeof pattern === 'string' && filePath.includes(pattern)) {
           action(event, filePath);
         }
       });

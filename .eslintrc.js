@@ -9,7 +9,10 @@ const commonRules = {
   "prefer-object-spread": 0,
   // TODO: open rule indent, consider of  MemberExpression
   "indent": 0,
-  'semi': 2,
+  "semi": 2,
+  "react/react-in-jsx-scope": 0,
+  "jsx-a11y/html-has-lang": 0,
+  "react/static-property-placement": 0
 };
 
 const jsRules = deepmerge(eslint, {

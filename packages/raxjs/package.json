@@ -1,0 +1,45 @@
+{
+  "name": "raxjs",
+  "version": "0.1.0-0",
+  "description": "",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/alibaba/ice#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "bin": {
+    "raxjs": "./bin/rax-cli.js"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "dependencies": {
+    "@alib/build-scripts": "^0.1.13",
+    "build-plugin-rax-app": "^5.0.2",
+    "chokidar": "^3.3.1",
+    "commander": "^5.0.0",
+    "detect-port": "^1.3.0",
+    "inquirer": "^7.1.0",
+    "yargs-parser": "^18.1.2"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "engines": {
+    "node": ">=8.6.0",
+    "npm": ">=3.0.0"
+  }
+}

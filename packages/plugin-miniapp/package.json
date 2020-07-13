@@ -1,0 +1,38 @@
+{
+  "name": "build-plugin-miniapp",
+  "version": "1.6.2",
+  "description": "Using icejs and React.js to write miniapp",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/alibaba/ice#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "dependencies": {
+    "build-plugin-rax-app": "^5.0.2",
+    "miniapp-element": "^0.1.16",
+    "miniapp-render": "^1.0.1",
+    "rax-compile-config": "^0.2.14",
+    "rax-miniapp-babel-plugins": "^0.1.3",
+    "rax-miniapp-config-webpack-plugin": "^1.2.1",
+    "rax-miniapp-runtime-webpack-plugin": "^1.0.1"
+  }
+}
