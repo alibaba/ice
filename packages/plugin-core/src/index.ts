@@ -91,10 +91,16 @@ export default (api, options) => {
     }
   });
 
+  const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
   renderFiles(
     path.join(__dirname, './generator/templates/common'),
     path.join(iceTempPath, 'common'),
-    { runtimeModules, isReact, isRax }
+    {
+      runtimeModules,
+      isReact,
+      isRax,
+      appJsonConfig: appJsonConfig.length && appJsonConfig[0]
+    }
   );
 
   const { targets = [] } = userConfig;

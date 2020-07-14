@@ -59,16 +59,21 @@ function App(props) {
   );
 }
 
-function runApp(staticConfig = {}, dynamicConfig = {}) {
+function runApp(appConfig = {}) {
+  const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
+  const {
+    history,
+    runtime,
+    appJSONConfig,
+    appConfig: appDynamicConfig
+  } = createApp(appConfig, { env });
+
   // Set custom driver
-  if (typeof staticConfig.driver !== 'undefined') {
-    driver = staticConfig.driver;
+  if (typeof appJSONConfig.driver !== 'undefined') {
+    driver = appJSONConfig.driver;
   }
 
-  const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, config, history } = createApp(staticConfig, dynamicConfig, options);
-
-  const { routes } = staticConfig;
+  const { routes } = appJSONConfig;
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   pathRedirect(history, routes);
 
@@ -77,10 +82,10 @@ function runApp(staticConfig = {}, dynamicConfig = {}) {
     .then(initialComponent => {
       _initialComponent = initialComponent;
       const props = {
-        appConfig: staticConfig,
+        appConfig: appJSONConfig,
         history,
         routes,
-        pageProps: config,
+        pageProps: {},
         InitialComponent: _initialComponent
       };
 
@@ -102,8 +107,9 @@ function runApp(staticConfig = {}, dynamicConfig = {}) {
       // Emit app launch cycle
       emit('launch');
 
-      const { rootId = DEFAULE_ROOT_ID } = staticConfig;
-      if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
+      const { app = {} } = appDynamicConfig;
+      const rootId = document.getElementById(app.rootId) || DEFAULE_ROOT_ID;
+      if (isWeb && appDynamicConfig.rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
 
       return render(
         appInstance,

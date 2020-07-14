@@ -20,15 +20,13 @@ function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
   return renderApp(appConfig, context);
 }
 
-function runApp(appConfig, dynamicConfig = {}) {
+function runApp(appConfig = {}) {
   // set appConfig to application life cycle
   setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
     return;
   }
 
-  // load module to run before createApp ready
-  // loadStaticModules(appConfig);
   let initialData = {};
   let pageInitialProps = {};
 
@@ -51,10 +49,10 @@ function runApp(appConfig, dynamicConfig = {}) {
   }
 }
 
-function renderApp(staticConfig: IAppConfig, dynamicConfig: any, context?: IContext) {
-  const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime } = createApp(staticConfig, dynamicConfig, options);
-  const { appConfig, modifyDOMRender } = runtime
+function renderApp(appConfig: IAppConfig, context?: IContext) {
+  const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
+  const { runtime } = createApp(appConfig, { env });
+  const { modifyDOMRender } = runtime
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
@@ -86,6 +84,5 @@ function renderApp(staticConfig: IAppConfig, dynamicConfig: any, context?: ICont
 
 export {
   runApp,
-  createAppWithSSR,
-  // loadStaticModules
+  createAppWithSSR
 }
