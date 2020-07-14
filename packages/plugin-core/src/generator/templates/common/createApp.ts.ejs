@@ -1,7 +1,18 @@
+import deepmerge from 'deepmerge';
 import { addAppLifeCyle } from './appCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
 import RuntimeModule from './runtimeModule';
 import loadRuntimeModules from './loadRuntimeModlues';
+import { createHistory } from './history';
+
+const DEFAULE_CONFIG = {
+  app: {
+    rootId: 'root'
+  },
+  router: {
+    type: 'hash'
+  }
+}
 
 let launched = false;
 
@@ -50,6 +61,15 @@ function createApp(staticConfig, dynamicConfig = {}, options = {}) {
 
   launched = true;
 
+  dynamicConfig = deepmerge(DEFAULE_CONFIG, dynamicConfig);
+
+  // Set history
+  const { router } = dynamicConfig;
+  const { type, basename, history: customHistory } = router;
+  const history = customHistory || createHistory(type, basename);
+  staticConfig.router.history = history;
+
+  // Set runtime modules
   const runtime = new RuntimeModule(staticConfig);
   loadRuntimeModules(runtime);
 
@@ -58,7 +78,8 @@ function createApp(staticConfig, dynamicConfig = {}, options = {}) {
 
   return {
     runtime,
-    config
+    config,
+    history
   };
 };
 

@@ -3,7 +3,6 @@ import { Navigation, TabBar } from 'rax-pwa';
 import { useRouter } from 'rax-use-router';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import UniversalDriver from 'driver-universal';
-import { createMemoryHistory, createHashHistory, createBrowserHistory } from 'history';
 import pathRedirect from './pathRedirect';
 import { emit } from './common/appCycles';
 import createApp from './common/createApp';
@@ -14,12 +13,7 @@ const initialDataFromSSR = global[INITIAL_DATA_FROM_SSR];
 // eslint-disable-next-line
 const DEFAULE_ROOT_ID = document.getElementById('root');
 
-let history;
 let driver = UniversalDriver;
-
-export function getHistory() {
-  return history;
-}
 
 function _isNullableComponent(component) {
   return !component || Array.isArray(component) && component.length === 0;
@@ -65,32 +59,18 @@ function App(props) {
   );
 }
 
-function runApp(staticConfig, dynamicConfig = {}) {
-  // Set history
-  if (typeof staticConfig.history !== 'undefined') {
-    history = staticConfig.history;
-  } else if (initialDataFromSSR) {
-    // If that contains `initialDataFromSSR`, which means SSR is enabled,
-    // we should use browser history to make it works.
-    history = createBrowserHistory();
-  } else if (isWeb) {
-    history = createHashHistory();
-  } else {
-    // In other situation use memory history.
-    history = createMemoryHistory();
-  }
-
+function runApp(staticConfig = {}, dynamicConfig = {}) {
   // Set custom driver
   if (typeof staticConfig.driver !== 'undefined') {
     driver = staticConfig.driver;
   }
 
+  const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
+  const { runtime, config, history } = createApp(staticConfig, dynamicConfig, options);
+
   const { routes } = staticConfig;
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   pathRedirect(history, routes);
-
-  const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, config } = createApp(staticConfig, dynamicConfig, options);
 
   let _initialComponent;
   return _matchInitialComponent(history.location.pathname, routes)

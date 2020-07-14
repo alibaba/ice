@@ -6,9 +6,7 @@ import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'univ
 import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
 import { IAppConfig } from './types';
-import { createHistory } from './common/history';
 import createApp from './common/createApp';
-
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export interface IContext {
@@ -17,35 +15,17 @@ export interface IContext {
   pathname?: string;
 }
 
-const defaultAppConfig = {
-  app: {
-    rootId: 'ice-container'
-  },
-  router: {
-    type: 'hash'
-  }
-}
-
 function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
-  const appConfig = deepmerge(defaultAppConfig, customConfig);
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }
 
-function runApp(staticConfig, dynamicConfig = {}) {
-  const appConfig = deepmerge(defaultAppConfig, staticConfig);
-
+function runApp(appConfig, dynamicConfig = {}) {
   // set appConfig to application life cycle
   setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
     return;
   }
-
-  // client side rendering
-  // get history instance
-  const { type, basename = '', history: customHistory } = appConfig.router;
-  const history = customHistory || createHistory(type, basename);
-  appConfig.router.history = history;
 
   // load module to run before createApp ready
   // loadStaticModules(appConfig);
