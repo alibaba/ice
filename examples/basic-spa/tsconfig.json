@@ -30,7 +30,7 @@
         "./src/*"
       ],
       "ice": [
-        ".ice/index.js"
+        ".ice/index.ts"
       ],
       "ice/*": [
         ".ice/pages/*"

@@ -1,4 +1,9 @@
-import * as React from 'react';
+<% if (isReact) { %>
+  import React from 'react';
+<% } %>
+<% if (isRax) { %>
+  import { createElement } from 'rax';
+<% } %>
 // import { createHistory } from './history';
 
 interface IRenderParams {

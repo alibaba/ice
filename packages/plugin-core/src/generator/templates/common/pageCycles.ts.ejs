@@ -1,5 +1,4 @@
-/* eslint no-undef:0, default-case: 0, react-hooks/rules-of-hooks: 0 */
-import { useEffect } from 'rax';
+import { useEffect } from 'react';
 // import { getHistory } from '../runApp';
 import { isWeb, isWeex, isMiniApp, isWeChatMiniProgram } from 'universal-env';
 import { SHOW, HIDE } from './constants';
@@ -58,6 +57,7 @@ if (isWeb) {
   try {
     // https://weex.apache.org/docs/modules/globalEvent.html#addeventlistener
     // Use __weex_require__ in Rax project.
+    // @ts-ignore
     const globalEvent = __weex_require__('@weex-module/globalEvent');
     globalEvent.addEventListener('WXApplicationDidBecomeActiveEvent', function() {
       emit(SHOW);

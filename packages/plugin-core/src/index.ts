@@ -14,7 +14,9 @@ export default (api, options) => {
   const { framework } = options;
   const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
   const { rootDir, command, userConfig } = context;
-  const tempDir = framework === 'rax' ? 'rax' : 'ice';
+  const isReact = framework === 'react';
+  const isRax = framework === 'rax';
+  const tempDir = isRax ? 'rax' : 'ice';
   const iceTempPath = path.join(rootDir, `.${tempDir}`);
   setValue('ICE_TEMP', iceTempPath);
   const tsEntryFiles = globby.sync(['src/app.@(ts?(x))', 'src/pages/*/app.@(ts?(x))'], { cwd: rootDir });
@@ -51,7 +53,7 @@ export default (api, options) => {
 
   onGetWebpackConfig((config: any) => {
     const aliasName = framework === 'rax' ? 'raxapp' : 'ice';
-    config.resolve.alias.set(`${aliasName}$`, path.join(iceTempPath, 'index.js'));
+    config.resolve.alias.set(`${aliasName}$`, path.join(iceTempPath, 'index.ts'));
     // config.resolve.alias.set('ice', path.join(iceTempPath, 'pages'));
     // config.resolve.alias.set('raxapp', path.join(iceTempPath, 'pages'));
 
@@ -92,7 +94,7 @@ export default (api, options) => {
   renderFiles(
     path.join(__dirname, './generator/templates/common'),
     path.join(iceTempPath, 'common'),
-    { runtimeModules }
+    { runtimeModules, isReact, isRax }
   );
 
   const { targets = [] } = userConfig;
@@ -101,7 +103,8 @@ export default (api, options) => {
     targetDir: iceTempPath,
     templateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
     defaultData: {
-      framework,
+      isReact,
+      isRax,
       // miniapp: targets.includes('miniapp'),
       // web: targets.includes('web'),
       runtimeModules,

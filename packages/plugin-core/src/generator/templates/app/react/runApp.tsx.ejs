@@ -5,8 +5,8 @@ import deepmerge from 'deepmerge';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
-import { createHistory } from './history';
 import { IAppConfig } from './types';
+import { createHistory } from './common/history';
 import createApp from './common/createApp';
 
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>

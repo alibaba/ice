@@ -90,7 +90,7 @@ function runApp(staticConfig, dynamicConfig = {}) {
   pathRedirect(history, routes);
 
   const options = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, pageProps } = createApp(staticConfig, dynamicConfig, options);
+  const { runtime, config } = createApp(staticConfig, dynamicConfig, options);
 
   let _initialComponent;
   return _matchInitialComponent(history.location.pathname, routes)
@@ -100,7 +100,7 @@ function runApp(staticConfig, dynamicConfig = {}) {
         appConfig: staticConfig,
         history,
         routes,
-        pageProps,
+        pageProps: config,
         InitialComponent: _initialComponent
       };
 

@@ -10,7 +10,10 @@
     "rax-text": "^1.0.0",
     "rax-view": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^3.7.5",
+    "@types/rax": "^1.0.0"
+  },
   "scripts": {
     "start": "raxjs start",
     "build": "raxjs build"

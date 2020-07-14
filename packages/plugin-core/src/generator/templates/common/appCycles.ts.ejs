@@ -61,25 +61,25 @@ export function useAppShare(callback) {
 
 // Emit MiniApp App lifeCycles
 if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
-  window.addEventListener(LAUNCH, ({ options, context }) => {
+  window.addEventListener(LAUNCH, ({ options, context }: any) => {
     emit(LAUNCH, context, options);
   });
-  window.addEventListener('appshow', ({ options, context }) => {
+  window.addEventListener('appshow', ({ options, context }: any) => {
     emit(SHOW, context, options);
   });
-  window.addEventListener('apphide', ({ context }) => {
+  window.addEventListener('apphide', ({ context }: any) => {
     emit(HIDE, context);
   });
-  window.addEventListener('apperror', ({ context, error }) => {
+  window.addEventListener('apperror', ({ context, error }: any) => {
     emit(ERROR, context, error);
   });
-  window.addEventListener('pagenotfound', ({ context }) => {
+  window.addEventListener('pagenotfound', ({ context }: any) => {
     emit(NOT_FOUND, context);
   });
-  window.addEventListener('appshare', ({ context, shareInfo, options }) => {
+  window.addEventListener('appshare', ({ context, shareInfo, options }: any) => {
     emit(SHARE, context, shareInfo, options);
   });
-  window.addEventListener('tabitemclick', ({ options, context }) => {
+  window.addEventListener('tabitemclick', ({ options, context }: any) => {
     emit(TAB_ITEM_CLICK, context, options);
   });
 } else {

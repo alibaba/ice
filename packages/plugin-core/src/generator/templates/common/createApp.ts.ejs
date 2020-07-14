@@ -53,18 +53,12 @@ function createApp(staticConfig, dynamicConfig = {}, options = {}) {
   const runtime = new RuntimeModule(staticConfig);
   loadRuntimeModules(runtime);
 
-  // const AppProvider = runtime.composeAppProvider();
-  // const AppRouter = runtime.getAppRouter();
-
-  // const { routes, rootId = DEFAULE_ROOT_ID } = staticConfig;
-  // const { history, driver, env, methods } = options;
-  // const { createElement, render } = methods;
   const { env } = options;
-  const pageProps = _handleDynamicConfig(dynamicConfig, env);
+  const config = _handleDynamicConfig(dynamicConfig, env);
 
   return {
     runtime,
-    pageProps
+    config
   };
 };
 
