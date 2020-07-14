@@ -4,57 +4,16 @@
 <% if (isRax) { %>
   import { createElement } from 'rax';
 <% } %>
-// import { createHistory } from './history';
-
-interface IRenderParams {
-  App: React.ComponentType;
-  appMountNode: HTMLElement;
-}
-
-interface IDOMRender {
-  (data: IRenderParams): void;
-}
-
-interface IGetAppRouter {
-  (): React.ComponentType;
-}
-
-interface RouteItemProps {
-  children?: RouteItemProps[];
-  path?: string;
-  redirect?: string;
-  component?: React.ComponentType;
-  RouteWrapper?: React.ComponentType;
-}
-
-interface IModifyRoutes {
-  (modifyFn: IModifyFn): void;
-}
-
-interface IModifyFn {
-  (routes: RouteItemProps[]): RouteItemProps[];
-}
-
-interface IAppRouter {
-  (routes: RouteItemProps[]): React.ComponentType;
-}
-
-interface IWrapperRoute {
-  (RouteComponent: React.ComponentType): React.ComponentType;
-}
-
-interface IWrapperRouteComponent {
-  (wrapperRoute: IWrapperRoute): void;
-}
+import { createHistory } from './history';
 
 class RuntimeModule {
-  private AppProvider: React.ComponentType[];
+  private AppProvider: any;
 
-  private modifyRoutesRegistration: IModifyFn[];
+  private modifyRoutesRegistration: any;
 
-  private wrapperRouteRegistration: IWrapperRoute[];
+  private wrapperRouteRegistration: any;
 
-  public renderRouter: IAppRouter;
+  public renderRouter: any;
 
   public appConfig: any;
 
@@ -62,7 +21,7 @@ class RuntimeModule {
 
   public buildConfig: any;
 
-  public modifyDOMRender: IDOMRender|null;
+  public modifyDOMRender: any;
 
   constructor(appConfig, buildConfig, context) {
     this.renderRouter = () => () => <div>No route</div>;
@@ -82,7 +41,7 @@ class RuntimeModule {
       addDOMRender: this.addDOMRender,
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
-      // createHistory
+      createHistory
     };
 
     if (module) module.default({
@@ -114,15 +73,15 @@ class RuntimeModule {
     });
   }
 
-  public addDOMRender = (render: IDOMRender) => {
+  public addDOMRender = (render) => {
     this.modifyDOMRender = render;
   }
 
-  public modifyRoutes: IModifyRoutes = (modifyFn) => {
+  public modifyRoutes = (modifyFn) => {
     this.modifyRoutesRegistration.push(modifyFn);
   }
 
-  public wrapperRouteComponent: IWrapperRouteComponent = (wrapperRoute) => {
+  public wrapperRouteComponent = (wrapperRoute) => {
     this.wrapperRouteRegistration.push(wrapperRoute);
   }
 
@@ -137,7 +96,7 @@ class RuntimeModule {
     });
   }
 
-  public getAppRouter: IGetAppRouter = () => {
+  public getAppRouter = () => {
     const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));
