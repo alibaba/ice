@@ -112,17 +112,3 @@ export default ({ modifyRoutes }) => {
   });
 };
 ```
-
-### createHistory
-
-创建history，基于[history](https://github.com/ReactTraining/history)。
-
-```javascript
-export default ({ createHistory }) {
-  // type: history 模式，可选类型 hash browser memory
-  // basename: 基准路由
-  // 返回值：与 type 相对应的 createHashHistory createBrowserHistory createMemoryHistory 详情见：https://github.com/ReactTraining/history/blob/master/docs/api-reference.md
-  createHistory(type, basename);
-};
-```
-

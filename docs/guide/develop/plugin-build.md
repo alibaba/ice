@@ -238,6 +238,18 @@ this.applyMethod('addPageExport', 'Home', { source: './models', 'store' })
 
 与 `addPageExport` 对应
 
+### addIceAppConfigTypes
+
+向 appConfig 添加类型
+
+```javascript
+applyMethod('addIceAppConfigTypes', { source: `./types`, specifier: '{ Foo }', exportName: `foo?: Foo` });
+```
+
+###    removeIceAppConfigTypes
+
+与 `addIceAppConfigTypes` 对应
+
 ### getPages
 
 获取 `src/pages` 下的一级页面列表：
@@ -330,3 +342,4 @@ module.exports = ({getValue}) => {
 const projectType = getValue('PROJECT_TYPE'); // ts|js
 const iceDirPath = getValue('ICE_TEMP');  // 对应 .ice 的路径
 ```
+
