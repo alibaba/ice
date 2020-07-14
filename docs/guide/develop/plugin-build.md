@@ -13,7 +13,7 @@ import { IPlugin } from '@alib/build-scripts';
 ```
 
 ```javascript
-module.exports = ({ context, onGetWebpackConfig, log, onHook, ... }, options) => {
+module.exports = ({ context, onGetWebpackConfig, log, onHook, ...rest }, options) => {
   // 第一项参数为插件 API 提供的能力
   // options：插件自定义参数
 };
@@ -55,10 +55,10 @@ module.exports = ({onGetWebpackConfig, registerTask}) => {
 
 ```javascript
 module.exports = ({onGetJestConfig}) => {
-    onGetJestConfig((jestConfig) => {
-        const modifiedJestConfig = modify(jestConfig);
-        return modifiedJestConfig;
-    });
+  onGetJestConfig((jestConfig) => {
+    const modifiedJestConfig = modify(jestConfig);
+      return modifiedJestConfig;
+  });
 };
 ```
 

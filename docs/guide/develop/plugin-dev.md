@@ -7,6 +7,10 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 
 插件机制是 icejs 的核心之一，当前 icejs 的基础能力都是通过插件来实现。插件机制不但可以保证框架核心足够精简和稳定，还可以通过插件对运行时和编译时的能力进行封装复用，最终打造一个完整的生态。
 
+## 快速开始
+
+使用 [CLI](/docs/guide/start#使用%20CLI) 初始化项目。选择模板： `ice.js plugin development template.`
+
 ## 插件目录
 
 通常情况下，插件通过 npm 包的形式分发，插件初始化目录如下：
@@ -16,7 +20,9 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 ├── src
 │   ├── index.[t,j]s    # 插件工程入口
 │   └── runtime.[t,j]s  # 插件编译时入口
+├── tests               # 测试文件目录
 ├── package.json        # npm 包配置
+├── tsconfig.json       # typescript 配置文件
 └── README.md           # 说明文档
 ```
 

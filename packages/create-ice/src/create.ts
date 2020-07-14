@@ -63,6 +63,9 @@ async function selectTemplate(): Promise<string> {
   }, {
     npmName: '@alifd/fusion-design-pro-js',
     description: 'Fusion Design Pro JavaScript template.',
+  }, {
+    npmName: 'build-plugin-template',
+    description: 'ice.js plugin development template.'
   }];
   const defaultTemplate = templates[0];
 
