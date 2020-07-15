@@ -5,12 +5,6 @@ order: 2
 
 插件工程能力通过 `src/index.ts` 定义，结构如下
 
-## 类型
-
-接口类型通过以下方法引入：
-```javascript
-import { IPlugin } from '@alib/build-scripts';
-```
 
 ```javascript
 module.exports = ({ context, onGetWebpackConfig, log, onHook, ...rest }, options) => {
@@ -343,3 +337,9 @@ const projectType = getValue('PROJECT_TYPE'); // ts|js
 const iceDirPath = getValue('ICE_TEMP');  // 对应 .ice 的路径
 ```
 
+## 类型
+
+接口类型通过以下方法引入：
+```javascript
+import { IPlugin } from '@alib/build-scripts';
+```

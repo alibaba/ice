@@ -9,7 +9,11 @@ icejs 基于工程构建工具 build-scripts 封装，因此在插件能力上�
 
 ## 快速开始
 
-使用 [CLI](/docs/guide/start#使用%20CLI) 初始化项目。选择模板： `ice.js plugin development template.`
+使用 [CLI](/docs/guide/start#使用%20CLI) 初始化项目。选择插件模板：
+
+```shell
+$ npm init ice <your-plugin-name>
+```
 
 ## 插件目录
 
