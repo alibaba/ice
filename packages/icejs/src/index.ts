@@ -1,4 +1,4 @@
-const getBuiltInPlugins = () => {
+const getBuiltInPlugins = (userConfig) => {
   // built-in plugins for icejs
   const builtInPlugins = [
     [
@@ -6,9 +6,12 @@ const getBuiltInPlugins = () => {
         'framework': 'react'
       }
     ],
-    'build-plugin-react-app',
-    'build-plugin-ice-router'
+    'build-plugin-react-app'
   ];
+
+  if (!userConfig.miniapp) {
+    builtInPlugins.push('build-plugin-ice-router');
+  }
   return builtInPlugins;
 };
 

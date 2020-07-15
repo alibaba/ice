@@ -1,3 +1,4 @@
 {
-  "plugins": []
+  "plugins": [],
+  "targets": ["web"]
 }

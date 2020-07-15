@@ -6,6 +6,7 @@ import UniversalDriver from 'driver-universal';
 import pathRedirect from './pathRedirect';
 import { emit } from './common/appCycles';
 import createApp from './common/createApp';
+import createMiniappHistory from './common/createMiniappHistory';
 
 const INITIAL_DATA_FROM_SSR = '__INITIAL_DATA__';
 const initialDataFromSSR = global[INITIAL_DATA_FROM_SSR];
@@ -74,6 +75,13 @@ function runApp(appConfig = {}) {
   }
 
   const { routes } = appJSONConfig;
+
+  // In MiniApp, it needn't return App Component
+  if (isMiniApp || isWeChatMiniProgram) {
+    createMiniappHistory(routes);
+    return;
+  }
+
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   pathRedirect(history, routes);
 

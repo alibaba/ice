@@ -1,18 +1,13 @@
 {
-  "name": "example-with-fusion-design",
-  "description": "with fusion design",
+  "name": "example-with-miniapp",
+  "description": "miniapp example",
   "dependencies": {
-    "@alifd/next": "^1.19.4",
-    "moment": "^2.24.0",
-    "ice.js": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "@alifd/theme-design-pro": "^0.x",
-    "build-plugin-fusion": "^0.1.0",
-    "build-plugin-moment-locales": "^0.1.0",
-    "miniapp-history": "^0.1.2"
+    "miniapp-history": "^0.1.2",
+    "miniapp-render": "^1.0.1"
   },
   "scripts": {
     "start": "icejs start --disable-reload=true --disable-open=true",

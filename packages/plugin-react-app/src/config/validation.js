@@ -42,7 +42,7 @@ module.exports = {
   outputDir: 'string',
   proxy: 'object',
   publicPath: 'string',
-  targets: (val) => {
+  browserslist: (val) => {
     return validation('targets', val, 'string|object');
   },
   vendor: 'boolean',

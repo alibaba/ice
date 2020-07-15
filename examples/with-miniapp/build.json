@@ -4,5 +4,7 @@
   ],
   "minify": false,
   "injectBabel": false,
-  "appType": ["miniapp"]
+  "miniapp": {
+    "buildType": "runtime"
+  }
 }

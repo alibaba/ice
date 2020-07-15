@@ -1,13 +1,17 @@
 import deepmerge from 'deepmerge';
 import { addAppLifeCyle } from './appCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
+
+<% if (!miniapp) {%>
 import RuntimeModule from './runtimeModule';
 import loadRuntimeModules from './loadRuntimeModlues';
+<% } %>
+
 import { createHistory } from './history';
 
 let appJSONConfig = {};
 <% if (appJsonConfig) {%>
-  appJSONConfig = require('../../<%= appJsonConfig %>').default;
+  appJSONConfig = require('../../<%= appJsonConfig %>');
 <% } %>
 
 const DEFAULE_APP_CONFIG = {
@@ -63,15 +67,20 @@ function createApp(appConfig, options = {}) {
 
   appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
-  // Set history
-  const { router } = appConfig;
-  const { type, basename, history: customHistory } = router;
-  const history = customHistory || createHistory(type, basename);
-  appConfig.router.history = history;
-
   // Set runtime modules
-  const runtime = new RuntimeModule(appConfig);
-  loadRuntimeModules(runtime);
+  let runtime = {};
+
+  <% if (!miniapp) {%>
+    // Set history
+    const { router } = appConfig;
+    const { type, basename, history: customHistory } = router;
+    const history = customHistory || createHistory(type, basename);
+    appConfig.router.history = history;
+
+    // TODO：
+    runtime = new RuntimeModule(appConfig);
+    loadRuntimeModules(runtime);
+  <% } %>
 
   // Set app lifeCyle
   const { env } = options;
@@ -81,7 +90,7 @@ function createApp(appConfig, options = {}) {
     history,
     runtime,
     appConfig,
-    appJSONConfig
+    appJSONConfig: appJSONConfig.default || appJSONConfig
   };
 };
 

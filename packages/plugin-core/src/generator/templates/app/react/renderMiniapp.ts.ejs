@@ -1,0 +1,11 @@
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import createApp from './common/createApp';
+import createMiniappHistory from './common/createMiniappHistory'
+
+function renderMiniApp(appConfig = {}) {
+  const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
+  const { appJSONConfig } = createApp(appConfig, { env });
+  createMiniappHistory(appJSONConfig);
+}
+
+export default renderMiniApp;

@@ -9,6 +9,7 @@ import PageGenerator from './generator/pageGenerator';
 import getPages from './utils/getPages';
 import getRoutes from './utils/getRoutes';
 import formatPath from './utils/formatPath';
+import { USER_CONFIG } from './constant';
 
 export default (api, options) => {
   const { framework } = options;
@@ -91,6 +92,8 @@ export default (api, options) => {
     }
   });
 
+  const miniapp = userConfig.miniapp && userConfig.miniapp.buildType === 'runtime';
+  console.log({miniapp});
   const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
   renderFiles(
     path.join(__dirname, './generator/templates/common'),
@@ -99,11 +102,11 @@ export default (api, options) => {
       runtimeModules,
       isReact,
       isRax,
-      appJsonConfig: appJsonConfig.length && appJsonConfig[0]
+      appJsonConfig: appJsonConfig.length && appJsonConfig[0],
+      miniapp
     }
   );
 
-  const { targets = [] } = userConfig;
   const generator = new Generator({
     projectRoot: rootDir,
     targetDir: iceTempPath,
@@ -111,8 +114,7 @@ export default (api, options) => {
     defaultData: {
       isReact,
       isRax,
-      // miniapp: targets.includes('miniapp'),
-      // web: targets.includes('web'),
+      miniapp,
       runtimeModules,
       buildConfig: JSON.stringify(buildConfig)
     },
@@ -131,23 +133,8 @@ export default (api, options) => {
     await generator.render();
   }
 
-  // register store in build.json
-  registerUserConfig({
-    name: 'store',
-    validation: 'boolean',
-  });
-
-  // register ssr in build.json
-  registerUserConfig({
-    name: 'ssr',
-    validation: 'boolean',
-  });
-
-  // register ssr in build.json
-  // registerUserConfig({
-  //   name: 'targets',
-  //   validation: 'array',
-  // });
+  // register config in build.json
+  USER_CONFIG.forEach(item => registerUserConfig({ ...item }));
 
   // register utils method
   registerMethod('getPages', getPages);
