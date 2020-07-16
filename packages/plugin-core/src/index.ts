@@ -46,22 +46,13 @@ export default (api, options) => {
       };
     });
 
-  // Config key 'entry' is not supported
-  // if (!userConfig.entry) {
-  //   // modify default entry to src/app
-  //   modifyUserConfig('entry', 'src/app');
-  // }
-
   onGetWebpackConfig((config: any) => {
     const aliasName = framework === 'rax' ? 'raxapp' : 'ice';
     config.resolve.alias.set(`${aliasName}$`, path.join(iceTempPath, 'index.ts'));
-    // config.resolve.alias.set('ice', path.join(iceTempPath, 'pages'));
-    // config.resolve.alias.set('raxapp', path.join(iceTempPath, 'pages'));
+    config.resolve.alias.set(`${aliasName}`, path.join(iceTempPath, 'pages'));
 
     // default alias of @/
-    // config.resolve.alias.set('@', path.join(rootDir, 'src'));
-    // config.resolve.alias.set('$ice/appConfig', path.join(iceTempPath, 'appConfig.ts'));
-    // config.resolve.alias.set('$ice/components', path.join(iceTempPath, 'components'));
+    config.resolve.alias.set('@', path.join(rootDir, 'src'));
 
     // const defineVariables = {
     //   'process.env.__IS_SERVER__': false
@@ -71,17 +62,17 @@ export default (api, options) => {
     //   .tap(([args]) => [{ ...args, ...defineVariables }]);
 
     // add alias of basic dependencies
-    // const basicDependencies = [
-    //   ['react', rootDir],
-    //   ['react-dom', rootDir]
-    // ];
-    // basicDependencies.forEach((dep: string[] | string): void => {
-    //   const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
-    //   const aliasPath = searchFolder
-    //     ? require.resolve(depName, { paths: [searchFolder] })
-    //     : require.resolve(depName);
-    //   config.resolve.alias.set(depName, path.dirname(aliasPath));
-    // });
+    const basicDependencies = [
+      ['react', rootDir],
+      ['react-dom', rootDir]
+    ];
+    basicDependencies.forEach((dep: string[] | string): void => {
+      const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
+      const aliasPath = searchFolder
+        ? require.resolve(depName, { paths: [searchFolder] })
+        : require.resolve(depName);
+      config.resolve.alias.set(depName, path.dirname(aliasPath));
+    });
   });
 
   const buildConfig = {};
