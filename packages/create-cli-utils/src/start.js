@@ -8,7 +8,6 @@ const log = require('@alib/build-scripts/lib/utils/log');
 
 let child = null;
 const rawArgv = parse(process.argv.slice(2));
-const scriptPath = require.resolve('./child-process-start.js');
 const configPath = path.resolve(rawArgv.config || 'build.json');
 
 const inspectRegExp = /^--(inspect(?:-brk)?)(?:=(?:([^:]+):)?(\d+))?$/;
@@ -29,11 +28,11 @@ function modifyInspectArgv(argv) {
   );
 }
 
-function restartProcess() {
+function restartProcess(forkChildProcessPath) {
   (async () => {
     // remove the inspect related argv when passing to child process to avoid port-in-use error
     const argv = await modifyInspectArgv(process.execArgv);
-    child = fork(scriptPath, process.argv.slice(2), { execArgv: argv });
+    child = fork(forkChildProcessPath, process.argv.slice(2), { execArgv: argv });
     child.on('message', data => {
       if (process.send) {
         process.send(data);
@@ -48,24 +47,22 @@ function restartProcess() {
   })();
 }
 
-const onUserChange = () => {
-  console.log('\n');
-  log.info('build.json has been changed');
-  log.info('restart dev server');
-  // add process env for mark restart dev process
-  process.env.RESTART_DEV = true;
-  child.kill();
-  restartProcess();
-};
-
-module.exports = () => {
-  restartProcess();
+module.exports = (getBuiltInPlugins, forkChildProcessPath) => {
+  restartProcess(forkChildProcessPath);
 
   const watcher = chokidar.watch(configPath, {
     ignoreInitial: true,
   });
 
-  watcher.on('change', onUserChange);
+  watcher.on('change', function() {
+    console.log('\n');
+    log.info('build.json has been changed');
+    log.info('restart dev server');
+    // add process env for mark restart dev process
+    process.env.RESTART_DEV = true;
+    child.kill();
+    restartProcess(forkChildProcessPath);
+  });
 
   watcher.on('error', error => {
     log.error('fail to watch file', error);

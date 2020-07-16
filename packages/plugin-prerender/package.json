@@ -19,6 +19,6 @@
     "prerender-spa-plugin": "^3.4.0"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.16"
+    "@alib/build-scripts": "^0.1.24"
   }
 }

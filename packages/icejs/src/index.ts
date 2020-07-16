@@ -15,4 +15,4 @@ const getBuiltInPlugins = (userConfig) => {
   return builtInPlugins;
 };
 
-export = getBuiltInPlugins
+module.exports = getBuiltInPlugins;

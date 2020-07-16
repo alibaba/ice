@@ -19,7 +19,7 @@
     "loglevel": "^1.6.6"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.13",
+    "@alib/build-scripts": "^0.1.24",
     "typescript": "^3.7.2"
   },
   "publishConfig": {

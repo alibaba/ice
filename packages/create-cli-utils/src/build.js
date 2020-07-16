@@ -2,9 +2,9 @@
 const parse = require('yargs-parser');
 const { build } = require('@alib/build-scripts');
 const log = require('@alib/build-scripts/lib/utils/log');
-const getBuiltInPlugins = require('../lib/index');
 
-module.exports = async () => {
+module.exports = async (getBuiltInPlugins) => {
+  console.log('getBuiltInPlugins==>:', getBuiltInPlugins);
   process.env.NODE_ENV = 'production';
   const rawArgv = parse(process.argv.slice(2), {
     configuration: { 'strip-dashed': true },
