@@ -237,10 +237,23 @@ this.applyMethod('addPageExport', 'Home', { source: './models', 'store' })
 向 appConfig 添加类型
 
 ```javascript
-applyMethod('addIceAppConfigTypes', { source: `./types`, specifier: '{ Foo }', exportName: `foo?: Foo` });
+// 第一项参数对应 API 名称，第二项参数对应 API 参数。
+//
+// API 参数：
+// source: 类型声明文件。./foo/types，对应 ICE_TEMP_DIR/foo/types。 ICE_TEMP_DIR，可通过 getValue('ICE_TEMP') 获得。注意：需先将对应类型文件移至 ICE_TEMP_DIR。
+// specifier: 导出类型标识符，可选，默认值为 '*'。
+// exportName: 添加至 appConfig 类型 IAppConfig 上的导出名。
+//
+// 结果为：
+// // ICE_TEMP_DIR/types.ts
+// import { Foo } from './foo/types';
+// export interface IAppConfig {
+//   foo?: Foo
+// }
+applyMethod('addIceAppConfigTypes', { source: `./foo/types`, specifier: '{ Foo }', exportName: `foo?: Foo` });
 ```
 
-###    removeIceAppConfigTypes
+### removeIceAppConfigTypes
 
 与 `addIceAppConfigTypes` 对应
 

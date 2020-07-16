@@ -60,14 +60,16 @@ export default ({ addProvider }) => {
 
 ### addDOMRender
 
-修改 DOMRender。默认使用[react-dom](https://reactjs.org/docs/react-dom.html)。
+自定义渲染。默认使用[react-dom](https://reactjs.org/docs/react-dom.html)。
 
 ```javascript
+import ReactDOM from 'react-dom';
+
 export default ({ addDOMRender }) => {
   // App: React 组件
   // appMountNode: App 挂载点
   const DOMRender = ({ App, appMountNode }) => {
-    render(<App />, appMountNode);
+    ReactDOM.render(<App />, appMountNode);
   };
   addDOMRender(DOMRender);
 };
@@ -105,6 +107,10 @@ export default ({ wrapperRouteComponent }) => {
 动态修改路由。
 
 ```javascript
+function modify (routes) {
+    return routes;
+}
+
 export default ({ modifyRoutes }) => {
   modifyRoutes(routes => {
     const modifiedRoutes = modify(routes); // 修改路由
