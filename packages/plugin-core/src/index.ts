@@ -23,30 +23,33 @@ export default (api) => {
 
   const plugins = getAllPlugin();
   // get runtime module
-  const runtimeModules = plugins.map(({ pluginPath }) => {
-    // compatible with function plugin
-    if (!pluginPath) return false;
-    // NOTE: module.js will be discarded in future.
-    let modulePath = path.join(path.dirname(pluginPath), 'runtime.js');
-    if(!fse.existsSync(modulePath)){
-      modulePath = path.join(path.dirname(pluginPath), 'module.js');
+  let runtimeModules = [];
+  if (!userConfig.disableRuntime) {
+    runtimeModules = plugins.map(({ pluginPath }) => {
+      // compatible with function plugin
+      if (!pluginPath) return false;
+      // NOTE: module.js will be discarded in future.
+      let modulePath = path.join(path.dirname(pluginPath), 'runtime.js');
       if(!fse.existsSync(modulePath)){
-        return false;
+        modulePath = path.join(path.dirname(pluginPath), 'module.js');
+        if(!fse.existsSync(modulePath)){
+          return false;
+        }
+        console.log('WARN: module.ts(x) will not be supported in the future. Please rename as runtime.ts(x)');
       }
-      console.log('WARN: module.ts(x) will not be supported in the future. Please rename as runtime.ts(x)');
-    }
-    return formatPath(modulePath);
-  })
-    .filter(Boolean)
-    .map(pluginPath => {
-      const pkgPath = path.join(pluginPath, '../../package.json');
-      const { pluginConfig } = fse.readJSONSync(pkgPath);
-      const staticModule = (pluginConfig && pluginConfig.staticModule) || false;
-      return {
-        staticModule,
-        path: pluginPath
-      };
-    });
+      return formatPath(modulePath);
+    })
+      .filter(Boolean)
+      .map(pluginPath => {
+        const pkgPath = path.join(pluginPath, '../../package.json');
+        const { pluginConfig } = fse.readJSONSync(pkgPath);
+        const staticModule = (pluginConfig && pluginConfig.staticModule) || false;
+        return {
+          staticModule,
+          path: pluginPath
+        };
+      });
+  };
 
   if (!userConfig.entry) {
     // modify default entry to src/app
