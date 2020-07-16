@@ -5,8 +5,9 @@ order: 2
 
 插件工程能力通过 `src/index.ts` 定义，结构如下
 
+
 ```javascript
-module.exports = ({ context, onGetWebpackConfig, log, onHook }, options) => {
+module.exports = ({ context, onGetWebpackConfig, log, onHook, ...rest }, options) => {
   // 第一项参数为插件 API 提供的能力
   // options：插件自定义参数
 };
@@ -40,6 +41,19 @@ module.exports = ({onGetWebpackConfig, registerTask}) => {
     config.entry('xxx');
   });
 }
+```
+
+### onGetJestConfig
+
+通过 `onGetJestConfig` 获取 jest 配置，可对配置进行自定义修改：
+
+```javascript
+module.exports = ({onGetJestConfig}) => {
+  onGetJestConfig((jestConfig) => {
+    const modifiedJestConfig = modify(jestConfig);
+      return modifiedJestConfig;
+  });
+};
 ```
 
 ### onHook
@@ -95,6 +109,85 @@ log.verbose('debug');
 log.error('exit');
 ```
 
+### registerUserConfig
+
+为用户配置文件 `build.json` 中添加自定义字段。
+
+```javascript
+module.exports = ({registerUserConfig}) => {
+  registerUserConfig({
+    name: 'custom-key',
+    validation: 'boolean' // 可选，支持类型有 string, number, array, object, boolean
+  });
+};
+```
+
+### registerClioption
+
+为命令行启动添加自定义参数。
+
+```javascript
+module.exports = ({registerClioption}) => {
+  registerCliOption({
+    name: 'custom-option', // 参数名
+    commands: ['start'], // 命令
+    configWebpack: (arg) => {} // 可选，arg 为命令行参数对应值
+  });
+};
+```
+
+### registerMethod
+
+注册自定义方法。通过 `applyMethod` 调用。
+
+```javascript
+module.exports = ({registerMethod}) => {
+  registerMethod(name, func); // name, func 分别为方法名和方法
+};
+```
+
+### modifyUserConfig
+
+修改用户配置文件。
+
+```javascript
+module.exports = ({modifyUserConfig}) => {
+  modifyUserConfig(key, value); // key, value 分别为用户配置文件键值对
+};
+```
+
+### registerTask
+
+添加 webpack 配置，配置为 webpack-chain 形式。
+
+```javascript
+module.exports = ({registerTask}) => {
+  registerTask(name, config); // name: Task名, config: webpack-chain 形式的配置
+};
+```
+
+### getAllTask
+
+获取所有 webpack 配置名称。
+
+```javascript
+module.exports = ({getAllTask}) => {
+  const alltasks = getAlltask();
+};
+```
+
+### getAllPlugin
+
+获取所有插件。
+
+```javascript
+module.exports = ({getAllPlugin}) => {
+  // 获取所有插件数组
+  // 类型：() => [{pluginPath, options, name}]
+  const plugins = getAllPlugin(); ，[]
+}
+```
+
 ## 扩展 API
 
 除了以上由 build-scripts 内置支持的 API，我们还通过 icejs 对插件 API 做了扩展，扩展的 API 需要通过以下方式调用：
@@ -138,6 +231,31 @@ this.applyMethod('addPageExport', 'Home', { source: './models', 'store' })
 ### removePageExport
 
 与 `addPageExport` 对应
+
+### addIceAppConfigTypes
+
+向 appConfig 添加类型
+
+```javascript
+// 第一项参数对应 API 名称，第二项参数对应 API 参数。
+//
+// API 参数：
+// source: 类型声明文件。./foo/types，对应 ICE_TEMP_DIR/foo/types。 ICE_TEMP_DIR，可通过 getValue('ICE_TEMP') 获得。注意：需先将对应类型文件移至 ICE_TEMP_DIR。
+// specifier: 导出类型标识符，可选，默认值为 '*'。
+// exportName: 添加至 appConfig 类型 IAppConfig 上的导出名。
+//
+// 结果为：
+// // ICE_TEMP_DIR/types.ts
+// import { Foo } from './foo/types';
+// export interface IAppConfig {
+//   foo?: Foo
+// }
+applyMethod('addIceAppConfigTypes', { source: `./foo/types`, specifier: '{ Foo }', exportName: `foo?: Foo` });
+```
+
+### removeIceAppConfigTypes
+
+与 `addIceAppConfigTypes` 对应
 
 ### getPages
 
@@ -230,4 +348,11 @@ module.exports = ({getValue}) => {
 ```js
 const projectType = getValue('PROJECT_TYPE'); // ts|js
 const iceDirPath = getValue('ICE_TEMP');  // 对应 .ice 的路径
+```
+
+## 类型
+
+接口类型通过以下方法引入：
+```javascript
+import { IPlugin } from '@alib/build-scripts';
 ```
