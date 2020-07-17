@@ -6,7 +6,6 @@ import {
   Switch,
   Route,
   Redirect,
-
   RouteComponentProps
 } from 'react-router-dom';
 import { RoutesProps, RouterProps } from '../types/router';

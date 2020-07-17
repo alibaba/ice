@@ -1,0 +1,14 @@
+{
+  "ignoreHtmlTemplate": true,
+  "plugins": [],
+  "modeConfig": {
+    "prod": {
+      "ignoreHtmlTemplate": false
+    }
+  },
+  "eslint": {
+    "disable": false,
+    "quiet": true
+  },
+  "disableRuntime": true
+}

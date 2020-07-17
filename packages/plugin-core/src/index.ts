@@ -5,7 +5,6 @@ import * as globby from 'globby';
 import Generator from './generator';
 import PageGenerator from './generator/pageGenerator';
 import getPages from './utils/getPages';
-import getRoutes from './utils/getRoutes';
 import formatPath from './utils/formatPath';
 
 export default (api) => {
@@ -130,7 +129,6 @@ export default (api) => {
   // register utils method
   registerMethod('getPages', getPages);
   registerMethod('formatPath', formatPath);
-  registerMethod('getRoutes', getRoutes);
 
   // registerMethod for modify page
   registerMethod('addPageExport', pageGenerator.addPageExport);

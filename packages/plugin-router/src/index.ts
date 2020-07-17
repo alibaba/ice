@@ -3,29 +3,32 @@ import * as fse from 'fs-extra';
 import { IPlugin } from '@alib/build-scripts';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
+import { getRoutes, IParams }from './utils/getRoutes';
+import { getProjectType, Entry } from './utils/getProjectType';
 
 // compatible with $ice/routes
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
 const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
-const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig }) => {
+const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, registerMethod, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
   // [enum] js or ts
-  const projectType = getValue('PROJECT_TYPE');
+  const projectType = getValue('PROJECT_TYPE') ? getValue('PROJECT_TYPE') : getProjectType(userConfig.entry as Entry, rootDir);
+  const iceTempPath = getValue('ICE_TEMP') ? getValue('ICE_TEMP') : path.join(rootDir, '.ice');
 
-  // .tmp path
-  const iceTempPath = getValue('ICE_TEMP');
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
   const { configPath } = routerOptions;
   const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
-  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
+  
+  registerMethod('getRoutes', getRoutes);
+  const { routesPath, isConfigRoutes } = getRoutes({
     rootDir,
     tempDir: iceTempPath,
     configPath,
     projectType,
     isMpa
-  });
+  } as IParams);
 
   // add babel plugins for ice lazy
   modifyUserConfig('babelPlugins',
@@ -57,6 +60,12 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     TEM_ROUTER_SETS.forEach(i => {
       config.resolve.alias.set(i, routesPath);
     });
+
+    if (userConfig.disableRuntime) {
+      // alias for IceRouter
+      config.resolve.alias.set('ice/Router', path.join(__dirname, 'runtime/Router'));
+    }
+
     // alias for runtime/Router
     config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
 

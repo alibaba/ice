@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 
-interface IParams {
+export interface IParams {
   rootDir: string;
   tempDir: string;
   configPath: string;
@@ -46,4 +46,6 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa }: IParams
   };
 }
 
-export default getRoutes;
+export {
+  getRoutes
+};

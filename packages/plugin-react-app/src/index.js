@@ -26,9 +26,13 @@ module.exports = ({
   onHook,
   log,
 }) => {
-  const { command, rootDir, webpack, commandArgs, pkg } = context;
+  const { command, rootDir, webpack, commandArgs, pkg, userConfig } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
+  if (!userConfig.entry) {
+    // compatible with disableRuntime enabled
+    modifyUserConfig('entry', 'src/index');
+  };
   modifyUserConfig((userConfig) => {
     const { modeConfig = {} } = userConfig;
     return modeConfig[appMode] || {};
@@ -198,6 +202,10 @@ module.exports = ({
   onGetWebpackConfig((chainConfig) => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
+    if (userConfig.disableRuntime) {
+      // alias for project src directory. compatible with disableRuntime enabled
+      config.resolve.alias.set('@', path.join(rootDir, 'src'));
+    }
   });
 
   if (command === 'test') {
