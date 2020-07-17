@@ -84,12 +84,13 @@ export default (api, options) => {
   });
 
   const miniapp = userConfig.miniapp && userConfig.miniapp.buildType === 'runtime';
-  console.log({miniapp});
   const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
   renderFiles(
     path.join(__dirname, './generator/templates/common'),
     path.join(iceTempPath, 'common'),
     {
+      pageImports: '',
+      pageExports: '',
       runtimeModules,
       isReact,
       isRax,
@@ -112,15 +113,15 @@ export default (api, options) => {
     log
   });
 
-  // const pageGenerator = new PageGenerator({
-  //   rootDir,
-  //   generator,
-  //   templatePath: path.join(__dirname, './generator/templates/page/index.ts.ejs'),
-  //   targetPath: iceTempPath,
-  // });
+  const pageGenerator = new PageGenerator({
+    rootDir,
+    generator,
+    templatePath: path.join(__dirname, './generator/templates/common/page.ts.ejs'),
+    targetPath: iceTempPath,
+  });
 
   async function renderIce() {
-    // pageGenerator.render();
+    pageGenerator.render();
     await generator.render();
   }
 
@@ -133,8 +134,8 @@ export default (api, options) => {
   registerMethod('getRoutes', getRoutes);
 
   // registerMethod for modify page
-  // registerMethod('addPageExport', pageGenerator.addPageExport);
-  // registerMethod('removePageExport', pageGenerator.removePageExport);
+  registerMethod('addPageExport', pageGenerator.addPageExport);
+  registerMethod('removePageExport', pageGenerator.removePageExport);
   // pageGenerator.addPageExport('Index', { exportName: 'store', source: './store' });
 
   // registerMethod for add export
