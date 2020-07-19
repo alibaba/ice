@@ -1,4 +1,4 @@
-<% if(miniapp){ %>
+<% if(isMiniapp){ %>
   import renderMiniapp from './renderMiniapp';
 <% } else { %>
   import { render } from './render';
@@ -9,7 +9,7 @@
 <% } %>
 
 function runApp(appConfig) {
-  <% if(miniapp){ %>
+  <% if(isMiniapp){ %>
     renderMiniapp(appConfig);
   <% } else{ %>
     render(appConfig);

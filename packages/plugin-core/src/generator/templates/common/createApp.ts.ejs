@@ -2,7 +2,7 @@ import deepmerge from 'deepmerge';
 import { addAppLifeCyle } from './appCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
 
-<% if (!miniapp) {%>
+<% if (!isMiniapp) {%>
 import RuntimeModule from './runtimeModule';
 import loadRuntimeModules from './loadRuntimeModlues';
 <% } %>
@@ -70,7 +70,7 @@ function createApp(appConfig, options = {}) {
   // Set runtime modules
   let runtime = {};
 
-  <% if (!miniapp) {%>
+  <% if (!isMiniapp) {%>
     // Set history
     const { router } = appConfig;
     const { type, basename, history: customHistory } = router;

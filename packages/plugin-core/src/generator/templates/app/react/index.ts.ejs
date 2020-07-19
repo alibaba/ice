@@ -1,6 +1,6 @@
 export { runApp } from './runApp';
 
-<% if (!miniapp) {%>
+<% if (!isMiniapp) {%>
   <%- iceImports %>
   export * from './common';
   export * from './types';

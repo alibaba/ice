@@ -57,7 +57,7 @@ function initGenerator(api, options) {
     defaultData: {
       isReact: options.framework === 'react',
       isRax: options.framework === 'rax',
-      miniapp: userConfig.miniapp,
+      isMiniapp: userConfig.miniapp,
       runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(userConfig),
       appJsonConfig: appJsonConfig.length && appJsonConfig[0]
