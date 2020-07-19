@@ -1,96 +1,63 @@
+
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as chokidar from 'chokidar';
 import * as globby from 'globby';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
-import Generator from './generator';
+import Generator from './generator/appGenerator';
 import PageGenerator from './generator/pageGenerator';
-import getPages from './utils/getPages';
-import getRoutes from './utils/getRoutes';
-import formatPath from './utils/formatPath';
-import { USER_CONFIG } from './constant';
+import getRuntimeModules from './utils/getRuntimeModules';
+import registerMethods from './utils/registerMethods';
+import { USER_CONFIG, PROJECT_TYPE, ICE_TEMP } from './constant';
+import dev from './dev';
 
 export default (api, options) => {
-  const { framework } = options;
-  const { onHook, onGetWebpackConfig, registerMethod, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
+  const { onHook, onGetWebpackConfig, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
   const { rootDir, command, userConfig } = context;
+
+  const { framework } = options;
   const isReact = framework === 'react';
   const isRax = framework === 'rax';
+
   const tempDir = isRax ? 'rax' : 'ice';
-  const iceTempPath = path.join(rootDir, `.${tempDir}`);
-  setValue('ICE_TEMP', iceTempPath);
+  const tempPath = path.join(rootDir, `.${tempDir}`);
+  setValue(ICE_TEMP, tempPath);
+
   const tsEntryFiles = globby.sync(['src/app.@(ts?(x))', 'src/pages/*/app.@(ts?(x))'], { cwd: rootDir });
   const projectType = tsEntryFiles.length ? 'ts' : 'js';
-  setValue('PROJECT_TYPE', projectType);
+  setValue(PROJECT_TYPE, projectType);
 
-  fse.ensureDirSync(iceTempPath);
-  fse.emptyDirSync(iceTempPath);
+  fse.ensureDirSync(tempPath);
+  fse.emptyDirSync(tempPath);
 
-  const plugins = getAllPlugin();
   // get runtime module
-  const runtimeModules = plugins.map(({ pluginPath }) => {
-    // compatible with function plugin
-    if (!pluginPath) return false;
-    const modulePath = path.join(path.dirname(pluginPath), 'module.js');
-    return fse.existsSync(modulePath) ? formatPath(modulePath) : false;
-  })
-    .filter(Boolean)
-    .map(pluginPath => {
-      const pkgPath = path.join(pluginPath, '../../package.json');
-      const { pluginConfig } = fse.readJSONSync(pkgPath);
-      const staticModule = (pluginConfig && pluginConfig.staticModule) || false;
-      return {
-        staticModule,
-        path: pluginPath
-      };
-    });
+  const plugins = getAllPlugin();
+  const runtimeModules = getRuntimeModules(plugins);
+
+  // modify default entry to src/app
+  if (!userConfig.entry) {
+    modifyUserConfig('entry', 'src/app');
+  }
 
   onGetWebpackConfig((config: any) => {
-    const aliasName = framework === 'rax' ? 'raxapp' : 'ice';
-    config.resolve.alias.set(`${aliasName}$`, path.join(iceTempPath, 'index.ts'));
-    config.resolve.alias.set(`${aliasName}`, path.join(iceTempPath, 'pages'));
-
-    // default alias of @/
-    config.resolve.alias.set('@', path.join(rootDir, 'src'));
-
-    // const defineVariables = {
-    //   'process.env.__IS_SERVER__': false
-    // };
-    // config
-    //   .plugin('DefinePlugin')
-    //   .tap(([args]) => [{ ...args, ...defineVariables }]);
-
-    // add alias of basic dependencies
-    const basicDependencies = [
-      ['react', rootDir],
-      ['react-dom', rootDir]
+    const aliasKey = framework === 'rax' ? 'raxapp' : 'ice';
+    const aliasMap = [
+      [`${aliasKey}$`, path.join(tempPath, 'index.ts')],
+      [`${aliasKey}`, path.join(tempPath, 'pages') ],
+      ['@', path.join(rootDir, 'src')]
     ];
-    basicDependencies.forEach((dep: string[] | string): void => {
-      const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
-      const aliasPath = searchFolder
-        ? require.resolve(depName, { paths: [searchFolder] })
-        : require.resolve(depName);
-      config.resolve.alias.set(depName, path.dirname(aliasPath));
-    });
-  });
 
-  const buildConfig = {};
-  const BUILD_CONFIG_MAP = ['router', 'store', 'ssr'];
-  Object.keys(userConfig).forEach(key => {
-    if (BUILD_CONFIG_MAP.includes(key)) {
-      buildConfig[key] = userConfig[key];
-    }
+    aliasMap.forEach(alias => config.resolve.alias.set(alias[0], alias[1]));
   });
 
   const miniapp = userConfig.miniapp && userConfig.miniapp.buildType === 'runtime';
   const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
   renderFiles(
     path.join(__dirname, './generator/templates/common'),
-    path.join(iceTempPath, 'common'),
+    path.join(tempPath, 'common'),
     {
-      pageImports: '',
       pageExports: '',
+      pageImports: '',
       runtimeModules,
       isReact,
       isRax,
@@ -101,14 +68,14 @@ export default (api, options) => {
 
   const generator = new Generator({
     projectRoot: rootDir,
-    targetDir: iceTempPath,
+    targetDir: tempPath,
     templateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
     defaultData: {
       isReact,
       isRax,
       miniapp,
       runtimeModules,
-      buildConfig: JSON.stringify(buildConfig)
+      buildConfig: JSON.stringify(userConfig)
     },
     log
   });
@@ -117,7 +84,7 @@ export default (api, options) => {
     rootDir,
     generator,
     templatePath: path.join(__dirname, './generator/templates/common/page.ts.ejs'),
-    targetPath: iceTempPath,
+    targetPath: tempPath,
   });
 
   async function renderIce() {
@@ -128,78 +95,18 @@ export default (api, options) => {
   // register config in build.json
   USER_CONFIG.forEach(item => registerUserConfig({ ...item }));
 
-  // register utils method
-  registerMethod('getPages', getPages);
-  registerMethod('formatPath', formatPath);
-  registerMethod('getRoutes', getRoutes);
-
-  // registerMethod for modify page
-  registerMethod('addPageExport', pageGenerator.addPageExport);
-  registerMethod('removePageExport', pageGenerator.removePageExport);
-  // pageGenerator.addPageExport('Index', { exportName: 'store', source: './store' });
-
-  // registerMethod for add export
-  const regsiterKeys = ['addIceExport', 'addIceTypesExport', 'addIceAppConfigTypes', 'addIceAppConfigAppTypes'];
-  regsiterKeys.forEach((registerKey) => {
-    registerMethod(registerKey, (exportData) => {
-      generator.addExport(registerKey, exportData);
-    });
-    registerMethod(registerKey.replace('add', 'remove'), (removeExportName) => {
-      generator.removeExport(registerKey, removeExportName);
-    });
-  });
+  // register api method
+  registerMethods(api, { generator, pageGenerator });
 
   // watch src folder
   if (command === 'start') {
-    const watchEvents = [];
-    registerMethod('watchFileChange', (pattern, action) => {
-      watchEvents.push([pattern, action]);
-    });
-    chokidar.watch(path.join(rootDir, 'src'), {
-      ignoreInitial: true,
-    }).on('all', (event, filePath) => {
-      watchEvents.forEach(([pattern, action]) => {
-        if (pattern instanceof RegExp && pattern.test(filePath)) {
-          action(event, filePath);
-        } else if (typeof pattern === 'string' && filePath.includes(pattern)) {
-          action(event, filePath);
-        }
-      });
-    });
-
-    // watch pages change
-    watchEvents.push([/src\/pages\/[A-Za-z.$]+$/, () => {
-      renderIce();
-    }]);
-    // rerender when global style file added or removed
-    watchEvents.push([/src\/global.(scss|less|css)/, async (event: string) => {
-      if (event === 'unlink' || event === 'add') {
-        await generator.render();
-      }
-    }]);
+    dev(api, { renderIce, generator });
   }
-
-  const registerAPIs = {
-    addEntryImports: {
-      apiKey: 'addContent',
-    },
-    addEntryCode: {
-      apiKey: 'addContent',
-    },
-  };
-
-  Object.keys(registerAPIs).forEach((apiName) => {
-    registerMethod(apiName, (code, position = 'after') => {
-      const { apiKey } = registerAPIs[apiName];
-      generator[apiKey](apiName, code, position);
-    });
-  });
 
   onHook(`before.${command}.run`, async () => {
     await renderIce();
   });
 };
-
 
 async function renderFiles(templateDir, targetDir, extraData) {
   const ejsTemplates = await globby(['**/*'], { cwd: templateDir });

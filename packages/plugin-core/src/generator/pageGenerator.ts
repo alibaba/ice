@@ -1,5 +1,5 @@
 import * as path from 'path';
-import Generator from './index';
+import Generator from './appGenerator';
 import getPages from '../utils/getPages';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
