@@ -1,8 +1,8 @@
-import getPages from './getPages';
-import getRoutes from './getRoutes';
-import formatPath from './formatPath';
+import getPages from '../utils/getPages';
+import getRoutes from '../utils/getRoutes';
+import formatPath from '../utils/formatPath';
 
-export default (api, options: any = {}) => {
+export default (api, options) => {
   const { registerMethod } = api;
   const { generator } = options;
 

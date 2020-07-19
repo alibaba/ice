@@ -1,88 +1,67 @@
 
 import * as path from 'path';
-import * as fse from 'fs-extra';
 import * as globby from 'globby';
-import * as ejs from 'ejs';
-import * as prettier from 'prettier';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
-import registerMethods from './utils/registerMethods';
-import { USER_CONFIG, PROJECT_TYPE, ICE_TEMP } from './constant';
+import { ICE_TEMP } from './constant';
 import dev from './dev';
+import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
 
 export default (api, options) => {
-  const { onHook, onGetWebpackConfig, registerUserConfig, context, getAllPlugin, setValue, modifyUserConfig, log } = api;
-  const { rootDir, command, userConfig } = context;
+  const { onHook, context } = api;
+  const { command } = context;
 
-  const { framework } = options;
-  const isReact = framework === 'react';
-  const isRax = framework === 'rax';
+  // Set temporary directory
+  // eg: .ice or .rax
+  setTempDir(api, options);
 
-  const tempDir = isRax ? 'rax' : 'ice';
-  const tempPath = path.join(rootDir, `.${tempDir}`);
-  setValue(ICE_TEMP, tempPath);
+  // Set project type
+  // eg: ts | js
+  setProjectType(api);
 
-  const tsEntryFiles = globby.sync(['src/app.@(ts?(x))', 'src/pages/*/app.@(ts?(x))'], { cwd: rootDir });
-  const projectType = tsEntryFiles.length ? 'ts' : 'js';
-  setValue(PROJECT_TYPE, projectType);
+  // Modify default entry to src/app
+  // eg: src/app.(ts|js)
+  setEntry(api);
 
-  fse.ensureDirSync(tempPath);
-  fse.emptyDirSync(tempPath);
+  // Set alias
+  setAlias(api, options);
 
-  // get runtime module
-  const plugins = getAllPlugin();
-  const runtimeModules = getRuntimeModules(plugins);
+  // register config in build.json
+  setRegisterUserConfig(api);
 
-  // modify default entry to src/app
-  if (!userConfig.entry) {
-    modifyUserConfig('entry', 'src/app');
+  // register api method
+  const generator = initGenerator(api, options);
+  setRegisterMethod(api, { generator });
+
+  // watch src folder
+  if (command === 'start') {
+    dev(api, { render: generator.render });
   }
 
-  onGetWebpackConfig((config: any) => {
-    const aliasKey = framework === 'rax' ? 'raxapp' : 'ice';
-    const aliasMap = [
-      [`${aliasKey}$`, path.join(tempPath, 'index.ts')],
-      [`${aliasKey}`, path.join(tempPath, 'pages') ],
-      ['@', path.join(rootDir, 'src')]
-    ];
-
-    aliasMap.forEach(alias => config.resolve.alias.set(alias[0], alias[1]));
+  onHook(`before.${command}.run`, async () => {
+    await generator.render();
   });
+};
 
-  const miniapp = userConfig.miniapp && userConfig.miniapp.buildType === 'runtime';
+
+function initGenerator(api, options) {
+  const { getAllPlugin, context, log, getValue } = api;
+  const { userConfig, rootDir } = context;
+  const plugins = getAllPlugin();
   const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
-  const generator = new Generator({
+  return new Generator({
     rootDir,
-    targetDir: tempPath,
-    appTemplateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
+    targetDir: getValue(ICE_TEMP),
+    appTemplateDir: path.join(__dirname, `./generator/templates/app/${options.framework}`),
     commonTemplateDir: path.join(__dirname, './generator/templates/common'),
     defaultData: {
-      isReact,
-      isRax,
-      miniapp,
-      runtimeModules,
+      isReact: options.framework === 'react',
+      isRax: options.framework === 'rax',
+      miniapp: userConfig.miniapp,
+      runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(userConfig),
       appJsonConfig: appJsonConfig.length && appJsonConfig[0]
     },
     log
   });
-
-  async function render() {
-    await generator.render();
-  }
-
-  // register config in build.json
-  USER_CONFIG.forEach(item => registerUserConfig({ ...item }));
-
-  // register api method
-  registerMethods(api, { generator });
-
-  // watch src folder
-  if (command === 'start') {
-    dev(api, { render, generator });
-  }
-
-  onHook(`before.${command}.run`, async () => {
-    await render();
-  });
-};
+}

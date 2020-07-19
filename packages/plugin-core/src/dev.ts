@@ -4,7 +4,7 @@ import * as chokidar from 'chokidar';
 export default (api, options: any = {}) => {
   const { registerMethod, context } = api;
   const { rootDir } = context;
-  const { renderIce, generator } = options;
+  const { render } = options;
 
   const watchEvents = [];
   registerMethod('watchFileChange', (pattern, action) => {
@@ -24,13 +24,13 @@ export default (api, options: any = {}) => {
 
   // watch pages change
   watchEvents.push([/src\/pages\/[A-Za-z.$]+$/, () => {
-    renderIce();
+    render();
   }]);
 
   // rerender when global style file added or removed
   watchEvents.push([/src\/global.(scss|less|css)/, async (event: string) => {
     if (event === 'unlink' || event === 'add') {
-      await generator.render();
+      await render();
     }
   }]);
 };
