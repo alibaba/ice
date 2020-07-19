@@ -6,6 +6,7 @@ import * as prettier from 'prettier';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
+import getPages from '../utils/getPages';
 import { IExportData } from '../types/base';
 
 interface IRenderData {
@@ -20,6 +21,11 @@ interface IRenderFile {
   (templatePath: string, targetDir: string, extraData?: IRenderData): void;
 }
 
+interface IPageRenderData {
+  pageImports: string;
+  pageExports: string;
+}
+
 const API_MAP = [
   'addEntryImports',
   'addEntryCode',
@@ -30,7 +36,9 @@ const API_MAP = [
 ];
 
 export default class Generator {
-  public templateDir: string;
+  public appTemplateDir: string;
+
+  public commonTemplateDir: string;
 
   public targetDir: string;
 
@@ -40,21 +48,28 @@ export default class Generator {
 
   private rerender: boolean;
 
-  private projectRoot: string;
+  private rootDir: string;
+
+  private pageExports: { [key: string]: IExportData[] };
+
+  private pageRenderData: IPageRenderData;
 
   private log: any;
 
   private showPrettierError: boolean;
 
-  constructor({ projectRoot, targetDir, templateDir, defaultData, log }) {
-    this.projectRoot = projectRoot;
-    this.templateDir = templateDir;
+  constructor({ rootDir, targetDir, appTemplateDir, commonTemplateDir, defaultData, log }) {
+    this.rootDir = rootDir;
+    this.appTemplateDir = appTemplateDir;
+    this.commonTemplateDir = commonTemplateDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
     this.contentRegistration = {};
     this.rerender = false;
     this.log = log;
     this.showPrettierError = true;
+    this.pageExports = {};
+    this.pageRenderData = { pageImports: '', pageExports: '' };
   }
 
   public addExport = (registerKey, exportData: IExportData | IExportData[]) => {
@@ -102,9 +117,10 @@ export default class Generator {
   }
 
   public parseRenderData() {
-    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.projectRoot });
+    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     this.renderData = {
       ...this.renderData,
+      ...this.pageRenderData,
       ...this.getExportStr('addIceExport', ['iceImports', 'iceExports']),
       ...this.getExportStr('addIceTypesExport', ['iceTypesImports', 'iceTypesExports']),
       ...this.getExportStr('addIceAppConfigTypes', ['iceIAppConfigTypesImports', 'iceIAppConfigTypesExports']),
@@ -127,36 +143,100 @@ export default class Generator {
 
   public async render() {
     this.rerender = true;
-    const ejsTemplates = await globby(['**/*'], { cwd: this.templateDir });
+    const appTemplates = await globby(['**/*'], { cwd: this.appTemplateDir });
     this.parseRenderData();
-    ejsTemplates.forEach((template) => {
-      const templatePath = path.join(this.templateDir, template);
-      const targetPath = path.join(this.targetDir, template);
-      const renderExt = '.ejs';
-      if (path.extname(template) === renderExt) {
-        this.renderFile(templatePath, targetPath.replace(renderExt, ''));
+    appTemplates.forEach((templateFile) => {
+      if (templateFile === 'page.ts.ejs') {
+        this.renderPageTemplates(templateFile);
       } else {
-        fse.ensureDirSync(path.dirname(targetPath));
-        fse.copyFileSync(templatePath, targetPath);
+        this.renderAppTemplates(templateFile);
       }
+    });
+
+    this.renderCommonTemplates();
+  }
+
+  public async renderAppTemplates(templateFile) {
+    this.renderFile(
+      path.join(this.appTemplateDir, templateFile),
+      path.join(this.targetDir, templateFile)
+    );
+  }
+
+  public renderPageTemplates(templateFile) {
+    const pages = getPages(this.rootDir);
+    pages.forEach((name) => {
+      const source = `./pages/${name}/index`;
+      this.pageRenderData = { ...this.getPageExport(name) };
+      this.renderFile(
+        path.join(this.appTemplateDir, templateFile),
+        path.join(this.targetDir, `${source}.ts`), this.pageRenderData);
+    });
+  }
+
+  public async renderCommonTemplates() {
+    const commonTemplates = await globby(['**/*'], { cwd: this.commonTemplateDir });
+    commonTemplates.forEach((templateFile) => {
+      this.renderFile(
+        path.join(this.commonTemplateDir, templateFile),
+        path.join(this.targetDir, 'common', templateFile)
+      );
     });
   }
 
   public renderFile: IRenderFile = (templatePath, targetPath, extraData = {}) => {
-    const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    let content = ejs.render(templateContent, { ...this.renderData, ...extraData });
-    try {
-      content = prettier.format(content, {
-        parser: 'typescript',
-        singleQuote: true
-      });
-    } catch (error) {
-      if (this.showPrettierError) {
-        this.log.warn(`Prettier format error: ${error.message}`);
-        this.showPrettierError = false;
+    const renderExt = '.ejs';
+    if (path.extname(templatePath) === '.ejs') {
+      const templateContent = fse.readFileSync(templatePath, 'utf-8');
+      let content = ejs.render(templateContent, { ...this.renderData, ...extraData });
+      try {
+        content = prettier.format(content, {
+          parser: 'typescript',
+          singleQuote: true
+        });
+      } catch (error) {
+        if (this.showPrettierError) {
+          this.log.warn(`Prettier format error: ${error.message}`);
+          this.showPrettierError = false;
+        }
       }
+      const realTargetPath = targetPath.replace(renderExt, '');
+      fse.ensureDirSync(path.dirname(realTargetPath));
+      fse.writeFileSync(realTargetPath, content, 'utf-8');
+    } else {
+      fse.ensureDirSync(targetPath);
+      fse.copyFileSync(targetPath, targetPath);
     }
-    fse.ensureDirSync(path.dirname(targetPath));
-    fse.writeFileSync(targetPath, content, 'utf-8');
+  }
+
+  private getPageExport(pageName) {
+    const exportList = this.pageExports[pageName] || [];
+    const { importStr, exportStr } = generateExports(exportList);
+
+    return {
+      pageImports: importStr,
+      pageExports: exportStr,
+    };
+  }
+
+  public addPageExport = (pageName: string, exportData: IExportData | IExportData[]) => {
+    if (!this.pageExports[pageName]) {
+      this.pageExports[pageName] = [];
+    }
+    checkExportData(this.pageExports[pageName], exportData, 'addPageExport');
+    this.pageExports[pageName] = [
+      ...this.pageExports[pageName],
+      ...(Array.isArray(exportData) ? exportData : [exportData]),
+    ];
+    if (this.rerender) {
+      this.render();
+    }
+  }
+
+  public removePageExport = (pageName: string, removeExportName: string | string[]) => {
+    this.pageExports[pageName] = removeExportData(this.pageExports[pageName] || [], removeExportName);
+    if (this.rerender) {
+      this.render();
+    }
   }
 }

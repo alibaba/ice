@@ -4,8 +4,7 @@ import * as globby from 'globby';
 import * as chokidar from 'chokidar';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
-import AppGenerator from './generator/appGenerator';
-import PageGenerator from './generator/pageGenerator';
+import Generator from './generator';
 import getPages from './utils/getPages';
 import getRoutes from './utils/getRoutes';
 import formatPath from './utils/formatPath';
@@ -36,7 +35,6 @@ export default class Core {
     this.tempPath = this.getTempPath();
     this.projectType = this.getProjectType();
     this.generator = this.renderAppTemplates();
-    this.pageGenerator = this.renderPageTemplates();
 
     this.setUp();
   }
@@ -145,10 +143,11 @@ export default class Core {
     const { userConfig } = context;
     const templateDir = path.join(__dirname, `./generator/templates/app/${framework}`);
     const miniapp = userConfig.miniapp && userConfig.miniapp.buildType === 'runtime';
-    const gen = new AppGenerator({
-      projectRoot: this.rootDir,
+    const gen = new Generator({
+      rootDir: this.rootDir,
       targetDir: this.tempPath,
-      templateDir,
+      appTemplateDir: templateDir,
+      commonTemplateDir: templateDir,
       defaultData: {
         isReact: framework === 'react',
         isRax: framework === 'rax',
@@ -157,16 +156,6 @@ export default class Core {
         buildConfig: JSON.stringify(userConfig)
       },
       log
-    });
-    return gen;
-  }
-
-  public renderPageTemplates() {
-    const gen = new PageGenerator({
-      rootDir: this.rootDir,
-      generator: this.generator,
-      templatePath: path.join(__dirname, './generator/templates/common/page.ts.ejs'),
-      targetPath: this.tempPath
     });
     return gen;
   }

@@ -4,7 +4,7 @@ import formatPath from './formatPath';
 
 export default (api, options: any = {}) => {
   const { registerMethod } = api;
-  const { generator, pageGenerator } = options;
+  const { generator } = options;
 
   // register utils method
   registerMethod('getPages', getPages);
@@ -12,8 +12,8 @@ export default (api, options: any = {}) => {
   registerMethod('getRoutes', getRoutes);
 
   // registerMethod for modify page
-  registerMethod('addPageExport', pageGenerator.addPageExport);
-  registerMethod('removePageExport', pageGenerator.removePageExport);
+  registerMethod('addPageExport', generator.addPageExport);
+  registerMethod('removePageExport', generator.removePageExport);
 
   // registerMethod for add export
   const regsiterKeys = ['addIceExport', 'addIceTypesExport', 'addIceAppConfigTypes', 'addIceAppConfigAppTypes'];

@@ -4,8 +4,7 @@ import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
-import Generator from './generator/appGenerator';
-import PageGenerator from './generator/pageGenerator';
+import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
 import registerMethods from './utils/registerMethods';
 import { USER_CONFIG, PROJECT_TYPE, ICE_TEMP } from './constant';
@@ -52,43 +51,23 @@ export default (api, options) => {
 
   const miniapp = userConfig.miniapp && userConfig.miniapp.buildType === 'runtime';
   const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
-  renderFiles(
-    path.join(__dirname, './generator/templates/common'),
-    path.join(tempPath, 'common'),
-    {
-      pageExports: '',
-      pageImports: '',
-      runtimeModules,
-      isReact,
-      isRax,
-      appJsonConfig: appJsonConfig.length && appJsonConfig[0],
-      miniapp
-    }
-  );
-
   const generator = new Generator({
-    projectRoot: rootDir,
+    rootDir,
     targetDir: tempPath,
-    templateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
+    appTemplateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
+    commonTemplateDir: path.join(__dirname, './generator/templates/common'),
     defaultData: {
       isReact,
       isRax,
       miniapp,
       runtimeModules,
-      buildConfig: JSON.stringify(userConfig)
+      buildConfig: JSON.stringify(userConfig),
+      appJsonConfig: appJsonConfig.length && appJsonConfig[0]
     },
     log
   });
 
-  const pageGenerator = new PageGenerator({
-    rootDir,
-    generator,
-    templatePath: path.join(__dirname, './generator/templates/common/page.ts.ejs'),
-    targetPath: tempPath,
-  });
-
-  async function renderIce() {
-    pageGenerator.render();
+  async function render() {
     await generator.render();
   }
 
@@ -96,44 +75,14 @@ export default (api, options) => {
   USER_CONFIG.forEach(item => registerUserConfig({ ...item }));
 
   // register api method
-  registerMethods(api, { generator, pageGenerator });
+  registerMethods(api, { generator });
 
   // watch src folder
   if (command === 'start') {
-    dev(api, { renderIce, generator });
+    dev(api, { render, generator });
   }
 
   onHook(`before.${command}.run`, async () => {
-    await renderIce();
+    await render();
   });
 };
-
-async function renderFiles(templateDir, targetDir, extraData) {
-  const ejsTemplates = await globby(['**/*'], { cwd: templateDir });
-  ejsTemplates.forEach((template) => {
-    const templatePath = path.join(templateDir, template);
-    const targetPath = path.join(targetDir, template);
-    const renderExt = '.ejs';
-    if (path.extname(template) === renderExt) {
-      renderFile(templatePath, targetPath.replace(renderExt, ''), extraData);
-    } else {
-      fse.ensureDirSync(path.dirname(targetPath));
-      fse.copyFileSync(templatePath, targetPath);
-    }
-  });
-}
-
-function renderFile (templatePath, targetPath, extraData = {}) {
-  const templateContent = fse.readFileSync(templatePath, 'utf-8');
-  let content = ejs.render(templateContent, { ...extraData });
-  try {
-    content = prettier.format(content, {
-      parser: 'typescript',
-      singleQuote: true
-    });
-  } catch (error) {
-    //
-  }
-  fse.ensureDirSync(path.dirname(targetPath));
-  fse.writeFileSync(targetPath, content, 'utf-8');
-}
