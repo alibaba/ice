@@ -36,7 +36,7 @@ function render(appConfig = {}) {
     renderApp(appConfig, { initialData, pageInitialProps });
   } else {
     // ssr not enabled, or SSR is enabled but the server does not return data
-    if (appConfig.app.getInitialData) {
+    if (appConfig.app && appConfig.app.getInitialData) {
       (async() => {
         // @ts-ignore
         initialData = await appConfig.app.getInitialData();
@@ -50,9 +50,9 @@ function render(appConfig = {}) {
 
 function renderApp(appConfig: IAppConfig, context?: IContext) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime } = createApp(appConfig, { env });
+  const { runtime, appConfig: modifiedAppConfig } = createApp(appConfig, { env });
   const { modifyDOMRender } = runtime
-  const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app
+  const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
 
@@ -72,7 +72,9 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
   if (process.env.__IS_SERVER__) {
     return ReactDOMServer.renderToString(<App />);
   } else {
-    const appMountNode = mountNode || document.getElementById(rootId);
+    const appMountNode = mountNode
+      || document.getElementById(rootId)
+      || document.getElementById('ice-container');
     if (modifyDOMRender) {
       return modifyDOMRender({ App, appMountNode });
     } else {
