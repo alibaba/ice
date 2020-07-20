@@ -4,7 +4,7 @@ import { useRouter } from 'rax-use-router';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 import pathRedirect from './pathRedirect';
-import { emit } from './common/appCycles';
+import emitCycles from './common/emitCycles';
 import createApp from './common/createApp';
 import createMiniappHistory from './common/createMiniappHistory';
 
@@ -113,7 +113,7 @@ function runApp(appConfig = {}) {
       // if (shell) { }
 
       // Emit app launch cycle
-      emit('launch');
+      emitCycles();
 
       const { app = {} } = appDynamicConfig;
       const rootId = document.getElementById(app.rootId) || DEFAULE_ROOT_ID;

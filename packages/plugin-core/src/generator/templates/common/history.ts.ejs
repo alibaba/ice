@@ -21,7 +21,12 @@ function createHistory(type: string, basename: string) {
   return history;
 }
 
+function getHistory() {
+  return history;
+}
+
 export {
   history,
+  getHistory,
   createHistory
 };

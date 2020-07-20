@@ -1,8 +1,10 @@
 /* eslint no-multi-assign:0, no-undef:0 */
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import { isMiniAppPlatform } from './env';
 import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from './constants';
-
-export const isFunction = target => typeof target === 'function';
+import { isFunction, isUndef } from './type';
+import { history } from './history';
+import router from './router';
+import { emit as pageEmit } from './pageCycles';
 
 export const appCycles = {};
 
@@ -15,19 +17,23 @@ export const appCycles = {};
 export function emit(cycle, context, ...args) {
   if (appCycles.hasOwnProperty(cycle)) {
     const cycles = appCycles[cycle];
-    let fn;
     if (cycle === SHARE) {
       // In MiniApp, it need return callback result as share info, like { title, desc, path }
       args[0].content = context ? cycles[0].call(context, args[1]) : cycles[0](args[1]);
     } else {
-      while (fn = cycles.shift()) { // eslint-disable-line
-        context ? fn.apply(context, args) : fn(...args);
-      }
+      cycles.forEach(cycle => {
+        context ? cycle.apply(context, args) : cycle(...args);
+      });
     }
   }
 }
 
-export function addAppLifeCyle(cycle, callback) {
+/**
+ * Add app lifecycle callback
+ * @param {string} cycle cycle name
+ * @param {function} callback cycle callback
+ */
+export function addAppLifeCycle(cycle, callback) {
   if (isFunction(callback)) {
     const cycles = appCycles[cycle] = appCycles[cycle] || [];
     cycles.push(callback);
@@ -36,54 +42,71 @@ export function addAppLifeCyle(cycle, callback) {
 
 // All of the following hooks will be removed when the future break change
 export function useAppLaunch(callback) {
-  addAppLifeCyle(LAUNCH, callback);
+  addAppLifeCycle(LAUNCH, callback);
 }
 
 export function useAppShow(callback) {
-  addAppLifeCyle(SHOW, callback);
+  addAppLifeCycle(SHOW, callback);
 }
 
 export function useAppHide(callback) {
-  addAppLifeCyle(HIDE, callback);
+  addAppLifeCycle(HIDE, callback);
 }
 
 export function useAppError(callback) {
-  addAppLifeCyle(ERROR, callback);
+  addAppLifeCycle(ERROR, callback);
 }
 
 export function usePageNotFound(callback) {
-  addAppLifeCyle(NOT_FOUND, callback);
+  addAppLifeCycle(NOT_FOUND, callback);
 }
 
 export function useAppShare(callback) {
-  addAppLifeCyle('appshare', callback);
+  addAppLifeCycle('appshare', callback);
 }
 
 // Emit MiniApp App lifeCycles
-if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
-  window.addEventListener(LAUNCH, ({ options, context }: any) => {
+if (isMiniAppPlatform) {
+  window.addEventListener(LAUNCH, ({ options, context }) => {
     emit(LAUNCH, context, options);
   });
-  window.addEventListener('appshow', ({ options, context }: any) => {
+  window.addEventListener('appshow', ({ options, context }) => {
     emit(SHOW, context, options);
   });
-  window.addEventListener('apphide', ({ context }: any) => {
+  window.addEventListener('apphide', ({ context }) => {
     emit(HIDE, context);
   });
-  window.addEventListener('apperror', ({ context, error }: any) => {
+  window.addEventListener('apperror', ({ context, error }) => {
     emit(ERROR, context, error);
   });
-  window.addEventListener('pagenotfound', ({ context }: any) => {
+  window.addEventListener('pagenotfound', ({ context }) => {
     emit(NOT_FOUND, context);
   });
-  window.addEventListener('appshare', ({ context, shareInfo, options }: any) => {
+  window.addEventListener('appshare', ({ context, shareInfo, options }) => {
     emit(SHARE, context, shareInfo, options);
   });
-  window.addEventListener('tabitemclick', ({ options, context }: any) => {
+  window.addEventListener('tabitemclick', ({ options, context }) => {
     emit(TAB_ITEM_CLICK, context, options);
   });
-} else {
-  // Emit Web lifeCycles
+} else if (!isUndef(document) && !isUndef(window)) {
+  document.addEventListener('visibilitychange', function() {
+    // The app switches from foreground to background
+    if (router.current && history.pathname === router.current.path) {
+      router.current.visibiltyState = !router.current.visibiltyState;
+      if (router.current.visibiltyState) {
+        // Emit app show
+        emit(SHOW);
+        // Emit page show
+        pageEmit(SHOW, router.current.path);
+      } else {
+        // Emit app hide
+        emit(HIDE);
+        // Emit page hide
+        pageEmit(HIDE, router.current.path);
+      }
+    }
+  });
+  // Emit error lifeCycles
   window.addEventListener('error', event => {
     emit(ERROR, null, event.error);
   });

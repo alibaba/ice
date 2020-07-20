@@ -1,0 +1,37 @@
+import { getHistory } from './history';
+import router from './router';
+import { LAUNCH, SHOW, HIDE } from './constants';
+import { emit as appEmit } from './appCycles';
+import { emit as pageEmit } from './pageCycles';
+
+function emitCycles() {
+  appEmit(LAUNCH);
+  appEmit(SHOW);
+
+  // Get history
+  const history = getHistory();
+  const pathname = history.location.pathname;
+
+  // Set current router
+  router.current = {
+    path: pathname,
+    visibiltyState: true
+  };
+
+  // Listen history change
+  history.listen((location) => {
+    if (location.pathname !== router.current.path) {
+      // Flow router info
+      router.prev = router.current;
+      router.current = {
+        path: location.pathname,
+        visibiltyState: true
+      };
+      router.prev.visibiltyState = false;
+      pageEmit(HIDE, router.prev.path);
+      pageEmit(SHOW, router.current.path);
+    }
+  });
+}
+
+export default emitCycles;

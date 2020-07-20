@@ -1,5 +1,5 @@
 import { history } from './history';
-import { usePageHide, usePageShow } from './pageCycles';
+import { usePageHide, usePageShow, withPageLifeCycle } from './pageCycles';
 import {
   registerNativeEventListeners,
   addNativeEventListener,
@@ -10,6 +10,7 @@ export {
   history,
   usePageHide,
   usePageShow,
+  withPageLifeCycle,
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener

@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { addAppLifeCyle } from './appCycles';
+import { addAppLifeCycle } from './appCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
 
 <% if (!isMiniapp) {%>
@@ -30,30 +30,30 @@ function _handleAppConfig(appConfig, env) {
   const { onLaunch, onShow, onError, onHide, onTabItemClick } = appConfig;
   // multi-end valid lifecycle
   // Add app lanuch callback
-  addAppLifeCyle(LAUNCH, onLaunch);
+  addAppLifeCycle(LAUNCH, onLaunch);
   // Add app show callback
-  addAppLifeCyle(SHOW, onShow);
+  addAppLifeCycle(SHOW, onShow);
   // Add app error callback
-  addAppLifeCyle(ERROR, onError);
+  addAppLifeCycle(ERROR, onError);
   // Add app hide callback
-  addAppLifeCyle(HIDE, onHide);
+  addAppLifeCycle(HIDE, onHide);
   // Add tab bar item click callback
-  addAppLifeCyle(TAB_ITEM_CLICK, onTabItemClick);
+  addAppLifeCycle(TAB_ITEM_CLICK, onTabItemClick);
   // Add lifecycle callbacks which only valid in Wechat MiniProgram and ByteDance MicroApp
   if (isWeChatMiniProgram || isByteDanceMicroApp) {
     const { onPageNotFound, onShareAppMessage } = appConfig;
     // Add global share callback
-    addAppLifeCyle(SHARE, onShareAppMessage);
+    addAppLifeCycle(SHARE, onShareAppMessage);
     // Add page not found callback
-    addAppLifeCyle(NOT_FOUND, onPageNotFound);
+    addAppLifeCycle(NOT_FOUND, onPageNotFound);
   }
   // Add lifecycle callbacks which only valid in Alibaba MiniApp
   if (isMiniApp) {
     const { onShareAppMessage, onUnhandledRejection } = appConfig;
     // Add global share callback
-    addAppLifeCyle(SHARE, onShareAppMessage);
+    addAppLifeCycle(SHARE, onShareAppMessage);
     // Add unhandledrejection callback
-    addAppLifeCyle(UNHANDLED_REJECTION, onUnhandledRejection);
+    addAppLifeCycle(UNHANDLED_REJECTION, onUnhandledRejection);
   }
 }
 
