@@ -35,6 +35,10 @@ const getBuiltInPlugins = (userConfig) => {
     plugins = commonPlugins.concat(reactAppPlugins);
   }
 
+  if (userConfig.ssr) {
+    plugins.push('build-plugin-ice-ssr');
+  }
+
   // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
     plugins.push('build-plugin-ice-store');

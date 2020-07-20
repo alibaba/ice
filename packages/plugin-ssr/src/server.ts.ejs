@@ -1,7 +1,8 @@
 import '@/app';
 import * as cheerio from 'cheerio';
 import { matchPath } from 'ice';
-import { createAppWithSSR, loadStaticModules } from './createApp';
+import { renderAppWithSSR } from './common/render';
+import loadStaticModules from './common/loadStaticModules';
 import { getAppConfig } from './appConfig';
 import routes from '@/routes';
 
@@ -40,7 +41,7 @@ const serverRender = async ({ context, pathname, initialData, htmlTemplate }) =>
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const bundleContent = createAppWithSSR(appConfig, {
+    const bundleContent = renderAppWithSSR(appConfig, {
       staticContext: context,
       pathname,
       initialData,

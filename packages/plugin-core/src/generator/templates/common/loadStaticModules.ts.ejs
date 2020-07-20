@@ -1,0 +1,11 @@
+function loadStaticModules(appConfig) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(runtimeModule.staticModule){ %>
+        require('<%= runtimeModule.path %>').default({appConfig});
+      <% } %>
+    <% }) %>
+  <% } %>
+}
+
+export default loadStaticModules;

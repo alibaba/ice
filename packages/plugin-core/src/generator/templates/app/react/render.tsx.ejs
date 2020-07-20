@@ -14,7 +14,7 @@ export interface IContext {
   pathname?: string;
 }
 
-function createAppWithSSR(appConfig: IAppConfig, context: IContext) {
+function renderAppWithSSR(appConfig: IAppConfig, context: IContext) {
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }
@@ -85,6 +85,5 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
 
 export {
   render,
-  createAppWithSSR,
-  // loadStaticModules
+  renderAppWithSSR
 }
