@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/plugin-core" },
     { "path": "packages/plugin-router" },
+    { "path": "packages/plugin-store" },
     { "path": "packages/plugin-miniapp" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },

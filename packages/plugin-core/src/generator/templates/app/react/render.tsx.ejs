@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
-import deepmerge from 'deepmerge';
-import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
 import { IAppConfig } from './types';
@@ -15,7 +14,7 @@ export interface IContext {
   pathname?: string;
 }
 
-function createAppWithSSR(customConfig: IAppConfig, context: IContext) {
+function createAppWithSSR(appConfig: IAppConfig, context: IContext) {
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }

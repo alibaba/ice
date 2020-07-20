@@ -57,7 +57,7 @@ function _handleAppConfig(appConfig, env) {
   }
 }
 
-function createApp(appConfig, options = {}) {
+function createApp(appConfig, context:any = {}) {
   if (launched) throw new Error('Error: runApp can only be called once.');
   if (appConfig && Object.prototype.toString.call(appConfig) !== '[object Object]') {
     throw new Error('Error: the runApp method param can only be Object.');
@@ -78,18 +78,19 @@ function createApp(appConfig, options = {}) {
     appConfig.router.history = history;
 
     // TODO：
-    runtime = new RuntimeModule(appConfig);
+    runtime = new RuntimeModule(appConfig, <%- buildConfig %>, context);
     loadRuntimeModules(runtime);
   <% } %>
 
   // Set app lifeCyle
-  const { env } = options;
+  const { env } = context;
   _handleAppConfig(appConfig, env);
 
   return {
     history,
     runtime,
     appConfig,
+    // @ts-ignore
     appJSONConfig: appJSONConfig.default || appJSONConfig
   };
 };

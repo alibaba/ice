@@ -12,6 +12,11 @@ const getBuiltInPlugins = (userConfig) => {
   if (!userConfig.miniapp) {
     builtInPlugins.push('build-plugin-ice-router');
   }
+
+  if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
+    builtInPlugins.push('build-plugin-ice-store');
+  }
+
   return builtInPlugins;
 };
 
