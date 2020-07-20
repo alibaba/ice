@@ -1,23 +1,46 @@
 const getBuiltInPlugins = (userConfig) => {
-  // built-in plugins for icejs
-  const builtInPlugins = [
+  if (userConfig.disableRuntime && !userConfig.miniapp) {
+    return [
+      'build-plugin-react-app',
+      'build-plugin-ice-mpa'
+    ];
+  }
+
+  let plugins = [];
+
+  // common plugins
+  const commonPlugins = [
     [
       'build-plugin-ice-core', {
         'framework': 'react'
       }
     ],
-    'build-plugin-react-app'
+    'build-plugin-react-app',
   ];
 
-  if (!userConfig.miniapp) {
-    builtInPlugins.push('build-plugin-ice-router');
+  // for ice/react plugins
+  const reactAppPlugins = [
+    'build-plugin-ice-router',
+    'build-plugin-ice-helpers',
+    'build-plugin-ice-logger',
+    'build-plugin-ice-config',
+    'build-plugin-ice-request',
+    'build-plugin-ice-mpa',
+  ];
+
+  // for miniapp plugins
+  if (userConfig.miniapp) {
+    plugins = commonPlugins;
+  } else {
+    plugins = commonPlugins.concat(reactAppPlugins);
   }
 
+  // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
-    builtInPlugins.push('build-plugin-ice-store');
+    plugins.push('build-plugin-ice-store');
   }
 
-  return builtInPlugins;
+  return plugins;
 };
 
 module.exports = getBuiltInPlugins;
