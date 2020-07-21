@@ -1,3 +1,4 @@
+/* eslint no-undef:0 */
 import {
   createBrowserHistory,
   createHashHistory,
@@ -6,8 +7,6 @@ import {
 import { createMiniAppHistory } from 'miniapp-history';
 import { isMiniAppPlatform } from './env';
 
-// provide history instance
-// can be used in the application through history.push()
 let history;
 
 function createHistory({ routes, customHistory, type, basename }) {
@@ -31,4 +30,4 @@ function getHistory() {
   return isMiniAppPlatform ? window.history : history;
 }
 
-export { history, getHistory, createHistory };
+export { getHistory, createHistory };

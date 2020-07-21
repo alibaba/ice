@@ -1,10 +1,10 @@
 import { getHistory } from './history';
 import router from './router';
 import { LAUNCH, SHOW, HIDE } from './constants';
-import { emit as appEmit } from './appCycles';
-import { emit as pageEmit } from './pageCycles';
+import { emit as appEmit } from './appLifeCycles';
+import { emit as pageEmit } from './pageLifeCycles';
 
-function emitCycles() {
+function emitLifeCycles() {
   appEmit(LAUNCH);
   appEmit(SHOW);
 
@@ -34,4 +34,4 @@ function emitCycles() {
   });
 }
 
-export default emitCycles;
+export default emitLifeCycles;

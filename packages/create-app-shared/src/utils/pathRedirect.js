@@ -1,3 +1,4 @@
+/* eslint no-undef:0 */
 // In a Single-Page Application, sometimes we need to jump to a specific route.
 // It is very simple in the Web application, url like #/xxx can jump to the corresponding page.
 
@@ -41,7 +42,9 @@ export default function pathRedirect(history, routes) {
   }
 
   if (targetPath && !isConfirmed) {
-    console.warn('Warning: url query `_path` should be an exist path in app.json, see: https://rax.js.org/docs/guide/routes ');
+    console.warn(
+      'Warning: url query `_path` should be an exist path in app.json, see: https://rax.js.org/docs/guide/routes '
+    );
     return false;
   }
 

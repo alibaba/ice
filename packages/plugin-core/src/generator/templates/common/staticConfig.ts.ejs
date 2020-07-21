@@ -1,0 +1,9 @@
+let staticConfig = {};
+
+try {
+  staticConfig = require('../../src/app.json');
+} catch (error) {
+  // ignore error
+}
+
+export default staticConfig.default || staticConfig;

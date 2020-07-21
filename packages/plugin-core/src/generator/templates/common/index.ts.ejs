@@ -1,17 +1,45 @@
-import { history } from './history';
-import { usePageHide, usePageShow, withPageLifeCycle } from './pageCycles';
-import {
+import { createElement, useEffect } from '<%- framework %>';
+<% if(isRax){ %>
+  import { withRouter as defaultWithRouter } from 'rax-use-router';
+<% } else { %>
+  import { withRouter as defaultWithRouter } from 'react-router';
+<% } %>
+import createShareAPI from 'create-app-shared';
+import loadRuntimeModules from './loadRuntimeModules';
+import loadStaticModules from './loadStaticModules';
+
+const {
+  createApp,
+  withRouter,
+  createHistory,
+  getHistory,
+  emitLifeCycles,
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+  pathRedirect,
   registerNativeEventListeners,
   addNativeEventListener,
-  removeNativeEventListener
-} from './nativeEventListener';
+  removeNativeEventListener,
+} = createShareAPI({
+  createElement,
+  useEffect,
+  withRouter: defaultWithRouter,
+  loadRuntimeModules,
+  loadStaticModules
+});
 
 export {
-  history,
-  usePageHide,
+  createApp,
+  withRouter,
+  createHistory,
+  getHistory,
+  emitLifeCycles,
   usePageShow,
+  usePageHide,
   withPageLifeCycle,
+  pathRedirect,
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener
-};
+}

@@ -5,8 +5,7 @@ import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-e
 import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
 import { IAppConfig } from './types';
-import createApp from './common/createApp';
-import emitCycles from './common/emitCycles';
+import { createApp, emitLifeCycles } from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export interface IContext {
@@ -51,7 +50,7 @@ function render(appConfig = {}) {
 
 function renderApp(appConfig: IAppConfig, context?: IContext) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, appConfig: modifiedAppConfig } = createApp(appConfig, { env });
+  const { runtime, appConfig: modifiedAppConfig } = createApp(appConfig, <%- buildConfig %>, { env });
   const { modifyDOMRender } = runtime
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app
   const AppProvider = runtime.composeAppProvider();
@@ -71,7 +70,7 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
   }
 
   // Emit app launch cycle
-  emitCycles();
+  emitLifeCycles();
 
   if (process.env.__IS_SERVER__) {
     return ReactDOMServer.renderToString(<App />);

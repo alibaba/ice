@@ -3,10 +3,8 @@ import { Navigation, TabBar } from 'rax-pwa';
 import { useRouter } from 'rax-use-router';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import UniversalDriver from 'driver-universal';
-import pathRedirect from './pathRedirect';
-import emitCycles from './common/emitCycles';
-import createApp from './common/createApp';
-import { createHistory } from './common/history';
+import { createApp, emitLifeCycles, createHistory, pathRedirect, getHistory } from './common';
+import staticConfig from './common/staticConfig';
 
 const INITIAL_DATA_FROM_SSR = '__INITIAL_DATA__';
 const initialDataFromSSR = global[INITIAL_DATA_FROM_SSR];
@@ -63,18 +61,16 @@ function App(props) {
 function runApp(appConfig = {}) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const {
-    history,
     runtime,
-    appJSONConfig,
     appConfig: appDynamicConfig
-  } = createApp(appConfig, { env });
+  } = createApp(appConfig, <%- buildConfig %>, { env });
 
   // Set custom driver
-  if (typeof appJSONConfig.driver !== 'undefined') {
-    driver = appJSONConfig.driver;
+  if (typeof staticConfig.driver !== 'undefined') {
+    driver = staticConfig.driver;
   }
 
-  const { routes } = appJSONConfig;
+  const { routes } = staticConfig;
 
   // In MiniApp, it needn't return App Component
   if (isMiniApp || isWeChatMiniProgram) {
@@ -83,6 +79,8 @@ function runApp(appConfig = {}) {
   }
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
+  const history = getHistory();
+  console.log('history======>:', history);
   pathRedirect(history, routes);
 
   let _initialComponent;
@@ -90,14 +88,14 @@ function runApp(appConfig = {}) {
     .then(initialComponent => {
       _initialComponent = initialComponent;
       const props = {
-        appConfig: appJSONConfig,
+        appConfig: staticConfig,
         history,
         routes,
         pageProps: {},
         InitialComponent: _initialComponent
       };
 
-      const AppProvider = runtime.composeAppProvider();
+      const AppProvider = runtime.composeAppProvider && runtime.composeAppProvider();
       const RootComponent = () => {
         if (AppProvider) {
           return (
@@ -113,7 +111,7 @@ function runApp(appConfig = {}) {
       // if (shell) { }
 
       // Emit app launch cycle
-      emitCycles();
+      emitLifeCycles();
 
       const { app = {} } = appDynamicConfig;
       const rootId = document.getElementById(app.rootId) || DEFAULE_ROOT_ID;

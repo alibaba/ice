@@ -1,28 +1,6 @@
-<% if (isReact) { %>
-  import React from 'react';
-<% } %>
-<% if (isRax) { %>
-  import { createElement } from 'rax';
-<% } %>
 import { createHistory } from './history';
 
 class RuntimeModule {
-  private AppProvider: any;
-
-  private modifyRoutesRegistration: any;
-
-  private wrapperRouteRegistration: any;
-
-  public renderRouter: any;
-
-  public appConfig: any;
-
-  public context: any;
-
-  public buildConfig: any;
-
-  public modifyDOMRender: any;
-
   constructor(appConfig, buildConfig, context) {
     this.renderRouter = () => () => <div>No route</div>;
     this.AppProvider = [];
@@ -30,11 +8,12 @@ class RuntimeModule {
     this.buildConfig = buildConfig;
     this.context = context;
     this.modifyDOMRender = null;
+    this.createElement = null;
     this.modifyRoutesRegistration = [];
     this.wrapperRouteRegistration = [];
   }
 
-  public loadModule(module) {
+  loadModule(module) {
     const runtimeAPI = {
       setRenderRouter: this.setRenderRouter,
       addProvider: this.addProvider,
@@ -52,15 +31,15 @@ class RuntimeModule {
     });
   }
 
-  public setRenderRouter = (renderRouter) => {
+  setRenderRouter = (renderRouter) => {
     this.renderRouter = renderRouter;
   }
 
-  public addProvider = (Provider) => {
+  addProvider = (Provider) => {
     this.AppProvider.push(Provider);
   }
 
-  public composeAppProvider() {
+  composeAppProvider() {
     if (!this.AppProvider.length) return null;
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
       return ({ children, ...rest }) => {
@@ -73,19 +52,19 @@ class RuntimeModule {
     });
   }
 
-  public addDOMRender = (render) => {
+  addDOMRender = (render) => {
     this.modifyDOMRender = render;
   }
 
-  public modifyRoutes = (modifyFn) => {
+  modifyRoutes = (modifyFn) => {
     this.modifyRoutesRegistration.push(modifyFn);
   }
 
-  public wrapperRouteComponent = (wrapperRoute) => {
+  wrapperRouteComponent = (wrapperRoute) => {
     this.wrapperRouteRegistration.push(wrapperRoute);
   }
 
-  private wrapperRoutes = (routes) => {
+  wrapperRoutes = (routes) => {
     return routes.map((item) => {
       if (item.children) {
         item.children = this.wrapperRoutes(item.children);
@@ -96,7 +75,7 @@ class RuntimeModule {
     });
   }
 
-  public getAppRouter = () => {
+  getAppRouter = () => {
     const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));

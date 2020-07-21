@@ -1,18 +1,8 @@
 import deepmerge from 'deepmerge';
-import { addAppLifeCycle } from './appCycles';
+import { addAppLifeCycle } from './appLifeCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
-
-<% if (!isMiniapp) {%>
 import RuntimeModule from './runtimeModule';
-import loadRuntimeModules from './loadRuntimeModlues';
-<% } %>
-
 import { createHistory } from './history';
-
-let appJSONConfig = {};
-<% if (appJsonConfig) {%>
-  appJSONConfig = require('../../<%= appJsonConfig %>');
-<% } %>
 
 const DEFAULE_APP_CONFIG = {
   app: {
@@ -21,7 +11,7 @@ const DEFAULE_APP_CONFIG = {
   router: {
     type: 'hash'
   }
-}
+};
 
 let launched = false;
 
@@ -57,42 +47,41 @@ function _handleAppConfig(appConfig, env) {
   }
 }
 
-function createApp(appConfig, context:any = {}) {
-  if (launched) throw new Error('Error: runApp can only be called once.');
-  if (appConfig && Object.prototype.toString.call(appConfig) !== '[object Object]') {
-    throw new Error('Error: the runApp method param can only be Object.');
-  }
+function createApp({ loadRuntimeModules }) {
+  return (appConfig, buildConfig, context = {}) => {
+    if (launched) throw new Error('Error: runApp can only be called once.');
+    if (appConfig && Object.prototype.toString.call(appConfig) !== '[object Object]') {
+      throw new Error('Error: the runApp method param can only be Object.');
+    }
 
-  launched = true;
+    launched = true;
 
-  appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
+    appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
-  // Set runtime modules
-  let runtime = {};
+    const { env } = context;
 
-  <% if (!isMiniapp) {%>
     // Set history
-    const { router } = appConfig;
-    const { type, basename, history: customHistory } = router;
-    const history = customHistory || createHistory({ type, basename });
-    appConfig.router.history = history;
+    let history = {};
+    if (!env.isMiniApp) {
+      const { router } = appConfig;
+      const { type, basename } = router;
+      history = createHistory({ type, basename });
+      appConfig.router.history = history;
+    }
 
-    // TODO：
-    runtime = new RuntimeModule(appConfig, <%- buildConfig %>, context);
+    // Load runtime modules
+    const runtime = new RuntimeModule(appConfig, buildConfig, context);
     loadRuntimeModules(runtime);
-  <% } %>
 
-  // Set app lifeCyle
-  const { env } = context;
-  _handleAppConfig(appConfig, env);
+    // Set app lifeCyle
+    _handleAppConfig(appConfig, env);
 
-  return {
-    history,
-    runtime,
-    appConfig,
-    // @ts-ignore
-    appJSONConfig: appJSONConfig.default || appJSONConfig
+    return {
+      history,
+      runtime,
+      appConfig
+    };
   };
-};
+}
 
 export default createApp;

@@ -1,6 +1,5 @@
 
 import * as path from 'path';
-import * as globby from 'globby';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
 import { ICE_TEMP } from './constant';
@@ -47,20 +46,20 @@ export default (api, options) => {
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
   const { userConfig, rootDir } = context;
+  const { framework } = options;
   const plugins = getAllPlugin();
-  const appJsonConfig = globby.sync(['src/app.json'], { cwd: rootDir });
   return new Generator({
     rootDir,
     targetDir: getValue(ICE_TEMP),
-    appTemplateDir: path.join(__dirname, `./generator/templates/app/${options.framework}`),
+    appTemplateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
     commonTemplateDir: path.join(__dirname, './generator/templates/common'),
     defaultData: {
-      isReact: options.framework === 'react',
-      isRax: options.framework === 'rax',
+      framework,
+      isReact: framework === 'react',
+      isRax: framework === 'rax',
       isMiniapp: userConfig.miniapp,
       runtimeModules: getRuntimeModules(plugins),
-      buildConfig: JSON.stringify(userConfig),
-      appJsonConfig: appJsonConfig.length && appJsonConfig[0]
+      buildConfig: JSON.stringify(userConfig)
     },
     log
   });

@@ -1,3 +1,4 @@
+/* eslint no-unused-vars:0, no-undef:0 */
 export function registerNativeEventListeners(Klass, events) {
   // TODO: distinguish page configuration
 }

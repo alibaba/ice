@@ -1,10 +1,10 @@
-/* eslint no-multi-assign:0, no-undef:0 */
-import { isMiniAppPlatform } from './env';
+/* eslint no-undef:0 */
 import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from './constants';
-import { isFunction, isUndef } from './type';
-import { history } from './history';
+import { isFunction, isUndef } from './utils';
+import { isMiniAppPlatform } from './env';
+import { getHistory } from './history';
 import router from './router';
-import { emit as pageEmit } from './pageCycles';
+import { emit as pageEmit } from './pageLifeCycles';
 
 export const appCycles = {};
 
@@ -15,14 +15,15 @@ export const appCycles = {};
  * @param  {...any} args callback params
  */
 export function emit(cycle, context, ...args) {
-  if (appCycles.hasOwnProperty(cycle)) {
+  if (Object.prototype.hasOwnProperty.call(appCycles, cycle)) {
     const cycles = appCycles[cycle];
     if (cycle === SHARE) {
       // In MiniApp, it need return callback result as share info, like { title, desc, path }
       args[0].content = context ? cycles[0].call(context, args[1]) : cycles[0](args[1]);
     } else {
-      cycles.forEach(cycle => {
-        context ? cycle.apply(context, args) : cycle(...args);
+      cycles.forEach(fn => {
+        // eslint-disable-next-line
+        context ? fn.apply(context, args) : fn(...args);
       });
     }
   }
@@ -35,6 +36,7 @@ export function emit(cycle, context, ...args) {
  */
 export function addAppLifeCycle(cycle, callback) {
   if (isFunction(callback)) {
+    // eslint-disable-next-line
     const cycles = appCycles[cycle] = appCycles[cycle] || [];
     cycles.push(callback);
   }
@@ -91,6 +93,7 @@ if (isMiniAppPlatform) {
 } else if (!isUndef(document) && !isUndef(window)) {
   document.addEventListener('visibilitychange', function() {
     // The app switches from foreground to background
+    const history = getHistory();
     if (router.current && history.location.pathname === router.current.path) {
       router.current.visibiltyState = !router.current.visibiltyState;
       if (router.current.visibiltyState) {
