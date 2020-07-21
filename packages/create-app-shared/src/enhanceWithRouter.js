@@ -1,11 +1,7 @@
-import {
-  isMiniApp,
-  isWeChatMiniProgram,
-  isByteDanceMicroApp,
-} from 'universal-env';
+import { isMiniAppPlatform } from './env';
 
 function enhanceWithRouter({ withRouter, createElement }) {
-  if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
+  if (isMiniAppPlatform) {
     withRouter = function (Component) {
       function Wrapper(props) {
         // eslint-disable-next-line
