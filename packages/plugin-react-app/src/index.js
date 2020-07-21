@@ -30,10 +30,6 @@ module.exports = (api) => {
   onGetWebpackConfig((chainConfig) => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
-    if (userConfig.disableRuntime) {
-      // alias for project src directory. compatible with disableRuntime enabled
-      config.resolve.alias.set('@', path.join(rootDir, 'src'));
-    }
   });
 
   targets.forEach(target => registerTask(target, getBase(api)));
