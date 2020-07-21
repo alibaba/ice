@@ -6,6 +6,7 @@ import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
 import { IAppConfig } from './types';
 import createApp from './common/createApp';
+import emitCycles from './common/emitCycles';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export interface IContext {
@@ -68,6 +69,9 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
     }
     return rootApp;
   }
+
+  // Emit app launch cycle
+  emitCycles();
 
   if (process.env.__IS_SERVER__) {
     return ReactDOMServer.renderToString(<App />);

@@ -1,8 +1,10 @@
-export default (api) => {
+export default (api, options) => {
   const { modifyUserConfig, context } = api;
   const { userConfig } = context;
 
-  if (!userConfig.entry) {
-    modifyUserConfig('entry', 'src/app');
+  if (options.framework === 'react') {
+    if (!userConfig.entry) {
+      modifyUserConfig('entry', 'src/app');
+    }
   }
 };

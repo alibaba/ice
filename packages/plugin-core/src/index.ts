@@ -21,7 +21,7 @@ export default (api, options) => {
 
   // Modify default entry to src/app
   // eg: src/app.(ts|js)
-  setEntry(api);
+  setEntry(api, options);
 
   // Set alias
   setAlias(api, options);

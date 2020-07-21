@@ -1,7 +1,15 @@
 import React from 'react';
-import { Link } from 'ice';
+import { Link, usePageShow, usePageHide } from 'ice';
 
 export default function Home(props) {
+  usePageShow(() => {
+    console.log('page show....');
+  });
+
+  usePageHide(() => {
+    console.log('page hide...');
+  });
+
   return (
     <>
       <h2>Home Page...{props.count}</h2>
