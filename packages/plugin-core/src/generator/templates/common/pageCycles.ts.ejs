@@ -5,7 +5,7 @@
 <% if (isRax) { %>
   import { useEffect } from 'rax';
 <% } %>
-import { history } from './history';
+import { getHistory } from './history';
 import { isMiniAppPlatform } from './env';
 import { SHOW, HIDE } from './constants';
 
@@ -13,6 +13,7 @@ import { SHOW, HIDE } from './constants';
 const visibleListeners = {};
 
 function addPageLifeCycle(cycle, callback) {
+  const history = getHistory();
   if (history) {
     const pathname = history.location.pathname;
     if (!visibleListeners[pathname]) {
@@ -40,6 +41,7 @@ function usePageLifeCycle(cycle, callback) {
     if (cycle === SHOW) {
       callback();
     }
+    const history = getHistory();
     if (history) {
       const pathname = history.location.pathname;
       addPageLifeCycle(cycle, callback);
@@ -78,6 +80,7 @@ export function withPageLifeCycle(Component) {
       if (this.onHide) {
         addPageLifeCycle(HIDE, this.onHide.bind(this));
       }
+      const history = getHistory();
       if (history) {
         // Keep the path name corresponding to current page component
         this.pathname = history.location.pathname;
@@ -94,9 +97,11 @@ export function withPageLifeCycle(Component) {
 
 if (isMiniAppPlatform) {
   window.addEventListener('pageshow', () => {
+    const history = getHistory();
     emit(SHOW, history.location.pathname);
   });
   window.addEventListener('pagehide', () => {
+    const history = getHistory();
     emit(HIDE, history.location.pathname);
   });
 }

@@ -74,7 +74,7 @@ function createApp(appConfig, context:any = {}) {
     // Set history
     const { router } = appConfig;
     const { type, basename, history: customHistory } = router;
-    const history = customHistory || createHistory(type, basename);
+    const history = customHistory || createHistory({ type, basename });
     appConfig.router.history = history;
 
     // TODO：

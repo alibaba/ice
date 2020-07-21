@@ -1,32 +1,34 @@
 import {
   createBrowserHistory,
   createHashHistory,
-  createMemoryHistory
+  createMemoryHistory,
 } from 'history';
+import { createMiniAppHistory } from 'miniapp-history';
+import { isMiniAppPlatform } from './env';
 
 // provide history instance
 // can be used in the application through history.push()
 let history;
 
-function createHistory(type: string, basename: string) {
-  const histories = {
-    hash: createHashHistory,
-    browser: createBrowserHistory,
-    memory: createMemoryHistory
-  };
-  // Note: only support createHashHistory and createBrowserHistory parameters
-  // https://github.com/ReactTraining/history/blob/master/modules/createBrowserHistory.js#L37
-  const props = (type === 'hash' || type === 'browser') ? { basename } : {};
-  history = histories[type](props);
+function createHistory({ routes, customHistory, type, basename }) {
+  if (customHistory) {
+    history = customHistory;
+  } else if (type === 'hash') {
+    history = createHashHistory({ basename });
+  } else if (type === 'browser') {
+    history = createBrowserHistory({ basename });
+  } else if (isMiniAppPlatform) {
+    window.history = createMiniAppHistory(routes);
+    window.location = window.history.location;
+    history = window.history;
+  } else {
+    history = createMemoryHistory();
+  }
   return history;
 }
 
 function getHistory() {
-  return history;
+  return isMiniAppPlatform ? window.history : history;
 }
 
-export {
-  history,
-  getHistory,
-  createHistory
-};
+export { history, getHistory, createHistory };

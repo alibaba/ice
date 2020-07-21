@@ -1,8 +1,8 @@
 export { runApp } from './runApp';
+export * from './common';
 <%- iceImports %>
 
 <% if (!isMiniapp) {%>
-  export * from './common';
   export * from './types';
   export * from './lazy';
   export * from './components';

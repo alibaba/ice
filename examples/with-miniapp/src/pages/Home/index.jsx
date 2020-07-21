@@ -1,7 +1,16 @@
 import * as React from 'react';
+import { usePageShow, usePageHide } from 'ice';
 import styles from './index.module.scss';
 
 const Home = (props) => {
+  usePageShow(() => {
+    console.log('page show...');
+  });
+
+  usePageHide(() => {
+    console.log('page hide...');
+  });
+
   const { history } = props;
   return (
     <div className={styles.container}>
