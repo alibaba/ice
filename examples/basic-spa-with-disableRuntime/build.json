@@ -10,5 +10,9 @@
     "disable": false,
     "quiet": true
   },
-  "disableRuntime": true
+  "disableRuntime": true,
+  "entry": "src/index",
+  "alias": {
+    "@": "src"
+  }
 }

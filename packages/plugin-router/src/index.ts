@@ -21,6 +21,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
   
+  // refactor needed. getRoutes used in plugin-store.
   registerMethod('getRoutes', getRoutes);
   const { routesPath, isConfigRoutes } = getRoutes({
     rootDir,
