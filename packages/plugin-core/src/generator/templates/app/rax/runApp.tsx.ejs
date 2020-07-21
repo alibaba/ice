@@ -6,7 +6,7 @@ import UniversalDriver from 'driver-universal';
 import pathRedirect from './pathRedirect';
 import emitCycles from './common/emitCycles';
 import createApp from './common/createApp';
-import createMiniappHistory from './common/createMiniappHistory';
+import { createHistory } from './common/history';
 
 const INITIAL_DATA_FROM_SSR = '__INITIAL_DATA__';
 const initialDataFromSSR = global[INITIAL_DATA_FROM_SSR];
@@ -78,7 +78,7 @@ function runApp(appConfig = {}) {
 
   // In MiniApp, it needn't return App Component
   if (isMiniApp || isWeChatMiniProgram) {
-    createMiniappHistory(routes);
+    createHistory({ routes });
     return;
   }
 

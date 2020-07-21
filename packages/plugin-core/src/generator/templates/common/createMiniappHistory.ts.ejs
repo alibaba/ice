@@ -1,7 +1,0 @@
-import { createMiniAppHistory } from 'miniapp-history';
-
-export default function (appConfig = {}) {
-  const { routes } = appConfig;
-  window.history = createMiniAppHistory(routes);
-  window.location = window.history.location;
-}
