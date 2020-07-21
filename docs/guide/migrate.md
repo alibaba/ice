@@ -7,7 +7,7 @@ order: 4
 
 飞冰的脚手架从 `ice-scripts@1.x` 到 `ice-scripts@2.x` 到 icejs 经过了三个大的版本变化，这些版本变化都是结合我们的业务实践以及用户诉求不断演进的，在能力和规范性上都在不断提高，核心的一些差别：
 
-|      纬度\版本     |    icejs 1.x    |  ice-scripts 2.x   |  ice-scripts 1.x  |
+|      维度\版本     |    icejs 1.x    |  ice-scripts 2.x   |  ice-scripts 1.x  |
 |-------------------|-------------------|-------------------|-------------------|
 |  定位             |   研发框架        |       构建工具       |     构建工具        |
 |  配置文件         |  build.json      |      ice.config.js  |  package.json(buildConfig) |
