@@ -23,8 +23,8 @@ class ErrorBoundary extends React.Component<IProps, IState> {
     Fallback: ErrorBoundaryFallback,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       error: null,
       info: {
