@@ -17,6 +17,9 @@
     { "path": "packages/plugin-ssr" },
     { "path": "packages/plugin-fast-refresh" },
     { "path": "packages/plugin-miniapp" },
+    { "path": "packages/renderer-react" },
+    { "path": "packages/renderer-rax" },
+    { "path": "packages/renderer-miniapp" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
     { "path": "packages/raxjs" }

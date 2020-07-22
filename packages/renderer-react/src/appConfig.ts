@@ -11,4 +11,4 @@ function getAppConfig() {
 export {
   setAppConfig,
   getAppConfig
-}
+};

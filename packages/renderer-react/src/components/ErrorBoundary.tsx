@@ -23,12 +23,15 @@ class ErrorBoundary extends React.Component<IProps, IState> {
     Fallback: ErrorBoundaryFallback,
   };
 
-  state = {
-    error: null,
-    info: {
-      componentStack: ''
-    }
-  };
+  constructor() {
+    super();
+    this.state = {
+      error: null,
+      info: {
+        componentStack: ''
+      }
+    };
+  }
 
   componentDidCatch(error: Error, info: IErrorInfo): void {
     const { onError } = this.props;

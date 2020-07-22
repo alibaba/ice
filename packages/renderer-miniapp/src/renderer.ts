@@ -1,10 +1,9 @@
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
-import { createApp, createHistory, staticConfig } from './common';
 
-function renderMiniApp(appConfig = {}) {
+function renderer({ appConfig, createApp, createHistory, staticConfig }) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  createApp(appConfig, <%- buildConfig %>, { env });
+  createApp(appConfig, {}, { env });
   createHistory({ routes: staticConfig.routes });
-}
+};
 
-export default renderMiniApp;
+export default renderer;

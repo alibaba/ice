@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "jsx": "react",
+    "jsx": "preserve",
     "experimentalDecorators": true,
     "declaration": true,
     "sourceMap": false,

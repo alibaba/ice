@@ -1,21 +1,27 @@
+import { createApp, emitLifeCycles, staticConfig, createHistory } from './common';
 <% if(isMiniapp){ %>
-  import renderMiniApp from './renderMiniApp';
+  import miniappRenderer from 'renderer-miniapp';
 <% } else { %>
-  import { renderReactApp } from './renderReactApp';
+  import reactRenderer from 'renderer-react';
 <% } %>
 
 <% if (globalStyle) {%>
   import '../<%= globalStyle %>'
 <% } %>
 
-function runApp(appConfig) {
+export function runApp(appConfig) {
   <% if(isMiniapp){ %>
-    renderMiniApp(appConfig);
-  <% } else{ %>
-    renderReactApp(appConfig);
+    miniappRenderer({
+      appConfig,
+      createApp,
+      staticConfig,
+      createHistory
+    });
+  <% } else { %>
+    reactRenderer({
+      appConfig,
+      emitLifeCycles,
+      createApp,
+    });
   <% } %>
-}
-
-export {
-  runApp
-}
+};

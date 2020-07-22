@@ -4,9 +4,6 @@ import * as ReactDOMServer from 'react-dom/server';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import { ErrorBoundary } from './components';
 import { setAppConfig } from './appConfig';
-import { IAppConfig } from './types';
-import { createApp, emitLifeCycles } from './common';
-<% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export interface IContext {
   initialData?: any;
@@ -14,12 +11,12 @@ export interface IContext {
   pathname?: string;
 }
 
-function renderReactAppWithSSR(appConfig: IAppConfig, context: IContext) {
+function renderReactAppWithSSR(appConfig: any, context: IContext) {
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }
 
-function renderReactApp(appConfig = {}) {
+function renderReactApp({ appConfig, createApp, emitLifeCycles }) {
   // set appConfig to application life cycle
   setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
@@ -30,29 +27,34 @@ function renderReactApp(appConfig = {}) {
   let pageInitialProps = {};
 
   // ssr enabled and the server has returned data
+  // @ts-ignore
   if (window.__ICE_APP_DATA__) {
+    // @ts-ignore
     initialData = window.__ICE_APP_DATA__;
+    // @ts-ignore
     pageInitialProps = window.__ICE_PAGE_PROPS__;
-    renderApp(appConfig, { initialData, pageInitialProps });
+    renderApp(appConfig, { initialData, pageInitialProps, createApp, emitLifeCycles });
   } else {
     // ssr not enabled, or SSR is enabled but the server does not return data
+    // eslint-disable-next-line
     if (appConfig.app && appConfig.app.getInitialData) {
       (async() => {
         // @ts-ignore
         initialData = await appConfig.app.getInitialData();
-        renderApp(appConfig, { initialData, pageInitialProps });
+        renderApp(appConfig, { initialData, pageInitialProps, createApp, emitLifeCycles });
       })();
     } else {
-      renderApp(appConfig);
+      renderApp(appConfig, { createApp, emitLifeCycles });
     }
   }
 }
 
-function renderApp(appConfig: IAppConfig, context?: IContext) {
+function renderApp(appConfig: any, context?: any) {
+  const { createApp, emitLifeCycles } = context;
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, appConfig: modifiedAppConfig } = createApp(appConfig, <%- buildConfig %>, { env });
-  const { modifyDOMRender } = runtime
-  const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app
+  const { runtime, appConfig: modifiedAppConfig } = createApp(appConfig, {}, { env });
+  const { modifyDOMRender } = runtime;
+  const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
 
@@ -64,7 +66,7 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
         <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
           {rootApp}
         </ErrorBoundary>
-      )
+      );
     }
     return rootApp;
   }
@@ -81,6 +83,7 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
     if (modifyDOMRender) {
       return modifyDOMRender({ App, appMountNode });
     } else {
+      // @ts-ignore
       return ReactDOM[window.__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
     }
   }
@@ -89,4 +92,6 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
 export {
   renderReactApp,
   renderReactAppWithSSR
-}
+};
+
+export default renderReactApp;
