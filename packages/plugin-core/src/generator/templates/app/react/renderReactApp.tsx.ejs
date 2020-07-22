@@ -14,12 +14,12 @@ export interface IContext {
   pathname?: string;
 }
 
-function renderAppWithSSR(appConfig: IAppConfig, context: IContext) {
+function renderReactAppWithSSR(appConfig: IAppConfig, context: IContext) {
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }
 
-function render(appConfig = {}) {
+function renderReactApp(appConfig = {}) {
   // set appConfig to application life cycle
   setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
@@ -87,6 +87,6 @@ function renderApp(appConfig: IAppConfig, context?: IContext) {
 }
 
 export {
-  render,
-  renderAppWithSSR
+  renderReactApp,
+  renderReactAppWithSSR
 }

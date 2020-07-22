@@ -1,7 +1,7 @@
 <% if(isMiniapp){ %>
-  import renderMiniapp from './renderMiniapp';
+  import renderMiniApp from './renderMiniApp';
 <% } else { %>
-  import { render } from './render';
+  import { renderReactApp } from './renderReactApp';
 <% } %>
 
 <% if (globalStyle) {%>
@@ -10,9 +10,9 @@
 
 function runApp(appConfig) {
   <% if(isMiniapp){ %>
-    renderMiniapp(appConfig);
+    renderMiniApp(appConfig);
   <% } else{ %>
-    render(appConfig);
+    renderReactApp(appConfig);
   <% } %>
 }
 

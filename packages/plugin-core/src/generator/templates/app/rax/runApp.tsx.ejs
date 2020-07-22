@@ -3,8 +3,8 @@ import { Navigation, TabBar } from 'rax-pwa';
 import { useRouter } from 'rax-use-router';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import UniversalDriver from 'driver-universal';
-import { createApp, emitLifeCycles, createHistory, pathRedirect, getHistory } from './common';
-import staticConfig from './common/staticConfig';
+import { createApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig } from './common';
+<% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 const INITIAL_DATA_FROM_SSR = '__INITIAL_DATA__';
 const initialDataFromSSR = global[INITIAL_DATA_FROM_SSR];
@@ -80,7 +80,6 @@ function runApp(appConfig = {}) {
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   const history = getHistory();
-  console.log('history======>:', history);
   pathRedirect(history, routes);
 
   let _initialComponent;
@@ -126,5 +125,5 @@ function runApp(appConfig = {}) {
 }
 
 
-export default runApp;
+export { runApp };
 

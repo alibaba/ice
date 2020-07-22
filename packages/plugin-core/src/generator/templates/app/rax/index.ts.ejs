@@ -1,5 +1,10 @@
-import runApp from './runApp';
+<%- iceImports %>
+export { runApp } from './runApp';
 
 export * from './common';
 
-export { runApp };
+<% if (iceExports) { %>
+  export {
+    <%- iceExports %>
+  }
+<% } %>

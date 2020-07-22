@@ -1,6 +1,5 @@
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
-import { createApp, createHistory } from './common';
-import staticConfig from './common/staticConfig';
+import { createApp, createHistory, staticConfig } from './common';
 
 function renderMiniApp(appConfig = {}) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
