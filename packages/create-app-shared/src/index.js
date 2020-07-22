@@ -10,13 +10,13 @@ import {
   removeNativeEventListener
 } from './nativeEventListener';
 
-function createShareAPI({ withRourer, createElement, useEffect, loadRuntimeModules }) {
+function createShareAPI({ withRouter, createElement, useEffect, loadRuntimeModules }) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
   return {
     createApp: createApp({ loadRuntimeModules }),
 
     // history api
-    withRouter: enhanceWithRouter({ withRourer, createElement }),
+    withRouter: enhanceWithRouter({ withRouter, createElement }),
     createHistory,
     getHistory,
 
