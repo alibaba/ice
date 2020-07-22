@@ -57,8 +57,7 @@ function App(props) {
   );
 }
 
-function renderer(appConfig, api) {
-  const { createApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig } = api;
+function renderer({ appConfig, createApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig }) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const {
     runtime,

@@ -2,7 +2,7 @@ import raxRenderer from 'renderer-rax';
 import { createApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig } from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
-function runApp(appConfig) {
+export function runApp(appConfig) {
   raxRenderer({
     appConfig,
     createApp,
