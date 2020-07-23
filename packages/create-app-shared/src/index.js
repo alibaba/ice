@@ -13,7 +13,7 @@ import {
 function createShareAPI({ withRouter, createElement, useEffect, loadRuntimeModules }) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
   return {
-    createBaseApp: createBaseApp({ loadRuntimeModules }),
+    createBaseApp: createBaseApp({ loadRuntimeModules, createElement }),
 
     // history api
     withRouter: enhanceWithRouter({ withRouter, createElement }),

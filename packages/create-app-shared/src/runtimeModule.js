@@ -2,13 +2,12 @@ import { createHistory } from './history';
 
 class RuntimeModule {
   constructor(appConfig, buildConfig, context) {
-    this.renderRouter = () => () => <div>No route</div>;
+    this.renderRouter = () => () => context.createElement('div', null, 'No route');
     this.AppProvider = [];
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
     this.context = context;
     this.modifyDOMRender = null;
-    this.createElement = null;
     this.modifyRoutesRegistration = [];
     this.wrapperRouteRegistration = [];
   }
@@ -43,10 +42,13 @@ class RuntimeModule {
     if (!this.AppProvider.length) return null;
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
       return ({ children, ...rest }) => {
-        return (
-          <ProviderComponent {...rest}>
-            {CurrentProvider ? <CurrentProvider {...rest}>{children}</CurrentProvider> : children}
-          </ProviderComponent>
+        const element = CurrentProvider
+          ? this.context.createElement(CurrentProvider, {...rest})
+          : this.context.createElement(children);
+        return this.context.createElement(
+          ProviderComponent,
+          {...rest},
+          element
         );
       };
     });

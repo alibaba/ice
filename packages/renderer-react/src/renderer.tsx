@@ -11,15 +11,11 @@ export interface IContext {
   pathname?: string;
 }
 
-function renderReactAppWithSSR(appConfig: any, context: IContext) {
-  appConfig.router.type = 'static';
-  return renderApp(appConfig, context);
-}
-
-function renderReactApp({ appConfig, createBaseApp, emitLifeCycles }) {
+function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
   // set appConfig to application life cycle
   setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
+    appConfig.router.type = 'static';
     return;
   }
 
@@ -58,7 +54,9 @@ function renderApp(appConfig: any, context?: any) {
   const { modifyDOMRender } = runtime;
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
   const AppProvider = runtime.composeAppProvider();
+  console.log('AppProvider222===>:', AppProvider);
   const AppRouter = runtime.getAppRouter();
+  console.log('AppRourer=====>:',  AppRouter);
 
   function App() {
     const appRouter = <AppRouter />;
@@ -91,9 +89,4 @@ function renderApp(appConfig: any, context?: any) {
   }
 }
 
-export {
-  renderReactApp,
-  renderReactAppWithSSR
-};
-
-export default renderReactApp;
+export default reactRenderer;

@@ -45,7 +45,7 @@ function _handleAppLifeCycle(appConfig, env) {
   }
 }
 
-function createBaseApp({ loadRuntimeModules }) {
+function createBaseApp({ loadRuntimeModules, createElement }) {
   return (appConfig, buildConfig, context = {}) => {
 
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
@@ -60,6 +60,8 @@ function createBaseApp({ loadRuntimeModules }) {
       history = createHistory({ type, basename });
       appConfig.router.history = history;
     }
+
+    context.createElement = createElement;
 
     // Load runtime modules
     const runtime = new RuntimeModule(appConfig, buildConfig, context);
