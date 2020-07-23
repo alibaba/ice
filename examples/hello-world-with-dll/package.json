@@ -1,0 +1,23 @@
+{
+  "name": "example-hello-world-with-dll",
+  "description": "hello world",
+  "dependencies": {
+    "ice.js": "^1.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.5"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "start:withDll": "icejs start --withDll",
+    "build": "icejs build",
+    "build:dll": "icejs build --dll",
+    "build:withDll": "icejs build --withDll"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

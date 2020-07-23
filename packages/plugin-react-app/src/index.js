@@ -4,6 +4,7 @@ const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
@@ -151,7 +152,37 @@ module.exports = ({
   }
 
   config.name('web');
-  registerTask('web', config);
+  if (!commandArgs.dll) {
+    registerTask('web', config);
+  } else if(commandArgs.dll) {
+    // webpack config for dll
+    const configDLL = getWebpackConfig(mode);
+
+    configDLL
+    .plugin('SimpleProgressPlugin')
+      .tap(([args]) => {
+        return [{
+          ...args,
+          progressOptions: {
+            clear: true,
+            callback: () => {
+              console.log();
+            }
+          }
+        }];
+      })
+      .end()
+    .plugin('DefinePlugin')
+      .use(webpack.DefinePlugin, [defineVariables])
+      .end()
+    .plugin('dllPlugin').use(webpack.DllPlugin, [{
+      name: '_dll_[name]',
+      path: path.join(rootDir, 'dll', '[name].manifest.json')
+    }]);
+
+    configDLL.name('dll');
+    registerTask('dll', configDLL);
+  }
 
   // sort config key to make sure entry config is always excute before injectBabel
   const configKeys = Object.keys(defaultConfig).sort();
@@ -194,10 +225,37 @@ module.exports = ({
     }
     return optionDefination;
   }));
+  registerCliOption({
+    name: 'dll',
+    commands: ['build']
+  });
+  registerCliOption({
+    name: 'withDll',
+    commands: ['start', 'build']
+  });
 
   onGetWebpackConfig((chainConfig) => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
+
+    if (commandArgs.dll) {
+      // dll generation
+      chainConfig.entryPoints.clear();
+      chainConfig.entry('react').add('react');
+      chainConfig.entry('react').add('react-dom');
+
+      chainConfig.output.path(path.join(rootDir, 'dll'));
+      chainConfig.output.library('_dll_[name]');
+      chainConfig.output.filename('[name].dll.js');
+    } else if(commandArgs.withDll) {
+      // use generated dll
+      chainConfig.plugin('DllReferencePlugin').use(webpack.DllReferencePlugin, [{
+        manifest: require(path.join(rootDir, 'dll', 'react.manifest.json'))
+      }]);
+      chainConfig.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
+        filepath: path.join(rootDir, 'dll', 'react.dll.js')
+      }]).after('HtmlWebpackPlugin');
+    }
   });
 
   if (command === 'test') {
