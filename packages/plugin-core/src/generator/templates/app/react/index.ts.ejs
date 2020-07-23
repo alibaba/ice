@@ -1,15 +1,13 @@
 export { runApp } from './runApp';
 export * from './common';
 
-<%- iceImports %>
-
 <% if (!isMiniapp) {%>
   export * from './types';
-  // export * from './lazy';
-  // export * from './components';
 
   export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 <% } %>
+
+<%- iceImports %>
 
 <% if (iceExports) { %>
   export {

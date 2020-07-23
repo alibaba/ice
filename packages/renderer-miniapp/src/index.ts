@@ -1,3 +1,3 @@
-import renderer from './renderer';
+import miniappRenderer from './miniappRenderer';
 
-export default renderer;
+export default miniappRenderer;

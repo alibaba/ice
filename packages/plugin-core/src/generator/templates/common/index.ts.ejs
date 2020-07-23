@@ -30,18 +30,35 @@ const {
   loadStaticModules
 });
 
+const history = getHistory();
+
+function initializeApp(appConfig, renderer) {
+  renderer({
+    appConfig,
+    staticConfig,
+    createBaseApp,
+    createHistory,
+    getHistory,
+    emitLifeCycles,
+    getHistory,
+    pathRedirect
+  })
+};
+
 export {
-  createBaseApp,
-  staticConfig,
+  // router api
   withRouter,
-  createHistory,
-  getHistory,
-  emitLifeCycles,
+  history,
+
+  // LifeCycles api
   usePageShow,
   usePageHide,
   withPageLifeCycle,
-  pathRedirect,
+
+  // events api
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener
-}
+};
+
+export default initializeApp;

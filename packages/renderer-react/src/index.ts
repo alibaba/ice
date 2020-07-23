@@ -1,4 +1,4 @@
-import renderer from './renderer';
+import reactRenderer from './reactRenderer';
 import lazy from './lazy';
 import { ErrorBoundary } from './components';
 
@@ -7,4 +7,4 @@ export {
   ErrorBoundary
 };
 
-export default renderer;
+export default reactRenderer;

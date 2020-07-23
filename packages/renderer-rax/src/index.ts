@@ -1,3 +1,3 @@
-import renderer from './renderer';
+import raxRenderer from './raxRenderer';
 
-export default renderer;
+export default raxRenderer;

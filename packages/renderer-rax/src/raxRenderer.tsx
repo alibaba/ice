@@ -5,9 +5,6 @@ import { useRouter } from 'rax-use-router';
 import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
-const INITIAL_DATA_FROM_SSR = '__INITIAL_DATA__';
-const initialDataFromSSR = global[INITIAL_DATA_FROM_SSR];
-
 // eslint-disable-next-line
 const DEFAULE_ROOT_ID = document.getElementById('root');
 
@@ -57,7 +54,7 @@ function App(props) {
   );
 }
 
-function renderer({ appConfig, createBaseApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig }) {
+function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig }) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const {
     runtime,
@@ -70,12 +67,6 @@ function renderer({ appConfig, createBaseApp, emitLifeCycles, createHistory, pat
   }
 
   const { routes } = staticConfig;
-
-  // In MiniApp, it needn't return App Component
-  if (isMiniApp || isWeChatMiniProgram) {
-    createHistory({ routes });
-    return;
-  }
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   const history = getHistory();
@@ -124,5 +115,5 @@ function renderer({ appConfig, createBaseApp, emitLifeCycles, createHistory, pat
 }
 
 
-export default renderer;
+export default raxRenderer;
 

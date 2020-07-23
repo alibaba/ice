@@ -1,0 +1,15 @@
+<% if(isMiniapp){ %>
+  import miniappRenderer from 'renderer-miniapp';
+<% } else { %>
+  import reactRenderer from 'renderer-react';
+<% } %>
+import initializeApp from './common';
+<% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
+
+export function runApp(appConfig) {
+  <% if(isMiniapp){ %>
+    initializeApp(appConfig, miniappRenderer);
+  <% } else { %>
+    initializeApp(appConfig, reactRenderer);
+  <% } %>
+};
