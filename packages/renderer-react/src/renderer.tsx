@@ -54,9 +54,7 @@ function renderApp(appConfig: any, context?: any) {
   const { modifyDOMRender } = runtime;
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
   const AppProvider = runtime.composeAppProvider();
-  console.log('AppProvider222===>:', AppProvider);
   const AppRouter = runtime.getAppRouter();
-  console.log('AppRourer=====>:',  AppRouter);
 
   function App() {
     const appRouter = <AppRouter />;

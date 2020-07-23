@@ -1,9 +1,11 @@
 let staticConfig = {};
 
 try {
-  staticConfig = require('../../src/app.json');
+  <% if (staticConfig) {%>
+    import '../../<%= staticConfig %>'<% }
+  %>
 } catch (error) {
   // ignore error
 }
 
-export default staticConfig.default || staticConfig;
+export default staticConfig.__esModule ? staticConfig.default : staticConfig;

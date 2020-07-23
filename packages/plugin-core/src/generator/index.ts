@@ -117,6 +117,7 @@ export default class Generator {
   }
 
   public parseRenderData() {
+    const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     this.renderData = {
       ...this.renderData,
@@ -125,6 +126,7 @@ export default class Generator {
       ...this.getExportStr('addIceTypesExport', ['iceTypesImports', 'iceTypesExports']),
       ...this.getExportStr('addIceAppConfigTypes', ['iceIAppConfigTypesImports', 'iceIAppConfigTypesExports']),
       ...this.getExportStr('addIceAppConfigAppTypes', ['iceIAppConfigAppTypesImports', 'iceIAppConfigAppTypesExports']),
+      staticConfig: staticConfig.length && staticConfig[0],
       globalStyle: globalStyles.length && globalStyles[0],
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
