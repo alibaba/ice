@@ -2,8 +2,8 @@ let staticConfig = {};
 
 try {
   <% if (staticConfig) {%>
-    import '../../<%= staticConfig %>'<% }
-  %>
+    staticConfig = require('../../<%= staticConfig %>');
+  <% } %>
 } catch (error) {
   // ignore error
 }

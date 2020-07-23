@@ -1,4 +1,4 @@
-import { runApp } from 'raxapp';
+import { runApp } from 'rax-app';
 
 runApp({
   onShow() {

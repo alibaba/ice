@@ -1,5 +1,5 @@
 import { createElement } from 'rax';
-import { usePageShow, usePageHide } from 'raxapp';
+import { usePageShow, usePageHide } from 'rax-app';
 import View from 'rax-view';
 import Text from 'rax-text';
 import Logo from '@/components/Logo';
