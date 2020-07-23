@@ -4,6 +4,7 @@ const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
@@ -26,7 +27,7 @@ module.exports = ({
   onHook,
   log,
 }) => {
-  const { command, rootDir, webpack, commandArgs, pkg } = context;
+  const { command, rootDir, webpack, commandArgs, pkg, userConfig } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
   modifyUserConfig((userConfig) => {
@@ -43,6 +44,19 @@ module.exports = ({
     validation: 'boolean',
     defaultValue: false
   }].forEach((item) => registerUserConfig(item));
+  ['dll', 'withDll'].forEach(name => {
+    registerUserConfig({
+      name,
+      validation: 'boolean',
+      defaultValue: false
+    });
+  });
+  // dllEntry: { [string]: string[] }
+  registerUserConfig({
+    name: 'dllEntry',
+    validation: 'object',
+    defaultValue: {}
+  });
 
   // modify user config to keep excute order
   modifyUserConfig((userConfig) => {
@@ -151,7 +165,38 @@ module.exports = ({
   }
 
   config.name('web');
-  registerTask('web', config);
+
+  if (!userConfig.dll) {
+    registerTask('web', config);
+  } else {
+    // webpack config for dll
+    const configDLL = getWebpackConfig(mode);
+
+    configDLL
+    .plugin('SimpleProgressPlugin')
+      .tap(([args]) => {
+        return [{
+          ...args,
+          progressOptions: {
+            clear: true,
+            callback: () => {
+              console.log();
+            }
+          }
+        }];
+      })
+      .end()
+    .plugin('DefinePlugin')
+      .use(webpack.DefinePlugin, [defineVariables])
+      .end()
+    .plugin('dllPlugin').use(webpack.DllPlugin, [{
+      name: '_dll_[name]',
+      path: path.join(rootDir, 'dll', '[name].manifest.json')
+    }]);
+
+    configDLL.name('dll');
+    registerTask('dll', configDLL);
+  }
 
   // sort config key to make sure entry config is always excute before injectBabel
   const configKeys = Object.keys(defaultConfig).sort();
@@ -198,6 +243,35 @@ module.exports = ({
   onGetWebpackConfig((chainConfig) => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
+
+    if (userConfig.dll) {
+      // dll generation
+      chainConfig.entryPoints.clear();
+
+      const entryKeys = Object.keys(userConfig.dllEntry);
+      entryKeys.forEach(entryKey => {
+        const entryValues = userConfig.dllEntry[entryKey];
+        entryValues.forEach(entryVal => {
+          chainConfig.entry(entryKey).add(entryVal);
+        });
+      });
+
+      chainConfig.output.path(path.join(rootDir, 'dll'));
+      chainConfig.output.library('_dll_[name]');
+      chainConfig.output.filename('[name].dll.js');
+    } else if(userConfig.withDll) {
+      // use generated dll
+      const entryKeys = Object.keys(userConfig.dllEntry);
+      entryKeys.forEach(entryKey => {
+        chainConfig.plugin('DllReferencePlugin').use(webpack.DllReferencePlugin, [{
+          manifest: require(path.join(rootDir, 'dll', `${entryKey}.manifest.json`))
+        }]);
+      });
+
+      chainConfig.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
+        filepath: path.resolve(rootDir, 'dll', '*.dll.js')
+      }]).after('HtmlWebpackPlugin');
+    }
   });
 
   if (command === 'test') {
