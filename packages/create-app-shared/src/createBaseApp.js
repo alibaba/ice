@@ -13,9 +13,7 @@ const DEFAULE_APP_CONFIG = {
   }
 };
 
-let launched = false;
-
-function _handleAppConfig(appConfig, env) {
+function _handleAppLifeCycle(appConfig, env) {
   const { isWeChatMiniProgram, isByteDanceMicroApp, isMiniApp } = env;
   const { onLaunch, onShow, onError, onHide, onTabItemClick } = appConfig;
   // multi-end valid lifecycle
@@ -47,14 +45,8 @@ function _handleAppConfig(appConfig, env) {
   }
 }
 
-function createApp({ loadRuntimeModules }) {
+function createBaseApp({ loadRuntimeModules }) {
   return (appConfig, buildConfig, context = {}) => {
-    if (launched) throw new Error('Error: runApp can only be called once.');
-    if (appConfig && Object.prototype.toString.call(appConfig) !== '[object Object]') {
-      throw new Error('Error: the runApp method param can only be Object.');
-    }
-
-    launched = true;
 
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
@@ -73,8 +65,8 @@ function createApp({ loadRuntimeModules }) {
     const runtime = new RuntimeModule(appConfig, buildConfig, context);
     loadRuntimeModules(runtime);
 
-    // Set app lifeCyle
-    _handleAppConfig(appConfig, env);
+    // Handle app lifeCyle
+    _handleAppLifeCycle(appConfig, env);
 
     return {
       history,
@@ -84,4 +76,4 @@ function createApp({ loadRuntimeModules }) {
   };
 }
 
-export default createApp;
+export default createBaseApp;

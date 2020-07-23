@@ -1,7 +1,7 @@
 import enhanceWithRouter from './enhanceWithRouter';
 import { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
 import emitLifeCycles from './emitLifeCycles';
-import createApp from './createApp';
+import createBaseApp from './createBaseApp';
 import { createHistory, getHistory } from './history';
 import { pathRedirect } from './utils';
 import {
@@ -13,7 +13,7 @@ import {
 function createShareAPI({ withRouter, createElement, useEffect, loadRuntimeModules }) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
   return {
-    createApp: createApp({ loadRuntimeModules }),
+    createBaseApp: createBaseApp({ loadRuntimeModules }),
 
     // history api
     withRouter: enhanceWithRouter({ withRouter, createElement }),

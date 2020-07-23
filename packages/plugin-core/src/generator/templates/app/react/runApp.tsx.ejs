@@ -1,4 +1,4 @@
-import { createApp, emitLifeCycles, staticConfig, createHistory } from './common';
+import { createBaseApp, emitLifeCycles, staticConfig, createHistory } from './common';
 <% if(isMiniapp){ %>
   import miniappRenderer from 'renderer-miniapp';
 <% } else { %>
@@ -13,7 +13,7 @@ export function runApp(appConfig) {
   <% if(isMiniapp){ %>
     miniappRenderer({
       appConfig,
-      createApp,
+      createBaseApp,
       staticConfig,
       createHistory
     });
@@ -21,7 +21,7 @@ export function runApp(appConfig) {
     reactRenderer({
       appConfig,
       emitLifeCycles,
-      createApp,
+      createBaseApp,
     });
   <% } %>
 };

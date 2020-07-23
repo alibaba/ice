@@ -1,11 +1,11 @@
 import raxRenderer from 'renderer-rax';
-import { createApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig } from './common';
+import { createBaseApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig } from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export function runApp(appConfig) {
   raxRenderer({
     appConfig,
-    createApp,
+    createBaseApp,
     emitLifeCycles,
     createHistory,
     pathRedirect,

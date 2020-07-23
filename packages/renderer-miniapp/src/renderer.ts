@@ -1,8 +1,8 @@
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 
-function renderer({ appConfig, createApp, createHistory, staticConfig }) {
+function renderer({ appConfig, createBaseApp, createHistory, staticConfig }) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  createApp(appConfig, {}, { env });
+  createBaseApp(appConfig, {}, { env });
   createHistory({ routes: staticConfig.routes });
 };
 

@@ -16,7 +16,7 @@ function renderReactAppWithSSR(appConfig: any, context: IContext) {
   return renderApp(appConfig, context);
 }
 
-function renderReactApp({ appConfig, createApp, emitLifeCycles }) {
+function renderReactApp({ appConfig, createBaseApp, emitLifeCycles }) {
   // set appConfig to application life cycle
   setAppConfig(appConfig);
   if (process.env.__IS_SERVER__) {
@@ -26,6 +26,8 @@ function renderReactApp({ appConfig, createApp, emitLifeCycles }) {
   let initialData = {};
   let pageInitialProps = {};
 
+  const context = { initialData, pageInitialProps, createBaseApp, emitLifeCycles };
+
   // ssr enabled and the server has returned data
   // @ts-ignore
   if (window.__ICE_APP_DATA__) {
@@ -33,7 +35,7 @@ function renderReactApp({ appConfig, createApp, emitLifeCycles }) {
     initialData = window.__ICE_APP_DATA__;
     // @ts-ignore
     pageInitialProps = window.__ICE_PAGE_PROPS__;
-    renderApp(appConfig, { initialData, pageInitialProps, createApp, emitLifeCycles });
+    renderApp(appConfig, context);
   } else {
     // ssr not enabled, or SSR is enabled but the server does not return data
     // eslint-disable-next-line
@@ -41,18 +43,18 @@ function renderReactApp({ appConfig, createApp, emitLifeCycles }) {
       (async() => {
         // @ts-ignore
         initialData = await appConfig.app.getInitialData();
-        renderApp(appConfig, { initialData, pageInitialProps, createApp, emitLifeCycles });
+        renderApp(appConfig, context);
       })();
     } else {
-      renderApp(appConfig, { createApp, emitLifeCycles });
+      renderApp(appConfig, context);
     }
   }
 }
 
 function renderApp(appConfig: any, context?: any) {
-  const { createApp, emitLifeCycles } = context;
+  const { createBaseApp, emitLifeCycles } = context;
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, appConfig: modifiedAppConfig } = createApp(appConfig, {}, { env });
+  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, {}, { env });
   const { modifyDOMRender } = runtime;
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
   const AppProvider = runtime.composeAppProvider();

@@ -57,12 +57,12 @@ function App(props) {
   );
 }
 
-function renderer({ appConfig, createApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig }) {
+function renderer({ appConfig, createBaseApp, emitLifeCycles, createHistory, pathRedirect, getHistory, staticConfig }) {
   const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const {
     runtime,
     appConfig: appDynamicConfig
-  } = createApp(appConfig, {}, { env });
+  } = createBaseApp(appConfig, {}, { env });
 
   // Set custom driver
   if (typeof staticConfig.driver !== 'undefined') {
