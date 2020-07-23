@@ -30,8 +30,8 @@ module.exports = ({
   const { command, rootDir, webpack, commandArgs, pkg, userConfig } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
-  modifyUserConfig((userConfig) => {
-    const { modeConfig = {} } = userConfig;
+  modifyUserConfig((config) => {
+    const { modeConfig = {} } = config;
     return modeConfig[appMode] || {};
   });
   // register user config without configWebpack
@@ -59,16 +59,16 @@ module.exports = ({
   });
 
   // modify user config to keep excute order
-  modifyUserConfig((userConfig) => {
-    const configKeys = [...Object.keys(userConfig), 'filename'].sort();
+  modifyUserConfig((config) => {
+    const configKeys = [...Object.keys(config), 'filename'].sort();
     const newConfig = {};
     configKeys.forEach((configKey) => {
       if (configKey !== 'plugins') {
-        newConfig[configKey] = Object.prototype.hasOwnProperty.call(userConfig, configKey)
-          ? userConfig[configKey]
-          : defaultConfig[configKey];;
+        newConfig[configKey] = Object.prototype.hasOwnProperty.call(config, configKey)
+          ? config[configKey]
+          : defaultConfig[configKey];
         // eslint-disable-next-line no-param-reassign
-        delete userConfig[configKey];
+        delete config[configKey];
       }
     });
     // migrate sourcemap to sourceMap
@@ -169,6 +169,9 @@ module.exports = ({
   if (!userConfig.dll) {
     registerTask('web', config);
   } else {
+    if (command === 'start') {
+      log.error('[DLL]: dll config is invalid in start command!');
+    }
     // webpack config for dll
     const configDLL = getWebpackConfig(mode);
 
