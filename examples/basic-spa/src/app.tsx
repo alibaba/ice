@@ -1,5 +1,5 @@
 import React from 'react';
-import { runApp, APP_MODE, IAppConfig } from 'ice';
+import { createApp, APP_MODE, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -34,4 +34,4 @@ const appConfig: IAppConfig = {
   },
 };
 
-runApp(appConfig);
+createApp(appConfig);

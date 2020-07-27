@@ -1,4 +1,10 @@
-export { runApp } from './runApp';
+import { runApp } from './runApp';
+
+export {
+  runApp,
+  runApp as createApp
+}
+
 export * from './common';
 
 <% if (!isMiniapp) {%>
