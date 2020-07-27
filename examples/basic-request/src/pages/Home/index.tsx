@@ -3,7 +3,7 @@ import { request, useRequest } from 'ice';
 import service from './service';
 
 const BuiltInRequestDemo1 = () => {
-  console.clear();
+  // console.clear();
 
   async function fetchUser1() {
     const data = await request({ url: '/user' });
@@ -29,7 +29,7 @@ const BuiltInRequestDemo1 = () => {
 };
 
 const BuiltInRequestDemo2 = () => {
-  console.clear();
+  // console.clear();
   const { request: fetchUser, ...rest } = useRequest(service.getUser);
   console.log('通过 Service + useRequest 调用:', {...rest});
 
@@ -39,7 +39,7 @@ const BuiltInRequestDemo2 = () => {
 };
 
 const BuiltInRequestDemo3 = () => {
-  console.clear();
+  // console.clear();
   async function fetchUser1() {
     const data = await request({ url: '/user', instanceName: 'request2' });
     console.log('多实例 + 直接调用 request：', data);
@@ -57,7 +57,7 @@ const BuiltInRequestDemo3 = () => {
 };
 
 const CustomRequestDemo = () => {
-  console.clear();
+  // console.clear();
   const { data, loading, error, request: fetchRepo } = useRequest(service.getRepo);
   console.log('自定义请求进行调用:', { data, loading, error });
   useEffect(() => {

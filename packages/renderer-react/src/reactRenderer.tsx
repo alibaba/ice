@@ -11,9 +11,15 @@ export interface IContext {
   pathname?: string;
 }
 
+let _createBaseApp;
+let _emitLifeCycles;
+
 function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
+  _createBaseApp = createBaseApp;
+  _emitLifeCycles = emitLifeCycles;
   // set appConfig to application life cycle
   setAppConfig(appConfig);
+
   if (process.env.__IS_SERVER__) {
     appConfig.router.type = 'static';
     return;
@@ -22,8 +28,6 @@ function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
   let initialData = {};
   let pageInitialProps = {};
 
-  const context = { initialData, pageInitialProps, createBaseApp, emitLifeCycles };
-
   // ssr enabled and the server has returned data
   // @ts-ignore
   if (window.__ICE_APP_DATA__) {
@@ -31,7 +35,7 @@ function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
     initialData = window.__ICE_APP_DATA__;
     // @ts-ignore
     pageInitialProps = window.__ICE_PAGE_PROPS__;
-    renderApp(appConfig, context);
+    renderApp(appConfig, { initialData, pageInitialProps });
   } else {
     // ssr not enabled, or SSR is enabled but the server does not return data
     // eslint-disable-next-line
@@ -39,18 +43,17 @@ function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
       (async() => {
         // @ts-ignore
         initialData = await appConfig.app.getInitialData();
-        renderApp(appConfig, context);
+        renderApp(appConfig, { initialData, pageInitialProps });
       })();
     } else {
-      renderApp(appConfig, context);
+      renderApp(appConfig, {});
     }
   }
 }
 
 function renderApp(appConfig: any, context?: any) {
-  const { createBaseApp, emitLifeCycles } = context;
-  const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
-  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, {}, { env });
+  context.env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
+  const { runtime, appConfig: modifiedAppConfig } = _createBaseApp(appConfig, {}, context);
   const { modifyDOMRender } = runtime;
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
   const AppProvider = runtime.composeAppProvider();
@@ -70,7 +73,7 @@ function renderApp(appConfig: any, context?: any) {
   }
 
   // Emit app launch cycle
-  emitLifeCycles();
+  _emitLifeCycles();
 
   if (process.env.__IS_SERVER__) {
     return ReactDOMServer.renderToString(<App />);

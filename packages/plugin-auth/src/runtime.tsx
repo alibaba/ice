@@ -23,7 +23,9 @@ const wrapperComponentFn = (authConfig) => (PageComponent) => {
 };
 
 export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {
-  const initialData = context ? context.initialData : {};
+  console.log('context======>:', context);
+  const initialData = context && context.initialData ? context.initialData : {};
+  console.log('initialData====>:', initialData);
   const initialAuth = initialData.auth || {} ;
   const authConfig = appConfig.auth || {};
 
