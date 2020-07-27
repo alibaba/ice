@@ -45,10 +45,13 @@ function _handleAppLifeCycle(appConfig, env) {
   }
 }
 
-function createBaseApp({ loadRuntimeModules, createElement }) {
+function createBaseApp({ loadRuntimeModules, loadStaticModules, createElement }) {
   return (appConfig, buildConfig, context = {}) => {
 
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
+
+    // load module to run before createApp ready
+    loadStaticModules(appConfig);
 
     const { env } = context;
 
