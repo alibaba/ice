@@ -51,6 +51,24 @@ order: 1
 - 类型：`string`
 - 默认值：`''`
 
+#### shouldAssetsRemove
+
+- 判断页面资源是否持久化保留，选填
+- 类型：`Function(assetUrl, element)`
+- 默认值：`() => true`
+
+> 应用资源在 AppRouter 初始化后将默认标识为框架应用资源，在子应用切换过程中不会被移除。但在框架应用开启懒加载或者一些资源通过脚本异步插入到页面的场景下，这类资源无法正确被标识为不需要移除的资源，可以通过 `shouldAssetsRemove` 方式进行规则判断
+
+```jsx
+<AppRouter
+  shouldAssetsRemove={(url, el) => {
+    // 如果资源 url 链接包含 icestark.com 则标识为框架应用资源，子应用切换时不需要移除
+    return url.match(/icestark.com/) ? false : true;
+  }}
+>
+</AppRouter>
+```
+
 ### AppRoute
 
 子应用注册组件，包含如下 props 属性：
@@ -126,6 +144,12 @@ order: 1
 - 子应用默认加载的 DOM 节点的 id，选填
 - 类型：`string`
 - 默认值：`icestarkNode`
+
+#### hashType
+
+- 子应用路由以 `hash` 路由的方式接入
+- 类型：`boolean`
+- 默认值：`false`
 
 #### sandbox
 
