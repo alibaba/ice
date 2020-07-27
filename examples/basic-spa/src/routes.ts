@@ -1,9 +1,11 @@
+import { lazy } from 'ice';
 import Layout from '@/layouts';
 import wrapperPage from '@/components/WrapperPage';
 
-import Dashboard from '@/pages/Dashboard';
-import Home from '@/pages/Home';
-import Notfound from '@/pages/NotFound';
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const Home = lazy(() => import('@/pages/Home'));
+const About = lazy(() => import('@/pages/About'));
+const Notfound = lazy(() => import('@/pages/NotFound'));
 
 export default [
   {
@@ -15,6 +17,11 @@ export default [
         exact: true,
         component: Dashboard,
         wrappers: [wrapperPage]
+      },
+      {
+        path: '/about',
+        exact: true,
+        component: About
       },
       {
         path: '/',

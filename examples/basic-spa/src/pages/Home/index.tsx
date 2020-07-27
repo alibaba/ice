@@ -1,7 +1,20 @@
 import React from 'react';
-import { Link, usePageShow, usePageHide } from 'ice';
+import { Link, usePageShow, usePageHide, helpers, logger, config  } from 'ice';
+
+logger.debug('helpers from ice', helpers.urlParse);
+logger.debug('logger from ice', logger.debug);
+
+logger.info('=== info ===');
+logger.warn('=== warn ===');
+logger.error('=== error ===');
+logger.debug('=== debug ===');
+logger.trace('=== trace ===');
 
 export default function Home(props) {
+
+  logger.info('Home props', props);
+  logger.info('render home config.appId', config.appId);
+
   usePageShow(() => {
     console.log('page show....');
   });

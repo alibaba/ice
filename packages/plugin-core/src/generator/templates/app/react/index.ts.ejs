@@ -2,6 +2,7 @@ export { runApp } from './runApp';
 export * from './common';
 
 <% if (!isMiniapp) {%>
+  export { lazy, ErrorBoundary } from 'renderer-react';
   export * from './types';
 
   export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
