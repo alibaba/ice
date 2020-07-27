@@ -5,7 +5,13 @@ const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     errorBoundary: true,
-    parseSearchParams: true
+    parseSearchParams: true,
+    onShow() {
+      console.log('app show...');
+    },
+    onHide() {
+      console.log('app hide...');
+    },
   },
   logger: {
     level: APP_MODE === 'build' ? 'error' : 'debug',
@@ -25,13 +31,7 @@ const appConfig: IAppConfig = {
         }
       }
     }
-  },
-  onShow() {
-    console.log('app show...');
-  },
-  onHide() {
-    console.log('app hide...');
-  },
+  }
 };
 
 createApp(appConfig);

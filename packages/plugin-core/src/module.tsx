@@ -1,3 +1,4 @@
+// @ts-ignore
 import { ErrorBoundary } from 'renderer-react';
 
 const module = ({ addProvider, appConfig, wrapperRouteComponent, context }) => {

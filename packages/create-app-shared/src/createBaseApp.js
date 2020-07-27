@@ -15,7 +15,7 @@ const DEFAULE_APP_CONFIG = {
 
 function _handleAppLifeCycle(appConfig, env) {
   const { isWeChatMiniProgram, isByteDanceMicroApp, isMiniApp } = env;
-  const { onLaunch, onShow, onError, onHide, onTabItemClick } = appConfig;
+  const { onLaunch, onShow, onError, onHide, onTabItemClick } = appConfig.app;
   // multi-end valid lifecycle
   // Add app lanuch callback
   addAppLifeCycle(LAUNCH, onLaunch);
