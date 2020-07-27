@@ -207,9 +207,9 @@ export default class App extends React.Component {
 
 > 如果子应用是开启按需加载，为了让子应用资源能够正确加载，需要在开启本地服务的时候设置 `publicPath`，如果子应用基于 icejs 进行开发，可以参考[配置](/docs/guide/basic/build#devPublicPath)。
 
-### UMI 应用如何接入
+### UmiJS 应用如何接入
 
-通过 UMI 提供运行时能力，劫持默认渲染逻辑，新建 `src/app.js` 文件：
+通过 UmiJS 提供运行时能力，劫持默认渲染逻辑，新建 `src/app.js` 文件：
 
 ```js
 import ReactDOM from 'react-dom';
@@ -230,3 +230,5 @@ export function render(oldRender) {
   }
 }
 ```
+
+> 由于 UmiJS 未提供运行时修改路由 basename 的内容，如果涉及到子应用基准路由不固定，可以通过在框架应用动态设置 `window.routerBase` 的方式动态修改
