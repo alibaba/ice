@@ -45,8 +45,8 @@ function _handleAppLifeCycle(appConfig, env) {
   }
 }
 
-function createBaseApp({ loadRuntimeModules, loadStaticModules, createElement }) {
-  return (appConfig, buildConfig, context = {}) => {
+export default ({ loadRuntimeModules, loadStaticModules, createElement }) => {
+  const createBaseApp = (appConfig, buildConfig, context = {}) => {
 
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
@@ -79,6 +79,6 @@ function createBaseApp({ loadRuntimeModules, loadStaticModules, createElement })
       appConfig
     };
   };
-}
 
-export default createBaseApp;
+  return createBaseApp;
+};

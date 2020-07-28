@@ -1,29 +1,40 @@
 import * as React from 'react';
+import * as queryString from 'query-string';
 // @ts-ignore
 import { ErrorBoundary } from '$ice/common';
 
 const module = ({ addProvider, appConfig, wrapperRouteComponent }) => {
-  const { ErrorBoundaryFallback, onErrorBoundaryHander } = appConfig.app;
+  const { app = {} } = appConfig;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, parseSearchParams } = app;
 
-  const wrapperComponent = (PageComponent) => {
+  const wrapperPageComponent = (PageComponent) => {
     const { pageConfig = {} } = PageComponent;
-    const StoreWrapperedComponent = (props) => {
+    const WrapperedPageComponent = (props) => {
+      const searchParams = getSearchParams(parseSearchParams, props.location.search);
       if (pageConfig.errorBoundary) {
         return (
           <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
-            <PageComponent {...props} />
+            <PageComponent {... Object.assign({}, props, searchParams)} />
           </ErrorBoundary>
         );
       }
-      return <PageComponent {...props} />;
+      return <PageComponent {... Object.assign({}, props, searchParams)} />;
     };
-    return StoreWrapperedComponent;
+    return WrapperedPageComponent;
   };
 
-  wrapperRouteComponent(wrapperComponent);
+  wrapperRouteComponent(wrapperPageComponent);
+
   if (appConfig.app && appConfig.app.addProvider) {
     addProvider(appConfig.app.addProvider);
   }
 };
+
+function getSearchParams(parseSearchParams, locationSearch) {
+  if (parseSearchParams) {
+    const searchParams = queryString.parse(locationSearch);
+    return { searchParams };
+  }
+}
 
 export default module;
