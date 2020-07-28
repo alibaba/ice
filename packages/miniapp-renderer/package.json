@@ -1,11 +1,14 @@
 {
-  "name": "renderer-react",
+  "name": "miniapp-renderer",
   "version": "1.6.3",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
   "main": "lib/index.js",
+  "dependencies": {
+    "universal-env": "^3.0.0"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"

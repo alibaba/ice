@@ -1,7 +1,7 @@
 <% if(isMiniapp){ %>
-  import miniappRenderer from 'renderer-miniapp';
+  import miniappRenderer from 'miniapp-renderer';
 <% } else { %>
-  import reactRenderer from 'renderer-react';
+  import reactRenderer from 'react-renderer';
 <% } %>
 import initializeApp from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>

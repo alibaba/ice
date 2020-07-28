@@ -1,5 +1,5 @@
 // @ts-ignore
-import { ErrorBoundary } from 'renderer-react';
+import { ErrorBoundary } from 'react-renderer';
 
 const module = ({ addProvider, appConfig, wrapperRouteComponent, context }) => {
   const { app = {} } = appConfig;
