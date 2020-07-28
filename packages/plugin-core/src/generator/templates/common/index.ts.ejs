@@ -8,6 +8,7 @@ import createShareAPI from 'create-app-shared';
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
+import { setAppConfig } from './appConfig';
 
 const {
   createBaseApp,
@@ -36,6 +37,7 @@ function initializeApp(appConfig, renderer) {
   renderer({
     appConfig,
     staticConfig,
+    setAppConfig,
     createBaseApp,
     createHistory,
     getHistory,
@@ -58,7 +60,11 @@ export {
   // events api
   registerNativeEventListeners,
   addNativeEventListener,
-  removeNativeEventListener
+  removeNativeEventListener,
+
+  // TODO:
+  createBaseApp,
+  emitLifeCycles
 };
 
 export default initializeApp;

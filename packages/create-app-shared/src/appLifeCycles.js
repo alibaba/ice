@@ -1,6 +1,6 @@
 /* eslint no-undef:0 */
 import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from './constants';
-import { isFunction, isUndef } from './utils';
+import { isFunction } from './utils';
 import { isMiniAppPlatform } from './env';
 import { getHistory } from './history';
 import router from './router';
@@ -90,7 +90,7 @@ if (isMiniAppPlatform) {
   window.addEventListener('tabitemclick', ({ options, context }) => {
     emit(TAB_ITEM_CLICK, context, options);
   });
-} else if (!isUndef(document) && !isUndef(window)) {
+} else if (typeof document !== 'undefined' && typeof window !== 'undefined') {
   document.addEventListener('visibilitychange', function() {
     // The app switches from foreground to background
     const history = getHistory();

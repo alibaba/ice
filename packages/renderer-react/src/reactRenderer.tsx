@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import { ErrorBoundary } from './components';
-import { setAppConfig } from './appConfig';
 
 export interface IContext {
   initialData?: any;
@@ -14,14 +13,21 @@ export interface IContext {
 let _createBaseApp;
 let _emitLifeCycles;
 
-function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
+function reactRendererWithSSR({appConfig, createBaseApp, emitLifeCycles, context}) {
   _createBaseApp = createBaseApp;
   _emitLifeCycles = emitLifeCycles;
+  appConfig.router.type = 'static';
+  return renderApp(appConfig, context);
+}
+
+function reactRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycles }) {
+  _createBaseApp = createBaseApp;
+  _emitLifeCycles = emitLifeCycles;
+
   // set appConfig to application life cycle
   setAppConfig(appConfig);
 
   if (process.env.__IS_SERVER__) {
-    appConfig.router.type = 'static';
     return;
   }
 
@@ -51,7 +57,8 @@ function reactRenderer({ appConfig, createBaseApp, emitLifeCycles }) {
   }
 }
 
-function renderApp(appConfig: any, context?: any) {
+function renderApp(appConfig: any, context = {}) {
+  // @ts-ignore
   context.env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const { runtime, appConfig: modifiedAppConfig } = _createBaseApp(appConfig, {}, context);
   const { modifyDOMRender } = runtime;
@@ -89,5 +96,7 @@ function renderApp(appConfig: any, context?: any) {
     }
   }
 }
+
+export { reactRendererWithSSR };
 
 export default reactRenderer;
