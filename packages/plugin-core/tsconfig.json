@@ -3,9 +3,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "lib",
-    "paths": {
-      "$ice/components": ["./src/_components"]
-    }
+    "outDir": "lib"
   }
 }

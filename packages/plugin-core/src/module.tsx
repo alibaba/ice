@@ -1,30 +1,23 @@
+import * as React from 'react';
 // @ts-ignore
-import { ErrorBoundary } from 'react-renderer';
+import { ErrorBoundary } from '$ice/common';
 
-const module = ({ addProvider, appConfig, wrapperRouteComponent, context }) => {
-  const { app = {} } = appConfig;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
-  const { createElement } = context;
+const module = ({ addProvider, appConfig, wrapperRouteComponent }) => {
+  const { ErrorBoundaryFallback, onErrorBoundaryHander } = appConfig.app;
 
   const wrapperComponent = (PageComponent) => {
     const { pageConfig = {} } = PageComponent;
-    const ErrorBoundaryWrapperedComponent = (props) => {
+    const StoreWrapperedComponent = (props) => {
       if (pageConfig.errorBoundary) {
-        return createElement(
-          ErrorBoundary,
-          {
-            Fallback: ErrorBoundaryFallback,
-            onError: onErrorBoundaryHander
-          },
-          createElement(
-            PageComponent,
-            {...props}
-          )
+        return (
+          <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+            <PageComponent {...props} />
+          </ErrorBoundary>
         );
       }
-      return createElement(PageComponent, {...props});
+      return <PageComponent {...props} />;
     };
-    return ErrorBoundaryWrapperedComponent;
+    return StoreWrapperedComponent;
   };
 
   wrapperRouteComponent(wrapperComponent);

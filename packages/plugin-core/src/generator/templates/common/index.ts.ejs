@@ -9,6 +9,7 @@ import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
+import ErrorBoundary from './ErrorBoundary';
 
 const {
   createBaseApp,
@@ -42,8 +43,8 @@ function initializeApp(appConfig, renderer) {
     createHistory,
     getHistory,
     emitLifeCycles,
-    getHistory,
-    pathRedirect
+    pathRedirect,
+    ErrorBoundary
   })
 };
 
@@ -61,6 +62,9 @@ export {
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener,
+
+  // components
+  ErrorBoundary,
 
   // TODO:
   createBaseApp,

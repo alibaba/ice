@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
-import { ErrorBoundary } from './components';
 
 export interface IContext {
   initialData?: any;
@@ -12,6 +11,7 @@ export interface IContext {
 
 let _createBaseApp;
 let _emitLifeCycles;
+let ErrorBoundaryComp;
 
 function reactRendererWithSSR({appConfig, createBaseApp, emitLifeCycles, context}) {
   _createBaseApp = createBaseApp;
@@ -20,9 +20,10 @@ function reactRendererWithSSR({appConfig, createBaseApp, emitLifeCycles, context
   return renderApp(appConfig, context);
 }
 
-function reactRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycles }) {
+function reactRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycles, ErrorBoundary }) {
   _createBaseApp = createBaseApp;
   _emitLifeCycles = emitLifeCycles;
+  ErrorBoundaryComp = ErrorBoundary;
 
   // set appConfig to application life cycle
   setAppConfig(appConfig);
@@ -71,9 +72,9 @@ function renderApp(appConfig: any, context = {}) {
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
     if (errorBoundary) {
       return (
-        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+        <ErrorBoundaryComp Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
           {rootApp}
-        </ErrorBoundary>
+        </ErrorBoundaryComp>
       );
     }
     return rootApp;
