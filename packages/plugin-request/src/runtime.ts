@@ -1,7 +1,6 @@
 import createAxiosInstance from '$ice/createAxiosInstance';
 
 const module = ({ appConfig }) => {
-  console.log('plugin-request====>:', appConfig);
   if (appConfig.request) {
     const { request: requestConfig = {} } = appConfig;
     // 支持配置多实例

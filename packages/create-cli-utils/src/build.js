@@ -4,7 +4,6 @@ const { build } = require('@alib/build-scripts');
 const log = require('@alib/build-scripts/lib/utils/log');
 
 module.exports = async (getBuiltInPlugins) => {
-  console.log('getBuiltInPlugins==>:', getBuiltInPlugins);
   process.env.NODE_ENV = 'production';
   const rawArgv = parse(process.argv.slice(2), {
     configuration: { 'strip-dashed': true },
