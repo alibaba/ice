@@ -204,6 +204,17 @@ module.exports = ({
     // jest config
     onGetJestConfig((jestConfig) => {
       const { moduleNameMapper, ...rest } = jestConfig;
+
+      Object.keys(moduleNameMapper).forEach(key => {
+        // escape $ in the beginning. because $ match the end position end in regular expression
+        // '^$ice/history$' -> '^\$ice/history$'
+        if (key.indexOf('^$') === 0) {
+          const newKey = `^\\${key.slice(1)}`;
+          moduleNameMapper[newKey] = moduleNameMapper[key];
+          delete moduleNameMapper[key];
+        };
+      });
+
       const defaultJestConfig = getJestConfig({ rootDir, moduleNameMapper });
       return {
         ...defaultJestConfig,
