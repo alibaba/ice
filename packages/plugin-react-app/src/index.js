@@ -4,7 +4,6 @@ const { getWebpackConfig, getJestConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const defaultConfig = require('./config/default.config');
@@ -44,19 +43,6 @@ module.exports = ({
     validation: 'boolean',
     defaultValue: false
   }].forEach((item) => registerUserConfig(item));
-  ['dll', 'withDll'].forEach(name => {
-    registerUserConfig({
-      name,
-      validation: 'boolean',
-      defaultValue: false
-    });
-  });
-  // dllEntry: { [string]: string[] }
-  registerUserConfig({
-    name: 'dllEntry',
-    validation: 'object',
-    defaultValue: {}
-  });
 
   // modify user config to keep excute order
   modifyUserConfig((config) => {
@@ -246,35 +232,6 @@ module.exports = ({
   onGetWebpackConfig((chainConfig) => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
-
-    if (userConfig.dll) {
-      // dll generation
-      chainConfig.entryPoints.clear();
-
-      const entryKeys = Object.keys(userConfig.dllEntry);
-      entryKeys.forEach(entryKey => {
-        const entryValues = userConfig.dllEntry[entryKey];
-        entryValues.forEach(entryVal => {
-          chainConfig.entry(entryKey).add(entryVal);
-        });
-      });
-
-      chainConfig.output.path(path.join(rootDir, 'dll'));
-      chainConfig.output.library('_dll_[name]');
-      chainConfig.output.filename('[name].dll.js');
-    } else if(userConfig.withDll) {
-      // use generated dll
-      const entryKeys = Object.keys(userConfig.dllEntry);
-      entryKeys.forEach(entryKey => {
-        chainConfig.plugin('DllReferencePlugin').use(webpack.DllReferencePlugin, [{
-          manifest: require(path.join(rootDir, 'dll', `${entryKey}.manifest.json`))
-        }]);
-      });
-
-      chainConfig.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
-        filepath: path.resolve(rootDir, 'dll', '*.dll.js')
-      }]).after('HtmlWebpackPlugin');
-    }
   });
 
   if (command === 'test') {

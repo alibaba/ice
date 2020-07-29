@@ -58,5 +58,8 @@ module.exports = {
   babelPlugins: [],
   babelPresets: [],
   eslint: false,
-  tsChecker: false
+  tsChecker: false,
+  dll: false,
+  withDll: false,
+  dllEntry: {}
 };

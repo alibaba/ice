@@ -5,7 +5,10 @@ const formatWinPath = require('../utils/formatWinPath');
 function getFilename(filePath) {
   return last((filePath || '').split('/'));
 }
-module.exports = (config, outputAssetsPath) => {
+module.exports = (config, outputAssetsPath, { userConfig }) => {
+  const { dll } = userConfig;
+  if (dll) return;
+
   const filename = getFilename(config.output.get('filename'));
   config.output.filename(formatWinPath(path.join(outputAssetsPath.js || '', filename)));
 
