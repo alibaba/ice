@@ -57,7 +57,7 @@ function initGenerator(api, options) {
       framework,
       isReact: framework === 'react',
       isRax: framework === 'rax',
-      isMiniapp: userConfig.miniapp,
+      isMiniapp: userConfig.targets && userConfig.targets.includes('miniapp'),
       runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(userConfig)
     },

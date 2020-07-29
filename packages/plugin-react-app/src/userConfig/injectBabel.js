@@ -1,7 +1,11 @@
 const formatWinPath = require('../utils/formatWinPath');
 const addBablePlugins = require('./babelPlugins');
 
-module.exports = (config, injectBabel) => {
+module.exports = (config, injectBabel, context) => {
+  const { userConfig: { targets } } = context;
+  if (Array.isArray(targets) && targets.includes('miniapp')) {
+    return;
+  }
   if (injectBabel === 'runtime') {
     ['jsx', 'tsx'].forEach((rule) => {
       config.module

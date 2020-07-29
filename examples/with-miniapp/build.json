@@ -2,9 +2,5 @@
   "plugins": [
     "../../packages/plugin-miniapp/lib/index.js"
   ],
-  "minify": false,
-  "injectBabel": false,
-  "miniapp": {
-    "buildType": "runtime"
-  }
+  "targets": ["miniapp"]
 }
