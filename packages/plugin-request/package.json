@@ -18,6 +18,7 @@
   "dependencies": {
     "@ahooksjs/use-request": "^2.0.0",
     "axios": "^0.19.2",
+    "axios-miniprogram-adapter": "^0.3.2",
     "fs-extra": "^8.1.0"
   },
   "pluginConfig": {

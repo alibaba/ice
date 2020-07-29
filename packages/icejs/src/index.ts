@@ -16,6 +16,7 @@ const getBuiltInPlugins = (userConfig) => {
       }
     ],
     'build-plugin-react-app',
+    'build-plugin-ice-request'
   ];
 
   // for ice/react plugins
@@ -24,7 +25,6 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-helpers',
     'build-plugin-ice-logger',
     'build-plugin-ice-config',
-    'build-plugin-ice-request',
     'build-plugin-ice-mpa',
   ];
 
