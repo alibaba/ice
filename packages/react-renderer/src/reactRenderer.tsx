@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 
 export interface IContext {
   initialData?: any;
@@ -59,8 +58,6 @@ function reactRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycles,
 }
 
 function renderApp(appConfig: any, context = {}) {
-  // @ts-ignore
-  context.env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const { runtime, appConfig: modifiedAppConfig } = _createBaseApp(appConfig, {}, context);
   const { modifyDOMRender } = runtime;
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;

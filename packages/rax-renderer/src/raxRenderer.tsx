@@ -2,7 +2,7 @@
 import { render, createElement, Fragment } from 'rax';
 import { Navigation, TabBar } from 'rax-pwa';
 import { useRouter } from 'rax-use-router';
-import { isWeb, isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import { isWeb } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
 // eslint-disable-next-line
@@ -55,11 +55,10 @@ function App(props) {
 }
 
 function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig }) {
-  const env = { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp };
   const {
     runtime,
     appConfig: appDynamicConfig
-  } = createBaseApp(appConfig, {}, { env });
+  } = createBaseApp(appConfig);
 
   // Set custom driver
   if (typeof staticConfig.driver !== 'undefined') {

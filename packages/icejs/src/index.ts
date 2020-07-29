@@ -1,5 +1,5 @@
 const getBuiltInPlugins = (userConfig) => {
-  if (userConfig.disableRuntime && !userConfig.miniapp) {
+  if (userConfig.disableRuntime) {
     return [
       'build-plugin-react-app',
       'build-plugin-ice-mpa'
@@ -29,7 +29,7 @@ const getBuiltInPlugins = (userConfig) => {
   ];
 
   // for miniapp plugins
-  if (userConfig.miniapp) {
+  if (Array.isArray(userConfig.targets) && userConfig.targets.includes('miniapp')) {
     plugins = commonPlugins;
   } else {
     plugins = commonPlugins.concat(reactAppPlugins);

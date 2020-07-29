@@ -3,6 +3,7 @@ import { addAppLifeCycle } from './appLifeCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
 import RuntimeModule from './runtimeModule';
 import { createHistory } from './history';
+import { isMiniAppPlatform, isWeChatMiniProgram, isByteDanceMicroApp } from './env';
 
 const DEFAULE_APP_CONFIG = {
   app: {
@@ -13,8 +14,7 @@ const DEFAULE_APP_CONFIG = {
   }
 };
 
-function _handleAppLifeCycle(appConfig, env) {
-  const { isWeChatMiniProgram, isByteDanceMicroApp, isMiniApp } = env;
+function _handleAppLifeCycle(appConfig) {
   const { onLaunch, onShow, onError, onHide, onTabItemClick } = appConfig.app;
   // multi-end valid lifecycle
   // Add app lanuch callback
@@ -36,7 +36,7 @@ function _handleAppLifeCycle(appConfig, env) {
     addAppLifeCycle(NOT_FOUND, onPageNotFound);
   }
   // Add lifecycle callbacks which only valid in Alibaba MiniApp
-  if (isMiniApp) {
+  if (isMiniAppPlatform) {
     const { onShareAppMessage, onUnhandledRejection } = appConfig;
     // Add global share callback
     addAppLifeCycle(SHARE, onShareAppMessage);
@@ -53,11 +53,9 @@ export default ({ loadRuntimeModules, loadStaticModules, createElement }) => {
     // load module to run before createApp ready
     loadStaticModules(appConfig);
 
-    const { env } = context;
-
     // Set history
     let history = {};
-    if (!env.isMiniApp) {
+    if (!isMiniAppPlatform) {
       const { router } = appConfig;
       const { type, basename } = router;
       history = createHistory({ type, basename });
@@ -71,7 +69,7 @@ export default ({ loadRuntimeModules, loadStaticModules, createElement }) => {
     loadRuntimeModules(runtime);
 
     // Handle app lifeCyle
-    _handleAppLifeCycle(appConfig, env);
+    _handleAppLifeCycle(appConfig);
 
     return {
       history,
