@@ -34,8 +34,6 @@ const {
   loadStaticModules
 });
 
-const history = getHistory();
-
 function initializeApp(appConfig, renderer) {
   renderer({
     appConfig,
@@ -53,7 +51,7 @@ function initializeApp(appConfig, renderer) {
 export {
   // router api
   withRouter,
-  history,
+  getHistory,
   useSearchParams,
   withSearchParams,
 
