@@ -48,6 +48,7 @@ function initializeApp(appConfig, renderer) {
   })
 };
 
+// Public API
 export {
   // router api
   withRouter,
@@ -66,11 +67,12 @@ export {
   removeNativeEventListener,
 
   // components
-  ErrorBoundary,
-
-  // TODO:
-  createBaseApp,
-  emitLifeCycles
+  ErrorBoundary
 };
 
-export default initializeApp;
+// Private API
+export default {
+  initializeApp,
+  createBaseApp,
+  emitLifeCycles
+}

@@ -1,7 +1,7 @@
 import raxRenderer from 'rax-renderer';
-import initializeApp from './common';
+import mod from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export function runApp(appConfig) {
-  initializeApp(appConfig, raxRenderer)
+  mod.initializeApp(appConfig, raxRenderer)
 }

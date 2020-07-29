@@ -3,13 +3,13 @@
 <% } else { %>
   import reactRenderer from 'react-renderer';
 <% } %>
-import initializeApp from './common';
+import mod from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export function runApp(appConfig) {
   <% if(isMiniapp){ %>
-    initializeApp(appConfig, miniappRenderer);
+    mod.initializeApp(appConfig, miniappRenderer);
   <% } else { %>
-    initializeApp(appConfig, reactRenderer);
+    mod.initializeApp(appConfig, reactRenderer);
   <% } %>
 };

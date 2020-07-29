@@ -4,10 +4,11 @@ import { matchPath } from 'ice';
 import { reactRendererWithSSR } from 'react-renderer';
 import { getAppConfig } from './common/appConfig';
 import loadStaticModules from './common/loadStaticModules';
-import { createBaseApp, emitLifeCycles } from './common';
+import mod from './common';
 import routes from '@/routes';
 
 const chalk = require('chalk');
+const { createBaseApp, emitLifeCycles } = mod;
 
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
