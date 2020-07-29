@@ -5,9 +5,11 @@ import { store as pageStore } from 'ice/Home';
 export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');
   const [pageState] = pageStore.useModel('default');
+  const [appTitleState] = appStore.useModel('title');
 
   return (
     <>
+      <h2>{appTitleState.title}</h2>
       <h2>{pageState.title}</h2>
 
       <div>
