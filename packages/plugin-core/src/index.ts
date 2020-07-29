@@ -48,11 +48,16 @@ function initGenerator(api, options) {
   const { userConfig, rootDir } = context;
   const { framework } = options;
   const plugins = getAllPlugin();
+  const templatesDir = path.join(__dirname, './generator/templates');
   return new Generator({
     rootDir,
     targetDir: getValue(ICE_TEMP),
-    appTemplateDir: path.join(__dirname, `./generator/templates/app/${framework}`),
-    commonTemplateDir: path.join(__dirname, './generator/templates/common'),
+    templatesDir,
+    appTemplateDir: path.join(templatesDir, `./app/${framework}`),
+    commonTemplateDir: path.join(templatesDir, './common'),
+    rootTemplatesPath: [
+      'runApp.ts.ejs',
+    ],
     defaultData: {
       framework,
       isReact: framework === 'react',

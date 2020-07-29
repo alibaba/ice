@@ -36,9 +36,13 @@ const API_MAP = [
 ];
 
 export default class Generator {
+  public templatesDir: string;
+
   public appTemplateDir: string;
 
   public commonTemplateDir: string;
+
+  public rootTemplatesPath: string[];
 
   public targetDir: string;
 
@@ -58,10 +62,12 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  constructor({ rootDir, targetDir, appTemplateDir, commonTemplateDir, defaultData, log }) {
+  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, rootTemplatesPath }) {
     this.rootDir = rootDir;
+    this.templatesDir = templatesDir;
     this.appTemplateDir = appTemplateDir;
     this.commonTemplateDir = commonTemplateDir;
+    this.rootTemplatesPath = rootTemplatesPath;
     this.targetDir = targetDir;
     this.renderData = defaultData;
     this.contentRegistration = {};
@@ -156,6 +162,8 @@ export default class Generator {
     });
 
     this.renderCommonTemplates();
+
+    this.renderRootTemplates();
   }
 
   public async renderAppTemplates(templateFile) {
@@ -182,6 +190,15 @@ export default class Generator {
       this.renderFile(
         path.join(this.commonTemplateDir, templateFile),
         path.join(this.targetDir, 'common', templateFile)
+      );
+    });
+  }
+
+  public async renderRootTemplates() {
+    this.rootTemplatesPath.forEach((templateFile) => {
+      this.renderFile(
+        path.join(this.templatesDir, templateFile),
+        path.join(this.targetDir, templateFile)
       );
     });
   }

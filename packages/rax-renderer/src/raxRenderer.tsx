@@ -6,7 +6,7 @@ import { isWeb } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
 // eslint-disable-next-line
-const DEFAULE_ROOT_ID = document.getElementById('root');
+const DEFAULE_ROOT_ID = document && document.getElementById('root');
 
 let driver = UniversalDriver;
 

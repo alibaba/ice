@@ -14,22 +14,22 @@ function emitLifeCycles() {
 
   // Set current router
   router.current = {
-    path: pathname,
+    pathname,
     visibiltyState: true
   };
 
   // Listen history change
   history.listen((location) => {
-    if (location.pathname !== router.current.path) {
+    if (location.pathname !== router.current.pathname) {
       // Flow router info
       router.prev = router.current;
       router.current = {
-        path: location.pathname,
+        pathname: location.pathname,
         visibiltyState: true
       };
       router.prev.visibiltyState = false;
-      pageEmit(HIDE, router.prev.path);
-      pageEmit(SHOW, router.current.path);
+      pageEmit(HIDE, router.prev.pathname);
+      pageEmit(SHOW, router.current.pathname);
     }
   });
 }

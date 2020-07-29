@@ -1,7 +1,7 @@
 /* eslint no-undef:0 */
+import { isMiniAppPlatform, isWeex } from './env';
 import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from './constants';
 import { isFunction } from './utils';
-import { isMiniAppPlatform } from './env';
 import { getHistory } from './history';
 import router from './router';
 import { emit as pageEmit } from './pageLifeCycles';
@@ -90,22 +90,46 @@ if (isMiniAppPlatform) {
   window.addEventListener('tabitemclick', ({ options, context }) => {
     emit(TAB_ITEM_CLICK, context, options);
   });
+} else if (isWeex) {
+  try {
+    // https://weex.apache.org/docs/modules/globalEvent.html#addeventlistener
+    // Use __weex_require__ in Rax project.
+    const globalEvent = __weex_require__('@weex-module/globalEvent');
+    globalEvent.addEventListener('WXApplicationDidBecomeActiveEvent', function() {
+      router.current.visibiltyState = true;
+      // Emit app show
+      emit(SHOW);
+      // Emit page show
+      pageEmit(SHOW, router.current.pathname);
+    });
+    globalEvent.addEventListener('WXApplicationWillResignActiveEvent', function() {
+      router.current.visibiltyState = false;
+      // Emit page hide
+      pageEmit(HIDE, router.current.pathname);
+      // Emit app hide
+      emit(HIDE);
+    });
+  } catch (err) {
+    console.log(`@weex-module/globalEvent error: ${  err}`);
+  }
 } else if (typeof document !== 'undefined' && typeof window !== 'undefined') {
   document.addEventListener('visibilitychange', function() {
-    // The app switches from foreground to background
+    // Get history
     const history = getHistory();
-    if (router.current && history.location.pathname === router.current.path) {
+    const currentPathName = history ? history.location.pathname : router.current.pathname;
+    // The app switches from foreground to background
+    if (currentPathName === router.current.pathname) {
       router.current.visibiltyState = !router.current.visibiltyState;
       if (router.current.visibiltyState) {
         // Emit app show
         emit(SHOW);
         // Emit page show
-        pageEmit(SHOW, router.current.path);
+        pageEmit(SHOW, router.current.pathname);
       } else {
+        // Emit page hide
+        pageEmit(HIDE, router.current.pathname);
         // Emit app hide
         emit(HIDE);
-        // Emit page hide
-        pageEmit(HIDE, router.current.path);
       }
     }
   });
