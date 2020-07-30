@@ -1,8 +1,8 @@
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
-import reactRenderer from 'react-renderer';
-import raxRenderer from 'rax-renderer';
-import Common from './common';
+<% if (isReact) {%>import reactRenderer from 'react-renderer';<% } %>
+<% if (isRax) {%>import raxRenderer from 'rax-renderer';<% } %>
+import common from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export function runApp(appConfig) {
@@ -13,5 +13,5 @@ export function runApp(appConfig) {
     renderer = reactRenderer;
   }
   <% } %>
-  Common.initializeApp(appConfig, renderer);
+  common.initializeApp(appConfig, renderer);
 };
