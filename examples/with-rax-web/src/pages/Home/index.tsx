@@ -10,11 +10,11 @@ export default function Home(props) {
   const { history } = props;
 
   usePageShow(() => {
-    console.log('page show...');
+    console.log('home show...');
   });
 
   usePageHide(() => {
-    console.log('page hide...');
+    console.log('home hide...');
   });
 
   return (

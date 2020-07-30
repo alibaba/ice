@@ -1,29 +1,28 @@
 import { getHistory } from './history';
-import { SHOW, HIDE } from './constants';
 import { isMiniAppPlatform } from './env';
+import { SHOW, HIDE } from './constants';
+import router from './router';
 
-// visibleListeners => { [path]: { show: [], hide: [] } }
+// visibleListeners => { [pathname]: { show: [], hide: [] } }
 const visibleListeners = {};
 
 function addPageLifeCycle(cycle, callback) {
-  const history = getHistory();
-  if (history) {
-    const pathname = history.location.pathname;
-    if (!visibleListeners[pathname]) {
-      visibleListeners[pathname] = {
-        [SHOW]: [],
-        [HIDE]: []
-      };
-    }
-    visibleListeners[pathname][cycle].push(callback);
+  const pathname = router.current.pathname;
+
+  if (!visibleListeners[pathname]) {
+    visibleListeners[pathname] = {
+      [SHOW]: [],
+      [HIDE]: []
+    };
   }
+  visibleListeners[pathname][cycle].push(callback);
 }
 
-function emit(cycle, path, ...args) {
+function emit(cycle, pathname, ...args) {
   // Ensure queue exists
-  if (visibleListeners[path] && visibleListeners[path][cycle]) {
-    for (let i = 0, l = visibleListeners[path][cycle].length; i < l; i++) {
-      visibleListeners[path][cycle][i](...args);
+  if (visibleListeners[pathname] && visibleListeners[pathname][cycle]) {
+    for (let i = 0, l = visibleListeners[pathname][cycle].length; i < l; i++) {
+      visibleListeners[pathname][cycle][i](...args);
     }
   }
 }
@@ -35,24 +34,22 @@ function createPageLifeCycle(useEffect) {
       if (cycle === SHOW) {
         callback();
       }
-      const history = getHistory();
-      if (history) {
-        const pathname = history.location.pathname;
-        addPageLifeCycle(cycle, callback);
+      const pathname = router.current.pathname;
 
-        return () => {
-          if (visibleListeners[pathname]) {
-            const index = visibleListeners[pathname][cycle].indexOf(callback);
-            if (index > -1) {
-              visibleListeners[pathname][cycle].splice(index, 1);
-            }
+      addPageLifeCycle(cycle, callback);
+
+      return () => {
+        if (visibleListeners[pathname]) {
+          const index = visibleListeners[pathname][cycle].indexOf(callback);
+          if (index > -1) {
+            visibleListeners[pathname][cycle].splice(index, 1);
           }
-        };
-      }
+        }
+      };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   };
 }
-
 function withPageLifeCycle(Component) {
   class Wrapper extends Component {
     constructor() {
@@ -67,30 +64,28 @@ function withPageLifeCycle(Component) {
       if (this.onHide) {
         addPageLifeCycle(HIDE, this.onHide.bind(this));
       }
-      const history = getHistory();
-      if (history) {
-        // Keep the path name corresponding to current page component
-        this.pathname = history.location.pathname;
-      }
+      // Keep the path name corresponding to current page component
+      this.pathname = router.current.pathname;
     }
 
     componentWillUnmount() {
       visibleListeners[this.pathname] = null;
     }
   }
-  // eslint-disable-next-line
-  Wrapper.displayName = 'withPageLifeCycle(' + (Component.displayName || Component.name) + ')';
+  Wrapper.displayName = `withPageLifeCycle(${  Component.displayName || Component.name  })`;
   return Wrapper;
 }
 
 if (isMiniAppPlatform) {
   // eslint-disable-next-line
   window.addEventListener('pageshow', () => {
+    // Get history
     const history = getHistory();
     emit(SHOW, history.location.pathname);
   });
   // eslint-disable-next-line
   window.addEventListener('pagehide', () => {
+    // Get history
     const history = getHistory();
     emit(HIDE, history.location.pathname);
   });

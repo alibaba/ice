@@ -5,9 +5,6 @@ import { useRouter } from 'rax-use-router';
 import { isWeb } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
-// eslint-disable-next-line
-const DEFAULE_ROOT_ID = document.getElementById('root');
-
 let driver = UniversalDriver;
 
 function _isNullableComponent(component) {
@@ -102,7 +99,7 @@ function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, g
       emitLifeCycles();
 
       const { app = {} } = appDynamicConfig;
-      const rootId = document.getElementById(app.rootId) || DEFAULE_ROOT_ID;
+      const rootId = document.getElementById(app.rootId);
       if (isWeb && appDynamicConfig.rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
 
       return render(
