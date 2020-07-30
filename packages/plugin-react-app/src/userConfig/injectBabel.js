@@ -1,10 +1,7 @@
 const formatWinPath = require('../utils/formatWinPath');
 const addBablePlugins = require('./babelPlugins');
 
-module.exports = (config, injectBabel, { userConfig }) => {
-  const { dll } = userConfig;
-  if (dll) return;
-
+module.exports = (config, injectBabel) => {
   if (injectBabel === 'runtime') {
     ['jsx', 'tsx'].forEach((rule) => {
       config.module

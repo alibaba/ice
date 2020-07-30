@@ -1,7 +1,4 @@
-module.exports = (config, filename, { userConfig }) => {
-  const { dll } = userConfig;
-  if (dll) return;
-
+module.exports = (config, filename) => {
   if (filename) {
     config.output.filename(filename);
   }

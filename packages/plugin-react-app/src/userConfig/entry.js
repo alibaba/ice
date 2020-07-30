@@ -26,8 +26,6 @@ const addHotDevClient = (entry) => {
 // entry : { [name]: string | array }
 module.exports = (config, value, context) => {
   const { rootDir, command, userConfig, commandArgs } = context;
-  const { dll } = userConfig;
-  if (dll) return;
 
   const ignoreHtmlTemplate = command === 'build' && userConfig.ignoreHtmlTemplate;
   let entry;

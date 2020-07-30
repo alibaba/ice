@@ -1,9 +1,7 @@
 const path = require('path');
 
 module.exports = (config, outputDir, context) => {
-  const { rootDir, userConfig } = context;
-  const { dll } = userConfig;
-  if (dll) return;
+  const { rootDir } = context;
 
   const outputPath = path.resolve(rootDir, outputDir);
   config.output.path(outputPath);

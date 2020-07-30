@@ -60,6 +60,5 @@ module.exports = {
   eslint: false,
   tsChecker: false,
   dll: false,
-  withDll: false,
   dllEntry: {}
 };

@@ -152,40 +152,7 @@ module.exports = ({
 
   config.name('web');
 
-  if (!userConfig.dll) {
-    registerTask('web', config);
-  } else {
-    if (command === 'start') {
-      log.error('[DLL]: dll config is invalid in start command!');
-    }
-    // webpack config for dll
-    const configDLL = getWebpackConfig(mode);
-
-    configDLL
-    .plugin('SimpleProgressPlugin')
-      .tap(([args]) => {
-        return [{
-          ...args,
-          progressOptions: {
-            clear: true,
-            callback: () => {
-              console.log();
-            }
-          }
-        }];
-      })
-      .end()
-    .plugin('DefinePlugin')
-      .use(webpack.DefinePlugin, [defineVariables])
-      .end()
-    .plugin('dllPlugin').use(webpack.DllPlugin, [{
-      name: '_dll_[name]',
-      path: path.join(rootDir, 'dll', '[name].manifest.json')
-    }]);
-
-    configDLL.name('dll');
-    registerTask('dll', configDLL);
-  }
+  registerTask('web', config);
 
   // sort config key to make sure entry config is always excute before injectBabel
   const configKeys = Object.keys(defaultConfig).sort();
