@@ -6,7 +6,10 @@ import common from './common';
 <% if (globalStyle) {%>import '../<%= globalStyle %>'<% } %>
 
 export function runApp(appConfig) {
-  let renderer = raxRenderer;
+  let renderer;
+  <% if(isRax){ %>
+    renderer = raxRenderer;
+  <% } %>
   if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
     renderer = miniappRenderer;
   }<% if(isReact){ %> else {
