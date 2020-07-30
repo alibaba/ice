@@ -26,7 +26,7 @@ module.exports = ({
   onHook,
   log,
 }) => {
-  const { command, rootDir, webpack, commandArgs, pkg, userConfig } = context;
+  const { command, rootDir, webpack, commandArgs, pkg } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
   modifyUserConfig((config) => {
