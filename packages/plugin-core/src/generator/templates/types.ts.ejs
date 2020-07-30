@@ -1,7 +1,7 @@
 import React from 'react';
-<%- iceIAppConfigTypesImports %>
-<%- iceIAppConfigAppTypesImports %>
-<%- iceTypesImports %>
+<%- appConfigTypesImports %>
+<%- appConfigAppTypesImports %>
+<%- typesImports %>
 
 export interface IApp {
   rootId?: string;
@@ -10,16 +10,16 @@ export interface IApp {
   getInitialData?: () => Promise<any>;
   ErrorBoundaryFallback?: React.ComponentType,
   onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
-  <% if (iceIAppConfigAppTypesImports) { %>
-    <%- iceIAppConfigAppTypesExports %>
+  <% if (appConfigAppTypesImports) { %>
+    <%- appConfigAppTypesExports %>
   <% } %>
   [key: string]: any;
 }
 
-<% if (iceIAppConfigTypesImports) { %>
+<% if (appConfigTypesImports) { %>
   export interface IAppConfig {
     app?: IApp
-    <%- iceIAppConfigTypesExports %>
+    <%- appConfigTypesExports %>
   }
 <% } %>
 

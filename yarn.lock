@@ -6509,6 +6509,11 @@ driver-miniapp@^0.1.0:
   dependencies:
     driver-dom "^2.0.6"
 
+driver-server@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/driver-server/download/driver-server-1.0.0.tgz#2fa67991d2aafa66dd808b1a1989b18125bb38c0"
+  integrity sha1-L6Z5kdKq+mbdgIsaGYmxgSW7OMA=
+
 driver-universal@^3.1.0:
   version "3.1.3"
   resolved "https://registry.npm.taobao.org/driver-universal/download/driver-universal-3.1.3.tgz#3c840a740b5d7febddea562f6c00d2fd65e5d6be"
@@ -13901,6 +13906,18 @@ rax-babel-config@^0.1.0:
     babel-plugin-transform-jsx-to-html "^0.1.0"
     chalk "^2.4.2"
 
+rax-children@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rax-children/download/rax-children-1.0.0.tgz#6e4b4174c7236f187f49a97fdff5de85f9af1f7e"
+  integrity sha1-bktBdMcjbxh/Sal/3/XehfmvH34=
+
+rax-clone-element@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rax-clone-element/download/rax-clone-element-1.0.0.tgz#d235f5bab8178983d730aa8d6c6a4fa09140a61d"
+  integrity sha1-0jX1urgXiYPXMKqNbGpPoJFAph0=
+  dependencies:
+    rax-is-valid-element "^1.0.0"
+
 rax-compile-config@^0.2.0, rax-compile-config@^0.2.14:
   version "0.2.14"
   resolved "https://registry.npm.taobao.org/rax-compile-config/download/rax-compile-config-0.2.14.tgz#84baaa26300394409a37b92fbf9df3c8ab601128"
@@ -13941,12 +13958,22 @@ rax-compile-config@^0.2.0, rax-compile-config@^0.2.14:
     source-map "^0.7.3"
     strip-ansi "^5.0.0"
 
+rax-create-factory@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rax-create-factory/download/rax-create-factory-1.0.0.tgz#95e8dada34327614355450d8abba80f68d0493b7"
+  integrity sha1-leja2jQydhQ1VFDYq7qA9o0Ek7c=
+
 rax-image@^1.1.2:
   version "1.1.3"
   resolved "https://registry.npm.taobao.org/rax-image/download/rax-image-1.1.3.tgz#28bfd653c2ba53e60efe3a8d13f1cff035e12a09"
   integrity sha1-KL/WU8K6U+YO/jqNE/HP8DXhKgk=
   dependencies:
     universal-env "^1.0.0"
+
+rax-is-valid-element@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rax-is-valid-element/download/rax-is-valid-element-1.0.0.tgz#c8583a0ae69b7a6b59b0638d3f997c06e500175e"
+  integrity sha1-yFg6CuabemtZsGONP5l8BuUAF14=
 
 rax-link@^1.0.2:
   version "1.4.0"
@@ -14082,6 +14109,19 @@ rax-webpack-config@^0.1.0:
     webpack-node-externals "^1.7.2"
     webpack-sources "^1.4.3"
     webpackbar "^4.0.0"
+
+rax@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/rax/download/rax-1.1.4.tgz#be71780930b3d1b15850df1c2ddf6437bddb9f05"
+  integrity sha1-vnF4CTCz0bFYUN8cLd9kN73bnwU=
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    driver-server "^1.0.0"
+    prop-types "^15.7.2"
+    rax-children "^1.0.0"
+    rax-clone-element "^1.0.0"
+    rax-create-factory "^1.0.0"
+    rax-is-valid-element "^1.0.0"
 
 rc@^1.2.7:
   version "1.2.8"

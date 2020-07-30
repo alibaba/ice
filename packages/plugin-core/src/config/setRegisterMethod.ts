@@ -1,6 +1,7 @@
 import getPages from '../utils/getPages';
 import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
+import { getExportApiKeys } from '../constant';
 
 export default (api, options) => {
   const { registerMethod } = api;
@@ -16,13 +17,13 @@ export default (api, options) => {
   registerMethod('removePageExport', generator.removePageExport);
 
   // registerMethod for add export
-  const regsiterKeys = ['addIceExport', 'addIceTypesExport', 'addIceAppConfigTypes', 'addIceAppConfigAppTypes'];
-  regsiterKeys.forEach((registerKey) => {
-    registerMethod(registerKey, (exportData) => {
-      generator.addExport(registerKey, exportData);
+  const apiKeys = getExportApiKeys();
+  apiKeys.forEach((apiKey) => {
+    registerMethod(apiKey, (exportData) => {
+      generator.addExport(apiKey, exportData);
     });
-    registerMethod(registerKey.replace('add', 'remove'), (removeExportName) => {
-      generator.removeExport(registerKey, removeExportName);
+    registerMethod(apiKey.replace('add', 'remove'), (removeExportName) => {
+      generator.removeExport(apiKey, removeExportName);
     });
   });
 
