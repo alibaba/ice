@@ -71,15 +71,11 @@ async function buildDll (dllPath, entry, webpack, rootDir) {
   chainConfig.resolve.modules.add('node_modules');
   chainConfig.resolve.modules.add(path.resolve(rootDir, 'node_modules'));
 
-  console.log(chainConfig.toConfig());
-
   return new Promise((resolve, reject) => {
     webpack(chainConfig.toConfig(), err => {
       if (err) {
-        console.log(err);
         reject(err);
       } else {
-        console.log('dll success');
         resolve();
       }
     });
