@@ -1,6 +1,6 @@
 {
-  "name": "miniapp-renderer",
-  "version": "1.6.3",
+  "name": "@ice/miniapp-renderer",
+  "version": "0.1.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",

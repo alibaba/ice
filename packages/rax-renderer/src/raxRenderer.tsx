@@ -2,7 +2,7 @@
 import { render, createElement, Fragment } from 'rax';
 import { Navigation, TabBar } from 'rax-pwa';
 import { useRouter } from 'rax-use-router';
-import { isWeb } from 'universal-env';
+import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
 let driver = UniversalDriver;
@@ -25,33 +25,27 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
-  const { appConfig, history, routes, pageProps, InitialComponent } = props;
+  const { appConfig, history, routes, InitialComponent } = props;
   const { component } = useRouter(() => ({ history, routes, InitialComponent }));
   // Return null directly if not matched
   if (_isNullableComponent(component)) return null;
 
-  // TODO
-  // if (isSSR) {}
-
   if (isWeb) {
     return createElement(
       Navigation,
-      Object.assign(
-        { appConfig, component, history, location: history.location, routes, InitialComponent },
-        pageProps
-      )
+      { appConfig, component, history, location: history.location, routes, InitialComponent },
     );
   }
 
   return createElement(
     Fragment,
     {},
-    createElement(component, Object.assign({ history, location: history.location, routes, InitialComponent }, pageProps)),
+    createElement(component, { history, location: history.location, routes, InitialComponent }),
     createElement(TabBar, { history, config: appConfig.tabBar })
   );
 }
 
-function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig }) {
+function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance }) {
   const {
     runtime,
     appConfig: appDynamicConfig
@@ -62,7 +56,7 @@ function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, g
     driver = staticConfig.driver;
   }
 
-  const { routes } = staticConfig;
+  const { routes, hydrate = false } = staticConfig;
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   const history = getHistory();
@@ -76,11 +70,10 @@ function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, g
         appConfig: staticConfig,
         history,
         routes,
-        pageProps: {},
         InitialComponent: _initialComponent
       };
 
-      const AppProvider = runtime.composeAppProvider && runtime.composeAppProvider();
+      const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
       const RootComponent = () => {
         if (AppProvider) {
           return (
@@ -90,22 +83,19 @@ function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, g
         return <App {...props}/>;
       };
 
-      const appInstance = createElement(RootComponent, { ...props });
-
-      // TODO：
-      // if (shell) { }
+      const appInstance = typeof createAppInstance === 'function' ? createAppInstance(initialComponent) : createElement(RootComponent, { ...props });
 
       // Emit app launch cycle
       emitLifeCycles();
 
       const { app = {} } = appDynamicConfig;
-      const rootId = document.getElementById(app.rootId);
+      const rootEl = isWeex || isKraken ? null : document.getElementById(app.rootId);
       if (isWeb && appDynamicConfig.rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
 
       return render(
         appInstance,
-        rootId,
-        { driver }
+        rootEl,
+        { driver, hydrate }
       );
     });
 }
