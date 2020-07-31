@@ -7,6 +7,7 @@ const commonRules = {
   "no-param-reassign": 0,
   "comma-dangle": 0,
   "prefer-object-spread": 0,
+  "import/named": 0,
   // TODO: open rule indent, consider of  MemberExpression
   "indent": 0,
   "semi": 2,
