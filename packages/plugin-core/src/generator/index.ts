@@ -125,7 +125,6 @@ export default class Generator {
         exportsData = Object.assign({}, exportsData, data);
       });
     });
-    console.log({...exportsData});
     this.renderData = {
       ...this.renderData,
       ...this.pageRenderData,

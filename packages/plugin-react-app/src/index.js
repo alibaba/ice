@@ -26,7 +26,8 @@ module.exports = ({
   onHook,
   log,
 }) => {
-  const { command, rootDir, webpack, commandArgs, pkg } = context;
+  const { command, rootDir, webpack, commandArgs, pkg, userConfig: { targets } } = context;
+  const isMiniapp = Array.isArray(targets) && targets.includes('miniapp');
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
   modifyUserConfig((userConfig) => {
@@ -148,6 +149,11 @@ module.exports = ({
           }
         ])
       .end();
+
+    if (isMiniapp) {
+      config.plugins.delete('HotModuleReplacementPlugin');
+      config.devServer.hot(false).inline(false);
+    }
   }
 
   config.name('web');
@@ -260,7 +266,7 @@ module.exports = ({
   }
 
   // open browser on server start
-  if (!commandArgs.disableOpen) {
+  if (!commandArgs.disableOpen && !isMiniapp) {
     onHook('after.start.devServer', ({ url }) => {
       // do not open browser when restart dev
       if (!process.env.RESTART_DEV) openBrowser(url);
