@@ -15,6 +15,9 @@ module.exports = (api) => {
   // Using Components
   const usingComponents = {};
 
+  // Using usingPlugins
+  const usingPlugins = {};
+
   // Native lifecycle map
   const nativeLifeCycleMap = {};
 
@@ -69,6 +72,7 @@ module.exports = (api) => {
           ...appConfig,
           config: {},
           usingComponents,
+          usingPlugins,
           nativeLifeCycleMap,
           rootDir,
           command

@@ -42,7 +42,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const routerTargetPath = path.join(iceTempPath, 'router');
   fse.ensureDirSync(routerTargetPath);
   fse.copySync(routerTemplatesPath, routerTargetPath);
-  applyMethod('addIceExport', { source: './router' });
+  applyMethod('addExport', { source: './router' });
 
   // copy types
   fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));

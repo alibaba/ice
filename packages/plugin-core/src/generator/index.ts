@@ -8,6 +8,7 @@ import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
 import getPages from '../utils/getPages';
 import { IExportData } from '../types/base';
+import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
 interface IRenderData {
   [key: string]: any;
@@ -25,15 +26,6 @@ interface IPageRenderData {
   pageImports: string;
   pageExports: string;
 }
-
-const API_MAP = [
-  'addEntryImports',
-  'addEntryCode',
-  'addIceExport',
-  'addIceTypesExport',
-  'addIceAppConfigTypes',
-  'addIceAppConfigAppTypes'
-];
 
 export default class Generator {
   public templatesDir: string;
@@ -97,7 +89,8 @@ export default class Generator {
 
   // addEntryImports/addEntryCode
   public addContent(apiName, ...args) {
-    if (!API_MAP.includes(apiName)) {
+    const apiKeys = getExportApiKeys();
+    if (!apiKeys.includes(apiName)) {
       throw new Error(`invalid API ${apiName}`);
     }
     const [data, position] = args;
@@ -125,13 +118,18 @@ export default class Generator {
   public parseRenderData() {
     const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
+    let exportsData = {};
+    EXPORT_API_MPA.forEach(item => {
+      item.name.forEach(key => {
+        const data = this.getExportStr(key, item.value);
+        exportsData = Object.assign({}, exportsData, data);
+      });
+    });
+    console.log({...exportsData});
     this.renderData = {
       ...this.renderData,
       ...this.pageRenderData,
-      ...this.getExportStr('addIceExport', ['iceImports', 'iceExports']),
-      ...this.getExportStr('addIceTypesExport', ['iceTypesImports', 'iceTypesExports']),
-      ...this.getExportStr('addIceAppConfigTypes', ['iceIAppConfigTypesImports', 'iceIAppConfigTypesExports']),
-      ...this.getExportStr('addIceAppConfigAppTypes', ['iceIAppConfigAppTypesImports', 'iceIAppConfigAppTypesExports']),
+      ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
       globalStyle: globalStyles.length && globalStyles[0],
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
