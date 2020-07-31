@@ -11,6 +11,7 @@ import {
 } from './nativeEventListener';
 import useSearchParams from './useSearchParams';
 import withSearchParams from './withSearchParams';
+import collectAppLifeCycle from './collectAppLifeCycle';
 
 function createShareAPI({ withRouter, createElement, useEffect, loadRuntimeModules, loadStaticModules }) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
@@ -26,6 +27,7 @@ function createShareAPI({ withRouter, createElement, useEffect, loadRuntimeModul
 
     // lifeCycle api
     emitLifeCycles,
+    collectAppLifeCycle,
     usePageShow,
     usePageHide,
     withPageLifeCycle,

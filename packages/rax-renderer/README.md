@@ -1,1 +1,1 @@
-# `rax-renderer`
+# `@ice/rax-renderer`

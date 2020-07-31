@@ -50,6 +50,7 @@ function createPageLifeCycle(useEffect) {
     }, []);
   };
 }
+
 function withPageLifeCycle(Component) {
   class Wrapper extends Component {
     constructor() {

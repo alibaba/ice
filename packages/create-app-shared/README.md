@@ -1,1 +1,1 @@
-# `create-app-shared`
+# `@ice/create-app-shared`

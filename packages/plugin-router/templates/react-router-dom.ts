@@ -13,7 +13,7 @@ export {
   // StaticRouter,
 
   // static method
-  // export withrouter API from the create-app-shared
+  // export withrouter API from the @ice/create-app-shared
   // withRouter,
   matchPath,
   generatePath,
