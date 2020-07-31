@@ -106,8 +106,8 @@ export default class Generator {
     });
 
     this.renderFile(this.appStoreTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false });
-    this.applyMethod('removeIceExport', exportName);
-    this.applyMethod('addIceExport', { source: `./${sourceFilename}`, exportName });
+    this.applyMethod('removeExport', exportName);
+    this.applyMethod('addExport', { source: `./${sourceFilename}`, exportName });
   }
 
   private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile }: IRenderPageParams) {

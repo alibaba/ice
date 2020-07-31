@@ -9,6 +9,6 @@ export default async (api) => {
 
   // move service to .ice/service
   await fse.copy(srcPath, distPath);
-  applyMethod('addIceExport', { source: './service/createService', exportName: 'createService' });
+  applyMethod('addExport', { source: './service/createService', exportName: 'createService' });
 };
 

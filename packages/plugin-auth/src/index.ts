@@ -20,7 +20,7 @@ export default async function (api) {
 
   // 导出接口
   // import { useAuth, withAuth } from 'ice';
-  applyMethod('addIceExport', { source: './auth' });
+  applyMethod('addExport', { source: './auth' });
 
   // 设置类型
   // export interface IAppConfig {

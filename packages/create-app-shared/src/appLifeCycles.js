@@ -1,5 +1,6 @@
 /* eslint no-undef:0 */
-import { isMiniAppPlatform, isWeex } from './env';
+import { isWeex } from 'universal-env';
+import { isMiniAppPlatform } from './env';
 import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from './constants';
 import { isFunction } from './utils';
 import { getHistory } from './history';

@@ -1,9 +1,10 @@
 import deepmerge from 'deepmerge';
+import { isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import { addAppLifeCycle } from './appLifeCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
 import RuntimeModule from './runtimeModule';
 import { createHistory } from './history';
-import { isMiniAppPlatform, isWeChatMiniProgram, isByteDanceMicroApp } from './env';
+import { isMiniAppPlatform } from './env';
 
 const DEFAULE_APP_CONFIG = {
   app: {
