@@ -61,7 +61,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
 
     // alias for runtime/history
-    config.resolve.alias.set('$ice/history', path.join(__dirname, '../templates/history'));
+    config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'router/history'));
 
     // alias for react-router-dom
     const routerName = 'react-router-dom';
