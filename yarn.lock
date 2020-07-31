@@ -4500,9 +4500,9 @@ build-plugin-ice-router@1.6.3:
     react-router-dom "^5.1.2"
 
 build-plugin-rax-app@^5.0.2:
-  version "5.1.0"
-  resolved "https://registry.npm.taobao.org/build-plugin-rax-app/download/build-plugin-rax-app-5.1.0.tgz#a6e301db5beedd8b384dca301ccef748f946f010"
-  integrity sha1-puMB21vu3Ys4TcowHM73SPlG8BA=
+  version "5.1.1"
+  resolved "https://registry.npm.taobao.org/build-plugin-rax-app/download/build-plugin-rax-app-5.1.1.tgz#829cb37be71d957649cf8b83d52522869656951b"
+  integrity sha1-gpyze+cdlXZJz4uD1SUihpZWlRs=
   dependencies:
     "@babel/core" "7.2.0"
     "@babel/generator" "^7.9.6"
@@ -5962,7 +5962,7 @@ cssstyle@^2.0.0:
 
 csstype@^2.2.0:
   version "2.6.13"
-  resolved "https://registry.npm.taobao.org/csstype/download/csstype-2.6.13.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcsstype%2Fdownload%2Fcsstype-2.6.13.tgz#a6893015b90e84dd6e85d0e3b442a1e84f2dbe0f"
+  resolved "https://registry.npm.taobao.org/csstype/download/csstype-2.6.13.tgz?cache=0&sync_timestamp=1596103383177&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcsstype%2Fdownload%2Fcsstype-2.6.13.tgz#a6893015b90e84dd6e85d0e3b442a1e84f2dbe0f"
   integrity sha1-pokwFbkOhN1uhdDjtEKh6E8tvg8=
 
 currently-unhandled@^0.4.1:
@@ -14067,9 +14067,9 @@ rax-view@^1.1.0:
     universal-env "^3.0.0"
 
 rax-webpack-config@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.npm.taobao.org/rax-webpack-config/download/rax-webpack-config-0.1.1.tgz#a5eb658800ea04bf26094a2249af7987db01a070"
-  integrity sha1-petliADqBL8mCUoiSa95h9sBoHA=
+  version "0.1.2"
+  resolved "https://registry.npm.taobao.org/rax-webpack-config/download/rax-webpack-config-0.1.2.tgz#5ff0ee56653181fd99e54240396fc96cdc10741a"
+  integrity sha1-X/DuVmUxgf2Z5UJAOW/JbNwQdBo=
   dependencies:
     "@babel/core" "7.2.0"
     "@babel/runtime" "^7.2.0"
