@@ -4,10 +4,10 @@ export { lazy } from './lazy';
 export * from './types';
 export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 
-<%- iceImports %>
+<%- imports %>
 
-<% if (iceExports) { %>
+<% if (exports) { %>
   export {
-    <%- iceExports %>
+    <%- exports %>
   }
 <% } %>

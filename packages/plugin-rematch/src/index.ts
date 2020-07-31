@@ -38,5 +38,5 @@ async function handleStoresDirChange(targetPath, templatePath, storesDir, applyM
   // export { connect }
   // remove connect before add in case of dir change
   applyMethod('removeIceExport', 'connect');
-  applyMethod('addIceExport', { source: 'react-redux', specifier: '{ connect }', exportName: 'connect' });
+  applyMethod('addExport', { source: 'react-redux', specifier: '{ connect }', exportName: 'connect' });
 }
