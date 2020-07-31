@@ -8107,11 +8107,12 @@ husky@^3.1.0:
     slash "^3.0.0"
 
 ice-npm-utils@^1.4.0:
-  version "1.4.1"
-  resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.4.1.tgz#d176955639b10a07db99348645224c398a076c3b"
-  integrity sha1-0XaVVjmxCgfbmTSGRSJMOYoHbDs=
+  version "1.4.5"
+  resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.4.5.tgz#dd6061eefb61ad5d13fba621ef7318ed2a64043b"
+  integrity sha1-3WBh7vthrV0T+6Yh73MY7SpkBDs=
   dependencies:
     "@types/npmlog" "^4.1.2"
+    fs-extra "^8.1.0"
     mkdirp "^0.5.1"
     npmlog "^4.1.2"
     request "^2.88.0"
@@ -8119,6 +8120,21 @@ ice-npm-utils@^1.4.0:
     request-promise "^4.2.4"
     semver "^6.0.0"
     tar "^4.4.8"
+    url-join "^4.0.1"
+
+ice-npm-utils@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-2.0.1.tgz#472587a0d09170a46e9b7ea26ad568eea7242044"
+  integrity sha1-RyWHoNCRcKRum36iatVo7qckIEQ=
+  dependencies:
+    fs-extra "^8.1.0"
+    mkdirp "^0.5.1"
+    request "^2.88.0"
+    request-progress "^3.0.0"
+    request-promise "^4.2.4"
+    semver "^6.0.0"
+    tar "^4.4.8"
+    url-join "^4.0.1"
 
 iconv-lite@0.4.24, iconv-lite@^0.4.13, iconv-lite@^0.4.15, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
@@ -15722,6 +15738,11 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/urix/download/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+url-join@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/url-join/download/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
+  integrity sha1-tkLiGiZGgI/6F4xMX9o5hE4Szec=
 
 url-loader@^2.1.0:
   version "2.3.0"
