@@ -1,13 +1,7 @@
 import axios from 'axios';
-import mpAdapter from 'axios-miniprogram-adapter';
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 
 // https://github.com/axios/axios#request-config
-let DEFAULE_CONFIG = {};
-
-if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
-  DEFAULE_CONFIG = Object.assign({}, DEFAULE_CONFIG, { adapter: mpAdapter });
-}
+const DEFAULE_CONFIG = {};
 
 const axiosInstance = {
   default: axios.create(DEFAULE_CONFIG)

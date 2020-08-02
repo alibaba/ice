@@ -3841,13 +3841,6 @@ axe-core@^3.5.4:
   resolved "https://registry.npm.taobao.org/axe-core/download/axe-core-3.5.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxe-core%2Fdownload%2Faxe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
   integrity sha1-hDFQc7U/o8DFFnbFiNWdoJoZIic=
 
-axios-miniprogram-adapter@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.npm.taobao.org/axios-miniprogram-adapter/download/axios-miniprogram-adapter-0.3.2.tgz#9240251ca0c21bfbe47644e6913a5e0368dd3ad7"
-  integrity sha1-kkAlHKDCG/vkdkTmkTpeA2jdOtc=
-  dependencies:
-    axios "^0.19.2"
-
 axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.npm.taobao.org/axios/download/axios-0.19.2.tgz?cache=0&sync_timestamp=1594827603723&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxios%2Fdownload%2Faxios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"

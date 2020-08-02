@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import { request } from 'ice';
+import request from 'universal-request';
 
 function getRepo(){
-  request('https://ice.alicdn.com/assets/materials/react-materials.json').then(res => {
+  request({
+    url: 'https://ice.alicdn.com/assets/materials/react-materials.json',
+
+  }).then(res => {
     console.log('request res:', res);
   }).catch(err => {
     console.log(err);
