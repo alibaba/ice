@@ -28,9 +28,14 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-mpa',
   ];
 
+  // for ice/miniapp plugins
+  const miniAppPlugins = [
+    'build-plugin-miniapp'
+  ];
+
   // for miniapp plugins
   if (Array.isArray(userConfig.targets) && userConfig.targets.includes('miniapp')) {
-    plugins = commonPlugins;
+    plugins = commonPlugins.concat(miniAppPlugins);
   } else {
     plugins = commonPlugins.concat(reactAppPlugins);
   }

@@ -8475,7 +8475,7 @@ husky@^3.1.0:
     run-node "^1.0.0"
     slash "^3.0.0"
 
-ice-npm-utils@^1.4.0:
+ice-npm-utils@^1.4.1:
   version "1.4.5"
   resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.4.5.tgz#dd6061eefb61ad5d13fba621ef7318ed2a64043b"
   integrity sha1-3WBh7vthrV0T+6Yh73MY7SpkBDs=
@@ -8484,6 +8484,20 @@ ice-npm-utils@^1.4.0:
     fs-extra "^8.1.0"
     mkdirp "^0.5.1"
     npmlog "^4.1.2"
+    request "^2.88.0"
+    request-progress "^3.0.0"
+    request-promise "^4.2.4"
+    semver "^6.0.0"
+    tar "^4.4.8"
+    url-join "^4.0.1"
+
+ice-npm-utils@^2.0.0, ice-npm-utils@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-2.0.1.tgz#472587a0d09170a46e9b7ea26ad568eea7242044"
+  integrity sha1-RyWHoNCRcKRum36iatVo7qckIEQ=
+  dependencies:
+    fs-extra "^8.1.0"
+    mkdirp "^0.5.1"
     request "^2.88.0"
     request-progress "^3.0.0"
     request-promise "^4.2.4"
