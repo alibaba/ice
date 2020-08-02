@@ -1,6 +1,6 @@
 {
-  "name": "@ice/rax-renderer",
-  "version": "0.1.1",
+  "name": "rax-renderer",
+  "version": "0.1.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
