@@ -24,7 +24,6 @@
     "@iceworks/generate-project": "^1.0.0",
     "chalk": "^3.0.0",
     "fs-extra": "^8.1.0",
-    "ice-npm-utils": "^1.4.0",
     "inquirer": "^7.0.4"
   },
   "publishConfig": {
