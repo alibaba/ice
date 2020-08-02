@@ -26,6 +26,6 @@ export default async function (api) {
   // export interface IAppConfig {
   //   auth?: IAuth;
   // }
-  applyMethod('addIceAppConfigTypes', { source: './auth/types', specifier: '{ IAuth }', exportName: 'auth?: IAuth' });
+  applyMethod('addAppConfigTypes', { source: './auth/types', specifier: '{ IAuth }', exportName: 'auth?: IAuth' });
 
 }

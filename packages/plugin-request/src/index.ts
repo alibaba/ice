@@ -17,7 +17,7 @@ export default async function (api) {
   applyMethod('addExport', { source: './request/useRequest', exportName: 'useRequest' });
 
   // add iceTypes exports
-  applyMethod('addIceAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
+  applyMethod('addAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
 
   onGetWebpackConfig((config) => {
     // add alias for runtime.ts use $ice/createAxiosInstance

@@ -16,7 +16,7 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
 
   // set IStore to IAppConfig
-  applyMethod('addIceAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
   // render template/types.ts.ejs to .ice/store/types.ts
   const typesTemplateContent = fse.readFileSync(typesTemplatePath, 'utf-8');
@@ -25,7 +25,7 @@ export default async (api) => {
   const content = ejs.render(typesTemplateContent, { hasAppModels });
   fse.ensureFileSync(typesTargetPath);
   fse.writeFileSync(typesTargetPath, content, 'utf-8');
-  applyMethod('addIceTypesExport', { source: './store/types' });
+  applyMethod('addTypesExport', { source: './store/types' });
 
   // add babel plugins for ice lazy
   const { configPath } = userConfig.router || {};

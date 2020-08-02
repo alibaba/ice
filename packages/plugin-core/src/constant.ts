@@ -20,27 +20,8 @@ export const USER_CONFIG = [
 export const PROJECT_TYPE = 'PROJECT_TYPE';
 export const ICE_TEMP = 'ICE_TEMP';
 
-export const EXPORT_API_MPA = [
-  {
-    name: ['addIceExport'],
-    value: ['imports', 'exports']
-  },
-  {
-    name: ['addIceTypesExport'],
-    value: ['typesImports', 'typesExports'],
-  },
-  {
-    name: ['addIceAppConfigTypes'],
-    value: ['appConfigTypesImports', 'appConfigTypesExports']
-  },
-  {
-    name: ['addIceAppConfigAppTypes'],
-    value: ['appConfigAppTypesImports', 'appConfigAppTypesExports']
-  }
-];
-
 /**
- * API_KEYS
+ * API_Names
  *
  * deprecated api
  * addIceExport、addIceTypesExport、addIceAppConfigTypes、addIceAppConfigAppTypes
@@ -48,13 +29,27 @@ export const EXPORT_API_MPA = [
  * for ice and rax
  * addExport、addTypesExport、addAppConfigTypes、addAppConfigAppTypes
  */
+export const EXPORT_API_MPA = [
+  {
+    name: ['addIceExport', 'addExport'],
+    value: ['imports', 'exports']
+  },
+  {
+    name: ['addIceTypesExport', 'addTypesExport'],
+    value: ['typesImports', 'typesExports'],
+  },
+  {
+    name: ['addIceAppConfigTypes', 'addAppConfigTypes'],
+    value: ['appConfigTypesImports', 'appConfigTypesExports']
+  },
+  {
+    name: ['addIceAppConfigAppTypes', 'addAppConfigAppTypes'],
+    value: ['appConfigAppTypesImports', 'appConfigAppTypesExports']
+  }
+];
+
 export const getExportApiKeys = () => {
-  let apiKeys = [
-    'addExport',
-    'addTypesExport',
-    'addAppConfigTypes',
-    'addAppConfigAppTypes'
-  ];
+  let apiKeys = [];
   EXPORT_API_MPA.forEach(item => {
     apiKeys = apiKeys.concat(item.name);
   });
