@@ -10,7 +10,7 @@ function enhanceWithRouter({ withRouter, createElement }) {
           Component,
           Object.assign({}, props, {
             history,
-            location: history.location,
+            location: (history as any).location,
           })
         );
       }

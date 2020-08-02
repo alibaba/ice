@@ -17,6 +17,7 @@
     { "path": "packages/plugin-ssr" },
     { "path": "packages/plugin-fast-refresh" },
     { "path": "packages/plugin-miniapp" },
+    { "path": "packages/create-app-shared" },
     { "path": "packages/react-renderer" },
     { "path": "packages/rax-renderer" },
     { "path": "packages/miniapp-renderer" },

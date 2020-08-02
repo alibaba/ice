@@ -1,15 +1,14 @@
-/* eslint no-undef:0 */
 import {
   createBrowserHistory,
   createHashHistory,
-  createMemoryHistory,
+  createMemoryHistory
 } from 'history';
 import { createMiniAppHistory } from 'miniapp-history';
 import { isMiniAppPlatform } from './env';
 
 let history;
 
-function createHistory({ routes, customHistory, type, basename }) {
+function createHistory({ routes, customHistory, type, basename }: any) {
   if (customHistory) {
     history = customHistory;
   } else if (type === 'hash') {
@@ -17,8 +16,8 @@ function createHistory({ routes, customHistory, type, basename }) {
   } else if (type === 'browser') {
     history = createBrowserHistory({ basename });
   } else if (isMiniAppPlatform) {
-    window.history = createMiniAppHistory(routes);
-    window.location = window.history.location;
+    (window as any).history = createMiniAppHistory(routes);
+    window.location = (window.history as any).location;
     history = window.history;
   } else {
     history = createMemoryHistory();

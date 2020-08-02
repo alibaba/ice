@@ -1,4 +1,3 @@
-/* eslint no-undef:0 */
 import { isWeex } from 'universal-env';
 import { isMiniAppPlatform } from './env';
 import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from './constants';
@@ -9,13 +8,16 @@ import { emit as pageEmit } from './pageLifeCycles';
 
 export const appCycles = {};
 
+// eslint-disable-next-line
+declare var __weex_require__: any;
+
 /**
  * Emit life cycle callback
  * @param {string} cycle cycle name
  * @param {object} context callback's context when executed
  * @param  {...any} args callback params
  */
-export function emit(cycle, context, ...args) {
+export function emit(cycle: any, context?: any, ...args) {
   if (Object.prototype.hasOwnProperty.call(appCycles, cycle)) {
     const cycles = appCycles[cycle];
     if (cycle === SHARE) {
@@ -70,25 +72,25 @@ export function useAppShare(callback) {
 
 // Emit MiniApp App lifeCycles
 if (isMiniAppPlatform) {
-  window.addEventListener(LAUNCH, ({ options, context }) => {
+  window.addEventListener(LAUNCH, ({ options, context }: any) => {
     emit(LAUNCH, context, options);
   });
-  window.addEventListener('appshow', ({ options, context }) => {
+  window.addEventListener('appshow', ({ options, context }: any) => {
     emit(SHOW, context, options);
   });
-  window.addEventListener('apphide', ({ context }) => {
+  window.addEventListener('apphide', ({ context }: any) => {
     emit(HIDE, context);
   });
-  window.addEventListener('apperror', ({ context, error }) => {
+  window.addEventListener('apperror', ({ context, error }: any) => {
     emit(ERROR, context, error);
   });
-  window.addEventListener('pagenotfound', ({ context }) => {
+  window.addEventListener('pagenotfound', ({ context }: any) => {
     emit(NOT_FOUND, context);
   });
-  window.addEventListener('appshare', ({ context, shareInfo, options }) => {
+  window.addEventListener('appshare', ({ context, shareInfo, options }: any) => {
     emit(SHARE, context, shareInfo, options);
   });
-  window.addEventListener('tabitemclick', ({ options, context }) => {
+  window.addEventListener('tabitemclick', ({ options, context }: any) => {
     emit(TAB_ITEM_CLICK, context, options);
   });
 } else if (isWeex) {

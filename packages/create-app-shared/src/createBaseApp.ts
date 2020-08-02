@@ -1,8 +1,10 @@
-import deepmerge from 'deepmerge';
 import RuntimeModule from './runtimeModule';
 import { createHistory } from './history';
 import { isMiniAppPlatform } from './env';
 import collectAppLifeCycle from './collectAppLifeCycle';
+
+// eslint-disable-next-line
+const deepmerge = require('deepmerge');
 
 const DEFAULE_APP_CONFIG = {
   app: {
@@ -14,7 +16,7 @@ const DEFAULE_APP_CONFIG = {
 };
 
 export default ({ loadRuntimeModules, loadStaticModules, createElement }) => {
-  const createBaseApp = (appConfig, buildConfig, context = {}) => {
+  const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
 
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 

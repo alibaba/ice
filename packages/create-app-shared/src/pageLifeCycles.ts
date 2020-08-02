@@ -18,7 +18,7 @@ function addPageLifeCycle(cycle, callback) {
   visibleListeners[pathname][cycle].push(callback);
 }
 
-function emit(cycle, pathname, ...args) {
+export function emit(cycle: any, pathname?: string, ...args) {
   // Ensure queue exists
   if (visibleListeners[pathname] && visibleListeners[pathname][cycle]) {
     for (let i = 0, l = visibleListeners[pathname][cycle].length; i < l; i++) {
@@ -51,7 +51,7 @@ function createPageLifeCycle(useEffect) {
   };
 }
 
-function withPageLifeCycle(Component) {
+export function withPageLifeCycle(Component) {
   class Wrapper extends Component {
     constructor() {
       super();
@@ -69,12 +69,12 @@ function withPageLifeCycle(Component) {
       this.pathname = router.current.pathname;
     }
 
-    componentWillUnmount() {
+    private componentWillUnmount() {
       visibleListeners[this.pathname] = null;
     }
   }
   Wrapper.displayName = `withPageLifeCycle(${  Component.displayName || Component.name  })`;
-  return Wrapper;
+  return Wrapper as any;
 }
 
 if (isMiniAppPlatform) {
@@ -92,7 +92,7 @@ if (isMiniAppPlatform) {
   });
 }
 
-function createUsePageLifeCycle({ useEffect }) {
+export function createUsePageLifeCycle({ useEffect }) {
   const usePageShow = (callback) => {
     createPageLifeCycle(useEffect)(SHOW, callback);
   };
@@ -106,9 +106,3 @@ function createUsePageLifeCycle({ useEffect }) {
     usePageHide
   };
 }
-
-export {
-  emit,
-  createUsePageLifeCycle,
-  withPageLifeCycle
-};
