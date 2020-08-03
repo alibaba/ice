@@ -2,8 +2,9 @@ const formatWinPath = require('../utils/formatWinPath');
 const addBablePlugins = require('./babelPlugins');
 
 module.exports = (config, injectBabel, context) => {
-  const { userConfig: { targets } } = context;
-  if (Array.isArray(targets) && targets.includes('miniapp')) {
+  const { userConfig: { targets = [] } } = context;
+  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
+  if (isMiniapp) {
     return;
   }
   if (injectBabel === 'runtime') {

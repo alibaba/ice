@@ -1,6 +1,3 @@
 {
-  "plugins": [
-    "../../packages/plugin-miniapp/lib/index.js"
-  ],
-  "targets": ["miniapp"]
+  "targets": ["wechat-miniprogram"]
 }

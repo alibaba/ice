@@ -5,12 +5,10 @@ import * as getAppConfig from 'build-plugin-rax-app/lib/config/miniapp/getAppCon
 
 const EntryLoader = require.resolve('./MiniAppEntryLoader');
 
-const TARGET = 'miniapp';
-
 module.exports = (api) => {
   const { onGetWebpackConfig, context } = api;
   const { rootDir, command, userConfig } = context;
-  const buildDir = path.join(rootDir, userConfig.outputDir, TARGET);
+  const { targets = [] } = userConfig;
 
   // Using Components
   const usingComponents = {};
@@ -21,78 +19,87 @@ module.exports = (api) => {
   // Native lifecycle map
   const nativeLifeCycleMap = {};
 
-  // get app config
-  const appConfig = getAppConfig(rootDir, TARGET, nativeLifeCycleMap);
+  // Need Copy files or dir
+  const needCopyList = [];
 
-  onGetWebpackConfig((config) => {
+  targets.forEach((target) => {
+    onGetWebpackConfig(target, (config) => {
 
-    if (command === 'start') {
-      // write to dist for miniapp
-      config.devServer.set('writeToDisk', true);
-    }
+      const buildDir = path.join(rootDir, userConfig.outputDir, target);
 
-    config.output
-      .filename(`${TARGET}/common/[name].js`)
-      .library('createApp')
-      .libraryExport('default')
-      .libraryTarget('window');
+      // Get app config
+      const appConfig = getAppConfig(rootDir, target, nativeLifeCycleMap);
 
-    config.devtool('none');
+      if (command === 'start') {
+        // Write to dist for miniapp
+        config.devServer.set('writeToDisk', true);
+      }
 
-    // Clear entry
-    config.entryPoints.clear();
+      config.output
+        .filename(`${target}/common/[name].js`)
+        .library('createApp')
+        .libraryExport('default')
+        .libraryTarget('window');
 
-    // Page entry
-    const { routes } = appConfig;
-    routes.forEach(({ entryName, source }) => {
-      const entryConfig = config.entry(entryName);
+      config.devtool('none');
 
-      const pageEntry = getDepPath(rootDir, source);
-      entryConfig.add(`${EntryLoader}?${JSON.stringify({ routes })}!${pageEntry}`);
+      // Clear entry
+      config.entryPoints.clear();
+
+      // Page entry
+      const { routes } = appConfig;
+      routes.forEach(({ entryName, source }) => {
+        const entryConfig = config.entry(entryName);
+
+        const pageEntry = getDepPath(rootDir, source);
+        entryConfig.add(`${EntryLoader}?${JSON.stringify({ routes })}!${pageEntry}`);
+      });
+
+      // App entry
+      config.entry('app').add(getDepPath(rootDir, 'app'));
+
+      config.plugin('MiniAppConfigPlugin')
+        .use(MiniAppConfigPlugin, [
+          {
+            type: 'runtime',
+            appConfig,
+            outputPath: buildDir,
+            target,
+            getAppConfig,
+            nativeConfig: userConfig[target] && userConfig[target].nativeConfig,
+          }
+        ]);
+
+      config.plugin('MiniAppRuntimePlugin')
+        .use(MiniAppRuntimePlugin, [
+          {
+            ...appConfig,
+            target,
+            config: userConfig[target] || {},
+            usingComponents,
+            usingPlugins,
+            nativeLifeCycleMap,
+            rootDir,
+            command,
+            needCopyList
+          }
+        ]);
+
+      if (config.plugins.get('MiniCssExtractPlugin')) {
+        config.plugin('MiniCssExtractPlugin').tap((args) => [
+          {
+            ...args,
+            filename: `${target}/[name].css`,
+          }
+        ]);
+      }
+
+      // Remove default HtmlWebpackPlugin
+      config.plugins.delete('HtmlWebpackPlugin');
+
+      // Remove default CopyWebpackPlugin
+      config.plugins.delete('CopyWebpackPlugin');
     });
-
-    // App entry
-    config.entry('app').add(getDepPath(rootDir, 'app'));
-
-    config.plugin('MiniAppConfigPlugin')
-      .use(MiniAppConfigPlugin, [
-        {
-          type: 'runtime',
-          target: TARGET,
-          appConfig,
-          outputPath: buildDir,
-          getAppConfig,
-          nativeConfig: {},
-        }
-      ]);
-
-    config.plugin('MiniAppRuntimePlugin')
-      .use(MiniAppRuntimePlugin, [
-        {
-          ...appConfig,
-          config: {},
-          usingComponents,
-          usingPlugins,
-          nativeLifeCycleMap,
-          rootDir,
-          command
-        }
-      ]);
-
-    if (config.plugins.get('MiniCssExtractPlugin')) {
-      config.plugin('MiniCssExtractPlugin').tap((args) => [
-        {
-          ...args,
-          filename: `${TARGET}/[name].css`,
-        }
-      ]);
-    }
-
-    // remove default HtmlWebpackPlugin
-    config.plugins.delete('HtmlWebpackPlugin');
-
-    // remove default CopyWebpackPlugin
-    config.plugins.delete('CopyWebpackPlugin');
   });
 };
 
