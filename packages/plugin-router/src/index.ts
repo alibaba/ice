@@ -4,7 +4,7 @@ import { IPlugin } from '@alib/build-scripts';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 import { getRoutes, IParams }from './utils/getRoutes';
-import { getProjectType, Entry } from './utils/getProjectType';
+import { getProjectType } from './utils/getProjectType';
 
 // compatible with $ice/routes
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
@@ -13,7 +13,7 @@ const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, registerMethod, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
   // [enum] js or ts
-  const projectType = getValue('PROJECT_TYPE') ? getValue('PROJECT_TYPE') : getProjectType(userConfig.entry as Entry, rootDir);
+  const projectType = getValue('PROJECT_TYPE') ? getValue('PROJECT_TYPE') : getProjectType(rootDir);
   const iceTempPath = getValue('ICE_TEMP') ? getValue('ICE_TEMP') : path.join(rootDir, '.ice');
 
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
