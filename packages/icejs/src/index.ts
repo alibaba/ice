@@ -30,11 +30,7 @@ const getBuiltInPlugins = (userConfig) => {
 
   // for ice/miniapp plugins
   const miniAppPlugins = [
-    [
-      'build-plugin-miniapp', {
-        targets: userConfig.targets
-      }
-    ]
+    'build-plugin-miniapp'
   ];
 
   // for miniapp plugins
