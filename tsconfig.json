@@ -18,6 +18,7 @@
     { "path": "packages/plugin-fast-refresh" },
     { "path": "packages/plugin-auth" },
     { "path": "packages/create-ice" },
-    { "path": "packages/icejs" }
+    { "path": "packages/icejs" },
+    { "path": "packages/plugin-esbuild" }
   ]
 }

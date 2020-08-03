@@ -6324,6 +6324,18 @@ es6-promisify@^6.0.0:
   resolved "https://registry.npmjs.org/es6-promisify/-/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
   integrity sha512-HBL8I3mIki5C1Cc9QjKUenHtnG0A5/xA8Q/AllRcfiwl2CZFXGK7ddBiCoRwAix4i2KxcQfjtIVcrVbB3vbmwg==
 
+esbuild-webpack-plugin@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/esbuild-webpack-plugin/download/esbuild-webpack-plugin-1.0.3.tgz#0757bbb34e356ce329d80400ce4a2c408c3a8a07"
+  integrity sha1-B1e7s041bOMp2AQAzkosQIw6igc=
+  dependencies:
+    esbuild "^0.6.2"
+
+esbuild@^0.6.2:
+  version "0.6.5"
+  resolved "https://registry.npm.taobao.org/esbuild/download/esbuild-0.6.5.tgz#efbe11cf51abd0d4d489ca1bc80fd4761a35bd16"
+  integrity sha1-774Rz1Gr0NTUicobyA/Udho1vRY=
+
 escape-html@^1.0.3, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/escape-html/download/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
