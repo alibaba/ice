@@ -43,3 +43,17 @@ VS Code 非常轻量，在大多数硬件和操作系统（macOS、 Windows 和 
 - 在 VS Code 的 Iceworks Pack 页面点击「安装」。
 
 ![安装 Iceworks Pack](https://img.alicdn.com/tfs/TB1XSy3a8Bh1e4jSZFhXXcC9VXa-960-600.gif)
+
+### 通过 zip 压缩包安装
+
+若您无法通过上述 2 种方式安装 Iceworks ，请下载 [zip 压缩包](https://iceworks.oss-cn-hangzhou.aliyuncs.com/vscode-extensions/release/Iceworks.zip) 。
+
+解压 zip 包后：
+
+* 点击 VS Code 活动栏上的「插件商店图标」；
+* 点击插件面板右上角「...」，选择通过 VSIX 安装；
+* 选择解压后的 xxx.vsix 文件安装对应插件；
+
+重复上述步骤，安装所有 xxx.vsix 文件，完成 Iceworks 安装。
+
+![安装 Iceworks Pack](https://img.alicdn.com/tfs/TB1srktNoY1gK0jSZFMXXaWcVXa-2880-1662.jpg)
