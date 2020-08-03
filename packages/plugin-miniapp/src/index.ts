@@ -19,6 +19,9 @@ module.exports = (api) => {
   // Native lifecycle map
   const nativeLifeCycleMap = {};
 
+  // Need Copy files or dir
+  const needCopyList = [];
+
   targets.forEach((target) => {
     onGetWebpackConfig(target, (config) => {
 
@@ -59,11 +62,11 @@ module.exports = (api) => {
         .use(MiniAppConfigPlugin, [
           {
             type: 'runtime',
-            target,
             appConfig,
             outputPath: buildDir,
+            target,
             getAppConfig,
-            nativeConfig: {},
+            nativeConfig: userConfig[target] && userConfig[target].nativeConfig,
           }
         ]);
 
@@ -72,12 +75,13 @@ module.exports = (api) => {
           {
             ...appConfig,
             target,
-            config: {},
+            config: userConfig[target] || {},
             usingComponents,
             usingPlugins,
             nativeLifeCycleMap,
             rootDir,
-            command
+            command,
+            needCopyList
           }
         ]);
 
