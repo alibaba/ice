@@ -63,6 +63,12 @@ async function selectTemplate(): Promise<string> {
   }, {
     npmName: '@alifd/fusion-design-pro-js',
     description: 'Fusion Design Pro JavaScript template.',
+  }, {
+    npmName: '@miniprogram-materials/scaffolds-app-ts',
+    description: 'Lightweight TypeScript template with Mini Program.'
+  }, {
+    npmName: '@miniprogram-materials/scaffolds-app-js',
+    description: 'Lightweight JavaScript template with Mini Program.'
   }];
   const defaultTemplate = templates[0];
 
