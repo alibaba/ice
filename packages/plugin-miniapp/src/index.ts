@@ -5,9 +5,9 @@ import * as getAppConfig from 'build-plugin-rax-app/lib/config/miniapp/getAppCon
 
 const EntryLoader = require.resolve('./MiniAppEntryLoader');
 
-const TARGET = 'miniapp';
+const TARGET = 'wechat-miniprogram';
 
-module.exports = (api) => {
+module.exports = (api, options) => {
   const { onGetWebpackConfig, context } = api;
   const { rootDir, command, userConfig } = context;
   const buildDir = path.join(rootDir, userConfig.outputDir, TARGET);
@@ -70,6 +70,7 @@ module.exports = (api) => {
       .use(MiniAppRuntimePlugin, [
         {
           ...appConfig,
+          target: TARGET,
           config: {},
           usingComponents,
           usingPlugins,

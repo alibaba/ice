@@ -30,11 +30,18 @@ const getBuiltInPlugins = (userConfig) => {
 
   // for ice/miniapp plugins
   const miniAppPlugins = [
-    'build-plugin-miniapp'
+    [
+      'build-plugin-miniapp', {
+        targets: userConfig.targets
+      }
+    ]
   ];
 
   // for miniapp plugins
-  if (Array.isArray(userConfig.targets) && userConfig.targets.includes('miniapp')) {
+  if (Array.isArray(userConfig.targets)
+    && (userConfig.targets.includes('miniapp') || userConfig.targets.includes('wechat-miniprogram'))
+  ) {
+    // @ts-ignore
     plugins = commonPlugins.concat(miniAppPlugins);
   } else {
     plugins = commonPlugins.concat(reactAppPlugins);

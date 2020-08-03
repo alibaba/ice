@@ -2,5 +2,5 @@
   "plugins": [
     "../../packages/plugin-miniapp/lib/index.js"
   ],
-  "targets": ["miniapp"]
+  "targets": ["miniapp", "wechat-miniprogram"]
 }
