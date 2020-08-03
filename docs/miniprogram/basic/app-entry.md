@@ -17,7 +17,7 @@ import { runApp } from 'ice';
 runApp();
 ```
 
-## 生命周期配置
+## 生命周期
 
 ```ts
 import { runApp } from 'ice';
