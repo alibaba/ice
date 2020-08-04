@@ -35,7 +35,7 @@
     "rax-pwa": "^2.0.0",
     "rax-use-router": "^3.0.0",
     "rax-app-renderer": "^0.1.0",
-    "react-app-renderer": "^1.6.3",
+    "react-app-renderer": "^0.1.0",
     "universal-env": "^3.0.0"
   },
   "repository": {
