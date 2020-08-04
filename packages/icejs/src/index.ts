@@ -11,7 +11,7 @@ const getBuiltInPlugins = (userConfig) => {
   // common plugins
   const commonPlugins = [
     [
-      'build-plugin-ice-core', {
+      'build-plugin-app-core', {
         'framework': 'react'
       }
     ],

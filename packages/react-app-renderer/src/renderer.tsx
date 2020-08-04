@@ -12,14 +12,14 @@ let _createBaseApp;
 let _emitLifeCycles;
 let ErrorBoundaryComp;
 
-function reactRendererWithSSR({appConfig, createBaseApp, emitLifeCycles, context}) {
+function reactAppRendererWithSSR({appConfig, createBaseApp, emitLifeCycles, context}) {
   _createBaseApp = createBaseApp;
   _emitLifeCycles = emitLifeCycles;
   appConfig.router.type = 'static';
   return renderApp(appConfig, context);
 }
 
-function reactRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycles, ErrorBoundary }) {
+function reactAppRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycles, ErrorBoundary }) {
   _createBaseApp = createBaseApp;
   _emitLifeCycles = emitLifeCycles;
   ErrorBoundaryComp = ErrorBoundary;
@@ -95,6 +95,6 @@ function renderApp(appConfig: any, context = {}) {
   }
 }
 
-export { reactRendererWithSSR };
+export { reactAppRendererWithSSR };
 
-export default reactRenderer;
+export default reactAppRenderer;

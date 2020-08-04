@@ -1,6 +1,6 @@
 {
-  "name": "@ice/react-renderer",
-  "version": "1.6.3",
+  "name": "react-app-renderer",
+  "version": "0.1.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",

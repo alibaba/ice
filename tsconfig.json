@@ -1,7 +1,7 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/plugin-core" },
+    { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },
     { "path": "packages/plugin-request" },
@@ -18,8 +18,8 @@
     { "path": "packages/plugin-fast-refresh" },
     { "path": "packages/plugin-miniapp" },
     { "path": "packages/create-app-shared" },
-    { "path": "packages/react-renderer" },
-    { "path": "packages/rax-renderer" },
+    { "path": "packages/react-app-renderer" },
+    { "path": "packages/rax-app-renderer" },
     { "path": "packages/miniapp-renderer" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
