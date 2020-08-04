@@ -56,20 +56,21 @@ async function buildDll (dllPath, entry, webpack, rootDir) {
     });
   });
 
-  chainConfig.output.path(dllPath);
-  chainConfig.output.library('_dll_[name]');
-  chainConfig.output.filename('[name].dll.js');
+  chainConfig.output
+    .path(dllPath)
+    .library('_dll_[name]')
+    .filename('[name].dll.js');
 
-  chainConfig
-  .plugin('dllPlugin').use(webpack.DllPlugin, [{
+  chainConfig.plugin('dllPlugin').use(webpack.DllPlugin, [{
     name: '_dll_[name]',
     path: path.join(dllPath, '[name].manifest.json')
   }]);
 
   chainConfig.name('dll');
 
-  chainConfig.resolve.modules.add('node_modules');
-  chainConfig.resolve.modules.add(path.resolve(rootDir, 'node_modules'));
+  chainConfig.resolve.modules
+    .add('node_modules')
+    .add(path.resolve(rootDir, 'node_modules'));
 
   return new Promise((resolve, reject) => {
     webpack(chainConfig.toConfig(), err => {
