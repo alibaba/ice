@@ -1,11 +1,12 @@
 function miniappRenderer(
-  { appConfig, createBaseApp, createHistory, staticConfig, pageProps },
+  { appConfig, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles },
   { renderFactory, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
   createBaseApp(appConfig);
   const rootId = appConfig.app.rootId;
 
+  emitLifeCycles();
   class App extends Component {
     public render() {
       const { Page, ...otherProps } = this.props;
