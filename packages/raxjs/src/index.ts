@@ -3,7 +3,7 @@ const getBuiltInPlugins = (userConfig) => {
 
   // built-in plugins for raxjs
   const builtInPlugins = [
-    ['build-plugin-ice-core', {
+    ['build-plugin-app-core', {
       'framework': 'rax'
     }],
     ['build-plugin-rax-app', {

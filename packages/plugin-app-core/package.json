@@ -1,7 +1,7 @@
 {
-  "name": "build-plugin-ice-core",
-  "version": "1.7.0-1",
-  "description": "the core plugin for icejs.",
+  "name": "build-plugin-app-core",
+  "version": "0.1.0",
+  "description": "the core plugin for icejs and raxjs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
   "license": "MIT",
@@ -20,7 +20,6 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@ice/react-renderer": "^1.6.3",
     "chokidar": "^3.4.1",
     "create-app-shared": "^0.1.1",
     "deepmerge": "^4.2.2",
@@ -35,7 +34,8 @@
     "querystring": "^0.2.0",
     "rax-pwa": "^2.0.0",
     "rax-use-router": "^3.0.0",
-    "rax-renderer": "^0.1.0",
+    "rax-app-renderer": "^0.1.0",
+    "react-app-renderer": "^0.1.0",
     "universal-env": "^3.0.0"
   },
   "repository": {

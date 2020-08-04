@@ -20,14 +20,14 @@
       {
         "name": "home",
         "path": "/home",
-        "icon": "https://gw.alicdn.com/tfs/TB1ypSMTcfpK1RjSZFOXXa6nFXa-144-144.png",
-        "activeIcon": "https://gw.alicdn.com/tfs/TB1NBiCTgHqK1RjSZFPXXcwapXa-144-144.png"
+        "icon": "/public/home.png",
+        "activeIcon": "/public/home_active.png"
       },
       {
         "name": "about",
         "path": "/about",
-        "icon": "https://gw.alicdn.com/tfs/TB1ypSMTcfpK1RjSZFOXXa6nFXa-144-144.png",
-        "activeIcon": "https://gw.alicdn.com/tfs/TB1NBiCTgHqK1RjSZFPXXcwapXa-144-144.png"
+        "icon": "/public/home.png",
+        "activeIcon": "/public/home_active.png"
       }
     ]
   }

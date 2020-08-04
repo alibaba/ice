@@ -49,6 +49,8 @@ function initGenerator(api, options) {
   const { framework } = options;
   const plugins = getAllPlugin();
   const templatesDir = path.join(__dirname, './generator/templates');
+  const { targets = [] } = userConfig;
+  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
   return new Generator({
     rootDir,
     targetDir: getValue(ICE_TEMP),
@@ -63,7 +65,7 @@ function initGenerator(api, options) {
       framework,
       isReact: framework === 'react',
       isRax: framework === 'rax',
-      isMiniapp: userConfig.targets && userConfig.targets.includes('miniapp'),
+      isMiniapp,
       runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(userConfig)
     },

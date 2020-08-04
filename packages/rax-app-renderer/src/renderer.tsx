@@ -45,7 +45,7 @@ function App(props) {
   );
 }
 
-function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance }) {
+function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance }) {
   const {
     runtime,
     appConfig: appDynamicConfig
@@ -101,5 +101,5 @@ function raxRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, g
 }
 
 
-export default raxRenderer;
+export default raxAppRenderer;
 
