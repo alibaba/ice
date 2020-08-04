@@ -2,20 +2,20 @@ const path = require('path');
 const { getJestConfig } = require('build-scripts-config');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const chalk = require('chalk');
 const registerCliOption = require('./registerCliOption');
 const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
 const getBase = require('./base');
-
-// eslint-disable-next-line
-const chalk = require('chalk');
+const getMiniappOutputPath = require('./utils/getMiniappOutputPath');
+const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 
 module.exports = (api) => {
   const { onGetJestConfig, onGetWebpackConfig, context, registerTask, onHook } = api;
   const { command, rootDir, commandArgs, userConfig } = context;
-  const { targets = ['web'] } = userConfig;
+  const { targets = [WEB] } = userConfig;
   const isMiniapp = Array.isArray(targets)
-    && (targets.includes('miniapp') || targets.includes('wechat-miniprogram'));
+    && (targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM));
 
   // register cli option
   registerCliOption(api);
@@ -70,24 +70,44 @@ module.exports = (api) => {
       // 包含错误时不打印 localUrl 和 assets 信息
       const isSuccessful = !messages.errors.length;
       if (isSuccessful) {
-        if (!commandArgs.disableAssets) {
-          console.log(stats.toString({
-            errors: false,
-            warnings: false,
-            colors: true,
-            assets: true,
-            chunks: false,
-            entrypoints: false,
-            modules: false,
-            timings: false
-          }));
+
+        if (isMiniapp) {
+          console.log(chalk.green(' Starting the development server at:'));
+          console.log();
+
+          if (targets.includes(MINIAPP)) {
+            console.log(chalk.green('  [Ali Miniapp] Use ali miniapp developer tools to open the following folder:'));
+            console.log('   ', chalk.underline.white(getMiniappOutputPath(context)));
+            console.log();
+          }
+
+          if (targets.includes(WECHAT_MINIPROGRAM)) {
+            console.log(chalk.green('  [WeChat MiniProgram] Use wechat miniprogram developer tools to open the following folder:'));
+            console.log('   ', chalk.underline.white(getMiniappOutputPath(context, { target: WECHAT_MINIPROGRAM })));
+            console.log();
+          }
         }
 
-        console.log();
-        console.log(chalk.green(' Starting the development server at:'));
-        console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
-        console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
-        console.log();
+        if (targets.includes('web')) {
+          if (!commandArgs.disableAssets) {
+            console.log(stats.toString({
+              errors: false,
+              warnings: false,
+              colors: true,
+              assets: true,
+              chunks: false,
+              entrypoints: false,
+              modules: false,
+              timings: false
+            }));
+          }
+
+          console.log();
+          console.log(chalk.green(' Starting the development server at:'));
+          console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
+          console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
+          console.log();
+        }
       }
     });
   }
