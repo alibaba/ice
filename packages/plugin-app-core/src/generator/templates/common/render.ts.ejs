@@ -1,0 +1,16 @@
+<% if(isRax){ %>
+  import { render } from 'rax';
+  import DriverUniversal from 'driver-universal';
+
+  export default function(appInstance, rootEl) {
+    return render(appInstance, rootEl, {
+      driver: DriverUniversal
+    });
+  }
+<% } else { %>
+  import ReactDOM from 'react-dom';
+
+  export default function(appInstance, rootEl) {
+    return ReactDOM.render(appInstance, rootEl);
+  }
+<% } %>

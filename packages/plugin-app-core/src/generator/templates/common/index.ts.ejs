@@ -1,4 +1,4 @@
-import { createElement, useEffect } from '<%- framework %>';
+import { createElement, useEffect, Component } from '<%- framework %>';
 <% if(isRax){ %>
   import { withRouter as defaultWithRouter } from 'rax-use-router';
 <% } else { %>
@@ -10,6 +10,7 @@ import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
 import ErrorBoundary from './ErrorBoundary';
+import render from './render';
 
 const {
   createBaseApp,
@@ -29,10 +30,8 @@ const {
 } = createShareAPI({
   createElement,
   useEffect,
-  withRouter: defaultWithRouter,
-  loadRuntimeModules,
-  loadStaticModules
-});
+  withRouter: defaultWithRouter
+}, loadRuntimeModules, loadStaticModules);
 
 function initializeApp(appConfig, renderer) {
   renderer({
@@ -45,6 +44,10 @@ function initializeApp(appConfig, renderer) {
     emitLifeCycles,
     pathRedirect,
     ErrorBoundary
+  }, {
+    createElement,
+    render,
+    Component
   })
 };
 
