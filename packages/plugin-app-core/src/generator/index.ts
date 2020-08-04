@@ -34,8 +34,6 @@ export default class Generator {
 
   public commonTemplateDir: string;
 
-  public rootTemplatesPath: string[];
-
   public targetDir: string;
 
   public renderData: IRenderData;
@@ -54,12 +52,11 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, rootTemplatesPath }) {
+  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log }) {
     this.rootDir = rootDir;
     this.templatesDir = templatesDir;
     this.appTemplateDir = appTemplateDir;
     this.commonTemplateDir = commonTemplateDir;
-    this.rootTemplatesPath = rootTemplatesPath;
     this.targetDir = targetDir;
     this.renderData = defaultData;
     this.contentRegistration = {};
@@ -159,8 +156,6 @@ export default class Generator {
     });
 
     this.renderCommonTemplates();
-
-    this.renderRootTemplates();
   }
 
   public async renderAppTemplates(templateFile) {
@@ -186,15 +181,6 @@ export default class Generator {
     commonTemplates.forEach((templateFile) => {
       this.renderFile(
         path.join(this.commonTemplateDir, templateFile),
-        path.join(this.targetDir, 'common', templateFile)
-      );
-    });
-  }
-
-  public async renderRootTemplates() {
-    this.rootTemplatesPath.forEach((templateFile) => {
-      this.renderFile(
-        path.join(this.templatesDir, templateFile),
         path.join(this.targetDir, templateFile)
       );
     });

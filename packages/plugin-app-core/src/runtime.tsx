@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as queryString from 'query-string';
 // @ts-ignore
-import { ErrorBoundary } from '$ice/common';
+import { ErrorBoundary } from 'ice';
 
 const module = ({ addProvider, appConfig, wrapperRouteComponent }) => {
   const { app = {} } = appConfig;
