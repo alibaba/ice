@@ -45,31 +45,6 @@ export function addAppLifeCycle(cycle, callback) {
   }
 }
 
-// All of the following hooks will be removed when the future break change
-export function useAppLaunch(callback) {
-  addAppLifeCycle(LAUNCH, callback);
-}
-
-export function useAppShow(callback) {
-  addAppLifeCycle(SHOW, callback);
-}
-
-export function useAppHide(callback) {
-  addAppLifeCycle(HIDE, callback);
-}
-
-export function useAppError(callback) {
-  addAppLifeCycle(ERROR, callback);
-}
-
-export function usePageNotFound(callback) {
-  addAppLifeCycle(NOT_FOUND, callback);
-}
-
-export function useAppShare(callback) {
-  addAppLifeCycle('appshare', callback);
-}
-
 // Emit MiniApp App lifeCycles
 if (isMiniAppPlatform) {
   window.addEventListener(LAUNCH, ({ options, context }: any) => {
