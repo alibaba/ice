@@ -1,6 +1,6 @@
 function miniappRenderer(
   { appConfig, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles },
-  { renderFactory, createElement, Component }
+  { rendedr, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
   createBaseApp(appConfig);
@@ -22,7 +22,7 @@ function miniappRenderer(
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
         document.body.appendChild(rootEl);
-        const appInstance = renderFactory(createElement(App, {
+        const appInstance = rendedr(createElement(App, {
           history,
           location: history.location,
           ...pageProps,

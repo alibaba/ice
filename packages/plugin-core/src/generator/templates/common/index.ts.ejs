@@ -10,7 +10,7 @@ import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
 import ErrorBoundary from './ErrorBoundary';
-import renderFactory from './renderFactory';
+import render from './render';
 
 const {
   createBaseApp,
@@ -46,7 +46,7 @@ function initializeApp(appConfig, renderer) {
     ErrorBoundary
   }, {
     createElement,
-    renderFactory,
+    render,
     Component
   })
 };
