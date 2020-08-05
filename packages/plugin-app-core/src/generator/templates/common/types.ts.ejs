@@ -3,6 +3,13 @@ import React from 'react';
 <%- appConfigAppTypesImports %>
 <%- typesImports %>
 
+interface IOnTabItemClickParams {
+  from: string;
+  path: string;
+  text: string;
+  index: number;
+}
+
 export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
@@ -10,6 +17,11 @@ export interface IApp {
   getInitialData?: () => Promise<any>;
   ErrorBoundaryFallback?: React.ComponentType,
   onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
+  onLaunch?: () => any;
+  onShow?: () => any;
+  onHide?: () => any;
+  onError?: (error: Error) => any;
+  onTabItemClick?: ({ from, path, text, index }: IOnTabItemClickParams) => any;
   <% if (appConfigAppTypesImports) { %>
     <%- appConfigAppTypesExports %>
   <% } %>
