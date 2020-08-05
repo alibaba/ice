@@ -3,8 +3,6 @@ import * as MiniAppRuntimePlugin from 'rax-miniapp-runtime-webpack-plugin';
 import * as MiniAppConfigPlugin from 'rax-miniapp-config-webpack-plugin';
 import * as getAppConfig from 'build-plugin-rax-app/lib/config/miniapp/getAppConfig';
 
-const EntryLoader = require.resolve('./MiniAppEntryLoader');
-
 module.exports = (api) => {
   const { onGetWebpackConfig, context } = api;
   const { rootDir, command, userConfig } = context;
@@ -36,27 +34,15 @@ module.exports = (api) => {
       }
 
       config.output
-        .filename(`${target}/common/[name].js`)
-        .library('createApp')
-        .libraryExport('default')
-        .libraryTarget('window');
+        .filename(`${target}/common/[name].js`);
 
       config.devtool('none');
 
       // Clear entry
       config.entryPoints.clear();
 
-      // Page entry
-      const { routes } = appConfig;
-      routes.forEach(({ entryName, source }) => {
-        const entryConfig = config.entry(entryName);
-
-        const pageEntry = getDepPath(rootDir, source);
-        entryConfig.add(`${EntryLoader}?${JSON.stringify({ routes })}!${pageEntry}`);
-      });
-
       // App entry
-      config.entry('app').add(getDepPath(rootDir, 'app'));
+      config.entry('index').add(getDepPath(rootDir, 'app'));
 
       config.plugin('MiniAppConfigPlugin')
         .use(MiniAppConfigPlugin, [
