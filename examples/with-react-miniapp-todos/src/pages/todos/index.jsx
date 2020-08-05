@@ -34,15 +34,19 @@ const Todos = (props) => {
 
   // lifecyle function
   usePageShow(async () => {
+    // my is global variable in mini program
+    // eslint-disable-next-line
     const myUserInfo = await my.getUserInfo();
     setUserInfo(myUserInfo);
     console.log('userInfo:', myUserInfo);
 
+    // eslint-disable-next-line
     const { data } = my.getStorageSync({
       key: 'todos'
     });
 
     if (data === null) {
+      // eslint-disable-next-line
       my.setStorageSync({
         key: 'todos',
         data: {

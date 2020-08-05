@@ -17,6 +17,7 @@ const AddToDo = (props) => {
   const add = () => {
     const storageKey = 'todos';
 
+    // eslint-disable-next-line
     const { data } = my.getStorageSync({
       key: storageKey
     });
@@ -28,6 +29,7 @@ const AddToDo = (props) => {
       });
     }
     
+    // eslint-disable-next-line 
     my.setStorageSync({
       key: storageKey,
       data: {
