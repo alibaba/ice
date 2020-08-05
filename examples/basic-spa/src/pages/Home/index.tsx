@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, usePageShow, usePageHide, helpers, logger, config  } from 'ice';
+import { Link, usePageShow, usePageHide, helpers, logger, config } from 'ice';
 
 logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);

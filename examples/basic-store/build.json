@@ -3,5 +3,5 @@
   "router": {
     "lazy": false
   },
-  "tsChecker": false
+  "tsChecker": true
 }

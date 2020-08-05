@@ -1,4 +1,4 @@
-import { runApp, IAppConfig } from 'ice';
+import { createApp, IAppConfig } from 'ice';
 import * as React from 'react';
 import { ConfigProvider } from '@alifd/next';
 
@@ -51,4 +51,4 @@ const appConfig: IAppConfig = {
   },
 };
 
-runApp(appConfig);
+createApp(appConfig);

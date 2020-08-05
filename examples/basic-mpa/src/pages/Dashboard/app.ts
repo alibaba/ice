@@ -1,4 +1,4 @@
-import { runApp, IAppConfig } from 'ice';
+import { createApp, IAppConfig } from 'ice';
 import routes from './routes';
 
 const appConfig: IAppConfig = {
@@ -7,4 +7,4 @@ const appConfig: IAppConfig = {
   },
 };
 
-runApp(appConfig);
+createApp(appConfig);
