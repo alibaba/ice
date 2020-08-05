@@ -1,3 +1,3 @@
 {
-  "targets": ["wechat-miniprogram"]
+  "targets": ["miniapp", "wechat-miniprogram"]
 }
