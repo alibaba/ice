@@ -15,8 +15,11 @@ const Home = (props) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Welcome to icejs miniapp!</h2>
-      <p className={styles.description}>This is a awesome project, enjoy it!</p>
-      <p onClick={() => history.push('/about')}>go about</p>
+      <view className={styles.description}>This is a awesome project, enjoy it!</view>
+      <view onClick={() => {
+        console.log('Click');
+        history.push('/about');
+      }}>go about</view>
     </div>
   );
 };

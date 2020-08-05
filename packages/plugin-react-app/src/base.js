@@ -1,6 +1,6 @@
 /* eslint-disable import/no-dynamic-require, global-require */
 const path = require('path');
-const { getWebpackConfig } = require('build-scripts-config');
+const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
@@ -18,6 +18,7 @@ module.exports = (api) => {
     && (targets.includes('miniapp') || targets.includes('wechat-miniprogram'));
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
+  const babelConfig = getBabelConfig();
 
   const mode = command === 'start' ? 'development' : 'production';
   const config = getWebpackConfig(mode);
@@ -85,6 +86,18 @@ module.exports = (api) => {
         },
       ]])
       .end();
+
+  // Process app.json file
+  config.module.rule('appJSON')
+    .type('javascript/auto')
+    .test(/app\.json$/)
+    .use('babel')
+    .loader(require.resolve('babel-loader'))
+    .options(babelConfig)
+    .end()
+    .use('loader')
+    .loader(require.resolve('./loaders/AppConfigLoader'));
+
   if (mode === 'development') {
     // disable build-scripts stats output
     process.env.DISABLE_STATS = true;
