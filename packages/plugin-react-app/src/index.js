@@ -29,8 +29,8 @@ module.exports = ({
   const { command, rootDir, webpack, commandArgs, pkg } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
-  modifyUserConfig((userConfig) => {
-    const { modeConfig = {} } = userConfig;
+  modifyUserConfig((config) => {
+    const { modeConfig = {} } = config;
     return modeConfig[appMode] || {};
   });
   // register user config without configWebpack
@@ -45,16 +45,16 @@ module.exports = ({
   }].forEach((item) => registerUserConfig(item));
 
   // modify user config to keep excute order
-  modifyUserConfig((userConfig) => {
-    const configKeys = [...Object.keys(userConfig), 'filename'].sort();
+  modifyUserConfig((config) => {
+    const configKeys = [...Object.keys(config), 'filename'].sort();
     const newConfig = {};
     configKeys.forEach((configKey) => {
       if (configKey !== 'plugins') {
-        newConfig[configKey] = Object.prototype.hasOwnProperty.call(userConfig, configKey)
-          ? userConfig[configKey]
-          : defaultConfig[configKey];;
+        newConfig[configKey] = Object.prototype.hasOwnProperty.call(config, configKey)
+          ? config[configKey]
+          : defaultConfig[configKey];
         // eslint-disable-next-line no-param-reassign
-        delete userConfig[configKey];
+        delete config[configKey];
       }
     });
     // migrate sourcemap to sourceMap
@@ -151,6 +151,7 @@ module.exports = ({
   }
 
   config.name('web');
+
   registerTask('web', config);
 
   // sort config key to make sure entry config is always excute before injectBabel
