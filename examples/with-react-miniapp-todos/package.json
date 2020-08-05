@@ -4,7 +4,6 @@
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-redux": "^7.2.1",
     "universal-request": "^2.2.0"
   },
   "devDependencies": {

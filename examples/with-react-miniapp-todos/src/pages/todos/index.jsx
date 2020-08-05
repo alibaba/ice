@@ -10,26 +10,26 @@ const Todos = (props) => {
 
   // state
   const [userInfo, setUserInfo] = useState({});
-  const [toDos, setToDos] = useState([
+  const [todos, setTodos] = useState([
     { text: 'Learning Javascript', completed: true },
     { text: 'Learning ES2016', completed: true },
-    { text: 'Learning 支付宝小程序', completed: false },
+    { text: 'Learning 小程序', completed: false },
   ]);
 
   // handlers
-  const addToDo = () => {
+  const addTodo = () => {
     history.push('/add-todo');
   };
 
-  const onToDoChange = (text) => {
-    const changedToDos = toDos.map(toDo => {
-      const completed = toDo.completed;
+  const onTodoChange = (text) => {
+    const changedTodos = todos.map(todo => {
+      const completed = todo.completed;
       return {
-        ...toDo,
-        completed: text === toDo.text ? !completed : completed
+        ...todo,
+        completed: text === todo.text ? !completed : completed
       };
     });
-    setToDos(changedToDos);
+    setTodos(changedTodos);
   };
 
   // lifecyle function
@@ -50,11 +50,11 @@ const Todos = (props) => {
       my.setStorageSync({
         key: 'todos',
         data: {
-          toDos
+          todos
         }
       });
     } else {
-      setToDos(data.toDos);
+      setTodos(data.todos);
     }
   });
 
@@ -68,13 +68,13 @@ const Todos = (props) => {
       <view className={styles['todo-items']}>
         <view className={styles['todo-items-group']}>
           {
-            toDos.map(toDo => (
+            todos.map(todo => (
               <view
-                className={`${styles['todo-item']} ${toDo.completed ? styles.checked : ''}`}
-                onClick={() => onToDoChange(toDo.text)}
-                key={toDo.text}>
-                <checkbox className={styles['todo-item-checkbox']} checked={toDo.completed} />
-                <text className={styles['todo-item-text']}>{toDo.text}</text>
+                className={`${styles['todo-item']} ${todo.completed ? styles.checked : ''}`}
+                onClick={() => onTodoChange(todo.text)}
+                key={todo.text}>
+                <checkbox className={styles['todo-item-checkbox']} checked={todo.completed} />
+                <text className={styles['todo-item-text']}>{todo.text}</text>
               </view>
             ))
           }
@@ -82,7 +82,7 @@ const Todos = (props) => {
       </view>
 
       <view className={styles['todo-footer']}>
-        <AddButton text="Add ToDo" onClickMe={addToDo} />
+        <AddButton text="Add Todo" onClickMe={addTodo} />
       </view>
     </view>
   );

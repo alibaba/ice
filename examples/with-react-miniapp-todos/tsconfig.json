@@ -3,31 +3,15 @@
   "buildOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "build",
     "module": "esnext",
     "target": "es6",
     "jsx": "react",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "lib": ["es6", "dom"],
     "sourceMap": true,
-    "allowJs": true,
-    "rootDir": "./",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": false,
-    "importHelpers": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
+    "alwaysStrict": true,
     "paths": {
       "@/*": ["./src/*"],
-      "ice": [".ice/index.ts"],
-      "ice/*": [".ice/pages/*"]
+      "ice": [".ice/index.ts"]
     }
-  },
-  "include": ["src/*", ".ice"],
-  "exclude": ["node_modules", "build", "public"]
+  }
 }

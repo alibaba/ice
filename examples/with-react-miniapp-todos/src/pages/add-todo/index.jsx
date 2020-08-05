@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AddButton from '@/components/add-button';
 import styles from './index.module.scss';
 
-const AddToDo = (props) => {
+const AddTodo = (props) => {
   const { history } = props;
 
   // state
@@ -23,7 +23,7 @@ const AddToDo = (props) => {
     });
 
     if (data !== null) {
-      data.toDos.push({
+      data.todos.push({
         text: value,
         completed: false
       });
@@ -33,7 +33,7 @@ const AddToDo = (props) => {
     my.setStorageSync({
       key: storageKey,
       data: {
-        toDos: data.toDos
+        todos: data.todos
       }
     });
     
@@ -58,4 +58,4 @@ const AddToDo = (props) => {
   );
 };
 
-export default AddToDo;
+export default AddTodo;
