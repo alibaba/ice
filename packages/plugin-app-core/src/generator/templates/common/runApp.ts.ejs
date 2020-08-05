@@ -18,7 +18,7 @@ import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
 import ErrorBoundary from './ErrorBoundary';
-import render from './render';
+import { mount, unmount } from './render';
 
 <% if (globalStyle) {%>
   import '../<%= globalStyle %>'
@@ -68,7 +68,8 @@ export function runApp(appConfig) {
     ErrorBoundary
   }, {
     createElement,
-    render,
+    mount,
+    unmount,
     Component
   })
 };
