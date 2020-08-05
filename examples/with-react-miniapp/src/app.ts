@@ -1,6 +1,6 @@
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
-createApp({
+runApp({
   app: {
     onShow() {
       console.log('app show...');
