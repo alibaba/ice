@@ -1,6 +1,6 @@
-/* eslint no-unused-vars:0, no-undef:0 */
+// eslint-disable-next-line
 export function registerNativeEventListeners(Klass, events) {
-  // TODO: distinguish page configuration
+  // For rax miniapp runtime babel plugins prev compile
 }
 
 export function addNativeEventListener(eventName, callback) {

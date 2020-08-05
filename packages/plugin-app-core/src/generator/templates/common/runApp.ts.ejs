@@ -1,16 +1,28 @@
 import { createElement, useEffect, Component } from '<%- framework %>';
-<% if(isRax){ %>
-  import { withRouter as defaultWithRouter } from 'rax-use-router';
-<% } else { %>
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import miniappRenderer from 'miniapp-renderer';
+import createShareAPI from 'create-app-shared';
+
+<% if (isReact) {%>
+  import reactAppRenderer from 'react-app-renderer';
   import { withRouter as defaultWithRouter } from 'react-router';
 <% } %>
-import createShareAPI from 'create-app-shared';
+
+<% if (isRax) {%>
+  import raxAppRenderer from 'rax-app-renderer';
+  import { withRouter as defaultWithRouter } from 'rax-use-router';
+<% } %>
+
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
 import ErrorBoundary from './ErrorBoundary';
 import render from './render';
+
+<% if (globalStyle) {%>
+  import '../<%= globalStyle %>'
+<% } %>
 
 const {
   createBaseApp,
@@ -33,7 +45,17 @@ const {
   withRouter: defaultWithRouter
 }, loadRuntimeModules, loadStaticModules);
 
-function initializeApp(appConfig, renderer) {
+export function runApp(appConfig) {
+  let renderer;
+  <% if(isRax){ %>
+    renderer = raxAppRenderer;
+  <% } %>
+  if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
+    renderer = miniappRenderer;
+  }<% if(isReact){ %> else {
+    renderer = reactAppRenderer;
+  }
+  <% } %>
   renderer({
     appConfig,
     staticConfig,
@@ -72,10 +94,3 @@ export {
   // components
   ErrorBoundary,
 };
-
-// Private API
-export default {
-  initializeApp,
-  createBaseApp,
-  emitLifeCycles
-}

@@ -10,7 +10,7 @@ export default (api, options) => {
     [`${aliasKey}$`, path.join(tempPath, 'index.ts')],
     [`${aliasKey}`, path.join(tempPath, 'pages') ],
     ['@', path.join(rootDir, 'src')],
-    ['$ice/common', path.join(tempPath, 'common')]
+    ['aliasKey', path.join(tempPath)]
   ];
 
   onGetWebpackConfig((config: any) => {

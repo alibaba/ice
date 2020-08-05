@@ -57,10 +57,6 @@ function initGenerator(api, options) {
     templatesDir,
     appTemplateDir: path.join(templatesDir, `./app/${framework}`),
     commonTemplateDir: path.join(templatesDir, './common'),
-    rootTemplatesPath: [
-      'runApp.ts.ejs',
-      'types.ts.ejs'
-    ],
     defaultData: {
       framework,
       isReact: framework === 'react',
