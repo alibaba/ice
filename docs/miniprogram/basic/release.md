@@ -1,5 +1,5 @@
 ---
-title: 发布
+title: 小程序发布
 order: 8
 ---
 

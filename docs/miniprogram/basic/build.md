@@ -1,9 +1,7 @@
 ---
-title: 构建
+title: 小程序构建
 order: 7
 ---
-
-# 构建
 
 通过运行 `npm run build` 命令可以快速构建小程序应用。
 

@@ -7,7 +7,7 @@ order: 2
 
 **初始化项目**
 
-基于 `npm init ice` 命令，可以快速创建一个基于 React 的小程工程（注意：npm 版本需 >= 6.1.0）：
+基于 `npm init ice` 命令，可以快速创建一个基于 React 的小程序工程（注意：npm 版本需 >= 6.1.0）：
 
 ```bash
 $ npm init ice <projectName>

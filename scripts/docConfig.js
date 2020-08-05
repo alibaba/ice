@@ -146,6 +146,7 @@ const docCategories = {
       dir: 'reference',
     }],
   },
+
   icestore: {
     // icestore
     title: {},
@@ -163,6 +164,18 @@ const docCategories = {
       dir: 'reference',
     }],
   },
+
+  miniprogram: {
+    title: {},
+    children: [{
+      title: {
+        'zh-cn': '基础指南',
+        'en-us': 'basic',
+      },
+      dir: 'basic',
+    }],
+  }
+
 };
 
 module.exports = {
