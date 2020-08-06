@@ -2,7 +2,7 @@
   "name": "example-hello-world",
   "description": "hello world",
   "dependencies": {
-    "ice.js": "^1.0.0",
+    "ice.js": "1.7.0-7",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },

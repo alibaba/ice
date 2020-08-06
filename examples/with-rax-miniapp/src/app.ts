@@ -1,6 +1,6 @@
-import { createApp } from 'rax-app';
+import { runApp } from 'rax-app';
 
-createApp({
+runApp({
   app: {
     onShow() {
       console.log('app show...');
