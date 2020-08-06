@@ -3383,6 +3383,15 @@ acorn@^7.0.0, acorn@^7.1.0, acorn@^7.1.1:
   resolved "https://registry.npm.taobao.org/acorn/download/acorn-7.4.0.tgz?cache=0&sync_timestamp=1596457241712&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Facorn%2Fdownload%2Facorn-7.4.0.tgz#e1ad486e6c54501634c6c397c5c121daa383607c"
   integrity sha1-4a1IbmxUUBY0xsOXxcEh2qODYHw=
 
+add-asset-html-webpack-plugin@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.npm.taobao.org/add-asset-html-webpack-plugin/download/add-asset-html-webpack-plugin-3.1.3.tgz#bec77dc8182644a58a0eebcae7d1f9eb162dafdf"
+  integrity sha1-vsd9yBgmRKWKDuvK59H56xYtr98=
+  dependencies:
+    globby "^9.0.0"
+    micromatch "^3.1.3"
+    p-each-series "^1.0.0"
+
 address@1.1.2, address@>=0.0.1, address@^1.0.0, address@^1.0.1, address@^1.1.0:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/address/download/address-1.1.2.tgz#bf1116c9c758c51b7a933d296b72c221ed9428b6"
@@ -6703,6 +6712,18 @@ es6-promisify@^6.0.0:
   version "6.1.1"
   resolved "https://registry.npm.taobao.org/es6-promisify/download/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
   integrity sha1-RoN2Ubewa/b/+JPQPyk5NmjQFiE=
+
+esbuild-webpack-plugin@^1.0.3:
+  version "1.0.5"
+  resolved "https://registry.npm.taobao.org/esbuild-webpack-plugin/download/esbuild-webpack-plugin-1.0.5.tgz#68a6a377a84c991da1a0fc302830f514c9d47472"
+  integrity sha1-aKajd6hMmR2hoPwwKDD1FMnUdHI=
+  dependencies:
+    esbuild "^0.6.8"
+
+esbuild@^0.6.8:
+  version "0.6.17"
+  resolved "https://registry.npm.taobao.org/esbuild/download/esbuild-0.6.17.tgz#64f428fe001600f7de9b4a28b0d0905c1078bc50"
+  integrity sha1-ZPQo/gAWAPfem0oosNCQXBB4vFA=
 
 escalade@^3.0.1:
   version "3.0.2"
@@ -11139,7 +11160,7 @@ micromatch@4.x, micromatch@^4.0.0, micromatch@^4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
-micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.9:
+micromatch@^3.1.10, micromatch@^3.1.3, micromatch@^3.1.4, micromatch@^3.1.9:
   version "3.1.10"
   resolved "https://registry.npm.taobao.org/micromatch/download/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
   integrity sha1-cIWbyVyYQJUvNZoGij/En57PrCM=

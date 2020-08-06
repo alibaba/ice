@@ -90,7 +90,7 @@ function renderApp(appConfig: any, context = {}) {
       return modifyDOMRender({ App, appMountNode });
     } else {
       // @ts-ignore
-      // return ReactDOM[window.__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
+      return ReactDOM[window.__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
     }
   }
 }

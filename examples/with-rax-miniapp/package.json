@@ -11,7 +11,7 @@
     "rax-view": "^1.0.0"
   },
   "devDependencies": {
-    "miniapp-render": "^1.0.1",
+    "miniapp-render": "1.2.0-0",
     "@types/rax": "^1.0.0"
   },
   "scripts": {
