@@ -11,7 +11,7 @@ module.exports = {
   'testPathIgnorePatterns': [
     '/node_modules/',
     '/lib/',
-    'icejs/bin/'
+    'create-cli-utils/'
   ],
   'preset': 'ts-jest'
 };

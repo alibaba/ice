@@ -5,7 +5,7 @@ export default ({ addProvider, appConfig, context }) => {
 
   const StoreProvider = ({children}) => {
     const storeConfig = appConfig.store || {};
-    const initialData = context ? context.initialData : {};
+    const initialData = context.initialData ? context.initialData : {};
 
     let initialStates = {};
 

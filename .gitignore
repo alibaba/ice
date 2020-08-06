@@ -14,6 +14,7 @@ packages/*/lib/
 
 # temp folder .ice
 examples/*/.ice
+examples/*/.rax
 
 .eslintcache
 docs/.vuepress/dist/

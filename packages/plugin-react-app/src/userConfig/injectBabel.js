@@ -1,7 +1,13 @@
 const formatWinPath = require('../utils/formatWinPath');
 const addBablePlugins = require('./babelPlugins');
 
-module.exports = (config, injectBabel) => {
+module.exports = (config, injectBabel, context) => {
+  const { userConfig: { targets = [] } } = context;
+  const isMiniapp = Array.isArray(targets)
+    && (targets.includes('miniapp') || targets.includes('wechat-miniprogram'));
+  if (isMiniapp) {
+    return;
+  }
   if (injectBabel === 'runtime') {
     ['jsx', 'tsx'].forEach((rule) => {
       config.module

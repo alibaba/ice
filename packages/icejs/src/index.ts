@@ -6,27 +6,53 @@ const getBuiltInPlugins = (userConfig) => {
     ];
   }
 
-  // built-in plugins for icejs
-  const builtInPlugins = [
-    'build-plugin-ice-core',
-    'build-plugin-react-app',
+  let plugins = [];
+
+  // common plugins
+  const commonPlugins = [
+    [
+      'build-plugin-app-core', {
+        'framework': 'react'
+      }
+    ],
+    'build-plugin-react-app'
+  ];
+
+  // for ice/react plugins
+  const reactAppPlugins = [
     'build-plugin-ice-router',
     'build-plugin-ice-helpers',
     'build-plugin-ice-logger',
     'build-plugin-ice-config',
-    'build-plugin-ice-request',
-    'build-plugin-ice-mpa'
+    'build-plugin-ice-mpa',
+    'build-plugin-ice-request'
   ];
 
+  // for ice/miniapp plugins
+  const miniAppPlugins = [
+    'build-plugin-miniapp'
+  ];
+
+  // for miniapp plugins
+  if (Array.isArray(userConfig.targets)
+    && (userConfig.targets.includes('miniapp') || userConfig.targets.includes('wechat-miniprogram'))
+  ) {
+    // @ts-ignore
+    plugins = commonPlugins.concat(miniAppPlugins);
+  } else {
+    plugins = commonPlugins.concat(reactAppPlugins);
+  }
+
   if (userConfig.ssr) {
-    builtInPlugins.push('build-plugin-ice-ssr');
+    plugins.push('build-plugin-ice-ssr');
   }
 
+  // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
-    builtInPlugins.push('build-plugin-ice-store');
+    plugins.push('build-plugin-ice-store');
   }
 
-  return builtInPlugins;
+  return plugins;
 };
 
-export = getBuiltInPlugins
+module.exports = getBuiltInPlugins;

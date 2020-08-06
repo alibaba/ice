@@ -24,7 +24,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
     modifyRoutes(runtimeModifyRoutes);
   }
   if (appType === 'child') {
-    const history = createHistory(type, getBasename());
+    const history = createHistory({ type, basename: getBasename() });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
@@ -67,7 +67,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(createHistory(type, basename));
+      const [routerHistory] = useState(createHistory({ type, basename }));
       const routerProps = {
         type,
         routes,

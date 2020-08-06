@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-ssr",
-  "version": "1.6.4-alpha.0",
+  "version": "1.7.0-1",
   "description": "ssr plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "build-scripts-config": "^0.1.6",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "cheerio": "^1.0.0-rc.3",
     "ejs": "^3.0.1",
     "fs-extra": "^8.1.0",

@@ -1,0 +1,11 @@
+let staticConfig = {};
+
+try {
+  <% if (staticConfig) {%>
+    staticConfig = require('../<%= staticConfig %>');
+  <% } %>
+} catch (error) {
+  // ignore error
+}
+
+export default staticConfig.__esModule ? staticConfig.default : staticConfig;

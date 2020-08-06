@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-mpa",
-  "version": "1.6.4-alpha.0",
+  "version": "1.7.0-0",
   "description": "enable mpa project for icejs framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -23,7 +23,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.16"
+    "@alib/build-scripts": "^0.1.24"
   },
   "dependencies": {
     "fs-extra": "^8.1.0"

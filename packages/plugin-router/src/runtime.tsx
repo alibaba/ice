@@ -11,7 +11,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
   });
 
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes, appConfig) : wrapperPageWithCSR(appConfig);
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR();
   wrapperRouteComponent(wrapperPageFn);
   if (appConfigRouter.modifyRoutes) {
     modifyRoutes(appConfigRouter.modifyRoutes);

@@ -1,7 +1,7 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/plugin-core" },
+    { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },
     { "path": "packages/plugin-request" },
@@ -16,9 +16,14 @@
     { "path": "packages/plugin-auth" },
     { "path": "packages/plugin-ssr" },
     { "path": "packages/plugin-fast-refresh" },
-    { "path": "packages/plugin-auth" },
+    { "path": "packages/plugin-miniapp" },
+    { "path": "packages/plugin-esbuild" },
+    { "path": "packages/create-app-shared" },
+    { "path": "packages/react-app-renderer" },
+    { "path": "packages/rax-app-renderer" },
+    { "path": "packages/miniapp-renderer" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
-    { "path": "packages/plugin-esbuild" }
+    { "path": "packages/raxjs" }
   ]
 }

@@ -19,5 +19,5 @@ export default async function ({
 
   // .ice/index.ts:
   // export * from './helpers';
-  applyMethod('addIceExport', { source: './helpers', exportName: 'helpers' });
+  applyMethod('addExport', { source: './helpers', exportName: 'helpers' });
 }

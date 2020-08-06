@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, helpers, logger, config } from 'ice';
+import { Link, usePageShow, usePageHide, helpers, logger, config } from 'ice';
 
 logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);
@@ -14,6 +14,14 @@ export default function Home(props) {
 
   logger.info('Home props', props);
   logger.info('render home config.appId', config.appId);
+
+  usePageShow(() => {
+    console.log('page show....');
+  });
+
+  usePageHide(() => {
+    console.log('page hide...');
+  });
 
   return (
     <>

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "1.6.4-alpha.0",
+  "version": "1.7.0-4",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "src/index.js",
@@ -25,6 +25,7 @@
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",
     "mkcert": "^1.2.0",
     "path-exists": "^4.0.0",

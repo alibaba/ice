@@ -298,21 +298,23 @@ icejs 中一般不允许修改该配置。
 
 注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。
 
-### targets
+### browserslist
 
 - 类型： `string` | `object` 
 - 默认值：`last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4`
 
-配置 @babel/preset-env 的 [targets](https://babeljs.io/docs/en/babel-preset-env#targets)，配置浏览器最低版本，新配置的 `targets` 会覆盖默认值。
+配置 @babel/preset-env 的浏览器最低版本(https://babeljs.io/docs/en/babel-preset-env#targets)，新配置的 `browserslist` 会覆盖默认值。
 
 ```json
 {
-  "targets": {
+  "browserslist": {
     "chrome": 49,
     "ie": 11,
   }
 }
 ```
+
+> 注: 因 targets 字段被使用，这里使用 browserslist 字段替代 @babel/preset-env 的 targets 字段。
 
 ### vendor
 
