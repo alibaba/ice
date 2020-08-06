@@ -1,6 +1,6 @@
 function miniappRenderer(
   { appConfig, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles },
-  { render, createElement, Component }
+  { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
   createBaseApp(appConfig);
@@ -22,14 +22,14 @@ function miniappRenderer(
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
         document.body.appendChild(rootEl);
-        const appInstance = render(createElement(App, {
+        const appInstance = mount(createElement(App, {
           history,
           location: history.location,
           ...pageProps,
           Page: PageComponent
         }), rootEl);
 
-        (document as any).__unmount = appInstance._internal.unmountComponent.bind(appInstance._internal);
+        (document as any).__unmount = unmount(appInstance, rootEl);
       },
       setDocument(value) {
         // eslint-disable-next-line no-global-assign

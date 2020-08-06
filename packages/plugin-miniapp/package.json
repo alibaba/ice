@@ -27,12 +27,11 @@
     "url": "https://github.com/alibaba/ice/issues"
   },
   "dependencies": {
-    "build-plugin-rax-app": "^5.0.2",
+    "build-plugin-rax-app": "5.2.0-1",
     "miniapp-element": "^0.1.16",
-    "miniapp-render": "^1.0.1",
     "rax-compile-config": "^0.2.14",
     "rax-miniapp-babel-plugins": "^0.1.3",
-    "rax-miniapp-config-webpack-plugin": "^1.2.1",
-    "rax-miniapp-runtime-webpack-plugin": "^1.0.1"
+    "rax-miniapp-config-webpack-plugin": "1.2.3-0",
+    "rax-miniapp-runtime-webpack-plugin": "1.0.3-3"
   }
 }

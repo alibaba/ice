@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "chokidar": "^3.4.1",
+    "chalk": "^4.0.0",
     "create-app-shared": "^0.1.1",
     "ejs": "^3.0.1",
     "fs-extra": "^8.1.0",

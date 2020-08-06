@@ -1,10 +1,10 @@
 import * as path from 'path';
 import * as MiniAppRuntimePlugin from 'rax-miniapp-runtime-webpack-plugin';
 import * as MiniAppConfigPlugin from 'rax-miniapp-config-webpack-plugin';
-import * as getAppConfig from 'build-plugin-rax-app/lib/config/miniapp/getAppConfig';
+import * as getAppConfig from 'build-plugin-rax-app/src/config/miniapp/getAppConfig';
 
 module.exports = (api) => {
-  const { onGetWebpackConfig, context } = api;
+  const { onGetWebpackConfig, context, getValue } = api;
   const { rootDir, command, userConfig } = context;
   const { targets = [] } = userConfig;
 
@@ -25,6 +25,8 @@ module.exports = (api) => {
 
       const buildDir = path.join(rootDir, userConfig.outputDir, target);
 
+      const projectType = getValue('PROJECT_TYPE');
+
       // Get app config
       const appConfig = getAppConfig(rootDir, target, nativeLifeCycleMap);
 
@@ -42,7 +44,7 @@ module.exports = (api) => {
       config.entryPoints.clear();
 
       // App entry
-      config.entry('index').add(getDepPath(rootDir, 'app'));
+      config.entry('index').add(getDepPath(rootDir, `app.${projectType}`));
 
       config.plugin('MiniAppConfigPlugin')
         .use(MiniAppConfigPlugin, [
