@@ -67,5 +67,8 @@ module.exports = {
   eslint: (val) => {
     return validation('eslint', val, 'boolean|object');
   },
-  tsChecker: 'boolean'
+  tsChecker: 'boolean',
+  dll: 'boolean',
+  // dllEntry: { [string]: string[] }
+  dllEntry: 'object'
 };

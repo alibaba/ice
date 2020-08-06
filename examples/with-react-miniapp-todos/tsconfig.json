@@ -1,0 +1,17 @@
+{
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "esnext",
+    "target": "es6",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "alwaysStrict": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "ice": [".ice/index.ts"]
+    }
+  }
+}

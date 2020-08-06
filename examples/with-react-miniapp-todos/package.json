@@ -1,0 +1,20 @@
+{
+  "name": "todos-example-with-miniapp",
+  "description": "miniapp example",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "universal-request": "^2.2.0"
+  },
+  "devDependencies": {
+    "miniapp-history": "^0.1.2",
+    "miniapp-render": "^1.0.1"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

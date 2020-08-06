@@ -18,12 +18,15 @@ const BuiltInRequestDemo1 = () => {
   const { request: fetchUser3, ...rest } = useRequest({ url: '/user' });
   console.log('直接调用 useRequest：', {...rest});
 
+  const { request: fetchUser4 } = useRequest(() => ({ url: '/user' }));
+
   return (
     <>
       <h4>内置 request 演示</h4>
       <button type='button' onClick={fetchUser1}>直接调用 request</button>
       <button type='button' onClick={fetchUser2}>调用 request + withFullResponse</button>
       <button type='button' onClick={fetchUser3}>直接调用 useRequest</button>
+      <button type='button' onClick={fetchUser4}>直接调用 userRequest - 函数作为参数</button>
     </>
   );
 };

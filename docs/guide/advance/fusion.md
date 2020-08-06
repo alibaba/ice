@@ -69,7 +69,7 @@ Fusion 组件默认的主题是蓝色系，无法满足所有项目的需求，�
 在配置主题时，可以通过 iconfont 导入一些自定义的 icon，这些 icon 在项目代码里通过基础组件 Icon 即可使用：
 
 ```jsx
-import { Icon } from 'react';
+import { Icon } from '@alifd/next';
 
 <Icon type="xxxx" />
 ```

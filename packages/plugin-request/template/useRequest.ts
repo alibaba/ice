@@ -51,7 +51,7 @@ function useRequest(service: any, options: any = {}) {
     // 避免发生 breakchange 这里将 manual 默认改为 true
     manual: true,
     // 默认使用 request 作为请求方法
-    requestMethod: () => request(service),
+    requestMethod: request,
     ...options,
   });
   return {

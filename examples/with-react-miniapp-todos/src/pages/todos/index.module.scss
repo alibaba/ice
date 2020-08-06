@@ -1,0 +1,130 @@
+page {
+  flex: 1;
+  display: flex;
+  background: #323239;
+  font-family: "pingFang SC" "pingFang";
+}
+
+.page-todos {
+  font-family: "pingFang SC" "pingFang";
+  display: flex;
+  flex-direction: column;
+  width: 750rpx;
+  max-height: 100vh;
+}
+
+.user {
+  display: flex;
+  flex-shrink: 0;
+  padding: 30px;
+  color: #FFF;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  background-color: #FFF;
+  align-self: center;
+}
+
+.nickname {
+  padding-top: 40rpx;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 100;
+}
+
+.todo-items {
+  flex-grow: 1;
+  font-size: 34rpx;
+  padding: 50rpx 120rpx;
+  color: #0EFFD6;
+  overflow: auto;
+}
+
+.todo-items-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-item {
+  position: relative;
+  margin-bottom: 50rpx;
+  padding-left:80rpx;
+  line-height: 70rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  border: 2px solid rgb(14, 255, 214);
+  border-radius: 100rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space:nowrap; */
+
+  transition: border 0.2s;
+}
+
+.todo-item:last-child {
+  margin-bottom: 0;
+}
+
+.todo-item::before {
+  content: '';
+  position: absolute;
+  left: 12rpx;
+  margin-right: 20rpx;
+  width: 45rpx;
+  height: 45rpx;
+  background-color: rgba(14, 222, 255, 0.3);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  transition: background-color 0.2s;
+}
+
+.todo-item::after {
+  content: '';
+  position: absolute;
+  left: 29rpx;
+  width: 8rpx;
+  height: 18rpx;
+  top: 50%;
+  transform: translateY(-60%) rotate(38deg);
+  border: 4rpx solid #FFF;
+  border-width: 0 4rpx 4rpx 0;
+  opacity: 0;
+
+  transition: opacity 0.2s;
+}
+
+.todo-item-checkbox {
+  display: none;
+}
+
+.checked .todo-item-text {
+  text-decoration: line-through;
+  color: #1AA0B8;
+}
+
+.checked.todo-item {
+  border: 2px solid rgba(14, 222, 255, 0.2);
+}
+
+.checked.todo-item::before {
+  background-color: rgba(14, 222, 255, 0.2);
+}
+
+.checked.todo-item::after {
+  opacity: 1;
+}
+
+.todo-footer {
+  flex-shrink: 0;
+  padding: 50rpx 0 100rpx;
+  font-size: 48rpx;
+  font-weight: 200;
+  text-align: center;
+}

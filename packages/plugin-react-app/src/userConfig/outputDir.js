@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = (config, outputDir, context) => {
   const { rootDir } = context;
+
   const outputPath = path.resolve(rootDir, outputDir);
   config.output.path(outputPath);
   // copy public folder to outputDir

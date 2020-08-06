@@ -17,6 +17,7 @@
     { "path": "packages/plugin-ssr" },
     { "path": "packages/plugin-fast-refresh" },
     { "path": "packages/plugin-miniapp" },
+    { "path": "packages/plugin-esbuild" },
     { "path": "packages/create-app-shared" },
     { "path": "packages/react-app-renderer" },
     { "path": "packages/rax-app-renderer" },

@@ -472,6 +472,40 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
+### dll
+
+- 类型：`boolean`
+- 默认值：`false`
+
+是否启用 [`DllPlugin`](https://webpack.js.org/plugins/dll-plugin/) 构建 `DLL`。
+
+配置为 `true` 时，默认为 `package.json` `dependencies` 构建 `DLL`。可通过 `dllEntry` 字段配置指定依赖。
+
+启用该选项后，进行 `Webpack` 构建时，会在目录中生成 `dll` 文件夹，包含 `dll` 相关代码。
+
+### dllEntry
+
+- 类型：`object`
+- 默认值：`{}`
+
+开启 `dll` 后，可通过该选项配置指定依赖。
+配置格式为：
+
+``` javascript
+{
+  [string]: string[]
+}
+```
+
+以 `react`、`react-dom` 为例:
+
+```javascript
+// build.json
+{
+  "react": ["react", "react-dom"]
+}
+```
+
 ## 根据环境区分工程配置
 
 参考 [区分不同环境](/docs/guide/basic/config.md)。
