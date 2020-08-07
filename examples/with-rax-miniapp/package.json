@@ -1,9 +1,8 @@
 {
-  "name": "with-rax-web",
-  "description": "rax web example",
+  "name": "with-rax-miniapp",
+  "description": "rax miniapp example",
   "dependencies": {
     "rax": "^1.1.0",
-    "rax-app": "^2.0.0",
     "rax-document": "^0.1.0",
     "rax-image": "^2.0.0",
     "rax-link": "^1.0.1",
@@ -11,7 +10,7 @@
     "rax-view": "^1.0.0"
   },
   "devDependencies": {
-    "miniapp-render": "1.2.0-0",
+    "rax.js": "^0.1.1",
     "@types/rax": "^1.0.0"
   },
   "scripts": {

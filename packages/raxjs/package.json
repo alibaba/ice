@@ -1,6 +1,6 @@
 {
   "name": "rax.js",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -24,6 +24,7 @@
     "yargs-parser": "^18.1.2"
   },
   "files": [
+    "bin",
     "lib"
   ],
   "publishConfig": {
