@@ -18,7 +18,7 @@ registerNativeEventListeners(Component, [...eventName])
 
 ### addNativeEventListener
 
-开始监听某个事件并执行回调函数
+开始监听某个事件并执行回调函数。
 
 ```js
 addNativeEventListener(eventName, callback)	
@@ -26,7 +26,7 @@ addNativeEventListener(eventName, callback)
 
 ### removeNativeEventListener
 
-移除某个事件的回调函数
+移除某个事件的回调函数。
 
 ```js
 removeNativeEventListener(eventName, callback)	
