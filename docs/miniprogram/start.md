@@ -1,6 +1,6 @@
 ---
 title: 快速开始
-order: 2
+order: 1
 ---
 
 ## 使用 CLI
