@@ -12,7 +12,7 @@ order: 1
 ├── src/                           # 源码目录
 │    ├── components                # 应用的公共组件
 │    │     └── Logo             
-│    │       ├── index.module.scss # Logo 组件的样式文件
+│    │       ├── index.module.less # Logo 组件的样式文件
 │    │       └── index.jsx         # Logo 组件 JSX 源码           
 │    └── pages                     # 页面
 │    │     └── Home                # home 页面
@@ -67,7 +67,7 @@ export default class extends Component {
 
 用于应用的静态配置，包括路由、小程序 window 等配置等。[详见](/docs/guide/basic/app)
 
-### global.scss
+### global.less
 
 用于全局的样式配置，框架默认会引入该文件。[详见](/docs/guide/basic/style)
 
