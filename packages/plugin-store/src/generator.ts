@@ -165,7 +165,7 @@ export default class Generator {
 
     const pages = this.applyMethod('getPages', this.rootDir);
     pages.forEach(pageName => {
-      const pageNameDir = path.join(this.rootDir, 'src', 'pages', pageName);
+      const pageNameDir = path.join(this.rootDir, 'client', 'pages', pageName);
 
       // e.g: src/pages/${pageName}/models/*
       const pageModelsDir = path.join(pageNameDir, 'models');
