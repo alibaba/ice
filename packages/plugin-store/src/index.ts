@@ -65,6 +65,8 @@ export default async (api) => {
     config.resolve.alias.set('$ice/store', path.join(targetPath, 'store', 'index.ts'));
   });
 
+  const srcDir = path.dirname(userConfig.entry);
+
   const gen = new Generator({
     appStoreTemplatePath,
     pageStoreTemplatePath,
@@ -72,7 +74,8 @@ export default async (api) => {
     targetPath,
     rootDir,
     applyMethod,
-    projectType
+    projectType,
+    srcDir
   });
 
   gen.render();
