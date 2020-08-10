@@ -8,6 +8,7 @@ order: 10
 通过运行 build 命令令可以快速构建小程序应用。
 
 ```bash
+$ cd <projectName>
 $ npm run build
 ```
 
@@ -18,6 +19,9 @@ $ npm run build
 **多端构建**
 
 多端应用会构建出不同平台的代码（目录名标示平台），例如在 `build.json` 配置如下：
+
+* `miniapp`：阿里小程序
+* `wechat-miniprogram`：支付宝小程序
 
 ```json
 {
@@ -32,6 +36,12 @@ build
 ├─miniapp             // 阿里小程序
 ├─wechat-miniprogram  // 微信小程序
 ```
+
+## 小程序 IDE
+
+构建完成后我们可以将构建产物导入到 [支付宝小程序开发者工具](https://opendocs.alipay.com/mini/ide/download) 或者 [微信小程序开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) 进行预览。
+
+![](https://img.alicdn.com/tfs/TB1tk55diDsXe8jSZR0XXXK6FXa-2880-1754.png)
 
 
 ## 发布
