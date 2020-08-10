@@ -3,14 +3,14 @@ title: 样式
 order: 5
 ---
 
-默认推荐使用 CSS Modules 方案，这能很好的解决样式开发中的 **全局污染** 和 **命名混乱** 的两个痛点问题。但同时也支持 Sass、less 等编写样式。
+默认推荐使用 CSS Modules 方案，这能很好的解决样式开发中的 **全局污染** 和 **命名混乱** 的两个痛点问题。但同时也支持 Sass、Less 等编写样式。
 
 
 ## 全局样式
 
-对于整个项目的全局样式，统一定义在 `src/global.[scss|less|scss]` 文件中，框架会默认引入该文件：
+对于整个项目的全局样式，统一定义在 `src/global.less` 文件中，框架会默认引入该文件：
 
-```scss
+```less
 // 该文件会被默认引用
 
 body {
@@ -22,19 +22,19 @@ body {
 
 对于页面级和组件级的样式，具体规范规则如下：
 
-- 文件名：约定文件名格式如 `xxx.module.scss`
+- 文件名：约定文件名格式如 `xxx.module.less`
 - 模块化：一个页面或者一个组件对应一个样式文件
 
 ```markdown
 Home
-├── index.module.scss
+├── index.module.less
 └── index.jsx
 ```
 
-在页面目录下新建 `index.jsx` 和 `index.module.scss` 两个文件：
+在页面目录下新建 `index.jsx` 和 `index.module.less` 两个文件：
 
-```scss
-// ./pages/Home/index.module.scss
+```less
+// ./pages/Home/index.module.less
 .container {
   background: #fff;
 }
@@ -53,7 +53,7 @@ Home
 
 ```jsx
 // ./pages/Home/index.jsx
-import styles from './index.module.scss';
+import styles from './index.module.less';
 
 function Home() {
   return (
