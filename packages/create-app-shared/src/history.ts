@@ -6,6 +6,7 @@ import {
 import { createMiniAppHistory } from 'miniapp-history';
 import { isMiniAppPlatform } from './env';
 
+// eslint-disable-next-line
 let history;
 
 function createHistory({ routes, customHistory, type, basename }: any) {
@@ -29,4 +30,4 @@ function getHistory() {
   return isMiniAppPlatform ? window.history : history;
 }
 
-export { getHistory, createHistory };
+export { getHistory, createHistory, history };

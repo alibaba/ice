@@ -1,4 +1,4 @@
-import reactAppRenderer, { reactAppRendererWithSSR, history } from './renderer';
+import reactAppRenderer, { reactAppRendererWithSSR } from './renderer';
 
-export { reactAppRendererWithSSR, history };
+export { reactAppRendererWithSSR };
 export default reactAppRenderer;
