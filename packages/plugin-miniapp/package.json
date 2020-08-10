@@ -31,7 +31,7 @@
     "miniapp-element": "^0.1.16",
     "rax-compile-config": "^0.2.14",
     "rax-miniapp-babel-plugins": "^0.1.3",
-    "rax-miniapp-config-webpack-plugin": "1.2.3-0",
-    "rax-miniapp-runtime-webpack-plugin": "1.1.0-3"
+    "rax-miniapp-config-webpack-plugin": "^1.2.3",
+    "rax-miniapp-runtime-webpack-plugin": "^1.1.0"
   }
 }
