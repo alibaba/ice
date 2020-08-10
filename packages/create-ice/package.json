@@ -1,6 +1,6 @@
 {
   "name": "create-ice",
-  "version": "1.6.3",
+  "version": "1.6.4-alpha.0",
   "description": "npm init ice",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -22,9 +22,8 @@
   },
   "dependencies": {
     "@iceworks/generate-project": "^1.0.0",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "fs-extra": "^8.1.0",
-    "ice-npm-utils": "^1.4.0",
     "inquirer": "^7.0.4"
   },
   "publishConfig": {

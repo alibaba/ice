@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {
+      "path": "/todos",
+      "source": "pages/todos/index"
+    },
+    {
+      "path": "/add-todo",
+      "source": "pages/add-todo/index"
+    }
+  ],
+  "window": {
+    "defaultTitle": "Todo App",
+    "titleBarColor": "#323239"
+  }
+}

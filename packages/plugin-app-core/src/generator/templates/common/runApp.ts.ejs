@@ -1,0 +1,104 @@
+import { createElement, useEffect, Component } from '<%- framework %>';
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import miniappRenderer from 'miniapp-renderer';
+import createShareAPI from 'create-app-shared';
+
+<% if (isReact) {%>
+  import reactAppRenderer, { history } from 'react-app-renderer';
+  import { withRouter as defaultWithRouter } from 'react-router';
+<% } %>
+
+<% if (isRax) {%>
+  import raxAppRenderer from 'rax-app-renderer';
+  import { withRouter as defaultWithRouter } from 'rax-use-router';
+<% } %>
+
+import loadRuntimeModules from './loadRuntimeModules';
+import loadStaticModules from './loadStaticModules';
+import staticConfig from './staticConfig';
+import { setAppConfig } from './appConfig';
+import ErrorBoundary from './ErrorBoundary';
+import { mount, unmount } from './render';
+
+<% if (globalStyle) {%>
+  import '../<%= globalStyle %>'
+<% } %>
+
+const {
+  createBaseApp,
+  withRouter,
+  createHistory,
+  getHistory,
+  emitLifeCycles,
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+  pathRedirect,
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+  useSearchParams,
+  withSearchParams
+} = createShareAPI({
+  createElement,
+  useEffect,
+  withRouter: defaultWithRouter
+}, loadRuntimeModules, loadStaticModules);
+
+export function runApp(appConfig) {
+  let renderer;
+  <% if(isRax){ %>
+    renderer = raxAppRenderer;
+  <% } %>
+  if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
+    renderer = miniappRenderer;
+  }<% if(isReact){ %> else {
+    renderer = reactAppRenderer;
+  }
+  <% } %>
+  renderer({
+    appConfig,
+    staticConfig,
+    setAppConfig,
+    createBaseApp,
+    createHistory,
+    getHistory,
+    emitLifeCycles,
+    pathRedirect,
+    ErrorBoundary
+  }, {
+    createElement,
+    mount,
+    unmount,
+    Component
+  })
+};
+
+// Public API
+export {
+  // router api
+  withRouter,
+  history,
+  getHistory,
+  useSearchParams,
+  withSearchParams,
+
+  // LifeCycles api
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+
+  // events api
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+
+  // components
+  ErrorBoundary,
+};
+
+// Private API
+export default {
+  createBaseApp,
+  emitLifeCycles
+}

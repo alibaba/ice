@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as path from 'path';
-import * as queryString from 'query-string';
 import { matchPath } from 'react-router-dom';
 
 const { useEffect, useState } = React;
@@ -22,14 +21,12 @@ export default function formatRoutes(routes, parentPath) {
   });
 }
 
-export function wrapperPageWithSSR(context, routes, appConfig) {
+export function wrapperPageWithSSR(context, routes) {
   const pageInitialProps = { ...context.pageInitialProps };
-  const { app: { parseSearchParams } } = appConfig;
   const WrapperPageFn = () => {
     const ServerWrapperedPage = (props) => {
-      const searchParams = getSearchParams(parseSearchParams, props.location.search);
       const MatchedPageComponent = getComponentByPath(routes, context.pathname);
-      return <MatchedPageComponent {...Object.assign({}, props, pageInitialProps, searchParams)} />;
+      return <MatchedPageComponent {...Object.assign({}, props, pageInitialProps)} />;
     };
     return ServerWrapperedPage;
   };
@@ -37,14 +34,12 @@ export function wrapperPageWithSSR(context, routes, appConfig) {
 }
 
 
-export function wrapperPageWithCSR(appConfig) {
+export function wrapperPageWithCSR() {
   const wrapperPage = (PageComponent) => {
-    const { app: { parseSearchParams } } = appConfig;
     const { pageConfig } = PageComponent;
     const { title, scrollToTop } = pageConfig || {};
 
     const RouterWrapperedPage = (props) => {
-      const searchParams = getSearchParams(parseSearchParams, props.location.search);
       const [data, setData] = useState((window as any).__ICE_PAGE_PROPS__);
       useEffect(() => {
         if (title) {
@@ -68,7 +63,7 @@ export function wrapperPageWithCSR(appConfig) {
           })();
         }
       }, []);
-      return <PageComponent { ...Object.assign({}, props, data, searchParams) } />;
+      return <PageComponent { ...Object.assign({}, props, data) } />;
     };
     return RouterWrapperedPage;
   };
@@ -84,11 +79,4 @@ function getComponentByPath(routes, currPath)  {
   }
   const matchedRoute = findMatchRoute(routes);
   return matchedRoute && matchedRoute.component;
-}
-
-function getSearchParams(parseSearchParams, locationSearch) {
-  if (parseSearchParams) {
-    const searchParams = queryString.parse(locationSearch);
-    return { searchParams };
-  }
 }

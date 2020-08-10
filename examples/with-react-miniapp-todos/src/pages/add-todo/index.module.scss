@@ -1,0 +1,38 @@
+page {
+  background: #323239;
+  font-family: "pingFang SC" "pingFang";
+}
+
+.page-add-todo {
+  font-family: "pingFang SC" "pingFang";
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.add-todo {
+  padding: 40px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-todo-input {
+  display: block;
+  font-size: 50rpx;
+  font-weight: 100;
+  padding: 5px 5px;
+  background: none;
+  border:none;
+  border-bottom: 1px solid #DFDFDF;
+  color: #0EFFD6;
+  width: 100%;
+}
+
+.todo-footer {
+  padding: 50rpx 0 100rpx;
+  font-size: 48rpx;
+  font-weight: 200;
+  text-align: center;
+}

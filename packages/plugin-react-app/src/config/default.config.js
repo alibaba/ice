@@ -42,7 +42,7 @@ module.exports = {
   outputDir: 'build',
   proxy: {},
   publicPath: '/',
-  targets: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4',
+  browserslist: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4',
   vendor: true,
   libraryTarget: '',
   library: '',
@@ -58,5 +58,7 @@ module.exports = {
   babelPlugins: [],
   babelPresets: [],
   eslint: false,
-  tsChecker: false
+  tsChecker: false,
+  dll: false,
+  dllEntry: {}
 };

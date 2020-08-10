@@ -1,11 +1,14 @@
 import '@/app';
 import * as cheerio from 'cheerio';
 import { matchPath } from 'ice';
-import { createAppWithSSR, loadStaticModules } from './createApp';
+import { reactAppRendererWithSSR } from 'react-app-renderer';
 import { getAppConfig } from './appConfig';
+import loadStaticModules from './loadStaticModules';
+import app from './runApp';
 import routes from '@/routes';
 
 const chalk = require('chalk');
+const { createBaseApp, emitLifeCycles } = app;
 
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
@@ -40,11 +43,16 @@ const serverRender = async ({ context, pathname, initialData, htmlTemplate }) =>
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const bundleContent = createAppWithSSR(appConfig, {
-      staticContext: context,
-      pathname,
-      initialData,
-      pageInitialProps
+    const bundleContent = reactAppRendererWithSSR({
+      appConfig,
+      createBaseApp,
+      emitLifeCycles,
+      context: {
+        staticContext: context,
+        pathname,
+        initialData,
+        pageInitialProps
+      }
     });
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>

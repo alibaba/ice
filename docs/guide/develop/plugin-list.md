@@ -266,3 +266,25 @@ $ npm i --save-dev build-plugin-webpack5 webpack@next
 ```
 
 > 通过 `customWebpack` 配置的开启，工程中使用 webpack 的版本将会以项目中依赖的 webpack 版本为准
+
+## build-plugin-esbuild（实验性）
+
+> 使用 [`esbuild`](https://github.com/evanw/esbuild) 进行代码压缩，显著提升代码压缩速度。
+
+### 使用
+
+安装插件:
+
+```bash
+$ npm i --save-dev build-plugin-esbuild
+```
+
+使用插件，修改 `build.json`
+
+```diff
+{
+  "plugins": [
++    "build-plugin-esbuild"
+  ]
+}
+```

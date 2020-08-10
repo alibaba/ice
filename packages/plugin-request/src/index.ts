@@ -13,11 +13,11 @@ export default async function (api) {
   // .ice/index.ts:
   // export * from './request';
   // export * from './useRequest';
-  applyMethod('addIceExport', { source: './request/request', exportName: 'request' });
-  applyMethod('addIceExport', { source: './request/useRequest', exportName: 'useRequest' });
+  applyMethod('addExport', { source: './request/request', exportName: 'request' });
+  applyMethod('addExport', { source: './request/useRequest', exportName: 'useRequest' });
 
   // add iceTypes exports
-  applyMethod('addIceAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
+  applyMethod('addAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
 
   onGetWebpackConfig((config) => {
     // add alias for runtime.ts use $ice/createAxiosInstance

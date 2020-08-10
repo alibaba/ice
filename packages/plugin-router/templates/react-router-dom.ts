@@ -13,7 +13,8 @@ export {
   // StaticRouter,
 
   // static method
-  withRouter,
+  // export withrouter API from the create-app-shared
+  // withRouter,
   matchPath,
   generatePath,
 

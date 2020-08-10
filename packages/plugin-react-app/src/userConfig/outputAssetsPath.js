@@ -6,6 +6,7 @@ function getFilename(filePath) {
   return last((filePath || '').split('/'));
 }
 module.exports = (config, outputAssetsPath) => {
+
   const filename = getFilename(config.output.get('filename'));
   config.output.filename(formatWinPath(path.join(outputAssetsPath.js || '', filename)));
 

@@ -42,8 +42,9 @@ module.exports = {
   outputDir: 'string',
   proxy: 'object',
   publicPath: 'string',
-  targets: (val) => {
-    return validation('targets', val, 'string|object');
+  targets: 'array',
+  browserslist: (val) => {
+    return validation('browserslist', val, 'string|object');
   },
   vendor: 'boolean',
   library: (val) => {
@@ -66,5 +67,8 @@ module.exports = {
   eslint: (val) => {
     return validation('eslint', val, 'boolean|object');
   },
-  tsChecker: 'boolean'
+  tsChecker: 'boolean',
+  dll: 'boolean',
+  // dllEntry: { [string]: string[] }
+  dllEntry: 'object'
 };

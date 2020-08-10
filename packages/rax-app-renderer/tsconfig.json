@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "lib",
+    "jsx": "preserve",
+    "jsxFactory": "createElement",
+    "module": "esNext",
+    "target": "es5",
+    "experimentalDecorators": true,
+    "declaration": true,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node"
+  },
+}

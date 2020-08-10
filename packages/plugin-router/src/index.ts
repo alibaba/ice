@@ -42,15 +42,15 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const routerTargetPath = path.join(iceTempPath, 'router');
   fse.ensureDirSync(routerTargetPath);
   fse.copySync(routerTemplatesPath, routerTargetPath);
-  applyMethod('addIceExport', { source: './router' });
+  applyMethod('addExport', { source: './router' });
 
   // copy types
   fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));
   fse.copySync(path.join(__dirname, '../src/types/base.ts'), path.join(iceTempPath, 'router/types/base.ts'));
   // set IAppRouterProps to IAppConfig
-  applyMethod('addIceAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+  applyMethod('addAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
   // export IRouterConfig to the public
-  applyMethod('addIceTypesExport', { source: './router/types' });
+  applyMethod('addTypesExport', { source: './router/types' });
   // modify webpack config
   onGetWebpackConfig((config) => {
     // add alias
@@ -61,7 +61,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
 
     // alias for runtime/history
-    config.resolve.alias.set('$ice/history', path.join(__dirname, '../templates/history'));
+    config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'router/history'));
 
     // alias for react-router-dom
     const routerName = 'react-router-dom';

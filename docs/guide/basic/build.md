@@ -298,21 +298,23 @@ icejs 中一般不允许修改该配置。
 
 注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。
 
-### targets
+### browserslist
 
 - 类型： `string` | `object` 
 - 默认值：`last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4`
 
-配置 @babel/preset-env 的 [targets](https://babeljs.io/docs/en/babel-preset-env#targets)，配置浏览器最低版本，新配置的 `targets` 会覆盖默认值。
+配置 @babel/preset-env 的浏览器最低版本(https://babeljs.io/docs/en/babel-preset-env#targets)，新配置的 `browserslist` 会覆盖默认值。
 
 ```json
 {
-  "targets": {
+  "browserslist": {
     "chrome": 49,
     "ie": 11,
   }
 }
 ```
+
+> 注: 因 targets 字段被使用，这里使用 browserslist 字段替代 @babel/preset-env 的 targets 字段。
 
 ### vendor
 
@@ -467,6 +469,40 @@ icejs 中一般不允许修改该配置。
 ```json
 {
   "tsChecker": true
+}
+```
+
+### dll
+
+- 类型：`boolean`
+- 默认值：`false`
+
+是否启用 [`DllPlugin`](https://webpack.js.org/plugins/dll-plugin/) 构建 `DLL`。
+
+配置为 `true` 时，默认为 `package.json` `dependencies` 构建 `DLL`。可通过 `dllEntry` 字段配置指定依赖。
+
+启用该选项后，进行 `Webpack` 构建时，会在目录中生成 `dll` 文件夹，包含 `dll` 相关代码。
+
+### dllEntry
+
+- 类型：`object`
+- 默认值：`{}`
+
+开启 `dll` 后，可通过该选项配置指定依赖。
+配置格式为：
+
+``` javascript
+{
+  [string]: string[]
+}
+```
+
+以 `react`、`react-dom` 为例:
+
+```javascript
+// build.json
+{
+  "react": ["react", "react-dom"]
 }
 ```
 
