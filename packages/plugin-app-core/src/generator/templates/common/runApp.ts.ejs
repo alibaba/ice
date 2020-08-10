@@ -4,7 +4,7 @@ import miniappRenderer from 'miniapp-renderer';
 import createShareAPI from 'create-app-shared';
 
 <% if (isReact) {%>
-  import reactAppRenderer from 'react-app-renderer';
+  import reactAppRenderer, { history } from 'react-app-renderer';
   import { withRouter as defaultWithRouter } from 'react-router';
 <% } %>
 
@@ -78,6 +78,7 @@ export function runApp(appConfig) {
 export {
   // router api
   withRouter,
+  history,
   getHistory,
   useSearchParams,
   withSearchParams,
