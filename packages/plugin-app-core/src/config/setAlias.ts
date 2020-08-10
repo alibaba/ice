@@ -9,7 +9,7 @@ export default (api, options) => {
   const aliasMap = [
     [`${aliasKey}$`, path.join(tempPath, 'index.ts')],
     [`${aliasKey}`, path.join(tempPath, 'pages') ],
-    ['@', path.join(rootDir, 'src')],
+    ['@', path.join(rootDir, 'client')],
     ['aliasKey', path.join(tempPath)]
   ];
 
