@@ -72,6 +72,20 @@ const docCategories = {
     ],
   },
 
+  // 小程序
+  miniprogram: {
+    // 工作台模式
+    title: {},
+    children: [{
+      title: {
+        'zh-cn': '基础指南',
+        'en-us': 'basic',
+      },
+      dir: 'basic',
+    }]
+  },
+
+
   // iceworks
   iceworks: {
     title: {},
@@ -146,6 +160,7 @@ const docCategories = {
       dir: 'reference',
     }],
   },
+
   icestore: {
     // icestore
     title: {},
