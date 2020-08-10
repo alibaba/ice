@@ -57,7 +57,7 @@ class ErrorBoundary extends React.Component<IProps, IState> {
     if (error !== null && typeof Fallback === 'function') {
       return (
         <Fallback
-          componentStack={info.componentStack}
+          componentStack={info && info.componentStack}
           error={error}
         />
       );
