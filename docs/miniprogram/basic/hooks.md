@@ -1,6 +1,6 @@
 ---
 title: Hooks
-order: 1
+order: 8
 ---
 
 Hook 是 React 16.8 的新增特性，它可以让函数组件（Function Component）使用状态和生命周期。

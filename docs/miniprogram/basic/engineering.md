@@ -1,6 +1,6 @@
 ---
 title: 工程配置
-order: 6
+order: 9
 ---
 
 `build.json` 用于应用的工程构建配置。

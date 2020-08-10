@@ -1,6 +1,6 @@
 ---
 title: 数据请求
-order: 5
+order: 6
 ---
 
 大多数前端应用都需要通过 HTTP 协议与后端服务器通讯，开发小程序时我们提供了 `universal-request` 用于网络请求。
