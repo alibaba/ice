@@ -4489,10 +4489,10 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-build-plugin-rax-app@5.2.0-1:
-  version "5.2.0-1"
-  resolved "https://registry.npm.taobao.org/build-plugin-rax-app/download/build-plugin-rax-app-5.2.0-1.tgz?cache=0&sync_timestamp=1596622391350&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbuild-plugin-rax-app%2Fdownload%2Fbuild-plugin-rax-app-5.2.0-1.tgz#8f3d3331ea00811948ee5331ee424fe7c233ee51"
-  integrity sha1-jz0zMeoAgRlI7lMx7kJP58Iz7lE=
+build-plugin-rax-app@5.2.0-2:
+  version "5.2.0-2"
+  resolved "https://registry.npm.taobao.org/build-plugin-rax-app/download/build-plugin-rax-app-5.2.0-2.tgz#b8f13c4c71aba82bc897818f3906b7004044f2b8"
+  integrity sha1-uPE8THGrqCvIl4GPOQa3AEBE8rg=
   dependencies:
     "@babel/core" "7.2.0"
     "@babel/generator" "^7.9.6"
@@ -4521,7 +4521,7 @@ build-plugin-rax-app@5.2.0-1:
     lodash "^4.17.15"
     memory-fs "^0.5.0"
     mini-css-extract-plugin "^0.9.0"
-    miniapp-render "1.2.0-0"
+    miniapp-render "1.2.0-1"
     null-loader "^3.0.0"
     optimize-css-assets-webpack-plugin "^5.0.1"
     postcss "^7.0.17"
@@ -4535,7 +4535,7 @@ build-plugin-rax-app@5.2.0-1:
     rax-compile-config "^0.2.0"
     rax-miniapp-babel-plugins "^0.1.0"
     rax-miniapp-config-webpack-plugin "1.2.3-0"
-    rax-miniapp-runtime-webpack-plugin "1.0.3-3"
+    rax-miniapp-runtime-webpack-plugin "1.1.0-3"
     rax-multi-pages-settings "^0.1.0"
     rax-quickapp-webpack-plugin "^1.0.0"
     rax-server-renderer "^1.0.0"
@@ -11266,10 +11266,10 @@ miniapp-history@^0.1.0:
   dependencies:
     universal-env "^3.0.0"
 
-miniapp-render@1.2.0-0:
-  version "1.2.0-0"
-  resolved "https://registry.npm.taobao.org/miniapp-render/download/miniapp-render-1.2.0-0.tgz?cache=0&sync_timestamp=1596622390830&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminiapp-render%2Fdownload%2Fminiapp-render-1.2.0-0.tgz#eaa191cbe32e0e8a756ed32840b652aa5f3b7c4b"
-  integrity sha1-6qGRy+MuDop1btMoQLZSql87fEs=
+miniapp-render@1.2.0-1:
+  version "1.2.0-1"
+  resolved "https://registry.npm.taobao.org/miniapp-render/download/miniapp-render-1.2.0-1.tgz#ff1132147ecc2a9973277eb4d6564175495cf48a"
+  integrity sha1-/xEyFH7MKplzJ3601lZBdUlc9Io=
 
 miniapp-render@^0.1.0:
   version "0.1.17"
@@ -13979,10 +13979,10 @@ rax-miniapp-config-webpack-plugin@1.2.3-0:
   dependencies:
     fs-extra "^8.1.0"
 
-rax-miniapp-runtime-webpack-plugin@1.0.3-3:
-  version "1.0.3-3"
-  resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.0.3-3.tgz?cache=0&sync_timestamp=1596622390191&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frax-miniapp-runtime-webpack-plugin%2Fdownload%2Frax-miniapp-runtime-webpack-plugin-1.0.3-3.tgz#e75979e0e2ef4d9ddcc62d884260e04709a23121"
-  integrity sha1-51l54OLvTZ3cxi2IQmDgRwmiMSE=
+rax-miniapp-runtime-webpack-plugin@1.1.0-3:
+  version "1.1.0-3"
+  resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.1.0-3.tgz#5ed9acc1da8de82826ec6f4393435ffda4b35923"
+  integrity sha1-XtmswdqN6Cgm7G9Dk0Nf/aSzWSM=
   dependencies:
     chalk "^3.0.0"
     colors "^1.4.0"
