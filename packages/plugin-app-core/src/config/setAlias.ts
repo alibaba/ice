@@ -9,11 +9,16 @@ export default (api, options) => {
   const aliasMap = [
     [`${aliasKey}$`, path.join(tempPath, 'index.ts')],
     [`${aliasKey}`, path.join(tempPath, 'pages') ],
-    ['@', path.join(rootDir, 'client')],
+    ['@', path.join(rootDir, 'src')],
     ['aliasKey', path.join(tempPath)]
   ];
 
   onGetWebpackConfig((config: any) => {
-    aliasMap.forEach(alias => config.resolve.alias.set(alias[0], alias[1]));
+    aliasMap.forEach(alias => {
+      const hasAlias = config.resolve.alias.has(alias[0]);
+      if(!hasAlias) {
+        config.resolve.alias.set(alias[0], alias[1]);
+      }
+    });
   });
 };

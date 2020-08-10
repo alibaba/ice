@@ -26,13 +26,16 @@ export default class Generator {
 
   private applyMethod: Function
 
+  private srcDir: string
+
   constructor({
     rootDir,
     appStoreTemplatePath,
     pageStoreTemplatePath,
     targetPath,
     applyMethod,
-    projectType
+    projectType,
+    srcDir = 'src'
   }: {
     rootDir: string;
     appStoreTemplatePath: string;
@@ -41,6 +44,7 @@ export default class Generator {
     targetPath: string;
     projectType: string;
     applyMethod: Function;
+    srcDir: string;
   }) {
     this.rootDir = rootDir;
     this.appStoreTemplatePath = appStoreTemplatePath;
@@ -48,6 +52,7 @@ export default class Generator {
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
+    this.srcDir = srcDir;
   }
 
   private getPageModels(pageName: string, pageModelsDir: string, pageModelFile: string) {
@@ -163,9 +168,9 @@ export default class Generator {
     // generate .ice/store/index.ts
     this.renderAppStore();
 
-    const pages = this.applyMethod('getPages', this.rootDir);
+    const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
     pages.forEach(pageName => {
-      const pageNameDir = path.join(this.rootDir, 'client', 'pages', pageName);
+      const pageNameDir = path.join(this.rootDir, this.srcDir, 'pages', pageName);
 
       // e.g: src/pages/${pageName}/models/*
       const pageModelsDir = path.join(pageNameDir, 'models');

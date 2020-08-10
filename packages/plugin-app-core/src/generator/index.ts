@@ -52,8 +52,11 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log }) {
+  private srcDir: string
+
+  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, srcDir = 'src' }) {
     this.rootDir = rootDir;
+    this.srcDir = srcDir;
     this.templatesDir = templatesDir;
     this.appTemplateDir = appTemplateDir;
     this.commonTemplateDir = commonTemplateDir;
@@ -166,7 +169,7 @@ export default class Generator {
   }
 
   public renderPageTemplates(templateFile) {
-    const pages = getPages(this.rootDir);
+    const pages = getPages(this.rootDir, this.srcDir);
     pages.forEach((name) => {
       const source = `./pages/${name}/index`;
       this.pageRenderData = { ...this.getPageExport(name) };
