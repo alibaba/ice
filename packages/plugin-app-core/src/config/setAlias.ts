@@ -1,10 +1,10 @@
 import * as path from 'path';
-import { ICE_TEMP } from '../constant';
+import { TEMP_PATH } from '../constant';
 
 export default (api, options) => {
   const { onGetWebpackConfig, context, getValue } = api;
   const { rootDir } = context;
-  const tempPath = getValue(ICE_TEMP);
+  const tempPath = getValue(TEMP_PATH);
   const aliasKey = options.framework === 'rax' ? 'rax-app' : 'ice';
   const aliasMap = [
     [`${aliasKey}$`, path.join(tempPath, 'index.ts')],

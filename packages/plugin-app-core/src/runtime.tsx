@@ -3,7 +3,8 @@ import * as queryString from 'query-string';
 // @ts-ignore
 import { ErrorBoundary } from 'ice';
 
-const module = ({ addProvider, appConfig, wrapperRouteComponent }) => {
+const module = ({ addProvider, appConfig, wrapperRouteComponent, context }) => {
+  console.log('context', context);
   const { app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander, parseSearchParams } = app;
 

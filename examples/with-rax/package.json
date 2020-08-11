@@ -1,6 +1,6 @@
 {
-  "name": "with-rax-miniapp",
-  "description": "rax miniapp example",
+  "name": "with-rax",
+  "description": "rax example",
   "dependencies": {
     "rax": "^1.1.0",
     "rax-document": "^0.1.0",
@@ -10,12 +10,12 @@
     "rax-view": "^1.0.0"
   },
   "devDependencies": {
-    "rax.js": "^0.1.1",
+    "rax-app": "*",
     "@types/rax": "^1.0.0"
   },
   "scripts": {
-    "start": "raxjs start",
-    "build": "raxjs build"
+    "start": "rax-app start",
+    "build": "rax-app build"
   },
   "engines": {
     "node": ">=8.0.0"

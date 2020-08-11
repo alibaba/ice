@@ -24,6 +24,6 @@
     { "path": "packages/miniapp-renderer" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
-    { "path": "packages/raxjs" }
+    { "path": "packages/rax-app" }
   ]
 }

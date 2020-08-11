@@ -7,7 +7,7 @@ export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
 
-  const targetPath = getValue('ICE_TEMP');
+  const targetPath = getValue('TEMP_PATH');
   const templatePath = path.join(__dirname, 'template');
   const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
   const pageStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
