@@ -1,4 +1,5 @@
 import enhanceWithRouter from './enhanceWithRouter';
+import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
 import emitLifeCycles from './emitLifeCycles';
 import createBaseApp from './createBaseApp';
@@ -31,6 +32,7 @@ function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeMod
     usePageShow,
     usePageHide,
     withPageLifeCycle,
+    addAppLifeCycle,
 
     // utils api
     pathRedirect,
