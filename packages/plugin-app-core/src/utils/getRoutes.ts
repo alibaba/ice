@@ -7,7 +7,7 @@ interface IParams {
   configPath: string;
   projectType: string;
   isMpa: boolean;
-  srcDir: string
+  srcDir: string;
 }
 
 interface IResult {
