@@ -10,7 +10,7 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context } = api;
+  const { onHook, context, onGetWebpackConfig, rootDir } = api;
   const { command, userConfig } = context;
   const { targets } = userConfig;
 
@@ -38,6 +38,21 @@ export default (api, options) => {
   // register api method
   const generator = initGenerator(api, options);
   setRegisterMethod(api, { generator });
+
+  onGetWebpackConfig(config => {
+    // add alias of basic dependencies
+    const basicDependencies = [
+      ['react', rootDir],
+      ['react-dom', rootDir]
+    ];
+    basicDependencies.forEach((dep: string[] | string): void => {
+      const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
+      const aliasPath = searchFolder
+        ? require.resolve(depName, { paths: [searchFolder] })
+        : require.resolve(depName);
+      config.resolve.alias.set(depName, path.dirname(aliasPath));
+    });
+  });
 
   // watch src folder
   if (command === 'start') {
