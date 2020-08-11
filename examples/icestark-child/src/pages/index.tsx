@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'ice';
+import { Link, history } from 'ice';
 
 const Home = (props) => {
+  console.log('history:', history);
   return (
     <>
       <h2>Home Page...{props.a}</h2>

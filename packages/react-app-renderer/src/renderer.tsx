@@ -12,9 +12,6 @@ let _createBaseApp;
 let _emitLifeCycles;
 let ErrorBoundaryComp;
 
-// eslint-disable-next-line
-let history;
-
 function reactAppRendererWithSSR({appConfig, createBaseApp, emitLifeCycles, context}) {
   _createBaseApp = createBaseApp;
   _emitLifeCycles = emitLifeCycles;
@@ -61,13 +58,11 @@ function reactAppRenderer({ appConfig, createBaseApp, setAppConfig, emitLifeCycl
 }
 
 function renderApp(appConfig: any, context = {}) {
-  const { runtime, appConfig: modifiedAppConfig, history: historyInstance } = _createBaseApp(appConfig, {}, context);
+  const { runtime, appConfig: modifiedAppConfig } = _createBaseApp(appConfig, {}, context);
   const { modifyDOMRender } = runtime;
   const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
   const AppProvider = runtime.composeAppProvider();
   const AppRouter = runtime.getAppRouter();
-
-  history = historyInstance;
 
   function App() {
     const appRouter = <AppRouter />;
@@ -100,6 +95,6 @@ function renderApp(appConfig: any, context = {}) {
   }
 }
 
-export { reactAppRendererWithSSR, history };
+export { reactAppRendererWithSSR };
 
 export default reactAppRenderer;

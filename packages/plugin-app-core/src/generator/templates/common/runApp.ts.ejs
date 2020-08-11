@@ -1,10 +1,10 @@
 import { createElement, useEffect, Component } from '<%- framework %>';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
-import createShareAPI from 'create-app-shared';
+import createShareAPI, { history } from 'create-app-shared';
 
 <% if (isReact) {%>
-  import reactAppRenderer, { history } from 'react-app-renderer';
+  import reactAppRenderer from 'react-app-renderer';
   import { withRouter as defaultWithRouter } from 'react-router';
 <% } %>
 
