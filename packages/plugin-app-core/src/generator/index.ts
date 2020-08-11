@@ -54,7 +54,7 @@ export default class Generator {
 
   private srcDir: string
 
-  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, srcDir = 'src' }) {
+  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, srcDir}) {
     this.rootDir = rootDir;
     this.srcDir = srcDir;
     this.templatesDir = templatesDir;

@@ -35,7 +35,7 @@ export default class Generator {
     targetPath,
     applyMethod,
     projectType,
-    srcDir = 'src'
+    srcDir
   }: {
     rootDir: string;
     appStoreTemplatePath: string;

@@ -7,6 +7,7 @@ interface IParams {
   configPath: string;
   projectType: string;
   isMpa: boolean;
+  srcDir: string
 }
 
 interface IResult {
@@ -14,7 +15,7 @@ interface IResult {
   isConfigRoutes: boolean;
 }
 
-function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa }: IParams): IResult {
+function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa, srcDir }: IParams): IResult {
   // if is mpa use empty router file
   if (isMpa) {
     const routesTempPath = path.join(tempDir, 'routes.ts');
@@ -28,7 +29,7 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa }: IParams
 
   const routesPath = configPath
     ? path.join(rootDir, configPath)
-    : path.join(rootDir, `src/routes.${projectType}`);
+    : path.join(rootDir, srcDir, `/routes.${projectType}`);
 
   // 配置式路由
   const configPathExists = fse.existsSync(routesPath);

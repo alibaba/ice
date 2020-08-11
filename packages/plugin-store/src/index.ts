@@ -29,19 +29,21 @@ export default async (api) => {
 
   // add babel plugins for ice lazy
   const { configPath } = userConfig.router || {};
-  const { mpa: isMpa } = userConfig;
+  const { mpa: isMpa, entry } = userConfig;
+  const srcDir = applyMethod('getSourceDir', entry);
   let { routesPath } = applyMethod('getRoutes', {
     rootDir,
     tempDir: targetPath,
     configPath,
     projectType,
-    isMpa
+    isMpa,
+    srcDir
   });
 
   if (isMpa) {
     const routesFile = `routes.${projectType}`;
     const pagesPath = path.join(rootDir, 'src', 'pages');
-    const pages = applyMethod('getPages', rootDir);
+    const pages = applyMethod('getPages', rootDir, srcDir);
     const pagesRoutePath = pages.map(pageName => {
       return path.join(pagesPath, pageName, routesFile);
     });
@@ -64,8 +66,6 @@ export default async (api) => {
   onGetWebpackConfig(config => {
     config.resolve.alias.set('$ice/store', path.join(targetPath, 'store', 'index.ts'));
   });
-
-  const srcDir = path.dirname(userConfig.entry);
 
   const gen = new Generator({
     appStoreTemplatePath,
