@@ -1,6 +1,6 @@
 // @ts-ignore
-import { render, createElement, Fragment } from 'rax';
-import { Navigation, TabBar } from 'rax-pwa';
+import { render, createElement, useEffect, useState, Fragment } from 'rax';
+import { createAppNavigation, createTabBar } from 'create-app-container';
 import { useRouter } from 'rax-use-router';
 import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
@@ -31,12 +31,14 @@ function App(props) {
   if (_isNullableComponent(component)) return null;
 
   if (isWeb) {
+    const AppNavigation = createAppNavigation({ createElement, useEffect, useState, Fragment });
     return createElement(
-      Navigation,
+      AppNavigation,
       { appConfig, component, history, location: history.location, routes, InitialComponent },
     );
   }
 
+  const TabBar = createTabBar({ createElement, useEffect, useState, Fragment });
   return createElement(
     Fragment,
     {},

@@ -1,16 +1,11 @@
 {
-  "name": "rax-app-renderer",
+  "name": "create-app-container",
   "version": "0.1.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
   "main": "lib/index.js",
-  "dependencies": {
-    "driver-universal": "^3.1.0",
-    "rax-use-router": "^3.0.0",
-    "universal-env": "^3.0.0"
-  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -18,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "dependencies": {
+    "universal-env": "^3.0.0"
+  },
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
   },
