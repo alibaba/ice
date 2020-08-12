@@ -18,6 +18,7 @@ $ npm install build-plugin-fusion --save-dev
 * `uniteBaseComponent` 如果项目里依赖了多个不同名称的基础包，可以通过 uniteBaseComponent 来统一基础包，减少重复的代码
 * `nextPrefix`  Fusion 组件样式 prefix，一般情况下需要配合入口代码的 `ConfigProvider` 使用，可以将所有的 className 改掉
 * `importOptions` 同 `babel-plugin-import` 参数，默认为 `{ style: true, libraryDirectory: 'es'}` 根据用户设置项将进行合并
+* `externalNext` 配合 `externals` 配置，将 Next 组件作为外部依赖引入
 
 ## 基础用法
 
@@ -87,6 +88,24 @@ import { Icon } from '@alifd/next';
   color: $color-brand1-6;
 }
 ```
+
+### 配置外部扩展（externals）
+
+项目开发中希望将 `@alifd/next` 作为外部扩展不打包到 bundle 中，除了需要配置 `externals` 外，还需要将通过插件能力分析业务组件依赖中按需加载的 Next 组件：
+
+```json
+{
+  "externals": {
+    "@alifd/next": "Next"
+  },
+  "plugins": [
+    ["build-plugin-fusion", {
+      "externalNext": true
+    }]
+  ]
+}
+```
+
 
 ## 动态切换主题
 
