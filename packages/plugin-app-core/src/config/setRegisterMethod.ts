@@ -1,5 +1,4 @@
 import getPages from '../utils/getPages';
-import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
 import { getExportApiKeys } from '../constant';
