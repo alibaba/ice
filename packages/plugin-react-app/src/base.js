@@ -11,11 +11,9 @@ const collect = require('./utils/collect');
 // eslint-disable-next-line
 const chalk = require('chalk');
 
-module.exports = (api) => {
+module.exports = (api, options) => {
   const { context, log } = api;
-  const { command, rootDir, webpack, commandArgs, pkg, userConfig: { targets } } = context;
-  const isMiniapp = Array.isArray(targets)
-    && (targets.includes('miniapp') || targets.includes('wechat-miniprogram'));
+  const { command, rootDir, webpack, commandArgs, pkg, userConfig } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
   const babelConfig = getBabelConfig();
@@ -98,7 +96,14 @@ module.exports = (api) => {
     .use('loader')
     .loader(require.resolve('./loaders/AppConfigLoader'));
 
-  if (mode === 'development') {
+  const isMiniapp = options.target === 'miniapp' || options.target === 'wechat-miniprogram';
+  if (isMiniapp) {
+    config.devServer.set('writeToDisk', true);
+  } else {
+    config.devServer.set('writeToDisk', true);
+  }
+
+  if (command === 'start') {
     // disable build-scripts stats output
     process.env.DISABLE_STATS = true;
 

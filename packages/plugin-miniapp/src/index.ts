@@ -21,73 +21,70 @@ module.exports = (api) => {
   const needCopyList = [];
 
   targets.forEach((target) => {
-    onGetWebpackConfig(target, (config) => {
+    if (target === 'miniapp' || target === 'wechat-miniprogram') {
+      onGetWebpackConfig(target, (config) => {
 
-      const buildDir = path.join(rootDir, userConfig.outputDir, target);
+        const buildDir = path.join(rootDir, userConfig.outputDir, target);
 
-      const projectType = getValue('PROJECT_TYPE');
+        const projectType = getValue('PROJECT_TYPE');
 
-      // Get app config
-      const appConfig = getAppConfig(rootDir, target, nativeLifeCycleMap);
+        // Get app config
+        const appConfig = getAppConfig(rootDir, target, nativeLifeCycleMap);
 
-      if (command === 'start') {
-        // Write to dist for miniapp
-        config.devServer.set('writeToDisk', true);
-      }
+        config.output
+          .filename(`${target}/common/[name].js`);
 
-      config.output
-        .filename(`${target}/common/[name].js`);
+        config.devtool('none');
 
-      config.devtool('none');
+        // Clear entry
+        config.entryPoints.clear();
 
-      // Clear entry
-      config.entryPoints.clear();
+        // App entry
+        config.entry('index').add(getDepPath(rootDir, `app.${projectType}`));
 
-      // App entry
-      config.entry('index').add(getDepPath(rootDir, `app.${projectType}`));
+        config.plugin('MiniAppConfigPlugin')
+          .use(MiniAppConfigPlugin, [
+            {
+              type: 'runtime',
+              appConfig,
+              outputPath: buildDir,
+              target,
+              getAppConfig,
+              nativeConfig: userConfig[target] && userConfig[target].nativeConfig,
+            }
+          ]);
 
-      config.plugin('MiniAppConfigPlugin')
-        .use(MiniAppConfigPlugin, [
-          {
-            type: 'runtime',
-            appConfig,
-            outputPath: buildDir,
-            target,
-            getAppConfig,
-            nativeConfig: userConfig[target] && userConfig[target].nativeConfig,
-          }
-        ]);
+        config.plugin('MiniAppRuntimePlugin')
+          .use(MiniAppRuntimePlugin, [
+            {
+              ...appConfig,
+              target,
+              config: userConfig[target] || {},
+              usingComponents,
+              usingPlugins,
+              nativeLifeCycleMap,
+              rootDir,
+              command,
+              needCopyList
+            }
+          ]);
 
-      config.plugin('MiniAppRuntimePlugin')
-        .use(MiniAppRuntimePlugin, [
-          {
-            ...appConfig,
-            target,
-            config: userConfig[target] || {},
-            usingComponents,
-            usingPlugins,
-            nativeLifeCycleMap,
-            rootDir,
-            command,
-            needCopyList
-          }
-        ]);
+        if (config.plugins.get('MiniCssExtractPlugin')) {
+          config.plugin('MiniCssExtractPlugin').tap((args) => [
+            {
+              ...args,
+              filename: `${target}/[name].css`,
+            }
+          ]);
+        }
 
-      if (config.plugins.get('MiniCssExtractPlugin')) {
-        config.plugin('MiniCssExtractPlugin').tap((args) => [
-          {
-            ...args,
-            filename: `${target}/[name].css`,
-          }
-        ]);
-      }
+        // Remove default HtmlWebpackPlugin
+        config.plugins.delete('HtmlWebpackPlugin');
 
-      // Remove default HtmlWebpackPlugin
-      config.plugins.delete('HtmlWebpackPlugin');
-
-      // Remove default CopyWebpackPlugin
-      config.plugins.delete('CopyWebpackPlugin');
-    });
+        // Remove default CopyWebpackPlugin
+        config.plugins.delete('CopyWebpackPlugin');
+      });
+    };
   });
 };
 

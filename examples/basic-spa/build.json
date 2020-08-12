@@ -10,5 +10,5 @@
     "disable": false,
     "quiet": true
   },
-  "tsChecker": true
+  "tsChecker": false
 }

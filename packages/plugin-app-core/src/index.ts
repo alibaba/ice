@@ -10,7 +10,7 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context } = api;
+  const { onHook, context, onGetWebpackConfig } = api;
   const { command, userConfig } = context;
   const { targets } = userConfig;
 
@@ -38,6 +38,18 @@ export default (api, options) => {
   // register api method
   const generator = initGenerator(api, options);
   setRegisterMethod(api, { generator });
+
+  targets.forEach((target) => {
+    onGetWebpackConfig(target, (config) => {
+      if (command === 'build') {
+        if (target === 'web') {
+          const outputDir = userConfig.outputDir;
+          const outputPath = path.join(context.rootDir, outputDir, 'web');
+          config.output.path(outputPath);
+        }
+      }
+    });
+  });
 
   // watch src folder
   if (command === 'start') {

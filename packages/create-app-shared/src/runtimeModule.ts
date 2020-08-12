@@ -94,10 +94,13 @@ class RuntimeModule {
     });
   }
 
-  public getAppRouter = () => {
-    const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
-      return curr(acc);
-    }, []));
+  public getAppRouter = (routes) => {
+    if (Array.isArray(routes) && !routes.length) {
+      routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
+        return curr(acc);
+      }, []));
+    }
+
     return this.renderRouter(routes);
   }
 }
