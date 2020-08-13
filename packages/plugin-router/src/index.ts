@@ -21,14 +21,17 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const srcDir = applyMethod('getSourceDir', userConfig.entry);
-  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
+
+  // refactor needed. getRoutes used in plugin-store.
+  registerMethod('getRoutes', getRoutes);
+  const { routesPath, isConfigRoutes } = getRoutes({
     rootDir,
     tempDir: iceTempPath,
     configPath,
     projectType,
     isMpa,
     srcDir
-  });
+  } as IParams);
   // add babel plugins for ice lazy
   modifyUserConfig('babelPlugins',
     [

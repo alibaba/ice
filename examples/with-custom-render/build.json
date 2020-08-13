@@ -1,0 +1,7 @@
+{
+  "disableRuntime": true,
+  "entry": "src/index",
+  "alias": {
+    "@": "src"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "exmaple-basic-spa-with-disableRuntime-enabled",
+  "name": "with-custom-render",
   "description": "",
   "dependencies": {
     "ice.js": "^1.0.11",

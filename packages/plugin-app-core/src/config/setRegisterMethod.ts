@@ -10,7 +10,6 @@ export default (api, options) => {
   // register utils method
   registerMethod('getPages', getPages);
   registerMethod('formatPath', formatPath);
-  registerMethod('getRoutes', getRoutes);
   registerMethod('getSourceDir', getSourceDir);
 
   // registerMethod for modify page

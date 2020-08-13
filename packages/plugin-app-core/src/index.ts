@@ -22,13 +22,13 @@ export default (api, options) => {
   // eg: .ice or .rax
   setTempDir(api, options);
 
-  // Set project type
-  // eg: ts | js
-  setProjectType(api);
-
   // Modify default entry to src/app
   // eg: src/app.(ts|js)
   setEntry(api, options);
+
+  // Set project type
+  // eg: ts | js
+  setProjectType(api);
 
   // Set alias
   setAlias(api, options);
