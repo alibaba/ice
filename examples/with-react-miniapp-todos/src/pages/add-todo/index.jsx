@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import AddButton from '@/components/add-button';
 import styles from './index.module.scss';
 
-const AddTodo = (props) => {
-  const { history } = props;
-
+const AddTodo = () => {
   // state
   const [value, setValue] = useState('');
 
@@ -36,8 +34,9 @@ const AddTodo = (props) => {
         todos: data.todos
       }
     });
-    
-    history.push('/todos');
+
+    // eslint-disable-next-line
+    my.navigateBack();
   };
 
 
