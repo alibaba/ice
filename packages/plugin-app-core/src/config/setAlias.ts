@@ -14,7 +14,12 @@ export default (api, options) => {
   ];
 
   onGetWebpackConfig((config: any) => {
-    aliasMap.forEach(alias => config.resolve.alias.set(alias[0], alias[1]));
+    aliasMap.forEach(alias => {
+      const hasAlias = config.resolve.alias.has(alias[0]);
+      if(!hasAlias) {
+        config.resolve.alias.set(alias[0], alias[1]);
+      }
+    });
     if (options.framework === 'react') {
       // add alias of basic dependencies
       const basicDependencies = [
