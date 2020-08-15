@@ -15,20 +15,26 @@ export default (api, options) => {
 
 
   onGetWebpackConfig((config: any) => {
-    aliasMap.forEach(alias => config.resolve.alias.set(alias[0], alias[1]));
-
-    if (options.framework === 'rax') {
+    aliasMap.forEach(alias => {
+      const hasAlias = config.resolve.alias.has(alias[0]);
+      if(!hasAlias) {
+        config.resolve.alias.set(alias[0], alias[1]);
+      }
+    });
+    const basicDependencies = [];
+    if (options.framework === 'react') {
       // add alias of basic dependencies
-      const basicDependencies = [
-        ['rax', rootDir],
-      ];
-      basicDependencies.forEach((dep: string[] | string): void => {
-        const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
-        const aliasPath = searchFolder
-          ? require.resolve(depName, { paths: [searchFolder] })
-          : require.resolve(depName);
-        config.resolve.alias.set(depName, path.dirname(aliasPath));
-      });
+      basicDependencies.push(['react', rootDir]);
+      basicDependencies.push(['react-dom', rootDir]);
+    } else if (options.framework === 'rax') {
+      basicDependencies.push(['rax', rootDir]);
     }
+    basicDependencies.forEach((dep: string[] | string): void => {
+      const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
+      const aliasPath = searchFolder
+        ? require.resolve(depName, { paths: [searchFolder] })
+        : require.resolve(depName);
+      config.resolve.alias.set(depName, path.dirname(aliasPath));
+    });
   });
 };

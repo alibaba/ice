@@ -36,7 +36,32 @@ const Todos = (props) => {
   usePageShow(async () => {
     // my is global variable in mini program
     // eslint-disable-next-line
-    const myUserInfo = await my.getUserInfo();
+    function getUserInfo() {
+      return new Promise((resolve, reject) => {
+        if (userInfo.avatar) resolve(userInfo);
+        // 调用用户授权 API
+        // eslint-disable-next-line
+        my.getAuthCode({
+          scopes: ['auth_user'],
+          success: () => {
+            // 调用获取用户信息 API
+            // eslint-disable-next-line
+            my.getAuthUserInfo({
+              success: res => {
+                resolve(res);
+              },
+              fail: () => {
+                reject(new Error('获取用户信息失败！'));
+              },
+            });
+          },
+          fail: () => {
+            reject(new Error('获取用户信息失败'));
+          },
+        });
+      });
+    }
+    const myUserInfo = await getUserInfo();
     setUserInfo(myUserInfo);
     console.log('userInfo:', myUserInfo);
 
@@ -61,7 +86,7 @@ const Todos = (props) => {
   return (
     <view className={styles['page-todos']}>
       <view className={styles.user}>
-        <image className={styles.avatar} src={userInfo.avatar ? logo : logo} alt="用户头像" />
+        <image className={styles.avatar} src={userInfo.avatar ? userInfo.avatar : logo} alt="用户头像" />
         <text className={styles.nickname}>{userInfo.nickName ? `${userInfo.nickName}'s` : 'My' } Todo List</text>
       </view>
       

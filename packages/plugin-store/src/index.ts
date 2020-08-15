@@ -6,7 +6,6 @@ import Generator from './generator';
 export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
-  const { alias } = userConfig;
 
   const targetPath = getValue('TEMP_PATH');
   const templatePath = path.join(__dirname, 'template');
@@ -27,6 +26,9 @@ export default async (api) => {
   fse.ensureFileSync(typesTargetPath);
   fse.writeFileSync(typesTargetPath, content, 'utf-8');
   applyMethod('addTypesExport', { source: './store/types' });
+
+  const { mpa: isMpa, entry } = userConfig;
+  const srcDir = applyMethod('getSourceDir', entry);
 
   // Get framework from plugin-core
   const framework = getValue('FRAMEWORK');
@@ -49,21 +51,22 @@ export default async (api) => {
         .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
     });
   } else {
-    // add babel plugins for ice lazy
+  // add babel plugins for ice lazy
     const { configPath } = userConfig.router || {};
-    const { mpa: isMpa } = userConfig;
+
     let { routesPath } = applyMethod('getRoutes', {
       rootDir,
       tempDir: targetPath,
       configPath,
       projectType,
-      isMpa
+      isMpa,
+      srcDir
     });
 
     if (isMpa) {
       const routesFile = `routes.${projectType}`;
       const pagesPath = path.join(rootDir, 'src', 'pages');
-      const pages = applyMethod('getPages', rootDir);
+      const pages = applyMethod('getPages', rootDir, srcDir);
       const pagesRoutePath = pages.map(pageName => {
         return path.join(pagesPath, pageName, routesFile);
       });
@@ -76,12 +79,13 @@ export default async (api) => {
           require.resolve('./babelPluginReplacePath'),
           {
             routesPath,
-            alias,
+            alias: userConfig.alias,
             applyMethod
           }
         ]
       ]
     );
+
 
     onGetWebpackConfig(config => {
       config.resolve.alias.set('$store', path.join(targetPath, 'store', 'index.ts'));
@@ -96,7 +100,8 @@ export default async (api) => {
     rootDir,
     applyMethod,
     projectType,
-    isRax
+    isRax,
+    srcDir
   });
 
   gen.render();

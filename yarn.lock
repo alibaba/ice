@@ -5210,6 +5210,11 @@ commander@^5.0.0, commander@^5.1.0:
   resolved "https://registry.npm.taobao.org/commander/download/commander-5.1.0.tgz?cache=0&sync_timestamp=1595168214577&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
   integrity sha1-Rqu9FlL44Fm92u+Zu9yyrZzxea4=
 
+commander@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npm.taobao.org/commander/download/commander-6.0.0.tgz?cache=0&sync_timestamp=1595168120323&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-6.0.0.tgz#2b270da94f8fb9014455312f829a1129dbf8887e"
+  integrity sha1-KycNqU+PuQFEVTEvgpoRKdv4iH4=
+
 commander@~2.19.0:
   version "2.19.0"
   resolved "https://registry.npm.taobao.org/commander/download/commander-2.19.0.tgz?cache=0&sync_timestamp=1595168214577&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
@@ -13961,7 +13966,7 @@ rax-miniapp-config-webpack-plugin@^1.0.1, rax-miniapp-config-webpack-plugin@^1.2
 
 rax-miniapp-runtime-webpack-plugin@^1.0.0, rax-miniapp-runtime-webpack-plugin@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.1.0.tgz#32a613efe1dc800b95a909352af471480c34f874"
+  resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.1.0.tgz?cache=0&sync_timestamp=1597141902065&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frax-miniapp-runtime-webpack-plugin%2Fdownload%2Frax-miniapp-runtime-webpack-plugin-1.1.0.tgz#32a613efe1dc800b95a909352af471480c34f874"
   integrity sha1-MqYT7+HcgAuVqQk1KvRxSAw0+HQ=
   dependencies:
     chalk "^3.0.0"

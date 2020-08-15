@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "lib",
-    "jsx": "preserve",
+    "jsx": "react",
     "jsxFactory": "createElement",
     "module": "esNext",
     "target": "es5",
