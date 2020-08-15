@@ -45,7 +45,7 @@ function App(props) {
   );
 }
 
-function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance }) {
+function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance, ErrorBoundary }) {
   const {
     runtime,
     appConfig: appDynamicConfig
@@ -73,24 +73,37 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
         InitialComponent: _initialComponent
       };
 
-      const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
-      const RootComponent = () => {
-        if (AppProvider) {
-          return (
-            <AppProvider><App {...props}/></AppProvider>
-          );
-        }
-        return <App {...props}/>;
-      };
+      const { app = {} } = appDynamicConfig;
+      const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
 
-      const appInstance = typeof createAppInstance === 'function' ? createAppInstance(initialComponent) : createElement(RootComponent, { ...props });
+      let appInstance;
+
+      if (typeof createAppInstance === 'function') {
+        appInstance = createAppInstance(initialComponent);
+      } else {
+        const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
+        const RootComponent = () => {
+          if (AppProvider) {
+            return (
+              <AppProvider><App {...props}/></AppProvider>
+            );
+          }
+          return <App {...props}/>;
+        };
+        const Root = <RootComponent />;
+
+        if (errorBoundary) {
+          appInstance = <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+            {Root}
+          </ErrorBoundary>;
+        }
+      }
 
       // Emit app launch cycle
       emitLifeCycles();
 
-      const { app = {} } = appDynamicConfig;
-      const rootEl = isWeex || isKraken ? null : document.getElementById(app.rootId);
-      if (isWeb && appDynamicConfig.rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
+      const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
+      if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
 
       return render(
         appInstance,

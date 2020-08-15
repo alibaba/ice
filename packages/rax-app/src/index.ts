@@ -6,6 +6,7 @@ const getBuiltInPlugins = (userConfig) => {
     ['build-plugin-app-core', {
       'framework': 'rax'
     }],
+    'build-plugin-ice-store',
     ['build-plugin-rax-app', {
       enterCheck: false,
       targets,

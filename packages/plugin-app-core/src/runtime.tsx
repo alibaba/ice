@@ -1,10 +1,8 @@
-import * as React from 'react';
 import * as queryString from 'query-string';
 // @ts-ignore
 import { ErrorBoundary } from 'ice';
 
-const module = ({ addProvider, appConfig, wrapperRouteComponent, context }) => {
-  console.log('context', context);
+const module = ({ addProvider, appConfig, wrapperRouteComponent, context: { createElement } }) => {
   const { app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander, parseSearchParams } = app;
 
@@ -14,12 +12,15 @@ const module = ({ addProvider, appConfig, wrapperRouteComponent, context }) => {
       const searchParams = getSearchParams(parseSearchParams, props.location.search);
       if (pageConfig.errorBoundary) {
         return (
-          <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
-            <PageComponent {... Object.assign({}, props, searchParams)} />
-          </ErrorBoundary>
+          createElement(ErrorBoundary, {
+            Fallback: ErrorBoundaryFallback,
+            onError: onErrorBoundaryHander
+          }, createElement(PageComponent, {
+            ... Object.assign({}, props, searchParams)
+          }))
         );
       }
-      return <PageComponent {... Object.assign({}, props, searchParams)} />;
+      return createElement(PageComponent, {... Object.assign({}, props, searchParams)});
     };
     return WrapperedPageComponent;
   };

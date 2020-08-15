@@ -17,8 +17,8 @@ import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import staticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
-import ErrorBoundary from './ErrorBoundary';
 import { mount, unmount } from './render';
+import ErrorBoundary from './ErrorBoundary';
 
 <% if (globalStyle) {%>
   import '../<%= globalStyle %>'
@@ -93,8 +93,7 @@ export {
   addNativeEventListener,
   removeNativeEventListener,
 
-  // components
-  ErrorBoundary,
+  ErrorBoundary
 };
 
 // Private API

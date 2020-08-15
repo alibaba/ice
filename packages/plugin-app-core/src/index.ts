@@ -10,9 +10,13 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context } = api;
+  const { onHook, context, setValue } = api;
   const { command, userConfig } = context;
   const { targets } = userConfig;
+  const { framework } = options;
+
+  // Set framework field
+  setValue('FRAMEWORK', framework);
 
   // Check target
   checkTargets(targets);

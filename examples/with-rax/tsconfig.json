@@ -8,7 +8,11 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "alwaysStrict": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "rax-app": [".rax/index.ts"]
+    }
   },
   "include": ["src/*", ".rax"],
   "exclude": ["build"]

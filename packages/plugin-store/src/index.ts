@@ -6,6 +6,7 @@ import Generator from './generator';
 export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
+  const { alias } = userConfig;
 
   const targetPath = getValue('TEMP_PATH');
   const templatePath = path.join(__dirname, 'template');
@@ -18,7 +19,7 @@ export default async (api) => {
   // set IStore to IAppConfig
   applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
-  // render template/types.ts.ejs to .ice/store/types.ts
+  // render template/types.ts.ejs to .ice/store/types.ts or .rax/store/types.ts
   const typesTemplateContent = fse.readFileSync(typesTemplatePath, 'utf-8');
   const typesTargetPath = path.join(targetPath, 'store', 'types.ts');
   const hasAppModels = fse.pathExistsSync(path.join(rootDir, 'src', 'models'));
@@ -27,43 +28,65 @@ export default async (api) => {
   fse.writeFileSync(typesTargetPath, content, 'utf-8');
   applyMethod('addTypesExport', { source: './store/types' });
 
-  // add babel plugins for ice lazy
-  const { configPath } = userConfig.router || {};
-  const { mpa: isMpa } = userConfig;
-  let { routesPath } = applyMethod('getRoutes', {
-    rootDir,
-    tempDir: targetPath,
-    configPath,
-    projectType,
-    isMpa
-  });
+  // Get framework from plugin-core
+  const framework = getValue('FRAMEWORK');
+  const isRax = framework === 'rax';
 
-  if (isMpa) {
-    const routesFile = `routes.${projectType}`;
-    const pagesPath = path.join(rootDir, 'src', 'pages');
-    const pages = applyMethod('getPages', rootDir);
-    const pagesRoutePath = pages.map(pageName => {
-      return path.join(pagesPath, pageName, routesFile);
+  if (isRax) {
+    onGetWebpackConfig(config => {
+      config.module.rule('appJSON')
+        .test(/app\.json$/)
+        .use('page-source-loader')
+        .loader(require.resolve('./pageSourceLoader'))
+        .options({
+          targetPath
+        });
+
+      // Set alias to run @ice/ice-store
+      config.resolve.alias
+        .set('$store', path.join(targetPath, 'store', 'index.ts'))
+        .set('react-redux', require.resolve('rax-redux'))
+        .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
     });
-    routesPath = pagesRoutePath;
-  }
-  modifyUserConfig('babelPlugins',
-    [
-      ...(userConfig.babelPlugins as [] || []),
-      [
-        require.resolve('./babelPluginReplacePath'),
-        {
-          routesPath,
-          alias: userConfig.alias,
-          applyMethod
-        }
-      ]
-    ]
-  );
+  } else {
+    // add babel plugins for ice lazy
+    const { configPath } = userConfig.router || {};
+    const { mpa: isMpa } = userConfig;
+    let { routesPath } = applyMethod('getRoutes', {
+      rootDir,
+      tempDir: targetPath,
+      configPath,
+      projectType,
+      isMpa
+    });
 
-  onGetWebpackConfig(config => {
-    config.resolve.alias.set('$ice/store', path.join(targetPath, 'store', 'index.ts'));
-  });
+    if (isMpa) {
+      const routesFile = `routes.${projectType}`;
+      const pagesPath = path.join(rootDir, 'src', 'pages');
+      const pages = applyMethod('getPages', rootDir);
+      const pagesRoutePath = pages.map(pageName => {
+        return path.join(pagesPath, pageName, routesFile);
+      });
+      routesPath = pagesRoutePath;
+    }
+    modifyUserConfig('babelPlugins',
+      [
+        ...(userConfig.babelPlugins as [] || []),
+        [
+          require.resolve('./babelPluginReplacePath'),
+          {
+            routesPath,
+            alias,
+            applyMethod
+          }
+        ]
+      ]
+    );
+
+    onGetWebpackConfig(config => {
+      config.resolve.alias.set('$store', path.join(targetPath, 'store', 'index.ts'));
+    });
+  }
 
   const gen = new Generator({
     appStoreTemplatePath,
@@ -72,7 +95,8 @@ export default async (api) => {
     targetPath,
     rootDir,
     applyMethod,
-    projectType
+    projectType,
+    isRax
   });
 
   gen.render();

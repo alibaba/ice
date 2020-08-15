@@ -9,11 +9,16 @@ export interface IRenderPageParams {
   pageNameDir: string;
   pageModelsDir: string;
   pageModelFile: string;
+  pageStoreFile: string;
+  existedStoreFile: boolean;
 }
 
 const matchRegex = /^[^._].*\.(js|ts)$/;
 
+
 export default class Generator {
+  private isRax: boolean
+
   private rootDir: string
 
   private appStoreTemplatePath: string
@@ -32,7 +37,8 @@ export default class Generator {
     pageStoreTemplatePath,
     targetPath,
     applyMethod,
-    projectType
+    projectType,
+    isRax
   }: {
     rootDir: string;
     appStoreTemplatePath: string;
@@ -41,6 +47,7 @@ export default class Generator {
     targetPath: string;
     projectType: string;
     applyMethod: Function;
+    isRax: boolean;
   }) {
     this.rootDir = rootDir;
     this.appStoreTemplatePath = appStoreTemplatePath;
@@ -48,6 +55,7 @@ export default class Generator {
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
+    this.isRax = isRax;
   }
 
   private getPageModels(pageName: string, pageModelsDir: string, pageModelFile: string) {
@@ -86,7 +94,7 @@ export default class Generator {
 
   private renderAppStore() {
     const sourceFilename = 'store/index';
-    const exportName = 'store';
+    const exportName = 'store, createStore';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
     let appModelsDir = path.join(this.rootDir, 'src', 'models');
@@ -107,11 +115,11 @@ export default class Generator {
 
     this.renderFile(this.appStoreTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false });
     this.applyMethod('removeExport', exportName);
-    this.applyMethod('addExport', { source: `./${sourceFilename}`, exportName });
+    this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: '{ store, createStore }', exportName });
   }
 
-  private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile }: IRenderPageParams) {
-    if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
+  private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {
+    if (!existedStoreFile && (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile))) {
       const sourceFilename = 'store';
       const exportName = 'store';
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
@@ -125,19 +133,21 @@ export default class Generator {
     }
   }
 
-  private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile }: IRenderPageParams) {
+  private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, `${pageName}.tsx`);
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
     const pageComponentName = `Page${pageName}`;
     const pageComponentRenderData = {
+      isRax: this.isRax,
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'` ,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
     };
 
-    if (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
+    if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       pageComponentRenderData.hasPageStore = true;
     }
 
@@ -164,6 +174,7 @@ export default class Generator {
     this.renderAppStore();
 
     const pages = this.applyMethod('getPages', this.rootDir);
+
     pages.forEach(pageName => {
       const pageNameDir = path.join(this.rootDir, 'src', 'pages', pageName);
 
@@ -173,7 +184,11 @@ export default class Generator {
       // e.g: src/pages/${pageName}/model.ts
       const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`);
 
-      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile };
+      // e.g: src/pages/${pageName}/store.ts
+      const pageStoreFile = path.join(pageNameDir, `store.${this.projectType}`);
+      const existedStoreFile = fse.pathExistsSync(pageStoreFile);
+
+      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile };
 
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);

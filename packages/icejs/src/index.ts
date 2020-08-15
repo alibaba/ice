@@ -49,7 +49,12 @@ const getBuiltInPlugins = (userConfig) => {
 
   // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
-    plugins.push('build-plugin-ice-store');
+    plugins.push([
+      'build-plugin-ice-store',
+      {
+        framework: 'react'
+      }
+    ]);
   }
 
   return plugins;

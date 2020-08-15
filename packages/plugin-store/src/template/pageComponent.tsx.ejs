@@ -1,8 +1,13 @@
-import * as React from 'react';
+
+<% if (isRax) {%>
+  import { createElement } from 'rax';
+<% } else { %>
+  import * as React from 'react';
+<% } %>
 <%- pageComponentImport %>
 
 <% if(hasPageStore) { %>
-  import store from './store';
+  <%- pageStoreImport %>
 <% } %>
 
 const PageComponentName = <%= pageComponentExport %>;
@@ -18,6 +23,7 @@ const PageComponentName = <%= pageComponentExport %>;
   }
   StoreWrapperedPage.pageConfig = PageComponentName.pageConfig || {};
   export default StoreWrapperedPage;
+  export { store };
 <% } else { %>
   export default PageComponentName;
 <% } %>

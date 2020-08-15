@@ -3,14 +3,25 @@ function miniappRenderer(
   { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
-  createBaseApp(appConfig);
+
+  const { runtime } = createBaseApp(appConfig);
+  const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
+
   const rootId = appConfig.app.rootId;
 
   emitLifeCycles();
   class App extends Component {
     public render() {
-      const { Page, ...otherProps } = this.props;
-      return createElement(Page, otherProps);
+      const { Page, source, ...otherProps } = this.props;
+      const PageComponent = createElement(Page, {
+        ...otherProps
+      });
+
+      if (AppProvider) {
+        return createElement(AppProvider, null, PageComponent);
+      }
+
+      return PageComponent;
     }
   }
 
@@ -26,6 +37,7 @@ function miniappRenderer(
           history,
           location: history.location,
           ...pageProps,
+          source,
           Page: PageComponent
         }), rootEl);
 
