@@ -3,6 +3,7 @@
   "version": "0.1.8",
   "description": "Basic configs for build-scripts and its plugins",
   "main": "lib/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
