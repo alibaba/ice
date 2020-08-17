@@ -19,14 +19,15 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const { configPath } = routerOptions;
   const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
+  const srcDir = applyMethod('getSourceDir', userConfig.entry);
   const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
     rootDir,
     tempDir: iceTempPath,
     configPath,
     projectType,
-    isMpa
+    isMpa,
+    srcDir
   });
-
   // add babel plugins for ice lazy
   modifyUserConfig('babelPlugins',
     [

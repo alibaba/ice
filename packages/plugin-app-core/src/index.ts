@@ -2,6 +2,7 @@
 import * as path from 'path';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
+import getSourceDir from './utils/getSourceDir';
 import { ICE_TEMP } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
@@ -58,6 +59,7 @@ function initGenerator(api, options) {
   const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
+  const srcDir = getSourceDir(userConfig.entry);
   return new Generator({
     rootDir,
     targetDir: getValue(ICE_TEMP),
@@ -72,7 +74,8 @@ function initGenerator(api, options) {
       runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(userConfig)
     },
-    log
+    log,
+    srcDir
   });
 }
 
