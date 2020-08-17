@@ -1,0 +1,15 @@
+{
+  "name": "build-plugin-moment-locales",
+  "version": "0.1.0",
+  "description": "build-scripts plugins for moment locale",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "keywords": [
+    "build-scripts",
+    "build-plugin"
+  ],
+  "author": "ICE Team",
+  "license": "MIT"
+}
