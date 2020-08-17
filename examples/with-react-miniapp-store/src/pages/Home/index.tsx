@@ -10,7 +10,7 @@ export default function Home(props) {
   const [appState, appDispatchers] = appStore.useModel('counter');
   return (
     <div className="home">
-      <p className="title">Welcome to Your Rax App!!!</p>
+      <p className="title">Welcome to ICE!!!</p>
       <p className="info" onClick={appDispatchers.increment}>App Count: {appState.count}</p>
       <p className="info" onClick={dispatchers.increment}>Home Count: {state.count}</p>
       <p className="info" onClick={() => history.push('/about')}>Go About</p>
