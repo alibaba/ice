@@ -2,7 +2,7 @@
   "name": "exmaple-basic-spa",
   "description": "",
   "dependencies": {
-    "ice.js": "^1.0.11",
+    "ice.js": "1.6.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },

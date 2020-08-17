@@ -15,13 +15,11 @@ const DEFAULE_APP_CONFIG = {
   }
 };
 
-export default ({ loadRuntimeModules, loadStaticModules, createElement }) => {
+export default ({ loadRuntimeModules, createElement }) => {
   const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
 
-    appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
-
     // load module to run before createApp ready
-    loadStaticModules(appConfig);
+    appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
     // Set history
     let history = {};

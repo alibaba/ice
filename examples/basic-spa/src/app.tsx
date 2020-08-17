@@ -1,17 +1,21 @@
 import React from 'react';
-import { createApp, APP_MODE, IAppConfig } from 'ice';
+import { createApp, APP_MODE, IAppConfig, request } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     errorBoundary: true,
     parseSearchParams: true,
-    onShow() {
-      console.log('app show...');
+    getInitialData: async() => {
+      const result = await request('/api/repo');
+      console.log('request result:', result);
     },
-    onHide() {
-      console.log('app hide...');
-    },
+    // onShow() {
+    //   console.log('app show...');
+    // },
+    // onHide() {
+    //   console.log('app hide...');
+    // },
   },
   logger: {
     level: APP_MODE === 'build' ? 'error' : 'debug',
@@ -23,7 +27,7 @@ const appConfig: IAppConfig = {
   },
   request: {
     timeout: 5000,
-    baseURL: '/',
+    baseURL: '/api',
     interceptors: {
       request: {
         onConfig: (config) => {
