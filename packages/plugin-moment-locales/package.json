@@ -2,7 +2,7 @@
   "name": "build-plugin-moment-locales",
   "version": "0.1.0",
   "description": "build-scripts plugins for moment locale",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"test\""
   },
