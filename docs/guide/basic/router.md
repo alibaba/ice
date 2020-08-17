@@ -27,8 +27,11 @@ const routerConfig = [
     component: UserLayout,
     children: [
       {
+        // 路由路径
         path: '/login',
+        // 精确匹配
         exact: true,
+        // 路由组件
         component: UserLogin,
         // 配置路由的高阶组件
         wrappers: [wrapperPage]
@@ -55,6 +58,49 @@ export default routerConfig;
 ```
 
 > 注意：路由有一个按顺序匹配的规则，从上到下一旦命中路由匹配规则就会停止遍历，因此如果你在最前面配置了 / 这样一个路由，则所有的路由都会命中该规则，导致其他路由没有效果，所以在开发时要注意路由的顺序以及 exact 属性的使用。
+
+### wrappers 配置
+
+配置路由的高阶组件，常用于路由级别的权限检验。
+
+* 假设路由配置如下：
+
+```ts
+import WrapperPage from '@/components/WrapperPage';
+
+const routerConfig = [
+  {
+    path: '/user',
+    component: User,
+    // 配置路由的高阶组件
+    wrappers: [WrapperPage]
+  },
+]
+```
+
+* 实现路由高阶组件：
+
+```tsx
+import { useAuth, Redirect } from 'ice';
+
+const WrapperPage = (WrappedComponent) => {
+  const [auth] = useAuth();
+
+  const Wrapped = () => {
+    return (
+      <>
+        {
+          auth.isLogin ? <WrappedComponent {...this.props} /> : <Redirect to="/login" />;
+        }
+      </>
+    )
+  }
+}
+
+export default WrapperPage;
+```
+
+通过 `wrappers` 配置我们可以对路由组件进行自定义包装，如上示例通过 WrapperPage 高阶组件对路由组件进行权限判断，如果是登录状态，则渲染 User 组件，否则跳转到 `/login` 路由。
 
 ### 动态路由
 
