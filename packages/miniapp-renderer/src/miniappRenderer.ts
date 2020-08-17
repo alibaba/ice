@@ -29,7 +29,6 @@ function miniappRenderer(
           onError: onErrorBoundaryHander
         }, appInstance);
       }
-
       return appInstance;
     }
   }

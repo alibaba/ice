@@ -86,8 +86,14 @@ export default async (api) => {
       ]
     );
 
-
     onGetWebpackConfig(config => {
+      config.module.rule('appJSON')
+        .test(/app\.json$/)
+        .use('page-source-loader')
+        .loader(require.resolve('./pageSourceLoader'))
+        .options({
+          targetPath
+        });
       config.resolve.alias.set('$store', path.join(targetPath, 'store', 'index.ts'));
     });
   }

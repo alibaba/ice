@@ -6,7 +6,6 @@ import * as prettier from 'prettier';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
-import getPages from '../utils/getPages';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
@@ -22,10 +21,6 @@ interface IRenderFile {
   (templatePath: string, targetDir: string, extraData?: IRenderData): void;
 }
 
-interface IPageRenderData {
-  pageImports: string;
-  pageExports: string;
-}
 
 export default class Generator {
   public templatesDir: string;
@@ -44,19 +39,13 @@ export default class Generator {
 
   private rootDir: string;
 
-  private pageExports: { [key: string]: IExportData[] };
-
-  private pageRenderData: IPageRenderData;
 
   private log: any;
 
   private showPrettierError: boolean;
 
-  private srcDir: string;
-
   constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, srcDir}) {
     this.rootDir = rootDir;
-    this.srcDir = srcDir;
     this.templatesDir = templatesDir;
     this.appTemplateDir = appTemplateDir;
     this.commonTemplateDir = commonTemplateDir;
@@ -66,8 +55,6 @@ export default class Generator {
     this.rerender = false;
     this.log = log;
     this.showPrettierError = true;
-    this.pageExports = {};
-    this.pageRenderData = { pageImports: '', pageExports: '' };
   }
 
   public addExport = (registerKey, exportData: IExportData | IExportData[]) => {
@@ -127,7 +114,6 @@ export default class Generator {
     });
     this.renderData = {
       ...this.renderData,
-      ...this.pageRenderData,
       ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
       globalStyle: globalStyles.length && globalStyles[0],
@@ -151,11 +137,7 @@ export default class Generator {
     const appTemplates = await globby(['**/*'], { cwd: this.appTemplateDir });
     this.parseRenderData();
     appTemplates.forEach((templateFile) => {
-      if (templateFile === 'page.ts.ejs') {
-        this.renderPageTemplates(templateFile);
-      } else {
-        this.renderAppTemplates(templateFile);
-      }
+      this.renderAppTemplates(templateFile);
     });
 
     this.renderCommonTemplates();
@@ -168,16 +150,6 @@ export default class Generator {
     );
   }
 
-  public renderPageTemplates(templateFile) {
-    const pages = getPages(this.rootDir, this.srcDir);
-    pages.forEach((name) => {
-      const source = `./pages/${name}/index`;
-      this.pageRenderData = { ...this.getPageExport(name) };
-      this.renderFile(
-        path.join(this.appTemplateDir, templateFile),
-        path.join(this.targetDir, `${source}.ts`), this.pageRenderData);
-    });
-  }
 
   public async renderCommonTemplates() {
     const commonTemplates = await globby(['**/*'], { cwd: this.commonTemplateDir });
@@ -211,37 +183,6 @@ export default class Generator {
     } else {
       fse.ensureDirSync(targetPath);
       fse.copyFileSync(targetPath, targetPath);
-    }
-  }
-
-  private getPageExport(pageName) {
-    const exportList = this.pageExports[pageName] || [];
-    const { importStr, exportStr } = generateExports(exportList);
-
-    return {
-      pageImports: importStr,
-      pageExports: exportStr,
-    };
-  }
-
-  public addPageExport = (pageName: string, exportData: IExportData | IExportData[]) => {
-    if (!this.pageExports[pageName]) {
-      this.pageExports[pageName] = [];
-    }
-    checkExportData(this.pageExports[pageName], exportData, 'addPageExport');
-    this.pageExports[pageName] = [
-      ...this.pageExports[pageName],
-      ...(Array.isArray(exportData) ? exportData : [exportData]),
-    ];
-    if (this.rerender) {
-      this.render();
-    }
-  }
-
-  public removePageExport = (pageName: string, removeExportName: string | string[]) => {
-    this.pageExports[pageName] = removeExportData(this.pageExports[pageName] || [], removeExportName);
-    if (this.rerender) {
-      this.render();
     }
   }
 }
