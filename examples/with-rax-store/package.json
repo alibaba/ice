@@ -10,7 +10,8 @@
     "rax-view": "^1.0.0"
   },
   "devDependencies": {
-    "@types/rax": "^1.0.0"
+    "@types/rax": "^1.0.0",
+    "miniapp-render": "^1.2.1"
   },
   "scripts": {
     "start": "rax-app start",
