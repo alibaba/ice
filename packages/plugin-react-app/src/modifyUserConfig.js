@@ -11,9 +11,7 @@ module.exports = (api) => {
       if (configKey !== 'plugins') {
         newConfig[configKey] = Object.prototype.hasOwnProperty.call(userConfig, configKey)
           ? userConfig[configKey]
-          : defaultConfig[configKey];;
-        // eslint-disable-next-line no-param-reassign
-        delete userConfig[configKey];
+          : defaultConfig[configKey];
       }
     });
     // migrate sourcemap to sourceMap
