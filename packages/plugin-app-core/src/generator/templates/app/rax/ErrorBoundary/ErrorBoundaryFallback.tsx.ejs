@@ -6,7 +6,7 @@ interface IProps {
 }
 
 const toTitle = (error: Error, componentStack: string): string => {
-  return `${error.toString()}\n\nThis is located at:${componentStack}`;
+  return `${error.toString()}`;
 };
 
 const style = {
@@ -17,9 +17,9 @@ const style = {
   color: '#ed3131'
 } as CSSProperties;
 
-const ErrorBoundaryFallback = ({ componentStack, error }: IProps) => {
+const ErrorBoundaryFallback = ({ error }: IProps) => {
   return (
-    <div style={style} title={toTitle(error, componentStack)}>
+    <div style={style} title={toTitle(error)}>
       <svg
         viewBox="0 0 1024 1024"
         version="1.1"

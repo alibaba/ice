@@ -28,10 +28,10 @@ export interface IApp {
   <% } %>
   getInitialData?: () => Promise<any>;
   <% if (isReact) {%>
-    ErrorBoundaryFallback?: React.ComponentType,
+    ErrorBoundaryFallback?: (error: any) => React.ComponentType,
   <% } %>
   <% if (isRax) {%>
-    aErrorBoundaryFallback?: ComponentType,
+    ErrorBoundaryFallback?: (error: any) => ComponentType,
   <% } %>
   onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
   onLaunch?: () => any;

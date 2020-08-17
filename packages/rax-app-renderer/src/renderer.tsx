@@ -78,10 +78,11 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
 
       let appInstance;
 
+      // For rax-app 2.x
       if (typeof createAppInstance === 'function') {
         appInstance = createAppInstance(initialComponent);
       } else {
-        const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
+        const AppProvider = runtime?.composeAppProvider?.();;
         const RootComponent = () => {
           if (AppProvider) {
             return (
@@ -96,6 +97,8 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
           appInstance = <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
             {Root}
           </ErrorBoundary>;
+        } else {
+          appInstance = Root;
         }
       }
 

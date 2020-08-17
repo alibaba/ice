@@ -44,7 +44,7 @@ export default async (api) => {
           targetPath
         });
 
-      // Set alias to run @ice/ice-store
+      // Set alias to run @ice/store
       config.resolve.alias
         .set('$store', path.join(targetPath, 'store', 'index.ts'))
         .set('react-redux', require.resolve('rax-redux'))

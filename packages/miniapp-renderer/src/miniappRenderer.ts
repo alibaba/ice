@@ -1,27 +1,36 @@
 function miniappRenderer(
-  { appConfig, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles },
+  { appConfig, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
 
   const { runtime } = createBaseApp(appConfig);
-  const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
+  const AppProvider = runtime?.composeAppProvider?.();;
 
-  const rootId = appConfig.app.rootId;
+  const { app = {} } = appConfig;
+  const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
 
   emitLifeCycles();
   class App extends Component {
     public render() {
-      const { Page, source, ...otherProps } = this.props;
+      const { Page, ...otherProps } = this.props;
       const PageComponent = createElement(Page, {
         ...otherProps
       });
 
+      let appInstance = PageComponent;
+
       if (AppProvider) {
-        return createElement(AppProvider, null, PageComponent);
+        appInstance = createElement(AppProvider, null, appInstance);
+      }
+      if (errorBoundary) {
+        appInstance = createElement(ErrorBoundary, {
+          Fallback: ErrorBoundaryFallback,
+          onError: onErrorBoundaryHander
+        }, appInstance);
       }
 
-      return PageComponent;
+      return appInstance;
     }
   }
 

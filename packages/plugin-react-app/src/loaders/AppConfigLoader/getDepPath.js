@@ -2,7 +2,7 @@ const { join } = require('path');
 const { existsSync } = require('fs-extra');
 
 function existsFile(path) {
-  return ['', '.js', '.tsx', '.jsx', '.ts'].some(ext => existsSync(`${path}${ext}`));
+  return ['.js', '.tsx', '.jsx', '.ts'].some(ext => existsSync(`${path}${ext}`));
 }
 
 /**

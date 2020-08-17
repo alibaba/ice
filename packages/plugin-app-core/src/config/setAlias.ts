@@ -21,13 +21,17 @@ export default (api, options) => {
         config.resolve.alias.set(alias[0], alias[1]);
       }
     });
-    const basicDependencies = [];
+    let basicDependencies = [];
+    // add alias of basic dependencies
     if (options.framework === 'react') {
-      // add alias of basic dependencies
-      basicDependencies.push(['react', rootDir]);
-      basicDependencies.push(['react-dom', rootDir]);
+      basicDependencies = [
+        ['react', rootDir],
+        ['react-dom', rootDir]
+      ];
     } else if (options.framework === 'rax') {
-      basicDependencies.push(['rax', rootDir]);
+      basicDependencies = [
+        ['rax', rootDir]
+      ];
     }
     basicDependencies.forEach((dep: string[] | string): void => {
       const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];

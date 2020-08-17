@@ -18,7 +18,6 @@ class About extends PureComponent {
 
   public render() {
     const { counter } = this.props;
-
     const [ state, dispatchers ] = counter;
     return (
       <View className="about">
