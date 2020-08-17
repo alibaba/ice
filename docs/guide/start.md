@@ -53,18 +53,9 @@ $ npm init ice --template <template> # 指定模板
 
 # 指定目录初始项目
 $ npm init ice <projectName> # 根据提示选择模板
-$ npm init ice <projectName> <tempalte> # 指定模板
 $ npm init ice <projectName> --template <template> # 指定模板
 ```
 > 可从 [模板库](https://ice.work/scaffold) 选择模板 `<template>`
-
-查看帮助信息
-
-```bash
-$ npm init ice -h
-# or
-$ npm init ice --help
-```
 
 **选择模板**
 
