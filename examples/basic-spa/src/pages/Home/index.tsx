@@ -15,13 +15,13 @@ export default function Home(props) {
   logger.info('Home props', props);
   logger.info('render home config.appId', config.appId);
 
-  // usePageShow(() => {
-  //   console.log('page show....');
-  // });
+  usePageShow(() => {
+    console.log('page show....');
+  });
 
-  // usePageHide(() => {
-  //   console.log('page hide...');
-  // });
+  usePageHide(() => {
+    console.log('page hide...');
+  });
 
   return (
     <>

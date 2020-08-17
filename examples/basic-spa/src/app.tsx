@@ -7,15 +7,15 @@ const appConfig: IAppConfig = {
     errorBoundary: true,
     parseSearchParams: true,
     getInitialData: async() => {
-      const result = await request('/api/repo');
+      const result = await request('/repo');
       console.log('request result:', result);
     },
-    // onShow() {
-    //   console.log('app show...');
-    // },
-    // onHide() {
-    //   console.log('app hide...');
-    // },
+    onShow() {
+      console.log('app show...');
+    },
+    onHide() {
+      console.log('app hide...');
+    },
   },
   logger: {
     level: APP_MODE === 'build' ? 'error' : 'debug',
