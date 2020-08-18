@@ -100,7 +100,7 @@ module.exports = (api, { isMiniapp }) => {
   if (isMiniapp) {
     config.devServer.set('writeToDisk', true);
   } else {
-    config.devServer.set('writeToDisk', true);
+    config.devServer.set('writeToDisk', false);
   }
 
   if (command === 'start') {
