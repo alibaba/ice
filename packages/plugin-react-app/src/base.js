@@ -11,11 +11,9 @@ const collect = require('./utils/collect');
 // eslint-disable-next-line
 const chalk = require('chalk');
 
-module.exports = (api) => {
+module.exports = (api, { isMiniapp }) => {
   const { context, log } = api;
-  const { command, rootDir, webpack, commandArgs, pkg, userConfig: { targets } } = context;
-  const isMiniapp = Array.isArray(targets)
-    && (targets.includes('miniapp') || targets.includes('wechat-miniprogram'));
+  const { command, rootDir, webpack, commandArgs, pkg } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
   const babelConfig = getBabelConfig();
