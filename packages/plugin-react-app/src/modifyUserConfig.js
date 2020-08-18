@@ -1,14 +1,7 @@
 const defaultConfig = require('./config/default.config');
 
 module.exports = (api) => {
-  const { modifyUserConfig, context } = api;
-  const { commandArgs, command } = context;
-  const appMode = commandArgs.mode || command;
-
-  modifyUserConfig((userConfig) => {
-    const { modeConfig = {} } = userConfig;
-    return modeConfig[appMode] || {};
-  });
+  const { modifyUserConfig } = api;
 
   // modify user config to keep excute order
   modifyUserConfig((userConfig) => {
