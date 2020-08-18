@@ -1,11 +1,15 @@
 import React from 'react';
-import { createApp, APP_MODE, IAppConfig } from 'ice';
+import { createApp, APP_MODE, IAppConfig, request } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     errorBoundary: true,
     parseSearchParams: true,
+    getInitialData: async() => {
+      const result = await request('/repo');
+      console.log('request result:', result);
+    },
     onShow() {
       console.log('app show...');
     },
@@ -23,7 +27,7 @@ const appConfig: IAppConfig = {
   },
   request: {
     timeout: 5000,
-    baseURL: '/',
+    baseURL: '/api',
     interceptors: {
       request: {
         onConfig: (config) => {

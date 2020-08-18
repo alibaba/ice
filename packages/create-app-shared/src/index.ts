@@ -14,10 +14,10 @@ import useSearchParams from './useSearchParams';
 import withSearchParams from './withSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
-function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeModules, loadStaticModules) {
+function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeModules) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
   return {
-    createBaseApp: createBaseApp({ loadRuntimeModules, loadStaticModules, createElement }),
+    createBaseApp: createBaseApp({ loadRuntimeModules, createElement }),
 
     // history api
     withRouter: enhanceWithRouter({ withRouter, createElement }),
