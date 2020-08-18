@@ -3,7 +3,7 @@
     "module": "esNext",
     "target": "es2015",
     "outDir": "build",
-    "jsx": "react",
+    "jsx": "preserve",
     "jsxFactory": "createElement",
     "moduleResolution": "node",
     "sourceMap": true,
