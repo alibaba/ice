@@ -1,5 +1,3 @@
-import * as path from 'path';
-
 import formatPath from './formatPath';
 
 // entry: src/app -> srcDir: src
