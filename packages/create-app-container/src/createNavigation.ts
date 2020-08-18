@@ -45,10 +45,10 @@ const activatePageComponent = (route, { createElement }) => {
     });
 };
 
-const createAppNavigation = (api) => (props) => {
+const createNavigation = (api) => (props) => {
   const { createElement, useEffect, useState, Fragment } = api;
-  const { appConfig, component, history, routes } = props;
-  const { maxAlivePageNum, tabBar } = appConfig;
+  const { staticConfig, component, history, routes } = props;
+  const { maxAlivePageNum, tabBar } = staticConfig;
 
   const [, setUpdateTemp] = useState(null);
 
@@ -74,7 +74,7 @@ const createAppNavigation = (api) => (props) => {
   // Props to page component
   const pageProps = {};
   Object.keys(props).forEach((key) => {
-    if (key !== 'appConfig' && key !== 'component') {
+    if (key !== 'staticConfig' && key !== 'component') {
       pageProps[key] = props[key];
     }
   });
@@ -129,4 +129,4 @@ const createAppNavigation = (api) => (props) => {
   );
 }
 
-export default createAppNavigation;
+export default createNavigation;

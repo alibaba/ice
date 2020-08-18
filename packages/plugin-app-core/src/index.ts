@@ -12,7 +12,7 @@ const chalk = require('chalk');
 export default (api, options) => {
   const { onHook, context, onGetWebpackConfig } = api;
   const { command, userConfig } = context;
-  const { targets } = userConfig;
+  const { targets = ['web'] } = userConfig;
 
   // Check target
   checkTargets(targets);
