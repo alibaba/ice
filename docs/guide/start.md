@@ -44,6 +44,19 @@ $ npm init ice <projectName>
 $ yarn create ice <projectName>
 ```
 
+同时支持以下几种方式初始项目，以 npm 为例
+
+```bash
+# 当前目录初始项目
+$ npm init ice # 根据提示选择模板
+$ npm init ice --template <template> # 指定模板
+
+# 指定目录初始项目
+$ npm init ice <projectName> # 根据提示选择模板
+$ npm init ice <projectName> --template <template> # 指定模板
+```
+> 可从 [模板库](https://ice.work/scaffold) 选择模板 `<template>`
+
 **选择模板**
 
 可以根据实际情况选择 TypeScript 和 JavaScript 模板，其中各包含一个轻量的 Lite 和功能完善的 Pro 模板：

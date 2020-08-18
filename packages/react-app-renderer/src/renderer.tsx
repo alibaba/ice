@@ -15,9 +15,11 @@ export function reactAppRendererWithSSR(context, options) {
 }
 
 export async function reactAppRenderer(options) {
-  const { appConfig, setAppConfig } = options || {};
+  const { appConfig, setAppConfig, loadStaticModules } = options || {};
 
   setAppConfig(appConfig);
+
+  loadStaticModules(appConfig);
 
   if (process.env.__IS_SERVER__) return;
 

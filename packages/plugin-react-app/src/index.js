@@ -14,8 +14,7 @@ module.exports = (api) => {
   const { onGetJestConfig, onGetWebpackConfig, context, registerTask, onHook } = api;
   const { command, rootDir, commandArgs, userConfig } = context;
   const { targets = [WEB] } = userConfig;
-  const isMiniapp = Array.isArray(targets)
-    && (targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM));
+  const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
 
   // register cli option
   registerCliOption(api);
@@ -32,7 +31,7 @@ module.exports = (api) => {
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
   });
 
-  targets.forEach(target => registerTask(target, getBase(api, { target })));
+  targets.forEach(target => registerTask(target, getBase(api, { isMiniapp })));
 
   if (command === 'test') {
     onGetJestConfig((jestConfig) => {
