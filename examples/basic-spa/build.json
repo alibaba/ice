@@ -9,6 +9,5 @@
   "eslint": {
     "disable": false,
     "quiet": true
-  },
-  "tsChecker": false
+  }
 }

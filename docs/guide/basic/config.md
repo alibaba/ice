@@ -39,7 +39,8 @@ icejs 支持区分不同环境，开发者可根据环境区分**工程配置**�
     },
     "prod": {
       "define": {},
-      "vendor": true
+      "vendor": true,
+      "plugins": ["build-plugin-esbuild"]
     }
   }
 }

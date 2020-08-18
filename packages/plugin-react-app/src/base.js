@@ -11,9 +11,10 @@ const collect = require('./utils/collect');
 // eslint-disable-next-line
 const chalk = require('chalk');
 
-module.exports = (api, options) => {
+
+module.exports = (api, { isMiniapp }) => {
   const { context, log } = api;
-  const { command, rootDir, webpack, commandArgs, pkg, userConfig } = context;
+  const { command, rootDir, webpack, commandArgs, pkg } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
   const babelConfig = getBabelConfig();
@@ -96,7 +97,6 @@ module.exports = (api, options) => {
     .use('loader')
     .loader(require.resolve('./loaders/AppConfigLoader'));
 
-  const isMiniapp = options.target === 'miniapp' || options.target === 'wechat-miniprogram';
   if (isMiniapp) {
     config.devServer.set('writeToDisk', true);
   } else {
