@@ -1,5 +1,7 @@
 import * as path from 'path';
 
+import formatPath from './formatPath';
+
 // entry: src/app -> srcDir: src
 // entry: client/app -> srcDir: client
 // mpa entry: {dashboard: 'src/pages/Dashboard/app.ts'} -> src
@@ -14,7 +16,9 @@ function getSourceDir (entry): string {
     }
   }
 
-  return entryStr.split(path.sep)[0];
+  entryStr = formatPath(entryStr);
+
+  return entryStr.split('/')[0];
 }
 
 export default getSourceDir;
