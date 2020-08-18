@@ -86,6 +86,27 @@ module.exports = (api, { isMiniapp }) => {
       ]])
       .end();
 
+  // Process rpx to vw
+  const cssPreprocessor = [ 'scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'];
+  cssPreprocessor.forEach(rule => {
+    if (config.module.rules.get(rule)) {
+      config.module
+        .rule(rule)
+        .use('postcss-loader')
+        .tap((options) => {
+          const { plugins = [] } = options;
+          return {
+            ...options,
+            plugins: [
+              ...plugins,
+              // eslint-disable-next-line
+              require('postcss-plugin-rpx2vw')
+            ],
+          };
+        });
+    }
+  });
+
   // Process app.json file
   config.module.rule('appJSON')
     .type('javascript/auto')
