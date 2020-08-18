@@ -44,15 +44,14 @@ const serverRender = async ({ context, pathname, initialData, htmlTemplate }) =>
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
     const bundleContent = reactAppRendererWithSSR({
+      staticContext: context,
+      pathname,
+      initialData,
+      pageInitialProps
+    }, {
       appConfig,
       createBaseApp,
-      emitLifeCycles,
-      context: {
-        staticContext: context,
-        pathname,
-        initialData,
-        pageInitialProps
-      }
+      emitLifeCycles
     });
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>

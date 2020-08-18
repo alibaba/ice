@@ -43,7 +43,7 @@ const {
   createElement,
   useEffect,
   withRouter: defaultWithRouter
-}, loadRuntimeModules, loadStaticModules);
+}, loadRuntimeModules);
 
 export function runApp(appConfig) {
   let renderer;
@@ -65,6 +65,7 @@ export function runApp(appConfig) {
     getHistory,
     emitLifeCycles,
     pathRedirect,
+    loadStaticModules,
     ErrorBoundary
   }, {
     createElement,
