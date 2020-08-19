@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
 import { createNavigation } from 'create-app-container';
-import { createUseRouter } from './useRouter';
+import { createUseRouter } from 'create-use-router';
 
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
