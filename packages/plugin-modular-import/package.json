@@ -1,0 +1,14 @@
+{
+  "name": "build-plugin-modular-import",
+  "version": "0.1.0",
+  "description": "build-scripts plugin for babel-plugin-import",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-plugin-import": "^1.11.2"
+  }
+}

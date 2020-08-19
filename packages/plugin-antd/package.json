@@ -1,0 +1,14 @@
+{
+  "name": "build-plugin-antd",
+  "version": "0.1.0",
+  "description": "build-scripts plugin for antd",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-import": "^1.11.2"
+  }
+}
