@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as chokidar from 'chokidar';
 
 export default (api, options: any = {}) => {
-  const { registerMethod, context } = api;
+  const { registerMethod, context, applyMethod } = api;
   const { rootDir } = context;
   const { render } = options;
 
@@ -14,6 +14,7 @@ export default (api, options: any = {}) => {
     ignoreInitial: true,
   }).on('all', (event, filePath) => {
     watchEvents.forEach(([pattern, action]) => {
+      filePath = applyMethod('formatPath', filePath);
       if (pattern instanceof RegExp && pattern.test(filePath)) {
         action(event, filePath);
       } else if (typeof pattern === 'string' && filePath.includes(pattern)) {
