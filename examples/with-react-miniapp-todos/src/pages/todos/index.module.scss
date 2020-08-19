@@ -22,6 +22,18 @@ page {
   align-items: center;
 }
 
+.login-button {
+  display: inline-block;
+  background: none;
+  border: none;
+  width: auto;
+  height: auto;
+}
+
+.login-button:after{
+  content: none;
+}
+
 .avatar {
   width: 130rpx;
   height: 130rpx;
@@ -35,6 +47,7 @@ page {
   text-align: center;
   font-size: 40rpx;
   font-weight: 100;
+  color: #FFF;
 }
 
 .todo-items {
@@ -66,9 +79,9 @@ page {
   transition: border 0.2s;
 }
 
-.todo-item:last-child {
-  margin-bottom: 0;
-}
+// .todo-item:last-child {
+//   margin-bottom: 0;
+// }
 
 .todo-item::before {
   content: '';

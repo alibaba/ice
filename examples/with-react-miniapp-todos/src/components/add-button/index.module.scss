@@ -6,6 +6,10 @@
   width: 300rpx;
 }
 
+.add-button:after {
+  content: none;
+}
+
 .add-icon {
   font-size: 52rpx;
   color: #00FFD6;

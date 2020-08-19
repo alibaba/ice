@@ -16,27 +16,20 @@ const AddTodo = () => {
     const storageKey = 'todos';
 
     // eslint-disable-next-line
-    const { data } = my.getStorageSync({
-      key: storageKey
-    });
+    const data = wx.getStorageSync(storageKey);
 
-    if (data !== null) {
-      data.todos.push({
-        text: value,
-        completed: false
-      });
-    }
+    data.todos.push({
+      text: value,
+      completed: false
+    });
     
     // eslint-disable-next-line 
-    my.setStorageSync({
-      key: storageKey,
-      data: {
-        todos: data.todos
-      }
-    });
+    wx.setStorageSync(storageKey, data);
 
     // eslint-disable-next-line
-    my.navigateBack();
+    wx.redirectTo({
+      url: '/pages/todos/index'
+    });
   };
 
 
@@ -47,7 +40,8 @@ const AddTodo = () => {
           className={styles['add-todo-input']}
           placeholder="What needs to be done?"
           value={value}
-          onChange={onChange} />
+          onChange={() => {}}
+          onInput={onChange} />
       </view>
 
       <view className={styles['todo-footer']}>

@@ -5,9 +5,7 @@ import AddButton from '@/components/add-button';
 import logo from '@/public/logo.svg';
 import styles from './index.module.scss';
 
-const Todos = (props) => {
-  const { history } = props;
-
+const Todos = () => {
   // state
   const [userInfo, setUserInfo] = useState({});
   const [todos, setTodos] = useState([
@@ -18,7 +16,10 @@ const Todos = (props) => {
 
   // handlers
   const addTodo = () => {
-    history.push('/add-todo');
+    // eslint-disable-next-line
+    wx.redirectTo({
+      url: '/pages/add-todo/index'
+    });
   };
 
   const onTodoChange = (text) => {
@@ -32,52 +33,35 @@ const Todos = (props) => {
     setTodos(changedTodos);
   };
 
+  const getUserInfo = async () => {
+    // eslint-disable-next-line
+    const storedUserInfo = wx.getStorageSync('userInfo');
+    if (storedUserInfo === '') {
+      // eslint-disable-next-line
+      const res = await wx.getUserInfo();
+
+      setUserInfo(res.userInfo);
+
+      // eslint-disable-next-line
+      wx.setStorageSync('userInfo', res.userInfo);
+    }
+  };
+
   // lifecyle function
   usePageShow(async () => {
-    // my is global variable in mini program
     // eslint-disable-next-line
-    function getUserInfo() {
-      return new Promise((resolve, reject) => {
-        if (userInfo.avatar) resolve(userInfo);
-        // 调用用户授权 API
-        // eslint-disable-next-line
-        my.getAuthCode({
-          scopes: ['auth_user'],
-          success: () => {
-            // 调用获取用户信息 API
-            // eslint-disable-next-line
-            my.getAuthUserInfo({
-              success: res => {
-                resolve(res);
-              },
-              fail: () => {
-                reject(new Error('获取用户信息失败！'));
-              },
-            });
-          },
-          fail: () => {
-            reject(new Error('获取用户信息失败'));
-          },
-        });
-      });
+    const storedUserInfo = wx.getStorageSync('userInfo');
+    if (userInfo !== '') {
+      setUserInfo(storedUserInfo);
     }
-    const myUserInfo = await getUserInfo();
-    setUserInfo(myUserInfo);
-    console.log('userInfo:', myUserInfo);
 
+    const storageKey = 'todos';
     // eslint-disable-next-line
-    const { data } = my.getStorageSync({
-      key: 'todos'
-    });
+    const data = wx.getStorageSync(storageKey);
 
-    if (data === null) {
+    if (data === '') {
       // eslint-disable-next-line
-      my.setStorageSync({
-        key: 'todos',
-        data: {
-          todos
-        }
-      });
+      wx.setStorageSync(storageKey, {todos});
     } else {
       setTodos(data.todos);
     }
@@ -86,8 +70,12 @@ const Todos = (props) => {
   return (
     <view className={styles['page-todos']}>
       <view className={styles.user}>
-        <image className={styles.avatar} src={userInfo.avatar ? userInfo.avatar : logo} alt="用户头像" />
-        <text className={styles.nickname}>{userInfo.nickName ? `${userInfo.nickName}'s` : 'My' } Todo List</text>
+        <button type='button' open-type="getUserInfo" onClick={getUserInfo} className={styles['login-button']} >
+          <view style={{display: 'flex', flexDirection: 'column'}}>
+            <image className={styles.avatar} src={userInfo.avatarUrl ? userInfo.avatarUrl : logo} alt="用户头像" />
+            <text className={styles.nickname}>{userInfo.nickName ? `${userInfo.nickName}'s` : 'My' } Todo List</text>
+          </view>
+        </button>
       </view>
       
       <view className={styles['todo-items']}>
