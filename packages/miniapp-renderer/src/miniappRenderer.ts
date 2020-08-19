@@ -5,7 +5,7 @@ function miniappRenderer(
   const history = createHistory({ routes: staticConfig.routes });
 
   const { runtime } = createBaseApp(appConfig);
-  const AppProvider = runtime?.composeAppProvider?.();;
+  const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
   const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;

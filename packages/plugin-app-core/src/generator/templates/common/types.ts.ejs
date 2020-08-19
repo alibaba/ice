@@ -1,9 +1,9 @@
 <% if (isReact) {%>
-  import React from 'react';
+  import React, { ReactElement: FrameworkElement, ComponentType: FrameworkComponentType, ReactNode: FrameworkNode } from 'react';
 <% } %>
 
 <% if (isRax) {%>
-  import { RaxNode, RaxElement, ComponentType } from 'rax';
+  import { RaxElement: FrameworkElement, ComponentType: FrameworkComponentType, RaxNode: FrameworkNode } from 'rax';
 <% } %>
 
 <%- appConfigTypesImports %>
@@ -20,19 +20,9 @@ interface IOnTabItemClickParams {
 export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
-  <% if (isReact) {%>
-    addProvider?: ({ children }: { children: React.ReactNode }) => React.ReactElement;
-  <% } %>
-  <% if (isRax) {%>
-    addProvider?: ({ children }: { children: RaxNode }) => RaxElement;
-  <% } %>
+  addProvider?: ({ children }: { children: FrameworkNode }) => FrameworkElement;
   getInitialData?: () => Promise<any>;
-  <% if (isReact) {%>
-    ErrorBoundaryFallback?: (error: any) => React.ComponentType,
-  <% } %>
-  <% if (isRax) {%>
-    ErrorBoundaryFallback?: (error: any) => ComponentType,
-  <% } %>
+  ErrorBoundaryFallback?: (error: any) => FrameworkComponentType,
   onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
   onLaunch?: () => any;
   onShow?: () => any;

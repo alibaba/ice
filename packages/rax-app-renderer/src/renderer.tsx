@@ -26,23 +26,19 @@ function _matchInitialComponent(fullpath, routes) {
 
 function App(props) {
   const { appConfig, history, routes, InitialComponent } = props;
-  const { component } = useRouter(() => ({ history, routes, InitialComponent }));
+  const { component: PageComponent } = useRouter(() => ({ history, routes, InitialComponent }));
   // Return null directly if not matched
-  if (_isNullableComponent(component)) return null;
-
+  if (_isNullableComponent(PageComponent)) return null;
+  const navigationProps = { appConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
   if (isWeb) {
-    return createElement(
-      Navigation,
-      { appConfig, component, history, location: history.location, routes, InitialComponent },
-    );
+    return <Navigation {...navigationProps} />;
   }
-
-  return createElement(
-    Fragment,
-    {},
-    createElement(component, { history, location: history.location, routes, InitialComponent }),
-    createElement(TabBar, { history, config: appConfig.tabBar })
-  );
+  const pageProps = { history, location: history.location, routes, InitialComponent };
+  const tabBarProps = { history, config: appConfig.tabBar };
+  return <Fragment>
+    <PageComponent {...pageProps} />
+    <TabBar {...tabBarProps} />
+  </Fragment>;
 }
 
 function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance, ErrorBoundary }) {
@@ -82,7 +78,7 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
       if (typeof createAppInstance === 'function') {
         appInstance = createAppInstance(initialComponent);
       } else {
-        const AppProvider = runtime?.composeAppProvider?.();;
+        const AppProvider = runtime?.composeAppProvider?.();
         const RootComponent = () => {
           if (AppProvider) {
             return (

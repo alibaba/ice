@@ -1,20 +1,14 @@
 const { join } = require('path');
 const { existsSync } = require('fs-extra');
 
-function existsFile(path) {
-  return ['.js', '.tsx', '.jsx', '.ts'].some(ext => existsSync(`${path}${ext}`));
-}
-
 /**
  * ./pages/foo -> based on src, return original
- * /pages/foo -> based on rootContext
+ * / -> based on absolute path
  * pages/foo -> based on src, add prefix: './'
  */
-module.exports = function getDepPath(path, rootContext = '') {
-  if (path[0] === '.') {
+module.exports = function getDepPath(path) {
+  if (path[0] === '.' || path[0] === '/') {
     return path;
-  } else if (path[0] === '/') {
-    return existsFile(path) ? path : join(rootContext, path);
   } else {
     return `./${path}`;
   }

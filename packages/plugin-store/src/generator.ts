@@ -189,7 +189,7 @@ export default class Generator {
       const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`);
 
       // e.g: src/pages/${pageName}/store.ts
-      const pageStoreFile = path.join(pageNameDir, `store.${this.projectType}`);
+      const pageStoreFile = this.applyMethod('formatPath', path.join(pageNameDir, `store.${this.projectType}`));
       const existedStoreFile = fse.pathExistsSync(pageStoreFile);
 
       const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile };
