@@ -1,6 +1,6 @@
 ---
 title: 资源管理器
-order: 2
+order: 3
 ---
 
 Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 资源管理器的基本功能。

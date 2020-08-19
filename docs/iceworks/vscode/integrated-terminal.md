@@ -1,6 +1,6 @@
 ---
 title: 集成终端
-order: 1
+order: 6
 ---
 
 Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 集成终端的基本功能。更多详细说明请阅读[《VS Code 官方文档》](https://code.visualstudio.com/docs/editor/integrated-terminal)。
