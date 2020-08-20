@@ -43,7 +43,7 @@ export async function reactAppRenderer(options) {
 }
 
 function _renderApp(context, options) {
-  const { appConfig, staticConfig, buildConfig, createBaseApp, emitLifeCycles } = options;
+  const { appConfig, staticConfig, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
   const { rootId, mountNode } = modifiedAppConfig.app;
   const appMountNode = mountNode || document.getElementById(rootId) || document.getElementById('ice-container');
