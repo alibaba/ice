@@ -1,9 +1,10 @@
-// @ts-ignore
-import { render, createElement, Fragment } from 'rax';
-import { Navigation, TabBar } from 'rax-pwa';
-import { useRouter } from 'rax-use-router';
+import { render, createElement, useEffect, useState, Fragment, useLayoutEffect } from 'rax';
+import { createNavigation, createTabBar } from 'create-app-container';
+import { createUseRouter } from 'create-use-router';
 import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
+
+const useRouter = createUseRouter({ useState, useLayoutEffect });
 
 let driver = UniversalDriver;
 
@@ -25,20 +26,25 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
-  const { appConfig, history, routes, InitialComponent } = props;
+  const { staticConfig, history, routes, InitialComponent } = props;
   const { component: PageComponent } = useRouter(() => ({ history, routes, InitialComponent }));
   // Return null directly if not matched
   if (_isNullableComponent(PageComponent)) return null;
-  const navigationProps = { appConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
+  const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
   if (isWeb) {
-    return <Navigation {...navigationProps} />;
+    const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
+    return <AppNavigation {...navigationProps} />;
   }
+
+  const TabBar = createTabBar({ createElement, useEffect, useState, Fragment });
   const pageProps = { history, location: history.location, routes, InitialComponent };
-  const tabBarProps = { history, config: appConfig.tabBar };
-  return <Fragment>
-    <PageComponent {...pageProps} />
-    <TabBar {...tabBarProps} />
-  </Fragment>;
+  const tabBarProps = { history, config: staticConfig.tabBar };
+  return (
+    <Fragment>
+      <PageComponent {...pageProps} />
+      <TabBar {...tabBarProps} />
+    </Fragment>
+  );
 }
 
 function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance, ErrorBoundary }) {
@@ -63,7 +69,7 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
     .then(initialComponent => {
       _initialComponent = initialComponent;
       const props = {
-        appConfig: staticConfig,
+        staticConfig,
         history,
         routes,
         InitialComponent: _initialComponent

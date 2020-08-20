@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { usePageShow, usePageHide } from 'ice';
+import Text from './components/Text';
 import styles from './index.module.scss';
 
 const Home = (props) => {
@@ -15,11 +16,12 @@ const Home = (props) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Welcome to icejs miniapp!</h2>
-      <view className={styles.description}>This is a awesome project, enjoy it!</view>
-      <view onClick={() => {
+      <div className={styles.description}>This is a awesome project, enjoy it!</div>
+      <Text />
+      <div onClick={() => {
         console.log('Click');
         history.push('/about');
-      }}>go about</view>
+      }}>go about</div>
     </div>
   );
 };

@@ -8,8 +8,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "driver-universal": "^3.1.0",
-    "rax-pwa": "^2.0.0",
-    "rax-use-router": "^3.0.0",
+    "create-app-container": "^0.1.0",
+    "create-use-router": "^0.1.0",
     "universal-env": "^3.0.0"
   },
   "directories": {
