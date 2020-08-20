@@ -32,11 +32,22 @@ PS：安装 Node.js 时会自动安装 npm ，可至 [https://nodejs.org/en/](ht
 
 点击左侧栏 Iceworks 图标，在 `NODE DEPENDENCIES` 栏中，可展示当前项目的依赖包信息（包含包名和当前安装的版本）。将鼠标移入 `NODE DEPENDENCIES` 区域内时，会出现 3 个操作按钮，功能如上图所示。
 
-## 本地安装
+## 查看依赖信息、升级依赖包或重装应用依赖
 
-点击 `+` 输入需要的 npm 包名，便可完成安装所需的包依赖。
+![使用示例](https://user-images.githubusercontent.com/56879942/87393973-9cf77d00-c5e1-11ea-8baa-96c8c41229cf.gif)
 
-![img02](https://img.alicdn.com/tfs/TB1iSB1hlFR4u4jSZFPXXanzFXa-2880-1662.png)
+1. 在左下角依赖库中查看应用安装的所有依赖；
+2. 点击依赖项目旁边的 `⬆️` 按钮，即可更新到最新依赖；
+3. 点击依赖列表标题框上的 `重装依赖` 按钮，即可重装应用的所有依赖包。
+
+## 一键安装或重装指定依赖
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87393970-9bc65000-c5e1-11ea-9724-3bd47c4b21ed.gif)
+
+1. 点击依赖列表标题框上面的 `+` 按钮；
+2. 在出现的命令面板上选择安装为 Dependencies (生产环境的依赖)或 devDependencies (开发环境的依赖)；
+3. 输入需要安装的 npm 包及版本信息，例如 `typescript@latest` ；
+4. npm 包将会自动安装，如果这个包已经添加到了依赖中，那么将会重新安装。
 
 ## 使用 npm 包
 
