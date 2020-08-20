@@ -10,6 +10,10 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "dependencies": {
+    "create-app-container": "^0.1.0",
+    "create-use-router": "^0.1.0"
+  },
   "devDependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1"

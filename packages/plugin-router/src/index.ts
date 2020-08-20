@@ -10,6 +10,12 @@ const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
 const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
+
+  // const { targets } = userConfig;
+  // if (Array.isArray(targets) && targets.includes('web')) {
+  //   return;
+  // }
+
   // [enum] js or ts
   const projectType = getValue('PROJECT_TYPE');
 
