@@ -45,8 +45,10 @@ export async function reactAppRenderer(options) {
 function _renderApp(context, options) {
   const { appConfig, staticConfig, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
-  const { rootId, mountNode } = modifiedAppConfig.app;
+  const { rootId, mountNode } = modifiedAppConfig.app || {};
   const appMountNode = mountNode || document.getElementById(rootId) || document.getElementById('ice-container');
+
+  options.appConfig = modifiedAppConfig;
 
   // Emit app launch cycle
   emitLifeCycles();
@@ -61,7 +63,7 @@ function _renderApp(context, options) {
 
 function _renderWebApp({ runtime, appMountNode }, options) {
   const { ErrorBoundary, appConfig } = options;
-  const { app: { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } } = appConfig;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app || {};
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
 
