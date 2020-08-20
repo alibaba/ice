@@ -31,7 +31,7 @@ module.exports = (api) => {
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
   });
 
-  targets.forEach(target => registerTask(target, getBase(api, { isMiniapp })));
+  targets.forEach(target => registerTask(target, getBase(api, { isMiniapp, target })));
 
   if (command === 'test') {
     onGetJestConfig((jestConfig) => {
