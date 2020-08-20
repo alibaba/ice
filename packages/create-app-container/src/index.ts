@@ -1,7 +1,8 @@
-import createAppNavigation from './createAppNavigation';
+
+import createNavigation from './createNavigation';
 import createTabBar from './createTabBar';
 
 export {
-  createAppNavigation,
+  createNavigation,
   createTabBar
 };

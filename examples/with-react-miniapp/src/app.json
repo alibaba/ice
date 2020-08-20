@@ -9,6 +9,25 @@
       "source": "pages/About/index"
     }
   ],
+  "tabBar": {
+    "textColor": "#999",
+    "selectedColor": "#666",
+    "backgroundColor": "#f8f8f8",
+    "items": [
+      {
+        "name": "home",
+        "path": "/home",
+        "icon": "https://gw.alicdn.com/tfs/TB1ypSMTcfpK1RjSZFOXXa6nFXa-144-144.png",
+        "activeIcon": "https://gw.alicdn.com/tfs/TB1NBiCTgHqK1RjSZFPXXcwapXa-144-144.png"
+      },
+      {
+        "name": "about",
+        "path": "/about",
+        "icon": "https://gw.alicdn.com/tfs/TB1ypSMTcfpK1RjSZFOXXa6nFXa-144-144.png",
+        "activeIcon": "https://gw.alicdn.com/tfs/TB1NBiCTgHqK1RjSZFPXXcwapXa-144-144.png"
+      }
+    ]
+  },
   "window": {
     "title": "Mini App"
   }

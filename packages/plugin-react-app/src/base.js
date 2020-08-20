@@ -7,12 +7,13 @@ const WebpackPluginImport = require('webpack-plugin-import');
 const defaultConfig = require('./config/default.config');
 const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
+const { WEB } = require('./constants');
 
 // eslint-disable-next-line
 const chalk = require('chalk');
 
 
-module.exports = (api, { isMiniapp }) => {
+module.exports = (api, { isMiniapp, target }) => {
   const { context, log } = api;
   const { command, rootDir, webpack, commandArgs, pkg } = context;
   const appMode = commandArgs.mode || command;
@@ -86,6 +87,29 @@ module.exports = (api, { isMiniapp }) => {
       ]])
       .end();
 
+  // Process rpx to vw
+  if (target === WEB) {
+    const cssPreprocessor = [ 'scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'];
+    cssPreprocessor.forEach(rule => {
+      if (config.module.rules.get(rule)) {
+        config.module
+          .rule(rule)
+          .use('postcss-loader')
+          .tap((options) => {
+            const { plugins = [] } = options;
+            return {
+              ...options,
+              plugins: [
+                ...plugins,
+                // eslint-disable-next-line
+                require('postcss-plugin-rpx2vw')
+              ],
+            };
+          });
+      }
+    });
+  }
+
   // Process app.json file
   config.module.rule('appJSON')
     .type('javascript/auto')
@@ -97,11 +121,8 @@ module.exports = (api, { isMiniapp }) => {
     .use('loader')
     .loader(require.resolve('./loaders/AppConfigLoader'));
 
-  if (isMiniapp) {
-    config.devServer.set('writeToDisk', true);
-  } else {
-    config.devServer.set('writeToDisk', true);
-  }
+
+  config.devServer.set('writeToDisk', isMiniapp);
 
   if (command === 'start') {
     // disable build-scripts stats output

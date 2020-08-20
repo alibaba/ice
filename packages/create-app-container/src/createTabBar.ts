@@ -1,4 +1,21 @@
+import { isWeex } from 'universal-env';
+import transformToVw from './transformToVw';
 import getSafeAreaInsetBottom from './getSafeAreaInsetBottom';
+
+const MAPING = {
+  tarBarHeight: 98 + getSafeAreaInsetBottom(),
+  tarBarPaddingBottom: getSafeAreaInsetBottom(),
+  tarBarItemText: 24,
+  TarBarItemImgWidth: 30,
+  TarBarItemImgHight: 30,
+  TarBarItemMarginBottom: 8
+};
+
+Object.keys(MAPING).forEach(key => {
+  if (!isWeex) {
+    MAPING[key] = transformToVw(MAPING[key]);
+  }
+});
 
 const styles = {
   tabBar: {
@@ -6,7 +23,8 @@ const styles = {
     left: '0',
     right: '0',
     bottom: '0',
-    height: '98rpx',
+    height: MAPING.tarBarHeight,
+    paddingBottom: MAPING.tarBarPaddingBottom,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -23,18 +41,16 @@ const styles = {
     justifyContent: 'center',
   },
 
-  tabBarItemTxt: {
-    fontSize: '24rpx',
+  tabBarItemText: {
+    fontSize: MAPING.tarBarItemText
   },
 
   tabBarItemImg: {
-    marginBottom: '8rpx',
-    width: '30rpx',
-    height: '30rpx',
+    marginBottom: MAPING.TarBarItemMarginBottom,
+    width: MAPING.TarBarItemImgWidth,
+    height:  MAPING.TarBarItemImgHight
   }
 };
-
-const TAB_BAR_HEIGHT = 98;
 
 const createTabBar = (api) => (props) => {
   const { createElement, useEffect, useState, Fragment } = api;
@@ -70,60 +86,58 @@ const createTabBar = (api) => (props) => {
     null,
     showTabBar
       ? createElement(
-          'div',
-          {
-            style: {
-              ...styles.tabBar,
-              backgroundColor: backgroundColor,
-              height: `${TAB_BAR_HEIGHT + getSafeAreaInsetBottom()}rpx`,
-              paddingBottom: `${getSafeAreaInsetBottom()}rpx`
-            }
-          },
-          items.map(function (item, index) {
-            const selected = item.path === pathname;
-            const itemTextColor = item.textColor || textColor;
-            const itemSelectedColor = item.selectedColor || selectedColor;
-            return createElement(
-              'div',
+        'div',
+        {
+          style: {
+            ...styles.tabBar,
+            backgroundColor
+          }
+        },
+        items.map(function (item, index) {
+          const selected = item.path === pathname;
+          const itemTextColor = item.textColor || textColor;
+          const itemSelectedColor = item.selectedColor || selectedColor;
+          return createElement(
+            'div',
+            {
+              key: `tab-${index}`,
+              style: styles.tabBarItem,
+              onClick: () => {
+                onClick && onClick(item);
+                if (!item.path) {
+                  console.warn(`TabBar item ${item.name} need set path`);
+                } else {
+                  history.push(item.path);
+                }
+              }
+            },
+            selected && item.activeIcon
+              ? createElement('img', {
+                style: styles.tabBarItemImg,
+                src: item.activeIcon
+              })
+              : null,
+            !selected && item.icon
+              ? createElement('img', {
+                style: styles.tabBarItemImg,
+                src: item.icon
+              })
+              : null,
+            createElement(
+              'span',
               {
-                key: `tab-${index}`,
-                style: styles.tabBarItem,
-                onClick: () => {
-                  onClick && onClick(item);
-                  if (!item.path) {
-                    console.warn(`TabBar item ${item.name} need set path`);
-                  } else {
-                    history.push(item.path);
-                  }
+                style: {
+                  ...styles.tabBarItemText,
+                  color: selected ? itemSelectedColor : itemTextColor
                 }
               },
-              selected && item.activeIcon
-                ? createElement('img', {
-                    style: styles.tabBarItemImg,
-                    src: item.activeIcon
-                  })
-                : null,
-              !selected && item.icon
-                ? createElement('img', {
-                    style: styles.tabBarItemImg,
-                    src: item.icon
-                  })
-                : null,
-              createElement(
-                'span',
-                {
-                  style: {
-                    ...styles.tabBarItemTxt,
-                    color: selected ? itemSelectedColor : itemTextColor
-                  }
-                },
-                item.name
-              )
-            );
-          })
-        )
+              item.name
+            )
+          );
+        })
+      )
       : null
   );
-}
+};
 
 export default createTabBar;

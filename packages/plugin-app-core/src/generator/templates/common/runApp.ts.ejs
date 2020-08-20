@@ -10,7 +10,8 @@ import createShareAPI, { history } from 'create-app-shared';
 
 <% if (isRax) {%>
   import raxAppRenderer from 'rax-app-renderer';
-  import { withRouter as defaultWithRouter } from 'rax-use-router';
+  import { createWithRouter } from 'create-use-router';
+  const defaultWithRouter = createWithRouter({ createElement });
 <% } %>
 
 import loadRuntimeModules from './loadRuntimeModules';

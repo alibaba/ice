@@ -3,9 +3,7 @@ const addBablePlugins = require('./babelPlugins');
 
 module.exports = (config, injectBabel, context) => {
   const { userConfig: { targets = [] } } = context;
-  const isMiniapp = Array.isArray(targets)
-    && (targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('web'));
-  if (isMiniapp) {
+  if (targets.includes('miniapp') || targets.includes('wechat-miniprogram')) {
     return;
   }
   if (injectBabel === 'runtime') {
