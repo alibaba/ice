@@ -43,7 +43,7 @@ export async function reactAppRenderer(options) {
 }
 
 function _renderApp(context, options) {
-  const { appConfig, staticConfig, buildConfig, createBaseApp, emitLifeCycles } = options;
+  const { appConfig, staticConfig, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
   const { rootId, mountNode } = modifiedAppConfig.app;
   const appMountNode = mountNode || document.getElementById(rootId) || document.getElementById('ice-container');
@@ -65,28 +65,28 @@ function _renderWebApp({ runtime, appMountNode }, options) {
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
 
-  let appInstance = createElement(AppRouter);
-
-  if (AppProvider) {
-    appInstance = createElement(AppProvider, null, createElement(AppRouter));
-  }
-
-  if (errorBoundary) {
-    appInstance = createElement(ErrorBoundary, {
-      Fallback: ErrorBoundaryFallback,
-      onError: onErrorBoundaryHander
-    }, appInstance);
+  function App() {
+    const appRouter = <AppRouter />;
+    const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
+    if (errorBoundary) {
+      return (
+        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+          {rootApp}
+        </ErrorBoundary>
+      );
+    }
+    return rootApp;
   }
 
   if (runtime?.modifyDOMRender) {
-    return runtime?.modifyDOMRender?.({ appInstance, appMountNode });
+    return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
   if (process.env.__IS_SERVER__) {
-    return ReactDOMServer.renderToString(appInstance);
+    return ReactDOMServer.renderToString(<App />);
   }
 
-  return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](appInstance, appMountNode);
+  return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
 }
 
 function _renderMobileApp({ runtime, appMountNode, history }, options) {
