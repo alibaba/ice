@@ -26,6 +26,9 @@
     { "path": "packages/miniapp-renderer" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
-    { "path": "packages/raxjs" }
+    { "path": "packages/raxjs" },
+    { "path": "packages/plugin-rml" },
+    { "path": "packages/plugin-stark-module" },
+    { "path": "packages/plugin-webpack5" },
   ]
 }

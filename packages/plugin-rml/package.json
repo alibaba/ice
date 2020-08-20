@@ -1,0 +1,35 @@
+{
+  "name": "build-plugin-rml",
+  "version": "1.2.0",
+  "description": "RML loader for build-scripts",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice/ice.js.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "tsc -w"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.20",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@reactml/loader": "^0.1.3"
+  }
+}
