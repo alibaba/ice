@@ -6,20 +6,19 @@ const getBuiltInPlugins = (userConfig) => {
     ];
   }
 
-  let plugins = [];
-
-  // common plugins
-  const commonPlugins = [
+  const plugins = [
+    // common plugins
     [
       'build-plugin-app-core', {
         'framework': 'react'
       }
     ],
-    'build-plugin-react-app'
-  ];
+    'build-plugin-react-app',
 
-  // for ice/react plugins
-  const reactAppPlugins = [
+    // for ice/miniapp plugins
+    'build-plugin-miniapp',
+
+    // for ice/react plugins
     'build-plugin-ice-router',
     'build-plugin-ice-helpers',
     'build-plugin-ice-logger',
@@ -27,21 +26,6 @@ const getBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-mpa',
     'build-plugin-ice-request'
   ];
-
-  // for ice/miniapp plugins
-  const miniAppPlugins = [
-    'build-plugin-miniapp'
-  ];
-
-  // for miniapp plugins
-  if (Array.isArray(userConfig.targets)
-    && (userConfig.targets.includes('miniapp') || userConfig.targets.includes('wechat-miniprogram'))
-  ) {
-    // @ts-ignore
-    plugins = commonPlugins.concat(miniAppPlugins);
-  } else {
-    plugins = commonPlugins.concat(reactAppPlugins);
-  }
 
   if (userConfig.ssr) {
     plugins.push('build-plugin-ice-ssr');

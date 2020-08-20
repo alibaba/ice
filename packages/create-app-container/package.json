@@ -1,9 +1,9 @@
 {
-  "name": "build-plugin-ice-ssr",
-  "version": "1.7.1",
-  "description": "ssr plugin",
+  "name": "create-app-container",
+  "version": "0.1.0",
+  "description": "",
   "author": "ice-admin@alibaba-inc.com",
-  "homepage": "",
+  "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "directories": {
@@ -11,25 +11,22 @@
     "test": "__tests__"
   },
   "files": [
-    "lib",
-    "src"
+    "lib"
   ],
+  "dependencies": {
+    "universal-env": "^3.0.0"
+  },
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "url": "git+https://github.com/alibaba/ice.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "dependencies": {
-    "build-scripts-config": "^0.1.6",
-    "chalk": "^4.0.0",
-    "cheerio": "^1.0.0-rc.3",
-    "ejs": "^3.0.1",
-    "fs-extra": "^8.1.0",
-    "html-minifier": "^4.0.0"
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
   }
 }

@@ -98,6 +98,7 @@ class RuntimeModule {
     const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));
+
     return this.renderRouter(routes);
   }
 }
