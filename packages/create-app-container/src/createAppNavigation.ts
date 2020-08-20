@@ -45,47 +45,10 @@ const activatePageComponent = (route, { createElement }) => {
     });
 };
 
-const renderAlivePages = (routes, { alivePages, currentPage, isAlivePage, createElement }) => {
-  if (alivePages.length > 0) {
-    return createElement(
-      'div',
-      {
-        style: {
-          ...styles.container,
-          display: isAlivePage ? 'block' : 'none'
-        }
-      },
-
-      alivePages.map((alivePage, index) => {
-        const alivePageRoute = routes.find(route => route.path === alivePage.path);
-        const isCurrentPage = alivePageRoute.path === currentPage.path;
-        const alivePageComponent = alivePagesCache[alivePageRoute.path] || null;
-
-        if (isCurrentPage && !alivePageComponent) {
-          activatePageComponent(alivePageRoute, { createElement });
-        }
-
-        return createElement(
-          'div',
-          {
-            key: `alivePage${index}`,
-            style: {
-              ...styles.alivePage,
-              display: isCurrentPage ? 'block' : 'none'
-            }
-          },
-          alivePageComponent
-        );
-      })
-    );
-  }
-  return null;
-};
-
-const createNavigation = (api) => (props) => {
+const createAppNavigation = (api) => (props) => {
   const { createElement, useEffect, useState, Fragment } = api;
-  const { staticConfig, component, history, routes } = props;
-  const { maxAlivePageNum, tabBar } = staticConfig;
+  const { appConfig, component, history, routes } = props;
+  const { maxAlivePageNum, tabBar } = appConfig;
 
   const [, setUpdateTemp] = useState(null);
 
@@ -111,7 +74,7 @@ const createNavigation = (api) => (props) => {
   // Props to page component
   const pageProps = {};
   Object.keys(props).forEach((key) => {
-    if (key !== 'staticConfig' && key !== 'component') {
+    if (key !== 'appConfig' && key !== 'component') {
       pageProps[key] = props[key];
     }
   });
@@ -128,15 +91,42 @@ const createNavigation = (api) => (props) => {
     Fragment,
     null,
     isAlivePage ? null : createElement(Component, pageProps),
-    renderAlivePages(routes, { alivePages, currentPage, isAlivePage, createElement }),
-    createElement(
-      TabBar,
-      {
-        config: tabBar,
-        history
-      }
-    )
+    alivePages.length > 0
+      ? createElement(
+        'div',
+        {
+          style: {
+            ...styles.container,
+            display: isAlivePage ? 'block' : 'none'
+          }
+        },
+        alivePages.map(function (alivePage, index) {
+          const alivePageRoute = routes.find(function (route) {
+            return route.path === alivePage.path;
+          });
+          const isCurrentPage = alivePageRoute.path === currentPage.path;
+          const alivePageComponent = alivePagesCache[alivePageRoute.path] || null;
+          if (isCurrentPage && !alivePageComponent)
+            activatePageComponent(alivePageRoute, { createElement });
+          return createElement(
+            'div',
+            {
+              key: `alivePage${index}`,
+              style: {
+                ...styles.alivePage,
+                display: isCurrentPage ? 'block' : 'none'
+              }
+            },
+            alivePageComponent
+          );
+        })
+      )
+      : null,
+    createElement(TabBar, {
+      config: tabBar,
+      history
+    })
   );
 };
 
-export default createNavigation;
+export default createAppNavigation;

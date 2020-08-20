@@ -10,6 +10,7 @@ function decodeParam(val) {
 }
 
 function matchPath(route, pathname, parentParams) {
+  // eslint-disable-next-line
   let { path, routes, exact: end = true, strict = false, sensitive = false } = route;
   // If not has path or has routes that should do not exact match
   if (path == null || routes) {
@@ -20,10 +21,10 @@ function matchPath(route, pathname, parentParams) {
   path = path || '';
 
   const regexpCacheKey = `${path}|${end}|${strict}|${sensitive}`;
-  const keysCacheKey = regexpCacheKey + '|';
+  const keysCacheKey = `${regexpCacheKey  }|`;
 
   let regexp = cache[regexpCacheKey];
-  let keys = cache[keysCacheKey] || [];
+  const keys = cache[keysCacheKey] || [];
 
   if (!regexp) {
     regexp = pathToRegexp(path, keys, {
@@ -130,7 +131,7 @@ const router = {
     router.handles[handleId - 1] = null;
   },
   triggerHandles(component) {
-    router.handles.map((handle) => {
+    router.handles.forEach((handle) => {
       handle && handle(component);
     });
   },
@@ -264,7 +265,7 @@ export function createWithRouter(api) {
       return createElement(Component, { ...props, history, location: history.location });
     };
 
-    Wrapper.displayName = 'withRouter(' + (Component.displayName || Component.name) + ')';
+    Wrapper.displayName = `withRouter(${  Component.displayName || Component.name  })`;
     Wrapper.WrappedComponent = Component;
     return Wrapper;
   }
