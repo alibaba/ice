@@ -27,5 +27,8 @@
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
     { "path": "packages/rax-app" }
+    { "path": "packages/plugin-rml" },
+    { "path": "packages/plugin-stark-module" },
+    { "path": "packages/plugin-webpack5" },
   ]
 }
