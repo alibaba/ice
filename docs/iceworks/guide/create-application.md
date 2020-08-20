@@ -6,6 +6,7 @@ order: 1
 ## 基本使用
 
 **第一步**：点击 VS Code 编辑器左侧活动栏 Iceworks 图标：
+
 ![start](https://img.alicdn.com/tfs/TB1jF2Ldsieb18jSZFvXXaI3FXa-1024-768.png)
 
 **第二步**：点击欢迎视图或者快速入口视图的**创建应用**，启动创建应用插件。选择好一个模板后，点击下一步：
