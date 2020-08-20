@@ -1,0 +1,14 @@
+{
+  "name": "build-plugin-css-assets-local",
+  "version": "0.1.0",
+  "description": "build-scripts plugin for localize CSS assets",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "extract-css-assets-webpack-plugin": "^0.2.5"
+  }
+}
