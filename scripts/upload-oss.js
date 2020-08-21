@@ -11,6 +11,9 @@ const accessKeySecret = process.env.ACCESS_KEY_SECRET;
 const branch = process.env.BRANCH_NAME;
 const assetsPath = branch === 'master' ? 'assets' : 'pre-assets';
 
+console.log('ACCESS_KEY_ID:', process.env.ACCESS_KEY_ID);
+console.log('ACCESS_KEY_SECRET:', process.env.ACCESS_KEY_SECRET);
+
 if (branch === 'master' || /docs/.test(branch)) {
   const ossClient = oss({
     bucket,
