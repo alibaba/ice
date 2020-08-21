@@ -119,7 +119,7 @@ function formatPagePath({ routesPath, value, alias, applyMethod }: IGetConfigRou
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `ice/${pageName}/${pageName}.tsx` : '';
+      newValue = pageName ? `ice/${pageName}/index.tsx` : '';
     }
     return newValue;
   }

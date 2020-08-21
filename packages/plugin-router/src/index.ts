@@ -14,7 +14,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const projectType = getValue('PROJECT_TYPE');
 
   // .tmp path
-  const iceTempPath = getValue('ICE_TEMP');
+  const iceTempPath = getValue('TEMP_PATH');
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
   const { configPath } = routerOptions;
   const { mpa: isMpa } = userConfig;
