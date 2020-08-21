@@ -107,7 +107,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 
 ## PageMetaData 页面元数据
 
-<!--TODO: 补充page 物料的链接-->
+<!--TODO: 补充 page 物料的链接-->
 ```javascript
 {
   // （必选）英文名称
