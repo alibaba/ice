@@ -28,7 +28,7 @@
     "globby": "^11.0.0",
     "history": "^4.9.0",
     "miniapp-history": "^0.1.0",
-    "miniapp-renderer": "0.1.4-0",
+    "miniapp-renderer": "^0.1.4",
     "prettier": "^2.0.2",
     "query-string": "^6.13.1",
     "rax-app-renderer": "0.1.2-0",
