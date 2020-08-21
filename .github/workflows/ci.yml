@@ -23,4 +23,6 @@ jobs:
       - run: npm run upload:oss
       - run: npm run coverage
         env:
+          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
           CI: true
