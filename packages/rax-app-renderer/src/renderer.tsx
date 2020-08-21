@@ -1,9 +1,10 @@
-// @ts-ignore
-import { render, createElement, Fragment } from 'rax';
-import { Navigation, TabBar } from 'rax-pwa';
-import { useRouter } from 'rax-use-router';
+import { render, createElement, useEffect, useState, Fragment, useLayoutEffect } from 'rax';
+import { createNavigation, createTabBar } from 'create-app-container';
+import { createUseRouter } from 'create-use-router';
 import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
+
+const useRouter = createUseRouter({ useState, useLayoutEffect });
 
 let driver = UniversalDriver;
 
@@ -25,23 +26,25 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
-  const { appConfig, history, routes, InitialComponent } = props;
+  const { staticConfig, history, routes, InitialComponent } = props;
   const { component } = useRouter(() => ({ history, routes, InitialComponent }));
   // Return null directly if not matched
   if (_isNullableComponent(component)) return null;
 
   if (isWeb) {
+    const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
     return createElement(
-      Navigation,
-      { appConfig, component, history, location: history.location, routes, InitialComponent },
+      AppNavigation,
+      { staticConfig, component, history, location: history.location, routes, InitialComponent },
     );
   }
 
+  const TabBar = createTabBar({ createElement, useEffect, useState, Fragment });
   return createElement(
     Fragment,
     {},
     createElement(component, { history, location: history.location, routes, InitialComponent }),
-    createElement(TabBar, { history, config: appConfig.tabBar })
+    createElement(TabBar, { history, config: staticConfig.tabBar })
   );
 }
 
@@ -67,7 +70,7 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
     .then(initialComponent => {
       _initialComponent = initialComponent;
       const props = {
-        appConfig: staticConfig,
+        staticConfig,
         history,
         routes,
         InitialComponent: _initialComponent

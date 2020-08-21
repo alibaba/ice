@@ -2,6 +2,7 @@ const path = require('path');
 const fse = require('fs-extra');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const Config = require('webpack-chain');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 module.exports = async (chainConfig, dll, { userConfig, rootDir, pkg, webpack }) => {
   if (!dll) return;
@@ -51,8 +52,9 @@ async function buildDll (dllPath, entry, webpack, rootDir) {
   const entryKeys = Object.keys(entry);
   entryKeys.forEach(entryKey => {
     const entryValues = entry[entryKey];
+    const escapedEntryKey = escapeStr(entryKey);
     entryValues.forEach(entryVal => {
-      chainConfig.entry(entryKey).add(entryVal);
+      chainConfig.entry(escapedEntryKey).add(entryVal);
     });
   });
 
@@ -73,12 +75,27 @@ async function buildDll (dllPath, entry, webpack, rootDir) {
     .add(path.resolve(rootDir, 'node_modules'));
 
   return new Promise((resolve, reject) => {
-    webpack(chainConfig.toConfig(), err => {
+    webpack(chainConfig.toConfig(), (err, stats) => {
       if (err) {
         reject(err);
-      } else {
-        resolve();
       }
+
+      const info = stats.toJson({
+        all: false,
+        errors: true,
+        warnings: true,
+        timings: true,
+      });
+
+      const messages = formatWebpackMessages(info);
+
+      if (messages.errors.length) {
+        fse.ensureDirSync(dllPath);
+        fse.emptyDirSync(dllPath);
+        reject(messages.errors.join(''));
+      }
+
+      resolve();
     });
   });
 }
@@ -86,12 +103,17 @@ async function buildDll (dllPath, entry, webpack, rootDir) {
 function withDll (chainConfig, dllPath, entry, webpack) {
   const entryKeys = Object.keys(entry);
   entryKeys.forEach(entryKey => {
+    const escapedEntryKey = escapeStr(entryKey);
     chainConfig.plugin(`DllReferencePlugin_${entryKey}`).use(webpack.DllReferencePlugin, [{
-      manifest: path.resolve(dllPath, `${entryKey}.manifest.json`)
+      manifest: path.resolve(dllPath, `${escapedEntryKey}.manifest.json`)
     }]);
   });
 
   chainConfig.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
     filepath: path.resolve(dllPath, '*.dll.js')
   }]).after('HtmlWebpackPlugin');
+}
+
+function escapeStr (str) {
+  return Buffer.from(str, 'utf8').toString('hex');
 }

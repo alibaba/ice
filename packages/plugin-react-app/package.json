@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "src/index.js",
@@ -29,6 +29,7 @@
     "lodash": "^4.17.15",
     "mkcert": "^1.2.0",
     "path-exists": "^4.0.0",
+    "postcss-plugin-rpx2vw": "^0.0.2",
     "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
@@ -37,6 +38,9 @@
   },
   "devDependencies": {
     "webpack": "^4.41.1"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
-  "name": "react-app-renderer",
-  "version": "0.1.8",
+  "name": "create-use-router",
+  "version": "0.1.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -9,14 +9,6 @@
   "directories": {
     "lib": "lib",
     "test": "__tests__"
-  },
-  "dependencies": {
-    "create-app-container": "^0.1.0",
-    "create-use-router": "^0.1.0"
-  },
-  "devDependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
   },
   "files": [
     "lib"
@@ -33,5 +25,8 @@
   },
   "bugs": {
     "url": "https://github.com/alibaba/ice/issues"
+  },
+  "dependencies": {
+    "path-to-regexp": "^6.1.0"
   }
 }

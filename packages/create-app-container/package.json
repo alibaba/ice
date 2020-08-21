@@ -1,6 +1,6 @@
 {
-  "name": "react-app-renderer",
-  "version": "0.1.8",
+  "name": "create-app-container",
+  "version": "0.1.1",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -10,17 +10,12 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "dependencies": {
-    "create-app-container": "^0.1.0",
-    "create-use-router": "^0.1.0"
-  },
-  "devDependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
-  },
   "files": [
     "lib"
   ],
+  "dependencies": {
+    "universal-env": "^3.0.0"
+  },
   "publishConfig": {
     "registry": "http://registry.npmjs.com/"
   },
