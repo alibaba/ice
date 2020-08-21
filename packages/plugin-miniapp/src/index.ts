@@ -81,8 +81,8 @@ module.exports = (api) => {
         // Remove default HtmlWebpackPlugin
         config.plugins.delete('HtmlWebpackPlugin');
 
-        // Remove default CopyWebpackPlugin
-        config.plugins.delete('CopyWebpackPlugin');
+        // // Remove default CopyWebpackPlugin
+        // config.plugins.delete('CopyWebpackPlugin');
       });
     };
   });
