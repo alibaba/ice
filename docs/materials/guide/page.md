@@ -29,7 +29,9 @@ $ npm install
 $ npm start
 ```
 
-页面开发的目录结构：
+查看[页面示例](https://github.com/ice-lab/iceworks-cli/tree/master/examples/material-page)
+
+页面项目的目录结构：
 ```
 .
 ├── blocks
@@ -52,8 +54,31 @@ $ npm start
   - setings.json
 
       你需要将页面模板中的所有出现过的模板变量制作一份 基于 json schema 的说明放入此文件中，这些说明将转化为可视化表格，以供物料使用者进行配置。
+      > 什么是 [JSON Schema](http://json-schema.org/)?
+      >
+      > JSON Schema 示例:
+      >
+      > ```
+      >{
+      >  "schema": {
+      >    "title": "用户任务列表",
+      >    "description": "显示用户信息和用户持有的任务",
+      >    "type": "object",
+      >    "required": [
+      >      "isShowUser"
+      >    ],
+      >    "properties": {
+      >      "isShowUser": {
+      >        "type": "boolean",
+      >        "title": "是否显示用户信息",
+      >        "default": "Chuck"
+      >      },
+      >		...
+      >    }
+      >  }
+      > ```
 
-      你也可以在这里配置用于生成表单的模式，可选择 formily 或自定义表单，默认为 formily。
+      你也可以在这里配置用于生成表单的模式，可选择 [formily](https://github.com/alibaba/formily) 或自定义表单，默认为 [formily](https://github.com/alibaba/formily)。
   - mock.js
 
       schema 的对应的的模拟数据，可用于开发调试。
