@@ -1,0 +1,4 @@
+{
+  "plugins": [],
+  "targets": ["web", "miniapp"]
+}

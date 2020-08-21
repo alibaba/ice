@@ -11,7 +11,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
   async function generateConfig() {
     const exportName = 'config';
     const filePath = path.join(rootDir,configFile);
-    const distPath =  path.join(getValue('ICE_TEMP'), 'config.ts');
+    const distPath =  path.join(getValue('TEMP_PATH'), 'config.ts');
     if (fse.existsSync(filePath)) {
       const srcPath = path.join(__dirname, '..', 'config', 'index.ts');
 

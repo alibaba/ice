@@ -1,11 +1,12 @@
 const getBuiltInPlugins = (userConfig) => {
   const { targets = ['web'], miniapp = {} } = userConfig;
 
-  // built-in plugins for raxjs
+  // built-in plugins for rax app
   const builtInPlugins = [
     ['build-plugin-app-core', {
       'framework': 'rax'
     }],
+    'build-plugin-ice-store',
     ['build-plugin-rax-app', {
       enterCheck: false,
       targets,

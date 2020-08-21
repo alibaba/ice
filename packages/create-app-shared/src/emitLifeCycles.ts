@@ -6,17 +6,22 @@ import { emit as pageEmit } from './pageLifeCycles';
 import { isMiniAppPlatform } from './env';
 
 function emitLifeCycles() {
-  // Get history
-  const history = getHistory();
-  const pathname = history.location.pathname;
+  if (isMiniAppPlatform) {
+    router.current = {
+      pathname: (window as any).__pageId,
+      visibiltyState: true
+    };
+  } else {
+    // Get history
+    const history = getHistory();
+    const pathname = history.location.pathname;
 
-  // Set current router
-  router.current = {
-    pathname,
-    visibiltyState: true
-  };
+    // Set current router
+    router.current = {
+      pathname,
+      visibiltyState: true
+    };
 
-  if (!isMiniAppPlatform) {
     // Emit app lifecycle
     appEmit(LAUNCH);
     appEmit(SHOW);
@@ -24,8 +29,10 @@ function emitLifeCycles() {
     // Listen history change
     history.listen((location) => {
       if (location.pathname !== router.current.pathname) {
-      // Flow router info
-        router.prev = router.current;
+        // Flow router info
+        router.prev = {
+          ...router.current
+        };
         router.current = {
           pathname: location.pathname,
           visibiltyState: true
