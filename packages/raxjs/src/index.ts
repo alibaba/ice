@@ -4,7 +4,8 @@ const getBuiltInPlugins = (userConfig) => {
   // built-in plugins for raxjs
   const builtInPlugins = [
     ['build-plugin-app-core', {
-      'framework': 'rax'
+      'framework': 'rax',
+      'alias': 'rax-app'
     }],
     ['build-plugin-rax-app', {
       enterCheck: false,

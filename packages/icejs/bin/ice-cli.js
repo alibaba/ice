@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-const createCli = require('create-cli-utils/lib/cli');
+const { getBuiltInPlugins, createCli } = require('../lib');
 const packageInfo = require('../package.json');
-const getBuiltInPlugins = require('../lib');
 
 const forkChildProcessPath = require.resolve('./child-process-start');
 
