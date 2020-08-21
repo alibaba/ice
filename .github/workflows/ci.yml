@@ -10,6 +10,7 @@ jobs:
         node-version: [10.x]
     steps:
       - uses: actions/checkout@v2
+      - uses: nelonoel/branch-name@v1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
