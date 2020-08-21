@@ -3,6 +3,8 @@ title: 页面开发
 order: 4
 ---
 
+## 开发
+
 新增页面开发，可以通过 `iceworks` 命令添加：
 
 ```bash
@@ -29,10 +31,10 @@ $ npm install
 $ npm start
 ```
 
-查看[页面示例](https://github.com/ice-lab/iceworks-cli/tree/master/examples/material-page)
-
 页面项目的目录结构：
-```
+> 查看[页面示例](https://github.com/ice-lab/iceworks-cli/tree/master/examples/material-page)
+
+```bash
 .
 ├── blocks
 ├── package.json
@@ -53,12 +55,12 @@ $ npm start
 
   - setings.json
 
-      你需要将页面模板中的所有出现过的模板变量制作一份 基于 json schema 的说明放入此文件中，这些说明将转化为可视化表格，以供物料使用者进行配置。
+      你需要将页面模板中的所有出现过的模板变量制作一份 基于 JSON schema 的说明放入此文件中，这些说明将转化为可视化表格，以供物料使用者进行配置。
       > 什么是 [JSON Schema](http://json-schema.org/)?
       >
       > JSON Schema 示例:
       >
-      > ```
+      > ```json
       >{
       >  "schema": {
       >    "title": "用户任务列表",
@@ -83,6 +85,8 @@ $ npm start
 
       schema 的对应的的模拟数据，可用于开发调试。
 - `.tmp`: 调试时生成的临时文件位于 `.tmp` 文件夹下。
+
+## 发布
 
 每个物料开发完成后，都需要先发布到 npm 才能使用，我们在当前路径执行 `npm publish` 发布 Homepage 页面：
 
