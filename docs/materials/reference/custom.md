@@ -25,7 +25,7 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 
 ### 物料模版的目录结构
 
-一套物料包含组件、区块和项目三种不同类型的物料，因此物料模版的物料结构应该按以下规则设置：
+一套物料包含组件、区块、页面和项目四种不同类型的物料，因此物料模版的物料结构应该按以下规则设置：
 
 ```bash
 .
@@ -34,6 +34,7 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 └── template        // 模版目录
     ├── block       // 区块模版
     ├── component   // 组件模版
+    ├── page        // 页面模版
     └── scaffold    // 项目模版
 ```
 
@@ -45,7 +46,7 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 
 ### 模板文件
 
-物料模版 `template/` 目录下包含 `block`、`component` 和 `scaffold` 三个子目录，它们即物料的模版文件，iceworks 获取到物料模版后，也是根据这三个文件生成对应的区块、组件和项目代码。
+物料模版 `template/` 目录下包含 `block`、`component`，`page` 和 `scaffold` 四个子目录，它们即物料的模版文件，iceworks 获取到物料模版后，也是根据这四个文件生成对应的区块、组件、页面和项目代码。
 
 ### 模板语法
 
@@ -83,9 +84,11 @@ iceworks 根据用户输入，提供了以下变量供物料模版开发者使�
 
 ### 特殊文件名称约定
 
-在 `block`、`component` 和 `scaffold` 三个目录下，是没有 `package.json` 的，但有一个 `_package.json` 文件，这个 `_package.json` 即物料的 `package.json` 的模版，在文件内部同样使用以上 ejs 语法。使用下划线前缀的主要目的是与 npm package.json 区分，以免安装时被 npm 解析。
+在 `block`、`component`、`page` 和 `scaffold` 三个目录下，是没有 `package.json` 的，但有一个 `_package.json` 文件，这个 `_package.json` 即物料的 `package.json` 的模版，在文件内部同样使用以上 ejs 语法。使用下划线前缀的主要目的是与 npm package.json 区分，以免安装时被 npm 解析。
 
-而另一个 `_gitignore` 则在物料被使用时被解析为 `.gitignore` 文件，在 iceworks 中并不处理。
+`_gitignore` 则在物料被使用时被解析为 `.gitignore` 文件，在 iceworks 中并不处理。
+
+在开发页面模板时，需要使用 `_ejs` 文件后缀开发 `ejs` 模板，例如，您需要将页面模板代码命名为 `index.tsx._ejs`，它将被解析为 `index.tsx.ejs`。 在这里使用下划线的原因是避免页面模板在呈现给物料开发者时像其余 `ejs` 模板一样被解析，并且保证这些文件可以转化为 `ejs` 模板供开发者使用。
 
 ## 如何使用物料模版
 
