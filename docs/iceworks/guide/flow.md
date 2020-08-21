@@ -14,6 +14,8 @@ order: 3
 
 ![debug](https://img.alicdn.com/tfs/TB1H82oR4z1gK0jSZSgXXavwpXa-1440-900.gif)
 
+更多关于应用调试的内容，可以参考[《调试》](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)章节。
+
 ## 构建
 
 构建应用有两种方式：
