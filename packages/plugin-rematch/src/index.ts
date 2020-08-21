@@ -9,7 +9,7 @@ export default async function ({
   onGetWebpackConfig,
 }) {
   const { rootDir } = context;
-  const targetPath = path.join(getValue('ICE_TEMP'), 'store.ts');
+  const targetPath = path.join(getValue('TEMP_PATH'), 'store.ts');
   const templatePath = path.join(__dirname, './template/store.ts.ejs');
   const storesDir = path.join(rootDir, 'src/stores');
 

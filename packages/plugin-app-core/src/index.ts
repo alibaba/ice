@@ -2,8 +2,8 @@
 import * as path from 'path';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
+import { TEMP_PATH } from './constant';
 import getSourceDir from './utils/getSourceDir';
-import { ICE_TEMP } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
 
@@ -11,9 +11,14 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context, onGetWebpackConfig } = api;
+  const { onHook, context, setValue, onGetWebpackConfig } = api;
   const { command, userConfig } = context;
-  const { targets = [] } = userConfig;
+  const { targets = ['web'] } = userConfig;
+  const { framework } = options;
+
+  // Set framework field
+  setValue('FRAMEWORK', framework);
+
 
   // Check target
   checkTargets(targets);
@@ -76,7 +81,7 @@ function initGenerator(api, options) {
   const srcDir = getSourceDir(userConfig.entry);
   return new Generator({
     rootDir,
-    targetDir: getValue(ICE_TEMP),
+    targetDir: getValue(TEMP_PATH),
     templatesDir,
     appTemplateDir: path.join(templatesDir, `./app/${framework}`),
     commonTemplateDir: path.join(templatesDir, './common'),

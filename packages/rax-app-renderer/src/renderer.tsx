@@ -27,28 +27,27 @@ function _matchInitialComponent(fullpath, routes) {
 
 function App(props) {
   const { staticConfig, history, routes, InitialComponent } = props;
-  const { component } = useRouter(() => ({ history, routes, InitialComponent }));
+  const { component: PageComponent } = useRouter(() => ({ history, routes, InitialComponent }));
   // Return null directly if not matched
-  if (_isNullableComponent(component)) return null;
-
+  if (_isNullableComponent(PageComponent)) return null;
+  const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
   if (isWeb) {
     const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
-    return createElement(
-      AppNavigation,
-      { staticConfig, component, history, location: history.location, routes, InitialComponent },
-    );
+    return <AppNavigation {...navigationProps} />;
   }
 
   const TabBar = createTabBar({ createElement, useEffect, useState, Fragment });
-  return createElement(
-    Fragment,
-    {},
-    createElement(component, { history, location: history.location, routes, InitialComponent }),
-    createElement(TabBar, { history, config: staticConfig.tabBar })
+  const pageProps = { history, location: history.location, routes, InitialComponent };
+  const tabBarProps = { history, config: staticConfig.tabBar };
+  return (
+    <Fragment>
+      <PageComponent {...pageProps} />
+      <TabBar {...tabBarProps} />
+    </Fragment>
   );
 }
 
-function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance }) {
+function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance, ErrorBoundary }) {
   const {
     runtime,
     appConfig: appDynamicConfig
@@ -76,24 +75,40 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
         InitialComponent: _initialComponent
       };
 
-      const AppProvider = runtime && runtime.composeAppProvider && runtime.composeAppProvider();
-      const RootComponent = () => {
-        if (AppProvider) {
-          return (
-            <AppProvider><App {...props}/></AppProvider>
-          );
-        }
-        return <App {...props}/>;
-      };
+      const { app = {} } = appDynamicConfig;
+      const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
 
-      const appInstance = typeof createAppInstance === 'function' ? createAppInstance(initialComponent) : createElement(RootComponent, { ...props });
+      let appInstance;
+
+      // For rax-app 2.x
+      if (typeof createAppInstance === 'function') {
+        appInstance = createAppInstance(initialComponent);
+      } else {
+        const AppProvider = runtime?.composeAppProvider?.();
+        const RootComponent = () => {
+          if (AppProvider) {
+            return (
+              <AppProvider><App {...props}/></AppProvider>
+            );
+          }
+          return <App {...props}/>;
+        };
+        const Root = <RootComponent />;
+
+        if (errorBoundary) {
+          appInstance = <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+            {Root}
+          </ErrorBoundary>;
+        } else {
+          appInstance = Root;
+        }
+      }
 
       // Emit app launch cycle
       emitLifeCycles();
 
-      const { app = {} } = appDynamicConfig;
-      const rootEl = isWeex || isKraken ? null : document.getElementById(app.rootId);
-      if (isWeb && appDynamicConfig.rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
+      const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
+      if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
 
       return render(
         appInstance,

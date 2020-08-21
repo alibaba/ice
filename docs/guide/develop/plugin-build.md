@@ -240,7 +240,7 @@ this.applyMethod('addPageExport', 'Home', { source: './models', 'store' })
 // 第一项参数对应 API 名称，第二项参数对应 API 参数。
 //
 // API 参数：
-// source: 类型声明文件。./foo/types，对应 ICE_TEMP_DIR/foo/types。 ICE_TEMP_DIR，可通过 getValue('ICE_TEMP') 获得。注意：需先将对应类型文件移至 ICE_TEMP_DIR。
+// source: 类型声明文件。./foo/types，对应 ICE_TEMP_DIR/foo/types。 ICE_TEMP_DIR，可通过 getValue('TEMP_PATH') 获得。注意：需先将对应类型文件移至 ICE_TEMP_DIR。
 // specifier: 导出类型标识符，可选，默认值为 '*'。
 // exportName: 添加至 appConfig 类型 IAppConfig 上的导出名。
 //
@@ -335,7 +335,7 @@ module.exports = ({getValue}) => {
 
 ```js
 const projectType = getValue('PROJECT_TYPE'); // ts|js
-const iceDirPath = getValue('ICE_TEMP');  // 对应 .ice 的路径
+const iceDirPath = getValue('TEMP_PATH');  // 对应 .ice 的路径
 ```
 
 ## 类型

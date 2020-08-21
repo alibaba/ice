@@ -94,7 +94,7 @@ $ npm init ice <your-plugin-name>
   
   const plugin: IPlugin = async ({ getValue, applyMethod }): Promise<void> => {
     const exportName = 'logger';
-    const distPath = path.join(getValue('ICE_TEMP'), exportName);
+    const distPath = path.join(getValue('TEMP_PATH'), exportName);
     await fse.copy(path.join(__dirname, './types'), path.join(distPath, 'types')); // 复制类型声明文件
   
     // 挂载至 appConfig。 appConfig 对应类型为 IAppConfig
@@ -129,7 +129,7 @@ $ npm init ice <your-plugin-name>
   
   const plugin: IPlugin = async ({ getValue, applyMethod, onGetWebpackConfig }): Promise<void> => {
     const exportName = 'logger';
-    const distPath = path.join(getValue('ICE_TEMP'), exportName);
+    const distPath = path.join(getValue('TEMP_PATH'), exportName);
     await fse.copy(path.join(__dirname, `../${exportName}`), distPath);
     // 导出 logger 功能
     // 用户可通过 import { logger } from 'ice'; 使用

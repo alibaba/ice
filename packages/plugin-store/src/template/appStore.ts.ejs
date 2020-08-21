@@ -13,8 +13,7 @@
   const appModel: AppModel = { <%- modelsStr %> };
   const store = createStore(appModel);
 
-  export { appModel };
-  export default store;
+  export { appModel, store, createStore };
 <% } else { %>
-  export default {};
+  export {};
 <% } %>

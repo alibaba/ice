@@ -18,6 +18,8 @@ export const USER_CONFIG = [
 ];
 
 export const PROJECT_TYPE = 'PROJECT_TYPE';
+export const TEMP_PATH = 'TEMP_PATH';
+
 export const ICE_TEMP = 'ICE_TEMP';
 
 /**
