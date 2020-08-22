@@ -1,4 +1,3 @@
-
 /**
  * npm run owner -- add sobear
  * npm run owner -- rm sobear
@@ -14,13 +13,12 @@ import getPackages from './fn/getPackages';
   const name = args[3];
   const { packageNames }  = await getPackages();
 
-  console.log(`npm owner ${action} ${name} to ${packageNames.join(',')}...`);
-
-  packageNames.forEach((npmName) => {
-    console.log(`\nnpm owner ${action} ${name || ''} ${npmName}: `);
+  // eslint-disable-next-line
+  for(const packageName of packageNames) {
     // https://www.npmjs.cn/cli/owner/
-    const params = action === 'ls' ? ['owner', action, npmName] : ['owner', action, name, npmName];
+    const params = action === 'ls' ? ['owner', action, packageName] : ['owner', action, name, packageName];
+    console.log(`\nnpm owner ${action} ${name || ''} ${packageName}`);
     spawn.sync('npm', params, { stdio: 'inherit' });
-  });
-
+    console.log('added successfully...');
+  }
 })();
