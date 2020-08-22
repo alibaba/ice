@@ -22,17 +22,13 @@ VS Code 非常轻量且兼容性佳，在大多数硬件和操作系统（macOS�
 
 ## 使用
 
-点击活动栏上的 Iceworks 图标，打开侧边栏和创建应用流程：
+安装成功，VS Code 活动栏上将出现 Iceworks 图标，点击该图标，打开侧边栏和创建应用流程：
 
 ![使用示例](https://img.alicdn.com/tfs/TB1eXo8R4D1gK0jSZFsXXbldVXa-1024-768.png_790x10000.jpg)
 
-应用创建完成，在 Iceworks 侧边栏上进行 npm 脚本执行、创建组件、生成页面等操作：
+应用创建完成，在 Iceworks 侧边栏上可执行更多操作：
 
 ![使用示例](https://img.alicdn.com/tfs/TB1w.xeSkT2gK0jSZFkXXcIQFXa-1024-768.png_790x10000.jpg)
-
-更多功能，可以点击状态栏右下角的「Iceworks」进行获取：
-
-![使用示例](https://img.alicdn.com/tfs/TB1oipkSoT1gK0jSZFrXXcNCXXa-1024-768.png_790x10000.jpg)
 
 ## 其他安装方式
 
