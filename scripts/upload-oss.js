@@ -8,7 +8,7 @@ const glob = require('glob');
 const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
 const accessKeySecret = process.env.ACCESS_KEY_SECRET;
-const branch = process.env.TRAVIS_BRANCH;
+const branch = process.env.BRANCH_NAME;
 const assetsPath = branch === 'master' ? 'assets' : 'pre-assets';
 
 if (branch === 'master' || /docs/.test(branch)) {
@@ -43,6 +43,6 @@ if (branch === 'master' || /docs/.test(branch)) {
   });
 } else {
   console.log('当前分支非 master/docs*, 不执行文档同步脚本');
-  console.log(`TRAVIS_BRANCH=${branch}`);
+  console.log(`BRANCH_NAME=${branch}`);
   process.exit(0);
 }
