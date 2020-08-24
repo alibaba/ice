@@ -93,11 +93,11 @@ Iceworks 内置 Fusion Design、Rax UI 组件库，丰富的模板做到开箱�
 
 ### 会不会提供其他 IDE 的插件，例如 WebStorm ？
 
-我们会研究相关技术，以实现低成本在更多 IDE 进行集成，服务广大的开发者，当目前没有明确的时间表。
+我们会研究相关技术，以实现低成本在更多 IDE 进行集成，服务广大的开发者，但目前没有明确的时间表。
 
 ### Iceworks 支持哪些应用类型？
 
-Iceworks 目前支持前端应用的开发，支持 Web 前端应用和无线应用（H5、小程序）的开发，内置使用 [icejs](https://github.com/alibaba/ice) 和 [rax-app](https://github.com/alibaba/rax) 框架，你可以通过添加[自定义物料](/docs/iceworks/)的方式使用更多的前端框架。
+Iceworks 目前支持前端应用的开发，支持 Web 前端应用和无线应用（H5、小程序）的开发，内置使用 [icejs](https://github.com/alibaba/ice) 框架，你可以通过添加[自定义物料](/docs/iceworks/)的方式使用更多的前端框架。
 
 ## 如何获取更多帮助？
 
