@@ -66,28 +66,28 @@ Iceworks 内置 Fusion Design、Rax UI 组件库，丰富的模板做到开箱�
 
 ## 指南导航
 
-- [概述](/docs/iceworks/)
-- [快速开始](/docs/iceworks/)：介绍如何安装和使用 Iceworks。
+- [概述](/docs/iceworks/about)
+- [快速开始](/docs/iceworks/quick-start)：介绍如何安装和使用 Iceworks。
 - 用户指南
-    - [创建应用](/docs/iceworks/)：介绍如何使用 Iceworks 创建前端应用。
-    - [信息概览](/docs/iceworks/)：介绍 Iceworks 入口包含的功能，按图索引了解 Iceworks 全部功能。
-    - [调试、构建和发布](/docs/iceworks/)：介绍如何通过 Iceworks 对前端应用进行基本的开发。
-    - [可视化搭建](/docs/iceworks/)：介绍如何使用 Iceworks 的可视化搭建功能。
-    - [可视化配置](/docs/iceworks/)：介绍如何使用 Iceworks 的可视化配置功能。
-    - [依赖包管理](/docs/iceworks/)：介绍如何使用 Iceworks 进行应用依赖包管理。
-    - [编码辅助](/docs/iceworks/)：介绍 Iceworks 包含的智能编码辅助功能。
-    - [自定义物料](/docs/iceworks/)：介绍如何通过自定义物料定制使用 Iceworks。
+    - [创建应用](/docs/iceworks/create-application)：介绍如何使用 Iceworks 创建前端应用。
+    - [信息概览](/docs/iceworks/application-view)：介绍 Iceworks 入口包含的功能，按图索引了解 Iceworks 全部功能。
+    - [调试、构建和发布](/docs/iceworks/flow)：介绍如何通过 Iceworks 对前端应用进行基本的开发。
+    - [可视化搭建](/docs/iceworks/ui-builder)：介绍如何使用 Iceworks 的可视化搭建功能。
+    - [可视化配置](/docs/iceworks/ui-settings)：介绍如何使用 Iceworks 的可视化配置功能。
+    - [依赖包管理](/docs/iceworks/dependency)：介绍如何使用 Iceworks 进行应用依赖包管理。
+    - [编码辅助](/docs/iceworks/intelli-sense)：介绍 Iceworks 包含的智能编码辅助功能。
+    - [自定义物料](/docs/iceworks/material)：介绍如何通过自定义物料定制使用 Iceworks。
 - 附加说明
-    - [功能配置和插件管理](/docs/iceworks/)：介绍如何禁止和启用 Iceworks 的相关功能。
-    - [从老版本升级](/docs/iceworks/)：介绍如何从 2.0 、3.0、4.0 版本进行升级
+    - [功能配置和插件管理](/docs/iceworks/settings)：介绍如何禁止和启用 Iceworks 的相关功能。
+    - [从老版本升级](/docs/iceworks/upgrade-guidelines)：介绍如何从 2.0 、3.0、4.0 版本进行升级
 - VS Code 指南
-    - [安装](/docs/iceworks/)
-    - [用户界面](/docs/iceworks/)
-    - [资源管理器](/docs/iceworks/)
-    - [代码编辑](/docs/iceworks/)
-    - [源代码管理(Git)](/docs/iceworks/)
-    - [集成终端(Terminal)](/docs/iceworks/)
-    - [设置](/docs/iceworks/)
+    - [安装](/docs/iceworks/install)
+    - [用户界面](/docs/iceworks/user-interface)
+    - [资源管理器](/docs/iceworks/explorer)
+    - [代码编辑](/docs/iceworks/editor)
+    - [源代码管理(Git)](/docs/iceworks/version-control)
+    - [集成终端(Terminal)](/docs/iceworks/integrated-terminal)
+    - [设置](/docs/iceworks/settings)
 
 ## 常见问题
 
