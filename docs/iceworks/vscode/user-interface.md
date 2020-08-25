@@ -3,8 +3,6 @@ title: 用户界面
 order: 2
 ---
 
-Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 的用户界面。更多详细说明请阅读[《VS Code 官方文档》](https://code.visualstudio.com/docs/getstarted/userinterface)。
-
 ![工作台](https://code.visualstudio.com/assets/docs/getstarted/userinterface/hero.png)
 
 ## 布局

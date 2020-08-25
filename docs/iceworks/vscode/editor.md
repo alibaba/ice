@@ -3,8 +3,6 @@ title: 代码编辑
 order: 4
 ---
 
-Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 代码编辑器的基本功能。更多详细说明请阅读[《VS Code 官方文档》](https://code.visualstudio.com/docs/editor/codebasics)。
-
 VS Code 包含了高效源代码编辑所需的功能。本主题将带您了解 VS Code 编辑器的基本知识，并帮助您高效处理代码。
 
 ## 多选（多光标）

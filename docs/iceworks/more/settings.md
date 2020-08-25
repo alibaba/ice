@@ -3,7 +3,7 @@ title: 功能配置和插件管理
 order: 1
 ---
 
-安装 [Iceworks VS Code 插件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)。由于Iceworks 的所有功能通过多个插件进行提供，因此你可以对 Iceworks 的功能进行配置或禁用某些功能。
+Iceworks 的所有功能通过多个插件进行提供，因此你可以对 Iceworks 的功能进行配置或禁用某些功能。
 
 ## 功能配置
 
