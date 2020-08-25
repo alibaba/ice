@@ -9,15 +9,15 @@ order: 1
 
 点击 VS Code 编辑器左侧活动栏 Iceworks 图标：
 
-![start](https://img.alicdn.com/tfs/TB1jF2Ldsieb18jSZFvXXaI3FXa-1024-768.png)
+![start](https://img.alicdn.com/tfs/TB10iN3dhvbeK8jSZPfXXariXXa-1440-900.png)
 
 点击欢迎视图或者快速入口视图的**创建应用**，启动创建应用流程。选择好一个模板后，点击『下一步』：
 
-![select-scaffold](https://img.alicdn.com/tfs/TB1G6WUhlFR4u4jSZFPXXanzFXa-1024-768.png)
+![select-scaffold](https://img.alicdn.com/tfs/TB105g2dZieb18jSZFvXXaI3FXa-1440-900.png)
 
 输入应用名称和选择本地路径后，点击『完成』，将会自动创建应用并打开：
 
-![create-application](https://img.alicdn.com/tfs/TB1TxS9R7L0gK0jSZFAXXcA9pXa-1024-768.png)
+![create-application](https://img.alicdn.com/tfs/TB177kuSET1gK0jSZFrXXcNCXXa-1440-900.png)
 
 ## 使用自定义模板
 

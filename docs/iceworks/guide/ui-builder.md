@@ -5,7 +5,7 @@ order: 4
 
 在 Iceworks 中，支持通过可视化的方式创建页面，搭建和创建组件。
 
-## 生成组件
+## 可视化搭建组件
 
 通过可视化搭建的方式生成组件代码。
 
@@ -16,16 +16,16 @@ order: 4
 - 点击 VS Code 编辑器左侧的活动栏中的 Iceworks 图标，并在快速入口视图中点击`生成组件`
 - 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤起命令面板，输入 `Iceworks: 生成组件`，并按下回车以激活插件
 
-![生成组件激活](https://img.alicdn.com/tfs/TB1ZEHNiGNj0u4jSZFyXXXgMVXa-1440-900.gif)
+![生成组件激活](https://img.alicdn.com/tfs/TB19T00dhvbeK8jSZPfXXariXXa-1440-900.gif)
 
 ### 使用
 
 1. 拖拽左侧的组件到中间的画布面板中；
 2. 按下 `⌘S` 或 `Ctrl+S`，在输入框中填写组件名，按下回车键即可生成组件到项目 `src/components/` 目录中。
 
-![生成组件使用](https://img.alicdn.com/tfs/TB1VGQHeypE_u4jSZKbXXbCUVXa-1440-900.gif)
+![生成组件使用](https://img.alicdn.com/tfs/TB1LBgrSET1gK0jSZFrXXcNCXXa-1440-900.gif)
 
-## 创建组件
+## 下载物料到本地
 
 通过下载区块物料快速创建组件。
 
@@ -36,7 +36,7 @@ order: 4
 - 点击 VS Code 编辑器左侧的活动栏中的 Iceworks 图标，并在组件列表视图中点击`+`图标，并选择`创建组件`
 - 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤起命令面板。输入 `Iceworks: 创建组件`，并按下回车以激活插件
 
-![创建组件激活](https://img.alicdn.com/tfs/TB16mLjR.H1gK0jSZSyXXXtlpXa-1440-900.gif)
+![创建组件激活](https://img.alicdn.com/tfs/TB1trcyetTfau8jSZFwXXX1mVXa-1440-900.gif)
 
 ### 使用
 
@@ -46,7 +46,7 @@ order: 4
 
 ![创建组件使用](https://user-images.githubusercontent.com/56879942/87535673-6f3a3300-c6ca-11ea-852e-f3a2bb3eb7bc.gif)
 
-## 生成页面
+## 通过区块组装页面
 
 通过可视化操作，以区块拼装的方式快速生成页面。
 
@@ -57,7 +57,7 @@ order: 4
 - 点击 VS Code 编辑器左侧的活动栏中的 Iceworks 图标，并在快速入口视图中点击`生成页面`
 - 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板。在命令面板中输入 `Iceworks: 生成页面`，并按下回车以激活插件
 
-![生成页面激活](https://img.alicdn.com/tfs/TB1glvbRYY1gK0jSZTEXXXDQVXa-1440-900.gif)
+![生成页面激活](https://img.alicdn.com/tfs/TB1otoqSBr0gK0jSZFnXXbRRXXa-1440-900.gif)
 
 ### 使用
 
@@ -80,11 +80,11 @@ order: 4
 - 在需要添加的物料的源码位置中点击右键，选择 `Iceworks: 添加组件`
 - 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板。在命令面板中输入 `Iceworks: 添加组件`，并按下回车以激活插件
 
-![物料面板激活](https://img.alicdn.com/tfs/TB171KahLzO3e4jSZFxXXaP_FXa-1440-900.gif)
+![物料面板激活](https://img.alicdn.com/tfs/TB1uDD.SxD1gK0jSZFsXXbldVXa-1440-900.gif)
 
 ### 使用
 
 1. 选择需要插入物料的代码位置
 2. 搜索组件，点击需要使用的组件，物料代码将自动添加到相应的位置中
 
-![物料面板使用](https://img.alicdn.com/tfs/TB1MuqahLzO3e4jSZFxXXaP_FXa-1440-900.gif)
+![物料面板使用](https://img.alicdn.com/tfs/TB175b_SEz1gK0jSZLeXXb9kVXa-1440-900.gif)

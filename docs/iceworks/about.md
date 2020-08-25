@@ -3,7 +3,7 @@ title: 概述
 order: 1
 ---
 
-## Iceworks: 可视化智能开发助手
+## 可视化智能开发助手
 
 ![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code)
 ![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)
