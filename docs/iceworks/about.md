@@ -103,8 +103,6 @@ Iceworks 目前支持前端应用的开发，支持 Web 前端应用和无线应
 
 ### 加入钉钉交流群
 
-加入钉钉群了解 Iceworks 最新进展：
-
 ![二维码](https://img.alicdn.com/tfs/TB1OdxtgIVl614jSZKPXXaGjpXa-490-672.png_360x10000.jpg)
 
 > 阿里内部钉钉群号：23161909
