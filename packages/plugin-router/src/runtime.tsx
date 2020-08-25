@@ -17,7 +17,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     modifyRoutes(appConfigRouter.modifyRoutes);
   }
 
-  const lazy = buildConfig.router && buildConfig.router.lazy;
+  const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
   const renderRouter = (routes) => () => {
     let routerProps = {
       ...appConfigRouter,

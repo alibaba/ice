@@ -1,6 +1,6 @@
 ---
 title: 物料数据生成
-order: 5
+order: 6
 ---
 
 完成物料集下所有物料的开发和发布之后，需要生成这个物料集合的物料数据，**请确保所有物料都已发布**，发布流程可看上一章[《物料开发》](/docs/materials/guide/dev.md)。
@@ -21,6 +21,7 @@ iceworks 会遍历所有物料，批量查询每个物料的 npm 信息，并将
 - name：物料名称，来源自 `package.json` 中的 `name`
 - components：包含所有组件信息的数组
 - blocks：包含所有区块信息的数组
+- pages: 包含所有页面信息的数组
 - scaffolds：包含所有项目模版信息的数组
 - description：（可选）物料描述，来源自 `package.json` 中的 `description`
 - logo：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig`
@@ -29,4 +30,4 @@ iceworks 会遍历所有物料，批量查询每个物料的 npm 信息，并将
 
 除可选的字段外，其他字段都是必不可少的。物料数据生成后，请检查是否包含必选的字段。
 
-对于 components、blocks 和 scafflods 下的每一个元素，也有特定的物料数据协议需要遵守，否则无法在 iceworks 中正常使用，具体数据协议可参考 [《物料数据协议》](/docs/materials/reference/protocol.md)。
+对于 components、blocks、pages 和 scafflods 下的每一个元素，也有特定的物料数据协议需要遵守，否则无法在 iceworks 中正常使用，具体数据协议可参考 [《物料数据协议》](/docs/materials/reference/protocol.md)。

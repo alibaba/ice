@@ -298,6 +298,21 @@ icejs 中一般不允许修改该配置。
 
 注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。
 
+### define
+
+- 类型： `object` 
+- 默认值： `{}` 
+
+配置全局变量。
+
+```json
+{
+  "define": {
+    "ASSER_VERSION": "0.1.0"
+  }
+}
+```
+
 ### browserslist
 
 - 类型： `string` | `object` 

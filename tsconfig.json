@@ -19,11 +19,16 @@
     { "path": "packages/plugin-miniapp" },
     { "path": "packages/plugin-esbuild" },
     { "path": "packages/create-app-shared" },
+    { "path": "packages/create-app-container" },
+    { "path": "packages/create-use-router" },
     { "path": "packages/react-app-renderer" },
     { "path": "packages/rax-app-renderer" },
     { "path": "packages/miniapp-renderer" },
     { "path": "packages/create-ice" },
     { "path": "packages/icejs" },
-    { "path": "packages/raxjs" }
+    { "path": "packages/raxjs" },
+    { "path": "packages/plugin-rml" },
+    { "path": "packages/plugin-stark-module" },
+    { "path": "packages/plugin-webpack5" },
   ]
 }

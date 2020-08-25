@@ -1,14 +1,20 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
+import { createNavigation } from 'create-app-container';
+import { createUseRouter } from 'create-use-router';
 
-function reactAppRendererWithSSR(context, options) {
+const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
+
+const useRouter = createUseRouter({ useState, useLayoutEffect });
+
+export function reactAppRendererWithSSR(context, options) {
   const { appConfig } = options || {};
   appConfig.router.type = 'static';
-  return renderApp(context, options);
+  return _renderApp(context, options);
 }
 
-async function reactAppRenderer(options) {
+export async function reactAppRenderer(options) {
   const { appConfig, setAppConfig, loadStaticModules } = options || {};
 
   setAppConfig(appConfig);
@@ -33,29 +39,33 @@ async function reactAppRenderer(options) {
   }
 
   const context = { initialData, pageInitialProps };
-  renderApp(context, options);
+  _renderApp(context, options);
 }
 
-function renderApp(context, options) {
-  const { appConfig, staticConfig, createBaseApp, ErrorBoundary, emitLifeCycles } = options;
-  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, {}, context);
-  const { modifyDOMRender } = runtime;
-  const { rootId, mountNode, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = modifiedAppConfig.app;
+function _renderApp(context, options) {
+  const { appConfig, staticConfig, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
+  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  const { rootId, mountNode } = modifiedAppConfig.app || {};
+  const appMountNode = mountNode || document.getElementById(rootId) || document.getElementById('ice-container');
 
-  // for miniapp routes
-  let routes = [];
-  if (staticConfig && staticConfig.routes) {
-    routes = staticConfig.routes.map(route => {
-      const pageComponent = route.component()();
-      return {
-        ...route,
-        component: pageComponent
-      };
-    });
-  };
+  options.appConfig = modifiedAppConfig;
 
-  const AppProvider = runtime.composeAppProvider();
-  const AppRouter = runtime.getAppRouter(routes);
+  // Emit app launch cycle
+  emitLifeCycles();
+
+  const isMobileWeb = Object.keys(staticConfig).length;
+  if (isMobileWeb) {
+    return _renderMobileApp({ runtime, appMountNode, history }, options);
+  } else {
+    return _renderWebApp({ runtime, appMountNode }, options);
+  }
+}
+
+function _renderWebApp({ runtime, appMountNode }, options) {
+  const { ErrorBoundary, appConfig } = options;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app || {};
+  const AppProvider = runtime?.composeAppProvider?.();
+  const AppRouter = runtime?.getAppRouter?.();
 
   function App() {
     const appRouter = <AppRouter />;
@@ -70,23 +80,62 @@ function renderApp(context, options) {
     return rootApp;
   }
 
-  // Emit app launch cycle
-  emitLifeCycles();
+  if (runtime?.modifyDOMRender) {
+    return runtime?.modifyDOMRender?.({ App, appMountNode });
+  }
 
   if (process.env.__IS_SERVER__) {
     return ReactDOMServer.renderToString(<App />);
-  } else {
-    const appMountNode = mountNode
-      || document.getElementById(rootId)
-      || document.getElementById('ice-container');
-    if (modifyDOMRender) {
-      return modifyDOMRender({ App, appMountNode });
-    } else {
-      return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
-    }
   }
+
+  return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
 }
 
-export { reactAppRendererWithSSR };
+function _renderMobileApp({ runtime, appMountNode, history }, options) {
+  const { staticConfig } = options;
+  const { routes } = staticConfig;
+  return _matchInitialComponent(history.location.pathname, routes)
+    .then(InitialComponent => {
+      const App = () => {
+        const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
+        const { component } = useRouter({ routes, history, InitialComponent });
 
-export default reactAppRenderer;
+        return createElement(
+          AppNavigation,
+          {
+            staticConfig,
+            component,
+            history,
+            location: history.location,
+            routes
+          }
+        );
+      };
+
+      const AppProvider = runtime?.composeAppProvider?.();
+
+      const Root = () => {
+        if (AppProvider) {
+          return createElement(AppProvider, null, createElement(App));
+        }
+        return createElement(App);
+      };
+
+      const appInstance = createElement(Root);
+
+      ReactDOM.render(appInstance, appMountNode);
+    });
+}
+
+function _matchInitialComponent(fullpath, routes) {
+  let initialComponent = null;
+  for (let i = 0, l = routes.length; i < l; i++) {
+    if (fullpath === routes[i].path || routes[i].regexp && routes[i].regexp.test(fullpath)) {
+      initialComponent = routes[i].component;
+      if (typeof initialComponent === 'function') initialComponent = initialComponent();
+      break;
+    }
+  }
+
+  return Promise.resolve(initialComponent);
+}

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-app-core",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "the core plugin for icejs and raxjs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
