@@ -7,7 +7,8 @@ order: 1
 
 ![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code)
 ![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)
-![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg)
+![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg)
+![Rating](https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 
