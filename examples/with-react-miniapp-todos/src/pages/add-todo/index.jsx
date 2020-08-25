@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import todosService from '@/services/todos';
+import storageService from '@/services/storage';
+
 import AddButton from '@/components/add-button';
 import styles from './index.module.scss';
 
@@ -12,19 +15,23 @@ const AddTodo = () => {
     setValue(e.target.value);
   };
 
-  const add = () => {
-    const storageKey = 'todos';
+  const add = async () => {
+    const curTodos = await storageService.todos.get();
 
-    // eslint-disable-next-line
-    const data = wx.getStorageSync(storageKey);
-
-    data.todos.push({
-      text: value,
-      completed: false
+    const openId = await storageService.openId.get();
+    console.log(openId);
+    const res = await todosService.add({
+      openId,
+      content: {
+        text: value,
+        completed: false
+      }
     });
-    
-    // eslint-disable-next-line 
-    wx.setStorageSync(storageKey, data);
+
+    const { todo } = res.data;
+
+    const newTodos = curTodos.concat(todo);
+    storageService.todos.set(newTodos);
 
     // eslint-disable-next-line
     wx.redirectTo({
