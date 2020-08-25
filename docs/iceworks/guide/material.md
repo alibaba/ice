@@ -14,7 +14,7 @@ order: 8
 - 点击 VS Code 编辑器左侧活动栏 Iceworks 图标，并点击快速入口视图中的`设置`
 - 点击编辑器右上角设置按钮，进入 Iceworks 设置面板
 
-![启动设置面板](https://img.alicdn.com/tfs/TB1ATiCgCR26e4jSZFEXXbwuXXa-1440-900.gif)
+![启动设置面板](https://img.alicdn.com/tfs/TB1kWklSqL7gK0jSZFBXXXZZpXa-1440-900.gif)
 
 然后点击添加按钮，输入物料源名称和物料源地址：
 
@@ -30,12 +30,12 @@ order: 8
 
 ### 添加自定义组件或区块到源码中
 
-![添加组件](https://img.alicdn.com/tfs/TB1v1TsR7T2gK0jSZFkXXcIQFXa-1440-900.png)
+![添加组件](https://img.alicdn.com/tfs/TB1mrsaSxz1gK0jSZSgXXavwpXa-1440-900.png)
 
 ### 使用自定义组件生成页面和组件
 
 组装自定义组件生成页面：
-![生成页面](https://img.alicdn.com/tfs/TB12tDpR7L0gK0jSZFAXXcA9pXa-1440-900.png)
+![生成页面](https://img.alicdn.com/tfs/TB1eaQvSET1gK0jSZFrXXcNCXXa-1440-900.png)
 
 组装自定义组件创建组件：
-![生成组件](https://img.alicdn.com/tfs/TB1vaZJfMgP7K4jSZFqXXamhVXa-1440-900.png)
+![生成组件](https://img.alicdn.com/tfs/TB1BvsFj639YK4jSZPcXXXrUFXa-1440-900.png)

@@ -12,7 +12,7 @@ order: 3
 - 点击 VS Code 编辑器左侧的活动栏中的 Iceworks 图标，并在快速入口视图中点击`启动调试`
 - 点击 VS Code 编辑器右上角的`本地调试`按钮
 
-![debug](https://img.alicdn.com/tfs/TB1H82oR4z1gK0jSZSgXXavwpXa-1440-900.gif)
+![debug](https://img.alicdn.com/tfs/TB1eBQbSrY1gK0jSZTEXXXDQVXa-1440-900.gif)
 
 更多关于应用调试的内容，可以参考[《调试》](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)章节。
 
@@ -23,7 +23,7 @@ order: 3
 - 点击 VS Code 编辑器左侧的活动栏中的 Iceworks 图标，并在快速入口视图中点击`执行构建`
 - 点击 VS Code 编辑器右上角的`本地构建`按钮
 
-![build](https://img.alicdn.com/tfs/TB1UFryR1H2gK0jSZJnXXaT1FXa-1440-900.gif)
+![build](https://img.alicdn.com/tfs/TB10JwmSuL2gK0jSZFmXXc7iXXa-1440-900.gif)
 
 ## 发布
 
