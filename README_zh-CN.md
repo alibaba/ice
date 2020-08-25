@@ -133,7 +133,7 @@ createApp(appConfig)
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
-| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | 基于 VS Code 的多端研发套件 |
+| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | 可视化智能开发助手 |
 
 [icejs]: https://github.com/ice-lab/icejs
 [icestark]: https://github.com/ice-lab/icestark

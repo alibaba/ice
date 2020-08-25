@@ -133,7 +133,7 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
-| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | Universal Application Development Pack for VS Code |
+| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] |Visual Intelligent Development Assistant|
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
