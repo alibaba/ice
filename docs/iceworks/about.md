@@ -11,6 +11,8 @@ order: 1
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+[立即安装 >>>](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
+
 社会、经济、民生正在加速数字化，微软预测：未来五年，我们开发的应用程序将超过过去所有时代的总和 —— 这是一个爆炸式的发展。爆炸式发展对先进生产力提出了更高的要求，但现状却是：应用程序开发高门槛、质量无保障和效率遇瓶颈的困局。
 
 Iceworks 就是在此背景下诞生的可视化智能开发助手，旨在驱动软件开发工具和方法产生巨大变革。
@@ -49,7 +51,6 @@ Iceworks 内置 Fusion Design、Rax UI 组件库，丰富的模板开箱即用�
 
 ## 指南导航
 
-- [概述](/docs/iceworks/about)
 - [快速开始](/docs/iceworks/quick-start)：介绍如何安装和使用 Iceworks。
 - 用户指南
     - [创建应用](/docs/iceworks/create-application)：介绍如何使用 Iceworks 创建前端应用。
