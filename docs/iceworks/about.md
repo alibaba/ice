@@ -45,9 +45,9 @@ Iceworks 的代码自动补全能力基于语言语义和源代码分析，完�
 
 ### 丰富的物料体系
 
-Iceworks 内置 Fusion Design、Rax UI 组件库，丰富的模板开箱即用。同时支持接入自定义物料，对物料开发的链路提供了全流程的支持，开发者可轻松定制业务专属的物料集合：
+Iceworks 内置 Fusion Design、Rax UI 组件库，丰富的物料开箱即用：可通过物料创建应用、生成组件和组装页面、一键添加到代码……同时支持接入自定义物料，对物料开发的链路提供了全流程的支持，开发者可轻松定制业务专属的物料集合：
 
-![物料示例](https://img.alicdn.com/tfs/TB1UjO9SET1gK0jSZFrXXcNCXXa-1000-750.png)
+![物料示例](https://img.alicdn.com/tfs/TB1UjO9SET1gK0jSZFrXXcNCXXa-1000-750.png_790x10000.jpg)
 
 ## 指南导航
 
