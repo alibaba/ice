@@ -5,11 +5,11 @@ order: 1
 
 ## Iceworks: 可视化智能开发助手
 
-[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ice-lab/iceworks/pulls)
-[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code)
+![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)
+![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 社会、经济、民生正在加速数字化，微软预测：未来五年，我们开发的应用程序将超过过去所有时代的总和 —— 这是一个爆炸式的发展。爆炸式发展对先进生产力提出了更高的要求，但现状却是：应用程序开发高门槛、质量无保障和效率遇瓶颈的困局。
 
