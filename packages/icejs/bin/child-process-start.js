@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-const { getBuiltInPlugins, childProcessStart } = require('../lib');
+const utils = require('create-cli-utils');
+const getBuiltInPlugins = require('../lib/getBuiltInPlugins');
 
 (async() => {
-  await childProcessStart(getBuiltInPlugins);
+  await utils.childProcessStart(getBuiltInPlugins);
 })();

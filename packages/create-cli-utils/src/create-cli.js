@@ -6,7 +6,14 @@ const build = require('./build');
 const test = require('./test');
 
 module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo) => {
-  console.log(packageInfo.name, packageInfo.version);
+  if (packageInfo.__ICEJS_INFO__) {
+    console.log(
+      `${packageInfo.name} ${packageInfo.version}`,
+      `(${packageInfo.__ICEJS_INFO__.name} ${packageInfo.__ICEJS_INFO__.version})`
+    );
+  } else {
+    console.log(packageInfo.name, packageInfo.version);
+  }
   // finish check before run command
   checkNodeVersion(packageInfo.engines.node);
 

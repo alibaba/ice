@@ -11,7 +11,7 @@ module.exports = (userConfig: any) => {
     [
       'build-plugin-app-core', {
         'framework': 'react',
-        'alias': process.env.ALIAS || 'ice'
+        'alias': process.env.__FRAMEWORK_NAME__ || 'ice'
       }
     ],
     'build-plugin-react-app',
