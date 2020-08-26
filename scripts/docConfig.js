@@ -99,17 +99,17 @@ const docCategories = {
       },
       {
         title: {
-          'zh-cn': '插件列表',
-          'en-us': 'Extensions',
+          'zh-cn': '附加说明',
+          'en-us': 'More',
         },
-        dir: 'extensions',
+        dir: 'more',
       },
       {
         title: {
-          'zh-cn': '高级教程',
-          'en-us': 'Advanced',
+          'zh-cn': 'VS Code 指南',
+          'en-us': 'VS Code',
         },
-        dir: 'advanced',
+        dir: 'vscode',
       },
     ],
   },
