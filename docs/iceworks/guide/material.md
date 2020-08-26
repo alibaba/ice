@@ -24,16 +24,16 @@ order: 8
 
 ### 自定义模板创建应用
 
-![创建应用](https://img.alicdn.com/tfs/TB1V941R7L0gK0jSZFtXXXQCXXa-1024-768.png)
+![创建应用](https://img.alicdn.com/tfs/TB1jhJOSUH1gK0jSZSyXXXtlpXa-1440-900.png_790x10000.jpg)
 
 ### 添加自定义组件或区块到源码中
 
-![添加组件](https://img.alicdn.com/tfs/TB1mrsaSxz1gK0jSZSgXXavwpXa-1440-900.png)
+![添加组件](https://img.alicdn.com/tfs/TB1jjXGSHY1gK0jSZTEXXXDQVXa-1440-900.png_790x10000.jpg)
 
 ### 使用自定义组件生成页面和组件
 
 组装自定义组件生成页面：
-![生成页面](https://img.alicdn.com/tfs/TB1eaQvSET1gK0jSZFrXXcNCXXa-1440-900.png)
+![生成页面](https://img.alicdn.com/tfs/TB1zQtUSQY2gK0jSZFgXXc5OFXa-1440-900.png_790x10000.jpg)
 
 组装自定义组件创建组件：
-![生成组件](https://img.alicdn.com/tfs/TB1BvsFj639YK4jSZPcXXXrUFXa-1440-900.png)
+![生成组件](https://img.alicdn.com/tfs/TB1QIX3SKL2gK0jSZFmXXc7iXXa-1440-900.png_790x10000.jpg)

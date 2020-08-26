@@ -9,13 +9,13 @@ order: 2
 
 点击 VS Code 编辑器左侧活动栏 Iceworks 图标。
 
-![启动应用大纲树](https://img.alicdn.com/tfs/TB1gZhBSGL7gK0jSZFBXXXZZpXa-1440-900.png)
+![启动应用大纲树](https://img.alicdn.com/tfs/TB1e2FBh8FR4u4jSZFPXXanzFXa-1440-900.png_790x10000.jpg)
 
 ## 快速入口
 
 在快速入口的视图中，列举了一些常用的操作命令，支持一键快速调试或构建应用、重装或添加依赖、创建应用等。
 
-![快速入口](https://img.alicdn.com/tfs/TB1vqu8gIVl614jSZKPXXaGjpXa-1440-900.png)
+![快速入口](https://img.alicdn.com/tfs/TB1QiEajk9l0K4jSZFKXXXFjpXa-1440-900.png_790x10000.jpg)
 
 ## npm 脚本
 
