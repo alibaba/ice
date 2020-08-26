@@ -9,7 +9,7 @@ order: 2
 
 点击 VS Code 编辑器左侧活动栏 Iceworks 图标。
 
-![启动应用大纲树](https://img.alicdn.com/tfs/TB1GJ7gSuH2gK0jSZJnXXaT1FXa-1440-900.png)
+![启动应用大纲树](https://img.alicdn.com/tfs/TB1gZhBSGL7gK0jSZFBXXXZZpXa-1440-900.png)
 
 ## 快速入口
 

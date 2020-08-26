@@ -9,16 +9,14 @@ order: 8
 
 ## 接入自定义物料
 
-首先需要先打开设置面板，打开方式有两种：
+1. 首先需要先打开设置面板，打开方式有两种：
 
-- 点击 VS Code 编辑器左侧活动栏 Iceworks 图标，并点击快速入口视图中的`设置`
-- 点击编辑器右上角设置按钮，进入 Iceworks 设置面板
+   - 点击 VS Code 编辑器左侧活动栏 Iceworks 图标，并点击快速入口视图中的`设置`
+   - 点击编辑器右上角设置按钮，进入 Iceworks 设置面板
 
-![启动设置面板](https://img.alicdn.com/tfs/TB1kWklSqL7gK0jSZFBXXXZZpXa-1440-900.gif)
+2. 然后『添加』按钮，输入物料源名称和物料源地址
 
-然后点击添加按钮，输入物料源名称和物料源地址：
-
-![添加物料源](https://img.alicdn.com/tfs/TB1JkUxiA9l0K4jSZFKXXXFjpXa-1024-768.png)
+![接入自定义物料](https://img.alicdn.com/tfs/TB1Hh1hecieb18jSZFvXXaI3FXa-1440-900.gif)
 
 ## 使用自定义物料
 
