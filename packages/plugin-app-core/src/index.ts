@@ -122,7 +122,7 @@ function checkTargets(targets) {
   if you want to describes the browserslist environments for your project.
   you should set browserslist in build.json.
 
-    e.g. { "browserlist": { "chrome": "58", "ie": 11 } }
+    e.g. { "browserslist": { "chrome": "58", "ie": 11 } }
 `;
     console.log();
     console.log(chalk.red(msg));
