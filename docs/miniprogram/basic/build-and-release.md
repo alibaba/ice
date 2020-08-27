@@ -20,12 +20,13 @@ $ npm run build
 
 多端应用会构建出不同平台的代码（目录名标示平台），例如在 `build.json` 配置如下：
 
+* `web`：H5 应用
 * `miniapp`：阿里小程序
-* `wechat-miniprogram`：支付宝小程序
+* `wechat-miniprogram`微信小程序
 
 ```json
 {
-  "targets": ["miniapp", "wechat-miniprogram"]
+  "targets": ["web", "miniapp", "wechat-miniprogram"]
 }
 ```
 
