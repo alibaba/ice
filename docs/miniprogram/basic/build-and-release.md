@@ -22,7 +22,7 @@ $ npm run build
 
 * `web`：H5 应用
 * `miniapp`：阿里小程序
-* `wechat-miniprogram`微信小程序
+* `wechat-miniprogram`：微信小程序
 
 ```json
 {
