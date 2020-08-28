@@ -506,6 +506,15 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
+产物如下：
+
+```md
+dll                            // dll 构建产物文件夹
+├── 7265616374.dll.js          // dllEntry 中配置内容的构建产物。文件名根据 dllEntry 中键生成，此处为 react。
+├── 7265616374.manifest.json   // DllReferencePlugin 使用
+└── dll-pkg.json               // build.json 中所配置的 dllEntry 信息
+````
+
 ## 根据环境区分工程配置
 
 参考 [区分不同环境](/docs/guide/basic/config.md)。
