@@ -8,6 +8,7 @@ const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
 const getBase = require('./base');
 const getMiniappOutputPath = require('./utils/getMiniappOutputPath');
+const getWebOutputPath = require('./utils/getWebOutputPath');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 
 module.exports = (api) => {
@@ -108,6 +109,15 @@ module.exports = (api) => {
           console.log();
         }
       }
+    });
+  }
+
+  if (command === 'build') {
+    targets.forEach((target) => {
+      onGetWebpackConfig(target, (config) => {
+        const outputPath = getWebOutputPath(context, { target });
+        config.output.path(outputPath);
+      });
     });
   }
 

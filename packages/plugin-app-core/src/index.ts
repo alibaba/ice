@@ -45,20 +45,6 @@ export default (api, options) => {
   const generator = initGenerator(api, options);
   setRegisterMethod(api, { generator });
 
-  if (targets.length) {
-    targets.forEach((target) => {
-      onGetWebpackConfig(target, (config) => {
-        if (command === 'build') {
-          if (target === 'web') {
-            const outputDir = userConfig.outputDir;
-            const outputPath = path.join(context.rootDir, outputDir, 'web');
-            config.output.path(outputPath);
-          }
-        }
-      });
-    });
-  }
-
   // watch src folder
   if (command === 'start') {
     dev(api, { render: generator.render });
