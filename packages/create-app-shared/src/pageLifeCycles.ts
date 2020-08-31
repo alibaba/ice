@@ -1,4 +1,3 @@
-import { getHistory } from './history';
 import { isMiniAppPlatform } from './env';
 import { SHOW, HIDE } from './constants';
 import router from './router';
@@ -8,7 +7,6 @@ const visibleListeners = {};
 
 function addPageLifeCycle(cycle, callback) {
   const pathname = router.current.pathname;
-
   if (!visibleListeners[pathname]) {
     visibleListeners[pathname] = {
       [SHOW]: [],
@@ -80,15 +78,11 @@ export function withPageLifeCycle(Component) {
 if (isMiniAppPlatform) {
   // eslint-disable-next-line
   window.addEventListener('pageshow', () => {
-    // Get history
-    const history = getHistory();
-    emit(SHOW, history.location.pathname);
+    emit(SHOW, (window as any).__pageId);
   });
   // eslint-disable-next-line
   window.addEventListener('pagehide', () => {
-    // Get history
-    const history = getHistory();
-    emit(HIDE, history.location.pathname);
+    emit(HIDE, (window as any).__pageId);
   });
 }
 

@@ -13,6 +13,7 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
 - name `{string}`：（必选）物料名称，来源自 `package.json` 中的 `name` 字段
 - components `{Array[ComponentMetaData]}`：（必选）包含所有组件元数据的数组
 - blocks `{Array[BlockMetaData]}`：（必选）包含所有区块信息的数组
+- pages `{Array[PageMetaData]}`：（必选）包含所有页面信息的数组
 - scaffolds `{Array[ScaffoldMetaData]}`：（必选）包含所有项目模版信息的数组
 - description `{string}`：（可选）物料描述，来源自 `package.json` 中的 `description` 字段
 - logo `{string}`：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig` 字段
@@ -96,6 +97,53 @@ ICE 物料数据协议是一套通用的描述物料元数据的标准格式，�
   // （可选）多张截图
   screenshots: [
     "https://unpkg.com/@icedesign/ability-introduction-block/screenshot.png"
+  ],
+  // （必选）发布时间
+  publishTime: "2018-12-13T08:48:27.377Z",
+  // （必选）最后更新时间
+  updateTime: "2019-04-26T13:52:36.487Z"
+}
+```
+
+## PageMetaData 页面元数据
+
+<!--TODO: 补充 page 物料的链接-->
+```javascript
+{
+  // （必选）英文名称
+  name: "page-introduction",
+  // （必选）名称
+  title: "产品能力介绍",
+  //（必选）描述
+  description: "产品能力介绍",
+  //（必选）预览地址
+  homepage: "",
+  //（必选）分类
+  category: "Basic",
+  //（必选）源码地址
+  repository: "",
+  //（必选）描述安装方式
+  source: {
+    //（必选）安装方式 npm
+    type: "npm",
+    //（必选）npm package name
+    npm: "@icedesign/ability-introduction-page",
+    //（必选）版本号
+    version: "1.0.0",
+    //（必选）npm 源
+    registry: "http://registry.npmjs.com"
+  },
+  // （必选）依赖关系
+  dependencies: {
+    prop-types: "^15.5.8",
+    react: "^16.2.0",
+    @alifd/next: "^1.x"
+  },
+  //（必选）截图
+  screenshot: "",
+  //（可选）多张截图
+  screenshots: [
+    ""
   ],
   // （必选）发布时间
   publishTime: "2018-12-13T08:48:27.377Z",

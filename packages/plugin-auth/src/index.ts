@@ -5,7 +5,7 @@ const PLUFIN_AUTH_DIR = 'auth';
 
 export default async function (api) {
   const { getValue, onGetWebpackConfig, applyMethod } = api;
-  const iceTemp = getValue('ICE_TEMP');
+  const iceTemp = getValue('TEMP_PATH');
 
   // 复制模板到 .ice/auth 目录下
   const templateSourceDir = path.join(__dirname, '../template');

@@ -1,5 +1,4 @@
 import { isMiniAppPlatform } from './env';
-import { getHistory } from './history';
 
 const current = {
   pathname: '/',
@@ -16,9 +15,8 @@ Object.defineProperty(router, 'current', {
     if (!isMiniAppPlatform) {
       return current;
     }
-    const history = getHistory();
     return Object.assign(current, {
-      pathname: history.location.pathname
+      pathname: (window as any).__pageId
     });
   },
   set(value) {

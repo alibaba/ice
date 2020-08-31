@@ -3,12 +3,17 @@
     "module": "esNext",
     "target": "es2015",
     "outDir": "build",
-    "jsx": "preserve",
+    "jsx": "react",
     "jsxFactory": "createElement",
     "moduleResolution": "node",
     "sourceMap": true,
     "alwaysStrict": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "rax-app": [".rax/index.ts"],
+      "rax": ["node_modules/@types/rax"]
+    }
   },
   "include": ["src/*", ".rax"],
   "exclude": ["build"]
