@@ -483,6 +483,8 @@ icejs 中一般不允许修改该配置。
 
 启用该选项后，进行 `Webpack` 构建时，会在目录中生成 `dll` 文件夹，包含 `dll` 相关代码。
 
+`dll` 构建产物无需 `git` 提交，建议加到 `.gitignore` 中。
+
 ### dllEntry
 
 - 类型：`object`
@@ -505,6 +507,15 @@ icejs 中一般不允许修改该配置。
   "react": ["react", "react-dom"]
 }
 ```
+
+产物如下：
+
+```md
+dll                            // dll 构建产物文件夹
+├── 7265616374.dll.js          // dllEntry 中配置内容的构建产物。文件名根据 dllEntry 中键生成，此处为 react。
+├── 7265616374.manifest.json   // DllReferencePlugin 使用
+└── dll-pkg.json               // build.json 中所配置的 dllEntry 信息
+````
 
 ## 根据环境区分工程配置
 
