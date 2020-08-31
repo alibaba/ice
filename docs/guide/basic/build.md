@@ -483,6 +483,8 @@ icejs 中一般不允许修改该配置。
 
 启用该选项后，进行 `Webpack` 构建时，会在目录中生成 `dll` 文件夹，包含 `dll` 相关代码。
 
+`dll` 构建产物无需 `git` 提交，建议加到 `.gitignore` 中。
+
 ### dllEntry
 
 - 类型：`object`
