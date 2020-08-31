@@ -32,7 +32,14 @@ module.exports = (api) => {
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
   });
 
-  targets.forEach(target => registerTask(target, getBase(api, { isMiniapp, target })));
+  targets.forEach(target => {
+    // compatible with old logic，not set target
+    // output：build/*
+    if (target === WEB && !userConfig.targets) {
+      target = '';
+    }
+    registerTask(target, getBase(api, { isMiniapp, target }));
+  });
 
   if (command === 'test') {
     onGetJestConfig((jestConfig) => {
