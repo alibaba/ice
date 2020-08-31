@@ -20,6 +20,7 @@ export default (api, options) => {
         config.resolve.alias.set(alias[0], alias[1]);
       }
     });
+
     if (options.framework === 'react') {
       // add alias of basic dependencies
       const basicDependencies = [

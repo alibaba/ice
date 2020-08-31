@@ -30,7 +30,7 @@ English | [简体中文](./README_zh-CN.md)
 
 We recommend creating a new icejs app using [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks):
 
-![create icejs app](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
+![demo](https://img.alicdn.com/tfs/TB1aRI.RHr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
 
 > See [Quick start by Iceworks](https://ice.work/docs/iceworks/quick-start) for more details.
 
@@ -133,7 +133,7 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
-| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | Universal Application Development Pack for VS Code |
+| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] |Visual Intelligent Development Assistant|
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark

@@ -1,13 +1,11 @@
 ---
 title: 源代码管理(Git)
-order: 0
+order: 5
 ---
-
-Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 源代码控制的基本功能。更多详细说明请阅读[《VS Code 官方文档》](https://code.visualstudio.com/docs/editor/versioncontrol)。
 
 VS Code 集成了源代码控制，并默认支持 Git。
 
-> 如果您不了解 Git，可以通过 [git-scm](https://git-scm.com/doc) 网站的[在线文本教程](https://git-scm.com/book)或[初学者视频教程](https://git-scm.com/video/what-is-git)来进行学习。Iceworks 文档默认你已了解 Git。
+> 如果您不了解 Git，可以通过 [git-scm](https://git-scm.com/doc) 网站的[在线文本教程](https://git-scm.com/book)或[初学者视频教程](https://git-scm.com/video/what-is-git)来进行学习。本文档默认你已了解 Git。
 
 ![Git](https://img.alicdn.com/tfs/TB1IZhjtG61gK0jSZFlXXXDKFXa-754-418.png)
 
@@ -65,7 +63,7 @@ VS Code 能够定期从远程获取更改。这让 VS Code 能够显示本地仓
 
 ## 编辑器侧边栏提示
 
-如果您打开一个已关联 Git 仓库文件进行更改，iceworks 将向编辑器的左边栏和右侧缩略图添加提醒：
+如果您打开一个已关联 Git 仓库文件进行更改，VS Code 将向编辑器的左边栏和右侧缩略图添加提醒：
 
 - 红色三角形表示删除行的位置；
 - 绿色条表示新添加的行；

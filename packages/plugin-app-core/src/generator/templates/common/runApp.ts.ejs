@@ -1,5 +1,5 @@
 import { createElement, useEffect, Component } from '<%- framework %>';
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp } from 'universal-env';
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
 
@@ -10,7 +10,8 @@ import createShareAPI, { history } from 'create-app-shared';
 
 <% if (isRax) {%>
   import raxAppRenderer from 'rax-app-renderer';
-  import { withRouter as defaultWithRouter } from 'rax-use-router';
+  import { createWithRouter } from 'create-use-router';
+  const defaultWithRouter = createWithRouter({ createElement });
 <% } %>
 
 import loadRuntimeModules from './loadRuntimeModules';
@@ -50,7 +51,7 @@ export function runApp(appConfig) {
   <% if(isRax){ %>
     renderer = raxAppRenderer;
   <% } %>
-  if (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) {
+  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) && !isWeb) {
     renderer = miniappRenderer;
   }<% if(isReact){ %> else {
     renderer = reactAppRenderer;

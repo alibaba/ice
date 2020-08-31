@@ -30,7 +30,7 @@
 
 我们推荐你安装 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)，然后通过该插件的引导进行项目的创建：
 
-![创建应用](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
+![使用示例](https://img.alicdn.com/tfs/TB1oeKDSoH1gK0jSZSyXXXtlpXa-2048-1536.png_790x10000.jpg)
 
 > 参考[《Iceworks 快速开始》](https://ice.work/docs/iceworks/quick-start)了解更多细节。
 
@@ -133,7 +133,7 @@ createApp(appConfig)
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
-| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | 基于 VS Code 的多端研发套件 |
+| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | 可视化智能开发助手 |
 
 [icejs]: https://github.com/ice-lab/icejs
 [icestark]: https://github.com/ice-lab/icestark
