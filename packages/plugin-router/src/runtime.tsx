@@ -1,6 +1,6 @@
 import * as React from 'react';
 // @ts-ignore
-import { ErrorBoundary } from 'ice';
+import { ErrorBoundary } from '$ice/ErrorBoundary';
 import defaultRoutes from '$ice/routes';
 import { IceRouter } from './runtime/Router';
 import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';

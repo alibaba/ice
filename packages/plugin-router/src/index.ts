@@ -64,6 +64,9 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     // alias for runtime/history
     config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'router/history'));
 
+    // alias for runtime/ErrorBoundary
+    config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'ErrorBoundary'));
+
     // alias for react-router-dom
     const routerName = 'react-router-dom';
     config.resolve.alias.set(routerName, require.resolve(routerName));
