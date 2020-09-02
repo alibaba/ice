@@ -2,7 +2,6 @@
   "name": "example-with-miniapp",
   "description": "miniapp example",
   "dependencies": {
-    "mini-ali-ui": "^1.1.4",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "universal-request": "^2.2.0"

@@ -1,4 +1,4 @@
 {
   "entry": "src/app.ts",
-  "targets": ["web", "miniapp"]
+  "targets": ["web", "miniapp", "wechat-miniprogram"]
 }
