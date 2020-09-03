@@ -80,6 +80,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
 
     const frameworkRouter = (routes) => () => {
       const [appPathname, setAppPathname] = useState('');
+      const [routeInfo, setRouteInfo] = useState({});
       const [appEnter, setAppEnter] = useState({});
       const [appLeave, setAppLeave] = useState({});
 
@@ -95,7 +96,8 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
         })();
       }, []);
 
-      function handleRouteChange(pathname) {
+      function handleRouteChange(pathname, query, hash, routeType) {
+        setRouteInfo({ pathname, query, hash, routeType });
         setAppPathname(pathname);
       }
 
@@ -109,6 +111,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
 
       const appInfo = {
         pathname: appPathname,
+        routeInfo,
         appEnter,
         appLeave,
         updateApps: setApps,

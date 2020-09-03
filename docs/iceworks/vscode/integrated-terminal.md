@@ -1,9 +1,7 @@
 ---
 title: 集成终端
-order: 1
+order: 6
 ---
-
-Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 集成终端的基本功能。更多详细说明请阅读[《VS Code 官方文档》](https://code.visualstudio.com/docs/editor/integrated-terminal)。
 
 在 VS Code 中提供了一个集成终端，以供您快速地在当前项目中执行命令行任务而不需要切换窗口或更改已有终端的执行目录。
 
@@ -26,7 +24,7 @@ Iceworks 运行在 VS Code 之上，以下为您介绍 VS Code 集成终端的�
 
 ## 配置
 
-[打开设置界面](/docs/iceworks/guide/settings)，点击**终端**，可以设置终端的 Shell 类型及显示字体：
+[打开设置界面](/docs/iceworks/vscode/settings)，点击**终端**，可以设置终端的 Shell 类型及显示字体：
 
 ![终端设置](https://img.alicdn.com/tfs/TB1ESIffOcKOu4jSZKbXXc19XXa-2242-1048.png)
 
