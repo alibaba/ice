@@ -305,7 +305,77 @@ const HomePage = () => {
 
 大部分情况下，按照上面两个步骤的操作就可以在项目里正常的使用状态管理能力了。[完整示例代码](https://github.com/ice-lab/icejs/tree/master/examples/basic-store)
 
-## 高阶能力
+## 自定义创建 Store
+
+对于页面级状态，也可以自定义创建 store 进行使用。如下目录结构：
+
+```md
+src
+├── pages
+|   ├── Home
+|   │   ├── index.tsx
+|   │   ├── model.ts    // 页面级状态：定义 model
+|   │   └── store.ts    // 页面级状态：创建 store
+```
+
+
+### 定义 model
+
+```ts
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+
+export default {
+  state: {
+    count: 0
+  },
+
+  reducers: {
+    increment (prevState) {
+      return { count: prevState.count + 1 };
+    },
+    decrement (prevState) {
+      return { count: prevState.count - 1 };
+    }
+  },
+
+  effects: (dispatch: IRootDispatch) => ({
+    async decrementAsync () {
+      await delay(10);
+      dispatch.counter.decrement();
+    },
+  }),
+};
+```
+
+### 创建 store
+
+```ts
+import { createStore } from 'ice';
+import counter from './model';
+
+const model = { counter };
+const store = createStore(model);
+export default store;
+```
+
+### 使用 model
+
+```ts
+// 引入自定义创建的 store 
+import store from './store';
+
+const HomePage = () => {
+  // 调用 state、dispatchers
+  const [state, dispatchers] = store.useModel('counter');
+
+  return (
+    // jsx
+  );
+}
+
+```
+
+## API
 
 ### useModelState
 
