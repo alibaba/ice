@@ -10,6 +10,7 @@ jobs:
         node-version: [10.x]
     steps:
       - uses: actions/checkout@v2
+      - uses: nelonoel/branch-name@v1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -18,8 +19,10 @@ jobs:
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
+      - run: npm run coverage
       - run: npm run generate:docs
       - run: npm run upload:oss
-      - run: npm run coverage
         env:
+          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
           CI: true
