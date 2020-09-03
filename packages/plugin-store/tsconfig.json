@@ -5,7 +5,7 @@
     "rootDir": "src",
     "outDir": "lib",
     "paths": {
-      "$ice/store": ["./src/_store"]
+      "$store": ["./src/_store"]
     }
   },
 }

@@ -1,3 +1,3 @@
 # plugin-app-core
 
-The core plugin for icejs and raxjs.
+The core plugin for icejs and rax app.

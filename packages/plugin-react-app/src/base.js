@@ -4,14 +4,13 @@ const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
-const defaultConfig = require('./config/default.config');
+const getWebOutputPath = require('./utils/getWebOutputPath');
 const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
 const { WEB } = require('./constants');
 
 // eslint-disable-next-line
 const chalk = require('chalk');
-
 
 module.exports = (api, { isMiniapp, target }) => {
   const { context, log } = api;
@@ -34,6 +33,8 @@ module.exports = (api, { isMiniapp, target }) => {
     'process.env.APP_MODE': JSON.stringify(appMode),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
+
+  const outputPath = getWebOutputPath(context, { target });
 
   config
     .plugin('SimpleProgressPlugin')
@@ -72,7 +73,7 @@ module.exports = (api, { isMiniapp, target }) => {
       .use(CopyWebpackPlugin, [[
         {
           from: path.resolve(rootDir, 'public'),
-          to: path.resolve(rootDir, defaultConfig.outputDir),
+          to: path.resolve(rootDir, outputPath),
           ignore: ['index.html'],
         },
       ]])

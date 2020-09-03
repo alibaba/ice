@@ -14,7 +14,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const projectType = getValue('PROJECT_TYPE');
 
   // .tmp path
-  const iceTempPath = getValue('ICE_TEMP');
+  const iceTempPath = getValue('TEMP_PATH');
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
   const { configPath } = routerOptions;
   const { mpa: isMpa } = userConfig;
@@ -63,6 +63,9 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
 
     // alias for runtime/history
     config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'router/history'));
+
+    // alias for runtime/ErrorBoundary
+    config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'ErrorBoundary'));
 
     // alias for react-router-dom
     const routerName = 'react-router-dom';

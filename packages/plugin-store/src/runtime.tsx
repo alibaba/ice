@@ -1,11 +1,9 @@
-import * as React from 'react';
-import AppStore from '$ice/store';
+import { store as AppStore } from '$store';
 
-export default ({ addProvider, appConfig, context }) => {
+export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
 
   const StoreProvider = ({children}) => {
     const storeConfig = appConfig.store || {};
-    const initialData = context.initialData ? context.initialData : {};
 
     let initialStates = {};
 
@@ -19,13 +17,11 @@ export default ({ addProvider, appConfig, context }) => {
       initialStates = storeConfig.initialStates;
     }
 
-    return (
-      <AppStore.Provider initialStates={initialStates}>
-        {children}
-      </AppStore.Provider>
-    );
+    return createElement(AppStore.Provider, {
+      initialStates,
+      children
+    });
   };
-
   if (AppStore && AppStore.Provider) {
     addProvider(StoreProvider);
   }

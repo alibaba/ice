@@ -5,7 +5,7 @@ import { IPlugin } from '@alib/build-scripts';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }) => {
   const { rootDir } = context;
-  const iceTempPath = getValue('ICE_TEMP');
+  const iceTempPath = getValue('TEMP_PATH');
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
   onGetWebpackConfig((config) => {
