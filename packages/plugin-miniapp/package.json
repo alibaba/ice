@@ -28,9 +28,6 @@
   },
   "dependencies": {
     "miniapp-builder-shared": "^0.1.1",
-    "miniapp-runtime-config": "^0.1.1",
-    "rax-miniapp-babel-plugins": "^0.1.3",
-    "rax-miniapp-config-webpack-plugin": "^1.2.3",
-    "rax-miniapp-runtime-webpack-plugin": "^1.1.0"
+    "miniapp-runtime-config": "^0.1.1"
   }
 }
