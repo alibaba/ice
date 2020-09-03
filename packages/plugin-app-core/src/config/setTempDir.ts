@@ -10,7 +10,7 @@ export default (api, options) => {
   const isRax = framework === 'rax';
 
   const tempDir = isRax ? 'rax' : 'ice';
-  const tempPath = path.join(rootDir, `.${tempDir}`);
+  const tempPath = path.join(rootDir, `.${process.env.__FRAMEWORK_NAME__ || tempDir}`);
   setValue(TEMP_PATH, tempPath);
   setValue(ICE_TEMP, tempPath);
 

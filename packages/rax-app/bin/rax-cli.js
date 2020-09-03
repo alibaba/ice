@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const createCli = require('create-cli-utils/lib/cli');
+const createCli = require('create-cli-utils');
 const packageInfo = require('../package.json');
 const getBuiltInPlugins = require('../lib');
 

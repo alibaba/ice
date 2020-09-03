@@ -1,16 +1,22 @@
 import * as path from 'path';
 import { TEMP_PATH } from '../constant';
 
-export default (api, options) => {
+interface IOptions {
+  framework: string;
+  alias: string;
+}
+
+export default (api, options: IOptions) => {
   const { onGetWebpackConfig, context, getValue } = api;
+  const { alias, framework } = options;
   const { rootDir } = context;
   const tempPath = getValue(TEMP_PATH);
-  const aliasKey = options.framework === 'rax' ? 'rax-app' : 'ice';
+
   const aliasMap = [
-    [`${aliasKey}$`, path.join(tempPath, 'index.ts')],
-    [`${aliasKey}`, path.join(tempPath, 'pages') ],
+    [`${alias}$`, path.join(tempPath, 'index.ts')],
+    [`${alias}`, path.join(tempPath, 'pages') ],
+    ['alias', path.join(tempPath)],
     ['@', path.join(rootDir, 'src')],
-    ['aliasKey', path.join(tempPath)]
   ];
 
 
@@ -21,14 +27,15 @@ export default (api, options) => {
         config.resolve.alias.set(alias[0], alias[1]);
       }
     });
-    let basicDependencies = [];
+
     // add alias of basic dependencies
-    if (options.framework === 'react') {
+    let basicDependencies = [];
+    if (framework === 'react') {
       basicDependencies = [
         ['react', rootDir],
         ['react-dom', rootDir]
       ];
-    } else if (options.framework === 'rax') {
+    } else if (framework === 'rax') {
       basicDependencies = [
         ['rax', rootDir]
       ];

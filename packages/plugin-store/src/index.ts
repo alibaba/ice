@@ -8,6 +8,7 @@ export default async (api) => {
   const { rootDir, userConfig } = context;
 
   const targetPath = getValue('TEMP_PATH');
+  const tempDir = (path.basename(targetPath) || '').split('.')[1];
   const templatePath = path.join(__dirname, 'template');
   const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
   const pageStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
@@ -80,7 +81,8 @@ export default async (api) => {
           {
             routesPath,
             alias: userConfig.alias,
-            applyMethod
+            applyMethod,
+            tempDir
           }
         ]
       ]
