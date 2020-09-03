@@ -1,5 +1,6 @@
 import * as miniappConfig from 'miniapp-runtime-config';
 import * as builderShared from 'miniapp-builder-shared';
+import * as path from 'path';
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, getValue } = api;
@@ -14,6 +15,8 @@ module.exports = (api) => {
         config.entryPoints.clear();
         // App entry
         config.entry('index').add(builderShared.pathHelper.getDepPath(rootDir, `app.${projectType}`));
+
+        config.output.path(path.join(rootDir, 'build'));
 
         miniappConfig.setConfig(config, userConfig[target] || {}, { context, target, babelRuleName: 'babel-loader' });
 
