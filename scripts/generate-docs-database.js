@@ -14,6 +14,13 @@ const projectDir = path.resolve(__dirname, '..');
 const docsDir = path.resolve(__dirname, '../docs');
 const destDir = path.join(__dirname, '../build');
 
+const branch = process.env.BRANCH_NAME;
+if (branch !== 'master' && !/docs/.test(branch)) {
+  console.log('当前分支非 master/docs*, 不执行文档同步脚本');
+  console.log(`BRANCH_NAME=${branch}`);
+  process.exit(0);
+}
+
 rimraf.sync(destDir);
 fse.ensureDirSync(destDir);
 
