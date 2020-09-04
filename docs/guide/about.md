@@ -8,19 +8,19 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 ## 特性
 
-- **可视化开发**：通过 IDE 简化前端工程复杂度，同时通过适配器可接入不同的项目工程进行可视化管理，定制专属的前端工作台
+- **最佳实践**：通过 icejs 研发框架集成路由、状态管理、样式、权限管理、微前端等最佳实践
+- **可视化开发**：通过 VS Code 插件集合 Iceworks 简化前端工程复杂度，提供可视化、配置化等能力
 - **丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
-- **最佳实践**：结合丰富的经验沉淀出的项目开发最佳实践，包括目录结构、开发调试、路由配置、状态管理等
-- **自定义物料**：通过物料开发者工具快速开发构建私有物料体系
+- **自定义物料**：不同团队可基于物料开发工具快速开发构建私有的物料体系
 
 ## 生态
 
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
-| [icejs](https://github.com/ice-lab/icejs) | ![](https://img.shields.io/npm/v/ice.js.svg) | [docs](/docs/guide/intro) |基于 React.js 的通用框架|
-| [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |轻量简洁的状态管理方案|
+| [icejs](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/ice.js.svg) | [docs](/docs/guide/intro) |基于 React.js 的通用框架|
+| [Iceworks](https://github.com/ice-lab/iceworks) | ![](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code) | [docs](/docs/iceworks/about) |可视化智能开发助手|
 | [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
-| [iceworks](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/iceworks.svg) | [docs](/docs/iceworks/about) |可视化研发工具|
+| [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |轻量简洁的状态管理方案|
 
 ## 常见问题
 
@@ -30,9 +30,9 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 #### 资深前端同学是否适合使用飞冰？
 
-在 IDE 基础上，飞冰还提供了 [CLI 版本](/docs/guide/start#使用%20CLI%20方式创建项目)，因此如果你不需要 IDE 的能力，依然可以完全使用 CLI 的链路开发项目，同时使用到飞冰的项目最佳实践、工程工具以及状态管理方案。
+适合，面向前端场景飞冰团队有大量的最佳实践，无论是工程、规范、状态管理还是微前端都可以开箱即用。
 
-#### 飞冰（ICE）的浏览器兼容策略是怎样的？
+#### 飞冰的浏览器兼容策略是怎样的？
 
 飞冰官方 React 物料默认使用 React 16+，其需要的最低 IE 版本为 11，如果您需要在以下的版本使用，您可能需要引入一些 polyfill 来支持 `Map`, `Set` 等特性。参考[React 官网说明](https://reactjs.org/blog/2017/09/26/react-v16.0.html#javascript-environment-requirements)。
 
@@ -42,20 +42,13 @@ Fusion 组件和 antd 组件本身是解决类似问题的，飞冰始于淘宝�
 
 当然在飞冰的体系里你依然可以选择使用 antd 的组件，甚至你可以发起建设基于 antd 的物料。
 
-#### icejs 与 Next.js 有什么区别?
-
-Next.js 以 SSR 出道，相对来讲比较轻量，而 icejs 则定位于 React 通用型框架，在框架设计上借鉴了 Nuxt.js 的一些思想，内聚了更多的能力以及最佳实践，同时也支持 SPA、SSR、MPA、微前端等流行的应用类型。
-
-#### icejs 与脚手架有什么区别？
-
-诸如社区前几年有太多的 React 脚手架，这些脚手架多是一些方案的组合，基于脚手架创建项目后，90% 的开发者会基于脚手架定制符合业务的脚手架，与原有脚手架失去了粘性或者说几乎不会再用。究其原因如下：1）脚手架的组合的方案不是开发者需要的，可以随时被替换掉。2）当脚手架被初始化项目之后，两者是分离的无法升级。 3）脚手架的能力是有限的无法持续扩展出新的能力。
-
 ## 谁在使用
 
-- 淘宝中后台业务
-- 飞猪中后台业务
+- 淘宝&天猫
+- 飞猪
+- 菜鸟
+- 阿里体育
 - 阿里健康
-- 村淘
 - 优酷
 - 阿里云
 - ……

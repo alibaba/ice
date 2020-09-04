@@ -55,6 +55,7 @@ $ npm init ice --template <template> # 指定模板
 $ npm init ice <projectName> # 根据提示选择模板
 $ npm init ice <projectName> --template <template> # 指定模板
 ```
+
 > 可从 [模板库](https://ice.work/scaffold) 选择模板 `<template>`
 
 **选择模板**
