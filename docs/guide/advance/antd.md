@@ -3,6 +3,13 @@ title: 使用 antd 组件
 order: 14
 ---
 
+我们提供了一套 antd 的基础脚手架，通过 CLI 即可直接创建：
+
+```bash
+$ mkdir icejs-antd && cd icejs-antd
+$ npm ini ice --template @icedesign/ice-antd-scaffold
+```
+
 项目开发中如果使用 antd 组件作为基础 UI 组件，可以通过工程插件提供 antd 组件的按需加载和主题定制能力。
 
 ## 插件安装
