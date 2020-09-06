@@ -3,7 +3,7 @@ module.exports = async ({ onGetWebpackConfig, log }, pluginOptions = {}) => {
   onGetWebpackConfig((config) => {
     // support less modify vars
     if (themeConfig) {
-      log.info('自定义 Antd 组件主题变量：', themeConfig);
+      log.info('自定义 antd 组件主题变量：', themeConfig);
     }
     ['less', 'less-module'].forEach((rule) => {
       config.module
