@@ -5,7 +5,7 @@ const start = require('./start');
 const build = require('./build');
 const test = require('./test');
 
-module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo) => {
+module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo, extendCli) => {
   if (packageInfo.__ICEJS_INFO__) {
     console.log(
       `${packageInfo.name} ${packageInfo.version}`,
@@ -49,6 +49,10 @@ module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo) =>
     .action(async function() {
       await test(getBuiltInPlugins);
     });
+
+  if (typeof extendCli === 'function') {
+    extendCli(program);
+  }
 
   program.parse(process.argv);
 
