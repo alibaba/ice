@@ -56,9 +56,7 @@ $ npm start
   - setings.json
 
       你需要将页面模板中的所有出现过的模板变量制作一份 基于 JSON schema 的说明放入此文件中，这些说明将转化为可视化表格，以供物料使用者进行配置。
-      > 什么是 [JSON Schema](http://json-schema.org/)?
-      >
-      > JSON Schema 示例:
+      >[JSON Schema](http://json-schema.org/) 示例
       >
       > ```json
       >{
@@ -80,65 +78,17 @@ $ npm start
       >  }
       > ```
 
-      你也可以在这里配置用于生成表单的模式，可选择 [formily](https://github.com/alibaba/formily) 或自定义表单，默认为 [formily](https://github.com/alibaba/formily)。
+      你也可以在这里配置用于生成表单的模式，可选择 [formily](https://github.com/alibaba/formily) 表单或自定义表单，默认为 [formily](https://github.com/alibaba/formily)。
   - mock.js
 
       schema 的对应的的模拟数据，可用于开发调试。
 - `.tmp`: 调试时生成的临时文件位于 `.tmp` 文件夹下。
 
-## 调试
+### 关于 setting.json 的一些建议
 
-### 调试模板
-
-你需要 `build-plugin-block` 插件来对模板进行调试，下载这个插件并将其配置到 `build.json` 文件中。如果你使用了 `iceworks-cli` 脚手架, 那么脚手架已经帮你完成了相关的配置，如果你的 `build.json` 文件并非是通过 `iceworks-cli` 生成，请添加如下代码：
-
-```json
-{
-  "plugins": [
-    [
-      ...
-      "build-plugin-block",
-      {
-        "usingTemplate": true,
-        "materialType": "page"
-      }
-    ]
-}
-```
-
-之后，你需要进入页面物料所在的文件夹，运行项目启动指令启动调试功能。
-
-```
-cd pages/ExamplePage
-npm install // run this command only in first time
-npm start
-```
-
-在调试期间，当你修改 `src/` 下的所有物料源文件或 `config/mock.js` 模拟数据均会触发热加载，你将获得由当前模拟数据生成的实时页面。
-
-### 调试 settting.json
-
-`config/setting.json` 文件是沟通物料模板开发者与使用者的桥梁，物料使用者通过基于 `setting.json` 生成的 [Fromily](https://github.com/alibaba/formily) 表单进行创建页面配置。
-
-我们默认使用了 `fusion design` 主题，这意味着你不需要配置 `JSON Schema` 中关于表单样式的字段即可生成配置界面。如果你需要定制样式，请添加这些字段以生成高度定制化的表单。
-
-> [如何配置 Formily 表单的 JSON Schema ？](https://formilyjs.org/#/0yTeT0/jAU8UVSYI8)
->
-> [fusion design 为默认主题提供了那些组件？](https://formilyjs.org/#/zoi8i0/MAUJU4SyFj)
->
-> [如何控制表单生成定制化布局？](https://formilyjs.org/#/0yTeT0/rpi9iZS5sY)
-
-如果你想要模拟用户配置页面模板，你需要先将页面物料物料托管到云端，之后在 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 中设置 `自定义物料源` 为你发布的物料源。
-
-配置后，你需要在 VS Code 中打开一个当前页面物料可以适配的项目（例如： ICE ），通过 `Ctrl+Shift+P` 或 `⇧⌘P` 唤起 vscode 命令行，输入 `iceworks: 创建页面` 唤起创建页面功能面板。在选定你发布的物料源后可以看到需要调试的页面物料，你可以在这个面板中模拟用户配置过程。
-
-> [如何发布物料？](https://ice.work/docs/materials/get_start)
->
-> [如何配置自定义物料源？](https://ice.work/docs/materials/guide/usage)
-
-如果配置正确，你将看到类似下图的界面：
-
-![使用示例](https://user-images.githubusercontent.com/56879942/91725804-d0ae5680-ebd1-11ea-9716-d7273e816280.png)
+- [formily](https://github.com/alibaba/formily) 表单不支持可以自定义属性名称的对象，因此您必须在类型为 `object` 的模块中添加 `properties` 属性，否则 [formily](https://github.com/alibaba/formily) 表单会认为这是一个不含有任何属性的对象，不会在表单上显示。
+- 如果您需要使用复杂嵌套的表单（例如：在数组中嵌套对象，或是数组的元素中拥有非常多的属性）， 建议将全局的 `labelAlign` 属性设置为 `top` 而非 `left`，这是因为 `left` 的显示范围是 `top` 的三分之一，可能会导致显示问题。
+- 请尽可能为最外层属性设置默认值，或者在模板添加错误边界，渲染时如果没有找到默认值，则会按照 「字符串： ""，布尔值：false，数字：0，数组：[]，对象：{}」 的默认值进行渲染。
 
 ## 发布
 
