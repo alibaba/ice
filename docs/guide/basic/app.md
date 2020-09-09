@@ -47,7 +47,7 @@ const appConfig = {
     rootId: 'ice-container',
 
     // 可选，根节点 DOM 元素，更灵活的 rootId
-    mountNode: document.getElementById('#ice-container'),
+    mountNode: document.getElementById('ice-container'),
 
     // 可选，是否解析路由组件的查询参数
     parseSearchParams: true
