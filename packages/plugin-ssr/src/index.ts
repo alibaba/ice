@@ -7,8 +7,8 @@ import { getWebpackConfig } from 'build-scripts-config';
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log } = api;
   const { rootDir, command, webpack, userConfig, commandArgs } = context;
-  const ICE_TEMP = getValue('ICE_TEMP');
-  const ssrEntry = path.join(ICE_TEMP, 'server.ts');
+  const TEMP_PATH = getValue('TEMP_PATH');
+  const ssrEntry = path.join(TEMP_PATH, 'server.ts');
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, userConfig.outputDir);
   const serverDir = path.join(buildDir, 'server');

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { ICE_TEMP } from '../constant';
+import { TEMP_PATH, ICE_TEMP } from '../constant';
 
 export default (api, options) => {
   const { context, setValue } = api;
@@ -10,7 +10,8 @@ export default (api, options) => {
   const isRax = framework === 'rax';
 
   const tempDir = isRax ? 'rax' : 'ice';
-  const tempPath = path.join(rootDir, `.${tempDir}`);
+  const tempPath = path.join(rootDir, `.${process.env.__FRAMEWORK_NAME__ || tempDir}`);
+  setValue(TEMP_PATH, tempPath);
   setValue(ICE_TEMP, tempPath);
 
   fse.ensureDirSync(tempPath);

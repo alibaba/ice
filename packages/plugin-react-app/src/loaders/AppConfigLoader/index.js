@@ -32,7 +32,8 @@ module.exports = function(appJSON) {
   });
 
   const assembleRoutes = appConfig.routes.map((route) => {
-    if (!route.path || !route.source) {
+    const source = route.realSource || route.source;
+    if (!route.path || !source) {
       throw new Error('route object should have path and source.');
     }
 
@@ -48,7 +49,7 @@ module.exports = function(appJSON) {
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${getDepPath(route.source, this.rootContext)}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${getDepPath(source)}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
@@ -59,7 +60,7 @@ module.exports = function(appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${getDepPath(route.source, this.rootContext)}'))`;
+    const importComponent = `() => () => interopRequire(require('${getDepPath(source)}'))`;
 
     return `routes.push(
       {

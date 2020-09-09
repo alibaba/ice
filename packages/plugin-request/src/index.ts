@@ -4,7 +4,7 @@ import * as fse from 'fs-extra';
 export default async function (api) {
   const { getValue, applyMethod, onGetWebpackConfig } = api;
   const templatePath = path.join(__dirname, '..', 'template');
-  const distPath = path.join(getValue('ICE_TEMP'), 'request');
+  const distPath = path.join(getValue('TEMP_PATH'), 'request');
 
   // move template to .ice/request
   await fse.copy(templatePath, distPath);

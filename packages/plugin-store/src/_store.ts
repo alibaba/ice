@@ -4,7 +4,7 @@ const models = {};
 
 const store = createStore(models);
 
-export default store;
+export { store };
 export type IRootDispatch = IcestoreDispatch<typeof models>;
 export type IRootState = IcestoreRootState<typeof models>;
 

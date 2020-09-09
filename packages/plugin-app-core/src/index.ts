@@ -2,8 +2,8 @@
 import * as path from 'path';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
+import { TEMP_PATH } from './constant';
 import getSourceDir from './utils/getSourceDir';
-import { ICE_TEMP } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
 
@@ -11,9 +11,14 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context, onGetWebpackConfig } = api;
+  const { onHook, context, setValue, onGetWebpackConfig } = api;
   const { command, userConfig } = context;
-  const { targets = [] } = userConfig;
+  const { targets = ['web'] } = userConfig;
+  const { framework } = options;
+
+  // Set framework field
+  setValue('FRAMEWORK', framework);
+
 
   // Check target
   checkTargets(targets);
@@ -40,20 +45,6 @@ export default (api, options) => {
   const generator = initGenerator(api, options);
   setRegisterMethod(api, { generator });
 
-  if (targets.length) {
-    targets.forEach((target) => {
-      onGetWebpackConfig(target, (config) => {
-        if (command === 'build') {
-          if (target === 'web') {
-            const outputDir = userConfig.outputDir;
-            const outputPath = path.join(context.rootDir, outputDir, 'web');
-            config.output.path(outputPath);
-          }
-        }
-      });
-    });
-  }
-
   // watch src folder
   if (command === 'start') {
     dev(api, { render: generator.render });
@@ -76,7 +67,7 @@ function initGenerator(api, options) {
   const srcDir = getSourceDir(userConfig.entry);
   return new Generator({
     rootDir,
-    targetDir: getValue(ICE_TEMP),
+    targetDir: getValue(TEMP_PATH),
     templatesDir,
     appTemplateDir: path.join(templatesDir, `./app/${framework}`),
     commonTemplateDir: path.join(templatesDir, './common'),
@@ -117,7 +108,7 @@ function checkTargets(targets) {
   if you want to describes the browserslist environments for your project.
   you should set browserslist in build.json.
 
-    e.g. { "browserlist": { "chrome": "58", "ie": 11 } }
+    e.g. { "browserslist": { "chrome": "58", "ie": 11 } }
 `;
     console.log();
     console.log(chalk.red(msg));

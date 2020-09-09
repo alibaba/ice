@@ -4,7 +4,7 @@ import * as path from 'path';
 // eg: src/pages/home | src/pages/home/index | src/pages/home/index(.tsx|.jsx) | src/pages/index(.tsx|jsx)
 const pathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
 
-module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
+module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => {
   return {
     visitor: {
       ImportDeclaration(nodePath, state) {
@@ -22,7 +22,7 @@ module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
               // default alias: import Home from '@/pages/Home';
               // custom alias: import Home from '$pages/Home';
               // relative path: import Home from '../pages/Home'
-              const newValue = formatPagePath({ routesPath: state.filename, value, alias, applyMethod });
+              const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
               // replace to: import Home from 'ice/pages/Home'
               if (newValue) {
                 replaceWith(t, nodePath, newValue);
@@ -46,7 +46,7 @@ module.exports = ({ types: t }, { routesPath, alias, applyMethod }) => {
                 // default alias: const Home = lazy(() => import('@/pages/Home'));
                 // custom alias: const Home = lazy(() => import('$pages/home));
                 // relative path: const Home = lazy(() => import('../pages/Home'));
-                const newValue = formatPagePath({ routesPath: state.filename, value, alias, applyMethod });
+                const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
                 // replace to: const Home =lazy (() => import('ice/Home/Home'));
                 if (newValue) {
                   args[i].value = newValue;
@@ -67,6 +67,7 @@ interface IAlias {
 interface IGetConfigRoutePathParmas {
   routesPath: string;
   value: string;
+  tempDir: string;
   alias: IAlias;
   applyMethod: Function;
 }
@@ -110,7 +111,7 @@ function matchRelativePath(routesPath: string, value: string, applyMethod: Funct
 /**
  * 格式化路由的替换路径值
  */
-function formatPagePath({ routesPath, value, alias, applyMethod }: IGetConfigRoutePathParmas): string {
+function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGetConfigRoutePathParmas): string {
   const matchedPagePath = matchRelativePath(routesPath, value, applyMethod) || matchAliasPath(alias, value, applyMethod);
   if (matchedPagePath && pathRegExp.test(matchedPagePath)) {
     let newValue = '';
@@ -119,7 +120,7 @@ function formatPagePath({ routesPath, value, alias, applyMethod }: IGetConfigRou
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `ice/${pageName}/${pageName}.tsx` : '';
+      newValue = pageName ? `${tempDir}/${pageName}/index.tsx` : '';
     }
     return newValue;
   }

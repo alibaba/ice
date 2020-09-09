@@ -1,6 +1,6 @@
 {
   "name": "rax-app-renderer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -11,6 +11,9 @@
     "create-app-container": "^0.1.0",
     "create-use-router": "^0.1.0",
     "universal-env": "^3.0.0"
+  },
+  "devDependencies": {
+    "rax": "^1.0.0"
   },
   "directories": {
     "lib": "lib",
