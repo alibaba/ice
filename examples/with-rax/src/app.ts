@@ -7,6 +7,10 @@ runApp({
     },
     onHide() {
       console.log('app hide...');
-    }
+    },
+    parseSearchParams: true
+  },
+  router: {
+    basename: '/home'
   }
 });

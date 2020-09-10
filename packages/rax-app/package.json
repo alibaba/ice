@@ -1,6 +1,6 @@
 {
   "name": "rax-app",
-  "version": "3.0.0-3",
+  "version": "3.0.0-4",
   "description": "command line interface and builtin plugin for rax app",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -17,10 +17,10 @@
     "@alib/build-scripts": "^0.1.24",
     "build-plugin-app-core": "0.1.14",
     "build-plugin-ice-store": "1.7.2",
-    "build-plugin-rax-app": "5.2.2-4",
+    "build-plugin-rax-app": "5.2.6",
     "chokidar": "^3.3.1",
     "commander": "^5.0.0",
-    "create-cli-utils": "^0.1.0",
+    "create-cli-utils": "0.1.2",
     "detect-port": "^1.3.0",
     "inquirer": "^7.1.0",
     "yargs-parser": "^18.1.2"
@@ -29,9 +29,6 @@
     "bin",
     "lib"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/ice.git"

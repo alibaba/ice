@@ -6,6 +6,7 @@ import createShareAPI, { history } from 'create-app-shared';
 <% if (isReact) {%>
   import reactAppRenderer from 'react-app-renderer';
   import { withRouter as defaultWithRouter } from 'react-router';
+  import genWithSearchParams from './genWithSearchParams';
 <% } %>
 
 <% if (isRax) {%>
@@ -38,8 +39,7 @@ const {
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener,
-  useSearchParams,
-  withSearchParams
+  getSearchParams
 } = createShareAPI({
   createElement,
   useEffect,
@@ -82,9 +82,11 @@ export {
   withRouter,
   history,
   getHistory,
-  useSearchParams,
-  withSearchParams,
-
+  getSearchParams,
+<% if (isReact) {%>
+  useSearchParams: getSearchParams,
+  withSearchParams: genWithSearchParams(getSearchParams),
+<% } %>
   // LifeCycles api
   usePageShow,
   usePageHide,

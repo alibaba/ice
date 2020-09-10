@@ -121,9 +121,7 @@ const createNavigation = (api) => (props) => {
   _updatePageTrigger = setUpdateTemp;
   // eslint-disable-next-line
   maxAlivePageNum && (config.maxAlivePageNum = maxAlivePageNum);
-
   const TabBar = createTabBar(api);
-
   return createElement(
     Fragment,
     null,

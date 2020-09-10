@@ -1,11 +1,9 @@
-import * as queryString from 'query-string';
-import { getHistory } from './history';
+import { createElement } from 'react';
 
-export default (createElement) => {
+export default (getSearchParams) => {
   const withSearchParams = Component => {
     const WrapperedSearchParams = props => {
-      const history = getHistory();
-      const searchParams = queryString.parse(history.location.search);
+      const searchParams = getSearchParams();
       return createElement(
         Component,
         {
