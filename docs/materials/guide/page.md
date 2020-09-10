@@ -56,9 +56,7 @@ $ npm start
   - setings.json
 
       你需要将页面模板中的所有出现过的模板变量制作一份 基于 JSON schema 的说明放入此文件中，这些说明将转化为可视化表格，以供物料使用者进行配置。
-      > 什么是 [JSON Schema](http://json-schema.org/)?
-      >
-      > JSON Schema 示例:
+      >[JSON Schema](http://json-schema.org/) 示例
       >
       > ```json
       >{
@@ -80,11 +78,17 @@ $ npm start
       >  }
       > ```
 
-      你也可以在这里配置用于生成表单的模式，可选择 [formily](https://github.com/alibaba/formily) 或自定义表单，默认为 [formily](https://github.com/alibaba/formily)。
+      你也可以在这里配置用于生成表单的模式，可选择 [formily](https://github.com/alibaba/formily) 表单或自定义表单，默认为 [formily](https://github.com/alibaba/formily)。
   - mock.js
 
       schema 的对应的的模拟数据，可用于开发调试。
 - `.tmp`: 调试时生成的临时文件位于 `.tmp` 文件夹下。
+
+### 关于 setting.json 的一些建议
+
+- [formily](https://github.com/alibaba/formily) 表单不支持可以自定义属性名称的对象，因此您必须在类型为 `object` 的模块中添加 `properties` 属性，否则 [formily](https://github.com/alibaba/formily) 表单会认为这是一个不含有任何属性的对象，不会在表单上显示。
+- 如果您需要使用复杂嵌套的表单（例如：在数组中嵌套对象，或是数组的元素中拥有非常多的属性）， 建议将全局的 `labelAlign` 属性设置为 `top` 而非 `left`，这是因为 `left` 的显示范围是 `top` 的三分之一，可能会导致显示问题。
+- 请尽可能为最外层属性设置默认值，或者在模板添加错误边界，渲染时如果没有找到默认值，则会按照 「字符串： ""，布尔值：false，数字：0，数组：[]，对象：{}」 的默认值进行渲染。
 
 ## 发布
 
