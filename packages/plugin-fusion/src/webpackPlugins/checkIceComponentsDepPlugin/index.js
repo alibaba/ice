@@ -42,21 +42,13 @@ module.exports = class CheckDepsPlugin {
 
       console.log('\n----项目依赖健康检查-----');
 
-      // 1. 多版本
-      Object.keys(depModules).forEach((moduleName) => {
-        const versions = depModules[moduleName];
-        if (versions.length > 1) {
-          this.log.warn(`项目依赖了 ${moduleName} 的两个版本，`, versions);
-        }
-      });
-
-      // 2. 多份基础组件
+      // 1. 多份基础组件
       const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter((name) => depModules[name]);
       if (baseComponentDeps.length > 1) {
         this.log.warn(`项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
       }
 
-      // 3. 业务组件与基础组件的版本对应关系
+      // 2. 业务组件与基础组件的版本对应关系
       const pkgDirectDeps = this.pkg.dependencies || {};
       const depFdNext = pkgDirectDeps['@alifd/next'];
       const depFeNext = pkgDirectDeps['@ali/ice'] || pkgDirectDeps['@icedesign/base'] || pkgDirectDeps['@alife/next'];
@@ -85,7 +77,7 @@ module.exports = class CheckDepsPlugin {
         });
       }
 
-      // 4. 不维护的业务组件
+      // 3. 不维护的业务组件
       Object.keys(depModules).forEach((moduleName) => {
         const deprecatedMsg = deprecatedComponents[moduleName];
         if (deprecatedMsg) {
