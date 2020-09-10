@@ -12,11 +12,26 @@ const getWebOutputPath = require('./utils/getWebOutputPath');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 
 module.exports = (api) => {
-  const { onGetJestConfig, onGetWebpackConfig, context, registerTask, onHook, applyMethod } = api;
+  const { onGetJestConfig, onGetWebpackConfig, context, registerTask, onHook } = api;
   const { command, rootDir, commandArgs, userConfig } = context;
-  const { targets = [WEB] } = userConfig;
+  const { targets = [WEB], mpa } = userConfig;
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
-  const openPage = getOpenPage({ userConfig, commandArgs, applyMethod, context });
+
+  // open the specified html in MPA mode
+  let entryHtml;
+  if (mpa) {
+    if (commandArgs.mpaEntry) {
+      const arr = commandArgs.mpaEntry.split(',');
+      const pageName = arr[0].toLocaleLowerCase();
+      entryHtml = `${pageName}.html`;
+    } else {
+      onGetWebpackConfig(config => {
+        const entryNames = Object.keys(config.entryPoints.entries());
+        const pageName = entryNames[0].toLocaleLowerCase();
+        entryHtml = `${pageName}.html`;
+      });
+    }
+  }
 
   // register cli option
   registerCliOption(api);
@@ -112,8 +127,8 @@ module.exports = (api) => {
 
           console.log();
           console.log(chalk.green(' Starting the development server at:'));
-          console.log('   - Local  : ', chalk.underline.white(getLocalUrl(urls.localUrlForBrowser, openPage)));
-          console.log('   - Network: ', chalk.underline.white(getLocalUrl(urls.lanUrlForTerminal, openPage)));
+          console.log('   - Local  : ', chalk.underline.white(getLocalUrl(urls.localUrlForBrowser, entryHtml)));
+          console.log('   - Network: ', chalk.underline.white(getLocalUrl(urls.lanUrlForTerminal, entryHtml)));
           console.log();
         }
       }
@@ -133,29 +148,11 @@ module.exports = (api) => {
   if (!commandArgs.disableOpen && !isMiniapp) {
     onHook('after.start.devServer', ({ url }) => {
       // do not open browser when restart dev
-      if (!process.env.RESTART_DEV) openBrowser(getLocalUrl(url, openPage));
+      if (!process.env.RESTART_DEV) openBrowser(getLocalUrl(url, entryHtml));
     });
   }
 };
 
-function getLocalUrl(url, openPage) {
-  return openPage ? `${url}${openPage}` : url;
-}
-
-function getOpenPage({ userConfig, commandArgs, applyMethod, context }) {
-  const { mpa, entry } = userConfig;
-  const { rootDir } = context;
-  const { mpaEntry } = commandArgs;
-  if (mpa) {
-    if (mpaEntry) {
-      const arr = mpaEntry.split(',');
-      const pageName = arr[0].toLocaleLowerCase();
-      return `${pageName}.html`;
-    } else {
-      const srcDir = applyMethod('getSourceDir', entry);
-      const pages = applyMethod('getPages', rootDir, srcDir);
-      const firstPageName = pages[0].toLocaleLowerCase();
-      return `${firstPageName}.html`;
-    }
-  }
+function getLocalUrl(url, entryHtml) {
+  return entryHtml ? `${url}${entryHtml}` : url;
 }
