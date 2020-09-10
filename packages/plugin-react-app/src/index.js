@@ -43,7 +43,7 @@ module.exports = (api) => {
   });
 
   if (command === 'test') {
-    onHook('before.test.run', (config) => {
+    onHook('before.test.run', ({ config }) => {
       debug(JSON.stringify(config, null, 2));
     });
 
@@ -71,7 +71,7 @@ module.exports = (api) => {
   }
 
   if (command === 'start') {
-    onHook('before.start.run', (config) => {
+    onHook('before.start.run', ({ config }) => {
       debug(JSON.stringify(config, null, 2));
     });
 
@@ -129,7 +129,7 @@ module.exports = (api) => {
   }
 
   if (command === 'build') {
-    onHook('before.build.run', (config) => {
+    onHook('before.build.run', ({ config }) => {
       debug(JSON.stringify(config, null, 2));
     });
 
