@@ -20,6 +20,7 @@
     "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.3.1",
+    "debug": "^4.1.1",
     "eslint-loader": "^4.0.0",
     "fork-ts-checker-webpack-plugin": "^5.0.5",
     "friendly-errors-webpack-plugin": "^1.7.0",
