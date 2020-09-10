@@ -30,5 +30,6 @@
     { "path": "packages/plugin-rml" },
     { "path": "packages/plugin-stark-module" },
     { "path": "packages/plugin-webpack5" },
+    { "path": "packages/webpack-dev-mock" },
   ]
 }
