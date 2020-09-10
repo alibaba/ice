@@ -37,13 +37,9 @@ function getConfig(rootDir) {
           delete require.cache[file];
         }
       });
-      try {
-        // eslint-disable-next-line import/no-dynamic-require, global-require
-        const mockData = require(mockFile) || {};
-        Object.assign(mockConfig, mockData);
-      } catch (err) {
-        console.error(err);
-      }
+      // eslint-disable-next-line import/no-dynamic-require, global-require
+      const mockData = require(mockFile) || {};
+      Object.assign(mockConfig, mockData);
     }
   });
   return mockConfig;

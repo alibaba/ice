@@ -33,7 +33,7 @@ module.exports = function matchPath(req, mockConfig) {
           const key = keys[i - 1];
           const prop = key.name;
           const val = decodeParam(match[i]);
-          if (val !== undefined || !val.hasOwnProperty.call(params, prop)) {
+          if (val !== undefined || !Object.prototype.hasOwnProperty.call(params, prop)) {
             params[prop] = val;
           }
         }
