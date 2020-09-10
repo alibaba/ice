@@ -1,4 +1,4 @@
-import * as pathToRegexp from 'path-to-regexp';
+import * as pathToRegexpModule from 'path-to-regexp';
 
 const cache = {};
 function decodeParam(val) {
@@ -27,7 +27,7 @@ function matchPath(route, pathname, parentParams) {
   const keys = cache[keysCacheKey] || [];
 
   if (!regexp) {
-    regexp = pathToRegexp(path, keys, {
+    regexp = (pathToRegexpModule as any).pathToRegexp(path, keys, {
       end,
       strict,
       sensitive
