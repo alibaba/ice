@@ -561,3 +561,18 @@ module.exports = ({ context, onGetWebpackConfig }) => {
   ]
 }
 ```
+
+## 调试
+
+在某些情况下可能遇到配置没有生效，或者配置不符合预期，这时候我们可以通过下面的命令进行调试，查看最终的 Webpack 配置是否符合预期。
+
+```bash
+# 调试开发环境
+$ DEBUG=icejs npm start
+
+# 调试构建环境
+$ DEBUG=icejs npm run build
+
+# 调试构建环境
+$ DEBUG=icejs npm run test
+```
