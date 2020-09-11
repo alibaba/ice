@@ -51,9 +51,9 @@ function _renderApp(context, options) {
   // Emit app launch cycle
   emitLifeCycles();
 
-  const isMobileWeb = Object.keys(staticConfig).length;
-  if (isMobileWeb) {
-    return _renderH5({ runtime, history }, options);
+  const isMobile = Object.keys(staticConfig).length;
+  if (isMobile) {
+    return _renderMobile({ runtime, history }, options);
   } else {
     return _render({ runtime }, options);
   }
@@ -91,7 +91,7 @@ function _render({ runtime }, options) {
   return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
 }
 
-function _renderH5({ runtime, history }, options) {
+function _renderMobile({ runtime, history }, options) {
   const { staticConfig, appConfig = {} } = options;
   const { routes } = staticConfig;
   const { rootId, mountNode } = appConfig.app;
