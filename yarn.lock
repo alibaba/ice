@@ -17539,20 +17539,6 @@ webpack-dev-middleware@^3.7.2:
     range-parser "^1.2.1"
     webpack-log "^2.0.0"
 
-webpack-dev-mock@^0.1.5:
-  version "0.1.6"
-  resolved "https://registry.npm.taobao.org/webpack-dev-mock/download/webpack-dev-mock-0.1.6.tgz#ab028aee12e2fae707abbc7a554359f145172f3d"
-  integrity sha1-qwKK7hLi+ucHq7x6VUNZ8UUXLz0=
-  dependencies:
-    body-parser "^1.18.3"
-    chalk "^2.4.1"
-    chokidar "^2.0.4"
-    debug "^3.1.0"
-    express-http-proxy "^1.2.0"
-    glob "^7.1.4"
-    multer "^1.4.2"
-    path-to-regexp "^3.0.0"
-
 webpack-dev-server@^3.7.2:
   version "3.11.0"
   resolved "https://registry.npm.taobao.org/webpack-dev-server/download/webpack-dev-server-3.11.0.tgz#8f154a3bce1bcfd1cc618ef4e703278855e7ff8c"
