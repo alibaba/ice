@@ -82,59 +82,62 @@ const renderAlivePages = (routes, { alivePages, currentPage, isAlivePage, create
   return null;
 };
 
-const createNavigation = (api) => (props) => {
-  const { createElement, useEffect, useState, Fragment } = api;
-  const { staticConfig, component, history, routes } = props;
-  const { maxAlivePageNum, tabBar } = staticConfig;
+const createNavigation = (api) => {
+  const TabBar = createTabBar(api);
 
-  const [, setUpdateTemp] = useState(null);
+  return (props) => {
+    const { createElement, useEffect, useState, Fragment } = api;
+    const { staticConfig, component, history, routes } = props;
+    const { maxAlivePageNum, tabBar } = staticConfig;
 
-  const Component = component;
-  const currentPathname = history.location.pathname;
-  const currentPage = routes.find(route => route.path === currentPathname) || {};
+    const [, setUpdateTemp] = useState(null);
 
-  const isAlivePage = currentPage.keepAlive;
-  useEffect(() => {
-    // Use display control alive page, need get alive page list.
-    routes.forEach((route) => {
-      if (route.keepAlive) {
-        alivePages.push(route);
+    const Component = component;
+    const currentPathname = history.location.pathname;
+    const currentPage = routes.find(route => route.path === currentPathname) || {};
+
+    const isAlivePage = currentPage.keepAlive;
+    useEffect(() => {
+      // Use display control alive page, need get alive page list.
+      routes.forEach((route) => {
+        if (route.keepAlive) {
+          alivePages.push(route);
+        }
+      });
+      // If current page is alive page, need update routes.
+      if (isAlivePage) {
+        // @ts-ignore
+        _updatePageTrigger(Date.now());
+      }
+    }, []);
+
+    // Props to page component
+    const pageProps = {};
+    Object.keys(props).forEach((key) => {
+      if (key !== 'staticConfig' && key !== 'component') {
+        pageProps[key] = props[key];
       }
     });
-    // If current page is alive page, need update routes.
-    if (isAlivePage) {
-      // @ts-ignore
-      _updatePageTrigger(Date.now());
-    }
-  }, []);
 
-  // Props to page component
-  const pageProps = {};
-  Object.keys(props).forEach((key) => {
-    if (key !== 'staticConfig' && key !== 'component') {
-      pageProps[key] = props[key];
-    }
-  });
-
-  config.pageProps = pageProps;
-  config.routes = routes;
-  _updatePageTrigger = setUpdateTemp;
-  // eslint-disable-next-line
-  maxAlivePageNum && (config.maxAlivePageNum = maxAlivePageNum);
-  const TabBar = createTabBar(api);
-  return createElement(
-    Fragment,
-    null,
-    isAlivePage ? null : createElement(Component, pageProps),
-    renderAlivePages(routes, { alivePages, currentPage, isAlivePage, createElement }),
-    createElement(
-      TabBar,
-      {
-        config: tabBar,
-        history
-      }
-    )
-  );
+    config.pageProps = pageProps;
+    config.routes = routes;
+    _updatePageTrigger = setUpdateTemp;
+    // eslint-disable-next-line
+    maxAlivePageNum && (config.maxAlivePageNum = maxAlivePageNum);
+    return createElement(
+      Fragment,
+      null,
+      isAlivePage ? null : createElement(Component, pageProps),
+      renderAlivePages(routes, { alivePages, currentPage, isAlivePage, createElement }),
+      createElement(
+        TabBar,
+        {
+          config: tabBar,
+          history
+        }
+      )
+    );
+  };
 };
 
 export default createNavigation;

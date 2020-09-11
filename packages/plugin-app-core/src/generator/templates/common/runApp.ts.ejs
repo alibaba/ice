@@ -76,6 +76,11 @@ export function runApp(appConfig) {
   })
 };
 
+<% if (isReact) {%>
+  const useSearchParams = getSearchParams;
+  const withSearchParams = genWithSearchParams(getSearchParams);
+<% } %>
+
 // Public API
 export {
   // router api
@@ -84,8 +89,8 @@ export {
   getHistory,
   getSearchParams,
 <% if (isReact) {%>
-  useSearchParams: getSearchParams,
-  withSearchParams: genWithSearchParams(getSearchParams),
+  useSearchParams,
+  withSearchParams,
 <% } %>
   // LifeCycles api
   usePageShow,

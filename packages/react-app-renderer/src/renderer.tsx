@@ -7,6 +7,7 @@ import { createUseRouter } from 'create-use-router';
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
 const useRouter = createUseRouter({ useState, useLayoutEffect });
+const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
 
 export function reactAppRendererWithSSR(context, options) {
   const { appConfig } = options || {};
@@ -97,9 +98,7 @@ function _renderMobileApp({ runtime, appMountNode, history }, options) {
   return _matchInitialComponent(history.location.pathname, routes)
     .then(InitialComponent => {
       const App = () => {
-        const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
         const { component } = useRouter({ routes, history, InitialComponent });
-
         return createElement(
           AppNavigation,
           {
