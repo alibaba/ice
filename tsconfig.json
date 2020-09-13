@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/project-analysis" },
     { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },
@@ -31,6 +32,5 @@
     { "path": "packages/plugin-stark-module" },
     { "path": "packages/plugin-webpack5" },
     { "path": "packages/webpack-dev-mock" },
-    { "path": "packages/project-analysis" },
   ]
 }
