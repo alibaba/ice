@@ -3,6 +3,7 @@ const { getJestConfig } = require('build-scripts-config');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
+const debug = require('debug')('icejs');
 const registerCliOption = require('./registerCliOption');
 const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
@@ -42,6 +43,10 @@ module.exports = (api) => {
   });
 
   if (command === 'test') {
+    onHook('before.test.run', ({ config }) => {
+      debug(JSON.stringify(config, null, 2));
+    });
+
     onGetJestConfig((jestConfig) => {
       const { moduleNameMapper, ...rest } = jestConfig;
 
@@ -66,6 +71,10 @@ module.exports = (api) => {
   }
 
   if (command === 'start') {
+    onHook('before.start.run', ({ config }) => {
+      debug(JSON.stringify(config, null, 2));
+    });
+
     onHook('after.start.compile', ({ urls, stats }) => {
       const statsJson = stats.toJson({
         all: false,
@@ -120,6 +129,10 @@ module.exports = (api) => {
   }
 
   if (command === 'build') {
+    onHook('before.build.run', ({ config }) => {
+      debug(JSON.stringify(config, null, 2));
+    });
+
     targets.forEach((target) => {
       onGetWebpackConfig(target, (config) => {
         const outputPath = getWebOutputPath(context, { target });
