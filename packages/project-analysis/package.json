@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/alibaba/ice/issues"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "globby": "^11.0.1"
+  }
 }
