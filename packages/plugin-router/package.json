@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-router",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "build-plugin-ice-router",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -11,9 +11,11 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "chokidar": "^3.4.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "history": "^4.10.1",
+    "ice-project-analysis": "^1.0.0-0",
     "query-string": "^6.12.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

@@ -1,0 +1,20 @@
+{
+  "name": "ice-project-analysis",
+  "version": "1.0.0-0",
+  "description": "utils for analyze project information",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/ice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "license": "ISC"
+}

@@ -1,6 +1,8 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import * as chokidar from 'chokidar';
 import { IPlugin } from '@alib/build-scripts';
+import { getProjectType, getRoutesInfo } from 'ice-project-analysis';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 
@@ -10,24 +12,25 @@ const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
 const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig }) => {
   const { rootDir, userConfig, command } = context;
+  const { mpa, disableRuntime } = userConfig;
   // [enum] js or ts
-  const projectType = getValue('PROJECT_TYPE');
+  const projectType = getValue('PROJECT_TYPE') || getProjectType(rootDir);
 
   // .tmp path
-  const iceTempPath = getValue('TEMP_PATH');
+  const iceTempPath = getValue('TEMP_PATH') || path.join(rootDir, '.ice');
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
   const { configPath } = routerOptions;
-  const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
-  const srcDir = applyMethod('getSourceDir', userConfig.entry);
-  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
+  const srcDir = applyMethod('getSourceDir', userConfig.entry) || 'src';
+  const getRoutesParams = {
     rootDir,
     tempDir: iceTempPath,
     configPath,
     projectType,
-    isMpa,
+    isMpa: mpa as boolean,
     srcDir
-  });
+  };
+  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', getRoutesParams) || getRoutesInfo(getRoutesParams);
   // add babel plugins for ice lazy
   modifyUserConfig('babelPlugins',
     [
@@ -43,15 +46,17 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const routerTargetPath = path.join(iceTempPath, 'router');
   fse.ensureDirSync(routerTargetPath);
   fse.copySync(routerTemplatesPath, routerTargetPath);
-  applyMethod('addExport', { source: './router' });
-
   // copy types
   fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));
   fse.copySync(path.join(__dirname, '../src/types/base.ts'), path.join(iceTempPath, 'router/types/base.ts'));
-  // set IAppRouterProps to IAppConfig
-  applyMethod('addAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
-  // export IRouterConfig to the public
-  applyMethod('addTypesExport', { source: './router/types' });
+
+  if (!disableRuntime) {
+    applyMethod('addExport', { source: './router' });
+    // set IAppRouterProps to IAppConfig
+    applyMethod('addAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+    // export IRouterConfig to the public
+    applyMethod('addTypesExport', { source: './router/types' });
+  }
   // modify webpack config
   onGetWebpackConfig((config) => {
     // add alias
@@ -89,9 +94,17 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     walker(walkerOptions);
     if (command === 'start') {
       // watch folder change when dev
-      applyMethod('watchFileChange', routerMatch, () => {
-        walker(walkerOptions);
-      });
+      if (!disableRuntime) {
+        applyMethod('watchFileChange', routerMatch, () => {
+          walker(walkerOptions);
+        });
+      } else {
+        chokidar.watch(path.join(rootDir, routerMatch), {
+          ignoreInitial: true,
+        }).on('all', () => {
+          walker(walkerOptions);
+        });
+      }
     }
   }
 };

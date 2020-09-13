@@ -2,7 +2,8 @@ module.exports = (userConfig: any) => {
   if (userConfig.disableRuntime) {
     return [
       'build-plugin-react-app',
-      'build-plugin-ice-mpa'
+      'build-plugin-ice-mpa',
+      'build-plugin-ice-router',
     ];
   }
 
