@@ -1,4 +1,5 @@
 import { createHistory } from './history';
+import getSearchParams from './getSearchParams';
 
 class RuntimeModule {
 
@@ -36,7 +37,8 @@ class RuntimeModule {
       addDOMRender: this.addDOMRender,
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
-      createHistory
+      createHistory,
+      getSearchParams
     };
 
     if (module) module.default({

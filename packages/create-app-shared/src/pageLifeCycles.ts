@@ -51,8 +51,8 @@ function createPageLifeCycle(useEffect) {
 
 export function withPageLifeCycle(Component) {
   class Wrapper extends Component {
-    constructor() {
-      super();
+    constructor(...args) {
+      super(...args);
       if (this.onShow) {
         if (!isMiniAppPlatform) {
           // In MiniApp platform show event will trigger after addPageLifeCycle, so it needn't be execute in constructor

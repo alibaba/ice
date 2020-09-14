@@ -5,6 +5,13 @@ import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
 const useRouter = createUseRouter({ useState, useLayoutEffect });
+let AppNavigation; let TabBar;
+
+if (isWeb) {
+  AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
+} else {
+  TabBar = createTabBar({ createElement, useEffect, useState, Fragment });
+}
 
 let driver = UniversalDriver;
 
@@ -32,11 +39,9 @@ function App(props) {
   if (_isNullableComponent(PageComponent)) return null;
   const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
   if (isWeb) {
-    const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
     return <AppNavigation {...navigationProps} />;
   }
 
-  const TabBar = createTabBar({ createElement, useEffect, useState, Fragment });
   const pageProps = { history, location: history.location, routes, InitialComponent };
   const tabBarProps = { history, config: staticConfig.tabBar };
   return (
