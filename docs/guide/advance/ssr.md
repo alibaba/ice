@@ -130,7 +130,7 @@ router.get('/*', async (ctx) => {
   // 将资源下载到 server 端
   // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
   const render = require(serverBundlePath);
-  const html = render({
+  const { html, error } = await render({
     // 当前请求的路径（必选参数）
     pathname: ctx.req.pathname
     // 可选
