@@ -77,7 +77,11 @@ export function runApp(appConfig) {
 };
 
 <% if (isReact) {%>
-  const useSearchParams = getSearchParams;
+  const useSearchParams = () => {
+    *// @deprecated*
+​    console.warn('Detected that you are using useSearchParams, please use getSearchParams method, Visit https://ice.work/docs/guide/basic/api.');
+    getSearchParams();
+  };
   const withSearchParams = genWithSearchParams(getSearchParams);
 <% } %>
 
