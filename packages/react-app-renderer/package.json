@@ -1,6 +1,6 @@
 {
   "name": "react-app-renderer",
-  "version": "0.1.8",
+  "version": "0.1.9-1",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -11,8 +11,8 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "create-app-container": "^0.1.0",
-    "create-use-router": "^0.1.0"
+    "create-app-container": "0.1.2-0",
+    "create-use-router": "0.1.1-2"
   },
   "devDependencies": {
     "react": "^16.4.1",
