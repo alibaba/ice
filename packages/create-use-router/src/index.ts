@@ -26,6 +26,7 @@ const router = {
 
     (router as any).fullpath = fullpath;
     const parent = (router as any).root;
+    // @ts-ignore
     const matched = matchRoute(
       parent,
       parent.path,
