@@ -79,7 +79,7 @@ const createTabBar = (api) => (props) => {
     history.listen((location) => {
       setPathname(location.pathname);
     });
-  }, []);
+  }, [history]);
 
   return createElement(
     Fragment,
@@ -103,7 +103,9 @@ const createTabBar = (api) => (props) => {
               key: `tab-${index}`,
               style: styles.tabBarItem,
               onClick: () => {
-                onClick && onClick(item);
+                if (onClick) {
+                  onClick(item);
+                }
                 if (!item.path) {
                   console.warn(`TabBar item ${item.name} need set path`);
                 } else {

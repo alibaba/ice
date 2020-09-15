@@ -21,6 +21,7 @@ export default (api, options: IOptions) => {
 
 
   onGetWebpackConfig((config: any) => {
+    // eslint-disable-next-line
     aliasMap.forEach(alias => {
       const hasAlias = config.resolve.alias.has(alias[0]);
       if(!hasAlias) {

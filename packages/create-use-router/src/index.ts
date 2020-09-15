@@ -1,12 +1,84 @@
 import * as pathToRegexpModule from 'path-to-regexp';
 
 const cache = {};
+
+let _initialized = false;
+let _routerConfig = null;
+const router = {
+  history: null,
+  handles: [],
+  errorHandler() { },
+  addHandle(handle) {
+    return router.handles.push(handle);
+  },
+  removeHandle(handleId) {
+    router.handles[handleId - 1] = null;
+  },
+  triggerHandles(component) {
+    router.handles.forEach((handle) => {
+      if (handle) {
+        handle(component);
+      }
+    });
+  },
+  match(fullpath) {
+    if (fullpath == null) return;
+
+    (router as any).fullpath = fullpath;
+    const parent = (router as any).root;
+    const matched = matchRoute(
+      parent,
+      parent.path,
+      fullpath
+    );
+
+    // eslint-disable-next-line
+    function next(parent) {
+      const current = matched.next();
+
+      if (current.done) {
+        const error = new Error(`No match for ${fullpath}`);
+        // @ts-ignore
+        return router.errorHandler(error, router.history.location);
+      }
+
+      let component = current.$.route.component;
+      if (typeof component === 'function') {
+        component = component(current.$.params, router.history.location);
+      }
+
+      if (component instanceof Promise) {
+        // Lazy loading component by import('./Foo')
+        // eslint-disable-next-line
+        return component.then((component) => {
+          // Check current fullpath avoid router has changed before lazy loading complete
+          // @ts-ignore
+          if (fullpath === router.fullpath) {
+            router.triggerHandles(component);
+          }
+        });
+      } else if (component != null) {
+        router.triggerHandles(component);
+        return component;
+      } else {
+        return next(parent);
+      }
+    }
+
+    return next(parent);
+  }
+};
+
 function decodeParam(val) {
   try {
     return decodeURIComponent(val);
   } catch (err) {
     return val;
   }
+}
+
+function matchLocation({ pathname }) {
+  router.match(pathname);
 }
 
 function matchPath(route, pathname, parentParams) {
@@ -118,78 +190,6 @@ function matchRoute(route, baseUrl, pathname, parentParams) {
   };
 }
 
-let _initialized = false;
-let _routerConfig = null;
-const router = {
-  history: null,
-  handles: [],
-  errorHandler() { },
-  addHandle(handle) {
-    return router.handles.push(handle);
-  },
-  removeHandle(handleId) {
-    router.handles[handleId - 1] = null;
-  },
-  triggerHandles(component) {
-    router.handles.forEach((handle) => {
-      handle && handle(component);
-    });
-  },
-  match(fullpath) {
-    if (fullpath == null) return;
-
-    // @ts-ignore
-    router.fullpath = fullpath;
-
-    // @ts-ignore
-    const parent = router.root;
-    // @ts-ignore
-    const matched = matchRoute(
-      parent,
-      parent.path,
-      fullpath
-    );
-
-    function next(parent) {
-      const current = matched.next();
-
-      if (current.done) {
-        const error = new Error(`No match for ${fullpath}`);
-        // @ts-ignore
-        return router.errorHandler(error, router.history.location);
-      }
-
-      let component = current.$.route.component;
-      if (typeof component === 'function') {
-        component = component(current.$.params, router.history.location);
-      }
-
-      if (component instanceof Promise) {
-        // Lazy loading component by import('./Foo')
-        return component.then((component) => {
-          // Check current fullpath avoid router has changed before lazy loading complete
-          // @ts-ignore
-          if (fullpath === router.fullpath) {
-            router.triggerHandles(component);
-          }
-        });
-      } else if (component != null) {
-        router.triggerHandles(component);
-        return component;
-      } else {
-        return next(parent);
-      }
-    }
-
-    return next(parent);
-  }
-};
-
-function matchLocation({ pathname }) {
-  router.match(pathname);
-}
-
-
 function getInitialComponent(routerConfig) {
   let InitialComponent = [];
 
@@ -231,6 +231,7 @@ export function createUseRouter(api) {
       // @ts-ignore
       router.root = Array.isArray(routes) ? { routes } : routes;
 
+      // eslint-disable-next-line
       const handleId = router.addHandle((component) => {
         setComponent(component);
       });
@@ -240,7 +241,7 @@ export function createUseRouter(api) {
         matchLocation(history.location);
       }
 
-      const unlisten = history.listen((location, action) => {
+      const unlisten = history.listen((location) => {
         matchLocation(location);
       });
 
