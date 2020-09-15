@@ -1,0 +1,32 @@
+{
+  "name": "build-plugin-fusion-crossend",
+  "version": "0.0.1",
+  "description": "plugin for build scripts while use fusion component",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fusion",
+    "build-plugin",
+    "build-scripts"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-import": "^1.11.2",
+    "find-root": "^1.1.0",
+    "ice-skin-loader": "^0.3.0-0",
+    "lodash": "^4.17.15",
+    "resolve-sass-import": "^0.1.0",
+    "semver": "^6.1.0",
+    "webpack-plugin-import": "^0.2.5",
+    "webpack-sources": "^1.3.0"
+  },
+  "peerDependencies": {
+    "node-sass": "^4.9.0"
+  },
+  "devDependencies": {
+    "node-sass": "^4.12.0"
+  }
+}
