@@ -1,7 +1,6 @@
 {
   "name": "ice.js",
   "private": true,
-  "version": "1.8.1",
   "workspaces": [
     "packages/*"
   ],
