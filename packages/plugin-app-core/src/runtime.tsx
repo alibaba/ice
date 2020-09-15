@@ -4,7 +4,7 @@ const module = ({ addProvider, appConfig, wrapperRouteComponent, getSearchParams
   const wrapperPageComponent = (PageComponent) => {
     const WrapperedPageComponent = (props) => {
       const searchParams = parseSearchParams && getSearchParams();
-      return createElement(PageComponent, {... Object.assign({}, props, searchParams)});
+      return createElement(PageComponent, {...Object.assign({}, props, { searchParams })});
     };
     return WrapperedPageComponent;
   };
