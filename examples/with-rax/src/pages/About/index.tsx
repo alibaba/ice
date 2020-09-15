@@ -1,11 +1,15 @@
 import { createElement, PureComponent } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
-import { withPageLifeCycle } from 'rax-app';
+import { getSearchParams, withPageLifeCycle } from 'rax-app';
 
 import './index.css';
 
 class About extends PureComponent {
+  public componentDidMount() {
+    console.log('about search params', getSearchParams());
+  }
+
   public onShow() {
     console.log('about show...');
   }

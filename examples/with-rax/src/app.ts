@@ -8,5 +8,8 @@ runApp({
     onHide() {
       console.log('app hide...');
     }
+  },
+  router: {
+    basename: '/home'
   }
 });

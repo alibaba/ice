@@ -18,7 +18,7 @@ module.exports = (api) => {
 
         config.output.path(path.join(rootDir, 'build'));
 
-        miniappConfig.setConfig(config, userConfig[target] || {}, { context, target, babelRuleName: 'babel-loader' });
+        miniappConfig.setConfig(config, userConfig[target] || {}, { context, target, babelRuleName: 'babel-loader', onGetWebpackConfig });
 
         if (config.plugins.get('MiniCssExtractPlugin')) {
           config.plugin('MiniCssExtractPlugin').tap((args) => [

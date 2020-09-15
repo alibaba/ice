@@ -3,6 +3,7 @@ const { getJestConfig } = require('build-scripts-config');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
+const debug = require('debug')('icejs');
 const registerCliOption = require('./registerCliOption');
 const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
@@ -14,8 +15,24 @@ const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 module.exports = (api) => {
   const { onGetJestConfig, onGetWebpackConfig, context, registerTask, onHook } = api;
   const { command, rootDir, commandArgs, userConfig } = context;
-  const { targets = [WEB] } = userConfig;
+  const { targets = [WEB], mpa } = userConfig;
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
+
+  // open the specified html in MPA mode
+  let entryHtml;
+  if (mpa) {
+    if (commandArgs.mpaEntry) {
+      const arr = commandArgs.mpaEntry.split(',');
+      const pageName = arr[0].toLocaleLowerCase();
+      entryHtml = `${pageName}.html`;
+    } else {
+      onGetWebpackConfig(config => {
+        const entryNames = Object.keys(config.entryPoints.entries());
+        const pageName = entryNames[0].toLocaleLowerCase();
+        entryHtml = `${pageName}.html`;
+      });
+    }
+  }
 
   // register cli option
   registerCliOption(api);
@@ -42,6 +59,10 @@ module.exports = (api) => {
   });
 
   if (command === 'test') {
+    onHook('before.test.run', ({ config }) => {
+      debug(JSON.stringify(config, null, 2));
+    });
+
     onGetJestConfig((jestConfig) => {
       const { moduleNameMapper, ...rest } = jestConfig;
 
@@ -66,6 +87,10 @@ module.exports = (api) => {
   }
 
   if (command === 'start') {
+    onHook('before.start.run', ({ config }) => {
+      debug(JSON.stringify(config, null, 2));
+    });
+
     onHook('after.start.compile', ({ urls, stats }) => {
       const statsJson = stats.toJson({
         all: false,
@@ -111,8 +136,8 @@ module.exports = (api) => {
 
           console.log();
           console.log(chalk.green(' Starting the development server at:'));
-          console.log('   - Local  : ', chalk.underline.white(urls.localUrlForBrowser));
-          console.log('   - Network: ', chalk.underline.white(urls.lanUrlForTerminal));
+          console.log('   - Local  : ', chalk.underline.white(getLocalUrl(urls.localUrlForBrowser, entryHtml)));
+          console.log('   - Network: ', chalk.underline.white(getLocalUrl(urls.lanUrlForTerminal, entryHtml)));
           console.log();
         }
       }
@@ -120,6 +145,10 @@ module.exports = (api) => {
   }
 
   if (command === 'build') {
+    onHook('before.build.run', ({ config }) => {
+      debug(JSON.stringify(config, null, 2));
+    });
+
     targets.forEach((target) => {
       onGetWebpackConfig(target, (config) => {
         const outputPath = getWebOutputPath(context, { target });
@@ -132,7 +161,11 @@ module.exports = (api) => {
   if (!commandArgs.disableOpen && !isMiniapp) {
     onHook('after.start.devServer', ({ url }) => {
       // do not open browser when restart dev
-      if (!process.env.RESTART_DEV) openBrowser(url);
+      if (!process.env.RESTART_DEV) openBrowser(getLocalUrl(url, entryHtml));
     });
   }
 };
+
+function getLocalUrl(url, entryHtml) {
+  return entryHtml ? `${url}${entryHtml}` : url;
+}

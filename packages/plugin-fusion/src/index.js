@@ -19,7 +19,7 @@ function normalizeEntry(entry, preparedChunks) {
 }
 
 module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {}) => {
-  const { themePackage, themeConfig, nextLibDir = 'es', style = true, uniteNextLib, externalNext } = plugionOptions;
+  const { themePackage, themeConfig, nextLibDir = 'es', style = true, uniteNextLib, externalNext, importOptions = {} } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
@@ -146,6 +146,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
         libraryName: '@alifd/next',
         libraryDirectory: nextLibDir,
         style,
+        ...importOptions,
       }];
       ['jsx', 'tsx'].forEach((rule) => {
         config.module

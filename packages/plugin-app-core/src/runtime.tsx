@@ -1,12 +1,9 @@
-import * as queryString from 'query-string';
-
-const module = ({ addProvider, appConfig, wrapperRouteComponent, context: { createElement } }) => {
+const module = ({ addProvider, appConfig, wrapperRouteComponent, getSearchParams, context: { createElement } }) => {
   const { app = {} } = appConfig;
-  const { parseSearchParams } = app;
-
+  const { parseSearchParams = true } = app;
   const wrapperPageComponent = (PageComponent) => {
     const WrapperedPageComponent = (props) => {
-      const searchParams = getSearchParams(parseSearchParams, props.location.search);
+      const searchParams = parseSearchParams && getSearchParams();
       return createElement(PageComponent, {... Object.assign({}, props, searchParams)});
     };
     return WrapperedPageComponent;
@@ -18,12 +15,5 @@ const module = ({ addProvider, appConfig, wrapperRouteComponent, context: { crea
     addProvider(appConfig.app.addProvider);
   }
 };
-
-function getSearchParams(parseSearchParams, locationSearch) {
-  if (parseSearchParams) {
-    const searchParams = queryString.parse(locationSearch);
-    return { searchParams };
-  }
-}
 
 export default module;

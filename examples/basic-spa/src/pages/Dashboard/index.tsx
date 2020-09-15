@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link, useSearchParams, withSearchParams } from 'ice';
+import { Link, getSearchParams } from 'ice';
 
-@withSearchParams
 class Foo extends React.PureComponent {
   public render() {
-    console.log('Foo:', this.props.searchParams);
+    console.log('Foo:', getSearchParams());
     return (
       <>Foo</>
     );
@@ -12,7 +11,7 @@ class Foo extends React.PureComponent {
 }
 
 const Bar = () => {
-  const searchParams = useSearchParams();
+  const searchParams = getSearchParams();
   console.log('Bar:', searchParams);
   return (
     <>Bar</>
