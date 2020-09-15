@@ -60,7 +60,7 @@ module.exports = (api) => {
 
   if (command === 'test') {
     onHook('before.test.run', ({ config }) => {
-      debug(JSON.stringify(config, null, 2));
+      logWebpackConfig(config);
     });
 
     onGetJestConfig((jestConfig) => {
@@ -88,7 +88,7 @@ module.exports = (api) => {
 
   if (command === 'start') {
     onHook('before.start.run', ({ config }) => {
-      debug(JSON.stringify(config, null, 2));
+      logWebpackConfig(config);
     });
 
     onHook('after.start.compile', ({ urls, stats }) => {
@@ -146,7 +146,7 @@ module.exports = (api) => {
 
   if (command === 'build') {
     onHook('before.build.run', ({ config }) => {
-      debug(JSON.stringify(config, null, 2));
+      logWebpackConfig(config);
     });
 
     targets.forEach((target) => {
@@ -168,4 +168,12 @@ module.exports = (api) => {
 
 function getLocalUrl(url, entryHtml) {
   return entryHtml ? `${url}${entryHtml}` : url;
+}
+
+function logWebpackConfig(config) {
+  try {
+    debug(JSON.stringify(config, null, 2));
+  } catch (error) {
+    // ignore error
+  }
 }
