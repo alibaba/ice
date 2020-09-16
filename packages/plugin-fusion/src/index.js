@@ -93,13 +93,16 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
         config.module
           .rule(rule)
           .use('postcss-loader')
-          .loader(require.resolve('postcss-loader'))
-          .options({
-            postcssOptions: {
+          .tap((options) => {
+            const { plugins = [] } = options;
+            return {
+              ...options,
               plugins: [
-                require.resolve('./postcssPlugins/postcss-plugin-px2vw'),
+                ...plugins,
+                // eslint-disable-next-line
+                require('./postcssPlugins/postcssPluginPx2vw'),
               ],
-            },
+            };
           });
       }
 
