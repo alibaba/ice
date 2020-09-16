@@ -19,6 +19,7 @@ $ npm install build-plugin-fusion --save-dev
 * `nextPrefix`  Fusion 组件样式 prefix，一般情况下需要配合入口代码的 `ConfigProvider` 使用，可以将所有的 className 改掉
 * `importOptions` 同 `babel-plugin-import` 参数，默认为 `{ style: true, libraryDirectory: 'es'}` 根据用户设置项将进行合并
 * `externalNext` 配合 `externals` 配置，将 Next 组件作为外部依赖引入
+* `usePx2Vw` 配合postcss插件，将css样式单位px转化为vw，默认为false不开启，true为开启
 
 ## 基础用法
 
