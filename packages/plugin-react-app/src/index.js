@@ -181,7 +181,7 @@ function logWebpackConfig(config) {
         tmp.push(val);
       }
       return val;
-   }, 2));
+    }, 2));
   } catch (error) {
     // ignore error
   }
