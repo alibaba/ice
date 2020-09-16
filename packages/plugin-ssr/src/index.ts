@@ -129,7 +129,7 @@ const plugin = async (api): Promise<void> => {
     }
   });
 
-  onHook('after.build.compile', () => {
+  onHook(`after.${command}.compile`, () => {
     const serverFilePath = path.join(serverDir, serverFilename);
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');

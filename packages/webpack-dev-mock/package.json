@@ -1,0 +1,25 @@
+{
+  "name": "webpack-dev-mock",
+  "version": "1.0.0",
+  "description": "Webpack devserver middleware mock server",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "author": "ice-admin@alibaba-inc.com",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.4",
+    "debug": "^3.1.0",
+    "express-http-proxy": "^1.2.0",
+    "glob": "^7.1.4",
+    "multer": "^1.4.2",
+    "path-to-regexp": "^3.0.0"
+  },
+  "devDependencies": {
+    "express": "^4.16.3"
+  },
+  "repository": "https://github.com/ice-lab/ice-scripts/tree/master/packages/webpack-dev-mock"
+}

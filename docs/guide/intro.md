@@ -24,9 +24,8 @@ order: 2
 - 🦊 **路由**：默认使用配置式路由，同时支持约定式路由
 - 🐯 **数据流**：内置集成 icestore，基于 React Hooks 的轻量级状态管理方案
 - 🐶 **日志**：内置集成 logger，类似 `console.log` 的统一日志方案
-- 🐱 **工具函数**：内置集成 helper，提供常用的工具函数
 - 🦁 **应用配置**：内置集成 config，支持多环境配置
 - 🐴 **Hooks**：提供应用级别 useApp 和页面级别 usePage 等 Hooks API
 - 🐌 **插件体系**：提供插件机制，可以扩展框架的核心功能
 - 🐘 **typescript**：默认使用 typescript
-- 🐂**Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
+- 🐂 **Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
