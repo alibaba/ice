@@ -31,7 +31,7 @@ const routerConfig = [
 
 ```diff
 const UserLogin = lazy(() => import('@/pages/UserLogin'));
-+ const UserLogin = lazy(() => import(/* webpackChunkName: `${name}` */'@/pages/UserLogin'));
++ const UserLogin = lazy(() => import(/* webpackChunkName: 'user-login' */'@/pages/UserLogin'));
 ```
 
 ### 约定式路由
