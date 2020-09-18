@@ -110,7 +110,8 @@ const createNavigation = (api) => {
         // @ts-ignore
         _updatePageTrigger(Date.now());
       }
-    }, [isAlivePage, routes]);
+    // eslint-disable-next-line
+    }, []);
 
     // Props to page component
     const pageProps = {};

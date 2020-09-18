@@ -79,7 +79,8 @@ const createTabBar = (api) => (props) => {
     history.listen((location) => {
       setPathname(location.pathname);
     });
-  }, [history]);
+  // eslint-disable-next-line
+  }, []);
 
   return createElement(
     Fragment,
