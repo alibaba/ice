@@ -159,6 +159,31 @@ export default class Generator {
     this.renderFile(pageComponentTemplatePath, pageComponentTargetPath , pageComponentRenderData);
   }
 
+  private renderPageLayout({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
+    const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Layout.tsx');
+    const pageComponentSourcePath = this.applyMethod('formatPath', `${pageNameDir}/Layout`);
+
+    if (!fse.pathExistsSync(pageComponentSourcePath)) {
+      return;
+    }
+
+    const pageLayoutName = `${pageName}Layout`;
+    const pageLayoutRenderData = {
+      isRax: this.isRax,
+      pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
+      pageComponentExport: pageLayoutName,
+      hasPageStore: false,
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
+    };
+
+    if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
+      pageLayoutRenderData.hasPageStore = true;
+    }
+
+    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath , pageLayoutRenderData);
+  }
+
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
     let content = ejs.render(templateContent, {...extraData});
@@ -197,8 +222,11 @@ export default class Generator {
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);
 
-      // generate .ice/pages/${pageName}/${pageName}.tsx
+      // generate .ice/pages/${pageName}/index.tsx
       this.renderPageComponent(params);
+
+      // generate .ice/pages/${pageName}/${pageName}.tsx
+      this.renderPageLayout(params);
     });
   }
 }
