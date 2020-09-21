@@ -30,7 +30,7 @@ const About = (props) => {
           </div>
       }
 
-      <Link to="/">home</Link>
+      <Link to="/home/a">home</Link>
     </>
   );
 };

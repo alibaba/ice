@@ -8,6 +8,7 @@ export default () => {
     <>
       <h2>{state.title}</h2>
       <Link to="/home/a">PageA</Link>
+      <Link to="/">Index</Link>
     </>
   );
 };
