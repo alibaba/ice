@@ -134,6 +134,8 @@ createApp(appConfig)
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
 | [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] | 可视化智能开发助手 |
+| [formily-repo]| [![formily-status]][formily-package] | [docs][formily-docs] |能力完备性能出众的表单解决方案|
+| [ahooks-repo]| [![ahooks-status]][ahooks-package] | [docs][ahooks-docs] |React Hooks Library|
 
 [icejs]: https://github.com/ice-lab/icejs
 [icestark]: https://github.com/ice-lab/icestark
@@ -154,6 +156,16 @@ createApp(appConfig)
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [iceworks-docs]: https://ice.work/docs/iceworks/about
+
+[formily-repo]: https://github.com/alibaba/formily
+[formily-status]: https://img.shields.io/npm/v/@formily/react.svg
+[formily-package]: https://npmjs.com/package/@formily/react
+[formily-docs]: https://formilyjs.org/
+
+[ahooks-repo]: https://github.com/alibaba/ahooks
+[ahooks-status]: https://img.shields.io/npm/v/@ahooks/react.svg
+[ahooks-package]: https://npmjs.com/package/@ahooks/react
+[ahooks-docs]: https://ahooks.js.org
 
 ## 社区
 
