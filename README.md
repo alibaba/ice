@@ -162,7 +162,7 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 [formily-package]: https://npmjs.com/package/@formily/react
 [formily-docs]: https://formilyjs.org/
 
-[ahooks]: https://github.com/alibaba/ahooks
+[ahooks]: https://github.com/alibaba/hooks
 [ahooks-status]: https://img.shields.io/npm/v/ahooks.svg
 [ahooks-package]: https://npmjs.com/package/ahooks
 [ahooks-docs]: https://ahooks.js.org
