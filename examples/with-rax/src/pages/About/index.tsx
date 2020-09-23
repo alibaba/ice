@@ -22,7 +22,7 @@ class About extends PureComponent {
     return (
       <View className="about">
         <Text className="title">About Page!!!</Text>
-        <Text className="info" onClick={() => this.props.history.push('/')}>Go Home</Text>
+        <Text className="info" onClick={() => (this.props as any).history.push('/')}>Go Home</Text>
       </View>
     );
   }

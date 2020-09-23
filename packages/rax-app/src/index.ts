@@ -1,5 +1,6 @@
 const getBuiltInPlugins = (userConfig) => {
-  const { targets = ['web'], miniapp = {} } = userConfig;
+  const { targets = ['web'] } = userConfig;
+  let compileIndex = 0;
 
   // built-in plugins for rax app
   const builtInPlugins = [
@@ -7,15 +8,14 @@ const getBuiltInPlugins = (userConfig) => {
       'framework': 'rax',
       'alias': 'rax-app'
     }],
-    'build-plugin-ice-store',
-    ['build-plugin-rax-app', {
-      enterCheck: false,
-      targets,
-      miniapp: {
-        buildType: miniapp.buildType || 'runtime'
-      }
-    }]
+    ['build-plugin-app-base', userConfig],
+    'build-plugin-ice-store'
   ];
+
+  if (targets.includes('web')) {
+    builtInPlugins.push(['build-plugin-rax-web', { compileIndex }]);
+    compileIndex++;
+  }
 
   return builtInPlugins;
 };

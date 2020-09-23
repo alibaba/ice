@@ -1,4 +1,5 @@
 {
   "plugins": [],
-  "targets": ["web"]
+  "targets": ["web"],
+  "inlineStyle": true
 }

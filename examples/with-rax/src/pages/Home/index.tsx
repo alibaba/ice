@@ -24,6 +24,7 @@ export default function Home(props) {
   return (
     <View className="home">
       <Logo />
+      <a href="/#/about">1321321</a>
       <Text className="title">Welcome to Your Rax App!!!</Text>
       <Text className="info">More information about Rax</Text>
       <Text className="info" onClick={() => history.push('/about?id=1')}>Go About</Text>

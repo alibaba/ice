@@ -12,27 +12,46 @@ const configPath = path.resolve(rawArgv.config || 'build.json');
 
 const inspectRegExp = /^--(inspect(?:-brk)?)(?:=(?:([^:]+):)?(\d+))?$/;
 
-function modifyInspectArgv(argv) {
-  return Promise.all(
-    argv.map(async item => {
+async function modifyInspectArgv(execArgv, processArgv) {
+  /**
+   * Enable debugger by exec argv, eg. node --inspect node_modules/.bin/build-scripts start
+   * By this way, there will be two inspector, because start.js is run as a child process.
+   * So need to handle the conflict of port.
+   */
+  const result = await Promise.all(
+    execArgv.map(async item => {
       const matchResult = inspectRegExp.exec(item);
       if (!matchResult) {
         return item;
       }
-      // eslint-disable-next-line no-unused-vars
       const [_, command, ip, port = 9229] = matchResult;
       const nPort = +port;
       const newPort = await detect(nPort);
       return `--${command}=${ip ? `${ip}:` : ''}${newPort}`;
     })
   );
+
+  /**
+   * Enable debugger by process argv, eg. npm run start --inspect
+   * Need to change it as an exec argv.
+   */
+  if (processArgv.inspect) {
+    const matchResult = /(?:([^:]+):)?(\d+)/.exec(rawArgv.inspect);
+    const [_, ip, port = 9229] = matchResult || [];
+    const newPort = await detect(port);
+    result.push(`--inspect-brk=${ip ? `${ip}:` : ''}${newPort}`);
+  }
+
+  return result;
 }
+
 
 function restartProcess(forkChildProcessPath) {
   (async () => {
     // remove the inspect related argv when passing to child process to avoid port-in-use error
-    const argv = await modifyInspectArgv(process.execArgv);
-    child = fork(forkChildProcessPath, process.argv.slice(2), { execArgv: argv });
+    const argv = await modifyInspectArgv(process.execArgv, rawArgv);
+    const nProcessArgv = process.argv.slice(2).filter((arg) => arg.indexOf('--inspect') === -1);
+    child = fork(forkChildProcessPath, nProcessArgv, { execArgv: argv });
     child.on('message', data => {
       if (process.send) {
         process.send(data);
