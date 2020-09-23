@@ -43,6 +43,7 @@
     "postcss-preset-env": "^6.7.0",
     "qrcode-terminal": "^0.12.0",
     "rax-babel-config": "^1.0.0",
+    "rax-jest-config": "^1.0.0",
     "rax-webpack-config": "^1.0.0",
     "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",

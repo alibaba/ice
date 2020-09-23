@@ -1,4 +1,4 @@
-const { getJestConfig } = require('build-scripts-config');
+const getJestConfig = require('rax-jest-config');
 
 module.exports = (api) => {
   // eslint-disable-next-line global-require
