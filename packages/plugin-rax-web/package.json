@@ -22,10 +22,10 @@
     "klaw-sync": "^6.0.0",
     "miniapp-builder-shared": "^0.1.5",
     "qs": "^6.9.4",
-    "rax-babel-config": "^0.1.2",
+    "rax-babel-config": "1.0.0-0",
     "rax-compile-config": "^0.2.16",
     "rax-server-renderer": "^1.2.0",
-    "rax-webpack-config": "^0.1.2",
+    "rax-webpack-config": "1.0.0-0",
     "webpack": "^4.44.2",
     "webpack-sources": "^2.0.0"
   }
