@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 const chalk = require('chalk');
 
 module.exports = (err, stats) => {

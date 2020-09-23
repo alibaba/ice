@@ -15,6 +15,7 @@ const {
 const handleWebpackErr = require('./utils/handleWebpackErr');
 
 module.exports = function(api) {
+  // eslint-disable-next-line global-require
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
   const { commandArgs, userConfig } = context;
@@ -23,6 +24,7 @@ module.exports = function(api) {
   onHook('before.start.run', ({ config }) => {
     try {
       debug(config[0].module.rules);
+    // eslint-disable-next-line no-empty
     } catch (err) {}
   });
 

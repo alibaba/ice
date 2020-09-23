@@ -13,6 +13,7 @@ const {
 } = require('./constants');
 
 module.exports = (api) => {
+  // eslint-disable-next-line global-require
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
   const { rootDir, userConfig } = context;
@@ -21,6 +22,7 @@ module.exports = (api) => {
   onHook('before.build.run', ({ config }) => {
     try {
       debug(config[0]);
+    // eslint-disable-next-line no-empty
     } catch (err) {}
   });
 

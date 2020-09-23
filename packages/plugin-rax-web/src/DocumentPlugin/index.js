@@ -40,7 +40,7 @@ module.exports = class DocumentPlugin {
     const pages = {};
 
     // Get all entry point names for html file
-    Object.keys(mainConfig.entry).map(entryName => {
+    Object.keys(mainConfig.entry).forEach(entryName => {
       pages[entryName] = {
         tempFile: `__${entryName.replace(/\//g, '_')}_document`,
         fileName: `${outputFilePrefix}${entryName}.html`
@@ -49,7 +49,7 @@ module.exports = class DocumentPlugin {
 
     // Merge the page info from options
     if (options.pages) {
-      options.pages.map(page => {
+      options.pages.forEach(page => {
         const pageInfo = pages[page.entryName];
         if (pageInfo) {
           Object.assign(pageInfo, {
@@ -74,7 +74,7 @@ module.exports = class DocumentPlugin {
 
     delete webpackConfig.entry.index;
     // Add ssr loader for each entry
-    Object.keys(pages).map((entryName) => {
+    Object.keys(pages).forEach((entryName) => {
       const pageInfo = pages[entryName];
       const { tempFile, source, pagePath } = pageInfo;
 
@@ -153,6 +153,7 @@ module.exports = class DocumentPlugin {
         });
       }
 
+      // eslint-disable-next-line
       for (const page in cachedHTML) {
         compilation.assets[page] = cachedHTML[page];
       }
@@ -184,6 +185,7 @@ async function generateHtml(compilation, options) {
       const Document = loadDocument(documentContent);
       pageSource = Document.renderToHTML(assets);
     } catch (error) {
+      // eslint-disable-next-line no-await-in-loop
       const errorStack = await parse(error, documentContent);
       // Prevent print duplicate error info
       if (!hasPrintError) {

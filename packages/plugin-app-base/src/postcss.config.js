@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable global-require */
 const atImport = require('postcss-import');
 
 // See https://github.com/postcss/postcss-loader#context-ctx

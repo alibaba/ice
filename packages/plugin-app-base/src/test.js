@@ -1,6 +1,7 @@
 const { getJestConfig } = require('build-scripts-config');
 
 module.exports = (api) => {
+  // eslint-disable-next-line global-require
   const debug = require('debug')('rax-app');
   const { onGetJestConfig, context, onHook } = api;
   const { rootDir } = context;
