@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.8
+- [feat] support `crossend` to load h5 component in mobile mode
+
 ## 0.1.7
 
 - [feat] support option `usePx2Vw` to transform css unit
