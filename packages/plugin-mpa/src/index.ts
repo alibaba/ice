@@ -1,34 +1,73 @@
-import * as path from 'path';
 import { IPlugin } from '@alib/build-scripts';
-import getEntries from './getEntries';
+import * as path from 'path';
+import * as fs from 'fs-extra';
 
-const plugin: IPlugin = ({ context, onGetWebpackConfig }) => {
-  const { rootDir } = context;
-  const mpaEntries = getEntries(rootDir);
-  onGetWebpackConfig('web', (config) => {
-    // clear entry points
-    config.entryPoints.clear();
-    // add mpa entries
-    const matchStrs = [];
-    mpaEntries.forEach((entry) => {
-      const { entryName, entryPath, pageName } = entry;
-      const pageEntry = path.join(rootDir, 'src/pages', entryPath);
-      config.entry(entryName).add(/app\.(t|j)sx?$/.test(entryPath) ? pageEntry : `${require.resolve('./mpa-loader')}?type=rax!${pageEntry}`);
-      // get page paths for rule match
-      const matchStr = `src/pages/${pageName}`;
-      matchStrs.push(process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr);
-    });
+const plugin: IPlugin = ({ context, registerUserConfig, registerCliOption, modifyUserConfig, log }) => {
+  const { rootDir, userConfig, commandArgs } = context;
 
-    // modify appJSON rules for mpa
-    if (config.module.rules.get('appJSON')) {
-      const matchInclude = (filepath: string) => {
-        const matchReg = matchStrs.length ? new RegExp(matchStrs.join('|')) : null;
-        return matchReg && matchReg.test(filepath);
-      };
-      config.module.rule('appJSON').include.add(matchInclude);
-    }
+  // register mpa in build.json
+  registerUserConfig({
+    name: 'mpa',
+    validation: 'boolean',
   });
-  // TODO mpa index html
+
+  // support --mpa-entry to specify mpa entry
+  registerCliOption({
+    name: 'mpa-entry',
+    commands: ['start'],
+  });
+
+  if (userConfig.mpa) {
+    const pagesPath = path.join(rootDir, 'src/pages');
+    const pages = fs.existsSync(pagesPath)
+      ? fs.readdirSync(pagesPath)
+        .filter(page => !/^[._]/.test(page))
+        .map(page => path.parse(page).name)
+      : [];
+    let entries = pages.reduce((acc, pageName) => {
+      const entryName = pageName.toLocaleLowerCase();
+      const pageEntry = getPageEntry(rootDir, pageName);
+      if (!pageEntry) return acc;
+      return {
+        ...acc,
+        [entryName]: `src/pages/${pageName}/${pageEntry}`
+      };
+    }, {});
+
+    const finalEntries = {};
+    if (commandArgs.mpaEntry) {
+      const arr = commandArgs.mpaEntry.split(',');
+      arr.forEach((pageName) => {
+        const entryName = pageName.toLocaleLowerCase();
+        if (entries[entryName]) {
+          finalEntries[entryName] = entries[entryName];
+        }
+      });
+      if (Object.keys(finalEntries).length > 0) {
+        entries = finalEntries;
+        log.info('已启用 --map-entry 指定多页入口 \n', JSON.stringify(entries));
+      } else {
+        log.warn(`--map-entry ${commandArgs.entry}`, '未能匹配到指定入口');
+      }
+    } else {
+      log.info('使用多页面模式 \n', JSON.stringify(entries));
+    }
+
+    // modify entry
+    modifyUserConfig('entry', entries);
+  }
 };
+
+function getPageEntry(rootDir, pageName) {
+  const pagePath = path.join(rootDir, 'src', 'pages', pageName);
+  const pageRootFiles = fs.readdirSync(pagePath);
+  const appRegexp = /^app\.(t|j)sx?$/;
+  const indexRegexp = /^index\.(t|j)sx?$/;
+
+  return pageRootFiles.find(file => {
+    // eslint-disable-next-line
+    return appRegexp.test(file) ? 'app' : indexRegexp.test(file) ? 'index' : null;
+  });
+}
 
 export default plugin;
