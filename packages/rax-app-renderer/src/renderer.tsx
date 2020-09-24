@@ -114,7 +114,6 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
 
       const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
       if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
-
       return render(
         appInstance,
         rootEl,

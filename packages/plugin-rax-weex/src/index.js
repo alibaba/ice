@@ -21,15 +21,16 @@ module.exports = (api) => {
 
   onGetWebpackConfig('weex', config => {
     const { userConfig, rootDir, command } = context;
-    // Set output dir
-    if (userConfig.outputDir) {
-      config.output.path(path.resolve(rootDir, userConfig.outputDir));
-    } else {
-      config.output.path(path.resolve(rootDir, 'build', 'weex'));
-    }
-
-    config.devServer.writeToDisk(true);
 
     config.output.filename('weex/[name].js');
+    if (command === 'start') {
+      config.output.filename('weex/[name].js');
+    } else if (command === 'build') {
+      // Set output dir
+      const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
+      : path.resolve(rootDir, 'build', 'weex');
+
+      config.output.path(outputPath);
+    }
   });
 };

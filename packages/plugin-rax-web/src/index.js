@@ -20,15 +20,14 @@ module.exports = (api, { taskIndex }) => {
     const { userConfig, rootDir, command } = context;
     const webConfig = userConfig.web || {};
 
-    // Set output dir
-    if (userConfig.outputDir) {
-      config.output.path(path.resolve(rootDir, userConfig.outputDir));
-    } else {
-      config.output.path(path.resolve(rootDir, 'build', 'web'));
-    }
-
     if (command === 'start') {
       setDev(config, taskIndex);
+    } else if (command === 'build') {
+      // Set output dir
+      const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
+      : path.resolve(rootDir, 'build', 'web');
+
+      config.output.path(outputPath);
     }
 
     const webpackConfig = config.toConfig();

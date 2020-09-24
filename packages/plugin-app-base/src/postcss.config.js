@@ -12,6 +12,10 @@ module.exports = ({ file, options, env }) => {
 
 function getPlugins(type) {
   switch (type) {
+    case 'weex':
+      return [
+        atImport()
+      ];
     // Inline style
     case 'inline':
       return [

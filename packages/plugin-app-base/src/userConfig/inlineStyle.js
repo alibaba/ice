@@ -55,12 +55,23 @@ function setCSSRule(configRule, context, value) {
   if (value) {
     configRule.uses.delete('MiniCssExtractPlugin.loader');
     // enbale inlineStyle
-    if (isMiniAppStandard) {
-      configInlineStyle(configRule);
+    if (isInlineStandard || isMiniAppStandard) {
+      configInlineStyle(configRule)
+      .use('postcss-loader')
+        .tap((options) => {
+          return {
+            ...options,
+            config: {
+              path: configPath,
+              ctx: {
+                type: 'weex'
+              },
+            }
+          };
+        });
     } else {
       // Only web need transfrom rpx to vw
       configInlineStyle(configRule)
-        .end()
         .use('postcss-loader')
         .tap((options) => {
           const { plugins = [] } = options;
@@ -113,5 +124,5 @@ function configInlineStyle(configRule) {
     .loader(require.resolve('stylesheet-loader'))
     .options({
       transformDescendantCombinator: true,
-    });
+    }).end();
 }

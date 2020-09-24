@@ -22,7 +22,7 @@ module.exports = function(api) {
 
   onHook('before.start.run', ({ config }) => {
     try {
-      debug(config[0].module.rules);
+      debug(config[0].devServer);
     // eslint-disable-next-line no-empty
     } catch (err) {}
   });
