@@ -1,7 +1,7 @@
 {
-  "name": "build-plugin-rax-web",
+  "name": "build-plugin-rax-weex",
   "version": "1.0.0-0",
-  "description": "rax web app plugin",
+  "description": "rax weex app plugin",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

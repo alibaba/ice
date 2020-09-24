@@ -2,9 +2,9 @@
 // It is determined by webpack configuration, but not vary based on the operating system.
 const HTMLAssetPath = 'index.html';
 
-module.exports = (config, index) => {
+module.exports = (config, taskIndex) => {
   config.devServer.set('before', (app, devServer) => {
-    const compiler = devServer.compiler.compilers[index];
+    const compiler = devServer.compiler.compilers[taskIndex];
     const httpResponseQueue = [];
     let fallbackHTMLContent;
 

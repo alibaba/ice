@@ -5,7 +5,7 @@ const { hmrClient } = require('rax-compile-config');
 module.exports = (config, context) => {
   const { rootDir, command } = context;
   const isDev = command === 'start';
-  const target = 'web';
+  const target = 'weex';
 
   // SPA
   const appEntry = absoluteModuleResolve(rootDir, './src/app');

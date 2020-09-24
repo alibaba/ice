@@ -12,7 +12,6 @@ const {
   WEEX,
   KRAKEN,
 } = require('./constants');
-const handleWebpackErr = require('./utils/handleWebpackErr');
 
 module.exports = function(api) {
   // eslint-disable-next-line global-require
@@ -132,8 +131,6 @@ module.exports = function(api) {
         qrcode.generate(weexUrl, { small: true });
         console.log();
       }
-    } else {
-      handleWebpackErr(err, stats);
     }
   });
 

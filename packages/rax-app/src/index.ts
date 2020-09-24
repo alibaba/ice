@@ -1,6 +1,5 @@
 const getBuiltInPlugins = (userConfig) => {
   const { targets = ['web'] } = userConfig;
-  let compileIndex = 0;
 
   // built-in plugins for rax app
   const builtInPlugins = [
@@ -13,8 +12,11 @@ const getBuiltInPlugins = (userConfig) => {
   ];
 
   if (targets.includes('web')) {
-    builtInPlugins.push(['build-plugin-rax-web', { compileIndex }]);
-    compileIndex++;
+    builtInPlugins.push(['build-plugin-rax-web', { taskIndex: 0 }]);
+  }
+
+  if (targets.includes('weex')) {
+    builtInPlugins.push(['build-plugin-rax-weex']);
   }
 
   return builtInPlugins;
