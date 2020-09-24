@@ -1,8 +1,6 @@
 import React from 'react';
 import { store } from 'ice/Detail';
 
-console.log(store);
-
 class Detail extends React.Component {
   constructor(props) {
     super(props);
