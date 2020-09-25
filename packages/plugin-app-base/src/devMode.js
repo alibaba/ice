@@ -22,7 +22,7 @@ module.exports = function(api) {
 
   onHook('before.start.run', ({ config }) => {
     try {
-      debug(config[0].devServer);
+      debug(config[0]);
     // eslint-disable-next-line no-empty
     } catch (err) {}
   });
@@ -42,7 +42,7 @@ module.exports = function(api) {
       console.log(chalk.green(' Starting the development server at:'));
       console.log();
 
-      if (!commandArgs.disableAssets) {
+      if (commandArgs.disableAssets === false) {
         console.log(
           stats.toString({
             errors: false,

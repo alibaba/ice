@@ -12309,6 +12309,14 @@ nth-check@^1.0.2, nth-check@~1.0.1:
   dependencies:
     boolbase "~1.0.0"
 
+null-loader@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/null-loader/download/null-loader-4.0.0.tgz#8e491b253cd87341d82c0e84b66980d806dfbd04"
+  integrity sha1-jkkbJTzYc0HYLA6EtmmA2AbfvQQ=
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^2.6.5"
+
 num2fraction@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npm.taobao.org/num2fraction/download/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"

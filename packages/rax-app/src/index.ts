@@ -19,6 +19,10 @@ const getBuiltInPlugins = (userConfig) => {
     builtInPlugins.push(['build-plugin-rax-weex']);
   }
 
+  if (targets.includes('kraken')) {
+    builtInPlugins.push(['build-plugin-rax-kraken']);
+  }
+
   return builtInPlugins;
 };
 

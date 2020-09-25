@@ -1,44 +1,42 @@
 const path = require('path');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
-const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');
 
 module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const chainConfig = getWebpackBase(api, {
-    target: 'weex',
+    target: 'kraken',
     babelConfigOptions: { styleSheet: true },
   });
 
   setEntry(chainConfig, context);
-
-  chainConfig.plugin('WeexFrameworkBannerPlugin')
-    .use(WeexFrameworkBannerPlugin);
 
   // Set process bar
   chainConfig
     .plugin('ProgressPlugin')
     .tap(() => {
       return {
-        name: '[ Weex ]'
+        name: '[ Kraken ]'
       };
     })
     .end();
 
-  registerTask('weex', chainConfig);
+  registerTask('kraken', chainConfig);
 
-  onGetWebpackConfig('weex', config => {
+  onGetWebpackConfig('kraken', config => {
     const { userConfig, rootDir, command } = context;
-    config.name('[ Weex ]');
-
+    config.name('[ Kraken ]');
     if (command === 'start') {
-      config.output.filename('weex/[name].js');
+      config.output.filename('kraken/[name].js');
+      // Force disable HMR, kraken not support yet.
+      config.devServer.inline(false);
+      config.devServer.hot(false);
     } else if (command === 'build') {
       // Set output dir
       const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
-      : path.resolve(rootDir, 'build', 'weex');
+      : path.resolve(rootDir, 'build', 'kraken');
 
       config.output.path(outputPath);
     }

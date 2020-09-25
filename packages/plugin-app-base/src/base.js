@@ -1,7 +1,7 @@
 const getWebpackConfig = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
 
-module.exports = (api, { target, babelConfigOptions }) => {
+module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   const { context } = api;
   const { rootDir, command, webpack, commandArgs } = context;
   const appMode = commandArgs.mode || command;

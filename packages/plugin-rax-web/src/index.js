@@ -16,9 +16,20 @@ module.exports = (api, { taskIndex }) => {
   // Set Entry
   setEntry(chainConfig, context);
 
+  // Set process bar
+  chainConfig
+  .plugin('ProgressPlugin')
+    .tap(() => {
+      return {
+        name: '[ Web ]'
+      };
+    })
+    .end();
+
   onGetWebpackConfig('web', (config) => {
     const { userConfig, rootDir, command } = context;
     const webConfig = userConfig.web || {};
+    config.name('[ Web ]');
 
     if (command === 'start') {
       setDev(config, taskIndex);
