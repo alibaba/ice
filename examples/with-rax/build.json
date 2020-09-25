@@ -1,4 +1,4 @@
 {
   "plugins": [],
-  "targets": ["web"]
+  "targets": ["web", "weex", "kraken", "miniapp"]
 }

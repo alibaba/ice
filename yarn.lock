@@ -14531,10 +14531,10 @@ rax-use-router@^3.0.0:
   dependencies:
     path-to-regexp "^3.0.0"
 
-rax-webpack-config@1.0.0-0:
-  version "1.0.0-0"
-  resolved "https://registry.npm.taobao.org/rax-webpack-config/download/rax-webpack-config-1.0.0-0.tgz#18b6bf916ef6f2375f328bad0a5290ab6ca91d76"
-  integrity sha1-GLa/kW728jdfMoutClKQq2ypHXY=
+rax-webpack-config@1.0.0-2:
+  version "1.0.0-2"
+  resolved "https://registry.npm.taobao.org/rax-webpack-config/download/rax-webpack-config-1.0.0-2.tgz#7e57ad2257f04d2ab6c13097552c74f257e7c44b"
+  integrity sha1-fletIlfwTSq2wTCXVSx08lfnxEs=
   dependencies:
     "@babel/core" "7.2.0"
     "@babel/runtime" "^7.2.0"

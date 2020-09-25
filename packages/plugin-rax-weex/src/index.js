@@ -27,6 +27,7 @@ module.exports = (api) => {
 
     if (command === 'start') {
       config.output.filename('weex/[name].js');
+      config.devServer.writeToDisk(false);
     } else if (command === 'build') {
       // Set output dir
       const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)

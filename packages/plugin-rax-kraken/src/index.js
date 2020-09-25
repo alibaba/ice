@@ -21,6 +21,7 @@ module.exports = (api) => {
   onGetWebpackConfig('kraken', config => {
     const { userConfig, rootDir, command } = context;
     if (command === 'start') {
+      config.devServer.writeToDisk(false);
       config.output.filename('kraken/[name].js');
       // Force disable HMR, kraken not support yet.
       config.devServer.inline(false);

@@ -25,6 +25,7 @@ module.exports = (api) => {
 
     if (command === 'start') {
       setDev(config);
+      config.devServer.writeToDisk(false);
     } else if (command === 'build') {
       // Set output dir
       const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
