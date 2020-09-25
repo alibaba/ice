@@ -58,54 +58,17 @@ function setCSSRule(configRule, context, value) {
     if (isInlineStandard || isMiniAppStandard) {
       configInlineStyle(configRule)
       .use('postcss-loader')
-        .tap((options) => {
-          return {
-            ...options,
-            config: {
-              path: configPath,
-              ctx: {
-                type: 'weex'
-              },
-            }
-          };
-        });
+        .tap(getPostCssConfig.bind(null, 'normal'));
     } else {
-      // Only web need transfrom rpx to vw
       configInlineStyle(configRule)
         .use('postcss-loader')
-        .tap((options) => {
-          const { plugins = [] } = options;
-          return {
-            ...options,
-            plugins: [
-              ...plugins,
-              // eslint-disable-next-line
-              require('postcss-plugin-rpx2vw')
-            ],
-            config: {
-              path: configPath,
-              ctx: {
-                type: 'inline'
-              },
-            }
-          };
-        });
+        .tap(getPostCssConfig.bind(null, 'web-inline'));
       }
 
   } else if (isWebStandard || isMiniAppStandard) {
       configRule
         .use('postcss-loader')
-        .tap((options) => {
-          return {
-            ...options,
-            config: {
-              path: configPath,
-              ctx: {
-                type: isWebStandard ? 'web' : 'miniapp'
-              },
-            },
-          };
-        })
+        .tap(getPostCssConfig.bind(null, isWebStandard ? 'web' : 'normal'))
         .end();
     } else if (isInlineStandard) {
       configInlineStyle(configRule);
@@ -125,4 +88,16 @@ function configInlineStyle(configRule) {
     .options({
       transformDescendantCombinator: true,
     }).end();
+}
+
+function getPostCssConfig(type, options) {
+  return {
+    ...options,
+    config: {
+      path: configPath,
+      ctx: {
+        type
+      },
+    }
+  };
 }

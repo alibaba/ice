@@ -12,12 +12,12 @@ module.exports = ({ file, options, env }) => {
 
 function getPlugins(type) {
   switch (type) {
-    case 'weex':
+    case 'normal':
       return [
         atImport()
       ];
     // Inline style
-    case 'inline':
+    case 'web-inline':
       return [
         require('postcss-plugin-rpx2vw')(),
         atImport()
@@ -26,20 +26,16 @@ function getPlugins(type) {
     // extract css file in web while inlineStyle is disabled
     // web/miniapp standard
     case 'web':
-    case 'miniapp':
-      const plugins = [
+      return [
         require('postcss-preset-env')({
           autoprefixer: {
             flexbox: 'no-2009',
           },
           stage: 3,
         }),
+        require('postcss-plugin-rpx2vw')(),
         atImport()
       ];
-      if (type === 'web') {
-        plugins.push(require('postcss-plugin-rpx2vw')());
-      }
-      return plugins;
     default:
       return [];
   }
