@@ -95,19 +95,19 @@ module.exports = function(api) {
         console.log();
       }
       if (targets.includes(WEB)) {
-        console.log(highlightPrint('  [Web] Development Local server at: '));
-        console.log(chalk.underline.white(getLocalUrl(urls.localUrlForBrowser)));
-        console.log(highlightPrint('  [Web] Development Network server at: '));
-        console.log(chalk.underline.white(getLocalUrl(urls.lanUrlForBrowser)));
+        console.log(highlightPrint('  [Web] Development server at: '));
+        console.log(`  ${chalk.underline.white(getLocalUrl(urls.localUrlForBrowser))}`);
+        console.log(`  ${chalk.underline.white(getLocalUrl(urls.lanUrlForBrowser))}`);
         console.log();
       }
 
       if (targets.includes(KRAKEN)) {
         const krakenURL = `${urls.localUrlForBrowser  }kraken/index.js`;
         console.log(highlightPrint('  [Kraken] Development server at: '));
-        console.log(chalk.underline.white(krakenURL));
+        console.log(`  ${chalk.underline.white(krakenURL)}`);
+        console.log();
         console.log(highlightPrint('  [Kraken] Run Kraken Playground App: '));
-        console.log(chalk.underline.white(`kraken -u ${krakenURL}`));
+        console.log(`  ${chalk.underline.white(`kraken -u ${krakenURL}`)}`);
         console.log();
       }
 
@@ -115,7 +115,7 @@ module.exports = function(api) {
         // Use Weex App to scan ip address (mobile phone can't visit localhost).
         const weexUrl = `${urls.lanUrlForBrowser}weex/index.js?wh_weex=true`;
         console.log(highlightPrint('  [Weex] Development server at: '));
-        console.log(chalk.underline.white(weexUrl));
+        console.log(`  ${chalk.underline.white(weexUrl)}`);
         console.log();
         qrcode.generate(weexUrl, { small: true });
         console.log();

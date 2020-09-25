@@ -1,5 +1,4 @@
 {
   "plugins": [],
-  "targets": ["web", "weex", "kraken"],
-  "inlineStyle": true
+  "targets": ["web"]
 }

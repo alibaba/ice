@@ -2,10 +2,8 @@ const { hmrClient } = require('rax-compile-config');
 const fs = require('fs-extra');
 const path = require('path');
 
-module.exports = (config, context) => {
-  const { rootDir, command } = context;
-  const isDev = command === 'start';
-  const target = 'weex';
+module.exports = (config, context, target) => {
+  const { rootDir } = context;
 
   // SPA
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
@@ -24,9 +22,6 @@ module.exports = (config, context) => {
       });
   });
 
-  if (isDev) {
-    entryConfig.add(hmrClient);
-  }
   entryConfig.add(appEntry);
 };
 

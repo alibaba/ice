@@ -57,13 +57,13 @@ function setCSSRule(configRule, context, value) {
     // enbale inlineStyle
     if (isInlineStandard || isMiniAppStandard) {
       configInlineStyle(configRule)
-      .use('postcss-loader')
+        .use('postcss-loader')
         .tap(getPostCssConfig.bind(null, 'normal'));
     } else {
       configInlineStyle(configRule)
         .use('postcss-loader')
         .tap(getPostCssConfig.bind(null, 'web-inline'));
-      }
+    }
 
   } else if (isWebStandard || isMiniAppStandard) {
       configRule
