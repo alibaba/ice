@@ -21,6 +21,7 @@ module.exports = function(api) {
   const { targets } = userConfig;
 
   onHook('before.start.run', ({ config }) => {
+
     try {
       debug(config[0].devServer);
     // eslint-disable-next-line no-empty

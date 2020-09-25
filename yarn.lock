@@ -4721,6 +4721,11 @@ build-plugin-app-core@0.1.15:
     react-app-renderer "^0.1.9"
     universal-env "^3.0.0"
 
+build-plugin-universal-ssr@1.0.0-0:
+  version "1.0.0-0"
+  resolved "https://registry.npm.taobao.org/build-plugin-universal-ssr/download/build-plugin-universal-ssr-1.0.0-0.tgz#26d190c60b7104102b7511acc41071f5492bbe25"
+  integrity sha1-JtGQxgtxBBArdRGsxBBx9UkrviU=
+
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"

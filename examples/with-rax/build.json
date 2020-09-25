@@ -1,7 +1,5 @@
 {
   "targets": ["web"],
-  "plugins": [
-    "../../packages/plugin-rax-ssr/lib/index.js"
-  ],
+  "plugins": [],
   "inlineStyle": true
 }
