@@ -9,7 +9,7 @@ module.exports = (config, postcssrc) => {
       'less',
       'less-module',
     ].forEach(rule => {
-      if (config.module.rules.get(rule)) {
+      if (config.module.rules.has(rule)) {
         config.module
           .rule(rule)
           .use('postcss-loader')

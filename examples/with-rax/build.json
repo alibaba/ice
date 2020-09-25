@@ -1,5 +1,5 @@
 {
   "plugins": [],
-  "targets": ["web"],
+  "targets": ["web", "weex"],
   "inlineStyle": true
 }

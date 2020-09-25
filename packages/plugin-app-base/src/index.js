@@ -3,9 +3,9 @@ const registerCliOption = require('./registerCliOption');
 const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
 const getBase = require('./base');
-const dev = require('./dev');
-const build = require('./build');
-const test = require('./test');
+const dev = require('./setDev');
+const build = require('./setBuild');
+const test = require('./setTest');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
 module.exports = (api) => {

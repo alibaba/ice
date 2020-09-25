@@ -176,7 +176,6 @@ async function generateHtml(compilation, options) {
 
     const files = compilation.entrypoints.get(entryName).getFiles();
     const assets = getAssetsForPage(files, publicPath);
-
     const documentContent = compilation.assets[`${tempFile}.js`].source();
 
     let pageSource;
