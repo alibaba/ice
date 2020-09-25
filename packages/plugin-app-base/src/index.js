@@ -3,9 +3,9 @@ const registerCliOption = require('./registerCliOption');
 const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
 const getBase = require('./base');
-const devMode = require('./devMode');
-const buildMode = require('./buildMode');
-const testMode = require('./testMode');
+const dev = require('./setDev');
+const build = require('./setBuild');
+const test = require('./setTest');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
 module.exports = (api) => {
@@ -33,14 +33,14 @@ module.exports = (api) => {
   });
 
   if (command === 'test') {
-    testMode(api);
+    test(api);
   }
 
   if (command === 'start') {
-    devMode(api);
+    dev(api);
   }
 
   if (command === 'build') {
-    buildMode(api);
+    build(api);
   }
 };
