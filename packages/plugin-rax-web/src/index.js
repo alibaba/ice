@@ -4,7 +4,7 @@ const setEntry = require('./setEntry');
 const DocumentPlugin = require('./DocumentPlugin');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
-module.exports = (api, { compileIndex }) => {
+module.exports = (api) => {
   const { onGetWebpackConfig, getValue, context, registerTask } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
@@ -20,12 +20,14 @@ module.exports = (api, { compileIndex }) => {
     const { userConfig, rootDir, command } = context;
     const webConfig = userConfig.web || {};
 
-    // Set output dir
-    config.output.path(path.resolve(rootDir, userConfig.outputDir, 'web'));
-    config.output.filename('[name].js');
-
     if (command === 'start') {
-      setDev(config, compileIndex);
+      setDev(config);
+    } else if (command === 'build') {
+      // Set output dir
+      const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
+      : path.resolve(rootDir, 'build', 'web');
+
+      config.output.path(outputPath);
     }
 
     const webpackConfig = config.toConfig();

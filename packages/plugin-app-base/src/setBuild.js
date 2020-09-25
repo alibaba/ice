@@ -2,7 +2,6 @@ const path = require('path');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const { getOutputPath } = require('miniapp-builder-shared');
-const handleWebpackErr = require('./utils/handleWebpackErr');
 const {
   MINIAPP,
   WEB,
@@ -94,8 +93,6 @@ module.exports = (api) => {
         );
         console.log();
       }
-    } else {
-      handleWebpackErr(err, stats);
     }
   });
 };

@@ -11,7 +11,7 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context, setValue, onGetWebpackConfig } = api;
+  const { onHook, context, setValue } = api;
   const { command, userConfig } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
@@ -119,6 +119,6 @@ function checkTargets(targets) {
 
 function matchTargets(targets) {
   return targets.every(target => {
-    return ['web', 'miniapp', 'wechat-miniprogram'].includes(target);
+    return ['web', 'miniapp', 'wechat-miniprogram', 'weex', 'kraken', 'bytedance-microapp', 'quickapp'].includes(target);
   });
 }

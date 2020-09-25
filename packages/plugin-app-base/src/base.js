@@ -47,7 +47,7 @@ module.exports = (api, { target, babelConfigOptions }) => {
   ['jsx', 'tsx'].forEach((ruleName) => {
     config.module
       .rule(ruleName)
-      .use('platform')
+      .use('platform-loader')
       .loader(require.resolve('rax-compile-config/src/platformLoader'));
   });
 
