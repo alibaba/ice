@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, store as appStore  } from 'ice';
+import { Link, store as appStore } from 'ice';
 import { store as pageStore } from 'ice/About';
 
 const About = (props) => {
