@@ -160,11 +160,11 @@ export default class Generator {
   }
 
   private renderPageIndex(params) {
-    const { pageName, pageModelsDir, pageModelFile, existedStoreFile } = params;
+    const { pageName, pageModelsDir, pageModelFile } = params;
     const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
 
-    const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile) || existedStoreFile;
+    const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
     const pageComponentRenderData = {
       pageImports: existStore ? 'import store from \'./store\'' : '',
       pageExports: existStore ? ' store ' : ''
