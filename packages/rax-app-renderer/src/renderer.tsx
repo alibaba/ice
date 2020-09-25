@@ -102,7 +102,7 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
     driver = staticConfig.driver;
   }
 
-  const { routes, hydrate = true } = staticConfig;
+  const { routes } = staticConfig;
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   const history = getHistory();
@@ -152,11 +152,13 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
       emitLifeCycles();
 
       const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
+      // @ts-ignore
+      const isSSR = typeof window !== 'undefined' ? window.__INITIAL_DATA__ && window.__INITIAL_DATA__.isSSR : false;
       if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
       return render(
         appInstance,
         rootEl,
-        { driver, hydrate }
+        { driver, hydrate: isSSR }
       );
     });
 }

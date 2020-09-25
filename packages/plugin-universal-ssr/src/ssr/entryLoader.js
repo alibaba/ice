@@ -36,6 +36,7 @@ module.exports = function() {
       const documentData = await getInitialProps(Document, ctx);
 
       const initialData = {
+        isSSR: true,
         shellData,
         pageData,
         pagePath: '${pagePath}'

@@ -13,7 +13,9 @@ const getBuiltInPlugins = (userConfig) => {
 
   if (targets.includes('web')) {
     builtInPlugins.push(['build-plugin-rax-web']);
-    builtInPlugins.push(['build-plugin-universal-ssr']);
+    if (userConfig.web && userConfig.web.ssr) {
+      builtInPlugins.push(['build-plugin-universal-ssr']);
+    }
   }
 
   if (targets.includes('weex')) {
