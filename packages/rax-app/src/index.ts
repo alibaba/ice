@@ -12,7 +12,7 @@ const getBuiltInPlugins = (userConfig) => {
   ];
 
   if (targets.includes('web')) {
-    builtInPlugins.push(['build-plugin-rax-web', { taskIndex: 0 }]);
+    builtInPlugins.push(['build-plugin-rax-web']);
   }
 
   if (targets.includes('weex')) {
