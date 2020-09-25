@@ -30,7 +30,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
 
   config
     .plugin('ProgressPlugin')
-    .use(ProgressPlugin, [progressOptions])
+    .use(ProgressPlugin, [Object.assign({ color: '#F4AF3D' } ,progressOptions)])
     .end()
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables])

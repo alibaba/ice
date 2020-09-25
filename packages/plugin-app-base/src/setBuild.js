@@ -11,12 +11,15 @@ const {
   KRAKEN,
 } = require('./constants');
 
+const highlightPrint = chalk.hex('#F4AF3D');
+
 module.exports = (api) => {
   // eslint-disable-next-line global-require
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
   const { rootDir, userConfig } = context;
   const { outputDir = 'build', targets } = userConfig;
+
 
   onHook('before.build.run', ({ config }) => {
     try {
@@ -37,11 +40,11 @@ module.exports = (api) => {
     const isSuccessful = !messages.errors.length;
 
     if (isSuccessful) {
-      console.log(chalk.green('Build finished:'));
+      console.log(highlightPrint('Build finished:'));
       console.log();
 
       if (targets.includes(WEB)) {
-        console.log(chalk.green('[Web] Bundle at:'));
+        console.log(highlightPrint('[Web] Bundle at:'));
         console.log(
           '   ',
           chalk.underline.white(path.resolve(rootDir, outputDir, WEB))
@@ -50,7 +53,7 @@ module.exports = (api) => {
       }
 
       if (targets.includes(WEEX)) {
-        console.log(chalk.green('[Weex] Bundle at:'));
+        console.log(highlightPrint('[Weex] Bundle at:'));
         console.log(
           '   ',
           chalk.underline.white(path.resolve(rootDir, outputDir, WEEX))
@@ -59,7 +62,7 @@ module.exports = (api) => {
       }
 
       if (targets.includes(KRAKEN)) {
-        console.log(chalk.green('[Kraken] Bundle at:'));
+        console.log(highlightPrint('[Kraken] Bundle at:'));
         console.log(
           '   ',
           chalk.underline.white(path.resolve(rootDir, outputDir, KRAKEN))
@@ -68,7 +71,7 @@ module.exports = (api) => {
       }
 
       if (targets.includes(MINIAPP)) {
-        console.log(chalk.green('[Alibaba MiniApp] Bundle at:'));
+        console.log(highlightPrint('[Alibaba MiniApp] Bundle at:'));
         console.log(
           '   ',
           chalk.underline.white(getOutputPath(context, MINIAPP))
@@ -77,7 +80,7 @@ module.exports = (api) => {
       }
 
       if (targets.includes(WECHAT_MINIPROGRAM)) {
-        console.log(chalk.green('[WeChat MiniProgram] Bundle at:'));
+        console.log(highlightPrint('[WeChat MiniProgram] Bundle at:'));
         console.log(
           '   ',
           chalk.underline.white(getOutputPath(context, WECHAT_MINIPROGRAM))
@@ -86,7 +89,7 @@ module.exports = (api) => {
       }
 
       if (targets.includes(BYTEDANCE_MICROAPP)) {
-        console.log(chalk.green('[ByteDance MicroApp] Bundle at:'));
+        console.log(highlightPrint('[ByteDance MicroApp] Bundle at:'));
         console.log(
           '   ',
           chalk.underline.white(getOutputPath(context, BYTEDANCE_MICROAPP))
