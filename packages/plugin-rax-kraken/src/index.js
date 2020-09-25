@@ -9,25 +9,17 @@ module.exports = (api) => {
   const chainConfig = getWebpackBase(api, {
     target: 'kraken',
     babelConfigOptions: { styleSheet: true },
+    progressOptions: {
+      name: 'Kraken'
+    }
   });
 
   setEntry(chainConfig, context);
-
-  // Set process bar
-  chainConfig
-    .plugin('ProgressPlugin')
-    .tap(() => {
-      return {
-        name: '[ Kraken ]'
-      };
-    })
-    .end();
 
   registerTask('kraken', chainConfig);
 
   onGetWebpackConfig('kraken', config => {
     const { userConfig, rootDir, command } = context;
-    config.name('[ Kraken ]');
     if (command === 'start') {
       config.output.filename('kraken/[name].js');
       // Force disable HMR, kraken not support yet.

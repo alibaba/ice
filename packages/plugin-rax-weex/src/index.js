@@ -10,6 +10,9 @@ module.exports = (api) => {
   const chainConfig = getWebpackBase(api, {
     target: 'weex',
     babelConfigOptions: { styleSheet: true },
+    progressOptions: {
+      name: 'Weex'
+    }
   });
 
   setEntry(chainConfig, context);
@@ -17,21 +20,10 @@ module.exports = (api) => {
   chainConfig.plugin('WeexFrameworkBannerPlugin')
     .use(WeexFrameworkBannerPlugin);
 
-  // Set process bar
-  chainConfig
-    .plugin('ProgressPlugin')
-    .tap(() => {
-      return {
-        name: '[ Weex ]'
-      };
-    })
-    .end();
-
   registerTask('weex', chainConfig);
 
   onGetWebpackConfig('weex', config => {
     const { userConfig, rootDir, command } = context;
-    config.name('[ Weex ]');
 
     if (command === 'start') {
       config.output.filename('weex/[name].js');

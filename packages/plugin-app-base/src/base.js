@@ -1,5 +1,6 @@
 const getWebpackConfig = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
+const ProgressPlugin = require('webpackbar');
 
 module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   const { context } = api;
@@ -28,6 +29,9 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   };
 
   config
+    .plugin('ProgressPlugin')
+    .use(ProgressPlugin, [progressOptions])
+    .end()
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables])
     .end();
