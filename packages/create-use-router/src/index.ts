@@ -121,7 +121,7 @@ function matchRoute(route, baseUrl, pathname, parentParams) {
 let _initialized = false;
 let _routerConfig = null;
 const router = {
-  history: null,
+  history: {} as any,
   handles: [],
   errorHandler() { },
   addHandle(handle) {

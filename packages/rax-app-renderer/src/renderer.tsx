@@ -4,8 +4,11 @@ import { createUseRouter } from 'create-use-router';
 import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
-const useRouter = createUseRouter({ useState, useLayoutEffect });
-let AppNavigation; let TabBar;
+let AppNavigation;
+let TabBar;
+
+// @ts-ignore
+const initialDataFromSSR = global.__INITIAL_DATA__;
 
 if (isWeb) {
   AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
@@ -33,12 +36,48 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
+  const useRouter = createUseRouter({ useState, useLayoutEffect });
   const { staticConfig, history, routes, InitialComponent } = props;
   const { component: PageComponent } = useRouter(() => ({ history, routes, InitialComponent }));
+  const [pageInitialProps, setPageInitialProps] = useState(
+    // If SSR is enabled, set pageInitialProps: {pagePath: pageData}
+    initialDataFromSSR ? { [initialDataFromSSR.pagePath || '']: initialDataFromSSR.pageData || {} } : {}
+  );
+
   // Return null directly if not matched
   if (_isNullableComponent(PageComponent)) return null;
-  const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
+
+  // If SSR is enabled, process getInitialProps method
+  if (isWeb && initialDataFromSSR && PageComponent.getInitialProps && !pageInitialProps[PageComponent.__path]) {
+    // eslint-disable-next-line
+    useEffect(() => {
+      const getInitialPropsPromise = PageComponent.getInitialProps();
+
+      // Check getInitialProps returns promise.
+      if (process.env.NODE_ENV !== 'production') {
+        if (!getInitialPropsPromise.then) {
+          throw new Error(`getInitialProps should be async function or return a promise. See detail at "${  PageComponent.name  }".`);
+        }
+      }
+
+      getInitialPropsPromise.then((nextDefaultProps) => {
+        if (nextDefaultProps) {
+          // Process pageData from SSR
+          const pageData = initialDataFromSSR && initialDataFromSSR.pagePath === PageComponent.__path ? initialDataFromSSR.pageData : {};
+          // Do not cache getInitialPropsPromise result
+          setPageInitialProps(Object.assign({}, { [PageComponent.__path]: Object.assign({}, pageData, nextDefaultProps) }));
+        }
+      }).catch((error) => {
+        // In case of uncaught promise.
+        throw error;
+      });
+    });
+    // Early return null if initialProps were not get.
+    return null;
+  }
+
   if (isWeb) {
+    const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
     return <AppNavigation {...navigationProps} />;
   }
 
@@ -63,7 +102,7 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
     driver = staticConfig.driver;
   }
 
-  const { routes, hydrate = false } = staticConfig;
+  const { routes, hydrate = true } = staticConfig;
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   const history = getHistory();
