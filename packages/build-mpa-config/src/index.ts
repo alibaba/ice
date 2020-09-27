@@ -18,7 +18,7 @@ const setMPAConfig = (config, options: ConfigOptions) => {
   mpaEntries.forEach((entry) => {
     const { entryName, entryPath, pageName } = entry;
     const pageEntry = path.join(rootDir, 'src/pages', entryPath);
-    config.entry(entryName).add(/app\.(t|j)sx?$/.test(entryPath) ? pageEntry : `${require.resolve('./mpa-loader')}?type=${type}!${pageEntry}`);
+    config.entry(entryName).add(pageEntry);
     // get page paths for rule match
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr);
