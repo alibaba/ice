@@ -24,6 +24,8 @@ class EntryPlugin {
       isInlineStyle,
       absoluteDocumentPath,
       absoluteShellPath,
+      absoluteAppConfigPath,
+      absoluteAppPath,
       assetsProcessor
     } = this.options;
 
@@ -44,6 +46,8 @@ class EntryPlugin {
         scripts: isMultiPages ? [`${publicPath}${name}.js`] : [`${publicPath}index.js`],
         absoluteDocumentPath,
         absoluteShellPath,
+        absoluteAppPath,
+        absoluteAppConfigPath,
         assetsProcessor
       };
 

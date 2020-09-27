@@ -17,7 +17,8 @@ module.exports = function() {
   const query = typeof this.query === 'string' ? qs.parse(this.query.substr(1)) : this.query;
   const {
     absoluteDocumentPath,
-    absoluteShellPath,
+    absoluteAppPath,
+    absoluteAppConfigPath,
     pagePath,
     styles = [],
     scripts = [],
@@ -25,24 +26,20 @@ module.exports = function() {
   } = query;
 
   const absolutePagePath = formatPath(this.resourcePath);
-  const hasShell = fs.existsSync(absoluteShellPath);
-  const shellStr = hasShell ? `import Shell from '${formatPath(absoluteShellPath)}'` : 'const Shell = function (props) { return props.children };';
 
   const renderHtmlFnc = `
     async function renderComponentToHTML(Component, ctx) {
-
-      const shellData = await getInitialProps(Shell, ctx);
       const pageData = await getInitialProps(Component, ctx);
-      const documentData = await getInitialProps(Document, ctx);
+      const initialData = appConfig.app && appConfig.app.getInitialData ? await appConfig.app.getInitialData() : {};
 
-      const initialData = {
+      const data = {
         isSSR: true,
-        shellData,
+        initialData,
         pageData,
         pagePath: '${pagePath}'
       };
 
-      const contentElement = createElement(Shell, shellData, createElement(Component, pageData));
+      const contentElement = createElement(Component, pageData);
 
       const initialHtml = renderer.renderToString(contentElement, {
         defaultUnit: 'rpx'
@@ -60,14 +57,14 @@ module.exports = function() {
       DocumentContextProvider.prototype.getChildContext = function() {
         return {
           __initialHtml: initialHtml,
-          __initialData: JSON.stringify(initialData),
+          __initialData: JSON.stringify(data),
           __pagePath: '${pagePath}',
           __styles: styles,
           __scripts: scripts,
         };
       };
       DocumentContextProvider.prototype.render = function() {
-        return createElement(Document, documentData);
+        return createElement(Document, initialData);
       };
 
       const DocumentContextProviderElement = createElement(DocumentContextProvider);
@@ -82,9 +79,12 @@ module.exports = function() {
     import { createElement } from 'rax';
     import renderer from 'rax-server-renderer';
 
+    import '${formatPath(absoluteAppPath)}';
+    import { getAppConfig } from '${formatPath(absoluteAppConfigPath)}'
     import Page from '${formatPath(absolutePagePath)}';
     import Document from '${formatPath(absoluteDocumentPath)}';
-    ${shellStr}
+
+    const appConfig = getAppConfig() || {};
 
     ${renderHtmlFnc}
 

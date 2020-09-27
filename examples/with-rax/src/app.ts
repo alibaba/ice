@@ -7,6 +7,12 @@ runApp({
     },
     onHide() {
       console.log('app hide...');
+    },
+    getInitialData: async () => {
+      return {
+        a: 1,
+        b: 2
+      };
     }
   },
   router: {

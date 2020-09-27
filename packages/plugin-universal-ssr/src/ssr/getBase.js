@@ -7,8 +7,8 @@ const EntryPlugin = require('./entryPlugin');
 const EntryLoader = require.resolve('./entryLoader');
 
 // Can‘t clone webpack chain object, so generate a new chain and reset config
-module.exports = (context, getValue) => {
-  const { userConfig, rootDir } = context;
+module.exports = (context) => {
+  const { userConfig, rootDir, webpack } = context;
 
   const babelConfig = getBabelConfig({
     styleSheet: true,
@@ -27,10 +27,11 @@ module.exports = (context, getValue) => {
 
   config.target('node');
 
-  const { plugins, inlineStyle = true } = userConfig;
+  const { inlineStyle = true } = userConfig;
   // build-plugin-rax-multi-pages is deprecated, but still need to be compatible.
   // eslint-disable-next-line
-  const isMultiPages = getValue('appType') === 'mpa' || !!~plugins.indexOf('build-plugin-rax-multi-pages');
+  // const isMultiPages = getValue('appType') === 'mpa' || !!~plugins.indexOf('build-plugin-rax-multi-pages');
+
   // eslint-disable-next-line
   const appJSON = require(path.resolve(rootDir, 'src/app.json'));
   const entries = appJSON.routes.map((route) => {
@@ -41,14 +42,23 @@ module.exports = (context, getValue) => {
     };
   });
 
+  config
+    .plugin('DefinePlugin')
+    .use(webpack.DefinePlugin, [{
+      'process.env.__IS_SERVER__': true
+    }])
+    .end();
+
   config.plugin('entryPlugin')
     .use(EntryPlugin, [{
       entries,
       loader: EntryLoader,
-      isMultiPages,
+      isMultiPages: false,
       isInlineStyle: inlineStyle,
       absoluteDocumentPath: path.join(rootDir, 'src/document/index.jsx'),
       absoluteShellPath: path.join(rootDir, 'src/shell/index.jsx'),
+      absoluteAppPath: path.join(rootDir, 'src/app.ts'),
+      absoluteAppConfigPath: path.join(rootDir, '.rax', 'appConfig.ts')
     }]);
 
   if (!inlineStyle) {

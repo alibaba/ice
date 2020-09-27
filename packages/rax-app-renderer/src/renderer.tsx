@@ -4,11 +4,10 @@ import { createUseRouter } from 'create-use-router';
 import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
+const useRouter = createUseRouter({ useState, useLayoutEffect });
+
 let AppNavigation;
 let TabBar;
-
-// @ts-ignore
-const initialDataFromSSR = global.__INITIAL_DATA__;
 
 if (isWeb) {
   AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
@@ -36,52 +35,22 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
-  const useRouter = createUseRouter({ useState, useLayoutEffect });
-  const { staticConfig, history, routes, InitialComponent } = props;
+  const { staticConfig, history, routes, InitialComponent, context } = props;
   const { component: PageComponent } = useRouter(() => ({ history, routes, InitialComponent }));
-  const [pageInitialProps, setPageInitialProps] = useState(
-    // If SSR is enabled, set pageInitialProps: {pagePath: pageData}
-    initialDataFromSSR ? { [initialDataFromSSR.pagePath || '']: initialDataFromSSR.pageData || {} } : {}
-  );
 
   // Return null directly if not matched
   if (_isNullableComponent(PageComponent)) return null;
 
-  // If SSR is enabled, process getInitialProps method
-  if (isWeb && initialDataFromSSR && PageComponent.getInitialProps && !pageInitialProps[PageComponent.__path]) {
-    // eslint-disable-next-line
-    useEffect(() => {
-      const getInitialPropsPromise = PageComponent.getInitialProps();
-
-      // Check getInitialProps returns promise.
-      if (process.env.NODE_ENV !== 'production') {
-        if (!getInitialPropsPromise.then) {
-          throw new Error(`getInitialProps should be async function or return a promise. See detail at "${  PageComponent.name  }".`);
-        }
-      }
-
-      getInitialPropsPromise.then((nextDefaultProps) => {
-        if (nextDefaultProps) {
-          // Process pageData from SSR
-          const pageData = initialDataFromSSR && initialDataFromSSR.pagePath === PageComponent.__path ? initialDataFromSSR.pageData : {};
-          // Do not cache getInitialPropsPromise result
-          setPageInitialProps(Object.assign({}, { [PageComponent.__path]: Object.assign({}, pageData, nextDefaultProps) }));
-        }
-      }).catch((error) => {
-        // In case of uncaught promise.
-        throw error;
-      });
-    });
-    // Early return null if initialProps were not get.
-    return null;
-  }
-
   if (isWeb) {
-    const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
+    const navigationProps = Object.assign(
+      { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent },
+      {...context.pageInitialProps}
+    );
     return <AppNavigation {...navigationProps} />;
   }
 
-  const pageProps = { history, location: history.location, routes, InitialComponent };
+  const pageProps = Object.assign({ history, location: history.location, routes, InitialComponent}, {...context});
+
   const tabBarProps = { history, config: staticConfig.tabBar };
   return (
     <Fragment>
@@ -91,7 +60,44 @@ function App(props) {
   );
 }
 
-function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance, ErrorBoundary }) {
+async function raxAppRenderer(options) {
+  const { appConfig, setAppConfig } = options || {};
+
+  setAppConfig(appConfig);
+
+  if (process.env.__IS_SERVER__) return;
+
+  let initialData = {};
+  let pageInitialProps = {};
+
+  // ssr enabled and the server has returned data
+  if ((window as any).__INITIAL_DATA__) {
+    initialData = (window as any).__INITIAL_DATA__.initialData;
+    pageInitialProps = (window as any).__INITIAL_DATA__ .pageData;
+  } else {
+    // ssr not enabled, or SSR is enabled but the server does not return data
+    // eslint-disable-next-line
+    if (appConfig.app && appConfig.app.getInitialData) {
+      initialData = await appConfig.app.getInitialData();
+    }
+  }
+
+  const context = { initialData, pageInitialProps };
+  _renderApp(context, options);
+}
+
+function _renderApp(context, options) {
+  const {
+    appConfig,
+    createBaseApp,
+    emitLifeCycles,
+    pathRedirect,
+    getHistory,
+    staticConfig,
+    createAppInstance,
+    ErrorBoundary
+  } = options;
+
   const {
     runtime,
     appConfig: appDynamicConfig
@@ -116,7 +122,8 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
         staticConfig,
         history,
         routes,
-        InitialComponent: _initialComponent
+        InitialComponent: _initialComponent,
+        context
       };
 
       const { app = {} } = appDynamicConfig;
@@ -152,17 +159,16 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
       emitLifeCycles();
 
       const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
-      // @ts-ignore
-      const isSSR = typeof window !== 'undefined' ? window.__INITIAL_DATA__ && window.__INITIAL_DATA__.isSSR : false;
       if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
+      const isSSR = typeof window !== 'undefined' ? (window as any).__INITIAL_DATA__ && (window as any).__INITIAL_DATA__.isSSR : false;
       return render(
         appInstance,
         rootEl,
         { driver, hydrate: isSSR }
       );
     });
-}
 
+}
 
 export default raxAppRenderer;
 
