@@ -1,7 +1,14 @@
-<% if (importStr) { %>
-  import { createStore, Models } from '@ice/store';
-  <%- importStr %>
+<% if (hasAppStore) { %>
+  import { createStore } from '@ice/store';
+    
+  <%- appStoreImport %>
 
+  export { store, createStore }
+<% } else if (importStr) { %>
+  import { createStore, Models } from '@ice/store';
+    
+  <%- importStr %>
+    
   interface AppModel extends Models {
     <% modelsStr.split(',').forEach(function(model){ %>
       <% if (model) { %>
@@ -12,7 +19,7 @@
 
   const appModel: AppModel = { <%- modelsStr %> };
   const store = createStore(appModel);
-
+    
   export { appModel, store, createStore };
 <% } else { %>
   export {};

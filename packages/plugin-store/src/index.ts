@@ -19,15 +19,6 @@ export default async (api) => {
   // set IStore to IAppConfig
   applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
-  // render template/types.ts.ejs to .ice/store/types.ts or .rax/store/types.ts
-  const typesTemplateContent = fse.readFileSync(typesTemplatePath, 'utf-8');
-  const typesTargetPath = path.join(targetPath, 'store', 'types.ts');
-  const hasAppModels = fse.pathExistsSync(path.join(rootDir, 'src', 'models'));
-  const content = ejs.render(typesTemplateContent, { hasAppModels });
-  fse.ensureFileSync(typesTargetPath);
-  fse.writeFileSync(typesTargetPath, content, 'utf-8');
-  applyMethod('addTypesExport', { source: './store/types' });
-
   const { mpa: isMpa, entry } = userConfig;
   const srcDir = applyMethod('getSourceDir', entry);
 
@@ -52,7 +43,7 @@ export default async (api) => {
         .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
     });
   } else {
-  // add babel plugins for ice lazy
+    // add babel plugins for ice lazy
     const { configPath } = userConfig.router || {};
 
     let { routesPath } = applyMethod('getRoutes', {
@@ -104,6 +95,7 @@ export default async (api) => {
     appStoreTemplatePath,
     pageStoreTemplatePath,
     pageStoresTemplatePath,
+    typesTemplatePath,
     targetPath,
     rootDir,
     applyMethod,
