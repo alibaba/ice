@@ -7,11 +7,11 @@ order: 1
 
 ### AppRouter
 
-定位子应用渲染节点，包含如下 props 属性
+定位微应用渲染节点，包含如下 props 属性
 
 #### onRouteChange
 
-- 子应用 route 变化时的回调，选填
+- 微应用 route 变化时的回调，选填
 - 类型：`Function(pathname, query, hash, type)`
 - 默认值：`-`
 
@@ -23,31 +23,31 @@ order: 1
 
 #### ErrorComponent
 
-- 子应用 `js` 静态资源加载出错时的展示内容，选填
+- 微应用 `js` 静态资源加载出错时的展示内容，选填
 - 类型：`string | ReactNode`
 - 默认值：`<div>js bundle loaded error</div>`
 
 #### LoadingComponent
 
-- 子应用静态资源加载时的展示内容，选填
+- 微应用静态资源加载时的展示内容，选填
 - 类型：`string | ReactNode`
 - 默认值：`-`
 
 #### onAppEnter
 
-- 子应用渲染前的回调，选填
+- 微应用渲染前的回调，选填
 - 类型：`Function(appConfig)`
 - 默认值：`-`
 
 #### onAppLeave
 
-- 子应用卸载前的回调，选填
+- 微应用卸载前的回调，选填
 - 类型：`Function(appConfig)`
 - 默认值：`-`
 
 #### basename
 
-- 子应用路由匹配统一添加 basename，选填
+- 微应用路由匹配统一添加 basename，选填
 - 类型：`string`
 - 默认值：`''`
 
@@ -57,12 +57,12 @@ order: 1
 - 类型：`Function(assetUrl, element)`
 - 默认值：`() => true`
 
-> 应用资源在 AppRouter 初始化后将默认标识为框架应用资源，在子应用切换过程中不会被移除。但在框架应用开启懒加载或者一些资源通过脚本异步插入到页面的场景下，这类资源无法正确被标识为不需要移除的资源，可以通过 `shouldAssetsRemove` 方式进行规则判断
+> 应用资源在 AppRouter 初始化后将默认标识为框架应用资源，在微应用切换过程中不会被移除。但在框架应用开启懒加载或者一些资源通过脚本异步插入到页面的场景下，这类资源无法正确被标识为不需要移除的资源，可以通过 `shouldAssetsRemove` 方式进行规则判断
 
 ```jsx
 <AppRouter
   shouldAssetsRemove={(url, el) => {
-    // 如果资源 url 链接包含 icestark.com 则标识为框架应用资源，子应用切换时不需要移除
+    // 如果资源 url 链接包含 icestark.com 则标识为框架应用资源，微应用切换时不需要移除
     return url.match(/icestark.com/) ? false : true;
   }}
 >
@@ -71,29 +71,29 @@ order: 1
 
 ### AppRoute
 
-子应用注册组件，包含如下 props 属性：
+微应用注册组件，包含如下 props 属性：
 
 #### path
 
-- 定义子应用匹配哪些路由，比如默认域名为`www.icestark.com`，`path` 设置为 `/user`，表示当访问 `www.icestark.com/user` 时，渲染此应用，必填
+- 定义微应用匹配哪些路由，比如默认域名为`www.icestark.com`，`path` 设置为 `/user`，表示当访问 `www.icestark.com/user` 时，渲染此应用，必填
 - 类型：`string | string[]`
 - 默认值：`-`
 
 #### url
 
-- 子应用静态资源对应的 cdn 地址，当渲染子应用时，会将此 `url` 内的 js、css 资源加载进来，必填
+- 微应用静态资源对应的 cdn 地址，当渲染微应用时，会将此 `url` 内的 js、css 资源加载进来，必填
 - 类型：`string | string[]`
 - 默认值：`-`
 
 #### entry
 
-- 子应用对应的 html 入口，当渲染子应用时，会通过 `window.fetch` 将 html 内容获取过来，然后 `append` 至动态创建的节点，选填。**entry > entryContent > url**
+- 微应用对应的 html 入口，当渲染微应用时，会通过 `window.fetch` 将 html 内容获取过来，然后 `append` 至动态创建的节点，选填。**entry > entryContent > url**
 - 类型：`string`
 - 默认值：`-`
 
 #### entryContent
 
-- 直接配置子应用的 html 内容（需要用 html 入口且不支持跨域获取资源场景）。当渲染子应用时，会 `append` 至动态创建的节点，选填。**entry > entryContent > url**
+- 直接配置微应用的 html 内容（需要用 html 入口且不支持跨域获取资源场景）。当渲染微应用时，会 `append` 至动态创建的节点，选填。**entry > entryContent > url**
 - 类型：`string`
 - 默认值：`-`
 
@@ -111,7 +111,7 @@ order: 1
 
 #### title
 
-- 子应用渲染时展示的 documentTitle ，选填
+- 微应用渲染时展示的 documentTitle ，选填
 - 类型：`string`
 - 默认值：`-`
 
@@ -141,23 +141,23 @@ order: 1
 
 #### rootId
 
-- 子应用默认加载的 DOM 节点的 id，选填
+- 微应用默认加载的 DOM 节点的 id，选填
 - 类型：`string`
 - 默认值：`icestarkNode`
 
 #### hashType
 
-- 子应用路由以 `hash` 路由的方式接入
+- 微应用路由以 `hash` 路由的方式接入
 - 类型：`boolean`
 - 默认值：`false`
 
 #### sandbox
 
-- 子应用开启沙箱运行环境
+- 微应用开启沙箱运行环境
 - 类型：`boolean | Sandbox`
 - 默认值：`false`
 
-`icestark` 内置 `@ice/sandbox` 作为沙箱执行依赖，开发者可以通过传入自定义的沙箱实现，作为子应用的执行沙箱：
+`icestark` 内置 `@ice/sandbox` 作为沙箱执行依赖，开发者可以通过传入自定义的沙箱实现，作为微应用的执行沙箱：
 
 ```js
 class CustomSanbox {
@@ -178,7 +178,7 @@ const sandbox = new CustomSanbox();
 
 ### AppLink
 
-提供声明式的，可访问的导航，表示本次跳转需要重新加载静态资源。子应用内部跳转仍然使用 `Link`
+提供声明式的，可访问的导航，表示本次跳转需要重新加载静态资源。微应用内部跳转仍然使用 `Link`
 
 #### to
 
@@ -269,22 +269,22 @@ export default class SelfLink extends React.Component {
 
 ### getBasename
 
-配置子应用 `React Router` 中的 `basename` 参数的方法，根据 `AppRoute` 中的 `basename` 或者 `path` 配置生成最终结果
+配置微应用 `React Router` 中的 `basename` 参数的方法，根据 `AppRoute` 中的 `basename` 或者 `path` 配置生成最终结果
 
 - 类型：`function`
 - 默认值：`() => basename || (Array.isArray(path) ? path[0] : path)) || "/"`
 
 ### getMountNode
 
-根据子应用运行环境，返回子应用渲染节点
+根据微应用运行环境，返回微应用渲染节点
 
 - 类型：`function`
 - 默认值：`<div id="ice-container"></div>`
-- 使用规则：方法支持传参，传参代表默认渲染的 DOM 节点，默认节点只在子应用单独启动时生效。支持 `string | HTMLElement | function`， `string` 表示默认 DOM 节点的 `id`，`function` 支持函数返回值作为默认 DOM 节点
+- 使用规则：方法支持传参，传参代表默认渲染的 DOM 节点，默认节点只在微应用单独启动时生效。支持 `string | HTMLElement | function`， `string` 表示默认 DOM 节点的 `id`，`function` 支持函数返回值作为默认 DOM 节点
 
 ### renderNotFound
 
-子应用触发渲染全局 404 的方法
+微应用触发渲染全局 404 的方法
 
 - 类型：`function`
 

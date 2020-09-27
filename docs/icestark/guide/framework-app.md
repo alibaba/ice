@@ -1,9 +1,9 @@
 ---
-title: 框架应用开发
+title: React 框架应用开发
 order: 3
 ---
 
-框架应用负责整个系统的 Layout 设计以及所有子应用的管理注册，icestark 约束了框架应用必须基于 React。
+框架应用负责整个系统的 Layout 设计以及所有微应用的管理注册，icestark 约束了框架应用必须基于 React。
 
 ## 创建框架应用
 
@@ -22,7 +22,7 @@ $ npm start
 $ npm i --save @ice/stark
 ```
 
-通过 `AppRouter/AppRoute` 来管理注册子应用：
+通过 `AppRouter/AppRoute` 来管理注册微应用：
 
 ```jsx
 // src/App.jsx
@@ -69,19 +69,19 @@ export default class App extends React.Component {
 }
 ```
 
-## 子应用配置字段
+## 微应用配置字段
 
 ### 基准路由 path
 
-类型为 `string|string[]`，大部分情况下都是 string，通过 path 约束每个子应用的路由定义，建立路由和子应用的映射关系。
+类型为 `string|string[]`，大部分情况下都是 string，通过 path 约束每个微应用的路由定义，建立路由和微应用的映射关系。
 
-### 子应用入口 entry/url/entryContent
+### 微应用入口 entry/url/entryContent
 
-icestark 通过子应用入口字段的配置进行应用的渲染，因此这个字段非常重要。针对不同的场景，icestark 也支持了多种入口配置形式：
+icestark 通过微应用入口字段的配置进行应用的渲染，因此这个字段非常重要。针对不同的场景，icestark 也支持了多种入口配置形式：
 
 #### url
 
-最常见的形式，适用于子应用入口资源比较确定，同时除了 mountNode 不依赖其他 DOM 节点，此时将这些资源地址按顺序拼成数组传给 icestark 即可。
+最常见的形式，适用于微应用入口资源比较确定，同时除了 mountNode 不依赖其他 DOM 节点，此时将这些资源地址按顺序拼成数组传给 icestark 即可。
 
 #### entry
 
@@ -103,7 +103,7 @@ entry 对应 html url, icestark 对 `entry` 的处理包含以下步骤：
 
 #### component/render
 
-同时我们也提供通过 React 组件的方式渲染子应用，常用于子应用通过 iframe 方式的场景：
+同时我们也提供通过 React 组件的方式渲染微应用，常用于微应用通过 iframe 方式的场景：
 
 ```js
 <AppRoute
@@ -116,9 +116,9 @@ entry 对应 html url, icestark 对 `entry` 的处理包含以下步骤：
 />
 ```
 
-## 子应用注册通过数据驱动
+## 微应用注册通过数据驱动
 
-在很多场景下，我们的子应用可能通过一些配置平台注册，这时候可以将所有子应用的信息通过全局变量输出到 html 中，然后前端通过该数据注册子应用：
+在很多场景下，我们的微应用可能通过一些配置平台注册，这时候可以将所有微应用的信息通过全局变量输出到 html 中，然后前端通过该数据注册微应用：
 
 ```jsx
 // src/App.jsx
