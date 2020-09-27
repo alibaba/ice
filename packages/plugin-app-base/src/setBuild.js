@@ -1,7 +1,6 @@
 const path = require('path');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
-const { getOutputPath } = require('miniapp-builder-shared');
 const {
   MINIAPP,
   WEB,
@@ -18,8 +17,6 @@ module.exports = (api) => {
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
   const { rootDir, userConfig } = context;
-  const { outputDir = 'build', targets } = userConfig;
-
 
   onHook('before.build.run', ({ config }) => {
     try {
@@ -38,6 +35,7 @@ module.exports = (api) => {
     const messages = formatWebpackMessages(statsJson);
     // Do not print localUrl and assets information when containing an error
     const isSuccessful = !messages.errors.length;
+    const { outputDir = 'build', targets } = userConfig;
 
     if (isSuccessful) {
       console.log(highlightPrint('Build finished:'));
@@ -74,7 +72,7 @@ module.exports = (api) => {
         console.log(highlightPrint('[Alibaba MiniApp] Bundle at:'));
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, MINIAPP))
+          chalk.underline.white(path.resolve(rootDir, outputDir, MINIAPP))
         );
         console.log();
       }
@@ -83,7 +81,7 @@ module.exports = (api) => {
         console.log(highlightPrint('[WeChat MiniProgram] Bundle at:'));
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, WECHAT_MINIPROGRAM))
+          chalk.underline.white(path.resolve(rootDir, outputDir, WECHAT_MINIPROGRAM))
         );
         console.log();
       }
@@ -92,7 +90,7 @@ module.exports = (api) => {
         console.log(highlightPrint('[ByteDance MicroApp] Bundle at:'));
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, BYTEDANCE_MICROAPP))
+          chalk.underline.white(path.resolve(rootDir, outputDir, BYTEDANCE_MICROAPP))
         );
         console.log();
       }

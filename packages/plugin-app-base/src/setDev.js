@@ -1,8 +1,8 @@
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const openBrowser = require('react-dev-utils/openBrowser');
 const chalk = require('chalk');
-const { getOutputPath } = require('miniapp-builder-shared');
 const qrcode = require('qrcode-terminal');
+const path = require('path');
 
 const {
   MINIAPP,
@@ -19,7 +19,7 @@ module.exports = function(api) {
   // eslint-disable-next-line global-require
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
-  const { commandArgs, userConfig } = context;
+  const { commandArgs, userConfig, rootDir } = context;
   const { targets } = userConfig;
 
   onHook('before.start.run', ({ config }) => {
@@ -39,6 +39,8 @@ module.exports = function(api) {
     const messages = formatWebpackMessages(statsJson);
     // Do not print localUrl and assets information when containing an error
     const isSuccessful = !messages.errors.length;
+    const { outputDir = 'build' } = userConfig;
+
 
     if (isSuccessful) {
       if (commandArgs.disableAssets === false) {
@@ -64,7 +66,7 @@ module.exports = function(api) {
         );
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, MINIAPP))
+          chalk.underline.white(path.resolve(rootDir, outputDir, MINIAPP))
         );
         console.log();
       }
@@ -77,7 +79,7 @@ module.exports = function(api) {
         );
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, WECHAT_MINIPROGRAM))
+          chalk.underline.white(path.resolve(rootDir, outputDir, WECHAT_MINIPROGRAM))
         );
         console.log();
       }
@@ -90,7 +92,7 @@ module.exports = function(api) {
         );
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, BYTEDANCE_MICROAPP))
+          chalk.underline.white(path.resolve(rootDir, outputDir, BYTEDANCE_MICROAPP))
         );
         console.log();
       }

@@ -21,20 +21,18 @@ module.exports = (api) => {
 
   onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
-    const { outputDir } = userConfig;
+    const { outputDir = 'build' } = userConfig;
     let outputPath;
     if (command === 'start') {
       // Set output dir
-      outputPath = outputDir ? path.resolve(rootDir, outputDir)
-       : path.resolve(rootDir, 'build');
+      outputPath = path.resolve(rootDir, outputDir);
       config.output.filename(`${target}/[name].js`);
       // Force disable HMR, kraken not support yet.
       config.devServer.inline(false);
       config.devServer.hot(false);
     } else if (command === 'build') {
       // Set output dir
-      outputPath = outputDir ? path.resolve(rootDir, outputDir)
-      : path.resolve(rootDir, 'build', target);
+      outputPath = path.resolve(rootDir, outputDir, target);
     }
     config.output.path(outputPath);
   });

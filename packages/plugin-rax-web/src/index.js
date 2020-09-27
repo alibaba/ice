@@ -27,8 +27,7 @@ module.exports = (api) => {
     const webConfig = userConfig.web || {};
 
    // Set output dir
-    const outputPath = outputDir ? path.resolve(rootDir, outputDir)
-      : path.resolve(rootDir, 'build', target);
+    const outputPath = path.resolve(rootDir, outputDir, target);
     config.output.path(outputPath);
 
     if (command === 'start') {

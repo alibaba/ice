@@ -25,18 +25,16 @@ module.exports = (api) => {
 
   onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
-    const { outputDir } = userConfig;
+    const { outputDir = 'build' } = userConfig;
     let outputPath;
     if (command === 'start') {
       // Set output dir
-      outputPath = outputDir ? path.resolve(rootDir, outputDir)
-       : path.resolve(rootDir, 'build');
+      outputPath = path.resolve(rootDir, outputDir);
       config.devServer.contentBase(outputPath);
       config.output.filename(`${target}/[name].js`);
     } else if (command === 'build') {
       // Set output dir
-      outputPath = outputDir ? path.resolve(rootDir, outputDir)
-      : path.resolve(rootDir, 'build', target);
+      outputPath = path.resolve(rootDir, outputDir, target);
     }
     config.output.path(outputPath);
   });

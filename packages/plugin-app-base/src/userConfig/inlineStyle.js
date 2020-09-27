@@ -18,7 +18,7 @@ const miniappStandardList = [
 ];
 
 module.exports = (config, value, context) => {
-  const { userConfig, taskName, command } = context;
+  const { taskName, command } = context;
   const isDev = command === 'start';
 
   const cssRule = config.module.rule('css');
@@ -51,6 +51,11 @@ function setCSSRule(configRule, context, value) {
   const isMiniAppStandard = miniappStandardList.includes(taskName);
   const isNodeStandard = taskName === DOCUMENT;
 
+  // When taskName is weex or kraken, inlineStyle should be true
+  if (isInlineStandard) {
+    value = true;
+  }
+
   if (value) {
     configRule.uses.delete('MiniCssExtractPlugin.loader');
     // enbale inlineStyle
@@ -69,8 +74,6 @@ function setCSSRule(configRule, context, value) {
         .use('postcss-loader')
         .tap(getPostCssConfig.bind(null, isWebStandard ? 'web' : 'normal'))
         .end();
-    } else if (isInlineStandard) {
-      configInlineStyle(configRule);
     } else if (isNodeStandard) {
       // Do not generate CSS file, it will be built by web complier
       configRule
