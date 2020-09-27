@@ -21,6 +21,7 @@ src
 ├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
+└── store.ts
 ```
 
 ### 页面状态
@@ -189,10 +190,10 @@ src
 
 export default () => {
   // 使用 counter 模型，src/models/counter.ts -> counter
-+ const [counterState, counterDispatchers] = appStore.useModel('counter);
++ const [counterState, counterDispatchers] = appStore.useModel('counter');
 
   // 使用 user 模型，src/models/user.ts -> user
-+ const [userState, userDispatchers] = appStore.useModel('user);
++ const [userState, userDispatchers] = appStore.useModel('user');
 }
 ```
 
@@ -219,8 +220,8 @@ export default () => {
   // 多个 model 的情况，model 名称约定为文件名，如：
   // src/pages/Home/models/foo.ts -> foo
   // src/pages/Home/models/bar.ts -> bar
-+ const [fooState, fooDispatchers] = appStore.useModel('foo);
-+ const [barState, barDispatchers] = appStore.useModel('bar);
++ const [fooState, fooDispatchers] = appStore.useModel('foo');
++ const [barState, barDispatchers] = appStore.useModel('bar');
 }
 ```
 
@@ -435,6 +436,29 @@ const appConfig = {
 };
 
 createApp(appConfig);
+```
+
+## 创建自定义 store
+
+在某些情况下，可能需要创建自定义的 store，以获得更多的能力。以创建全局自定义 store 为例，示例代码如下：
+
+```js
+// ./src/store.ts
+import { createStore } from '@ice/store';
+import user from './models/user';
+
+const models = {
+  user
+};
+
+const options = {
+  disableImmer: true,
+  disableError: true
+}
+
+const store = createStore(models, options);
+
+export default store;
 ```
 
 ## 版本变更说明

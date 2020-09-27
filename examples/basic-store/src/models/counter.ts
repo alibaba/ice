@@ -1,5 +1,3 @@
-import { IRootDispatch } from 'ice';
-
 export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
@@ -8,16 +6,16 @@ export default {
   },
 
   reducers: {
-    increment (prevState) {
+    increment(prevState) {
       return { count: prevState.count + 1 };
     },
-    decrement (prevState) {
+    decrement(prevState) {
       return { count: prevState.count - 1 };
     }
   },
 
-  effects: (dispatch: IRootDispatch) => ({
-    async decrementAsync () {
+  effects: (dispatch) => ({
+    async decrementAsync() {
       await delay(10);
       dispatch.counter.decrement();
     },
