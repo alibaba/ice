@@ -21,7 +21,6 @@ src
 ├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
-└── store.ts
 ```
 
 ### 页面状态
@@ -220,8 +219,8 @@ export default () => {
   // 多个 model 的情况，model 名称约定为文件名，如：
   // src/pages/Home/models/foo.ts -> foo
   // src/pages/Home/models/bar.ts -> bar
-+ const [fooState, fooDispatchers] = appStore.useModel('foo');
-+ const [barState, barDispatchers] = appStore.useModel('bar');
++ const [fooState, fooDispatchers] = appStore.useModel('foo);
++ const [barState, barDispatchers] = appStore.useModel('bar);
 }
 ```
 
