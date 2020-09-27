@@ -35,6 +35,8 @@ module.exports = (api) => {
     webpackConfig.target = 'node';
 
     webpackConfig.output.libraryTarget = 'commonjs2';
+    // do not generate vendor.js when compile document
+    webpackConfig.optimization.splitChunks.cacheGroups = {};
 
     // do not generate vendor.js when compile document
     webpackConfig.optimization.splitChunks.cacheGroups = {};

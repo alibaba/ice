@@ -1,0 +1,11 @@
+{
+  /*"web": {
+    "mpa": true
+  },
+  "weex": {
+    "mpa": true
+  }, */
+  "plugins": ["build-plugin-mpa"],
+  "targets": ["web"],
+  "inlineStyle": true
+}

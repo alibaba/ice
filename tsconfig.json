@@ -12,6 +12,7 @@
     { "path": "packages/plugin-icestark" },
     { "path": "packages/plugin-config" },
     { "path": "packages/plugin-mpa" },
+    { "path": "packages/plugin-ice-mpa" },
     { "path": "packages/plugin-prerender" },
     { "path": "packages/plugin-auth" },
     { "path": "packages/plugin-ssr" },
