@@ -7,6 +7,7 @@ module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const target = 'weex';
   const chainConfig = getWebpackBase(api, {
     target: 'weex',
     babelConfigOptions: { styleSheet: true },
@@ -20,20 +21,23 @@ module.exports = (api) => {
   chainConfig.plugin('WeexFrameworkBannerPlugin')
     .use(WeexFrameworkBannerPlugin);
 
-  registerTask('weex', chainConfig);
+  registerTask(target, chainConfig);
 
-  onGetWebpackConfig('weex', config => {
+  onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
-
+    const { outputDir } = userConfig;
+    let outputPath;
     if (command === 'start') {
-      config.output.filename('weex/[name].js');
-      config.devServer.writeToDisk(false);
+      // Set output dir
+      outputPath = outputDir ? path.resolve(rootDir, outputDir)
+       : path.resolve(rootDir, 'build');
+      config.devServer.contentBase(outputPath);
+      config.output.filename(`${target}/[name].js`);
     } else if (command === 'build') {
       // Set output dir
-      const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
-      : path.resolve(rootDir, 'build', 'weex');
-
-      config.output.path(outputPath);
+      outputPath = outputDir ? path.resolve(rootDir, outputDir)
+      : path.resolve(rootDir, 'build', target);
     }
+    config.output.path(outputPath);
   });
 };

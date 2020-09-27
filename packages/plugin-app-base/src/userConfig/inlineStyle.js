@@ -18,8 +18,8 @@ const miniappStandardList = [
 ];
 
 module.exports = (config, value, context) => {
-  const { userConfig, taskName } = context;
-  const { publicPath } = userConfig;
+  const { userConfig, taskName, command } = context;
+  const isDev = command === 'start';
 
   const cssRule = config.module.rule('css');
   const cssModuleRule = config.module.rule('css-module');
@@ -35,11 +35,10 @@ module.exports = (config, value, context) => {
   const sassModuleRule = config.module.rule('scss-module');
   setCSSRule(sassRule, context, value);
   setCSSRule(sassModuleRule, context, value);
-
   if ((webStandardList.includes(taskName) || miniappStandardList.includes(taskName)) && !value) {
     config.plugin('MiniCssExtractPlugin')
       .use(MiniCssExtractPlugin, [{
-        filename: `${publicPath.startsWith('.') ? '' : `${taskName}/`}[name].css`,
+        filename: isDev ? `${taskName}/[name].css`: '[name].css',
         ignoreOrder: true
       }]);
   }

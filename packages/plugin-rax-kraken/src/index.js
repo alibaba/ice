@@ -6,8 +6,9 @@ module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const target = 'kraken';
   const chainConfig = getWebpackBase(api, {
-    target: 'kraken',
+    target,
     babelConfigOptions: { styleSheet: true },
     progressOptions: {
       name: 'Kraken'
@@ -16,22 +17,25 @@ module.exports = (api) => {
 
   setEntry(chainConfig, context);
 
-  registerTask('kraken', chainConfig);
+  registerTask(target, chainConfig);
 
-  onGetWebpackConfig('kraken', config => {
+  onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
+    const { outputDir } = userConfig;
+    let outputPath;
     if (command === 'start') {
-      config.devServer.writeToDisk(false);
-      config.output.filename('kraken/[name].js');
+      // Set output dir
+      outputPath = outputDir ? path.resolve(rootDir, outputDir)
+       : path.resolve(rootDir, 'build');
+      config.output.filename(`${target}/[name].js`);
       // Force disable HMR, kraken not support yet.
       config.devServer.inline(false);
       config.devServer.hot(false);
     } else if (command === 'build') {
       // Set output dir
-      const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
-      : path.resolve(rootDir, 'build', 'kraken');
-
-      config.output.path(outputPath);
+      outputPath = outputDir ? path.resolve(rootDir, outputDir)
+      : path.resolve(rootDir, 'build', target);
     }
+    config.output.path(outputPath);
   });
 };
