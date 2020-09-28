@@ -1,7 +1,9 @@
 const path = require('path');
 const getWebpackBase = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
+const setMPAConfig = require('build-mpa-config');
 const getEntryName = require('./getEntryName');
+
 const EntryPlugin = require('./entryPlugin');
 
 const EntryLoader = require.resolve('./entryLoader');
@@ -9,12 +11,11 @@ const EntryLoader = require.resolve('./entryLoader');
 // Can‘t clone webpack chain object, so generate a new chain and reset config
 module.exports = (context) => {
   const { userConfig, rootDir, webpack } = context;
+  const { web: webConfig = {}, inlineStyle = true } = userConfig;
 
   const babelConfig = getBabelConfig({
     styleSheet: true,
-    jsxToHtml: true,
-    // Note: rax-babel-config 1.0.0-1 不支持
-    // isNode: true
+    jsxToHtml: true
   });
 
   const config = getWebpackBase({
@@ -22,25 +23,32 @@ module.exports = (context) => {
     processBar: {
       name: 'SSR'
     },
-    babelConfig,
+    babelConfig
   });
 
   config.target('node');
 
-  const { inlineStyle = true } = userConfig;
-  // build-plugin-rax-multi-pages is deprecated, but still need to be compatible.
-  // eslint-disable-next-line
-  // const isMultiPages = getValue('appType') === 'mpa' || !!~plugins.indexOf('build-plugin-rax-multi-pages');
+  let entries = {};
+  if (webConfig.mpa) {
+    setMPAConfig.default(config, { rootDir });
 
-  // eslint-disable-next-line
-  const appJSON = require(path.resolve(rootDir, 'src/app.json'));
-  const entries = appJSON.routes.map((route) => {
-    return {
-      name: getEntryName(route.path),
-      sourcePath: path.join(rootDir, 'src', route.source),
-      pagePath: route.path,
-    };
-  });
+    const mpaEntries = config.toConfig().entry;
+    entries = Object.keys(mpaEntries).map(entryName => {
+      return {
+        name: entryName,
+        sourcePath: mpaEntries[entryName][0]
+      };
+    });
+  } else {
+     // eslint-disable-next-line
+    const appJSON = require(path.resolve(rootDir, 'src/app.json'));
+    entries = appJSON.routes.map((route) => {
+      return {
+        name: getEntryName(route.path),
+        sourcePath: path.join(rootDir, 'src', route.source),
+      };
+    });
+  }
 
   config
     .plugin('DefinePlugin')
@@ -53,7 +61,7 @@ module.exports = (context) => {
     .use(EntryPlugin, [{
       entries,
       loader: EntryLoader,
-      isMultiPages: false,
+      isMultiPages: webConfig.mpa || false,
       isInlineStyle: inlineStyle,
       absoluteDocumentPath: path.join(rootDir, 'src/document/index.jsx'),
       absoluteShellPath: path.join(rootDir, 'src/shell/index.jsx'),

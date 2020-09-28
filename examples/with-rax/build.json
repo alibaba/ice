@@ -1,6 +1,7 @@
 {
   "targets": ["web"],
   "web": {
+    "mpa": false,
     "ssr": true
   },
   "plugins": [],

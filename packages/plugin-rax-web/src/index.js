@@ -1,4 +1,5 @@
 const path = require('path');
+const setMPAConfig = require('build-mpa-config');
 const setDev = require('./setDev');
 const setEntry = require('./setEntry');
 const DocumentPlugin = require('./DocumentPlugin');
@@ -19,6 +20,10 @@ module.exports = (api) => {
   onGetWebpackConfig('web', (config) => {
     const { userConfig, rootDir, command } = context;
     const webConfig = userConfig.web || {};
+
+    if (webConfig.mpa) {
+      setMPAConfig.default(config, { rootDir });
+    }
 
     if (command === 'start') {
       setDev(config);

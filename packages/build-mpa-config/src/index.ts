@@ -9,7 +9,7 @@ interface ConfigOptions {
 }
 
 const setMPAConfig = (config, options: ConfigOptions) => {
-  const { rootDir, type = 'web', renderModule = 'rax', filterEntries = () => {} } = options || {};
+  const { rootDir, type = 'web', renderModule = 'rax', filterEntries = (v) => v } = options || {};
   let mpaEntries = getEntries(rootDir);
   mpaEntries = filterEntries(mpaEntries);
   // clear entry points
