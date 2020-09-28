@@ -4,11 +4,12 @@
 <% } else { %>
   import * as React from 'react';
 <% } %>
-<%- pageComponentImport %>
 
 <% if(hasPageStore) { %>
   <%- pageStoreImport %>
 <% } %>
+
+<%- pageComponentImport %>
 
 const PageComponentName = <%= pageComponentExport %>;
 
