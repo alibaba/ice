@@ -2,6 +2,8 @@ const getWebpackConfig = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
 const ProgressPlugin = require('webpackbar');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const fs = require('fs-extra');
 
 module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   const { context } = api;
@@ -34,10 +36,14 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     .use(ProgressPlugin, [Object.assign({ color: '#F4AF3D' } ,progressOptions)])
     .end()
     .plugin('DefinePlugin')
-    .use(webpack.DefinePlugin, [defineVariables])
-    .end()
-    .plugin('CopyWebpackPlugin')
-    .use(CopyWebpackPlugin, [[]]);
+    .use(webpack.DefinePlugin, [defineVariables]);
+
+  // Copy public dir
+  if (fs.existsSync(path.resolve(rootDir, 'public'))) {
+    config
+      .plugin('CopyWebpackPlugin')
+      .use(CopyWebpackPlugin, [[]]);
+  }
 
   // Process app.json file
   config.module

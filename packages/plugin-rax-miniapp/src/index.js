@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const { platformMap } = require('miniapp-builder-shared');
 const { setConfig } = require('miniapp-runtime-config');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
@@ -24,10 +25,10 @@ module.exports = (api) => {
       setEntry(chainConfig, context, target);
       // Register task
       registerTask(target, chainConfig);
-      registerUserConfig({
-        name: target,
-        validation: 'object'
-      });
+      // registerUserConfig({
+      //   name: target,
+      //   validation: 'object'
+      // });
 
       onGetWebpackConfig(target, config => {
         const { userConfig, rootDir } = context;
@@ -42,6 +43,29 @@ module.exports = (api) => {
 
         const needCopyDirs = [];
 
+        // Copy src/miniapp-native dir
+        if (fs.existsSync(path.resolve(rootDir, 'src', 'miniapp-native'))) {
+          needCopyDirs.push({
+            from: path.resolve(rootDir, 'src', 'miniapp-native'),
+            to: path.resolve(rootDir, outputDir, target, 'miniapp-native')
+          });
+        }
+
+        // Copy public dir
+      if (config.plugins.has('CopyWebpackPlugin')) {
+        needCopyDirs.push({
+          from: path.resolve(rootDir, 'public'),
+          to: path.resolve(rootDir, outputDir, target)
+        });
+        config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
+          return [copyList.concat(needCopyDirs)];
+        });
+      } else if (needCopyDirs.length > 1) {
+        config
+          .plugin('CopyWebpackPlugin')
+          .use(CopyWebpackPlugin, [needCopyDirs]);
+      }
+
         // Copy public dir
         if (fs.existsSync(path.resolve(rootDir, 'public'))) {
           needCopyDirs.push({
@@ -50,13 +74,7 @@ module.exports = (api) => {
           });
         }
 
-        // Copy src/miniapp-native dir
-        if (fs.existsSync(path.resolve(rootDir, 'src', 'miniapp-native'))) {
-          needCopyDirs.push({
-            from: path.resolve(rootDir, 'src', 'miniapp-native'),
-            to: path.resolve(rootDir, outputDir, target, 'miniapp-native')
-          });
-        }
+
 
         config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
           return [
