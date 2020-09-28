@@ -18,7 +18,7 @@
     "build-plugin-app-core": "0.1.15",
     "build-plugin-ice-store": "1.7.2",
     "build-plugin-app-base": "1.0.0-0",
-    "build-plugin-rax-web": "1.0.0-0",
+    "build-plugin-rax-web": "1.0.0-1",
     "build-plugin-rax-weex": "1.0.0-0",
     "build-plugin-rax-kraken": "1.0.0-0",
     "build-plugin-rax-miniapp": "1.0.0-0",
