@@ -2,6 +2,7 @@ const path = require('path');
 const Module = require('module');
 const { parse, print } = require('error-stack-tracey');
 const getEntryName = require('./getEntryName');
+const getMpaRoutes = require('./getMpaRoutes');
 
 function exec(code, filename, filePath) {
   const module = new Module(filename, this);
@@ -12,23 +13,28 @@ function exec(code, filename, filePath) {
 }
 
 module.exports = (config, context) => {
-  const { rootDir } = context;
+  const { rootDir, userConfig } = context;
+  const { web: webConfig = {} } = userConfig;
 
   config.mode('development');
 
-  const absoluteAppJSONPath = path.join(rootDir, 'src/app.json');
-  // eslint-disable-next-line
-  const appJSON = require(absoluteAppJSONPath);
+  let routes = [];
 
-  const distDir = config.output.get('path');
-  const filename = config.output.get('filename');
-  const routes = appJSON.routes;
+  if (webConfig.mpa) {
+    routes = getMpaRoutes(config);
+  } else {
+    const absoluteAppJSONPath = path.join(rootDir, 'src/app.json');
+    const distDir = config.output.get('path');
+    const filename = config.output.get('filename');
+    // eslint-disable-next-line
+    routes = require(absoluteAppJSONPath).routes;
 
-  routes.forEach((route) => {
-    const entryName = getEntryName(route.path);
-    route.entryName = entryName;
-    route.componentPath = path.join(distDir, filename.replace('[name]', entryName));
-  });
+    routes.forEach((route) => {
+      const entryName = getEntryName(route.path);
+      route.entryName = entryName;
+      route.componentPath = path.join(distDir, filename.replace('[name]', entryName));
+    });
+  }
 
   // enable inline soucremap for get error stack
   config.devtool('eval-cheap-source-map');

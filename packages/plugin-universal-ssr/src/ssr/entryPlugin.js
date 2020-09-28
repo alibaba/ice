@@ -1,4 +1,5 @@
 const qs = require('qs');
+const path = require('path');
 
 /**
  * An entry plugin which will set loader for entry before compile.
@@ -23,10 +24,9 @@ class EntryPlugin {
       isMultiPages,
       isInlineStyle,
       absoluteDocumentPath,
-      absoluteShellPath,
       absoluteAppConfigPath,
       absoluteAppPath,
-      assetsProcessor
+      assetsProcessor,
     } = this.options;
 
     const publicPath = compiler.options.output.publicPath;
@@ -36,19 +36,25 @@ class EntryPlugin {
     entries.forEach((entry) => {
       const {
         name,
-        sourcePath,
-        pagePath,
+        sourcePath
       } = entry;
 
+      let absolutePagePath;
+      const appRegexp = /^app\.(t|j)sx?$/;
+      const entryBasename = path.basename(sourcePath);
+      const entryDirname = path.dirname(sourcePath);
+      if (appRegexp.test(entryBasename)) {
+        absolutePagePath = path.join(entryDirname, 'index.tsx');
+      }
+
       const query = {
-        pagePath,
         styles: isMultiPages && !isInlineStyle ? [`${publicPath}${name}.css`] : [],
         scripts: isMultiPages ? [`${publicPath}${name}.js`] : [`${publicPath}index.js`],
         absoluteDocumentPath,
-        absoluteShellPath,
         absoluteAppPath,
         absoluteAppConfigPath,
-        assetsProcessor
+        absolutePagePath,
+        assetsProcessor,
       };
 
       entryConfig[name] = `${loader}?${qs.stringify(query)}!${sourcePath}`;

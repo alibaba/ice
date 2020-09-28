@@ -19,13 +19,11 @@ module.exports = function() {
     absoluteDocumentPath,
     absoluteAppPath,
     absoluteAppConfigPath,
-    pagePath,
+    absolutePagePath = formatPath(this.resourcePath),
     styles = [],
     scripts = [],
-    assetsProcessor
+    assetsProcessor,
   } = query;
-
-  const absolutePagePath = formatPath(this.resourcePath);
 
   const renderHtmlFnc = `
     async function renderComponentToHTML(Component, ctx) {
@@ -36,7 +34,6 @@ module.exports = function() {
         isSSR: true,
         initialData,
         pageData,
-        pagePath: '${pagePath}'
       };
 
       const contentElement = createElement(Component, pageData);
@@ -58,7 +55,6 @@ module.exports = function() {
         return {
           __initialHtml: initialHtml,
           __initialData: JSON.stringify(data),
-          __pagePath: '${pagePath}',
           __styles: styles,
           __scripts: scripts,
         };

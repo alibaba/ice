@@ -3,12 +3,11 @@ import getEntries from './getEntries';
 
 interface ConfigOptions {
   rootDir: string;
-  filterEntries: Function;
-  type: string;
+  filterEntries?: Function;
 }
 
 const setMPAConfig = (config, options: ConfigOptions) => {
-  const { rootDir, type = 'rax', filterEntries = () => {} } = options || {};
+  const { rootDir, filterEntries = (v) => v } = options || {};
   let mpaEntries = getEntries(rootDir);
   mpaEntries = filterEntries(mpaEntries);
   // clear entry points
