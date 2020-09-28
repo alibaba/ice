@@ -4,6 +4,6 @@
     "ssr": true
   },
   "plugins": [],
-  "inlineStyle": true
-  "targets": ["web", "weex", "kraken", "miniapp"]
+  "inlineStyle": true,
+  "targets": ["web", "weex"]
 }

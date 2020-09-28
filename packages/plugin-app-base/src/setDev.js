@@ -21,9 +21,12 @@ module.exports = function(api) {
   const { context, onHook } = api;
   const { commandArgs, userConfig, rootDir } = context;
   const { targets } = userConfig;
-
+  let webEntryKeys = [];
+  let weexEntryKeys = [];
+  const getWebpackEntry = (configs, configName) => (configs.find((webpackConfig) => webpackConfig.name === configName).entry || {});
   onHook('before.start.run', ({ config }) => {
-
+    webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
+    weexEntryKeys = Object.keys(getWebpackEntry(config, 'weex'));
     try {
       debug(config[0]);
     // eslint-disable-next-line no-empty
@@ -99,9 +102,12 @@ module.exports = function(api) {
       }
       if (targets.includes(WEB)) {
         console.log(highlightPrint('  [Web] Development server at: '));
-        console.log(`  ${chalk.underline.white(getLocalUrl(urls.localUrlForBrowser))}`);
-        console.log(`  ${chalk.underline.white(getLocalUrl(urls.lanUrlForBrowser))}`);
-        console.log();
+        webEntryKeys.forEach((entryKey) => {
+          const entryPath = webEntryKeys.length > 0 ? entryKey : '';
+          console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.localUrlForBrowser)}${entryPath}`)}`);
+          console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.lanUrlForBrowser)}${entryPath}`)}`);
+          console.log();
+        });
       }
 
       if (targets.includes(KRAKEN)) {
@@ -116,12 +122,14 @@ module.exports = function(api) {
 
       if (targets.includes(WEEX)) {
         // Use Weex App to scan ip address (mobile phone can't visit localhost).
-        const weexUrl = `${urls.lanUrlForBrowser}weex/index.js?wh_weex=true`;
         console.log(highlightPrint('  [Weex] Development server at: '));
-        console.log(`  ${chalk.underline.white(weexUrl)}`);
-        console.log();
-        qrcode.generate(weexUrl, { small: true });
-        console.log();
+        weexEntryKeys.forEach((entryKey) => {
+          const weexUrl = `${urls.lanUrlForBrowser}weex/${weexEntryKeys.length > 0 ? entryKey : 'index'}.js?wh_weex=true`;
+          console.log(`  ${chalk.underline.white(weexUrl)}`);
+          console.log();
+          qrcode.generate(weexUrl, { small: true });
+          console.log();
+        });
       }
     }
   });

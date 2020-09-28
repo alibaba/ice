@@ -17,6 +17,7 @@ module.exports = (api) => {
       name: 'Web'
     }
   });
+  chainConfig.name('web');
 
   // Set Entry
   setEntry(chainConfig, context);
