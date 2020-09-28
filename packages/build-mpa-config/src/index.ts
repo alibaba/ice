@@ -2,16 +2,24 @@ import * as path from 'path';
 import getEntries from './getEntries';
 
 interface ConfigOptions {
-  rootDir: string;
-  filterEntries: Function;
+  context: {
+    rootDir: string;
+    commandArgs: any;
+  };
   type: string;
   framework: string;
 }
 
 const setMPAConfig = (config, options: ConfigOptions) => {
-  const { rootDir, type = 'web', framework = 'rax', filterEntries = (v) => v } = options || {};
+  const { context, type = 'web', framework = 'rax' } = options || {};
+  const { rootDir, commandArgs } = context;
   let mpaEntries = getEntries(rootDir);
-  mpaEntries = filterEntries(mpaEntries);
+  if (commandArgs.mpaEntry) {
+    const arr = commandArgs.mpaEntry.split(',');
+    mpaEntries = mpaEntries.filter((entry) => {
+      return arr.includes(entry.entryName);
+    });
+  }
   // clear entry points
   config.entryPoints.clear();
   // add mpa entries
