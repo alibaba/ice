@@ -11,14 +11,16 @@ module.exports = (api) => {
     if (target === 'miniapp' || target === 'wechat-miniprogram') {
       onGetWebpackConfig(target, (config) => {
         const projectType = getValue('PROJECT_TYPE');
+        const { outputDir = 'build' } = userConfig;
         // Clear entry
         config.entryPoints.clear();
         // App entry
         config.entry('index').add(builderShared.pathHelper.getDepPath(rootDir, `app.${projectType}`));
 
-        config.output.path(path.join(rootDir, 'build'));
+        const outputPath = path.resolve(rootDir, outputDir, target);
+        config.output.path(path.join(rootDir, 'build', target));
 
-        miniappConfig.setConfig(config, userConfig[target] || {}, { context, target, babelRuleName: 'babel-loader', onGetWebpackConfig });
+        miniappConfig.setConfig(config, userConfig[target] || {}, { context, target, babelRuleName: 'babel-loader', outputPath });
 
         if (config.plugins.get('MiniCssExtractPlugin')) {
           config.plugin('MiniCssExtractPlugin').tap((args) => [

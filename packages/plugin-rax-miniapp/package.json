@@ -1,7 +1,7 @@
 {
-  "name": "build-plugin-rax-weex",
+  "name": "build-plugin-rax-miniapp",
   "version": "1.0.0-0",
-  "description": "rax weex app plugin",
+  "description": "rax miniapp app plugin",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,9 @@
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
+    "miniapp-runtime-config": "^0.1.2",
     "rax-compile-config": "^0.2.16",
-    "webpack-sources": "^2.0.0"
+    "webpack-sources": "^2.0.0",
+    "miniapp-builder-shared": "^0.1.5"
   }
 }

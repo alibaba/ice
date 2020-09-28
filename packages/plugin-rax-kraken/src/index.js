@@ -1,25 +1,21 @@
 const path = require('path');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
-const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');
 
 module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
-  const target = 'weex';
+  const target = 'kraken';
   const chainConfig = getWebpackBase(api, {
-    target: 'weex',
+    target,
     babelConfigOptions: { styleSheet: true },
     progressOptions: {
-      name: 'Weex'
+      name: 'Kraken'
     }
   });
 
   setEntry(chainConfig, context);
-
-  chainConfig.plugin('WeexFrameworkBannerPlugin')
-    .use(WeexFrameworkBannerPlugin);
 
   registerTask(target, chainConfig);
 
@@ -30,8 +26,10 @@ module.exports = (api) => {
     if (command === 'start') {
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir);
-      config.devServer.contentBase(outputPath);
       config.output.filename(`${target}/[name].js`);
+      // Force disable HMR, kraken not support yet.
+      config.devServer.inline(false);
+      config.devServer.hot(false);
     } else if (command === 'build') {
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir, target);

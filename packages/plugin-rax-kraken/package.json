@@ -1,7 +1,7 @@
 {
-  "name": "build-plugin-rax-weex",
+  "name": "build-plugin-rax-kraken",
   "version": "1.0.0-0",
-  "description": "rax weex app plugin",
+  "description": "rax kraken app plugin",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
-    "rax-compile-config": "^0.2.16",
     "webpack-sources": "^2.0.0"
   }
 }
