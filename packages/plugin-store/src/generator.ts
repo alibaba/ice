@@ -239,11 +239,11 @@ export default class Generator {
   public render() {
     const srcDir = path.join(this.rootDir, this.srcDir);
     const appStoreFile = this.applyMethod('formatPath', path.join(srcDir, `store.${this.projectType}`));
-    const existedAppStoreFile = fse.pathExistsSync(appStoreFile);
+    const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
     const hasAppModels = fse.pathExistsSync(path.join(this.rootDir, 'src', 'models'));
 
     // if store is created by user, don't create .ice/store/index.ts and .ice/store/types.ts
-    if (!existedAppStoreFile) {
+    if (!existsAppStoreFile) {
       // generate .ice/store/index.ts
       this.renderAppStore({ appStoreFile });
 

@@ -16,11 +16,11 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
 
   const appStoreFile = applyMethod('formatPath', path.join(rootDir, 'src', `store.${projectType}`));
-  const existedAppStoreFile = fse.pathExistsSync(appStoreFile);
+  const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
   applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });
 
-  if (!existedAppStoreFile) {
+  if (!existsAppStoreFile) {
     // set IStore to IAppConfig
     applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
   }
@@ -44,7 +44,7 @@ export default async (api) => {
 
       // Set alias to run @ice/store
       config.resolve.alias
-        .set('$store', existedAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'))
+        .set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'))
         .set('react-redux', require.resolve('rax-redux'))
         .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
     });
@@ -93,7 +93,7 @@ export default async (api) => {
         .options({
           targetPath
         });
-      config.resolve.alias.set('$store', existedAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
+      config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
     });
   }
 
