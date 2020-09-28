@@ -1,8 +1,8 @@
-import { store as AppStore } from '$store';
+import AppStore from '$store';
 
 export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
 
-  const StoreProvider = ({children}) => {
+  const StoreProvider = ({ children }) => {
     const storeConfig = appConfig.store || {};
 
     let initialStates = {};
