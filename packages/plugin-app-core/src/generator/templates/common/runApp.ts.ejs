@@ -46,7 +46,7 @@ const {
   withRouter: defaultWithRouter
 }, loadRuntimeModules);
 
-export function runApp(appConfig, staticConfig) {
+export function runApp(appConfig, staticConfig?: any) {
   let renderer;
   <% if(isRax){ %>
     renderer = raxAppRenderer;
