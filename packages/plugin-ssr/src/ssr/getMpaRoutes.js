@@ -20,8 +20,17 @@ function getMpaRoutes(config) {
           path: `/${entryName}.html`,
           source: route.source,
           entryName: getEntryName(route.path),
-          componentPath: distDir && filename ? path.join(distDir, filename.replace('[name]', entryName)) : ''
+          componentPath: path.join(distDir, filename.replace('[name]', entryName))
         });
+      });
+    } else {
+      const entryPath = mpaEntries[entryName][0];
+      const pageName = path.dirname(entryPath).split('/')[0];
+      routes.push({
+        path: `/${entryName}.html`,
+        source: `/pages/${pageName}/index`,
+        entryName,
+        componentPath: path.join(distDir, filename.replace('[name]', entryName))
       });
     }
   });
