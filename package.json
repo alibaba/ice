@@ -64,6 +64,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "core-js": "^3.6.4"
+    "core-js": "^3.6.4",
+    "path-to-regexp": "6.1.0"
   }
 }

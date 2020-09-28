@@ -3,5 +3,8 @@ import { getHistory } from './history';
 
 export default function() {
   const history = getHistory();
-  return queryString.parse(history.location.search);
+  if (history && history.location) {
+    return queryString.parse(history.location.search);
+  }
+  return {};
 }

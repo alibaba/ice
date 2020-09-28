@@ -1,6 +1,5 @@
 import { createElement, PureComponent } from 'rax';
 import Image from 'rax-image';
-import { withRouter } from 'rax-app';
 
 import './index.css';
 
@@ -19,4 +18,4 @@ class Logo extends PureComponent {
   }
 }
 
-export default withRouter(Logo);
+export default Logo;

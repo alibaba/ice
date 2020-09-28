@@ -1,6 +1,6 @@
 {
   "name": "webpack-dev-mock",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Webpack devserver middleware mock server",
   "main": "lib/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "express-http-proxy": "^1.2.0",
     "glob": "^7.1.4",
     "multer": "^1.4.2",
-    "path-to-regexp": "^3.0.0"
+    "path-to-regexp": "^6.0.0"
   },
   "devDependencies": {
     "express": "^4.16.3"

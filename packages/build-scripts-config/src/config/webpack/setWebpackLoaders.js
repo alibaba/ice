@@ -35,7 +35,7 @@ const configCSSRule = (config, style, mode, loaders = []) => {
           .exclude.add(cssModuleReg).end();
     }
 
-    if (mode === 'development') {      
+    if (mode === 'development') {
       const cssHotLoader = rule.use('css-hot-loader')
         .loader(require.resolve('css-hot-loader'));
       if (ruleKey === 'module') {
