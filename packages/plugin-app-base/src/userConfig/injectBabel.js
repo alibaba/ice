@@ -38,7 +38,6 @@ module.exports = (config, injectBabel, context) => {
     const fileList = [];
     if (!entries) return;
     Object.keys(entries).forEach((key) => {
-      console.log(key);
       let addPolyfill = false;
       // only include entry path
       for (let i = 0; i < entries[key].length; i += 1) {

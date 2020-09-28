@@ -43,9 +43,6 @@ module.exports = (api) => {
     // do not generate vendor.js when compile document
     webpackConfig.optimization.splitChunks.cacheGroups = {};
 
-    // do not generate vendor.js when compile document
-    webpackConfig.optimization.splitChunks.cacheGroups = {};
-
     config.plugin('document').use(DocumentPlugin, [
       {
         context,
