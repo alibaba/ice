@@ -30,7 +30,7 @@ module.exports = (context) => {
 
   let entries = {};
   if (webConfig.mpa) {
-    setMPAConfig.default(config, { rootDir });
+    setMPAConfig.default(config, { context, type: 'node' });
 
     const mpaEntries = config.toConfig().entry;
     entries = Object.keys(mpaEntries).map(entryName => {

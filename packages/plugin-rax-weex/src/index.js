@@ -1,10 +1,17 @@
 const path = require('path');
+const setMPAConfig = require('build-mpa-config');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');
 
 module.exports = (api) => {
-  const { getValue, context, registerTask, onGetWebpackConfig } = api;
+  const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
+  const { userConfig, rootDir, command } = context;
+
+  registerUserConfig({
+    name: 'weex',
+    validation: 'object',
+  });
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const chainConfig = getWebpackBase(api, {
@@ -20,8 +27,10 @@ module.exports = (api) => {
   registerTask('weex', chainConfig);
 
   onGetWebpackConfig('weex', config => {
-    const { userConfig, rootDir, command } = context;
-
+    // set mpa config
+    if (userConfig.weex && userConfig.weex.mpa) {
+      setMPAConfig.default(config, { context, type: 'weex' });
+    }
     config.output.filename('weex/[name].js');
     if (command === 'start') {
       config.output.filename('weex/[name].js');

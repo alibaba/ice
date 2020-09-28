@@ -20,6 +20,8 @@ const setMPAConfig = (config, options: ConfigOptions) => {
       return arr.includes(entry.entryName);
     });
   }
+  // do not splitChunks when mpa
+  config.optimization.splitChunks({ cacheGroups: {} });
   // clear entry points
   config.entryPoints.clear();
   // add mpa entries
@@ -32,7 +34,6 @@ const setMPAConfig = (config, options: ConfigOptions) => {
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr);
   });
-
   // modify appJSON rules for mpa
   if (config.module.rules.get('appJSON')) {
     const matchInclude = (filepath: string) => {
