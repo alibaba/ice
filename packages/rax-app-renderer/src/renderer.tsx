@@ -49,7 +49,7 @@ function App(props) {
     return <AppNavigation {...navigationProps} />;
   }
 
-  const pageProps = Object.assign({ history, location: history.location, routes, InitialComponent}, {...context});
+  const pageProps = Object.assign({ history, location: history.location, routes, InitialComponent}, {...context.pageInitialProps});
 
   const tabBarProps = { history, config: staticConfig.tabBar };
   return (

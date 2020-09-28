@@ -18,6 +18,13 @@ module.exports = (config, context) => {
 
   config.mode('development');
 
+
+  config
+    .plugin('DefinePlugin')
+    .tap((args) => [Object.assign(...args, {
+      'process.env.__IS_SERVER__': true
+    })]);
+
   let routes = [];
 
   if (webConfig.mpa) {
