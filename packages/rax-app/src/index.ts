@@ -19,7 +19,7 @@ const getBuiltInPlugins = (userConfig) => {
   }
 
   if (targets.includes('weex')) {
-    // builtInPlugins.push(['build-plugin-rax-weex']);
+    builtInPlugins.push(['build-plugin-rax-weex']);
   }
 
   return builtInPlugins;

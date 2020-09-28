@@ -22,7 +22,7 @@ module.exports = (api) => {
     const webConfig = userConfig.web || {};
 
     if (webConfig.mpa) {
-      setMPAConfig.default(config, { rootDir });
+      setMPAConfig.default(config, { context, type: 'web' });
     }
 
     if (command === 'start') {
