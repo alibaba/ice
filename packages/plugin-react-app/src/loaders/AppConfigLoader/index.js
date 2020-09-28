@@ -53,7 +53,7 @@ module.exports = function(appJSON) {
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
-          return createElement(reference, Object.assign({}, routeProps, props));
+          return React.createElement(reference, Object.assign({}, routeProps, props));
         }
         ${routeTitle ? `document.title="${routeTitle}"` : ''}
         Component.__path = '${route.path}';
@@ -71,7 +71,7 @@ module.exports = function(appJSON) {
   }).join('\n');
 
   return `
-    import { createElement } from 'rax';
+    import React from 'react';
     const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}
