@@ -11,7 +11,12 @@ const getDepPath = require('./getDepPath');
         "source": "pages/Home/index",
         "component": fn,
       }
-    ]
+    ],
+    "shell": {
+      "source": "shell/index",
+      "component": fn
+    },
+    "hydrate": false
   }
  */
 module.exports = function(appJSON) {
@@ -32,8 +37,7 @@ module.exports = function(appJSON) {
   });
 
   const assembleRoutes = appConfig.routes.map((route) => {
-    const source = route.realSource || route.source;
-    if (!route.path || !source) {
+    if (!route.path || !route.source) {
       throw new Error('route object should have path and source.');
     }
 
@@ -49,7 +53,7 @@ module.exports = function(appJSON) {
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${getDepPath(source)}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${getDepPath(route.source, this.rootContext)}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
@@ -60,7 +64,7 @@ module.exports = function(appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${getDepPath(source)}'))`;
+    const importComponent = `() => () => interopRequire(require('${getDepPath(route.source, this.rootContext)}'))`;
 
     return `routes.push(
       {
@@ -70,7 +74,21 @@ module.exports = function(appJSON) {
     );`;
   }).join('\n');
 
+  let processShell;
+  if (appConfig.shell) {
+    processShell = `
+    import Shell from "${getDepPath(appConfig.shell.source, this.rootContext)}";
+    appConfig.shell = {
+      source: '${appConfig.shell.source}',
+      component: Shell
+    };
+    `;
+  } else {
+    processShell = '';
+  }
+
   return `
+    import { createElement } from 'rax';
     const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}
@@ -78,6 +96,7 @@ module.exports = function(appJSON) {
       ...${appJSON},
       routes
     };
+    ${processShell}
     export default appConfig;
   `;
 };
