@@ -21,6 +21,7 @@ src
 ├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
+└── store.ts
 ```
 
 ### 页面状态
@@ -159,9 +160,22 @@ export default {
 定义好 model 之后，我们需要自定义创建 Store 实例。
 
 ```ts
+// ./src/store.ts
 import { createStore } from 'ice';
+import user from './models/user';
 
-createStore(models)
+const models = {
+  user
+};
+
+const options = {
+  disableImmer: true,
+  disableError: true
+}
+
+const store = createStore(models, options);
+
+export default store;
 ```
 
 ### 模型使用
@@ -179,6 +193,7 @@ src
 ├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
+└── store.ts
 ```
 
 如上所示目录结构，我们可以通过文件名获取到对应的模型：
@@ -189,10 +204,10 @@ src
 
 export default () => {
   // 使用 counter 模型，src/models/counter.ts -> counter
-+ const [counterState, counterDispatchers] = appStore.useModel('counter);
++ const [counterState, counterDispatchers] = appStore.useModel('counter');
 
   // 使用 user 模型，src/models/user.ts -> user
-+ const [userState, userDispatchers] = appStore.useModel('user);
++ const [userState, userDispatchers] = appStore.useModel('user');
 }
 ```
 
@@ -219,8 +234,8 @@ export default () => {
   // 多个 model 的情况，model 名称约定为文件名，如：
   // src/pages/Home/models/foo.ts -> foo
   // src/pages/Home/models/bar.ts -> bar
-+ const [fooState, fooDispatchers] = appStore.useModel('foo);
-+ const [barState, barDispatchers] = appStore.useModel('bar);
++ const [fooState, fooDispatchers] = appStore.useModel('foo');
++ const [barState, barDispatchers] = appStore.useModel('bar');
 }
 ```
 
@@ -236,6 +251,7 @@ export default () => {
 src
 ├── models               // 全局状态
 │   └── user.ts
+└── store.ts
 ```
 
 定义模型如下：
