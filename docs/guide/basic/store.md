@@ -21,6 +21,7 @@ src
 ├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
+└── store.ts
 ```
 
 ### 页面状态
@@ -159,9 +160,22 @@ export default {
 定义好 model 之后，我们需要自定义创建 Store 实例。
 
 ```ts
+// ./src/store.ts
 import { createStore } from 'ice';
+import user from './models/user';
 
-createStore(models)
+const models = {
+  user
+};
+
+const options = {
+  disableImmer: true,
+  disableError: true
+}
+
+const store = createStore(models, options);
+
+export default store;
 ```
 
 ### 模型使用
@@ -179,6 +193,7 @@ src
 ├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
+└── store.ts
 ```
 
 如上所示目录结构，我们可以通过文件名获取到对应的模型：
@@ -236,6 +251,7 @@ export default () => {
 src
 ├── models               // 全局状态
 │   └── user.ts
+└── store.ts
 ```
 
 定义模型如下：
@@ -435,29 +451,6 @@ const appConfig = {
 };
 
 createApp(appConfig);
-```
-
-## 创建自定义 store
-
-在某些情况下，可能需要创建自定义的 store，以获得更多的能力。以创建全局自定义 store 为例，示例代码如下：
-
-```js
-// ./src/store.ts
-import { createStore } from '@ice/store';
-import user from './models/user';
-
-const models = {
-  user
-};
-
-const options = {
-  disableImmer: true,
-  disableError: true
-}
-
-const store = createStore(models, options);
-
-export default store;
 ```
 
 ## 版本变更说明
