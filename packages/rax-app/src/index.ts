@@ -14,7 +14,7 @@ const getBuiltInPlugins = (userConfig) => {
   if (targets.includes('web')) {
     builtInPlugins.push(['build-plugin-rax-web']);
     if (userConfig.web && userConfig.web.ssr) {
-      builtInPlugins.push(['build-plugin-universal-ssr']);
+      builtInPlugins.push(['build-plugin-ssr']);
     }
   }
 

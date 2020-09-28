@@ -31,7 +31,7 @@ module.exports = function() {
       const initialData = appConfig.app && appConfig.app.getInitialData ? await appConfig.app.getInitialData() : {};
 
       const data = {
-        isSSR: true,
+        __SSR_ENABLED__: true,
         initialData,
         pageData,
       };

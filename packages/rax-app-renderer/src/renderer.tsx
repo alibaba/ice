@@ -160,7 +160,7 @@ function _renderApp(context, options) {
 
       const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
       if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
-      const isSSR = typeof window !== 'undefined' ? (window as any).__INITIAL_DATA__ && (window as any).__INITIAL_DATA__.isSSR : false;
+      const isSSR = typeof window !== 'undefined' ? (window as any).__INITIAL_DATA__ && (window as any).__INITIAL_DATA__.__SSR_ENABLED__ : false;
       return render(
         appInstance,
         rootEl,

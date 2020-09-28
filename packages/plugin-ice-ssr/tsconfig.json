@@ -4,5 +4,5 @@
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "lib"
-  }
+  },
 }
