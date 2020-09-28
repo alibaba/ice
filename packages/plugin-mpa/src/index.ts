@@ -94,13 +94,7 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
   defaultEntryNames.forEach(defaultEntryName => {
     const htmlPluginKey = `HtmlWebpackPlugin_${defaultEntryName}`;
     if (config.plugins.get(htmlPluginKey)) {
-      const filename = `${defaultEntryName}.html`;
-      const htmlPluginOption = {
-        filename,
-        excludeChunks: defaultEntryNames.filter((n) => n !== defaultEntryName),
-        inject: true,
-      };
-
+      const htmlPluginOption = {};
       const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName]);
 
       if (fs.existsSync(entryTemplate)) {
