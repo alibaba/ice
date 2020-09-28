@@ -1,6 +1,9 @@
 import { runApp } from 'rax-app';
 
 runApp({
+  router: {
+    type: 'browser'
+  },
   app: {
     onShow() {
       console.log('app show...');
@@ -14,8 +17,5 @@ runApp({
         b: 2
       };
     }
-  },
-  router: {
-    basename: '/home'
   }
 });
