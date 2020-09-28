@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as ejs from 'ejs';
 import Generator from './generator';
 
 export default async (api) => {
@@ -16,8 +15,15 @@ export default async (api) => {
   const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
-  // set IStore to IAppConfig
-  applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  const appStoreFile = applyMethod('formatPath', path.join(rootDir, 'src', `store.${projectType}`));
+  const existedAppStoreFile = fse.pathExistsSync(appStoreFile);
+
+  applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });
+
+  if (!existedAppStoreFile) {
+    // set IStore to IAppConfig
+    applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  }
 
   const { mpa: isMpa, entry } = userConfig;
   const srcDir = applyMethod('getSourceDir', entry);
@@ -38,7 +44,7 @@ export default async (api) => {
 
       // Set alias to run @ice/store
       config.resolve.alias
-        .set('$store', path.join(targetPath, 'store', 'index.ts'))
+        .set('$store', existedAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'))
         .set('react-redux', require.resolve('rax-redux'))
         .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
     });
@@ -87,7 +93,7 @@ export default async (api) => {
         .options({
           targetPath
         });
-      config.resolve.alias.set('$store', path.join(targetPath, 'store', 'index.ts'));
+      config.resolve.alias.set('$store', existedAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
     });
   }
 
