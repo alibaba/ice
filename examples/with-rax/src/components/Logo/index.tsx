@@ -6,7 +6,7 @@ import './index.css';
 class Logo extends PureComponent {
   public render() {
     const source = {
-      uri: '//gw.alicdn.com/tfs/TB1MRC_cvb2gK0jSZK9XXaEgFXa-1701-1535.png',
+      uri: `${process.env.PUBLIC_URL}/rax.png`,
     };
     console.log('with router =>', this.props);
     return (

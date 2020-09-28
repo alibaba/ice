@@ -1,6 +1,7 @@
 const getWebpackConfig = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
 const ProgressPlugin = require('webpackbar');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   const { context } = api;
@@ -18,7 +19,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   // 1M = 1024 KB = 1048576 B
   config.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
 
-  // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
+  // setup DefinePlugin and CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
 
   // DefinePlugin
@@ -34,7 +35,9 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     .end()
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables])
-    .end();
+    .end()
+    .plugin('CopyWebpackPlugin')
+    .use(CopyWebpackPlugin, [[]]);
 
   // Process app.json file
   config.module

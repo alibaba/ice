@@ -1,9 +1,10 @@
 const path = require('path');
+const fs = require('fs');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
 module.exports = (api) => {
-  const { getValue, context, registerTask, onGetWebpackConfig } = api;
+  const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const target = 'kraken';
@@ -18,6 +19,11 @@ module.exports = (api) => {
   setEntry(chainConfig, context);
 
   registerTask(target, chainConfig);
+  registerUserConfig({
+    name: target,
+    validation: 'object'
+  });
+
 
   onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
@@ -35,5 +41,28 @@ module.exports = (api) => {
       outputPath = path.resolve(rootDir, outputDir, target);
     }
     config.output.path(outputPath);
+
+    let publicUrl = '""';
+    if (command === 'build') {
+      publicUrl = '"."';
+    }
+
+    config
+      .plugin('DefinePlugin')
+      .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': publicUrl })]);
+
+    const needCopyDirs = [];
+
+    // Copy public dir
+    if (fs.existsSync(path.resolve(rootDir, 'public'))) {
+      needCopyDirs.push({
+        from: path.resolve(rootDir, 'public'),
+        to: path.resolve(rootDir, outputDir, target)
+      });
+    }
+
+    config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
+      return [copyList.concat(needCopyDirs)];
+    });
   });
 };
