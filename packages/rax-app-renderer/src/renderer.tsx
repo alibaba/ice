@@ -5,7 +5,9 @@ import { isWeb, isWeex, isKraken } from 'universal-env';
 import UniversalDriver from 'driver-universal';
 
 const useRouter = createUseRouter({ useState, useLayoutEffect });
-let AppNavigation; let TabBar;
+
+let AppNavigation;
+let TabBar;
 
 if (isWeb) {
   AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
@@ -33,16 +35,22 @@ function _matchInitialComponent(fullpath, routes) {
 }
 
 function App(props) {
-  const { staticConfig, history, routes, InitialComponent } = props;
+  const { staticConfig, history, routes, InitialComponent, context } = props;
   const { component: PageComponent } = useRouter(() => ({ history, routes, InitialComponent }));
+
   // Return null directly if not matched
   if (_isNullableComponent(PageComponent)) return null;
-  const navigationProps = { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent };
+
   if (isWeb) {
+    const navigationProps = Object.assign(
+      { staticConfig, component: PageComponent, history, location: history.location, routes, InitialComponent },
+      {...context.pageInitialProps}
+    );
     return <AppNavigation {...navigationProps} />;
   }
 
-  const pageProps = { history, location: history.location, routes, InitialComponent };
+  const pageProps = Object.assign({ history, location: history.location, routes, InitialComponent}, {...context.pageInitialProps});
+
   const tabBarProps = { history, config: staticConfig.tabBar };
   return (
     <Fragment>
@@ -52,7 +60,44 @@ function App(props) {
   );
 }
 
-function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect, getHistory, staticConfig, createAppInstance, ErrorBoundary }) {
+async function raxAppRenderer(options) {
+  const { appConfig, setAppConfig } = options || {};
+
+  setAppConfig(appConfig);
+
+  if (process.env.__IS_SERVER__) return;
+
+  let initialData = {};
+  let pageInitialProps = {};
+
+  // ssr enabled and the server has returned data
+  if ((window as any).__INITIAL_DATA__) {
+    initialData = (window as any).__INITIAL_DATA__.initialData;
+    pageInitialProps = (window as any).__INITIAL_DATA__ .pageData;
+  } else {
+    // ssr not enabled, or SSR is enabled but the server does not return data
+    // eslint-disable-next-line
+    if (appConfig.app && appConfig.app.getInitialData) {
+      initialData = await appConfig.app.getInitialData();
+    }
+  }
+
+  const context = { initialData, pageInitialProps };
+  _renderApp(context, options);
+}
+
+function _renderApp(context, options) {
+  const {
+    appConfig,
+    createBaseApp,
+    emitLifeCycles,
+    pathRedirect,
+    getHistory,
+    staticConfig,
+    createAppInstance,
+    ErrorBoundary
+  } = options;
+
   const {
     runtime,
     appConfig: appDynamicConfig
@@ -63,7 +108,7 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
     driver = staticConfig.driver;
   }
 
-  const { routes, hydrate = false } = staticConfig;
+  const { routes } = staticConfig;
 
   // Like https://xxx.com?_path=/page1, use `_path` to jump to a specific route.
   const history = getHistory();
@@ -77,7 +122,8 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
         staticConfig,
         history,
         routes,
-        InitialComponent: _initialComponent
+        InitialComponent: _initialComponent,
+        context
       };
 
       const { app = {} } = appDynamicConfig;
@@ -114,14 +160,15 @@ function raxAppRenderer({ appConfig, createBaseApp, emitLifeCycles, pathRedirect
 
       const rootEl = isWeex || isKraken ? null : document.getElementById(rootId);
       if (isWeb && rootId === null) console.warn('Error: Can not find #root element, please check which exists in DOM.');
+      const isSSR = typeof window !== 'undefined' ? (window as any).__INITIAL_DATA__ && (window as any).__INITIAL_DATA__.__SSR_ENABLED__ : false;
       return render(
         appInstance,
         rootEl,
-        { driver, hydrate }
+        { driver, hydrate: isSSR }
       );
     });
-}
 
+}
 
 export default raxAppRenderer;
 

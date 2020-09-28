@@ -1,15 +1,18 @@
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
 
-const CONFIG = [{
-  name: 'modeConfig',
-  validation: 'object',
-  defaultValue: {},
-}, {
-  name: 'disableRuntime',
-  validation: 'boolean',
-  defaultValue: false
-}];
+const CONFIG = [
+  {
+    name: 'modeConfig',
+    validation: 'object',
+    defaultValue: {},
+  },
+  {
+    name: 'web',
+    validation: 'object',
+    defaultValue: {}
+  }
+];
 
 module.exports = (api) => {
   const { registerUserConfig, log } = api;

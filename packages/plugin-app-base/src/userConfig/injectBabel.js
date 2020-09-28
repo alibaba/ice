@@ -36,6 +36,7 @@ module.exports = (config, injectBabel, context) => {
     const entries = config.toConfig().entry;
     const rule = config.module.rule('polyfill').test(/\.jsx?|\.tsx?$/);
     const fileList = [];
+    if (!entries) return;
     Object.keys(entries).forEach((key) => {
       let addPolyfill = false;
       // only include entry path

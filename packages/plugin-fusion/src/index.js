@@ -19,7 +19,7 @@ function normalizeEntry(entry, preparedChunks) {
 }
 
 module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {}) => {
-  const { themePackage, themeConfig, nextLibDir = 'es', style = true, uniteNextLib, externalNext, importOptions = {} } = plugionOptions;
+  const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, style = true, uniteNextLib, externalNext, importOptions = {} } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
@@ -89,13 +89,35 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
     const themeFile = typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
 
     ['scss', 'scss-module'].forEach((rule) => {
+      if (usePx2Vw) {
+        config.module
+          .rule(rule)
+          .use('postcss-loader')
+          .tap((options) => {
+            const { plugins = [] } = options;
+            return {
+              ...options,
+              plugins: [
+                ...plugins,
+                // eslint-disable-next-line
+                require('./postcssPlugins/postcssPluginPx2vw'),
+              ],
+            };
+          });
+      }
+
       config.module
         .rule(rule)
         .use('ice-skin-loader')
         .loader(require.resolve('ice-skin-loader'))
         .options({
           themeFile,
-          themeConfig: Object.assign({}, defaultScssVars, replaceVars, themeConfig || {}),
+          themeConfig: Object.assign(
+            {},
+            defaultScssVars,
+            replaceVars,
+            themeConfig || {}
+          ),
         });
     });
 

@@ -27,9 +27,14 @@ module.exports = (api) => {
       entryHtml = `${pageName}.html`;
     } else {
       onGetWebpackConfig(config => {
-        const entryNames = Object.keys(config.entryPoints.entries());
-        const pageName = entryNames[0].toLocaleLowerCase();
-        entryHtml = `${pageName}.html`;
+        const defaultEntryNames = Object.keys(config.entryPoints.entries());
+        let pageName = '';
+        if (typeof mpa.openPage === 'string') {
+          pageName = mpa.openPage.split('.html')[0];
+        } else {
+          pageName = defaultEntryNames[0];
+        }
+        entryHtml = pageName ? `${pageName.toLocaleLowerCase()}.html` : '';
       });
     }
   }
@@ -60,7 +65,7 @@ module.exports = (api) => {
 
   if (command === 'test') {
     onHook('before.test.run', ({ config }) => {
-      debug(JSON.stringify(config, null, 2));
+      logWebpackConfig(config);
     });
 
     onGetJestConfig((jestConfig) => {
@@ -88,7 +93,7 @@ module.exports = (api) => {
 
   if (command === 'start') {
     onHook('before.start.run', ({ config }) => {
-      debug(JSON.stringify(config, null, 2));
+      logWebpackConfig(config);
     });
 
     onHook('after.start.compile', ({ urls, stats }) => {
@@ -146,7 +151,7 @@ module.exports = (api) => {
 
   if (command === 'build') {
     onHook('before.build.run', ({ config }) => {
-      debug(JSON.stringify(config, null, 2));
+      logWebpackConfig(config);
     });
 
     targets.forEach((target) => {
@@ -168,4 +173,21 @@ module.exports = (api) => {
 
 function getLocalUrl(url, entryHtml) {
   return entryHtml ? `${url}${entryHtml}` : url;
+}
+
+function logWebpackConfig(config) {
+  try {
+    const tmp = [];
+    debug(JSON.stringify(config, function(key, val) {
+      if (val != null && typeof val === 'object') {
+        if (tmp.indexOf(val) >= 0) {
+          return;
+        }
+        tmp.push(val);
+      }
+      return val;
+    }, 2));
+  } catch (error) {
+    // ignore error
+  }
 }
