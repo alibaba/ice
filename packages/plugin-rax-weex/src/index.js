@@ -27,7 +27,7 @@ module.exports = (api) => {
 
   chainConfig.plugin('WeexFrameworkBannerPlugin')
     .use(WeexFrameworkBannerPlugin);
-
+  chainConfig.name('weex');
   registerTask(target, chainConfig);
 
   onGetWebpackConfig(target, config => {
