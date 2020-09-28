@@ -6,11 +6,6 @@ const CONFIG = [
     name: 'modeConfig',
     validation: 'object',
     defaultValue: {},
-  },
-  {
-    name: 'web',
-    validation: 'object',
-    defaultValue: {}
   }
 ];
 

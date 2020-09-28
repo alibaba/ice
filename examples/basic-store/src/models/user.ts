@@ -9,7 +9,7 @@ export default {
   },
 
   reducers: {
-    update (prevState, payload) {
+    update(prevState, payload) {
       return {
         ...prevState,
         ...payload,
@@ -18,7 +18,7 @@ export default {
   },
 
   effects: (dispatch: IRootDispatch) => ({
-    async getUserInfo () {
+    async getUserInfo() {
       await delay(1000);
       dispatch.user.update({
         name: 'taobao',

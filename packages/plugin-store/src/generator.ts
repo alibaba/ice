@@ -25,6 +25,8 @@ export default class Generator {
 
   private pageStoreTemplatePath: string
 
+  private typesTemplatePath: string
+
   private targetPath: string
 
   private projectType: string
@@ -37,6 +39,7 @@ export default class Generator {
     rootDir,
     appStoreTemplatePath,
     pageStoreTemplatePath,
+    typesTemplatePath,
     targetPath,
     applyMethod,
     projectType,
@@ -47,6 +50,7 @@ export default class Generator {
     appStoreTemplatePath: string;
     pageStoreTemplatePath: string;
     pageStoresTemplatePath: string;
+    typesTemplatePath: string;
     targetPath: string;
     projectType: string;
     applyMethod: Function;
@@ -56,6 +60,7 @@ export default class Generator {
     this.rootDir = rootDir;
     this.appStoreTemplatePath = appStoreTemplatePath;
     this.pageStoreTemplatePath = pageStoreTemplatePath;
+    this.typesTemplatePath = typesTemplatePath;
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
@@ -97,9 +102,9 @@ export default class Generator {
     };
   }
 
-  private renderAppStore() {
+  private renderAppStore({ appStoreFile }) {
     const sourceFilename = 'store/index';
-    const exportName = 'store, createStore';
+    const exportName = 'store';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
     let appModelsDir = path.join(this.rootDir, 'src', 'models');
@@ -117,12 +122,28 @@ export default class Generator {
       importStr += `\nimport ${model} from '${appModelsDir}/${model}';`;
       modelsStr += `${model},`;
     });
-    this.renderFile(this.appStoreTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false });
-    this.applyMethod('removeExport', exportName);
 
-    if (appModels.length > 0) {
-      this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: '{ store, createStore }', exportName });
-    }
+    const appStoreRenderData = {
+      importStr,
+      modelsStr,
+      isSingleModel: false,
+      appStoreImport: `import store from '${appStoreFile.replace(`.${this.projectType}`, '')}'`
+    };
+
+    this.renderFile(this.appStoreTemplatePath, targetPath, appStoreRenderData);
+    this.applyMethod('removeExport', exportName);
+    this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: 'store', exportName });
+  }
+
+  private renderAppStoreTypes({ hasAppModels }) {
+    const sourceFilename = 'store/types';
+    const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
+    const appStoreTypesRenderData = {
+      hasAppModels
+    };
+
+    this.renderFile(this.typesTemplatePath, targetPath, appStoreTypesRenderData);
+    this.applyMethod('addTypesExport', { source: './store/types' });
   }
 
   private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {
@@ -161,6 +182,31 @@ export default class Generator {
     this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
+  private renderPageLayout({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
+    const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Layout.tsx');
+    const pageComponentSourcePath = this.applyMethod('formatPath', `${pageNameDir}/Layout`);
+
+    if (!fse.pathExistsSync(pageComponentSourcePath)) {
+      return;
+    }
+
+    const pageLayoutName = `${pageName}Layout`;
+    const pageLayoutRenderData = {
+      isRax: this.isRax,
+      pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
+      pageComponentExport: pageLayoutName,
+      hasPageStore: false,
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
+    };
+
+    if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
+      pageLayoutRenderData.hasPageStore = true;
+    }
+
+    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
+  }
+
   private renderPageIndex(params) {
     const { pageName, pageModelsDir, pageModelFile } = params;
     const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
@@ -191,8 +237,19 @@ export default class Generator {
   }
 
   public render() {
-    // generate .ice/store/index.ts
-    this.renderAppStore();
+    const srcDir = path.join(this.rootDir, this.srcDir);
+    const appStoreFile = this.applyMethod('formatPath', path.join(srcDir, `store.${this.projectType}`));
+    const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
+    const hasAppModels = fse.pathExistsSync(path.join(this.rootDir, 'src', 'models'));
+
+    // if store is created by user, don't create .ice/store/index.ts and .ice/store/types.ts
+    if (!existsAppStoreFile) {
+      // generate .ice/store/index.ts
+      this.renderAppStore({ appStoreFile });
+
+      // generate .ice/store/types.ts
+      this.renderAppStoreTypes({ hasAppModels });
+    }
 
     const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
     pages.forEach(pageName => {
@@ -213,9 +270,11 @@ export default class Generator {
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);
 
-      // generate .ice/pages/${pageName}/${pageName}.tsx
+      // generate .ice/pages/${pageName}/index.tsx
       this.renderPageComponent(params);
 
+      // generate .ice/pages/${pageName}/${pageName}.tsx
+      this.renderPageLayout(params);
       // generate .ice/pages/${pageName}/index.ts
       this.renderPageIndex(params);
     });

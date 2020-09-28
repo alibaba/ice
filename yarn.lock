@@ -5190,6 +5190,21 @@ chokidar@^2.0.4, chokidar@^2.1.8:
   optionalDependencies:
     fsevents "^1.2.7"
 
+chokidar@^3.3.0, chokidar@^3.3.1, chokidar@^3.4.1:
+  version "3.4.2"
+  resolved "https://registry.npm.taobao.org/chokidar/download/chokidar-3.4.2.tgz#38dc8e658dec3809741eb3ef7bb0a47fe424232d"
+  integrity sha1-ONyOZY3sOAl0HrPve7Ckf+QkIy0=
+  dependencies:
+    anymatch "~3.1.1"
+    braces "~3.0.2"
+    glob-parent "~5.1.0"
+    is-binary-path "~2.1.0"
+    is-glob "~4.0.1"
+    normalize-path "~3.0.0"
+    readdirp "~3.4.0"
+  optionalDependencies:
+    fsevents "~2.1.2"
+
 chownr@^1.1.1, chownr@^1.1.2:
   version "1.1.4"
   resolved "https://registry.npm.taobao.org/chownr/download/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
@@ -11857,7 +11872,19 @@ miniapp-render@^1.2.2:
   resolved "https://registry.npm.taobao.org/miniapp-render/download/miniapp-render-1.2.4.tgz#265b3f0d81467777708732be724c34ffa784b6fc"
   integrity sha1-Jls/DYFGd3dwhzK+ckw0/6eEtvw=
 
-miniapp-runtime-config@^0.1.1, miniapp-runtime-config@^0.1.2:
+miniapp-runtime-config@0.1.3-4:
+  version "0.1.3-4"
+  resolved "https://registry.npm.taobao.org/miniapp-runtime-config/download/miniapp-runtime-config-0.1.3-4.tgz#865a7df972d9fe098768107fbffa2b363beea88e"
+  integrity sha1-hlp9+XLZ/gmHaBB/v/orNjvuqI4=
+  dependencies:
+    copy-webpack-plugin "^6.0.3"
+    miniapp-builder-shared "0.1.6-1"
+    miniapp-render "^1.2.2"
+    rax-miniapp-babel-plugins "^0.1.3"
+    rax-miniapp-config-webpack-plugin "^1.2.3"
+    rax-miniapp-runtime-webpack-plugin "1.2.2-3"
+
+miniapp-runtime-config@^0.1.1:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/miniapp-runtime-config/download/miniapp-runtime-config-0.1.2.tgz#536eac3d36919ee03baf9b3b37118d9da047e7b9"
   integrity sha1-U26sPTaRnuA7r5s7NxGNnaBH57k=
@@ -14736,6 +14763,23 @@ rax-miniapp-config-webpack-plugin@^1.2.3:
   integrity sha1-fQ2zPPei5/sHuyLgGXbs+oaEyL4=
   dependencies:
     fs-extra "^8.1.0"
+
+rax-miniapp-runtime-webpack-plugin@1.2.2-3:
+  version "1.2.2-3"
+  resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.2.2-3.tgz#e44c55fefe85b4b9eafdd89bcedf2a5b4a1633ca"
+  integrity sha1-5ExV/v6FtLnq/dibzt8qW0oWM8o=
+  dependencies:
+    chalk "^3.0.0"
+    colors "^1.4.0"
+    csso "^4.0.3"
+    ejs "^3.1.2"
+    fs-extra "^8.1.0"
+    path-to-regexp "^3.0.0"
+    postcss "^7.0.17"
+    pretty-data "^0.40.0"
+    terser "^4.6.10"
+    webpack "^4.35.3"
+    webpack-sources "^1.3.0"
 
 rax-miniapp-runtime-webpack-plugin@^1.1.0:
   version "1.2.1"
