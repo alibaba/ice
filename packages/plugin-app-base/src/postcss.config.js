@@ -24,7 +24,7 @@ function getPlugins(type) {
       ];
 
     // extract css file in web while inlineStyle is disabled
-    // web/miniapp standard
+    // web standard
     case 'web':
       return [
         require('postcss-preset-env')({

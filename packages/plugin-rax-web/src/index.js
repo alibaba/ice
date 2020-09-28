@@ -9,30 +9,34 @@ module.exports = (api) => {
   const { onGetWebpackConfig, getValue, context, registerTask } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const target = 'web';
   const chainConfig = getWebpackBase(api, {
-    target: 'web',
+    target,
     babelConfigOptions: { styleSheet: true },
+    progressOptions: {
+      name: 'Web'
+    }
   });
 
   // Set Entry
   setEntry(chainConfig, context);
+  registerTask(target, chainConfig);
 
-  onGetWebpackConfig('web', (config) => {
+  onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
+    const { outputDir } = userConfig;
     const webConfig = userConfig.web || {};
 
     if (webConfig.mpa) {
       setMPAConfig.default(config, { context, type: 'web' });
     }
 
+    // Set output dir
+    const outputPath = path.resolve(rootDir, outputDir, target);
+    config.output.path(outputPath);
+
     if (command === 'start') {
       setDev(config);
-    } else if (command === 'build') {
-      // Set output dir
-      const outputPath = userConfig.outputDir ? path.resolve(rootDir, userConfig.outputDir)
-      : path.resolve(rootDir, 'build', 'web');
-
-      config.output.path(outputPath);
     }
 
     const webpackConfig = config.toConfig();
@@ -58,6 +62,4 @@ module.exports = (api) => {
       },
     ]);
   });
-
-  registerTask('web', chainConfig);
 };
