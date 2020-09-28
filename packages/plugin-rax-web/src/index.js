@@ -7,7 +7,7 @@ const DocumentPlugin = require('./DocumentPlugin');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
 module.exports = (api) => {
-  const { onGetWebpackConfig, getValue, context, registerTask } = api;
+  const { onGetWebpackConfig, getValue, context, registerTask, registerUserConfig } = api;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const target = 'web';
@@ -18,7 +18,11 @@ module.exports = (api) => {
       name: 'Web'
     }
   });
-  chainConfig.name('web');
+  chainConfig.name(target);
+  registerUserConfig({
+    name: target,
+    validation: 'object'
+  });
 
   // Set Entry
   setEntry(chainConfig, context);

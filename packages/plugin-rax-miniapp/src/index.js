@@ -6,7 +6,7 @@ const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
 module.exports = (api) => {
-  const { getValue, context, registerTask, onGetWebpackConfig } = api;
+  const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
   const { userConfig } = context;
   const { targets } = userConfig;
 
@@ -24,6 +24,10 @@ module.exports = (api) => {
       setEntry(chainConfig, context, target);
       // Register task
       registerTask(target, chainConfig);
+      registerUserConfig({
+        name: target,
+        validation: 'object'
+      });
 
       onGetWebpackConfig(target, config => {
         const { userConfig, rootDir } = context;

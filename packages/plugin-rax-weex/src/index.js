@@ -9,11 +9,6 @@ module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
   const { userConfig, rootDir, command } = context;
 
-  registerUserConfig({
-    name: 'weex',
-    validation: 'object',
-  });
-
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const target = 'weex';
   const chainConfig = getWebpackBase(api, {
@@ -28,8 +23,12 @@ module.exports = (api) => {
 
   chainConfig.plugin('WeexFrameworkBannerPlugin')
     .use(WeexFrameworkBannerPlugin);
-  chainConfig.name('weex');
+  chainConfig.name(target);
   registerTask(target, chainConfig);
+  registerUserConfig({
+    name: target,
+    validation: 'object'
+  });
 
   onGetWebpackConfig(target, config => {
     const { outputDir = 'build', weex = {} } = userConfig;
