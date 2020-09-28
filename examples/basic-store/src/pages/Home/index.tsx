@@ -13,9 +13,9 @@ export default () => {
       <h2>{pageState.title}</h2>
 
       <div>
-        <button type="button" onClick={() => counterActions.increment()}>+</button>
+        <button type="button" onClick={counterActions.increment}>+</button>
         <span>{counterState.count}</span>
-        <button type="button" onClick={() => counterActions.decrementAsync()}>-</button>
+        <button type="button" onClick={counterActions.decrementAsync}>-</button>
       </div>
 
       <Link to="/about">about</Link>

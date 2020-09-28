@@ -102,7 +102,7 @@ export default class Generator {
     };
   }
 
-  private renderAppStore({ existedAppStoreFile, appStoreFile }) {
+  private renderAppStore({ appStoreFile }) {
     const sourceFilename = 'store/index';
     const exportName = 'store';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
@@ -127,7 +127,6 @@ export default class Generator {
       importStr,
       modelsStr,
       isSingleModel: false,
-      hasAppStore: existedAppStoreFile,
       appStoreImport: `import store from '${appStoreFile.replace(`.${this.projectType}`, '')}'`
     };
 
@@ -136,12 +135,11 @@ export default class Generator {
     this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: 'store', exportName });
   }
 
-  private renderAppStoreTypes({ hasAppModels, existedAppStoreFile }) {
+  private renderAppStoreTypes({ hasAppModels }) {
     const sourceFilename = 'store/types';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
     const appStoreTypesRenderData = {
-      hasAppModels,
-      existedAppStoreFile
+      hasAppModels
     };
 
     this.renderFile(this.typesTemplatePath, targetPath, appStoreTypesRenderData);
@@ -233,10 +231,10 @@ export default class Generator {
     // if store is created by user, don't create .ice/store/index.ts and .ice/store/types.ts
     if (!existedAppStoreFile) {
       // generate .ice/store/index.ts
-      this.renderAppStore({ existedAppStoreFile, appStoreFile });
+      this.renderAppStore({ appStoreFile });
 
       // generate .ice/store/types.ts
-      this.renderAppStoreTypes({ existedAppStoreFile, hasAppModels });
+      this.renderAppStoreTypes({ hasAppModels });
     }
 
     const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
