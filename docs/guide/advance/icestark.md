@@ -7,7 +7,7 @@ order: 3
 
 ## 框架应用
 
-通过物料模板快速创建一个微前端的子应用：
+通过物料模板快速创建一个微前端的框架应用：
 
 ```bash
 $ npm init ice icestark-framework @icedesign/stark-layout-scaffold
