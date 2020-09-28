@@ -12,10 +12,6 @@ const getDepPath = require('./getDepPath');
         "component": fn,
       }
     ],
-    "shell": {
-      "source": "shell/index",
-      "component": fn
-    },
     "hydrate": false
   }
  */
@@ -74,19 +70,6 @@ module.exports = function(appJSON) {
     );`;
   }).join('\n');
 
-  let processShell;
-  if (appConfig.shell) {
-    processShell = `
-    import Shell from "${getDepPath(appConfig.shell.source, this.rootContext)}";
-    appConfig.shell = {
-      source: '${appConfig.shell.source}',
-      component: Shell
-    };
-    `;
-  } else {
-    processShell = '';
-  }
-
   return `
     import { createElement } from 'rax';
     const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
@@ -96,7 +79,6 @@ module.exports = function(appJSON) {
       ...${appJSON},
       routes
     };
-    ${processShell}
     export default appConfig;
   `;
 };
