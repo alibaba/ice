@@ -2,8 +2,8 @@ import { getOptions } from 'loader-utils';
 
 function mpaLoader() {
   const options = getOptions(this) || {};
-  const renderModule = options.renderModule || 'rax';
-  const withSSR = process.env.RAX_SSR === 'true';
+  const framework = options.framework || 'rax';
+  const withSSR = process.env.__SSR_ENABLED__ === 'true';
   let appRender = '';
   if (options.type === 'weex') {
     appRender = 'render(createElement(Entry), null, { driver: DriverUniversal });';
@@ -23,7 +23,7 @@ function mpaLoader() {
     `;
   }
   const source = `
-  import { render, createElement } from '${renderModule}';
+  import { render, createElement } from '${framework}';
   import Component from '${process.platform === 'win32' ? this.resourcePath.replace(/\//g, '\\\\') : this.resourcePath}';
   import DriverUniversal from 'driver-universal';
   const withSSR = ${withSSR};
