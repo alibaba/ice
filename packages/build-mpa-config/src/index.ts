@@ -3,11 +3,13 @@ import getEntries from './getEntries';
 
 interface ConfigOptions {
   rootDir: string;
-  filterEntries?: Function;
+  filterEntries: Function;
+  type: string;
+  framework: string;
 }
 
 const setMPAConfig = (config, options: ConfigOptions) => {
-  const { rootDir, filterEntries = (v) => v } = options || {};
+  const { rootDir, type = 'web', framework = 'rax', filterEntries = (v) => v } = options || {};
   let mpaEntries = getEntries(rootDir);
   mpaEntries = filterEntries(mpaEntries);
   // clear entry points
@@ -17,7 +19,7 @@ const setMPAConfig = (config, options: ConfigOptions) => {
   mpaEntries.forEach((entry) => {
     const { entryName, entryPath, pageName } = entry;
     const pageEntry = path.join(rootDir, 'src/pages', entryPath);
-    config.entry(entryName).add(pageEntry);
+    config.entry(entryName).add(/app\.(t|j)sx?$/.test(entryPath) ? pageEntry : `${require.resolve('./mpa-loader')}?type=${type}&framework=${framework}!${pageEntry}`);
     // get page paths for rule match
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr);
