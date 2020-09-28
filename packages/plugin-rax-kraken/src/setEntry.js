@@ -1,11 +1,9 @@
-const { hmrClient } = require('rax-compile-config');
 const fs = require('fs-extra');
 const path = require('path');
 
 module.exports = (config, context) => {
-  const { rootDir, command } = context;
-  const isDev = command === 'start';
-  const target = 'weex';
+  const { rootDir } = context;
+  const target = 'kraken';
 
   // SPA
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
@@ -15,7 +13,6 @@ module.exports = (config, context) => {
     .use('loader')
     .tap(() => ({ type: target }));
 
-
   ['jsx', 'tsx'].forEach(tag => {
     config.module.rule(tag)
       .use('platform-loader')
@@ -24,9 +21,6 @@ module.exports = (config, context) => {
       });
   });
 
-  if (isDev) {
-    entryConfig.add(hmrClient);
-  }
   entryConfig.add(appEntry);
 };
 

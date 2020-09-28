@@ -22,5 +22,8 @@
   },
   "bugs": {
     "url": "https://github.com/alibaba/ice/issues"
+  },
+  "dependencies": {
+    "build-mpa-config": "^1.0.0-0"
   }
 }

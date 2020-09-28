@@ -1,8 +1,8 @@
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const openBrowser = require('react-dev-utils/openBrowser');
 const chalk = require('chalk');
-const { getOutputPath } = require('miniapp-builder-shared');
 const qrcode = require('qrcode-terminal');
+const path = require('path');
 
 const {
   MINIAPP,
@@ -13,17 +13,19 @@ const {
   KRAKEN,
 } = require('./constants');
 
+const highlightPrint = chalk.hex('#F4AF3D');
+
 module.exports = function(api) {
   // eslint-disable-next-line global-require
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
-  const { commandArgs, userConfig } = context;
+  const { commandArgs, userConfig, rootDir } = context;
   const { targets } = userConfig;
 
   onHook('before.start.run', ({ config }) => {
 
     try {
-      debug(config[0].devServer);
+      debug(config[0]);
     // eslint-disable-next-line no-empty
     } catch (err) {}
   });
@@ -38,12 +40,11 @@ module.exports = function(api) {
     const messages = formatWebpackMessages(statsJson);
     // Do not print localUrl and assets information when containing an error
     const isSuccessful = !messages.errors.length;
+    const { outputDir = 'build' } = userConfig;
+
 
     if (isSuccessful) {
-      console.log(chalk.green(' Starting the development server at:'));
-      console.log();
-
-      if (!commandArgs.disableAssets) {
+      if (commandArgs.disableAssets === false) {
         console.log(
           stats.toString({
             errors: false,
@@ -60,74 +61,64 @@ module.exports = function(api) {
 
       if (targets.includes(MINIAPP)) {
         console.log(
-          chalk.green(
+          highlightPrint(
             '  [Alibaba Miniapp] Use ali miniapp developer tools to open the following folder:'
           )
         );
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, MINIAPP))
+          chalk.underline.white(path.resolve(rootDir, outputDir, MINIAPP))
         );
         console.log();
       }
 
       if (targets.includes(WECHAT_MINIPROGRAM)) {
         console.log(
-          chalk.green(
+          highlightPrint(
             '  [WeChat MiniProgram] Use wechat miniprogram developer tools to open the following folder:'
           )
         );
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, WECHAT_MINIPROGRAM))
+          chalk.underline.white(path.resolve(rootDir, outputDir, WECHAT_MINIPROGRAM))
         );
         console.log();
       }
 
       if (targets.includes(BYTEDANCE_MICROAPP)) {
         console.log(
-          chalk.green(
+          highlightPrint(
             '  [Bytedance Microapp] Use bytedance microapp developer tools to open the following folder:'
           )
         );
         console.log(
           '   ',
-          chalk.underline.white(getOutputPath(context, BYTEDANCE_MICROAPP))
+          chalk.underline.white(path.resolve(rootDir, outputDir, BYTEDANCE_MICROAPP))
         );
         console.log();
       }
       if (targets.includes(WEB)) {
-        console.log(
-          '  [Web] Development Local server at: ',
-          chalk.underline.white(getLocalUrl(urls.localUrlForBrowser))
-        );
-        console.log(
-          '  [Web] Development Network server at: ',
-          chalk.underline.white(getLocalUrl(urls.lanUrlForBrowser))
-        );
+        console.log(highlightPrint('  [Web] Development server at: '));
+        console.log(`  ${chalk.underline.white(getLocalUrl(urls.localUrlForBrowser))}`);
+        console.log(`  ${chalk.underline.white(getLocalUrl(urls.lanUrlForBrowser))}`);
         console.log();
       }
 
       if (targets.includes(KRAKEN)) {
         const krakenURL = `${urls.localUrlForBrowser  }kraken/index.js`;
-        console.log(
-          '  [Kraken] Development server at: ',
-          chalk.underline.white(krakenURL)
-        );
-        console.log(
-          '  [Kraken] Run Kraken Playground App:',
-          chalk.underline.white(`kraken -u ${krakenURL}`)
-        );
+        console.log(highlightPrint('  [Kraken] Development server at: '));
+        console.log(`  ${chalk.underline.white(krakenURL)}`);
+        console.log();
+        console.log(highlightPrint('  [Kraken] Run Kraken Playground App: '));
+        console.log(`  ${chalk.underline.white(`kraken -u ${krakenURL}`)}`);
         console.log();
       }
 
       if (targets.includes(WEEX)) {
         // Use Weex App to scan ip address (mobile phone can't visit localhost).
         const weexUrl = `${urls.lanUrlForBrowser}weex/index.js?wh_weex=true`;
-        console.log(
-          '  [Weex] Development server at: ',
-          chalk.underline.white(weexUrl)
-        );
+        console.log(highlightPrint('  [Weex] Development server at: '));
+        console.log(`  ${chalk.underline.white(weexUrl)}`);
         console.log();
         qrcode.generate(weexUrl, { small: true });
         console.log();
