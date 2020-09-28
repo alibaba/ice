@@ -148,7 +148,7 @@ export default class Generator {
     const pageComponentName = `Page${pageName}`;
     const pageComponentRenderData = {
       isRax: this.isRax,
-      pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'` ,
+      pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
       pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
@@ -158,12 +158,26 @@ export default class Generator {
       pageComponentRenderData.hasPageStore = true;
     }
 
-    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath , pageComponentRenderData);
+    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
+  }
+
+  private renderPageIndex(params) {
+    const { pageName, pageModelsDir, pageModelFile } = params;
+    const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
+
+    const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
+    const pageComponentRenderData = {
+      pageImports: existStore ? 'import store from \'./store\'' : '',
+      pageExports: existStore ? ' store ' : ''
+    };
+
+    this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    let content = ejs.render(templateContent, {...extraData});
+    let content = ejs.render(templateContent, { ...extraData });
     try {
       content = prettier.format(content, {
         parser: 'typescript',
@@ -201,6 +215,9 @@ export default class Generator {
 
       // generate .ice/pages/${pageName}/${pageName}.tsx
       this.renderPageComponent(params);
+
+      // generate .ice/pages/${pageName}/index.ts
+      this.renderPageIndex(params);
     });
   }
 }

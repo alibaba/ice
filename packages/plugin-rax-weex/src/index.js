@@ -1,11 +1,18 @@
 const path = require('path');
 const fs = require('fs-extra');
+const setMPAConfig = require('build-mpa-config');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');
 
 module.exports = (api) => {
-  const { getValue, context, registerTask, onGetWebpackConfig } = api;
+  const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
+  const { userConfig, rootDir, command } = context;
+
+  registerUserConfig({
+    name: 'weex',
+    validation: 'object',
+  });
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const target = 'weex';
@@ -21,15 +28,19 @@ module.exports = (api) => {
 
   chainConfig.plugin('WeexFrameworkBannerPlugin')
     .use(WeexFrameworkBannerPlugin);
-
+  chainConfig.name('weex');
   registerTask(target, chainConfig);
 
   onGetWebpackConfig(target, config => {
-    const { userConfig, rootDir, command } = context;
-    const { outputDir = 'build' } = userConfig;
-    let outputPath;
+    const { outputDir = 'build', weex = {} } = userConfig;
     let publicUrl = '""';
+    // set mpa config
+    if (weex.mpa) {
+      setMPAConfig.default(config, { context, type: 'weex' });
+    }
+    config.output.filename('weex/[name].js');
 
+    let outputPath;
     if (command === 'start') {
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir);
@@ -40,6 +51,8 @@ module.exports = (api) => {
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir, target);
     }
+
+    config.output.path(outputPath);
 
     // Set public url
     config
@@ -58,7 +71,5 @@ module.exports = (api) => {
     config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
       return [copyList.concat(needCopyDirs)];
     });
-
-    config.output.path(outputPath);
   });
 };

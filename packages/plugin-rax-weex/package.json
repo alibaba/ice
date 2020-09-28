@@ -17,6 +17,7 @@
     "rax": "^1.0.0"
   },
   "dependencies": {
+    "build-mpa-config": "^1.0.0-0",
     "fs-extra": "^9.0.1",
     "rax-compile-config": "^0.2.16",
     "webpack-sources": "^2.0.0"

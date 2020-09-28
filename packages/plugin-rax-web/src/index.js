@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const setMPAConfig = require('build-mpa-config');
 const setDev = require('./setDev');
 const setEntry = require('./setEntry');
 const DocumentPlugin = require('./DocumentPlugin');
@@ -17,6 +18,7 @@ module.exports = (api) => {
       name: 'Web'
     }
   });
+  chainConfig.name('web');
 
   // Set Entry
   setEntry(chainConfig, context);
@@ -58,12 +60,18 @@ module.exports = (api) => {
       });
 
 
+    if (webConfig.mpa) {
+      setMPAConfig.default(config, { context, type: 'web' });
+    }
+
+
     const webpackConfig = config.toConfig();
 
     webpackConfig.target = 'node';
 
     webpackConfig.output.libraryTarget = 'commonjs2';
-
+    // do not generate vendor.js when compile document
+    webpackConfig.optimization.splitChunks.cacheGroups = {};
 
     config.plugin('document').use(DocumentPlugin, [
       {

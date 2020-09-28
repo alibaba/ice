@@ -2,13 +2,14 @@ import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 
-const plugin: IPlugin = ({ context, registerUserConfig, registerCliOption, modifyUserConfig, log }) => {
+const plugin: IPlugin = (api) => {
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log } = api;
   const { rootDir, userConfig, commandArgs } = context;
+  const { mpa } = userConfig;
 
   // register mpa in build.json
   registerUserConfig({
-    name: 'mpa',
-    validation: 'boolean',
+    name: 'mpa'
   });
 
   // support --mpa-entry to specify mpa entry
@@ -17,7 +18,7 @@ const plugin: IPlugin = ({ context, registerUserConfig, registerCliOption, modif
     commands: ['start'],
   });
 
-  if (userConfig.mpa) {
+  if (mpa) {
     const pagesPath = path.join(rootDir, 'src/pages');
     const pages = fs.existsSync(pagesPath)
       ? fs.readdirSync(pagesPath)
@@ -53,6 +54,14 @@ const plugin: IPlugin = ({ context, registerUserConfig, registerCliOption, modif
       log.info('使用多页面模式 \n', JSON.stringify(entries));
     }
 
+    // set page template
+    onGetWebpackConfig(config => {
+      if (typeof mpa === 'object') {
+        const { template } = mpa || {} as any;
+        setPageTemplate(rootDir, entries, template, config);
+      }
+    });
+
     // modify entry
     modifyUserConfig('entry', entries);
   }
@@ -67,6 +76,38 @@ function getPageEntry(rootDir, pageName) {
   return pageRootFiles.find(file => {
     // eslint-disable-next-line
     return appRegexp.test(file) ? 'app' : indexRegexp.test(file) ? 'index' : null;
+  });
+}
+
+function setPageTemplate(rootDir, entries, template = {}, config) {
+  const templateNames = Object.keys(template);
+  const entryNames = {};
+
+  templateNames.forEach(templateName => {
+    template[templateName].forEach(entryName => {
+      const key = entryName.toLocaleLowerCase();
+      entryNames[key] = templateName;
+    });
+  });
+
+  const defaultEntryNames = Object.keys(entries);
+  defaultEntryNames.forEach(defaultEntryName => {
+    const htmlPluginKey = `HtmlWebpackPlugin_${defaultEntryName}`;
+    if (config.plugins.get(htmlPluginKey)) {
+      const htmlPluginOption = {};
+      const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName]);
+
+      if (fs.existsSync(entryTemplate)) {
+        (htmlPluginOption as any).template = entryTemplate;
+      }
+
+      config.plugin(htmlPluginKey).tap((args) => [
+        {
+          ...args,
+          ...htmlPluginOption,
+        }
+      ]);
+    }
   });
 }
 

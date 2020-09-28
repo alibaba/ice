@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
-    "miniapp-runtime-config": "^0.1.2",
+    "miniapp-runtime-config": "0.1.3-4",
     "rax-compile-config": "^0.2.16",
     "webpack-sources": "^2.0.0",
     "miniapp-builder-shared": "^0.1.5"
