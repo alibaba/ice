@@ -117,10 +117,12 @@ export default class Generator {
       importStr += `\nimport ${model} from '${appModelsDir}/${model}';`;
       modelsStr += `${model},`;
     });
-
     this.renderFile(this.appStoreTemplatePath, targetPath, { importStr, modelsStr, isSingleModel: false });
     this.applyMethod('removeExport', exportName);
-    this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: '{ store, createStore }', exportName });
+
+    if (appModels.length > 0) {
+      this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: '{ store, createStore }', exportName });
+    }
   }
 
   private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {

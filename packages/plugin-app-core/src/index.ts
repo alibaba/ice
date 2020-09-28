@@ -116,6 +116,6 @@ function checkTargets(targets) {
 
 function matchTargets(targets) {
   return targets.every(target => {
-    return ['web', 'miniapp', 'wechat-miniprogram'].includes(target);
+    return ['web', 'miniapp', 'wechat-miniprogram', 'weex', 'kraken', 'bytedance-microapp', 'quickapp'].includes(target);
   });
 }

@@ -1,4 +1,9 @@
 {
+  "web": {
+    "mpa": true,
+    "ssr": true
+  },
   "plugins": [],
-  "targets": ["web"]
+  "inlineStyle": true,
+  "targets": ["web", "weex"]
 }

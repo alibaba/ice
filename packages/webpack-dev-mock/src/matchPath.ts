@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires:0 */
-const pathToRegexp = require('path-to-regexp');
+const { pathToRegexp } = require('path-to-regexp');
 
 function decodeParam(val) {
   if (typeof val !== 'string' || val.length === 0) {
