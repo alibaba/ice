@@ -25,8 +25,8 @@ export default function Home(props) {
   return (
     <View className="home">
       <Logo />
-      <Text className="title">{props.data.title}</Text>
-      <Text className="info">{props.data.info}</Text>
+      <Text className="title">{props?.data?.title || 'Welcome to Your Rax App'}</Text>
+      <Text className="info">{props?.data?.info || 'More information about Rax'}</Text>
       <Text className="info" onClick={() => history.push('/about?id=1')}>Go About</Text>
     </View>
   );
@@ -35,7 +35,7 @@ export default function Home(props) {
 Home.getInitialProps = async () => {
   return {
     data: {
-      title: 'Welcome to Your Rax App!!!',
+      title: 'Welcome to Your Rax App with SSR',
       info: 'More information about Rax'
     }
   };

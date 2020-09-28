@@ -5,6 +5,7 @@ import { getSearchParams, withPageLifeCycle } from 'rax-app';
 
 import './index.css';
 
+@withPageLifeCycle
 class About extends PureComponent {
   public componentDidMount() {
     console.log('about search params', getSearchParams());
@@ -21,11 +22,11 @@ class About extends PureComponent {
   public render() {
     return (
       <View className="about">
-        <Text className="title">About Page!!!</Text>
+        <Text className="title">About Page</Text>
         <Text className="info" onClick={() => (this.props as any).history.push('/')}>Go Home</Text>
       </View>
     );
   }
 }
 
-export default withPageLifeCycle(About);
+export default About;
