@@ -1,6 +1,7 @@
 module.exports = {
   WEB: 'web',
   DOCUMENT: 'document',
+  SSR: 'ssr',
   WEEX: 'weex',
   KRAKEN: 'kraken',
   MINIAPP: 'miniapp',
