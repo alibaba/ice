@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const setMPAConfig = require('build-mpa-config');
 const setDev = require('./setDev');
 const setEntry = require('./setEntry');
@@ -51,17 +50,16 @@ module.exports = (api) => {
 
       const needCopyDirs = [];
 
-      // Copy public dir
-      if (fs.existsSync(path.resolve(rootDir, 'public'))) {
-        needCopyDirs.push({
-          from: path.resolve(rootDir, 'public'),
-          to: outputPath
-        });
-      }
-
+    // Copy public dir
+    if (config.plugins.has('CopyWebpackPlugin')) {
+      needCopyDirs.push({
+        from: path.resolve(rootDir, 'public'),
+        to: outputPath
+      });
       config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
         return [copyList.concat(needCopyDirs)];
       });
+    }
 
 
     if (webConfig.mpa) {
