@@ -36,12 +36,12 @@ module.exports = (api) => {
     const outputPath = path.resolve(rootDir, outputDir, target);
     config.output.path(outputPath);
 
-    let publicUrl = '""';
+    let publicUrl = JSON.stringify('');
 
     if (command === 'start') {
       setDev(config);
     } else if (command === 'build') {
-      publicUrl = '"."';
+      publicUrl = JSON.stringify('.');
     }
 
     config

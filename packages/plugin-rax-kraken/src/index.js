@@ -42,9 +42,9 @@ module.exports = (api) => {
     }
     config.output.path(outputPath);
 
-    let publicUrl = '""';
+    let publicUrl = JSON.stringify('');
     if (command === 'build') {
-      publicUrl = '"."';
+      publicUrl = JSON.stringify('.');
     }
 
     config

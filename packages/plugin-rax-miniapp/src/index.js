@@ -40,7 +40,7 @@ module.exports = (api) => {
 
         config
           .plugin('DefinePlugin')
-          .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': '".."' })]);
+          .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': JSON.stringify('..') })]);
 
         const needCopyDirs = [];
 

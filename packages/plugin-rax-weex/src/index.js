@@ -32,12 +32,11 @@ module.exports = (api) => {
 
   onGetWebpackConfig(target, config => {
     const { outputDir = 'build', weex = {} } = userConfig;
-    let publicUrl = '""';
+    let publicUrl = JSON.stringify('');
     // set mpa config
     if (weex.mpa) {
       setMPAConfig.default(config, { context, type: 'weex' });
     }
-    config.output.filename('weex/[name].js');
 
     let outputPath;
     if (command === 'start') {
@@ -46,7 +45,7 @@ module.exports = (api) => {
       config.devServer.contentBase(outputPath);
       config.output.filename(`${target}/[name].js`);
     } else if (command === 'build') {
-      publicUrl = '"."';
+      publicUrl = JSON.stringify('.');
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir, target);
     }
