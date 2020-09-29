@@ -20,6 +20,7 @@ $ npm install build-plugin-fusion --save-dev
 * `importOptions` 同 `babel-plugin-import` 参数，默认为 `{ style: true, libraryDirectory: 'es'}` 根据用户设置项将进行合并
 * `externalNext` 配合 `externals` 配置，将 Next 组件作为外部依赖引入
 * `usePx2Vw` 配合postcss插件，将css样式单位px转化为vw，默认为false不开启，true为开启
+* `crossend` 值为对象，修改业务组件的引入路径，推荐用在PC跨H5的项目中，给业务组件指定H5的渲染组件
 
 ## 基础用法
 
@@ -143,4 +144,60 @@ build.json 中完成多主题包配置后，业务代码中可以直接调用 `_
 ```js
 // 可以在设置的主题包 @icedesign/theme 和 @alifd/theme-ice-purple 之间切换
 window.__changeTheme__('@alifd/theme-ice-purple');
+```
+
+## 跨端用法
+
+### API
+- 增加 `crossend` API，该接口值为对象，可接受 `bizComponent` `customPath` 等参数
+- 增加 `usePx2Vw` API，跨端模式下请开启
+
+```js
+module.exports = {
+  plugins: [
+    ['build-plugin-fusion', {
+      usePx2Vw: true,                                       // 开启r?px => vw 的单位转换
+      importOptions: {
+        libraryDirectory: 'lib',
+        customName: (name) => {                             // 自定义「基础组件」的H5的引入路径，注意对@alifd/next的版本要求
+          if(['config-provider'].indexOf(name) !== -1) {
+            return `@alifd/next/lib/${name}`;
+          }
+          return `@alifd/next/lib/${name}/mobile`;
+        },
+        customStyleName: (name) => {
+          // 引入没有Mobile版本的PC组件的样式
+          return `@alifd/next/lib/${name}/style.js`;
+        }
+      },
+      crossend: {                                         // 自定义「业务组件」的H5的引入路径
+        bizComponent: ['@alifd/anchor', '@alifd/pro-components'],   // 业务组件列表
+        customPath: '/mobile'                             // 默认值为'/mobile'，按照规范不用改
+      },
+    }]
+  ],
+}
+```
+
+### crossend详解
+bizComponent 可以是由 业务组件名字 string构成的数组，或者是由对象构成的数组
+
+#### bizComponent类型为数组
+bizComponent: ['@alifd/anchor', '@alifd/pro-components']
+
+```js
+import Anchor from '@alifd/anchor';
+ReactDOM.render(<Anchor>xxxx</Anchor>);
+      ↓ ↓ ↓ ↓ ↓ ↓
+var _anchor = require('@alifd/anchor/es/button/mobile');   // 差别在这里 多了一层es 和 mobile 
+ReactDOM.render(<_anchor>xxxx</_anchor>);
+```
+#### bizComponent类型为对象 （会忽略customPath）
+
+```js
+bizComponent: {
+  '@alifd/pro-components': '@alifd/pro-components/lib/mobile',
+  '@alifd/pro-components2': '@alifd/pro-components2/es/mobile',
+  '@alifd/pro-components': '@alifd/pro-components-mobile'
+}
 ```
