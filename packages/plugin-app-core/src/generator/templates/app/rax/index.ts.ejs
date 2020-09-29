@@ -1,11 +1,10 @@
 export * from './runApp';
-import ErrorBoundary from './ErrorBoundary';
+export { ErrorBoundary } from './ErrorBoundary';
 
 <%- imports %>
 
 <% if (exports) { %>
   export {
-    ErrorBoundary,
     <%- exports %>
   }
 <% } %>
