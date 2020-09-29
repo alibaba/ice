@@ -38,7 +38,7 @@ module.exports = (config, context) => {
   }
 
   // enable inline soucremap for get error stack
-  // config.devtool('eval-cheap-source-map');
+  config.devtool('eval-cheap-source-map');
 
   config.devServer.hot(false);
 
