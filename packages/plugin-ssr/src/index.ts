@@ -6,22 +6,26 @@ const setSSRDev = require('./ssr/setDev');
 const setWebDev = require('./web/setDev');
 
 // can‘t clone webpack chain object
-module.exports = ({ onGetWebpackConfig, registerTask, context, onHook }) => {
-
+module.exports = (api) => {
+  const { onGetWebpackConfig, registerTask, context, onHook } = api;
   const { command, rootDir, userConfig = {} } = context;
   const { outputDir } = userConfig;
 
-  const ssrConfig = getSSRBase(context);
+  const ssrConfig = getSSRBase(api);
 
   registerTask('ssr', ssrConfig);
 
+  onGetWebpackConfig('ssr', (config) => {
+    // do not generate vendor.js when compile document
+    config.optimization.splitChunks({ cacheGroups: {} });
+
+    config.output
+      .filename('node/[name].js')
+      .libraryTarget('commonjs2');
+  });
+
   if (command === 'start') {
     onGetWebpackConfig('ssr', (config) => {
-      // do not generate vendor.js when compile document
-      config.optimization.splitChunks({ cacheGroups: {} });
-      config.output
-        .filename('node/[name].js')
-        .libraryTarget('commonjs2');
       setSSRDev(config, context);
     });
 

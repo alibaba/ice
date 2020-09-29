@@ -1,37 +1,32 @@
 const path = require('path');
-const getWebpackBase = require('rax-webpack-config');
-const getBabelConfig = require('rax-babel-config');
 const setMPAConfig = require('build-mpa-config');
 const getEntryName = require('./getEntryName');
-
 const EntryPlugin = require('./entryPlugin');
 
 const EntryLoader = require.resolve('./entryLoader');
 
+const GET_WEBPACK_BASE_CONFIG = 'getWebpackBaseConfig';
+const TARGET = 'node';
+
 // Can‘t clone webpack chain object, so generate a new chain and reset config
-module.exports = (context) => {
+module.exports = (api) => {
+  const { context, getValue } = api;
   const { userConfig, rootDir, webpack } = context;
   const { web: webConfig = {}, inlineStyle = true } = userConfig;
 
-  const babelConfig = getBabelConfig({
-    styleSheet: true,
-    jsxToHtml: true
-  });
+  const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
 
-  const config = getWebpackBase({
-    ...context,
-    processBar: {
+  const config = getWebpackBase(api, {
+    target: TARGET,
+    babelConfigOptions: { styleSheet: true, disableRegenerator: true },
+    progressOptions: {
       name: 'SSR'
-    },
-    babelConfig
+    }
   });
-
-  config.target('node');
 
   let entries = {};
   if (webConfig.mpa) {
-    setMPAConfig.default(config, { context, type: 'node' });
-
+    setMPAConfig.default(config, { context, type: TARGET });
     const mpaEntries = config.toConfig().entry;
     entries = Object.keys(mpaEntries).map(entryName => {
       return {

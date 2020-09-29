@@ -1,6 +1,6 @@
 const { resolve } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { WEB, WEEX, DOCUMENT, KRAKEN, MINIAPP, WECHAT_MINIPROGRAM } = require('../constants');
+const { WEB, WEEX, DOCUMENT, SSR, KRAKEN, MINIAPP, WECHAT_MINIPROGRAM } = require('../constants');
 
 const configPath = resolve(__dirname, '../');
 
@@ -49,7 +49,7 @@ function setCSSRule(configRule, context, value) {
   const isInlineStandard = inlineStandardList.includes(taskName);
   const isWebStandard = webStandardList.includes(taskName);
   const isMiniAppStandard = miniappStandardList.includes(taskName);
-  const isNodeStandard = taskName === DOCUMENT;
+  const isNodeStandard = taskName === DOCUMENT || taskName === SSR;
 
   // When taskName is weex or kraken, inlineStyle should be true
   if (isInlineStandard) {
@@ -76,6 +76,8 @@ function setCSSRule(configRule, context, value) {
         .end();
     } else if (isNodeStandard) {
       // Do not generate CSS file, it will be built by web complier
+      configRule.uses.delete('postcss-loader');
+      configRule.uses.delete('MiniCssExtractPlugin.loader');
       configRule
         .use('null-loader')
         .loader(require.resolve('null-loader'))
