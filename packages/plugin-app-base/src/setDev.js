@@ -109,7 +109,7 @@ module.exports = function(api) {
       if (targets.includes(WEB)) {
         console.log(highlightPrint('  [Web] Development server at: '));
         webEntryKeys.forEach((entryKey) => {
-          const entryPath = webEntryKeys.length > 0 ? entryKey : '';
+          const entryPath = webEntryKeys.length > 1 ? entryKey : '';
           console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.localUrlForBrowser)}${entryPath}`)}`);
           console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.lanUrlForBrowser)}${entryPath}`)}`);
           console.log();
@@ -130,7 +130,7 @@ module.exports = function(api) {
         // Use Weex App to scan ip address (mobile phone can't visit localhost).
         console.log(highlightPrint('  [Weex] Development server at: '));
         weexEntryKeys.forEach((entryKey) => {
-          const weexUrl = `${urls.lanUrlForBrowser}weex/${weexEntryKeys.length > 0 ? entryKey : 'index'}.js?wh_weex=true`;
+          const weexUrl = `${urls.lanUrlForBrowser}weex/${weexEntryKeys.length > 1 ? entryKey : 'index'}.js?wh_weex=true`;
           console.log(`  ${chalk.underline.white(weexUrl)}`);
           console.log();
           qrcode.generate(weexUrl, { small: true });
