@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 

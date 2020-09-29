@@ -3,7 +3,7 @@
 const atImport = require('postcss-import');
 
 // See https://github.com/postcss/postcss-loader#context-ctx
-module.exports = ({ file, options, env }) => {
+module.exports = ({ options }) => {
   const type = options && options.type;
   return {
     plugins: getPlugins(type),
