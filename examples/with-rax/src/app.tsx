@@ -6,9 +6,7 @@ runApp({
     type: 'browser'
   },
   app: {
-    // ErrorBoundary
-    errorBoundary: true,
-    ErrorBoundaryFallback: () => <div>渲染错误</div>,
+
 
     // 生命周期
     onShow() {

@@ -1,5 +1,6 @@
 const path = require('path');
 const setMPAConfig = require('build-mpa-config');
+const fs = require('fs-extra');
 const getEntryName = require('./getEntryName');
 const EntryPlugin = require('./entryPlugin');
 
@@ -51,10 +52,19 @@ module.exports = (api) => {
       loader: EntryLoader,
       isMultiPages: webConfig.mpa || false,
       isInlineStyle: inlineStyle,
-      absoluteDocumentPath: path.join(rootDir, 'src/document/index.jsx'),
-      absoluteAppPath: path.join(rootDir, 'src/app.ts'),
+      absoluteDocumentPath: moduleResolve(path.join(rootDir, 'src/document/index')),
+      absoluteAppPath: moduleResolve(path.join(rootDir, 'src/app')),
       absoluteAppConfigPath: path.join(rootDir, '.rax', 'appConfig.ts')
     }]);
 
   return config;
 };
+
+
+function moduleResolve(filePath) {
+  const ext = ['.ts', '.js', '.tsx', '.jsx'].find(extension => fs.existsSync(`${filePath}${extension}`));
+  if (!ext) {
+    throw new Error(`Cannot find target file ${filePath}.`);
+  }
+  return require.resolve(`${filePath}${ext}`);
+}
