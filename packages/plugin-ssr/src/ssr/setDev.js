@@ -1,5 +1,6 @@
 const path = require('path');
 const Module = require('module');
+const fs = require('fs-extra');
 const { parse, print } = require('error-stack-tracey');
 const getEntryName = require('./getEntryName');
 const getMpaRoutes = require('./getMpaRoutes');
@@ -17,13 +18,6 @@ module.exports = (config, context) => {
   const { web: webConfig = {} } = userConfig;
 
   config.mode('development');
-
-
-  config
-    .plugin('DefinePlugin')
-    .tap((args) => [Object.assign(...args, {
-      'process.env.__IS_SERVER__': true
-    })]);
 
   let routes = [];
 
@@ -66,6 +60,7 @@ module.exports = (config, context) => {
           mod.render(req, res);
         } catch (error) {
           console.log('exec error');
+          fs.writeFileSync(path.resolve(rootDir, 'build', 'index.js'), bundleContent);
           const errorStack = await parse(error, bundleContent);
           print(error.message, errorStack);
         }

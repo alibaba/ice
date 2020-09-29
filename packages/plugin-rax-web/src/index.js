@@ -61,7 +61,6 @@ module.exports = (api) => {
       });
     }
 
-
     if (webConfig.mpa) {
       setMPAConfig.default(config, { context, type: 'web' });
     }

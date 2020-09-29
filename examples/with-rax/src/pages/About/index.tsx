@@ -1,7 +1,8 @@
 import { createElement, PureComponent } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
-import { getSearchParams, withPageLifeCycle } from 'rax-app';
+import { getSearchParams, withPageLifeCycle, ErrorBoundary } from 'rax-app';
+import BuggyCounter from '@/components/BuggyCounter';
 
 import './index.css';
 
@@ -24,6 +25,7 @@ class About extends PureComponent {
       <View className="about">
         <Text className="title">About Page</Text>
         <Text className="info" onClick={() => (this.props as any).history.push('/')}>Go Home</Text>
+          <BuggyCounter />
       </View>
     );
   }
