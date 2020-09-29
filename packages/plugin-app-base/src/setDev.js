@@ -109,7 +109,7 @@ module.exports = function(api) {
       if (targets.includes(WEB)) {
         console.log(highlightPrint('  [Web] Development server at: '));
         webEntryKeys.forEach((entryKey) => {
-          const entryPath = webEntryKeys.length > 1 ? entryKey : '';
+          const entryPath = webEntryKeys.length > 1 ? `${entryKey}.html` : '';
           console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.localUrlForBrowser)}${entryPath}`)}`);
           console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.lanUrlForBrowser)}${entryPath}`)}`);
           console.log();
