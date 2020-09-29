@@ -10,10 +10,6 @@ export const USER_CONFIG = [
   {
     name: 'targets',
     validation: 'array'
-  },
-  {
-    name: 'miniapp',
-    validation: 'object'
   }
 ];
 

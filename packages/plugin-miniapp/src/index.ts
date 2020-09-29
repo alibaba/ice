@@ -3,19 +3,18 @@ import * as builderShared from 'miniapp-builder-shared';
 import * as path from 'path';
 
 module.exports = (api) => {
-  const { onGetWebpackConfig, context, getValue } = api;
+  const { onGetWebpackConfig, context, registerUserConfig } = api;
   const { rootDir, userConfig } = context;
   const { targets = [] } = userConfig;
 
   targets.forEach((target) => {
     if (target === 'miniapp' || target === 'wechat-miniprogram') {
       onGetWebpackConfig(target, (config) => {
-        const projectType = getValue('PROJECT_TYPE');
         const { outputDir = 'build' } = userConfig;
-        // Clear entry
-        config.entryPoints.clear();
-        // App entry
-        config.entry('index').add(builderShared.pathHelper.getDepPath(rootDir, `app.${projectType}`));
+        registerUserConfig({
+          name: target,
+          validation: 'object'
+        });
 
         const outputPath = path.resolve(rootDir, outputDir, target);
         config.output.path(path.join(rootDir, 'build', target));

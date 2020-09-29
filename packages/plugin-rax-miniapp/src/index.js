@@ -21,14 +21,15 @@ module.exports = (api) => {
           name: platformMap[target].name
         }
       });
+      chainConfig.name(target);
       // Set Entry
       setEntry(chainConfig, context, target);
       // Register task
       registerTask(target, chainConfig);
-      // registerUserConfig({
-      //   name: target,
-      //   validation: 'object'
-      // });
+      registerUserConfig({
+        name: target,
+        validation: 'object'
+      });
 
       onGetWebpackConfig(target, config => {
         const { userConfig, rootDir } = context;

@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const setMPAConfig = require('build-mpa-config');
 const setDev = require('./setDev');
 const setEntry = require('./setEntry');
