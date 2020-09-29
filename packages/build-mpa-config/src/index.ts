@@ -34,6 +34,14 @@ const setMPAConfig = (config, options: ConfigOptions) => {
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr);
   });
+  if (type === 'web') {
+    config.plugin('document').tap(args => {
+      return [{
+        ...args[0],
+        pages: mpaEntries,
+      }];
+    });
+  }
   // modify appJSON rules for mpa
   if (config.module.rules.get('appJSON')) {
     const matchInclude = (filepath: string) => {

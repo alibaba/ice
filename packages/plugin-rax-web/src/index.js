@@ -61,11 +61,6 @@ module.exports = (api) => {
       });
     }
 
-    if (webConfig.mpa) {
-      setMPAConfig.default(config, { context, type: 'web' });
-    }
-
-
     const webpackConfig = config.toConfig();
 
     webpackConfig.target = 'node';
@@ -88,5 +83,8 @@ module.exports = (api) => {
         webpackConfig
       },
     ]);
+    if (webConfig.mpa) {
+      setMPAConfig.default(config, { context, type: 'web' });
+    }
   });
 };
