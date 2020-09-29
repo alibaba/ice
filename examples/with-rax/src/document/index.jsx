@@ -2,7 +2,6 @@ import { createElement } from 'rax';
 import { Root, Style, Script, Data } from 'rax-document';
 
 function Document(props) {
-  console.log('document props:', props);
   return (
     <html>
       <head>
