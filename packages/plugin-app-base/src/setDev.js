@@ -24,11 +24,11 @@ module.exports = function(api) {
   let webEntryKeys = [];
   let weexEntryKeys = [];
   const getWebpackEntry = (configs, configName) => {
-    const targetConfig = configs.find((webpackConfig) => webpackConfig.name === configName);
-    if (!targetConfig || !targetConfig.entry) {
+    const taskConfig = configs.find((webpackConfig) => webpackConfig.name === configName);
+    if (!taskConfig || !taskConfig.entry) {
       return {};
     }
-    return targetConfig.entry;
+    return taskConfig.entry;
   };
   onHook('before.start.run', ({ config }) => {
     webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
