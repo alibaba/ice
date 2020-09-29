@@ -23,7 +23,13 @@ module.exports = function(api) {
   const { targets } = userConfig;
   let webEntryKeys = [];
   let weexEntryKeys = [];
-  const getWebpackEntry = (configs, configName) => (configs.find((webpackConfig) => webpackConfig.name === configName).entry || {});
+  const getWebpackEntry = (configs, configName) => {
+    const targetConfig = configs.find((webpackConfig) => webpackConfig.name === configName);
+    if (!targetConfig || !targetConfig.entry) {
+      return {};
+    }
+    return targetConfig.entry;
+  };
   onHook('before.start.run', ({ config }) => {
     webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
     weexEntryKeys = Object.keys(getWebpackEntry(config, 'weex'));

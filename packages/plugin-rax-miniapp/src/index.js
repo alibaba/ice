@@ -52,35 +52,19 @@ module.exports = (api) => {
         }
 
         // Copy public dir
-      if (config.plugins.has('CopyWebpackPlugin')) {
-        needCopyDirs.push({
-          from: path.resolve(rootDir, 'public'),
-          to: path.resolve(rootDir, outputDir, target)
-        });
-        config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
-          return [copyList.concat(needCopyDirs)];
-        });
-      } else if (needCopyDirs.length > 1) {
-        config
-          .plugin('CopyWebpackPlugin')
-          .use(CopyWebpackPlugin, [needCopyDirs]);
-      }
-
-        // Copy public dir
-        if (fs.existsSync(path.resolve(rootDir, 'public'))) {
+        if (config.plugins.has('CopyWebpackPlugin')) {
           needCopyDirs.push({
             from: path.resolve(rootDir, 'public'),
             to: path.resolve(rootDir, outputDir, target)
           });
+          config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
+            return [copyList.concat(needCopyDirs)];
+          });
+        } else if (needCopyDirs.length > 1) {
+          config
+            .plugin('CopyWebpackPlugin')
+            .use(CopyWebpackPlugin, [needCopyDirs]);
         }
-
-
-
-        config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
-          return [
-            copyList.concat(needCopyDirs)
-          ];
-        });
 
         setConfig(config, userConfig[target] || {}, {
           context,
