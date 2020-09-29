@@ -12,34 +12,45 @@ module.exports = (api) => {
   const { outputDir } = userConfig;
 
   const ssrConfig = getSSRBase(api);
+  const isDev = command === 'start';
 
   registerTask('ssr', ssrConfig);
 
-  onGetWebpackConfig('ssr', (config) => {
-    // do not generate vendor.js when compile document
-    config.optimization.splitChunks({ cacheGroups: {} });
-
-    config.output
-      .filename('node/[name].js')
-      .libraryTarget('commonjs2');
-  });
-
-  if (command === 'start') {
-    onGetWebpackConfig('ssr', (config) => {
-      setSSRDev(config, context);
-    });
-
+  if (isDev) {
     onGetWebpackConfig('web', (config) => {
       config.optimization.splitChunks({ cacheGroups: {} });
       setWebDev(config, context);
     });
   }
 
-  if (command === 'build') {
-    onGetWebpackConfig('ssr', (config) => {
+  onGetWebpackConfig('ssr', (config) => {
+    config.target('node');
+
+    // do not generate vendor.js when compile document
+    config.optimization.splitChunks({ cacheGroups: {} });
+
+    config.devServer.writeToDisk(true);
+
+    config.output
+      .filename('node/[name].js')
+      .libraryTarget('commonjs2');
+
+    let publicUrl = JSON.stringify('');
+
+    if (isDev) {
+      setSSRDev(config, context);
+    } else {
+      publicUrl = JSON.stringify('.');
       setSSRBuild(config, context);
-    });
-  }
+    }
+
+    config
+      .plugin('DefinePlugin')
+      .tap((args) => [Object.assign({}, ...args, {
+        'process.env.__IS_SERVER__': true,
+        'process.env.PUBLIC_URL': publicUrl
+      })]);
+  });
 
   onHook('after.build.compile', () => {
     console.log(chalk.green('[SSR] Bundle at:'));

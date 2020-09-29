@@ -11,14 +11,14 @@ const TARGET = 'node';
 // Can‘t clone webpack chain object, so generate a new chain and reset config
 module.exports = (api) => {
   const { context, getValue } = api;
-  const { userConfig, rootDir, webpack } = context;
+  const { userConfig, rootDir } = context;
   const { web: webConfig = {}, inlineStyle = true } = userConfig;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
 
   const config = getWebpackBase(api, {
     target: TARGET,
-    babelConfigOptions: { styleSheet: true, disableRegenerator: true },
+    babelConfigOptions: { styleSheet: true },
     progressOptions: {
       name: 'SSR'
     }
@@ -45,13 +45,6 @@ module.exports = (api) => {
     });
   }
 
-  config
-    .plugin('DefinePlugin')
-    .use(webpack.DefinePlugin, [{
-      'process.env.__IS_SERVER__': true
-    }])
-    .end();
-
   config.plugin('entryPlugin')
     .use(EntryPlugin, [{
       entries,
@@ -59,19 +52,9 @@ module.exports = (api) => {
       isMultiPages: webConfig.mpa || false,
       isInlineStyle: inlineStyle,
       absoluteDocumentPath: path.join(rootDir, 'src/document/index.jsx'),
-      absoluteShellPath: path.join(rootDir, 'src/shell/index.jsx'),
       absoluteAppPath: path.join(rootDir, 'src/app.ts'),
       absoluteAppConfigPath: path.join(rootDir, '.rax', 'appConfig.ts')
     }]);
-
-  if (!inlineStyle) {
-    // there is no need to generate css file in node
-    config.module.rule('ignorecss')
-      .test(/\.(css|less|saas|scss)?$/)
-      .use('ignorecss')
-      .loader(require.resolve('null-loader'))
-      .end();
-  }
 
   return config;
 };
