@@ -45,6 +45,14 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
       .use(CopyWebpackPlugin, [[]]);
   }
 
+  config.plugin('friendly-error')
+    .use(require.resolve('friendly-errors-webpack-plugin'), [
+      {
+        clearConsole: false,
+      }
+    ])
+    .end();
+
   // Process app.json file
   config.module
     .rule('appJSON')
