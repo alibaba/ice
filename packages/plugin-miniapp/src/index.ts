@@ -1,5 +1,4 @@
 import * as miniappConfig from 'miniapp-runtime-config';
-import * as builderShared from 'miniapp-builder-shared';
 import * as path from 'path';
 
 module.exports = (api) => {

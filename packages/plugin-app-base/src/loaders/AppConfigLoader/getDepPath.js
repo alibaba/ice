@@ -1,5 +1,4 @@
 const { join } = require('path');
-const { existsSync } = require('fs-extra');
 
 /**
  * ./pages/foo -> based on src, return original

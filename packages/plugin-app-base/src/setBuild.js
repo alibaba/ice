@@ -25,7 +25,7 @@ module.exports = (api) => {
     } catch (err) {}
   });
 
-  onHook('after.build.compile', ({ err, stats }) => {
+  onHook('after.build.compile', ({ stats }) => {
     const statsJson = stats.toJson({
       all: false,
       errors: true,

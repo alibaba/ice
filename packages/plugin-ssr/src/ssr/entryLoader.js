@@ -1,5 +1,4 @@
 const qs = require('qs');
-const fs = require('fs');
 const path = require('path');
 
 const isWin = process.platform === 'win32';

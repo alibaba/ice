@@ -32,7 +32,7 @@ module.exports = (api) => {
       });
 
       onGetWebpackConfig(target, config => {
-        const { userConfig, rootDir } = context;
+        const { rootDir } = context;
         const { outputDir = 'build' } = userConfig;
         // Set output dir
         const outputPath = path.resolve(rootDir, outputDir, target);

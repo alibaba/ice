@@ -1,4 +1,3 @@
-const { hmrClient } = require('rax-compile-config');
 const fs = require('fs-extra');
 const path = require('path');
 

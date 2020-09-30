@@ -39,7 +39,7 @@ module.exports = function(api) {
     } catch (err) {}
   });
 
-  onHook('after.start.compile', async({ urls, stats, err }) => {
+  onHook('after.start.compile', async({ urls, stats }) => {
     const statsJson = stats.toJson({
       all: false,
       errors: true,
