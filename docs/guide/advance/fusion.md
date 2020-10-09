@@ -20,6 +20,7 @@ $ npm install build-plugin-fusion --save-dev
 * `importOptions` 同 `babel-plugin-import` 参数，默认为 `{ style: true, libraryDirectory: 'es'}` 根据用户设置项将进行合并
 * `externalNext` 配合 `externals` 配置，将 Next 组件作为外部依赖引入
 * `usePx2Vw` 配合postcss插件，将css样式单位px转化为vw，默认为false不开启，true为开启
+* `px2vwOptions` 传递参数给postcss插件，默认为`{ viewportWidth: 750 }` 根据用户设置项将进行合并
 
 ## 基础用法
 
