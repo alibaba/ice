@@ -13,7 +13,7 @@ const TARGET = 'node';
 module.exports = (api) => {
   const { context, getValue } = api;
   const { userConfig, rootDir } = context;
-  const { web: webConfig = {}, inlineStyle = true } = userConfig;
+  const { web: webConfig = {}, inlineStyle = false } = userConfig;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
 

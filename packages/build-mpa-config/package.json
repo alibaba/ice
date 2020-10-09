@@ -1,6 +1,6 @@
 {
   "name": "build-mpa-config",
-  "version": "1.0.0-0",
+  "version": "1.0.0",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -12,9 +12,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:alibaba/ice.git"

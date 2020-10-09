@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-rax-kraken",
-  "version": "1.0.0-0",
+  "version": "1.0.0-1",
   "description": "rax kraken app plugin",
   "main": "lib/index.js",
   "scripts": {

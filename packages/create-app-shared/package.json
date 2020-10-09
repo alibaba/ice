@@ -1,6 +1,6 @@
 {
   "name": "create-app-shared",
-  "version": "0.1.12",
+  "version": "0.1.13-0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -20,9 +20,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/ice.git"

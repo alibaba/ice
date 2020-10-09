@@ -14,6 +14,7 @@ module.exports = (api) => {
       name: 'Kraken'
     }
   });
+  chainConfig.taskName = target;
 
   setEntry(chainConfig, context);
 

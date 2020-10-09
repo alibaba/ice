@@ -18,6 +18,7 @@ module.exports = (api) => {
     }
   });
   chainConfig.name(target);
+  chainConfig.taskName = target;
   registerUserConfig({
     name: target,
     validation: 'object'

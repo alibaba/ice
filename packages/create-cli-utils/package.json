@@ -1,6 +1,6 @@
 {
   "name": "create-cli-utils",
-  "version": "0.1.3",
+  "version": "0.1.4-0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -20,9 +20,6 @@
     "detect-port": "^1.3.0",
     "inquirer": "^7.1.0",
     "yargs-parser": "^18.1.2"
-  },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
   },
   "repository": {
     "type": "git",
