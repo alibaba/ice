@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.8
+
+- [feat] support option `px2vwOptions` to pass options to postcssPlugin
+
 ## 0.1.7
 
 - [feat] support option `usePx2Vw` to transform css unit
