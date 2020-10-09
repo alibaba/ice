@@ -21,7 +21,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
   const routerOptions = (userConfig.router || {}) as IRouterOptions;
   const { configPath } = routerOptions;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
-  const srcDir = applyMethod('getSourceDir', userConfig.entry) || 'src';
+  const srcDir = !disableRuntime ? applyMethod('getSourceDir', userConfig.entry) : 'src';
   const getRoutesParams = {
     rootDir,
     tempDir: iceTempPath,
@@ -30,7 +30,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     isMpa: mpa as boolean,
     srcDir
   };
-  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', getRoutesParams) || getRoutesInfo(getRoutesParams);
+  const { routesPath, isConfigRoutes } = !disableRuntime ? applyMethod('getRoutes', getRoutesParams) : getRoutesInfo(getRoutesParams);
   // add babel plugins for ice lazy
   modifyUserConfig('babelPlugins',
     [
@@ -73,8 +73,11 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
     config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'ErrorBoundary'));
 
     // alias for react-router-dom
-    const routerName = 'react-router-dom';
-    config.resolve.alias.set(routerName, require.resolve(routerName));
+    if (!disableRuntime) {
+      // do not lock react-router-dom, in case of project dependency
+      const routerName = 'react-router-dom';
+      config.resolve.alias.set(routerName, require.resolve(routerName));
+    }
 
     // config historyApiFallback for router type browser
     config.devServer.set('historyApiFallback', true);
