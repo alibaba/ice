@@ -12,30 +12,71 @@ icejs 支持 **全局状态** 和 **页面状态** 两种维度：
 - 全局状态：即应用级别，整个应用都可以使用；
 - 页面状态：即页面级状态，只能在对应页面或者页面的子组件中消费。
 
-目录组织如下：
+### 全局状态
+
+约定全局状态位于 `src/models` 目录。
 
 ```md
 src
-├── models               // 全局状态：通常会有多个 model
+├── models               // 全局状态
+|   ├── counter.ts
+│   └── user.ts
+└── store.ts
+```
+
+### 页面状态
+
+约定页面状态位于 `src/pages/*/models` 目录。
+
+但通常情况下应用的复杂度不一，对页面的状态管理和目录组织方式也有着不同的诉求，因此 icejs 提供了两种组织方式用于开发可大可小的应用。
+
+#### 非嵌套页面
+
+非嵌套页面即 `src/pages` 下的页面只**包含一个路由页面**，目录组织如下：
+
+```md
+src
+├── models                  // 全局状态
 |   ├── counter.ts
 │   └── user.ts
 └── pages
-|   ├── Home
-|   │   ├── index.tsx
-|   │   └── model.ts     // 页面级状态：只有一个 model
-|   ├── About
-|   │   ├── index.tsx
-|   │   ├── models       // 页面级状态：有多个 model
+|   ├── Home                // Home 页面
+|   │   ├── models          // 页面状态
 |   │   |   ├── foo.ts
 |   │   |   └── bar.ts
+|   │   ├── store.ts
+|   │   └── index.tsx
 └── app.ts
 ```
+
+### 嵌套页面
+
+嵌套页面即 `src/pages` 下的页面**包含多个路由页面**，目录组织如下：
+
+```md
+src
+├── models                   // 全局状态
+|   ├── counter.ts
+│   └── user.ts
+└── pages
+│   ├── Home                 // Home 页面包含了 Foo、Bar 等多个路由页面
+│   │   ├── Foo        
+│   │   ├── Bar
+│   │   ├── Layout
+│   │   ├── models           // 页面状态
+│   │   │   ├── Foo.ts
+│   │   │   └── Bar.ts
+│   │   └── store.ts
+└── app.ts
+```
+
+> 说明：对于嵌套页面的状态管理，在对应的页面下面需要新增 Layout 文件，用于 icejs 自动注册 Provider。
 
 ## 模型规范
 
 ### 模型定义
 
-如上目录结构所示，icejs 约定在 `src/models`、`src/pages/*/models`、`src/pages/*/model.ts` 目录下的文件为项目定义的模型文件，每个文件需要默认导出一个对象。
+如上目录结构所示，icejs 约定在 `src/models`、`src/pages/*/models` 目录下的文件为项目定义的模型文件，每个文件需要默认导出一个对象。
 
 通常模型定义包括 state、reducers、effects 三部分：
 
@@ -114,6 +155,29 @@ export default {
 
 在 effects 中的 action 方法中可以通过 `dispatch[model][action]` 拿到其他模型所定义的方法。
 
+### 创建 Store 实例
+
+定义好 model 之后，我们需要自定义创建 Store 实例。
+
+```ts
+// ./src/store.ts
+import { createStore } from 'ice';
+import user from './models/user';
+
+const models = {
+  user
+};
+
+const options = {
+  disableImmer: true,
+  disableError: true
+}
+
+const store = createStore(models, options);
+
+export default store;
+```
+
 ### 模型使用
 
 定义好 model 之后，我们就可以通过 `useModel` 传入对应的 model 名称进行使用，并返回该模型的状态（state）和调度器（dispatchers）。
@@ -126,9 +190,10 @@ useModel(name: string): [ state, dispatchers ]
 
 ```md
 src
-├── models               // 全局状态：通常会有多个 model
+├── models               // 全局状态
 |   ├── counter.ts
 │   └── user.ts
+└── store.ts
 ```
 
 如上所示目录结构，我们可以通过文件名获取到对应的模型：
@@ -139,10 +204,10 @@ src
 
 export default () => {
   // 使用 counter 模型，src/models/counter.ts -> counter
-+ const [counterState, counterDispatchers] = appStore.useModel('counter);
++ const [counterState, counterDispatchers] = appStore.useModel('counter');
 
   // 使用 user 模型，src/models/user.ts -> user
-+ const [userState, userDispatchers] = appStore.useModel('user);
++ const [userState, userDispatchers] = appStore.useModel('user');
 }
 ```
 
@@ -152,41 +217,25 @@ export default () => {
 src
 ├── pages
 |   ├── Home
-|   │   ├── index.tsx
-|   │   └── model.ts     // 页面级状态：只有一个 model
-|   ├── About
-|   │   ├── index.tsx
-|   │   ├── models       // 页面级状态：有多个 model
+|   │   ├── models       // 页面级状态
 |   │   |   ├── foo.ts
 |   │   |   └── bar.ts
+|   │   ├── store.ts
+│   │   └── index.tsx
 ```
 
-如上所示目录结构，页面模型有单个和多个的两种情况：
-
-* 单个页面模型
+如上所示目录结构，我们可以通过文件名获取到对应的模型：
 
 ```diff
-  // 页面模型按照页面名称进行引用，如 pages/Home/index.tsx -> ice/Home
-+ import { store as pageStore } from 'ice/Home';
-
-export default () => {
-  // 一个 model 的情况 model 名称约定为 default， 如 src/pages/Home/model.ts -> default
-+ const [pageState, pageDispatchers] = pageStore.useModel('default');
-}
-```
-
-* 多个页面模型
-
-```diff
-  // 页面模型按照页面名称进行引用，如 pages/About/index.tsx -> ice/About
-+ import { store as aboutStore } from 'ice/About';
+  // 页面模型从相应的 store 实例进行引用
++ import { store as PageStore } from '@/pages/Home/store';
 
 export default () => {
   // 多个 model 的情况，model 名称约定为文件名，如：
-  // src/pages/About/models/foo.ts -> foo
-  // src/pages/About/models/bar.ts -> bar
-+ const [fooState, fooDispatchers] = appStore.useModel('foo);
-+ const [barState, barDispatchers] = appStore.useModel('bar);
+  // src/pages/Home/models/foo.ts -> foo
+  // src/pages/Home/models/bar.ts -> bar
++ const [fooState, fooDispatchers] = appStore.useModel('foo');
++ const [barState, barDispatchers] = appStore.useModel('bar');
 }
 ```
 
@@ -202,6 +251,7 @@ export default () => {
 src
 ├── models               // 全局状态
 │   └── user.ts
+└── store.ts
 ```
 
 定义模型如下：
@@ -241,14 +291,17 @@ export default {
 
 ### 页面状态
 
-页面状态位于 `src/pages/*/models` 目录，或者 `src/pages/*/model.ts` 文件中，这里演示单个 model 的使用，新建目录如下：
+页面状态位于 `src/pages/*/models` 目录，新建目录如下：
 
 ```md
 src
 ├── pages
 |   ├── Home
-|   │   ├── index.tsx
-|   │   └── model.ts     // 页面级状态：只有一个 model
+|   │   ├── models/
+|   |   │   ├── foo.ts
+|   |   │   └── bar.ts
+|   │   ├── store.ts
+|   │   └── index.tsx
 ```
 
 定义模型如下：
@@ -285,17 +338,15 @@ const HomePage = () => {
 
 **页面状态**
 
-通过 `import { store } from 'ice/pageName'` 获取页面的 store 实例：
-
-> 注释：pageName 需要替换成为当前的页面名称
+通过 `import { store } from '@/pages/Home/store'` 获取页面的 store 实例：
 
 ```tsx
 // 引用页面状态
-import { store as pageStore } from 'ice/Home';
+import { store as pageStore } from '@/pages/Home/store';
 
 const HomePage = () => {
-  // 一个 model 的情况 model 名称约定为 default， 如 src/pages/*/model.ts -> default
-  const [pageState, pageDispatchers] = pageStore.useModel('default');
+
+  const [pageState, pageDispatchers] = pageStore.useModel('foo');
 
   return (
     // jsx
@@ -304,76 +355,6 @@ const HomePage = () => {
 ```
 
 大部分情况下，按照上面两个步骤的操作就可以在项目里正常的使用状态管理能力了。[完整示例代码](https://github.com/ice-lab/icejs/tree/master/examples/basic-store)
-
-## 自定义创建 Store
-
-对于页面级状态，也可以自定义创建 store 进行使用。如下目录结构：
-
-```md
-src
-├── pages
-|   ├── Home
-|   │   ├── index.tsx
-|   │   ├── model.ts    // 页面级状态：定义 model
-|   │   └── store.ts    // 页面级状态：创建 store
-```
-
-
-### 定义 model
-
-```ts
-export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
-
-export default {
-  state: {
-    count: 0
-  },
-
-  reducers: {
-    increment (prevState) {
-      return { count: prevState.count + 1 };
-    },
-    decrement (prevState) {
-      return { count: prevState.count - 1 };
-    }
-  },
-
-  effects: (dispatch: IRootDispatch) => ({
-    async decrementAsync () {
-      await delay(10);
-      dispatch.counter.decrement();
-    },
-  }),
-};
-```
-
-### 创建 store
-
-```ts
-import { createStore } from 'ice';
-import counter from './model';
-
-const model = { counter };
-const store = createStore(model);
-export default store;
-```
-
-### 使用 model
-
-```ts
-// 引入自定义创建的 store 
-import store from './store';
-
-const HomePage = () => {
-  // 调用 state、dispatchers
-  const [state, dispatchers] = store.useModel('counter');
-
-  return (
-    // jsx
-  );
-}
-
-```
 
 ## API
 

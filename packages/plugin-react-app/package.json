@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "1.7.4",
+  "version": "1.7.7-1",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "src/index.js",
@@ -20,6 +20,7 @@
     "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.3.1",
+    "debug": "^4.1.1",
     "eslint-loader": "^4.0.0",
     "fork-ts-checker-webpack-plugin": "^5.0.5",
     "friendly-errors-webpack-plugin": "^1.7.0",

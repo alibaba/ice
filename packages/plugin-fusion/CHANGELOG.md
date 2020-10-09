@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.7
+
+- [feat] support option `usePx2Vw` to transform css unit
+
+## 0.1.6
+
+- [feat] support option `importOptions` to specify babel-plugin-import options of `@alifd/next`
+
 ## 0.1.5
 
 - [feat] support external fusion components

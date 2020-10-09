@@ -40,8 +40,6 @@ module.exports = class CheckDepsPlugin {
         }
       });
 
-      console.log('\n----项目依赖健康检查-----');
-
       // 1. 多份基础组件
       const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter((name) => depModules[name]);
       if (baseComponentDeps.length > 1) {

@@ -21,3 +21,7 @@ coverage/
 **/*.min.js
 
 workspace/
+
+# 忽略 rax 示例
+examples/with-rax
+examples/with-rax-store

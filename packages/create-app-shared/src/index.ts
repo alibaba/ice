@@ -10,8 +10,7 @@ import {
   addNativeEventListener,
   removeNativeEventListener
 } from './nativeEventListener';
-import useSearchParams from './useSearchParams';
-import withSearchParams from './withSearchParams';
+import getSearchParams from './getSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
 function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeModules) {
@@ -23,9 +22,7 @@ function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeMod
     withRouter: enhanceWithRouter({ withRouter, createElement }),
     createHistory,
     getHistory,
-    useSearchParams,
-    withSearchParams: withSearchParams(createElement),
-
+    getSearchParams,
     // lifeCycle api
     emitLifeCycles,
     collectAppLifeCycle,

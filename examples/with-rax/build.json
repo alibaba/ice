@@ -1,4 +1,8 @@
 {
+  "web": {
+    "ssr": true
+  },
+  "inlineStyle": true,
   "plugins": [],
   "targets": ["web"]
 }

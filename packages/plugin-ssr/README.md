@@ -1,1 +1,1 @@
-# plugin-ssr
+# `plugin-universal-ssr`
