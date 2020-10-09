@@ -1,7 +1,7 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/project-analysis" },
+    { "path": "packages/project-utils" },
     { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },

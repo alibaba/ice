@@ -1,6 +1,6 @@
 {
-  "name": "ice-project-analysis",
-  "version": "1.0.0-0",
+  "name": "ice-project-utils",
+  "version": "1.0.0",
   "description": "utils for analyze project information",
   "main": "lib/index.js",
   "files": [

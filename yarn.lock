@@ -4569,6 +4569,19 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+build-plugin-ice-router@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.npm.taobao.org/build-plugin-ice-router/download/build-plugin-ice-router-1.7.3.tgz#c3cd96d334bdb3aab8f6757b5049aabe82c64acc"
+  integrity sha1-w82W0zS9s6q49nV7UEmqvoLGSsw=
+  dependencies:
+    fs-extra "^8.1.0"
+    glob "^7.1.6"
+    history "^4.10.1"
+    query-string "^6.12.1"
+    react "^16.12.0"
+    react-dom "^16.12.0"
+    react-router-dom "^5.1.2"
+
 build-plugin-rax-app@5.2.2-4:
   version "5.2.2-4"
   resolved "https://registry.npm.taobao.org/build-plugin-rax-app/download/build-plugin-rax-app-5.2.2-4.tgz#863ddee3b3b35f6598e440603aa6ea75a1cec115"

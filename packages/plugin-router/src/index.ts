@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as chokidar from 'chokidar';
 import { IPlugin } from '@alib/build-scripts';
-import { getProjectType, getRoutesInfo } from 'ice-project-analysis';
+import { getProjectType, getRoutesInfo } from 'ice-project-utils';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 
@@ -102,6 +102,7 @@ const plugin: IPlugin = ({ context, onGetWebpackConfig, modifyUserConfig, getVal
           walker(walkerOptions);
         });
       } else {
+        // watch file change by chokidar when disable runtime
         chokidar.watch(path.join(rootDir, routerMatch), {
           ignoreInitial: true,
         }).on('all', () => {
