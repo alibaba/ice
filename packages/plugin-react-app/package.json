@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "1.7.7-1",
+  "version": "1.7.7-2",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "src/index.js",
@@ -34,7 +34,7 @@
     "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-mock": "^1.0.0",
+    "webpack-dev-mock": "1.0.1-0",
     "webpack-plugin-import": "^0.2.6"
   },
   "devDependencies": {
