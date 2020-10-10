@@ -10,6 +10,7 @@ module.exports = async ({ context, onGetWebpackConfig, onHook, log }) => {
       const originalDevServeBefore = config.devServer.get('before');
 
       config.merge({ devServer: {
+        writeToDisk: true,
         before(app, server) {
           // eslint-disable-next-line react-hooks/rules-of-hooks
           app.use(useExpressDevPack({
