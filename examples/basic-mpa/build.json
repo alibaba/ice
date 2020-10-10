@@ -1,6 +1,6 @@
 {
   "mpa": {
-    "openPage": "Home",
+    "openPage": "Dashboard",
     "template": {
       "web.html": ["Dashboard", "Home"]
     }
