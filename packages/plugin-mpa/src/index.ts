@@ -56,8 +56,8 @@ const plugin: IPlugin = (api) => {
 
     // set page template
     onGetWebpackConfig(config => {
-      if (typeof mpa === 'object') {
-        const { template } = mpa || {} as any;
+      if (typeof mpa === 'object' && Object.keys(mpa).length !== 0) {
+        const { template } = mpa as any;
         setPageTemplate(rootDir, entries, template, config);
       }
     });
@@ -102,10 +102,11 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
       }
 
       config.plugin(htmlPluginKey).tap((args) => [
-        {
+        Object.assign(
+          {},
           ...args,
-          ...htmlPluginOption,
-        }
+          htmlPluginOption
+        )
       ]);
     }
   });
