@@ -1,3 +1,5 @@
+import { IRootDispatch, IRootState } from './store';
+
 export default {
   state: {
     title: ''
@@ -12,9 +14,10 @@ export default {
     },
   },
 
-  effects: () => ({
-    async getPageTitle () {
-      this.update({
+  effects: (dispatch: IRootDispatch) => ({
+    async getPageTitle (playload, rootState: IRootState) {
+      console.log({ playload, rootState });
+      dispatch.about.update({
         title: 'About Page'
       });
     },
