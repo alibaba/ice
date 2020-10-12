@@ -206,20 +206,6 @@ export default class Generator {
     this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
   }
 
-  // private renderPageIndex(params) {
-  //   const { pageName, pageModelsDir, pageModelFile } = params;
-  //   const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
-  //   const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
-
-  //   const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
-  //   const pageComponentRenderData = {
-  //     pageImports: existStore ? 'import store from \'./store\'' : '',
-  //     pageExports: existStore ? ' store ' : ''
-  //   };
-
-  //   this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
-  // }
-
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
     let content = ejs.render(templateContent, { ...extraData });
@@ -274,8 +260,6 @@ export default class Generator {
 
       // generate .ice/pages/${pageName}/${pageName}.tsx
       this.renderPageLayout(params);
-      // generate .ice/pages/${pageName}/index.ts
-      // this.renderPageIndex(params);
     });
   }
 }
