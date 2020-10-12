@@ -139,10 +139,10 @@ src
 
 export default () => {
   // 使用 counter 模型，src/models/counter.ts -> counter
-+ const [counterState, counterDispatchers] = appStore.useModel('counter);
++ const [counterState, counterDispatchers] = appStore.useModel('counter');
 
   // 使用 user 模型，src/models/user.ts -> user
-+ const [userState, userDispatchers] = appStore.useModel('user);
++ const [userState, userDispatchers] = appStore.useModel('user');
 }
 ```
 
@@ -185,8 +185,8 @@ export default () => {
   // 多个 model 的情况，model 名称约定为文件名，如：
   // src/pages/About/models/foo.ts -> foo
   // src/pages/About/models/bar.ts -> bar
-+ const [fooState, fooDispatchers] = appStore.useModel('foo);
-+ const [barState, barDispatchers] = appStore.useModel('bar);
++ const [fooState, fooDispatchers] = appStore.useModel('foo');
++ const [barState, barDispatchers] = appStore.useModel('bar');
 }
 ```
 
