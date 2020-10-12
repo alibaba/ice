@@ -4307,7 +4307,7 @@ aws4@^1.8.0:
 
 axe-core@^3.5.4:
   version "3.5.5"
-  resolved "https://registry.npm.taobao.org/axe-core/download/axe-core-3.5.5.tgz?cache=0&sync_timestamp=1602256935636&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxe-core%2Fdownload%2Faxe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
+  resolved "https://registry.npm.taobao.org/axe-core/download/axe-core-3.5.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxe-core%2Fdownload%2Faxe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
   integrity sha1-hDFQc7U/o8DFFnbFiNWdoJoZIic=
 
 axios@^0.19.2:
@@ -4963,61 +4963,13 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-build-plugin-app-core@0.1.15:
-  version "0.1.15"
-  resolved "https://registry.npm.taobao.org/build-plugin-app-core/download/build-plugin-app-core-0.1.15.tgz#ce75c72a2981089564a1b87c822334949d5fff19"
-  integrity sha1-znXHKimBCJVkobh8giM0lJ1f/xk=
+build-mpa-config@1.0.0-2:
+  version "1.0.0-2"
+  resolved "https://registry.npm.taobao.org/build-mpa-config/download/build-mpa-config-1.0.0-2.tgz#ba6b5fe246c522d44b51f0512929698275099a30"
+  integrity sha1-umtf4kbFItRLUfBRKSlpgnUJmjA=
   dependencies:
-    chalk "^4.0.0"
-    chokidar "^3.4.1"
-    create-app-shared "^0.1.12"
-    ejs "^3.0.1"
     fs-extra "^8.1.0"
-    globby "^11.0.0"
-    history "^4.9.0"
-    miniapp-history "^0.1.0"
-    miniapp-renderer "^0.1.4"
-    prettier "^2.0.2"
-    query-string "^6.13.1"
-    rax-app-renderer "^0.1.3"
-    rax-use-router "^3.0.0"
-    react-app-renderer "^0.1.9"
-    universal-env "^3.0.0"
-
-build-plugin-app-core@0.1.18:
-  version "0.1.18"
-  resolved "https://registry.npm.taobao.org/build-plugin-app-core/download/build-plugin-app-core-0.1.18.tgz#aa7f7bd664d5c7e18cf2f4753ebd11e0de6ba8a4"
-  integrity sha1-qn971mTVx+GM8vR1Pr0R4N5rqKQ=
-  dependencies:
-    chalk "^4.0.0"
-    chokidar "^3.4.1"
-    create-app-shared "^0.1.12"
-    ejs "^3.0.1"
-    fs-extra "^8.1.0"
-    globby "^11.0.0"
-    history "^4.9.0"
-    miniapp-history "^0.1.0"
-    miniapp-renderer "^0.1.4"
-    prettier "^2.0.2"
-    query-string "^6.13.1"
-    rax-app-renderer "^0.1.3"
-    rax-use-router "^3.0.0"
-    react-app-renderer "^0.1.9"
-    universal-env "^3.0.0"
-
-build-plugin-ice-store@1.7.2:
-  version "1.7.2"
-  resolved "https://registry.npm.taobao.org/build-plugin-ice-store/download/build-plugin-ice-store-1.7.2.tgz#b6dae9d75f35b312a330a96c17bfe2eb4c7eaa30"
-  integrity sha1-ttrp1181sxKjMKlsF7/i60x+qjA=
-  dependencies:
-    "@ice/store" "^1.3.1"
-    ejs "^3.0.2"
-    enhanced-resolve "^4.3.0"
-    fs-extra "^8.1.0"
-    fs-readdir-recursive "^1.1.0"
     loader-utils "^2.0.0"
-    prettier "^2.0.4"
-    rax-redux "^1.0.0"
 
 builtin-status-codes@^3.0.0:
   version "3.0.0"
@@ -12014,6 +11966,16 @@ mini-create-react-context@^0.4.0:
     "@babel/runtime" "^7.5.5"
     tiny-warning "^1.0.3"
 
+mini-css-extract-plugin@^0.11.2:
+  version "0.11.3"
+  resolved "https://registry.npm.taobao.org/mini-css-extract-plugin/download/mini-css-extract-plugin-0.11.3.tgz?cache=0&sync_timestamp=1602247987745&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmini-css-extract-plugin%2Fdownload%2Fmini-css-extract-plugin-0.11.3.tgz#15b0910a7f32e62ffde4a7430cfefbd700724ea6"
+  integrity sha1-FbCRCn8y5i/95KdDDP771wByTqY=
+  dependencies:
+    loader-utils "^1.1.0"
+    normalize-url "1.9.1"
+    schema-utils "^1.0.0"
+    webpack-sources "^1.1.0"
+
 mini-css-extract-plugin@^0.8.0:
   version "0.8.2"
   resolved "https://registry.npm.taobao.org/mini-css-extract-plugin/download/mini-css-extract-plugin-0.8.2.tgz?cache=0&sync_timestamp=1602247987745&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmini-css-extract-plugin%2Fdownload%2Fmini-css-extract-plugin-0.8.2.tgz#a875e169beb27c88af77dd962771c9eedc3da161"
@@ -12024,18 +11986,10 @@ mini-css-extract-plugin@^0.8.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
-miniapp-builder-shared@0.1.6, miniapp-builder-shared@^0.1.1, miniapp-builder-shared@^0.1.5:
+miniapp-builder-shared@0.1.6, miniapp-builder-shared@^0.1.1, miniapp-builder-shared@^0.1.6:
   version "0.1.6"
   resolved "https://registry.npm.taobao.org/miniapp-builder-shared/download/miniapp-builder-shared-0.1.6.tgz#3fe6008fdf15cdd6068d8cbc20a23248ed109118"
   integrity sha1-P+YAj98VzdYGjYy8IKIySO0QkRg=
-  dependencies:
-    enhanced-resolve "^4.3.0"
-    fs-extra "^8.0.1"
-
-miniapp-builder-shared@0.1.6-1:
-  version "0.1.6-1"
-  resolved "https://registry.npm.taobao.org/miniapp-builder-shared/download/miniapp-builder-shared-0.1.6-1.tgz#e8b752cf320eb4b5e7a60e74283f9c8bcb76bc82"
-  integrity sha1-6LdSzzIOtLXnpg50KD+ci8t2vII=
   dependencies:
     enhanced-resolve "^4.3.0"
     fs-extra "^8.0.1"
@@ -12052,19 +12006,7 @@ miniapp-render@^1.2.2:
   resolved "https://registry.npm.taobao.org/miniapp-render/download/miniapp-render-1.2.5.tgz#39ceb465ad153d46df99ca7db95a548835ec3ffb"
   integrity sha1-Oc60Za0VPUbfmcp9uVpUiDXsP/s=
 
-miniapp-runtime-config@0.1.3-4:
-  version "0.1.3-4"
-  resolved "https://registry.npm.taobao.org/miniapp-runtime-config/download/miniapp-runtime-config-0.1.3-4.tgz#865a7df972d9fe098768107fbffa2b363beea88e"
-  integrity sha1-hlp9+XLZ/gmHaBB/v/orNjvuqI4=
-  dependencies:
-    copy-webpack-plugin "^6.0.3"
-    miniapp-builder-shared "0.1.6-1"
-    miniapp-render "^1.2.2"
-    rax-miniapp-babel-plugins "^0.1.3"
-    rax-miniapp-config-webpack-plugin "^1.2.3"
-    rax-miniapp-runtime-webpack-plugin "1.2.2-3"
-
-miniapp-runtime-config@^0.1.1:
+miniapp-runtime-config@^0.1.1, miniapp-runtime-config@^0.1.3:
   version "0.1.3"
   resolved "https://registry.npm.taobao.org/miniapp-runtime-config/download/miniapp-runtime-config-0.1.3.tgz#cc01d1c5a6b2f70a78d64adcd411835ea67a870c"
   integrity sha1-zAHRxaay9wp41krc1BGDXqZ6hww=
@@ -14775,10 +14717,10 @@ raw-body@^2.2.0, raw-body@^2.3.0, raw-body@^2.3.3:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-rax-babel-config@1.0.0-0:
-  version "1.0.0-0"
-  resolved "https://registry.npm.taobao.org/rax-babel-config/download/rax-babel-config-1.0.0-0.tgz#49c94d68a909d285993891f284e13eccdbc0bac1"
-  integrity sha1-SclNaKkJ0oWZOJHyhOE+zNvAusE=
+rax-babel-config@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npm.taobao.org/rax-babel-config/download/rax-babel-config-0.1.2.tgz#b331a328de80502a5a5383de2180effbe42d22c9"
+  integrity sha1-szGjKN6AUCpaU4PeIYDv++QtIsk=
   dependencies:
     "@babel/code-frame" "^7.5.5"
     "@babel/core" "^7.9.6"
@@ -14811,10 +14753,10 @@ rax-babel-config@1.0.0-0:
     babel-plugin-transform-jsx-to-html "^0.1.0"
     chalk "^2.4.2"
 
-rax-babel-config@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npm.taobao.org/rax-babel-config/download/rax-babel-config-0.1.2.tgz#b331a328de80502a5a5383de2180effbe42d22c9"
-  integrity sha1-szGjKN6AUCpaU4PeIYDv++QtIsk=
+rax-babel-config@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rax-babel-config/download/rax-babel-config-1.0.0.tgz#a3f7eec0f86f2bf1bd16bd4988fd0ed1fb60a2a3"
+  integrity sha1-o/fuwPhvK/G9Fr1JiP0O0ftgoqM=
   dependencies:
     "@babel/code-frame" "^7.5.5"
     "@babel/core" "^7.9.6"
@@ -14934,23 +14876,6 @@ rax-miniapp-config-webpack-plugin@^1.2.3:
   dependencies:
     fs-extra "^8.1.0"
 
-rax-miniapp-runtime-webpack-plugin@1.2.2-3:
-  version "1.2.2-3"
-  resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.2.2-3.tgz#e44c55fefe85b4b9eafdd89bcedf2a5b4a1633ca"
-  integrity sha1-5ExV/v6FtLnq/dibzt8qW0oWM8o=
-  dependencies:
-    chalk "^3.0.0"
-    colors "^1.4.0"
-    csso "^4.0.3"
-    ejs "^3.1.2"
-    fs-extra "^8.1.0"
-    path-to-regexp "^3.0.0"
-    postcss "^7.0.17"
-    pretty-data "^0.40.0"
-    terser "^4.6.10"
-    webpack "^4.35.3"
-    webpack-sources "^1.3.0"
-
 rax-miniapp-runtime-webpack-plugin@^1.2.2:
   version "1.2.4"
   resolved "https://registry.npm.taobao.org/rax-miniapp-runtime-webpack-plugin/download/rax-miniapp-runtime-webpack-plugin-1.2.4.tgz#bebc0bcc79bc4f98caa822945adf8c3b88659f9b"
@@ -14987,10 +14912,10 @@ rax-use-router@^3.0.0:
   dependencies:
     path-to-regexp "^3.0.0"
 
-rax-webpack-config@1.0.0-2:
-  version "1.0.0-2"
-  resolved "https://registry.npm.taobao.org/rax-webpack-config/download/rax-webpack-config-1.0.0-2.tgz?cache=0&sync_timestamp=1602236325047&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frax-webpack-config%2Fdownload%2Frax-webpack-config-1.0.0-2.tgz#7e57ad2257f04d2ab6c13097552c74f257e7c44b"
-  integrity sha1-fletIlfwTSq2wTCXVSx08lfnxEs=
+rax-webpack-config@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rax-webpack-config/download/rax-webpack-config-1.0.0.tgz?cache=0&sync_timestamp=1602236325047&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frax-webpack-config%2Fdownload%2Frax-webpack-config-1.0.0.tgz#e0874341a864880b33b1c66be5bf8dc2e50a5226"
+  integrity sha1-4IdDQahkiAszscZr5b+NwuUKUiY=
   dependencies:
     "@babel/core" "7.2.0"
     "@babel/runtime" "^7.2.0"
@@ -15005,6 +14930,7 @@ rax-webpack-config@1.0.0-2:
     less "^3.10.3"
     less-loader "^5.0.0"
     lodash.clonedeep "^4.5.0"
+    mini-css-extract-plugin "^0.11.2"
     optimize-css-assets-webpack-plugin "^5.0.3"
     postcss-loader "^3.0.0"
     postcss-safe-parser "^4.0.1"
@@ -18281,6 +18207,20 @@ webpack-dev-middleware@^3.7.2:
     mkdirp "^0.5.1"
     range-parser "^1.2.1"
     webpack-log "^2.0.0"
+
+webpack-dev-mock@1.0.1-0:
+  version "1.0.1-0"
+  resolved "https://registry.npm.taobao.org/webpack-dev-mock/download/webpack-dev-mock-1.0.1-0.tgz#2e778d963bfcc4f40ce0ebb02635b3f52de56b7f"
+  integrity sha1-LneNljv8xPQM4OuwJjWz9S3la38=
+  dependencies:
+    body-parser "^1.18.3"
+    chalk "^2.4.1"
+    chokidar "^2.0.4"
+    debug "^3.1.0"
+    express-http-proxy "^1.2.0"
+    glob "^7.1.4"
+    multer "^1.4.2"
+    path-to-regexp "^6.0.0"
 
 webpack-dev-server@^3.7.2:
   version "3.11.0"

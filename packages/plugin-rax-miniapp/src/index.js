@@ -9,19 +9,20 @@ const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
   const { userConfig } = context;
-  const { targets } = userConfig;
+  const { targets, inlineStyle } = userConfig;
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   targets.forEach(target => {
     if (['miniapp', 'wechat-miniprogram', 'bytedance-microapp'].includes(target)) {
       const chainConfig = getWebpackBase(api, {
         target,
-        babelConfigOptions: { styleSheet: true, disableRegenerator: true },
+        babelConfigOptions: { styleSheet: inlineStyle, disableRegenerator: true },
         progressOptions: {
           name: platformMap[target].name
         }
       });
       chainConfig.name(target);
+      chainConfig.taskName = target;
       // Set Entry
       setEntry(chainConfig, context, target);
       // Register task

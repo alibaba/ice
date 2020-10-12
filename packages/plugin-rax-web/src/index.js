@@ -10,14 +10,16 @@ module.exports = (api) => {
 
   const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
   const target = 'web';
+  const { userConfig = {} } = context;
   const chainConfig = getWebpackBase(api, {
     target,
-    babelConfigOptions: { styleSheet: true },
+    babelConfigOptions: { styleSheet: userConfig.inlineStyle },
     progressOptions: {
       name: 'Web'
     }
   });
   chainConfig.name(target);
+  chainConfig.taskName = target;
   registerUserConfig({
     name: target,
     validation: 'object'
