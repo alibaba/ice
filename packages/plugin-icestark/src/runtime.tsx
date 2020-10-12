@@ -15,7 +15,7 @@ import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, createHistory }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyRoutes, createHistory }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -23,6 +23,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
+  console.log('buildConfig', buildConfig);
   if (appType === 'child') {
     const history = createHistory({ type, basename: getBasename() });
 
