@@ -5,7 +5,7 @@ order: 5
 
 icejs 内置了状态管理方案，并在此基础上进一步遵循 **“约定优于配置”** 原则，进行抽象和封装，使得状态管理变得非常容易。
 
-> 说明：该文档适用于 ice.js@1.9.7 及以上版本，如果非该版本请参考 [状态管理](https://github.com/alibaba/ice/blob/v1.9.6/docs/guide/basic/store.md)
+> 说明：该文档适用于 ice.js@1.9.7 及以上版本，如果非该版本请参考 [状态管理](https://github.com/alibaba/ice/blob/v1.9.6/docs/guide/basic/store.md)；差异点主要在于 1.9.7 版本之后推荐自定义创建 Store 实例用于透传参数，与老版本完全兼容。
 
 ### 全局状态
 
@@ -87,6 +87,8 @@ const HomePage = () => {
 ```
 
 ### 页面状态
+
+> 注意：页面状态只能在该页面下使用，无法跨页面使用。
 
 约定页面状态位于 `src/pages/*/models` 目录。
 
@@ -388,7 +390,7 @@ export default store.withModel('todos')(TodoList);
 
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
-## 配置参数
+## 设置初始状态
 
 ```ts
 import { runApp } from '@/store';
