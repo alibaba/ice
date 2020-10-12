@@ -53,7 +53,7 @@ module.exports = (api) => {
   });
 
   onHook('after.build.compile', () => {
-    console.log(chalk.green('[SSR] Bundle at:'));
+    console.log(chalk.hex('#F4AF3D')('[SSR] Bundle at:'));
     console.log('   ', chalk.underline.white(path.resolve(rootDir, outputDir, 'node')));
     console.log();
   });
