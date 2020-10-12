@@ -23,7 +23,7 @@ icejs 支持区分不同环境，开发者可根据环境区分**工程配置**�
 }
 ```
 
-> 阿里内部同学可参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/angwyx#TzBL7)指定日常环境
+> 阿里内部同学可参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/angwyx#TzBL7)区分日常和线上环境
 
 ## 区分工程配置
 
