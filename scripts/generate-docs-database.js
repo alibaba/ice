@@ -101,6 +101,7 @@ function getDirFiles(dirPath) {
       ...jsonML.meta,
       participle,
       jsonml: jsonML.content,
+      markdown: content
     });
   });
 
