@@ -1,5 +1,6 @@
+import { Models, IcestoreRootState, IcestoreDispatch } from '@ice/store';
+
 <% if (hasAppModels) { %>
-import { IcestoreRootState, IcestoreDispatch } from '@ice/store';
 import { appModel } from '.';
 export type IRootDispatch = IcestoreDispatch<typeof appModel>;
 export type IRootState = IcestoreRootState<typeof appModel>;
@@ -13,3 +14,7 @@ export interface IStore {
   initialStates?: IInitialStates;
   getInitialStates?: (initialData) => IInitialStates;
 }
+
+export type IDispatch = IcestoreDispatch;
+export type IRootState = IcestoreRootState;
+export type IModels = Models;
