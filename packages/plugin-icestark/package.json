@@ -15,6 +15,7 @@
     "src/types"
   ],
   "dependencies": {
+    "@babel/types": "^7.11.5",
     "@ice/stark": "^1.3.1",
     "@ice/stark-app": "^1.2.0",
     "fs-extra": "^8.1.0",
