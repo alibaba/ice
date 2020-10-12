@@ -5,6 +5,8 @@ order: 5
 
 icejs 内置了状态管理方案，并在此基础上进一步遵循 **“约定优于配置”** 原则，进行抽象和封装，使得状态管理变得非常容易。
 
+> 说明：该文档适用于 ice.js@1.9.7 及以上版本，如果非该版本请参考 [状态管理](https://github.com/alibaba/ice/blob/v1.9.6/docs/guide/basic/store.md)
+
 ### 全局状态
 
 约定全局状态位于 `src/models` 目录，目录结构如下：
@@ -389,7 +391,7 @@ export default store.withModel('todos')(TodoList);
 ## 配置参数
 
 ```ts
-import { runApp } from '@store';
+import { runApp } from '@/store';
 
 const appConfig = {
   store: {
