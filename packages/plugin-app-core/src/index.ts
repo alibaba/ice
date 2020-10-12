@@ -6,12 +6,13 @@ import { TEMP_PATH } from './constant';
 import getSourceDir from './utils/getSourceDir';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
+import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
 
 export default (api, options) => {
-  const { onHook, context, setValue, onGetWebpackConfig } = api;
+  const { onHook, context, setValue } = api;
   const { command, userConfig } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
@@ -65,6 +66,7 @@ function initGenerator(api, options) {
   const { targets = [] } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
   const srcDir = getSourceDir(userConfig.entry);
+  
   return new Generator({
     rootDir,
     targetDir: getValue(TEMP_PATH),
@@ -77,7 +79,7 @@ function initGenerator(api, options) {
       isRax: framework === 'rax',
       isMiniapp,
       runtimeModules: getRuntimeModules(plugins),
-      buildConfig: JSON.stringify(userConfig)
+      buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,
     srcDir

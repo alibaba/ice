@@ -57,9 +57,11 @@ export function runApp(appConfig) {
     renderer = reactAppRenderer;
   }
   <% } %>
+  const buildConfig = <%- buildConfig %>;
   renderer({
     appConfig,
     staticConfig,
+    buildConfig,
     setAppConfig,
     createBaseApp,
     createHistory,

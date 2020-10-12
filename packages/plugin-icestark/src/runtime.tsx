@@ -23,13 +23,13 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
-  console.log('buildConfig', buildConfig);
   if (appType === 'child') {
+    const { icestarkUMD } = buildConfig;
     const history = createHistory({ type, basename: getBasename() });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
-        if (isInIcestark()) {
+        if (isInIcestark() && !icestarkUMD) {
           registerAppEnter(() => {
             const mountNode = getMountNode();
             if (enterRegistration) {
