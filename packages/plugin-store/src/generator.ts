@@ -15,7 +15,6 @@ export interface IRenderPageParams {
 
 const matchRegex = /^[^._].*\.(js|ts)$/;
 
-
 export default class Generator {
   private isRax: boolean
 
@@ -172,7 +171,7 @@ export default class Generator {
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
-      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\''
     };
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
@@ -197,7 +196,7 @@ export default class Generator {
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageLayoutName,
       hasPageStore: false,
-      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\''
     };
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
@@ -207,19 +206,19 @@ export default class Generator {
     this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
   }
 
-  private renderPageIndex(params) {
-    const { pageName, pageModelsDir, pageModelFile } = params;
-    const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
+  // private renderPageIndex(params) {
+  //   const { pageName, pageModelsDir, pageModelFile } = params;
+  //   const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
+  //   const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
 
-    const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
-    const pageComponentRenderData = {
-      pageImports: existStore ? 'import store from \'./store\'' : '',
-      pageExports: existStore ? ' store ' : ''
-    };
+  //   const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
+  //   const pageComponentRenderData = {
+  //     pageImports: existStore ? 'import store from \'./store\'' : '',
+  //     pageExports: existStore ? ' store ' : ''
+  //   };
 
-    this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
-  }
+  //   this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
+  // }
 
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
     const templateContent = fse.readFileSync(templatePath, 'utf-8');
@@ -276,7 +275,7 @@ export default class Generator {
       // generate .ice/pages/${pageName}/${pageName}.tsx
       this.renderPageLayout(params);
       // generate .ice/pages/${pageName}/index.ts
-      this.renderPageIndex(params);
+      // this.renderPageIndex(params);
     });
   }
 }
