@@ -46,7 +46,7 @@ export default {
   effects: () => ({
     async getUserInfo () {
       await delay(1000);
-      this.update({
+      dispatch.user.update({
         name: 'taobao',
         id: '123',
       });
@@ -231,7 +231,7 @@ export default {
 effects: (dispatch) => ({ [string]: (payload, rootState) => void })
 ```
 
-一个可以处理该模型副作用的函数集合。这些方法以 payload 和 rootState 作为入参，适用于进行异步调用、模型联动等场景。在 effects 内部，通过调用 `this.reducerFn` 来更新模型状态。
+一个可以处理该模型副作用的函数集合。这些方法以 payload 和 rootState 作为入参，适用于进行异步调用、模型联动等场景。
 
 ```diff
 export default {
@@ -248,8 +248,8 @@ export default {
 
 + effects: () => ({
 +   async asyncDecrement() {
-+     await delay(1000); // 进行一些异步操作
-+     this.increment();  // 调用模型 reducers 内的方法来更新状态
++     await delay(1000);             // 进行一些异步操作
++     dispatch.counter.increment();  // 调用模型 reducers 内的方法来更新状态
 +   },
 + }),
 };

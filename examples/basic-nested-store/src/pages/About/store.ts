@@ -1,8 +1,18 @@
-import { createStore } from 'ice';
+import { createStore, IStoreModels, IStoreRootState, IStoreDispatch } from 'ice';
 import modelAbout from './model';
 
-const store = createStore({
-  about: modelAbout
-});
+interface IAppStoreModels extends IStoreModels {
+  about: typeof modelAbout;
+};
 
-export default store;
+const appModels: IAppStoreModels = {
+  about: modelAbout
+};
+
+export default createStore(appModels);
+
+// 导出 IRootDispatch 类型
+export type IRootDispatch = IStoreDispatch<typeof appModels>;
+
+// 导出 IRootState 类型
+export type IRootState = IStoreRootState<typeof appModels>;
