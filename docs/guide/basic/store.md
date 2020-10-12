@@ -390,42 +390,44 @@ export default store.withModel('todos')(TodoList);
 
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
-## 定义类型
-
+## 类型提示
+ 
 编写类型有助于更好的代码提示，类型定义步骤如下：
 
 * 创建 Store 实例
 
 ```ts
-import { createStore, Models, IcestoreDispatch, IcestoreRootState } from 'ice';
+// src/store.ts
+import { createStore, IStoreModels, IStoreDispatch, IStoreRootState } from 'ice';
 import user from './models/user';
 
-interface AppModels extends Models {
+interface IAppStoreModels extends IStoreModels {
   user: typeof user;
-}
+};
 
-const appModels: AppModels = {
+const appModels: IAppStoreModels = {
   user
 };
 
-export default createStore(appModels);;
+export default createStore(appModels);
 
 // 导出 IRootDispatch 类型
-export type IRootDispatch = IcestoreDispatch<typeof appModels>;
+export type IRootDispatch = IStoreDispatch<typeof appModels>;
 
 // 导出 IRootState 类型
-export type IRootState = IcestoreRootState<typeof appModels>;
+export type IRootState = IStoreRootState<typeof appModels>;
 ```
 
 * 定义状态模型
 
-```tsx
+```diff
+// src/models/user.ts
 +import { IRootState, IRootDispatch } from '@/store';
 
 const user = {
   state: [],
   reducers: {},
-+    effects: (dispatch: IRootDispatch => ({
++ effects: (dispatch: IRootDispatch => ({
 +   like(playload, rootState: IRootState) {
 
     }
