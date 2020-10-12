@@ -17,6 +17,7 @@ module.exports = (api) => {
       name: 'Weex'
     }
   });
+  chainConfig.taskName = target;
 
   setEntry(chainConfig, context);
 
