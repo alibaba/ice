@@ -5,6 +5,8 @@ order: 5
 
 icejs 内置了状态管理方案，并在此基础上进一步遵循 **“约定优于配置”** 原则，进行抽象和封装，使得状态管理变得非常容易。
 
+> 说明：该文档适用于 ice.js@1.9.7 及以上版本，如果非该版本请参考 [状态管理](https://github.com/alibaba/ice/blob/v1.9.6/docs/guide/basic/store.md)；差异点主要在于 1.9.7 版本之后推荐自定义创建 Store 实例用于透传参数，与老版本完全兼容。
+
 ### 全局状态
 
 约定全局状态位于 `src/models` 目录，目录结构如下：
@@ -44,7 +46,7 @@ export default {
   effects: () => ({
     async getUserInfo () {
       await delay(1000);
-      this.update({
+      dispatch.user.update({
         name: 'taobao',
         id: '123',
       });
@@ -85,6 +87,8 @@ const HomePage = () => {
 ```
 
 ### 页面状态
+
+> 注意：页面状态只能在该页面下使用，无法跨页面使用。
 
 约定页面状态位于 `src/pages/*/models` 目录。
 
@@ -227,7 +231,7 @@ export default {
 effects: (dispatch) => ({ [string]: (payload, rootState) => void })
 ```
 
-一个可以处理该模型副作用的函数集合。这些方法以 payload 和 rootState 作为入参，适用于进行异步调用、模型联动等场景。在 effects 内部，通过调用 `this.reducerFn` 来更新模型状态。
+一个可以处理该模型副作用的函数集合。这些方法以 payload 和 rootState 作为入参，适用于进行异步调用、模型联动等场景。
 
 ```diff
 export default {
@@ -244,8 +248,8 @@ export default {
 
 + effects: () => ({
 +   async asyncDecrement() {
-+     await delay(1000); // 进行一些异步操作
-+     this.increment();  // 调用模型 reducers 内的方法来更新状态
++     await delay(1000);             // 进行一些异步操作
++     dispatch.counter.increment();  // 调用模型 reducers 内的方法来更新状态
 +   },
 + }),
 };
@@ -386,10 +390,55 @@ export default store.withModel('todos')(TodoList);
 
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
-## 配置参数
+## 类型提示
+ 
+编写类型有助于更好的代码提示，类型定义步骤如下：
+
+* 创建 Store 实例
 
 ```ts
-import { runApp } from '@store';
+// src/store.ts
+import { createStore, IStoreModels, IStoreDispatch, IStoreRootState } from 'ice';
+import user from './models/user';
+
+interface IAppStoreModels extends IStoreModels {
+  user: typeof user;
+};
+
+const appModels: IAppStoreModels = {
+  user
+};
+
+export default createStore(appModels);
+
+// 导出 IRootDispatch 类型
+export type IRootDispatch = IStoreDispatch<typeof appModels>;
+
+// 导出 IRootState 类型
+export type IRootState = IStoreRootState<typeof appModels>;
+```
+
+* 定义状态模型
+
+```diff
+// src/models/user.ts
++import { IRootState, IRootDispatch } from '@/store';
+
+const user = {
+  state: [],
+  reducers: {},
++ effects: (dispatch: IRootDispatch => ({
++   like(playload, rootState: IRootState) {
+
+    }
+  })
+};
+```
+
+## 设置初始状态
+
+```ts
+import { runApp } from '@/store';
 
 const appConfig = {
   store: {
