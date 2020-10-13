@@ -47,6 +47,9 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
               ReactDOM.unmountComponentAtNode(mountNode);
             }
           });
+        } else if (icestarkUMD) {
+          const mountNode = getMountNode();
+          ReactDOM.render(<App />, mountNode, resolve);
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }

@@ -2,12 +2,12 @@ import * as t from '@babel/types';
 
 const templateIfStatement = 'if (!isInIcestark()) {}';
 const templateExportStatement = `
-export const mount = (container, props) => {
+export const mount = (props) => {
   createApp(APP_CONFIG);
 };
-export const unmount = (container, props) => {
+export const unmount = ({ container, customProps }) => {
   if (APP_CONFIG?.icestark?.regsiterAppLeave) {
-    APP_CONFIG.icestark.regsiterAppLeave(container, props);
+    APP_CONFIG.icestark.regsiterAppLeave(container, customProps);
   } else {
     ReactDOM.unmountComponentAtNode(container);
   }
@@ -38,6 +38,7 @@ export default (api, { entryList }) => {
           const node: t.Program = nodePath.node;
           const { body } = node;
           let starkappStatement = false;
+          let reactdomStatement = false;
           let lastImportIndex = 0;
           body.forEach((item, index) => {
             // check ImportDeclaration
@@ -55,12 +56,24 @@ export default (api, { entryList }) => {
                 starkappStatement = true;
                 let importIsInIcestark = false;
                 item.specifiers.forEach((value) => {
-                  if (t.isImportSpecifier(value, { local: { name: 'isInIcestark'}})) {
+                  if (t.isImportSpecifier(value) && t.isIdentifier(value.local, { name: 'isInIcestark'})) {
                     importIsInIcestark = true;
                   }
                 });
                 if (!importIsInIcestark) {
                   item.specifiers.push(t.importSpecifier(t.identifier('isInIcestark'), t.identifier('isInIcestark')));
+                }
+              // check import ReactDOM from 'react-dom';
+              } else if (t.isIdentifier(item.source, { value: 'react-dom'})) {
+                reactdomStatement = true;
+                let importReactDOM = false;
+                item.specifiers.forEach((value) => {
+                  if (t.isImportDefaultSpecifier(value) && t.isIdentifier(value.local, { name: 'ReactDOM'})) {
+                    importReactDOM = true;
+                  }
+                });
+                if (!importReactDOM) {
+                  item.specifiers.push(t.importDefaultSpecifier(t.identifier('ReactDOM')));
                 }
               }
               lastImportIndex = index;
@@ -72,7 +85,14 @@ export default (api, { entryList }) => {
               [t.importSpecifier(t.identifier('isInIcestark'), t.identifier('isInIcestark'))],
               t.stringLiteral('@ice/stark-app'),
             );
-            body.splice(lastImportIndex + 1, 0, starkappImport);
+            lastImportIndex += 1;
+            body.splice(lastImportIndex, 0, starkappImport);
+          }
+
+          // import ReactDOM from 'react-dom';
+          if (!reactdomStatement) {
+            lastImportIndex += 1;
+            body.splice(lastImportIndex, 0, t.importDeclaration([t.importDefaultSpecifier(t.identifier('ReactDOM'))], t.stringLiteral('react-dom')));
           }
         }
       },
