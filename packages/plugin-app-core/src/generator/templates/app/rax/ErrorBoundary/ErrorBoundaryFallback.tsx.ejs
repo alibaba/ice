@@ -5,7 +5,7 @@ interface IProps {
   error: Error;
 }
 
-const toTitle = (error: Error, componentStack: string): string => {
+const toTitle = (error: Error): string => {
   return `${error.toString()}`;
 };
 

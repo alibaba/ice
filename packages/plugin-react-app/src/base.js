@@ -115,7 +115,7 @@ module.exports = (api, { isMiniapp, target }) => {
   config.module.rule('appJSON')
     .type('javascript/auto')
     .test(/app\.json$/)
-    .use('babel')
+    .use('babel-loader')
     .loader(require.resolve('babel-loader'))
     .options(babelConfig)
     .end()

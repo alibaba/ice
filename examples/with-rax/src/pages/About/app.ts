@@ -1,4 +1,5 @@
 import { runApp } from 'rax-app';
+import staticConfig from './app.json';
 
 runApp({
   app: {
@@ -7,9 +8,12 @@ runApp({
     },
     onHide() {
       console.log('app hide...');
+    },
+    getInitialData: async () => {
+      return {
+        a: 1,
+        b: 2
+      };
     }
-  },
-  router: {
-    basename: '/home'
   }
-});
+}, staticConfig);

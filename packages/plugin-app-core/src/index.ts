@@ -3,7 +3,6 @@ import * as path from 'path';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
 import { TEMP_PATH } from './constant';
-import getSourceDir from './utils/getSourceDir';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
 import getBuildConfig from './utils/getBuildConfig';
@@ -65,8 +64,7 @@ function initGenerator(api, options) {
   const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
-  const srcDir = getSourceDir(userConfig.entry);
-  
+
   return new Generator({
     rootDir,
     targetDir: getValue(TEMP_PATH),
@@ -81,8 +79,7 @@ function initGenerator(api, options) {
       runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
-    log,
-    srcDir
+    log
   });
 }
 
@@ -121,6 +118,6 @@ function checkTargets(targets) {
 
 function matchTargets(targets) {
   return targets.every(target => {
-    return ['web', 'miniapp', 'wechat-miniprogram'].includes(target);
+    return ['web', 'miniapp', 'wechat-miniprogram', 'weex', 'kraken', 'bytedance-microapp', 'quickapp'].includes(target);
   });
 }
