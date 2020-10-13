@@ -283,3 +283,27 @@ require('./index.scss');
 ```
 
 项目中我们通过内置插件会自动引入该 style.js，如果没有用 ICE 的工程工具则需要手动引入对应的 style.js 文件。
+
+### 支持大包模式展示文档
+
+> 版本要求 `build-plugin-component` 1.0.0+
+
+#### 目录结构
+
+```
+.
+├── README.md
+├── src/                # 组件源码
+│
+|
+├── demo/               # demo 目录
+│   ├── ComponentA      # 大包中 A 组件 demo
+│   │   ├── a.md
+│   │   └── b.md
+│   └── ComponentB      # 大包中 B 组件 demo
+│       ├── a.md
+│       └── b.md
+└── package.json
+```
+
+大包模式展示文档将增加侧边栏展示
