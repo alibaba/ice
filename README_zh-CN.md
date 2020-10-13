@@ -95,7 +95,7 @@ export default HomePage
 配置你的应用信息如路由，以及其他更多的配置项在 `src/app.js` 文件，但它是可选的，内容如下：
 
 ```js
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 
 const appConfig = {
   router: {
@@ -105,7 +105,7 @@ const appConfig = {
   // more...
 }
 
-createApp(appConfig)
+runApp(appConfig)
 ```
 
 最后，运行 `npm run start` 启动项目，启动完成后会自动打开浏览器访问 [http://localhost:3333](http://localhost:3333) .

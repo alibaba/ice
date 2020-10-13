@@ -30,7 +30,7 @@ icejs 支持服务端渲染（即 SSR）能力，开发者可以按需一键开�
 在 `src/app.ts` 中可通过 `getInitialData` 获取全局数据：
 
 ```diff
-import { createApp, request } from 'ice';
+import { runApp, request } from 'ice';
 
 const appConfig = {
 +  app: {
@@ -41,7 +41,7 @@ const appConfig = {
 +  },
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 开启了 SSR 的行为说明：
@@ -56,7 +56,7 @@ createApp(appConfig);
 定义完全局初始数据后，接下来需要在业务代码中使用这些数据，应用级的 `initialData` 通常通过全局 store 的 `initialStates` 来使用：
 
 ```diff
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   app: {
@@ -71,7 +71,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 > 目前仅支持通过 store 的 `initialStates` 来使用消费 `initalData`，如果需要在其它业务代码中直接消费，可以先将需求反馈给 ICE 团队

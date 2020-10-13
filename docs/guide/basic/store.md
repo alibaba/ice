@@ -384,7 +384,7 @@ export default store.withModel('todos')(TodoList);
 ## 配置参数
 
 ```ts
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   store: {
@@ -399,7 +399,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ## 版本变更说明

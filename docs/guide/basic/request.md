@@ -337,7 +337,7 @@ const { data, error, loading, request } = useRequest((id) => ({
 在实际项目中通常需要对请求进行全局统一的封装，例如配置请求的 baseURL、统一 header、拦截请求和响应等等，这时只需要在应用的的 appConfig 中进行配置即可。
 
 ```js
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   request: {
@@ -380,7 +380,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ### 多个请求配置
@@ -388,7 +388,7 @@ createApp(appConfig);
 在某些复杂场景的应用中，我们也可以配置多个请求，每个配置请求都是单一的实例对象。
 
 ```ts
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   request: [
@@ -405,7 +405,7 @@ const appConfig = {
   ]
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 使用示例：
@@ -503,7 +503,7 @@ export default {
 在 `src/app.ts` 中配置 `request.baseURL`:
 
 ```js
-import { createApp, config} from 'ice';
+import { runApp, config} from 'ice';
 
 const appConfig = {
   request: {
@@ -511,5 +511,5 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```

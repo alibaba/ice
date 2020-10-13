@@ -5,9 +5,11 @@ order: 12
 
 ## 基础
 
-### createApp
+### runApp
 
 用于创建渲染整个应用。[详见](/docs/guide/basic/app)
+
+> 说明：ice.js@1.6.3 及以下版本，框架通过 `createApp` 创建渲染整个应用；但在 ice.js@1.7.0 及以上版本，更新为 `runApp`，更加语义化。
 
 ### config
 
@@ -331,13 +333,13 @@ const history = createMemoryHistory();
 appConfig 的类型定义。
 
 ```diff
-+import { createApp, IAppConfig } from 'ice';
++import { runApp, IAppConfig } from 'ice';
 
 +const appConfig: IAppConfig {
 
 }
 
-createApp();
+runApp();
 ```
 
 ### IRouterConfig

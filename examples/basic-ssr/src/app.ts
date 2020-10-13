@@ -1,4 +1,4 @@
-import { createApp, IAppConfig, config, request } from 'ice';
+import { runApp, IAppConfig, config, request } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -20,4 +20,4 @@ const appConfig: IAppConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);

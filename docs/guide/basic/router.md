@@ -283,7 +283,7 @@ export default [
 在 `src/app.ts` 中，我们可以配置路由的类型和基础路径等路由信息，具体配置如下：
 
 ```jsx
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   router: {
@@ -296,7 +296,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 **options**:
@@ -365,7 +365,7 @@ createApp(appConfig);
 本地开发时，只需要在 `src/app.ts` 中增加以下配置即可：
 
 ```diff
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   router: {
@@ -373,7 +373,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 线上运行时需要服务端支持，否则会出现刷新 404 问题，具体方案请参考社区文档：

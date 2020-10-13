@@ -58,7 +58,7 @@ export default [{ path: '/', component: Dashboard }];
 
 ```ts
 // src/pages/Dashboard/app.js
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 + import routes from './routes';
 
 const appConfig = {
@@ -67,7 +67,7 @@ const appConfig = {
 + }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ## 状态管理

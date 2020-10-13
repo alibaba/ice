@@ -43,7 +43,7 @@ export default {
 在 `src/app.ts` 中将配置的 loglevel 传递给 logger：
 
 ```js
-import { createApp, config } from 'ice';
+import { runApp, config } from 'ice';
 
 // 用于配置
 const appConfig = {
@@ -52,5 +52,5 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
