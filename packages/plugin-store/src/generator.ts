@@ -273,7 +273,7 @@ export default class Generator {
       // generate .ice/pages/${pageName}/index.ts	
       this.renderPageIndex(params);
 
-      // generate .ice/pages/${pageName}/${pageName}.tsx
+      // generate .ice/pages/${pageName}/Page.tsx
       this.renderPageComponent(params);
 
       // generate .ice/pages/${pageName}/Layout.tsx
