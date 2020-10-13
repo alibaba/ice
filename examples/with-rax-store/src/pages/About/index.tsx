@@ -1,8 +1,8 @@
 import { createElement, PureComponent } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
-import { withPageLifeCycle, store as appStore } from 'rax-app';
-
+import { withPageLifeCycle } from 'rax-app';
+import appStore from '@/store';
 import './index.css';
 
 const { withModel } = appStore;
