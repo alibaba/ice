@@ -177,7 +177,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
       const mapList = Object.keys(componentMap);
       if (mapList.length > 0) {
         mapList.forEach(orgName => {
-          mixBizCom[orgName] = bizComponent[orgName];
+          mixBizCom[orgName] = componentMap[orgName];
         })
       }
 
