@@ -19,7 +19,7 @@ function normalizeEntry(entry, preparedChunks) {
 }
 
 module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {}) => {
-  const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, style = true, uniteNextLib, externalNext, importOptions = {}, crossend = {} } = plugionOptions;
+  const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, style = true, uniteNextLib, externalNext, importOptions = {}, componentOptions = {} } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
@@ -159,21 +159,24 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
 
     const crossendBabelLoader = [];
 
-    if ('crossend' in plugionOptions) {
-      const { bizComponent = [], customPath = '/mobile' } = crossend;
+    if ('componentOptions' in plugionOptions) {
+      const { bizComponent = [], customPath = '', componentMap = {} } = componentOptions;
       const mixBizCom = {};
 
       // bizComponent: ['@alifd/anchor', '@alifd/pro-components'],
       if (Array.isArray(bizComponent)) {
         bizComponent.map(com => {
-          mixBizCom[com] = `${com}/${nextLibDir}${customPath}`;
+          mixBizCom[com] = `${com}${customPath}`;
         });
-      } else if (typeof bizComponent === 'object') {
-        // bizComponent: {
-        //  '@alifd/pro-components': '@alifd/pro-components/lib/mobile',
-        //  '@alifd/pro-components-2': '@alifd/pro-components-2-mobile'
-        // }
-        Object.keys(bizComponent).forEach(orgName => {
+      }
+
+      // componentMap: {
+      //  '@alifd/pro-components': '@alifd/pro-components/lib/mobile',
+      //  '@alifd/pro-components-2': '@alifd/pro-components-2-mobile'
+      // }
+      const mapList = Object.keys(componentMap);
+      if (mapList.length > 0) {
+        mapList.forEach(orgName => {
           mixBizCom[orgName] = bizComponent[orgName];
         })
       }
