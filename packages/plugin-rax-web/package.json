@@ -1,0 +1,30 @@
+{
+  "name": "build-plugin-rax-web",
+  "version": "1.0.0-1",
+  "description": "rax web app plugin",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "plugin",
+    "rax"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "@alib/build-scripts": "^0.1.0",
+    "rax": "^1.0.0"
+  },
+  "dependencies": {
+    "build-mpa-config": "^1.0.0-0",
+    "error-stack-tracey": "^0.1.3",
+    "fs-extra": "^9.0.1",
+    "klaw-sync": "^6.0.0",
+    "qs": "^6.9.4",
+    "rax-compile-config": "^0.2.16",
+    "rax-server-renderer": "^1.2.0",
+    "webpack": "^4.44.2",
+    "webpack-sources": "^2.0.0"
+  }
+}

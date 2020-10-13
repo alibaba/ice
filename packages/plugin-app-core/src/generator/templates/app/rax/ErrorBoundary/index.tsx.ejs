@@ -46,15 +46,13 @@ class ErrorBoundary extends Component<IProps, IState> {
     const { error } = this.state;
     // render fallback UI if there is error
     if (error !== null && typeof Fallback === 'function') {
-      return (
-        <Fallback
-          error={error}
-        />
-      );
+      return <Fallback error={error} />
     }
 
     return children || null;
   }
 }
+
+export { ErrorBoundary };
 
 export default ErrorBoundary;

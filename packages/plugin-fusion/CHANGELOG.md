@@ -1,7 +1,8 @@
 # Changelog
 
 ## 0.1.8
-- [feat] support `crossend` to load h5 component in mobile mode
+- [feat] support `componentOptions` to load h5 component in mobile mode
+- [feat] support option `px2vwOptions` to pass options to postcssPlugin
 
 ## 0.1.7
 

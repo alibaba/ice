@@ -19,7 +19,11 @@ function normalizeEntry(entry, preparedChunks) {
 }
 
 module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {}) => {
+<<<<<<< HEAD
   const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, style = true, uniteNextLib, externalNext, importOptions = {}, componentOptions = {} } = plugionOptions;
+=======
+  const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, px2vwOptions = {}, style = true, uniteNextLib, externalNext, importOptions = {} } = plugionOptions;
+>>>>>>> c80cd85694c25b7ccf5ee8ce14dad4f6aee73dce
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
@@ -101,7 +105,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
                 ...plugins,
                 // eslint-disable-next-line
                 require('postcss-plugin-rpx2vw'),
-                require('./postcssPlugins/postcssPluginPx2vw'),
+                require('./postcssPlugins/postcssPluginPx2vw')(px2vwOptions),
               ],
             };
           });

@@ -44,7 +44,7 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, srcDir}) {
+  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log}) {
     this.rootDir = rootDir;
     this.templatesDir = templatesDir;
     this.appTemplateDir = appTemplateDir;

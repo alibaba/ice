@@ -8,16 +8,16 @@ export default {
   },
 
   reducers: {
-    increment (prevState) {
+    increment(prevState) {
       return { count: prevState.count + 1 };
     },
-    decrement (prevState) {
+    decrement(prevState) {
       return { count: prevState.count - 1 };
     }
   },
 
   effects: (dispatch: IRootDispatch) => ({
-    async decrementAsync () {
+    async decrementAsync() {
       await delay(10);
       dispatch.counter.decrement();
     },
