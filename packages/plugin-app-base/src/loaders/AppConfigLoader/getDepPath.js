@@ -9,6 +9,6 @@ const { join } = require('path');
 module.exports = function getDepPath(path, rootContext = '') {
   const splitPath = path.split('/');
   splitPath[splitPath.length - 1] = 'Page';
-  const newPath = splitPath.join('/');
-  return join(rootContext, '.rax', newPath);
+  const tempPagePath = splitPath.join('/');
+  return join(rootContext, '.rax', tempPagePath);
 };
