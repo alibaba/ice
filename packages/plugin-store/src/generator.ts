@@ -162,7 +162,7 @@ export default class Generator {
 
   private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.tsx');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Page.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
     const pageComponentName = `Page${pageName}`;
@@ -204,6 +204,21 @@ export default class Generator {
     }
 
     this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
+  }
+
+  private renderPageIndex(params) {
+    const { pageName, existedStoreFile, pageModelFile, pageModelsDir } = params;
+    const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
+
+    const existsModel = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
+
+    const pageComponentRenderData = {
+      pageImports: (existsModel && !existedStoreFile) ? 'import store from \'./store\'' : '',
+      pageExports: (existsModel && !existedStoreFile) ? ' store ' : ''
+    };
+
+    this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
   private renderFile(templatePath: string, targetPath: string, extraData = {}) {
@@ -250,15 +265,18 @@ export default class Generator {
       const pageStoreFile = this.applyMethod('formatPath', path.join(pageNameDir, `store.${this.projectType}`));
       const existedStoreFile = fse.pathExistsSync(pageStoreFile);
 
-      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile };
+      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile, existsAppStoreFile };
 
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);
 
-      // generate .ice/pages/${pageName}/index.tsx
-      this.renderPageComponent(params);
+      // generate .ice/pages/${pageName}/index.ts	
+      this.renderPageIndex(params);
 
       // generate .ice/pages/${pageName}/${pageName}.tsx
+      this.renderPageComponent(params);
+
+      // generate .ice/pages/${pageName}/Layout.tsx
       this.renderPageLayout(params);
     });
   }

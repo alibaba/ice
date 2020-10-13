@@ -7,5 +7,8 @@ const { join } = require('path');
  */
 // Todo: Will support ice later
 module.exports = function getDepPath(path, rootContext = '') {
-  return join(rootContext, '.rax', path);
+  const splitPath = path.split('/');
+  splitPath[splitPath.length - 1] = 'Page';
+  const newPath = splitPath.join('/');
+  return join(rootContext, '.rax', newPath);
 };
