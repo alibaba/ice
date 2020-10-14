@@ -1,14 +1,31 @@
+import * as queryString from 'query-string';
 import logger from '$ice/logger';
 
 const module = ({ appConfig }) => {
-  if (appConfig.logger && appConfig.logger.level) {
-    logger.setLevel(appConfig.logger.level);
-  } else {
-    const LOCALHOST_URL_REGEXP = /^https?:\/\/\w+(\.\w+)*(:[0-9]+)/;
-    const IP_URL_REGEXP = /^https?:\/\/(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]){2}/;
-    const DEFAULE_LEVEL = LOCALHOST_URL_REGEXP.test(location.origin) || IP_URL_REGEXP.test(location.origin) ? 'DEBUG' : 'WARN';
-    logger.setLevel(DEFAULE_LEVEL);
+  const { logger: userLogger = {} } = appConfig;
+
+  if (userLogger.level) {
+    logger.setLevel(userLogger.level);
+  } else if (userLogger.smartLoglevel) {
+    const searchParams: any = getSearchParams();
+    if (searchParams.logLevel) {
+      logger.setLevel(searchParams.logLevel);
+    }
+  } else if (process.env.NODE_ENV === 'development') {
+    const DEV_DEFAULE_LEVEL = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
+    logger.setLevel(DEV_DEFAULE_LEVEL);
   }
 };
+
+function getSearchParams() {
+  let searchParams = {};
+  if (location.hash) {
+    searchParams = queryString.parse(location.hash.substring(2));
+  } else {
+    searchParams = queryString.parse(location.search);
+  }
+  console.log('searchParams:', searchParams);
+  return searchParams;
+}
 
 export default module;
