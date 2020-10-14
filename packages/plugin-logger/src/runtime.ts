@@ -8,8 +8,8 @@ const module = ({ appConfig }) => {
     logger.setLevel(userLogger.level);
   } else if (userLogger.smartLoglevel) {
     const searchParams: any = getSearchParams();
-    if (searchParams.logLevel) {
-      logger.setLevel(searchParams.logLevel);
+    if (searchParams.loglevel) {
+      logger.setLevel(searchParams.loglevel);
     }
   } else if (process.env.NODE_ENV === 'development') {
     const DEV_DEFAULE_LEVEL = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
