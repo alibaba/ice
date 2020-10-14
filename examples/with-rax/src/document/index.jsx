@@ -1,7 +1,7 @@
 import { createElement } from 'rax';
-import { Root, Style, Script } from 'rax-document';
+import { Root, Style, Script, Data } from 'rax-document';
 
-function Document() {
+function Document(props) {
   return (
     <html>
       <head>
@@ -13,6 +13,7 @@ function Document() {
       <body>
         {/* root container */}
         <Root />
+        <Data />
         <Script />
       </body>
     </html>

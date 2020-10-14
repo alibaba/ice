@@ -45,6 +45,7 @@ const activatePageComponent = (route, { createElement }) => {
     });
 };
 
+// eslint-disable-next-line
 const renderAlivePages = (routes, { alivePages, currentPage, isAlivePage, createElement }) => {
   if (alivePages.length > 0) {
     return createElement(
@@ -109,6 +110,7 @@ const createNavigation = (api) => {
         // @ts-ignore
         _updatePageTrigger(Date.now());
       }
+    // eslint-disable-next-line
     }, []);
 
     // Props to page component

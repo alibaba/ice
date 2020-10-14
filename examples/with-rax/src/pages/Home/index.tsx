@@ -12,6 +12,7 @@ export default function Home(props) {
   const searchParams = getSearchParams();
 
   console.log('home search params =>', searchParams);
+  console.log('home page props =>', props);
 
   usePageShow(() => {
     console.log('home show...');
@@ -24,9 +25,18 @@ export default function Home(props) {
   return (
     <View className="home">
       <Logo />
-      <Text className="title">Welcome to Your Rax App!!!</Text>
-      <Text className="info">More information about Rax</Text>
+      <Text className="title">{props?.data?.title || 'Welcome to Your Rax App'}</Text>
+      <Text className="info">{props?.data?.info || 'More information about Rax'}</Text>
       <Text className="info" onClick={() => history.push('/about?id=1')}>Go About</Text>
     </View>
   );
 }
+
+Home.getInitialProps = async () => {
+  return {
+    data: {
+      title: 'Welcome to Your Rax App with SSR',
+      info: 'More information about Rax'
+    }
+  };
+};

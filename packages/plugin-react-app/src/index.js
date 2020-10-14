@@ -27,9 +27,14 @@ module.exports = (api) => {
       entryHtml = `${pageName}.html`;
     } else {
       onGetWebpackConfig(config => {
-        const entryNames = Object.keys(config.entryPoints.entries());
-        const pageName = entryNames[0].toLocaleLowerCase();
-        entryHtml = `${pageName}.html`;
+        const defaultEntryNames = Object.keys(config.entryPoints.entries());
+        let pageName = '';
+        if (typeof mpa.openPage === 'string') {
+          pageName = mpa.openPage.split('.html')[0];
+        } else {
+          pageName = defaultEntryNames[0];
+        }
+        entryHtml = pageName ? `${pageName.toLocaleLowerCase()}.html` : '';
       });
     }
   }
