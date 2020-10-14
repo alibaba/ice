@@ -5,16 +5,17 @@ const module = ({ appConfig }) => {
   const { logger: userLogger = {} } = appConfig;
 
   if (userLogger.level) {
-    logger.setLevel(userLogger.level);
-  } else if (userLogger.smartLoglevel) {
+    return logger.setLevel(userLogger.level);
+  }
+
+  let loglevel = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
+  if (userLogger.smartLoglevel) {
     const searchParams: any = getSearchParams();
     if (searchParams.loglevel) {
-      logger.setLevel(searchParams.loglevel);
+      loglevel = searchParams.loglevel;
     }
-  } else if (process.env.NODE_ENV === 'development') {
-    const DEV_DEFAULE_LEVEL = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
-    logger.setLevel(DEV_DEFAULE_LEVEL);
   }
+  logger.setLevel(loglevel);
 };
 
 function getSearchParams() {
