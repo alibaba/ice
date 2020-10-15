@@ -11,7 +11,7 @@ const wrapperComponentFn = (authConfig) => (PageComponent) => {
     if(pageConfigAuth && !Array.isArray(pageConfigAuth)) {
       throw new Error('pageConfig.auth must be an array');
     }
-    const hasAuth = Array.isArray(pageConfigAuth)
+    const hasAuth = Array.isArray(pageConfigAuth) && pageConfigAuth.length
       ? Object.keys(authState).filter(item => pageConfigAuth.includes(item) ? authState[item] : false).length
       : true;
     if (!hasAuth) {
