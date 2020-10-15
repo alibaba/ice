@@ -83,6 +83,13 @@ registerMicroApps([
 - 类型：`string`
 - 默认值：`-`
 
+#### umd
+
+标识微应用是否是一个标准的 UMD 微应用
+
+- 类型：`boolean`
+- 默认值：`false`
+
 #### entryContent
 
 直接配置微应用的 html 内容。当渲染微应用时，会 `append` 至动态创建的节点，选填。**entry > entryContent > url**

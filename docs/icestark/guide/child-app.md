@@ -130,3 +130,8 @@ export function unmount() {
   ReactDOM.unmountComponentAtNode(document.getElementById('icestarkNode'));
 }
 ```
+
+生命周期函数接收的 props 包含两项内容：
+
+- container：用来标识渲染节点
+- customProps：由框架应用传递给微应用的自定义属性
