@@ -4963,14 +4963,6 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-build-mpa-config@1.0.0-2:
-  version "1.0.0-2"
-  resolved "https://registry.npm.taobao.org/build-mpa-config/download/build-mpa-config-1.0.0-2.tgz#ba6b5fe246c522d44b51f0512929698275099a30"
-  integrity sha1-umtf4kbFItRLUfBRKSlpgnUJmjA=
-  dependencies:
-    fs-extra "^8.1.0"
-    loader-utils "^2.0.0"
-
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
@@ -18207,20 +18199,6 @@ webpack-dev-middleware@^3.7.2:
     mkdirp "^0.5.1"
     range-parser "^1.2.1"
     webpack-log "^2.0.0"
-
-webpack-dev-mock@1.0.1-0:
-  version "1.0.1-0"
-  resolved "https://registry.npm.taobao.org/webpack-dev-mock/download/webpack-dev-mock-1.0.1-0.tgz#2e778d963bfcc4f40ce0ebb02635b3f52de56b7f"
-  integrity sha1-LneNljv8xPQM4OuwJjWz9S3la38=
-  dependencies:
-    body-parser "^1.18.3"
-    chalk "^2.4.1"
-    chokidar "^2.0.4"
-    debug "^3.1.0"
-    express-http-proxy "^1.2.0"
-    glob "^7.1.4"
-    multer "^1.4.2"
-    path-to-regexp "^6.0.0"
 
 webpack-dev-server@^3.7.2:
   version "3.11.0"
