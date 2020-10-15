@@ -23,8 +23,10 @@ module.exports = function(api) {
   const { targets} = userConfig;
   let webEntryKeys = [];
   let weexEntryKeys = [];
+  let krakenEntryKeys = [];
   let webMpa = false;
   let weexMpa = false;
+  let krakenMpa = false;
   const getWebpackEntry = (configs, configName) => {
     const taskConfig = configs.find((webpackConfig) => webpackConfig.name === configName);
     if (!taskConfig || !taskConfig.entry) {
@@ -35,8 +37,10 @@ module.exports = function(api) {
   onHook('before.start.run', ({ config }) => {
     webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
     weexEntryKeys = Object.keys(getWebpackEntry(config, 'weex'));
+    krakenEntryKeys = Object.keys(getWebpackEntry(config, 'kraken'));
     webMpa = userConfig.web && userConfig.web.mpa;
     weexMpa = userConfig.weex && userConfig.weex.mpa;
+    krakenMpa = userConfig.kraken && userConfig.kraken.mpa;
     try {
       debug(config);
     // eslint-disable-next-line no-empty
@@ -121,13 +125,19 @@ module.exports = function(api) {
       }
 
       if (targets.includes(KRAKEN)) {
-        const krakenURL = `${urls.localUrlForBrowser  }kraken/index.js`;
         console.log(highlightPrint('  [Kraken] Development server at: '));
-        console.log(`  ${chalk.underline.white(krakenURL)}`);
-        console.log();
+        krakenEntryKeys.forEach((entryKey) => {
+          const krakenURL = `${urls.lanUrlForBrowser}kraken/${krakenMpa ? entryKey : 'index'}.js`;
+          console.log(`  ${chalk.underline.white(krakenURL)}`);
+          console.log();
+        });
+
         console.log(highlightPrint('  [Kraken] Run Kraken Playground App: '));
-        console.log(`  ${chalk.underline.white(`kraken -u ${krakenURL}`)}`);
-        console.log();
+        krakenEntryKeys.forEach((entryKey) => {
+          const krakenURL = `${urls.lanUrlForBrowser}kraken/${krakenMpa ? entryKey : 'index'}.js`;
+          console.log(`  ${chalk.underline.white(`kraken -u ${krakenURL}`)}`);
+          console.log();
+        });
       }
 
       if (targets.includes(WEEX)) {

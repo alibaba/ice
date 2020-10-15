@@ -8,8 +8,7 @@ function getEntries(rootDir: string) {
       .filter(page => !/^[._]/.test(page))
       .map(page => path.parse(page).name)
     : [];
-  
-  
+
   const entries = pages.map((pageName) => {
     const entryName = pageName.toLocaleLowerCase();
     const pageEntry = getPageEntry(pagesPath, pageName);

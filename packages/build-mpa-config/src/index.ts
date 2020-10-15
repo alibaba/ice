@@ -8,12 +8,14 @@ interface ConfigOptions {
   };
   type: string;
   framework: string;
+
+  entries?: [];
 }
 
 const setMPAConfig = (config, options: ConfigOptions) => {
-  const { context, type = 'web', framework = 'rax' } = options || {};
+  const { context, type = 'web', framework = 'rax', entries } = options || {};
   const { rootDir, commandArgs } = context;
-  let mpaEntries = getEntries(rootDir);
+  let mpaEntries = entries || getEntries(rootDir);
   if (commandArgs.mpaEntry) {
     const arr = commandArgs.mpaEntry.split(',');
     mpaEntries = mpaEntries.filter((entry) => {

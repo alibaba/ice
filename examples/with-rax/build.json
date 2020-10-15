@@ -1,9 +1,11 @@
 {
+  "plugins": [],
+  "targets": ["web", "weex"],
+  "inlineStyle": true,
   "web": {
-    "ssr": true,
     "mpa": true
   },
-  "plugins": [],
-  "targets": ["web", "miniapp"],
-  "inlineStyle": true
+  "weex": {
+    "mpa": true
+  }
 }

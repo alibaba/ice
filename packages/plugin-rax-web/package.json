@@ -24,7 +24,8 @@
     "qs": "^6.9.4",
     "rax-compile-config": "^0.2.16",
     "rax-server-renderer": "^1.2.0",
-    "webpack": "^4.44.2",
-    "webpack-sources": "^2.0.0"
+    "webpack-sources": "^2.0.0",
+    "webpack": "^4.0.0",
+    "build-helpers": "^1.0.0"
   }
 }

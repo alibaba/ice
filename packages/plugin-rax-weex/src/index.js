@@ -1,5 +1,6 @@
 const path = require('path');
 const setMPAConfig = require('build-mpa-config');
+const { getEntries } = require('build-helpers');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');
@@ -35,7 +36,7 @@ module.exports = (api) => {
     let publicUrl = JSON.stringify('');
     // set mpa config
     if (weex.mpa) {
-      setMPAConfig.default(config, { context, type: 'weex' });
+      setMPAConfig.default(config, { context, type: 'weex', entries: getEntries(api, target) });
     }
 
     let outputPath;

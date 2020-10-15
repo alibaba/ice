@@ -1,4 +1,6 @@
 const path = require('path');
+const setMPAConfig = require('build-mpa-config');
+const { getEntries } = require('build-helpers');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
@@ -14,6 +16,7 @@ module.exports = (api) => {
       name: 'Kraken'
     }
   });
+  chainConfig.name(target);
   chainConfig.taskName = target;
 
   setEntry(chainConfig, context);
@@ -28,6 +31,7 @@ module.exports = (api) => {
   onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
     const { outputDir = 'build' } = userConfig;
+    const krakenConfig = userConfig.kraken || {};
     let outputPath;
     if (command === 'start') {
       // Set output dir
@@ -62,6 +66,10 @@ module.exports = (api) => {
       config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
         return [copyList.concat(needCopyDirs)];
       });
+    }
+
+    if (krakenConfig.mpa) {
+      setMPAConfig.default(config, { context, type: 'kraken', entries: getEntries(api, target) });
     }
   });
 };

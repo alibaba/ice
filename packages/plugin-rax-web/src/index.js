@@ -1,5 +1,6 @@
 const path = require('path');
 const setMPAConfig = require('build-mpa-config');
+const { getEntries } = require('build-helpers');
 const setDev = require('./setDev');
 const setEntry = require('./setEntry');
 const DocumentPlugin = require('./DocumentPlugin');
@@ -86,7 +87,7 @@ module.exports = (api) => {
       },
     ]);
     if (webConfig.mpa) {
-      setMPAConfig.default(config, { context, type: 'web' });
+      setMPAConfig.default(config, { context, type: 'web', entries: getEntries(api, target) });
     }
   });
 };
