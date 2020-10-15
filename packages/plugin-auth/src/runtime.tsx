@@ -15,7 +15,13 @@ const wrapperComponentFn = (authConfig) => (PageComponent) => {
       ? Object.keys(authState).filter(item => pageConfigAuth.includes(item) ? authState[item] : false).length
       : true;
     if (!hasAuth) {
-      return authConfig.NoAuthFallback ? authConfig.NoAuthFallback : null;
+      if (authConfig.NoAuthFallback) {
+        if (typeof authConfig.NoAuthFallback === 'function') {
+          return <authConfig.NoAuthFallback />;
+        }
+        return authConfig.NoAuthFallback;
+      }
+      return null;
     }
     return <PageComponent {...rest} />;
   };
