@@ -11,8 +11,8 @@ const module = ({ appConfig }) => {
   let loglevel = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
   if (userLogger.smartLoglevel) {
     const searchParams: any = getSearchParams();
-    if (searchParams.loglevel) {
-      loglevel = searchParams.loglevel;
+    if (searchParams.__loglevel__) {
+      loglevel = searchParams.__loglevel__;
     }
   }
   logger.setLevel(loglevel);

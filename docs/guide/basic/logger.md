@@ -29,7 +29,7 @@ logger.info('== info ==');
 
 ### smartLoglevel
 
-当开启 `smartLoglevel: true` 时，可通过在当前地址栏的 url 加上 `loglevel` 来动态设置日志级别，可以非常方便的进行调试。
+当开启 `smartLoglevel: true` 时，可通过在当前地址栏的 url 加上 `__loglevel__` 来动态设置日志级别，可以非常方便的进行调试。
 
 app.js 配置如下:
 
@@ -46,17 +46,17 @@ const appConfig = {
 runApp(appConfig);
 ```
 
-设置 loglevel 为 warn：
+设置 loglevel 为 info
 
 ```md
-http://localhost:3333/#/?loglevel=warn
+http://localhost:3333/#/?__loglevel__=info
 
 or
 
-https://ice.work/?loglevel=info
+https://ice.work/?__loglevel__=info
 ```
 
-当开启 `smartLoglevel: true` 但并未在地址栏的 url 上添加 loglevel 参数时，则默认值在开发环境下设置为 debug ，在生产环境下设置为 warn。
+当开启 `smartLoglevel: true` 但并未在地址栏的 url 上添加 `__loglevel__` 参数时，则默认值在开发环境下设置为 debug ，在生产环境下设置为 warn。
 
 ### level
 
