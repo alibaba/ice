@@ -1,11 +1,4 @@
 {
-  "plugins": [],
-  "targets": ["web", "weex"],
-  "inlineStyle": true,
-  "web": {
-    "mpa": true
-  },
-  "weex": {
-    "mpa": true
-  }
+  "targets": ["web", "weex", "kraken"],
+  "inlineStyle": true
 }

@@ -32,11 +32,17 @@ module.exports = (api) => {
     const { userConfig, rootDir, command } = context;
     const { outputDir = 'build' } = userConfig;
     const krakenConfig = userConfig.kraken || {};
+
+    if (krakenConfig.mpa) {
+      setMPAConfig.default(config, { context, type: 'kraken', entries: getEntries(api, target) });
+    }
+
     let outputPath;
     if (command === 'start') {
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir);
       config.output.filename(`${target}/[name].js`);
+      config.devServer.contentBase(outputPath);
       // Force disable HMR, kraken not support yet.
       config.devServer.inline(false);
       config.devServer.hot(false);
@@ -66,10 +72,6 @@ module.exports = (api) => {
       config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
         return [copyList.concat(needCopyDirs)];
       });
-    }
-
-    if (krakenConfig.mpa) {
-      setMPAConfig.default(config, { context, type: 'kraken', entries: getEntries(api, target) });
     }
   });
 };
