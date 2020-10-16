@@ -25,7 +25,6 @@ function getSearchParams() {
   } else {
     searchParams = queryString.parse(location.search);
   }
-  console.log('searchParams:', searchParams);
   return searchParams;
 }
 
