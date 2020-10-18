@@ -1,40 +1,11 @@
 ---
-title: 快速开始
+title: 使用 CLI 创建应用
 order: 3
 ---
 
 > 如果是阿里内部开发者，请参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/gsfp6h)，可直接打通内部流程。
 
-## 使用 Iceworks
-
-**安装 Iceworks**
-
-![安装](https://img.alicdn.com/tfs/TB1FWaiKKT2gK0jSZFvXXXnFXXa-960-600.gif)
-
-- 点击 VS Code 活动栏上的「插件市场图标」
-- 在侧边栏的搜索框上输入「Iceworks」
-- 点击侧边栏上出现的搜索结果中的「Iceworks 插件栏」
-- 在主窗口出现的页面上点击「安装」按钮
-
-**初始化项目**
-
-![创建](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
-
-- 点击 VS Code 活动栏上的「Iceworks 图标」
-- 点击侧边栏上的「创建新应用」按钮
-- 在主窗口出现的页面上根据引导创建项目
-
-**启动项目**
-
-![启动](https://img.alicdn.com/tfs/TB1jDa9L7T2gK0jSZFkXXcIQFXa-960-600.gif)
-
-- 点击 VS Code 活动栏上的「Iceworks 图标」
-- 鼠标移动到 「NPM 脚本」下的「start 项」
-- 点击 start 项右边的「启动图标」
-
-## 使用 CLI
-
-**环境准备**
+## 环境准备
 
 首先需要安装 [node](https://nodejs.org)，并确保 node 版本是 10.x 版本或以上。推荐使用 [nvm](https://github.com/nvm-sh/nvm) 来管理 node 版本，windows 用户可以参考 [nvm-windows](https://github.com/coreybutler/nvm-windows) 进行安装。下面以在 mac 下安装举例：
 
@@ -81,7 +52,7 @@ $ nrm ls
 $ nrm use taobao
 ```
 
-**初始化项目**
+## 初始化项目
 
 可以选择使用 npm 或者 yarn 工具进行项目初始化，如下输入项目名即可：
 
@@ -105,7 +76,7 @@ $ npm init ice <projectName> --template <template> # 指定模板
 
 > 可从 [模板库](https://ice.work/scaffold) 选择模板 `<template>`
 
-**选择模板**
+## 选择模板
 
 可以根据实际情况选择 TypeScript 和 JavaScript 模板，其中各包含一个轻量的 Lite 和功能完善的 Pro 模板：
 
@@ -132,7 +103,7 @@ Starts the development server.
 ✨  Done
 ```
 
-**启动项目**
+## 启动项目
 
 按照上面的提示，进入新建的项目安装依赖即可：
 
