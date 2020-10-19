@@ -3,7 +3,9 @@ title: 快速开始
 order: 3
 ---
 
-> 如果是阿里内部开发者，请参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/gsfp6h)，可直接打通内部流程。
+## 使用 DEF 创建
+
+如果是阿里内部开发者，请参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/gsfp6h)，可直接打通内部发布流程。
 
 ## 使用 Iceworks
 

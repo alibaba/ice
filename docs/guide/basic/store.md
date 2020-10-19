@@ -443,18 +443,16 @@ import { runApp } from '@/store';
 const appConfig = {
   store: {
     // 可选，初始化状态
-    initialStates: {};
-
-    // 已废弃
-    // 可选，获取初始状态，在 SSR 场景下会将 getInitialData 返回的数据作为入参
-    getInitialStates: (initialData) => {
-      return initialData;
-    };
+    initialStates: {}
   }
 };
 
 createApp(appConfig);
 ```
+
+> API `store.getInitialStates` 已废弃，推荐使用 `store.initialStates`
+
+> SSR 场景下 `initialData.initialStates` 会默认赋值给 `store.initialStates`
 
 ## 版本变更说明
 
