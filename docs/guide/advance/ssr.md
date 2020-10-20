@@ -185,12 +185,6 @@ export default {
 
 ```diff
 import { runApp,IAppConfig } from 'ice';
-+// 如果是调用 faas 函数的场景，需要设置下 faas 请求的 baseURL
-+import { defaults } from '@ali/midway-hooks/request';
-
-+if (process.env.__IS_SERVER__) {
-+  defaults.baseURL = config.baseURL;
-+}
 
 const appConfig: IAppConfig = {
 +  request: {

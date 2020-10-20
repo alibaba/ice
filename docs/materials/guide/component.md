@@ -86,7 +86,7 @@ order: 1
 
 本 demo 演示一行文字的用法。
 
-````jsx
+```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ExampleComponent from '@ali/example-component';
@@ -104,14 +104,14 @@ class App extends Component {
 ReactDOM.render((
   <App />
 ), mountNode);
-````
+```
 
 // 书写 demo 样式
-````css
+```css
 .ttt {
   background: red;
 }
-````
+```
 `````
 
 如果开发者希望在 js 或者 ts 文件中维护 Demo 中的代码，可以通过约定的组件引入外部的代码：
@@ -124,9 +124,9 @@ order: 1
 
 本 demo 演示一行文字的用法。
 
-````jsx
+```jsx
 <DemoCode src="path/to/code.js" />
-````
+```
 `````
 
 工程上将自动将路径中的源码获取，并展示在 Demo 预览页面中。通过上述的方式开发 Demo 可以享受编辑器带来的代码提示、语法高亮等便捷功能。
@@ -282,4 +282,4 @@ require('@icedesign/balloon-confirm/lib/style');
 require('./index.scss');
 ```
 
-项目中我们通过内置插件会自动引入该 style.js，如果没有用 ICE 的工程工具则需要手动引入对应的 style.js 文件。
+项目中我们通过内置插件会自动引入组件对应的 style.js，如果没有用 ICE 的工程工具则需要手动引入对应的 style.js 文件。

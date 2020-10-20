@@ -385,8 +385,7 @@ const model = {
   reducers: {},
   effects: (dispatch) => ({
 +   like(playload, rootState: IRootState) {
-
-    }
++    }
   })
 };
 ```
