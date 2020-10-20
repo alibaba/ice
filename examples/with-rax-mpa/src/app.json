@@ -1,0 +1,18 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "source": "pages/Home/index",
+      "window": {
+        "title": "home"
+      }
+    },
+    {
+      "path": "/about",
+      "source": "/pages/About/index"
+    }
+  ],
+  "window": {
+    "title": "Rax App"
+  }
+}

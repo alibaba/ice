@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
-import { getSearchParams, withPageLifeCycle, ErrorBoundary } from 'rax-app';
+import { getSearchParams, withPageLifeCycle } from 'rax-app';
 import BuggyCounter from '@/components/BuggyCounter';
 
 import './index.css';
