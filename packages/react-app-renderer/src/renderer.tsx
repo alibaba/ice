@@ -17,7 +17,7 @@ export function reactAppRendererWithSSR(context, options) {
 
 let __initialData__;
 
-export function setInitialData(initialData) {
+function setInitialData(initialData) {
   __initialData__ = initialData;
 }
 

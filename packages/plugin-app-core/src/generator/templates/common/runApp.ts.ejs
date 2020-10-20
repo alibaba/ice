@@ -4,7 +4,7 @@ import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
 
 <% if (isReact) {%>
-  import reactAppRenderer, { getInitialData, setInitialData } from 'react-app-renderer';
+  import reactAppRenderer, { getInitialData } from 'react-app-renderer';
   import { withRouter as defaultWithRouter } from 'react-router';
   import genWithSearchParams from './genWithSearchParams';
 <% } %>
@@ -96,7 +96,6 @@ export {
   useSearchParams,
   withSearchParams,
   getInitialData,
-  setInitialData,
 <% } %>
   // LifeCycles api
   usePageShow,

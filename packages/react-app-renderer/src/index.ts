@@ -1,4 +1,4 @@
-import { reactAppRenderer, reactAppRendererWithSSR, getInitialData, setInitialData } from './renderer';
+import { reactAppRenderer, reactAppRendererWithSSR, getInitialData } from './renderer';
 
-export { reactAppRendererWithSSR, getInitialData, setInitialData };
+export { reactAppRendererWithSSR, getInitialData };
 export default reactAppRenderer;
