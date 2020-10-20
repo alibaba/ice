@@ -34,7 +34,7 @@ import { createApp, request } from 'ice';
 
 const appConfig = {
 +  app: {
-+    getInitialData: async () => {
++    getInitialData: async (ctx) => {
 +      // const data = await request.get('/api/data');
 +      return { user: { name: 'Jack Ma', id: '01' } }
 +    }
@@ -48,6 +48,9 @@ createApp(appConfig);
 
 - 服务端渲染时直接调用 `getInitialData` 获取数据并渲染应用，同时将数据注入到全局变量中
 - 浏览器端渲染时不再调用 `getInitialData`，会直接通过全局变量获取初始数据
+- 可以获取到当前请求的上下文 `ctx` 参数，包含以下字段
+  - `ctx.req`：HTTP request 对象 （仅在server端输出）
+  - `ctx.res`：HTTP response 对象 （仅在server端输出）
 
 未开启 SSR 的行为说明：
 
@@ -82,7 +85,10 @@ SEO 场景下，需要访问每个页面时都能够返回实际的 DOM 节点�
 
 > 注意：如果只是追求首屏加载速度，不推荐使用页面级的 getInitialProps，因为这在一定程度上会延长服务端渲染直出 HTML 的时间。
 
-在页面级组件中通过 `Component.getInitialProps` 来获取页面初始数据：
+在页面级组件中通过 `Component.getInitialProps` 来获取页面初始数据，同时可以获取到当前请求的上下文 `ctx` 参数，包含以下字段：
+
+- `ctx.req`：HTTP request 对象 （仅在server端输出）
+- `ctx.res`：HTTP response 对象 （仅在server端输出）
 
 ```diff
 import { request } from 'ice';
@@ -91,7 +97,7 @@ function Home({ stars }) {
   return <div>icejs stars: {stars}</div>;
 }
 
-+Home.getInitialProps = async () => {
++Home.getInitialProps = async (ctx) => {
 +  const res = await request.get('https://api.github.com/repos/ice-lab/icejs');
 +  return { stars: res.data.stargazers_count };
 +}
@@ -131,6 +137,8 @@ router.get('/*', async (ctx) => {
   // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
   const render = require(serverBundlePath);
   const { html, error } = await render({
+    // 当前请求的上下文(可选)
+    ctx,
     // 当前请求的路径（必选参数）
     pathname: ctx.req.pathname
     // 可选
