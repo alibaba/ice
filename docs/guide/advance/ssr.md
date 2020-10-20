@@ -184,26 +184,13 @@ export default {
 然后在 `src/app.js` 中设置 `request.baseURL`：
 
 ```diff
-import { runApp,IAppConfig } from 'ice';
+import { runApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
 +  request: {
 +    baseURL: config.baseURL
 +  }
 };
-
-runApp(appConfig);
-```
-
-如果使用了 midway-hooks，需要设置下 midway-hooks 请求的 baseURL：
-
-```diff
-import { runApp,IAppConfig } from 'ice';
-+import { defaults } from '@ali/midway-hooks/request';
-
-+if (process.env.__IS_SERVER__) {
-+  defaults.baseURL = config.baseURL;
-+}
 
 runApp(appConfig);
 ```
