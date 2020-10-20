@@ -38,19 +38,11 @@ module.exports = (api) => {
     const outputPath = path.resolve(rootDir, outputDir, target);
     config.output.path(outputPath);
 
-    let publicUrl = JSON.stringify('');
-
     if (command === 'start') {
       setDev(config);
-    } else if (command === 'build') {
-      publicUrl = JSON.stringify('.');
     }
 
-    config
-      .plugin('DefinePlugin')
-      .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': publicUrl })]);
-
-      const needCopyDirs = [];
+    const needCopyDirs = [];
 
     // Copy public dir
     if (config.plugins.has('CopyWebpackPlugin')) {

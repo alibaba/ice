@@ -32,7 +32,6 @@ module.exports = (api) => {
 
   onGetWebpackConfig(target, config => {
     const { outputDir = 'build', weex = {} } = userConfig;
-    let publicUrl = JSON.stringify('');
     // set mpa config
     if (weex.mpa) {
       setMPAConfig.default(config, { context, type: 'weex' });
@@ -45,17 +44,11 @@ module.exports = (api) => {
       config.devServer.contentBase(outputPath);
       config.output.filename(`${target}/[name].js`);
     } else if (command === 'build') {
-      publicUrl = JSON.stringify('.');
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir, target);
     }
 
     config.output.path(outputPath);
-
-    // Set public url
-    config
-      .plugin('DefinePlugin')
-      .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': publicUrl })]);
 
     const needCopyDirs = [];
     // Copy public dir
