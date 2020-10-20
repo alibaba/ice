@@ -3,14 +3,24 @@ title: 业务组件开发
 order: 2
 ---
 
-物料仓库初始化后，在根目录通过命令即可新增组件：
+## 创建组件
+
+### 物料集合项目
+
+> 项目中包含多个业务组件、区块以及模板
+
+物料集合项目初始化后，在根目录通过命令即可新增组件：
 
 ```bash
 $ cd my-materials
 $ iceworks add component
 ```
 
-有些场景下可能需要在单独仓库中开发业务组件，即一个仓库一个业务组件，可以按照下面这个方式：
+### 单独的业务组件项目
+
+> 项目中只包含一个业务组件
+
+#### 通过命令行方式初始化
 
 ```bash
 # 新建组件文件夹
@@ -19,6 +29,8 @@ $ mkdir my-component & cd my-component
 # 初始化
 $ iceworks init component
 ```
+
+#### 通过 DEF 初始化
 
 > 如果是阿里内部的同学并且想接入 DEF 发布 npm 包，可以参考文档 [组件开发接入 DEF](https://yuque.alibaba-inc.com/ice/rdy99p/gbekwv)
 
@@ -72,13 +84,15 @@ export default function ExampleComponent(props) {
 
 > 对于业务组件自身依赖的组件，样式无需手动引入，我们会通过工程工具自动引入
 
+> src/index.js 中无需主动引入 src/index.scss，因为这会引起样式重复打包的问题
+
 ## 编写 demo
 
-组件的 demo 演示文件，位于 `demo` 目录下，使用 `yaml-markdown` 语法。可以通过修改默认的 `usage.md` 来调整组件 demo，或通过增加 *.md 文件，来创建多个 demo。
+组件的 demo 演示文件，位于 `demo` 目录下，使用 `yaml-markdown` 语法。可以通过修改默认的 `usage.md` 来调整组件 demo，或通过增加 example.md 文件来创建多个 demo。
 
 每个 demo 的形式如下：
 
-`````
+````
 ---
 title: Simple Usage
 order: 1
@@ -86,7 +100,7 @@ order: 1
 
 本 demo 演示一行文字的用法。
 
-````jsx
+```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ExampleComponent from '@ali/example-component';
@@ -104,19 +118,19 @@ class App extends Component {
 ReactDOM.render((
   <App />
 ), mountNode);
-````
+```
 
 // 书写 demo 样式
-````css
+```css
 .ttt {
   background: red;
 }
+```
 ````
-`````
 
 如果开发者希望在 js 或者 ts 文件中维护 Demo 中的代码，可以通过约定的组件引入外部的代码：
 
-`````
+````
 ---
 title: Simple Usage
 order: 1
@@ -124,12 +138,45 @@ order: 1
 
 本 demo 演示一行文字的用法。
 
-````jsx
+```jsx
 <DemoCode src="path/to/code.js" />
+```
 ````
-`````
 
 工程上将自动将路径中的源码获取，并展示在 Demo 预览页面中。通过上述的方式开发 Demo 可以享受编辑器带来的代码提示、语法高亮等便捷功能。
+
+## 组件文档
+
+在执行 `npm run build` 时，会通过 `demo/` 以及 `README.md` 生成 `build/index.html`，将 html 进行托管即可完整预览组件的文档。
+
+以 `qrcode` 组件的文档为例，[文档地址](https://unpkg.com/@icedesign/qrcode@1.0.5/build/index.html) ：
+
+![](https://img.alicdn.com/tfs/TB1VIZ9ZEY1gK0jSZFCXXcwqXXa-1441-738.png)
+
+默认情况下，`demo/` 目录里的文件都是扁平的，适合展示单个组件的文档，比如：
+
+```bash
+demo/
+├── simple.md                          
+├── size.md
+├── type.md
+```
+
+但是某些情况下，我们的业务组件可能会导出多个组件，此时可以通过目录嵌套来展示多个组件的文档：
+
+```
+├── demo/                           
+│   ├── ComponentA/              
+│   │  ├── simple.md
+│   │  └── simple2.md
+│   ├── ComponentB/                
+│   │  ├── simple.md
+│   └──└── simple2.md
+```
+
+最终效果如下，其中每个目录对应一个组件，即左侧的一个导航：
+
+![](https://img.alicdn.com/tfs/TB1nQrZk5DsXe8jSZR0XXXK6FXa-1426-700.png)
 
 ## 组件工程配置
 
@@ -282,4 +329,4 @@ require('@icedesign/balloon-confirm/lib/style');
 require('./index.scss');
 ```
 
-项目中我们通过内置插件会自动引入该 style.js，如果没有用 ICE 的工程工具则需要手动引入对应的 style.js 文件。
+项目中我们通过内置插件会自动引入组件对应的 style.js，如果没有用 ICE 的工程工具则需要手动引入对应的 style.js 文件。
