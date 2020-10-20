@@ -144,4 +144,59 @@ icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端
 
 ### 服务端请求必须使用绝对的 URL 路径
 
-开启了 SSR 之后，`app.getInitialData` 以及 `Home.getInitialProps` 都会在服务端下执行，服务端发请求必须用绝对路径不能用相对路径，因此这两个方法里如果出现异步请求，请务必使用绝对路径，或者正确设置 `request.baseURL`。
+开启了 SSR 之后，`app.getInitialData` 以及 `Home.getInitialProps` 都会在服务端下执行，服务端发请求必须用绝对路径不能用相对路径，因此这两个方法里如果出现异步请求，请务必使用绝对路径，或者正确设置 `request.baseURL`。推荐做法：
+
+`src/config.js` 中动态区分环境并配置 baseURL：
+
+```js
+if (process.env.__IS_SERVER__) {
+  // 动态扩展环境：服务端通过环境变量区分，此处以 Midway 为例
+  global.__app_mode__ = process.env.MIDWAY_SERVER_ENV;
+} else {
+  // 动态扩展环境：浏览器端通过 location 区分
+  if (/pre.example.com/.test(location.host)) {
+    window.__app_mode__ = 'pre';
+  } else if (/daily.example.com/.test(location.host)) {
+    window.__app_mode__ = 'daily';
+  } else if (/example.com/.test(location.host)) {
+    window.__app_mode__ = 'prod';
+  } else {
+    window.__app_mode__ = 'local';
+  }
+}
+
+export default {
+  local: {
+    baseURL: `http://localhost:${process.env.SERVER_PORT}`
+  },
+  daily: {
+    baseURL: 'https://ice-ssr.daily.fx.alibaba.net'
+  },
+  pre: {
+    baseURL: 'https://ice-ssr.pre-fx.alibaba-inc.com'
+  },
+  prod: {
+    baseURL: 'https://ice-ssr.fx.alibaba-inc.com'
+  }
+}
+```
+
+然后在 `src/app.js` 中设置 `request.baseURL`：
+
+```diff
+import { runApp,IAppConfig } from 'ice';
++// 如果是调用 faas 函数的场景，需要设置下 faas 请求的 baseURL：
++import { defaults } from '@ali/midway-hooks/request';
+
++if (process.env.__IS_SERVER__) {
++  defaults.baseURL = config.baseURL;
++}
+
+const appConfig: IAppConfig = {
++  request: {
++    baseURL: config.baseURL
++  }
+};
+
+runApp(appConfig);
+```
