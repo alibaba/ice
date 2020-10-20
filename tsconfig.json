@@ -33,6 +33,6 @@
     { "path": "packages/webpack-dev-mock" },
     { "path": "packages/plugin-ssr" },
     { "path": "packages/build-mpa-config" },
-    { "path": "packages/build-helpers" }
+    { "path": "packages/build-app-helpers" }
   ]
 }
