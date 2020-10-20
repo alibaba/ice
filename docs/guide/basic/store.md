@@ -447,7 +447,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 > API `store.getInitialStates` 已废弃，推荐使用 `store.initialStates`

@@ -30,7 +30,7 @@ icejs 支持服务端渲染（即 SSR）能力，开发者可以按需一键开�
 在 `src/app.ts` 中可通过 `getInitialData` 获取全局数据：
 
 ```diff
-import { createApp, request } from 'ice';
+import { runApp, request } from 'ice';
 
 const appConfig = {
 +  app: {
@@ -45,7 +45,7 @@ const appConfig = {
 +  },
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 开启了 SSR 的行为说明：
@@ -185,7 +185,7 @@ export default {
 
 ```diff
 import { runApp,IAppConfig } from 'ice';
-+// 如果是调用 faas 函数的场景，需要设置下 faas 请求的 baseURL：
++// 如果是调用 faas 函数的场景，需要设置下 faas 请求的 baseURL
 +import { defaults } from '@ali/midway-hooks/request';
 
 +if (process.env.__IS_SERVER__) {
@@ -197,6 +197,19 @@ const appConfig: IAppConfig = {
 +    baseURL: config.baseURL
 +  }
 };
+
+runApp(appConfig);
+```
+
+如果使用了 midway-hooks，需要设置下 midway-hooks 请求的 baseURL：
+
+```diff
+import { runApp,IAppConfig } from 'ice';
++import { defaults } from '@ali/midway-hooks/request';
+
++if (process.env.__IS_SERVER__) {
++  defaults.baseURL = config.baseURL;
++}
 
 runApp(appConfig);
 ```
