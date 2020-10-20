@@ -30,18 +30,22 @@ icejs 支持服务端渲染（即 SSR）能力，开发者可以按需一键开�
 在 `src/app.ts` 中可通过 `getInitialData` 获取全局数据：
 
 ```diff
-import { createApp, request } from 'ice';
+import { runApp, request } from 'ice';
 
 const appConfig = {
 +  app: {
 +    getInitialData: async () => {
 +      // const data = await request.get('/api/data');
-+      return { user: { name: 'Jack Ma', id: '01' } }
++      return {
++       initialStates: {
++         user: { name: 'Jack Ma', id: '01' }
++       }
++      };
 +    }
 +  },
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 开启了 SSR 的行为说明：
@@ -53,28 +57,9 @@ createApp(appConfig);
 
 - 浏览器端会同步调用 `getInitialData`，调用完成后执行 render 逻辑
 
-定义完全局初始数据后，接下来需要在业务代码中使用这些数据，应用级的 `initialData` 通常通过全局 store 的 `initialStates` 来使用：
+`getInitialData` 返回的 `initialData.initialStates` 会作为 store 的初始状态，因此 View 里通过 model 拿到的默认 state 即 `initialData.initialStates`，如 `models/user.js` 的默认 states 即上出的 `{ name: 'Jack Ma', id: '01' }`。
 
-```diff
-import { createApp } from 'ice';
-
-const appConfig = {
-  app: {
-    getInitialData: async () => {}
-  },
-  store: {
-+   // 参数 initialData 即 getInitialData 返回的数据
-+   getInitialStates: (initialData) => {
-+     // 可按需选择需要作为 initialStates 的数据
-+     return initialData;
-+   }
-  }
-};
-
-createApp(appConfig);
-```
-
-> 目前仅支持通过 store 的 `initialStates` 来使用消费 `initalData`，如果需要在其它业务代码中直接消费，可以先将需求反馈给 ICE 团队
+> 目前仅支持通过 store 来使用 `initalData`，如果需要在其它业务代码中直接消费，可以先将需求反馈给 ICE 团队
 
 ## 页面级数据
 
@@ -129,14 +114,21 @@ export default Home;
 router.get('/*', async (ctx) => {
   // 将资源下载到 server 端
   // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
-  const render = require(serverBundlePath);
-  const { html, error } = await render({
+  const serverRender = require(serverBundlePath);
+  const { html, error } = await serverRender.default({
     // 当前请求的路径（必选参数）
     pathname: ctx.req.pathname
     // 可选
-    initialData: {},
+    initialData: {
+      initialStates: {
+        user: {}
+      }
+    },
   });
-
+  if (error) {
+    console.log('[SSR ERROR]', 'serverRender error', error);
+  }
+  console.log('[SSR SUCCESS]', `output html content\n`);
   ctx.res.body = html;
 });
 ```
@@ -147,3 +139,77 @@ icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端
 - initialData: 选填，如果不填写，服务端则会调用前端声明的 `getInitialData` 方法，但如果**对性能追求比较极致**，服务端则可以自行获取对应数据并通过 `initialData` 传入。（调用前端的 getInitialData 一般会发起 HTTP 请求，但是服务端有可能通过缓存/数据库来查询，速度会快一点）
 
 以上即 icejs SSR 能力的使用说明，如遇到相关问题，欢迎给我们提 issue。
+
+## 其他问题
+
+### 服务端请求必须使用绝对的 URL 路径
+
+开启了 SSR 之后，`app.getInitialData` 以及 `Home.getInitialProps` 都会在服务端下执行，服务端发请求必须用绝对路径不能用相对路径，因此这两个方法里如果出现异步请求，请务必使用绝对路径，或者正确设置 `request.baseURL`。推荐做法：
+
+`src/config.js` 中动态区分环境并配置 baseURL：
+
+```js
+if (process.env.__IS_SERVER__) {
+  // 动态扩展环境：服务端通过环境变量区分，此处以 Midway 为例
+  global.__app_mode__ = process.env.MIDWAY_SERVER_ENV;
+} else {
+  // 动态扩展环境：浏览器端通过 location 区分
+  if (/pre.example.com/.test(location.host)) {
+    window.__app_mode__ = 'pre';
+  } else if (/daily.example.com/.test(location.host)) {
+    window.__app_mode__ = 'daily';
+  } else if (/example.com/.test(location.host)) {
+    window.__app_mode__ = 'prod';
+  } else {
+    window.__app_mode__ = 'local';
+  }
+}
+
+export default {
+  local: {
+    baseURL: `http://localhost:${process.env.SERVER_PORT}`
+  },
+  daily: {
+    baseURL: 'https://ice-ssr.daily.fx.alibaba.net'
+  },
+  pre: {
+    baseURL: 'https://ice-ssr.pre-fx.alibaba-inc.com'
+  },
+  prod: {
+    baseURL: 'https://ice-ssr.fx.alibaba-inc.com'
+  }
+}
+```
+
+然后在 `src/app.js` 中设置 `request.baseURL`：
+
+```diff
+import { runApp,IAppConfig } from 'ice';
++// 如果是调用 faas 函数的场景，需要设置下 faas 请求的 baseURL
++import { defaults } from '@ali/midway-hooks/request';
+
++if (process.env.__IS_SERVER__) {
++  defaults.baseURL = config.baseURL;
++}
+
+const appConfig: IAppConfig = {
++  request: {
++    baseURL: config.baseURL
++  }
+};
+
+runApp(appConfig);
+```
+
+如果使用了 midway-hooks，需要设置下 midway-hooks 请求的 baseURL：
+
+```diff
+import { runApp,IAppConfig } from 'ice';
++import { defaults } from '@ali/midway-hooks/request';
+
++if (process.env.__IS_SERVER__) {
++  defaults.baseURL = config.baseURL;
++}
+
+runApp(appConfig);
+```
