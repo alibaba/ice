@@ -26,6 +26,6 @@
     "rax-server-renderer": "^1.2.0",
     "webpack-sources": "^2.0.0",
     "webpack": "^4.0.0",
-    "build-helpers": "^1.0.0"
+    "build-app-helpers": "^1.0.0"
   }
 }

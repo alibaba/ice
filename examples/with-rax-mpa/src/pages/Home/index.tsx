@@ -7,8 +7,6 @@ import Logo from '@/components/Logo';
 import './index.css';
 
 export default function Home(props) {
-  const { history } = props;
-
   const searchParams = getSearchParams();
 
   console.log('home search params =>', searchParams);
@@ -27,7 +25,6 @@ export default function Home(props) {
       <Logo />
       <Text className="title">{props?.data?.title || 'Welcome to Your Rax App'}</Text>
       <Text className="info">{props?.data?.info || 'More information about Rax'}</Text>
-      <Text className="info" onClick={() => history.push('/about?id=1')}>Go About</Text>
     </View>
   );
 }
