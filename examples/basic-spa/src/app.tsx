@@ -8,7 +8,7 @@ const appConfig: IAppConfig = {
     parseSearchParams: true,
     getInitialData: async() => {
       const result = await request('/repo');
-      console.log('request result:', result);
+      return result;
     },
     onShow() {
       console.log('app show...');

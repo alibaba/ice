@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, usePageShow, usePageHide, helpers, logger, config } from 'ice';
+import { Link, usePageShow, usePageHide, helpers, logger, config, getInitialData, setInitialData } from 'ice';
 
 logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);
@@ -10,7 +10,12 @@ logger.error('=== error ===');
 logger.debug('=== debug ===');
 logger.trace('=== trace ===');
 
+console.log('getInitialData outside=====>:', getInitialData());
+
+setInitialData({ a: 1 });
+
 export default function Home(props) {
+  console.log('getInitialData inside=====>:', getInitialData());
 
   logger.info('Home props', props);
   logger.info('render home config.appId', config.appId);
