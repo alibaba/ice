@@ -7,7 +7,7 @@ const fs = require('fs-extra');
 
 module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   const { context, onGetWebpackConfig } = api;
-  const { rootDir, command, webpack, commandArgs } = context;
+  const { rootDir, command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
   const babelConfig = getBabelConfig(babelConfigOptions);
 
@@ -76,8 +76,8 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     process.env.DISABLE_STATS = true;
   }
 
-  // Set public url after developer has set public path
   onGetWebpackConfig((config) => {
+    // Set public url after developer has set public path
     // Get public path
     let publicUrl = config.output.get('publicPath');
 
@@ -93,6 +93,17 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
           'process.env.PUBLIC_URL': JSON.stringify(publicUrl),
         }),
       ]);
+
+    const { outputDir = 'build' } = userConfig;
+    // Copy public dir
+    if (config.plugins.has('CopyWebpackPlugin')) {
+      config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
+        return [copyList.concat([{
+        from: path.resolve(rootDir, 'public'),
+        to: path.resolve(rootDir, outputDir, target)
+      }])];
+      });
+    }
   });
 
   return chainConfig;

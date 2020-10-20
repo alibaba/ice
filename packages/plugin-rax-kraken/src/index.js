@@ -41,17 +41,5 @@ module.exports = (api) => {
       outputPath = path.resolve(rootDir, outputDir, target);
     }
     config.output.path(outputPath);
-    const needCopyDirs = [];
-
-    // Copy public dir
-    if (config.plugins.has('CopyWebpackPlugin')) {
-      needCopyDirs.push({
-        from: path.resolve(rootDir, 'public'),
-        to: path.resolve(rootDir, outputDir, target)
-      });
-      config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
-        return [copyList.concat(needCopyDirs)];
-      });
-    }
   });
 };
