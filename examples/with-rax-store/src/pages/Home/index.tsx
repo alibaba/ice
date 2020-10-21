@@ -1,8 +1,9 @@
 import { createElement } from 'rax';
-import { usePageShow, usePageHide, store as appStore } from 'rax-app';
+import { usePageShow, usePageHide } from 'rax-app';
 import View from 'rax-view';
 import Text from 'rax-text';
 import Logo from '@/components/Logo';
+import appStore from '@/store';
 import store from './store';
 
 import './index.css';

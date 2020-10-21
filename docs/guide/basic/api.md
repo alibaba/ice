@@ -7,9 +7,9 @@ order: 12
 
 ### runApp
 
-用于创建渲染整个应用。[详见](/docs/guide/basic/app)
+> 1.7.0 版本之后推荐使用 runApp 替代原先的 createApp
 
-> 说明：ice.js@1.6.3 及以下版本，框架通过 `createApp` 创建渲染整个应用；但在 ice.js@1.7.0 及以上版本，更新为 `runApp`，更加语义化。
+用于创建渲染整个应用。[详见](/docs/guide/basic/app)
 
 ### config
 
@@ -385,9 +385,23 @@ const model = {
   reducers: {},
   effects: (dispatch) => ({
 +   like(playload, rootState: IRootState) {
-
-    }
++    }
   })
 };
 ```
 
+## 环境变量
+
+icejs 会将一些环境变量注入到运行时，前端代码中可直接使用。
+
+### process.env.__IS_SERVER__
+
+开启 SSR 之后，用于判断是否是服务端执行
+
+### process.env.SERVER_PORT
+
+前端调试使用的端口号
+
+### process.env.NODE_ENV
+
+`icejs start` 对应 `development`，其他情况（build）对应 `production`

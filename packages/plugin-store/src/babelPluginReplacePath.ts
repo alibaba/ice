@@ -2,7 +2,9 @@ import * as path from 'path';
 
 // match:
 // eg: src/pages/home | src/pages/home/index | src/pages/home/index(.tsx|.jsx) | src/pages/index(.tsx|jsx)
-const pathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
+const pagePathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
+// eg：src/pages/home/Layout
+const layoutPathRegExp = /src\/pages\/\w+\/Layout/;
 
 module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => {
   return {
@@ -113,15 +115,19 @@ function matchRelativePath(routesPath: string, value: string, applyMethod: Funct
  */
 function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGetConfigRoutePathParmas): string {
   const matchedPagePath = matchRelativePath(routesPath, value, applyMethod) || matchAliasPath(alias, value, applyMethod);
-  if (matchedPagePath && pathRegExp.test(matchedPagePath)) {
+  if (matchedPagePath && pagePathRegExp.test(matchedPagePath)) {
     let newValue = '';
     // Note：过滤掉 pages 目录下的单文件形式
     if (/src\/pages\/\w+(.tsx|.jsx?)$/.test(value)) {
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `${tempDir}/${pageName}/index.tsx` : '';
+      newValue = pageName ? `${tempDir}/${pageName}/Page.tsx` : '';
     }
+    return newValue;
+  } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
+    const [, , pageName] = matchedPagePath.split('/');
+    const newValue = pageName ? `${tempDir}/${pageName}/Layout` : '';
     return newValue;
   }
 }

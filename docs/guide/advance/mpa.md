@@ -93,7 +93,7 @@ runApp(appConfig);
 
 关于状态管理的更多内容，请查看文档 [状态管理](/docs/guide/basic/store.md)
 
-## 其他
+## 高级功能
 
 ### 指定入口
 
@@ -107,6 +107,26 @@ runApp(appConfig);
 }
 ```
 
-只需要这么简单，你的 SPA 应用就可以变成 MPA 应用了。
+### 指定 HTML 模板
+
+可以通过配置 `template` 指定多个页面使用同一个 HTML 模板。
+
+```json
+"mpa": {
+  "template": {
+    "web.html": ["Dashboard", "Home"]
+  }
+}
+```
+
+### 指定打开页面
+
+可以通过配置 `openPage` 指定多个页面时默认打开指定的页面。
+
+```json
+"mpa": {
+  "openPage": "Home",
+}
+```
 
 * MPA 项目示例 [详见](https://github.com/ice-lab/icejs/tree/master/examples/basic-mpa)

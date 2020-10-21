@@ -1,4 +1,9 @@
 {
+  "web": {
+    "ssr": true,
+    "mpa": true
+  },
   "plugins": [],
-  "targets": ["web"]
+  "targets": ["web", "miniapp"],
+  "inlineStyle": true
 }
