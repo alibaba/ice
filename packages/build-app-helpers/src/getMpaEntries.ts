@@ -1,17 +1,17 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import getRoutesByJson from './getRoutesByJson';
+import getRoutesByAppJson from './getRoutesByAppJson';
 
 // Get entries when exist app.json
-export default function (api, { target, jsonPath }) {
-  if (jsonPath) {
-    return getEntriesByJson(target, jsonPath);
+export default function (api, { target, appJsonPath }) {
+  if (appJsonPath) {
+    return getEntriesByJson(target, appJsonPath);
   }
   return getEntriesByDir(api);
 }
 
-function getEntriesByJson(target, jsonPath) {
-  const routes = getRoutesByJson(target, jsonPath);
+function getEntriesByJson(target, appJsonPath) {
+  const routes = getRoutesByAppJson(target, appJsonPath);
   return routes.map((route) => {
     const dir = path.dirname(route.source);
     const pageName = path.parse(dir).name;
