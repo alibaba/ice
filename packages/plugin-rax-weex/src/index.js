@@ -37,7 +37,7 @@ module.exports = (api) => {
     if (weex.mpa) {
       setMPAConfig.default(config, { context, type: 'weex', entries: getMpaEntries(api, {
         target,
-        jsonPath: path.join(rootDir, 'src/app.json')
+        appJsonPath: path.join(rootDir, 'src/app.json')
       }) });
     }
 

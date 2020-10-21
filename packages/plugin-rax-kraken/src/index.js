@@ -36,7 +36,7 @@ module.exports = (api) => {
     if (krakenConfig.mpa) {
       setMPAConfig.default(config, { context, type: 'kraken', entries: getMpaEntries(api, {
         target,
-        jsonPath: path.join(rootDir, 'src/app.json')
+        appJsonPath: path.join(rootDir, 'src/app.json')
       }) });
     }
 

@@ -26,11 +26,11 @@ module.exports = (api) => {
     }
   });
 
-  const jsonPath = path.resolve(rootDir, 'src/app.json');
+  const appJsonPath = path.resolve(rootDir, 'src/app.json');
 
   let entries = {};
   if (webConfig.mpa) {
-    setMPAConfig.default(config, { context, type: TARGET, entries: getMpaEntries(api, { target: 'web', jsonPath }) });
+    setMPAConfig.default(config, { context, type: TARGET, entries: getMpaEntries(api, { target: 'web', appJsonPath }) });
     const mpaEntries = config.toConfig().entry;
     entries = Object.keys(mpaEntries).map(entryName => {
       return {
@@ -40,7 +40,7 @@ module.exports = (api) => {
     });
   } else {
      // eslint-disable-next-line
-    const appJSON = require(jsonPath);
+    const appJSON = require(appJsonPath);
     entries = appJSON.routes.map((route) => {
       return {
         name: getEntryName(route.path),
