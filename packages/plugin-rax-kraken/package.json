@@ -1,0 +1,25 @@
+{
+  "name": "build-plugin-rax-kraken",
+  "version": "1.0.3-0",
+  "description": "rax kraken app plugin",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "plugin",
+    "rax"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "@alib/build-scripts": "^0.1.0",
+    "rax": "^1.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "webpack-sources": "^2.0.0",
+    "build-mpa-config": "1.0.2-0",
+    "build-app-helpers": "1.0.0-0"
+  }
+}

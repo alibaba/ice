@@ -95,7 +95,7 @@ export default HomePage
 Configure an application information in the `src/app.js` file, but it is optional:
 
 ```js
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 
 const appConfig = {
   router: {
@@ -105,7 +105,7 @@ const appConfig = {
   // more...
 }
 
-createApp(appConfig)
+runApp(appConfig)
 ```
 
 Finally, To start developing your application run `npm run start`. The application is now running on [http://localhost:3333](http://localhost:3333).
@@ -134,6 +134,8 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
 | [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] |Visual Intelligent Development Assistant|
+| [formily]| [![formily-status]][formily-package] | [docs][formily-docs] |Performant, flexible and extensible form solusion|
+| [ahooks]| [![ahooks-status]][ahooks-package] | [docs][ahooks-docs] |React Hooks Library|
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -154,6 +156,16 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [iceworks-docs]: https://ice.work/docs/iceworks/about
+
+[formily]: https://github.com/alibaba/formily
+[formily-status]: https://img.shields.io/npm/v/@formily/react.svg
+[formily-package]: https://npmjs.com/package/@formily/react
+[formily-docs]: https://formilyjs.org/
+
+[ahooks]: https://github.com/alibaba/hooks
+[ahooks-status]: https://img.shields.io/npm/v/ahooks.svg
+[ahooks-package]: https://npmjs.com/package/ahooks
+[ahooks-docs]: https://ahooks.js.org
 
 ## Community
 

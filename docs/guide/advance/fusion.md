@@ -19,6 +19,9 @@ $ npm install build-plugin-fusion --save-dev
 * `nextPrefix`  Fusion 组件样式 prefix，一般情况下需要配合入口代码的 `ConfigProvider` 使用，可以将所有的 className 改掉
 * `importOptions` 同 `babel-plugin-import` 参数，默认为 `{ style: true, libraryDirectory: 'es'}` 根据用户设置项将进行合并
 * `externalNext` 配合 `externals` 配置，将 Next 组件作为外部依赖引入
+* `usePx2Vw` 配合 postcss 插件，将 css 样式单位 px 转化为 vw ，默认为 false 不开启， true 为开启
+* `px2vwOptions` 传递参数给postcss插件，默认为`{ viewportWidth: 750 }` 根据用户设置项将进行合并
+* `componentOptions` 值为对象，修改业务组件的引入路径，推荐用在 PC 跨 H5 的项目中，给业务组件指定 H5 的渲染组件
 
 ## 基础用法
 
@@ -142,4 +145,68 @@ build.json 中完成多主题包配置后，业务代码中可以直接调用 `_
 ```js
 // 可以在设置的主题包 @icedesign/theme 和 @alifd/theme-ice-purple 之间切换
 window.__changeTheme__('@alifd/theme-ice-purple');
+```
+
+## 跨端用法
+
+### API
+- 增加 `componentOptions` API，该接口值为对象，可接受 `bizComponent` `customPath` `componentMap` 等参数
+- 增加 `usePx2Vw` API，跨端模式下请开启
+
+```js
+module.exports = {
+  plugins: [
+    ['build-plugin-fusion', {
+      usePx2Vw: true,                                       // 开启r?px => vw 的单位转换
+      importOptions: {
+        libraryDirectory: 'lib',
+        customName: (name) => {                             // 自定义「基础组件」的 H5 的引入路径，注意对 @alifd/next 的版本要求
+          if(['config-provider'].indexOf(name) !== -1) {
+            return `@alifd/next/lib/${name}`;
+          }
+          return `@alifd/next/lib/${name}/mobile`;          // mobile 是在 1.21.7-alpha 版本开始支持的
+        },
+        customStyleName: (name) => {
+          // 引入没有Mobile版本的PC组件的样式
+          return `@alifd/next/lib/${name}/style.js`;
+        }
+      },
+      componentOptions: {                                            // 自定义「业务组件」的H5的引入路径
+        bizComponent: ['@alifd/anchor', '@alifd/pro-components'],    // 业务组件列表
+        customPath: '/es/mobile',                                    // 默认值为''
+        componentMap: {
+          '@alifd/pro-components2': '@alifd/pro-components2-mobile'
+        }
+      },
+    }]
+  ],
+}
+```
+
+### componentOptions 详解
+用来自定义业务组件的引用路径及入口
+
+#### bizComponent 需要自定义路径的组件
+类型为数组，与 `customPath` 共同作用生效
+bizComponent: ['@alifd/anchor', '@alifd/pro-components']
+customPath: '/es/mobile'
+
+```js
+import Anchor from '@alifd/anchor';
+ReactDOM.render(<Anchor>xxxx</Anchor>);
+      ↓ ↓ ↓ ↓ ↓ ↓
+var _anchor = require('@alifd/anchor/es/mobile');   // 差别在这里 多了一层 es 和 mobile 
+ReactDOM.render(<_anchor>xxxx</_anchor>);
+```
+#### customPath 自定义的路径
+结合 `bizComponent` 一起生效，用法参考 `bizComponent` 文档。
+
+#### componentMap 组件路径映射
+类型为对象，表示路径映射的 mapping ，若与 `bizComponent` 冲突，则以 `componentMap` 为优先
+```js
+componentMap: {
+  '@alifd/pro-components': '@alifd/pro-components/lib/mobile',
+  '@alifd/pro-components2': '@alifd/pro-components2/es/mobile',
+  '@alifd/pro-components': '@alifd/pro-components-mobile'
+}
 ```

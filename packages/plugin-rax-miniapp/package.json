@@ -1,0 +1,26 @@
+{
+  "name": "build-plugin-rax-miniapp",
+  "version": "1.0.2-0",
+  "description": "rax miniapp app plugin",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "plugin",
+    "rax"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "@alib/build-scripts": "^0.1.0",
+    "rax": "^1.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "miniapp-runtime-config": "^0.1.3",
+    "webpack-sources": "^2.0.0",
+    "miniapp-builder-shared": "^0.1.6",
+    "copy-webpack-plugin": "^5.0.4"
+  }
+}

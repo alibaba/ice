@@ -19,7 +19,7 @@ function normalizeEntry(entry, preparedChunks) {
 }
 
 module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {}) => {
-  const { themePackage, themeConfig, nextLibDir = 'es', style = true, uniteNextLib, externalNext, importOptions = {} } = plugionOptions;
+  const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, px2vwOptions = {}, style = true, uniteNextLib, externalNext, importOptions = {}, componentOptions = {} } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
@@ -88,6 +88,27 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
 
     const themeFile = typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
 
+    if (usePx2Vw) {
+      ['css', 'scss', 'scss-module'].forEach(rule => {
+        config.module
+          .rule(rule)
+          .use('postcss-loader')
+          .tap((options) => {
+            const { plugins = [] } = options;
+            return {
+              ...options,
+              plugins: [
+                ...plugins,
+                // eslint-disable-next-line
+                require('postcss-plugin-rpx2vw'),
+                // eslint-disable-next-line
+                require('./postcssPlugins/postcssPluginPx2vw')(px2vwOptions),
+              ],
+            };
+          });
+      });
+    };
+
     ['scss', 'scss-module'].forEach((rule) => {
       config.module
         .rule(rule)
@@ -95,7 +116,12 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
         .loader(require.resolve('ice-skin-loader'))
         .options({
           themeFile,
-          themeConfig: Object.assign({}, defaultScssVars, replaceVars, themeConfig || {}),
+          themeConfig: Object.assign(
+            {},
+            defaultScssVars,
+            replaceVars,
+            themeConfig || {}
+          ),
         });
     });
 
@@ -132,6 +158,35 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
       config.plugin('AppendStyleWebpackPlugin').use(AppendStyleWebpackPlugin, [appendStylePluginOption]);
     }
 
+    const crossendBabelLoader = [];
+
+    if ('componentOptions' in plugionOptions) {
+      const { bizComponent = [], customPath = '', componentMap = {} } = componentOptions;
+      const mixBizCom = {};
+
+      // bizComponent: ['@alifd/anchor', '@alifd/pro-components'],
+
+      if (Array.isArray(bizComponent)) {
+        bizComponent.forEach(com => {
+          mixBizCom[com] = `${com}${customPath}`;
+        });
+      }
+
+      // componentMap: {
+      //  '@alifd/pro-components': '@alifd/pro-components/lib/mobile',
+      //  '@alifd/pro-components-2': '@alifd/pro-components-2-mobile'
+      // }
+      const mapList = Object.keys(componentMap);
+      if (mapList.length > 0) {
+        mapList.forEach(orgName => {
+          mixBizCom[orgName] = componentMap[orgName];
+        });
+      }
+
+      crossendBabelLoader.push(require.resolve('babel-plugin-module-resolver'), {
+        alias: mixBizCom
+      });
+    }
     // 2. 组件（包含业务组件）按需加载&样式自动引入
     // babel-plugin-import: 基础组件
     // remove babel-plugin-import if external next
@@ -158,6 +213,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
                 return [require.resolve('babel-plugin-import'), itemConfig, itemConfig.libraryName];
               }),
             );
+            crossendBabelLoader.length > 0 && plugins.push(crossendBabelLoader);
             options.plugins = plugins;
             return options;
           });
@@ -226,7 +282,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
         pkg,
         log,
       }]);
-    
+
     if (uniteNextLib) {
       const replaceRegex = new RegExp(`(alife|alifd)/next/${nextLibDir === 'es' ? 'lib' : 'es'}`);
       config.plugin('UniteNextLib')

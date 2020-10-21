@@ -5,7 +5,9 @@ order: 12
 
 ## 基础
 
-### createApp
+### runApp
+
+> 1.7.0 版本之后推荐使用 runApp 替代原先的 createApp
 
 用于创建渲染整个应用。[详见](/docs/guide/basic/app)
 
@@ -316,6 +318,10 @@ const history = createMemoryHistory();
 
 ## 工具方法
 
+### getInitialData
+
+获取通过 `app.getInitialData` 返回的 initialData 数据。[详见](/docs/guide/advance/ssr#应用级数据)
+
 ### lazy
 
 用于代码懒加载。[详见](/docs/guide/advance/code-splitting)
@@ -331,13 +337,13 @@ const history = createMemoryHistory();
 appConfig 的类型定义。
 
 ```diff
-+import { createApp, IAppConfig } from 'ice';
++import { runApp, IAppConfig } from 'ice';
 
 +const appConfig: IAppConfig {
 
 }
 
-createApp();
+runApp();
 ```
 
 ### IRouterConfig
@@ -383,9 +389,23 @@ const model = {
   reducers: {},
   effects: (dispatch) => ({
 +   like(playload, rootState: IRootState) {
-
-    }
++    }
   })
 };
 ```
 
+## 环境变量
+
+icejs 会将一些环境变量注入到运行时，前端代码中可直接使用。
+
+### process.env.__IS_SERVER__
+
+开启 SSR 之后，用于判断是否是服务端执行
+
+### process.env.SERVER_PORT
+
+前端调试使用的端口号
+
+### process.env.NODE_ENV
+
+`icejs start` 对应 `development`，其他情况（build）对应 `production`

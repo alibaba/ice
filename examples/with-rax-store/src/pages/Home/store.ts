@@ -1,5 +1,5 @@
 import { createStore } from 'rax-app';
-import CounterModel from './counter';
+import CounterModel from './models/counter';
 
 const model = { 'counter': CounterModel };
 const store = createStore(model);

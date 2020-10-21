@@ -1,0 +1,14 @@
+{
+  "name": "build-plugin-ice-faas",
+  "version": "0.1.1",
+  "description": "build-scripts plugin for midway serverless",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@midwayjs/faas-dev-pack": "^1.0.0"
+  }
+}

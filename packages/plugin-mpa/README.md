@@ -17,7 +17,7 @@ modify build options to enable mpa
 config router in each `app.[t|j]s` under `src/pages`
 
 ```js
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 import Dashboard from './index'
 
 const appConfig = {
@@ -26,5 +26,5 @@ const appConfig = {
   },
 }
 
-createApp(appConfig)
+runApp(appConfig)
 ```

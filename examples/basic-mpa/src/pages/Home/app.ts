@@ -1,4 +1,4 @@
-import { createApp, IAppConfig } from 'ice';
+import { runApp, IAppConfig } from 'ice';
 import Home from './index';
 
 const appConfig: IAppConfig = {
@@ -7,4 +7,4 @@ const appConfig: IAppConfig = {
   },
 };
 
-createApp(appConfig);
+runApp(appConfig);

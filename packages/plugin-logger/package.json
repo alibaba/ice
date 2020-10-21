@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-logger",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "builtin logger in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -21,9 +21,6 @@
   "devDependencies": {
     "@alib/build-scripts": "^0.1.24",
     "typescript": "^3.7.2"
-  },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
   },
   "repository": {
     "type": "git",

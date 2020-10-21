@@ -28,9 +28,6 @@
     "@types/node": "^12.12.12",
     "typescript": "^3.7.2"
   },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:alibaba/ice.git"

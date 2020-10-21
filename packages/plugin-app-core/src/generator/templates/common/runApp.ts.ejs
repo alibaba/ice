@@ -4,7 +4,7 @@ import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
 
 <% if (isReact) {%>
-  import reactAppRenderer from 'react-app-renderer';
+  import reactAppRenderer, { getInitialData } from 'react-app-renderer';
   import { withRouter as defaultWithRouter } from 'react-router';
   import genWithSearchParams from './genWithSearchParams';
 <% } %>
@@ -17,7 +17,7 @@ import createShareAPI, { history } from 'create-app-shared';
 
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
-import staticConfig from './staticConfig';
+import defaultStaticConfig from './staticConfig';
 import { setAppConfig } from './appConfig';
 import { mount, unmount } from './render';
 import ErrorBoundary from './ErrorBoundary';
@@ -46,7 +46,7 @@ const {
   withRouter: defaultWithRouter
 }, loadRuntimeModules);
 
-export function runApp(appConfig) {
+export function runApp(appConfig, staticConfig?: any) {
   let renderer;
   <% if(isRax){ %>
     renderer = raxAppRenderer;
@@ -59,7 +59,7 @@ export function runApp(appConfig) {
   <% } %>
   renderer({
     appConfig,
-    staticConfig,
+    staticConfig: staticConfig || defaultStaticConfig,
     setAppConfig,
     createBaseApp,
     createHistory,
@@ -95,6 +95,7 @@ export {
 <% if (isReact) {%>
   useSearchParams,
   withSearchParams,
+  getInitialData,
 <% } %>
   // LifeCycles api
   usePageShow,
