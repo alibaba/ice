@@ -113,7 +113,7 @@ function Routes({ routes, fallback }: RoutesProps) {
             <Route
               key={id}
               {...others}
-              component={RenderComponent}
+              render={RenderComponent}
             />
           );
         }

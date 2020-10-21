@@ -4,7 +4,7 @@ function mpaLoader() {
   const options = getOptions(this) || {};
   const framework = options.framework || 'rax';
   let appRender = '';
-  if (options.type === 'weex') {
+  if (['weex', 'kraken'].includes(options.type)) {
     appRender = 'render(createElement(Entry), null, { driver: DriverUniversal });';
   } else {
     appRender = `

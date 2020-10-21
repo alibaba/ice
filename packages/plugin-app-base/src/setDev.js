@@ -20,9 +20,13 @@ module.exports = function(api) {
   const debug = require('debug')('rax-app');
   const { context, onHook } = api;
   const { commandArgs, userConfig, rootDir } = context;
-  const { targets } = userConfig;
+  const { targets} = userConfig;
   let webEntryKeys = [];
   let weexEntryKeys = [];
+  let krakenEntryKeys = [];
+  let webMpa = false;
+  let weexMpa = false;
+  let krakenMpa = false;
   const getWebpackEntry = (configs, configName) => {
     const taskConfig = configs.find((webpackConfig) => webpackConfig.name === configName);
     if (!taskConfig || !taskConfig.entry) {
@@ -33,8 +37,12 @@ module.exports = function(api) {
   onHook('before.start.run', ({ config }) => {
     webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
     weexEntryKeys = Object.keys(getWebpackEntry(config, 'weex'));
+    krakenEntryKeys = Object.keys(getWebpackEntry(config, 'kraken'));
+    webMpa = userConfig?.web?.mpa;
+    weexMpa = userConfig?.weex?.mpa;
+    krakenMpa = userConfig?.kraken?.mpa;
     try {
-      debug(config[0]);
+      debug(config);
     // eslint-disable-next-line no-empty
     } catch (err) {}
   });
@@ -109,7 +117,7 @@ module.exports = function(api) {
       if (targets.includes(WEB)) {
         console.log(highlightPrint('  [Web] Development server at: '));
         webEntryKeys.forEach((entryKey) => {
-          const entryPath = webEntryKeys.length > 1 ? `${entryKey}.html` : '';
+          const entryPath = webMpa ? `${entryKey}.html` : '';
           console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.localUrlForBrowser)}${entryPath}`)}`);
           console.log(`  ${chalk.underline.white(`${getLocalUrl(urls.lanUrlForBrowser)}${entryPath}`)}`);
           console.log();
@@ -117,20 +125,26 @@ module.exports = function(api) {
       }
 
       if (targets.includes(KRAKEN)) {
-        const krakenURL = `${urls.localUrlForBrowser  }kraken/index.js`;
         console.log(highlightPrint('  [Kraken] Development server at: '));
-        console.log(`  ${chalk.underline.white(krakenURL)}`);
-        console.log();
+        krakenEntryKeys.forEach((entryKey) => {
+          const krakenURL = `${urls.lanUrlForBrowser}kraken/${krakenMpa ? entryKey : 'index'}.js`;
+          console.log(`  ${chalk.underline.white(krakenURL)}`);
+          console.log();
+        });
+
         console.log(highlightPrint('  [Kraken] Run Kraken Playground App: '));
-        console.log(`  ${chalk.underline.white(`kraken -u ${krakenURL}`)}`);
-        console.log();
+        krakenEntryKeys.forEach((entryKey) => {
+          const krakenURL = `${urls.lanUrlForBrowser}kraken/${krakenMpa ? entryKey : 'index'}.js`;
+          console.log(`  ${chalk.underline.white(`kraken -u ${krakenURL}`)}`);
+          console.log();
+        });
       }
 
       if (targets.includes(WEEX)) {
         // Use Weex App to scan ip address (mobile phone can't visit localhost).
         console.log(highlightPrint('  [Weex] Development server at: '));
         weexEntryKeys.forEach((entryKey) => {
-          const weexUrl = `${urls.lanUrlForBrowser}weex/${weexEntryKeys.length > 1 ? entryKey : 'index'}.js?wh_weex=true`;
+          const weexUrl = `${urls.lanUrlForBrowser}weex/${weexMpa ? entryKey : 'index'}.js?wh_weex=true`;
           console.log(`  ${chalk.underline.white(weexUrl)}`);
           console.log();
           qrcode.generate(weexUrl, { small: true });

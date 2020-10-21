@@ -1,9 +1,4 @@
 {
-  "web": {
-    "ssr": true,
-    "mpa": true
-  },
-  "plugins": [],
-  "targets": ["web", "miniapp"],
+  "targets": ["web", "weex", "kraken"],
   "inlineStyle": true
 }
