@@ -39,10 +39,6 @@ module.exports = (api) => {
         const outputPath = path.resolve(rootDir, outputDir, target);
         config.output.path(outputPath);
 
-        config
-          .plugin('DefinePlugin')
-          .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': JSON.stringify('..') })]);
-
         const needCopyDirs = [];
 
         // Copy src/miniapp-native dir
@@ -55,10 +51,6 @@ module.exports = (api) => {
 
         // Copy public dir
         if (config.plugins.has('CopyWebpackPlugin')) {
-          needCopyDirs.push({
-            from: path.resolve(rootDir, 'public'),
-            to: path.resolve(rootDir, outputDir, target)
-          });
           config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
             return [copyList.concat(needCopyDirs)];
           });
