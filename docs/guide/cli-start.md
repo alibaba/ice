@@ -19,8 +19,10 @@ export NVM_DIR="$HOME/.nvm"
 
 # 使用 nvm 安装 node 的10.22.0版本
 $ nvm install 10.22.0
+
 # 使用 10.22.0 版本
 $ nvm use 10.22.0
+
 # 验证 node 是否安装成功
 $ node -v
 v10.22.0
@@ -28,7 +30,7 @@ $ npm -v
 6.14.6
 ```
 
-在国内使用 npm 安装依赖可能会比较慢。我们需要使用国内源加速：
+在国内使用 npm 安装依赖可能会比较慢。建议使用国内镜像源进行加速：
 
 ```bash
 $ npm install -g cnpm --registry=https://registry.npm.taobao.org
