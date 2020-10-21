@@ -81,7 +81,22 @@ const appConfig = {
 runApp(appConfig);
 ```
 
-> 目前仅支持通过 store 的 `initialStates` 来使用消费 `initalData`，如果需要在其它业务代码中直接消费，可以先将需求反馈给 ICE 团队
+框架提供了两种方式获取 `getInitialData` 返回的数据：
+
+- 通过 `getInitialData` API 消费 `initialData`。
+
+```ts
+import React from 'react';
+import { getInitialData } from 'ice';
+
+export default = () => {
+  // 获取通过 app.getInitialData 返回的 initialData 数据。
+  const initialData = getInitialData();
+  console.log(initialData);
+};
+```
+
+- 通过 store 的 `initialStates` 来使用消费 `initalData`，[详见](/docs/guide/basic/store)。
 
 
 ## 页面级数据
