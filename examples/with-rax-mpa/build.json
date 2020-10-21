@@ -1,0 +1,13 @@
+{
+  "targets": ["web", "weex", "kraken"],
+  "weex": {
+    "mpa": true
+  },
+  "kraken": {
+    "mpa": true
+  },
+  "web": {
+    "mpa": true
+  },
+  "inlineStyle": true
+}

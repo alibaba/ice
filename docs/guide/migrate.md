@@ -1,6 +1,6 @@
 ---
 title: 迁移到 icejs
-order: 4
+order: 5
 ---
 
 ## 为什么要升级到 icejs

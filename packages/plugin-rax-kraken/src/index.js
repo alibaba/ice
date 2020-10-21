@@ -1,4 +1,6 @@
 const path = require('path');
+const setMPAConfig = require('build-mpa-config');
+const { getMpaEntries } = require('build-app-helpers');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 
@@ -14,6 +16,7 @@ module.exports = (api) => {
       name: 'Kraken'
     }
   });
+  chainConfig.name(target);
   chainConfig.taskName = target;
 
   setEntry(chainConfig, context);
@@ -28,11 +31,21 @@ module.exports = (api) => {
   onGetWebpackConfig(target, config => {
     const { userConfig, rootDir, command } = context;
     const { outputDir = 'build' } = userConfig;
+    const krakenConfig = userConfig.kraken || {};
+
+    if (krakenConfig.mpa) {
+      setMPAConfig.default(config, { context, type: 'kraken', entries: getMpaEntries(api, {
+        target,
+        appJsonPath: path.join(rootDir, 'src/app.json')
+      }) });
+    }
+
     let outputPath;
     if (command === 'start') {
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir);
       config.output.filename(`${target}/[name].js`);
+      config.devServer.contentBase(outputPath);
       // Force disable HMR, kraken not support yet.
       config.devServer.inline(false);
       config.devServer.hot(false);
@@ -41,27 +54,5 @@ module.exports = (api) => {
       outputPath = path.resolve(rootDir, outputDir, target);
     }
     config.output.path(outputPath);
-
-    let publicUrl = JSON.stringify('');
-    if (command === 'build') {
-      publicUrl = JSON.stringify('.');
-    }
-
-    config
-      .plugin('DefinePlugin')
-      .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': publicUrl })]);
-
-    const needCopyDirs = [];
-
-    // Copy public dir
-    if (config.plugins.has('CopyWebpackPlugin')) {
-      needCopyDirs.push({
-        from: path.resolve(rootDir, 'public'),
-        to: path.resolve(rootDir, outputDir, target)
-      });
-      config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
-        return [copyList.concat(needCopyDirs)];
-      });
-    }
   });
 };

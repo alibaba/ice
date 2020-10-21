@@ -1,5 +1,6 @@
 const path = require('path');
 const setMPAConfig = require('build-mpa-config');
+const { getMpaEntries } = require('build-app-helpers');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
 const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');
@@ -32,10 +33,12 @@ module.exports = (api) => {
 
   onGetWebpackConfig(target, config => {
     const { outputDir = 'build', weex = {} } = userConfig;
-    let publicUrl = JSON.stringify('');
     // set mpa config
     if (weex.mpa) {
-      setMPAConfig.default(config, { context, type: 'weex' });
+      setMPAConfig.default(config, { context, type: 'weex', entries: getMpaEntries(api, {
+        target,
+        appJsonPath: path.join(rootDir, 'src/app.json')
+      }) });
     }
 
     let outputPath;
@@ -45,28 +48,10 @@ module.exports = (api) => {
       config.devServer.contentBase(outputPath);
       config.output.filename(`${target}/[name].js`);
     } else if (command === 'build') {
-      publicUrl = JSON.stringify('.');
       // Set output dir
       outputPath = path.resolve(rootDir, outputDir, target);
     }
 
     config.output.path(outputPath);
-
-    // Set public url
-    config
-      .plugin('DefinePlugin')
-      .tap((args) => [Object.assign(...args, { 'process.env.PUBLIC_URL': publicUrl })]);
-
-    const needCopyDirs = [];
-    // Copy public dir
-    if (config.plugins.has('CopyWebpackPlugin')) {
-      needCopyDirs.push({
-        from: path.resolve(rootDir, 'public'),
-        to: path.resolve(rootDir, outputDir, target)
-      });
-      config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
-        return [copyList.concat(needCopyDirs)];
-      });
-    }
   });
 };

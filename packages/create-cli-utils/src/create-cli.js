@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const program = require('commander');
-const checkNodeVersion = require('@alib/build-scripts/lib/utils/checkNodeVersion');
+const checkNodeVersion = require('./checkNodeVersion');
 const start = require('./start');
 const build = require('./build');
 const test = require('./test');
@@ -15,7 +15,7 @@ module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo, ex
     console.log(packageInfo.name, packageInfo.version);
   }
   // finish check before run command
-  checkNodeVersion(packageInfo.engines.node);
+  checkNodeVersion(packageInfo.engines.node, packageInfo.name);
 
   program
     .version(packageInfo.version)

@@ -1,5 +1,5 @@
 ---
-title: 快速开始
+title: 使用 CLI 创建应用
 order: 3
 ---
 
@@ -7,36 +7,56 @@ order: 3
 
 如果是阿里内部开发者，请参考[文档](https://yuque.alibaba-inc.com/ice/rdy99p/gsfp6h)，可直接打通内部发布流程。
 
-## 使用 Iceworks
+## 环境准备
 
-**安装 Iceworks**
+首先需要安装 [node](https://nodejs.org)，并确保 node 版本是 10.x 版本或以上。推荐使用 [nvm](https://github.com/nvm-sh/nvm) 来管理 node 版本，windows 用户可以参考 [nvm-windows](https://github.com/coreybutler/nvm-windows) 进行安装。下面以在 mac 下安装举例：
 
-![安装](https://img.alicdn.com/tfs/TB1FWaiKKT2gK0jSZFvXXXnFXXa-960-600.gif)
+```bash
+$ curl https://raw.githubusercontent.com/cnpm/nvm/master/install.sh | bash
 
-- 点击 VS Code 活动栏上的「插件市场图标」
-- 在侧边栏的搜索框上输入「Iceworks」
-- 点击侧边栏上出现的搜索结果中的「Iceworks 插件栏」
-- 在主窗口出现的页面上点击「安装」按钮
+# 增加以下内容到 ~/.bashrc 或者 ~/.zshrc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-**初始化项目**
+# 使用 nvm 安装 node 的10.22.0版本
+$ nvm install 10.22.0
 
-![创建](https://img.alicdn.com/tfs/TB1tyMVLFP7gK0jSZFjXXc5aXXa-960-600.gif)
+# 使用 10.22.0 版本
+$ nvm use 10.22.0
 
-- 点击 VS Code 活动栏上的「Iceworks 图标」
-- 点击侧边栏上的「创建新应用」按钮
-- 在主窗口出现的页面上根据引导创建项目
+# 验证 node 是否安装成功
+$ node -v
+v10.22.0
+$ npm -v
+6.14.6
+```
 
-**启动项目**
+在国内使用 npm 安装依赖可能会比较慢。建议使用国内镜像源进行加速：
 
-![启动](https://img.alicdn.com/tfs/TB1jDa9L7T2gK0jSZFkXXcIQFXa-960-600.gif)
+```bash
+$ npm install -g cnpm --registry=https://registry.npm.taobao.org
+# 验证 cnpm 安装是否成功
+$ cnpm -v
+```
 
-- 点击 VS Code 活动栏上的「Iceworks 图标」
-- 鼠标移动到 「NPM 脚本」下的「start 项」
-- 点击 start 项右边的「启动图标」
+除了 npm，我们还可以使用 yarn 作为依赖管理工具：
 
-## 使用 CLI
+```bash
+$ npm i yarn -g
+$ yarn -v
+1.22.5
+```
 
-**初始化项目**
+如果经常需要切换 npm 镜像源，推荐使用 [nrm](https://github.com/Pana/nrm) 进行管理：
+
+```bash
+$ npm install -g nrm
+$ nrm ls
+$ nrm use taobao
+```
+
+## 初始化项目
 
 可以选择使用 npm 或者 yarn 工具进行项目初始化，如下输入项目名即可：
 
@@ -60,7 +80,7 @@ $ npm init ice <projectName> --template <template> # 指定模板
 
 > 可从 [模板库](https://ice.work/scaffold) 选择模板 `<template>`
 
-**选择模板**
+## 选择模板
 
 可以根据实际情况选择 TypeScript 和 JavaScript 模板，其中各包含一个轻量的 Lite 和功能完善的 Pro 模板：
 
@@ -87,7 +107,7 @@ Starts the development server.
 ✨  Done
 ```
 
-**启动项目**
+## 启动项目
 
 按照上面的提示，进入新建的项目安装依赖即可：
 

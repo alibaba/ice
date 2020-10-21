@@ -318,6 +318,10 @@ const history = createMemoryHistory();
 
 ## 工具方法
 
+### getInitialData
+
+获取通过 `app.getInitialData` 返回的 initialData 数据。[详见](/docs/guide/advance/ssr#应用级数据)
+
 ### lazy
 
 用于代码懒加载。[详见](/docs/guide/advance/code-splitting)

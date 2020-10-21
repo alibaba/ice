@@ -6,20 +6,20 @@ const path = require('path');
 const fs = require('fs-extra');
 
 module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
-  const { context } = api;
-  const { rootDir, command, webpack, commandArgs } = context;
+  const { context, onGetWebpackConfig } = api;
+  const { rootDir, command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
   const babelConfig = getBabelConfig(babelConfigOptions);
 
   const mode = command === 'start' ? 'development' : 'production';
-  const config = getWebpackConfig({
+  const chainConfig = getWebpackConfig({
     rootDir,
     mode,
     babelConfig,
-    target
+    target,
   });
   // 1M = 1024 KB = 1048576 B
-  config.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
+  chainConfig.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
 
   // setup DefinePlugin and CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
@@ -31,30 +31,29 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
 
-  config
+  chainConfig
     .plugin('ProgressPlugin')
-    .use(ProgressPlugin, [Object.assign({ color: '#F4AF3D' } ,progressOptions)])
+    .use(ProgressPlugin, [Object.assign({ color: '#F4AF3D' }, progressOptions)])
     .end()
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
 
   // Copy public dir
   if (fs.existsSync(path.resolve(rootDir, 'public'))) {
-    config
-      .plugin('CopyWebpackPlugin')
-      .use(CopyWebpackPlugin, [[]]);
+    chainConfig.plugin('CopyWebpackPlugin').use(CopyWebpackPlugin, [[]]);
   }
 
-  config.plugin('friendly-error')
+  chainConfig
+    .plugin('friendly-error')
     .use(require.resolve('friendly-errors-webpack-plugin'), [
       {
         clearConsole: false,
-      }
+      },
     ])
     .end();
 
   // Process app.json file
-  config.module
+  chainConfig.module
     .rule('appJSON')
     .type('javascript/auto')
     .test(/app\.json$/)
@@ -66,7 +65,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     .loader(require.resolve('./loaders/AppConfigLoader'));
 
   ['jsx', 'tsx'].forEach((ruleName) => {
-    config.module
+    chainConfig.module
       .rule(ruleName)
       .use('platform-loader')
       .loader(require.resolve('rax-compile-config/src/platformLoader'));
@@ -77,5 +76,35 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     process.env.DISABLE_STATS = true;
   }
 
-  return config;
+  onGetWebpackConfig(target, (config) => {
+    // Set public url after developer has set public path
+    // Get public path
+    let publicUrl = config.output.get('publicPath');
+
+    // Developer will use process.env.PUBLIC_URL + '/logo.png', so it need remove last /
+    if (publicUrl && publicUrl.endsWith('/')) {
+      publicUrl = publicUrl.substring(0, publicUrl.length - 1);
+    }
+
+    config
+      .plugin('DefinePlugin')
+      .tap((args) => [
+        Object.assign(...args, {
+          'process.env.PUBLIC_URL': JSON.stringify(publicUrl),
+        }),
+      ]);
+
+    const { outputDir = 'build' } = userConfig;
+    // Copy public dir
+    if (config.plugins.has('CopyWebpackPlugin')) {
+      config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
+        return [copyList.concat([{
+        from: path.resolve(rootDir, 'public'),
+        to: path.resolve(rootDir, outputDir, target)
+      }])];
+      });
+    }
+  });
+
+  return chainConfig;
 };

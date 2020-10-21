@@ -1,22 +1,32 @@
 import * as path from 'path';
-import getEntries from './getEntries';
 
-interface ConfigOptions {
+interface IEntries {
+  entryName: string;
+  pageName: string;
+  entryPath: string;
+}
+
+interface IConfigOptions {
   context: {
     rootDir: string;
     commandArgs: any;
   };
   type: string;
   framework: string;
+
+  entries?: IEntries[];
 }
 
-const setMPAConfig = (config, options: ConfigOptions) => {
-  const { context, type = 'web', framework = 'rax' } = options || {};
+const setMPAConfig = (config, options: IConfigOptions) => {
+  if (!options) {
+    throw new Error('There need pass options param to setMPAConfig method');
+  }
+  const { context, type = 'web', framework = 'rax' } = options;
+  let { entries } = options;
   const { rootDir, commandArgs } = context;
-  let mpaEntries = getEntries(rootDir);
   if (commandArgs.mpaEntry) {
     const arr = commandArgs.mpaEntry.split(',');
-    mpaEntries = mpaEntries.filter((entry) => {
+    entries = entries.filter((entry) => {
       return arr.includes(entry.entryName);
     });
   }
@@ -26,7 +36,7 @@ const setMPAConfig = (config, options: ConfigOptions) => {
   config.entryPoints.clear();
   // add mpa entries
   const matchStrs = [];
-  mpaEntries.forEach((entry) => {
+  entries.forEach((entry) => {
     const { entryName, entryPath, pageName } = entry;
     const pageEntry = path.join(rootDir, 'src/pages', entryPath);
     config.entry(entryName).add((/app\.(t|j)sx?$/.test(entryPath) || type === 'node') ? pageEntry : `${require.resolve('./mpa-loader')}?type=${type}&framework=${framework}!${pageEntry}`);
@@ -38,7 +48,7 @@ const setMPAConfig = (config, options: ConfigOptions) => {
     config.plugin('document').tap(args => {
       return [{
         ...args[0],
-        pages: mpaEntries,
+        pages: entries,
       }];
     });
   }
