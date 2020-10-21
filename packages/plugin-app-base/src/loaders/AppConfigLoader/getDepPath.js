@@ -1,4 +1,5 @@
 const { join } = require('path');
+const formatWinPath = require('../../utils/formatWinPath');
 
 /**
  * ./pages/foo -> based on src, return original
@@ -10,5 +11,5 @@ module.exports = function getDepPath(path, rootContext = '') {
   const splitPath = path.split('/');
   splitPath[splitPath.length - 1] = 'Page';
   const tempPagePath = splitPath.join('/');
-  return join(rootContext, '.rax', tempPagePath);
+  return formatWinPath(join(rootContext, '.rax', tempPagePath));
 };

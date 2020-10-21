@@ -38,9 +38,9 @@ module.exports = function(api) {
     webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
     weexEntryKeys = Object.keys(getWebpackEntry(config, 'weex'));
     krakenEntryKeys = Object.keys(getWebpackEntry(config, 'kraken'));
-    webMpa = userConfig?.web?.mpa;
-    weexMpa = userConfig?.weex?.mpa;
-    krakenMpa = userConfig?.kraken?.mpa;
+    webMpa = userConfig.web && userConfig.web.mpa;
+    weexMpa = userConfig.weex && userConfig.weex.mpa;
+    krakenMpa = userConfig.kraken && userConfig.kraken.mpa;
     try {
       debug(config);
     // eslint-disable-next-line no-empty

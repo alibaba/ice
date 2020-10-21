@@ -20,6 +20,6 @@
     "fs-extra": "^9.0.1",
     "webpack-sources": "^2.0.0",
     "build-mpa-config": "1.0.2-0",
-    "build-app-helpers": "1.0.0-0"
+    "build-app-helpers": "1.0.0-1"
   }
 }
