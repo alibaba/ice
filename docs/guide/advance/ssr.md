@@ -59,7 +59,27 @@ runApp(appConfig);
 
 `getInitialData` 返回的 `initialData.initialStates` 会作为 store 的初始状态，因此 View 里通过 model 拿到的默认 state 即 `initialData.initialStates`，如 `models/user.js` 的默认 states 即上出的 `{ name: 'Jack Ma', id: '01' }`。
 
-> 目前仅支持通过 store 来使用 `initalData`，如果需要在其它业务代码中直接消费，可以先将需求反馈给 ICE 团队
+```diff
+import { runApp } from 'ice';
+
+const appConfig = {
+  app: {
+    getInitialData: async () => {}
+  },
+  store: {
++   // 参数 initialData 即 getInitialData 返回的数据
++   getInitialStates: (initialData) => {
++     // 可按需选择需要作为 initialStates 的数据
++     return initialData;
++   }
+  }
+};
+
+runApp(appConfig);
+```
+
+> 目前仅支持通过 store 的 `initialStates` 来使用消费 `initalData`，如果需要在其它业务代码中直接消费，可以先将需求反馈给 ICE 团队
+
 
 ## 页面级数据
 
