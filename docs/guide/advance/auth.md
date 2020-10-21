@@ -36,7 +36,7 @@ $ npm install build-plugin-ice-auth --save-dev
 
 
 ```tsx
-import { createApp, request, IAppConfig } from 'ice';
+import { runApp, request, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -65,7 +65,7 @@ const appConfig: IAppConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ## 页面权限

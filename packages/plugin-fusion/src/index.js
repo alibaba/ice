@@ -101,6 +101,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
                 ...plugins,
                 // eslint-disable-next-line
                 require('postcss-plugin-rpx2vw'),
+                // eslint-disable-next-line
                 require('./postcssPlugins/postcssPluginPx2vw')(px2vwOptions),
               ],
             };
@@ -164,8 +165,9 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
       const mixBizCom = {};
 
       // bizComponent: ['@alifd/anchor', '@alifd/pro-components'],
+
       if (Array.isArray(bizComponent)) {
-        bizComponent.map(com => {
+        bizComponent.forEach(com => {
           mixBizCom[com] = `${com}${customPath}`;
         });
       }
@@ -178,7 +180,7 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
       if (mapList.length > 0) {
         mapList.forEach(orgName => {
           mixBizCom[orgName] = componentMap[orgName];
-        })
+        });
       }
 
       crossendBabelLoader.push(require.resolve('babel-plugin-module-resolver'), {

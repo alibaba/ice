@@ -129,7 +129,7 @@ ReactDOM.render(router(), ICE_CONTAINER);
 新建 `src/app.js` 文件：
 
 ```ts
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   router: {
@@ -137,7 +137,7 @@ const appConfig = {
   },
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 最后，删除 `src/index.js` 文件
