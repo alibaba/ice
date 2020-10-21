@@ -15,6 +15,16 @@ export function reactAppRendererWithSSR(context, options) {
   return _renderApp(context, options);
 }
 
+let __initialData__;
+
+function setInitialData(initialData) {
+  __initialData__ = initialData;
+}
+
+export function getInitialData() {
+  return __initialData__;
+}
+
 export async function reactAppRenderer(options) {
   const { appConfig, setAppConfig, loadStaticModules } = options || {};
 
@@ -38,6 +48,9 @@ export async function reactAppRenderer(options) {
       initialData = await appConfig.app.getInitialData();
     }
   }
+
+  // set InitialData, can get the return value through getInitialData method
+  setInitialData(initialData);
 
   const context = { initialData, pageInitialProps };
   _renderApp(context, options);
