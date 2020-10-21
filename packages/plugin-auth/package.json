@@ -17,9 +17,6 @@
     "lib",
     "template"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/ice.git"
