@@ -1,6 +1,6 @@
 {
   "name": "rax-app",
-  "version": "3.0.3",
+  "version": "3.0.4-0",
   "description": "command line interface and builtin plugin for rax app",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
