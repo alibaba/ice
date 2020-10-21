@@ -1,7 +1,7 @@
 import getMpaEntries from './getMpaEntries';
-import getRoutesByJson from './getRoutesByJson';
+import getRoutesByAppJson from './getRoutesByAppJson';
 
 export {
   getMpaEntries,
-  getRoutesByJson
+  getRoutesByAppJson
 };
