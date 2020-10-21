@@ -76,7 +76,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     process.env.DISABLE_STATS = true;
   }
 
-  onGetWebpackConfig((config) => {
+  onGetWebpackConfig(target, (config) => {
     // Set public url after developer has set public path
     // Get public path
     let publicUrl = config.output.get('publicPath');
