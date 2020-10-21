@@ -1,7 +1,7 @@
 import '@/app';
 import * as cheerio from 'cheerio';
 import { matchPath } from 'ice';
-import { reactAppRendererWithSSR } from 'react-app-renderer';
+import { reactAppRendererWithSSR, setInitialData } from 'react-app-renderer';
 import { getAppConfig } from './appConfig';
 import loadStaticModules from './loadStaticModules';
 import app from './runApp';
@@ -33,6 +33,9 @@ const serverRender = async ({ ctx, pathname, initialData, htmlTemplate }) => {
         initialData = await getInitialData(ctx);
       }
     }
+
+    // set initial data
+    setInitialData(initialData);
 
     // get page initial props
     const PageComponent = getComponentByPath(routes, pathname);
