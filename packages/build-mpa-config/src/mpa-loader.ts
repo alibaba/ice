@@ -1,4 +1,5 @@
 import { getOptions } from 'loader-utils';
+import { formatPath } from 'build-app-helpers';
 
 function mpaLoader() {
   const options = getOptions(this) || {};
@@ -23,7 +24,7 @@ function mpaLoader() {
   }
   const source = `
   import { render, createElement } from '${framework}';
-  import Component from '${process.platform === 'win32' ? this.resourcePath.replace(/\//g, '\\\\') : this.resourcePath}';
+  import Component from '${formatPath(this.resourcePath)}';
   import DriverUniversal from 'driver-universal';
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
