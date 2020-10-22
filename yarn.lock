@@ -4979,17 +4979,6 @@ build-plugin-app-core@0.1.20:
     react-app-renderer "^0.1.9"
     universal-env "^3.0.0"
 
-build-plugin-rax-weex@1.0.4-0:
-  version "1.0.4-0"
-  resolved "https://registry.npm.taobao.org/build-plugin-rax-weex/download/build-plugin-rax-weex-1.0.4-0.tgz#519d107b2f1295497e469692cad8db17fc0a9480"
-  integrity sha1-UZ0Qey8SlUl+RpaSytjbF/wKlIA=
-  dependencies:
-    build-app-helpers "1.0.0-1"
-    build-mpa-config "1.0.2-0"
-    fs-extra "^9.0.1"
-    rax-compile-config "^0.2.16"
-    webpack-sources "^2.0.0"
-
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
