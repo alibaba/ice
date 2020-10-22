@@ -7,16 +7,23 @@ function mpaLoader() {
   if (['weex', 'kraken'].includes(options.type)) {
     appRender = 'render(createElement(Entry), null, { driver: DriverUniversal });';
   } else {
+    // Todo: mpa will refactor in next month to optimize it, see more detail in https://github.com/raxjs/rax-scripts/issues/457
     appRender = `
-      const renderApp = async function() {
+      var renderApp = function() {
         // process App.getInitialProps
         if (isSSR && window.__INITIAL_DATA__.pageData !== null) {
           Object.assign(comProps, window.__INITIAL_DATA__.pageData);
+          render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
         } else if (Component.getInitialProps) {
-          Object.assign(comProps, await Component.getInitialProps());
+          Component.getInitialProps().then(initialProps => {
+            Object.assign(comProps, initialProps);
+          });
+          render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
+        } else {
+          render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
         }
-        render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
       }
+
 
       renderApp();
     `;
@@ -25,9 +32,9 @@ function mpaLoader() {
   import { render, createElement } from '${framework}';
   import Component from '${process.platform === 'win32' ? this.resourcePath.replace(/\//g, '\\\\') : this.resourcePath}';
   import DriverUniversal from 'driver-universal';
-  const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
+  var isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
-  const comProps = {};
+  var comProps = {};
 
   function Entry() {
     return createElement(Component, comProps);
