@@ -1,6 +1,6 @@
 ---
 title: 数据请求
-order: 4
+order: 5
 ---
 
 大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。在 icejs 框架中内置约定和规范了一套从 UI 交互到请求服务端数据的完整方案，更进一步简化了应用的数据请求流程，基于此提供了 request 和 useRequest Hooks 方法。
