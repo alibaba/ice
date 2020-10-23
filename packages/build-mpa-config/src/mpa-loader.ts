@@ -16,7 +16,7 @@ function mpaLoader() {
           Object.assign(comProps, window.__INITIAL_DATA__.pageData);
           render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
         } else if (Component.getInitialProps) {
-          Component.getInitialProps().then(initialProps => {
+          Component.getInitialProps().then(function(initialProps) {
             Object.assign(comProps, initialProps);
           });
           render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
