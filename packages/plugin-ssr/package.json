@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ssr",
-  "version": "1.0.5-2",
+  "version": "1.0.5-3",
   "description": "",
   "author": "",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -24,7 +24,7 @@
     "url": "https://github.com/alibaba/ice/issues"
   },
   "dependencies": {
-    "build-mpa-config": "1.0.3-2",
+    "build-mpa-config": "1.0.3-3",
     "chalk": "^4.1.0",
     "rax-compile-config": "^0.2.16",
     "fs-extra": "^9.0.1",
