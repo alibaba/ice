@@ -60,7 +60,6 @@ const Navigation = () => {
 首先在 `src/layouts/BasicLayout/menuConfig.ts` 中增加以下的内容：
 
 ```diff
-// src/layouts/BasicLayout/menuConfig.js
 export const asideMenuConfig = [
   {
     name: 'Home',
