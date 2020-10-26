@@ -1,4 +1,6 @@
 {
-  "targets": ["web", "weex", "kraken"],
-  "inlineStyle": true
+  "targets": ["miniapp"],
+  "miniapp": {
+    "buildType": "compile"
+  }
 }
