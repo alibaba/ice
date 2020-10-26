@@ -1,5 +1,5 @@
 import React from 'react';
-import { createApp, IAppConfig } from 'ice';
+import { runApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -25,8 +25,8 @@ const appConfig: IAppConfig = {
   },
   auth: {
     // 可选的，设置无权限时的展示组件，默认为 null
-    NoAuthFallback: <div>没有权限...</div>,
+    NoAuthFallback: () => <div>没有权限...</div>,
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);

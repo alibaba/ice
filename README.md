@@ -95,7 +95,7 @@ export default HomePage
 Configure an application information in the `src/app.js` file, but it is optional:
 
 ```js
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 
 const appConfig = {
   router: {
@@ -105,7 +105,7 @@ const appConfig = {
   // more...
 }
 
-createApp(appConfig)
+runApp(appConfig)
 ```
 
 Finally, To start developing your application run `npm run start`. The application is now running on [http://localhost:3333](http://localhost:3333).

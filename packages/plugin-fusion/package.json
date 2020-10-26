@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-fusion",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "plugin for build scripts while use fusion component",
   "main": "lib/index.js",
   "scripts": {
@@ -15,10 +15,12 @@
   "license": "MIT",
   "dependencies": {
     "babel-plugin-import": "^1.11.2",
+    "babel-plugin-module-resolver": "^4.0.0",
     "find-root": "^1.1.0",
     "ice-skin-loader": "^0.3.0-0",
     "lodash": "^4.17.15",
     "postcss": "^7.0.32",
+    "postcss-plugin-rpx2vw": "^0.0.2",
     "resolve-sass-import": "^0.1.0",
     "semver": "^6.1.0",
     "webpack-plugin-import": "^0.2.5",

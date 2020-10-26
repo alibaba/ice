@@ -45,7 +45,7 @@ $ npm init ice <your-plugin-name>
 
 ## 运行时能力定制
 
-运行时能力以 `runtime.ts` 为入口，通过浏览器打开页面时会执行 `src/app.ts` 中的 `createApp()` 方法，这个方法会加载并执行所有插件的 `runtime.ts`。
+运行时能力以 `runtime.ts` 为入口，通过浏览器打开页面时会执行 `src/app.ts` 中的 `runApp()` 方法，这个方法会加载并执行所有插件的 `runtime.ts`。
 
 关于 `runtime.ts` 应该如何书写请参考下一个章节的文档 [通过插件定制运行时能力](/docs/guide/develop/plugin-runtime.md)。
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createApp, APP_MODE, IAppConfig, request } from 'ice';
+import { runApp, APP_MODE, IAppConfig, request } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -8,7 +8,7 @@ const appConfig: IAppConfig = {
     parseSearchParams: true,
     getInitialData: async() => {
       const result = await request('/repo');
-      console.log('request result:', result);
+      return result;
     },
     onShow() {
       console.log('app show...');
@@ -38,4 +38,4 @@ const appConfig: IAppConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);

@@ -1,6 +1,7 @@
 const path = require('path');
 const setMPAConfig = require('build-mpa-config');
 const fs = require('fs-extra');
+const { getMpaEntries } = require('build-app-helpers');
 const getEntryName = require('./getEntryName');
 const EntryPlugin = require('./entryPlugin');
 
@@ -25,9 +26,11 @@ module.exports = (api) => {
     }
   });
 
+  const appJsonPath = path.resolve(rootDir, 'src/app.json');
+
   let entries = {};
   if (webConfig.mpa) {
-    setMPAConfig.default(config, { context, type: TARGET });
+    setMPAConfig.default(config, { context, type: TARGET, entries: getMpaEntries(api, { target: 'web', appJsonPath }) });
     const mpaEntries = config.toConfig().entry;
     entries = Object.keys(mpaEntries).map(entryName => {
       return {
@@ -37,7 +40,7 @@ module.exports = (api) => {
     });
   } else {
      // eslint-disable-next-line
-    const appJSON = require(path.resolve(rootDir, 'src/app.json'));
+    const appJSON = require(appJsonPath);
     entries = appJSON.routes.map((route) => {
       return {
         name: getEntryName(route.path),

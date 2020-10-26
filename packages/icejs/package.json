@@ -1,6 +1,6 @@
 {
   "name": "ice.js",
-  "version": "1.9.8",
+  "version": "1.9.10",
   "description": "command line interface and builtin plugin for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -22,26 +22,27 @@
   },
   "dependencies": {
     "@alib/build-scripts": "^0.1.13",
+    "build-plugin-app-core": "0.1.21",
     "build-plugin-ice-config": "1.7.1",
-    "build-plugin-app-core": "0.1.20",
     "build-plugin-ice-helpers": "1.7.1",
-    "build-plugin-ice-logger": "1.7.1",
+    "build-plugin-ice-logger": "1.7.2",
     "build-plugin-ice-mpa": "1.7.1",
     "build-plugin-ice-request": "1.7.2",
-    "build-plugin-ice-router": "1.7.3",
-    "build-plugin-ice-ssr": "1.7.3",
+    "build-plugin-ice-router": "1.7.4",
+    "build-plugin-ice-ssr": "1.7.4",
     "build-plugin-ice-store": "1.7.6",
     "build-plugin-react-app": "1.7.8",
     "build-plugin-miniapp": "0.1.6",
-    "create-cli-utils": "0.1.4",
+    "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
     "commander": "^5.0.0",
+    "create-cli-utils": "0.1.5",
     "detect-port": "^1.3.0",
     "inquirer": "^7.1.0",
     "yargs-parser": "^18.1.2"
   },
   "engines": {
-    "node": ">=8.6.0",
+    "node": ">=10.13.0",
     "npm": ">=3.0.0"
   },
   "gitHead": "cf40d079714b437417e77b444b078cf83286f2fc"
