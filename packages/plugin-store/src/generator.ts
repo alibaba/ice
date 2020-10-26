@@ -15,7 +15,6 @@ export interface IRenderPageParams {
 
 const matchRegex = /^[^._].*\.(js|ts)$/;
 
-
 export default class Generator {
   private isRax: boolean
 
@@ -163,7 +162,7 @@ export default class Generator {
 
   private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.tsx');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Page.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
     const pageComponentName = `Page${pageName}`;
@@ -172,7 +171,7 @@ export default class Generator {
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
-      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\''
     };
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
@@ -197,7 +196,7 @@ export default class Generator {
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageLayoutName,
       hasPageStore: false,
-      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile}'` : 'import store from \'./store\''
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\''
     };
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
@@ -208,14 +207,15 @@ export default class Generator {
   }
 
   private renderPageIndex(params) {
-    const { pageName, pageModelsDir, pageModelFile } = params;
+    const { pageName, existedStoreFile, pageModelFile, pageModelsDir } = params;
     const pageIndexTemplatePath = path.join(__dirname, './template/pageIndex.ts.ejs');
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.ts');
 
-    const existStore = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
+    const existsModel = fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile);
+
     const pageComponentRenderData = {
-      pageImports: existStore ? 'import store from \'./store\'' : '',
-      pageExports: existStore ? ' store ' : ''
+      pageImports: (existsModel && !existedStoreFile) ? 'import store from \'./store\'' : '',
+      pageExports: (existsModel && !existedStoreFile) ? ' store ' : ''
     };
 
     this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
@@ -265,18 +265,19 @@ export default class Generator {
       const pageStoreFile = this.applyMethod('formatPath', path.join(pageNameDir, `store.${this.projectType}`));
       const existedStoreFile = fse.pathExistsSync(pageStoreFile);
 
-      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile };
+      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile, existsAppStoreFile };
 
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);
 
-      // generate .ice/pages/${pageName}/index.tsx
+      // generate .ice/pages/${pageName}/index.ts	
+      this.renderPageIndex(params);
+
+      // generate .ice/pages/${pageName}/Page.tsx
       this.renderPageComponent(params);
 
-      // generate .ice/pages/${pageName}/${pageName}.tsx
+      // generate .ice/pages/${pageName}/Layout.tsx
       this.renderPageLayout(params);
-      // generate .ice/pages/${pageName}/index.ts
-      this.renderPageIndex(params);
     });
   }
 }

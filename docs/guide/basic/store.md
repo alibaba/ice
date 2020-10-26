@@ -43,7 +43,7 @@ export default {
   },
 
   // 定义处理该模型副作用的函数
-  effects: () => ({
+  effects: (dispatch) => ({
     async getUserInfo () {
       await delay(1000);
       dispatch.user.update({
@@ -246,7 +246,7 @@ export default {
     }
   },
 
-+ effects: () => ({
++ effects: (dispatch) => ({
 +   async asyncDecrement() {
 +     await delay(1000);             // 进行一些异步操作
 +     dispatch.counter.increment();  // 调用模型 reducers 内的方法来更新状态

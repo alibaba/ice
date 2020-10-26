@@ -1,6 +1,5 @@
 import { createStore } from 'rax-app';
 import CounterModel from './models/counter';
 
-const model = { 'counter': CounterModel };
-const store = createStore(model);
+const store = createStore({ counter: CounterModel })
 export default store;

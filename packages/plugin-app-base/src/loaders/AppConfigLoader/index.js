@@ -19,7 +19,7 @@ const getDepPath = require('./getDepPath');
     "hydrate": false
   }
  */
-module.exports = function(appJSON) {
+module.exports = function (appJSON) {
   const options = getOptions(this) || {};
   const { type } = options;
   const appConfig = JSON.parse(appJSON);
