@@ -224,4 +224,4 @@ Class Foo extends React.Component {
 }
 
 export default withAuth(Foo)
-``
+```
