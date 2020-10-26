@@ -45,8 +45,8 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     };
 
     if (process.env.__IS_SERVER__) {
-      const { pathname, staticContext = {} } = context;
-      routerProps = Object.assign({}, routerProps, { location: pathname, context: staticContext });
+      const { pathname, staticContext = {}, searchParams } = context;
+      routerProps = Object.assign({}, routerProps, { location: pathname, context: staticContext, searchParams });
     }
 
     return <IceRouter {...routerProps} />;
