@@ -45,7 +45,7 @@
     "url": "https://github.com/alibaba/ice/issues"
   },
   "engines": {
-    "node": ">=8.6.0",
+    "node": ">=10.13.0",
     "npm": ">=3.0.0"
   }
 }
