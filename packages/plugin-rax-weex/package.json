@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-rax-weex",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "rax weex app plugin",
   "main": "lib/index.js",
   "scripts": {
