@@ -55,7 +55,7 @@ const View = () => {
 Set global `initialstates` to `src/app.ts`:
 
 ```ts
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 
 const appConfig = {
   // Set global initialstates

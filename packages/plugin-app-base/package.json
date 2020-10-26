@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-app-base",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "rax app base plugin",
   "main": "lib/index.js",
   "scripts": {

@@ -35,20 +35,16 @@ module.exports = (api) => {
       .filename('node/[name].js')
       .libraryTarget('commonjs2');
 
-    let publicUrl = JSON.stringify('');
-
     if (isDev) {
       setSSRDev(config, context);
     } else {
-      publicUrl = JSON.stringify('.');
       setSSRBuild(config, context);
     }
 
     config
       .plugin('DefinePlugin')
       .tap((args) => [Object.assign({}, ...args, {
-        'process.env.__IS_SERVER__': true,
-        'process.env.PUBLIC_URL': publicUrl
+        'process.env.__IS_SERVER__': true
       })]);
   });
 

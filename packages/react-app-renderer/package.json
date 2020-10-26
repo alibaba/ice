@@ -1,6 +1,6 @@
 {
   "name": "react-app-renderer",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -21,9 +21,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/ice.git"

@@ -21,7 +21,7 @@ Add plugin to `build.json`:
 Set runtime options to `src/index.ts`:
 
 ```js
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   request: {
@@ -41,7 +41,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ## Usage

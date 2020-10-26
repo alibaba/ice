@@ -1,0 +1,25 @@
+{
+  "name": "build-app-helpers",
+  "version": "1.0.1",
+  "description": "build helpers for app framework",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0"
+  }
+}

@@ -29,7 +29,7 @@ $ npm start
 同时我们需要在应用入口 `src/app.ts` 中配置框架应用的一些运行时信息：
 
 ```diff
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 +import NotFound from '@/components/NotFound';
 +import BasicLayout from '@/layouts/BasicLayout';
 
@@ -60,7 +60,7 @@ const appConfig = {
   },
 };
 
-createApp(appConfig)
+runApp(appConfig)
 ```
 
 `appConfig.icestark` 完整的配置项说明：
@@ -148,7 +148,7 @@ $ npm start
 同框架应用一样，微应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了微应用相关的信息：
 
 ```diff
-import { createApp } from 'ice'
+import { runApp } from 'ice'
 
 const appConfig = {
   app: {
@@ -162,7 +162,7 @@ const appConfig = {
   },
 };
 
-createApp(appConfig)
+runApp(appConfig)
 ```
 
 只需要这么简单，你的 SPA 应用就可以变成微前端的微应用了。

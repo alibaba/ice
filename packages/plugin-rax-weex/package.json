@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-rax-weex",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "rax weex app plugin",
   "main": "lib/index.js",
   "scripts": {
@@ -17,9 +17,10 @@
     "rax": "^1.0.0"
   },
   "dependencies": {
-    "build-mpa-config": "^1.0.0",
+    "build-mpa-config": "^1.0.2",
     "fs-extra": "^9.0.1",
     "rax-compile-config": "^0.2.16",
-    "webpack-sources": "^2.0.0"
+    "webpack-sources": "^2.0.0",
+    "build-app-helpers": "^1.0.0"
   }
 }

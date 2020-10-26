@@ -16,7 +16,7 @@ icejs 中默认在应用的根组件上添加了 `ErrorBoundary` 组件，当应
 同时，我们也可以通过自 `ErrorBoundaryFallback` 和 `onErrorBoundaryHander` 进行自定义：
 
 ```tsx
-import { createApp, IAppConfig } from 'ice';
+import { runApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
@@ -31,7 +31,7 @@ const appConfig: IAppConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ## 页面错误边界

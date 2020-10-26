@@ -52,7 +52,7 @@ const UserLogin = lazy(() => import('@/pages/UserLogin'));
 当组件动态加载过程中或者组件渲染失败时，可以通过 fallback 属性设置提示：
 
 ```diff
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   router: {
@@ -60,7 +60,7 @@ const appConfig = {
   }
 }
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ## 非路由代码分割

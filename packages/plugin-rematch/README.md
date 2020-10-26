@@ -23,7 +23,7 @@ Add plugin to `build.json`:
 Set runtime options to `src/index.ts`:
 
 ```js
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   // ref: https://rematch.github.io/rematch/#/api-reference/api?id=init
@@ -36,7 +36,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 ### Develop

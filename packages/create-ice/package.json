@@ -27,9 +27,6 @@
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.4"
   },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:alibaba/ice.git"
