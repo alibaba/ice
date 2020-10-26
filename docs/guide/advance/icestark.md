@@ -168,3 +168,20 @@ createApp(appConfig)
 只需要这么简单，你的 SPA 应用就可以变成微前端的子应用了。
 
 关于微前端的更多内容，请查看文档 [icestark](/docs/icestark/about)。
+
+### UMD 规范微应用
+
+> build-plugin-icestark@1.8.0 以上版本支持
+
+在 `build.json` 中配置 umd 属性即可导出标准 UMD 规范的微应用：
+
+```json
+{
+  "plugins": [
+    ["build-plugin-icestark", {
+      "umd": true,
+      "library": "microApp" // UMD 模块导出名称，选填。默认为项目 package.json 中的 name 字段
+    }]
+  ]
+}
+```
