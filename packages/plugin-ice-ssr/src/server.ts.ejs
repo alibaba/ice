@@ -8,6 +8,7 @@ import app from './runApp';
 import routes from '@/routes';
 
 const chalk = require('chalk');
+const parseurl = require('parseurl');
 const { createBaseApp, emitLifeCycles } = app;
 
 // appConfig set by: import '@/app'
@@ -47,7 +48,7 @@ const serverRender = async ({ ctx, pathname, initialData, htmlTemplate }) => {
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const { search, hash, state } = ctx.req._parsedUrl;
+    const { search, hash, state } = parseurl(ctx.req);
     const bundleContent = reactAppRendererWithSSR({
       staticContext: ctx,
       location: { pathname, search, hash, state },
