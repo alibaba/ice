@@ -3,7 +3,7 @@ title: 菜单配置
 order: 4
 ---
 
-在模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。以  `BasicLayout`  布局为例，菜单配置文件约定在 `src/layouts/BasicLayout/menuConfig.ts`中。
+在 [Fusion Design Pro](https://github.com/alibaba-fusion/materials/tree/master/scaffolds/fusion-design-pro) 模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。以 `BasicLayout` 布局为例，菜单配置文件约定在 `src/layouts/BasicLayout/menuConfig.ts`中。
 
 ## 基本配置
 
@@ -12,7 +12,7 @@ order: 4
 ```typescript
 // 顶部菜单栏配置
 export const headerMenuConfig = [
-   {
+  {
     name: 'Home',                     // 菜单名称
     path: '/',                        // 菜单路径
     icon: 'message'                   // 菜单图标
@@ -40,8 +40,6 @@ export const asideMenuConfig = [
 ];
 ```
 
-## 菜单渲染
-
 完整的菜单渲染逻辑可参考 [src/layouts/BasicLayout/components/PageNav/index.tsx](https://github.com/alibaba-fusion/materials/blob/master/scaffolds/scaffold-lite/src/layouts/BasicLayout/components/PageNav/index.tsx)。
 
 ## 菜单权限
@@ -60,39 +58,47 @@ export const asideMenuConfig = [
 
 然后在 `src/layouts/BasicLayout/components/PageNav/index.tsx`中配置以下内容：
 
-```tsx
-// 模拟权限数据
-// 大多数情况下菜单权限数据是从服务端获取，前端获取到数据后，对权限进行对比来控制菜单权限
-const mockAuthData = {
-  admin: true,
-  guest: false,
-};
+```diff
++ import { useAuth } from 'ice';
 
-function getNavMenuItems(menusData, initIndex, auth) {
-  return menusData
-    .filter(item => {
-    let roleAuth = true;
-    if (auth && item.auth && item.auth instanceof Array) {
-      if (item.auth.length) {
-        // 获取当前用户是否有该菜单的权限
-        roleAuth = item.auth.some(key => auth[key]);
-      }
-    }
-    return item.name && !item.hideInMenu && roleAuth;
-  })
-  .map((item, index) => getSubMenuOrItem(item, `${initIndex}-${index}`, auth));
+- function getNavMenuItems(menusData, initIndex) {
++ function getNavMenuItems(menusData, initIndex, auth) {
+
+- return menusData
+-   .filter(item => item.name && !item.hideInMenu)
+-   .map((item, index) => {
+-     return getSubMenuOrItem(item, `${initIndex}-${index}`);
+-   });
++ return menusData.filter(item => {
++   let roleAuth = true;
++   if (auth && item.auth && item.auth instanceof Array) {
++     if (item.auth.length) {
++       // 获取当前用户是否有该菜单的权限
++       roleAuth = item.auth.some(key => auth[key]);
++     }
++   }
++   return item.name && !item.hideInMenu && roleAuth;
++ }).map((item, index) => {
++   getSubMenuOrItem(item, `${initIndex}-${index}`, auth)
++ });
 }
 
-function getSubMenuOrItem(item, index, auth) {
-  // ...
-	const childrenItems = getNavMenuItems(item.children, index, auth);
-  // ...
+- function getSubMenuOrItem(item, index) {
++ function getSubMenuOrItem(item, index, auth) {
+  if (item.children && item.children.some(child => child.name)) {
+-   const childrenItems = getNavMenuItems(item.children, index);
++   const childrenItems = getNavMenuItems(item.children, index, auth);
+    // ...
+  }
 }
 
 const Navigation = () => {
+  // 获取权限数据 更多权限管理的内容可以参考: https://ice.work/docs/guide/advance/auth
++ const [auth] = useAuth();
 	return (
   	<Nav embeddable activeDirection="right">
-      {getNavMenuItems(asideMenuConfig, 0, mockAuthData)}
+-     {getNavMenuItems(asideMenuConfig, 0)}
++     {getNavMenuItems(asideMenuConfig, 0, auth)}
     </Nav>
   )
 }
