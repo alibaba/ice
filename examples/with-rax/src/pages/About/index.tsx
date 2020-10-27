@@ -1,4 +1,4 @@
-import { createElement, PureComponent } from 'rax';
+import { createElement, Component } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
 import { getSearchParams, withPageLifeCycle } from 'rax-app';
@@ -7,7 +7,7 @@ import BuggyCounter from '@/components/BuggyCounter';
 import './index.css';
 
 @withPageLifeCycle
-class About extends PureComponent {
+class About extends Component {
   public componentDidMount() {
     console.log('about search params', getSearchParams());
   }

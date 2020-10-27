@@ -1,6 +1,10 @@
 {
   "targets": ["miniapp"],
   "miniapp": {
-    "buildType": "compile"
+    "buildType": "compile",
+    "disableCopyNpm": true
+  },
+  "devServer": {
+    "writeToDisk": true
   }
 }
