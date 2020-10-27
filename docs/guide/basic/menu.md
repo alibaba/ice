@@ -95,8 +95,8 @@ export const asideMenuConfig = [
 const Navigation = () => {
   // 获取权限数据 更多权限管理的内容可以参考: https://ice.work/docs/guide/advance/auth
 + const [auth] = useAuth();
-	return (
-  	<Nav embeddable activeDirection="right">
+  return (
+    <Nav embeddable activeDirection="right">
 -     {getNavMenuItems(asideMenuConfig, 0)}
 +     {getNavMenuItems(asideMenuConfig, 0, auth)}
     </Nav>
