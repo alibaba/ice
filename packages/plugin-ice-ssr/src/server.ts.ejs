@@ -47,11 +47,11 @@ const serverRender = async ({ ctx, pathname, initialData, htmlTemplate }) => {
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const searchParams = ctx.req.query;
+    const { search, hash, state } = ctx.req._parsedUrl;
     const bundleContent = reactAppRendererWithSSR({
       staticContext: ctx,
+      location: { pathname, search, hash, state },
       pathname,
-      searchParams,
       initialData,
       pageInitialProps
     }, {
@@ -66,6 +66,7 @@ const serverRender = async ({ ctx, pathname, initialData, htmlTemplate }) => {
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
     </script>`)
   } catch (e) {
+    console.log('e ==>', e);
     error = e;
     logError('[SSR] generate html template error');
   }

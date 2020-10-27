@@ -55,11 +55,11 @@ function parseRoutes(routes: RouteItemProps[]) {
 }
 
 export function IceRouter(props: RouterProps) {
-  const { type, routes, fallback, searchParams, ...others } = props;
+  const { type, routes, fallback, ...others } = props;
   // parse routes before render
   const parsedRoutes = parseRoutes(routes);
 
-  const children = <Routes routes={parsedRoutes} fallback={fallback} searchParams={searchParams} />;
+  const children = <Routes routes={parsedRoutes} fallback={fallback} />;
   return type === 'static' ?
     <StaticRouter {...others}>
       {children}
@@ -69,7 +69,7 @@ export function IceRouter(props: RouterProps) {
     </Router>;
 }
 
-function Routes({ routes, fallback, searchParams }: RoutesProps) {
+function Routes({ routes, fallback }: RoutesProps) {
   return (
     <Switch>
       {routes.map((route, id) => {
@@ -85,10 +85,7 @@ function Routes({ routes, fallback, searchParams }: RoutesProps) {
             // process.env.__IS_SERVER__: React.RenderToString()
             // window.__ICE_SSR_ENABLED__: React.hydrate()
             const RenderComponent = process.env.__IS_SERVER__ || (window as any).__ICE_SSR_ENABLED__
-              ? (props: RouteComponentProps) => {
-                const componentProps = Object.assign({}, props, { searchParams });
-                return <RouteComponent {...componentProps} />;
-              }
+              ? (props: RouteComponentProps) => <RouteComponent {...props} />
               : (props: RouteComponentProps) => {
                 return (
                   <React.Suspense fallback={fallback || <div>loading</div>}>
@@ -109,7 +106,7 @@ function Routes({ routes, fallback, searchParams }: RoutesProps) {
           const { component: LayoutComponent, children, ...others } = route;
           const RenderComponent = (props: RouteComponentProps) => (
             <LayoutComponent {...props}>
-              <Routes routes={children} fallback={fallback} searchParams={searchParams} />
+              <Routes routes={children} fallback={fallback} />
             </LayoutComponent>
           );
           return (

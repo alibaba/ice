@@ -23,10 +23,9 @@ export default function formatRoutes(routes, parentPath) {
 
 export function wrapperPageWithSSR(context, routes) {
   const pageInitialProps = { ...context.pageInitialProps };
-  const WrapperPageFn = () => {
+  const WrapperPageFn = (PageComponent) => {
     const ServerWrapperedPage = (props) => {
-      const MatchedPageComponent = getComponentByPath(routes, context.pathname);
-      return <MatchedPageComponent {...Object.assign({}, props, pageInitialProps)} />;
+      return <PageComponent {...Object.assign({}, props, pageInitialProps)} />;
     };
     return ServerWrapperedPage;
   };

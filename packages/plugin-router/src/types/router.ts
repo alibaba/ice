@@ -19,13 +19,11 @@ export interface RouterProps {
   initialIndex?: number;
   fallback?: React.ReactNode;
   history: History;
-  searchParams: { [key: string]: string };
 };
 
 export interface RoutesProps {
   routes: IRouterConfig[];
   fallback?: React.ReactNode;
-  searchParams?: { [key: string]: string };
 };
 
 export interface IRouterOptions {
