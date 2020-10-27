@@ -51,7 +51,6 @@ const serverRender = async ({ ctx, pathname, initialData, htmlTemplate }) => {
     const bundleContent = reactAppRendererWithSSR({
       staticContext: ctx,
       location: { pathname, search, hash, state },
-      pathname,
       initialData,
       pageInitialProps
     }, {
