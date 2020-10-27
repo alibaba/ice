@@ -1,8 +1,8 @@
+export { APP_MODE } from './appMode';
 export * from './runApp';
 export { runApp as createApp } from './runApp';
 export { lazy } from './lazy';
 export * from './types';
-export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 
 <%- imports %>
 
