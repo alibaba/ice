@@ -43,7 +43,7 @@ export default async function create(dirPath: string, templateName: string, dirn
   if (isAliInternal) {
     console.log(chalk.cyan('    tnpm install'));
     console.log(chalk.cyan('    tnpm start'));
-    console.log(chalk.cyan('Detected that you are an Alibaba user, DEF plugin has been installed!'));
+    console.log(chalk.cyan('Detected that you are an Alibaba user, DEF plugin has been added!'));
   } else {
     console.log(chalk.cyan('    npm install'));
     console.log(chalk.cyan('    npm start'));
