@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as path from 'path';
-import { matchPath } from 'react-router-dom';
 
 const { useEffect, useState } = React;
 
@@ -62,20 +61,9 @@ export function wrapperPageWithCSR() {
           })();
         }
       }, []);
-      return <PageComponent { ...Object.assign({}, props, data) } />;
+      return <PageComponent {...Object.assign({}, props, data)} />;
     };
     return RouterWrapperedPage;
   };
   return wrapperPage;
-}
-
-function getComponentByPath(routes, currPath)  {
-  function findMatchRoute(routeList) {
-    const matchedRoute = routeList.find(route => {
-      return matchPath(currPath, route);
-    });
-    return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
-  }
-  const matchedRoute = findMatchRoute(routes);
-  return matchedRoute && matchedRoute.component;
 }
