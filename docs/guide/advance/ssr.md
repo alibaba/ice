@@ -196,7 +196,12 @@ if (process.env.__IS_SERVER__) {
   // 动态扩展环境：服务端通过环境变量区分，此处以 Midway 为例
   global.__app_mode__ = process.env.MIDWAY_SERVER_ENV;
 } else {
-  // 动态扩展环境：浏览器端通过 location 区分
+  // 动态扩展环境：两种方式
+  
+  // 方式 1. 通过服务端输出的全局变量
+  window.__app_mode__ = window.g_config.faasEnv;
+  
+  // 方式 2. 通过 url 地址动态判断 
   if (/pre.example.com/.test(location.host)) {
     window.__app_mode__ = 'pre';
   } else if (/daily.example.com/.test(location.host)) {
