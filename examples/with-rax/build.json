@@ -1,10 +1,3 @@
 {
-  "targets": ["miniapp"],
-  "miniapp": {
-    "buildType": "compile",
-    "disableCopyNpm": true
-  },
-  "devServer": {
-    "writeToDisk": true
-  }
+  "targets": ["web", "miniapp", "weex", "kraken"]
 }
