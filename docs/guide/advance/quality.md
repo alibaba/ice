@@ -1,6 +1,6 @@
 ---
 title: 代码质量保障
-order: 17
+order: 18
 ---
 
 为了保证代码质量，我们推荐使用 lint 相关的工具对代码进行检测，同时为了降低常规 lint 工具的使用成本，我们封装了 [@ice/spec](https://github.com/ice-lab/spec) 这个 npm 包。
