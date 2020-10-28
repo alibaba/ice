@@ -71,7 +71,7 @@ export default store;
 
 ```tsx
 // 引用全局状态
-import { store } from '@/store';
+import store from '@/store';
 
 const HomePage = () => {
   // 使用 user 模型
@@ -139,7 +139,7 @@ export default store;
 
 ```tsx
 // 引用页面状态
-import { store as pageStore } from '@/pages/Home/store';
+import pageStore from '@/pages/Home/store';
 
 const HomePage = () => {
 
@@ -281,7 +281,7 @@ useModel(name: string): [ state, dispatchers ]
 
 ```diff
 // 全局状态引用
-+ import { store as appStore } from '@/store';
++ import appStore from '@/store';
 
 export default () => {
 + const [counterState, counterDispatchers] = appStore.useModel('counter');
@@ -321,7 +321,7 @@ createStore(models, options);
 通过该 hooks 使用模型的状态并订阅其更新。
 
 ```ts
-import { store } from '@/store';
+import store from '@/store';
 
 function FunctionComponent() {
   const state = store.useModelState('counter');
@@ -334,7 +334,7 @@ function FunctionComponent() {
 仅使用 Action 不使用 State。有些时候组件中只需要触发 action 不需要依赖对应的数据状态，此时可以使用 `useModelDispatchers` API。
 
 ```ts
-import { store } from '@/store';
+import store from '@/store';
 
 function FunctionComponent() {
   const dispatchers = store.useModelDispatchers('counter');
@@ -348,7 +348,7 @@ function FunctionComponent() {
 异步 Action 状态。通过 `useModelEffectsState` API 即可获取到异步请求的 loading 和 error 状态。
 
 ```ts
-import { store } from '@/store';
+import store from '@/store';
 
 function FunctionComponent() {
   const [state, dispatchers] = store.useModel('counter');
@@ -371,7 +371,7 @@ function FunctionComponent() {
 在 Class Component 中使用。useModel 相关的 API 基于 React 的 Hooks 能力，仅能在 Function Component 中使用，通过 `withModel` API 可以实现在 Class Component 中使用。
 
 ```ts
-import { store } from '@/store';
+import store from '@/store';
 
 class TodoList extends React.Component {
   render() {
@@ -391,7 +391,7 @@ export default store.withModel('todos')(TodoList);
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
 ## 类型提示
- 
+
 编写类型有助于更好的代码提示，类型定义步骤如下：
 
 * 创建 Store 实例
@@ -438,7 +438,7 @@ const user = {
 ## 设置初始状态
 
 ```ts
-import { runApp } from '@/store';
+import { runApp } from 'ice';
 
 const appConfig = {
   store: {
