@@ -1,4 +1,6 @@
-import { IRootDispatch } from 'ice';
+import { IRootDispatch, APP_MODE } from 'ice';
+
+console.log('APP_MODE:', APP_MODE);
 
 export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 

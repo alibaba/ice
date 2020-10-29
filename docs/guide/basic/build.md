@@ -1,6 +1,6 @@
 ---
 title: 工程配置
-order: 6
+order: 7
 ---
 
 icejs 基于 build-scripts，因此工程使用方式与 build-scripts 完全一致。

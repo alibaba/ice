@@ -9,8 +9,11 @@ import { isMiniAppPlatform, isWeex, isKraken } from './env';
 // eslint-disable-next-line
 let history;
 
-function createHistory({ routes, customHistory, type, basename }: any) {
-  if (customHistory) {
+function createHistory({ routes, customHistory, type, basename, location }: any) {
+  if (process.env.__IS_SERVER__) {
+    history = createMemoryHistory();
+    history.location = location;
+  } else if (customHistory) {
     history = customHistory;
   } else {
     // Force memory history when env is weex or kraken
