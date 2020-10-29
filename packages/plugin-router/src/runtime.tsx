@@ -46,11 +46,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
 
     if (process.env.__IS_SERVER__) {
       const { serverContext = {}, location } = context;
-      // update the location in history
-      const history = { ...routerProps.history, location };
-      // update the new history
-      createHistory({ customHistory: history });
-      routerProps = Object.assign({}, routerProps, { location, context: serverContext, history });
+      routerProps = Object.assign({}, routerProps, { location, context: serverContext });
     }
 
     return <IceRouter {...routerProps} />;
