@@ -146,7 +146,7 @@ const HomePage = () => {
   const [pageState, pageDispatchers] = pageStore.useModel('foo');
 
   return (
-    <>{foo.title}</>
+    <>{pageState.title}</>
   );
 }
 ```
