@@ -102,10 +102,20 @@ console.log(config.appId);
 在 `src/config.ts` 中通过域名来扩展环境：
 
 ```js
-// src/config.ts：如通过域名来动态设置环境
+// src/config.ts：动态扩展环境：两种方式
+
+// 方式 1. 通过服务端输出到页面上的全局变量
+window.__app_mode__ = window.g_config.faasEnv;  // window.g_config.faasEnv 也可能是 window.__env__，具体看服务端怎么约定
+  
+// 方式 2. 通过 url 地址动态判断 
 if (/pre.example.com/.test(location.host)) {
-  // 动态增加预发环境
   window.__app_mode__ = 'pre';
+} else if (/daily.example.com/.test(location.host)) {
+  window.__app_mode__ = 'daily';
+} else if (/example.com/.test(location.host)) {
+  window.__app_mode__ = 'prod';
+} else {
+  window.__app_mode__ = 'local';
 }
 
 export default {
