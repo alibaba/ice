@@ -35,7 +35,7 @@ module.exports = function(api) {
     }
     return taskConfig.entry;
   };
-  onHook('before.start.run', ({ configs }) => {
+  onHook('before.start.run', ({ config: configs }) => {
     webEntryKeys = Object.keys(getWebpackEntry(configs, 'web'));
     weexEntryKeys = Object.keys(getWebpackEntry(configs, 'weex'));
     krakenEntryKeys = Object.keys(getWebpackEntry(configs, 'kraken'));

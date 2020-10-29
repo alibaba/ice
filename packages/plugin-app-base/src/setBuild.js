@@ -18,7 +18,7 @@ module.exports = (api) => {
   const { context, onHook } = api;
   const { rootDir, userConfig } = context;
 
-  onHook('before.build.run', ({ configs }) => {
+  onHook('before.build.run', ({ config: configs }) => {
     try {
       debug(configs);
     // eslint-disable-next-line no-empty
