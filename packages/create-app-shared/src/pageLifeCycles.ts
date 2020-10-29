@@ -1,19 +1,23 @@
 import { isMiniAppPlatform } from './env';
-import { SHOW, HIDE } from './constants';
+import { SHOW, HIDE, MINIAPP_PAGE_LIFECYCLE } from './constants';
 import router from './router';
 
 // visibleListeners => { [pathname]: { show: [], hide: [] } }
 const visibleListeners = {};
 
 function addPageLifeCycle(cycle, callback) {
-  const pathname = router.current.pathname;
-  if (!visibleListeners[pathname]) {
-    visibleListeners[pathname] = {
-      [SHOW]: [],
-      [HIDE]: []
-    };
+  if (isMiniAppPlatform) {
+    document.addEventListener(MINIAPP_PAGE_LIFECYCLE[cycle], callback);
+  } else {
+    const pathname = router.current.pathname;
+    if (!visibleListeners[pathname]) {
+      visibleListeners[pathname] = {
+        [SHOW]: [],
+        [HIDE]: []
+      };
+    }
+    visibleListeners[pathname][cycle].push(callback);
   }
-  visibleListeners[pathname][cycle].push(callback);
 }
 
 export function emit(cycle: any, pathname?: string, ...args) {
@@ -73,17 +77,6 @@ export function withPageLifeCycle(Component) {
   }
   Wrapper.displayName = `withPageLifeCycle(${  Component.displayName || Component.name  })`;
   return Wrapper as any;
-}
-
-if (isMiniAppPlatform) {
-  // eslint-disable-next-line
-  window.addEventListener('pageshow', () => {
-    emit(SHOW, (window as any).__pageId);
-  });
-  // eslint-disable-next-line
-  window.addEventListener('pagehide', () => {
-    emit(HIDE, (window as any).__pageId);
-  });
 }
 
 export function createUsePageLifeCycle({ useEffect }) {
