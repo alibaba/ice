@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-rax-miniapp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "rax miniapp app plugin",
   "main": "lib/index.js",
   "scripts": {
