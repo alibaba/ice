@@ -28,6 +28,8 @@ function createHistory({ routes, customHistory, type, basename, location }: any)
       (window as any).history = createMiniAppHistory(routes);
       window.location = (window.history as any).location;
       history = window.history;
+    } else {
+      history = createMemoryHistory();
     }
   }
   return history;
