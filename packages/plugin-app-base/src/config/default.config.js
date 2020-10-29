@@ -21,6 +21,8 @@ module.exports = {
       ignored: /node_modules/,
       aggregateTimeout: 600,
     },
+    writeToDisk: true,
+    historyApiFallback: true,
     before(app) {
       app.use((req, res, next) => {
         // set cros for all served files

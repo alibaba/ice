@@ -6,8 +6,8 @@ module.exports = (api) => {
   const { onGetJestConfig, context, onHook } = api;
   const { rootDir } = context;
 
-  onHook('before.test.run', ({ config }) => {
-    debug(JSON.stringify(config, null, 2));
+  onHook('before.test.run', ({ configs }) => {
+    debug(configs);
   });
 
   onGetJestConfig((jestConfig) => {
