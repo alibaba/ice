@@ -3,7 +3,7 @@ title: 菜单配置
 order: 4
 ---
 
-在 [Fusion Design Pro](https://github.com/alibaba-fusion/materials/tree/master/scaffolds/fusion-design-pro) 模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。以 `BasicLayout` 布局为例，菜单配置文件约定在 `src/layouts/BasicLayout/menuConfig.ts`中。
+在 [Pro](https://unpkg.com/@alifd/fusion-design-pro-js@0.1.23/build/index.html#/dashboard/analysis) 模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。以 `BasicLayout` 布局为例，菜单配置文件约定在 `src/layouts/BasicLayout/menuConfig.ts`中。
 
 ## 基本配置
 
@@ -13,27 +13,35 @@ order: 4
 // 顶部菜单栏配置
 export const headerMenuConfig = [
   {
-    name: 'Home',                     // 菜单名称
-    path: '/',                        // 菜单路径
-    icon: 'message'                   // 菜单图标
+    name: 'Home',                       // 菜单名称
+    path: '/',                          // 菜单路径
+    icon: 'message'                     // 菜单图标
   },
 ];
 // 侧边菜单栏配置
 export const asideMenuConfig = [
   {
-    name: 'Dashboard',                // 一级菜单名称
-    path: '/',                        // 一级菜单路径
-    icon: 'edit',                     // 一级菜单图标
+    name: 'Dashboard',                  // 一级菜单名称
+    path: '/',                          // 一级菜单路径
+    icon: 'edit',                       // 一级菜单图标
     // 二级菜单配置
     children: [
       {
-        name: 'Analysis',             // 二级菜单名称
-        path: '/dashboard/analysis',  // 二级菜单路径
+        name: 'Analysis',               // 二级菜单名称
+        path: '/dashboard/analysis',    // 二级菜单路径
       },
       {
-        name: 'Monitor',
-        path: '/dashboard/monitor',
-      },
+        name: 'DashboardChild',
+        path: '/',
+        icon: 'add',
+        // 三级菜单配置
+        children: [
+          {
+            name: 'Monitor',            // 三级菜单名称
+            path: '/dashboard/monitor', // 三级菜单路径 
+          },
+        ]
+      }
     ],
   },
   // ...
@@ -41,6 +49,20 @@ export const asideMenuConfig = [
 ```
 
 完整的菜单渲染逻辑可参考 [src/layouts/BasicLayout/components/PageNav/index.tsx](https://github.com/alibaba-fusion/materials/blob/master/scaffolds/scaffold-lite/src/layouts/BasicLayout/components/PageNav/index.tsx)。
+
+## 菜单图标
+
+我们默认使用 [Icon](/component/icon) 这个组件渲染图标，可以使用哪些图标可以在组件文档中看到，如果有其他自定义的图标需求，将代码改为对应图标组件即可。
+
+```jsx
+<SubNav
+  key={item.name}
+  icon={item.icon}
+  label={item.name}
+>
+  {childrenItems}
+</SubNav>
+```
 
 ## 菜单权限
 
