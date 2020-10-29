@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as path from 'path';
-import { matchPath } from 'react-router-dom';
 
 const { useEffect, useState } = React;
 
@@ -23,10 +22,9 @@ export default function formatRoutes(routes, parentPath) {
 
 export function wrapperPageWithSSR(context, routes) {
   const pageInitialProps = { ...context.pageInitialProps };
-  const WrapperPageFn = () => {
+  const WrapperPageFn = (PageComponent) => {
     const ServerWrapperedPage = (props) => {
-      const MatchedPageComponent = getComponentByPath(routes, context.pathname);
-      return <MatchedPageComponent {...Object.assign({}, props, pageInitialProps)} />;
+      return <PageComponent {...Object.assign({}, props, pageInitialProps)} />;
     };
     return ServerWrapperedPage;
   };
@@ -63,20 +61,9 @@ export function wrapperPageWithCSR() {
           })();
         }
       }, []);
-      return <PageComponent { ...Object.assign({}, props, data) } />;
+      return <PageComponent {...Object.assign({}, props, data)} />;
     };
     return RouterWrapperedPage;
   };
   return wrapperPage;
-}
-
-function getComponentByPath(routes, currPath)  {
-  function findMatchRoute(routeList) {
-    const matchedRoute = routeList.find(route => {
-      return matchPath(currPath, route);
-    });
-    return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
-  }
-  const matchedRoute = findMatchRoute(routes);
-  return matchedRoute && matchedRoute.component;
 }

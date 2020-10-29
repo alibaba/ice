@@ -1,6 +1,6 @@
 ---
 title: 编写单元测试
-order: 15
+order: 16
 ---
 
 icejs 支持 `icejs test` 命令，内置 Jest 配置提供前端的单元测试解决方案。
