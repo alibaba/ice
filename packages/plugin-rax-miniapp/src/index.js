@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const { platformMap } = require('miniapp-builder-shared');
 const { setConfig } = require('miniapp-runtime-config');
+const { setAppConfig: setCompileConfig } = require('miniapp-compile-config');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const setEntry = require('./setEntry');
 const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
@@ -23,8 +24,11 @@ module.exports = (api) => {
       });
       chainConfig.name(target);
       chainConfig.taskName = target;
-      // Set Entry
-      setEntry(chainConfig, context, target);
+      const isCompileProject = userConfig[target] && userConfig[target].buildType === 'compile';
+      // Set Entry when it's runtime project
+      if (!isCompileProject) {
+        setEntry(chainConfig, context, target);
+      }
       // Register task
       registerTask(target, chainConfig);
       registerUserConfig({
@@ -60,12 +64,16 @@ module.exports = (api) => {
             .use(CopyWebpackPlugin, [needCopyDirs]);
         }
 
-        setConfig(config, userConfig[target] || {}, {
-          context,
-          target,
-          babelRuleName: 'babel-loader',
-          modernMode: true
-        });
+        if (isCompileProject) {
+          setCompileConfig(config, userConfig[target] || {}, { target, context, outputPath, entryPath: './src/app' });
+        } else {
+          setConfig(config, userConfig[target] || {}, {
+            context,
+            target,
+            babelRuleName: 'babel-loader',
+            modernMode: true
+          });
+        }
       });
     }
   });
