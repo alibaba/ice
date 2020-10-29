@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { formatPath } from 'build-app-helpers';
 
 interface IEntries {
   entryName: string;
@@ -42,7 +43,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
     config.entry(entryName).add((/app\.(t|j)sx?$/.test(entryPath) || type === 'node') ? pageEntry : `${require.resolve('./mpa-loader')}?type=${type}&framework=${framework}!${pageEntry}`);
     // get page paths for rule match
     const matchStr = `src/pages/${pageName}`;
-    matchStrs.push(process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr);
+    matchStrs.push(formatPath(matchStr));
   });
   if (type === 'web') {
     config.plugin('document').tap(args => {

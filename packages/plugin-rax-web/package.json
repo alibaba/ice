@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-rax-web",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "rax web app plugin",
   "main": "lib/index.js",
   "scripts": {

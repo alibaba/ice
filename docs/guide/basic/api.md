@@ -274,7 +274,7 @@ history.replace('/home');
 history.goBack();
 ```
 
-更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/api-reference.md)
 
 ### createHashHistory
 
