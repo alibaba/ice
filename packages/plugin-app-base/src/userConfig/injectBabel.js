@@ -1,4 +1,4 @@
-const formatWinPath = require('../utils/formatWinPath');
+const { formatPath } = require('build-app-helpers');
 const addBablePlugins = require('./babelPlugins');
 
 module.exports = (config, injectBabel, context) => {
@@ -14,7 +14,7 @@ module.exports = (config, injectBabel, context) => {
         .tap((options) => {
           // get @babel/plugin-transform-runtime
           const babelPlugins = options.plugins || [];
-          const targetPlugin = formatWinPath('@babel/plugin-transform-runtime');
+          const targetPlugin = formatPath('@babel/plugin-transform-runtime');
           const plguinOption = {
             corejs: false,
             helpers: true,
@@ -22,8 +22,8 @@ module.exports = (config, injectBabel, context) => {
             useESModules: false,
           };
           const plugins = babelPlugins.map((plugin) => {
-            if (typeof plugin === 'string' && formatWinPath(plugin).indexOf(targetPlugin) > -1
-              || Array.isArray(plugin) && formatWinPath(plugin[0]).indexOf(targetPlugin) > -1 ) {
+            if (typeof plugin === 'string' && formatPath(plugin).indexOf(targetPlugin) > -1
+              || Array.isArray(plugin) && formatPath(plugin[0]).indexOf(targetPlugin) > -1 ) {
               return [Array.isArray(plugin) ? plugin[0] : plugin, plguinOption];
             } else {
               return [require.resolve('@babel/plugin-transform-runtime'), plguinOption];
