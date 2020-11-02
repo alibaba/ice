@@ -1,13 +1,11 @@
 const path = require('path');
 const { getJestConfig } = require('build-scripts-config');
+const { registerCliOption, registerUserConfig, getWebpackBase } = require('build-webpack-config');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const debug = require('debug')('icejs');
-const registerCliOption = require('./registerCliOption');
-const registerUserConfig = require('./registerUserConfig');
 const modifyUserConfig = require('./modifyUserConfig');
-const getBase = require('./base');
 const getMiniappOutputPath = require('./utils/getMiniappOutputPath');
 const getWebOutputPath = require('./utils/getWebOutputPath');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
@@ -60,7 +58,7 @@ module.exports = (api) => {
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    registerTask(target, getBase(api, { isMiniapp, target }));
+    registerTask(target, getWebpackBase(api, { isMiniapp, target }));
   });
 
   if (command === 'test') {
