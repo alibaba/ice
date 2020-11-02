@@ -1,0 +1,4 @@
+{
+  "targets": ["web"],
+  "inlineStyle": true
+}
