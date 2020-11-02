@@ -1,5 +1,6 @@
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
+const modifyUserConfig = require('./modifyUserConfig');
 
 const CONFIG = [{
   name: 'modeConfig',
@@ -17,6 +18,7 @@ module.exports = (api) => {
 
   // sort config key to make sure entry config is always excute before injectBabel
   const configKeys = Object.keys(defaultConfig).sort();
+
   // register user config
   registerUserConfig(configKeys.map((configKey) => {
     let configFunc = null;
@@ -38,4 +40,7 @@ module.exports = (api) => {
     }
     return false;
   }).filter(Boolean));
+
+  // modify user config to keep excute order
+  modifyUserConfig(api);
 };

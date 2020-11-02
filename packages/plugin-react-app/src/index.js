@@ -5,7 +5,6 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
 const debug = require('debug')('icejs');
-const modifyUserConfig = require('./modifyUserConfig');
 const getMiniappOutputPath = require('./utils/getMiniappOutputPath');
 const getWebOutputPath = require('./utils/getWebOutputPath');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
@@ -42,9 +41,6 @@ module.exports = (api) => {
 
   // register user config
   registerUserConfig(api);
-
-  // modify user config to keep excute order
-  modifyUserConfig(api);
 
   // set webpack config
   onGetWebpackConfig((chainConfig) => {
