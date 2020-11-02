@@ -6,12 +6,7 @@ const CONFIG = [
     name: 'modeConfig',
     validation: 'object',
     defaultValue: {},
-  },
-  {
-    name: 'lite',
-    validation: 'boolean',
-    defaultValue: false
-  },
+  }
 ];
 
 module.exports = (api) => {

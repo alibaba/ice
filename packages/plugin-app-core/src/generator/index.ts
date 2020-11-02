@@ -44,9 +44,7 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  public lite: boolean;
-
-  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log, lite}) {
+  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log}) {
     this.rootDir = rootDir;
     this.templatesDir = templatesDir;
     this.appTemplateDir = appTemplateDir;
@@ -57,7 +55,6 @@ export default class Generator {
     this.rerender = false;
     this.log = log;
     this.showPrettierError = true;
-    this.lite = lite;
   }
 
   public addExport = (registerKey, exportData: IExportData | IExportData[]) => {
@@ -106,6 +103,7 @@ export default class Generator {
   }
 
   public parseRenderData() {
+    const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     let exportsData = {};
     EXPORT_API_MPA.forEach(item => {
@@ -117,17 +115,13 @@ export default class Generator {
     this.renderData = {
       ...this.renderData,
       ...exportsData,
+      staticConfig: staticConfig.length && staticConfig[0],
       globalStyle: globalStyles.length && globalStyles[0],
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
       entryCodeBefore: this.contentRegistration.addEntryCode_before || '',
       entryCodeAfter: this.contentRegistration.addEntryCode_after || '',
     };
-    // If it's lite mode, it needn't generate staticConfig
-    if (!this.lite) {
-      const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
-      this.renderData.staticConfig = staticConfig.length && staticConfig[0];
-    }
   }
 
   public generateImportStr(apiName) {
