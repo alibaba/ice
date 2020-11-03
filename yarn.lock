@@ -4992,10 +4992,10 @@ build-plugin-app-core@0.1.20:
     react-app-renderer "^0.1.9"
     universal-env "^3.0.0"
 
-build-plugin-ice-store@1.7.6:
-  version "1.7.6"
-  resolved "https://registry.npm.taobao.org/build-plugin-ice-store/download/build-plugin-ice-store-1.7.6.tgz#c98e8f5ee90fa88620734b4b8aca59860c97d910"
-  integrity sha1-yY6PXukPqIYgc0tLispZhgyX2RA=
+build-plugin-ice-store@1.7.7:
+  version "1.7.7"
+  resolved "https://registry.npm.taobao.org/build-plugin-ice-store/download/build-plugin-ice-store-1.7.7.tgz#d6f8316e0dcac1261f2f14368ba185f8786fe9dd"
+  integrity sha1-1vgxbg3KwSYfLxQ2i6GF+Hhv6d0=
   dependencies:
     "@ice/store" "^1.3.1"
     ejs "^3.0.2"
@@ -6316,7 +6316,7 @@ css-selector-tokenizer@^0.7.0:
 
 css-tree@1.0.0-alpha.29:
   version "1.0.0-alpha.29"
-  resolved "https://registry.npm.taobao.org/css-tree/download/css-tree-1.0.0-alpha.29.tgz?cache=0&sync_timestamp=1603806468338&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcss-tree%2Fdownload%2Fcss-tree-1.0.0-alpha.29.tgz#3fa9d4ef3142cbd1c301e7664c1f352bd82f5a39"
+  resolved "https://registry.npm.taobao.org/css-tree/download/css-tree-1.0.0-alpha.29.tgz?cache=0&sync_timestamp=1603806518742&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcss-tree%2Fdownload%2Fcss-tree-1.0.0-alpha.29.tgz#3fa9d4ef3142cbd1c301e7664c1f352bd82f5a39"
   integrity sha1-P6nU7zFCy9HDAedmTB81K9gvWjk=
   dependencies:
     mdn-data "~1.1.0"
@@ -11220,9 +11220,9 @@ jsx-ast-utils@^2.4.1:
     object.assign "^4.1.1"
 
 jsx-compiler@^0.4.0:
-  version "0.4.21"
-  resolved "https://registry.npm.taobao.org/jsx-compiler/download/jsx-compiler-0.4.21.tgz#38531de70efeb4fbbd0511aaabd755d95b8388cf"
-  integrity sha1-OFMd5w7+tPu9BRGqq9dV2VuDiM8=
+  version "0.4.20"
+  resolved "https://registry.npm.taobao.org/jsx-compiler/download/jsx-compiler-0.4.20.tgz#0609e5138faf270ff9e4530224e28b8ec1e5cac3"
+  integrity sha1-BgnlE4+vJw/55FMCJOKLjsHlysM=
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/generator" "^7.3.4"
@@ -11265,7 +11265,7 @@ jsx2mp-loader@^0.4.13:
 
 jsx2mp-runtime@^0.4.16:
   version "0.4.16"
-  resolved "https://registry.npm.taobao.org/jsx2mp-runtime/download/jsx2mp-runtime-0.4.16.tgz?cache=0&sync_timestamp=1604305064291&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjsx2mp-runtime%2Fdownload%2Fjsx2mp-runtime-0.4.16.tgz#5b3841f1bcc8bf84c010957ee3b8f5e533cb6975"
+  resolved "https://registry.npm.taobao.org/jsx2mp-runtime/download/jsx2mp-runtime-0.4.16.tgz#5b3841f1bcc8bf84c010957ee3b8f5e533cb6975"
   integrity sha1-WzhB8bzIv4TAEJV+47j15TPLaXU=
 
 kebab-case@^1.0.0:
@@ -11898,7 +11898,7 @@ mdn-data@2.0.6:
 
 mdn-data@~1.1.0:
   version "1.1.4"
-  resolved "https://registry.npm.taobao.org/mdn-data/download/mdn-data-1.1.4.tgz#50b5d4ffc4575276573c4eedb8780812a8419f01"
+  resolved "https://registry.npm.taobao.org/mdn-data/download/mdn-data-1.1.4.tgz?cache=0&sync_timestamp=1602987131460&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmdn-data%2Fdownload%2Fmdn-data-1.1.4.tgz#50b5d4ffc4575276573c4eedb8780812a8419f01"
   integrity sha1-ULXU/8RXUnZXPE7tuHgIEqhBnwE=
 
 media-typer@0.3.0:
@@ -17585,7 +17585,7 @@ tr46@~0.0.3:
 
 traverse@0.6.6:
   version "0.6.6"
-  resolved "https://registry.npm.taobao.org/traverse/download/traverse-0.6.6.tgz?cache=0&sync_timestamp=1602049904142&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftraverse%2Fdownload%2Ftraverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  resolved "https://registry.npm.taobao.org/traverse/download/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
 trim-newlines@^1.0.0:

@@ -1,5 +1,5 @@
 const path = require('path');
-const formatWinPath = require('../utils/formatWinPath');
+const { formatPath } = require('build-app-helpers');
 
 module.exports = (config, hash, context) => {
   const { command } = context;
@@ -12,10 +12,10 @@ module.exports = (config, hash, context) => {
     pathArray.pop(); // pop filename
     pathArray = pathArray.filter((v) => v);
     const outputPath = pathArray.length ? pathArray.join('/') : '';
-    config.output.filename(formatWinPath(path.join(outputPath, `[name].[${hashStr}].js`)));
+    config.output.filename(formatPath(path.join(outputPath, `[name].[${hashStr}].js`)));
     if (config.plugins.get('MiniCssExtractPlugin')) {
       config.plugin('MiniCssExtractPlugin').tap((args) => [Object.assign(...args, {
-        filename: formatWinPath(path.join(outputPath, `[name].[${hashStr}].css`)),
+        filename: formatPath(path.join(outputPath, `[name].[${hashStr}].css`)),
       })]);
     }
   }

@@ -1,6 +1,7 @@
 const { getOptions } = require('loader-utils');
+const { join } = require('path');
+const { formatPath } = require('build-app-helpers');
 const getRouteName = require('../../utils/getRouteName');
-const getDepPath = require('./getDepPath');
 
 /**
  * universal-app-config-loader
@@ -11,11 +12,7 @@ const getDepPath = require('./getDepPath');
         "source": "pages/Home/index",
         "component": fn,
       }
-    ],
-    "shell": {
-      "source": "shell/index",
-      "component": fn
-    },
+    ]
     "hydrate": false
   }
  */
@@ -53,7 +50,7 @@ module.exports = function (appJSON) {
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${getDepPath(route.source, this.rootContext)}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
@@ -64,7 +61,7 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${getDepPath(route.source, this.rootContext)}'))`;
+    const importComponent = `() => () => interopRequire(require('${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}'))`;
 
     return `routes.push(
       {
@@ -74,18 +71,6 @@ module.exports = function (appJSON) {
     );`;
   }).join('\n');
 
-  let processShell;
-  if (appConfig.shell) {
-    processShell = `
-    import Shell from "${getDepPath(appConfig.shell.source, this.rootContext)}";
-    appConfig.shell = {
-      source: '${appConfig.shell.source}',
-      component: Shell
-    };
-    `;
-  } else {
-    processShell = '';
-  }
 
   return `
     import { createElement } from 'rax';
@@ -96,7 +81,6 @@ module.exports = function (appJSON) {
       ...${appJSON},
       routes
     };
-    ${processShell}
     export default appConfig;
   `;
 };

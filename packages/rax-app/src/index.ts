@@ -1,5 +1,5 @@
 const getBuiltInPlugins = (userConfig) => {
-  const { targets = ['web'] } = userConfig;
+  const { targets = ['web'], store = true } = userConfig;
 
   // built-in plugins for rax app
   const builtInPlugins = [
@@ -11,8 +11,11 @@ const getBuiltInPlugins = (userConfig) => {
       },
     ],
     ['build-plugin-app-base', userConfig],
-    'build-plugin-ice-store',
   ];
+
+  if (store) {
+    builtInPlugins.push(['build-plugin-ice-store']);
+  }
 
   if (targets.includes('web')) {
     builtInPlugins.push(['build-plugin-rax-web']);
