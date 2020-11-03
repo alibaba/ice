@@ -2,6 +2,7 @@ const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
 const modifyUserConfig = require('./utils/modifyUserConfig');
 
+// TODO: move to build-plugin-react-app ?
 const CONFIG = [{
   name: 'modeConfig',
   validation: 'object',
@@ -12,12 +13,14 @@ const CONFIG = [{
   defaultValue: false
 }];
 
-module.exports = (api) => {
+module.exports = (api, { customConfig }) => {
   const { registerUserConfig, log } = api;
   CONFIG.forEach((item) => registerUserConfig(item));
 
+  const config = Object.assign({}, defaultConfig, customConfig);
+
   // sort config key to make sure entry config is always excute before injectBabel
-  const configKeys = Object.keys(defaultConfig).sort();
+  const configKeys = Object.keys(config).sort();
 
   // register user config
   registerUserConfig(configKeys.map((configKey) => {
@@ -35,7 +38,7 @@ module.exports = (api) => {
         name: configKey,
         validation: configValidation,
         configWebpack: configFunc,
-        defaultValue: defaultConfig[configKey],
+        defaultValue: config[configKey],
       };
     }
     return false;
