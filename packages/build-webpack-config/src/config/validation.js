@@ -57,7 +57,7 @@ module.exports = {
   ignoreHtmlTemplate: 'boolean',
   sourceMap: 'boolean',
   terserOptions: 'object',
-  cssLoaderOptions:'object',
+  cssLoaderOptions: 'object',
   lessLoaderOptions: 'object',
   sassLoaderOptions: 'object',
   postcssrc: 'boolean',
@@ -70,5 +70,6 @@ module.exports = {
   tsChecker: 'boolean',
   dll: 'boolean',
   // dllEntry: { [string]: string[] }
-  dllEntry: 'object'
+  dllEntry: 'object',
+  inlineStyle: 'boolean'
 };

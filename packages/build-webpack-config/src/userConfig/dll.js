@@ -4,11 +4,11 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const Config = require('webpack-chain');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
-module.exports = async (chainConfig, dll, { userConfig, rootDir, pkg, webpack }) => {
+module.exports = async(chainConfig, dll, { userConfig, rootDir, pkg, webpack }) => {
   if (!dll) return;
 
   const dllPath = path.join(rootDir, 'dll');
-  
+
   let entry = {};
   const { dllEntry } = userConfig;
   if (Object.keys(dllEntry).length !== 0) {
@@ -28,7 +28,7 @@ module.exports = async (chainConfig, dll, { userConfig, rootDir, pkg, webpack })
   withDll(chainConfig, dllPath, entry, webpack);
 };
 
-function rebuildCheck (curEntry, prevEntryPath) {
+function rebuildCheck(curEntry, prevEntryPath) {
   const pkgPath = path.join(prevEntryPath, 'dll-pkg.json');
   if (!fse.pathExistsSync(pkgPath)) {
     fse.ensureDirSync(prevEntryPath);
@@ -46,7 +46,7 @@ function rebuildCheck (curEntry, prevEntryPath) {
   }
 }
 
-async function buildDll (dllPath, entry, webpack, rootDir) {
+async function buildDll(dllPath, entry, webpack, rootDir) {
   const chainConfig = new Config();
   chainConfig.entryPoints.clear();
   const entryKeys = Object.keys(entry);
@@ -100,7 +100,7 @@ async function buildDll (dllPath, entry, webpack, rootDir) {
   });
 }
 
-function withDll (chainConfig, dllPath, entry, webpack) {
+function withDll(chainConfig, dllPath, entry, webpack) {
   const entryKeys = Object.keys(entry);
   entryKeys.forEach(entryKey => {
     const escapedEntryKey = escapeStr(entryKey);
@@ -114,6 +114,6 @@ function withDll (chainConfig, dllPath, entry, webpack) {
   }]).after('HtmlWebpackPlugin');
 }
 
-function escapeStr (str) {
+function escapeStr(str) {
   return Buffer.from(str, 'utf8').toString('hex');
 }

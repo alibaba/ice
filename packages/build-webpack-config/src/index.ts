@@ -1,11 +1,11 @@
 const applyCliOption = require('./applyCliOption');
 const applyUserConfig = require('./applyUserConfig');
-const getWebpackBase = require('./getWebpackBase');
+const getEnhanceWebpackConfig = require('./getEnhanceWebpackConfig');
 const getDefaultConfig = require('./config/default.config');
 
 export {
   applyCliOption,
   applyUserConfig,
-  getWebpackBase,
+  getEnhanceWebpackConfig,
   getDefaultConfig
 };

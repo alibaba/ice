@@ -4,7 +4,7 @@ module.exports = {
   devPublicPath: '/',
   filename: '[name].js',
   // resolve.extensions
-  extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
+  extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx', 'rml'],
   // resolve.modules
   modules: ['node_modules'],
   devServer: {
@@ -21,6 +21,9 @@ module.exports = {
       ignored: /node_modules/,
       aggregateTimeout: 600,
     },
+    // For mutilple task, web will occupy the server root route
+    writeToDisk: true,
+    historyApiFallback: true,
     before(app) {
       app.use((req, res, next) => {
         // set cros for all served files
@@ -30,14 +33,13 @@ module.exports = {
     },
   },
   mock: true,
-  entry: 'src/index.jsx',
   externals: {},
   hash: false,
   injectBabel: 'polyfill',
   minify: true,
   outputAssetsPath: {
-    js: 'js',
-    css: 'css',
+    js: '',
+    css: '',
   },
   outputDir: 'build',
   proxy: {},
@@ -47,7 +49,6 @@ module.exports = {
   libraryTarget: '',
   library: '',
   libraryExport: '',
-  ignoreHtmlTemplate: false,
   sourceMap: false,
   terserOptions: {},
   cssLoaderOptions: {},
@@ -60,5 +61,6 @@ module.exports = {
   eslint: false,
   tsChecker: false,
   dll: false,
-  dllEntry: {}
+  dllEntry: {},
+  inlineStyle: false
 };

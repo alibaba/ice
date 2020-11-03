@@ -1,4 +1,4 @@
-const formatWinPath = require('../utils/formatWinPath');
+const { formatPath } = require('build-app-helpers');
 
 module.exports = (config, babelPresets) => {
   ['jsx', 'tsx'].forEach((rule) => {
@@ -11,16 +11,16 @@ module.exports = (config, babelPresets) => {
           const [presetPath] = Array.isArray(preset) ? preset : [preset];
           let matchedPreset = null;
           extraPresets = extraPresets.filter((babelPreset) => {
-            const matched = formatWinPath(presetPath).indexOf(Array.isArray(babelPreset) ? babelPreset[0] : babelPreset) > -1;
+            const matched = formatPath(presetPath).indexOf(Array.isArray(babelPreset) ? babelPreset[0] : babelPreset) > -1;
             if (matched) {
               matchedPreset = babelPreset;
             }
             return !matched;
           });
           // replace current preset if match
-          return matchedPreset || preset ;
+          return matchedPreset || preset;
         });
-        
+
         return {
           ...options,
           presets: [

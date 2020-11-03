@@ -15,7 +15,7 @@ module.exports = (config, proxyConfig) => {
             proxyRes.headers['x-proxy-by'] = 'ice-proxy';
             proxyRes.headers['x-proxy-match'] = match;
             proxyRes.headers['x-proxy-target'] = target;
-  
+
             let distTarget = target;
             if (target && target.endsWith('/')) {
               distTarget = target.replace(/\/$/, '');
