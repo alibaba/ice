@@ -5,7 +5,7 @@ import defaultRoutes from '$ice/routes';
 import { IceRouter } from './runtime/Router';
 import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context }) => {
+const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context, createHistory }) => {
   const { router: appConfigRouter = {}, app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
 
@@ -45,8 +45,8 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     };
 
     if (process.env.__IS_SERVER__) {
-      const { pathname, staticContext = {} } = context;
-      routerProps = Object.assign({}, routerProps, { location: pathname, context: staticContext });
+      const { serverContext = {}, location } = context;
+      routerProps = Object.assign({}, routerProps, { location, context: serverContext });
     }
 
     return <IceRouter {...routerProps} />;

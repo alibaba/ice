@@ -1,6 +1,6 @@
 ---
 title: 框架 API
-order: 12
+order: 13
 ---
 
 ## 基础
@@ -274,7 +274,7 @@ history.replace('/home');
 history.goBack();
 ```
 
-更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/api-reference.md)
 
 ### createHashHistory
 
@@ -398,14 +398,14 @@ const model = {
 
 icejs 会将一些环境变量注入到运行时，前端代码中可直接使用。
 
-### process.env.__IS_SERVER__
+### `process.env.__IS_SERVER__`
 
 开启 SSR 之后，用于判断是否是服务端执行
 
-### process.env.SERVER_PORT
+### `process.env.SERVER_PORT`
 
-前端调试使用的端口号
+本地调试时使用的端口号
 
-### process.env.NODE_ENV
+### `process.env.NODE_ENV`
 
 `icejs start` 对应 `development`，其他情况（build）对应 `production`

@@ -3,6 +3,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const chalk = require('chalk');
 const qrcode = require('qrcode-terminal');
 const path = require('path');
+const fs = require('fs-extra');
 
 const {
   MINIAPP,
@@ -34,15 +35,22 @@ module.exports = function(api) {
     }
     return taskConfig.entry;
   };
-  onHook('before.start.run', ({ config }) => {
-    webEntryKeys = Object.keys(getWebpackEntry(config, 'web'));
-    weexEntryKeys = Object.keys(getWebpackEntry(config, 'weex'));
-    krakenEntryKeys = Object.keys(getWebpackEntry(config, 'kraken'));
-    webMpa = userConfig?.web?.mpa;
-    weexMpa = userConfig?.weex?.mpa;
-    krakenMpa = userConfig?.kraken?.mpa;
+  onHook('before.start.run', ({ config: configs }) => {
+    webEntryKeys = Object.keys(getWebpackEntry(configs, 'web'));
+    weexEntryKeys = Object.keys(getWebpackEntry(configs, 'weex'));
+    krakenEntryKeys = Object.keys(getWebpackEntry(configs, 'kraken'));
+    webMpa = userConfig.web && userConfig.web.mpa;
+    weexMpa = userConfig.weex && userConfig.weex.mpa;
+    krakenMpa = userConfig.kraken && userConfig.kraken.mpa;
+
+    // Remove outputDir when start devServer
+    const { outputDir = 'build' } = userConfig;
+    configs.forEach(config => {
+      fs.removeSync(path.resolve(rootDir, outputDir, config.name));
+    });
+
     try {
-      debug(config);
+      debug(configs);
     // eslint-disable-next-line no-empty
     } catch (err) {}
   });
