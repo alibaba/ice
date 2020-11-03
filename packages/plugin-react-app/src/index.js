@@ -1,6 +1,6 @@
 const path = require('path');
 const { getJestConfig } = require('build-scripts-config');
-const { registerCliOption, registerUserConfig, getWebpackBase } = require('build-webpack-config');
+const { applyCliOption, applyUserConfig, getWebpackBase } = require('build-webpack-config');
 const openBrowser = require('react-dev-utils/openBrowser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const chalk = require('chalk');
@@ -37,10 +37,10 @@ module.exports = (api) => {
   }
 
   // register cli option
-  registerCliOption(api);
+  applyCliOption(api);
 
   // register user config
-  registerUserConfig(api);
+  applyUserConfig(api);
 
   // set webpack config
   onGetWebpackConfig((chainConfig) => {

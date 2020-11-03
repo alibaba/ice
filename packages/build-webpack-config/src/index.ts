@@ -1,11 +1,11 @@
-const registerCliOption = require('./registerCliOption');
-const registerUserConfig = require('./registerUserConfig');
+const applyCliOption = require('./applyCliOption');
+const applyUserConfig = require('./applyUserConfig');
 const getWebpackBase = require('./base');
 const getDefaultConfig = require('./config/default.config');
 
 export {
-  registerCliOption,
-  registerUserConfig,
+  applyCliOption,
+  applyUserConfig,
   getWebpackBase,
   getDefaultConfig
 };
