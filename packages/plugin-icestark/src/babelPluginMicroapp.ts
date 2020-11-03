@@ -3,7 +3,7 @@ import * as t from '@babel/types';
 const templateIfStatement = 'if (!isInIcestark()) {}';
 const templateExportStatement = `
 export const mount = (props) => {
-  createApp(APP_CONFIG);
+  APP_CALLEE(APP_CONFIG);
 };
 export const unmount = ({ container, customProps }) => {
   if (APP_CONFIG?.icestark?.regsiterAppLeave) {
@@ -12,6 +12,11 @@ export const unmount = ({ container, customProps }) => {
     ReactDOM.unmountComponentAtNode(container);
   }
 };`;
+const templateModeStatement = `
+if (typeof window !== 'undefined' && window.ICESTARK && window.ICESTARK.loadMode !== 'umd') {
+  console.warn('[icestark] unable to get lifecycle from umd module without specify the configration of umd');
+}
+`;
 
 const getUid = () => {
   let uid = 0;
@@ -94,23 +99,29 @@ export default (api, { entryList }) => {
             lastImportIndex += 1;
             body.splice(lastImportIndex, 0, t.importDeclaration([t.importDefaultSpecifier(t.identifier('ReactDOM'))], t.stringLiteral('react-dom')));
           }
+
+          // inject code of icestark load mode
+          const codeAst = api.template(templateModeStatement)({
+            ICESTARK: 'ICESTARK',
+          });
+          body.push(codeAst);
         }
       },
       ExpressionStatement(nodePath, state) {
         if (checkEntryFile(state.filename) && !replaced) {
           const node: t.ExpressionStatement = nodePath.node;
-          // replace with if statement
-          const memberExpressisonCallee = namespaceSpecifier
+          let callIdentifier = '';
+          if (namespaceSpecifier
             && t.isCallExpression(node.expression)
             && t.isMemberExpression(node.expression.callee)
-            && t.isIdentifier(node.expression.callee.object, { name: namespaceSpecifier})
-            && t.isIdentifier(node.expression.callee.property, { name: 'createApp'});
+            && t.isIdentifier(node.expression.callee.object, { name: namespaceSpecifier})) {
+            callIdentifier = t.isIdentifier(node.expression.callee.property, { name: 'createApp'}) ? 'createApp' : 'runApp';
+          }
           const identifierCallee = importSpecifier
             && t.isCallExpression(node.expression)
             && t.isIdentifier(node.expression.callee, { name: importSpecifier});
 
-
-          if (memberExpressisonCallee || identifierCallee) {
+          if (callIdentifier || identifierCallee) {
             const expression = node.expression as t.CallExpression;
             if (t.isIdentifier(expression.arguments[0])) {
               configIdentifier = expression.arguments[0].name;
@@ -133,12 +144,14 @@ export default (api, { entryList }) => {
                   ]));
               expression.arguments = [t.identifier(configIdentifier)];
             }
+            // replace with if statement
             const astIf = api.template(templateIfStatement)();
             astIf.consequent.body.push(node);
             nodePath.replaceWith(astIf);
 
             const astExport = api.template(templateExportStatement)({
-              APP_CONFIG: configIdentifier
+              APP_CONFIG: configIdentifier,
+              APP_CALLEE: callIdentifier || importSpecifier,
             });
             nodePath.insertAfter(astExport);
             replaced = true;
