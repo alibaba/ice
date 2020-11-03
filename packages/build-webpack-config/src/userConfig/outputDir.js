@@ -1,5 +1,5 @@
 const path = require('path');
-const { WEB } = require('../constants');
+const { WEB } = require('../config/constants');
 
 module.exports = (config, outputDir, context) => {
   const { rootDir, userConfig: { targets = [] } } = context;

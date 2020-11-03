@@ -1,5 +1,6 @@
 const path = require('path');
 const { applyCliOption, applyUserConfig, getWebpackBase } = require('build-webpack-config');
+const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 const setTest = require('./setTest');
 const setDev = require('./setDev');
@@ -9,6 +10,9 @@ module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask } = api;
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
+  const mode = command === 'start' ? 'development' : 'production';
+  const webpackConfig = getWebpackConfig(mode);
+  const babelConfig = getBabelConfig();
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
 
   // register cli option
@@ -29,10 +33,17 @@ module.exports = (api) => {
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    registerTask(target, getWebpackBase(api, { isMiniapp, target }));
+    registerTask(target, getWebpackBase(api, { target, webpackConfig, babelConfig }));
   });
 
   if (command === 'start') {
+    onGetWebpackConfig(config => {
+      if (isMiniapp) {
+        config.plugins.delete('HotModuleReplacementPlugin');
+        config.devServer.set('writeToDisk', isMiniapp);
+        config.devServer.hot(false).inline(false);
+      }
+    });
     setDev(api, { targets, isMiniapp });
   }
 

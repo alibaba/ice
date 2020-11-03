@@ -1,28 +1,25 @@
 /* eslint-disable import/no-dynamic-require, global-require */
 const path = require('path');
-const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const getWebOutputPath = require('./utils/getWebOutputPath');
 const getFilePath = require('./utils/getFilePath');
 const collect = require('./utils/collect');
-const { WEB } = require('./constants');
+const { WEB } = require('./config/constants');
 
 // eslint-disable-next-line
 const chalk = require('chalk');
 
-module.exports = (api, { isMiniapp, target }) => {
+module.exports = (api, { target, webpackConfig, babelConfig }) => {
   const { context, log } = api;
   const { command, rootDir, webpack, commandArgs, pkg } = context;
   const appMode = commandArgs.mode || command;
   collect({ command, log, rootDir, pkg });
-  const babelConfig = getBabelConfig();
 
   const mode = command === 'start' ? 'development' : 'production';
-  const config = getWebpackConfig(mode);
   // 1M = 1024 KB = 1048576 B
-  config.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
+  webpackConfig.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
 
   // setup DefinePlugin, HtmlWebpackPlugin and  CopyWebpackPlugin out of onGetWebpackConfig
   // in case of registerUserConfig will be excute before onGetWebpackConfig
@@ -36,7 +33,7 @@ module.exports = (api, { isMiniapp, target }) => {
 
   const outputPath = getWebOutputPath(context, { target });
 
-  config
+  webpackConfig
     .plugin('SimpleProgressPlugin')
       .tap(([args]) => {
         return [{
@@ -92,8 +89,8 @@ module.exports = (api, { isMiniapp, target }) => {
   if (target === WEB) {
     const cssPreprocessor = [ 'scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'];
     cssPreprocessor.forEach(rule => {
-      if (config.module.rules.get(rule)) {
-        config.module
+      if (webpackConfig.module.rules.get(rule)) {
+        webpackConfig.module
           .rule(rule)
           .use('postcss-loader')
           .tap((options) => {
@@ -112,7 +109,7 @@ module.exports = (api, { isMiniapp, target }) => {
   }
 
   // Process app.json file
-  config.module.rule('appJSON')
+  webpackConfig.module.rule('appJSON')
     .type('javascript/auto')
     .test(/app\.json$/)
     .use('babel-loader')
@@ -122,15 +119,12 @@ module.exports = (api, { isMiniapp, target }) => {
     .use('loader')
     .loader(require.resolve('./loaders/AppConfigLoader'));
 
-
-  config.devServer.set('writeToDisk', isMiniapp);
-
   if (command === 'start') {
     // disable build-scripts stats output
     process.env.DISABLE_STATS = true;
 
     // set hot reload plugin
-    config
+    webpackConfig
       .plugin('HotModuleReplacementPlugin')
         .use(webpack.HotModuleReplacementPlugin)
         .end()
@@ -141,12 +135,7 @@ module.exports = (api, { isMiniapp, target }) => {
           }
         ])
       .end();
-
-    if (isMiniapp) {
-      config.plugins.delete('HotModuleReplacementPlugin');
-      config.devServer.hot(false).inline(false);
-    }
   }
 
-  return config;
+  return webpackConfig;
 };

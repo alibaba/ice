@@ -1,4 +1,4 @@
-const defaultConfig = require('./config/default.config');
+const defaultConfig = require('../config/default.config');
 
 module.exports = (api) => {
   const { modifyUserConfig } = api;

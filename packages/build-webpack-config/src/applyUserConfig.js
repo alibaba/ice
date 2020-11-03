@@ -1,6 +1,6 @@
 const defaultConfig = require('./config/default.config');
 const validation = require('./config/validation');
-const modifyUserConfig = require('./modifyUserConfig');
+const modifyUserConfig = require('./utils/modifyUserConfig');
 
 const CONFIG = [{
   name: 'modeConfig',
