@@ -3,7 +3,7 @@ title: 路由配置
 order: 3
 ---
 
-icejs 推荐使用 **配置式路由** 进行应用的路由管理，如果希望使用约定式路由可参考 [文档](/docs/guide/basic/convention-routing)。
+icejs 推荐使用 **配置式路由** 进行应用的路由管理，如果希望使用约定式路由可参考 [文档](/docs/guide/advance/convention-routing)。
 
 ## 配置式路由
 
@@ -86,11 +86,13 @@ const WrapperPage = (WrappedComponent) => {
     return (
       <>
         {
-          auth.isLogin ? <WrappedComponent {...this.props} /> : <Redirect to="/login" />;
+          auth.isLogin ? <WrappedComponent {...props} /> : <Redirect to="/login" />;
         }
       </>
     )
   }
+
+  return Wrapped;
 }
 
 export default WrapperPage;
@@ -145,6 +147,35 @@ export default = () => {
 - `history`：详见 [history api](/docs/guide/basic/api#history)
 - `searchParams`：当前 URL 的查询参数对象（需要开启 [parseSearchParams](/docs/guide/basic/app#配置项)）
 - `match`：当前路由和 URL match 后的对象，包含 `path`、`url`、`params`、`isExact` 属性
+
+## 运行时配置
+
+在 `src/app.ts` 中，我们可以配置路由的类型和基础路径等路由信息，具体配置如下：
+
+```jsx
+import { runApp } from 'ice';
+
+const appConfig = {
+  router: {
+    type: 'browser',
+    basename: '/seller',
+    fallback: <div>loading...</div>
+    modifyRoutes: (routes) => {
+      return routes;
+    }
+  }
+};
+
+runApp(appConfig);
+```
+
+**options**:
+
+- type: 路由类型，默认值 `hash`，可选值 `browser|hash|static`
+- basename: 路由基准地址
+- fallback: 开启按需加载时配置 fallback UI
+- modifyRoutes: 动态修改路由
+- history: 自定义创建 history 对象，[详见](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
 
 ## 路由跳转
 
