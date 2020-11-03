@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
-const utils = require('create-cli-utils');
+const utils = require('@alib/build-scripts');
 const getBuiltInPlugins = require('./getBuiltInPlugins');
 const pkg = require('../package.json');
 
