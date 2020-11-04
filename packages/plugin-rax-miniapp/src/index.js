@@ -58,7 +58,7 @@ module.exports = (api) => {
           config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
             return [copyList.concat(needCopyDirs)];
           });
-        } else if (needCopyDirs.length > 1) {
+        } else if (needCopyDirs.length > 0) {
           config
             .plugin('CopyWebpackPlugin')
             .use(CopyWebpackPlugin, [needCopyDirs]);
