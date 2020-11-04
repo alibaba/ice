@@ -1,6 +1,6 @@
-# plugin-react-app
+# plugin-rax-app
 
-> The basic webpack configuration for ice project
+> The basic webpack configuration for rax project
 
 ## Usage
 

@@ -17,6 +17,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     target,
   });
   const enhanceWebpackConfig = getEnhanceWebpackConfig(api, {
+    target,
     webpackConfig,
     babelConfig,
   });

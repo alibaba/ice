@@ -2,7 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const fs = require('fs-extra');
 
-module.exports = (api, { webpackConfig, babelConfig }) => {
+module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) => {
   const { context } = api;
   const { rootDir, command, webpack, commandArgs } = context;
   const appMode = commandArgs.mode || command;
@@ -41,7 +41,11 @@ module.exports = (api, { webpackConfig, babelConfig }) => {
     .options(babelConfig)
     .end()
     .use('loader')
-    .loader(require.resolve('./loaders/AppConfigLoader'));
+    .loader(require.resolve('./loaders/AppConfigLoader'))
+    .options({
+      libName,
+      target
+    });
 
   if (command === 'start') {
     // disable build-scripts stats output

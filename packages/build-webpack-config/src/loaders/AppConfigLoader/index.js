@@ -1,6 +1,6 @@
 const { getOptions } = require('loader-utils');
 const { join } = require('path');
-const { formatPath } = require('build-app-helpers');
+const { formatPath, getRoutesByAppJson } = require('build-app-helpers');
 const getRouteName = require('../../utils/getRouteName');
 
 /**
@@ -18,20 +18,10 @@ const getRouteName = require('../../utils/getRouteName');
  */
 module.exports = function (appJSON) {
   const options = getOptions(this) || {};
-  const { type } = options;
+  const { target, libName } = options;
   const appConfig = JSON.parse(appJSON);
 
-  if (!appConfig.routes || !Array.isArray(appConfig.routes)) {
-    throw new Error('routes should be an array in app.json.');
-  }
-
-  appConfig.routes = appConfig.routes.filter(route => {
-    if (Array.isArray(route.targets) && !route.targets.includes(type)) {
-      return false;
-    }
-
-    return true;
-  });
+  appConfig.routes = getRoutesByAppJson();
 
   const assembleRoutes = appConfig.routes.map((route) => {
     if (!route.path || !route.source) {
@@ -66,14 +56,14 @@ module.exports = function (appJSON) {
     return `routes.push(
       {
         ...${JSON.stringify(route)},
-        component: ${type === 'web' ? dynamicImportComponent : importComponent}
+        component: ${target === 'web' ? dynamicImportComponent : importComponent}
       }
     );`;
   }).join('\n');
 
 
   return `
-    import { createElement } from 'rax';
+    import { createElement } from ${libName};
     const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}

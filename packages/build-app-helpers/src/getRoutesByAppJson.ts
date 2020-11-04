@@ -10,9 +10,14 @@ interface IStaticConfig {
   window: any;
 }
 
+interface IOptions {
+  appJsonPath?: string;
+  appJsonContent?: string;
+}
+
 // Get entries when exist app.json
-export default function (target, appJsonPath) {
-  const appJSON = fs.readFileSync(appJsonPath) as any;
+export default function (target, { appJsonPath, appJsonContent }: IOptions) {
+  const appJSON = appJsonContent || fs.readFileSync(appJsonPath) as any;
   const staticConfig: IStaticConfig = JSON.parse(appJSON);
 
   if (!staticConfig.routes || !Array.isArray(staticConfig.routes)) {

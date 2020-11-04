@@ -1,4 +1,4 @@
-const { MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP } = require('../constants');
+const { MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP } = require('../config/constants');
 
 const defaultCompileDependencies = [
   'ansi-regex',
