@@ -6,7 +6,7 @@ const getBase = require('./base');
 const dev = require('./setDev');
 const build = require('./setBuild');
 const test = require('./setTest');
-const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
+const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 
 module.exports = (api) => {
   const {

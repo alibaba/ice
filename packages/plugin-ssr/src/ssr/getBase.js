@@ -16,7 +16,7 @@ module.exports = (api) => {
   const { userConfig, rootDir } = context;
   const { web: webConfig = {}, inlineStyle = false } = userConfig;
 
-  const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const getWebpackBase = getValue(GET_RAX_APP_WEBPACK_CONFIG);
 
   const config = getWebpackBase(api, {
     target: TARGET,
