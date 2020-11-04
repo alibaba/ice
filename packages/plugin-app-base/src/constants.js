@@ -8,5 +8,5 @@ module.exports = {
   WECHAT_MINIPROGRAM: 'wechat-miniprogram',
   BYTEDANCE_MICROAPP: 'bytedance-microapp',
   QUICKAPP: 'quickapp',
-  GET_WEBPACK_BASE_CONFIG: 'getWebpackBaseConfig'
+  GET_RAX_APP_WEBPACK_CONFIG: 'getRaxAppWebpackConfig'
 };
