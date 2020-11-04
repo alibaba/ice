@@ -1,6 +1,7 @@
 const { getOptions } = require('loader-utils');
+const { join } = require('path');
+const { formatPath, getRoutesByAppJson } = require('build-app-helpers');
 const getRouteName = require('../../utils/getRouteName');
-const getDepPath = require('./getDepPath');
 
 /**
  * universal-app-config-loader
@@ -11,26 +12,16 @@ const getDepPath = require('./getDepPath');
         "source": "pages/Home/index",
         "component": fn,
       }
-    ],
+    ]
     "hydrate": false
   }
  */
-module.exports = function(appJSON) {
+module.exports = function (appJSON) {
   const options = getOptions(this) || {};
-  const { type } = options;
+  const { target, libName } = options;
   const appConfig = JSON.parse(appJSON);
 
-  if (!appConfig.routes || !Array.isArray(appConfig.routes)) {
-    throw new Error('routes should be an array in app.json.');
-  }
-
-  appConfig.routes = appConfig.routes.filter(route => {
-    if (Array.isArray(route.targets) && !route.targets.includes(type)) {
-      return false;
-    }
-
-    return true;
-  });
+  appConfig.routes = getRoutesByAppJson();
 
   const assembleRoutes = appConfig.routes.map((route) => {
     if (!route.path || !route.source) {
@@ -49,29 +40,30 @@ module.exports = function(appJSON) {
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${getDepPath(route.source, this.rootContext)}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
-          return React.createElement(reference, Object.assign({}, routeProps, props));
+          return createElement(reference, Object.assign({}, routeProps, props));
         }
         ${routeTitle ? `document.title="${routeTitle}"` : ''}
         Component.__path = '${route.path}';
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${getDepPath(route.source, this.rootContext)}'))`;
+    const importComponent = `() => () => interopRequire(require('${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}'))`;
 
     return `routes.push(
       {
         ...${JSON.stringify(route)},
-        component: ${type === 'web' ? dynamicImportComponent : importComponent}
+        component: ${target === 'web' ? dynamicImportComponent : importComponent}
       }
     );`;
   }).join('\n');
 
+
   return `
-    import React from 'react';
+    import { createElement } from ${libName};
     const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}

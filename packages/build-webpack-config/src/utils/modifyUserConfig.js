@@ -8,7 +8,7 @@ module.exports = (api) => {
     const configKeys = [...Object.keys(userConfig), 'filename'].sort();
     const newConfig = {};
     configKeys.forEach((configKey) => {
-      if (configKey !== 'plugins') {
+      if (!['plugins', 'web', 'miniapp', 'weex', 'kraken', 'wechat-miniprogram', 'bytedance-microapp', 'targets'].includes(configKey)) {
         newConfig[configKey] = Object.prototype.hasOwnProperty.call(userConfig, configKey)
           ? userConfig[configKey]
           : defaultConfig[configKey];;

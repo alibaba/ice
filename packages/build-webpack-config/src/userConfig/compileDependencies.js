@@ -1,3 +1,5 @@
+const { MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP } = require('../config/constants');
+
 const defaultCompileDependencies = [
   'ansi-regex',
   'ansi-styles',
@@ -9,6 +11,7 @@ const defaultCompileDependencies = [
   'strip-ansi'
 ];
 module.exports = (config, compileDependencies) => {
+  const excludeNodeModules = ![MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName);
   const matchExclude = (filepath) => {
     // exclude the core-js for that it will fail to run in IE
     if (filepath.match(/core-js/))
@@ -28,8 +31,9 @@ module.exports = (config, compileDependencies) => {
     if (matchReg && matchReg.test(filepath)) {
       return false;
     }
+
     // exclude node_modules as default
-    return /node_modules/.test(filepath);
+    return excludeNodeModules && /node_modules/.test(filepath);
   };
 
   ['jsx', 'tsx'].forEach((rule) => {

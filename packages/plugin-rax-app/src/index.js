@@ -1,30 +1,21 @@
 const path = require('path');
-const registerCliOption = require('./registerCliOption');
-const registerUserConfig = require('./registerUserConfig');
-const modifyUserConfig = require('./modifyUserConfig');
+const { applyCliOption, applyUserConfig } = require('build-webpack-config');
 const getBase = require('./base');
-const dev = require('./setDev');
-const build = require('./setBuild');
-const test = require('./setTest');
 const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
+const setTest = require('./setTest');
+const setDev = require('./setDev');
+const setBuild = require('./setBuild');
 
 module.exports = (api) => {
-  const {
-    onGetWebpackConfig,
-    context,
-    setValue,
-  } = api;
+  const { onGetWebpackConfig, context, setValue } = api;
   const { command, rootDir } = context;
   setValue(GET_RAX_APP_WEBPACK_CONFIG, getBase);
 
   // register cli option
-  registerCliOption(api);
+  applyCliOption(api);
 
   // register user config
-  registerUserConfig(api);
-
-  // modify user config to keep excute order
-  modifyUserConfig(api);
+  applyUserConfig(api);
 
   // set webpack config
   onGetWebpackConfig((chainConfig) => {
@@ -32,15 +23,17 @@ module.exports = (api) => {
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
   });
 
-  if (command === 'test') {
-    test(api);
-  }
-
   if (command === 'start') {
-    dev(api);
+    setDev(api);
   }
 
   if (command === 'build') {
-    build(api);
+    setBuild(api);
+  }
+
+  if (command === 'test') {
+    setTest(api);
   }
 };
+
+

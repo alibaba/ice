@@ -13,8 +13,9 @@ const CONFIG = [{
   defaultValue: false
 }];
 
-module.exports = (api, { customConfig }) => {
+module.exports = (api, options = {}) => {
   const { registerUserConfig, log } = api;
+  const { customConfig } = options;
   CONFIG.forEach((item) => registerUserConfig(item));
 
   const config = Object.assign({}, defaultConfig, customConfig);
@@ -33,6 +34,7 @@ module.exports = (api, { customConfig }) => {
     } catch (err) {
       log.error(err);
     }
+
     if (configFunc && configValidation) {
       return {
         name: configKey,
