@@ -7,7 +7,7 @@ const EntryPlugin = require('./entryPlugin');
 
 const EntryLoader = require.resolve('./entryLoader');
 
-const GET_WEBPACK_BASE_CONFIG = 'getWebpackBaseConfig';
+const GET_RAX_APP_WEBPACK_CONFIG = 'getRaxAppWebpackConfig';
 const TARGET = 'node';
 
 // Can‘t clone webpack chain object, so generate a new chain and reset config

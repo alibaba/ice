@@ -15,7 +15,7 @@ module.exports = (api) => {
     setValue,
   } = api;
   const { command, rootDir } = context;
-  setValue(GET_WEBPACK_BASE_CONFIG, getBase);
+  setValue(GET_RAX_APP_WEBPACK_CONFIG, getBase);
 
   // register cli option
   registerCliOption(api);
