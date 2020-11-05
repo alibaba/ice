@@ -2,10 +2,10 @@ const path = require('path');
 const fs = require('fs-extra');
 const { platformMap } = require('miniapp-builder-shared');
 const { setConfig } = require('miniapp-runtime-config');
-const { setAppConfig: setCompileConfig } = require('miniapp-compile-config');
+const { setAppConfig: setAppCompileConfig, setComponentConfig: setComponentCompileConfig } = require('miniapp-compile-config');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const setEntry = require('./setEntry');
-const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
+const { GET_WEBPACK_BASE_CONFIG, MINIAPP_COMPILED_DIR } = require('./constants');
 
 module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
@@ -65,7 +65,7 @@ module.exports = (api) => {
         }
 
         if (isCompileProject) {
-          setCompileConfig(config, userConfig[target] || {}, { target, context, outputPath, entryPath: './src/app' });
+          setAppCompileConfig(config, userConfig[target] || {}, { target, context, outputPath, entryPath: './src/app' });
         } else {
           setConfig(config, userConfig[target] || {}, {
             context,
@@ -73,6 +73,31 @@ module.exports = (api) => {
             babelRuleName: 'babel-loader',
             modernMode: true
           });
+
+          // If miniapp-compiled dir exists, register a new task
+          const compiledComponentsPath = path.resolve(rootDir, 'src', MINIAPP_COMPILED_DIR);
+          if (fs.existsSync(compiledComponentsPath)) {
+            const compiledComponentsChainConfig = getWebpackBase(api, {
+              target: 'rax-compiled-components',
+              babelConfigOptions: { styleSheet: inlineStyle, disableRegenerator: true },
+              progressOptions: {
+                name: 'rax-compiled-components'
+              }
+            });
+            compiledComponentsChainConfig.name('rax-compiled-components');
+            compiledComponentsChainConfig.taskName = 'rax-compiled-components';
+
+            setComponentCompileConfig(
+              compiledComponentsChainConfig,
+              { disableCopyNpm: true },
+              {
+                target,
+                context,
+                outputPath: path.resolve(rootDir, outputDir, target, MINIAPP_COMPILED_DIR),
+                entryPath: path.join('src', MINIAPP_COMPILED_DIR, 'index')
+              });
+            registerTask('rax-compiled-components', compiledComponentsChainConfig);
+          }
         }
       });
     }
