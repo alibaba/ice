@@ -1,4 +1,5 @@
-const defaultConfig = require('./config/default.config');
+const unionBy = require('lodash/unionBy');
+const defaultConfigKeys = require('./config/default.config');
 const validation = require('./config/validation');
 const modifyUserConfig = require('./utils/modifyUserConfig');
 
@@ -10,21 +11,19 @@ const CONFIG = [{
 }, {
   name: 'disableRuntime',
   validation: 'boolean',
-  defaultValue: false
+  defaultValue: false,
+  configWebpack: () => {}
 }];
 
 module.exports = (api, options = {}) => {
   const { registerUserConfig, log } = api;
-  const { customConfig } = options;
+  const { customConfigs } = options;
   CONFIG.forEach((item) => registerUserConfig(item));
 
-  const config = Object.assign({}, defaultConfig, customConfig);
-
   // sort config key to make sure entry config is always excute before injectBabel
-  const configKeys = Object.keys(config).sort();
+  const configKeys = Object.keys(defaultConfigKeys).sort();
 
-  // register user config
-  registerUserConfig(configKeys.map((configKey) => {
+  const defaultConfig = configKeys.map((configKey) => {
     let configFunc = null;
     let configValidation = null;
     try {
@@ -40,11 +39,16 @@ module.exports = (api, options = {}) => {
         name: configKey,
         validation: configValidation,
         configWebpack: configFunc,
-        defaultValue: config[configKey],
+        defaultValue: defaultConfigKeys[configKey],
       };
     }
     return false;
-  }).filter(Boolean));
+  }).filter(Boolean);
+
+  const finalyConfig = unionBy(customConfigs.concat(defaultConfig), 'name');
+
+  // register user config
+  registerUserConfig(finalyConfig);
 
   // modify user config to keep excute order
   modifyUserConfig(api);

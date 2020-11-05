@@ -1,9 +1,5 @@
-import getMpaEntries from './getMpaEntries';
-import getRoutesByAppJson from './getRoutesByAppJson';
-import formatPath from './formatPath';
+export { default as getMpaEntries } from './getMpaEntries';
+export { default as getRoutesByAppJson } from './getRoutesByAppJson';
+export { default as formatPath } from './formatPath';
+export { default as validation } from './validation';
 
-export {
-  getMpaEntries,
-  getRoutesByAppJson,
-  formatPath,
-};

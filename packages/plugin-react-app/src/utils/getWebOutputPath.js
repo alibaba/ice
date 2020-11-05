@@ -1,10 +1,11 @@
 const path = require('path');
-const { getDefaultConfig } = require('build-webpack-config');
+const { defaultConfig } = require('build-webpack-config');
 const { WEB } = require('../constants');
 
 module.exports = (context, { target }) => {
   const { userConfig, rootDir } = context;
-  const defaultConfig = getDefaultConfig();
+
+  console.log('defaultConfig===>:', defaultConfig);
 
   let outputPath = path.join(rootDir, defaultConfig.outputDir);
 

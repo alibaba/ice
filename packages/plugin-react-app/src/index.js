@@ -1,10 +1,12 @@
 const path = require('path');
-const { applyCliOption, applyUserConfig, getWebpackBase } = require('build-webpack-config');
+const { applyCliOption, applyUserConfig, getEnhanceWebpackConfig } = require('build-webpack-config');
 const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
-const setTest = require('./setTest');
+const customConfigs = require('./config');
+const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
+const setTest = require('./setTest');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask } = api;
@@ -19,10 +21,10 @@ module.exports = (api) => {
   applyCliOption(api);
 
   // register user config
-  applyUserConfig(api);
+  applyUserConfig(api, { customConfigs });
 
   // set webpack config
-  onGetWebpackConfig((chainConfig) => {
+  onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
   });
@@ -33,7 +35,11 @@ module.exports = (api) => {
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    registerTask(target, getWebpackBase(api, { target, webpackConfig, babelConfig }));
+    registerTask(target, getEnhanceWebpackConfig(api, { target, webpackConfig, babelConfig }));
+
+    onGetWebpackConfig((chainConfig) => {
+      setBase(api, { target, webpackConfig: chainConfig  });
+    });
   });
 
   if (command === 'start') {
@@ -55,5 +61,3 @@ module.exports = (api) => {
     setTest(api);
   }
 };
-
-
