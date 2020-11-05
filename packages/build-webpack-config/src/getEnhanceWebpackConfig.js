@@ -19,13 +19,10 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
 
   webpackConfig
     .plugin('DefinePlugin')
-    .use(webpack.DefinePlugin, [defineVariables]);
-
-  if (!userConfig.eslint) {
-    webpackConfig
-      .plugin('ESLintReportingPlugin')
-      .use(require.resolve('eslint-reporting-webpack-plugin'));
-  }
+    .use(webpack.DefinePlugin, [defineVariables])
+    .end()
+    .plugin('ESLintReportingPlugin')
+    .use(require.resolve('eslint-reporting-webpack-plugin'));
 
   // Process app.json file
   webpackConfig.module
