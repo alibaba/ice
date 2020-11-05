@@ -5,8 +5,6 @@ const { WEB } = require('../constants');
 module.exports = (context, { target }) => {
   const { userConfig, rootDir } = context;
 
-  console.log('defaultConfig===>:', defaultConfig);
-
   let outputPath = path.join(rootDir, defaultConfig.outputDir);
 
   if (userConfig.outputDir) {
