@@ -21,9 +21,6 @@ module.exports = {
       ignored: /node_modules/,
       aggregateTimeout: 600,
     },
-    // For mutilple task, web will occupy the server root route
-    writeToDisk: true,
-    historyApiFallback: true,
     before(app) {
       app.use((req, res, next) => {
         // set cros for all served files
@@ -38,8 +35,8 @@ module.exports = {
   injectBabel: 'polyfill',
   minify: true,
   outputAssetsPath: {
-    js: '',
-    css: '',
+    js: 'js',
+    css: 'css',
   },
   outputDir: 'build',
   proxy: {},
@@ -61,6 +58,5 @@ module.exports = {
   eslint: false,
   tsChecker: false,
   dll: false,
-  dllEntry: {},
-  inlineStyle: false
+  dllEntry: {}
 };

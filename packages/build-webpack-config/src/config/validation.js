@@ -54,6 +54,5 @@ module.exports = {
   tsChecker: 'boolean',
   dll: 'boolean',
   // dllEntry: { [string]: string[] }
-  dllEntry: 'object',
-  inlineStyle: 'boolean'
+  dllEntry: 'object'
 };
