@@ -5,6 +5,7 @@ const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 const setTest = require('./setTest');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
+const customConfigs = require('./config');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, setValue } = api;
@@ -15,7 +16,7 @@ module.exports = (api) => {
   applyCliOption(api);
 
   // register user config
-  applyUserConfig(api);
+  applyUserConfig(api, { customConfigs });
 
   // set webpack config
   onGetWebpackConfig((chainConfig) => {
