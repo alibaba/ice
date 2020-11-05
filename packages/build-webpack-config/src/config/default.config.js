@@ -62,5 +62,6 @@ module.exports = {
   tsChecker: false,
   dll: false,
   dllEntry: {},
-  inlineStyle: false
+  inlineStyle: false,
+  polyfill: 'usage'
 };

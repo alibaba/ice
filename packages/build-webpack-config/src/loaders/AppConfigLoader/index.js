@@ -21,7 +21,7 @@ module.exports = function (appJSON) {
   const { target, libName } = options;
   const appConfig = JSON.parse(appJSON);
 
-  appConfig.routes = getRoutesByAppJson();
+  appConfig.routes = getRoutesByAppJson(target, { appJsonContent: appConfig });
 
   const assembleRoutes = appConfig.routes.map((route) => {
     if (!route.path || !route.source) {
@@ -63,7 +63,7 @@ module.exports = function (appJSON) {
 
 
   return `
-    import { createElement } from ${libName};
+    import { createElement } from '${libName}';
     const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}
