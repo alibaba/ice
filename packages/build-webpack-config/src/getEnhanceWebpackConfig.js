@@ -1,10 +1,6 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const path = require('path');
-const fs = require('fs-extra');
-
 module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) => {
   const { context } = api;
-  const { rootDir, command, webpack, commandArgs } = context;
+  const { command, webpack, commandArgs } = context;
   const appMode = commandArgs.mode || command;
 
   const mode = command === 'start' ? 'development' : 'production';
@@ -24,12 +20,6 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
   webpackConfig
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
-
-  // Copy public dir
-  if (fs.existsSync(path.resolve(rootDir, 'public'))) {
-    webpackConfig.plugin('CopyWebpackPlugin').use(CopyWebpackPlugin, [[]]);
-  }
-
 
   // Process app.json file
   webpackConfig.module
