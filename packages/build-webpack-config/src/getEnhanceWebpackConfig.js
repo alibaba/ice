@@ -23,7 +23,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
 
   if (!userConfig.eslint) {
     webpackConfig
-      .plugin('eslint-reporting-webpack-plugin')
+      .plugin('ESLintReportingPlugin')
       .use(require.resolve('eslint-reporting-webpack-plugin'));
   }
 
