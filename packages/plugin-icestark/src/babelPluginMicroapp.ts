@@ -13,7 +13,7 @@ export const unmount = ({ container, customProps }) => {
   }
 };`;
 const templateModeStatement = `
-if (typeof window !== 'undefined' && window.ICESTARK && window.ICESTARK.loadMode !== 'umd') {
+if (typeof window !== 'undefined' && window.ICESTARK && window.ICESTARK.loadMode && window.ICESTARK.loadMode !== 'umd') {
   console.warn('[icestark] unable to get lifecycle from umd module without specify the configration of umd');
 }
 `;
