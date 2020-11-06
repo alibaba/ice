@@ -1,7 +1,7 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/user-config" },
+    { "path": "packages/build-user-config" },
     { "path": "packages/build-app-helpers" },
     { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-router" },
