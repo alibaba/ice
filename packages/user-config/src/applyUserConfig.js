@@ -46,7 +46,6 @@ module.exports = (api, options = {}) => {
   }).filter(Boolean);
 
   const finalyConfig = unionBy(defaultConfig.concat(customConfigs), 'name');
-
   // register user config
   registerUserConfig(finalyConfig.sort((curr, next) => curr.name.localeCompare(next.name)));
 

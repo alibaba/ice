@@ -17,9 +17,6 @@ module.exports = {
   hash: (val) => {
     return validation('hash', val, 'string|boolean');
   },
-  injectBabel: (val) => {
-    return validation('injectBabel', val, 'string|boolean');
-  },
   minify: 'boolean',
   mock: 'boolean',
   outputAssetsPath: 'object',

@@ -21,7 +21,8 @@
     "lodash": "^4.17.15",
     "mkcert": "^1.2.0",
     "path-exists": "^4.0.0",
-    "react-dev-utils": "^10.2.1"
+    "react-dev-utils": "^10.2.1",
+    "build-app-helpers": "^1.0.1"
   },
   "devDependencies": {
     "webpack": "^4.41.1"

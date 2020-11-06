@@ -35,7 +35,6 @@ module.exports = {
   mock: true,
   externals: {},
   hash: false,
-  injectBabel: 'polyfill',
   minify: true,
   outputAssetsPath: {
     js: '',

@@ -23,5 +23,17 @@ module.exports = [
     defaultValue: 'build',
     configWebpack: require('./userConfig/outputDir'),
     validation: 'string'
+  },
+  {
+    name: 'injectBabel',
+    defaultValue: 'polyfill',
+    configWebpack: require('./userConfig/injectBabel'),
+    validation: (val) => {
+      return validation('injectBabel', val, 'string|boolean');
+    }
+  },
+  {
+    name: 'polyfill',
+    defaultValue: 'entry'
   }
 ];

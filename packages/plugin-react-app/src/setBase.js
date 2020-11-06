@@ -9,7 +9,6 @@ module.exports = (api, { target, webpackConfig }) => {
   const { context } = api;
   const { rootDir } = context;
   const outputPath = getWebOutputPath(context, { target });
-
   webpackConfig
   // SimpleProgressPlugin
     .plugin('SimpleProgressPlugin')

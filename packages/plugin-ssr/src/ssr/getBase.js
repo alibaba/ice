@@ -26,6 +26,8 @@ module.exports = (api) => {
     }
   });
 
+  config.name('ssr');
+
   const appJsonPath = path.resolve(rootDir, 'src/app.json');
 
   let entries = {};
