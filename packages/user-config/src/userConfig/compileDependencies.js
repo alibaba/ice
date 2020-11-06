@@ -11,7 +11,7 @@ const defaultCompileDependencies = [
   'strip-ansi'
 ];
 module.exports = (config, compileDependencies) => {
-  const excludeNodeModules = ![MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName);
+  if ([MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName)) return;
   const matchExclude = (filepath) => {
     // exclude the core-js for that it will fail to run in IE
     if (filepath.match(/core-js/))
@@ -33,7 +33,7 @@ module.exports = (config, compileDependencies) => {
     }
 
     // exclude node_modules as default
-    return excludeNodeModules && /node_modules/.test(filepath);
+    return /node_modules/.test(filepath);
   };
 
   ['jsx', 'tsx'].forEach((rule) => {

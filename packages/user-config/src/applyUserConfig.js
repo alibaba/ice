@@ -21,7 +21,7 @@ module.exports = (api, options = {}) => {
   CONFIG.forEach((item) => registerUserConfig(item));
 
   // sort config key to make sure entry config is always excute before injectBabel
-  const configKeys = Object.keys(defaultConfigKeys).sort();
+  const configKeys = Object.keys(defaultConfigKeys);
 
   const defaultConfig = configKeys.map((configKey) => {
     let configFunc = null;
@@ -45,10 +45,10 @@ module.exports = (api, options = {}) => {
     return false;
   }).filter(Boolean);
 
-  const finalyConfig = unionBy(customConfigs.concat(defaultConfig), 'name');
+  const finalyConfig = unionBy(defaultConfig.concat(customConfigs), 'name');
 
   // register user config
-  registerUserConfig(finalyConfig);
+  registerUserConfig(finalyConfig.sort((curr, next) => curr.name.localeCompare(next.name)));
 
   // modify user config to keep excute order
   modifyUserConfig(api);

@@ -1,4 +1,5 @@
 const defaultConfig = require('../config/default.config');
+const { USER_CONFIG_KEY_WITHOUT_BUILD } = require('../config/constants');
 
 module.exports = (api) => {
   const { modifyUserConfig } = api;
@@ -8,7 +9,7 @@ module.exports = (api) => {
     const configKeys = [...Object.keys(userConfig), 'filename'].sort();
     const newConfig = {};
     configKeys.forEach((configKey) => {
-      if (!['plugins', 'web', 'miniapp', 'weex', 'kraken', 'wechat-miniprogram', 'bytedance-microapp', 'targets'].includes(configKey)) {
+      if (!USER_CONFIG_KEY_WITHOUT_BUILD.includes(configKey)) {
         newConfig[configKey] = Object.prototype.hasOwnProperty.call(userConfig, configKey)
           ? userConfig[configKey]
           : defaultConfig[configKey];;
