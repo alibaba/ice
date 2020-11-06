@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { defaultConfig } = require('build-webpack-config');
+const { defaultConfig } = require('@builder/user-config');
 const { MINIAPP } = require('../constants');
 
 module.exports = (context, options = {}) => {

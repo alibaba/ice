@@ -1,5 +1,5 @@
 const path = require('path');
-const { defaultConfig } = require('build-webpack-config');
+const { defaultConfig } = require('@builder/user-config');
 const { WEB } = require('../constants');
 
 module.exports = (context, { target }) => {

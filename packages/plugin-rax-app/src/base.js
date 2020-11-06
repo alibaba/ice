@@ -1,4 +1,4 @@
-const { getEnhanceWebpackConfig } = require('build-webpack-config');
+const { getEnhancedWebpackConfig } = require('@builder/user-config');
 const getWebpackConfig = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
 const ProgressPlugin = require('webpackbar');
@@ -16,7 +16,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     babelConfig,
     target,
   });
-  const enhanceWebpackConfig = getEnhanceWebpackConfig(api, {
+  const enhanceWebpackConfig = getEnhancedWebpackConfig(api, {
     target,
     webpackConfig,
     babelConfig,

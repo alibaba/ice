@@ -1,5 +1,5 @@
 const path = require('path');
-const { applyCliOption, applyUserConfig, getEnhanceWebpackConfig } = require('build-webpack-config');
+const { applyCliOption, applyUserConfig, getEnhancedWebpackConfig } = require('@builder/user-config');
 const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 const customConfigs = require('./config');
@@ -35,7 +35,7 @@ module.exports = (api) => {
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    registerTask(target, getEnhanceWebpackConfig(api, { target, webpackConfig, babelConfig }));
+    registerTask(target, getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig }));
 
     onGetWebpackConfig((chainConfig) => {
       setBase(api, { target, webpackConfig: chainConfig  });

@@ -1,8 +1,7 @@
 {
-  "name": "build-webpack-config",
+  "name": "@builder/user-config",
   "version": "0.1.0",
-  "description": "> TODO: description",
-  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "description": "",
   "homepage": "",
   "license": "MIT",
   "main": "lib/index.js",
@@ -34,9 +33,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/ice.git"

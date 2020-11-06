@@ -8,6 +8,10 @@ module.exports = (config, presetEnvParam) => {
           const [presetName] = Array.isArray(preset) ? preset : [preset];
           return presetName.indexOf('@babel/preset-env') > -1;
         });
+        if (presetEnvParam.useBuiltIns === 'usage') {
+          // Force babel sourceType unambiguous when preset env useBuiltIns is usage
+          options.sourceType = 'unambiguous';
+        }
         presetEnv[1] = { ...presetEnv[1], ...presetEnvParam };
         return options;
      });
