@@ -79,7 +79,9 @@ function getComponentByPath(routes, currPath)  {
     const matchedRoute = routeList.find(route => {
       return matchPath(currPath, route);
     });
-    return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
+    if (matchedRoute) {
+      return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
+    }
   }
   const matchedRoute = findMatchRoute(routes);
   return matchedRoute && matchedRoute.component;
