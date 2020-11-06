@@ -52,7 +52,6 @@ module.exports = {
   dll: 'boolean',
   // dllEntry: { [string]: string[] }
   dllEntry: 'object',
-  inlineStyle: 'boolean',
   polyfill: (val) => {
     return validation('polyfill', val, 'string|boolean|object');
   }

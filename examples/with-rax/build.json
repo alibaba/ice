@@ -1,6 +1,4 @@
 {
   "targets": ["web"],
-  "inlineStyle": true,
-  "polyfill": false,
-  "store": false
+  "inlineStyle": true
 }

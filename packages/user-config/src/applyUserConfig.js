@@ -1,4 +1,4 @@
-const unionBy = require('lodash/unionBy');
+const { unionBy } = require('build-app-helpers');
 const defaultConfigKeys = require('./config/default.config');
 const validation = require('./config/validation');
 const modifyUserConfig = require('./utils/modifyUserConfig');

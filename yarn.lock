@@ -12178,6 +12178,15 @@ mini-css-extract-plugin@^0.8.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
+mini-css-extract-plugin@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/mini-css-extract-plugin/download/mini-css-extract-plugin-1.2.1.tgz?cache=0&sync_timestamp=1603807634732&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmini-css-extract-plugin%2Fdownload%2Fmini-css-extract-plugin-1.2.1.tgz#30ea7dee632b3002b0c77aeed447790408cb247e"
+  integrity sha1-MOp97mMrMAKwx3ru1Ed5BAjLJH4=
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^3.0.0"
+    webpack-sources "^1.1.0"
+
 miniapp-builder-shared@^0.1.0, miniapp-builder-shared@^0.1.1, miniapp-builder-shared@^0.1.6, miniapp-builder-shared@^0.1.7:
   version "0.1.7"
   resolved "https://registry.npm.taobao.org/miniapp-builder-shared/download/miniapp-builder-shared-0.1.7.tgz?cache=0&sync_timestamp=1602661514342&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminiapp-builder-shared%2Fdownload%2Fminiapp-builder-shared-0.1.7.tgz#e78e08aac0d8e32c92ca5082b16a3dc3e20da49a"

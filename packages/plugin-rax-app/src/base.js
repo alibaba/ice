@@ -3,6 +3,8 @@ const getWebpackConfig = require('rax-webpack-config');
 const getBabelConfig = require('rax-babel-config');
 const ProgressPlugin = require('webpackbar');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const fs = require('fs-extra');
 
 module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
   const { context, onGetWebpackConfig } = api;
@@ -16,20 +18,25 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     babelConfig,
     target,
   });
-  const enhanceWebpackConfig = getEnhancedWebpackConfig(api, {
+  const enhancedWebpackConfig = getEnhancedWebpackConfig(api, {
     target,
     webpackConfig,
     babelConfig,
   });
 
-  enhanceWebpackConfig
+  enhancedWebpackConfig
     .plugin('ProgressPlugin')
     .use(ProgressPlugin, [
       Object.assign({ color: '#F4AF3D' }, progressOptions),
     ]);
 
+  // Copy public dir
+  if (fs.existsSync(path.resolve(rootDir, 'public'))) {
+    enhancedWebpackConfig.plugin('CopyWebpackPlugin').use(CopyWebpackPlugin, [[]]);
+  }
+
   ['jsx', 'tsx'].forEach((ruleName) => {
-    enhanceWebpackConfig.module
+    enhancedWebpackConfig.module
       .rule(ruleName)
       .use('platform-loader')
       .loader(require.resolve('rax-compile-config/src/platformLoader'));
@@ -67,5 +74,5 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     }
   });
 
-  return enhanceWebpackConfig;
+  return enhancedWebpackConfig;
 };
