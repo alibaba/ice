@@ -45,8 +45,9 @@ module.exports = function(api) {
 
     // Remove outputDir when start devServer
     const { outputDir = 'build' } = userConfig;
+
     configs.forEach(config => {
-      fs.removeSync(path.resolve(rootDir, outputDir, config.name));
+      fs.removeSync(path.resolve(rootDir, outputDir, config.name === 'ssr' ? 'node' : config.name));
     });
 
     try {
