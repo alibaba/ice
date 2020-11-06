@@ -4,7 +4,7 @@ module.exports = {
   devPublicPath: '/',
   filename: '[name].js',
   // resolve.extensions
-  extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx', 'rml'],
+  extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx', '.rml'],
   // resolve.modules
   modules: ['node_modules'],
   devServer: {
