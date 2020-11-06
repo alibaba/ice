@@ -26,7 +26,7 @@ module.exports = (api) => {
     }
   });
 
-  config.name('ssr');
+  config.name('node');
 
   const appJsonPath = path.resolve(rootDir, 'src/app.json');
 

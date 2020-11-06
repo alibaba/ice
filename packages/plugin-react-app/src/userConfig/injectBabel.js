@@ -1,12 +1,13 @@
 const { formatPath } = require('build-app-helpers');
+const chalk = require('chalk');
 const addBablePlugins = require('../utils/addBabelPlugins');
 
 module.exports = (config, injectBabel, context) => {
-  const { userConfig: { targets = [], polyfill } } = context;
+  const { userConfig: { targets = [] } } = context;
   if (targets.includes('miniapp') || targets.includes('wechat-miniprogram')) {
     return;
   }
-  console.log('polyfill', polyfill);
+  console.log(chalk.cyan('Detected  you are using injectBabel, please use polyfill, Visit https://ice.work/docs/guide/basic/build.'));
   if (injectBabel === 'runtime') {
     ['jsx', 'tsx'].forEach((rule) => {
       config.module
