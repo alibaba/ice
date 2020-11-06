@@ -47,7 +47,7 @@ module.exports = function(api) {
     const { outputDir = 'build' } = userConfig;
 
     configs.forEach(config => {
-      fs.removeSync(path.resolve(rootDir, outputDir, config.name === 'ssr' ? 'node' : config.name));
+      fs.removeSync(path.resolve(rootDir, outputDir, config.name));
     });
 
     try {
