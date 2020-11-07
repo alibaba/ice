@@ -1,3 +1,4 @@
+const { injectTransformRuntime } = require('build-app-helpers');
 const processPresetEnv  = require('../utils/processPresetEnv');
 
 module.exports = (config, polyfill) => {
@@ -6,6 +7,7 @@ module.exports = (config, polyfill) => {
   };
   if (typeof polyfill === 'string') {
     presetEnvParam.corejs = 3;
+    injectTransformRuntime(config);
   }
   processPresetEnv(config, presetEnvParam);
 };

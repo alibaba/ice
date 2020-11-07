@@ -32,11 +32,11 @@ export default function Home(props) {
   );
 }
 
-// Home.getInitialProps = async () => {
-//   return {
-//     data: {
-//       title: 'Welcome to Your Rax App with SSR',
-//       info: 'More information about Rax'
-//     }
-//   };
-// };
+Home.getInitialProps = async () => {
+  return {
+    data: {
+      title: 'Welcome to Your Rax App with SSR',
+      info: 'More information about Rax'
+    }
+  };
+};
