@@ -26,6 +26,8 @@ module.exports = (api) => {
     }
   });
 
+  config.name('node');
+
   const appJsonPath = path.resolve(rootDir, 'src/app.json');
 
   let entries = {};

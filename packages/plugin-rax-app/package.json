@@ -17,7 +17,7 @@
     "rax-babel-config": "^1.0.0",
     "rax-jest-config": "^1.0.0",
     "rax-compile-config": "^0.2.16",
-    "build-webpack-config": "^0.1.0",
+    "@builder/user-config": "^0.1.0",
     "build-app-helpers": "^1.0.1",
     "chalk": "^4.0.0",
     "debug": "^4.1.1",
@@ -28,7 +28,8 @@
     "react-dev-utils": "^10.2.1",
     "webpackbar": "^4.0.0",
     "qrcode-terminal": "^0.12.0",
-    "mini-css-extract-plugin": "^1.2.1"
+    "mini-css-extract-plugin": "^1.2.1",
+    "copy-webpack-plugin": "^5.0.4"
   },
   "devDependencies": {
     "webpack": "^4.41.1"

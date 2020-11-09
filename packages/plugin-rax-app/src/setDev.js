@@ -64,7 +64,6 @@ module.exports = function(api) {
     const isSuccessful = !messages.errors.length;
     const { outputDir = 'build' } = userConfig;
 
-
     if (isSuccessful) {
       if (commandArgs.disableAssets === false) {
         console.log(
@@ -159,7 +158,7 @@ module.exports = function(api) {
     }
   });
 
-  if (!commandArgs.disableOpen && targets.includes[WEB]) {
+  if (!commandArgs.disableOpen && targets.includes(WEB)) {
     onHook('after.start.devServer', ({ url }) => {
       // do not open browser when restart dev
       if (!process.env.RESTART_DEV) openBrowser(url);

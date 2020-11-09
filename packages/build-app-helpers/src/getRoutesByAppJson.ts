@@ -12,13 +12,17 @@ interface IStaticConfig {
 
 interface IOptions {
   appJsonPath?: string;
-  appJsonContent?: string;
+  appJsonContent?: IStaticConfig;
 }
 
 // Get entries when exist app.json
 export default function (target, { appJsonPath, appJsonContent }: IOptions) {
-  const appJSON = appJsonContent || fs.readFileSync(appJsonPath) as any;
-  const staticConfig: IStaticConfig = JSON.parse(appJSON);
+  let staticConfig: IStaticConfig  = appJsonContent;
+
+  if (appJsonPath) {
+    const appJSON = appJsonContent || fs.readFileSync(appJsonPath) as any;
+    staticConfig = JSON.parse(appJSON);
+  }
 
   if (!staticConfig.routes || !Array.isArray(staticConfig.routes)) {
     throw new Error('routes should be an array in app.json.');

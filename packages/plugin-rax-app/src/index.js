@@ -1,5 +1,5 @@
 const path = require('path');
-const { applyCliOption, applyUserConfig } = require('build-webpack-config');
+const { applyCliOption, applyUserConfig } = require('@builder/user-config');
 const getBase = require('./base');
 const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 const setTest = require('./setTest');

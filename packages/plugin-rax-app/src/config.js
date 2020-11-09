@@ -1,10 +1,28 @@
-const { validation } = require('build-app-helpers');
-
 /* eslint global-require: 0 */
 module.exports = [
   {
     name: 'devServer',
     defaultValue: {
+      disableHostCheck: true,
+      compress: true,
+      // Use 'ws' instead of 'sockjs-node' on server since webpackHotDevClient is using native websocket
+      transportMode: 'ws',
+      logLevel: 'silent',
+      clientLogLevel: 'none',
+      hot: true,
+      publicPath: '/',
+      quiet: false,
+      watchOptions: {
+        ignored: /node_modules/,
+        aggregateTimeout: 600,
+      },
+      before(app) {
+        app.use((req, res, next) => {
+          // set cros for all served files
+          res.set('Access-Control-Allow-Origin', '*');
+          next();
+        });
+      },
       // For mutilple task, web will occupy the server root route
       writeToDisk: true,
       historyApiFallback: true,
@@ -12,7 +30,7 @@ module.exports = [
   },
   {
     name: 'outputAssetsPath',
-    defauleValue: {
+    defaultValue: {
       js: '',
       css: '',
     }
