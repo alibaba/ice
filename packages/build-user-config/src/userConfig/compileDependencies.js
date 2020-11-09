@@ -11,7 +11,7 @@ const defaultCompileDependencies = [
   'strip-ansi'
 ];
 module.exports = (config, compileDependencies) => {
-  if ([MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName)) return;
+  if ([MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName)) return false;
   const matchExclude = (filepath) => {
     // exclude the core-js for that it will fail to run in IE
     if (filepath.match(/core-js/))
