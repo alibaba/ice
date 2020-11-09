@@ -1,4 +1,4 @@
-const { validation } = require('build-app-helpers');
+const { validation } = require('@builder/app-helpers');
 const chalk = require('chalk');
 
 /* eslint global-require: 0 */

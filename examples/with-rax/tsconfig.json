@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "esNext",
     "target": "es2015",
     "outDir": "build",
     "jsx": "preserve",

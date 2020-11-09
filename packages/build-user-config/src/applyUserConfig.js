@@ -1,4 +1,4 @@
-const { unionBy } = require('build-app-helpers');
+const { unionBy } = require('@builder/app-helpers');
 const defaultConfigKeys = require('./config/default.config');
 const validation = require('./config/validation');
 const modifyUserConfig = require('./utils/modifyUserConfig');

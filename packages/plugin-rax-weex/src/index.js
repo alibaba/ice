@@ -1,6 +1,6 @@
 const path = require('path');
-const setMPAConfig = require('build-mpa-config');
-const { getMpaEntries } = require('build-app-helpers');
+const setMPAConfig = require('@builder/mpa-config');
+const { getMpaEntries } = require('@builder/app-helpers');
 const setEntry = require('./setEntry');
 const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 const WeexFrameworkBannerPlugin = require('./WeexFrameworkBannerPlugin');

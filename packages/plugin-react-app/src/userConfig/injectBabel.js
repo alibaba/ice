@@ -1,4 +1,4 @@
-const { injectTransformRuntime } = require('build-app-helpers');
+const { injectTransformRuntime } = require('@builder/app-helpers');
 const chalk = require('chalk');
 const addBablePlugins = require('../utils/addBabelPlugins');
 

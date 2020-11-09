@@ -1,4 +1,4 @@
-const { injectTransformRuntime } = require('build-app-helpers');
+const { injectTransformRuntime } = require('@builder/app-helpers');
 const processPresetEnv  = require('../utils/processPresetEnv');
 
 module.exports = (config, polyfill) => {
