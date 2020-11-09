@@ -10,7 +10,7 @@ const getBuiltInPlugins = (userConfig) => {
         alias: 'rax-app',
       },
     ],
-    ['build-plugin-app-base', userConfig],
+    ['build-plugin-rax-app'],
   ];
 
   if (store) {

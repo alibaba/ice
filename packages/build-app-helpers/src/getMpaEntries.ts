@@ -11,7 +11,7 @@ export default function (api, { target, appJsonPath }) {
 }
 
 function getEntriesByJson(target, appJsonPath) {
-  const routes = getRoutesByAppJson(target, appJsonPath);
+  const routes = getRoutesByAppJson(target, { appJsonPath });
   return routes.map((route) => {
     const dir = path.dirname(route.source);
     const pageName = path.parse(dir).name;
