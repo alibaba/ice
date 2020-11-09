@@ -40,7 +40,22 @@ module.exports = class EslintReportingPlugin {
 
       async function processResults() {
         const report = eslint.executeOnFiles(files);
-        console.log(formatter(report.results));
+        const message = formatter(report.results);
+
+        if (message) {
+          console.log('ESLint(https://eslint.org/) activated. Report:');
+          console.log(message);
+
+          if (report.fixableErrorCount || report.fixableWarningCount) {
+            console.log('You can add `--fix` to eslint script in package.json, like: "eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx ./"');
+          } else {
+            console.log('Please check ESLint problems');
+          }
+          
+          console.log('');
+          console.log('');
+        }
+
         files = [];
       }
     });
