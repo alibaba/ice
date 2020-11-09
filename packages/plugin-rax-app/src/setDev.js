@@ -125,6 +125,10 @@ module.exports = function(api) {
           console.log(`  ${chalk.underline.white(`${urls.localUrlForBrowser}${entryPath}`)}`);
           console.log(`  ${chalk.underline.white(`${urls.lanUrlForBrowser}${entryPath}`)}`);
           console.log();
+          // do not open browser when restart dev
+          if (!commandArgs.disableOpen && !process.env.RESTART_DEV) {
+            openBrowser(`${urls.localUrlForBrowser}${entryPath}`);
+          }
         });
       }
 
@@ -158,10 +162,4 @@ module.exports = function(api) {
     }
   });
 
-  if (!commandArgs.disableOpen && targets.includes(WEB)) {
-    onHook('after.start.devServer', ({ url }) => {
-      // do not open browser when restart dev
-      if (!process.env.RESTART_DEV) openBrowser(url);
-    });
-  }
 };
