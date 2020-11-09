@@ -1,6 +1,6 @@
 {
   "name": "eslint-reporting-webpack-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A friendly ESLint reporting plugin for webpack.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
