@@ -26,7 +26,7 @@
     "mkcert": "^1.2.0",
     "path-exists": "^4.0.0",
     "react-dev-utils": "^10.2.1",
-    "@builder/app-helpers": "^1.0.1"
+    "@builder/app-helpers": "^1.0.0"
   },
   "devDependencies": {
     "webpack": "^4.41.1"
