@@ -7,7 +7,9 @@ module.exports = (config, polyfill) => {
   };
   if (typeof polyfill === 'string') {
     presetEnvParam.corejs = 3;
-    injectTransformRuntime(config);
+    if (polyfill === 'usage') {
+      injectTransformRuntime(config);
+    }
   }
   processPresetEnv(config, presetEnvParam);
 };
