@@ -1,3 +1,3 @@
 {
-  "targets": ["miniapp"]
+  "targets": ["web", "miniapp", "weex", "kraken"]
 }

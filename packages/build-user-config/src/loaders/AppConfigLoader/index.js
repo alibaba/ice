@@ -20,7 +20,6 @@ module.exports = function (appJSON) {
   const options = getOptions(this) || {};
   const { target, libName } = options;
   const appConfig = JSON.parse(appJSON);
-  console.log('target', target);
 
   appConfig.routes = getRoutesByAppJson(target, { appJsonContent: appConfig });
   const assembleRoutes = appConfig.routes.map((route) => {
