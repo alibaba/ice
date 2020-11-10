@@ -22,7 +22,6 @@ module.exports = function (appJSON) {
   const appConfig = JSON.parse(appJSON);
 
   appConfig.routes = getRoutesByAppJson(target, { appJsonContent: appConfig });
-
   const assembleRoutes = appConfig.routes.map((route) => {
     if (!route.path || !route.source) {
       throw new Error('route object should have path and source.');
@@ -52,7 +51,6 @@ module.exports = function (appJSON) {
       })
     `;
     const importComponent = `() => () => interopRequire(require('${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}'))`;
-
     return `routes.push(
       {
         ...${JSON.stringify(route)},
@@ -60,7 +58,6 @@ module.exports = function (appJSON) {
       }
     );`;
   }).join('\n');
-
 
   return `
     import { createElement } from '${libName}';

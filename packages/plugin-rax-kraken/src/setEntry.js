@@ -9,9 +9,6 @@ module.exports = (config, context) => {
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
   const entryConfig = config.entry('index');
 
-  config.module.rule('appJSON')
-    .use('loader');
-
   ['jsx', 'tsx'].forEach(tag => {
     config.module.rule(tag)
       .use('platform-loader')
