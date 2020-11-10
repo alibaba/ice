@@ -27,7 +27,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
       .plugin('ESLintReportingPlugin')
       .use(require.resolve('eslint-reporting-webpack-plugin'));
   }
-
+  console.log('target====', target);
   // Process app.json file
   webpackConfig.module
     .rule('appJSON')
