@@ -1,5 +1,4 @@
 const { injectTransformRuntime } = require('@builder/app-helpers');
-const chalk = require('chalk');
 const addBablePlugins = require('../utils/addBabelPlugins');
 
 module.exports = (config, injectBabel, context) => {
@@ -9,7 +8,6 @@ module.exports = (config, injectBabel, context) => {
   || Object.prototype.hasOwnProperty.call(userConfig, 'polyfill')) {
     return;
   }
-  console.log(chalk.cyan('Detected that you are using injectBabel, please use polyfill field, Visit https://ice.work/docs/guide/basic/build.'));
   if (injectBabel === 'runtime') {
     injectTransformRuntime(config);
   } else if (injectBabel === 'polyfill') {

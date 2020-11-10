@@ -7,6 +7,7 @@ const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
+const logDetectedTip = require('./utils/logDetectedTip');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask } = api;
@@ -16,6 +17,9 @@ module.exports = (api) => {
   const webpackConfig = getWebpackConfig(mode);
   const babelConfig = getBabelConfig();
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
+
+  // tip detected injectBabel
+  logDetectedTip(userConfig);
 
   // register cli option
   applyCliOption(api);
