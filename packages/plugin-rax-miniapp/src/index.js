@@ -79,11 +79,9 @@ module.exports = (api) => {
           if (fs.existsSync(compiledComponentsPath)) {
             const compiledComponentsChainConfig = getWebpackBase(api, {
               target: 'rax-compiled-components',
-              babelConfigOptions: { styleSheet: inlineStyle, disableRegenerator: true },
-              progressOptions: {
-                name: 'rax-compiled-components'
-              }
+              babelConfigOptions: { styleSheet: inlineStyle, disableRegenerator: true }
             });
+            compiledComponentsChainConfig.plugins.delete('ProgressPlugin');
             compiledComponentsChainConfig.name('rax-compiled-components');
             compiledComponentsChainConfig.taskName = 'rax-compiled-components';
 
