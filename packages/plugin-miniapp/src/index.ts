@@ -27,7 +27,7 @@ module.exports = (api) => {
         miniappConfig.setConfig(config, userConfig[target] || {}, { context, target, babelRuleName: 'babel-loader', outputPath });
 
         if (config.plugins.get('MiniCssExtractPlugin')) {
-          config.plugin('MiniCssExtractPlugin').tap((args) => [
+          config.plugin('MiniCssExtractPlugin').tap(([args]) => [
             {
               ...args,
               filename: `${target}/[name].css`,
