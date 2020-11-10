@@ -40,7 +40,7 @@ module.exports = function() {
       const initialHtml = renderer.renderToString(contentElement, {
         defaultUnit: 'rpx'
       });
-
+      console.log('initialHtml', initialHtml);
       // use let statement, because styles and scripts may be changed by assetsProcessor
       let styles = ${JSON.stringify(styles)};
       let scripts = ${JSON.stringify(scripts)};

@@ -8,10 +8,6 @@ module.exports = (config, context, target) => {
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
   const entryConfig = config.entry('index');
 
-  config.module.rule('appJSON')
-    .use('loader')
-    .tap(() => ({ type: target }));
-
 
   ['jsx', 'tsx'].forEach(tag => {
     config.module.rule(tag)

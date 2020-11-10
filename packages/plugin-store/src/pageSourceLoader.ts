@@ -17,10 +17,19 @@ export default function pageSourceLoader(appJSON) {
   const content = JSON.parse(appJSON);
 
   content.routes = content.routes.map(route => {
-    return {
-      ...route,
-      realSource: join(targetPath, route.source)
-    };
+    let pageSource = route.source;
+    if (/^\/?pages/.test(pageSource)) {
+      if (/index$/.test(pageSource)) {
+        pageSource = pageSource.replace(/index$/, 'Page');
+      } else {
+        pageSource = join(pageSource, 'Page');
+      }
+      return {
+        ...route,
+        pageSource: join(targetPath, pageSource)
+      };
+    }
+    return route;
   });
   return JSON.stringify(content);
 };

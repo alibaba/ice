@@ -1,15 +1,15 @@
 const path = require('path');
-const setMPAConfig = require('build-mpa-config');
-const { getMpaEntries } = require('build-app-helpers');
+const setMPAConfig = require('@builder/mpa-config');
+const { getMpaEntries } = require('@builder/app-helpers');
 const setDev = require('./setDev');
 const setEntry = require('./setEntry');
 const DocumentPlugin = require('./DocumentPlugin');
-const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
+const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, getValue, context, registerTask, registerUserConfig } = api;
 
-  const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const getWebpackBase = getValue(GET_RAX_APP_WEBPACK_CONFIG);
   const target = 'web';
   const { userConfig = {} } = context;
   const chainConfig = getWebpackBase(api, {

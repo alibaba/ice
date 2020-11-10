@@ -62,7 +62,7 @@ function initGenerator(api, options) {
   const plugins = getAllPlugin();
   const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
-  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
+  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
   return new Generator({
     rootDir,
     targetDir: getValue(TEMP_PATH),
@@ -77,7 +77,7 @@ function initGenerator(api, options) {
       runtimeModules: getRuntimeModules(plugins),
       buildConfig: JSON.stringify(userConfig)
     },
-    log
+    log,
   });
 }
 
