@@ -1,4 +1,3 @@
-
 import * as semver from 'semver';
 import { getPackageInfos, IPackageInfo } from './getPackageInfos';
 
