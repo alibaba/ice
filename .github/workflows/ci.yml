@@ -19,6 +19,7 @@ jobs:
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
+      - run: npm run version:check
       - run: npm run coverage
       - run: npm run generate:docs
       - run: npm run upload:oss
