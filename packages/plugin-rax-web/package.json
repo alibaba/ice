@@ -22,10 +22,11 @@
     "fs-extra": "^9.0.1",
     "klaw-sync": "^6.0.0",
     "qs": "^6.9.4",
-    "rax-compile-config": "^0.2.16",
     "rax-server-renderer": "^1.2.0",
     "webpack-sources": "^2.0.0",
     "webpack": "^4.0.0",
-    "@builder/app-helpers": "1.0.0-0"
+    "@builder/app-helpers": "1.0.0-0",
+    "react-dev-utils": "^10.0.0",
+    "chalk": "^4.1.0"
   }
 }

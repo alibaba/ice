@@ -5005,6 +5005,26 @@ build-plugin-app-core@0.1.23-0:
     react-app-renderer "0.1.10"
     universal-env "^3.0.0"
 
+build-plugin-miniapp@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.npm.taobao.org/build-plugin-miniapp/download/build-plugin-miniapp-0.1.6.tgz#b349e1b51617a190088e0aab3ce215f1351d46b6"
+  integrity sha1-s0nhtRYXoZAIjgqrPOIV8TUdRrY=
+  dependencies:
+    miniapp-builder-shared "^0.1.1"
+    miniapp-runtime-config "^0.1.1"
+
+build-plugin-rax-miniapp@1.0.4-1:
+  version "1.0.4-1"
+  resolved "https://registry.npm.taobao.org/build-plugin-rax-miniapp/download/build-plugin-rax-miniapp-1.0.4-1.tgz#706dd883bf82531c9795b37eedc2f7bb8c588c62"
+  integrity sha1-cG3Yg7+CUxyXlbN+7cL3u4xYjGI=
+  dependencies:
+    copy-webpack-plugin "^5.0.4"
+    fs-extra "^9.0.1"
+    miniapp-builder-shared "^0.1.6"
+    miniapp-compile-config "^0.1.3"
+    miniapp-runtime-config "^0.1.3"
+    webpack-sources "^2.0.0"
+
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
@@ -15158,7 +15178,7 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dev-utils@^10.2.1:
+react-dev-utils@^10.0.0, react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.npm.taobao.org/react-dev-utils/download/react-dev-utils-10.2.1.tgz#f6de325ae25fa4d546d09df4bb1befdc6dd19c19"
   integrity sha1-9t4yWuJfpNVG0J30uxvv3G3RnBk=

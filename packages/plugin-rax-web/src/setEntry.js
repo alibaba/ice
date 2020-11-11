@@ -1,8 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
 
-const { hmrClient } = require('rax-compile-config');
-
 module.exports = (config, context) => {
   const { rootDir, command } = context;
   const isDev = command === 'start';
@@ -15,7 +13,7 @@ module.exports = (config, context) => {
     .use('loader');
 
   if (isDev) {
-    entryConfig.add(hmrClient);
+    entryConfig.add(require.resolve('react-dev-utils/webpackHotDevClient'));
   }
   entryConfig.add(appEntry);
 };

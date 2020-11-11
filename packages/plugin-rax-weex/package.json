@@ -19,8 +19,8 @@
   "dependencies": {
     "@builder/mpa-config": "1.0.0-0",
     "fs-extra": "^9.0.1",
-    "rax-compile-config": "^0.2.16",
     "webpack-sources": "^2.0.0",
-    "@builder/app-helpers": "1.0.0-0"
+    "@builder/app-helpers": "1.0.0-0",
+    "react-dev-utils": "^10.0.0"
   }
 }

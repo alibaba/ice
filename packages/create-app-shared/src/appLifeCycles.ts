@@ -75,6 +75,7 @@ if (isMiniAppPlatform) {
     const globalEvent = __weex_require__('@weex-module/globalEvent');
     globalEvent.addEventListener('WXApplicationDidBecomeActiveEvent', function() {
       router.current.visibiltyState = true;
+      console.error(11111);
       // Emit app show
       emit(SHOW);
       // Emit page show
