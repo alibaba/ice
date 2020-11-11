@@ -5,14 +5,14 @@ const { setConfig } = require('miniapp-runtime-config');
 const { setAppConfig: setCompileConfig } = require('miniapp-compile-config');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const setEntry = require('./setEntry');
-const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
+const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 
 module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
   const { userConfig } = context;
   const { targets, inlineStyle } = userConfig;
 
-  const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const getWebpackBase = getValue(GET_RAX_APP_WEBPACK_CONFIG);
   targets.forEach(target => {
     if (['miniapp', 'wechat-miniprogram', 'bytedance-microapp'].includes(target)) {
       const chainConfig = getWebpackBase(api, {
@@ -58,7 +58,7 @@ module.exports = (api) => {
           config.plugin('CopyWebpackPlugin').tap(([copyList]) => {
             return [copyList.concat(needCopyDirs)];
           });
-        } else if (needCopyDirs.length > 1) {
+        } else if (needCopyDirs.length > 0) {
           config
             .plugin('CopyWebpackPlugin')
             .use(CopyWebpackPlugin, [needCopyDirs]);

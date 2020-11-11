@@ -13,8 +13,7 @@ module.exports = (config, context) => {
   const entryConfig = config.entry('index');
 
   config.module.rule('appJSON')
-    .use('loader')
-    .tap(() => ({ type: target }));
+    .use('loader');
 
 
   ['jsx', 'tsx'].forEach(tag => {

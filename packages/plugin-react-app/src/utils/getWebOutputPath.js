@@ -1,9 +1,10 @@
 const path = require('path');
+const { defaultConfig } = require('@builder/user-config');
 const { WEB } = require('../constants');
-const defaultConfig = require('../config/default.config');
 
 module.exports = (context, { target }) => {
   const { userConfig, rootDir } = context;
+
   let outputPath = path.join(rootDir, defaultConfig.outputDir);
 
   if (userConfig.outputDir) {
