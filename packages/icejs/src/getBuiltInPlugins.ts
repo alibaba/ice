@@ -25,7 +25,8 @@ module.exports = (userConfig: any) => {
     'build-plugin-ice-logger',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
-    'build-plugin-ice-request'
+    'build-plugin-ice-request',
+    'build-plugin-ice-auth'
   ];
 
   if (userConfig.ssr) {
