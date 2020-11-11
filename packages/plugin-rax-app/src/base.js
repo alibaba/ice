@@ -6,7 +6,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const fs = require('fs-extra');
 
-module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
+module.exports = (api, { target, babelConfigOptions, progressOptions = {} }) => {
   const { context, onGetWebpackConfig } = api;
   const { rootDir, command, userConfig } = context;
 
