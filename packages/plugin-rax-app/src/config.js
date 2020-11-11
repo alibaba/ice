@@ -40,5 +40,9 @@ module.exports = [
     defaultValue: false,
     configWebpack: require('./userConfig/inlineStyle'),
     validation: 'boolean'
+  },
+  {
+    name: 'compileDependencies',
+    defaultValue: [''],
   }
 ];

@@ -27,7 +27,7 @@ module.exports = (api) => {
       const isCompileProject = userConfig[target] && userConfig[target].buildType === 'compile';
       // Set Entry when it's runtime project
       if (!isCompileProject) {
-        setEntry(chainConfig, context, target);
+        setEntry(chainConfig, context);
       }
       // Register task
       registerTask(target, chainConfig);
