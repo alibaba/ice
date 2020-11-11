@@ -5,19 +5,10 @@ const path = require('path');
 module.exports = (config, context) => {
   const { rootDir, command } = context;
   const isDev = command === 'start';
-  const target = 'weex';
 
   // SPA
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
   const entryConfig = config.entry('index');
-
-  ['jsx', 'tsx'].forEach(tag => {
-    config.module.rule(tag)
-      .use('platform-loader')
-      .options({
-        platform: target,
-      });
-  });
 
   if (isDev) {
     entryConfig.add(hmrClient);
