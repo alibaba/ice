@@ -171,7 +171,7 @@ runApp(appConfig)
 
 ### UMD 规范微应用
 
-> build-plugin-icestark@1.8.0 以上版本支持
+> build-plugin-icestark@2.0.0 以上版本支持
 
 在 `build.json` 中配置 umd 属性即可导出标准 UMD 规范的微应用：
 
