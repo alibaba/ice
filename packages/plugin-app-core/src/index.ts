@@ -5,6 +5,7 @@ import getRuntimeModules from './utils/getRuntimeModules';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
+import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
@@ -62,7 +63,7 @@ function initGenerator(api, options) {
   const plugins = getAllPlugin();
   const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
-  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
+  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
   return new Generator({
     rootDir,
     targetDir: getValue(TEMP_PATH),
@@ -75,9 +76,9 @@ function initGenerator(api, options) {
       isRax: framework === 'rax',
       isMiniapp,
       runtimeModules: getRuntimeModules(plugins),
-      buildConfig: JSON.stringify(userConfig)
+      buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
-    log
+    log,
   });
 }
 

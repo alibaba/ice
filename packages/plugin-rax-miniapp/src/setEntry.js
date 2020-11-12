@@ -1,25 +1,12 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-module.exports = (config, context, target) => {
+module.exports = (config, context) => {
   const { rootDir } = context;
 
   // SPA
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
   const entryConfig = config.entry('index');
-
-  config.module.rule('appJSON')
-    .use('loader')
-    .tap(() => ({ type: target }));
-
-
-  ['jsx', 'tsx'].forEach(tag => {
-    config.module.rule(tag)
-      .use('platform-loader')
-      .options({
-        platform: target,
-      });
-  });
 
   entryConfig.add(appEntry);
 };

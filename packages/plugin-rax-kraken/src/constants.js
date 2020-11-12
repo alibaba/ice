@@ -1,3 +1,3 @@
 module.exports = {
-  GET_WEBPACK_BASE_CONFIG: 'getWebpackBaseConfig'
+  GET_RAX_APP_WEBPACK_CONFIG: 'getRaxAppWebpackConfig'
 };

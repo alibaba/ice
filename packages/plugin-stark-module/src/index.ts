@@ -39,7 +39,7 @@ const plugin: IPlugin = ({ registerTask, onGetWebpackConfig, context, onHook }, 
         .library((library as string) || 'module')
         .libraryTarget('umd');
       // css
-      config.plugin('MiniCssExtractPlugin').tap((args) => [{ ...args, filename: '[name].css' }]);
+      config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: '[name].css' }]);
       config.devServer.contentBase(path.join(rootDir, 'dist'));
       config.devServer.writeToDisk(true);
       config.externals(externals as webpack.ExternalsElement[]);

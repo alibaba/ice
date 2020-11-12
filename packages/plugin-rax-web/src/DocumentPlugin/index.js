@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const { RawSource } = require('webpack-sources');
-const { handleWebpackErr } = require('rax-compile-config');
 const { parse, print } = require('error-stack-tracey');
 
 const PLUGIN_NAME = 'DocumentPlugin';
@@ -66,10 +65,6 @@ module.exports = class DocumentPlugin {
     // Document path is specified
     const absoluteDocumentPath = getAbsoluteFilePath(rootDir, 'src/document/index');
 
-    // Shell is enabled by config in app.json, so it can be disabled without delete code
-    const appConfig = fs.readJsonSync(path.join(rootDir, 'src/app.json'));
-    const shellPath = appConfig.shell && appConfig.shell.source;
-    const absoluteShellPath = shellPath ? getAbsoluteFilePath(rootDir, path.join('src', shellPath)) : null;
     const manifestString = options.manifests ? JSON.stringify(options.manifests) : null;
 
     delete webpackConfig.entry.index;
@@ -79,10 +74,8 @@ module.exports = class DocumentPlugin {
       const { tempFile, source, pagePath } = pageInfo;
 
       const absolutePagePath = options.staticExport && source ? getAbsoluteFilePath(rootDir, path.join('src', source)) : '';
-
       const query = {
         absoluteDocumentPath,
-        absoluteShellPath,
         absolutePagePath,
         pagePath,
         doctype: options.doctype,
@@ -132,7 +125,7 @@ module.exports = class DocumentPlugin {
       // Run as child to get child compilation
       childCompiler.runAsChild((err, entries, childCompilation) => {
         if (err) {
-          handleWebpackErr(err);
+          console.log(err);
         } else {
           fileDependencies = childCompilation.fileDependencies;
         }
@@ -257,7 +250,6 @@ function getAssetsForPage(files, publicPath) {
 /**
  * Get the exact file
  * @param {*} rootDir '/Document/work/code/rax-demo/'
- * @param {*} filePath 'src/shell/index'
  */
 function getAbsoluteFilePath(rootDir, filePath) {
   const exts = ['.js', '.jsx', '.tsx'];

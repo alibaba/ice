@@ -1,13 +1,13 @@
 const path = require('path');
-const setMPAConfig = require('build-mpa-config');
-const { getMpaEntries } = require('build-app-helpers');
+const setMPAConfig = require('@builder/mpa-config');
+const { getMpaEntries } = require('@builder/app-helpers');
 const setEntry = require('./setEntry');
-const { GET_WEBPACK_BASE_CONFIG } = require('./constants');
+const { GET_RAX_APP_WEBPACK_CONFIG } = require('./constants');
 
 module.exports = (api) => {
   const { getValue, context, registerTask, onGetWebpackConfig, registerUserConfig } = api;
 
-  const getWebpackBase = getValue(GET_WEBPACK_BASE_CONFIG);
+  const getWebpackBase = getValue(GET_RAX_APP_WEBPACK_CONFIG);
   const target = 'kraken';
   const chainConfig = getWebpackBase(api, {
     target,

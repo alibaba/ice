@@ -1,32 +1,19 @@
 const path = require('path');
 const fs = require('fs-extra');
 
-const { hmrClient } = require('rax-compile-config');
-
 module.exports = (config, context) => {
   const { rootDir, command } = context;
   const isDev = command === 'start';
-  const target = 'web';
 
   // SPA
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
   const entryConfig = config.entry('index');
 
   config.module.rule('appJSON')
-    .use('loader')
-    .tap(() => ({ type: target }));
-
-
-  ['jsx', 'tsx'].forEach(tag => {
-    config.module.rule(tag)
-      .use('platform-loader')
-      .options({
-        platform: target,
-      });
-  });
+    .use('loader');
 
   if (isDev) {
-    entryConfig.add(hmrClient);
+    entryConfig.add(require.resolve('react-dev-utils/webpackHotDevClient'));
   }
   entryConfig.add(appEntry);
 };
