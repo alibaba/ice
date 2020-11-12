@@ -1,6 +1,6 @@
 ## Changelog
 
-### 3.0.7 (November 11, 2020)
+### 3.0.7 (November 12, 2020)
 
 - Feat: support manually close store.(https://github.com/alibaba/ice/pull/3750)
 - Feat: support pages that are not in the `src/pages`.(https://github.com/alibaba/ice/pull/3750) 
