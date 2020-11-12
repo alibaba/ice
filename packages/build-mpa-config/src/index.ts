@@ -12,9 +12,9 @@ interface IConfigOptions {
     rootDir: string;
     commandArgs: any;
   };
-  type: string;
+  type?: string;
   framework: string;
-
+  autoConfig?: boolean;
   entries?: IEntries[];
 }
 
@@ -22,7 +22,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
   if (!options) {
     throw new Error('There need pass options param to setMPAConfig method');
   }
-  const { context, type = 'web', framework = 'rax' } = options;
+  const { context, type = 'web', framework = 'rax', autoConfig = true } = options;
   let { entries } = options;
   const { rootDir, commandArgs } = context;
   if (commandArgs.mpaEntry) {
@@ -34,7 +34,9 @@ const setMPAConfig = (config, options: IConfigOptions) => {
   // do not splitChunks when mpa
   config.optimization.splitChunks({ cacheGroups: {} });
   // clear entry points
-  config.entryPoints.clear();
+  if (autoConfig) {
+    config.entryPoints.clear();
+  }
   // add mpa entries
   const matchStrs = [];
   const includeEntryList = [];
@@ -42,7 +44,11 @@ const setMPAConfig = (config, options: IConfigOptions) => {
     const { entryName, entryPath, pageName } = entry;
     const pageEntry = path.join(rootDir, 'src/pages', entryPath);
     const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
-    config.entry(entryName).add(pageEntry);
+    // icejs will config entry by api modifyUserConfig
+    if (autoConfig) {
+      config.entry(entryName).add(pageEntry);
+    }
+    
     if (!useOriginEntry) {
       includeEntryList.push(formatPath(pageEntry));
     }
@@ -50,8 +56,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(formatPath(matchStr));
   });
-
-  if (includeEntryList.length) {
+  if (includeEntryList.length > 0) {
     // add mpa-loader for MPA entries
     ['tsx', 'jsx'].forEach((rule) => {
       if (config.module.rules.has(rule)) {
@@ -63,7 +68,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
     });
   }
 
-  if (type === 'web') {
+  if (type === 'web' && config.plugins.has('document')) {
     config.plugin('document').tap(args => {
       return [{
         ...args[0],

@@ -1,6 +1,8 @@
-import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { getMpaEntries } from '@builder/app-helpers';
+import setMPAConfig from '@builder/mpa-config';
+import { IPlugin } from '@alib/build-scripts';
 
 const plugin: IPlugin = (api) => {
   const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log } = api;
@@ -19,19 +21,11 @@ const plugin: IPlugin = (api) => {
   });
 
   if (mpa) {
-    const pagesPath = path.join(rootDir, 'src/pages');
-    const pages = fs.existsSync(pagesPath)
-      ? fs.readdirSync(pagesPath)
-        .filter(page => !/^[._]/.test(page))
-        .map(page => path.parse(page).name)
-      : [];
-    let entries = pages.reduce((acc, pageName) => {
-      const entryName = pageName.toLocaleLowerCase();
-      const pageEntry = getPageEntry(rootDir, pageName);
-      if (!pageEntry) return acc;
+    const mpaEntries = getMpaEntries(api);
+    let entries = mpaEntries.reduce((acc, { entryName, entryPath }) => {
       return {
         ...acc,
-        [entryName]: `src/pages/${pageName}/${pageEntry}`
+        [entryName]: `src/pages/${entryPath}`
       };
     }, {});
 
@@ -56,27 +50,16 @@ const plugin: IPlugin = (api) => {
 
     // set page template
     onGetWebpackConfig(config => {
+      // setMPAConfig(config, { context, entries: mpaEntries, framework: 'react' });
       if (typeof mpa === 'object' && (mpa as any).template) {
         setPageTemplate(rootDir, entries, (mpa as any).template, config);
       }
     });
-
+    console.log(entries);
     // modify entry
     modifyUserConfig('entry', entries);
   }
 };
-
-function getPageEntry(rootDir, pageName) {
-  const pagePath = path.join(rootDir, 'src', 'pages', pageName);
-  const pageRootFiles = fs.readdirSync(pagePath);
-  const appRegexp = /^app\.(t|j)sx?$/;
-  const indexRegexp = /^index\.(t|j)sx?$/;
-
-  return pageRootFiles.find(file => {
-    // eslint-disable-next-line
-    return appRegexp.test(file) ? 'app' : indexRegexp.test(file) ? 'index' : null;
-  });
-}
 
 function setPageTemplate(rootDir, entries, template = {}, config) {
   const templateNames = Object.keys(template);
