@@ -7,6 +7,7 @@ module.exports = (config, value) => {
       config.externals([externals, value]);
     }
   } else {
-    config.merge({ externals: [value] });
+    // compatible with object externals
+    config.merge({ externals: value });
   }
 };
