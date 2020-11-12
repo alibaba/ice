@@ -29,6 +29,7 @@ coverage
 .tmp
 *.swp
 *.dia~
+*.temp.json
 
 # Packages
 packages/*/lib/
