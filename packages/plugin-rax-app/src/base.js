@@ -6,7 +6,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const fs = require('fs-extra');
 
-module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
+module.exports = (api, { target, babelConfigOptions, progressOptions = {} }) => {
   const { context, onGetWebpackConfig } = api;
   const { rootDir, command, userConfig } = context;
 
@@ -39,7 +39,10 @@ module.exports = (api, { target, babelConfigOptions, progressOptions }) => {
     enhancedWebpackConfig.module
       .rule(ruleName)
       .use('platform-loader')
-      .loader(require.resolve('rax-compile-config/src/platformLoader'));
+      .loader(require.resolve('rax-platform-loader'))
+      .options({
+        platform: target
+      });
   });
 
   onGetWebpackConfig(target, (config) => {

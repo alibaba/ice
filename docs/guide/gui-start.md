@@ -1,5 +1,5 @@
 ---
-title: 使用 Iceworks 创建应用
+title: 使用 GUI 创建应用
 order: 4
 ---
 

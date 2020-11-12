@@ -17,16 +17,6 @@ export default ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, ...res
 
 对应 `src/app.ts` 用户自定义的 appConfig。详细字段见 [应用入口](/docs/guide/basic/app)。
 
-### buildConfig
-
-对应 `build.json` 用户自定义内容。仅包含 `router`、`store`、`ssr` 字段。
-
-```javascript
-export default ({ buildConfig }) => {
-  const { router, store, ssr } = buildConfig;
-};
-```
-
 ### context
 
 应用运行上下文。包含`initialData` 和`pageInitialProps`，分别对应[应用级数据](/docs/guide/advance/ssr#应用级数据)和[页面级数据](/docs/guide/advance/ssr#页面级数据) 。

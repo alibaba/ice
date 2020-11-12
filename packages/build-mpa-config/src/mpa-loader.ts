@@ -1,5 +1,5 @@
 import { getOptions } from 'loader-utils';
-import { formatPath } from 'build-app-helpers';
+import { formatPath } from '@builder/app-helpers';
 
 const IGNORE_LOADER_CODE = '?_IGNORE_MPA_LOADER';
 function mpaLoader(code) {

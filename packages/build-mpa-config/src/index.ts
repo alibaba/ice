@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { formatPath } from 'build-app-helpers';
+import { formatPath } from '@builder/app-helpers';
 
 interface IEntries {
   entryName: string;

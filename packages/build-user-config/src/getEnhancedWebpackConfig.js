@@ -1,3 +1,5 @@
+let ESLintReportingPluginUsed = false;
+
 module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) => {
   const { context } = api;
   const { command, webpack, commandArgs, userConfig } = context;
@@ -21,13 +23,13 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
 
-  if (!userConfig.eslint) {
+  if (!userConfig.eslint && !ESLintReportingPluginUsed) {
     // Add friendly eslint reporting
     webpackConfig
       .plugin('ESLintReportingPlugin')
       .use(require.resolve('eslint-reporting-webpack-plugin'));
+    ESLintReportingPluginUsed = true;
   }
-
   // Process app.json file
   webpackConfig.module
     .rule('appJSON')

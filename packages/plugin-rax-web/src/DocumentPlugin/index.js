@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const { RawSource } = require('webpack-sources');
-const { handleWebpackErr } = require('rax-compile-config');
 const { parse, print } = require('error-stack-tracey');
 
 const PLUGIN_NAME = 'DocumentPlugin';
@@ -126,7 +125,7 @@ module.exports = class DocumentPlugin {
       // Run as child to get child compilation
       childCompiler.runAsChild((err, entries, childCompilation) => {
         if (err) {
-          handleWebpackErr(err);
+          console.log(err);
         } else {
           fileDependencies = childCompilation.fileDependencies;
         }

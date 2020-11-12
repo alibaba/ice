@@ -15,7 +15,7 @@ import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, createHistory }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyRoutes, createHistory }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -24,11 +24,12 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
     modifyRoutes(runtimeModifyRoutes);
   }
   if (appType === 'child') {
+    const { icestarkUMD } = buildConfig;
     const history = createHistory({ type, basename: getBasename() });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
-        if (isInIcestark()) {
+        if (isInIcestark() && !icestarkUMD) {
           registerAppEnter(() => {
             const mountNode = getMountNode();
             if (enterRegistration) {
@@ -46,6 +47,9 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
               ReactDOM.unmountComponentAtNode(mountNode);
             }
           });
+        } else if (icestarkUMD) {
+          const mountNode = getMountNode();
+          ReactDOM.render(<App />, mountNode, resolve);
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }
