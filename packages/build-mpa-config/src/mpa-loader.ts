@@ -1,48 +1,17 @@
 import { getOptions } from 'loader-utils';
 import { formatPath } from 'build-app-helpers';
 
-function mpaLoader() {
+const IGNORE_LOADER_CODE = '?_IGNORE_MPA_LOADER';
+function mpaLoader(code) {
   const options = getOptions(this) || {};
   const framework = options.framework || 'rax';
-  let appRender = '';
-  if (['weex', 'kraken'].includes(options.type)) {
-    appRender = 'render(createElement(Entry), null, { driver: DriverUniversal });';
-  } else {
-    // Todo: mpa will refactor in next month to optimize it, see more detail in https://github.com/raxjs/rax-scripts/issues/457
-    appRender = `
-      var renderApp = function() {
-        // process App.getInitialProps
-        if (isSSR && window.__INITIAL_DATA__.pageData !== null) {
-          Object.assign(comProps, window.__INITIAL_DATA__.pageData);
-          render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
-        } else if (Component.getInitialProps) {
-          Component.getInitialProps().then(function(initialProps) {
-            Object.assign(comProps, initialProps);
-          });
-          render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
-        } else {
-          render(createElement(Entry), document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
-        }
-      }
-
-
-      renderApp();
-    `;
+  const enableMpaLoader = this.resourcePath.match(new RegExp(options.includeEntryList.join('|')))
+    || this.request.includes(IGNORE_LOADER_CODE);
+  if (!enableMpaLoader) {
+    return code;
   }
-  const source = `
-  import { render, createElement } from '${framework}';
-  import Component from '${formatPath(this.resourcePath)}';
-  import DriverUniversal from 'driver-universal';
-  var isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
-
-  var comProps = {};
-
-  function Entry() {
-    return createElement(Component, comProps);
-  }
-  ${appRender}
-  `;
-  return source;
+  // eslint-disable-next-line
+  return require(`./template/${framework}`)({ type: options.type, resourcePath: `${formatPath(this.resourcePath)}${IGNORE_LOADER_CODE}`});
 }
 
 export default mpaLoader;

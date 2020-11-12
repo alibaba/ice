@@ -73,7 +73,7 @@ async function raxAppRenderer(options) {
   // ssr enabled and the server has returned data
   if ((window as any).__INITIAL_DATA__) {
     initialData = (window as any).__INITIAL_DATA__.initialData;
-    pageInitialProps = (window as any).__INITIAL_DATA__ .pageData;
+    pageInitialProps = (window as any).__INITIAL_DATA__.pageData;
   } else {
     // ssr not enabled, or SSR is enabled but the server does not return data
     // eslint-disable-next-line

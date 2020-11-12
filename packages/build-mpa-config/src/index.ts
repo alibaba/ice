@@ -37,14 +37,32 @@ const setMPAConfig = (config, options: IConfigOptions) => {
   config.entryPoints.clear();
   // add mpa entries
   const matchStrs = [];
+  const includeEntryList = [];
   entries.forEach((entry) => {
     const { entryName, entryPath, pageName } = entry;
     const pageEntry = path.join(rootDir, 'src/pages', entryPath);
-    config.entry(entryName).add((/app\.(t|j)sx?$/.test(entryPath) || type === 'node') ? pageEntry : `${require.resolve('./mpa-loader')}?type=${type}&framework=${framework}!${pageEntry}`);
+    const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
+    config.entry(entryName).add(pageEntry);
+    if (!useOriginEntry) {
+      includeEntryList.push(pageEntry);
+    }
     // get page paths for rule match
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(formatPath(matchStr));
   });
+
+  if (includeEntryList.length) {
+    // add mpa-loader for MPA entries
+    ['tsx', 'jsx'].forEach((rule) => {
+      if (config.module.rules.has(rule)) {
+        config.module.rule(rule)
+          .use('mpa-loader')
+          .loader(require.resolve('./mpa-loader'))
+          .options({ framework, type, includeEntryList });
+      }
+    });
+  }
+
   if (type === 'web') {
     config.plugin('document').tap(args => {
       return [{
@@ -53,6 +71,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
       }];
     });
   }
+
   // modify appJSON rules for mpa
   if (config.module.rules.get('appJSON')) {
     const matchInclude = (filepath: string) => {
