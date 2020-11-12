@@ -1,6 +1,6 @@
 const path = require('path');
 const { last } = require('lodash');
-const { formatPath } = require('build-app-helpers');
+const { formatPath } = require('@builder/app-helpers');
 
 function getFilename(filePath) {
   return last((filePath || '').split('/'));

@@ -1,6 +1,6 @@
 const { getOptions } = require('loader-utils');
 const { join } = require('path');
-const { formatPath, getRoutesByAppJson } = require('build-app-helpers');
+const { formatPath, getRoutesByAppJson } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
 
 /**
@@ -22,7 +22,6 @@ module.exports = function (appJSON) {
   const appConfig = JSON.parse(appJSON);
 
   appConfig.routes = getRoutesByAppJson(target, { appJsonContent: appConfig });
-
   const assembleRoutes = appConfig.routes.map((route) => {
     if (!route.path || !route.source) {
       throw new Error('route object should have path and source.');
@@ -40,7 +39,7 @@ module.exports = function (appJSON) {
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(route.pageSource || join(this.rootContext, 'src', route.source))}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
@@ -51,8 +50,7 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${route.pageSource || formatPath(join(this.rootContext, 'src', route.source))}'))`;
-
+    const importComponent = `() => () => interopRequire(require('${formatPath(route.pageSource || join(this.rootContext, 'src', route.source))}'))`;
     return `routes.push(
       {
         ...${JSON.stringify(route)},
@@ -60,7 +58,6 @@ module.exports = function (appJSON) {
       }
     );`;
   }).join('\n');
-
 
   return `
     import { createElement } from '${libName}';

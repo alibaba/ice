@@ -1,4 +1,5 @@
 import { createElement, Component  } from 'rax';
+import Text from 'rax-text';
 
 class BuggyCounter extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class BuggyCounter extends Component {
       // Simulate a JS error
       throw new Error('I crashed!');
     }
-    return <h1 onClick={this.handleClick}>{this.state.counter}</h1>;
+    return <Text onClick={this.handleClick}>{this.state.counter}</Text>;
   }
 }
 

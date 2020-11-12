@@ -1,4 +1,4 @@
-const { validation } = require('build-app-helpers');
+const { validation } = require('@builder/app-helpers');
 
 module.exports = {
   alias: 'object',

@@ -19,7 +19,7 @@ const highlightPrint = chalk.hex('#F4AF3D');
 
 module.exports = function(api) {
   // eslint-disable-next-line global-require
-  const { context, onHook } = api;
+  const { context, onHook, log } = api;
   const { commandArgs, userConfig, rootDir } = context;
   const { targets} = userConfig;
   let webEntryKeys = [];
@@ -120,12 +120,33 @@ module.exports = function(api) {
       }
       if (targets.includes(WEB)) {
         console.log(highlightPrint('  [Web] Development server at: '));
-        webEntryKeys.forEach((entryKey) => {
-          const entryPath = webMpa ? `${entryKey}.html` : '';
-          console.log(`  ${chalk.underline.white(`${urls.localUrlForBrowser}${entryPath}`)}`);
-          console.log(`  ${chalk.underline.white(`${urls.lanUrlForBrowser}${entryPath}`)}`);
+        // do not open browser when restart dev
+        const shouldOpenBrowser = !commandArgs.disableOpen && !process.env.RESTART_DEV;
+        if (webEntryKeys.length > 0) {
+          let openEntries = [];
+          if (commandArgs.mpaEntry) {
+            openEntries = commandArgs.mpaEntry.split(',');
+          } else {
+            openEntries.push(webEntryKeys[0]);
+          }
+          webEntryKeys.forEach((entryKey) => {
+            const entryPath = webMpa ? `${entryKey}.html` : '';
+            console.log(`  ${chalk.underline.white(`${urls.localUrlForBrowser}${entryPath}`)}`);
+            console.log(`  ${chalk.underline.white(`${urls.lanUrlForBrowser}${entryPath}`)}`);
+            console.log();
+            if (shouldOpenBrowser && openEntries.includes(entryKey)) {
+              openBrowser(`${urls.localUrlForBrowser}${entryPath}`);
+            }
+          });
+        } else {
+          console.log(`  ${chalk.underline.white(`${urls.localUrlForBrowser}`)}`);
+          console.log(`  ${chalk.underline.white(`${urls.lanUrlForBrowser}`)}`);
           console.log();
-        });
+
+          if (shouldOpenBrowser) {
+            openBrowser(`${urls.localUrlForBrowser}`);
+          }
+        }
       }
 
       if (targets.includes(KRAKEN)) {
@@ -158,10 +179,4 @@ module.exports = function(api) {
     }
   });
 
-  if (!commandArgs.disableOpen && targets.includes(WEB)) {
-    onHook('after.start.devServer', ({ url }) => {
-      // do not open browser when restart dev
-      if (!process.env.RESTART_DEV) openBrowser(url);
-    });
-  }
 };
