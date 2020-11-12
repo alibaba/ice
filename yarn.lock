@@ -15010,7 +15010,7 @@ rax-clone-element@^1.0.0:
   dependencies:
     rax-is-valid-element "^1.0.0"
 
-rax-compile-config@^0.2.15, rax-compile-config@^0.2.16:
+rax-compile-config@^0.2.15:
   version "0.2.16"
   resolved "https://registry.npm.taobao.org/rax-compile-config/download/rax-compile-config-0.2.16.tgz#b22c379f70377437dcea6f3c1c6a85d0bc3dcf90"
   integrity sha1-siw3n3A3dDfc6m88HGqF0Lw9z5A=
@@ -15101,6 +15101,19 @@ rax-miniapp-runtime-webpack-plugin@^1.1.0, rax-miniapp-runtime-webpack-plugin@^1
     terser "^4.6.10"
     webpack "^4.35.3"
     webpack-sources "^1.3.0"
+
+rax-platform-loader@1.0.0-0:
+  version "1.0.0-0"
+  resolved "https://registry.npm.taobao.org/rax-platform-loader/download/rax-platform-loader-1.0.0-0.tgz#e4a661904dcb22adf8b1aa4b1f55ad01fd64b053"
+  integrity sha1-5KZhkE3LIq34sapLH1WtAf1ksFM=
+  dependencies:
+    "@babel/code-frame" "^7.5.5"
+    "@babel/generator" "^7.6.4"
+    "@babel/parser" "^7.6.4"
+    "@babel/traverse" "^7.6.3"
+    "@babel/types" "^7.6.3"
+    loader-utils "^1.1.0"
+    source-map "^0.7.3"
 
 rax-redux@^1.0.0:
   version "1.0.0"
