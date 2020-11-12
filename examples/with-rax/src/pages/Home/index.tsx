@@ -27,7 +27,7 @@ export default function Home(props) {
       <Logo />
       <Text className="title">{props?.data?.title || 'Welcome to Your Rax App'}</Text>
       <Text className="info">{props?.data?.info || 'More information about Rax'}</Text>
-      <Text className="info" onClick={() => history.push('/about?id=1')}>Go About</Text>
+      <Text className="info" onClick={() => history.push('/about', { id: 1 })}>Go About</Text>
     </View>
   );
 }

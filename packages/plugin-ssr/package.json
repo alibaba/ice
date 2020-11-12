@@ -26,10 +26,10 @@
   "dependencies": {
     "@builder/mpa-config": "1.0.0-0",
     "chalk": "^4.1.0",
-    "rax-compile-config": "^0.2.16",
     "fs-extra": "^9.0.1",
     "error-stack-tracey": "^0.1.3",
     "qs": "^6.9.4",
-    "@builder/app-helpers": "1.0.0-0"
+    "@builder/app-helpers": "1.0.0-0",
+    "react-dev-utils": "^10.0.0"
   }
 }
