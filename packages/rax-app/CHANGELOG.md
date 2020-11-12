@@ -11,6 +11,7 @@
 - Fix: `miniapp-native` dir copy logic.(https://github.com/alibaba/ice/pull/3761)
 - Fix: error when set `ssr: true`.(https://github.com/alibaba/ice/pull/3775)
 - Chore: remove rax-compile-config.(https://github.com/raxjs/rax-scripts/pull/480)
+- Chore: use `react-dev-utils/webpackHotDevClient` instead of `rax-compile-config/hmr`.(https://github.com/alibaba/ice/pull/3806)
 - Chore: change polyfill load settings.(https://github.com/raxjs/rax-scripts/pull/475)
 - Chore: update mini-css-extract-plugin version and set `esModule` to `false` as default.(https://github.com/raxjs/rax-scripts/pull/475)
 - Chore: unify the packaging mechanism of icejs and rax-app.(https://github.com/alibaba/ice/pull/3753)
