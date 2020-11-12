@@ -44,7 +44,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
     const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
     config.entry(entryName).add(pageEntry);
     if (!useOriginEntry) {
-      includeEntryList.push(pageEntry);
+      includeEntryList.push(formatPath(pageEntry));
     }
     // get page paths for rule match
     const matchStr = `src/pages/${pageName}`;
