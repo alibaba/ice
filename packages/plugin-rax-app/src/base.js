@@ -39,7 +39,7 @@ module.exports = (api, { target, babelConfigOptions, progressOptions = {} }) => 
     enhancedWebpackConfig.module
       .rule(ruleName)
       .use('platform-loader')
-      .loader(require.resolve('rax-compile-config/src/platformLoader'))
+      .loader(require.resolve('rax-platform-loader'))
       .options({
         platform: target
       });
