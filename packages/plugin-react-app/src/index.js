@@ -39,11 +39,9 @@ module.exports = (api) => {
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    registerTask(target, getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig }));
-
-    onGetWebpackConfig((chainConfig) => {
-      setBase(api, { target, webpackConfig: chainConfig  });
-    });
+    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig });
+    setBase(api, { target, webpackConfig: enhancedWebpackConfig });
+    registerTask(target, enhancedWebpackConfig);
   });
 
   if (command === 'start') {
