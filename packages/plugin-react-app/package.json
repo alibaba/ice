@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "1.7.9-2",
+  "version": "1.7.9-3",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "src/index.js",
@@ -13,8 +13,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/app-helpers": "1.0.0-0",
-    "@builder/user-config": "0.1.0-1",
+    "@builder/app-helpers": "1.0.0-1",
+    "@builder/user-config": "0.1.0-2",
     "build-scripts-config": "^0.1.0",
     "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",

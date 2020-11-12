@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "0.1.0-1",
+  "version": "0.1.0-2",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "core-js": "^3.3.1",
     "debug": "^4.1.1",
     "eslint-loader": "^4.0.0",
-    "eslint-reporting-webpack-plugin": "0.1.0-0",
+    "eslint-reporting-webpack-plugin": "0.1.0-1",
     "fork-ts-checker-webpack-plugin": "^5.0.5",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^8.1.0",
@@ -28,7 +28,7 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-mock": "^1.0.1",
     "webpack-plugin-import": "^0.2.6",
-    "@builder/app-helpers": "1.0.0-0"
+    "@builder/app-helpers": "1.0.0-1"
   },
   "files": [
     "lib"
