@@ -16,7 +16,7 @@
     "rax-webpack-config": "1.0.1-2",
     "rax-babel-config": "1.0.1-0",
     "rax-jest-config": "^1.0.0",
-    "rax-platform-loader": "^1.0.0",
+    "rax-platform-loader": "1.0.0-0",
     "@builder/user-config": "0.1.0-1",
     "@builder/app-helpers": "1.0.0-0",
     "chalk": "^4.0.0",

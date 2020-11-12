@@ -181,7 +181,7 @@ async function generateHtml(compilation, options) {
       const errorStack = await parse(error, documentContent);
       // Prevent print duplicate error info
       if (!hasPrintError) {
-        print(error.message, errorStack.reverse());
+        print(error.message, errorStack);
         hasPrintError = true;
       }
 
