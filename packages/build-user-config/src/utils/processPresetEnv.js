@@ -1,3 +1,5 @@
+import { formatPath } from '@builder/app-helpers';
+
 module.exports = (config, presetEnvParam) => {
   ['jsx', 'tsx'].forEach((rule) => {
     config.module
@@ -6,7 +8,7 @@ module.exports = (config, presetEnvParam) => {
      .tap((options) => {
         const presetEnv = options.presets.find(preset => {
           const [presetName] = Array.isArray(preset) ? preset : [preset];
-          return presetName.indexOf('@babel/preset-env') > -1;
+          return formatPath(presetName).indexOf('@babel/preset-env') > -1;
         });
         if (presetEnvParam.useBuiltIns === 'usage') {
           // Force babel sourceType unambiguous when preset env useBuiltIns is usage
