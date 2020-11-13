@@ -3,17 +3,9 @@ const path = require('path');
 
 module.exports = (config, context) => {
   const { rootDir } = context;
-  const target = 'kraken';
-
   // SPA
   const appEntry = moduleResolve(formatPath(path.join(rootDir, './src/app')));
   const entryConfig = config.entry('index');
-
-  config.module.rule('platform-loader')
-    .use('platform-loader')
-    .options({
-      platform: target,
-    });
 
   entryConfig.add(appEntry);
 };
