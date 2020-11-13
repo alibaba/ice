@@ -8,9 +8,7 @@ module.exports = (config, polyfill) => {
   };
   if (typeof polyfill === 'string') {
     presetEnvParam.corejs = 3;
-    if (polyfill === 'usage') {
-      injectTransformRuntime(config);
-    } else if (polyfill === 'entry') {
+    if (polyfill === 'entry') {
       const entries = config.toConfig().entry;
       const rule = config.module.rule('polyfill').test(/\.jsx?|\.tsx?$/);
       const fileList = [];
@@ -34,7 +32,12 @@ module.exports = (config, polyfill) => {
       });
       rule.use('polyfill-loader').loader(require.resolve('../utils/polyfillLoader')).options({});
       addBablePlugins(config, [[require.resolve('../utils/babelPluginCorejsLock.js'), { fileList }]]);
+    } else {
+      injectTransformRuntime(config);
     }
+  } else {
+    // inject async/await polyfill
+    injectTransformRuntime(config);
   }
   processPresetEnv(config, presetEnvParam);
 };
