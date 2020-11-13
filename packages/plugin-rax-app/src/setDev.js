@@ -28,6 +28,7 @@ module.exports = function(api) {
   let webMpa = false;
   let weexMpa = false;
   let krakenMpa = false;
+  let isFirstCompile = true;
   const getWebpackEntry = (configs, configName) => {
     const taskConfig = configs.find((webpackConfig) => webpackConfig.name === configName);
     if (!taskConfig || !taskConfig.entry) {
@@ -121,7 +122,8 @@ module.exports = function(api) {
       if (targets.includes(WEB)) {
         console.log(highlightPrint('  [Web] Development server at: '));
         // do not open browser when restart dev
-        const shouldOpenBrowser = !commandArgs.disableOpen && !process.env.RESTART_DEV;
+        const shouldOpenBrowser = !commandArgs.disableOpen && !process.env.RESTART_DEV && isFirstCompile;
+        isFirstCompile = false;
         if (webEntryKeys.length > 0) {
           let openEntries = [];
           if (commandArgs.mpaEntry) {
