@@ -1,6 +1,6 @@
 {
   "name": "ice.js",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "command line interface and builtin plugin for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -31,7 +31,7 @@
     "build-plugin-ice-router": "1.7.5",
     "build-plugin-ice-ssr": "1.7.6",
     "build-plugin-ice-store": "1.7.8",
-    "build-plugin-react-app": "1.7.9",
+    "build-plugin-react-app": "1.7.10",
     "build-plugin-miniapp": "0.1.7",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
