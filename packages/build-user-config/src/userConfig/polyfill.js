@@ -35,7 +35,7 @@ module.exports = (config, polyfill) => {
     } else {
       injectTransformRuntime(config);
     }
-  } else {
+  } else if (polyfill === false) {
     // inject async/await polyfill
     injectTransformRuntime(config);
   }
