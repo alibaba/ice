@@ -1,4 +1,4 @@
-import { formatPath } from '@builder/app-helpers';
+const { formatPath } = require('@builder/app-helpers');
 
 module.exports = (config, presetEnvParam) => {
   ['jsx', 'tsx'].forEach((rule) => {
