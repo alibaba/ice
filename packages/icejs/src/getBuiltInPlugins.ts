@@ -1,3 +1,5 @@
+const chalk = require('chalk');
+
 module.exports = (userConfig: any) => {
   if (userConfig.disableRuntime) {
     return [
@@ -25,8 +27,7 @@ module.exports = (userConfig: any) => {
     'build-plugin-ice-logger',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
-    'build-plugin-ice-request',
-    'build-plugin-ice-auth'
+    'build-plugin-ice-request'
   ];
 
   if (userConfig.ssr) {
@@ -36,6 +37,14 @@ module.exports = (userConfig: any) => {
   // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
     plugins.push('build-plugin-ice-store');
+  }
+
+  if (userConfig.plugins && userConfig.plugins.indexOf('build-plugin-ice-auth') > -1) {
+    console.log('');
+    console.log(chalk.magenta('The build-plugin-ice-auth has been built in. Please remove it from build.json.'));
+    console.log('');
+  } else {
+    plugins.push('build-plugin-ice-auth');
   }
 
   return plugins;
