@@ -15,7 +15,10 @@ module.exports = class EslintReportingPlugin {
 
   apply(compiler) {
 
-    let eslint, formatter, userESLintHasError = false;
+    let eslint;
+    let formatter;
+    let userESLintHasError = false;
+
     const context = this.getContext(compiler);
     const configFiles = glob.sync(`${context}/.eslintrc.*`);
 
@@ -33,6 +36,9 @@ module.exports = class EslintReportingPlugin {
     } catch (e) {
       // When user eslint has error, don‘t run this plugin
       userESLintHasError = true;
+      console.log('If you see this message, some error occurred in eslint checker. please check your eslint config, see: https://www.yuque.com/hedgqh/quality/lint');
+      console.log('');
+      console.log('');
     }
 
     if (!userESLintHasError) {
