@@ -33,6 +33,10 @@ module.exports = class EslintReportingPlugin {
         configFile: configFiles[0],
       });
       formatter = eslint.getFormatter();
+
+      // Run ESlint used method, avoid plugin or parser error block webpack.
+      eslint.isPathIgnored('');
+      eslint.executeOnFiles([]);
     } catch (e) {
       // When user eslint has error, don‘t run this plugin
       userESLintHasError = true;
