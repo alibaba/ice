@@ -3,7 +3,6 @@ export default ({ resourcePath }) => {
   import React from 'react';
   import ReactDOM from 'react-dom';
   import Component from '${resourcePath}';
-  console.log(Component);
   function renderApp() {
     const isSSR = window.__ICE_SSR_ENABLED__;
     let comProps = {};
