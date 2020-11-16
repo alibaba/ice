@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { getMpaEntries } from '@builder/app-helpers';
-import setMPAConfig from '@builder/mpa-config';
+import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from '@alib/build-scripts';
 
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log } = api;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, getValue } = api;
   const { rootDir, userConfig, commandArgs } = context;
   const { mpa } = userConfig;
 
@@ -50,14 +50,17 @@ const plugin: IPlugin = (api) => {
 
     // set page template
     onGetWebpackConfig(config => {
-      // setMPAConfig(config, { context, entries: mpaEntries, framework: 'react' });
       if (typeof mpa === 'object' && (mpa as any).template) {
         setPageTemplate(rootDir, entries, (mpa as any).template, config);
       }
     });
-    console.log(entries);
+    const parsedEntries = generateMPAEntries({ context, entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
+    const finalMPAEntries = {};
+    Object.keys(parsedEntries).forEach((entryKey) => {
+      finalMPAEntries[entryKey] = parsedEntries[entryKey].finalEntry;
+    });
     // modify entry
-    modifyUserConfig('entry', entries);
+    modifyUserConfig('entry', finalMPAEntries);
   }
 };
 

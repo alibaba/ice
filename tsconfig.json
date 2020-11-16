@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/build-user-config" },
     { "path": "packages/build-app-helpers" },
+    { "path": "packages/build-mpa-config" },
     { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },
@@ -33,7 +34,6 @@
     { "path": "packages/plugin-stark-module" },
     { "path": "packages/plugin-webpack5" },
     { "path": "packages/webpack-dev-mock" },
-    { "path": "packages/plugin-ssr" },
-    { "path": "packages/build-mpa-config" }
+    { "path": "packages/plugin-ssr" }
   ]
 }
