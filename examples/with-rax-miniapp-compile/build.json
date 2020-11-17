@@ -1,6 +1,0 @@
-{
-  "targets": ["miniapp"],
-  "miniapp": {
-    "buildType": "compile"
-  }
-}
