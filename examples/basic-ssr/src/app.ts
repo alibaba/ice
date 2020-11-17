@@ -2,7 +2,9 @@ import { runApp, IAppConfig, config, request } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
-    getInitialData: async () => {
+    getInitialData: async (ctx) => {
+      console.log('getInitialData ctx', ctx);
+
       const res = await request('/user');
       return res;
     }
