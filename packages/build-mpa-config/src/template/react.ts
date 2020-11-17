@@ -3,6 +3,7 @@ export default ({ resourcePath }) => {
   import React from 'react';
   import ReactDOM from 'react-dom';
   import Component from '${resourcePath}';
+
   function renderApp() {
     const isSSR = window.__ICE_SSR_ENABLED__;
     let comProps = {};
@@ -12,7 +13,11 @@ export default ({ resourcePath }) => {
     }
     ReactDOM[isSSR ? 'hydrate' : 'render'](<Component {...comProps} />, document.getElementById('ice-container'));
   }
-  renderApp();
+  if (!Component) {
+    console.warn('[icejs] You likely forget to export your component at ${resourcePath}');
+  } else {
+    renderApp();
+  }
   `;
   return source;
 };
