@@ -17,8 +17,6 @@ module.exports = (api, defaultRegistration) => {
           : defaultConfig[configKey];
         // eslint-disable-next-line no-param-reassign
         delete userConfig[configKey];
-      } else {
-        newConfig[configKey] = userConfig[configKey];
       }
     });
     // migrate sourcemap to sourceMap
