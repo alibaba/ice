@@ -39,11 +39,8 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
 function parseRoutes(routes: RouteItemProps[]) {
   return routes.map((route) => {
     const { children, component, routeWrappers, wrappers, ...others } = route;
-    let mergedRouteWrappers = [];
-    if (children) {
-      // do not add wrappers added by runtime api wrapperRouteComponent
-      mergedRouteWrappers = routeWrappers;
-    }
+    // do not wrapper components to layout added by runtime api wrapperRouteComponent
+    let mergedRouteWrappers = children ? [] : routeWrappers;
     if (wrappers && wrappers.length) {
       mergedRouteWrappers = mergedRouteWrappers.concat(wrappers);
     }
