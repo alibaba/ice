@@ -1,7 +1,7 @@
 const { USER_CONFIG_KEY_WITHOUT_BUILD } = require('../config/constants');
 
 module.exports = (api, defaultRegistration) => {
-  const { modifyUserConfig } = api;
+  const { modifyUserConfig, context } = api;
   const defaultConfig = {};
   defaultRegistration.forEach(({name, defaultValue}) => {
     defaultConfig[name] = defaultValue;
@@ -17,6 +17,8 @@ module.exports = (api, defaultRegistration) => {
           : defaultConfig[configKey];
         // eslint-disable-next-line no-param-reassign
         delete userConfig[configKey];
+      } else {
+        newConfig[configKey] = userConfig[configKey];
       }
     });
     // migrate sourcemap to sourceMap
@@ -24,6 +26,7 @@ module.exports = (api, defaultRegistration) => {
       newConfig.sourceMap = newConfig.sourcemap;
     }
     delete newConfig.sourcemap;
+    context.userConfig = newConfig;
     return newConfig;
   });
 };
