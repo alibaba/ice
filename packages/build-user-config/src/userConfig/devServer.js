@@ -1,5 +1,3 @@
-const defaultConfig = require('../config/default.config');
-
 module.exports = (config, devServer, context) => {
   const { userConfig } = context;
   // make sure to use config proxy instead of config devServer.proxy
@@ -8,5 +6,5 @@ module.exports = (config, devServer, context) => {
     delete devServer.proxy;
   }
   // merge default devServer
-  config.merge({ devServer: { ...defaultConfig.devServer, ...devServer } });
+  config.merge({ devServer });
 };
