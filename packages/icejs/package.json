@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@alib/build-scripts": "^0.1.13",
-    "build-plugin-app-core": "0.1.23",
+    "build-plugin-app-core": "0.1.22",
+    "build-plugin-ice-auth": "1.7.2",
     "build-plugin-ice-config": "1.7.1",
     "build-plugin-ice-helpers": "1.7.1",
     "build-plugin-ice-logger": "1.7.2",
