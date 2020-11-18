@@ -34,7 +34,8 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
   res,
   pathname,
   query: parsedQuery,
-  path
+  path,
+  location: { pathname, search, hash },
   }
 
   try {
@@ -78,6 +79,10 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
     </script>`)
   } catch (e) {
     error = e;
+    $('head').append(`
+    <script>
+      window.__ICE_SSR_ERROR__ = '${error}';
+    </script>`)
     logError('[SSR] generate html template error');
   }
 

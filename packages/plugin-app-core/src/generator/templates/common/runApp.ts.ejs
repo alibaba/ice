@@ -41,7 +41,8 @@ const {
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener,
-  getSearchParams
+  getSearchParams,
+  getInitialContext
 } = createShareAPI({
   createElement,
   useEffect,
@@ -71,7 +72,8 @@ export function runApp(appConfig, staticConfig?: any) {
     emitLifeCycles,
     pathRedirect,
     loadStaticModules,
-    ErrorBoundary
+    ErrorBoundary,
+    getInitialContext
   }, {
     createElement,
     mount,

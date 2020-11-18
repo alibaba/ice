@@ -12,6 +12,7 @@ import {
 } from './nativeEventListener';
 import getSearchParams from './getSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
+import getInitialContext from './getInitialContext';
 
 function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeModules) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
@@ -35,7 +36,8 @@ function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeMod
     pathRedirect,
     registerNativeEventListeners,
     addNativeEventListener,
-    removeNativeEventListener
+    removeNativeEventListener,
+    getInitialContext
   };
 };
 

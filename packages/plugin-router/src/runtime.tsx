@@ -5,7 +5,7 @@ import defaultRoutes from '$ice/routes';
 import { IceRouter } from './runtime/Router';
 import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context }) => {
+const module = ({ setRenderRouter, appConfig, modifyRoutes, getInitialContext, wrapperRouteComponent, buildConfig, context }) => {
   const { router: appConfigRouter = {}, app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
 
@@ -29,7 +29,11 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     return WrapperedPageErrorBoundary;
   };
 
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR(context);
+  let initialContext = {};
+  if (!process.env.__IS_SERVER__) {
+    initialContext = getInitialContext();
+  }
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR(initialContext);
   wrapperRouteComponent(wrapperPageFn);
   wrapperRouteComponent(wrapperPageErrorBoundary);
   if (appConfigRouter.modifyRoutes) {
@@ -45,8 +49,8 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     };
 
     if (process.env.__IS_SERVER__) {
-      const { initialContext = {}, location } = context;
-      routerProps = Object.assign({}, routerProps, { location, context: initialContext });
+      const { initialContext = {} } = context;
+      routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
     }
 
     return <IceRouter {...routerProps} />;

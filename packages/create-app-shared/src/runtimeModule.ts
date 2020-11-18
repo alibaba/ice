@@ -1,5 +1,6 @@
 import { createHistory } from './history';
 import getSearchParams from './getSearchParams';
+import getInitialContext from './getInitialContext';
 
 class RuntimeModule {
 
@@ -38,7 +39,8 @@ class RuntimeModule {
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
       createHistory,
-      getSearchParams
+      getSearchParams,
+      getInitialContext
     };
 
     if (module) module.default({

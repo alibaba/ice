@@ -32,7 +32,7 @@ export function wrapperPageWithSSR(context, routes) {
 }
 
 
-export function wrapperPageWithCSR(context) {
+export function wrapperPageWithCSR(initialContext) {
   const wrapperPage = (PageComponent) => {
     const { pageConfig } = PageComponent;
     const { title, scrollToTop } = pageConfig || {};
@@ -56,7 +56,7 @@ export function wrapperPageWithCSR(context) {
         } else if (PageComponent.getInitialProps) {
           // When the server does not return data, the client calls getinitialprops
           (async () => {
-            const result = await PageComponent.getInitialProps(context.initialContext);
+            const result = await PageComponent.getInitialProps(initialContext);
             setData(result);
           })();
         }
