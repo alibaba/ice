@@ -40,9 +40,9 @@ const plugin: IPlugin = (api) => {
       });
       if (Object.keys(finalEntries).length > 0) {
         entries = finalEntries;
-        log.info('已启用 --map-entry 指定多页入口 \n', JSON.stringify(entries));
+        log.info('已启用 --mpa-entry 指定多页入口 \n', JSON.stringify(entries));
       } else {
-        log.warn(`--map-entry ${commandArgs.entry}`, '未能匹配到指定入口');
+        log.warn(`--mpa-entry ${commandArgs.entry}`, '未能匹配到指定入口');
       }
     } else {
       log.info('使用多页面模式 \n', JSON.stringify(entries));

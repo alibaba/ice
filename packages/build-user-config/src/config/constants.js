@@ -11,14 +11,5 @@ module.exports = {
   GET_RAX_APP_WEBPACK_CONFIG: 'getRaxAppWebpackConfig',
   USER_CONFIG_KEY_WITHOUT_BUILD: [
     'plugins',
-    // task name
-    'web',
-    'miniapp',
-    'weex',
-    'kraken',
-    'wechat-miniprogram',
-    'bytedance-microapp',
-    // tasks config
-    'targets',
   ],
 };
