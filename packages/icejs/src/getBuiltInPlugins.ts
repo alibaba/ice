@@ -39,7 +39,18 @@ module.exports = (userConfig: any) => {
     plugins.push('build-plugin-ice-store');
   }
 
-  if (userConfig.plugins && userConfig.plugins.indexOf('build-plugin-ice-auth') > -1) {
+  const ICE_AUTH_PLUGIN_KEY = 'build-plugin-ice-auth';
+  const existIceAuthPlugin = userConfig.plugins && userConfig.plugins.some(plugin => {
+    if (typeof plugin === 'string') {
+      return plugin === ICE_AUTH_PLUGIN_KEY;
+    } else if (Array.isArray(plugin)) {
+      return plugin[0] === ICE_AUTH_PLUGIN_KEY;
+    } else {
+      return false;
+    }
+  });
+
+  if (existIceAuthPlugin) {
     console.log('');
     console.log(chalk.magenta('The build-plugin-ice-auth has been built in. Please remove it from build.json.'));
     console.log('');
