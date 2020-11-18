@@ -1,10 +1,16 @@
 const optionConfig = require('./config/option.config');
 
-module.exports = (api) => {
+module.exports = (api, options = {}) => {
   const { registerCliOption, log } = api;
-  const optionKeys = Object.keys(optionConfig);
+  const { customOptionConfig } = options;
+  const config = {
+    ...optionConfig,
+    ...customOptionConfig,
+  };
+
+  const optionKeys = Object.keys(config);
   registerCliOption(optionKeys.map((optionKey) => {
-    const { module, commands } = optionConfig[optionKey];
+    const { module, commands } = config[optionKey];
     const moduleName = module || optionKey;
     const optionDefination = {
       name: optionKey,
