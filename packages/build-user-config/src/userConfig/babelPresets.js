@@ -1,4 +1,4 @@
-const { formatPath } = require('build-app-helpers');
+const { formatPath } = require('@builder/app-helpers');
 
 module.exports = (config, babelPresets) => {
   ['jsx', 'tsx'].forEach((rule) => {

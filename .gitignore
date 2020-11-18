@@ -29,12 +29,12 @@ coverage
 .tmp
 *.swp
 *.dia~
+*.temp.json
 
 # Packages
 packages/*/lib/
 
 # temp folder .ice
 examples/*/.ice
-examples/*/.rax
 
 build

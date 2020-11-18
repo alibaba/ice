@@ -1,4 +1,4 @@
-const { unionBy } = require('build-app-helpers');
+const { unionBy } = require('@builder/app-helpers');
 const defaultConfigKeys = require('./config/default.config');
 const validation = require('./config/validation');
 const modifyUserConfig = require('./utils/modifyUserConfig');
@@ -48,7 +48,6 @@ module.exports = (api, options = {}) => {
   const finalyConfig = unionBy(defaultConfig.concat(customConfigs), 'name');
   // register user config
   registerUserConfig(finalyConfig.sort((curr, next) => curr.name.localeCompare(next.name)));
-
   // modify user config to keep excute order
-  modifyUserConfig(api);
+  modifyUserConfig(api, finalyConfig);
 };

@@ -1,7 +1,7 @@
 const path = require('path');
-const setMPAConfig = require('build-mpa-config');
+const setMPAConfig = require('@builder/mpa-config');
 const fs = require('fs-extra');
-const { getMpaEntries } = require('build-app-helpers');
+const { getMpaEntries } = require('@builder/app-helpers');
 const getEntryName = require('./getEntryName');
 const EntryPlugin = require('./entryPlugin');
 
