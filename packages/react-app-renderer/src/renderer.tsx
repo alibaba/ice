@@ -38,13 +38,6 @@ export async function reactAppRenderer(options) {
   let initialData = {};
   let pageInitialProps = {};
 
-  // const { pathname, href, origin, search } = window.location;
-  // const parsedQuery = queryString.parse(search);
-  // const initialContext = {
-  //   pathname,
-  //   query: parsedQuery,
-  //   path: href.replace(origin, ''),
-  // };
   const initialContext = getInitialContext();
 
   // ssr enabled and the server has returned data
