@@ -63,7 +63,6 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
     console.log('[SSR]', 'generating html content');
     const bundleContent = reactAppRendererWithSSR({
       initialContext,
-      location: { pathname, search, hash },
       initialData,
       pageInitialProps
     }, {
