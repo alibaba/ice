@@ -1,5 +1,6 @@
 const { USER_CONFIG_KEY_WITHOUT_BUILD } = require('../config/constants');
-const getNewUserConfig = require('./getNewUserConfig');
+
+const mergeConfigKeys = ['devServer'];
 
 module.exports = (api, finalyConfigs) => {
   const { modifyUserConfig, context } = api;
@@ -15,9 +16,12 @@ module.exports = (api, finalyConfigs) => {
     const configKeys = Object.keys(userConfig).sort((curr, next) => curr.localeCompare(next));
     const newConfig = {};
     configKeys.forEach((configKey) => {
-      if (!USER_CONFIG_KEY_WITHOUT_BUILD.includes(configKey)
-       && Object.prototype.hasOwnProperty.call(defaultConfig, configKey)) {
-        newConfig[configKey] = getNewUserConfig(userConfig, configKey, defaultConfig[configKey]);
+      if (!USER_CONFIG_KEY_WITHOUT_BUILD.includes(configKey)) {
+        if (mergeConfigKeys.includes(configKey)) {
+          newConfig[configKey] = {...defaultConfig[configKey], ...userConfig[configKey]};
+        } else {
+          newConfig[configKey] = userConfig[configKey];
+        }
         // eslint-disable-next-line no-param-reassign
         delete userConfig[configKey];
       }
@@ -27,7 +31,7 @@ module.exports = (api, finalyConfigs) => {
       newConfig.sourceMap = newConfig.sourcemap;
     }
     delete newConfig.sourcemap;
-    context.userConfig = Object.assign(newConfig, userConfig);
+    context.userConfig = newConfig;
     return newConfig;
   });
 };
