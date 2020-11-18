@@ -1,5 +1,5 @@
 const path = require('path');
-const { formatPath } = require('build-app-helpers');
+const { formatPath } = require('@builder/app-helpers');
 
 module.exports = (config, hash, context) => {
   const { command } = context;

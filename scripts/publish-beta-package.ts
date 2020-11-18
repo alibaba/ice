@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { setPublishedPackages } from './published-info';
-import { IPackageInfo, getPackageInfos } from './getPackageInfos';
+import { IPackageInfo, getPackageInfos, getVersionPrefix } from './getPackageInfos';
 
 const BETA_REG = /([^-]+)-beta\.(\d+)/; // '1.0.0-beta.1'
 
@@ -54,9 +54,9 @@ function updatePackageJson(betaPackageInfos: IBetaPackageInfo[]): void {
       const dependenceVersion = betaPackageInfos[i].betaVersion;
 
       if (packageData.dependencies && packageData.dependencies[dependenceName]) {
-        packageData.dependencies[dependenceName] = dependenceVersion;
+        packageData.dependencies[dependenceName] = `${getVersionPrefix(packageData.dependencies[dependenceName])}${dependenceVersion}`;
       } else if (packageData.devDependencies && packageData.devDependencies[dependenceName]) {
-        packageData.devDependencies[dependenceName] = dependenceVersion;
+        packageData.devDependencies[dependenceName] = `${getVersionPrefix(packageData.devDependencies[dependenceName])}${dependenceVersion}`;
       }
     }
 

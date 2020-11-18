@@ -72,6 +72,8 @@ export default {
 
 ### 在模型中调用 service
 
+> 结合 [状态管理文档](/docs/guide/basic/store) 使用
+
 * `service`：约定数据请求统一管理在 services 目录下；
 * `model`：约定数据请求统一在 models 里进行调用；
 * `view`：最终在视图里通过调用 models 的 effects 的方法触发数据请求。
@@ -105,7 +107,7 @@ export default {
 
 ```ts
 import React, { useEffect } from 'react';
-import { store } from 'ice';
+import store from '@/store';
 
 const HomePage = () => {
   // 调用定义的 user 模型

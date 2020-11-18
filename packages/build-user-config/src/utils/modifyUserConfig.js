@@ -1,9 +1,11 @@
-const defaultConfig = require('../config/default.config');
 const { USER_CONFIG_KEY_WITHOUT_BUILD } = require('../config/constants');
 
-module.exports = (api) => {
-  const { modifyUserConfig } = api;
-
+module.exports = (api, defaultRegistration) => {
+  const { modifyUserConfig, context } = api;
+  const defaultConfig = {};
+  defaultRegistration.forEach(({name, defaultValue}) => {
+    defaultConfig[name] = defaultValue;
+  });
   // modify user config to keep excute order
   modifyUserConfig((userConfig) => {
     const configKeys = [...Object.keys(userConfig), 'filename'].sort();
@@ -12,7 +14,7 @@ module.exports = (api) => {
       if (!USER_CONFIG_KEY_WITHOUT_BUILD.includes(configKey)) {
         newConfig[configKey] = Object.prototype.hasOwnProperty.call(userConfig, configKey)
           ? userConfig[configKey]
-          : defaultConfig[configKey];;
+          : defaultConfig[configKey];
         // eslint-disable-next-line no-param-reassign
         delete userConfig[configKey];
       }
@@ -22,7 +24,7 @@ module.exports = (api) => {
       newConfig.sourceMap = newConfig.sourcemap;
     }
     delete newConfig.sourcemap;
-
+    context.userConfig = newConfig;
     return newConfig;
   });
 };

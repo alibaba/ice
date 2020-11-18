@@ -1,5 +1,5 @@
 import { getOptions } from 'loader-utils';
-import { formatPath } from 'build-app-helpers';
+import { formatPath } from '@builder/app-helpers';
 
 function mpaLoader() {
   const options = getOptions(this) || {};

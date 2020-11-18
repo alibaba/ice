@@ -59,9 +59,11 @@ export function runApp(appConfig, staticConfig?: any) {
     renderer = reactAppRenderer;
   }
   <% } %>
+  const buildConfig = <%- buildConfig %>;
   renderer({
     appConfig,
     staticConfig: staticConfig || defaultStaticConfig,
+    buildConfig,
     setAppConfig,
     createBaseApp,
     createHistory,

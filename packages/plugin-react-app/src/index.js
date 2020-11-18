@@ -2,11 +2,12 @@ const path = require('path');
 const { applyCliOption, applyUserConfig, getEnhancedWebpackConfig } = require('@builder/user-config');
 const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
-const customConfigs = require('./config');
+const getCustomConfigs = require('./config');
 const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
+const logDetectedTip = require('./utils/logDetectedTip');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask } = api;
@@ -17,11 +18,14 @@ module.exports = (api) => {
   const babelConfig = getBabelConfig();
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
 
+  // tip detected injectBabel
+  logDetectedTip(userConfig);
+
   // register cli option
   applyCliOption(api);
 
   // register user config
-  applyUserConfig(api, { customConfigs });
+  applyUserConfig(api, { customConfigs: getCustomConfigs(userConfig) });
 
   // set webpack config
   onGetWebpackConfig(chainConfig => {
@@ -35,11 +39,9 @@ module.exports = (api) => {
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    registerTask(target, getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig }));
-
-    onGetWebpackConfig((chainConfig) => {
-      setBase(api, { target, webpackConfig: chainConfig  });
-    });
+    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig });
+    setBase(api, { target, webpackConfig: enhancedWebpackConfig });
+    registerTask(target, enhancedWebpackConfig);
   });
 
   if (command === 'start') {

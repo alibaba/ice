@@ -5,6 +5,7 @@ import getRuntimeModules from './utils/getRuntimeModules';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
+import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
@@ -75,7 +76,7 @@ function initGenerator(api, options) {
       isRax: framework === 'rax',
       isMiniapp,
       runtimeModules: getRuntimeModules(plugins),
-      buildConfig: JSON.stringify(userConfig)
+      buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,
   });
