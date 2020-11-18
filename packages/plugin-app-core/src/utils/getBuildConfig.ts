@@ -17,7 +17,7 @@ function getBuildConfig(userConfig): IBuildConfig{
   buildConfig.icestarkUMD = plugins && !!plugins.find((plugin) => {
     if (Array.isArray(plugin)) {
       const [pluginName, pluginOptions] = plugin;
-      return pluginName === 'build-plugin-icestark' && pluginOptions.umd;
+      return pluginName === 'build-plugin-icestark' && pluginOptions?.umd;
     }
     return false;
   });

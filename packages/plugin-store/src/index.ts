@@ -26,7 +26,8 @@ export default async (api) => {
   }
 
   const { mpa: isMpa, entry } = userConfig;
-  const srcDir = applyMethod('getSourceDir', entry);
+  // get mpa entries in src/pages
+  const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
 
   // Get framework from plugin-core
   const framework = getValue('FRAMEWORK');
