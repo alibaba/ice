@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = (config, eslint, { rootDir }) => {
-  if (typeof eslint === 'boolean' && eslint === false) {
+  if (!eslint) {
     return config;
   }
   const { disable, ...args } = eslint;
