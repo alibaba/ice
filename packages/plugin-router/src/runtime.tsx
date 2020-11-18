@@ -29,11 +29,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, getInitialContext, w
     return WrapperedPageErrorBoundary;
   };
 
-  let initialContext = {};
-  if (!process.env.__IS_SERVER__) {
-    initialContext = getInitialContext();
-  }
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR(initialContext);
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR(getInitialContext);
   wrapperRouteComponent(wrapperPageFn);
   wrapperRouteComponent(wrapperPageErrorBoundary);
   if (appConfigRouter.modifyRoutes) {
