@@ -181,8 +181,7 @@ module.exports = [
     name: 'eslint',
     validation: (val) => {
       return validation('eslint', val, 'boolean|object');
-    },
-    defaultValue: false
+    }
   },
   {
     name: 'tsChecker',
