@@ -36,6 +36,5 @@ packages/*/lib/
 
 # temp folder .ice
 examples/*/.ice
-examples/*/.rax
 
 build

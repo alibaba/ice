@@ -93,7 +93,7 @@ export default class Generator {
       };
     }
 
-    const pageComponentName = `Page${pageName}`;
+    const pageComponentName = 'PageComponent';
     return {
       isSingleModel: true,
       importStr: `import ${pageComponentName} from '${this.applyMethod('formatPath', pageModelFile)}';`,
@@ -166,7 +166,7 @@ export default class Generator {
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Page.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
-    const pageComponentName = `Page${pageName}`;
+    const pageComponentName = 'PageComponent';
     const pageComponentRenderData = {
       isRax: this.isRax,
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
@@ -271,7 +271,7 @@ export default class Generator {
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);
 
-      // generate .ice/pages/${pageName}/index.ts	
+      // generate .ice/pages/${pageName}/index.ts
       this.renderPageIndex(params);
 
       // generate .ice/pages/${pageName}/Page.tsx

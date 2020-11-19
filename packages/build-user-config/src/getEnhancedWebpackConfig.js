@@ -58,6 +58,8 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
         },
       ])
       .end();
+  } else {
+    webpackConfig.optimization.minimize(true);
   }
 
   return webpackConfig;

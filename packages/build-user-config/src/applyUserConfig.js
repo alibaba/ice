@@ -1,7 +1,6 @@
 const { unionBy } = require('@builder/app-helpers');
-const defaultConfigKeys = require('./config/default.config');
-const validation = require('./config/validation');
 const modifyUserConfig = require('./utils/modifyUserConfig');
+const baseUserConfigs = require('./config/user.config');
 
 // TODO: move to build-plugin-react-app ?
 const CONFIG = [{
@@ -16,38 +15,29 @@ const CONFIG = [{
 }];
 
 module.exports = (api, options = {}) => {
-  const { registerUserConfig, log } = api;
+  const { registerUserConfig } = api;
   const { customConfigs } = options;
   CONFIG.forEach((item) => registerUserConfig(item));
 
-  // sort config key to make sure entry config is always excute before injectBabel
-  const configKeys = Object.keys(defaultConfigKeys);
-
-  const defaultConfig = configKeys.map((configKey) => {
+  const defaultConfig = baseUserConfigs.map((config) => {
+    const { name } = config;
     let configFunc = null;
-    let configValidation = null;
     try {
       // eslint-disable-next-line
-      configFunc = require(`./userConfig/${configKey}`);
-      configValidation = validation[configKey];
-    } catch (err) {
-      log.error(err);
-    }
+      configFunc = require(`./userConfig/${name}`);
+    // eslint-disable-next-line no-empty
+    } catch (err) {}
 
-    if (configFunc && configValidation) {
-      return {
-        name: configKey,
-        validation: configValidation,
-        configWebpack: configFunc,
-        defaultValue: defaultConfigKeys[configKey],
-      };
-    }
-    return false;
-  }).filter(Boolean);
+    return {
+      configWebpack: configFunc,
+      ...config,
+    };
+  });
 
-  const finalyConfig = unionBy(defaultConfig.concat(customConfigs), 'name');
+  const finalyConfigs = unionBy(defaultConfig.concat(customConfigs), 'name');
   // register user config
-  registerUserConfig(finalyConfig.sort((curr, next) => curr.name.localeCompare(next.name)));
+  // sort config key to make sure entry config is always excute before injectBabel
+  registerUserConfig(finalyConfigs);
   // modify user config to keep excute order
-  modifyUserConfig(api, finalyConfig);
+  modifyUserConfig(api, finalyConfigs);
 };

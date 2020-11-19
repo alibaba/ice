@@ -18,7 +18,7 @@ const appConfig = getAppConfig();
 const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) => {
 
   // get html template
-  const $ = cheerio.load(htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`);
+  const $ = cheerio.load(htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`, { decodeEntities: false });
 
   // load module to run before createApp ready
   loadStaticModules(appConfig);
