@@ -27,7 +27,7 @@ export function getInitialData() {
 }
 
 export async function reactAppRenderer(options) {
-  const { appConfig, setAppConfig, loadStaticModules, getInitialContext } = options || {};
+  const { appConfig, setAppConfig, loadStaticModules } = options || {};
 
   setAppConfig(appConfig);
 
@@ -38,7 +38,16 @@ export async function reactAppRenderer(options) {
   let initialData = {};
   let pageInitialProps = {};
 
-  const initialContext = getInitialContext();
+  const { href, origin, pathname, search } = window.location;
+  const path = href.replace(origin, '');
+  const query = queryString.parse(search);
+  const ssrError = (window as any).__ICE_SSR_ERROR__;
+  const initialContext = {
+    pathname,
+    path,
+    query,
+    ssrError
+  };
 
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {

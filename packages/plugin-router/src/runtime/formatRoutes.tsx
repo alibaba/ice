@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as path from 'path';
+import * as queryString from 'query-string';
 
 const { useEffect, useState } = React;
 
@@ -32,7 +33,7 @@ export function wrapperPageWithSSR(context, routes) {
 }
 
 
-export function wrapperPageWithCSR(getInitialContext) {
+export function wrapperPageWithCSR() {
   const wrapperPage = (PageComponent) => {
     const { pageConfig } = PageComponent;
     const { title, scrollToTop } = pageConfig || {};
@@ -56,7 +57,16 @@ export function wrapperPageWithCSR(getInitialContext) {
         } else if (PageComponent.getInitialProps) {
           // When the server does not return data, the client calls getinitialprops
           (async () => {
-            const initialContext = getInitialContext();
+            const { href, origin, pathname, search } = window.location;
+            const path = href.replace(origin, '');
+            const query = queryString.parse(search);
+            const ssrError = (window as any).__ICE_SSR_ERROR__;
+            const initialContext = {
+              pathname,
+              path,
+              query,
+              ssrError
+            };
             const result = await PageComponent.getInitialProps(initialContext);
             setData(result);
           })();

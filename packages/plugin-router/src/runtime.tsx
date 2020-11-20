@@ -5,7 +5,7 @@ import defaultRoutes from '$ice/routes';
 import { IceRouter } from './runtime/Router';
 import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, getInitialContext, wrapperRouteComponent, buildConfig, context }) => {
+const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context }) => {
   const { router: appConfigRouter = {}, app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
 
@@ -29,7 +29,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, getInitialContext, w
     return WrapperedPageErrorBoundary;
   };
 
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR(getInitialContext);
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR();
   wrapperRouteComponent(wrapperPageFn);
   wrapperRouteComponent(wrapperPageErrorBoundary);
   if (appConfigRouter.modifyRoutes) {
