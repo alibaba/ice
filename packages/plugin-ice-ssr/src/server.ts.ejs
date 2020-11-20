@@ -30,12 +30,12 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
   const { search, hash, path } = parseurl(req);
   const parsedQuery = queryString.parse(search);
   const initialContext = {
-  req,
-  res,
-  pathname,
-  query: parsedQuery,
-  path,
-  location: { pathname, search, hash },
+    req,
+    res,
+    pathname,
+    query: parsedQuery,
+    path,
+    location: { pathname, search, hash, state: {} },
   }
 
   try {
