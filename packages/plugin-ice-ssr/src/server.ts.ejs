@@ -35,7 +35,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
     pathname,
     query: parsedQuery,
     path,
-    location: { pathname, search, hash, state: {} },
+    location: { pathname, search, hash, state: undefined },
   }
 
   try {
