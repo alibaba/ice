@@ -29,7 +29,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     return WrapperedPageErrorBoundary;
   };
 
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR();
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR();
   wrapperRouteComponent(wrapperPageFn);
   wrapperRouteComponent(wrapperPageErrorBoundary);
   if (appConfigRouter.modifyRoutes) {
