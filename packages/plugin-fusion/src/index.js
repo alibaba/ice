@@ -213,7 +213,9 @@ module.exports = async ({ onGetWebpackConfig, log, context }, plugionOptions = {
                 return [require.resolve('babel-plugin-import'), itemConfig, itemConfig.libraryName];
               }),
             );
-            crossendBabelLoader.length > 0 && plugins.push(crossendBabelLoader);
+            if (crossendBabelLoader.length > 0) {
+              plugins.push(crossendBabelLoader);
+            }
             options.plugins = plugins;
             return options;
           });

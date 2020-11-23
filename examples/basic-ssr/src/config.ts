@@ -1,6 +1,6 @@
 const config = {
   dev: {
-    baseURL: 'http://localhost:3333/api'
+    baseURL: 'http://localhost:3335/api'
   },
   prod: {
     baseURL: 'http://example.com/api'

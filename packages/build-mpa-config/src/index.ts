@@ -18,7 +18,6 @@ interface IConfigOptions {
   entries?: IEntries[];
   targetDir: string;
 }
-
 export const generateMPAEntries = (options: IConfigOptions) => {
   const { context, type = 'web', framework = 'rax', targetDir = '' } = options;
   let { entries } = options;
@@ -36,7 +35,7 @@ export const generateMPAEntries = (options: IConfigOptions) => {
     const pageEntry = path.join(rootDir, 'src/pages', entryPath);
     const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
     // icejs will config entry by api modifyUserConfig
-    
+
     let finalEntry = pageEntry;
     if (!useOriginEntry) {
       // generate mpa entries
@@ -63,11 +62,11 @@ const setMPAConfig = (config, options: IConfigOptions) => {
   config.entryPoints.clear();
   // add mpa entries
   const matchStrs = [];
-  
+
   Object.keys(parsedEntries).forEach((entryKey) => {
     const { entryName, pageName, finalEntry } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
-    
+
     // get page paths for rule match
     const matchStr = `src/pages/${pageName}`;
     matchStrs.push(formatPath(matchStr));
@@ -77,7 +76,7 @@ const setMPAConfig = (config, options: IConfigOptions) => {
     config.plugin('document').tap(args => {
       return [{
         ...args[0],
-        pages: parsedEntries,
+        pages: Object.values(parsedEntries),
       }];
     });
   }

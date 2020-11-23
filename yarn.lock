@@ -13985,7 +13985,7 @@ query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.12.1, query-string@^6.13.1:
+query-string@^6.12.1, query-string@^6.13.1, query-string@^6.13.7:
   version "6.13.7"
   resolved "https://registry.npm.taobao.org/query-string/download/query-string-6.13.7.tgz?cache=0&sync_timestamp=1604609999412&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fquery-string%2Fdownload%2Fquery-string-6.13.7.tgz#af53802ff6ed56f3345f92d40a056f93681026ee"
   integrity sha1-r1OAL/btVvM0X5LUCgVvk2gQJu4=
