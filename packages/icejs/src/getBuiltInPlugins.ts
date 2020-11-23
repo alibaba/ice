@@ -54,7 +54,7 @@ module.exports = (userConfig: any) => {
     console.log('');
     console.log(chalk.magenta('The build-plugin-ice-auth has been built in. Please remove it from build.json.'));
     console.log('');
-  } else {
+  } else if (userConfig.auth !== false) {
     plugins.push('build-plugin-ice-auth');
   }
 
