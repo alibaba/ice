@@ -10,7 +10,11 @@ export const USER_CONFIG = [
   {
     name: 'targets',
     validation: 'array'
-  }
+  },
+  {
+    name: 'auth',
+    validation: 'boolean'
+  },
 ];
 
 export const PROJECT_TYPE = 'PROJECT_TYPE';
