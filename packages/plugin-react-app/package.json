@@ -13,8 +13,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/app-helpers": "^1.0.0",
-    "@builder/user-config": "^0.1.0",
+    "@builder/app-helpers": "^1.0.2",
+    "@builder/user-config": "^0.1.2",
     "build-scripts-config": "^0.1.0",
     "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",
