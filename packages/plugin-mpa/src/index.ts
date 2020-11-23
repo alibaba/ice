@@ -54,11 +54,20 @@ const plugin: IPlugin = (api) => {
         setPageTemplate(rootDir, entries, (mpa as any).template, config);
       }
     });
-    const parsedEntries = generateMPAEntries({ context, entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
-    const finalMPAEntries = {};
-    Object.keys(parsedEntries).forEach((entryKey) => {
-      finalMPAEntries[entryKey] = parsedEntries[entryKey].finalEntry;
-    });
+    let parsedEntries = null;
+    // compatible with undefined TEMP_PATH
+    // if disableRuntime is true, do not generate mpa entries
+    if (getValue('TEMP_PATH')) {
+      parsedEntries = generateMPAEntries({ context, entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
+    }
+    let finalMPAEntries = {};
+    if (parsedEntries) {
+      Object.keys(parsedEntries).forEach((entryKey) => {
+        finalMPAEntries[entryKey] = parsedEntries[entryKey].finalEntry;
+      });
+    } else {
+      finalMPAEntries = entries;
+    }
     // modify entry
     modifyUserConfig('entry', finalMPAEntries);
   }
