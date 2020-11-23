@@ -26,7 +26,8 @@ export default ({ loadRuntimeModules, createElement }) => {
     if (!isMiniAppPlatform) {
       const { router } = appConfig;
       const { type, basename } = router;
-      history = createHistory({ type, basename, location: context.location });
+      const location = context.initialContext ? context.initialContext.location : null;
+      history = createHistory({ type, basename, location });
       appConfig.router.history = history;
     }
 

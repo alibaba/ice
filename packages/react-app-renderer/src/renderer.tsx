@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
 import { createNavigation } from 'create-app-container';
 import { createUseRouter } from 'create-use-router';
+import * as queryString from 'query-string';
 
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
@@ -37,6 +38,17 @@ export async function reactAppRenderer(options) {
   let initialData = {};
   let pageInitialProps = {};
 
+  const { href, origin, pathname, search } = window.location;
+  const path = href.replace(origin, '');
+  const query = queryString.parse(search);
+  const ssrError = (window as any).__ICE_SSR_ERROR__;
+  const initialContext = {
+    pathname,
+    path,
+    query,
+    ssrError
+  };
+
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
     initialData = (window as any).__ICE_APP_DATA__;
@@ -45,14 +57,14 @@ export async function reactAppRenderer(options) {
     // ssr not enabled, or SSR is enabled but the server does not return data
     // eslint-disable-next-line
     if (appConfig.app && appConfig.app.getInitialData) {
-      initialData = await appConfig.app.getInitialData();
+      initialData = await appConfig.app.getInitialData(initialContext);
     }
   }
 
   // set InitialData, can get the return value through getInitialData method
   setInitialData(initialData);
 
-  const context = { initialData, pageInitialProps };
+  const context = { initialData, pageInitialProps, initialContext };
   _renderApp(context, options);
 }
 
