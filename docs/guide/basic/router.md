@@ -122,10 +122,7 @@ const routerConfig = [
 ]
 ```
 
-注意：
-
-1. Wrapper 组件不支持通过 lazy 导入
-2. 路由配置里有 children 属性的元素（一般为 Layout）目前不支持 wrappers 属性
+> 注意：Wrapper 组件不支持通过 lazy 导入
 
 #### 实现高阶组件
 
