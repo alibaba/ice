@@ -21,7 +21,7 @@ export default function formatRoutes(routes, parentPath) {
   });
 }
 
-export function wrapperPageWithSSR(context, routes) {
+export function wrapperPageWithSSR(context) {
   const pageInitialProps = { ...context.pageInitialProps };
   const WrapperPageFn = (PageComponent) => {
     const ServerWrapperedPage = (props) => {
@@ -58,12 +58,12 @@ export function wrapperPageWithCSR() {
           // When the server does not return data, the client calls getinitialprops
           (async () => {
             const { href, origin, pathname, search } = window.location;
-            const path = href.replace(origin, '');
+            const curPath = href.replace(origin, '');
             const query = queryString.parse(search);
             const ssrError = (window as any).__ICE_SSR_ERROR__;
             const initialContext = {
               pathname,
-              path,
+              path: curPath,
               query,
               ssrError
             };
