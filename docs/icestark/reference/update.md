@@ -34,4 +34,45 @@ icestark@0.x 的项目如何迁移到 1.0 版本。
 
 ### 迁移步骤
 
-存量 1.x 的应用将 `@ice/stark` 升级到 2.x 最新版本即可，AppRouter 注册方式同 1.x 完全兼容
+存量 1.x 的应用将 `@ice/stark` 升级到 2.x 最新版本即可，AppRouter 注册方式同 1.x 完全兼容。
+
+## 不同版本混用情况
+
+微应用本身不依赖 `@ice/stark` 的版本变化，原先通过 `registerAppEnter` 和 `registerAppLeave` 方式注册生命周期的方式，均可以在 1.x 和 2.x 版本下运行。
+基于微应用标准的支持，增量微应用模版的打包方式将变更为 UMD 的打包方式。
+
+## 1.x 框架应用加载 UMD 微应用
+
+`@ice/stark@1.6.0` 版本开始支持加载 UMD 标准微应用，在配置上指定以 UMD 方式加载模块：
+
+```js
+...
+
+<AppRoute
+  umd
+  path="/seller"
+  title="标题"
+  url={[
+    '//ice.alicdn.com/icestark/child-seller-react/index.js',
+    '//ice.alicdn.com/icestark/child-seller-react/index.css',
+  ]}
+/>
+...
+```
+
+## 2.x 框架应用加载 UMD 微应用
+
+2.x 同样支持加载 UMD 应用，通过 `AppRoute` 配置方式同 1.x 版本相同，API 方式注册如下：
+
+```js
+regsiterMicroApps([
+  {
+    name: 'app1',
+    activePath: ['/seller'],
+    umd: true
+    title: '通用页面',
+    container: document.getElementById('icestarkNode'),
+    url: ['//ice.alicdn.com/icestark/child-seller-react/index.js'],
+  }
+]);
+```
