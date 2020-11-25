@@ -18,6 +18,7 @@ module.exports = (config, eslint, { rootDir }) => {
         .loader(require.resolve('eslint-loader'))
         .tap((options) => ({
             cache: true,
+            emitError: true,
             eslintPath: require.resolve('eslint'),
             formatter: require.resolve('react-dev-utils/eslintFormatter'),
             ...options,
