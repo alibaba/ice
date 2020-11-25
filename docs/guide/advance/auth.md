@@ -9,28 +9,7 @@ order: 9
 - 操作权限：页面中的某些按钮或组件针对无权限的用户直接隐藏；
 - 接口权限：当用户通过操作调用没有权限的接口时跳转到无权限页面。
 
-## 使用权限插件
-
-> ice.js@1.11.2版本开始，框架内置权限插件，开发者无需安装权限插件
-
-### 安装
-
-```bash
-# 安装权限插件
-$ npm install build-plugin-ice-auth --save-dev
-```
-
-### 配置
-
-在 `build.json` 中配置权限插件
-
-```json
-{
-  "plugins": [
-    "build-plugin-ice-auth"
-  ]
-}
-```
+> 框架默认内置权限插件，开发者无需安装。如果 ice.js 版本低于 1.11.2，需要自行安装 `build-plugin-ice-auth` 依赖，并在 `build.json` 中引入该插件。
 
 ## 初始化权限数据
 
