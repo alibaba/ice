@@ -1,6 +1,6 @@
 {
-  "name": "build-app-helpers",
-  "version": "1.0.1",
+  "name": "@builder/app-helpers",
+  "version": "1.0.2",
   "description": "build helpers for app framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -20,6 +20,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "lodash": "^4.17.20"
   }
 }

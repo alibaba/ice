@@ -2,8 +2,13 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import getRoutesByAppJson from './getRoutesByAppJson';
 
+interface IOptions {
+  target: string;
+  appJsonPath: string;
+}
 // Get entries when exist app.json
-export default function (api, { target, appJsonPath }) {
+export default function (api, options?: IOptions) {
+  const { target, appJsonPath } = options || {};
   if (appJsonPath) {
     return getEntriesByJson(target, appJsonPath);
   }
@@ -11,7 +16,7 @@ export default function (api, { target, appJsonPath }) {
 }
 
 function getEntriesByJson(target, appJsonPath) {
-  const routes = getRoutesByAppJson(target, appJsonPath);
+  const routes = getRoutesByAppJson(target, { appJsonPath });
   return routes.map((route) => {
     const dir = path.dirname(route.source);
     const pageName = path.parse(dir).name;
@@ -39,12 +44,13 @@ function getEntriesByDir(api: any) {
   const entries = pages.map((pageName) => {
     const entryName = pageName.toLocaleLowerCase();
     const pageEntry = getPageEntry(pagesPath, pageName);
+    if (!pageEntry) return null;
     return {
       entryName,
       pageName,
       entryPath: `${pageName}/${pageEntry}`,
     };
-  });
+  }).filter(Boolean);
   return entries;
 }
 

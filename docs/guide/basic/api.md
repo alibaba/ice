@@ -1,6 +1,6 @@
 ---
 title: 框架 API
-order: 12
+order: 13
 ---
 
 ## 基础
@@ -176,7 +176,7 @@ function Example() {
 
 ### useSearchParams
 
-**已废弃**，用于在非路由函数组件中解析 url 参数。
+**已废弃**，请使用 getSearchParams。用于在非路由函数组件中解析 url 参数。
 
 假设当前 URL 为 `https://example.com?foo=bar`，解析查询参数如下：
 
@@ -192,7 +192,7 @@ function Example() {
 
 ### withSearchParams
 
-**已废弃**，与 `useSearchParams` 对应，用在 Class Component 中。
+**已废弃**，请使用 getSearchParams。与 `useSearchParams` 对应，用在 Class Component 中。
 
 ```tsx
 import { withSearchParams } from 'ice';
@@ -274,7 +274,7 @@ history.replace('/home');
 history.goBack();
 ```
 
-更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+更多 [history API](https://github.com/ReactTraining/history/blob/master/docs/api-reference.md)
 
 ### createHashHistory
 

@@ -1,6 +1,6 @@
 {
   "name": "create-ice",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "npm init ice",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -25,6 +25,7 @@
     "chalk": "^4.0.0",
     "commander": "^6.0.0",
     "fs-extra": "^8.1.0",
+    "ice-npm-utils": "^2.0.1",
     "inquirer": "^7.0.4"
   },
   "repository": {

@@ -1,6 +1,6 @@
 ---
 title: 工程配置
-order: 6
+order: 7
 ---
 
 icejs 基于 build-scripts，因此工程使用方式与 build-scripts 完全一致。
@@ -214,7 +214,34 @@ icejs 中一般不允许修改该配置。
 }
 ```
 
+### polyfill
+
+- 类型：`string`
+- 默认值：`"entry"`
+- 可选值：`"usage"` | `false`
+
+配置 `@babel/preset-env` 处理 `polyfill` 的逻辑。
+
+#### polyfill: "entry"
+根据配置的 `browserslist` 字段在每个文件开头都引入对应的 `polyfill`。
+
+#### polyfill: "usage"
+根据源码中使用到的代码按需引入 `polyfill`。
+
+**注意：** 在这种模式下，默认不会去分析 `node_modules` 里的代码，如果需要的话，请看 `compileDependencies` 字段相关的说明，添加相关需要编译的依赖。
+
+#### polyfill: false
+不引入任何 `polyfill`。
+
+```json
+{
+  "polyfill": false
+}
+```
+
 ### injectBabel
+
+**已废弃**，请使用 `polyfill` 替代。
 
 - 类型：`string`
 - 默认值：`polyfill`

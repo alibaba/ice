@@ -93,7 +93,7 @@ export default class Generator {
       };
     }
 
-    const pageComponentName = `Page${pageName}`;
+    const pageComponentName = 'PageComponent';
     return {
       isSingleModel: true,
       importStr: `import ${pageComponentName} from '${this.applyMethod('formatPath', pageModelFile)}';`,
@@ -134,11 +134,12 @@ export default class Generator {
     this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: 'store', exportName });
   }
 
-  private renderAppStoreTypes({ hasAppModels }) {
+  private renderAppStoreTypes({ hasAppModels, existsAppStoreFile }) {
     const sourceFilename = 'store/types';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
     const appStoreTypesRenderData = {
-      hasAppModels
+      hasAppModels,
+      existsAppStoreFile
     };
 
     this.renderFile(this.typesTemplatePath, targetPath, appStoreTypesRenderData);
@@ -165,7 +166,7 @@ export default class Generator {
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Page.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
-    const pageComponentName = `Page${pageName}`;
+    const pageComponentName = 'PageComponent';
     const pageComponentRenderData = {
       isRax: this.isRax,
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
@@ -242,14 +243,14 @@ export default class Generator {
     const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
     const hasAppModels = fse.pathExistsSync(path.join(this.rootDir, 'src', 'models'));
 
-    // if store is created by user, don't create .ice/store/index.ts and .ice/store/types.ts
+    // if store is created by user, don't create .ice/store/index.ts
     if (!existsAppStoreFile) {
       // generate .ice/store/index.ts
       this.renderAppStore({ appStoreFile });
-
-      // generate .ice/store/types.ts
-      this.renderAppStoreTypes({ hasAppModels });
     }
+
+    // generate .ice/store/types.ts
+    this.renderAppStoreTypes({ hasAppModels, existsAppStoreFile });
 
     const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
     pages.forEach(pageName => {
@@ -270,7 +271,7 @@ export default class Generator {
       // generate .ice/pages/${pageName}/store.ts
       this.renderPageStore(params);
 
-      // generate .ice/pages/${pageName}/index.ts	
+      // generate .ice/pages/${pageName}/index.ts
       this.renderPageIndex(params);
 
       // generate .ice/pages/${pageName}/Page.tsx

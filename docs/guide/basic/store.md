@@ -1,13 +1,13 @@
 ---
 title: 状态管理
-order: 5
+order: 6
 ---
 
 icejs 内置了状态管理方案，并在此基础上进一步遵循 **“约定优于配置”** 原则，进行抽象和封装，使得状态管理变得非常容易。
 
-> 说明：该文档适用于 ice.js@1.9.7 及以上版本，如果非该版本请参考 [状态管理](https://github.com/alibaba/ice/blob/v1.9.6/docs/guide/basic/store.md)；差异点主要在于 1.9.7 版本之后推荐自定义创建 Store 实例用于透传参数，与老版本完全兼容。
+## 全局应用状态
 
-### 全局状态
+### 定义 Model
 
 约定全局状态位于 `src/models` 目录，目录结构如下：
 
@@ -55,27 +55,37 @@ export default {
 };
 ```
 
-自定义创建 Store 实例：
+### 初始化 Store
 
 ```ts
 // src/store.ts
 import { createStore } from 'ice';
 import user from './models/user';
+import project from './models/project';
 
-const store = createStore({ user });
+const store = createStore({
+  user,
+  project,
+}, {
+  // options
+});
 
 export default store;
 ```
 
-在 View 中使用模型状态：
+`createStore()` 支持的 options:
 
-```tsx
-// 引用全局状态
-import { store } from '@/store';
+- disableImmer：布尔值，可选，默认值 false，如果设置为 true，那么 immer 将被禁用，这意味着不能再在 reducers 中直接改变状态，而是必须返回新的状态。
+- disableError：布尔值，可选，默认值 false，如果设置为 true，则 `UseModelEffectsError` 和 `WithModelEffectsError` 将不可用。
+- disableLoading：布尔值，可选，默认值 false，如果设置为 true，则 `useModelEffectsLoading` 和 `withModelEffectsLoading` 将不可用。
+
+### 在 View 中使用模型状态
+
+```diff
++ import store from '@/store';
 
 const HomePage = () => {
-  // 使用 user 模型
-  const [userState, userDispatchers] = store.useModel('user');
++  const [userState, userDispatchers] = store.useModel('user');
 
   return (
     <>
@@ -86,28 +96,22 @@ const HomePage = () => {
 }
 ```
 
-### 页面状态
+## 页面级状态
 
-> 注意：页面状态只能在该页面下使用，无法跨页面使用。
+页面状态只能在该页面下的组件中使用，无法跨页面使用。约定页面状态在 `src/pages/*/models` 中定义。
 
-约定页面状态位于 `src/pages/*/models` 目录。
+目录组织如下：
 
-但通常情况下应用的复杂度不一，对页面的状态管理和目录组织方式也有着不同的诉求，因此 icejs 提供了两种组织方式用于开发可大可小的应用。
-
-#### 非嵌套页面
-
-非嵌套页面即 `src/pages` 下的页面只**包含一个路由页面**，目录组织如下：
-
-```md
+```diff
 src
 ├── models                  // 全局状态
 │   └── user.ts
 └── pages
 |   ├── Home                // Home 页面
-|   │   ├── models          // 页面状态
-|   │   |   ├── foo.ts
-|   │   |   └── bar.ts
-|   │   ├── store.ts
++|   │   ├── models          // 页面状态
++|   │   |   ├── foo.ts
++|   │   |   └── bar.ts
++|   │   ├── store.ts
 |   │   └── index.tsx
 └── app.ts
 ```
@@ -118,12 +122,12 @@ src
 // src/pages/Home/models/foo.ts
 export default {
   state: {
-    title: 'Foo'
+    title: 'Hello'
   }
 };
 ```
 
-自定义创建 Store 实例：
+初始化 Store 实例：
 
 ```ts
 // src/pages/Home/store.ts
@@ -135,48 +139,147 @@ const store = createStore({ foo });
 export default store;
 ```
 
-在 View 中使用模型状态：
+在页面组件中使用模型状态：
 
 ```tsx
 // 引用页面状态
-import { store as pageStore } from '@/pages/Home/store';
+import pageStore from '@/pages/Home/store';
 
 const HomePage = () => {
-
   const [pageState, pageDispatchers] = pageStore.useModel('foo');
-
   return (
-    <>{foo.title}</>
+    <>{pageState.title}</>  // Hello
   );
 }
 ```
 
-#### 嵌套页面
-
-嵌套页面即 `src/pages` 下的页面**包含多个路由页面**，目录组织如下：
+某些复杂场景会出现嵌套页面的情况，即 `src/pages/Home` 下**包含多个路由页面**，目录组织如下：
 
 ```md
 src
-├── models                   // 全局状态
-|   ├── counter.ts
-│   └── user.ts
 └── pages
 │   ├── Home                 // Home 页面包含了 Foo、Bar 等多个路由页面
 │   │   ├── Foo        
 │   │   ├── Bar
 │   │   ├── Layout           // 页面布局
+│   │   │  └── index.tsx
 │   │   ├── models           // 页面状态
 │   │   │   ├── Foo.ts
 │   │   │   └── Bar.ts
+│   │   ├── index.tsx
 │   │   └── store.ts
 └── app.ts
 ```
 
+对于嵌套页面，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在并配置在 `src/routes.ts` 中：
+
+```diff
+// src/routes.ts
++import HomeLayout from '@/pages/Home/Layout';
+import Foo from '@/pages/Home/Foo';
+import Bar from '@/pages/Home/Bar';
+import About from '@/pages/About';
+
+export default [
+  {
+    path: '/',
+    component: BasicLayout,
+    children: [
+      {
+        path: '/home',
++        component: HomeLayout,
+        children: [
+          {
+            path: '/foo',
+            component: Foo
+          },
+          {
+            path: '/bar',
+            component: Bar
+          },
+        ]
+      },
+      {
+        path: '/about',
+        component: About,
+      }
+    ]
+  }
+]
+```
+
 对于嵌套页面的状态管理，在对应的页面下需要新增 Layout 文件，用于 icejs 自动注册 Provider，其它与非嵌套页面一致。
 
-## 模型规范
+## 参阅资料
 
-### 模型定义
+### 设置初始状态
+
+```ts
+import { runApp } from 'ice';
+
+const appConfig = {
+  store: {
+    // 可选，初始化状态
+    initialStates: {}
+  }
+};
+
+runApp(appConfig);
+```
+
+> API `store.getInitialStates` 已废弃，推荐使用 `store.initialStates`
+
+> SSR 场景下 `initialData.initialStates` 会默认赋值给 `store.initialStates`
+
+> 页面级状态目前不支持设置 initialStates
+
+### TypeScript 类型提示
+
+编写类型有助于更好的代码提示，类型定义步骤如下：
+
+* 创建 Store 实例
+
+```diff
+// src/store.ts
+import { createStore, IStoreModels, IStoreDispatch, IStoreRootState } from 'ice';
+import user from './models/user';
+import porject from './models/porject';
+
++interface IAppStoreModels extends IStoreModels {
++  user: typeof user;
++  project: typeof project;
++};
+
++const appModels: IAppStoreModels = {
++  user,
++  project,
++};
+
+export default createStore(appModels);
+
++export type IRootDispatch = IStoreDispatch<typeof appModels>;
++export type IRootState = IStoreRootState<typeof appModels>;
+```
+
+* 定义状态模型
+
+```diff
+// src/models/user.ts
++import { IRootState, IRootDispatch } from '@/store';
+
+const user = {
+  state: [],
+  reducers: {},
++  effects: ((dispatch: IRootDispatch) => ({
++    like(playload, rootState: IRootState) {
++      dispatch.project.foo(payload); // 调用其他 model 的 effects/reducers
++      rootState.project.title;       // 获取其他 model 的 state
++    }
++  })
+};
+```
+
+### model 定义详细说明
 
 如上示例所述，icejs 约定在 `src/models`、`src/pages/*/models` 目录下的文件为项目定义的模型文件，每个文件需要默认导出一个对象。
 
@@ -212,18 +315,22 @@ reducers: { [string]: (prevState, payload) => any }
 
 ```diff
 export default {
-  state: { count: 0 },
+  state: { count: 0, list: [] },
 
 + reducers: {
 +   increment (prevState, payload) {
-+     return { count: prevState.count + 1 };
++     // 
++     prevState.count += 1;
++     prevState.list.push(1);
 +   },
 +   decrement (prevState) {
-+     return { count: prevState.count - 1 };
++     prevState.count += 1;
 +   }
 + }
 }
 ```
+
+> icestore 默认内置了 immer，因此 reducer 中直接修改数据即可，无需返回新对象
 
 **effects**
 
@@ -239,139 +346,93 @@ export default {
 
   reducers: {
     increment (prevState, payload) {
-      return { count: prevState.count + 1 };
+      prevState.count += 1;
     },
     decrement (prevState) {
-      return { count: prevState.count - 1 };
+      prevState.count -= 1;
     }
   },
 
 + effects: (dispatch) => ({
 +   async asyncDecrement() {
 +     await delay(1000);             // 进行一些异步操作
-+     dispatch.counter.increment();  // 调用模型 reducers 内的方法来更新状态
++     this.increment();              // 调用模型 reducers 内的方法来更新状态
 +   },
 + }),
 };
 ```
 
-在 effects 中的 action 方法中可以通过 `dispatch[model][action]` 拿到其他模型所定义的方法。
+### model 之间通信
 
-### 创建 Store 实例
-
-定义好 model 之后，我们需要自定义创建 Store 实例。
-
-```ts
-// ./src/store.ts
-import { createStore } from 'ice';
-import counter from './models/counter';
-
-const store = createStore({ counter });
-
-export default store;
-```
-
-### 模型使用
-
-定义好 model 之后，我们就可以通过 `useModel` 传入对应的 model 名称进行使用，并返回该模型的状态（state）和调度器（dispatchers）。
-
-```ts
-useModel(name: string): [ state, dispatchers ]
-```
+> 注意：如果两个 model 不属于同一个 store 实例，是无法通信的
 
 ```diff
-// 全局状态引用
-+ import { store as appStore } from '@/store';
+// src/models/user
+export default {
+  state: {
+    name: '',
+    tasks: 0,
+  },
+  effects: () => ({
+    async refresh() {
+      const data = await fetch('/user');
++      // 通过 this.foo 调用自身的 reducer
++      this.setState(data);
+    },
+  }),
+};
 
-export default () => {
-+ const [counterState, counterDispatchers] = appStore.useModel('counter');
-
-  return (
-    <>{counterState.count}</>
-  )
-}
+// src/models/tasks
+export default {
+  state: [],
+  effects: (dispatch) => ({
+    async refresh() {
+      const data = await fetch('/tasks');
+      this.setState(data);
+    },
+    async add(task) {
+      await fetch('/tasks/add', task);
++      // 调用另一个 model user 的 effects
++      await dispatch.user.refresh();
++      // 通过 this.foo 调用自身的 effects
++      await this.refresh();
+    },
+  }),
+};
 ```
 
-## API
+在 effects 里的 action 方法中可以通过 `dispatch[model][action]` 拿到其他模型所定义的方法。
 
-### createStore
+> 如果遇到 `this.foo` 的 ts 类型错误，请参考文档 [icestore QA](https://github.com/ice-lab/icestore/blob/master/docs/qna.zh-CN.md) 进行修复
 
-该方法用于创建 Store。
+> setState 是 icestore 内置的一个 reducer，可以直接使用
 
-```ts
-createStore(models, options);
-```
+### 获取 effects 的状态 loading/error
 
-**options**
+通过 `useModelEffectsState` API 即可获取到 effects 的 loading 和 error 状态。
 
-- disableImmer (布尔值, 可选, 默认值=false)
-
-如果将此设置为true，那么 immer 将被禁用，这意味着您不能再在 reducers 中直接改变状态，而是必须返回新的状态。
-
-- disableError (布尔值, 可选, 默认值=false)
-
-如果将此设置为true，则 `UseModelEffectsError` 和 `WithModelEffectsError` 将不可用。仅当您非常关注性能或故意抛出错误时才启用该选项。
-
-- disableLoading (布尔值, 可选, 默认值=false)
-
-如果将此设置为true，则 `useModelEffectsLoading` 和 `withModelEffectsLoading` 将不可用。
-
-### useModelState
-
-通过该 hooks 使用模型的状态并订阅其更新。
-
-```ts
-import { store } from '@/store';
-
-function FunctionComponent() {
-  const state = store.useModelState('counter');
-  console.log(state.value);
-}
-```
-
-### useModelDispatchers
-
-仅使用 Action 不使用 State。有些时候组件中只需要触发 action 不需要依赖对应的数据状态，此时可以使用 `useModelDispatchers` API。
-
-```ts
-import { store } from '@/store';
-
-function FunctionComponent() {
-  const dispatchers = store.useModelDispatchers('counter');
-  // 只调用 increment 方法
-  dispatchers.increment();
-}
-```
-
-### useModelEffectsState
-
-异步 Action 状态。通过 `useModelEffectsState` API 即可获取到异步请求的 loading 和 error 状态。
-
-```ts
-import { store } from '@/store';
+```diff
+import store from '@/store';
 
 function FunctionComponent() {
   const [state, dispatchers] = store.useModel('counter');
-  const effectsState = store.useModelEffectsState('counter');
++  const effectsState = store.useModelEffectsState('counter');
 
   useEffect(() => {
     dispatchers.asyncDecrement();
   }, []);
 
-  // loading
-  console.log(effectsState.asyncDecrement.isLoading);
-
-  // error
-  console.log(effectsState.asyncDecrement.error);
++  console.log(effectsState.asyncDecrement.isLoading); // loading
++  console.log(effectsState.asyncDecrement.error);  // error
 }
 ```
 
-### withModel
+### 在 Class Component 中使用
 
-在 Class Component 中使用。useModel 相关的 API 基于 React 的 Hooks 能力，仅能在 Function Component 中使用，通过 `withModel` API 可以实现在 Class Component 中使用。
+useModel 相关的 API 基于 React 的 Hooks 能力，仅能在 Function Component 中使用，通过 `withModel` API 可以实现在 Class Component 中使用。
 
 ```ts
-import { store } from '@/store';
+import store from '@/store';
 
 class TodoList extends React.Component {
   render() {
@@ -390,70 +451,36 @@ export default store.withModel('todos')(TodoList);
 
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
-## 类型提示
- 
-编写类型有助于更好的代码提示，类型定义步骤如下：
+## 版本变更说明
 
-* 创建 Store 实例
+icejs@1.9.7 版本开始框架推荐开发者自行初始化 store，这样可以更灵活的定制一些参数，相对之前方案带来的改变：
+
+* 开发者需要自行在 store.ts 中初始化 store 实例，框架默认不初始化
 
 ```ts
 // src/store.ts
-import { createStore, IStoreModels, IStoreDispatch, IStoreRootState } from 'ice';
+import { createStore } from 'ice';
 import user from './models/user';
+import project from './models/project';
 
-interface IAppStoreModels extends IStoreModels {
-  user: typeof user;
-};
+const store = createStore({
+  user,
+  project,
+});
 
-const appModels: IAppStoreModels = {
-  user
-};
-
-export default createStore(appModels);
-
-// 导出 IRootDispatch 类型
-export type IRootDispatch = IStoreDispatch<typeof appModels>;
-
-// 导出 IRootState 类型
-export type IRootState = IStoreRootState<typeof appModels>;
+export default store;
 ```
 
-* 定义状态模型
+* 引入 store 的路径发生了变化：
 
 ```diff
-// src/models/user.ts
-+import { IRootState, IRootDispatch } from '@/store';
+// 全局状态
+- import { store } from 'ice';
++ import store from '@/store';
 
-const user = {
-  state: [],
-  reducers: {},
-+ effects: (dispatch: IRootDispatch => ({
-+   like(playload, rootState: IRootState) {
-
-    }
-  })
-};
+// 页面级状态
+- import { store } from 'ice/Home';
++ import store from '@/pages/Home/store';
 ```
 
-## 设置初始状态
-
-```ts
-import { runApp } from '@/store';
-
-const appConfig = {
-  store: {
-    // 可选，初始化状态
-    initialStates: {}
-  }
-};
-
-runApp(appConfig);
-```
-
-> API `store.getInitialStates` 已废弃，推荐使用 `store.initialStates`
-
-> SSR 场景下 `initialData.initialStates` 会默认赋值给 `store.initialStates`
-
-## 版本变更说明
-
-如果在控制台看到关于 store 的警告信息，可以参考 [升级指南](https://github.com/ice-lab/icestore/blob/master/docs/upgrade-guidelines.zh-CN.md) 进行迁移。
+对于之前的版本我们做了向前兼容，只有当项目里存在 `src/store.ts` 或者 `src/pages/*/store.ts` 时才会触发新的方案，如果之前项目里刚好存在同名文件则有可能触发 break change。

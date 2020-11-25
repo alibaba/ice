@@ -1,6 +1,6 @@
 ---
 title: 数据请求
-order: 4
+order: 5
 ---
 
 大多数前端应用都需要通过 HTTP 协议与后端服务器通讯。在 icejs 框架中内置约定和规范了一套从 UI 交互到请求服务端数据的完整方案，更进一步简化了应用的数据请求流程，基于此提供了 request 和 useRequest Hooks 方法。
@@ -72,6 +72,8 @@ export default {
 
 ### 在模型中调用 service
 
+> 结合 [状态管理文档](/docs/guide/basic/store) 使用
+
 * `service`：约定数据请求统一管理在 services 目录下；
 * `model`：约定数据请求统一在 models 里进行调用；
 * `view`：最终在视图里通过调用 models 的 effects 的方法触发数据请求。
@@ -105,7 +107,7 @@ export default {
 
 ```ts
 import React, { useEffect } from 'react';
-import { store } from 'ice';
+import store from '@/store';
 
 const HomePage = () => {
   // 调用定义的 user 模型

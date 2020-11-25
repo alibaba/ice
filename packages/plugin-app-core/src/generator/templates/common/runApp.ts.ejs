@@ -15,16 +15,18 @@ import createShareAPI, { history } from 'create-app-shared';
   const defaultWithRouter = createWithRouter({ createElement });
 <% } %>
 
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '../<%= globalStyle %>'
+<% } %>
+
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import defaultStaticConfig from './staticConfig';
+
 import { setAppConfig } from './appConfig';
 import { mount, unmount } from './render';
 import ErrorBoundary from './ErrorBoundary';
-
-<% if (globalStyle) {%>
-  import '../<%= globalStyle %>'
-<% } %>
 
 const {
   createBaseApp,
@@ -57,9 +59,11 @@ export function runApp(appConfig, staticConfig?: any) {
     renderer = reactAppRenderer;
   }
   <% } %>
+  const buildConfig = <%- buildConfig %>;
   renderer({
     appConfig,
     staticConfig: staticConfig || defaultStaticConfig,
+    buildConfig,
     setAppConfig,
     createBaseApp,
     createHistory,

@@ -1,6 +1,6 @@
 ---
 title: 使用 antd 组件
-order: 14
+order: 15
 ---
 
 我们提供了一套 antd 的基础脚手架，通过 CLI 即可直接创建：

@@ -29,7 +29,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     return WrapperedPageErrorBoundary;
   };
 
-  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context, defaultRoutes) : wrapperPageWithCSR();
+  const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR();
   wrapperRouteComponent(wrapperPageFn);
   wrapperRouteComponent(wrapperPageErrorBoundary);
   if (appConfigRouter.modifyRoutes) {
@@ -45,8 +45,8 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     };
 
     if (process.env.__IS_SERVER__) {
-      const { pathname, staticContext = {} } = context;
-      routerProps = Object.assign({}, routerProps, { location: pathname, context: staticContext });
+      const { initialContext = {} } = context;
+      routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
     }
 
     return <IceRouter {...routerProps} />;
