@@ -64,9 +64,10 @@ function initGenerator(api, options) {
   const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
+  const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
-    targetDir: getValue(TEMP_PATH),
+    targetDir,
     templatesDir,
     appTemplateDir: path.join(templatesDir, `./app/${framework}`),
     commonTemplateDir: path.join(templatesDir, './common'),
@@ -75,7 +76,7 @@ function initGenerator(api, options) {
       isReact: framework === 'react',
       isRax: framework === 'rax',
       isMiniapp,
-      runtimeModules: getRuntimeModules(plugins),
+      runtimeModules: getRuntimeModules(plugins, targetDir),
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,
