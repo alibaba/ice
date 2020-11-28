@@ -468,22 +468,15 @@ icejs 中一般不允许修改该配置。
 ### eslint
 
 - 类型：`boolean` | `object`
+- 默认值：`undefined`
 
-默认在控制台上打印 lint 错误信息。
+说明：
 
-#### eslint: false
-关闭 eslint 代码检测。
+- `undefined`：将 eslint 错误输出到终端里
+- `false`：不检测 eslint 错误
+- `true`：将 eslint 错误展示在预览页面上
 
-#### eslint: true
-开启 eslint 代码检测，错误信息打印在浏览器中，并且会阻塞构建。配置方式如下：
-
-```json
-{
-  "eslint": true
-}
-```
-
-配置 eslint 相关选项，详见 [eslint-loader](https://github.com/webpack-contrib/eslint-loader)。
+其他相关选项详见 [eslint-loader](https://github.com/webpack-contrib/eslint-loader)。
 
 ```json
 {
