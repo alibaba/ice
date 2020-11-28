@@ -472,19 +472,10 @@ icejs 中一般不允许修改该配置。
 
 说明：
 
-- `undefined`：将 eslint 错误输出到终端里
+- `undefined`：即没有设置 eslint 选项，将 eslint 错误输出到终端里
 - `false`：不检测 eslint 错误
 - `true`：将 eslint 错误展示在预览页面上
-
-其他相关选项详见 [eslint-loader](https://github.com/webpack-contrib/eslint-loader)。
-
-```json
-{
-  "eslint": {
-    "quiet": true
-  }
-}
-```
+- `object`：表现等同于 `true`，同时支持配置 [eslint-loader](https://github.com/webpack-contrib/eslint-loader) 的更多参数
 
 ### disableRuntime
 
