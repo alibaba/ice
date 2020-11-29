@@ -15,7 +15,7 @@ export default [
         component: Dashboard
       },
       {
-        path: '/',
+        path: '/home',
         exact: true,
         component: Home
       },
@@ -23,6 +23,10 @@ export default [
         path: '/about',
         exact: true,
         component: About
+      },
+      {
+        path: '/',
+        redirect: '/home'
       },
       {
         path: '*',

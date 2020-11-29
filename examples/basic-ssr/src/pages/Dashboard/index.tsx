@@ -12,7 +12,7 @@ const Dashboard = (props) => {
 };
 
 Dashboard.getInitialProps = async (ctx) => {
-  console.log('Dashboard ctx', ctx);
+  // console.log('Dashboard ctx', ctx);
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ title: 'Dashboard Page xxxx...' });

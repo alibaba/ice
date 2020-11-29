@@ -70,6 +70,11 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       createBaseApp,
       emitLifeCycles
     });
+
+    if (initialContext.url) {
+      return res.redirect(302, initialContext.url);
+    }
+
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
