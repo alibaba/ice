@@ -72,12 +72,6 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       emitLifeCycles
     });
 
-    const redirectUrl = initialContext.url;
-    if (redirectUrl) {
-      res.redirect(302, redirectUrl);
-      return { redirectUrl, error, html: htmlTemplateContent }
-    }
-
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
@@ -94,7 +88,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
   }
 
   const html = $.html();
-  return { html, error };
+  return { html, error, redirectUrl: initialContext.url };
 }
 
 function getComponentByPath(routes, currPath)  {

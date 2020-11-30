@@ -84,15 +84,15 @@ const plugin = async (api): Promise<void> => {
 
       if (redirectUrl) {
         console.log('[SSR]', `Redirect to the new path ${redirectUrl}`);
-        return;
+        res.redirect(302, redirectUrl);
+      } else {
+        if (error) {
+          log.error('[SSR] Server side rendering error, downgraded to client side rendering');
+          log.error(error);
+        }
+        console.log('[SSR]', `output html content\n${html}\n`);
+        res.send(html);
       }
-
-      if (error) {
-        log.error('[SSR] Server side rendering error, downgraded to client side rendering');
-        log.error(error);
-      }
-      console.log('[SSR]', `output html content\n${html}\n`);
-      res.send(html);
     }
     if (command === 'start') {
       config.devServer
