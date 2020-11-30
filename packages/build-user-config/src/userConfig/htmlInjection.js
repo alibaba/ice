@@ -183,7 +183,6 @@ exports.init = (api) => {
   if (userConfig.htmlInjection
     || (!isExsitsHtml && !isExsitsDocument)
     || (userConfig.mpa && userConfig.mpa.htmlInjection)) {
-    
     onGetWebpackConfig((config) => {
       // config html plugin after calling method of injectHTML
       configHTMLPlugin(config);
