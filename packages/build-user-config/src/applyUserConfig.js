@@ -28,8 +28,12 @@ module.exports = (api, options = {}) => {
     // eslint-disable-next-line no-empty
     } catch (err) {}
 
+    if (configFunc && configFunc.init) {
+      configFunc.init(api);
+    }
+
     return {
-      configWebpack: configFunc,
+      configWebpack: Object.prototype.toString.call(configFunc) === '[object Object]' ? configFunc.configWebpack : configFunc,
       ...config,
     };
   });

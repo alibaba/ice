@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html<%= htmlAttrs %>>
+  <head<%= headAttrs %>>
+    <%= headPrepend %>
+    <%= htmlWebpackPlugin.tags.headTags %>
+    <%= headAppend %>
+  </head>
+  <body<%= bodyAttrs %>>
+    <%= bodyPrepend %>
+    <%= rootContainer %>
+    <%= htmlWebpackPlugin.tags.bodyTags %>
+    <%= bodyAppend %>
+  </body>
+</html>

@@ -204,5 +204,9 @@ module.exports = [
       return validation('polyfill', val, 'string|boolean|object');
     },
     defaultValue: 'entry'
+  },
+  {
+    name: 'htmlInjection',
+    validation: 'object',
   }
 ];

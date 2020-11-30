@@ -82,5 +82,39 @@ module.exports = (api, { target, webpackConfig }) => {
     });
   }
 
+  // initialize html content
+  api.applyMethod('injectHTML', () => {
+    return [
+      {
+        tag: 'meta',
+        charset: 'utf-8',
+        tagId: 'meta-charset',
+      },
+      {
+        tag: 'meta',
+        'http-equiv': 'x-ua-compatible',
+        content: 'ie=edge,chrome=1',
+        tagId: 'meta-compatible',
+      },
+      {
+        tag: 'meta',
+        name: 'viewport',
+        content: 'width=device-width',
+        tagId: 'meta-viewport',
+      },
+    ];
+  }, 'headPrepend');
+  api.applyMethod('injectHTML', () => {
+    return [
+      {
+        tag: 'title',
+        innerHTML: 'icejs',
+      }
+    ];
+  }, 'headAppend');
+  api.applyMethod('injectHTML', () => {
+    return '<div id="ice-container"></div>';
+  }, 'rootContainer');
+
   return webpackConfig;
 };
