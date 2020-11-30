@@ -150,7 +150,7 @@ exports.configWebpack = (config, options, context) => {
           // overwrite content by tagId / unique tag
           value.forEach((tagInfo) => {
             const { tagId, tag } = tagInfo;
-            let index = null;
+            let index = -1;
             if (tag === 'title') {
               index = htmlContent[optionKey].findIndex(item => item.tag === tag);
             } else if (tagId) {
@@ -163,7 +163,7 @@ exports.configWebpack = (config, options, context) => {
               newValue.push(tagInfo);
             }
           });
-          htmlContent[optionKey] = (htmlContent[optionKey] || []).contact(newValue);
+          htmlContent[optionKey] = (htmlContent[optionKey] || []).concat(newValue);
         } else if (type === 'object') {
           htmlContent[optionKey] = {
             ...(htmlContent[optionKey] || {}),

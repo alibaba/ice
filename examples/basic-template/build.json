@@ -1,0 +1,24 @@
+{
+  "ignoreHtmlTemplate": true,
+  "plugins": [],
+  "htmlInjection": {
+    "headAppend": [
+      {
+        "tag": "title",
+        "innerHTML": "html injection"
+      }
+    ],
+    "headPrepend": [
+      {
+        "tag": "meta",
+        "tagId": "meta-charset",
+        "charset": "en"
+      },
+      {
+        "tag": "link",
+        "href": "/css/index.css?v=1",
+        "rel": "stylesheet"
+      }
+    ]
+  }
+}
