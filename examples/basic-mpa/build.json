@@ -3,6 +3,24 @@
     "openPage": "Dashboard",
     "template": {
       "web.html": ["Dashboard", "Home"]
+    },
+    "htmlInjection": {
+      "Dashboard": {
+        "headAppend": [
+          {
+            "tag": "title",
+            "innerHTML": "html Dashboard"
+          }
+        ]
+      },
+      "Home": {
+        "headAppend": [
+          {
+            "tag": "title",
+            "innerHTML": "html Home"
+          }
+        ]
+      }
     }
   },
   "plugins": []

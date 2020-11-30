@@ -1,8 +1,10 @@
 const path = require('path');
 const glob = require('glob');
+const { cloneDeep } = require('lodash');
 const { existsSync } = require('fs-extra');
 
-const htmlContent = {};
+const htmlContentStorage = {};
+const multiHTMLContentStorage = {};
 const HTML_POSITIONS = {
   headAppend: {
     defaultValue: [],
@@ -54,7 +56,7 @@ function injectHTML(callback, position) {
     console.warn('[user config]', `unknown position ${position}.`);
   }
   // store html content added by applyMethod
-  htmlContent[position] = callback(htmlContent[position]);
+  htmlContentStorage[position] = callback(htmlContentStorage[position]);
 }
 
 function parseHTMLContent(content) {
@@ -72,7 +74,7 @@ function parseHTMLAttrs(attrs) {
   return attrKeys.length ? ` ${attrKeys.map(attrKey => `${attrKey}="${attrs[attrKey]}"`).join(' ')}` : '';
 }
 
-function getHTMLParams() {
+function getHTMLParams(htmlContent) {
   const htmlParams = {};
   Object.keys(htmlContent).forEach((htmlPosition) => {
     const htmlTags = htmlContent[htmlPosition];
@@ -103,25 +105,69 @@ function modifyHTMLPluginOptions(config, pluginName, options, params) {
   }
 }
 
-function configHTMLPlugin(config, context) {
-  const { userConfig } = context;
-  const htmlParams = getHTMLParams();
+function configHTMLPlugin(config) {
+  const htmlParams = getHTMLParams(htmlContentStorage);
   const htmlPluginOptions = {
     template: path.join(__dirname, '../template/index.html'),
     inject: false,
   };
-  const { entry } = userConfig;
+  const entry = config.entryPoints.entries();
     // mpa HtmlWebpackPlugin
   if (Object.prototype.toString.call(entry) === '[object Object]' && Object.keys(entry).length > 1)  {
     // delete multi HtmlWebpackPlugin
     Object.keys(entry).forEach((entryKey) => {
       const pluginName = `HtmlWebpackPlugin_${entryKey}`;
-      modifyHTMLPluginOptions(config, pluginName, htmlPluginOptions, htmlParams);
+      modifyHTMLPluginOptions(
+        config,
+        pluginName,
+        htmlPluginOptions,
+        multiHTMLContentStorage[entryKey] ? getHTMLParams(multiHTMLContentStorage[entryKey]) : htmlParams);
     });
   } else {
     modifyHTMLPluginOptions(config, 'HtmlWebpackPlugin', htmlPluginOptions, htmlParams);
   }
 }
+
+function configHTMLContent(htmlInjection, entryKey) {
+  let storage = htmlContentStorage;
+  if (entryKey) {
+    multiHTMLContentStorage[entryKey] = cloneDeep(htmlContentStorage);
+    storage = multiHTMLContentStorage[entryKey];
+  }
+  Object.keys(htmlInjection).forEach((optionKey) => {
+    if (HTML_POSITIONS[optionKey]) {
+      const { type } = HTML_POSITIONS[optionKey];
+      const value = htmlInjection[optionKey];
+      if (type === 'array') {
+        const newValue = [];
+        // overwrite content by tagId / unique tag
+        value.forEach((tagInfo) => {
+          const { tagId, tag } = tagInfo;
+          let index = -1;
+          if (tag === 'title') {
+            index = storage[optionKey].findIndex(item => item.tag === tag);
+          } else if (tagId) {
+            index = storage[optionKey].findIndex(item => item.tagId === tagId);
+          }
+
+          if (index > -1) {
+            storage[optionKey][index] = tagInfo;
+          } else {
+            newValue.push(tagInfo);
+          }
+        });
+        storage[optionKey] = (storage[optionKey] || []).concat(newValue);
+      } else if (type === 'object') {
+        storage[optionKey] = {
+          ...(storage[optionKey] || {}),
+          ...value,
+        };
+      } else {
+        storage[optionKey] = value;
+      }
+    }
+  });
+};
 
 // init htmlInjection
 exports.init = (api) => {
@@ -129,51 +175,24 @@ exports.init = (api) => {
   const { rootDir, userConfig } = context;
 
   registerMethod('injectHTML', injectHTML);
+  registerMethod('configHTMLContent', configHTMLContent);
+
   const isExsitsHtml = existsSync(path.resolve(rootDir, 'public/index.html'));
   const isExsitsDocument = glob.sync('src/document/index.*', { path: rootDir } ).length > 0;
   // init htmlInjection added by plugin
-  if (userConfig.htmlInjection || (!isExsitsHtml && !isExsitsDocument)) {
+  if (userConfig.htmlInjection
+    || (!isExsitsHtml && !isExsitsDocument)
+    || (userConfig.mpa && userConfig.mpa.htmlInjection)) {
+    
     onGetWebpackConfig((config) => {
-      configHTMLPlugin(config, context);
+      // config html plugin after calling method of injectHTML
+      configHTMLPlugin(config);
     });
   }
 };
 
-exports.configWebpack = (config, options, context) => {
-  if (options) {
-    Object.keys(options).forEach((optionKey) => {
-      if (HTML_POSITIONS[optionKey]) {
-        const { type } = HTML_POSITIONS[optionKey];
-        const value = options[optionKey];
-        if (type === 'array') {
-          const newValue = [];
-          // overwrite content by tagId / unique tag
-          value.forEach((tagInfo) => {
-            const { tagId, tag } = tagInfo;
-            let index = -1;
-            if (tag === 'title') {
-              index = htmlContent[optionKey].findIndex(item => item.tag === tag);
-            } else if (tagId) {
-              index = htmlContent[optionKey].findIndex(item => item.tagId === tagId);
-            }
-
-            if (index > -1) {
-              htmlContent[optionKey][index] = tagInfo;
-            } else {
-              newValue.push(tagInfo);
-            }
-          });
-          htmlContent[optionKey] = (htmlContent[optionKey] || []).concat(newValue);
-        } else if (type === 'object') {
-          htmlContent[optionKey] = {
-            ...(htmlContent[optionKey] || {}),
-            ...value,
-          };
-        } else {
-          htmlContent[optionKey] = value;
-        }
-      }
-    });
-    configHTMLPlugin(config, context);
+exports.configWebpack = (config, htmlInjection) => {
+  if (htmlInjection) {
+    configHTMLContent(htmlInjection);
   }
 };

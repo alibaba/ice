@@ -4,10 +4,20 @@ import { getMpaEntries } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from '@alib/build-scripts';
 
+interface IMpaOptions {
+  openPage?: string;
+  template?: {
+    [name: string]: string[];
+  };
+  htmlInjection?: {
+    [name: string]: any;
+  };
+}
+
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, getValue } = api;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, getValue, applyMethod } = api;
   const { rootDir, userConfig, commandArgs } = context;
-  const { mpa } = userConfig;
+  const mpa = userConfig.mpa as IMpaOptions;
 
   // register mpa in build.json
   registerUserConfig({
@@ -48,10 +58,22 @@ const plugin: IPlugin = (api) => {
       log.info('使用多页面模式 \n', JSON.stringify(entries));
     }
 
+    if (mpa && mpa.htmlInjection) {
+      try {
+        Object.keys(mpa.htmlInjection).forEach((entryName) => {
+          applyMethod('configHTMLContent', mpa.htmlInjection[entryName], entryName.toLocaleLowerCase());
+        });
+      } catch(error) {
+        console.log(error);
+        log.error('[MPA]', 'error occured when applyMethod configHTMLContent');
+      }
+    }
+
     // set page template
     onGetWebpackConfig(config => {
-      if (typeof mpa === 'object' && (mpa as any).template) {
-        setPageTemplate(rootDir, entries, (mpa as any).template, config);
+      // ignore mpa.template when config mpa.htmlInjection
+      if (typeof mpa === 'object' && mpa.template && !mpa.htmlInjection) {
+        setPageTemplate(rootDir, entries, mpa.template, config);
       }
     });
     let parsedEntries = null;
