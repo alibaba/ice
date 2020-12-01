@@ -14,8 +14,6 @@ module.exports = (api) => {
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
-  const webpackConfig = getWebpackConfig(mode);
-  const babelConfig = getBabelConfig();
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
 
   // tip detected injectBabel
@@ -34,12 +32,14 @@ module.exports = (api) => {
   });
 
   targets.forEach(target => {
+    const webpackConfig = getWebpackConfig(mode);
+    const babelConfig = getBabelConfig();
     // compatible with old logic，not set target
     // output：build/*
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig });
+    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig, libName: 'react' });
     setBase(api, { target, webpackConfig: enhancedWebpackConfig });
     registerTask(target, enhancedWebpackConfig);
   });

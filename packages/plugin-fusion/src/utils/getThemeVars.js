@@ -23,7 +23,7 @@ module.exports = (themeFile, themeConfig) => {
     originTheme[themeKey.slice(1)] = themeVars[themeKey];
 
     const themeValue = themeVars[themeKey];
-    if (themeValue && (themeValue.indexOf('#') !== 0 || ['$color-white', '$color-black'].indexOf(themeKey) > -1)) {
+    if (themeValue && (themeValue.indexOf('#') !== 0 && !themeValue.match(/^rgb/) || ['$color-white', '$color-black'].indexOf(themeKey) > -1)) {
       delete themeVars[themeKey];
     }
   });

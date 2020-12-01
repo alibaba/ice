@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as path from 'path';
+import * as queryString from 'query-string';
 
 const { useEffect, useState } = React;
 
@@ -20,7 +21,7 @@ export default function formatRoutes(routes, parentPath) {
   });
 }
 
-export function wrapperPageWithSSR(context, routes) {
+export function wrapperPageWithSSR(context) {
   const pageInitialProps = { ...context.pageInitialProps };
   const WrapperPageFn = (PageComponent) => {
     const ServerWrapperedPage = (props) => {
@@ -56,7 +57,17 @@ export function wrapperPageWithCSR() {
         } else if (PageComponent.getInitialProps) {
           // When the server does not return data, the client calls getinitialprops
           (async () => {
-            const result = await PageComponent.getInitialProps();
+            const { href, origin, pathname, search } = window.location;
+            const curPath = href.replace(origin, '');
+            const query = queryString.parse(search);
+            const ssrError = (window as any).__ICE_SSR_ERROR__;
+            const initialContext = {
+              pathname,
+              path: curPath,
+              query,
+              ssrError
+            };
+            const result = await PageComponent.getInitialProps(initialContext);
             setData(result);
           })();
         }

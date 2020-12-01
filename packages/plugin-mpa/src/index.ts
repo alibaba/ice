@@ -1,9 +1,11 @@
-import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { getMpaEntries } from '@builder/app-helpers';
+import { generateMPAEntries } from '@builder/mpa-config';
+import { IPlugin } from '@alib/build-scripts';
 
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log } = api;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, getValue } = api;
   const { rootDir, userConfig, commandArgs } = context;
   const { mpa } = userConfig;
 
@@ -19,19 +21,11 @@ const plugin: IPlugin = (api) => {
   });
 
   if (mpa) {
-    const pagesPath = path.join(rootDir, 'src/pages');
-    const pages = fs.existsSync(pagesPath)
-      ? fs.readdirSync(pagesPath)
-        .filter(page => !/^[._]/.test(page))
-        .map(page => path.parse(page).name)
-      : [];
-    let entries = pages.reduce((acc, pageName) => {
-      const entryName = pageName.toLocaleLowerCase();
-      const pageEntry = getPageEntry(rootDir, pageName);
-      if (!pageEntry) return acc;
+    const mpaEntries = getMpaEntries(api);
+    let entries = mpaEntries.reduce((acc, { entryName, entryPath }) => {
       return {
         ...acc,
-        [entryName]: `src/pages/${pageName}/${pageEntry}`
+        [entryName]: `src/pages/${entryPath}`
       };
     }, {});
 
@@ -46,9 +40,9 @@ const plugin: IPlugin = (api) => {
       });
       if (Object.keys(finalEntries).length > 0) {
         entries = finalEntries;
-        log.info('已启用 --map-entry 指定多页入口 \n', JSON.stringify(entries));
+        log.info('已启用 --mpa-entry 指定多页入口 \n', JSON.stringify(entries));
       } else {
-        log.warn(`--map-entry ${commandArgs.entry}`, '未能匹配到指定入口');
+        log.warn(`--mpa-entry ${commandArgs.entry}`, '未能匹配到指定入口');
       }
     } else {
       log.info('使用多页面模式 \n', JSON.stringify(entries));
@@ -60,23 +54,24 @@ const plugin: IPlugin = (api) => {
         setPageTemplate(rootDir, entries, (mpa as any).template, config);
       }
     });
-
+    let parsedEntries = null;
+    // compatible with undefined TEMP_PATH
+    // if disableRuntime is true, do not generate mpa entries
+    if (getValue('TEMP_PATH')) {
+      parsedEntries = generateMPAEntries({ context, entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
+    }
+    let finalMPAEntries = {};
+    if (parsedEntries) {
+      Object.keys(parsedEntries).forEach((entryKey) => {
+        finalMPAEntries[entryKey] = parsedEntries[entryKey].finalEntry;
+      });
+    } else {
+      finalMPAEntries = entries;
+    }
     // modify entry
-    modifyUserConfig('entry', entries);
+    modifyUserConfig('entry', finalMPAEntries);
   }
 };
-
-function getPageEntry(rootDir, pageName) {
-  const pagePath = path.join(rootDir, 'src', 'pages', pageName);
-  const pageRootFiles = fs.readdirSync(pagePath);
-  const appRegexp = /^app\.(t|j)sx?$/;
-  const indexRegexp = /^index\.(t|j)sx?$/;
-
-  return pageRootFiles.find(file => {
-    // eslint-disable-next-line
-    return appRegexp.test(file) ? 'app' : indexRegexp.test(file) ? 'index' : null;
-  });
-}
 
 function setPageTemplate(rootDir, entries, template = {}, config) {
   const templateNames = Object.keys(template);

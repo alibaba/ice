@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = (config, eslint, { rootDir }) => {
-  if (typeof eslint === 'boolean' && eslint === false) {
+  if (!eslint) {
     return config;
   }
   const { disable, ...args } = eslint;
@@ -17,7 +17,7 @@ module.exports = (config, eslint, { rootDir }) => {
       .use('eslint')
         .loader(require.resolve('eslint-loader'))
         .tap((options) => ({
-            cache: true,
+            emitError: true,
             eslintPath: require.resolve('eslint'),
             formatter: require.resolve('react-dev-utils/eslintFormatter'),
             ...options,

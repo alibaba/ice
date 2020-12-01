@@ -23,7 +23,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
 
-  if (!userConfig.eslint && !ESLintReportingPluginUsed) {
+  if (userConfig.eslint === undefined && !ESLintReportingPluginUsed) {
     // Add friendly eslint reporting
     webpackConfig
       .plugin('ESLintReportingPlugin')
@@ -58,6 +58,8 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
         },
       ])
       .end();
+  } else {
+    webpackConfig.optimization.minimize(true);
   }
 
   return webpackConfig;
