@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import formatPath from './formatPath';
 
-export default (plugins: any = [], targetDir: string) => {
+export default (plugins: any = [], targetDir: string, debugRuntime: boolean) => {
   return plugins.map(({ pluginPath, name }) => {
     // compatible with function plugin
     if (!pluginPath) return false;
@@ -17,7 +17,7 @@ export default (plugins: any = [], targetDir: string) => {
         return false;
       }
       console.log(`WARN: module.ts(x) will not be supported in the future. Please rename as runtime.ts(x) in ${modulePath}`);
-    } else if (name){
+    } else if (name && debugRuntime){
       // copy module dir to target dir
       const tempDir = path.join(targetDir, 'plugins', name);
       fse.ensureDirSync(tempDir);
@@ -26,7 +26,6 @@ export default (plugins: any = [], targetDir: string) => {
       if (fse.existsSync(srcDir)) {
         fse.copySync(srcDir, tempDir);
         const runtimePaths = globby.sync('runtime.@((t|j)s?(x))', { cwd: tempDir });
-        console.log(runtimePaths);
         if (runtimePaths.length > 0) {
           modulePath = path.join(tempDir, runtimePaths[0]);
         }
@@ -43,7 +42,6 @@ export default (plugins: any = [], targetDir: string) => {
     } catch(error) {
       console.log(`ERROR: fail to load package.json of plugin ${name}`);
     }
-    console.log(pluginConfig, modulePath);
     return {
       pluginConfig,
       modulePath: formatPath(modulePath),
