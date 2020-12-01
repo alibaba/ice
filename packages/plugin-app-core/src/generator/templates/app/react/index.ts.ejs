@@ -1,8 +1,8 @@
 import { runApp } from './runApp';
-export { APP_MODE } from './appMode';
 export * from './runApp';
 export { lazy } from './lazy';
 export * from './types';
+export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 
 export function createApp(appConfig, staticConfig?: any) {
   console.warn('Detected that you are using createApp, please use runApp method, Visit https://ice.work/docs/guide/basic/api.');
