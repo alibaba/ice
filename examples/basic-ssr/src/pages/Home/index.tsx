@@ -30,8 +30,7 @@ export default function Home(props) {
   );
 }
 
-Home.getInitialProps = async (ctx) => {
-  console.log('Home ctx', ctx);
+Home.getInitialProps = async () => {
   const res = await request('/profile');
   return { ...res.data, title: 'Home Page...' };
 };
