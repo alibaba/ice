@@ -1,1 +1,0 @@
-export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
