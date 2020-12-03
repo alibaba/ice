@@ -164,7 +164,7 @@ router.get('/*', async (ctx) => {
   // 将资源下载到 server 端
   // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
   const serverRender = require(serverBundlePath);
-  const { html, error } = await serverRender.default({
+  const { html, error, redirectUrl } = await serverRender.default({
     // 当前请求的上下文(可选)
     ctx,
     // 当前请求的路径（必选参数）
@@ -176,11 +176,18 @@ router.get('/*', async (ctx) => {
       }
     },
   });
-  if (error) {
-    console.log('[SSR ERROR]', 'serverRender error', error);
+
+  if (redirectUrl) {
+    console.log('[SSR Redirect]', `Redirect to the new path ${redirectUrl}`);
+    // 重定向
+    ctx.res.redirect(302, redirectUrl);
+  } else {
+    if (error) {
+      console.log('[SSR ERROR]', 'serverRender error', error);
+    }
+    console.log('[SSR SUCCESS]', `output html content\n`);
+    ctx.res.body = html;
   }
-  console.log('[SSR SUCCESS]', `output html content\n`);
-  ctx.res.body = html;
 });
 ```
 
