@@ -12,8 +12,7 @@ const About = (props) => {
   );
 };
 
-About.getInitialProps = async (ctx) => {
-  console.log('About ctx', ctx);
+About.getInitialProps = async () => {
   return { title: 'About Page...' };
 };
 

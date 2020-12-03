@@ -131,12 +131,12 @@ const routerConfig = [
 import { useAuth, Redirect } from 'ice';
 
 const LoginWrapper = (WrappedComponent) => {
-  const Wrapped = () => {
+  const Wrapped = (props) => {
     const [auth] = useAuth();
     return (
       <>
         {
-          auth.isLogin ? <WrappedComponent {...props} /> : <Redirect to="/login" />;
+          auth.isLogin ? <WrappedComponent {...props} /> : <Redirect to="/login" />
         }
       </>
     )

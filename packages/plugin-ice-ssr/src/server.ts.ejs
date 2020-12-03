@@ -17,8 +17,9 @@ const appConfig = getAppConfig();
 
 const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) => {
 
+  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
   // get html template
-  const $ = cheerio.load(htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`, { decodeEntities: false });
+  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
 
   // load module to run before createApp ready
   loadStaticModules(appConfig);
@@ -70,6 +71,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       createBaseApp,
       emitLifeCycles
     });
+
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
@@ -86,7 +88,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
   }
 
   const html = $.html();
-  return { html, error };
+  return { html, error, redirectUrl: initialContext.url };
 }
 
 function getComponentByPath(routes, currPath)  {

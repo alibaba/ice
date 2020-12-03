@@ -12,7 +12,7 @@ const chalk = require('chalk');
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, userConfig } = context;
+  const { command, commandArgs, userConfig } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
@@ -42,7 +42,7 @@ export default (api, options) => {
   setRegisterUserConfig(api);
 
   // register api method
-  const generator = initGenerator(api, options);
+  const generator = initGenerator(api, { ...options, debugRuntime: commandArgs.debugRuntime });
   setRegisterMethod(api, { generator });
 
   // watch src folder
@@ -59,14 +59,15 @@ export default (api, options) => {
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
   const { userConfig, rootDir } = context;
-  const { framework } = options;
+  const { framework, debugRuntime } = options;
   const plugins = getAllPlugin();
   const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
+  const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
-    targetDir: getValue(TEMP_PATH),
+    targetDir,
     templatesDir,
     appTemplateDir: path.join(templatesDir, `./app/${framework}`),
     commonTemplateDir: path.join(templatesDir, './common'),
@@ -75,7 +76,7 @@ function initGenerator(api, options) {
       isReact: framework === 'react',
       isRax: framework === 'rax',
       isMiniapp,
-      runtimeModules: getRuntimeModules(plugins),
+      runtimeModules: getRuntimeModules(plugins, targetDir, debugRuntime),
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,

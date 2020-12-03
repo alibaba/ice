@@ -72,6 +72,7 @@ export function withPageLifeCycle(Component) {
     }
 
     private componentWillUnmount() {
+      super.componentWillUnmount();
       visibleListeners[this.pathname] = null;
     }
   }

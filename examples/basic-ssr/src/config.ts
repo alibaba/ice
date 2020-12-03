@@ -1,6 +1,6 @@
 const config = {
   dev: {
-    baseURL: 'http://localhost:3335/api'
+    baseURL: `http://localhost:${process.env.SERVER_PORT}/api`
   },
   prod: {
     baseURL: 'http://example.com/api'

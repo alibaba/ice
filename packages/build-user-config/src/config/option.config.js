@@ -28,5 +28,9 @@ module.exports = {
   'disable-assets': {
     module: false,
     commands: ['start'],
-  }
+  },
+  'debug-runtime': {
+    module: false,
+    commands: ['start'],
+  },
 };
