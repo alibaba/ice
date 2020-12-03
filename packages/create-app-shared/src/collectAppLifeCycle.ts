@@ -17,7 +17,7 @@ export default function collectAppLifeCycle(appConfig) {
   addAppLifeCycle(TAB_ITEM_CLICK, onTabItemClick);
   // Add lifecycle callbacks which only valid in Wechat MiniProgram and ByteDance MicroApp
   if (isWeChatMiniProgram || isByteDanceMicroApp) {
-    const { onPageNotFound, onShareAppMessage } = appConfig;
+    const { onPageNotFound, onShareAppMessage } = appConfig.app;
     // Add global share callback
     addAppLifeCycle(SHARE, onShareAppMessage);
     // Add page not found callback
@@ -25,7 +25,7 @@ export default function collectAppLifeCycle(appConfig) {
   }
   // Add lifecycle callbacks which only valid in Alibaba MiniApp
   if (isMiniAppPlatform) {
-    const { onShareAppMessage, onUnhandledRejection } = appConfig;
+    const { onShareAppMessage, onUnhandledRejection } = appConfig.app;
     // Add global share callback
     addAppLifeCycle(SHARE, onShareAppMessage);
     // Add unhandledrejection callback

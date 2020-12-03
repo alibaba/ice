@@ -468,25 +468,14 @@ icejs 中一般不允许修改该配置。
 ### eslint
 
 - 类型：`boolean` | `object`
-- 默认值：`false`
+- 默认值：`undefined`
 
-默认关闭 eslint 代码检测，如需开启配置为 `true` 即可。
+说明：
 
-```json
-{
-  "eslint": true
-}
-```
-
-配置 eslint 相关选项，详见 [eslint-loader](https://github.com/webpack-contrib/eslint-loader)。
-
-```json
-{
-  "eslint": {
-    "quiet": true
-  }
-}
-```
+- `undefined`：即没有设置 eslint 选项，将 eslint 错误输出到终端里
+- `false`：不检测 eslint 错误
+- `true`：将 eslint 错误展示在预览页面上
+- `object`：表现等同于 `true`，同时支持配置 [eslint-loader](https://github.com/webpack-contrib/eslint-loader) 的更多参数
 
 ### disableRuntime
 

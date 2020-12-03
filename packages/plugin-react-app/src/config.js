@@ -19,7 +19,7 @@ module.exports = function(userConfig) {
     },
     {
       name: 'ignoreHtmlTemplate',
-      defauleValue: false,
+      defaultValue: false,
       configWebpack: require('./userConfig/ignoreHtmlTemplate'),
       validation: 'boolean',
     },
