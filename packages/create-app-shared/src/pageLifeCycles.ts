@@ -72,7 +72,8 @@ export function withPageLifeCycle(Component) {
     }
 
     private componentWillUnmount() {
-      super.componentWillUnmount();
+      // eslint-disable-next-line no-unused-expressions
+      super.componentWillUnmount?.();
       visibleListeners[this.pathname] = null;
     }
   }
