@@ -38,3 +38,4 @@ packages/*/lib/
 examples/*/.ice
 
 build
+.history
