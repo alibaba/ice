@@ -1,11 +1,11 @@
 ---
-title: 子应用开发或迁移
-order: 4
+title: 微应用开发或迁移
+order: 5
 ---
 
-本文介绍如何从零开发一个子应用，同时已有应用迁移也可以参考本文档。
+本文介绍如何从零开发一个微应用，同时已有应用迁移也可以参考本文档。
 
-## 创建子应用
+## 创建微应用
 
 React 项目（基于 icejs）：
 
@@ -19,7 +19,7 @@ Vue 项目：
 $ npm init ice icestark-child @vue-materials/icestark-child-app
 ```
 
-## 已有项目改造为子应用
+## 已有项目改造为微应用
 
 如果你的项目基于 icejs，请参考文档 [icejs 接入微前端](/docs/guide/advance/icestark.md)，接入步骤非常简单。如果不是 icejs 的项目那么请参考下面的流程。
 
@@ -77,7 +77,7 @@ if (isInIcestark()) {
 
 ### 2. 定义基准路由
 
-正常情况下，注册子应用时会为每个子应用分配一个基准路由比如 `/seller`，当前子应用的所有路由需要定义在基准路由之下，社区常见的路由库都可以通过参数非常简单的实现该功能。子应用可以通过 `getBasename()` API 获取自身的基准路由。
+正常情况下，注册微应用时会为每个微应用分配一个基准路由比如 `/seller`，当前微应用的所有路由需要定义在基准路由之下，社区常见的路由库都可以通过参数非常简单的实现该功能。微应用可以通过 `getBasename()` API 获取自身的基准路由。
 
 React 项目中使用 react-router：
 
@@ -112,6 +112,23 @@ export default new Router({
   mode: 'history',
   base: getBasename(),
 });
+```
+
+## UMD 规范微应用
+
+微应用除了通过 `registerAppEnter` 和 `regsiterAppLeave` 方式注册生命周期外，icestark 也支持加载以 umd 规范打包并导出对应生命的应用
+
+```js
+// 应用挂载都会调用的 mount 方法
+export function mount(props) {
+  console.log(props);
+  ReactDOM.render(<App />, document.getElementById('icestarkNode'));
+}
+
+// 应用每次卸载会调用的 unmount 方法
+export function unmount() {
+  ReactDOM.unmountComponentAtNode(document.getElementById('icestarkNode'));
+}
 ```
 
 ## 其他问题
@@ -149,7 +166,6 @@ axios.defaults.baseURL = '//127.0.0.1:4444';
 import { runApp } from 'ice';
 
 const appConfig = {
-  ...
   request: {
     baseURL: '//127.0.0.1:4444',
   }
@@ -205,30 +221,7 @@ export default class App extends React.Component {
 }
 ```
 
-> 如果子应用是开启按需加载，为了让子应用资源能够正确加载，需要在开启本地服务的时候设置 `publicPath`，如果子应用基于 icejs 进行开发，可以参考[配置](/docs/guide/basic/build#devPublicPath)。
+生命周期函数接收的 props 包含两项内容：
 
-### UmiJS 应用如何接入
-
-通过 UmiJS 提供运行时能力，劫持默认渲染逻辑，新建 `src/app.js` 文件：
-
-```js
-import ReactDOM from 'react-dom';
-import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
-import RouterWrapper from './pages/.umi/router';
-
-export function render(oldRender) {
-  // 在 icestark 环境下注册对应的生命周期
-  if (isInIcestark()) {
-    registerAppEnter(() => {
-      ReactDOM.render(<RouterWrapper />, getMountNode())
-    });
-    registerAppLeave(() => {
-      ReactDOM.unmountComponentAtNode(getMountNode());
-    })
-  } else {
-    oldRender();
-  }
-}
-```
-
-> 由于 UmiJS 未提供运行时修改路由 basename 的内容，如果涉及到子应用基准路由不固定，可以通过在框架应用动态设置 `window.routerBase` 的方式动态修改
+- container：用来标识渲染节点
+- customProps：由框架应用传递给微应用的自定义属性
