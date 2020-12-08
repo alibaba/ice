@@ -9,17 +9,14 @@ interface IEntries {
 }
 
 interface IConfigOptions {
-  context: {
-    rootDir: string;
-    commandArgs: any;
-  };
   type?: string;
   framework: string;
   entries?: IEntries[];
   targetDir: string;
 }
-export const generateMPAEntries = (options: IConfigOptions) => {
-  const { context, type = 'web', framework = 'rax', targetDir = '' } = options;
+export const generateMPAEntries = (api, options: IConfigOptions) => {
+  const { context } = api;
+  const { type = 'web', framework = 'rax', targetDir = '' } = options;
   let { entries } = options;
   const { rootDir, commandArgs } = context;
   if (commandArgs.mpaEntry) {
@@ -39,7 +36,7 @@ export const generateMPAEntries = (options: IConfigOptions) => {
     let finalEntry = pageEntry;
     if (!useOriginEntry) {
       // generate mpa entries
-      finalEntry = generateEntry({ framework, targetDir, type, pageEntry, entryName });
+      finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });
     }
     parsedEntries[entryName] = {
       ...entry,
@@ -49,12 +46,12 @@ export const generateMPAEntries = (options: IConfigOptions) => {
   return parsedEntries;
 };
 
-const setMPAConfig = (config, options: IConfigOptions) => {
+const setMPAConfig = (api, config, options: IConfigOptions) => {
   if (!options) {
     throw new Error('There need pass options param to setMPAConfig method');
   }
   const { type = 'web' } = options;
-  const parsedEntries = generateMPAEntries(options);
+  const parsedEntries = generateMPAEntries(api, options);
 
   // do not splitChunks when mpa
   config.optimization.splitChunks({ cacheGroups: {} });

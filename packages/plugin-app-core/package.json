@@ -31,7 +31,8 @@
     "rax-app-renderer": "^0.1.4",
     "rax-use-router": "^3.0.0",
     "react-app-renderer": "0.1.11",
-    "universal-env": "^3.0.0"
+    "universal-env": "^3.0.0",
+    "lodash.debounce": "^4.0.8"
   },
   "repository": {
     "type": "git",
