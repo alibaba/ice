@@ -1,4 +1,4 @@
-import { AppConfig } from '@ice/stark';
+import { AppRouteProps } from '@ice/stark/lib/AppRoute';
 
 export interface IAppRouter {
   ErrorComponent?: React.ComponentType;
@@ -11,5 +11,5 @@ export interface IAppRouter {
 }
 
 export interface IGetApps {
-  (): AppConfig[] | Promise<AppConfig[]>;
+  (): AppRouteProps[] | Promise<AppRouteProps[]>;
 }
