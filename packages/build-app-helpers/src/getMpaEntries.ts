@@ -10,23 +10,42 @@ interface IOptions {
 export default function (api, options?: IOptions) {
   const { target, appJsonPath } = options || {};
   if (appJsonPath) {
-    return getEntriesByJson(target, appJsonPath);
+    return getEntriesByJson(api, target, appJsonPath);
   }
   return getEntriesByDir(api);
 }
 
-function getEntriesByJson(target, appJsonPath) {
+function getEntriesByJson(api, target, appJsonPath) {
+  const {
+    context: { rootDir },
+  } = api;
   const routes = getRoutesByAppJson(target, { appJsonPath });
   return routes.map((route) => {
-    const dir = path.dirname(route.source);
-    const pageName = path.parse(dir).name;
+    let pageName;
+    let entryName;
+    if (route.name) {
+      entryName = route.name;
+      pageName = route.name;
+    } else {
+      const dir = path.dirname(route.source);
+      pageName = path.parse(dir).name;
+      entryName = pageName.toLocaleLowerCase();
+    }
     return {
       path: route.path,
-      entryName: pageName.toLowerCase(),
+      entryPath: getPageEntryByAppJson(path.resolve(rootDir, 'src', route.source), route.source),
+      entryName,
       pageName,
-      entryPath: route.source.replace(/\/?pages/, ''),
     };
   });
+}
+
+function getPageEntryByAppJson(absolutePath, source) {
+  const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${path.join(absolutePath)}.${ext}`));
+  if (!targetExt) {
+    throw new Error(`Cannot find target file ${absolutePath}.`);
+  }
+  return `${source}.${targetExt}`;
 }
 
 function getEntriesByDir(api: any) {
@@ -43,18 +62,18 @@ function getEntriesByDir(api: any) {
 
   const entries = pages.map((pageName) => {
     const entryName = pageName.toLocaleLowerCase();
-    const pageEntry = getPageEntry(pagesPath, pageName);
+    const pageEntry = getPageEntryByDir(pagesPath, pageName);
     if (!pageEntry) return null;
     return {
       entryName,
       pageName,
-      entryPath: `${pageName}/${pageEntry}`,
+      entryPath: `pages/${pageName}/${pageEntry}`,
     };
   }).filter(Boolean);
   return entries;
 }
 
-function getPageEntry(pagesPath: string, pageName: string) {
+function getPageEntryByDir(pagesPath: string, pageName: string) {
   const pagePath = path.join(pagesPath, pageName);
   const pageRootFiles = fs.readdirSync(pagePath);
   const appRegexp = /^app\.(t|j)sx?$/;
