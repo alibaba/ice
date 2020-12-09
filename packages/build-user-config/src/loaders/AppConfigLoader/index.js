@@ -2,6 +2,7 @@ const { getOptions } = require('loader-utils');
 const { join } = require('path');
 const { formatPath, getRoutesByAppJson } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
+const { getProcessedCompleteRoutes, getProcessedSubAppRoutes } = require('../../utils/getProcessedRoutes');
 
 /**
  * universal-app-config-loader
@@ -16,12 +17,21 @@ const getRouteName = require('../../utils/getRouteName');
     "hydrate": false
   }
  */
+
 module.exports = function (appJSON) {
   const options = getOptions(this) || {};
-  const { target, libName } = options;
+  const { target, libName, subPackages } = options;
   const appConfig = JSON.parse(appJSON);
+  const isRootAppJsonPath = this.resourcePath === join(this.rootContext, 'src', 'app.json');
 
-  appConfig.routes = getRoutesByAppJson(target, { appJsonContent: appConfig });
+  const appRoutes = getRoutesByAppJson(target, { appJsonContent: appConfig });
+
+  if (subPackages) {
+    appConfig.routes = isRootAppJsonPath ? getProcessedCompleteRoutes(appRoutes, this.rootContext, target) : getProcessedSubAppRoutes(appRoutes, this.resourcePath, this.rootContext);
+  } else {
+    appConfig.routes = appRoutes;
+  }
+
   const assembleRoutes = appConfig.routes.map((route) => {
     if (!route.path || !route.source) {
       throw new Error('route object should have path and source.');
