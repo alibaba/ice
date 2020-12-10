@@ -32,15 +32,16 @@ function getEntriesByJson(api, target, appJsonPath) {
       entryName = pageName.toLocaleLowerCase();
     }
     return {
-      entryPath: getPageEntryByAppJson(path.resolve(rootDir, 'src', route.source), route.source),
+      entryPath: getPageEntryByAppJson(rootDir, route.source),
       entryName,
       pageName,
     };
   });
 }
 
-function getPageEntryByAppJson(absolutePath, source) {
-  const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${path.join(absolutePath)}.${ext}`));
+function getPageEntryByAppJson(rootDir, source) {
+  const absolutePath = path.resolve(rootDir, 'src', source);
+  const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${absolutePath}.${ext}`));
   if (!targetExt) {
     throw new Error(`Cannot find target file ${absolutePath}.`);
   }
