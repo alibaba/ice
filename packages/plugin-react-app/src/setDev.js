@@ -81,8 +81,7 @@ module.exports = (api, opts) => {
         console.log();
         console.log(chalk.green(' Starting the development server at:'));
         if (process.env.CLOUDIDE_ENV) {
-          console.log('   - Local  : ', `https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}`);
-          console.log('   - Network: ', `http://${process.env.WORKSPACE_IP}`);
+          console.log('   - IDE server: ', `https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}`);
         } else {
           console.log('   - Local  : ', chalk.underline.white(getLocalUrl(urls.localUrlForBrowser, entryHtml)));
           console.log('   - Network: ', chalk.underline.white(getLocalUrl(urls.lanUrlForTerminal, entryHtml)));
