@@ -23,6 +23,8 @@ const plugin: IPlugin = async (api): Promise<void> => {
       applyMethod('removeIceExport', exportName);
       fse.removeSync(distPath);
     }
+
+    applyMethod('addExport', { source: './appMode', exportName: 'APP_MODE' });
   }
 
   generateConfig();
