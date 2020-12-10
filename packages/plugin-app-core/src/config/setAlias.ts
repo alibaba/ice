@@ -15,7 +15,6 @@ export default (api, options: IOptions) => {
   const aliasMap = [
     [`${alias}$`, path.join(tempPath, 'index.ts')],
     [`${alias}`, path.join(tempPath, 'pages') ],
-    ['alias', path.join(tempPath)],
     ['@', path.join(rootDir, 'src')],
   ];
 

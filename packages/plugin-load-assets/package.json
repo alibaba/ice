@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-load-assets",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "build plugin for load assets",
   "main": "lib/index.js",
   "scripts": {

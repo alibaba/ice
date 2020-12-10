@@ -53,8 +53,12 @@ runApp(appConfig);
 - 服务端渲染时直接调用 `getInitialData` 获取数据并渲染应用，同时将数据注入到全局变量中
 - 浏览器端渲染时不再调用 `getInitialData`，会直接通过全局变量获取初始数据
 - 可以获取到当前请求的上下文 `ctx` 参数，包含以下字段
-  - `ctx.req`：HTTP request 对象 （仅在server端输出）
-  - `ctx.res`：HTTP response 对象 （仅在server端输出）
+  - `ctx.req`：HTTP request 对象 （仅在 server 端输出）
+  - `ctx.res`：HTTP response 对象 （仅在 server 端输出）
+  - `ctx.pathname`：当前路由路径
+  - `ctx.query`：请求参数对象
+  - `ctx.path`：URL 路径（包括请求参数）
+  - `ctx.ssrError`：服务端渲染时错误信息（仅在 client 端输出）
 
 未开启 SSR 的行为说明：
 
@@ -107,8 +111,12 @@ SEO 场景下，需要访问每个页面时都能够返回实际的 DOM 节点�
 
 在页面级组件中通过 `Component.getInitialProps` 来获取页面初始数据，同时可以获取到当前请求的上下文 `ctx` 参数，包含以下字段：
 
-- `ctx.req`：HTTP request 对象 （仅在server端输出）
-- `ctx.res`：HTTP response 对象 （仅在server端输出）
+- `ctx.req`：HTTP request 对象 （仅在 server 端输出）
+- `ctx.res`：HTTP response 对象 （仅在 server 端输出）
+- `ctx.pathname`：当前路由路径
+- `ctx.query`：请求参数对象
+- `ctx.path`：URL 路径（包括请求参数）
+- `ctx.ssrError`：服务端渲染时错误信息（仅在 client 端输出）
 
 ```diff
 import { request } from 'ice';
@@ -156,7 +164,7 @@ router.get('/*', async (ctx) => {
   // 将资源下载到 server 端
   // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
   const serverRender = require(serverBundlePath);
-  const { html, error } = await serverRender.default({
+  const { html, error, redirectUrl } = await serverRender.default({
     // 当前请求的上下文(可选)
     ctx,
     // 当前请求的路径（必选参数）
@@ -168,11 +176,18 @@ router.get('/*', async (ctx) => {
       }
     },
   });
-  if (error) {
-    console.log('[SSR ERROR]', 'serverRender error', error);
+
+  if (redirectUrl) {
+    console.log('[SSR Redirect]', `Redirect to the new path ${redirectUrl}`);
+    // 重定向
+    ctx.res.redirect(302, redirectUrl);
+  } else {
+    if (error) {
+      console.log('[SSR ERROR]', 'serverRender error', error);
+    }
+    console.log('[SSR SUCCESS]', `output html content\n`);
+    ctx.res.body = html;
   }
-  console.log('[SSR SUCCESS]', `output html content\n`);
-  ctx.res.body = html;
 });
 ```
 

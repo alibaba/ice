@@ -20,12 +20,12 @@ $ npm start
 
 ![demo](https://img.alicdn.com/tfs/TB1aJ0WjAL0gK0jSZFtXXXQCXXa-2880-1578.png)
 
-打开 `src/app.tsx` 即可看到默认注册的几个子应用。
+打开 `src/app.tsx` 即可看到默认注册的几个微应用。
 
-## 初始化子应用
+## 初始化微应用
 
 ```bash
-# 基于 React 的子应用
+# 基于 React 的微应用
 $ npm init ice icestark-child @icedesign/stark-child-scaffold
 $ cd icestark-child
 # 安装依赖
@@ -34,4 +34,4 @@ $ npm install
 $ npm run start
 ```
 
-接着可以在框架应用的 `src/app.tsx` 中增加对应的子应用配置。
+接着可以在框架应用的 `src/app.tsx` 中增加对应的微应用配置。
