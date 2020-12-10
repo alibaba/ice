@@ -32,7 +32,6 @@ function getEntriesByJson(api, target, appJsonPath) {
       entryName = pageName.toLocaleLowerCase();
     }
     return {
-      path: route.path,
       entryPath: getPageEntryByAppJson(path.resolve(rootDir, 'src', route.source), route.source),
       entryName,
       pageName,
