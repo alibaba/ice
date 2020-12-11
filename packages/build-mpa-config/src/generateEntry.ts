@@ -6,8 +6,9 @@ function generateEntry({ framework, type, targetDir, pageEntry, entryName }) {
   // eslint-disable-next-line
   const entryCode = require(`./template/${framework}`).default({ type, resourcePath: `${formatPath(pageEntry)}`});
   const entryFolder = path.join(targetDir, 'mpaEntry');
-  ensureDirSync(entryFolder);
   const entryPath = path.join(entryFolder, `${entryName}.tsx`);
+  const entryDir = path.dirname(entryPath);
+  ensureDirSync(entryDir);
   writeFileSync(path.join(entryFolder, `${entryName}.tsx`), entryCode);
   return entryPath;
 }
