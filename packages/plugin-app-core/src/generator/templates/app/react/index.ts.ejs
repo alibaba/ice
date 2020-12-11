@@ -1,7 +1,3 @@
-export * from './runApp';
-export { lazy } from './lazy';
-export * from './types';
-
 <%- imports %>
 
 <% if (exports) { %>
@@ -9,3 +5,7 @@ export * from './types';
     <%- exports %>
   }
 <% } %>
+
+export * from './runApp';
+export { lazy } from './lazy';
+export * from './types';
