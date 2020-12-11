@@ -6,8 +6,16 @@ interface IOptions {
   target: string;
   appJsonPath: string;
 }
+
+interface IEntry {
+  entryPath: string;
+  entryName: string;
+  pageName: string;
+  source?: string;
+}
+
 // Get entries when exist app.json
-export default function (api, options?: IOptions) {
+export default function (api, options?: IOptions): IEntry[] {
   const { target, appJsonPath } = options || {};
   if (appJsonPath) {
     return getEntriesByJson(api, target, appJsonPath);
@@ -15,7 +23,7 @@ export default function (api, options?: IOptions) {
   return getEntriesByDir(api);
 }
 
-function getEntriesByJson(api, target, appJsonPath) {
+function getEntriesByJson(api, target, appJsonPath): IEntry[] {
   const {
     context: { rootDir },
   } = api;
@@ -35,6 +43,7 @@ function getEntriesByJson(api, target, appJsonPath) {
       entryPath: getPageEntryByAppJson(rootDir, route.source),
       entryName,
       pageName,
+      source: route.source
     };
   });
 }
@@ -48,7 +57,7 @@ function getPageEntryByAppJson(rootDir, source) {
   return `${source}.${targetExt}`;
 }
 
-function getEntriesByDir(api: any) {
+function getEntriesByDir(api: any): IEntry[] {
   const {
     context: { rootDir },
   } = api;
