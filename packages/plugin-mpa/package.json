@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-mpa",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "enable mpa project for icejs framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -23,8 +23,8 @@
     "@alib/build-scripts": "^0.1.24"
   },
   "dependencies": {
-    "@builder/app-helpers": "^1.0.2",
-    "@builder/mpa-config": "^1.1.0",
+    "@builder/app-helpers": "^1.0.3",
+    "@builder/mpa-config": "^2.0.0",
     "fs-extra": "^8.1.0"
   }
 }
