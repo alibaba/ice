@@ -4,7 +4,6 @@ import generateEntry from './generateEntry';
 
 interface IEntries {
   entryName: string;
-  pageName: string;
   entryPath: string;
 }
 
@@ -29,7 +28,7 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath } = entry;
-    const pageEntry = path.join(rootDir, 'src/pages', entryPath);
+    const pageEntry = path.join(rootDir, 'src', entryPath);
     const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
     // icejs will config entry by api modifyUserConfig
 
@@ -61,11 +60,11 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   const matchStrs = [];
 
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, pageName, finalEntry } = parsedEntries[entryKey];
+    const { entryName, entryPath, finalEntry } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
 
     // get page paths for rule match
-    const matchStr = `src/pages/${pageName}`;
+    const matchStr = `src/${entryPath}`;
     matchStrs.push(formatPath(matchStr));
   });
 
