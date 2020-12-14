@@ -1,6 +1,6 @@
 const path = require('path');
 const buildPluginWrapCode = require('build-plugin-wrap-code');
-const getLoadScriptsCode = require('build-plugin-load-assets/getLoadScriptsCode');
+const getLoadScriptsCode = require('build-plugin-load-assets/lib/getLoadScriptsCode');
 const getSmartLoaderCode = require('./getSmartLoaderCode');
 
 module.exports = ({ onGetWebpackConfig, log, context, ...restApi }) => {
