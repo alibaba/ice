@@ -19,7 +19,19 @@ function normalizeEntry(entry, preparedChunks) {
 }
 
 module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugionOptions = {}) => {
-  const { themePackage, themeConfig, nextLibDir = 'es', usePx2Vw = false, px2vwOptions = {}, style = true, uniteNextLib, externalNext, importOptions = {}, componentOptions = {} } = plugionOptions;
+  const {
+    themePackage,
+    themeConfig,
+    nextLibDir = 'es',
+    usePx2Vw = false,
+    px2vwOptions = {},
+    style = true,
+    uniteNextLib,
+    externalNext,
+    importOptions = {},
+    componentOptions = {},
+    colorNames,
+  } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
@@ -62,7 +74,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             calcVars = getCalcVars(varsPath, themePath, configData);
           }
           try {
-            themeVars = getThemeVars(themePath, Object.assign({}, calcVars, configData ));
+            themeVars = getThemeVars(themePath, Object.assign({}, calcVars, configData ), colorNames);
           } catch (err) {
             log.error('get theme variables err:', err);
           }
