@@ -1,7 +1,7 @@
 import { render, createElement } from 'rax';
-import Component from '<%- resourcePath %>';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken } from 'universal-env';
+import Component from '<%- resourcePath %>';
 
 const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
@@ -14,9 +14,9 @@ if (isWeex || isKraken) {
     if (isSSR && window.__INITIAL_DATA__.pageData !== null) {
       comProps = window.__INITIAL_DATA__.pageData;
     } else if (Component.getInitialProps) {
-      const comProps = await Component.getInitialProps();
+      comProps = await Component.getInitialProps();
     }
-    render(<Component {...comProps} />, document.getElementById("root"), { driver: DriverUniversal, hydrate: isSSR });
+    render(<Component {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
   }
   renderApp();
 }
