@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "build-plugin-load-assets": "^0.1.0",
+    "build-plugin-load-assets": "^0.1.3",
     "build-plugin-wrap-code": "^0.1.0"
   }
 }
