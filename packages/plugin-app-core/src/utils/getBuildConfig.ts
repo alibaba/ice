@@ -8,7 +8,7 @@ function getBuildConfig(userConfig): IBuildConfig{
   const { plugins } = userConfig;
   const buildConfig: IBuildConfig = {};
   // filter userConfig
-  ['router', 'store'].forEach((configKey) => {
+  ['router', 'store', 'web'].forEach((configKey) => {
     if (Object.prototype.hasOwnProperty.call(userConfig, configKey)) {
       buildConfig[configKey] = userConfig[configKey];
     }
