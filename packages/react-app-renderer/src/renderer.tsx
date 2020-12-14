@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as ReactDOMServer from 'react-dom/server';
 import { createNavigation } from 'create-app-container';
 import { createUseRouter } from 'create-use-router';
 import * as queryString from 'query-string';
@@ -9,12 +8,6 @@ const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
 const useRouter = createUseRouter({ useState, useLayoutEffect });
 const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
-
-export function reactAppRendererWithSSR(context, options) {
-  const { appConfig } = options || {};
-  appConfig.router.type = 'static';
-  return _renderApp(context, options);
-}
 
 let __initialData__;
 
@@ -65,32 +58,14 @@ export async function reactAppRenderer(options) {
   setInitialData(initialData);
 
   const context = { initialData, pageInitialProps, initialContext };
-  _renderApp(context, options);
+  renderInBrowser(context, options);
 }
 
-function _renderApp(context, options) {
-  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
-  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
-
-  options.appConfig = modifiedAppConfig;
-
-  // Emit app launch cycle
-  emitLifeCycles();
-
-  const isMobile = Object.keys(staticConfig).length;
-  if (isMobile) {
-    return _renderMobile({ runtime, history }, options);
-  } else {
-    return _render({ runtime }, options);
-  }
-}
-
-function _render({ runtime }, options) {
+export function getRenderApp(runtime, options) {
   const { ErrorBoundary, appConfig = {} } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
-  const { rootId, mountNode } = appConfig.app;
 
   function App() {
     const appRouter = <AppRouter />;
@@ -104,10 +79,29 @@ function _render({ runtime }, options) {
     }
     return rootApp;
   }
+  return App;
+}
 
-  if (process.env.__IS_SERVER__) {
-    return ReactDOMServer.renderToString(<App />);
+function renderInBrowser(context, options) {
+  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
+  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+
+  options.appConfig = modifiedAppConfig;
+  // Emit app launch cycle
+  emitLifeCycles();
+
+  const isMobile = Object.keys(staticConfig).length;
+  if (isMobile) {
+    return _renderMobile({ runtime, history }, options);
+  } else {
+    return _render({ runtime }, options);
   }
+}
+
+function _render({ runtime }, options) {
+  const { appConfig = {} } = options;
+  const { rootId, mountNode } = appConfig.app;
+  const App = getRenderApp(runtime, options);
 
   const appMountNode = _getAppMountNode(mountNode, rootId);
   if (runtime?.modifyDOMRender) {

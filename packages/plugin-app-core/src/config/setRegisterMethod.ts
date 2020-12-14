@@ -18,6 +18,11 @@ export default (api, options) => {
   registerMethod('addPageExport', generator.addPageExport);
   registerMethod('removePageExport', generator.removePageExport);
 
+  // registerMethod for render content
+  registerMethod('addRenderFile', generator.addRenderFile);
+  registerMethod('addTemplateDir', generator.addTemplateDir);
+  registerMethod('modifyRenderData', generator.modifyRenderData);
+
   // registerMethod for add export
   const apiKeys = getExportApiKeys();
   apiKeys.forEach((apiKey) => {

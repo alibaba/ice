@@ -32,7 +32,7 @@ module.exports = (api) => {
 
   let entries = {};
   if (webConfig.mpa) {
-    setMPAConfig.default(config, { context, type: TARGET, entries: getMpaEntries(api, { target: 'web', appJsonPath }) });
+    setMPAConfig.default(api, config, { type: TARGET, entries: getMpaEntries(api, { target: 'web', appJsonPath }) });
     const mpaEntries = config.toConfig().entry;
     entries = Object.keys(mpaEntries).map(entryName => {
       return {

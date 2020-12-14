@@ -1,24 +1,21 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as ejs from 'ejs';
 import { minify } from 'html-minifier';
 import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
-  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log } = api;
+  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod } = api;
   const { rootDir, command, webpack, userConfig, commandArgs } = context;
   const TEMP_PATH = getValue('TEMP_PATH');
-  const ssrEntry = path.join(TEMP_PATH, 'server.ts');
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, userConfig.outputDir);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
 
+  // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
-  const templateContent = fse.readFileSync(templatePath, 'utf-8');
-  const content = ejs.render(templateContent);
-  fse.ensureDirSync(path.dirname(ssrEntry));
-  fse.writeFileSync(ssrEntry, content, 'utf-8');
+  const ssrEntry = path.join(TEMP_PATH, 'server.ts');
+  applyMethod('addRenderFile', templatePath, ssrEntry);
 
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);

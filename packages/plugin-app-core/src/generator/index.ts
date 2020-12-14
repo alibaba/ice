@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import * as ejs from 'ejs';
 import * as prettier from 'prettier';
+import * as debounce from 'lodash.debounce';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
@@ -21,13 +22,15 @@ interface IRenderFile {
   (templatePath: string, targetDir: string, extraData?: IRenderData): void;
 }
 
+interface IRenderDataRegistration {
+  (renderDataFunction: IRenderData): IRenderData;
+}
+
+type IRenderTempalte = [string, string, IRenderData];
+
+const RENDER_WAIT = 500;
 
 export default class Generator {
-  public templatesDir: string;
-
-  public appTemplateDir: string;
-
-  public commonTemplateDir: string;
 
   public targetDir: string;
 
@@ -39,22 +42,24 @@ export default class Generator {
 
   private rootDir: string;
 
+  private renderTemplates: IRenderTempalte[];
+
+  private renderDataRegistration: IRenderDataRegistration[];
 
   private log: any;
 
   private showPrettierError: boolean;
 
-  constructor({ rootDir, targetDir, templatesDir, appTemplateDir, commonTemplateDir, defaultData, log}) {
+  constructor({ rootDir, targetDir, defaultData, log}) {
     this.rootDir = rootDir;
-    this.templatesDir = templatesDir;
-    this.appTemplateDir = appTemplateDir;
-    this.commonTemplateDir = commonTemplateDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
     this.contentRegistration = {};
     this.rerender = false;
     this.log = log;
     this.showPrettierError = true;
+    this.renderTemplates = [];
+    this.renderDataRegistration = [];
   }
 
   public addExport = (registerKey, exportData: IExportData | IExportData[]) => {
@@ -112,7 +117,7 @@ export default class Generator {
         exportsData = Object.assign({}, exportsData, data);
       });
     });
-    this.renderData = {
+    return {
       ...this.renderData,
       ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
@@ -132,33 +137,55 @@ export default class Generator {
     }).join('\n');
   }
 
-  public async render() {
+  public render = () => {
     this.rerender = true;
-    const appTemplates = await globby(['**/*'], { cwd: this.appTemplateDir });
-    this.parseRenderData();
-    appTemplates.forEach((templateFile) => {
-      this.renderAppTemplates(templateFile);
+    this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
+      if (typeof currentValue === 'function') {
+        return currentValue(previousValue);
+      }
+      return previousValue;
+    }, this.parseRenderData());
+    
+    this.renderTemplates.forEach((args) => {
+      this.renderFile(...args);
     });
+  };
 
-    this.renderCommonTemplates();
+  public debounceRender = debounce(this.render, RENDER_WAIT);
+
+  public addRenderFile = (templatePath: string, targetPath: string, extraData: IRenderData = {}) => {
+    // check target path if it is already been registed
+    const renderIndex = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
+    if (renderIndex > -1) {
+      const targetTemplate = this.renderTemplates[renderIndex];
+      if (targetTemplate[0] !== templatePath) {
+        this.log.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+      }
+      // replace template with lastest content
+      this.renderTemplates[renderIndex] = [templatePath, targetPath, extraData];
+    } else {
+      this.renderTemplates.push([templatePath, targetPath, extraData]);
+    }
+    if (this.rerender) {
+      this.debounceRender();
+    }
   }
 
-  public async renderAppTemplates(templateFile) {
-    this.renderFile(
-      path.join(this.appTemplateDir, templateFile),
-      path.join(this.targetDir, templateFile)
-    );
+  public addTemplateDir = async (templateDir: string, extraData: IRenderData = {}) => {
+    const templates = await globby(['**/*'], { cwd: templateDir });
+    templates.forEach((templateFile) => {
+      this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, templateFile), extraData);
+    });
+    if (this.rerender) {
+      this.debounceRender();
+    }
   }
 
-
-  public async renderCommonTemplates() {
-    const commonTemplates = await globby(['**/*'], { cwd: this.commonTemplateDir });
-    commonTemplates.forEach((templateFile) => {
-      this.renderFile(
-        path.join(this.commonTemplateDir, templateFile),
-        path.join(this.targetDir, templateFile)
-      );
-    });
+  public async modifyRenderData(registration: IRenderDataRegistration) {
+    this.renderDataRegistration.push(registration);
+    if (this.rerender) {
+      this.debounceRender();
+    }
   }
 
   public renderFile: IRenderFile = (templatePath, targetPath, extraData = {}) => {

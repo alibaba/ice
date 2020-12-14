@@ -58,7 +58,7 @@ const plugin: IPlugin = (api) => {
     // compatible with undefined TEMP_PATH
     // if disableRuntime is true, do not generate mpa entries
     if (getValue('TEMP_PATH')) {
-      parsedEntries = generateMPAEntries({ context, entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
+      parsedEntries = generateMPAEntries(api, { entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
     }
     let finalMPAEntries = {};
     if (parsedEntries) {
