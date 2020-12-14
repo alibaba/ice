@@ -30,7 +30,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
     externalNext,
     importOptions = {},
     componentOptions = {},
-    colorNames,
+    enableColorNames,
   } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
@@ -74,7 +74,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             calcVars = getCalcVars(varsPath, themePath, configData);
           }
           try {
-            themeVars = getThemeVars(themePath, Object.assign({}, calcVars, configData ), colorNames);
+            themeVars = getThemeVars(themePath, Object.assign({}, calcVars, configData ), enableColorNames);
           } catch (err) {
             log.error('get theme variables err:', err);
           }
