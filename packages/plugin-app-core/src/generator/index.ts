@@ -171,8 +171,8 @@ export default class Generator {
     }
   }
 
-  public addTemplateDir = async (templateDir: string, extraData: IRenderData = {}) => {
-    const templates = await globby(['**/*'], { cwd: templateDir });
+  public addTemplateDir = (templateDir: string, extraData: IRenderData = {}) => {
+    const templates = globby.sync(['**/*'], { cwd: templateDir });
     templates.forEach((templateFile) => {
       this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, templateFile), extraData);
     });
@@ -181,7 +181,7 @@ export default class Generator {
     }
   }
 
-  public async modifyRenderData(registration: IRenderDataRegistration) {
+  public modifyRenderData(registration: IRenderDataRegistration) {
     this.renderDataRegistration.push(registration);
     if (this.rerender) {
       this.debounceRender();
