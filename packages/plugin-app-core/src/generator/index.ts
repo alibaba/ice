@@ -137,7 +137,7 @@ export default class Generator {
     }).join('\n');
   }
 
-  public render = debounce(() => {
+  public render = () => {
     this.rerender = true;
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
       if (typeof currentValue === 'function') {
@@ -149,18 +149,25 @@ export default class Generator {
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
     });
-  }, RENDER_WAIT);
+  };
+
+  public debounceRender = debounce(this.render, RENDER_WAIT);
 
   public addRenderFile = (templatePath: string, targetPath: string, extraData: IRenderData = {}) => {
     // check target path if it is already been registed
-    const targetTemplate = this.renderTemplates.find(([, templateTarget]) => templateTarget === targetPath);
-    if (targetTemplate) {
-      this.log.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+    const renderIndex = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
+    if (renderIndex > -1) {
+      const targetTemplate = this.renderTemplates[renderIndex];
+      if (targetTemplate[0] !== templatePath) {
+        this.log.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+      }
+      // replace template with lastest content
+      this.renderTemplates[renderIndex] = [templatePath, targetPath, extraData];
     } else {
       this.renderTemplates.push([templatePath, targetPath, extraData]);
     }
     if (this.rerender) {
-      this.render();
+      this.debounceRender();
     }
   }
 
@@ -170,14 +177,14 @@ export default class Generator {
       this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, templateFile), extraData);
     });
     if (this.rerender) {
-      this.render();
+      this.debounceRender();
     }
   }
 
   public async modifyRenderData(registration: IRenderDataRegistration) {
     this.renderDataRegistration.push(registration);
     if (this.rerender) {
-      this.render();
+      this.debounceRender();
     }
   }
 
