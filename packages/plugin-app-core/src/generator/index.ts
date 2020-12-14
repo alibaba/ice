@@ -153,9 +153,11 @@ export default class Generator {
 
   public addRenderFile = (templatePath: string, targetPath: string, extraData: IRenderData = {}) => {
     // check target path if it is already been registed
-    const targetTemplate = this.renderTemplates.find(([, templateTarget]) => templateTarget === targetPath);
+    const targetTemplate = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
     if (targetTemplate) {
-      this.log.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+      if (targetTemplate[0] !== templatePath) {
+        this.log.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+      }
     } else {
       this.renderTemplates.push([templatePath, targetPath, extraData]);
     }
