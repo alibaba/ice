@@ -2,7 +2,7 @@
 const fs = require('fs');
 const colorNames = require('./colorNames');
 
-module.exports = (themeFile, themeConfig) => {
+module.exports = (themeFile, themeConfig, enableColorNames) => {
   const themeVars = {};
   try {
     const themeStr = fs.readFileSync(themeFile, 'utf8');
@@ -24,8 +24,12 @@ module.exports = (themeFile, themeConfig) => {
     originTheme[themeKey.slice(1)] = themeVars[themeKey];
 
     const themeValue = themeVars[themeKey];
-    if (themeValue && (themeValue.indexOf('#') !== 0 && !themeValue.match(/^(rgb|transparent)/) && !colorNames[themeValue] || ['$color-white', '$color-black'].indexOf(themeKey) > -1)) {
-      delete themeVars[themeKey];
+    if (themeValue && themeValue.indexOf('#') !== 0 && themeValue.match(/^rgb/) || ['$color-white', '$color-black'].indexOf(themeKey) > -1) {
+      // delete theme key if it is not a color variable
+      const removeThemeVar = enableColorNames ? !themeValue.match(/^transparent/) && !colorNames[themeValue] : true;
+      if (removeThemeVar) {
+        delete themeVars[themeKey];
+      }
     }
   });
 
