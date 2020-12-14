@@ -23,7 +23,7 @@
     "@alib/build-scripts": "^0.1.24"
   },
   "dependencies": {
-    "@builder/app-helpers": "^1.0.3",
+    "@builder/app-helpers": "^2.0.0",
     "@builder/mpa-config": "^2.0.0",
     "fs-extra": "^8.1.0"
   }
