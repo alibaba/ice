@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "0.1.5-0",
+  "version": "0.1.4",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-mock": "^1.0.1",
     "webpack-plugin-import": "^0.2.6",
-    "@builder/app-helpers": "2.0.1-0",
+    "@builder/app-helpers": "^2.0.0",
     "babel-loader": "^8.0.6"
   },
   "files": [
