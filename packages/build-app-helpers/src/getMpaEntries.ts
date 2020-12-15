@@ -43,7 +43,8 @@ function getEntriesByJson(api, target, appJsonPath): IEntry[] {
       entryPath: getPageEntryByAppJson(rootDir, route.source),
       entryName,
       pageName,
-      source: route.source
+      source: route.source,
+      path: route.path
     };
   });
 }
