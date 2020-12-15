@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.0
+## 0.1.11
+
+- [fix] error condition of color variables
+
+## 0.1.10
 
 - [feat] support color names
 
