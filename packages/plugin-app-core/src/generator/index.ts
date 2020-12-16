@@ -7,6 +7,7 @@ import * as debounce from 'lodash.debounce';
 import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
+import getRuntimeModules from '../utils/getRuntimeModules';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
@@ -50,6 +51,8 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
+  private disableRuntimePlugins: string[];
+
   constructor({ rootDir, targetDir, defaultData, log}) {
     this.rootDir = rootDir;
     this.targetDir = targetDir;
@@ -60,6 +63,7 @@ export default class Generator {
     this.showPrettierError = true;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
+    this.disableRuntimePlugins = [];
   }
 
   public addExport = (registerKey, exportData: IExportData | IExportData[]) => {
@@ -139,13 +143,19 @@ export default class Generator {
 
   public render = () => {
     this.rerender = true;
+    const { plugins: originPlugins, debugRumtime } = this.renderData;
+    const plugins = originPlugins.filter((originPlugin) => {
+      return !this.disableRuntimePlugins.includes(originPlugin.name);
+    });
+    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, debugRumtime);
+
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
       if (typeof currentValue === 'function') {
         return currentValue(previousValue);
       }
       return previousValue;
     }, this.parseRenderData());
-    
+
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
     });
@@ -211,5 +221,15 @@ export default class Generator {
       fse.ensureDirSync(targetPath);
       fse.copyFileSync(targetPath, targetPath);
     }
+  }
+
+  public addDisableRuntimePlugin = (pluginName: string) => {
+    if (!this.disableRuntimePlugins.includes(pluginName)) {
+      this.disableRuntimePlugins.push(pluginName);
+    };
+  }
+
+  public getDisableRuntimePlugins(): string[] {
+    return this.disableRuntimePlugins;
   }
 }
