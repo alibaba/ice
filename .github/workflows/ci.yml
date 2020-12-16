@@ -23,10 +23,10 @@ jobs:
       id: cache
       uses: actions/cache@v2
       with:
-      path: |
-        node_modules
-        */*/node_modules
-      key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
     - run: npm run setup
     - run: npm run dependency:check
     - run: npm run lint
