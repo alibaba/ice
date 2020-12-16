@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-app-core",
-  "version": "0.1.28",
+  "version": "1.0.1",
   "description": "the core plugin for icejs and raxjs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -28,9 +28,9 @@
     "miniapp-renderer": "^0.1.4",
     "prettier": "^2.0.2",
     "query-string": "^6.13.1",
-    "rax-app-renderer": "^0.1.4",
+    "rax-app-renderer": "^1.0.0",
     "rax-use-router": "^3.0.0",
-    "react-app-renderer": "0.1.11",
+    "react-app-renderer": "^1.0.0",
     "universal-env": "^3.0.0",
     "lodash.debounce": "^4.0.8"
   },
