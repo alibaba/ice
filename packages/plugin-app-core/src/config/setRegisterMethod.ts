@@ -23,6 +23,7 @@ export default (api, options) => {
   registerMethod('addTemplateDir', generator.addTemplateDir);
   registerMethod('modifyRenderData', generator.modifyRenderData);
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
+
   // registerMethod for add export
   const apiKeys = getExportApiKeys();
   apiKeys.forEach((apiKey) => {
