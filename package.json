@@ -25,7 +25,7 @@
     "clean": "lerna clean --yes && rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
+    "test": "jest --forceExit",
     "test:watch": "jest --watch",
     "coverage": "codecov"
   },
