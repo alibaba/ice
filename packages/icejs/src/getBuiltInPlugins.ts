@@ -1,21 +1,24 @@
+import { IGetBuiltInPlugins, IPluginList, Json } from '@alib/build-scripts';
+
+// eslint-disable-next-line
 const chalk = require('chalk');
 
-module.exports = (userConfig: any) => {
+const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   if (userConfig.disableRuntime) {
     return [
       'build-plugin-react-app',
       'build-plugin-ice-mpa'
     ];
   }
-
-  const plugins = [
+  const coreOptions = {
+    'framework': 'react',
+    'alias': process.env.__FRAMEWORK_NAME__ || 'ice'
+  } as Json;
+  const plugins: IPluginList = [
     // common plugins
-    [
-      'build-plugin-app-core', {
-        'framework': 'react',
-        'alias': process.env.__FRAMEWORK_NAME__ || 'ice'
-      }
-    ],
+    ['build-plugin-app-core', coreOptions],
+
+    // react base plugin
     'build-plugin-react-app',
 
     // for ice/miniapp plugins
@@ -60,3 +63,6 @@ module.exports = (userConfig: any) => {
 
   return plugins;
 };
+
+export = getBuiltInPlugins;
+
