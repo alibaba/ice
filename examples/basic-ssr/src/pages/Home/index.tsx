@@ -32,5 +32,12 @@ export default function Home(props) {
 
 Home.getInitialProps = async () => {
   const res = await request('/profile');
-  return { ...res.data, title: 'Home Page...' };
+
+  const __SSR_PAGE_TDK__ = {
+    title: 'hello',
+    description: 'Home Page Description',
+    keywords: 'Home Page Keywords'
+  };
+
+  return { ...res.data, title: 'Home Page...', __SSR_PAGE_TDK__ };
 };
