@@ -74,25 +74,16 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
     });
 
     const titleSelector = 'head>title', descriptionSelector = 'head>meta[name=description]', keywordsSelector='head>meta[name=keywords]';
-    const appTitle = $(titleSelector).text();
-    const appDescription = $(descriptionSelector).attr('content');
-    const appKeywords = $(keywordsSelector).attr('content');
-    const appTDKData = {
-      title: appTitle,
-      description: appDescription,
-      keywords: appKeywords
-    };
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-      window.__ICE_APP_TDK__=${JSON.stringify(appTDKData)};
     </script>`)
     if (pageInitialProps && pageInitialProps.__SSR_PAGE_TDK__) {
       const { title, description, keywords } = pageInitialProps.__SSR_PAGE_TDK__;
 
-      $(titleSelector).text(title || appTitle);
+      $(titleSelector).text(title);
       modifyMetaElement(descriptionSelector, 'description', description);
       modifyMetaElement(keywordsSelector, 'keywords', keywords);
     }

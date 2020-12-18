@@ -12,6 +12,10 @@ const About = (props) => {
   );
 };
 
+About.pageConfig = {
+  title: 'About',
+};
+
 About.getInitialProps = async () => {
   return { title: 'About Page...' };
 };
