@@ -1,14 +1,17 @@
 const genRegExpRule = (value) => new RegExp(Array.isArray(value) ? value.join('|') : value);
 const ensureArray = (value) => Array.isArray(value) ? value : [value];
+
 const optionAPIs = {
   test: (rule, value) => {
     rule.test(genRegExpRule(value));
   },
   oneOf: (rule, value) => {
-    rule.oneOf(value);
-  },
-  resourceQuery: (rule, value) => {
-    rule.resourceQuery(genRegExpRule(value));
+    Object.keys(value).forEach((oneOfName) => {
+      const { resourceQuery, loaders } = value[oneOfName];
+      const loaderRule = rule.oneOf(oneOfName)
+        .resourceQuery(genRegExpRule(resourceQuery));
+      configRuleLoaders(loaderRule, loaders || {});
+    });
   },
   // clear include rules
   includeClear: (rule) => {
@@ -45,7 +48,8 @@ const optionAPIs = {
   },
 };
 const validRuleOption = Object.keys(optionAPIs);
-const configModuleRule = (rule, options) => {
+
+function configModuleRule(rule, options) {
   // loop validRuleOption to make sure optionAPIs excute in order
   validRuleOption.forEach((optionsKey) => {
     const optionValue = options[optionsKey];
@@ -53,9 +57,9 @@ const configModuleRule = (rule, options) => {
       optionAPIs[optionsKey](rule, optionValue);
     }
   });
-};
+}
 
-const configRuleLoaders = (rule, loaders) => {
+function configRuleLoaders(rule, loaders) {
   const loaderNames = Object.keys(loaders);
   loaderNames.forEach((loaderName) => {
     const { options, before, after } = loaders[loaderName];
@@ -69,7 +73,7 @@ const configRuleLoaders = (rule, loaders) => {
     if (before) loaderRule.before(before);
     if (after) loaderRule.after(after);
   });
-};
+}
 
 module.exports = (config, webpackLoaders) => {
   if (webpackLoaders) {
