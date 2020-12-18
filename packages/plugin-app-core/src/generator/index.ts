@@ -53,7 +53,11 @@ export default class Generator {
 
   private disableRuntimePlugins: string[];
 
-  constructor({ rootDir, targetDir, defaultData, log}) {
+  private plugins: any[];
+
+  private debugRuntime: boolean;
+
+  constructor({ rootDir, targetDir, defaultData, log, plugins, debugRuntime }) {
     this.rootDir = rootDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
@@ -63,6 +67,8 @@ export default class Generator {
     this.showPrettierError = true;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
+    this.plugins = plugins;
+    this.debugRuntime = debugRuntime;
     this.disableRuntimePlugins = [];
   }
 
@@ -143,11 +149,10 @@ export default class Generator {
 
   public render = () => {
     this.rerender = true;
-    const { plugins: originPlugins, debugRumtime } = this.renderData;
-    const plugins = originPlugins.filter((originPlugin) => {
-      return !this.disableRuntimePlugins.includes(originPlugin.name);
+    const plugins = this.plugins.filter((plugin) => {
+      return !this.disableRuntimePlugins.includes(plugin.name);
     });
-    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, debugRumtime);
+    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, this.debugRuntime);
 
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
       if (typeof currentValue === 'function') {

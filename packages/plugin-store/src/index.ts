@@ -1,7 +1,8 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import Generator from './generator';
-import checkStoreAndModelExists from './checkStoreAndModelExists';
+import checkStoreAndModelExists from './utils/checkStoreAndModelExists';
+import { generateAppStorePath } from './utils/generatePath';
 
 const { name: pluginName } = require('../package.json');
 
@@ -35,7 +36,7 @@ export default async (api) => {
     }
   }
 
-  const appStoreFile = applyMethod('formatPath', path.join(rootDir, 'src', `store.${projectType}`));
+  const appStoreFile = applyMethod('formatPath', generateAppStorePath(rootDir, srcDir, projectType));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
   applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });

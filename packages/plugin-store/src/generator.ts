@@ -1,6 +1,12 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as recursiveReaddir from 'fs-readdir-recursive';
+import {
+  generatePageModelPath,
+  generatePageStorePath,
+  generateAppStorePath,
+  generateAppModelsPath,
+} from './utils/generatePath';
 
 export interface IRenderPageParams {
   pageName: string;
@@ -104,7 +110,7 @@ export default class Generator {
     const exportName = 'store';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
-    let appModelsDir = path.join(this.rootDir, 'src', 'models');
+    let appModelsDir = generateAppModelsPath(this.rootDir, this.srcDir);
     let appModels = [];
     if (fse.pathExistsSync(appModelsDir)) {
       appModelsDir = this.applyMethod('formatPath', appModelsDir);
@@ -221,10 +227,10 @@ export default class Generator {
   }
 
   public render() {
-    const srcDir = path.join(this.rootDir, this.srcDir);
-    const appStoreFile = this.applyMethod('formatPath', path.join(srcDir, `store.${this.projectType}`));
+    const appStoreFile = this.applyMethod('formatPath', generateAppStorePath(this.rootDir, this.srcDir, this.projectType));
     const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
-    const hasAppModels = fse.pathExistsSync(path.join(this.rootDir, 'src', 'models'));
+    const appModelsPath = generateAppModelsPath(this.rootDir, this.srcDir);
+    const hasAppModels = fse.pathExistsSync(appModelsPath);
 
     // if store is created by user, don't create .ice/store/index.ts
     if (!existsAppStoreFile) {
@@ -237,16 +243,8 @@ export default class Generator {
 
     const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
     pages.forEach(pageName => {
-      const pageNameDir = path.join(this.rootDir, this.srcDir, 'pages', pageName);
-
-      // e.g: src/pages/${pageName}/models/*
-      const pageModelsDir = path.join(pageNameDir, 'models');
-
-      // e.g: src/pages/${pageName}/model.ts
-      const pageModelFile = path.join(pageNameDir, `model.${this.projectType}`);
-
-      // e.g: src/pages/${pageName}/store.ts
-      const pageStoreFile = this.applyMethod('formatPath', path.join(pageNameDir, `store.${this.projectType}`));
+      const { pageModelsDir, pageModelFile, pageNameDir } = generatePageModelPath(this.rootDir, this.srcDir, pageName, this.projectType);
+      const pageStoreFile = this.applyMethod('formatPath', generatePageStorePath(this.rootDir, this.srcDir, pageName, this.projectType));
       const existedStoreFile = fse.pathExistsSync(pageStoreFile);
 
       const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile, existsAppStoreFile };

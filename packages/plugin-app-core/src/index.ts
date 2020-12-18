@@ -76,11 +76,11 @@ function initGenerator(api, options) {
       isReact: framework === 'react',
       isRax: framework === 'rax',
       isMiniapp,
-      plugins,
-      debugRuntime,
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,
+    plugins,
+    debugRuntime,
   });
 }
 
