@@ -585,7 +585,7 @@ dll                            // dll 构建产物文件夹
 
 通过 `webpackLoaders` 可以方便地新增或者修改工程上的 webpack loader 配置。
 
-配置方式
+配置方式：
 
 ```json
 {
@@ -608,7 +608,7 @@ dll                            // dll 构建产物文件夹
 配置规则如下：
 - webpackLoaders 配置下每一项为具体的 webpack loader 规则，支持参数
   - test：配置类型 `string|string[]`，同 [Rule.test](https://webpack.js.org/configuration/module/#ruletest)
-  - oneOf：配置类型 `[oneOfKey: string]: { resourceQuery: string; loaders: Loaders }`，同[Rule.oneOf](https://webpack.js.org/configuration/module/#ruleoneof)
+  - oneOf：配置类型 `[oneOfName: string]: { resourceQuery: string; loaders: Loaders }`，同[Rule.oneOf](https://webpack.js.org/configuration/module/#ruleoneof)
   - includeClear：清除默认 include 配置
   - include：配置类型 `string|string[]`，同 [Rule.include](https://webpack.js.org/configuration/module/#ruleinclude)
   - excludeClear：清除默认 exclude 配置
