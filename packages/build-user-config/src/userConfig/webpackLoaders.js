@@ -58,13 +58,16 @@ const configModuleRule = (rule, options) => {
 const configRuleLoaders = (rule, loaders) => {
   const loaderNames = Object.keys(loaders);
   loaderNames.forEach((loaderName) => {
-    const loaderOptions = loaders[loaderName];
+    const { options, before, after } = loaders[loaderName];
     // check if loader is exsits
+    let loaderRule = null;
     if (rule.uses.has(loaderName)) {
-      rule.use(loaderName).tap(opts => ({ ...opts, ...loaderOptions}));
+      loaderRule = rule.use(loaderName).tap(opts => ({ ...opts, ...options}));
     } else {
-      rule.use(loaderName).loader(loaderName).options(loaderOptions);
+      loaderRule = rule.use(loaderName).loader(loaderName).options(options);
     }
+    if (before) loaderRule.before(before);
+    if (after) loaderRule.after(after);
   });
 };
 
