@@ -93,8 +93,21 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       const { title, description, keywords } = pageInitialProps.__SSR_PAGE_TDK__;
 
       $(titleSelector).text(title || appTitle);
-      $(descriptionSelector).attr('content', description || appDescription);
-      $(keywordsSelector).attr('content', keywords || appKeywords);
+      modifyMetaElement(descriptionSelector, 'description', description);
+      modifyMetaElement(keywordsSelector, 'keywords', keywords);
+    }
+
+    function modifyMetaElement(selector: string, name: string, content: string) {
+      if (content) {
+        if ($('head>meta').is(`[name=${name}]`)) {
+          // update the meta element
+          $(selector).attr('content', content);
+        } else {
+          // add new meta element to the head
+          const head = $('head');
+          head.append(`<meta name="${name}" content="${content}">`);
+        }
+      }
     }
   } catch (e) {
     error = e;

@@ -34,7 +34,7 @@ Home.getInitialProps = async () => {
   const res = await request('/profile');
 
   const __SSR_PAGE_TDK__ = {
-    title: 'hello',
+    title: 'Home',
     description: 'Home Page Description',
     keywords: 'Home Page Keywords'
   };

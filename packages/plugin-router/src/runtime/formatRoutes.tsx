@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as path from 'path';
 import * as queryString from 'query-string';
-import updatePageTDK from '../utils/updatePageTDK';
+import modifyPageTDK from '../utils/modifyPageTDK';
 
 const { useEffect, useState } = React;
 
@@ -74,7 +74,7 @@ export function wrapperPageWithCSR() {
             if (result && result.__SSR_PAGE_TDK__) {
               pageTDKData = result.__SSR_PAGE_TDK__;
             }
-            updatePageTDK(pageTDKData);
+            modifyPageTDK(pageTDKData);
 
             setData(result);
           })();
