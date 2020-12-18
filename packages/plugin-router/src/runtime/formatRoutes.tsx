@@ -69,7 +69,7 @@ export function wrapperPageWithCSR() {
               ssrError
             };
             const result = await PageComponent.getInitialProps(initialContext);
-            console.log('result==>', result);
+
             let pageTDKData = {};
             if (result && result.__SSR_PAGE_TDK__) {
               pageTDKData = result.__SSR_PAGE_TDK__;
