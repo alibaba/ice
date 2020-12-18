@@ -68,7 +68,6 @@ export function wrapperPageWithCSR() {
               ssrError
             };
             const result = await PageComponent.getInitialProps(initialContext);
-
             setData(result);
           })();
         }
