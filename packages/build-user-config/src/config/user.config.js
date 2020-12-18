@@ -207,6 +207,14 @@ module.exports = [
   },
   {
     name: 'targets',
-    validation: 'array'
-  }
+    validation: 'array',
+  },
+  {
+    name: 'webpackLoaders',
+    validation: 'object',
+  },
+  {
+    name: 'webpackPlugins',
+    validation: 'object',
+  },
 ];
