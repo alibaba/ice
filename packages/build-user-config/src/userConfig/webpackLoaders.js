@@ -6,10 +6,26 @@ const optionAPIs = {
     rule.test(genRegExpRule(value));
   },
   oneOf: (rule, value) => {
+    /**
+     * config.module
+     *  .rule('css')
+     *   .oneOf('inline')
+     *     .resourceQuery(/inline/)
+     *     .use('url')
+     *       .loader('url-loader')
+     *       .end()
+     *     .end()
+     *   .oneOf('external')
+     *     .resourceQuery(/external/)
+     *     .use('file')
+     *       .loader('file-loader')
+     */
     Object.keys(value).forEach((oneOfName) => {
       const { resourceQuery, loaders } = value[oneOfName];
-      const loaderRule = rule.oneOf(oneOfName)
-        .resourceQuery(genRegExpRule(resourceQuery));
+      const loaderRule = rule.oneOf(oneOfName);
+      if (resourceQuery) {
+        loaderRule.resourceQuery(genRegExpRule(resourceQuery));
+      }
       configRuleLoaders(loaderRule, loaders || {});
     });
   },
