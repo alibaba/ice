@@ -67,8 +67,5 @@
     "webpack-chain": "^6.0.0",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-simple-progress-plugin": "0.0.4"
-  },
-  "devDependencies": {
-    "@types/postcss-preset-env": "^6.7.0"
   }
 }
