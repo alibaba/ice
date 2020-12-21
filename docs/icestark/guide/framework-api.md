@@ -1,11 +1,13 @@
 ---
-title: 基于 API 初始化框架应用
-order: 4
+title: 主应用开发与接入
+order: 3
 ---
 
-`icestark` 除了提供以 React 组件方式快速创建框架应用之外，同时也支持以 API 的方式在基于不同技术架构的应用中接入微前端方案
+`@ice/stark` 2.0.0 开始推荐使用 API `registerMicroApps` 的方式注册子应用，该方式不再限制主应用所使用的框架，因此主应用可以使用 React/Vue/... 等不同框架编写。
 
-## 在框架应用中注册微应用
+## 管理与注册子应用
+
+### 基础示例
 
 安装依赖：
 
@@ -13,12 +15,12 @@ order: 4
 $ npm i --save @ice/stark
 ```
 
-通过 `regsiterMicroApps` 来注册微应用：
+通过 `registerMicroApps` 来注册微应用：
 
-```jsx
-import { regsiterMicroApps, start } from '@ice/stark';
+```js
+import { registerMicroApps, start } from '@ice/stark';
 
-regsiterMicroApps([
+registerMicroApps([
   {
     name: 'app1',
     activePath: ['/', '/message', '/about'],
@@ -42,25 +44,9 @@ regsiterMicroApps([
 start();
 ```
 
-微应用完成注册后，由 `start` 完成路由的监听，一旦浏览器的 url 发生变化，icestark 将根据微应用注册的激活规则挂载/卸载对应的微应用。
+### 示例：React 场景
 
-## 手动加载微应用
-
-如果微应用并不耦合具体的路由，可以通过 icestark 提供的 createMicroApp 手动进行挂载
-
-```js
-import { createMicroApp } from '@ice/stark';
-
-createMicroApp({
-  name: 'app',
-  url: [
-    '//ice.alicdn.com/icestark/child-seller-react/index.js',
-  ],
-  container: document.getElementById('icestark-container'),
-});
-```
-
-### 结合 React 使用场景
+TODO
 
 ```js
 import { createMicroApp, unmountMicroApp } from '@ice/stark';
@@ -78,3 +64,11 @@ const MicroApp = () => {
 
 export default MicroApp;
 ```
+
+### 示例：Vue 场景
+
+TODO
+
+## 常见问题
+
+TODO

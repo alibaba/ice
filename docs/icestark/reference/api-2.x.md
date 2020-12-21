@@ -1,6 +1,7 @@
 ---
 title: 2.x 新增 API
 order: 2
+hide: true
 ---
 
 ## registerMicroApps
@@ -148,7 +149,7 @@ registerMicroApps([
 ```js
 export function mount(props) {
   const { container, customProps } = props;
-  // customProps 即为框架应用透传给微应用的属性
+  // customProps 即为主应用透传给微应用的属性
   console.log(customProps);
   ...
 }

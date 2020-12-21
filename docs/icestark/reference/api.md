@@ -3,6 +3,8 @@ title: API
 order: 1
 ---
 
+TODO
+
 ## @ice/stark
 
 ### AppRouter
@@ -57,12 +59,12 @@ order: 1
 - 类型：`Function(assetUrl, element)`
 - 默认值：`() => true`
 
-> 应用资源在 AppRouter 初始化后将默认标识为框架应用资源，在微应用切换过程中不会被移除。但在框架应用开启懒加载或者一些资源通过脚本异步插入到页面的场景下，这类资源无法正确被标识为不需要移除的资源，可以通过 `shouldAssetsRemove` 方式进行规则判断
+> 应用资源在 AppRouter 初始化后将默认标识为主应用资源，在微应用切换过程中不会被移除。但在主应用开启懒加载或者一些资源通过脚本异步插入到页面的场景下，这类资源无法正确被标识为不需要移除的资源，可以通过 `shouldAssetsRemove` 方式进行规则判断
 
 ```jsx
 <AppRouter
   shouldAssetsRemove={(url, el) => {
-    // 如果资源 url 链接包含 icestark.com 则标识为框架应用资源，微应用切换时不需要移除
+    // 如果资源 url 链接包含 icestark.com 则标识为主应用资源，微应用切换时不需要移除
     return url.match(/icestark.com/) ? false : true;
   }}
 >

@@ -18,13 +18,13 @@ order: 6
 
 使用场景：
 
-1. 中英文切换，切换按钮在框架应用，监听事件在微应用
+1. 中英文切换，切换按钮在主应用，监听事件在微应用
 2. 获取全局的登录用户信息
 
-在框架应用存储/设置信息：
+在主应用存储/设置信息：
 
 ```js
-// 框架应用
+// 主应用
 import { store } from '@ice/stark-data';
 
 const userInfo = { name: 'Tom', age: 18 };
@@ -61,12 +61,12 @@ const userInfo = store.get('user');
 
 ### 示例
 
-框架应用顶部有**消息**展示入口，微应用内有阅读消息的能力，阅读完消息后需要通知框架应用刷新**消息**展示信息。
+主应用顶部有**消息**展示入口，微应用内有阅读消息的能力，阅读完消息后需要通知主应用刷新**消息**展示信息。
 
-在框架应用中监听事件：
+在主应用中监听事件：
 
 ```js
-// 框架应用
+// 主应用
 import { event } from '@ice/stark-data';
 
 event.on('freshMessage', () => {
@@ -85,4 +85,4 @@ event.emit('freshMessage');
 
 ## 其他
 
-对于框架应用和微应用，运行时都共享了当前页面的 location、Cookie、LocalStorage、window 等全局信息，因此应用间的通信，也可以通过这些方案很简单的实现。
+对于主应用和微应用，运行时都共享了当前页面的 location、Cookie、LocalStorage、window 等全局信息，因此应用间的通信，也可以通过这些方案很简单的实现。

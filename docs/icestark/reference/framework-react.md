@@ -1,28 +1,11 @@
 ---
-title: React 框架应用开发
-order: 3
+title: React 主应用开发与接入
+order: 4
 ---
 
-框架应用负责整个系统的 Layout 设计以及所有微应用的管理注册，icestark 约束了框架应用必须基于 React。
+`@ice/stark` 2.0 开始我们推荐使用 API 的方式注册微应用，对于存量的从 1.x 升级上来的主应用 AppRouter/AppRoute 可继续使用。
 
-## 创建框架应用
-
-```bash
-$ npm init ice icestark-framework @icedesign/stark-layout-scaffold
-$ cd icestark-framework
-$ npm install
-$ npm start
-```
-
-## 已有项目改造为框架应用
-
-安装依赖：
-
-```bash
-$ npm i --save @ice/stark
-```
-
-通过 `AppRouter/AppRoute` 来管理注册微应用：
+## 通过 AppRouter&AppRoute 注册微应用
 
 ```jsx
 // src/App.jsx
@@ -61,6 +44,9 @@ export default class App extends React.Component {
               '//unpkg.com/icestark-child-seller/build/js/index.js',
               '//unpkg.com/icestark-child-seller/build/css/index.css',
             ]}
+          />
+          <AppRoute
+            //...
           />
         </AppRouter>
       </BasicLayout>

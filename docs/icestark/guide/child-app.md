@@ -151,7 +151,7 @@ import { appHistory } from '@ice/stark-app';
 
 ### 子应用开发时请求本地 Mock 接口？
 
-通常情况下，代码中的接口请求地址都是写成类似 `/api/xxx` 的相对地址，请求时会根据当前域名进行拼接，如果子应用嵌入框架应用进行开发，在域名变化后依旧想使用子应用的 Mock 接口或者代理配置，可以设置 `baseURL` 来请求非当前域名的接口地址，比如 `axios` 可以通过 `axios.defaults.baseURL` 来实现：
+通常情况下，代码中的接口请求地址都是写成类似 `/api/xxx` 的相对地址，请求时会根据当前域名进行拼接，如果子应用嵌入主应用进行开发，在域名变化后依旧想使用子应用的 Mock 接口或者代理配置，可以设置 `baseURL` 来请求非当前域名的接口地址，比如 `axios` 可以通过 `axios.defaults.baseURL` 来实现：
 
 ```js
 // src/utils/request.js
@@ -174,13 +174,13 @@ const appConfig = {
 runApp(appConfig);
 ```
 
-> 由于开发调试过程中框架应用和子应用的域名或者端口不一致，非 icejs 研发框架的工程可能会有跨域问题，工程修改可以参考[devServer 配置](https://github.com/ice-lab/icejs/blob/bf2b0a6d7834f0d3897f0216be8195fff9eadbed/packages/plugin-react-app/src/config/default.config.js#L21)
+> 由于开发调试过程中主应用和子应用的域名或者端口不一致，非 icejs 研发框架的工程可能会有跨域问题，工程修改可以参考[devServer 配置](https://github.com/ice-lab/icejs/blob/bf2b0a6d7834f0d3897f0216be8195fff9eadbed/packages/plugin-react-app/src/config/default.config.js#L21)
 
 ### 子应用本地开发如何调试？
 
-单独子应用开发时只能看到自身的内容，无法关注到在框架应用下的表现，这时候本地如果需要再启动一个框架应用，开发起来就很繁琐。针对这种情况，我们推荐通过框架应用的日常/线上环境调试本地子应用。
+单独子应用开发时只能看到自身的内容，无法关注到在主应用下的表现，这时候本地如果需要再启动一个主应用，开发起来就很繁琐。针对这种情况，我们推荐通过主应用的日常/线上环境调试本地子应用。
 
-在框架应用中注册子应用时，如果 url 里携带了类似 `?env=local` 的 query，则将子应用的 url 转换为对应的本地服务地址，这样就可以方便调试子应用了。大体代码如下（可根据具体需求调整）：
+在主应用中注册子应用时，如果 url 里携带了类似 `?env=local` 的 query，则将子应用的 url 转换为对应的本地服务地址，这样就可以方便调试子应用了。大体代码如下（可根据具体需求调整）：
 
 ```jsx
 // src/app.jsx
@@ -224,4 +224,4 @@ export default class App extends React.Component {
 生命周期函数接收的 props 包含两项内容：
 
 - container：用来标识渲染节点
-- customProps：由框架应用传递给微应用的自定义属性
+- customProps：由主应用传递给微应用的自定义属性

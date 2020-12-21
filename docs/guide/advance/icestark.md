@@ -30,12 +30,12 @@ $ npm i --save-dev build-plugin-icestark
 {
   "plugins": {
     ["build-plugin-icestark", {
-      // 防止与子应用的 webpackJSONP 冲突
+      // 防止与微应用的 webpackJSONP 冲突
       "uniqueName": "frameworkJsonp"
     }],
     ["build-plugin-fusion", {
       "themeConfig": {
-        // 防止与子应用里的基础组件 css prefix 冲突
+        // 防止与微应用里的基础组件 css prefix 冲突
         "nextPrefix": "next-icestark-"
       }
     }],
@@ -90,24 +90,24 @@ runApp(appConfig);
 
 - type: string, framework|child
 - Layout: Component, 系统对应的布局组件
-- getApps: function，获取所有子应用数据，单个子应用的完整配置字段请参考 icestark 文档
+- getApps: function，获取所有微应用数据，单个微应用的完整配置字段请参考 icestark 文档
 - appRouter:
   - NotFoundComponent: 404 组件
   - LoadingComponent: 应用切换时的 Loading 组件
 
-## 子应用
+## 微应用
 
-通过模板快速创建一个子应用：
+通过模板快速创建一个微应用：
 
 ``` bash
-# 创建子应用
+# 创建微应用
 $ npm init ice icestark-child @icedesign/stark-child-scaffold
 $ cd icestark-child
 $ npm install
 $ npm start
 ```
 
-同主应用一样，子应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了子应用相关的信息：
+同主应用一样，微应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了微应用相关的信息：
 
 ```diff
 import { runApp } from 'ice'
@@ -127,18 +127,18 @@ const appConfig = {
 runApp(appConfig)
 ```
 
-只需要这么简单，你的 SPA 应用就可以变成微前端的子应用了。
+只需要这么简单，你的 SPA 应用就可以变成微前端的微应用了。
 
 
 ## 常见问题
 
-### 如何监听子应用切换
+### 如何监听微应用切换
 
-`icestark` 通过 `onRouteChange`、`onAppEnter` 和 `onAppLeave` 来监听子应用间的切换，在 icejs 研发框架下可以通过在对应的 Layout 中实现相关钩子的监听。Layout 中接收 props 属性如下：
+`icestark` 通过 `onRouteChange`、`onAppEnter` 和 `onAppLeave` 来监听微应用间的切换，在 icejs 研发框架下可以通过在对应的 Layout 中实现相关钩子的监听。Layout 中接收 props 属性如下：
 
-- pathname：子应用路由切换信息，对应 `onRouteChange`
-- appEnter：渲染子应用的信息， `onAppEnter`
-- appLeave：卸载子应用的信息，对应 `onAppLeave`
+- pathname：微应用路由切换信息，对应 `onRouteChange`
+- appEnter：渲染微应用的信息， `onAppEnter`
+- appLeave：卸载微应用的信息，对应 `onAppLeave`
 
 在 Layout 使用相关属性时，结合对应属性是否发生变更来执行相应操作：
 
@@ -146,15 +146,15 @@ runApp(appConfig)
 
 const BasicLayout = ({ pathname, appLeave, appEnter, children }) => {
   useEffect(() => {
-    console.log(`子应用路由发生变化：${pathname}`);
+    console.log(`微应用路由发生变化：${pathname}`);
   }, [pathname]);
 
   useEffect(() => {
-    console.log(`卸载子应用：${appLeave.path}`);
+    console.log(`卸载微应用：${appLeave.path}`);
   }, [appLeave]);
 
   useEffect(() => {
-    console.log(`渲染子应用：${appEnter.path}`);
+    console.log(`渲染微应用：${appEnter.path}`);
   }, [appEnter]);
 
   return (
@@ -165,9 +165,9 @@ const BasicLayout = ({ pathname, appLeave, appEnter, children }) => {
 };
 ```
 
-### 动态修改子应用列表
+### 动态修改微应用列表
 
-初始化子应用列表可以如上文介绍在应用入口 `src/app.ts` 中配置 `getApps` 属性即可，如果需要动态修改子应用列表，可以通过 Layout 接收的 `updateApps` 属性进行修改：
+初始化微应用列表可以如上文介绍在应用入口 `src/app.ts` 中配置 `getApps` 属性即可，如果需要动态修改微应用列表，可以通过 Layout 接收的 `updateApps` 属性进行修改：
 
 ```js
 const BasicLayout = ({ updateApps, children }) => {
@@ -190,16 +190,16 @@ const BasicLayout = ({ updateApps, children }) => {
 }
 ```
 
-### UMD 规范子应用
+### UMD 规范微应用
 
-icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的子应用，在子应用层面可以更少的降低跟主应用的耦合：
+icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的微应用，在微应用层面可以更少的降低跟主应用的耦合：
 
-- 子应用依赖的 `build-plugin-icestark` 版本需要高于 `2.0.0` 才能支持构建出 UMD 规范的子应用
-- 主应用依赖的 `@ice/stark` 版本需要高于 `1.6.0` 才能支持渲染 UMD 规范的子应用
+- 微应用依赖的 `build-plugin-icestark` 版本需要高于 `2.0.0` 才能支持构建出 UMD 规范的微应用
+- 主应用依赖的 `@ice/stark` 版本需要高于 `1.6.0` 才能支持渲染 UMD 规范的微应用
 
-#### 子应用导出 UMD 规范的产物
+#### 微应用导出 UMD 规范的产物
 
-在 `build.json` 中配置 umd 属性即可导出标准 UMD 规范的子应用：
+在 `build.json` 中配置 umd 属性即可导出标准 UMD 规范的微应用：
 
 ```json
 {
@@ -212,9 +212,9 @@ icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的子应用，在子
 }
 ```
 
-### 主应用对采用 UMD 规范的子应用进行声明
+### 主应用对采用 UMD 规范的微应用进行声明
 
-对于 umd 类型的子应用需要在框架应用的子应用列表配置中显示声明：
+对于 umd 类型的微应用需要在框架应用的微应用列表配置中显示声明：
 
 ```diff
 const apps = [{

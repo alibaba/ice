@@ -5,7 +5,7 @@ order: 2
 
 本篇文档演示如何快速创建微前端的应用，以下模板均使用了 icejs，通过 icejs 的插件机制可以更加简单的接入微前端能力。
 
-## 初始化框架应用
+## 初始化主应用
 
 ```bash
 $ npm init ice icestark-layout @icedesign/stark-layout-scaffold
@@ -34,4 +34,4 @@ $ npm install
 $ npm run start
 ```
 
-接着可以在框架应用的 `src/app.tsx` 中增加对应的微应用配置。
+接着可以在主应用的 `src/app.tsx` 中增加对应的微应用配置。
