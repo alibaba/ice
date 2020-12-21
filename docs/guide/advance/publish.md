@@ -3,7 +3,9 @@ title: 前端资源发布
 order: 17
 ---
 
-> **如果是阿里内部同学，请参考 [文档](https://yuque.alibaba-inc.com/ice/rdy99p/angwyx)**
+> #### 如果是阿里内部同学，请参考 [文档](https://yuque.alibaba-inc.com/ice/rdy99p/angwyx) 
+
+------
 
 前面的章节提到过前端代码开发完成后我们会执行 `npm run build` 命令来进行构建，接下来需要我们需要在 HTML 或者后端模板中引入构建好的 js&css 文件，这时候就需要将构建好的文件进行发布，静态资源的发布一般有两种方式：CDN 发布、通过后端服务托管。
 
