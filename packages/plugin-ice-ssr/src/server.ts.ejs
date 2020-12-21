@@ -1,6 +1,7 @@
 import '@/app';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 import { matchPath } from 'ice';
 import { setInitialData } from 'react-app-renderer';
 import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
@@ -73,33 +74,16 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       emitLifeCycles
     });
 
-    const titleSelector = 'head>title', descriptionSelector = 'head>meta[name=description]', keywordsSelector='head>meta[name=keywords]';
+    const helmet = Helmet.renderStatic();
+
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-    </script>`)
-    if (pageInitialProps && pageInitialProps.__SSR_PAGE_TDK__) {
-      const { title, description, keywords } = pageInitialProps.__SSR_PAGE_TDK__;
-
-      $(titleSelector).text(title);
-      modifyMetaElement(descriptionSelector, 'description', description);
-      modifyMetaElement(keywordsSelector, 'keywords', keywords);
-    }
-
-    function modifyMetaElement(selector: string, name: string, content: string) {
-      if (content) {
-        if ($('head>meta').is(`[name=${name}]`)) {
-          // update the meta element
-          $(selector).attr('content', content);
-        } else {
-          // add new meta element to the head
-          const head = $('head');
-          head.append(`<meta name="${name}" content="${content}">`);
-        }
-      }
-    }
+    </script>`);
+    $('head').append(`${helmet.title.toString()}`);
+    $('head').append(`${helmet.meta.toString()}`)
   } catch (e) {
     error = e;
     $('head').append(`

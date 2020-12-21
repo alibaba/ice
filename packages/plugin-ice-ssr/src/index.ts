@@ -12,6 +12,8 @@ const plugin = async (api): Promise<void> => {
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
 
+  applyMethod('addExport', { source: 'react-helmet', specifier: '{ Helmet }', exportName: 'Helmet' });
+
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'server.ts');
