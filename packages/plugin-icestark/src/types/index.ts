@@ -1,5 +1,7 @@
+import * as React from 'react';
 import { IGetApps, IAppRouter } from './base';
 
+export { CompatibleAppConfig as IStarkAppConfig } from '@ice/stark/lib/AppRoute';
 export interface IIceStark {
   type: 'framework' | 'child';
   getApps?: IGetApps;

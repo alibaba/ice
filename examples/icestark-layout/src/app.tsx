@@ -1,5 +1,6 @@
 import { runApp, IAppConfig } from 'ice';
 import * as React from 'react';
+import { CompatibleAppConfig } from '@ice/stark/lib/AppRoute';
 import { ConfigProvider } from '@alifd/next';
 
 const appConfig: IAppConfig = {
@@ -19,9 +20,9 @@ const appConfig: IAppConfig = {
   icestark: {
     type: 'framework',
     getApps: async () => {
-      const apps = await new Promise((resolve) => {
+      const apps: CompatibleAppConfig[] = await new Promise((resolve) => {
         setTimeout(() => {
-          resolve([
+          const microConfig = [
             {
               path: '/seller',
               title: '商家平台',
@@ -42,7 +43,8 @@ const appConfig: IAppConfig = {
                 // '//localhost:8080/css/app.css',
               ],
             },
-          ]);
+          ];
+          resolve(microConfig);
         }, 1000);
       });
       return apps;
