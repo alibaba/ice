@@ -38,6 +38,5 @@ export default function Home(props) {
 
 Home.getInitialProps = async () => {
   const res = await request('/profile');
-
-  return { ...res.data };
+  return { ...res.data, title: 'Home Page...' };
 };

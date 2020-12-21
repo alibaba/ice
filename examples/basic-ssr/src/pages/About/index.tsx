@@ -8,8 +8,8 @@ const About = (props) => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>About</title>
-        <meta name="keywords" content="keywords" />
-        <meta name="description" content="About xx" />
+        <meta name="keywords" content="About Keywords" />
+        <meta name="description" content="About Description" />
       </Helmet>
       <h2>{props.title}</h2>
       <Link to="/dashboard">dashboard</Link><br />
@@ -18,12 +18,8 @@ const About = (props) => {
   );
 };
 
-About.pageConfig = {
-  // title: 'About',
-};
-
 About.getInitialProps = async () => {
-  return { title: 'About Page.......' };
+  return { title: 'About Page...' };
 };
 
 export default About;
