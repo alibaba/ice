@@ -486,11 +486,14 @@ import store from './store';
 const { Provider } = store;
 
 export default () => {
-  return <Provider>{/** */}</Provider>;
+  return <Provider><Child /></Provider>;
+}
+
+function Child() {
+  const [state, actions] = store.useModel('foo');
+  return <></>;
 }
 ```
-
-最后就可以在 `src/pages/Home/Foo/` 下的其他组件中使用 store 了。
 
 ## 版本变更说明
 
