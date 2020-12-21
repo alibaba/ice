@@ -6,30 +6,59 @@ interface IOptions {
   target: string;
   appJsonPath: string;
 }
+
+interface IEntry {
+  entryPath: string;
+  entryName: string;
+  pageName: string;
+  source?: string;
+}
+
 // Get entries when exist app.json
-export default function (api, options?: IOptions) {
+export default function (api, options?: IOptions): IEntry[] {
   const { target, appJsonPath } = options || {};
   if (appJsonPath) {
-    return getEntriesByJson(target, appJsonPath);
+    return getEntriesByJson(api, target, appJsonPath);
   }
   return getEntriesByDir(api);
 }
 
-function getEntriesByJson(target, appJsonPath) {
+function getEntriesByJson(api, target, appJsonPath): IEntry[] {
+  const {
+    context: { rootDir },
+  } = api;
   const routes = getRoutesByAppJson(target, { appJsonPath });
   return routes.map((route) => {
-    const dir = path.dirname(route.source);
-    const pageName = path.parse(dir).name;
+    let pageName;
+    let entryName;
+    if (route.name) {
+      entryName = route.name;
+      pageName = route.name;
+    } else {
+      const dir = path.dirname(route.source);
+      pageName = path.parse(dir).name;
+      entryName = pageName.toLocaleLowerCase();
+    }
     return {
-      path: route.path,
-      entryName: pageName.toLowerCase(),
+      entryPath: getPageEntryByAppJson(rootDir, route.source),
+      entryName,
       pageName,
-      entryPath: route.source.replace(/\/?pages/, ''),
+      source: route.source,
+      path: route.path
     };
   });
 }
 
-function getEntriesByDir(api: any) {
+function getPageEntryByAppJson(rootDir, source) {
+  const absolutePath = path.resolve(rootDir, 'src', source);
+  const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${absolutePath}.${ext}`));
+  if (!targetExt) {
+    throw new Error(`Cannot find target file ${absolutePath}.`);
+  }
+  return `${source}.${targetExt}`;
+}
+
+function getEntriesByDir(api: any): IEntry[] {
   const {
     context: { rootDir },
   } = api;
@@ -43,18 +72,18 @@ function getEntriesByDir(api: any) {
 
   const entries = pages.map((pageName) => {
     const entryName = pageName.toLocaleLowerCase();
-    const pageEntry = getPageEntry(pagesPath, pageName);
+    const pageEntry = getPageEntryByDir(pagesPath, pageName);
     if (!pageEntry) return null;
     return {
       entryName,
       pageName,
-      entryPath: `${pageName}/${pageEntry}`,
+      entryPath: `pages/${pageName}/${pageEntry}`,
     };
   }).filter(Boolean);
   return entries;
 }
 
-function getPageEntry(pagesPath: string, pageName: string) {
+function getPageEntryByDir(pagesPath: string, pageName: string) {
   const pagePath = path.join(pagesPath, pageName);
   const pageRootFiles = fs.readdirSync(pagePath);
   const appRegexp = /^app\.(t|j)sx?$/;

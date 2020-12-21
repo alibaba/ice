@@ -4,22 +4,18 @@ import generateEntry from './generateEntry';
 
 interface IEntries {
   entryName: string;
-  pageName: string;
   entryPath: string;
 }
 
 interface IConfigOptions {
-  context: {
-    rootDir: string;
-    commandArgs: any;
-  };
   type?: string;
   framework: string;
   entries?: IEntries[];
   targetDir: string;
 }
-export const generateMPAEntries = (options: IConfigOptions) => {
-  const { context, type = 'web', framework = 'rax', targetDir = '' } = options;
+export const generateMPAEntries = (api, options: IConfigOptions) => {
+  const { context } = api;
+  const { type = 'web', framework = 'rax', targetDir = '' } = options;
   let { entries } = options;
   const { rootDir, commandArgs } = context;
   if (commandArgs.mpaEntry) {
@@ -32,14 +28,14 @@ export const generateMPAEntries = (options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath } = entry;
-    const pageEntry = path.join(rootDir, 'src/pages', entryPath);
+    const pageEntry = path.join(rootDir, 'src', entryPath);
     const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
     // icejs will config entry by api modifyUserConfig
 
     let finalEntry = pageEntry;
     if (!useOriginEntry) {
       // generate mpa entries
-      finalEntry = generateEntry({ framework, targetDir, type, pageEntry, entryName });
+      finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });
     }
     parsedEntries[entryName] = {
       ...entry,
@@ -49,12 +45,12 @@ export const generateMPAEntries = (options: IConfigOptions) => {
   return parsedEntries;
 };
 
-const setMPAConfig = (config, options: IConfigOptions) => {
+const setMPAConfig = (api, config, options: IConfigOptions) => {
   if (!options) {
     throw new Error('There need pass options param to setMPAConfig method');
   }
   const { type = 'web' } = options;
-  const parsedEntries = generateMPAEntries(options);
+  const parsedEntries = generateMPAEntries(api, options);
 
   // do not splitChunks when mpa
   config.optimization.splitChunks({ cacheGroups: {} });
@@ -64,11 +60,11 @@ const setMPAConfig = (config, options: IConfigOptions) => {
   const matchStrs = [];
 
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, pageName, finalEntry } = parsedEntries[entryKey];
+    const { entryName, entryPath, finalEntry } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
 
     // get page paths for rule match
-    const matchStr = `src/pages/${pageName}`;
+    const matchStr = `src/${entryPath}`;
     matchStrs.push(formatPath(matchStr));
   });
 

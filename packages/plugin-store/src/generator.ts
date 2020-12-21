@@ -1,8 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as ejs from 'ejs';
 import * as recursiveReaddir from 'fs-readdir-recursive';
-import * as prettier from 'prettier';
 
 export interface IRenderPageParams {
   pageName: string;
@@ -129,7 +127,7 @@ export default class Generator {
       appStoreImport: `import store from '${appStoreFile.replace(`.${this.projectType}`, '')}'`
     };
 
-    this.renderFile(this.appStoreTemplatePath, targetPath, appStoreRenderData);
+    this.applyMethod('addRenderFile', this.appStoreTemplatePath, targetPath, appStoreRenderData);
     this.applyMethod('removeExport', exportName);
     this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: 'store', exportName });
   }
@@ -142,7 +140,7 @@ export default class Generator {
       existsAppStoreFile
     };
 
-    this.renderFile(this.typesTemplatePath, targetPath, appStoreTypesRenderData);
+    this.applyMethod('addRenderFile', this.typesTemplatePath, targetPath, appStoreTypesRenderData);
     this.applyMethod('addTypesExport', { source: './store/types' });
   }
 
@@ -154,7 +152,7 @@ export default class Generator {
 
       const pageModelFilePath = path.join(pageNameDir, 'model');
       const renderData = this.getPageModels(pageName, pageModelsDir, pageModelFilePath);
-      this.renderFile(this.pageStoreTemplatePath, targetPath, renderData);
+      this.applyMethod('addRenderFile', this.pageStoreTemplatePath, targetPath, renderData);
 
       this.applyMethod('removePageExport', pageName, exportName);
       this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
@@ -179,7 +177,7 @@ export default class Generator {
       pageComponentRenderData.hasPageStore = true;
     }
 
-    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
+    this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
   private renderPageLayout({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
@@ -204,7 +202,7 @@ export default class Generator {
       pageLayoutRenderData.hasPageStore = true;
     }
 
-    this.renderFile(pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
+    this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
   }
 
   private renderPageIndex(params) {
@@ -219,22 +217,7 @@ export default class Generator {
       pageExports: (existsModel && !existedStoreFile) ? ' store ' : ''
     };
 
-    this.renderFile(pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
-  }
-
-  private renderFile(templatePath: string, targetPath: string, extraData = {}) {
-    const templateContent = fse.readFileSync(templatePath, 'utf-8');
-    let content = ejs.render(templateContent, { ...extraData });
-    try {
-      content = prettier.format(content, {
-        parser: 'typescript',
-        singleQuote: true
-      });
-    } catch (error) {
-      // ignore error
-    }
-    fse.ensureDirSync(path.dirname(targetPath));
-    fse.writeFileSync(targetPath, content, 'utf-8');
+    this.applyMethod('addRenderFile', pageIndexTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
   public render() {

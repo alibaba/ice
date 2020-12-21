@@ -1,4 +1,3 @@
-
 import * as path from 'path';
 import Generator from './generator';
 import getRuntimeModules from './utils/getRuntimeModules';
@@ -44,6 +43,12 @@ export default (api, options) => {
   // register api method
   const generator = initGenerator(api, { ...options, debugRuntime: commandArgs.debugRuntime });
   setRegisterMethod(api, { generator });
+  
+  // add core template for framework
+  const templateRoot = path.join(__dirname, './generator/templates');
+  [`./app/${framework}`, './common'].forEach((templateDir) => {
+    generator.addTemplateDir(path.join(templateRoot, templateDir));
+  });
 
   // watch src folder
   if (command === 'start') {
@@ -61,16 +66,12 @@ function initGenerator(api, options) {
   const { userConfig, rootDir } = context;
   const { framework, debugRuntime } = options;
   const plugins = getAllPlugin();
-  const templatesDir = path.join(__dirname, './generator/templates');
   const { targets = [] } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
     targetDir,
-    templatesDir,
-    appTemplateDir: path.join(templatesDir, `./app/${framework}`),
-    commonTemplateDir: path.join(templatesDir, './common'),
     defaultData: {
       framework,
       isReact: framework === 'react',

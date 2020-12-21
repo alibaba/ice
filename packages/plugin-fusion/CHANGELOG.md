@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+- [feat] support color names
+
+## 0.1.9
+
+- [fix] compatible with component dist build
+
 ## 0.1.8
 - [feat] support `componentOptions` to load h5 component in mobile mode
 - [feat] support option `px2vwOptions` to pass options to postcssPlugin

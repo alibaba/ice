@@ -4,6 +4,7 @@ interface IRoute {
   targets?: string[];
   source: string;
   path: string;
+  name?: string;
 }
 interface IStaticConfig {
   routes: IRoute[];
