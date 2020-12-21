@@ -1,11 +1,11 @@
 ---
-title: React 主应用开发与接入
+title: 主应用开发与接入（React）
 order: 4
 ---
 
-`@ice/stark` 2.0 开始我们推荐使用 API 的方式注册微应用，对于存量的从 1.x 升级上来的主应用 AppRouter/AppRoute 可继续使用。
+对于 React 主应用，推荐使用 AppRouter/AppRoute 这种 React Component 的方式使用。
 
-## 通过 AppRouter&AppRoute 注册微应用
+## 注册微应用
 
 ```jsx
 // src/App.jsx
@@ -19,6 +19,7 @@ export default class App extends React.Component {
   state = {
     pathname: '',
   }
+
   handleRouteChange = (pathname) => {
     console.log('route change', pathname);
     // 如有需求，可根据 pathname 切换 layout 的形态
@@ -38,7 +39,7 @@ export default class App extends React.Component {
           onRouteChange={this.handleRouteChange}
         >
           <AppRoute
-            path="/seller"
+            
             title="商家平台"
             url={[
               '//unpkg.com/icestark-child-seller/build/js/index.js',
@@ -46,7 +47,14 @@ export default class App extends React.Component {
             ]}
           />
           <AppRoute
+            path="/user"
             //...
+          />
+          <AppRoute
+            path="*"
+            render={() => {
+              return <></>;
+            }}
           />
         </AppRouter>
       </BasicLayout>
@@ -55,7 +63,7 @@ export default class App extends React.Component {
 }
 ```
 
-## 微应用配置字段
+## 微应用配置
 
 ### 基准路由 path
 
