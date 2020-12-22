@@ -1,4 +1,5 @@
-import { AppConfig } from '@ice/stark';
+import * as React from 'react';
+import { CompatibleAppConfig } from '@ice/stark/lib/AppRoute';
 
 export interface IAppRouter {
   ErrorComponent?: React.ComponentType;
@@ -11,5 +12,5 @@ export interface IAppRouter {
 }
 
 export interface IGetApps {
-  (): AppConfig[] | Promise<AppConfig[]>;
+  (): CompatibleAppConfig[] | Promise<CompatibleAppConfig[]>;
 }
