@@ -28,7 +28,6 @@
     "fs-extra": "^8.1.0",
     "html-minifier": "^4.0.0",
     "parseurl": "^1.3.3",
-    "query-string": "^6.13.7",
-    "react-helmet": "^6.1.0"
+    "query-string": "^6.13.7"
   }
 }
