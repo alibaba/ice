@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import Generator from './generator';
 import checkStoreAndModelExists from './utils/checkStoreAndModelExists';
-import { generateAppStorePath } from './utils/generatePath';
+import { getAppStorePath, getRaxPagesPath } from './utils/getPath';
 
 const { name: pluginName } = require('../package.json');
 
@@ -10,13 +10,18 @@ export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
 
-  const { mpa: isMpa, entry } = userConfig;
-  // get mpa entries in src/pages
-  const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
-
   // Get framework from plugin-core
   const framework = getValue('FRAMEWORK');
   const isRax = framework === 'rax';
+
+  // get mpa entries in src/pages
+  const { mpa: isMpa, entry } = userConfig;
+  let srcDir;
+  if (isRax) {
+    srcDir = 'src';
+  } else {
+    srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
+  }
 
   const targetPath = getValue('TEMP_PATH');
   const tempDir = (path.basename(targetPath) || '').split('.')[1];
@@ -28,15 +33,15 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
 
   if (isRax) {
-    const pagesName = applyMethod('getPages', rootDir, srcDir);
-    const storeAndModelExists = checkStoreAndModelExists(rootDir, srcDir, projectType, pagesName);
+    const pagesPath = getRaxPagesPath(rootDir);
+    const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, pagesPath, isRax });
     if (!storeAndModelExists) {
       applyMethod('addDisableRuntimePlugin', pluginName);
       return;
     }
   }
 
-  const appStoreFile = applyMethod('formatPath', generateAppStorePath(rootDir, srcDir, projectType));
+  const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
   applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });
@@ -131,4 +136,3 @@ export default async (api) => {
     });
   });
 };
-

@@ -152,7 +152,6 @@ export default class Generator {
     const plugins = this.plugins.filter((plugin) => {
       return !this.disableRuntimePlugins.includes(plugin.name);
     });
-    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, this.debugRuntime);
 
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
       if (typeof currentValue === 'function') {
@@ -160,6 +159,8 @@ export default class Generator {
       }
       return previousValue;
     }, this.parseRenderData());
+
+    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, this.debugRuntime);
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
