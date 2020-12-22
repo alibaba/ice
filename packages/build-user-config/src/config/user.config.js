@@ -210,7 +210,15 @@ module.exports = [
     validation: 'array',
   },
   {
+    name: 'webpackLoaders',
+    validation: 'object',
+  },
+  {
+    name: 'webpackPlugins',
+    validation: 'object',
+  },
+  {
     name: 'postcssOptions',
     validation: 'object',
-  }
+  },
 ];
