@@ -1,10 +1,16 @@
 import React from 'react';
-import { Link, logger } from 'ice';
+import { Link, logger, Helmet } from 'ice';
 
 const About = (props) => {
   logger.info('About props', props);
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>About</title>
+        <meta name="keywords" content="About Keywords" />
+        <meta name="description" content="About Description" />
+      </Helmet>
       <h2>{props.title}</h2>
       <Link to="/dashboard">dashboard</Link><br />
       <Link to="/">home</Link>

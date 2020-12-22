@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { request, Link, logger, store as appStore } from 'ice';
+import { request, Link, logger, Helmet, store as appStore } from 'ice';
 import styles from './index.module.scss';
 
 export default function Home(props) {
@@ -16,6 +16,12 @@ export default function Home(props) {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{props.title}</title>
+        <meta name="keywords" content={props.keywords} />
+        <meta name="description" content={props.description} />
+      </Helmet>
       <h2 className={styles.title}>{props.title}</h2>
       <div>
         <div><strong>name：</strong>{userState.name}</div>
