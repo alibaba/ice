@@ -13,7 +13,8 @@ const commonRules = {
   "semi": 2,
   "react/react-in-jsx-scope": 0,
   "jsx-a11y/html-has-lang": 0,
-  "react/static-property-placement": 0
+  "react/static-property-placement": 0,
+  "no-multiple-empty-lines": 1
 };
 
 const jsRules = deepmerge(eslint, {
