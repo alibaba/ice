@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import Generator from './generator';
 import checkStoreAndModelExists from './utils/checkStoreAndModelExists';
-import { getAppStorePath, getRaxPagesPath } from './utils/getPath';
+import { getAppStorePath } from './utils/getPath';
 
 const { name: pluginName } = require('../package.json');
 
@@ -32,13 +32,10 @@ export default async (api) => {
   const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
-  if (isRax) {
-    const pagesPath = getRaxPagesPath(rootDir);
-    const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, pagesPath, isRax });
-    if (!storeAndModelExists) {
-      applyMethod('addDisableRuntimePlugin', pluginName);
-      return;
-    }
+  const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, isRax, applyMethod });
+  if (!storeAndModelExists) {
+    applyMethod('addDisableRuntimePlugin', pluginName);
+    return;
   }
 
   const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
