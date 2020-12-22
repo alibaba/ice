@@ -1,5 +1,5 @@
 import React from 'react';
-import { runApp, APP_MODE, IAppConfig, request } from 'ice';
+import { runApp, APP_MODE, IAppConfig } from 'ice';
 
 console.log('APP_MODE', APP_MODE);
 const appConfig: IAppConfig = {
@@ -8,7 +8,14 @@ const appConfig: IAppConfig = {
     errorBoundary: true,
     parseSearchParams: true,
     getInitialData: async() => {
-      const result = await request('/repo');
+      // const result = await request('/repo');
+      const result = {
+        status: 'SUCCESS',
+        data: {
+          group: 'ice.js',
+          url: 'http://github.com/ice-lab/ice.js',
+        }
+      };
       return result;
     },
     onShow() {

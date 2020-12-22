@@ -5,7 +5,6 @@ import { run } from './fn/shell';
 
 (async () => {
   await run('npm run clean');
-  await run('npx tsc --build ./tsconfig.json');
 
   const fileParten = '*/src/**/!(*.ts|*.tsx)';
   console.log(`[COPY]: ${fileParten}`);
@@ -21,6 +20,7 @@ import { run } from './fn/shell';
     // eslint-disable-next-line
     await fs.copyFile(from, to);
   }
+  await run('npx tsc --build ./tsconfig.json');
 
 })().catch((e) => {
   console.trace(e);
