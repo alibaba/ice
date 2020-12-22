@@ -217,4 +217,8 @@ module.exports = [
     name: 'webpackPlugins',
     validation: 'object',
   },
+  {
+    name: 'postcssOptions',
+    validation: 'object',
+  },
 ];

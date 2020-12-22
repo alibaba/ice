@@ -437,6 +437,37 @@ icejs 中一般不允许修改该配置。
 
 开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。
 
+### postcssOptions
+
+- 类型：`object`
+- 默认值：无
+
+配置方式：
+
+```json
+{
+  "postcssOptions": {
+    "plugins": {
+      "postcss-preset-env": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      },
+      "postcss-import": false,
+      "postcss-short": { "prefix": "x" }
+    },
+    "syntax": "sugarss",
+    "parser": "sugarss",
+    "stringifier": "sugarss"
+  }
+}
+```
+
+配置规则：
+- 工程已内置 `postcss-preset-env`，配置后将自动合并其参数
+- 如果工程未内置 postcss 插件，对应配置将会添加到所以样式处理规则的 `postcss-loader` 配置上
+- 设置为 `false` 的 postcss 插件，将从配置中移除
+
 ### terserOptions
 
 - 类型：`object`
