@@ -207,6 +207,10 @@ module.exports = [
   },
   {
     name: 'targets',
-    validation: 'array'
+    validation: 'array',
+  },
+  {
+    name: 'postcssOptions',
+    validation: 'object',
   }
 ];
