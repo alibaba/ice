@@ -14,11 +14,9 @@ module.exports = (config, postcssOptions) => {
         }
         if (builtInOptions.config && builtInOptions.config.path) {
           try {
-            const postcssFile = `${optionConfig.path}/defaultPostcssPlugins`;
-            finalPostcssOptions = {
-              // eslint-disable-next-line
-              plugins: (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || [],
-            };
+            const postcssFile = `${optionConfig.path}/defaultPostcssConfig`;
+            // eslint-disable-next-line
+            finalPostcssOptions = (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || [];
           } catch(err) {
             console.log('[Error] fail to load default postcss config');
           }
@@ -71,7 +69,13 @@ module.exports = (config, postcssOptions) => {
     styleRules.forEach((ruleName) => {
       if (checkPostcssLoader(config, ruleName)) {
         config.module.rule(ruleName).use('postcss-loader').tap(() => {
-          return {...restLoaderOptions, ...finalPostcssOptions, plugins: postcssPlugins };
+          // merge postcss-loader options
+          return {
+            ...restLoaderOptions,
+            ...postcssOptions,
+            ...finalPostcssOptions,
+            plugins: postcssPlugins,
+          };
         });
       }
     });
