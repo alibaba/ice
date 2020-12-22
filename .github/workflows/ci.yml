@@ -30,6 +30,9 @@ jobs:
     - name: setup
       if: steps.cache.outputs.cache-hit != 'true'
       run: npm run setup
+    - name: bootstrap
+      if: steps.cache.outputs.cache-hit == 'true'
+      run: npm run bootstrap
     - run: npm run dependency:check
     - run: npm run lint
     - run: npm run test
