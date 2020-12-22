@@ -32,7 +32,6 @@ export function wrapperPageWithSSR(context) {
   return WrapperPageFn;
 }
 
-
 export function wrapperPageWithCSR() {
   const wrapperPage = (PageComponent) => {
     const { pageConfig } = PageComponent;

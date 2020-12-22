@@ -1,4 +1,3 @@
-
 const glob = require('glob');
 const { CLIEngine } = require('eslint');
 const { isAbsolute, join } = require('path');
