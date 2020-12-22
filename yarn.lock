@@ -14209,7 +14209,11 @@ prerender-spa-plugin@^3.4.0:
     "@prerenderer/renderer-puppeteer" "^0.2.0"
     html-minifier "^3.5.16"
 
+<<<<<<< HEAD
 prettier@^2.0.2:
+=======
+prettier@^2.0.2, prettier@^2.0.4:
+>>>>>>> 7d9a69f56b1f680efe842eec998faf8216c913c8
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/prettier/download/prettier-2.2.1.tgz?cache=0&sync_timestamp=1606523097359&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprettier%2Fdownload%2Fprettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha1-eVoaeN1S8HPaDNQrIfnJE4GSP/U=
