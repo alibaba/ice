@@ -66,4 +66,3 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
 };
 
 export = getBuiltInPlugins;
-
