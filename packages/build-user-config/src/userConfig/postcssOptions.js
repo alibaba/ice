@@ -3,21 +3,38 @@ module.exports = (config, postcssOptions) => {
   if (postcssOptions) {
     const styleRules = ['css', 'css-module', 'scss', 'scss-module', 'less', 'less-module'];
     let finalPostcssOptions = {};
+    let restLoaderOptions = {};
     // get default post css config
     if (checkPostcssLoader(config, 'css')) {
       const builtInOptions = config.module.rule('css').use('postcss-loader').get('options');
-      if (builtInOptions && builtInOptions.config && builtInOptions.config.path) {
-        try {
-          const postcssFile = `${builtInOptions.config.path}/postcss.config`;
-          // eslint-disable-next-line
-          finalPostcssOptions = require(postcssFile)();
-        } catch(err) {
-          console.log('[Error] fail to load default postcss config');
+      if (builtInOptions) {
+        const { config: optionConfig, ...restOptions } = builtInOptions;
+        if (restOptions) {
+          restLoaderOptions = restOptions;
         }
+        if (builtInOptions.config && builtInOptions.config.path) {
+          try {
+            const postcssFile = `${optionConfig.path}/defaultPostcssPlugins`;
+            finalPostcssOptions = {
+              // eslint-disable-next-line
+              plugins: (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || [],
+            };
+          } catch(err) {
+            console.log('[Error] fail to load default postcss config');
+          }
+        } else {
+          // compatible with rax config
+          finalPostcssOptions = builtInOptions || { plugins: []};
+        } 
       }
     }
+    if (!finalPostcssOptions.plugins) {
+      // set default plugin value
+      finalPostcssOptions.plugins = [];
+    }
+
     // merge plugins
-    const { plugins = [] } = finalPostcssOptions;
+    const { plugins } = finalPostcssOptions;
     Object.keys(postcssOptions.plugins || {}).forEach((pluginName) => {
       let pluginOptions = {};
       const targetIndex = plugins.findIndex((pluginConfig) => {
@@ -25,7 +42,7 @@ module.exports = (config, postcssOptions) => {
         if (options) {
           pluginOptions = options;
         }
-        return name === pluginName;
+        return typeof name === 'string' && name === pluginName;
       });
       const options = postcssOptions.plugins[pluginName];
       if (targetIndex > -1) {
@@ -35,17 +52,27 @@ module.exports = (config, postcssOptions) => {
         } else {
           // shallow merge for options
           const mergedOptions = {...pluginOptions, ...options};
-          finalPostcssOptions.plugins.splice(targetIndex, 0, [pluginName, mergedOptions]);
+          finalPostcssOptions.plugins.splice(targetIndex, 1, [pluginName, mergedOptions]);
         }
       } else {
         finalPostcssOptions.plugins.push([pluginName, options]);
       }
     });
-
+    const postcssPlugins = finalPostcssOptions.plugins.map((pluginInfo) => {
+      const [name, options] = Array.isArray(pluginInfo) ? pluginInfo : [pluginInfo];
+      if (typeof name === 'string') {
+        // eslint-disable-next-line
+        return require(name)(options);
+      } else {
+        return pluginInfo;
+      }
+    });
     // modify css rules
     styleRules.forEach((ruleName) => {
       if (checkPostcssLoader(config, ruleName)) {
-        config.module.rule(ruleName).use('postcss-loader').tap(() => finalPostcssOptions);
+        config.module.rule(ruleName).use('postcss-loader').tap(() => {
+          return {...restLoaderOptions, ...finalPostcssOptions, plugins: postcssPlugins };
+        });
       }
     });
   }
