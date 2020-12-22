@@ -2,7 +2,7 @@ let ESLintReportingPluginUsed = false;
 
 module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) => {
   const { context } = api;
-  const { command, webpack, commandArgs, userConfig = {} } = context;
+  const { command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
   const subPackages = userConfig[target] && userConfig[target].subPackages;
 
