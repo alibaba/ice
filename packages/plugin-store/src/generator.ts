@@ -6,7 +6,6 @@ import {
   getPageStorePath,
   getAppStorePath,
   getAppModelsPath,
-  getRaxPagesPath,
 } from './utils/getPath';
 
 export interface IRenderPageParams {

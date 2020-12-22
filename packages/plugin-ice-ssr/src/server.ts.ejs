@@ -1,6 +1,7 @@
 import '@/app';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 import { matchPath } from 'ice';
 import { setInitialData } from 'react-app-renderer';
 import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
@@ -73,12 +74,18 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       emitLifeCycles
     });
 
+    const helmet = Helmet.renderStatic();
+
     $('#ice-container').append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-    </script>`)
+    </script>`);
+    $('head').append(`${helmet.title.toString()}`);
+    $('head').append(`${helmet.meta.toString()}`);
+    $('head').append(`${helmet.link.toString()}`);
+    $('head').append(`${helmet.script.toString()}`);
   } catch (e) {
     error = e;
     $('head').append(`

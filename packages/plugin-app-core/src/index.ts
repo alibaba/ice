@@ -17,7 +17,6 @@ export default (api, options) => {
   // Set framework field
   setValue('FRAMEWORK', framework);
 
-
   // Check target
   checkTargets(targets);
 
@@ -58,7 +57,6 @@ export default (api, options) => {
     await generator.render();
   });
 };
-
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
