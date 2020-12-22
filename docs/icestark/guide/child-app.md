@@ -1,11 +1,11 @@
 ---
-title: 微应用开发或迁移
+title: 微应用开发与接入
 order: 5
 ---
 
 本文介绍如何从零开发一个微应用，同时已有应用迁移也可以参考本文档。
 
-## 创建微应用
+## 通过脚手架创建
 
 React 项目（基于 icejs）：
 
@@ -44,9 +44,9 @@ export function unmount(props) {
 
 if (isInIcestark()) {
   console.log('app is running in framework app');
+} else {
+  ReactDOM.render(<App />, document.getElementById('ice-container'));
 }
-
-ReactDOM.render(<App />, document.getElementById('ice-container'));
 ```
 
 ### 2. 定义基准路由
@@ -73,7 +73,7 @@ export default () => {
 
 ## Vue 项目改造为微应用
 
-### 应用入口适配
+### 1. 应用入口适配
 
 vue 应用改造同样在入口文件中导出微应用相关生命周期即可：
 
@@ -102,7 +102,7 @@ if (!isInIcestark()) {
 }
 ```
 
-### 定义基准路由
+### 2. 定义基准路由
 
 Vue 项目中使用 vue-router：
 
@@ -123,7 +123,7 @@ export default new Router({
 
 ## 标准 UMD 微应用生成
 
-入口文件通过导出 mount、unmount 等标准生命周期后，需要配置工程上的改造，才能最终导出 UMD 标准的模块。
+入口文件通过导出 mount、unmount 等标准生命周期后，需要配置工程上的改造，才能最终导出 UMD 标准的微应用。
 
 以 webpack 工程为例：
 
@@ -132,7 +132,7 @@ module.exports = {
   output: {
     // 设置模块导出规范为 umd
     libraryTarget: 'umd',
-    // 设置模块在 window 上暴露的名称；icestark 框架不关心具体配置名称
+    // 可选，设置模块在 window 上暴露的名称；icestark 框架不关心具体配置名称
     library: 'microApp',
   }
 }

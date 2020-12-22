@@ -8,11 +8,13 @@ order: 2
 ## 初始化主应用
 
 ```bash
+# 基于 React 的主应用
 $ npm init ice icestark-layout @icedesign/stark-layout-scaffold
+# 或者基于 Vue 的主应用
+$ npm init ice icestark-layout @vue-materials/icestark-layout-app
+
 $ cd icestark-layout
-# 安装依赖
 $ npm install
-# 启动服务
 $ npm start
 ```
 
@@ -27,10 +29,11 @@ $ npm start
 ```bash
 # 基于 React 的微应用
 $ npm init ice icestark-child @icedesign/stark-child-scaffold
+# 基于 Vue 的微应用
+$ npm init ice icestark-child @vue-materials/icestark-child-app
+
 $ cd icestark-child
-# 安装依赖
 $ npm install
-# 启动服务
 $ npm run start
 ```
 
