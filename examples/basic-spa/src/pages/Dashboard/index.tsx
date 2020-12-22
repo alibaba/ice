@@ -30,7 +30,6 @@ const Dashboard = (props) => {
   );
 };
 
-
 Dashboard.pageConfig = {
   title: 'Dashboard Page'
 };

@@ -6,7 +6,6 @@
 import * as spawn from 'cross-spawn';
 import getPackages from './fn/getPackages';
 
-
 (async function () {
   const args = process.argv;
   const action = args[2];

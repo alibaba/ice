@@ -39,7 +39,6 @@ const AddTodo = () => {
     my.navigateBack();
   };
 
-
   return (
     <view className={styles['page-add-todo']}>
       <view className={styles['add-todo']}>

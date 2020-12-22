@@ -20,7 +20,6 @@ import nest from './nest';
 import splicer from './splicer';
 import amender from './amender';
 
-
 function ignorePath(checkPath: string, ignoreOptions: IgnoreOptions) {
   if (!ignoreOptions) return false;
   const ignoreList = Array.isArray(ignoreOptions) ? ignoreOptions : [ignoreOptions];

@@ -47,7 +47,6 @@ async function modifyInspectArgv(execArgv, processArgv) {
   return result;
 }
 
-
 function restartProcess(forkChildProcessPath) {
   (async () => {
     // remove the inspect related argv when passing to child process to avoid port-in-use error
