@@ -17,7 +17,7 @@ module.exports = (config, postcssOptions) => {
             const postcssFile = `${optionConfig.path}/defaultPostcssPlugins`;
             finalPostcssOptions = {
               // eslint-disable-next-line
-              plugins: require(postcssFile) || [],
+              plugins: (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || [],
             };
           } catch(err) {
             console.log('[Error] fail to load default postcss config');
