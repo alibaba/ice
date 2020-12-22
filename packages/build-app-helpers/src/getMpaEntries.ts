@@ -4,7 +4,8 @@ import getRoutesByAppJson from './getRoutesByAppJson';
 
 interface IOptions {
   target: string;
-  appJsonPath: string;
+  appJsonPath?: string;
+  appJsonContent?: string;
 }
 
 interface IEntry {
@@ -16,18 +17,18 @@ interface IEntry {
 
 // Get entries when exist app.json
 export default function (api, options?: IOptions): IEntry[] {
-  const { target, appJsonPath } = options || {};
-  if (appJsonPath) {
-    return getEntriesByJson(api, target, appJsonPath);
+  const { target, appJsonPath, appJsonContent } = options || {};
+  if (appJsonPath || appJsonContent) {
+    return getEntriesByJson(api, target, appJsonPath, appJsonContent);
   }
   return getEntriesByDir(api);
 }
 
-function getEntriesByJson(api, target, appJsonPath): IEntry[] {
+function getEntriesByJson(api, target, appJsonPath, appJsonContent): IEntry[] {
   const {
     context: { rootDir },
   } = api;
-  const routes = getRoutesByAppJson(target, { appJsonPath });
+  const routes = getRoutesByAppJson(target, { appJsonPath, appJsonContent });
   return routes.map((route) => {
     let pageName;
     let entryName;
