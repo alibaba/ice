@@ -1130,6 +1130,15 @@
   resolved "https://registry.npm.taobao.org/@bcoe/v8-coverage/download/@bcoe/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha1-daLotRy3WKdVPWgEpZMteqznXDk=
 
+"@builder/mpa-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/@builder/mpa-config/download/@builder/mpa-config-2.0.0.tgz#72de20663da6106d31437b4f2a67a5e30bec9790"
+  integrity sha1-ct4gZj2mEG0xQ3tPKmel4wvsl5A=
+  dependencies:
+    "@builder/app-helpers" "^2.0.0"
+    fs-extra "^8.1.0"
+    loader-utils "^2.0.0"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/@cnakazawa/watch/download/@cnakazawa/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -7095,15 +7104,6 @@ error-stack-parser@^2.0.0, error-stack-parser@^2.0.6:
   integrity sha1-WpmnB716TFinl5AtSNgoA+3mqtg=
   dependencies:
     stackframe "^1.1.1"
-
-es-abstract@^1.17.0, es-abstract@^1.17.0-next.1, es-abstract@^1.17.2, es-abstract@^1.17.5:
-error-stack-tracey@^0.1.3:
-  version "0.1.4"
-  resolved "https://registry.npm.taobao.org/error-stack-tracey/download/error-stack-tracey-0.1.4.tgz#ded73476819367b3a972d907e8e909e35ef582df"
-  integrity sha1-3tc0doGTZ7OpctkH6OkJ4171gt8=
-  dependencies:
-    error-stack-parser "^2.0.6"
-    source-map "^0.7.3"
 
 es-abstract@^1.17.0-next.1, es-abstract@^1.17.2:
   version "1.17.7"
@@ -14309,7 +14309,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.5.4, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -14716,20 +14716,20 @@ react-error-overlay@^6.0.3, react-error-overlay@^6.0.7:
   resolved "https://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-6.0.8.tgz#474ed11d04fc6bda3af643447d85e9127ed6b5de"
   integrity sha1-R07RHQT8a9o69kNEfYXpEn7Wtd4=
 
-react-fast-compare@^2.0.2:
-  version "2.0.4"
-  resolved "https://registry.npm.taobao.org/react-fast-compare/download/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
-  integrity sha1-6EtNRVsP7BE+BALDKTUnFRlvgfk=
+react-fast-compare@^3.1.1:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/react-fast-compare/download/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
+  integrity sha1-ZBqdqBtqYyDycOiXJPtFoLOeQ7s=
 
-react-helmet@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.npm.taobao.org/react-helmet/download/react-helmet-5.2.1.tgz#16a7192fdd09951f8e0fe22ffccbf9bb3e591ffa"
-  integrity sha1-FqcZL90JlR+OD+Iv/Mv5uz5ZH/o=
+react-helmet@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npm.taobao.org/react-helmet/download/react-helmet-6.1.0.tgz#a750d5165cb13cf213e44747502652e794468726"
+  integrity sha1-p1DVFlyxPPIT5EdHUCZS55RGhyY=
   dependencies:
     object-assign "^4.1.1"
-    prop-types "^15.5.4"
-    react-fast-compare "^2.0.2"
-    react-side-effect "^1.1.0"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.1.1"
+    react-side-effect "^2.1.0"
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
   version "16.13.1"
@@ -14786,12 +14786,10 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-side-effect@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.npm.taobao.org/react-side-effect/download/react-side-effect-1.2.0.tgz#0e940c78faba0c73b9b0eba9cd3dda8dfb7e7dae"
-  integrity sha1-DpQMePq6DHO5sOupzT3ajft+fa4=
-  dependencies:
-    shallowequal "^1.0.1"
+react-side-effect@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/react-side-effect/download/react-side-effect-2.1.1.tgz#66c5701c3e7560ab4822a4ee2742dee215d72eb3"
+  integrity sha1-ZsVwHD51YKtIIqTuJ0Le4hXXLrM=
 
 react-test-renderer@^16.13.1:
   version "16.14.0"
@@ -15787,11 +15785,6 @@ shallow-clone@^3.0.0:
   integrity sha1-jymBrZJTH1UDWwH7IwdppA4C76M=
   dependencies:
     kind-of "^6.0.2"
-
-shallowequal@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.npm.taobao.org/shallowequal/download/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
-  integrity sha1-GI1SHelbkIdAT9TctosT3wrk5/g=
 
 shebang-command@^1.2.0:
   version "1.2.0"
