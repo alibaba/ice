@@ -83,7 +83,9 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
     </script>`);
     $('head').append(`${helmet.title.toString()}`);
-    $('head').append(`${helmet.meta.toString()}`)
+    $('head').append(`${helmet.meta.toString()}`);
+    $('head').append(`${helmet.link.toString()}`);
+    $('head').append(`${helmet.script.toString()}`);
   } catch (e) {
     error = e;
     $('head').append(`
