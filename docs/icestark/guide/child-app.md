@@ -21,34 +21,32 @@ $ npm init ice icestark-child @vue-materials/icestark-child-app
 
 ## React 项目改造为微应用
 
-> TODO：采用 UMD 格式
-
 如果你的项目基于 icejs，请参考文档 [icejs 接入微前端](/docs/guide/advance/icestark.md)，接入步骤非常简单。如果不是 icejs 的项目那么请参考下面的流程。
 
 ### 1. 应用入口适配
 
-当应用在微前端环境里渲染时，需要关注两个点：
-
-1. 通过 `getMountNode()` 动态获取渲染节点
-2. 注册应用自身的声明周期
-
-React 项目：
+将 React 应用改造为微应用，仅仅只需要导出对应的生命周期即可：
 
 ```jsx
 import ReactDOM from 'react-dom';
-import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
+import { isInIcestark } from '@ice/stark-app';
 import App from './App';
 
-if (isInIcestark()) {
-  registerAppEnter(() => {
-    ReactDOM.render(router(), getMountNode());
-  });
-  registerAppLeave(() => {
-    ReactDOM.unmountComponentAtNode(getMountNode());
-  });
-} else {
-  ReactDOM.render(<App />, document.getElementById('ice-container'));
+export function mount(props) {
+  const { container, customProps } = props;
+  ReactDOM.render(<App {...customProps} />, container);
 }
+
+export function unmount(props) {
+  const { container } = props;
+  ReactDOM.unmountComponentAtNode(container);
+}
+
+if (isInIcestark()) {
+  console.log('app is running in framework app');
+}
+
+ReactDOM.render(<App />, document.getElementById('ice-container'));
 ```
 
 ### 2. 定义基准路由
@@ -77,27 +75,30 @@ export default () => {
 
 ### 应用入口适配
 
+vue 应用改造同样在入口文件中导出微应用相关生命周期即可：
+
 ```js
 // 应用入口文件 src/main.js
 import Vue from 'vue';
-import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
+import { isInIcestark } from '@ice/stark-app';
 
-if (isInIcestark()) {
-  let vue;
-  const mountNode = getMountNode();
-  registerAppEnter(() => {
-    vue = new Vue(...).$mount();
-    // for vue don't replace mountNode
-    mountNode.innerHTML = '';
-    mountNode.appendChild(vue.$el);
-  });
+let vue;
 
-  // make sure the unmount event is triggered
-  registerAppLeave(() => {
-    vue && vue.$destroy();
-  });
-} else {
-  const vue = new Vue(...);
+export function mount(props) {
+  const { container } = props;
+  vue = new Vue(...).$mount();
+  // for vue don't replace mountNode
+  container.innerHTML = '';
+  mountNode.appendChild(vue.$el);
+}
+
+export function unmount() {
+  vue && vue.$destroy();
+}
+
+if (!isInIcestark()) {
+  // 初始化 vue 项目
+  new Vue(...);  
 }
 ```
 
@@ -118,4 +119,21 @@ export default new Router({
   mode: 'history',
   base: getBasename(),
 });
+```
+
+## 标准 UMD 微应用生成
+
+入口文件通过导出 mount、unmount 等标准生命周期后，需要配置工程上的改造，才能最终导出 UMD 标准的模块。
+
+以 webpack 工程为例：
+
+```js
+module.exports = {
+  output: {
+    // 设置模块导出规范为 umd
+    libraryTarget: 'umd',
+    // 设置模块在 window 上暴露的名称；icestark 框架不关心具体配置名称
+    library: 'microApp',
+  }
+}
 ```

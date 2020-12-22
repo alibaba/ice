@@ -110,33 +110,12 @@ const onAppLeave = (appConfig) => {
 
 ### UmiJS 应用如何改造为微应用
 
-通过 UmiJS 提供运行时能力，劫持默认渲染逻辑，新建 `src/app.js` 文件：
-
-> TODO: UMD 格式
+UmiJS 支持配置 `@umijs/plugin-qiankun` 导出标准的微应用，安装完该插件后，通过注册 `config.js` 开启导出：
 
 ```js
-import ReactDOM from 'react-dom';
-import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
-
-// 微前端环境下动态修改渲染根节点
-export function modifyClientRenderOpts(memo)  {
-  return {
-    ...memo,
-    rootElement: isInIcestark() ? 'icestarkNode' : memo.rootElement,
-  }
-}
-
-export function render(oldRender) {
-  // 在 icestark 环境下注册对应的生命周期
-  if (isInIcestark()) {
-    registerAppEnter(() => {
-      oldRender();
-    });
-    registerAppLeave(() => {
-      ReactDOM.unmountComponentAtNode(getMountNode());
-    })
-  } else {
-    oldRender();
+export default {
+  qiankun: {
+    slave: {}
   }
 }
 ```
