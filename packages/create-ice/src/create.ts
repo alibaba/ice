@@ -39,7 +39,7 @@ export default async function create(dirPath: string, templateName: string, dirn
   console.log('Starts the development server.');
   console.log();
   console.log(chalk.cyan(`    cd ${dirname}`));
-  
+
   if (isAliInternal) {
     console.log(chalk.cyan('    tnpm install'));
     console.log(chalk.cyan('    tnpm start'));
@@ -75,12 +75,6 @@ async function selectTemplate(): Promise<string> {
     npmName: '@alifd/fusion-design-pro-js',
     description: 'Fusion Design Pro JavaScript template.',
   }, {
-    npmName: '@miniprogram-materials/scaffolds-app-js',
-    description: 'Lightweight JavaScript template with Mini Program.',
-  }, {
-    npmName: '@miniprogram-materials/scaffolds-app-ts',
-    description: 'Lightweight TypeScript template with Mini Program.',
-  }, {
     npmName: 'build-plugin-template',
     description: 'ice.js plugin development template.'
   }];
@@ -89,6 +83,7 @@ async function selectTemplate(): Promise<string> {
   const answer = await inquirer.prompt({
     type: 'list',
     name: 'template',
+    loop: false,
     message: 'Please select a template',
     default: defaultTemplate,
     choices: templates.map(item => {

@@ -28,16 +28,17 @@ module.exports = ({ onGetWebpackConfig, log, context, getAllTask, ...restApi }, 
     // compatible with dist output of component dev
     const ignoreTasks = ['component-dist'];
     taskNames.forEach((taskName) => {
-      if (ignoreTasks.includes(taskName)) {
-        return;
-      }
       onGetWebpackConfig(taskName, (config) => {
-        config.plugin('loadUrlWrapCodePlugin').tap(([options]) => [
-          { ...options,
-            addCodeBefore: `window.assetsUrls = ${JSON.stringify(assetsUrls[command])};
-              ${options.addCodeBefore || ''}`,
-          },
-        ]);
+        if (ignoreTasks.includes(taskName)) {
+          config.plugins.delete('loadUrlWrapCodePlugin');
+        } else {
+          config.plugin('loadUrlWrapCodePlugin').tap(([options]) => [
+            { ...options,
+              addCodeBefore: `window.assetsUrls = ${JSON.stringify(assetsUrls[command])};
+                ${options.addCodeBefore || ''}`,
+            },
+          ]);
+        }
       });
     }); 
   }

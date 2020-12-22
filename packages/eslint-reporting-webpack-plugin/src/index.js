@@ -24,7 +24,9 @@ module.exports = class EslintReportingPlugin {
 
     if (!configFiles[0]) return;
 
-    let files = [];
+    let results = [];
+    let fixable = false; // Show fixable recommended information.
+    let isFirstBuild = true; // Only run ESLint after the project is complete compiled. Avoid affecting the startup speed of dev server.
 
     try {
       eslint = new CLIEngine({
@@ -49,23 +51,30 @@ module.exports = class EslintReportingPlugin {
       compiler.hooks.thisCompilation.tap(NAME, (compilation) => {
         // Gather Files to lint
         compilation.hooks.succeedModule.tap(NAME, (module) => {
-          const file = module.resource;
-          if (file && !eslint.isPathIgnored(file || '') && extensionsReg.test(file)) {
-            files.push(file);
+          if (!isFirstBuild) {
+            // Check after dev server started and file changed
+            const file = module.resource;
+            if (file && !eslint.isPathIgnored(file || '') && extensionsReg.test(file)) {
+              const report = eslint.executeOnFiles([file]);
+              if (report.fixableErrorCount || report.fixableWarningCount) {
+                fixable = true;
+              }
+              results = results.concat(report.results);
+            }
           }
         });
         // await and interpret results
-        compilation.hooks.afterSeal.tapPromise(NAME, processResults);
+        compilation.hooks.afterSeal.tap(NAME, processResults);
 
-        async function processResults() {
-          const report = eslint.executeOnFiles(files);
-          const message = formatter(report.results);
+        function processResults() {
+
+          const message = formatter(results);
 
           if (message) {
             console.log('ESLint(https://eslint.org/) activated. Report:');
             console.log(message);
 
-            if (report.fixableErrorCount || report.fixableWarningCount) {
+            if (fixable) {
               console.log('You can add `--fix` to eslint script in package.json, like: "eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx ./"');
             } else {
               console.log('Please check ESLint problems');
@@ -75,7 +84,9 @@ module.exports = class EslintReportingPlugin {
             console.log('');
           }
 
-          files = [];
+          results = [];
+          fixable = false;
+          isFirstBuild = false;
         }
       });
 

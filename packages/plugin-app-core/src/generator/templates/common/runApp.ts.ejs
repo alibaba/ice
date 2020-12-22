@@ -80,6 +80,13 @@ export function runApp(appConfig, staticConfig?: any) {
   })
 };
 
+export function createApp(appConfig, staticConfig?: any) {
+  console.warn(
+    'Detected that you are using createApp, please use runApp method, Visit https://ice.work/docs/guide/basic/api.'
+  );
+  runApp(appConfig, staticConfig);
+}
+
 <% if (isReact) {%>
   const useSearchParams = () => {
     // @deprecated

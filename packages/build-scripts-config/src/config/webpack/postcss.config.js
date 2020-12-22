@@ -1,10 +1,7 @@
-const autoprefixer = require('autoprefixer');
-
 module.exports = () => ({
   plugins: [
-    autoprefixer({
-      // rename browserslist to overrideBrowserslist
-      overrideBrowserslist: [
+    ['postcss-preset-env', {
+      browsers: [
         'last 2 versions',
         'Firefox ESR',
         '> 1%',
@@ -12,6 +9,6 @@ module.exports = () => ({
         'iOS >= 8',
         'Android >= 4',
       ],
-    }),
+    }],
   ],
 });

@@ -1,8 +1,3 @@
-export * from './runApp';
-export { ErrorBoundary } from './ErrorBoundary';
-export * from './types';
-export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
-
 <%- imports %>
 
 <% if (exports) { %>
@@ -10,3 +5,7 @@ export const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
     <%- exports %>
   }
 <% } %>
+
+export * from './runApp';
+export { ErrorBoundary } from './ErrorBoundary';
+export * from './types';

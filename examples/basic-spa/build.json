@@ -1,9 +1,9 @@
 {
-  "ignoreHtmlTemplate": true,
+  "ignoreHtmlTemplate": false,
   "plugins": [],
   "modeConfig": {
     "prod": {
-      "ignoreHtmlTemplate": false
+      "ignoreHtmlTemplate": true
     }
   },
   "eslint": {
