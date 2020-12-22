@@ -95,11 +95,9 @@ runApp(appConfig);
 
 ## 高级功能
 
-### 指定入口
+### 调试时构建单个页面
 
 默认 MPA 应用在开发阶段会启动所有页面，如果你只想调试某个页面，可以通过指定 `--mpa-entry` 来启动。
-
-通过命令行参数指定启动的页面：
 
 ```bash
 "scripts": {
@@ -109,17 +107,18 @@ runApp(appConfig);
 
 ### 指定 HTML 模板
 
-可以通过配置 `template` 指定多个页面使用同一个 HTML 模板。
+默认情况下，`pages/Dashboard` 会优先使用 `public/dashboard.html` 作为 HTML 模板，如果该文件不存在则会使用 `public/index.html`。同时我们也支持通过 `template` 字段更加灵活的指定 HTML 模板： 
 
 ```json
 "mpa": {
   "template": {
-    "web.html": ["Dashboard", "Home"]
+    "web.html": ["Dashboard", "Home"],
+    "about.html": ["About"]
   }
 }
 ```
 
-### 指定打开页面
+### 指定调试时浏览器默认打开的页面
 
 可以通过配置 `openPage` 指定多个页面时默认打开指定的页面。
 

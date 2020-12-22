@@ -3,11 +3,9 @@ title: 微前端 icestark
 order: 3
 ---
 
-基于 icejs 的插件机制，我们封装了 `build-plugin-icestark` 插件，这个插件可以大大降低接入微前端方案的成本。
-
 ## 框架应用
 
-通过物料模板快速创建一个微前端的微应用：
+通过模板快速创建一个微前端的框架应用：
 
 ```bash
 $ npm init ice icestark-framework @icedesign/stark-layout-scaffold
@@ -16,26 +14,51 @@ $ npm install
 $ npm start
 ```
 
-该模板默认在 `build.json` 里引入了插件 `build-plugin-icestark`：
+如果不是通过模板创建，则需要按照下面的步骤进行改造：
+
+### 添加插件 build-plugin-icestark
+
+安装插件依赖：
+
+```bash
+$ npm i --save-dev build-plugin-icestark
+```
+
+在 `build.json` 里引入插件：
 
 ```json
 {
   "plugins": {
-    "build-plugin-icestark"
+    ["build-plugin-icestark", {
+      // 防止与微应用的 webpackJSONP 冲突
+      "uniqueName": "frameworkJsonp"
+    }],
+    ["build-plugin-fusion", {
+      "themeConfig": {
+        // 防止与微应用里的基础组件 css prefix 冲突
+        "nextPrefix": "next-icestark-"
+      }
+    }],
   }
 }
 ```
 
-同时我们需要在应用入口 `src/app.ts` 中配置框架应用的一些运行时信息：
+### 应用入口改造 
+
+应用入口 `src/app.ts` 中配置框架应用的一些运行时信息：
 
 ```diff
 import { runApp } from 'ice'
++import { ConfigProvider } from '@alifd/next';
 +import NotFound from '@/components/NotFound';
 +import BasicLayout from '@/layouts/BasicLayout';
 
 const appConfig = {
   app: {
     rootId: 'ice-container',
++    addProvider: ({ children }) => (
++      <ConfigProvider prefix="next-icestark-">{children}</ConfigProvider>
++    ),
   },
   router: {
 +    type: 'browser',
@@ -60,7 +83,7 @@ const appConfig = {
   },
 };
 
-runApp(appConfig)
+runApp(appConfig);
 ```
 
 `appConfig.icestark` 完整的配置项说明：
@@ -72,9 +95,44 @@ runApp(appConfig)
   - NotFoundComponent: 404 组件
   - LoadingComponent: 应用切换时的 Loading 组件
 
-### 常见问题
+## 微应用
 
-#### 如何监听微应用切换
+通过模板快速创建一个微应用：
+
+``` bash
+# 创建微应用
+$ npm init ice icestark-child @icedesign/stark-child-scaffold
+$ cd icestark-child
+$ npm install
+$ npm start
+```
+
+同主应用一样，微应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了微应用相关的信息：
+
+```diff
+import { runApp } from 'ice'
+
+const appConfig = {
+  app: {
+    rootId: 'ice-container',
+  },
+  router: {
++    type: 'browser',
+  },
+  icestark: {
++    type: 'child',
+  },
+};
+
+runApp(appConfig)
+```
+
+只需要这么简单，你的 SPA 应用就可以变成微前端的微应用了。
+
+
+## 常见问题
+
+### 如何监听微应用切换
 
 `icestark` 通过 `onRouteChange`、`onAppEnter` 和 `onAppLeave` 来监听微应用间的切换，在 icejs 研发框架下可以通过在对应的 Layout 中实现相关钩子的监听。Layout 中接收 props 属性如下：
 
@@ -104,11 +162,10 @@ const BasicLayout = ({ pathname, appLeave, appEnter, children }) => {
       {children}
     </div>
   );
-}
-
+};
 ```
 
-#### 动态修改微应用列表
+### 动态修改微应用列表
 
 初始化微应用列表可以如上文介绍在应用入口 `src/app.ts` 中配置 `getApps` 属性即可，如果需要动态修改微应用列表，可以通过 Layout 接收的 `updateApps` 属性进行修改：
 
@@ -133,45 +190,14 @@ const BasicLayout = ({ updateApps, children }) => {
 }
 ```
 
-## 微应用
-
-通过物料模板快速创建一个微前端的微应用：
-
-``` bash
-# 创建微应用
-$ npm init ice icestark-child @icedesign/stark-child-scaffold
-$ cd icestark-child
-$ npm install
-$ npm start
-```
-
-同框架应用一样，微应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了微应用相关的信息：
-
-```diff
-import { runApp } from 'ice'
-
-const appConfig = {
-  app: {
-    rootId: 'ice-container',
-  },
-  router: {
-+    type: 'browser',
-  },
-  icestark: {
-+    type: 'child',
-  },
-};
-
-runApp(appConfig)
-```
-
-只需要这么简单，你的 SPA 应用就可以变成微前端的微应用了。
-
-关于微前端的更多内容，请查看文档 [icestark](/docs/icestark/about)。
-
 ### UMD 规范微应用
 
-> build-plugin-icestark@2.0.0 以上版本支持
+icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的微应用，在微应用层面可以更少的降低跟主应用的耦合：
+
+- 微应用依赖的 `build-plugin-icestark` 版本需要高于 `2.0.0` 才能支持构建出 UMD 规范的微应用
+- 主应用依赖的 `@ice/stark` 版本需要高于 `1.6.0` 才能支持渲染 UMD 规范的微应用
+
+#### 微应用导出 UMD 规范的产物
 
 在 `build.json` 中配置 umd 属性即可导出标准 UMD 规范的微应用：
 
@@ -184,4 +210,20 @@ runApp(appConfig)
     }]
   ]
 }
+```
+
+### 主应用对采用 UMD 规范的微应用进行声明
+
+对于 umd 类型的微应用需要在框架应用的微应用列表配置中显示声明：
+
+```diff
+const apps = [{
+  path: '/seller',
+  title: '商家平台',
++  umd: true,
+  url: [
+    '//ice.alicdn.com/icestark/child-seller-react/index.js',
+    '//ice.alicdn.com/icestark/child-seller-react/index.css',
+  ],
+}];
 ```

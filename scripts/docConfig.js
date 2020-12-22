@@ -31,6 +31,7 @@ const docCategories = {
       dir: 'resource',
     }],
   },
+
   'guide-0.x': {
     title: {},
     children: [
@@ -73,18 +74,17 @@ const docCategories = {
   },
 
   // 小程序
-  miniprogram: {
-    // 工作台模式
-    title: {},
-    children: [{
-      title: {
-        'zh-cn': '基础指南',
-        'en-us': 'basic',
-      },
-      dir: 'basic',
-    }]
-  },
-
+  // miniprogram: {
+  //   // 工作台模式
+  //   title: {},
+  //   children: [{
+  //     title: {
+  //       'zh-cn': '基础指南',
+  //       'en-us': 'basic',
+  //     },
+  //     dir: 'basic',
+  //   }]
+  // },
 
   // iceworks
   iceworks: {
@@ -159,25 +159,7 @@ const docCategories = {
       },
       dir: 'reference',
     }],
-  },
-
-  icestore: {
-    // icestore
-    title: {},
-    children: [{
-      title: {
-        'zh-cn': '指南',
-        'en-us': 'guide',
-      },
-      dir: 'guide',
-    }, {
-      title: {
-        'zh-cn': '参考',
-        'en-us': 'Reference',
-      },
-      dir: 'reference',
-    }],
-  },
+  }
 };
 
 module.exports = {

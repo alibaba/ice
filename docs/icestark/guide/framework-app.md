@@ -1,28 +1,11 @@
 ---
-title: React 框架应用开发
-order: 3
+title: 主应用开发与接入（React）
+order: 4
 ---
 
-框架应用负责整个系统的 Layout 设计以及所有微应用的管理注册，icestark 约束了框架应用必须基于 React。
+对于 React 主应用，推荐使用 AppRouter/AppRoute 这种 React Component 的方式使用。
 
-## 创建框架应用
-
-```bash
-$ npm init ice icestark-framework @icedesign/stark-layout-scaffold
-$ cd icestark-framework
-$ npm install
-$ npm start
-```
-
-## 已有项目改造为框架应用
-
-安装依赖：
-
-```bash
-$ npm i --save @ice/stark
-```
-
-通过 `AppRouter/AppRoute` 来管理注册微应用：
+## 注册微应用
 
 ```jsx
 // src/App.jsx
@@ -36,6 +19,7 @@ export default class App extends React.Component {
   state = {
     pathname: '',
   }
+
   handleRouteChange = (pathname) => {
     console.log('route change', pathname);
     // 如有需求，可根据 pathname 切换 layout 的形态
@@ -55,12 +39,22 @@ export default class App extends React.Component {
           onRouteChange={this.handleRouteChange}
         >
           <AppRoute
-            path="/seller"
+            
             title="商家平台"
             url={[
               '//unpkg.com/icestark-child-seller/build/js/index.js',
               '//unpkg.com/icestark-child-seller/build/css/index.css',
             ]}
+          />
+          <AppRoute
+            path="/user"
+            //...
+          />
+          <AppRoute
+            path="*"
+            render={() => {
+              return <></>;
+            }}
           />
         </AppRouter>
       </BasicLayout>
@@ -69,41 +63,17 @@ export default class App extends React.Component {
 }
 ```
 
-## 微应用配置字段
+## 微应用配置
 
 ### 基准路由 path
 
 类型为 `string|string[]`，大部分情况下都是 string，通过 path 约束每个微应用的路由定义，建立路由和微应用的映射关系。
 
-### 微应用入口 entry/url/entryContent
+### 微应用入口 url/entry/entryContent
 
-icestark 通过微应用入口字段的配置进行应用的渲染，因此这个字段非常重要。针对不同的场景，icestark 也支持了多种入口配置形式：
+通过 AppRoute 注册微应用，微应用入口支持 url/entry/entryContent 方式，此部分与 API 注册使用一致，可参考文档[微应用入口](/docs/icestark/guide/framework-api#微应用入口)使用。
 
-#### url
-
-最常见的形式，适用于微应用入口资源比较确定，同时除了 mountNode 不依赖其他 DOM 节点，此时将这些资源地址按顺序拼成数组传给 icestark 即可。
-
-#### entry
-
-使用场景：
-
-- 应用依赖的入口资源不确定：比如需要引入 vendor、或者不确定的 externals 资源、hash 等场景
-- 应用默认需要依赖很多 DOM 节点：比如 `jQuery`/`Kissy`/`angular` 等方案
-
-entry 对应 html url, icestark 对 `entry` 的处理包含以下步骤：
-
-- 通过 `window.fetch` 获取 entry 属性对应的 html 地址
-- 解析 html ，解析出所有 js 资源包括 `inline` 和 `external` 两种类型，如果 `external` 类型是相对路径，根据 `entry` 地址进行补齐
-- 将处理后的 html 内容插入 icestark 动态创建的节点
-- 依次通过创建 `script` 标签按顺序引入 js 资源
-
-#### entryContent
-
-当需要使用 entry 能力但是 html url 不支持前端跨域访问的情况，可以自行将 html 内容拿到，然后通过 entryContent 属性传递给 icestark。
-
-#### component/render
-
-同时我们也提供通过 React 组件的方式渲染微应用，常用于微应用通过 iframe 方式的场景：
+在此基础上，AppRoute 还支持了更为灵活的 component 和 render 方式配置微应用入口：
 
 ```js
 <AppRoute
@@ -115,6 +85,8 @@ entry 对应 html url, icestark 对 `entry` 的处理包含以下步骤：
   // component={CustomComponent}
 />
 ```
+
+通过这种方式，可以通过 AppRoute 渲染一个 iframe 或者任意的 React 组件。
 
 ## 微应用注册通过数据驱动
 
