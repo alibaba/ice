@@ -14,8 +14,28 @@
     "plugins": {
       "postcss-preset-env": {
         "browsers": [
-          "last 2 versions"
+          "chrome 68"
         ]
+      }
+    }
+  },
+  "webpackPlugins": {
+    "MiniCssExtractPlugin": {
+      "options": {
+        "filename": "[name]-test.css"
+      }
+    }
+  },
+  "webpackLoaders": {
+    "scss-module": {
+      "loaders": {
+        "css-loader": {
+          "options": {
+            "modules": {
+              "localIdentName": "[local]--[hash:base64:7]"
+            }
+          }
+        }
       }
     }
   }
