@@ -14209,11 +14209,7 @@ prerender-spa-plugin@^3.4.0:
     "@prerenderer/renderer-puppeteer" "^0.2.0"
     html-minifier "^3.5.16"
 
-<<<<<<< HEAD
 prettier@^2.0.2:
-=======
-prettier@^2.0.2, prettier@^2.0.4:
->>>>>>> 7d9a69f56b1f680efe842eec998faf8216c913c8
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/prettier/download/prettier-2.2.1.tgz?cache=0&sync_timestamp=1606523097359&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprettier%2Fdownload%2Fprettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha1-eVoaeN1S8HPaDNQrIfnJE4GSP/U=
@@ -17617,14 +17613,14 @@ utila@~0.4:
 
 utility@0.1.11:
   version "0.1.11"
-  resolved "https://registry.npm.taobao.org/utility/download/utility-0.1.11.tgz#fde60cf9b4e4751947a0cf5d104ce29367226715"
+  resolved "https://registry.npm.taobao.org/utility/download/utility-0.1.11.tgz?cache=0&sync_timestamp=1608037972811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Futility%2Fdownload%2Futility-0.1.11.tgz#fde60cf9b4e4751947a0cf5d104ce29367226715"
   integrity sha1-/eYM+bTkdRlHoM9dEEzik2ciZxU=
   dependencies:
     address ">=0.0.1"
 
 utility@^1.15.0, utility@^1.16.1, utility@^1.8.0:
   version "1.17.0"
-  resolved "https://registry.npm.taobao.org/utility/download/utility-1.17.0.tgz#60819f712a6e0ce774f52fb1d691992a5f59d362"
+  resolved "https://registry.npm.taobao.org/utility/download/utility-1.17.0.tgz?cache=0&sync_timestamp=1608037972811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Futility%2Fdownload%2Futility-1.17.0.tgz#60819f712a6e0ce774f52fb1d691992a5f59d362"
   integrity sha1-YIGfcSpuDOd09S+x1pGZKl9Z02I=
   dependencies:
     copy-to "^2.0.1"
