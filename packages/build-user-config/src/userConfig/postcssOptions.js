@@ -1,4 +1,5 @@
 const checkPostcssLoader = (config, ruleName) => config.module.rules.has(ruleName) && config.module.rule(ruleName).uses.has('postcss-loader');
+
 module.exports = (config, postcssOptions) => {
   if (postcssOptions) {
     const styleRules = ['css', 'css-module', 'scss', 'scss-module', 'less', 'less-module'];
@@ -16,7 +17,7 @@ module.exports = (config, postcssOptions) => {
           try {
             const postcssFile = `${optionConfig.path}/defaultPostcssConfig`;
             // eslint-disable-next-line
-            finalPostcssOptions = (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || [];
+            finalPostcssOptions = (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || {};
           } catch(err) {
             console.log('[Error] fail to load default postcss config');
           }
