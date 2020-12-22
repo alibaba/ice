@@ -1,13 +1,22 @@
 {
-  "ignoreHtmlTemplate": true,
+  "ignoreHtmlTemplate": false,
   "plugins": [],
   "modeConfig": {
     "prod": {
-      "ignoreHtmlTemplate": false
+      "ignoreHtmlTemplate": true
     }
   },
   "eslint": {
     "disable": false,
     "quiet": true
+  },
+  "postcssOptions": {
+    "plugins": {
+      "postcss-preset-env": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
+    }
   }
 }

@@ -16,7 +16,10 @@ module.exports = {
         name: 'Jack Ma',
         edu: 'Hangzhou Normal University',
         address: 'Hangzhou'
-      }
+      },
+      title: 'Home Page...',
+      content: 'Home Content...',
+      description: 'Home Description...'
     },
   },
 };

@@ -1,4 +1,3 @@
-
 // import { lazy } from 'ice';
 
 import Layout from '@/layouts/index';

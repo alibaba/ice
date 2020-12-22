@@ -17,6 +17,7 @@
     { "path": "packages/plugin-mpa" },
     { "path": "packages/plugin-prerender" },
     { "path": "packages/plugin-auth" },
+    { "path": "packages/plugin-helmet" },
     { "path": "packages/plugin-ice-ssr" },
     { "path": "packages/plugin-fast-refresh" },
     { "path": "packages/plugin-miniapp" },
@@ -32,6 +33,5 @@
     { "path": "packages/plugin-stark-module" },
     { "path": "packages/plugin-webpack5" },
     { "path": "packages/webpack-dev-mock" },
-    { "path": "packages/plugin-ssr" }
   ]
 }

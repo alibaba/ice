@@ -1,6 +1,5 @@
 import * as path from 'path';
 import Generator from './generator';
-import getRuntimeModules from './utils/getRuntimeModules';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
@@ -17,7 +16,6 @@ export default (api, options) => {
 
   // Set framework field
   setValue('FRAMEWORK', framework);
-
 
   // Check target
   checkTargets(targets);
@@ -43,7 +41,7 @@ export default (api, options) => {
   // register api method
   const generator = initGenerator(api, { ...options, debugRuntime: commandArgs.debugRuntime });
   setRegisterMethod(api, { generator });
-  
+
   // add core template for framework
   const templateRoot = path.join(__dirname, './generator/templates');
   [`./app/${framework}`, './common'].forEach((templateDir) => {
@@ -59,7 +57,6 @@ export default (api, options) => {
     await generator.render();
   });
 };
-
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
@@ -77,10 +74,11 @@ function initGenerator(api, options) {
       isReact: framework === 'react',
       isRax: framework === 'rax',
       isMiniapp,
-      runtimeModules: getRuntimeModules(plugins, targetDir, debugRuntime),
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,
+    plugins,
+    debugRuntime,
   });
 }
 

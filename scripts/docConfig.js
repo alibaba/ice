@@ -85,7 +85,6 @@ const docCategories = {
     }]
   },
 
-
   // iceworks
   iceworks: {
     title: {},

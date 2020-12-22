@@ -1,17 +1,10 @@
-const autoprefixer = require('autoprefixer');
+const plugins = require('./defaultPostcssPlugins');
 
 module.exports = () => ({
-  plugins: [
-    autoprefixer({
-      // rename browserslist to overrideBrowserslist
-      overrideBrowserslist: [
-        'last 2 versions',
-        'Firefox ESR',
-        '> 1%',
-        'ie >= 9',
-        'iOS >= 8',
-        'Android >= 4',
-      ],
-    }),
-  ],
+  plugins: plugins.map(([pluginName, pluginOptions]) => {
+    // eslint-disable-next-line
+    return require(pluginName)(pluginOptions);
+  }),
 });
+
+exports.pluginsConfig = plugins;
