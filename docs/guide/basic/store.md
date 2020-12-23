@@ -75,9 +75,13 @@ export default store;
 
 `createStore()` 支持的 options:
 
-- disableImmer：布尔值，可选，默认值 false，如果设置为 true，那么 immer 将被禁用，这意味着不能再在 reducers 中直接改变状态，而是必须返回新的状态。
-- disableError：布尔值，可选，默认值 false，如果设置为 true，则 `UseModelEffectsError` 和 `WithModelEffectsError` 将不可用。
-- disableLoading：布尔值，可选，默认值 false，如果设置为 true，则 `useModelEffectsLoading` 和 `withModelEffectsLoading` 将不可用。
+- disableImmer：布尔类型，可选，默认值 false，如果设置为 true，那么 immer 将被禁用，这意味着不能再在 reducers 中直接改变状态，而是必须返回新的状态。
+- disableError：布尔类型，可选，默认值 false，如果设置为 true，则 `UseModelEffectsError` 和 `WithModelEffectsError` 将不可用。
+- disableLoading：布尔类型，可选，默认值 false，如果设置为 true，则 `useModelEffectsLoading` 和 `withModelEffectsLoading` 将不可用。
+- plugins：数组类型，可选，Redux 插件
+- redux：对象类型，可选
+  - middlewares：数组类型，Redux middlewares
+  - devtoolOptions：对象类型，Redux Devtools 参数
 
 ### 在 View 中使用模型状态
 
@@ -171,7 +175,16 @@ src
 └── app.ts
 ```
 
-对于嵌套页面，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在并配置在 `src/routes.ts` 中：
+对于嵌套页面，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在：
+
+```jsx
+// Layout/index.tsx
+export default ({ children }) => {
+  return <>{children}</>;
+}
+```
+
+同时配置在 `src/routes.ts` 中：
 
 ```diff
 // src/routes.ts
@@ -207,8 +220,6 @@ export default [
   }
 ]
 ```
-
-对于嵌套页面的状态管理，在对应的页面下需要新增 Layout 文件，用于 icejs 自动注册 Provider，其它与非嵌套页面一致。
 
 ## 参阅资料
 
@@ -450,6 +461,39 @@ export default store.withModel('todos')(TodoList);
 同时，也可以使用 `withModelDispatchers` 以及 `withModelEffectsState` API。
 
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
+
+### 调试
+
+icejs 中默认集成了 [Redux Devtools](https://github.com/zalmoxisus/redux-devtools-extension)，不需要额外的配置就可以通过 Redux Devtools 调试：
+
+![](https://img.alicdn.com/tfs/TB1wK4nqypE_u4jSZKbXXbCUVXa-1918-430.png)
+
+如果想要定义 Devtools 的参数，可以查看上面 `createStore` 的 options 说明。
+
+### 在其他地方使用 store
+
+icejs 默认支持 `src/models` 和 `src/pages/Home/models`，如果想在这两个地方以外使用 models 则需要自行包裹 `store.Provider`。
+
+比如希望在 `src/pages/Home/Foo/` 下创建一个 store：
+
+1. 在 `src/pages/Home/Foo/models/` 下定义 model
+2. 在 `src/pages/Home/Foo/store.ts` 中初始化 store
+3. **新增步骤：** 在 ` src/pages/Home/Foo/index.tsx` 中包裹 `store.Provider`
+
+```jsx
+// src/pages/Home/Foo/index.tsx
+import store from './store';
+const { Provider } = store;
+
+export default () => {
+  return <Provider><Child /></Provider>;
+}
+
+function Child() {
+  const [state, actions] = store.useModel('foo');
+  return <></>;
+}
+```
 
 ## 版本变更说明
 

@@ -49,7 +49,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 | [Iceworks](https://github.com/ice-lab/iceworks) | ![](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code) | [docs](/docs/iceworks/about) |可视化智能开发助手|
 | [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |轻量简洁的状态管理方案|
-| [ahooks](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/ahooks.svg) | [docs](https://ahooks.js.org/zh-CN) |基于业务沉淀的丰富完备的 React Hooks|
+| [ahooks](https://github.com/alibaba/hooks) | ![](https://img.shields.io/npm/v/ahooks.svg) | [docs](https://ahooks.js.org/zh-CN) |基于业务沉淀的丰富完备的 React Hooks|
 
 ## 常见问题
 
