@@ -437,6 +437,37 @@ icejs 中一般不允许修改该配置。
 
 开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。
 
+### postcssOptions
+
+- 类型：`object`
+- 默认值：无
+
+配置方式：
+
+```json
+{
+  "postcssOptions": {
+    "plugins": {
+      "postcss-preset-env": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      },
+      "postcss-import": false,
+      "postcss-short": { "prefix": "x" }
+    },
+    "syntax": "sugarss",
+    "parser": "sugarss",
+    "stringifier": "sugarss"
+  }
+}
+```
+
+配置规则：
+- 工程已内置 `postcss-preset-env`，配置后将自动合并其参数
+- 如果工程未内置 postcss 插件，对应配置将会添加到所以样式处理规则的 `postcss-loader` 配置上
+- 设置为 `false` 的 postcss 插件，将从配置中移除
+
 ### terserOptions
 
 - 类型：`object`
@@ -547,6 +578,78 @@ dll                            // dll 构建产物文件夹
 ├── 7265616374.manifest.json   // DllReferencePlugin 使用
 └── dll-pkg.json               // build.json 中所配置的 dllEntry 信息
 ````
+
+### webpackPlugins
+
+- 类型：`object`
+- 默认值：无
+
+通过 `webpackPlugins` 可以方便地新增或者修改工程上的 webpack 插件配置。
+
+配置方式：
+
+```json
+{
+  "webpackPlugins": {
+    "webpack.ProvidePlugin": {
+      "options": {
+        "identifier": "module1"
+      }
+    },
+    "HtmlWebpackPlugin": {
+      "before": "webpack.ProvidePlugin"
+    }
+  }
+}
+```
+
+配置规则如下：
+- 对于 webpack 内置的 plugins，可以通过 webpack.PluginName 的形式作为 key 值进行配置
+- 对于其他 webpack 插件，需要将插件的 npm 包名作为 key 值进行配置，package.json 中需要添加并安装该插件依赖
+- 每一项插件配置支持 before/after 用来调整 webpack 插件执行顺序
+- 如果配置设置的插件已被添加，则修改插件配置
+
+### webpackLoaders
+
+- 类型：`object`
+- 默认值：无
+
+通过 `webpackLoaders` 可以方便地新增或者修改工程上的 webpack loader 配置。
+
+配置方式：
+
+```json
+{
+  "webpackLoaders": {
+    "css": {
+      "test": ".css$",
+      "loaders": {
+        "style-loader": {
+          "options": {
+            "loaderoption": true
+          },
+          "before": "less-loader"
+        }
+      }
+    }
+  }
+}
+```
+
+配置规则如下：
+- webpackLoaders 配置下每一项为具体的 webpack loader 规则，支持参数
+  - test：配置类型 `string|string[]`，同 [Rule.test](https://webpack.js.org/configuration/module/#ruletest)
+  - oneOf：配置类型 `[oneOfName: string]: { resourceQuery: string; loaders: Loaders }`，同[Rule.oneOf](https://webpack.js.org/configuration/module/#ruleoneof)
+  - includeClear：清除默认 include 配置
+  - include：配置类型 `string|string[]`，同 [Rule.include](https://webpack.js.org/configuration/module/#ruleinclude)
+  - excludeClear：清除默认 exclude 配置
+  - exclude：配置类型 `string|string[]`，同 [Rule.exclude](https://webpack.js.org/configuration/module/#ruleexclude)
+  - pre：配置类型 `boolean`，配置 rule 的 enforce 值为 pre
+  - post：配置类型 `boolean`，配置 rule 的 enforce 值为 post
+  - before：配置类型 `string`，用于配置定义顺序，前置指定
+  - after：配置类型 `string`，用于配置定义顺序，后置指定
+  - loaders：配置具体的 webpack loader
+- loaders 参数用来指定具体 webpack loader 的参数；每一项 loader 参数支持 before/after 用来调整 webpack loader 的执行顺序；如果 loader 名已被添加，则修改插件配置
 
 ## 根据环境区分工程配置
 

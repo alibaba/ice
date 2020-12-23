@@ -18,7 +18,6 @@ export default (api, options: IOptions) => {
     ['@', path.join(rootDir, 'src')],
   ];
 
-
   onGetWebpackConfig((config: any) => {
     // eslint-disable-next-line
     aliasMap.forEach(alias => {
