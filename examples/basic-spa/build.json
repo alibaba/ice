@@ -18,5 +18,25 @@
         ]
       }
     }
+  },
+  "webpackPlugins": {
+    "MiniCssExtractPlugin": {
+      "options": {
+        "filename": "[name]-test.css"
+      }
+    }
+  },
+  "webpackLoaders": {
+    "scss-module": {
+      "loaders": {
+        "css-loader": {
+          "options": {
+            "modules": {
+              "localIdentName": "[local]--[hash:base64:7]"
+            }
+          }
+        }
+      }
+    }
   }
 }
