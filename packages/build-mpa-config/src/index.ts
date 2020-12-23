@@ -9,9 +9,9 @@ interface IEntries {
 
 interface IConfigOptions {
   type?: string;
-  framework: string;
+  framework?: string;
   entries?: IEntries[];
-  targetDir: string;
+  targetDir?: string;
 }
 export const generateMPAEntries = (api, options: IConfigOptions) => {
   const { context } = api;
