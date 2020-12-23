@@ -1,10 +1,9 @@
-const plugins = require('./defaultPostcssPlugins');
+const defaultConfig = require('./defaultPostcssConfig');
 
 module.exports = () => ({
-  plugins: plugins.map(([pluginName, pluginOptions]) => {
+  ...defaultConfig,
+  plugins: defaultConfig.plugins.map(([pluginName, pluginOptions]) => {
     // eslint-disable-next-line
     return require(pluginName)(pluginOptions);
   }),
 });
-
-exports.pluginsConfig = plugins;
