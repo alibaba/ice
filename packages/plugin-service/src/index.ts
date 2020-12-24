@@ -11,4 +11,3 @@ export default async (api) => {
   await fse.copy(srcPath, distPath);
   applyMethod('addExport', { source: './service/createService', exportName: 'createService' });
 };
-

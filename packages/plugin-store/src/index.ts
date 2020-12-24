@@ -1,10 +1,27 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import Generator from './generator';
+import checkStoreAndModelExists from './utils/checkStoreAndModelExists';
+import { getAppStorePath } from './utils/getPath';
+
+const { name: pluginName } = require('../package.json');
 
 export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
+
+  // Get framework from plugin-core
+  const framework = getValue('FRAMEWORK');
+  const isRax = framework === 'rax';
+
+  // get mpa entries in src/pages
+  const { mpa: isMpa, entry } = userConfig;
+  let srcDir;
+  if (isRax) {
+    srcDir = 'src';
+  } else {
+    srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
+  }
 
   const targetPath = getValue('TEMP_PATH');
   const tempDir = (path.basename(targetPath) || '').split('.')[1];
@@ -15,7 +32,13 @@ export default async (api) => {
   const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
-  const appStoreFile = applyMethod('formatPath', path.join(rootDir, 'src', `store.${projectType}`));
+  const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, isRax, applyMethod });
+  if (!storeAndModelExists) {
+    applyMethod('addDisableRuntimePlugin', pluginName);
+    return;
+  }
+
+  const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
   applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });
@@ -24,14 +47,6 @@ export default async (api) => {
     // set IStore to IAppConfig
     applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
   }
-
-  const { mpa: isMpa, entry } = userConfig;
-  // get mpa entries in src/pages
-  const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
-
-  // Get framework from plugin-core
-  const framework = getValue('FRAMEWORK');
-  const isRax = framework === 'rax';
 
   if (isRax) {
     onGetWebpackConfig(config => {
@@ -118,4 +133,3 @@ export default async (api) => {
     });
   });
 };
-

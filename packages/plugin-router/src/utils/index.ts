@@ -74,4 +74,3 @@ const obj2Str = Object.prototype.toString;
 export function isObject(v) {
   return obj2Str.call(v) === '[object Object]';
 }
-

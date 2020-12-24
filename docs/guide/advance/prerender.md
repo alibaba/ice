@@ -1,6 +1,7 @@
 ---
 title: 构建时预渲染 Prerender
 order: 5
+hide: true
 ---
 
 在某些业务场景下，需要更好的 SEO，提高首页加载速度等等，基于此 icejs 提供了构建时预渲染（Prerender）方案。
