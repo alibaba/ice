@@ -14,7 +14,6 @@ function getProcessedSubAppRoutes(appRoutes, resourcePath, rootContext) {
   });
 }
 
-
  /**
   * Get complete route path when using subpackages
   * @param {array} appRoutes
