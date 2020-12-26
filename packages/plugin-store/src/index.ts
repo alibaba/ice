@@ -10,20 +10,11 @@ export default async (api) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
 
-  // Get framework from plugin-core
-  const framework = getValue('FRAMEWORK');
-  const isRax = framework === 'rax';
-
   // get mpa entries in src/pages
   const { mpa: isMpa, entry } = userConfig;
-  let srcDir;
-  if (isRax) {
-    srcDir = 'src';
-  } else {
-    srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
-  }
 
   const targetPath = getValue('TEMP_PATH');
+  const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const tempDir = (path.basename(targetPath) || '').split('.')[1];
   const templatePath = path.join(__dirname, 'template');
   const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
@@ -32,7 +23,7 @@ export default async (api) => {
   const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
 
-  const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, isRax, applyMethod });
+  const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, applyMethod });
   if (!storeAndModelExists) {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
@@ -48,70 +39,52 @@ export default async (api) => {
     applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
   }
 
-  if (isRax) {
-    onGetWebpackConfig(config => {
-      config.module.rule('appJSON')
-        .test(/app\.json$/)
-        .use('page-source-loader')
-        .loader(require.resolve('./pageSourceLoader'))
-        .options({
-          targetPath
-        });
+  // add babel plugins for ice lazy
+  const { configPath } = userConfig.router || {};
 
-      // Set alias to run @ice/store
-      config.resolve.alias
-        .set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'))
-        .set('react-redux', require.resolve('rax-redux'))
-        .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
+  let { routesPath } = applyMethod('getRoutes', {
+    rootDir,
+    tempDir: targetPath,
+    configPath,
+    projectType,
+    isMpa,
+    srcDir
+  });
+
+  if (isMpa) {
+    const routesFile = `routes.${projectType}`;
+    const pagesPath = path.join(rootDir, 'src', 'pages');
+    const pages = applyMethod('getPages', rootDir, srcDir);
+    const pagesRoutePath = pages.map(pageName => {
+      return path.join(pagesPath, pageName, routesFile);
     });
-  } else {
-    // add babel plugins for ice lazy
-    const { configPath } = userConfig.router || {};
-
-    let { routesPath } = applyMethod('getRoutes', {
-      rootDir,
-      tempDir: targetPath,
-      configPath,
-      projectType,
-      isMpa,
-      srcDir
-    });
-
-    if (isMpa) {
-      const routesFile = `routes.${projectType}`;
-      const pagesPath = path.join(rootDir, 'src', 'pages');
-      const pages = applyMethod('getPages', rootDir, srcDir);
-      const pagesRoutePath = pages.map(pageName => {
-        return path.join(pagesPath, pageName, routesFile);
-      });
-      routesPath = pagesRoutePath;
-    }
-    modifyUserConfig('babelPlugins',
-      [
-        ...(userConfig.babelPlugins as [] || []),
-        [
-          require.resolve('./babelPluginReplacePath'),
-          {
-            routesPath,
-            alias: userConfig.alias,
-            applyMethod,
-            tempDir
-          }
-        ]
-      ]
-    );
-
-    onGetWebpackConfig(config => {
-      config.module.rule('appJSON')
-        .test(/app\.json$/)
-        .use('page-source-loader')
-        .loader(require.resolve('./pageSourceLoader'))
-        .options({
-          targetPath
-        });
-      config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
-    });
+    routesPath = pagesRoutePath;
   }
+  modifyUserConfig('babelPlugins',
+    [
+      ...(userConfig.babelPlugins as [] || []),
+      [
+        require.resolve('./babelPluginReplacePath'),
+        {
+          routesPath,
+          alias: userConfig.alias,
+          applyMethod,
+          tempDir
+        }
+      ]
+    ]
+  );
+
+  onGetWebpackConfig(config => {
+    config.module.rule('appJSON')
+      .test(/app\.json$/)
+      .use('page-source-loader')
+      .loader(require.resolve('./pageSourceLoader'))
+      .options({
+        targetPath
+      });
+    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
+  });
 
   const gen = new Generator({
     appStoreTemplatePath,
@@ -122,7 +95,6 @@ export default async (api) => {
     rootDir,
     applyMethod,
     projectType,
-    isRax,
     srcDir
   });
 

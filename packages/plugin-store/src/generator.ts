@@ -20,8 +20,6 @@ export interface IRenderPageParams {
 const matchRegex = /^[^._].*\.(js|ts)$/;
 
 export default class Generator {
-  private isRax: boolean
-
   private rootDir: string
 
   private appStoreTemplatePath: string
@@ -46,7 +44,6 @@ export default class Generator {
     targetPath,
     applyMethod,
     projectType,
-    isRax,
     srcDir
   }: {
     rootDir: string;
@@ -57,7 +54,6 @@ export default class Generator {
     targetPath: string;
     projectType: string;
     applyMethod: Function;
-    isRax: boolean;
     srcDir: string;
   }) {
     this.rootDir = rootDir;
@@ -67,7 +63,6 @@ export default class Generator {
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
-    this.isRax = isRax;
     this.srcDir = srcDir;
   }
 
@@ -172,7 +167,6 @@ export default class Generator {
 
     const pageComponentName = 'PageComponent';
     const pageComponentRenderData = {
-      isRax: this.isRax,
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
@@ -197,7 +191,6 @@ export default class Generator {
 
     const pageLayoutName = `${pageName}Layout`;
     const pageLayoutRenderData = {
-      isRax: this.isRax,
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageLayoutName,
       hasPageStore: false,
