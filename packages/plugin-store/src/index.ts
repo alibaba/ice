@@ -15,7 +15,7 @@ export default async (api) => {
   const isRax = framework === 'rax';
 
   // get mpa entries in src/pages
-  const { mpa: isMpa, entry } = userConfig;
+  const { mpa: isMpa, entry, store: userConfigStore } = userConfig;
   let srcDir;
   if (isRax) {
     srcDir = 'src';
@@ -33,7 +33,7 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
 
   const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, isRax, applyMethod });
-  if (!storeAndModelExists) {
+  if (!userConfigStore && !storeAndModelExists) {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
