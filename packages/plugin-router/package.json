@@ -11,6 +11,7 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "@builder/app-helpers": "^2.0.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "history": "^4.10.1",
