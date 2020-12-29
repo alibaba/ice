@@ -36,21 +36,38 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     modifyRoutes(appConfigRouter.modifyRoutes);
   }
 
-  const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
-  const renderRouter = (routes) => () => {
-    let routerProps = {
-      ...appConfigRouter,
-      routes,
-      lazy
+  let renderRouter = null;
+  if (buildConfig.router === false) {
+    renderRouter = ((routes) => () => {
+      const [mainRoute] = routes;
+      if (mainRoute) {
+        const RenderComponent = mainRoute.component;
+        let initalProps = {};
+        if (process.env.__IS_SERVER__) {
+          initalProps = context.initialContext || {};
+        }
+        return <RenderComponent {...initalProps} />;
+      }
+      return null;
+    });
+  } else {
+    const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
+    renderRouter = (routes) => () => {
+      let routerProps = {
+        ...appConfigRouter,
+        routes,
+        lazy
+      };
+
+      if (process.env.__IS_SERVER__) {
+        const { initialContext = {} } = context;
+        routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
+      }
+
+      return <IceRouter {...routerProps} />;
     };
+  }
 
-    if (process.env.__IS_SERVER__) {
-      const { initialContext = {} } = context;
-      routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
-    }
-
-    return <IceRouter {...routerProps} />;
-  };
   setRenderRouter(renderRouter);
 };
 
