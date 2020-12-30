@@ -52,6 +52,40 @@ $ npm install build-plugin-fusion --save-dev
 }
 ```
 
+## 修改 prefix
+
+fusion 组件的默认 class 前缀是 `next-`，在微前端等场景下可能需要修改 prefix：
+
+```json
+{
+  "plugins": [
+    ["build-plugin-fusion", {
+      "themeConfig": {
+        "nextPrefix": "next-icestark-"
+      }
+    }]
+  ]
+}
+```
+
+上面只是修改了 CSS 产物里的 prefix，同时还需要修改 js 里的 prefix 才能保证最终的一致性：
+
+```diff
+import { runApp } from 'ice'
++import { ConfigProvider } from '@alifd/next';
+
+const appConfig = {
+  app: {
++    addProvider: ({ children }) => (
++      <ConfigProvider prefix="next-icestark-">{children}</ConfigProvider>
++    ),
+  },
+  },
+};
+
+runApp(appConfig);
+```
+
 ## 使用主题包
 
 Fusion 组件默认的主题是蓝色系，无法满足所有项目的需求，因此我们通过工程方式支持一键换肤的能力。
@@ -93,7 +127,7 @@ import { Icon } from '@alifd/next';
 }
 ```
 
-### 配置外部扩展（externals）
+## 配置 external
 
 项目开发中希望将 `@alifd/next` 作为外部扩展不打包到 bundle 中，除了需要配置 `externals` 外，还需要将通过插件能力分析业务组件依赖中按需加载的 Next 组件：
 
@@ -109,7 +143,6 @@ import { Icon } from '@alifd/next';
   ]
 }
 ```
-
 
 ## 动态切换主题
 
