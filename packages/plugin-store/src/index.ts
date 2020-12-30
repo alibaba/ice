@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import Generator from './generator';
 import checkStoreAndModelExists from './utils/checkStoreAndModelExists';
 import { getAppStorePath } from './utils/getPath';
+import checkStoreAndModelFileExists from './utils/checkStoreAndModelFileExists';
 
 const { name: pluginName } = require('../package.json');
 
@@ -37,6 +38,8 @@ export default async (api) => {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
+
+  checkStoreAndModelFileExists({ rootDir, srcDir, projectType });
 
   const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
