@@ -127,7 +127,7 @@ import { Icon } from '@alifd/next';
 }
 ```
 
-## 配置 external
+## 配置 externals
 
 项目开发中希望将 `@alifd/next` 作为外部扩展不打包到 bundle 中，除了需要配置 `externals` 外，还需要将通过插件能力分析业务组件依赖中按需加载的 Next 组件：
 
