@@ -71,6 +71,23 @@ export default () => {
 };
 ```
 
+### 3. 构建为 UMD 产物
+
+入口文件通过导出 mount、unmount 等标准生命周期后，需要配置工程上的改造，才能最终导出 UMD 标准的微应用。
+
+以 webpack 工程为例：
+
+```js
+module.exports = {
+  output: {
+    // 设置模块导出规范为 umd
+    libraryTarget: 'umd',
+    // 可选，设置模块在 window 上暴露的名称；icestark 框架不关心具体配置名称
+    library: 'microApp',
+  }
+}
+```
+
 ## Vue 项目改造为微应用
 
 ### 1. 应用入口适配
@@ -121,19 +138,32 @@ export default new Router({
 });
 ```
 
-## 标准 UMD 微应用生成
+### 3. 构建为 UMD 产物
 
-入口文件通过导出 mount、unmount 等标准生命周期后，需要配置工程上的改造，才能最终导出 UMD 标准的微应用。
+同 React
 
-以 webpack 工程为例：
+## 微应用间跳转
 
-```js
-module.exports = {
-  output: {
-    // 设置模块导出规范为 umd
-    libraryTarget: 'umd',
-    // 可选，设置模块在 window 上暴露的名称；icestark 框架不关心具体配置名称
-    library: 'microApp',
-  }
+在 A 微应用里需要跳转到 B 微应用时，如果使用 react-router/vue-router 提供的 Link 组件，一般会强行在 path 上追加 basename，因此推荐使用 appHistory/AppLink 来跳转：
+
+注意：AppLink 仅支持在基于 React 的微应用中使用，appHistory 不限制微应用的框架类型
+
+```diff
+import React from 'react';
++import { appHistory, AppLink } from '@ice/stark-app';
+
+export default function FrameworkLayout() {
+  return (
+    <>
+      <span
+        onClick={() => {
++          appHistory.push('/seller/list');
+        }}
+      >
+        seller
+      </span>
++      <AppLink to="/waiter/list">waiter</AppLink>
+    </>
+  );
 }
 ```

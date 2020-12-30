@@ -62,7 +62,7 @@ SPA 类型的 entry 整体跟 icejs 的 SPA 应用基本接近，包含 `app.js`
 
 应用入口：
 
-```js
+```diff
 // src/pages/Dashboard/app.js
 import { runApp } from 'ice';
 + import routes from './routes';
