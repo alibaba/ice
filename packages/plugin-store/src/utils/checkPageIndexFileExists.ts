@@ -3,7 +3,7 @@ import * as globby from 'globby';
 import { join } from 'path';
 
 /**
- * Check if the src/pages/Home/index.jsx or src/pages/Home/Layout/index.jsx exists
+ * Check if the src/pages/${pageName}/index.jsx or src/pages/${pageName}/Layout/index.jsx exists
  */
 export default (path: string, projectType: string) => {
   const matchingPaths = globby.sync([
