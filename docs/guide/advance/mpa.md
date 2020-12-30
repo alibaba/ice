@@ -60,7 +60,7 @@ pages 下的每个 entry 可以是一个单独的 SPA，也可以是简单的一
 
 SPA 类型的 entry 整体跟 icejs 的 SPA 应用基本接近，包含 `app.js`, `routes.js` 等文件。
 
-#### 应用入口
+应用入口：
 
 ```js
 // src/pages/Dashboard/app.js
@@ -76,21 +76,7 @@ const appConfig = {
 runApp(appConfig);
 ```
 
-#### 路由配置
-
-```js
-// src/pages/Dashboard/routes.js
-import A from './pages/A';  // src/pages/Dashboard/pages/A/index.jsx
-import B from './pages/B';
-
-export default [
-  { path: '/a', component: A },
-  { path: '/b', component: B },
-];
-```
-#### 状态管理
-
-在 MPA 场景下，我们推荐按照页面维度进行状态的管理，推荐的目录结构如下：
+如有状态管理诉求，可按下面的方式组织目录：
 
 ```diff
   ├── src/pages
@@ -108,7 +94,7 @@ export default [
   └── tsconfig.json
 ```
 
-对于嵌套页面，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在：
+针对这种情况，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在：
 
 ```jsx
 // Dashboard/Layout/index.tsx
@@ -117,13 +103,13 @@ export default ({ children }) => {
 }
 ```
 
-同时配置在 `src/routes.ts` 中：
+接下来配置路由信息：
 
 ```diff
-// Dashboard/routes.ts
+// src/pages/Dashboard/routes.js
 +import BasicLayout from '@/pages/Dashboard/Layout';
-import DashboardA from '@/pages/Dashboard/DashboardA';
-import DashboardB from '@/pages/Dashboard/DashboardB';
++import DashboardA from '@/pages/Dashboard/DashboardA';
++import DashboardB from '@/pages/Dashboard/DashboardB';
 
 export default [
   {
@@ -134,12 +120,14 @@ export default [
         path: '/foo',
         component: DashboardA
       },
+      {
+        path: '/bar',
+        component: DashboardB
+      },
     ]
   }
 ]
 ```
-
-接下来在 `models/` 中定义不同的数据模型，然后通过 `store.js` 初始化，最后就可以通过 `import store from '@/pages/Dashboard/store';` 来使用操作状态了。
 
 ### 组件类型的 entry
 
