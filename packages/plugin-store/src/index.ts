@@ -41,7 +41,13 @@ export default async (api) => {
   const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
-  applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });
+  applyMethod('addExport', {
+    source: '@ice/store',
+    specifier: '{ createStore }',
+    exportName: 'createStore',
+    importSource: '@ice/store',
+    exportMembers: ['createStore'],
+  });
 
   if (!existsAppStoreFile) {
     // set IStore to IAppConfig

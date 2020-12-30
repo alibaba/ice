@@ -221,4 +221,8 @@ module.exports = [
     name: 'postcssOptions',
     validation: 'object',
   },
+  {
+    name: 'modularImportRuntime',
+    validation: 'boolean',
+  }
 ];

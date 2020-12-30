@@ -1,4 +1,5 @@
 {
+  "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
   "plugins": [],
   "modeConfig": {

@@ -9,22 +9,10 @@ const plugin: IPlugin = async (api): Promise<void> => {
   const configFile = `src/config.${getValue('PROJECT_TYPE')}`;
 
   async function generateConfig() {
-    const exportName = 'config';
     const filePath = path.join(rootDir,configFile);
     const distPath =  path.join(getValue('TEMP_PATH'), 'config.ts');
-    if (fse.existsSync(filePath)) {
-      const srcPath = path.join(__dirname, '..', 'config', 'index.ts');
-
-      await fse.copy(srcPath, distPath);
-      // add to ice exports
-      applyMethod('addExport', { source: './config', exportName });
-    } else {
-      // remove config file
-      applyMethod('removeIceExport', exportName);
-      fse.removeSync(distPath);
-    }
-
-    applyMethod('addExport', { source: './appMode', exportName: 'APP_MODE' });
+    const templatePath = path.join(__dirname, './template/config.ts.ejs');
+    applyMethod('addRenderFile', templatePath, distPath, { hasConfig: fse.existsSync(filePath)});
   }
 
   generateConfig();
