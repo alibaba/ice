@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as glob from 'glob';
 import { validation } from '@builder/app-helpers';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
@@ -32,23 +31,14 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const srcDir = applyMethod('getSourceDir', userConfig.entry);
-  const { routesPath, isConfigRoutes } = disableRouter ? { routesPath: routesTempPath, isConfigRoutes: false } : applyMethod('getRoutes', {
+  const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
     rootDir,
     tempDir: iceTempPath,
     configPath,
     projectType,
-    isMpa,
+    isMpa: isMpa || disableRouter,
     srcDir
   });
-
-  if (disableRouter) {
-    const indexFiles = glob.sync('src/index.@(t|j)s?(x)', { cwd: rootDir });
-    const mainContent = indexFiles.length > 0 ? 'import Main from \'@/index\';\n\nexport default [{ component: Main }];' : 'export default []';
-    if (indexFiles.length === 0) {
-      console.log('please create src/index.(t|j)sx as main entry');
-    }
-    fse.writeFileSync(routesPath, mainContent);
-  }
 
   // modify webpack config
   onGetWebpackConfig((config) => {
@@ -112,6 +102,8 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
         });
       }
     }
+  } else {
+    applyMethod('addAppConfigTypes', { exportName: 'renderComponent?: FrameworkComponentType' });
   }
 };
 

@@ -1,4 +1,5 @@
 {
+  "router": false,
   "mpa": {
     "openPage": "Dashboard",
     "template": {

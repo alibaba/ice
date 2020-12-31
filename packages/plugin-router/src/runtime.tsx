@@ -5,13 +5,13 @@ import defaultRoutes from '$ice/routes';
 import { IceRouter } from './runtime/Router';
 import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context }) => {
-  const { router: appConfigRouter = {}, app = {} } = appConfig;
+const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, buildConfig, context, createHistory }) => {
+  const { router: appConfigRouter = {}, app = {}, renderComponent } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
-    return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
+    return renderComponent ? [{ component: renderComponent }] : formatRoutes(appConfigRouter.routes || defaultRoutes, '');
   });
 
   const wrapperPageErrorBoundary = (PageComponent) => {
@@ -37,7 +37,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
   }
 
   let renderRouter = null;
-  if (buildConfig.router === false) {
+  if (renderComponent) {
     renderRouter = ((routes) => () => {
       const [mainRoute] = routes;
       if (mainRoute) {
@@ -58,7 +58,9 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
         routes,
         lazy
       };
-
+      if (!routerProps.history) {
+        routerProps.history = createHistory({ type: appConfigRouter.type, basename: appConfigRouter.basename });
+      }
       if (process.env.__IS_SERVER__) {
         const { initialContext = {} } = context;
         routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
