@@ -75,19 +75,19 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // 仅完全匹配 /seller 这一个路由
 <AppRoute
   path="/seller"
-  exact={true}
+  exact
 />
 
 // 匹配符合 /seller/* 以及 /user/* 的所有路由
 <AppRoute
-  path={["/seller", "/user"]}
+  path={['/seller', '/user']}
 />
 
-// 匹配 /user 这一个路由以及符合 /seller/* 的所有路由
+// 匹配 /seller 这一个路由以及符合 /user/* 的所有路由
 <AppRoute
   path={[
-    { path: "/seller", exact: true },
-    { path: "/user", exact: false },
+    { path: '/seller', exact: true },
+    { path: '/user', exact: false },
   ]}
 />
 ```

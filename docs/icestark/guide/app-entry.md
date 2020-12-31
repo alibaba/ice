@@ -34,8 +34,8 @@ const apps = [{
 
 entry 对应 html url, icestark 对 `entry` 的处理包含以下步骤：
 
-- 通过 `window.fetch` 获取 entry 属性对应的 html 地址
-- 解析 html ，拿到所有 js 资源包括 `inline` 和 `external` 两种类型，如果 `external` 类型是相对路径，根据 `entry` 地址进行补齐
+- 通过 `window.fetch` 获取 entry 属性对应的 html 内容
+- 解析 html 内容，框架将会进行解析处理：提取 js 信息，如果资源路径为相对地址，将根据 entry 地址进行补齐
 - 将处理后的 html 内容插入 icestark 动态创建的节点
 - 依次通过创建 `script` 标签按顺序引入 js 资源
 
