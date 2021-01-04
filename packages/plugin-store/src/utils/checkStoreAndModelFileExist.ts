@@ -1,6 +1,6 @@
 import * as globby from 'globby';
 import * as path from 'path';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 
 export default ({ rootDir, srcDir, projectType, pages }) => {
   const appStoreFilePath = path.join(rootDir, srcDir, `store.${projectType}`);
@@ -21,12 +21,11 @@ export default ({ rootDir, srcDir, projectType, pages }) => {
 };
 
 /**
- * Check the store[t|j]s or model[t|j]s which framework will read if exist.
+ * Check the store[j|t]s or model[j|t]s which framework will read if one of them exists.
  * e.g.: in TS project, when user writed store.js file, but framework will read store.ts, warning will occur in the terminal.
  */
 function checkFileExists(matchingPaths: string[], targetFilePath: string) {
-  console.log(matchingPaths);
-  if (matchingPaths.length && matchingPaths.some(matchingPath => matchingPath !== targetFilePath)) {
-    console.log(chalk.yellow(chalk.black.bgYellow(' WARNING '), `Could not find ${targetFilePath}. Please check if it exists.`));
+  if (matchingPaths.length && !matchingPaths.find(matchingPath => matchingPath === targetFilePath)) {
+    console.log(chalk.yellow(chalk.black.bgYellow(' WARNING '), `Expect ${targetFilePath}, but found ${matchingPaths.join(', ')}.`));
   }
 }
