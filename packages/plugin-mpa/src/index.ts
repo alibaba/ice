@@ -94,13 +94,18 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
         (htmlPluginOption as any).template = entryTemplate;
       }
 
-      config.plugin(htmlPluginKey).tap((args) => [
-        Object.assign(
-          {},
-          ...args,
-          htmlPluginOption
-        )
-      ]);
+      config.plugin(htmlPluginKey).tap((args) => {
+        (htmlPluginOption as any).templateParameters = {
+          ...(args.templateParameters || {}),
+          pageName: defaultEntryName,
+        };
+        return [
+          {
+            ...args,
+            ...htmlPluginOption,
+          }
+        ];
+      });
     }
   });
 }
