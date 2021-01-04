@@ -93,8 +93,7 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
       if (fs.existsSync(entryTemplate)) {
         (htmlPluginOption as any).template = entryTemplate;
       }
-
-      config.plugin(htmlPluginKey).tap((args) => {
+      config.plugin(htmlPluginKey).tap(([args]) => {
         (htmlPluginOption as any).templateParameters = {
           ...(args.templateParameters || {}),
           pageName: defaultEntryName,
