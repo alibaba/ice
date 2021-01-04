@@ -1,6 +1,7 @@
 import * as globby from 'globby';
 import * as path from 'path';
-import * as chalk from 'chalk';
+
+const chalk = require('chalk');
 
 export default ({ rootDir, srcDir, projectType, pages }) => {
   const appStoreFilePath = path.join(rootDir, srcDir, `store.${projectType}`);

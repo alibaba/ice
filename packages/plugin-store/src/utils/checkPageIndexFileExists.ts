@@ -1,6 +1,7 @@
-import * as chalk from 'chalk';
 import * as globby from 'globby';
 import { join } from 'path';
+
+const chalk = require('chalk');
 
 /**
  * Check if the src/pages/${pageName}/index.[j|t]s?(x) or src/pages/${pageName}/Layout/index.[j|t]s?(x) exists
