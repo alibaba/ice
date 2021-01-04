@@ -15,7 +15,7 @@ const DEFAULE_APP_CONFIG = {
   }
 };
 
-export default ({ loadRuntimeModules, createElement, initHistory }) => {
+export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
   const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
 
     // Merge default appConfig to user appConfig
