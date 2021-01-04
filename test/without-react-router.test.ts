@@ -8,8 +8,8 @@ let browser = null;
 buildFixture(example);
 
 test('open /', async () => {
-  const res = await setupBrowser({ example });
+  const res = await setupBrowser({ example, defaultHtml: 'home.html' });
   page = res.page;
   browser = res.page;
-  expect(await page.$text('h2')).toStrictEqual('Main Page');
+  expect(await page.$text('h2')).toStrictEqual('Home Page');
 });
