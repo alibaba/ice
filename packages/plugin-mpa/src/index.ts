@@ -25,10 +25,9 @@ const plugin: IPlugin = (api) => {
     let entries = mpaEntries.reduce((acc, { entryName, entryPath }) => {
       return {
         ...acc,
-        [entryName]: `src/pages/${entryPath}`
+        [entryName]: `src/${entryPath}`
       };
     }, {});
-
     const finalEntries = {};
     if (commandArgs.mpaEntry) {
       const arr = commandArgs.mpaEntry.split(',');

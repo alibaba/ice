@@ -14,7 +14,8 @@ function emitLifeCycles() {
   } else {
     // Get history
     const history = getHistory();
-    const pathname = history.location.pathname;
+    const pathname = history && history.location ?
+      history.location.pathname : typeof window !== 'undefined' && window.location.pathname;
 
     // Set current router
     router.current = {
@@ -26,22 +27,24 @@ function emitLifeCycles() {
     appEmit(LAUNCH);
     appEmit(SHOW);
 
-    // Listen history change
-    history.listen((location) => {
-      if (location.pathname !== router.current.pathname) {
-        // Flow router info
-        router.prev = {
-          ...router.current
-        };
-        router.current = {
-          pathname: location.pathname,
-          visibiltyState: true
-        };
-        router.prev.visibiltyState = false;
-        pageEmit(HIDE, router.prev.pathname);
-        pageEmit(SHOW, router.current.pathname);
-      }
-    });
+    if (history && history.listen) {
+      // Listen history change
+      history.listen((location) => {
+        if (location.pathname !== router.current.pathname) {
+          // Flow router info
+          router.prev = {
+            ...router.current
+          };
+          router.current = {
+            pathname: location.pathname,
+            visibiltyState: true
+          };
+          router.prev.visibiltyState = false;
+          pageEmit(HIDE, router.prev.pathname);
+          pageEmit(SHOW, router.current.pathname);
+        }
+      });
+    }
   }
 }
 

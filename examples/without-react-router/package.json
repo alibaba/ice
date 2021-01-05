@@ -1,0 +1,19 @@
+{
+  "name": "example-without-react-router",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
