@@ -155,7 +155,7 @@ export default Home;
 + │   └── server/index.js // 服务端代码文件
 ```
 
-### 页面 Meta 标签
+## 页面 Meta 标签
 
 在 SEO 场景下，往往需要设置每个页面的标题和 Meta 标签，以更好地让搜索引擎抓取页面内容。使用步骤如下：
 
