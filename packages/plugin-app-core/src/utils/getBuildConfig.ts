@@ -1,7 +1,8 @@
 interface IBuildConfig {
-  router?: object;
+  router?: object | boolean;
   store?: boolean;
   icestarkUMD?: boolean;
+  web?: object;
 }
 
 function getBuildConfig(userConfig): IBuildConfig{

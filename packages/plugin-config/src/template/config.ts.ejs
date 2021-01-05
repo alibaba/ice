@@ -1,21 +1,21 @@
 <% if (hasConfig) { %>
-import config from '@/config';
+import userConfig from '@/config';
 <% } else { %>
-const config = { default: {}};
+const userConfig = { default: {}};
 <% } %>
 interface Config {
   readonly [propName: string]: any;
 }
 
-const userConfig: Config = {
-  ...(config.default || {}),
+const config: Config = {
+  ...(userConfig.default || {}),
   // webpack will automatically convert global to window when target is web
-  ...(config[(global as any).__app_mode__ || process.env.APP_MODE] || {}),
+  ...(userConfig[(global as any).__app_mode__ || process.env.APP_MODE] || {}),
 };
 
 const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
 
 export {
-  userConfig,
+  config,
   APP_MODE,
 };

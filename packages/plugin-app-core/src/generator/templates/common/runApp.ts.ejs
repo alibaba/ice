@@ -2,7 +2,7 @@ import { createElement, useEffect, Component } from '<%- framework %>';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
-import { IAppConfig } from './types';
+import { IAppConfig, IBuildConfig } from './types';
 
 <% if (isReact) {%>
   import reactAppRenderer, { getInitialData } from 'react-app-renderer';
@@ -20,7 +20,6 @@ import { IAppConfig } from './types';
   // eslint-disable-next-line
   import '../<%= globalStyle %>'
 <% } %>
-import { userConfig as config, APP_MODE } from './config';
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import defaultStaticConfig from './staticConfig';
@@ -29,7 +28,7 @@ import { setAppConfig } from './appConfig';
 import { mount, unmount } from './render';
 import ErrorBoundary from './ErrorBoundary';
 
-const buildConfig = <%- buildConfig %>;
+const buildConfig: IBuildConfig = <%- buildConfig %>;
 const {
   createBaseApp,
   withRouter,
@@ -121,8 +120,6 @@ export {
   removeNativeEventListener,
 
   ErrorBoundary,
-  config,
-  APP_MODE,
 };
 
 // Private API
