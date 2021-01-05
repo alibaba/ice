@@ -13,6 +13,13 @@ const plugin: IPlugin = async (api): Promise<void> => {
     const distPath =  path.join(getValue('TEMP_PATH'), 'config.ts');
     const templatePath = path.join(__dirname, './template/config.ts.ejs');
     applyMethod('addRenderFile', templatePath, distPath, { hasConfig: fse.existsSync(filePath)});
+    applyMethod('addExport', {
+      source: './config',
+      exportName: 'config, APP_MODE',
+      specifier: '{ config, APP_MODE }',
+      importSource: '$$framework/config',
+      exportMembers: ['config', 'APP_MODE'],
+    });
   }
 
   generateConfig();

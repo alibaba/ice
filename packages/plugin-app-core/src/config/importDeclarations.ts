@@ -12,7 +12,6 @@ const defaultDeclarations = {
     'addNativeEventListener',
     'removeNativeEventListener',
     'ErrorBoundary',
-    'config', 'APP_MODE',
   ],
   // export lazy
   '$$ice/lazy': ['lazy'],

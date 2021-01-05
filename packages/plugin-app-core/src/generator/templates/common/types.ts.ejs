@@ -18,6 +18,13 @@ interface IOnTabItemClickParams {
   index: number;
 }
 
+export interface IBuildConfig {
+  router?: object | boolean;
+  store?: boolean;
+  icestarkUMD?: boolean;
+  web?: object;
+}
+
 export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
