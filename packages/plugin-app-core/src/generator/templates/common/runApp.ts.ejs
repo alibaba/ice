@@ -19,7 +19,7 @@ import createShareAPI, { history } from 'create-app-shared';
   // eslint-disable-next-line
   import '../<%= globalStyle %>'
 <% } %>
-
+import { userConfig as config, APP_MODE } from './config';
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import defaultStaticConfig from './staticConfig';
@@ -119,7 +119,9 @@ export {
   addNativeEventListener,
   removeNativeEventListener,
 
-  ErrorBoundary
+  ErrorBoundary,
+  config,
+  APP_MODE,
 };
 
 // Private API

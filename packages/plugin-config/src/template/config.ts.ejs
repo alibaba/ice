@@ -1,5 +1,8 @@
+<% if (hasConfig) { %>
 import config from '@/config';
-
+<% } else { %>
+const config = { default: {}};
+<% } %>
 interface Config {
   readonly [propName: string]: any;
 }
@@ -10,4 +13,9 @@ const userConfig: Config = {
   ...(config[(global as any).__app_mode__ || process.env.APP_MODE] || {}),
 };
 
-export default userConfig;
+const APP_MODE = (global as any).__app_mode__ || process.env.APP_MODE;
+
+export {
+  userConfig,
+  APP_MODE,
+};

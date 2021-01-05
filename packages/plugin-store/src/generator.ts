@@ -136,7 +136,13 @@ export default class Generator {
 
     this.applyMethod('addRenderFile', this.appStoreTemplatePath, targetPath, appStoreRenderData);
     this.applyMethod('removeExport', exportName);
-    this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: 'store', exportName });
+    this.applyMethod('addExport', {
+      source: `./${sourceFilename}`,
+      specifier: 'store',
+      exportName,
+      importSource: `$$ice/${sourceFilename}`,
+      exportDefault: 'store',
+    });
   }
 
   private renderAppStoreTypes({ hasAppModels, existsAppStoreFile }) {
@@ -149,6 +155,10 @@ export default class Generator {
 
     this.applyMethod('addRenderFile', this.typesTemplatePath, targetPath, appStoreTypesRenderData);
     this.applyMethod('addTypesExport', { source: './store/types' });
+    this.applyMethod('appImportDeclarations', {
+      importSource: '$$ice/store/types',
+      exportMembers: ['IRootDispatch', 'IRootState', 'IStore', 'IStoreModels', 'IStoreDispatch', 'IStoreRootState'],
+    });
   }
 
   private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {

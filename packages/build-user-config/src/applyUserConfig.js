@@ -29,7 +29,12 @@ module.exports = (api, options = {}) => {
     } catch (err) {}
 
     return {
-      configWebpack: configFunc,
+      configWebpack: (chainConfig, configValue, context) => {
+        if (configFunc) {
+          // enhance api params
+          configFunc(chainConfig, configValue, context, api);
+        }
+      },
       ...config,
     };
   });
