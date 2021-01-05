@@ -81,7 +81,7 @@ runApp(appConfig);
 - basename: 路由基准地址
 - fallback: 开启按需加载时配置 fallback UI
 - modifyRoutes: 动态修改路由
-- history: 自定义创建 history 对象，[详见](https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md)
+- history: 自定义创建 history 对象，[详见](https://github.com/ReactTraining/history/blob/master/docs/getting-started.md)
 
 ## 路由组件参数
 
