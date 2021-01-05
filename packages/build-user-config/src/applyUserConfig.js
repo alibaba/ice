@@ -30,8 +30,10 @@ module.exports = (api, options = {}) => {
 
     return {
       configWebpack: (chainConfig, configValue, context) => {
-        // enhance api params
-        configFunc(chainConfig, configValue, context, api);
+        if (configFunc) {
+          // enhance api params
+          configFunc(chainConfig, configValue, context, api);
+        }
       },
       ...config,
     };
