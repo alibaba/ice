@@ -7,6 +7,7 @@ import {
   getAppStorePath,
   getAppModelsPath,
 } from './utils/getPath';
+import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
   pageName: string;
@@ -191,6 +192,7 @@ export default class Generator {
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       pageComponentRenderData.hasPageStore = true;
+      checkPageIndexFileExists(pageNameDir, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
@@ -216,6 +218,7 @@ export default class Generator {
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       pageLayoutRenderData.hasPageStore = true;
+      checkPageIndexFileExists(pageComponentSourcePath, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);

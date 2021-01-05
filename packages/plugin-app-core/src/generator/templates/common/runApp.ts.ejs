@@ -28,6 +28,7 @@ import { setAppConfig } from './appConfig';
 import { mount, unmount } from './render';
 import ErrorBoundary from './ErrorBoundary';
 
+const buildConfig = <%- buildConfig %>;
 const {
   createBaseApp,
   withRouter,
@@ -45,7 +46,8 @@ const {
 } = createShareAPI({
   createElement,
   useEffect,
-  withRouter: defaultWithRouter
+  withRouter: defaultWithRouter,
+  initHistory: buildConfig.router !== false,
 }, loadRuntimeModules);
 
 export function runApp(appConfig, staticConfig?: any) {
@@ -59,7 +61,6 @@ export function runApp(appConfig, staticConfig?: any) {
     renderer = reactAppRenderer;
   }
   <% } %>
-  const buildConfig = <%- buildConfig %>;
   renderer({
     appConfig,
     staticConfig: staticConfig || defaultStaticConfig,

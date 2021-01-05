@@ -1,8 +1,9 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import Generator from './generator';
-import checkStoreAndModelExists from './utils/checkStoreAndModelExists';
+import checkStoreAndModelExist from './utils/checkStoreAndModelExist';
 import { getAppStorePath } from './utils/getPath';
+import checkStoreAndModelFileExist from './utils/checkStoreAndModelFileExist';
 
 const { name: pluginName } = require('../package.json');
 
@@ -31,12 +32,15 @@ export default async (api) => {
   const pageStoresTemplatePath = path.join(templatePath, 'pageStores.ts.ejs');
   const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const projectType = getValue('PROJECT_TYPE');
+  const pages = applyMethod('getPages', rootDir, srcDir);
 
-  const storeAndModelExists = checkStoreAndModelExists({ rootDir, srcDir, projectType, isRax, applyMethod });
+  const storeAndModelExists = checkStoreAndModelExist({ rootDir, srcDir, projectType, isRax, applyMethod });
   if (!storeAndModelExists) {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
+
+  checkStoreAndModelFileExist({ rootDir, srcDir, projectType, pages });
 
   const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
@@ -86,7 +90,6 @@ export default async (api) => {
     if (isMpa) {
       const routesFile = `routes.${projectType}`;
       const pagesPath = path.join(rootDir, 'src', 'pages');
-      const pages = applyMethod('getPages', rootDir, srcDir);
       const pagesRoutePath = pages.map(pageName => {
         return path.join(pagesPath, pageName, routesFile);
       });

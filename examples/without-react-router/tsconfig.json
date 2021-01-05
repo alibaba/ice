@@ -25,7 +25,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "types": ["node"],
     "paths": {
       "@/*": [
         "./src/*"
