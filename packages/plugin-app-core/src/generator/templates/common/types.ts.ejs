@@ -46,12 +46,6 @@ export interface IRouter {
 }
 <% } %>
 
-<% if (appConfigTypesImports) { %>
-  export interface IAppConfig {
-    app?: IApp
-    <%- appConfigTypesExports %>
-  }
-<% } %>
 export interface IAppConfig {
   app?: IApp,
   <% if (isRax) {%>
