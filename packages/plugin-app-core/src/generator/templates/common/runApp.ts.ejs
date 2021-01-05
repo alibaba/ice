@@ -2,6 +2,7 @@ import { createElement, useEffect, Component } from '<%- framework %>';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
+import { IAppConfig } from './types';
 
 <% if (isReact) {%>
   import reactAppRenderer, { getInitialData } from 'react-app-renderer';
@@ -50,7 +51,7 @@ const {
   initHistory: buildConfig.router !== false,
 }, loadRuntimeModules);
 
-export function runApp(appConfig, staticConfig?: any) {
+export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
   let renderer;
   <% if(isRax){ %>
     renderer = raxAppRenderer;
