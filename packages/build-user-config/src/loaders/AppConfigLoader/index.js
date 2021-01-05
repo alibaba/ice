@@ -47,6 +47,7 @@ module.exports = function (appJSON) {
         }
         ${routeTitle ? `document.title="${routeTitle}"` : ''}
         Component.__path = '${route.path}';
+        Component.getInitialProps = reference.getInitialProps;
         return Component;
       })
     `;
