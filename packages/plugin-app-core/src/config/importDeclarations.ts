@@ -1,7 +1,7 @@
 const importDeclarations: any = {};
 const defaultDeclarations = {
   // default export in app
-  '$$ice/runApp': [
+  '$$framework/runApp': [
     'runApp', 'createApp',
     // router api
     'withRouter', 'history', 'getHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
@@ -17,7 +17,7 @@ const defaultDeclarations = {
   // export lazy
   '$$ice/lazy': ['lazy'],
   // export types
-  '$$ice/types': ['IApp', 'IAppConfig'],
+  '$$framework/types': ['IApp', 'IAppConfig'],
 };
 
 Object.keys(defaultDeclarations).forEach((importSource) => {

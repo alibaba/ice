@@ -4,7 +4,7 @@ module.exports = (babel, { importDeclarations }) => {
     visitor: {
       ImportDeclaration(nodePath, state) {
         const { node } = nodePath;
-        if (t.isStringLiteral(node.source, { value: 'ice' })) {
+        if (t.isStringLiteral(node.source, { value: 'ice' }) || t.isStringLiteral(node.source, { value: 'rax-app' })) {
           // check import specifier
           // only transform parttern like: import { withAuth, useAuth } from 'ice';
           const needTransform = node.specifiers.every((specifier) => {
@@ -21,7 +21,7 @@ module.exports = (babel, { importDeclarations }) => {
             });
             nodePath.replaceWithMultiple(transformNodes);
           } else {
-            console.log('[babel transform]', `${state.filename} import statement of ice does not meet the specification`);
+            console.log('[babel transform]', `${state.filename} import statement does not meet the specification`);
           }
         }
       },
