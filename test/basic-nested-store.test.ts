@@ -37,4 +37,6 @@ test('open /about', async () => {
   await page.waitForFunction(`document.getElementsByTagName('strong').length > 1`);
   expect(await page.$$text('h2')).toStrictEqual(['Header', 'About Page']);
   expect(await page.$$text('a')).toStrictEqual(['home']);
+  expect(await page.html()).toContain('taobao');
+  expect(await page.html()).toContain('123');
 })

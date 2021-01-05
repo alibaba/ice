@@ -12,4 +12,7 @@ test('open /', async () => {
   page = res.page;
   browser = res.page;
   expect(await page.$$text('h2')).toStrictEqual(['Header', 'HOME']);
+  expect(await page.$$text('div>span')).toStrictEqual(['0']);
+  await page.click('button');
+  expect(await page.$$text('div>span')).toStrictEqual(['1']);
 })
