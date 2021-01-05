@@ -13,7 +13,7 @@ import {
 import getSearchParams from './getSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
-function createShareAPI({ withRouter, createElement, useEffect, initHistory }, loadRuntimeModules) {
+function createShareAPI({ withRouter, createElement, useEffect, initHistory = true }, loadRuntimeModules) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
   return {
     createBaseApp: createBaseApp({ loadRuntimeModules, createElement, initHistory }),
