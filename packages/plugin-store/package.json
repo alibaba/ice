@@ -27,8 +27,7 @@
     "enhanced-resolve": "^4.3.0",
     "fs-extra": "^8.1.0",
     "fs-readdir-recursive": "^1.1.0",
-    "globby": "^11.0.1",
     "loader-utils": "^2.0.0",
-    "rax-redux": "^1.0.0"
+    "globby": "^11.0.1"
   }
 }
