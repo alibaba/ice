@@ -155,6 +155,36 @@ export default Home;
 + │   └── server/index.js // 服务端代码文件
 ```
 
+## 页面 Meta 标签
+
+在 SEO 场景下，往往需要设置每个页面的标题和 Meta 标签，以更好地让搜索引擎抓取页面内容。使用步骤如下：
+
+```jsx
+// pages/Home/index.jsx
+import React from 'react';
+import { Helmet } from 'ice';
+
+const Home = (props) => {
+	const { title, description } = props;
+  
+  return (
+  	<div>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={props.description} />
+        <meta name="keywords" content="Home Keywords" />
+      </Helmet>
+    </div>
+  )
+}
+
+Home.getInitialProps = async () => {
+  // 模拟服务端返回 title 和 description 数据
+  const res = await request('/detail');
+  return res;
+}
+```
+
 ## 服务端集成
 
 本地开发时 icejs 通过 webpack-dev-server 做服务端渲染，应用发布后则需要对应的服务端自行渲染，核心逻辑如下：

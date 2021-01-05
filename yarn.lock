@@ -14607,13 +14607,6 @@ rax-miniapp-runtime-webpack-plugin@^1.2.2:
     webpack "^4.35.3"
     webpack-sources "^1.3.0"
 
-rax-redux@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/rax-redux/download/rax-redux-1.0.0.tgz#c8e95d408b5c1259dd96cf87a6b534e4c24eae73"
-  integrity sha1-yOldQItcElndls+HprU05MJOrnM=
-  dependencies:
-    invariant "^2.2.4"
-
 rax-use-router@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/rax-use-router/download/rax-use-router-3.0.0.tgz#47abc2205050794a2c94dbe70a774cd814b7097f"

@@ -4,6 +4,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
   const { context } = api;
   const { command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
+  const subPackages = userConfig[target] && userConfig[target].subPackages;
 
   const mode = command === 'start' ? 'development' : 'production';
   // 1M = 1024 KB = 1048576 B
@@ -43,7 +44,8 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
     .loader(require.resolve('./loaders/AppConfigLoader'))
     .options({
       libName,
-      target
+      target,
+      subPackages
     });
 
   if (command === 'start') {
