@@ -5,10 +5,13 @@ function generateExports(exportList: IExportData[]) {
   const exportStatements = [];
   exportList.forEach(data => {
     const { specifier, source, exportName } = data;
-    if (exportName && source) {
-      const symbol = source.includes('types') ? ';' : ',';
-      importStatements.push(`import ${specifier || exportName} from '${source}';`);
-      const exportStr = `${exportName}${symbol}`;
+    if (exportName) {
+      let exportStr = exportName;
+      if (source) {
+        const symbol = source.includes('types') ? ';' : ',';
+        importStatements.push(`import ${specifier || exportName} from '${source}';`);
+        exportStr = `${exportName}${symbol}`;
+      }
       exportStatements.push(exportStr);
     } else if (source) {
       importStatements.push(`export ${specifier || '*'} from '${source}';`);

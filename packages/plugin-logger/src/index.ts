@@ -8,7 +8,12 @@ const plugin: IPlugin = async ({ getValue, applyMethod, onGetWebpackConfig }): P
   await fse.copy(path.join(__dirname, `../${exportName}`), distPath);
   await fse.copy(path.join(__dirname, './types'), path.join(distPath, 'types'));
   // add ice exports
-  applyMethod('addExport', { source: `./${exportName}`, exportName });
+  applyMethod('addExport', {
+    source: `./${exportName}`,
+    exportName,
+    importSource: `$$ice/${exportName}`,
+    exportDefault: exportName,
+  });
 
   // add iceTypes exports
   applyMethod('addAppConfigTypes', { source: `./${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });

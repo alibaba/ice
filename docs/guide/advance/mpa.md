@@ -151,6 +151,37 @@ export default function About() {
 }
 ```
 
+### EJS 模版
+
+默认情况下 MPA 使用 `public/index.html` 作为 HTML 模版，如果存在一些简单的差异化渲染逻辑，可以通过 EJS 语法进行渲染。
+
+可使用变量：
+
+- NODE_ENV：可选值为 `development | production` 用来区分 start / build 命令
+- pageName：当前渲染页面的页面名称，默认为 src/pages 目录下的一级目录名（默认小写）
+
+
+html 中使用 EJS 语法：
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>title</title>
+  </head>
+  <body>
+    <div>current env: <%= NODE_ENV %></div>
+<% if (pageName === 'Home') { %>
+    <h2>Home page</h2>
+<% } %>
+    <div id="ice-container"></div>
+  </body>
+</html>
+```
+
 ### 指定调试时浏览器默认打开的页面
 
 可以通过配置 `openPage` 指定多个页面时默认打开指定的页面。

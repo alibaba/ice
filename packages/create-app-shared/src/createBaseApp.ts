@@ -15,7 +15,7 @@ const DEFAULE_APP_CONFIG = {
   }
 };
 
-export default ({ loadRuntimeModules, createElement }) => {
+export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
   const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
 
     // Merge default appConfig to user appConfig
@@ -23,11 +23,11 @@ export default ({ loadRuntimeModules, createElement }) => {
 
     // Set history
     let history = {};
-    if (!isMiniAppPlatform) {
+    if (!isMiniAppPlatform && initHistory) {
       const { router } = appConfig;
-      const { type, basename } = router;
+      const { type, basename, history: customHistory } = router;
       const location = context.initialContext ? context.initialContext.location : null;
-      history = createHistory({ type, basename, location });
+      history = createHistory({ type, basename, location, customHistory });
       appConfig.router.history = history;
     }
 

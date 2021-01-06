@@ -13,6 +13,7 @@ interface IEntry {
   entryName: string;
   pageName: string;
   source?: string;
+  path?: string;
 }
 
 // Get entries when exist app.json

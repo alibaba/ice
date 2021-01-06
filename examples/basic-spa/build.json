@@ -1,6 +1,8 @@
 {
+  "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
   "plugins": [],
+  "tsChecker": true,
   "modeConfig": {
     "prod": {
       "ignoreHtmlTemplate": true

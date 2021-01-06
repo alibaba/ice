@@ -1,5 +1,15 @@
+const path = require('path');
+
 const genRegExpRule = (value) => new RegExp(Array.isArray(value) ? value.join('|') : value);
 const ensureArray = (value) => Array.isArray(value) ? value : [value];
+const getConditionRule = (value) => {
+  if (value instanceof RegExp) {
+    return value;
+  } else if (typeof value === 'string') {
+    return path.isAbsolute(value) ? value : new RegExp(value);
+  }
+  return value;
+};
 
 const optionAPIs = {
   test: (rule, value) => {
@@ -35,7 +45,7 @@ const optionAPIs = {
   },
   include: (rule, value) => {
     ensureArray(value).forEach((includeValue) => {
-      rule.include.add(includeValue);
+      rule.include.add(getConditionRule(includeValue));
     });
   },
   // clear exclude rules
@@ -44,7 +54,7 @@ const optionAPIs = {
   },
   exclude: (rule, value) => {
     ensureArray(value).forEach((excludeValue) => {
-      rule.exclude.add(excludeValue);
+      rule.exclude.add(getConditionRule(excludeValue));
     });
   },
   pre: (rule) => {

@@ -25,10 +25,9 @@ const plugin: IPlugin = (api) => {
     let entries = mpaEntries.reduce((acc, { entryName, entryPath }) => {
       return {
         ...acc,
-        [entryName]: `src/pages/${entryPath}`
+        [entryName]: `src/${entryPath}`
       };
     }, {});
-
     const finalEntries = {};
     if (commandArgs.mpaEntry) {
       const arr = commandArgs.mpaEntry.split(',');
@@ -94,14 +93,18 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
       if (fs.existsSync(entryTemplate)) {
         (htmlPluginOption as any).template = entryTemplate;
       }
-
-      config.plugin(htmlPluginKey).tap((args) => [
-        Object.assign(
-          {},
-          ...args,
-          htmlPluginOption
-        )
-      ]);
+      config.plugin(htmlPluginKey).tap(([args]) => {
+        (htmlPluginOption as any).templateParameters = {
+          ...(args.templateParameters || {}),
+          pageName: defaultEntryName,
+        };
+        return [
+          {
+            ...args,
+            ...htmlPluginOption,
+          }
+        ];
+      });
     }
   });
 }
