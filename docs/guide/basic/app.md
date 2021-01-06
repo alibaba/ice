@@ -72,6 +72,10 @@ const appConfig = {
     onErrorBoundaryHander: (error, componentStack) {
       // Do something with the error
     },
+
+    // 可选，用于渲染一个简单组件，不再需要耦合 react-router 的路由系统
+    // 需要配合设置 build.json 的 router 项为 false
+    renderComponent: SimpleComponent,
   },
 };
 
