@@ -421,6 +421,36 @@ const sandbox = new CustomSanbox();
 />
 ```
 
+## @ice/stark-app
+
+### isInIcestark
+
+判断当前运行环境，是否运行在 icestark 环境中，返回值类型：boolean
+
+- 类型：`function`
+- 示例代码详见 `registerAppLeave`
+
+### getBasename
+
+配置微应用 `React Router` 中的 `basename` 参数的方法，根据 `AppRoute` 中的 `basename` 或者 `path` 配置生成最终结果
+
+- 类型：`function`
+- 默认值：`() => basename || (Array.isArray(path) ? path[0] : path)) || "/"`
+
+### getMountNode
+
+根据微应用运行环境，返回微应用渲染节点
+
+- 类型：`function`
+- 默认值：`<div id="ice-container"></div>`
+- 使用规则：方法支持传参，传参代表默认渲染的 DOM 节点，默认节点只在微应用单独启动时生效。支持 `string | HTMLElement | function`， `string` 表示默认 DOM 节点的 `id`，`function` 支持函数返回值作为默认 DOM 节点
+
+### renderNotFound
+
+微应用触发渲染全局 404 的方法
+
+- 类型：`function`
+
 ### AppLink
 
 提供声明式的，可访问的导航，表示本次跳转需要重新加载静态资源。微应用内部跳转仍然使用 `Link`
@@ -468,40 +498,6 @@ export default class SelfLink extends React.Component {
   }
 }
 ```
-
-### appHistory
-
-提供手动切换不同应用的方法，文档同子应用中的 appHistory
-
-## @ice/stark-app
-
-### isInIcestark
-
-判断当前运行环境，是否运行在 icestark 环境中，返回值类型：boolean
-
-- 类型：`function`
-- 示例代码详见 `registerAppLeave`
-
-### getBasename
-
-配置微应用 `React Router` 中的 `basename` 参数的方法，根据 `AppRoute` 中的 `basename` 或者 `path` 配置生成最终结果
-
-- 类型：`function`
-- 默认值：`() => basename || (Array.isArray(path) ? path[0] : path)) || "/"`
-
-### getMountNode
-
-根据微应用运行环境，返回微应用渲染节点
-
-- 类型：`function`
-- 默认值：`<div id="ice-container"></div>`
-- 使用规则：方法支持传参，传参代表默认渲染的 DOM 节点，默认节点只在微应用单独启动时生效。支持 `string | HTMLElement | function`， `string` 表示默认 DOM 节点的 `id`，`function` 支持函数返回值作为默认 DOM 节点
-
-### renderNotFound
-
-微应用触发渲染全局 404 的方法
-
-- 类型：`function`
 
 ### appHistory
 
