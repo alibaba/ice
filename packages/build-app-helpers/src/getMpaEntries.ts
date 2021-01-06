@@ -52,6 +52,9 @@ function getEntriesByJson(api, target, appJsonPath, appJsonContent): IEntry[] {
 }
 
 function getPageEntryByAppJson(rootDir, source) {
+  if (path.isAbsolute(source)) {
+    return source;
+  }
   const absolutePath = path.resolve(rootDir, 'src', source);
   const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${absolutePath}.${ext}`));
   if (!targetExt) {

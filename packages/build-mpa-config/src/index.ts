@@ -28,7 +28,7 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath } = entry;
-    const pageEntry = path.join(rootDir, 'src', entryPath);
+    const pageEntry = path.isAbsolute(entryPath) ? entryPath : path.join(rootDir, 'src', entryPath);
     const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
     // icejs will config entry by api modifyUserConfig
 
