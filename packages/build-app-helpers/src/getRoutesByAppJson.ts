@@ -5,6 +5,7 @@ interface IRoute {
   source: string;
   path: string;
   name?: string;
+  pageSource?: string;
 }
 interface IStaticConfig {
   routes: IRoute[];

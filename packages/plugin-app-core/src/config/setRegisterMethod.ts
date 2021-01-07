@@ -6,7 +6,7 @@ import { getExportApiKeys } from '../constant';
 import importDeclarations from './importDeclarations';
 
 export default (api, options) => {
-  const { registerMethod } = api;
+  const { registerMethod, setValue } = api;
   const { generator } = options;
 
   // register utils method
@@ -76,4 +76,6 @@ export default (api, options) => {
       generator[apiKey](apiName, code, position);
     });
   });
+
+  registerMethod('setStaticConfig', (staticConfig) => setValue('staticConfig', staticConfig));
 };
