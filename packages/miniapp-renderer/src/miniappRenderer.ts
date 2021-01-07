@@ -1,5 +1,5 @@
 function miniappRenderer(
-  { appConfig, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
+  { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
