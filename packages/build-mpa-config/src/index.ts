@@ -33,7 +33,7 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
     const { entryName, entryPath, source } = entry;
     const pageEntry = path.isAbsolute(entryPath) ? entryPath : path.join(rootDir, 'src', entryPath);
     const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath) || type === 'node';
-    const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
+    const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source || entryPath));
     // icejs will config entry by api modifyUserConfig
     let finalEntry = pageEntry;
     if (exportDefaultDeclarationExists && !useOriginEntry) {
