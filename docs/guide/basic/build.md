@@ -651,6 +651,15 @@ dll                            // dll 构建产物文件夹
   - loaders：配置具体的 webpack loader
 - loaders 参数用来指定具体 webpack loader 的参数；每一项 loader 参数支持 before/after 用来调整 webpack loader 的执行顺序；如果 loader 名已被添加，则修改插件配置
 
+### modularImportRuntime
+
+- 类型：`boolean`
+- 默认值：`false`
+
+> ice.js 1.14.0 版本以上开始支持
+
+开启后将按需加载运行时能力，以减小构建包体积
+
 ## 根据环境区分工程配置
 
 参考 [区分不同环境](/docs/guide/basic/config.md)。

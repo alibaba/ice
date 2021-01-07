@@ -33,7 +33,7 @@ axios.defaults.baseURL = '//127.0.0.1:4444';
 如果微应用使用 icejs 研发框架提供的数据请求方案，则只需通过配置 `appConfig`：
 
 ```js
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   ...
@@ -42,7 +42,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 由于开发调试过程中主应用和微应用的域名或者端口不一致，非 icejs 研发框架的工程可能会有跨域问题，需要修改 webpack devServer 配置：
