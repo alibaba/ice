@@ -1,5 +1,5 @@
 const { getOptions } = require('loader-utils');
-const { join, isAbsolute } = require('path');
+const { join } = require('path');
 const { formatPath, getRoutesByAppJson } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
 const { getProcessedSubAppRoutes } = require('../../utils/getProcessedRoutes');
