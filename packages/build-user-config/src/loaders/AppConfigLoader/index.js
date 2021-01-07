@@ -1,8 +1,7 @@
 const { getOptions } = require('loader-utils');
-const { join } = require('path');
-const { formatPath, getRoutesByAppJson } = require('@builder/app-helpers');
+const { join, dirname } = require('path');
+const { formatPath } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
-const { getProcessedSubAppRoutes } = require('../../utils/getProcessedRoutes');
 
 /**
  * universal-app-config-loader
@@ -24,18 +23,11 @@ module.exports = function (appJSON) {
   const appConfig = JSON.parse(appJSON);
   const isRootAppJsonPath = this.resourcePath === join(this.rootContext, 'src', 'app.json');
 
-  const appRoutes = getRoutesByAppJson(target, { appJsonContent: appConfig });
-
-  if (mpa) {
-    if (isRootAppJsonPath) {
-      return `
+  if (mpa && isRootAppJsonPath) {
+    return `
       const appConfig = ${appJSON};
       export default appConfig;
       `;
-    }
-    appConfig.routes = getProcessedSubAppRoutes(appRoutes, this.resourcePath, this.rootContext);
-  } else {
-    appConfig.routes = appRoutes;
   }
 
   const assembleRoutes = appConfig.routes.map((route) => {
@@ -50,12 +42,14 @@ module.exports = function (appJSON) {
       // Current route title: route.window.title
       routeTitle = route.window.title;
     }
+    const source = (route.pageSource || join(dirname(this.resourcePath), route.source));
+    route.source = source.replace(`${this.rootContext}/src/`, '');
 
     // First level function to support hooks will autorun function type state,
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(route.pageSource || join(this.rootContext, 'src', route.source))}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(source)}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
@@ -67,7 +61,7 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${formatPath(route.pageSource || join(this.rootContext, 'src', route.source))}'))`;
+    const importComponent = `() => () => interopRequire(require('${formatPath(source)}'))`;
     return `routes.push(
       {
         ...${JSON.stringify(route)},

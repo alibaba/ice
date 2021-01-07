@@ -6,8 +6,8 @@ import checkExportDefaultDeclarationExists from './checkExportDefaultDeclaration
 interface IEntries {
   entryName: string;
   entryPath: string;
-  source: string;
-  path: string;
+  source?: string;
+  path?: string;
 }
 
 interface IConfigOptions {
@@ -32,10 +32,9 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   entries.forEach((entry) => {
     const { entryName, entryPath, source } = entry;
     const pageEntry = path.isAbsolute(entryPath) ? entryPath : path.join(rootDir, 'src', entryPath);
-    const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
+    const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath) || type === 'node';
     const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
     // icejs will config entry by api modifyUserConfig
-
     let finalEntry = pageEntry;
     if (exportDefaultDeclarationExists && !useOriginEntry) {
       // generate mpa entries
