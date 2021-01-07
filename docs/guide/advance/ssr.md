@@ -165,7 +165,7 @@ import React from 'react';
 import { Helmet } from 'ice';
 
 const Home = (props) => {
-	const { title, description } = props;
+  const { title, description } = props;
   
   return (
   	<div>
