@@ -31,9 +31,9 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath, source } = entry;
-    const pageEntry = path.isAbsolute(entryPath) ? entryPath : path.join(rootDir, 'src', entryPath);
+    const pageEntry = entryPath;
     const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath) || type === 'node';
-    const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source || entryPath));
+    const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
     // icejs will config entry by api modifyUserConfig
     let finalEntry = pageEntry;
     if (exportDefaultDeclarationExists && !useOriginEntry) {
@@ -63,11 +63,11 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   const matchStrs = [];
 
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, entryPath, source, finalEntry } = parsedEntries[entryKey];
+    const { entryName, source, finalEntry } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
 
     // get page paths for rule match
-    const matchStr = source ? `src/${source}` : `src/${entryPath}`;
+    const matchStr = `src/${source}`;
     matchStrs.push(formatPath(matchStr));
   });
 
