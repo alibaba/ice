@@ -1,7 +1,6 @@
 import * as path from 'path';
-import { formatPath } from '@builder/app-helpers';
+import { formatPath, checkExportDefaultDeclarationExists } from '@builder/app-helpers';
 import generateEntry from './generateEntry';
-import checkExportDefaultDeclarationExists from './checkExportDefaultDeclarationExists';
 
 interface IEntries {
   entryName: string;
@@ -40,6 +39,7 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
       // generate mpa entries
       finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });
     }
+
     parsedEntries[entryName] = {
       ...entry,
       finalEntry,

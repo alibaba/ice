@@ -20,6 +20,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@babel/parser": "^7.12.11",
+    "@babel/traverse": "^7.12.12",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.20"
   }
