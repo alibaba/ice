@@ -79,3 +79,58 @@ function Home() {
 
 * [css-modules 官方文档](https://github.com/css-modules/css-modules)
 * [CSS Modules 详解及 React 中实践](https://zhuanlan.zhihu.com/p/20495964)
+
+## 常见问题
+
+### 如何全局覆盖基础组件（next/antd）样式？
+
+next/antd 都支持了一些定制样式的能力，如果这些能力不能满足诉求则可以通过样式覆盖的方式定制：
+
+```scss
+// src/global.[scss|less]
+
+body {
+  -webkit-font-smoothing: antialiased;
+
+  // 覆盖 next 组件的样式
+  .next-btn {
+    font-size: 18px;
+  }
+}
+```
+
+该方式会把项目里所有 Button 组件的 `font-size` 属性修改掉。
+
+### 如何局部覆盖基础组件样式？
+
+如果只是想覆盖某个页面/模块里的组件样式，则推荐采用局部覆盖的方式：
+
+```scss
+// ./pages/Home/index.module.scss
+.home {
+  padding: 10px;
+}
+
+.home :global {
+  // 仅修改 .home 下的 button 样式
+  .next-btn {
+    font-size: 24px;
+  }
+}
+```
+
+如果组件本身支持 style 属性，也可通过 `style` 属性修改：
+
+```jsx
+export default function() {
+  return (
+    <>
+      <Button
+        style={{ fontSize: 16 }}
+      >
+        OK
+      </Button>
+    </>
+  );
+}
+```
