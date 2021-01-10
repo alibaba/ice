@@ -218,26 +218,15 @@ icejs 中一般不允许修改该配置。
 
 - 类型：`string`
 - 默认值：`"entry"`
-- 可选值：`"usage"` | `false`
+- 可选值：`"usage"` | `"entry"` | `false`
 
-配置 `@babel/preset-env` 处理 `polyfill` 的逻辑。
+配置 `@babel/preset-env` 处理 `polyfill` 的逻辑，不同值的含义：
 
-#### polyfill: "entry"
-根据配置的 `browserslist` 字段在每个文件开头都引入对应的 `polyfill`。
-
-#### polyfill: "usage"
-根据源码中使用到的代码按需引入 `polyfill`。
+- `entry`: 根据配置的 `browserslist` 字段在每个文件开头都引入对应的 `polyfill`。
+- `false`: 不引入任何 `polyfill`。
+- `usage`: 根据源码中使用到的代码按需引入 `polyfill`。
 
 **注意：** 在这种模式下，默认不会去分析 `node_modules` 里的代码，如果需要的话，请看 `compileDependencies` 字段相关的说明，添加相关需要编译的依赖。
-
-#### polyfill: false
-不引入任何 `polyfill`。
-
-```json
-{
-  "polyfill": false
-}
-```
 
 ### injectBabel
 
@@ -245,14 +234,9 @@ icejs 中一般不允许修改该配置。
 
 - 类型：`string`
 - 默认值：`polyfill`
+- 可选值：`"polyfill"` | `"runtime"` | `false`
 
 默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 `targets` 配置的兼容浏览器进行 polyfill，实现按需添加。 开发类库项目，可以将配置设置为 `runtime`。 如果想手动 polyfill，可以将配置设置为 `false`，工程将不会进行自动的 polyfill。
-
-```json
-{
-  "injectBabel": false
-}
-```
 
 ### minify
 
@@ -363,7 +347,7 @@ icejs 中一般不允许修改该配置。
 - 类型：`boolean`
 - 默认值：`true`
 
-配置是否生成 vendor，如果希望禁用：
+MPA 场景下配置是否生成 vendor，如果希望禁用：
 
 ```json
 {
@@ -430,13 +414,6 @@ icejs 中一般不允许修改该配置。
 
 为 sass-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [sass-loader options](https://webpack.js.org/loaders/sass-loader/#options)。
 
-### postcssrc
-
-- 类型：`boolean`
-- 默认值：`false`
-
-开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。
-
 ### postcssOptions
 
 - 类型：`object`
@@ -464,9 +441,17 @@ icejs 中一般不允许修改该配置。
 ```
 
 配置规则：
+
 - 工程已内置 `postcss-preset-env`，配置后将自动合并其参数
 - 如果工程未内置 postcss 插件，对应配置将会添加到所以样式处理规则的 `postcss-loader` 配置上
 - 设置为 `false` 的 postcss 插件，将从配置中移除
+
+### postcssrc
+
+- 类型：`boolean`
+- 默认值：`false`
+
+适用于需要完全重写 postcss 配置。开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。
 
 ### terserOptions
 
@@ -692,7 +677,7 @@ module.exports = ({ context, onGetWebpackConfig }) => {
 
 ## 调试
 
-在某些情况下可能遇到配置没有生效，或者配置不符合预期，这时候我们可以通过下面的命令进行调试，查看最终的 Webpack 配置是否符合预期。
+在某些情况下可能遇到配置没有生效，或者配置不符合预期，这时候我们可以通过下面的命令进行调试，查看最终的 webpack 配置是否符合预期。
 
 ```bash
 # 调试开发环境

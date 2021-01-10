@@ -16,9 +16,8 @@ icejs 支持区分不同环境，开发者可根据环境区分**工程配置**�
 {
   "scripts": {
     "start": "icejs start --mode local",
-    "build": "icejs build --mode local",
     "build:daily": "icejs build --mode daily",
-    "build:prod": "icejs build --mode prod"
+    "build": "icejs build --mode prod"
   }
 }
 ```

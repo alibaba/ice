@@ -157,6 +157,8 @@ const HomePage = () => {
 }
 ```
 
+### 嵌套页面
+
 某些复杂场景会出现嵌套页面的情况，即 `src/pages/Home` 下**包含多个路由页面**，目录组织如下：
 
 ```md
@@ -170,7 +172,6 @@ src
 │   │   ├── models           // 页面状态
 │   │   │   ├── Foo.ts
 │   │   │   └── Bar.ts
-│   │   ├── index.tsx
 │   │   └── store.ts
 └── app.ts
 ```
@@ -205,11 +206,7 @@ export default [
           {
             path: '/foo',
             component: Foo
-          },
-          {
-            path: '/bar',
-            component: Bar
-          },
+          }
         ]
       },
       {
@@ -462,7 +459,7 @@ export default store.withModel('todos')(TodoList);
 
 [完整 API 文档](https://github.com/ice-lab/icestore/blob/master/docs/api.md)
 
-### 调试
+### Redux Devtools
 
 icejs 中默认集成了 [Redux Devtools](https://github.com/zalmoxisus/redux-devtools-extension)，不需要额外的配置就可以通过 Redux Devtools 调试：
 
@@ -472,9 +469,15 @@ icejs 中默认集成了 [Redux Devtools](https://github.com/zalmoxisus/redux-de
 
 ### 在其他地方使用 store
 
-icejs 默认支持 `src/models` 和 `src/pages/Home/models`，如果想在这两个地方以外使用 models 则需要自行包裹 `store.Provider`。
+满足以下几种情况，框架都会自动帮助开发者包裹 `store.Provider`：
 
-比如希望在 `src/pages/Home/Foo/` 下创建一个 store：
+- SPA 全局 store：`src/` 下有 `store.js` 和 `app.js`
+- SPA 页面级 store：`src/pages/Home` 下有 `store.js` 和 `index.jsx`
+- SPA 嵌套页面级 store：`src/pages/Home` 下有 `store.js` 和 `Layout/index.jsx`（优先级低于上面）
+- MPA 组件类型的 entry：`src/pages/Home` 下有 `store.js` 和 `index.jsx`
+- MPA 单页类型的 entry：`src/pages/Home` 下有 `store.js`, `app.js`, `Layout/index.jsx`
+
+如果不满足上述情况，则需要开发者自行包裹 `store.Provider`。比如希望在 `src/pages/Home/Foo/` 下创建一个 store：
 
 1. 在 `src/pages/Home/Foo/models/` 下定义 model
 2. 在 `src/pages/Home/Foo/store.ts` 中初始化 store
