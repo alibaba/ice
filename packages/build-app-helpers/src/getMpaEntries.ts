@@ -96,14 +96,12 @@ function getPageEntryByDir(pagesPath: string, pageName: string) {
   const appRegexp = /^app\.(t|j)sx?$/;
   const indexRegexp = /^index\.(t|j)sx?$/;
 
-  // eslint-disable-next-line
-  for (const file of pageRootFiles) {
-    if (appRegexp.test(file)) {
-      return 'app';
-    } else if (indexRegexp.test(file)) {
-      return 'index';
-    }
-  }
-
-  return null;
+  return pageRootFiles.find((file) => {
+    // eslint-disable-next-line
+    return appRegexp.test(file)
+      ? 'app'
+      : indexRegexp.test(file)
+        ? 'index'
+        : null;
+  });
 }
