@@ -35,6 +35,7 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
     const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
     // icejs will config entry by api modifyUserConfig
     let finalEntry = pageEntry;
+    // when the source is not the custom render page or runApp, do not generate entry
     if (exportDefaultDeclarationExists && !useOriginEntry) {
       // generate mpa entries
       finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });

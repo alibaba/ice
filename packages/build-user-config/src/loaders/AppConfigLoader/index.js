@@ -42,14 +42,14 @@ module.exports = function (appJSON) {
       // Current route title: route.window.title
       routeTitle = route.window.title;
     }
-    const source = (route.pageSource || join(dirname(this.resourcePath), route.source));
-    route.source = source.replace(`${this.rootContext}/src/`, '');
+    const pageSource = (route.pageSource || join(dirname(this.resourcePath), route.source));
+    route.source = pageSource.replace(`${this.rootContext}/src/`, '');
 
     // First level function to support hooks will autorun function type state,
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(source)}')
+      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(pageSource)}')
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
@@ -61,7 +61,7 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${formatPath(source)}'))`;
+    const importComponent = `() => () => interopRequire(require('${formatPath(pageSource)}'))`;
     return `routes.push(
       {
         ...${JSON.stringify(route)},
