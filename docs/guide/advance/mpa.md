@@ -34,7 +34,9 @@ MPA 应用以页面为维度进行划分，符合 `src/pages/*/[index|app].[ts|j
 + │   ├── index.html            # 默认 html
   │   └── favicon.png           # Favicon
   ├── src/                      # 源码
-  │   ├── layouts/              # 布局
+- │   ├── app.js
+- │   ├── routes.js
+- │   ├── store.js
   │   └── pages/                # 页面
   │        ├── Dashboard/       # Dashboard 页面，一个完整的 SPA 页面
 + │        │     ├── app.js     # 页面配置入口
@@ -58,9 +60,9 @@ pages 下的每个 entry 可以是一个单独的 SPA，也可以是简单的一
 
 SPA 类型的 entry 整体跟 icejs 的 SPA 应用基本接近，包含 `app.js`, `routes.js` 等文件。
 
-#### 应用入口
+应用入口：
 
-```js
+```diff
 // src/pages/Dashboard/app.js
 import { runApp } from 'ice';
 + import routes from './routes';
@@ -73,26 +75,16 @@ const appConfig = {
 
 runApp(appConfig);
 ```
-#### 路由配置
 
-```js
-// src/pages/Dashboard/routes.js
-import A from './pages/A';  // src/pages/Dashboard/pages/A/index.jsx
-import B from './pages/B';
-
-export default [
-  { path: '/a', component: A },
-  { path: '/b', component: B },
-];
-```
-#### 状态管理
-
-在 MPA 场景下，我们推荐按照页面维度进行状态的管理，推荐的目录结构如下：
+如有状态管理诉求，可按下面的方式组织目录：
 
 ```diff
   ├── src/pages
   │    └──  Dashboard/
-  │         ├── pages/
+  │         ├── DashboardA/index.jsx
+  │         ├── DashboardB/index.jsx
++ │         ├── Layout/
++ │         │     └── index.jsx 
 + │         ├── models/
 + │         ├── store.js
   │         ├── routes.js
@@ -102,7 +94,40 @@ export default [
   └── tsconfig.json
 ```
 
-在 `models/` 中定义不同的数据模型，然后通过 `store.js` 中初始化，接着就可以通过 `import store from '@/pages/Dashboard/store';` 来使用操作状态了。 关于状态管理的更多内容，请查看文档 [状态管理](/docs/guide/basic/store.md)
+针对这种情况，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在：
+
+```jsx
+// Dashboard/Layout/index.tsx
+export default ({ children }) => {
+  return <>{children}</>;
+}
+```
+
+接下来配置路由信息：
+
+```diff
+// src/pages/Dashboard/routes.js
++import BasicLayout from '@/pages/Dashboard/Layout';
++import DashboardA from '@/pages/Dashboard/DashboardA';
++import DashboardB from '@/pages/Dashboard/DashboardB';
+
+export default [
+  {
+    path: '/',
++    component: BasicLayout,
+    children: [
+      {
+        path: '/foo',
+        component: DashboardA
+      },
+      {
+        path: '/bar',
+        component: DashboardB
+      },
+    ]
+  }
+]
+```
 
 ### 组件类型的 entry
 
@@ -117,7 +142,7 @@ export default function About() {
 }
 ```
 
-> 注意：如果希望自行调用 `ReactDOM.render`，将此文件重命名为 `app.jsx` 即可。
+如果需要，组件类型的 entry 也可以使用状态管理能力，只需要新建 `models/` 文件夹以及 `store.js` 即可，框架会自动包裹 `store.Provider`。
 
 ## 指定不同 entry 的 HTML 模板
 
