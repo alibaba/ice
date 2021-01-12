@@ -166,9 +166,9 @@ import { Helmet } from 'ice';
 
 const Home = (props) => {
   const { title, description } = props;
-  
+
   return (
-  	<div>
+    <div>
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={props.description} />
