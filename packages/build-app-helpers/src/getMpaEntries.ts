@@ -42,7 +42,8 @@ function getEntriesByJson(api, target, appJsonPath, appJsonContent): IEntry[] {
       entryName = pageName.toLocaleLowerCase();
     }
     return {
-      entryPath: getPageEntryByAppJson(rootDir, route.source),
+      // routes.pageSource is absolute path, passed from the plugin-store
+      entryPath: route.pageSource || getPageEntryByAppJson(rootDir, route.source),
       entryName,
       pageName,
       source: route.source,
@@ -57,14 +58,15 @@ function getPageEntryByAppJson(rootDir, source) {
   if (!targetExt) {
     throw new Error(`Cannot find target file ${absolutePath}.`);
   }
-  return `${source}.${targetExt}`;
+  return `${absolutePath}.${targetExt}`;
 }
 
 function getEntriesByDir(api: any): IEntry[] {
   const {
     context: { rootDir },
   } = api;
-  const pagesPath = path.join(rootDir, 'src/pages');
+  const srcPath = path.join(rootDir, 'src');
+  const pagesPath = path.join(srcPath, 'pages');
   const pages = fs.existsSync(pagesPath)
     ? fs
       .readdirSync(pagesPath)
@@ -75,11 +77,14 @@ function getEntriesByDir(api: any): IEntry[] {
   const entries = pages.map((pageName) => {
     const entryName = pageName.toLocaleLowerCase();
     const pageEntry = getPageEntryByDir(pagesPath, pageName);
+    const source = `pages/${pageName}/${pageEntry}`;
+    const entryPath = path.join(srcPath, source);
     if (!pageEntry) return null;
     return {
       entryName,
       pageName,
-      entryPath: `pages/${pageName}/${pageEntry}`,
+      entryPath,
+      source,
     };
   }).filter(Boolean);
   return entries;

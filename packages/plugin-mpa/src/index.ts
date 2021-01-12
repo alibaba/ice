@@ -25,7 +25,7 @@ const plugin: IPlugin = (api) => {
     let entries = mpaEntries.reduce((acc, { entryName, entryPath }) => {
       return {
         ...acc,
-        [entryName]: `src/${entryPath}`
+        [entryName]: entryPath
       };
     }, {});
     const finalEntries = {};
