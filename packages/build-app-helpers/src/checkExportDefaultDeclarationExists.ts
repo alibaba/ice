@@ -26,7 +26,7 @@ function checkExportDefaultDeclarationExists(sourcePath: string) {
 function parseCode(code) {
   return parse(code, {
     sourceType: 'module',
-    plugins: ['jsx', 'typescript', 'decorators-legacy'],
+    plugins: ['jsx', 'typescript', 'decorators-legacy', 'dynamicImport', 'classProperties'],
   });
 }
 
