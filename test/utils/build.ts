@@ -22,8 +22,6 @@ interface IReturn {
 export const buildFixture = function(example: string) {
   test(`setup ${example}`, async () => {
     const rootDir = path.join(__dirname, `../../examples/${example}`);
-    const processCwdSpy = jest.spyOn(process, 'cwd');
-    processCwdSpy.mockReturnValue(rootDir);
     await build({
       args: {
         config: path.join(rootDir, 'build.json'),

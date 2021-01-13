@@ -1,9 +1,16 @@
+import * as path from 'path';
 import { buildFixture, setupBrowser } from './utils/build';
 import { IPage } from './utils/browser';
 
 const example = 'basic-mpa';
 let page: IPage = null;
 let browser = null;
+
+beforeAll(() => {
+    const rootDir = path.join(__dirname, `../examples/${example}`);
+    const processCwdSpy = jest.spyOn(process, 'cwd');
+    processCwdSpy.mockReturnValue(rootDir);
+});
 
 buildFixture(example);
 
