@@ -2,6 +2,7 @@
   "files": [],
   "references": [
     { "path": "packages/build-user-config" },
+    { "path": "packages/webpack-plugin-extract-css-assets" },
     { "path": "packages/build-app-helpers" },
     { "path": "packages/build-mpa-config" },
     { "path": "packages/plugin-app-core" },
