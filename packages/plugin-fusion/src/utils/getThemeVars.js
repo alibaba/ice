@@ -24,7 +24,9 @@ module.exports = (themeFile, themeConfig, enableColorNames) => {
     originTheme[themeKey.slice(1)] = themeVars[themeKey];
 
     const themeValue = themeVars[themeKey];
-    if (themeValue && (themeValue.indexOf('#') !== 0 && !themeValue.match(/^rgb/) || ['$color-white', '$color-black'].indexOf(themeKey) > -1)) {
+    const isNotColorValue = themeValue && themeValue.indexOf('#') !== 0 && !themeValue.match(/^rgb/);
+    const isInBlackList = ['$color-white', '$color-black'].indexOf(themeKey) > -1;
+    if (themeValue && (isNotColorValue || isInBlackList)) {
       // delete theme key if it is not a color variable
       const removeThemeVar = enableColorNames ? !themeValue.match(/^transparent/) && !colorNames[themeValue] : true;
       if (removeThemeVar) {
