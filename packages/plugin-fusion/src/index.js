@@ -36,12 +36,9 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
   const { rootDir, pkg, userConfig, webpack } = context;
 
   const taskNames = getAllTask();
-  // compatible with dist output of component dev
+  // ignore externals rule and babel-plugin-import when compile dist
   const ignoreTasks = ['component-dist'];
   taskNames.forEach((taskName) => {
-    if (ignoreTasks.includes(taskName)) {
-      return;
-    }
     onGetWebpackConfig(taskName, (config) => {
       // 1. 支持主题能力
       if (themePackage) {
@@ -209,7 +206,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
       // 2. 组件（包含业务组件）按需加载&样式自动引入
       // babel-plugin-import: 基础组件
       // remove babel-plugin-import if external next
-      if (!externalNext) {
+      if (!externalNext && !ignoreTasks.includes(taskName)) {
         const importConfigs = [{
           libraryName: '@icedesign/base',
           style,
@@ -316,7 +313,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
           ]);
       }
   
-      if (externalNext) {
+      if (externalNext && !ignoreTasks.includes(taskName)) {
         const externals = [];
         if (userConfig.externals) {
           externals.push(userConfig.externals);
