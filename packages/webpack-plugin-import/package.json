@@ -1,0 +1,27 @@
+{
+  "name": "webpack-plugin-import",
+  "version": "0.2.6",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\"",
+    "test:server": "node ./tests/index.js"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-scripts/tree/master/packages/webpack-plugin-import"
+  },
+  "keywords": [],
+  "author": "ICE Team",
+  "license": "MIT",
+  "dependencies": {
+    "loader-utils": "^2.0.0"
+  },
+  "devDependencies": {
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.6",
+    "babel-plugin-import": "^1.6.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "presets": [],
+  "plugins": [
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@icedesign/base"
+      }
+    ]
+  ]
+}
