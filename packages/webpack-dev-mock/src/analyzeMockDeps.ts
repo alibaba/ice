@@ -6,7 +6,7 @@ import * as path from 'path';
 function parseCode(code) {
   return parse(code, {
     sourceType: 'module',
-    plugins: ['jsx', 'typescript'],
+    plugins: ['jsx', 'typescript', 'decorators-legacy', 'dynamicImport', 'classProperties'],
   });
 }
 
@@ -46,7 +46,8 @@ function analyzeAST(code: string, dir: string) {
     },
   };
   traverse(ast, visitor);
-  return result.map((filePath) => path.join(dir, filePath));
+  // only analyze relative path
+  return result.filter((module) => /^\./.test(module)).map((modulePath) => path.join(dir, modulePath));
 }
 
 function dedupe(arr: string[]) {
@@ -70,13 +71,8 @@ function analyzeDenpendencies(filePath: string) {
       const fileContent = String(fse.readFileSync(file));
       const analyzeResult = dedupe(analyzeAST(fileContent, path.dirname(file)));
       result.push(...analyzeResult);
-      analyzeResult.forEach(module => {
-        if (/^\./.test(module)) {
-          const modulePath = require.resolve(
-            path.join(path.dirname(file), module),
-          );
-          trace(require.resolve(modulePath));
-        }
+      analyzeResult.forEach(modulePath => {
+        trace(require.resolve(modulePath));
       });
     }
   }
