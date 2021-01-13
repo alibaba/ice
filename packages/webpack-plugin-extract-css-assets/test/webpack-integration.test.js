@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import webpack from 'webpack';
-import junk from 'junk';
+const fs = require('fs');
+const path = require('path');
+const junk = require('junk');
+const webpack = require('webpack');
 
 jest.setTimeout(60000);
 

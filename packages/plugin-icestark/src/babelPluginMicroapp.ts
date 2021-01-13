@@ -24,8 +24,8 @@ const getUid = () => {
 };
 
 export default (api, { entryList }) => {
-  let namespaceSpecifier: string;
-  let importSpecifier: string;
+  const namespaceSpecifier: string[] = [];
+  const importSpecifier: string[] = [];
   let configIdentifier: string;
   let replaced = false;
 
@@ -35,7 +35,7 @@ export default (api, { entryList }) => {
       return filePath.includes((filename || '').replace(/\.[^/.]+$/, ''));
     });
   };
-  
+
   return {
     visitor: {
       Program(nodePath, state) {
@@ -51,10 +51,10 @@ export default (api, { entryList }) => {
               if (t.isStringLiteral(item.source, { value: 'ice'})) {
                 item.specifiers.forEach((value) => {
                   if (t.isImportNamespaceSpecifier(value)) {
-                    namespaceSpecifier = value.local.name;
+                    namespaceSpecifier.push(value.local.name);
                   }
                   if (t.isImportSpecifier(value)) {
-                    importSpecifier = value.local.name;
+                    importSpecifier.push(value.local.name);
                   }
                 });
               } else if (t.isIdentifier(item.source, { value: '@ice/stark-app'})) {
@@ -111,15 +111,21 @@ export default (api, { entryList }) => {
         if (checkEntryFile(state.filename) && !replaced) {
           const node: t.ExpressionStatement = nodePath.node;
           let callIdentifier = '';
-          if (namespaceSpecifier
+          if (namespaceSpecifier.length
             && t.isCallExpression(node.expression)
             && t.isMemberExpression(node.expression.callee)
-            && t.isIdentifier(node.expression.callee.object, { name: namespaceSpecifier})) {
+            && namespaceSpecifier.some(specifier => t.isCallExpression(node.expression) && t.isMemberExpression(node.expression.callee) && t.isIdentifier(node.expression.callee.object, { name: specifier})))
+          {
             callIdentifier = t.isIdentifier(node.expression.callee.property, { name: 'createApp'}) ? 'createApp' : 'runApp';
           }
-          const identifierCallee = importSpecifier
+
+          let identifierCallee = '';
+          if (importSpecifier.length
             && t.isCallExpression(node.expression)
-            && t.isIdentifier(node.expression.callee, { name: importSpecifier});
+            && importSpecifier.some(specifier => t.isCallExpression(node.expression) && t.isIdentifier(node.expression.callee, { name: specifier })))
+          {
+            identifierCallee = t.isIdentifier(node.expression.callee, { name: 'createApp'}) ? 'createApp' : 'runApp';
+          }
 
           if (callIdentifier || identifierCallee) {
             const expression = node.expression as t.CallExpression;
@@ -151,7 +157,7 @@ export default (api, { entryList }) => {
 
             const astExport = api.template(templateExportStatement)({
               APP_CONFIG: configIdentifier,
-              APP_CALLEE: callIdentifier || importSpecifier,
+              APP_CALLEE: callIdentifier || identifierCallee,
             });
             nodePath.insertAfter(astExport);
             replaced = true;
