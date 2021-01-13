@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/babel-preset-ice" },
     { "path": "packages/build-user-config" },
     { "path": "packages/build-app-helpers" },
     { "path": "packages/build-mpa-config" },

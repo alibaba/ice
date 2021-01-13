@@ -1038,7 +1038,7 @@
     core-js-compat "^3.8.0"
     semver "^5.5.0"
 
-"@babel/preset-flow@^7.0.0", "@babel/preset-flow@^7.7.4":
+"@babel/preset-flow@^7.7.4":
   version "7.12.1"
   resolved "https://registry.npm.taobao.org/@babel/preset-flow/download/@babel/preset-flow-7.12.1.tgz?cache=0&sync_timestamp=1602807792824&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fpreset-flow%2Fdownload%2F%40babel%2Fpreset-flow-7.12.1.tgz#1a81d376c5a9549e75352a3888f8c273455ae940"
   integrity sha1-GoHTdsWpVJ51NSo4iPjCc0Va6UA=
