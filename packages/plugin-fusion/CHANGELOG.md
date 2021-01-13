@@ -3,6 +3,8 @@
 ## 0.1.11
 
 - [fix] error condition of color variables
+- [fix] bump verison of ice-skin-loader
+- [fix] ignore externals rule and babel-plugin-import rule when build umd
 
 ## 0.1.10
 
