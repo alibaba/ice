@@ -88,7 +88,7 @@ runApp(appConfig);
 + │         ├── models/
 + │         ├── store.js
   │         ├── routes.js
-  │         └── app.jsx
+  │         └── app.js
   ├── build.json
   ├── package.json
   └── tsconfig.json
