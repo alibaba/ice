@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as semver from 'semver';
 import { getPackageInfos, IPackageInfo, getVersionPrefix } from './getPackageInfos';
 
 console.log('[VERSION] tag versions');
@@ -14,9 +15,13 @@ function updatePackageVersion(publishPackages: IPackageInfo[]) {
       const dependenceVersion = publishPackages[i].publishVersion;
 
       if (packageInfo.dependencies && packageInfo.dependencies[dependenceName]) {
-        packageInfo.dependencies[dependenceName] = `${getVersionPrefix(packageInfo.dependencies[dependenceName])}${dependenceVersion}`;
+        if (!semver.satisfies(dependenceVersion, packageInfo.dependencies[dependenceName])) {
+          packageInfo.dependencies[dependenceName] = `${getVersionPrefix(packageInfo.dependencies[dependenceName])}${dependenceVersion}`;
+        }
       } else if (packageInfo.devDependencies && packageInfo.devDependencies[dependenceName]) {
-        packageInfo.devDependencies[dependenceName] = `${getVersionPrefix(packageInfo.devDependencies[dependenceName])}${dependenceVersion}`;
+        if (!semver.satisfies(dependenceVersion, packageInfo.devDependencies[dependenceName])) {
+          packageInfo.devDependencies[dependenceName] = `${getVersionPrefix(packageInfo.devDependencies[dependenceName])}${dependenceVersion}`;
+        }
       }
     }
     console.log(`[VERSION] update package ${name} with version ${publishVersion}`);
