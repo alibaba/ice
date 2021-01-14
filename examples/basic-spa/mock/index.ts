@@ -1,17 +1,17 @@
-const projects = require('./projects');
+import projects from './projects';
 
+const status = 'SUCCESS';
 // mock/index.js
-module.exports = {
+export default {
   'GET /api/repo': {
-    status: 'SUCCESS',
+    status,
     data: {
       group: 'ice.js',
       url: 'http://github.com/ice-lab/ice.js'
     }
   },
-
   'GET /api/projects': {
-   status: 'SUCCESS',
-   data: projects
+    status,
+    data: projects
   }
 };
