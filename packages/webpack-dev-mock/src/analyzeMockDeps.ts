@@ -62,6 +62,8 @@ function dedupe(arr: string[]) {
   return Object.keys(map);
 }
 
+// require.resolve ts extension
+require.extensions['.ts'] = require.extensions['.js'];
 function analyzeDenpendencies(filePath: string) {
   const tracedFiles = {};
   const result = [];
