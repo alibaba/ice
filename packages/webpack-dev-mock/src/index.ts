@@ -1,21 +1,22 @@
 /* eslint @typescript-eslint/no-var-requires:0, no-shadow: 0 */
-const { existsSync } = require('fs');
-const assert = require('assert');
-const glob = require('glob');
-const bodyParser = require('body-parser');
-const chalk = require('chalk');
-const chokidar = require('chokidar');
-const path = require('path');
-const multer = require('multer');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as assert from 'assert';
+import * as glob from 'glob';
+import * as bodyParser from 'body-parser';
+import * as chokidar from 'chokidar';
+import * as multer from 'multer';
+import analyzeDenpendencies from './analyzeMockDeps';
+import matchPath from './matchPath';
+
 const debug = require('debug')('ice:mock');
-const matchPath = require('./matchPath');
+const chalk = require('chalk');
 
 const OPTIONAL_METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 
 const winPath = function(path) {
   return path.replace(/\\/g, '/');
 };
-
 let error = null;
 const cwd = process.cwd();
 const mockDir = winPath(path.join(cwd, 'mock'));
@@ -25,9 +26,24 @@ function getConfig(rootDir) {
   const mockFiles = glob.sync('mock/**/*.[jt]s', {
     cwd: rootDir,
   }).map(file => path.join(rootDir, file));
+  
+  const requireDeps = mockFiles.reduce((pre, curr) => {
+    return pre.concat(analyzeDenpendencies(curr));
+  }, []);
+  const onlySet = Array.from(new Set([...requireDeps, ...mockFiles]));
+  // set @babel/register for node's require
+  // eslint-disable-next-line global-require
+  require('@babel/register')({
+    presets: [require.resolve('./babelPresetNode')],
+    ignore: [/node_modules/],
+    only: onlySet,
+    extensions: ['.js', '.ts'],
+    babelrc: false,
+    cache: false,
+  });
   const mockConfig = {};
   mockFiles.forEach(mockFile => {
-    if (existsSync(mockFile)) {
+    if (fse.existsSync(mockFile)) {
       // disable require cache
       Object.keys(require.cache).forEach(file => {
         const winPathFile = winPath(file);
@@ -39,7 +55,8 @@ function getConfig(rootDir) {
       });
       try {
         // eslint-disable-next-line import/no-dynamic-require, global-require
-        const mockData = require(mockFile) || {};
+        const mockModule = require(mockFile);
+        const mockData = mockModule.default || mockModule || {};
         Object.assign(mockConfig, mockData);
       } catch (err) {
         console.log(err);
