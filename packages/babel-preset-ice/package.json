@@ -1,5 +1,5 @@
 {
-  "name": "babel-preset-ice",
+  "name": "@builder/babel-preset-ice",
   "version": "1.0.0",
   "description": "Basic babel preset",
   "main": "lib/index.js",

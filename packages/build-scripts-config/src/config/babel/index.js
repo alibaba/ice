@@ -1,4 +1,4 @@
-const getBabelPreset = require('babel-preset-ice').default;
+const getBabelPreset = require('@builder/babel-preset-ice').default;
 
 module.exports = () => {
   return getBabelPreset({

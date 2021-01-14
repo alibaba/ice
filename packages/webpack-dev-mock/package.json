@@ -9,7 +9,7 @@
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "dependencies": {
-    "babel-preset-ice": "^1.0.0",
+    "@builder/babel-preset-ice": "^1.0.0",
     "@babel/parser": "^7.12.11",
     "@babel/traverse": "^7.12.12",
     "@babel/register": "^7.12.10",

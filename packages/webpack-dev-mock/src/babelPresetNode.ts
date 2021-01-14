@@ -1,4 +1,4 @@
-import getBabelPreset from 'babel-preset-ice';
+import getBabelPreset from '@builder/babel-preset-ice';
 
 export default () => {
   return getBabelPreset({
