@@ -1,8 +1,5 @@
 import projects from './projects';
 
-interface IStatus {
-  name: string;
-}
 const status = 'SUCCESS';
 // mock/index.js
 export default {
