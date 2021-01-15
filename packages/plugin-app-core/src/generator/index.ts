@@ -234,4 +234,8 @@ export default class Generator {
       this.disableRuntimePlugins.push(pluginName);
     };
   }
+
+  public getDisableRuntimePlugin = () => {
+    return this.disableRuntimePlugins;
+  }
 }

@@ -23,7 +23,10 @@ export default (api, options) => {
   registerMethod('addRenderFile', generator.addRenderFile);
   registerMethod('addTemplateDir', generator.addTemplateDir);
   registerMethod('modifyRenderData', generator.modifyRenderData);
+
+  // registerMethod for disable runtimePlugin
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
+  registerMethod('getDisableRuntimePlugin', generator.getDisableRuntimePlugin);
 
   function addImportDeclaration(data) {
     const { importSource, exportMembers, exportDefault } = data;
