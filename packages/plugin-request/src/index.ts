@@ -13,8 +13,18 @@ export default async function (api) {
   // .ice/index.ts:
   // export * from './request';
   // export * from './useRequest';
-  applyMethod('addExport', { source: './request/request', exportName: 'request' });
-  applyMethod('addExport', { source: './request/useRequest', exportName: 'useRequest' });
+  applyMethod('addExport', {
+    source: './request/request',
+    exportName: 'request',
+    importSource: '$$ice/request/request',
+    exportDefault: 'request',
+  });
+  applyMethod('addExport', {
+    source: './request/useRequest',
+    exportName: 'useRequest',
+    importSource: '$$ice/request/useRequest',
+    exportDefault: 'useRequest',
+  });
 
   // add iceTypes exports
   applyMethod('addAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });

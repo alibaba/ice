@@ -3,6 +3,7 @@ import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
 import { getExportApiKeys } from '../constant';
+import importDeclarations from './importDeclarations';
 
 export default (api, options) => {
   const { registerMethod } = api;
@@ -24,10 +25,35 @@ export default (api, options) => {
   registerMethod('modifyRenderData', generator.modifyRenderData);
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
 
+  function addImportDeclaration(data) {
+    const { importSource, exportMembers, exportDefault } = data;
+    if (importSource) {
+      if (exportMembers) {
+        exportMembers.forEach((exportMember) => {
+          // import { withAuth } from 'ice' -> import { withAuth } from 'ice/auth';
+          importDeclarations[exportMember] = {
+            value: importSource,
+            type: 'normal',
+          };
+        });
+      } else if (exportDefault) {
+        // import { Helmet } from 'ice' -> import Helmet from 'ice/helmet';
+        importDeclarations[exportDefault] = {
+          value: importSource,
+          type: 'default',
+        };
+      }
+    }
+  }
+
+  registerMethod('addImportDeclaration', addImportDeclaration);
+
+  api.setValue('importDeclarations', importDeclarations);
   // registerMethod for add export
   const apiKeys = getExportApiKeys();
   apiKeys.forEach((apiKey) => {
     registerMethod(apiKey, (exportData) => {
+      addImportDeclaration(exportData);
       generator.addExport(apiKey, exportData);
     });
     registerMethod(apiKey.replace('add', 'remove'), (removeExportName) => {

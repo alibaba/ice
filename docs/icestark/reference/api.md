@@ -421,6 +421,13 @@ const sandbox = new CustomSanbox();
 />
 ```
 
+### AppLink - depreated
+
+不推荐使用，建议使用 `@ice/stark-app` 暴露的 AppLink 组件。
+
+### appHistory - depreated
+
+不推荐使用，建议使用 `@ice/stark-app` 暴露的 appHistory API。
 ## @ice/stark-app
 
 ### isInIcestark
@@ -450,6 +457,39 @@ const sandbox = new CustomSanbox();
 微应用触发渲染全局 404 的方法
 
 - 类型：`function`
+
+### appHistory
+
+提供手动切换不同应用的方法。
+
+#### appHistory.push
+
+- 类型：`function`
+- 代码示例：
+
+```js
+import React from 'react';
+import { appHistory } from '@ice/stark-app';
+
+export default class SelfLink extends React.Component {
+  render() {
+    return (
+      <span
+        onClick={() => {
+          appHistory.push('/home');
+        }}
+      >
+        selfLink
+      </span>
+    );
+  }
+}
+```
+
+#### appHistory.replace
+
+- 类型：`function`
+- 代码示例参考 `appHistory.push`
 
 ### AppLink
 
@@ -498,39 +538,6 @@ export default class SelfLink extends React.Component {
   }
 }
 ```
-
-### appHistory
-
-提供手动切换不同应用的方法。
-
-#### appHistory.push
-
-- 类型：`function`
-- 代码示例：
-
-```js
-import React from 'react';
-import { appHistory } from '@ice/stark-app';
-
-export default class SelfLink extends React.Component {
-  render() {
-    return (
-      <span
-        onClick={() => {
-          appHistory.push('/home');
-        }}
-      >
-        selfLink
-      </span>
-    );
-  }
-}
-```
-
-#### appHistory.replace
-
-- 类型：`function`
-- 代码示例参考 `appHistory.push`
 
 ### registerAppEnter
 

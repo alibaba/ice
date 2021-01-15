@@ -2,6 +2,7 @@ import { createElement, useEffect, Component } from '<%- framework %>';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
+import { IAppConfig, IBuildConfig } from './types';
 
 <% if (isReact) {%>
   import reactAppRenderer, { getInitialData } from 'react-app-renderer';
@@ -19,7 +20,6 @@ import createShareAPI, { history } from 'create-app-shared';
   // eslint-disable-next-line
   import '../<%= globalStyle %>'
 <% } %>
-
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';
 import defaultStaticConfig from './staticConfig';
@@ -28,6 +28,7 @@ import { setAppConfig } from './appConfig';
 import { mount, unmount } from './render';
 import ErrorBoundary from './ErrorBoundary';
 
+const buildConfig: IBuildConfig = <%- buildConfig %>;
 const {
   createBaseApp,
   withRouter,
@@ -45,10 +46,11 @@ const {
 } = createShareAPI({
   createElement,
   useEffect,
-  withRouter: defaultWithRouter
+  withRouter: defaultWithRouter,
+  initHistory: buildConfig.router !== false,
 }, loadRuntimeModules);
 
-export function runApp(appConfig, staticConfig?: any) {
+export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
   let renderer;
   <% if(isRax){ %>
     renderer = raxAppRenderer;
@@ -59,7 +61,6 @@ export function runApp(appConfig, staticConfig?: any) {
     renderer = reactAppRenderer;
   }
   <% } %>
-  const buildConfig = <%- buildConfig %>;
   renderer({
     appConfig,
     staticConfig: staticConfig || defaultStaticConfig,
@@ -118,7 +119,7 @@ export {
   addNativeEventListener,
   removeNativeEventListener,
 
-  ErrorBoundary
+  ErrorBoundary,
 };
 
 // Private API

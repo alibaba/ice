@@ -7,6 +7,7 @@ import {
   getAppStorePath,
   getAppModelsPath,
 } from './utils/getPath';
+import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
   pageName: string;
@@ -20,8 +21,6 @@ export interface IRenderPageParams {
 const matchRegex = /^[^._].*\.(js|ts)$/;
 
 export default class Generator {
-  private isRax: boolean
-
   private rootDir: string
 
   private appStoreTemplatePath: string
@@ -46,7 +45,6 @@ export default class Generator {
     targetPath,
     applyMethod,
     projectType,
-    isRax,
     srcDir
   }: {
     rootDir: string;
@@ -57,7 +55,6 @@ export default class Generator {
     targetPath: string;
     projectType: string;
     applyMethod: Function;
-    isRax: boolean;
     srcDir: string;
   }) {
     this.rootDir = rootDir;
@@ -67,7 +64,6 @@ export default class Generator {
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
-    this.isRax = isRax;
     this.srcDir = srcDir;
   }
 
@@ -135,7 +131,13 @@ export default class Generator {
 
     this.applyMethod('addRenderFile', this.appStoreTemplatePath, targetPath, appStoreRenderData);
     this.applyMethod('removeExport', exportName);
-    this.applyMethod('addExport', { source: `./${sourceFilename}`, specifier: 'store', exportName });
+    this.applyMethod('addExport', {
+      source: `./${sourceFilename}`,
+      specifier: 'store',
+      exportName,
+      importSource: `$$ice/${sourceFilename}`,
+      exportDefault: 'store',
+    });
   }
 
   private renderAppStoreTypes({ hasAppModels, existsAppStoreFile }) {
@@ -148,6 +150,10 @@ export default class Generator {
 
     this.applyMethod('addRenderFile', this.typesTemplatePath, targetPath, appStoreTypesRenderData);
     this.applyMethod('addTypesExport', { source: './store/types' });
+    this.applyMethod('appImportDeclarations', {
+      importSource: '$$ice/store/types',
+      exportMembers: ['IRootDispatch', 'IRootState', 'IStore', 'IStoreModels', 'IStoreDispatch', 'IStoreRootState'],
+    });
   }
 
   private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {
@@ -172,7 +178,6 @@ export default class Generator {
 
     const pageComponentName = 'PageComponent';
     const pageComponentRenderData = {
-      isRax: this.isRax,
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
@@ -181,6 +186,7 @@ export default class Generator {
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       pageComponentRenderData.hasPageStore = true;
+      checkPageIndexFileExists(pageNameDir, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
@@ -197,7 +203,6 @@ export default class Generator {
 
     const pageLayoutName = `${pageName}Layout`;
     const pageLayoutRenderData = {
-      isRax: this.isRax,
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageLayoutName,
       hasPageStore: false,
@@ -206,6 +211,7 @@ export default class Generator {
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       pageLayoutRenderData.hasPageStore = true;
+      checkPageIndexFileExists(pageComponentSourcePath, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);

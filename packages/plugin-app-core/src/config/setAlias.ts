@@ -16,6 +16,9 @@ export default (api, options: IOptions) => {
     [`${alias}$`, path.join(tempPath, 'index.ts')],
     [`${alias}`, path.join(tempPath, 'pages') ],
     ['@', path.join(rootDir, 'src')],
+    // add alias for modular import
+    [`$$${alias}`, tempPath],
+    ['$$framework', tempPath],
   ];
 
   onGetWebpackConfig((config: any) => {

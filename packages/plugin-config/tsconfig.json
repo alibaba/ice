@@ -3,10 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "lib",
-    "paths": {
-      "@/config": ["./src/_config"]
-    }
+    "outDir": "lib"
   },
   "exclude": [
     "config/*"

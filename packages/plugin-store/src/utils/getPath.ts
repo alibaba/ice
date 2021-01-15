@@ -12,11 +12,7 @@ export function getAppModelsPath({ rootDir, srcDir }) {
   return path.join(rootDir, srcDir, 'models');
 }
 
-export function getPageStorePath({ rootDir, srcDir, projectType, pagePath, isRax = false }) {
-  if (isRax) {
-    const dir = path.dirname(pagePath);
-    pagePath = path.parse(dir).name;
-  }
+export function getPageStorePath({ rootDir, srcDir, projectType, pagePath }) {
   pagePath = path.join('pages', pagePath);
 
   const pageNameDir = path.join(rootDir, srcDir, pagePath);
@@ -26,11 +22,7 @@ export function getPageStorePath({ rootDir, srcDir, projectType, pagePath, isRax
   return pageStoreFilePath;
 };
 
-export function getPageModelPath({ rootDir, srcDir, projectType, pagePath, isRax =false }) {
-  if (isRax) {
-    const dir = path.dirname(pagePath);
-    pagePath = path.parse(dir).name;
-  }
+export function getPageModelPath({ rootDir, srcDir, projectType, pagePath }) {
   pagePath = path.join('pages', pagePath);
 
   const pageNameDir = path.join(rootDir, srcDir, pagePath);

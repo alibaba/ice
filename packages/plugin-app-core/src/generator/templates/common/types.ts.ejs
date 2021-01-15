@@ -4,6 +4,7 @@
 
 <% if (isRax) {%>
   import { RaxElement as FrameworkElement, ComponentType as FrameworkComponentType, RaxNode as FrameworkNode } from 'rax';
+  import { History } from 'history';
 <% } %>
 
 <%- appConfigTypesImports %>
@@ -15,6 +16,13 @@ interface IOnTabItemClickParams {
   path: string;
   text: string;
   index: number;
+}
+
+export interface IBuildConfig {
+  router?: object | boolean;
+  store?: boolean;
+  icestarkUMD?: boolean;
+  web?: object;
 }
 
 export interface IApp {
@@ -35,12 +43,25 @@ export interface IApp {
   [key: string]: any;
 }
 
-<% if (appConfigTypesImports) { %>
-  export interface IAppConfig {
-    app?: IApp
-    <%- appConfigTypesExports %>
-  }
+<% if (isRax) {%>
+export interface IRouter {
+  type?: 'hash' | 'browser' | 'memory' | 'static';
+  // common props for BrowserRouter & HashRouter & MemoryRouter
+  basename?: string;
+  fallback?: FrameworkNode;
+  history?: History;
+}
 <% } %>
+
+export interface IAppConfig {
+  app?: IApp,
+  <% if (isRax) {%>
+  router?: IRouter
+  <% } %>
+  <% if (appConfigTypesImports) { %>
+    <%- appConfigTypesExports %>
+  <% } %>
+}
 
 declare global {
   interface Window {

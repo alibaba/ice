@@ -7,7 +7,6 @@ import * as queryString from 'query-string';
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
 const useRouter = createUseRouter({ useState, useLayoutEffect });
-const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
 
 let __initialData__;
 
@@ -121,6 +120,7 @@ function _renderMobile({ runtime, history }, options) {
     .then(InitialComponent => {
       const App = () => {
         const { component } = useRouter({ routes, history, InitialComponent });
+        const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
         return createElement(
           AppNavigation,
           {

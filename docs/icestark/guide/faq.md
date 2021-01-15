@@ -3,18 +3,6 @@ title: 常见问题
 order: 8
 ---
 
-## 微应用之间如何跳转？
-
-微应用内部跳转直接基于对应 router 提供的 link 组件即可，如果要跳转到其他微应用，可以使用 `appHistory` API，这里以 React 应用为例：
-
-```jsx
-import { appHistory } from '@ice/stark-app';
-
-<Button type="primary" onClick={() => {
-  appHistory.push('/seller/settings');
-}}>跳转到其他微应用</Button>
-```
-
 ## 微应用 bundle 加载失败？
 
 前端应用如果做了按需加载，按需加载的 bundle 默认是根据当前域名拼接地址，如果前端资源部署在非当前域名（比如 CDN）下，则需要通过手动配置 publicPath 来实现，具体参考[文档](/docs/guide/basic/build#publicPath)。
@@ -33,7 +21,7 @@ axios.defaults.baseURL = '//127.0.0.1:4444';
 如果微应用使用 icejs 研发框架提供的数据请求方案，则只需通过配置 `appConfig`：
 
 ```js
-import { createApp } from 'ice';
+import { runApp } from 'ice';
 
 const appConfig = {
   ...
@@ -42,7 +30,7 @@ const appConfig = {
   }
 };
 
-createApp(appConfig);
+runApp(appConfig);
 ```
 
 由于开发调试过程中主应用和微应用的域名或者端口不一致，非 icejs 研发框架的工程可能会有跨域问题，需要修改 webpack devServer 配置：
@@ -107,6 +95,10 @@ const onAppLeave = (appConfig) => {
 ```
 
 主应用和微应用均开启 lazy 的情况下，需要通过配置 `webpack.output.jsonpFunction` 来隔离两个应用的全局变量名称，详见 [webpack 配置](https://webpack.js.org/configuration/output/#outputjsonpfunction)。
+
+## `Error: Invariant failed: You should not use <withRouter(Navigation) /> outside a <Router>`
+
+因为 jsx 嵌套层级的关系，在主应用的 Layout 里没法使用 react-router 提供的 API，比如 `withRouter`, `Link`, `useParams` 等，具体参考文档 [主应用中路由跳转](/docs/icestark/guide/framework-app#主应用中路由跳转)。
 
 ## UmiJS 应用如何改造为微应用
 

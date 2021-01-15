@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-router",
-  "version": "1.7.6",
+  "version": "1.8.0",
   "description": "build-plugin-ice-router",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -11,6 +11,7 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "@builder/app-helpers": "^2.0.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "history": "^4.10.1",
@@ -30,7 +31,7 @@
   },
   "files": [
     "lib",
-    "src/types",
+    "src",
     "templates"
   ],
   "repository": {
