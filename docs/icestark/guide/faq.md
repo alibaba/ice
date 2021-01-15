@@ -128,13 +128,14 @@ export default {
 
 ### 修改主应用的路由模式
 
-在 `src/app.ts` 中增加以下配置即可，将 `router` 修改为 `hash`。
+在 `src/app.ts` 中增加以下配置，将 `router` 修改为 `hash`。
 
 ```diff
 import { runApp } from 'ice';
 
 const appConfig = {
   router: {
+-   type: 'browser',
 +   type: 'hash',
   }
 };
@@ -243,5 +244,5 @@ import { AppLink, appHistory } from '@ice/stark-app';
 const navItem = <AppLink to="/seller" hashType>{item.name}</AppLink>);
 
 // 示例2
-appHistory('/seller', true);
+appHistory.push('/seller', true);
 ```
