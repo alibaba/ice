@@ -15,8 +15,8 @@ module.exports = (config, webpackPlugins, context) => {
         if (pluginName.match(webpackRegExp)) {
           // webpack builtin plugins
           const { webpack } = context;
-          const webpackPluginName = pluginName.replace(webpackRegExp, '');
-          plugin = webpack[webpackPluginName];
+          const webpackInnerPluginName = pluginName.replace(webpackRegExp, '');
+          plugin = webpack[webpackInnerPluginName];
         } else {
           // eslint-disable-next-line
           plugin = require(pluginName);
