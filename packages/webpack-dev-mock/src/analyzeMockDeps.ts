@@ -78,7 +78,7 @@ function analyzeDenpendencies(filePath: string) {
         const fullPath = require.resolve(modulePath);
         // only analyze js|ts files
         if (/\.(js|ts)$/.test(fullPath)) {
-          trace(require.resolve(fullPath));
+          trace(fullPath);
         }
       });
     }
