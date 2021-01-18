@@ -73,8 +73,13 @@ function analyzeDenpendencies(filePath: string) {
       const fileContent = String(fse.readFileSync(file));
       const analyzeResult = dedupe(analyzeAST(fileContent, path.dirname(file)));
       result.push(...analyzeResult);
-      analyzeResult.forEach(modulePath => {
-        trace(require.resolve(modulePath));
+      analyzeResult.forEach(modulePath=> {
+        // full path with file extension
+        const fullPath = require.resolve(modulePath);
+        // only analyze js|ts files
+        if (/\.(js|ts)$/.test(fullPath)) {
+          trace(require.resolve(fullPath));
+        }
       });
     }
   }
