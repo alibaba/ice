@@ -16,13 +16,13 @@ $ npm install build-plugin-fusion --save-dev
 * `themePackage` Fusion 组件主题包配置，如果设置为数组则启动多主题能力
 * `themeConfig` 主题配置，通过设置 sass 变量对现有主题进行覆盖
 * `uniteBaseComponent` 如果项目里依赖了多个不同名称的基础包，可以通过 uniteBaseComponent 来统一基础包，减少重复的代码
-* `nextPrefix`  Fusion 组件样式 prefix，一般情况下需要配合入口代码的 `ConfigProvider` 使用，可以将所有的 className 改掉
 * `importOptions` 同 `babel-plugin-import` 参数，默认为 `{ style: true, libraryDirectory: 'es'}` 根据用户设置项将进行合并
 * `externalNext` 配合 `externals` 配置，将 Next 组件作为外部依赖引入
 * `usePx2Vw` 配合 postcss 插件，将 css 样式单位 px 转化为 vw ，默认为 false 不开启， true 为开启
 * `px2vwOptions` 传递参数给postcss插件，默认为`{ viewportWidth: 750 }` 根据用户设置项将进行合并
 * `componentOptions` 值为对象，修改业务组件的引入路径，推荐用在 PC 跨 H5 的项目中，给业务组件指定 H5 的渲染组件
 * `enableColorNames` 默认为 `false`，如果开启默认将提取 `transparent`、`red`、`blue` 等色值名称
+* `nextPrefix` 仅修改 `@alifd/next` 里的 css-prefix，一般用于 0.x&1.x 共存的场景
 
 ## 基础用法
 
@@ -61,7 +61,7 @@ fusion 组件的默认 class 前缀是 `next-`，在微前端等场景下可能�
   "plugins": [
     ["build-plugin-fusion", {
       "themeConfig": {
-        "nextPrefix": "next-icestark-"
+        "css-prefix": "next-icestark-"
       }
     }]
   ]

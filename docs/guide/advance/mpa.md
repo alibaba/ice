@@ -60,55 +60,44 @@ pages 下的每个 entry 可以是一个单独的 SPA，也可以是简单的一
 
 SPA 类型的 entry 整体跟 icejs 的 SPA 应用基本接近，包含 `app.js`, `routes.js` 等文件。
 
-应用入口：
-
-```diff
-// src/pages/Dashboard/app.js
-import { runApp } from 'ice';
-+ import routes from './routes';
-
-const appConfig = {
-+ router: {
-+   routes
-+ }
-};
-
-runApp(appConfig);
-```
-
-如有状态管理诉求，可按下面的方式组织目录：
+目录结构：
 
 ```diff
   ├── src/pages
   │    └──  Dashboard/
-  │         ├── DashboardA/index.jsx
-  │         ├── DashboardB/index.jsx
-+ │         ├── models/
-+ │         ├── store.js
-  │         ├── routes.js
-  │         └── app.js
++ │         ├── DashboardA/index.jsx
++ │         ├── DashboardB/index.jsx
++ │         ├── models/               // 如有状态管理相关诉求
++ │         ├── store.js              // 如有状态管理相关诉求
++ │         ├── routes.js             // 路由配置
++ │         └── app.js
   ├── build.json
   ├── package.json
   └── tsconfig.json
 ```
 
-首先需要在 `app.jsx` 中增加以下内容，将 store 的 Provider 包裹 Dashboard 组件：
+应用入口：
 
 ```diff
-// src/pages/Dashboard/app.jsx
-+ import React from 'react';
+// src/pages/Dashboard/app.js
+import { runApp } from 'ice';
 + import store from './store';
-
-+ const { Provider } = store;
++ import routes from './routes';
 
 const appConfig = {
   app: {
-    rootId: 'ice-container',
++   // 如有状态管理诉求，需要手动包裹 provider
 +   addProvider: ({ children }) => {
-+     return <Provider>{children}</Provider>;
++     return <store.Provider>{children}</store.Provider>;
 +   },
-  }
-}
+  },
++ router: {
++   // 需要手动引入 routes
++   routes
++ }
+};
+
+runApp(appConfig);
 ```
 
 接下来配置路由信息：
@@ -132,7 +121,7 @@ export default [
 
 ### 组件类型的 entry
 
-如果只是渲染一个简单的组件/页面，直接在 `index.jsx` 中导出组件即可，框架会自动调用 `ReactDOM.render` 渲染组件：
+如果只是渲染一个简单的组件/页面，直接在 `index.jsx` 中导出组件即可：
 
 ```js
 // src/pages/About/index.jsx
@@ -143,7 +132,7 @@ export default function About() {
 }
 ```
 
-如果需要，组件类型的 entry 也可以使用状态管理能力，只需要新建 `models/` 文件夹以及 `store.js` 即可，框架会自动包裹 `store.Provider`。
+如果有 `export default` 那么框架会自动调用 `ReactDOM.render` 渲染组件，如果希望自行渲染组件的话则不需要通过 `export default` 导出组件。
 
 ## 指定不同 entry 的 HTML 模板
 
