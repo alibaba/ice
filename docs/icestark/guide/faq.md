@@ -113,3 +113,128 @@ export default {
 ```
 
 > 由于 UmiJS 未提供运行时修改路由 basename 的内容，如果涉及到微应用基准路由不固定，可以通过在主应用动态设置 `window.routerBase` 的方式动态修改
+
+## 官方 Demo 如何启用 HashRouter
+
+官方推荐 BrowserRouter 作为微前端的路由模式。在某些情况下，你可以通过以下方式适配 HashRouter 路由模式。
+
+### 修改主应用的路由模式
+
+在 `src/app.ts` 中增加以下配置，将 `router` 修改为 `hash`。
+
+```diff
+import { runApp } from 'ice';
+
+const appConfig = {
+  router: {
+-   type: 'browser',
++   type: 'hash',
+  }
+};
+
+runApp(appConfig);
+```
+
+### 为微应用设置 hashType 为 true
+
+```diff
+import { runApp } from 'ice';
+
+const appConfig: IAppConfig = {
+  icestark: {
+    type: 'framework',
+    Layout: FrameworkLayout,
+    getApps: async () => {
+      const apps = [{
+        path: '/seller',
+        title: '商家平台',
+        umd: true,
+        sandbox: true,
++       hashType: true,
+        url: [
+          '//dev.g.alicdn.com/nazha/ice-child-react/0.0.1/js/index.js',
+          '//dev.g.alicdn.com/nazha/ice-child-react/0.0.1/css/index.css',
+        ],
+      }, {
+        path: '/waiter',
+        title: '小二平台',
+        sandbox: true,
++       hashType: true,
+        url: [
+          '//ice.alicdn.com/icestark/child-waiter-vue/app.js',
+          '//ice.alicdn.com/icestark/child-waiter-vue/app.css',
+        ],
+      }];
+      return apps;
+    },
+  },
+};
+
+runApp(appConfig);
+```
+
+### 修改 FrameworkLayout 中的逻辑
+
+此外，你可能需要自行修改 `FrameworkLayout` 中的逻辑，路由信息会通过 `routeInfo` 字段返回。
+
+```js
+import * as React from 'react';
+import BasicLayout from '../BasicLayout';
+import UserLayout from '../UserLayout';
+
+interface RouteInfo {
+  hash: string;
+  pathname: string;
+  query: object;
+  routeType: 'pushState' | 'replaceState',
+}
+
+const { useEffect } = React;
+export default function FrameworkLayout(props: {
+  children: React.ReactNode;
+  appLeave: { path: string };
+  appEnter: { path: string };
+  routeInfo: RouteInfo;
+}) {
+  const { children, appLeave, appEnter, routeInfo } = props;
+  // 如果是 HashRouter 模式
+  const isHashRouter = true;
+  const { hash = '', pathname } = routeInfo;
+  const path = isHashRouter ? hash.replace('#', '') : pathname;
+  const Layout = hash === '/login' ? UserLayout : BasicLayout;
+
+  useEffect(() => {
+    console.log('== app leave ==', appLeave);
+    if (appLeave.path === '/angular' && window.webpackJsonp) {
+      // remove webpackJsonp added by Angular app
+      delete window.webpackJsonp;
+    }
+  }, [appLeave]);
+
+  useEffect(() => {
+    console.log('== app enter ==', appEnter);
+  }, [appEnter]);
+
+  return (
+    <Layout pathname={path}>{children}</Layout>
+  );
+}
+```
+
+### 子应用改造
+
+子应用的同样需要改造成 `HashRouter` 路由模式。
+
+### 应用间跳转
+
+应用间跳转可以通过 `AppLink` 和 `appHistory`，并设置 `hashType` 为 `true`。
+
+```js
+import { AppLink, appHistory } from '@ice/stark-app';
+
+// 示例1
+const navItem = <AppLink to="/seller" hashType>{item.name}</AppLink>);
+
+// 示例2
+appHistory.push('/seller', true);
+```
