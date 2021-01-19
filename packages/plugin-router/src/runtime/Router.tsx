@@ -36,7 +36,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
   })) : wrapperRoute(component, routerWrappers);
 }
 
-function parseRoutes(routes: RouteItemProps[]) {
+export function parseRoutes(routes: RouteItemProps[]) {
   return routes.map((route) => {
     const { children, component, routeWrappers, wrappers, ...others } = route;
     // do not wrapper components to layout added by runtime api wrapperRouteComponent
@@ -56,11 +56,7 @@ function parseRoutes(routes: RouteItemProps[]) {
 }
 
 export function IceRouter(props: RouterProps) {
-  const { type, routes, fallback, ...others } = props;
-  // parse routes before render
-  const parsedRoutes = parseRoutes(routes);
-
-  const children = <Routes routes={parsedRoutes} fallback={fallback} />;
+  const { type, children, ...others } = props;
   return type === 'static' ?
     <StaticRouter {...others}>
       {children}
@@ -70,7 +66,7 @@ export function IceRouter(props: RouterProps) {
     </Router>;
 }
 
-function Routes({ routes, fallback }: RoutesProps) {
+export function Routes({ routes, fallback }: RoutesProps) {
   return (
     <Switch>
       {routes.map((route, id) => {

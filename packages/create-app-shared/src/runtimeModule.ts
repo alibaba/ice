@@ -1,6 +1,8 @@
 import { createHistory } from './history';
 import getSearchParams from './getSearchParams';
 
+type IRoutesComponent = boolean | React.ComponentType;
+
 class RuntimeModule {
 
   private renderRouter: any;
@@ -19,8 +21,11 @@ class RuntimeModule {
 
   private wrapperRouteRegistration: any;
 
+  private routesComponent: IRoutesComponent;
+
   constructor(appConfig, buildConfig, context) {
     this.renderRouter = () => () => context.createElement('div', null, 'No route');
+    this.routesComponent = false;
     this.AppProvider = [];
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
@@ -37,6 +42,7 @@ class RuntimeModule {
       addDOMRender: this.addDOMRender,
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
+      modifyRoutesComponent: this.modifyRoutesComponent,
       createHistory,
       getSearchParams
     };
@@ -81,6 +87,10 @@ class RuntimeModule {
     this.modifyRoutesRegistration.push(modifyFn);
   }
 
+  public modifyRoutesComponent = (modify: (routesComponent: IRoutesComponent) => IRoutesComponent) => {
+    this.routesComponent = modify(this.routesComponent);
+  }
+
   public wrapperRouteComponent = (wrapperRoute) => {
     this.wrapperRouteRegistration.push(wrapperRoute);
   }
@@ -100,8 +110,7 @@ class RuntimeModule {
     const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));
-
-    return this.renderRouter(routes);
+    return this.renderRouter(routes, this.routesComponent);
   }
 }
 
