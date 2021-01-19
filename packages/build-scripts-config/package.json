@@ -23,7 +23,6 @@
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "core-js": "^3.3.1",
-    "css-hot-loader": "^1.4.4",
     "css-loader": "^3.2.0",
     "file-loader": "^5.0.2",
     "identity-obj-proxy": "^3.0.0",
