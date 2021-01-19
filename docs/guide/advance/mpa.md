@@ -93,6 +93,7 @@ runApp(appConfig);
   ├── package.json
   └── tsconfig.json
 ```
+
 针对这种情况，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在：
 
 ```jsx
