@@ -42,7 +42,7 @@
     "terser-webpack-plugin": "^2.3.1",
     "time-fix-plugin": "^2.0.6",
     "ts-loader": "^6.1.2",
-    "typescript": "^3.6.3",
+    "typescript": "^4.0.0",
     "url-loader": "^2.1.0",
     "webpack-chain": "^6.0.0",
     "webpack-filter-warnings-plugin": "^1.2.1",
