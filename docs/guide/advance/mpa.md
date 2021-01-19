@@ -92,7 +92,7 @@ runApp(appConfig);
   └── tsconfig.json
 ```
 
-首先需要在 `app.jsx` 中增加以下内容，以将 store 的 Provider 包裹 Dashboard 组件：
+首先需要在 `app.jsx` 中增加以下内容，将 store 的 Provider 包裹 Dashboard 组件：
 
 ```diff
 // src/pages/Dashboard/app.jsx
