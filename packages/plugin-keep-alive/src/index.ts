@@ -8,6 +8,7 @@ const plugin = ({ applyMethod }) => {
     'createContext',
     'withAliveScope',
     'useAliveController',
+    'KeepAlive',
     'NodeKey',
   ];
   applyMethod('addExport', {
