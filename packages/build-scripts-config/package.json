@@ -31,7 +31,7 @@
     "less-loader": "^5.0.0",
     "loader-utils": "^1.2.3",
     "lodash.clonedeep": "^4.5.0",
-    "mini-css-extract-plugin": "^0.8.0",
+    "mini-css-extract-plugin": "^1.0.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
