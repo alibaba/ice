@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { minify } from 'html-minifier';
+import LoadablePlugin from '@loadable/webpack-plugin';
 import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
@@ -57,7 +58,22 @@ const plugin = async (api): Promise<void> => {
           }));
       }
     });
-
+    config.plugin('LoadablePlugin').use(LoadablePlugin);
+    ['jsx', 'tsx'].forEach((rule) => {
+      config.module
+        .rule(rule)
+        .use('babel-loader')
+        .tap((options) => {
+          const { plugins = [] } = options;
+          return {
+            ...options,
+            plugins: [
+              ...plugins,
+              '@loadable/babel-plugin',
+            ],
+          };
+        });
+    });
     config.output
       .path(serverDir)
       .filename(serverFilename)
@@ -95,7 +111,9 @@ const plugin = async (api): Promise<void> => {
       config.devServer
         .hot(true)
         .writeToDisk((filePath) => {
-          return /(server\/index\.js|index.html)$/.test(filePath);
+          // TODO: output file file
+          return filePath;
+          // return /(server\/index\.js|index.html)$/.test(filePath);
         });
       let serverReady = false;
       let httpResponseQueue = [];

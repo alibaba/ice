@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { createNavigation } from 'create-app-container';
 import { createUseRouter } from 'create-use-router';
 import * as queryString from 'query-string';
+import { loadableReady } from '@loadable/component';
 
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
@@ -57,14 +58,14 @@ export async function reactAppRenderer(options) {
   setInitialData(initialData);
 
   const context = { initialData, pageInitialProps, initialContext };
-  renderInBrowser(context, options);
+  await renderInBrowser(context, options);
 }
 
-export function getRenderApp(runtime, options) {
+export async function getRenderApp(runtime, options) {
   const { ErrorBoundary, appConfig = {} } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppRouter = runtime?.getAppRouter?.();
+  const AppRouter = await runtime?.getAppRouter?.();
 
   function App() {
     const appRouter = <AppRouter />;
@@ -81,7 +82,7 @@ export function getRenderApp(runtime, options) {
   return App;
 }
 
-function renderInBrowser(context, options) {
+async function renderInBrowser(context, options) {
   const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
@@ -93,21 +94,30 @@ function renderInBrowser(context, options) {
   if (isMobile) {
     return _renderMobile({ runtime, history }, options);
   } else {
-    return _render({ runtime }, options);
+    return await _render({ runtime }, options);
   }
 }
 
-function _render({ runtime }, options) {
+async function _render({ runtime }, options) {
   const { appConfig = {} } = options;
   const { rootId, mountNode } = appConfig.app;
-  const App = getRenderApp(runtime, options);
+  const App = await getRenderApp(runtime, options);
 
   const appMountNode = _getAppMountNode(mountNode, rootId);
   if (runtime?.modifyDOMRender) {
     return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
-  return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
+  if ((window as any).__ICE_SSR_ENABLED__) {
+    console.log('__ICE_SSR_ENABLED__===>');
+
+    loadableReady(() => {
+      ReactDOM.hydrate(<App />, appMountNode);
+    });
+  } else {
+    ReactDOM.render(<App />, appMountNode);
+  }
+  // return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
 }
 
 function _renderMobile({ runtime, history }, options) {

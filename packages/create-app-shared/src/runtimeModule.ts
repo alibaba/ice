@@ -96,13 +96,40 @@ class RuntimeModule {
     });
   }
 
-  public getAppRouter = () => {
-    const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
+  public getAppRouter = async () => {
+    let routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));
 
+    routes = await loadRouteComponent(routes);
     return this.renderRouter(routes);
   }
 }
 
 export default RuntimeModule;
+
+async function loadRouteComponent(routes) {
+  const newRoutes = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const { children, component, ...other } of routes) {
+    const route = {...other};
+    if (children) {
+      // eslint-disable-next-line no-await-in-loop
+      route.children = await loadRouteComponent(children);
+    }
+    if (component) {
+      if (component.load) {
+        // eslint-disable-next-line no-await-in-loop
+        const loadedComponent = await component.load();
+        route.component = loadedComponent.default;
+      } else {
+        route.component = component;
+      }
+    }
+
+    newRoutes.push(route);
+  }
+
+  return newRoutes;
+}

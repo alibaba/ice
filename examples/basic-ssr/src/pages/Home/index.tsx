@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { request, Link, logger, Helmet, store as appStore } from 'ice';
 import styles from './index.module.scss';
 
+// const A = loadable(() => import('./components/A'), {
+//   ssr: true,
+//   fallback: <span className="loading-state">ssr: true - Loading...</span>,
+// });
+
 export default function Home(props) {
   logger.info('Home props', props);
 
@@ -32,6 +37,7 @@ export default function Home(props) {
       <br />
       <Link to="/about">about</Link>
       <Link to="/dashboard">dashboard</Link>
+      {/* <A /> */}
     </>
   );
 }
