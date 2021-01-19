@@ -3,6 +3,10 @@ const { join, dirname } = require('path');
 const { formatPath } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
 
+function getSepProcessedPath(filePath) {
+  return filePath.replace(/\\/g, '/'); // Avoid path error in Windows
+}
+
 /**
  * universal-app-config-loader
  * return {
@@ -43,7 +47,7 @@ module.exports = function (appJSON) {
       routeTitle = route.window.title;
     }
     const pageSource = (route.pageSource || join(dirname(this.resourcePath), route.source));
-    route.source = pageSource.replace(`${this.rootContext}/src/`, '');
+    route.source = getSepProcessedPath(pageSource).replace(`${getSepProcessedPath(this.rootContext)}/src/`, '');
 
     // First level function to support hooks will autorun function type state,
     // Second level function to support rax-use-router rule autorun function type component.
