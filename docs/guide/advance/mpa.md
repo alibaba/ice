@@ -83,8 +83,6 @@ runApp(appConfig);
   │    └──  Dashboard/
   │         ├── DashboardA/index.jsx
   │         ├── DashboardB/index.jsx
-+ │         ├── Layout/
-+ │         │     └── index.jsx 
 + │         ├── models/
 + │         ├── store.js
   │         ├── routes.js
@@ -94,16 +92,7 @@ runApp(appConfig);
   └── tsconfig.json
 ```
 
-针对这种情况，框架会将 store 的 Provider 包裹在 `Layout/index.tsx` 上，因此需要保证该文件的存在：
-
-```jsx
-// Dashboard/Layout/index.tsx
-export default ({ children }) => {
-  return <>{children}</>;
-}
-```
-
-如果不需要 `Layout/index.jsx` 文件，则需要在 `app.jsx` 中增加以下内容，以将 store 的 Provider 包裹 Dashboard 组件：
+首先需要在 `app.jsx` 中增加以下内容，以将 store 的 Provider 包裹 Dashboard 组件：
 
 ```diff
 // src/pages/Dashboard/app.jsx
@@ -126,25 +115,18 @@ const appConfig = {
 
 ```diff
 // src/pages/Dashboard/routes.js
-+import BasicLayout from '@/pages/Dashboard/Layout';
 +import DashboardA from '@/pages/Dashboard/DashboardA';
 +import DashboardB from '@/pages/Dashboard/DashboardB';
 
 export default [
   {
-    path: '/',
-+    component: BasicLayout,
-    children: [
-      {
-        path: '/foo',
-        component: DashboardA
-      },
-      {
-        path: '/bar',
-        component: DashboardB
-      },
-    ]
-  }
+    path: '/foo',
+    component: DashboardA
+  },
+  {
+    path: '/bar',
+    component: DashboardB
+  },
 ]
 ```
 
