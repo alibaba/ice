@@ -16,7 +16,6 @@ const runtimeModule = ({ wrapperRouteComponent, modifyRoutesComponent }) => {
   wrapperRouteComponent(wrapperKeepAlive);
   // add provider for routes component
   modifyRoutesComponent((RoutesComponent: React.ComponentType) => {
-    console.log('add provide');
     return (props) => (
       <AliveScope>
         <RoutesComponent {...props} />
