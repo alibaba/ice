@@ -18,7 +18,7 @@ async function renderInServer(context, options) {
   }
 
   // const nodeStats = path.resolve('/Users/luhc228/Documents/ice/ice/examples/basic-ssr/build/server/loadable-stats.json');
-  const webStats = path.resolve('/Users/luhc228/Documents/ice/ice/examples/basic-ssr/build/loadable-stats.json');
+  const webStats = '/Users/luhc228/Documents/ice/ice/examples/basic-ssr-with-lazy-load/build/loadable-stats.json';
   // TODO: old version
   const App = await getRenderApp(runtime, options);
   // const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats, entrypoints: ['server'] });
@@ -26,7 +26,7 @@ async function renderInServer(context, options) {
   // console.log('nodeExtractor ==>');
   const webExtractor = new ChunkExtractor({ statsFile: webStats, entrypoints: ['index'] });
   const jsx = webExtractor.collectChunks(<App />);
-  console.log('webExtractor ==>');
+  // console.log('webExtractor ==>', webExtractor.);
 
   return {
     bundleContent: ReactDOMServer.renderToString(jsx),

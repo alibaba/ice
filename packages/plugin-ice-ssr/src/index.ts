@@ -58,22 +58,22 @@ const plugin = async (api): Promise<void> => {
           }));
       }
     });
-    config.plugin('LoadablePlugin').use(LoadablePlugin);
-    ['jsx', 'tsx'].forEach((rule) => {
-      config.module
-        .rule(rule)
-        .use('babel-loader')
-        .tap((options) => {
-          const { plugins = [] } = options;
-          return {
-            ...options,
-            plugins: [
-              ...plugins,
-              '@loadable/babel-plugin',
-            ],
-          };
-        });
-    });
+    // config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
+    // ['jsx', 'tsx'].forEach((rule) => {
+    //   config.module
+    //     .rule(rule)
+    //     .use('babel-loader')
+    //     .tap((options) => {
+    //       const { plugins = [] } = options;
+    //       return {
+    //         ...options,
+    //         plugins: [
+    //           ...plugins,
+    //           '@loadable/babel-plugin',
+    //         ],
+    //       };
+    //     });
+    // });
     config.output
       .path(serverDir)
       .filename(serverFilename)

@@ -31,7 +31,6 @@ export default function Home(props) {
       </div>
       <br />
       <Link to="/about">about</Link>
-      <Link to="/dashboard">dashboard</Link>
     </>
   );
 }

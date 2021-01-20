@@ -1,19 +1,22 @@
+import loadable from '@loadable/component';
+
 import Layout from '@/layouts';
-import Home from '@/pages/Home';
-import Dashboard from '@/pages/Dashboard';
-import About from '@/pages/About';
 import Notfound from '@/pages/NotFound';
+
+const Home = loadable(() => import('@/pages/Home'), {
+  ssr: true,
+  fallback: 111,
+});
+const About = loadable(() => import('@/pages/About'), {
+  ssr: true,
+  fallback: 123,
+});
 
 export default [
   {
     path: '/',
     component: Layout,
     children: [
-      {
-        path: '/dashboard',
-        exact: true,
-        component: Dashboard
-      },
       {
         path: '/home',
         exact: true,

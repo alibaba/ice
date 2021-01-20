@@ -57,8 +57,8 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
     // get page initial props
     let PageComponent = getComponentByPath(routes, pathname);
     if (PageComponent && PageComponent.load) {
-      const loadedPageComponent = await PageComponent.load()
-      PageComponent = loadedPageComponent.default
+      const loadedPageComponent = await PageComponent.load();
+      PageComponent = loadedPageComponent.default;
     }
     const getInitialProps = PageComponent && PageComponent.getInitialProps;
     if (getInitialProps) {
@@ -78,14 +78,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       emitLifeCycles
     });
 
-    const {
-      bundleContent,
-      loadableComponentExtractor
-     } = renderResult;
-
-    const renderedScriptTags = loadableComponentExtractor.getScriptTags();
-    const renderedLinkTags = loadableComponentExtractor.getLinkTags();
-    const renderedStyleTags = loadableComponentExtractor.getStyleTags();
+    const { bundleContent, loadableComponentExtractor } = renderResult;
 
     const helmet = Helmet.renderStatic();
 
@@ -96,9 +89,9 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
     </script>`);
     // lazy load bundle
-    $('head').append(`${renderedLinkTags}`);
-    $('head').append(`${renderedStyleTags}`);
-    $('body').append(`${renderedScriptTags}`);
+    $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+    $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+    $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
     // react-helmet
     $('head').append(`${helmet.title.toString()}`);
     $('head').append(`${helmet.meta.toString()}`);
