@@ -17,7 +17,8 @@ const { createBaseApp, emitLifeCycles } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) => {
+const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath }) => {
+  const buildConfig = { loadableStatsPath };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
   // get html template
@@ -74,6 +75,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       pageInitialProps
     }, {
       appConfig,
+      buildConfig,
       createBaseApp,
       emitLifeCycles
     });

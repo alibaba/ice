@@ -109,8 +109,6 @@ async function _render({ runtime }, options) {
   }
 
   if ((window as any).__ICE_SSR_ENABLED__) {
-    console.log('__ICE_SSR_ENABLED__===>');
-
     loadableReady(() => {
       ReactDOM.hydrate(<App />, appMountNode);
     });

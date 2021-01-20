@@ -27,6 +27,27 @@ const plugin = async (api): Promise<void> => {
       'process.env.APP_MODE': JSON.stringify(commandArgs.mode || command),
       'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
     }]);
+
+  onGetWebpackConfig((config) => {
+    config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
+
+    ['jsx', 'tsx'].forEach((rule) => {
+      config.module
+        .rule(rule)
+        .use('babel-loader')
+        .tap((options) => {
+          const { plugins = [] } = options;
+          return {
+            ...options,
+            plugins: [
+              ...plugins,
+              '@loadable/babel-plugin',
+            ],
+          };
+        });
+    });
+  });
+
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
@@ -58,22 +79,7 @@ const plugin = async (api): Promise<void> => {
           }));
       }
     });
-    // config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
-    // ['jsx', 'tsx'].forEach((rule) => {
-    //   config.module
-    //     .rule(rule)
-    //     .use('babel-loader')
-    //     .tap((options) => {
-    //       const { plugins = [] } = options;
-    //       return {
-    //         ...options,
-    //         plugins: [
-    //           ...plugins,
-    //           '@loadable/babel-plugin',
-    //         ],
-    //       };
-    //     });
-    // });
+
     config.output
       .path(serverDir)
       .filename(serverFilename)
@@ -84,7 +90,7 @@ const plugin = async (api): Promise<void> => {
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
     // TODO: support options to enable nodeExternals
     // empty externals added by config external
-    config.externals([]);
+    config.externals(['@loadable/component']);
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
@@ -110,11 +116,8 @@ const plugin = async (api): Promise<void> => {
     if (command === 'start') {
       config.devServer
         .hot(true)
-        .writeToDisk((filePath) => {
-          // TODO: output file file
-          return filePath;
-          // return /(server\/index\.js|index.html)$/.test(filePath);
-        });
+        .writeToDisk(true);
+
       let serverReady = false;
       let httpResponseQueue = [];
       const originalDevServeBefore = config.devServer.get('before');

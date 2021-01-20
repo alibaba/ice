@@ -1,13 +1,4 @@
 {
   "plugins": [],
-  "ssr": true,
-  "devServer": {
-    "writeToDisk": true
-  },
-  "webpackPlugins": {
-    "@loadable/webpack-plugin": {}
-  },
-   "babelPlugins": [
-    "@loadable/babel-plugin"
-  ]
+  "ssr": true
 }

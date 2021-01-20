@@ -101,14 +101,17 @@ class RuntimeModule {
       return curr(acc);
     }, []));
 
-    routes = await loadRouteComponent(routes);
+    if (!process.env.__IS_SERVER__) {
+      routes = await loadLazyComponent(routes);
+    }
+
     return this.renderRouter(routes);
   }
 }
 
 export default RuntimeModule;
 
-async function loadRouteComponent(routes) {
+async function loadLazyComponent(routes) {
   const newRoutes = [];
 
   // eslint-disable-next-line no-restricted-syntax
@@ -116,7 +119,7 @@ async function loadRouteComponent(routes) {
     const route = {...other};
     if (children) {
       // eslint-disable-next-line no-await-in-loop
-      route.children = await loadRouteComponent(children);
+      route.children = await loadLazyComponent(children);
     }
     if (component) {
       if (component.load) {

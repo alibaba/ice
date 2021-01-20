@@ -8,6 +8,8 @@ async function renderInServer(context, options) {
   const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
+  let { loadableStatsPath } = buildConfig;
+
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
   emitLifeCycles();
@@ -17,16 +19,14 @@ async function renderInServer(context, options) {
     return { bundleContent: '' };
   }
 
-  // const nodeStats = path.resolve('/Users/luhc228/Documents/ice/ice/examples/basic-ssr/build/server/loadable-stats.json');
-  const webStats = '/Users/luhc228/Documents/ice/ice/examples/basic-ssr-with-lazy-load/build/loadable-stats.json';
-  // TODO: old version
   const App = await getRenderApp(runtime, options);
-  // const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats, entrypoints: ['server'] });
-  // const { default: App } = nodeExtractor.requireEntrypoint();
-  // console.log('nodeExtractor ==>');
-  const webExtractor = new ChunkExtractor({ statsFile: webStats, entrypoints: ['index'] });
+
+  if (process.env.NODE_ENV === 'development') {
+    loadableStatsPath = '/Users/luhc228/Documents/ice/ice/examples/basic-ssr-with-lazy-load/build/loadable-stats.json';
+  }
+
+  const webExtractor = new ChunkExtractor({ statsFile: loadableStatsPath, entrypoints: ['index'] });
   const jsx = webExtractor.collectChunks(<App />);
-  // console.log('webExtractor ==>', webExtractor.);
 
   return {
     bundleContent: ReactDOMServer.renderToString(jsx),
@@ -36,6 +36,7 @@ async function renderInServer(context, options) {
 
 export default async function reactAppRendererWithSSR(context, options) {
   const { appConfig } = options || {};
+  console.log('options===>', options);
   appConfig.router.type = 'static';
   return await renderInServer(context, options);
 }
