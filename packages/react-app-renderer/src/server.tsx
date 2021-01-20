@@ -36,7 +36,6 @@ async function renderInServer(context, options) {
 
 export default async function reactAppRendererWithSSR(context, options) {
   const { appConfig } = options || {};
-  console.log('options===>', options);
   appConfig.router.type = 'static';
   return await renderInServer(context, options);
 }

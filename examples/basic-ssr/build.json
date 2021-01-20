@@ -1,7 +1,4 @@
 {
   "plugins": [],
-  "ssr": true,
-  "devServer": {
-    "writeToDisk": true
-  }
+  "ssr": true
 }

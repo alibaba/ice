@@ -1,6 +1,6 @@
 import Layout from '@/layouts';
-import Home from '@/pages/Home';
 import Dashboard from '@/pages/Dashboard';
+import Home from '@/pages/Home';
 import About from '@/pages/About';
 import Notfound from '@/pages/NotFound';
 

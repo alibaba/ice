@@ -115,7 +115,6 @@ async function _render({ runtime }, options) {
   } else {
     ReactDOM.render(<App />, appMountNode);
   }
-  // return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
 }
 
 function _renderMobile({ runtime, history }, options) {
