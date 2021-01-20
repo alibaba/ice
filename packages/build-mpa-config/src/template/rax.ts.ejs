@@ -12,8 +12,8 @@ if (!isNode) {
     const renderApp = async function() {
       let comProps = {};
       // process App.getInitialProps
-      if (isSSR && window.__INITIAL_DATA__.pageData !== null) {
-        comProps = window.__INITIAL_DATA__.pageData;
+      if (isSSR && window.__INITIAL_DATA__.pageInitialProps !== null) {
+        comProps = window.__INITIAL_DATA__.pageInitialProps;
       } else if (Component.getInitialProps) {
         comProps = await Component.getInitialProps();
       }
