@@ -1,12 +1,16 @@
-import * as React from 'react';
+<% if(ssr){ %>
+  export { default as lazy } from '@loadable/component';
+<% } else { %>
+  import * as React from 'react';
 
-export function lazy(dynamicImport, isRouteComponent?: boolean): any {
-  if (isRouteComponent) {
-    return {
-      __LAZY__: true,
-      dynamicImport,
-    };
-  } else {
-    return React.lazy(dynamicImport);
+  export function lazy(dynamicImport, isRouteComponent?: boolean): any {
+    if (isRouteComponent) {
+      return {
+        __LAZY__: true,
+        dynamicImport,
+      };
+    } else {
+      return React.lazy(dynamicImport);
+    }
   }
-}
+<% } %>

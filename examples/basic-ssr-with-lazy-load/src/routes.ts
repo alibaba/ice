@@ -1,10 +1,9 @@
-import loadable from '@loadable/component';
-
+import { lazy } from 'ice';
 import Layout from '@/layouts';
 import Notfound from '@/pages/NotFound';
 
-const Home = loadable(() => import('@/pages/Home'));
-const About = loadable(() => import('@/pages/About'));
+const Home = lazy(() => import('@/pages/Home'));
+const About = lazy(() => import('@/pages/About'));
 
 export default [
   {

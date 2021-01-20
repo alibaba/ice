@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as path from 'path';
 import * as ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
@@ -8,7 +7,7 @@ async function renderInServer(context, options) {
   const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
-  let { loadableStatsPath } = buildConfig;
+  const { loadableStatsPath } = buildConfig;
 
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
@@ -20,10 +19,6 @@ async function renderInServer(context, options) {
   }
 
   const App = await getRenderApp(runtime, options);
-
-  if (process.env.NODE_ENV === 'development') {
-    loadableStatsPath = '/Users/luhc228/Documents/ice/ice/examples/basic-ssr-with-lazy-load/build/loadable-stats.json';
-  }
 
   const webExtractor = new ChunkExtractor({ statsFile: loadableStatsPath, entrypoints: ['index'] });
   const jsx = webExtractor.collectChunks(<App />);

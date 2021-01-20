@@ -1,4 +1,5 @@
 import '@/app';
+import { join } from 'path';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -18,6 +19,10 @@ const { createBaseApp, emitLifeCycles } = app;
 const appConfig = getAppConfig();
 
 const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath }) => {
+  if (process.env.NODE_ENV === 'development') {
+    // loadable-stats.json will be genreated to the build dir in development
+    loadableStatsPath = join(process.cwd(), 'build', 'loadable-stats.json');
+  }
   const buildConfig = { loadableStatsPath };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;

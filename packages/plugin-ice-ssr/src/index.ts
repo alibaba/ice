@@ -6,10 +6,10 @@ import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod } = api;
-  const { rootDir, command, webpack, userConfig, commandArgs } = context;
+  const { rootDir, command, webpack, commandArgs } = context;
   const TEMP_PATH = getValue('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
-  const buildDir = path.join(rootDir, userConfig.outputDir);
+  const buildDir = path.join(rootDir, 'build');
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
 
@@ -41,6 +41,7 @@ const plugin = async (api): Promise<void> => {
             ...options,
             plugins: [
               ...plugins,
+              require.resolve('./babelPluginReplaceLazy'),
               '@loadable/babel-plugin',
             ],
           };
