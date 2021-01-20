@@ -3,15 +3,29 @@ title: 使用 fusion 组件
 order: 14
 ---
 
-项目开发中如果使用 `@alifd/next` 作为基础 UI 组件，可以通过 `build-plugin-fusion` 插件实现组件按需加载和样式主题等相关能力，飞冰官方的模板都是基于 Fusion 组件的，因此一般不需要开发者再手动引入。
+项目开发中如果使用 `@alifd/next` 作为基础 UI 组件，可以通过 `build-plugin-fusion` 插件实现组件按需加载和样式主题等相关能力。
 
-## 安装插件
+## 使用插件
+
+安装依赖：
 
 ```bash
 $ npm install build-plugin-fusion --save-dev
 ```
 
-## 插件配置
+在 build.json 中引入插件：
+
+```json
+{
+  "plugins": [
+    ["build-plugin-fusion", {
+      // ...options
+    }]
+  ]
+}
+```
+
+插件配置项：
 
 * `themePackage` Fusion 组件主题包配置，如果设置为数组则启动多主题能力
 * `themeConfig` 主题配置，通过设置 sass 变量对现有主题进行覆盖
@@ -24,29 +38,56 @@ $ npm install build-plugin-fusion --save-dev
 * `enableColorNames` 默认为 `false`，如果开启默认将提取 `transparent`、`red`、`blue` 等色值名称
 * `nextPrefix` 仅修改 `@alifd/next` 里的 css-prefix，一般用于 0.x&1.x 共存的场景
 
-## 基础用法
+## 通过主题包定制组件样式
 
-配置主题包：
+ICE 脚手架中默认使用了 `@alifd/theme-design-pro` 这个主题包，如果不能满足需求则可以让设计师配置业务需要的主题包：[配置组件主题样式](https://fusion.design/help.html#/design-config-component) ，每个主题包对应一个 npm 包。
 
-```json
+在 `build.json` 中配置主题包：
+
+```diff
 {
   "plugins": [
-    ["build-plugin-fusion", {}]
+    ["build-plugin-fusion", {
++      "themePackage": "@alifd/theme-design-pro"
+    }]
   ]
 }
 ```
 
-修改主题变量：
+在配置主题包时，可以通过 iconfont 导入一些自定义的 icon，这些 icon 在项目代码里通过基础组件 Icon 即可使用：
 
-> 注意：不能跟主题包功能同时使用，[原因](https://github.com/alibaba/ice/pull/1435#issuecomment-460055905)
+```jsx
+import { Icon } from '@alifd/next';
+
+<Icon type="xxxx" />
+```
+
+## 业务代码支持主题切换
+
+在项目中也可以使用主题包的变量，这样未来如果需要更换主题，业务代码就不需要做任何改动了，可以使用的变量列表请参考 [Fusion Design Tokens](https://fusion.design/component/tokens)，使用方式如下：
+
+```scss
+// 引入主题变量
+@import "~@alifd/next/lib/core/index.scss";
+
+// 使用主题变量
+.title {
+  color: $color-brand1-6;
+}
+```
+
+## 配置 externals
+
+项目开发中希望将 `@alifd/next` 作为外部扩展不打包到 bundle 中，除了需要配置 `externals` 外，还需要将通过插件能力分析业务组件依赖中按需加载的 Next 组件：
 
 ```json
 {
+  "externals": {
+    "@alifd/next": "Next"
+  },
   "plugins": [
     ["build-plugin-fusion", {
-      "themeConfig": {
-        "font-size-body-1": "14px"
-      }
+      "externalNext": true
     }]
   ]
 }
@@ -60,6 +101,7 @@ fusion 组件的默认 class 前缀是 `next-`，在微前端等场景下可能�
 {
   "plugins": [
     ["build-plugin-fusion", {
+      "themePackage": "@alifd/theme-design-pro",
       "themeConfig": {
         "css-prefix": "next-icestark-"
       }
@@ -86,67 +128,10 @@ const appConfig = {
 runApp(appConfig);
 ```
 
-## 使用主题包
-
-Fusion 组件默认的主题是蓝色系，无法满足所有项目的需求，因此我们通过工程方式支持一键换肤的能力。
-
-### 选择主题包
-
-主题包即一个 npm 包，包里面对应的是一堆主题变量。ICE 官方提供了几套不同颜色的主题包，分别是：
-
-- 默认的蓝色主题：`@alifd/theme-design-pro`
-- 橙色主题：`@alifd/theme-ice-orange`
-- 绿色主题：`@alifd/theme-ice-green`
-- 紫色主题：`@alifd/theme-ice-purple`
-
-如果这几个不能满足需求，可以在 ICE 群里反馈由官方来支持，也可以通过更自由的方式自行配置：[配置组件主题样式](https://fusion.design/help.html#/design-config-component)。注意：如果需要自行配置主题，推荐让专业的设计师同学来做。
-
-![](https://img.alicdn.com/tfs/TB1y78lECzqK1RjSZPxXXc4tVXa-1768-702.png)
-
-### 使用主题包里的自定义 Icon
-
-在配置主题时，可以通过 iconfont 导入一些自定义的 icon，这些 icon 在项目代码里通过基础组件 Icon 即可使用：
-
-```jsx
-import { Icon } from '@alifd/next';
-
-<Icon type="xxxx" />
-```
-
-### 使用主题变量
-
-在项目中也可以使用主题包的变量，这样未来如果需要更换主题，业务代码就不需要做任何改动了，可以使用的变量列表请参考 [fusion.design Design Tokens](https://fusion.design/component/tokens)，使用方式如下：
-
-```scss
-// 引入主题变量
-@import "~@alifd/next/variables.scss";
-
-// 使用主题变量
-.title {
-  color: $color-brand1-6;
-}
-```
-
-## 配置 externals
-
-项目开发中希望将 `@alifd/next` 作为外部扩展不打包到 bundle 中，除了需要配置 `externals` 外，还需要将通过插件能力分析业务组件依赖中按需加载的 Next 组件：
-
-```json
-{
-  "externals": {
-    "@alifd/next": "Next"
-  },
-  "plugins": [
-    ["build-plugin-fusion", {
-      "externalNext": true
-    }]
-  ]
-}
-```
-
 ## 动态切换主题
 
 build-plugin-fusion 结合 fusion 自身可以配置主题包的能力，支持多个主题包的配置，大大简化多主题切换的成本，通过 css 变量能力实现动态主题的切换，核心实现思路如下：
+
 1. 提取主题包中的 scss 变量（色值变量）
 2. 将 scss 变量具体内容转换为 css 变量，即 `$color-brand1-1: #E2EDFF; => $color-brand1-1: var(--color-brand-1);`
 3. 注入新的 scss 变量值（如 `$color-brand1-1: var(--color-brand-1)` ）进行编译
@@ -157,7 +142,7 @@ build-plugin-fusion 结合 fusion 自身可以配置主题包的能力，支持�
   "plugins": [
     ["build-plugin-fusion", {
       "themePackage": [{
-        "name": "@icedesign/theme",
+        "name": "@alifd/theme-design-pro",
         "default": true,
         "themeConfig": {
           "custom-color": "#000"
@@ -184,6 +169,7 @@ window.__changeTheme__('@alifd/theme-ice-purple');
 ## 跨端用法
 
 ### API
+
 - 增加 `componentOptions` API，该接口值为对象，可接受 `bizComponent` `customPath` `componentMap` 等参数
 - 增加 `usePx2Vw` API，跨端模式下请开启
 
@@ -218,9 +204,11 @@ module.exports = {
 ```
 
 ### componentOptions 详解
+
 用来自定义业务组件的引用路径及入口
 
 #### bizComponent 需要自定义路径的组件
+
 类型为数组，与 `customPath` 共同作用生效
 bizComponent: ['@alifd/anchor', '@alifd/pro-components']
 customPath: '/es/mobile'
@@ -233,9 +221,11 @@ var _anchor = require('@alifd/anchor/es/mobile');   // 差别在这里 多了一
 ReactDOM.render(<_anchor>xxxx</_anchor>);
 ```
 #### customPath 自定义的路径
+
 结合 `bizComponent` 一起生效，用法参考 `bizComponent` 文档。
 
 #### componentMap 组件路径映射
+
 类型为对象，表示路径映射的 mapping ，若与 `bizComponent` 冲突，则以 `componentMap` 为优先
 ```js
 componentMap: {
