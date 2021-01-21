@@ -43,7 +43,7 @@ module.exports = function (appJSON) {
       routeTitle = route.window.title;
     }
     const pageSource = (route.pageSource || join(dirname(this.resourcePath), route.source));
-    route.source = pageSource.replace(`${this.rootContext}/src/`, '');
+    route.source = formatPath(pageSource).replace(`${formatPath(this.rootContext)}/src/`, '');
 
     // First level function to support hooks will autorun function type state,
     // Second level function to support rax-use-router rule autorun function type component.
