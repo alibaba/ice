@@ -109,7 +109,9 @@ const plugin = async (api): Promise<void> => {
     if (command === 'start') {
       config.devServer
         .hot(true)
-        .writeToDisk(true);
+        .writeToDisk((filePath) => {
+          return /(server\/.*|loadable-stats.json|index.html)$/.test(filePath);
+        });
 
       let serverReady = false;
       let httpResponseQueue = [];
