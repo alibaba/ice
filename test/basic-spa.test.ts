@@ -10,7 +10,7 @@ buildFixture(example);
 test('open /', async () => {
   const res = await setupBrowser({ example });
   page = res.page;
-  browser = res.page;
+  browser = res.browser;
   expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
 });
 
