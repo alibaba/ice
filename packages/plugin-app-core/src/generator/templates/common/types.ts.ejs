@@ -18,6 +18,13 @@ interface IOnTabItemClickParams {
   index: number;
 }
 
+interface IContext {
+  pathname: string;
+  query?: any;
+  ssrError?: any;
+  path?: string;
+}
+
 export interface IBuildConfig {
   router?: object | boolean;
   store?: boolean;
@@ -29,10 +36,10 @@ export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
   addProvider?: ({ children }: { children: FrameworkNode }) => FrameworkElement;
-  getInitialData?: () => Promise<any>;
+  getInitialData?: (ctx?: IContext) => Promise<any>;
   ErrorBoundaryFallback?: (error: any) => FrameworkComponentType,
   onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
-  onLaunch?: () => any;
+  onLaunch?: (options?: any) => any;
   onShow?: () => any;
   onHide?: () => any;
   onError?: (error: Error) => any;
