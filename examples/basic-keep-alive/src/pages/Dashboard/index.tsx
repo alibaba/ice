@@ -7,16 +7,16 @@ const Dashboard = () => {
   return (
     <>
       <h2>Dashboard Page...</h2>
-      <div>{count}</div>
-      <a onClick={() => {setCount(count + 1);}}>+</a>
-      <a onClick={() => {setCount(count - 1);}}>-</a>
+      <div id="dashboard-count">{count}</div>
+      <a id="add" onClick={() => {setCount(count + 1);}}>+</a>
+      <a id="decrease" onClick={() => {setCount(count - 1);}}>-</a>
       <Link to="/about">About</Link>
     </>
   );
 };
 
 Dashboard.pageConfig = {
-  title: 'Dashboard Page'
+  keepAlive: false,
 };
 
 export default Dashboard;

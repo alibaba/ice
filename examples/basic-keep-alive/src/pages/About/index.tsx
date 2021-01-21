@@ -7,9 +7,9 @@ const About = () => {
   return (
     <>
       <h2>About Page</h2>
-      <div>{count}</div>
-      <a onClick={() => {setCount(count + 1);}}>+</a>
-      <a onClick={() => {setCount(count - 1);}}>-</a>
+      <div id="about-count">{count}</div>
+      <a id="add" onClick={() => {setCount(count + 1);}}>+</a>
+      <a id="decrease" onClick={() => {setCount(count - 1);}}>-</a>
       <Link to="/">dashboard</Link>
     </>
   );

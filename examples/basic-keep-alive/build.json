@@ -1,8 +1,5 @@
 {
   "plugins": [
-    "build-plugin-keep-alive"
-  ],
-  "babelPlugins": [
-    "react-activation/babel"
+    "../../packages/plugin-keep-alive"
   ]
 }
