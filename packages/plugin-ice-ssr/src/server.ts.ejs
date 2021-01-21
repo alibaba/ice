@@ -9,7 +9,7 @@ import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
 import { getAppConfig } from './appConfig';
 import loadStaticModules from './loadStaticModules';
 import app from './runApp';
-import routes from '@/routes';
+import routes from '<%- routesPath %>/routes';
 
 const chalk = require('chalk');
 const parseurl = require('parseurl');
@@ -21,7 +21,7 @@ const appConfig = getAppConfig();
 const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath }) => {
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be genreated to the build dir in development
-    loadableStatsPath = join(process.cwd(), 'build', 'loadable-stats.json');
+    loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
   const buildConfig = { loadableStatsPath };
 

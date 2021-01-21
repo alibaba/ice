@@ -5,18 +5,21 @@ import LoadablePlugin from '@loadable/webpack-plugin';
 import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
-  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod } = api;
-  const { rootDir, command, webpack, commandArgs } = context;
+  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
+  const { rootDir, command, webpack, commandArgs, userConfig } = context;
+  const { outputDir } = userConfig;
   const TEMP_PATH = getValue('TEMP_PATH');
+  const PROJECT_TYPE = getValue('PROJECT_TYPE');
   // Note: Compatible plugins to modify configuration
-  const buildDir = path.join(rootDir, 'build');
+  const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'server.ts');
-  applyMethod('addRenderFile', templatePath, ssrEntry);
+  const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
+  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
 
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);
@@ -30,25 +33,14 @@ const plugin = async (api): Promise<void> => {
 
   onGetWebpackConfig((config) => {
     config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
-
-    ['jsx', 'tsx'].forEach((rule) => {
-      config.module
-        .rule(rule)
-        .use('babel-loader')
-        .tap((options) => {
-          const { plugins = [] } = options;
-          return {
-            ...options,
-            plugins: [
-              ...plugins,
-              require.resolve('./babelPluginReplaceLazy'),
-              '@loadable/babel-plugin',
-            ],
-          };
-        });
-    });
   });
 
+  modifyUserConfig('babelPlugins',
+    [
+      ...(userConfig.babelPlugins as [] || []),
+      require.resolve('./babelPluginReplaceLazy'),
+      '@loadable/babel-plugin',
+    ]);
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
