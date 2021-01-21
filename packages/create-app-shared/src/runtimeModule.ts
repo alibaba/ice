@@ -96,7 +96,7 @@ class RuntimeModule {
     });
   }
 
-  public getAppRouter = async () => {
+  public getAppRouter = () => {
     const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));

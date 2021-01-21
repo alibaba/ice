@@ -3,7 +3,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
 
-async function renderInServer(context, options) {
+function renderInServer(context, options) {
   const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
@@ -18,7 +18,7 @@ async function renderInServer(context, options) {
     return { bundleContent: '' };
   }
 
-  const App = await getRenderApp(runtime, options);
+  const App = getRenderApp(runtime, options);
 
   const webExtractor = new ChunkExtractor({ statsFile: loadableStatsPath, entrypoints: ['index'] });
   const jsx = webExtractor.collectChunks(<App />);
@@ -29,8 +29,8 @@ async function renderInServer(context, options) {
   };
 }
 
-export default async function reactAppRendererWithSSR(context, options) {
+export default function reactAppRendererWithSSR(context, options) {
   const { appConfig } = options || {};
   appConfig.router.type = 'static';
-  return await renderInServer(context, options);
+  return renderInServer(context, options);
 }

@@ -61,11 +61,11 @@ export async function reactAppRenderer(options) {
   await renderInBrowser(context, options);
 }
 
-export async function getRenderApp(runtime, options) {
+export function getRenderApp(runtime, options) {
   const { ErrorBoundary, appConfig = {} } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppRouter = await runtime?.getAppRouter?.();
+  const AppRouter = runtime?.getAppRouter?.();
 
   function App() {
     const appRouter = <AppRouter />;
@@ -82,7 +82,7 @@ export async function getRenderApp(runtime, options) {
   return App;
 }
 
-async function renderInBrowser(context, options) {
+function renderInBrowser(context, options) {
   const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
@@ -94,14 +94,14 @@ async function renderInBrowser(context, options) {
   if (isMobile) {
     return _renderMobile({ runtime, history }, options);
   } else {
-    return await _render({ runtime }, options);
+    return _render({ runtime }, options);
   }
 }
 
-async function _render({ runtime }, options) {
+function _render({ runtime }, options) {
   const { appConfig = {} } = options;
   const { rootId, mountNode } = appConfig.app;
-  const App = await getRenderApp(runtime, options);
+  const App = getRenderApp(runtime, options);
 
   const appMountNode = _getAppMountNode(mountNode, rootId);
   if (runtime?.modifyDOMRender) {
