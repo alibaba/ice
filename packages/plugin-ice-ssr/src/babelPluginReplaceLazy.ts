@@ -20,6 +20,7 @@ module.exports = ({ types: t }) => {
                     return;
                   }
                   if (importedName === lazyImportName) {
+                    // from `import {lazy} from 'ice';` to `import {lazy as loadable} from 'ice';`
                     nodePath.replaceWith(
                       t.importDeclaration(
                         [
@@ -35,6 +36,7 @@ module.exports = ({ types: t }) => {
             CallExpression(nodePath) {
               const calleeName = nodePath.node.callee.name;
               if (calleeName && calleeName === lazyImportName) {
+                // from `lazy(() => import(''))` to `loadable(() => import(''))`
                 nodePath.replaceWith(
                   t.callExpression(
                     t.identifier(loadableImportName),
