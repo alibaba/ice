@@ -53,9 +53,9 @@ module.exports = function (appJSON) {
       .then((mod) => () => {
         const reference = interopRequire(mod);
         function Component(props) {
+          ${routeTitle ? `document.title="${routeTitle}"` : ''}
           return createElement(reference, Object.assign({}, routeProps, props));
         }
-        ${routeTitle ? `document.title="${routeTitle}"` : ''}
         Component.__path = '${route.path}';
         Component.getInitialProps = reference.getInitialProps;
         return Component;
