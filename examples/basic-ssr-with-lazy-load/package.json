@@ -2,7 +2,6 @@
   "name": "exmaple-basic-ssr",
   "description": "",
   "dependencies": {
-    "@loadable/component": "^5.14.1",
     "ice.js": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"

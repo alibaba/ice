@@ -1067,7 +1067,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4":
   version "7.12.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.12.5.tgz?cache=0&sync_timestamp=1604443606981&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha1-QQ5+SHRB4bNgwpvnFdhw2bmFiC4=
@@ -2513,6 +2513,36 @@
   dependencies:
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
+
+"@loadable/babel-plugin@^5.13.2":
+  version "5.13.2"
+  resolved "https://registry.npm.taobao.org/@loadable/babel-plugin/download/@loadable/babel-plugin-5.13.2.tgz#373cddc64ee5437814f7dca1c1b6a7b2c1665a9f"
+  integrity sha1-Nzzdxk7lQ3gU99yhwbanssFmWp8=
+  dependencies:
+    "@babel/plugin-syntax-dynamic-import" "^7.7.4"
+
+"@loadable/component@^5.14.1":
+  version "5.14.1"
+  resolved "https://registry.npm.taobao.org/@loadable/component/download/@loadable/component-5.14.1.tgz#cacd807162430bb85ae085945318027a600adc85"
+  integrity sha1-ys2AcWJDC7ha4IWUUxgCemAK3IU=
+  dependencies:
+    "@babel/runtime" "^7.7.7"
+    hoist-non-react-statics "^3.3.1"
+    react-is "^16.12.0"
+
+"@loadable/server@^5.14.0":
+  version "5.14.0"
+  resolved "https://registry.npm.taobao.org/@loadable/server/download/@loadable/server-5.14.0.tgz#8aa83166aaad7401a14d8a1b04a7e1cc169ca6c4"
+  integrity sha1-iqgxZqqtdAGhTYobBKfhzBacpsQ=
+  dependencies:
+    lodash "^4.17.15"
+
+"@loadable/webpack-plugin@^5.14.0":
+  version "5.14.0"
+  resolved "https://registry.npm.taobao.org/@loadable/webpack-plugin/download/@loadable/webpack-plugin-5.14.0.tgz#656cb298c4b30d3b93cfe6ebf227d9709685f357"
+  integrity sha1-ZWyymMSzDTuTz+br8ifZcJaF81c=
+  dependencies:
+    make-dir "^3.0.2"
 
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
@@ -8664,7 +8694,7 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha1-7OCsr3HWLClpwuxZ/v9CpLGoW0U=

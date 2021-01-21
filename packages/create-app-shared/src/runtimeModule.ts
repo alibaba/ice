@@ -97,42 +97,12 @@ class RuntimeModule {
   }
 
   public getAppRouter = async () => {
-    let routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
+    const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
       return curr(acc);
     }, []));
-
-    if (!process.env.__IS_SERVER__) {
-      routes = await loadLazyComponent(routes);
-    }
 
     return this.renderRouter(routes);
   }
 }
 
 export default RuntimeModule;
-
-async function loadLazyComponent(routes) {
-  const newRoutes = [];
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const { children, component, ...other } of routes) {
-    const route = {...other};
-    if (children) {
-      // eslint-disable-next-line no-await-in-loop
-      route.children = await loadLazyComponent(children);
-    }
-    if (component) {
-      if (component.load) {
-        // eslint-disable-next-line no-await-in-loop
-        const loadedComponent = await component.load();
-        route.component = loadedComponent.default;
-      } else {
-        route.component = component;
-      }
-    }
-
-    newRoutes.push(route);
-  }
-
-  return newRoutes;
-}
