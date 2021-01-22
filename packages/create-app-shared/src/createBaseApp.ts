@@ -2,6 +2,7 @@ import RuntimeModule from './runtimeModule';
 import { createHistory } from './history';
 import { isMiniAppPlatform } from './env';
 import collectAppLifeCycle from './collectAppLifeCycle';
+import getSearchParams from './getSearchParams';
 
 // eslint-disable-next-line
 const deepmerge = require('deepmerge');
@@ -16,19 +17,26 @@ const DEFAULE_APP_CONFIG = {
 };
 
 export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
-  const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
+  const createBaseApp = async (appConfig, buildConfig, context: any = {}) => {
 
     // Merge default appConfig to user appConfig
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
     // Set history
-    let history = {};
+    let history: any = {};
     if (!isMiniAppPlatform && initHistory) {
       const { router } = appConfig;
       const { type, basename, history: customHistory } = router;
       const location = context.initialContext ? context.initialContext.location : null;
       history = createHistory({ type, basename, location, customHistory });
       appConfig.router.history = history;
+    }
+
+    if (!context.initialData) {
+      context.initialData = await appConfig?.app?.getInitialData({
+        pathname: history.location.pathname,
+        query: getSearchParams()
+      });
     }
 
     context.createElement = createElement;

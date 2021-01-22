@@ -81,9 +81,9 @@ export function getRenderApp(runtime, options) {
   return App;
 }
 
-function renderInBrowser(context, options) {
+async function renderInBrowser(context, options) {
   const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
-  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  const { runtime, history, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
 
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle

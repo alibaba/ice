@@ -61,11 +61,22 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${formatPath(pageSource)}'))`;
+    const importComponentInClient = `() => () => interopRequire(require('${formatPath(pageSource)}'))`;
+    // without useRouter
+    const importComponentInServer = `() => interopRequire(require('${formatPath(pageSource)}'))`;
+
+    let importComponent;
+    if (target === 'web') {
+      importComponent = dynamicImportComponent;
+    } else if (target === 'ssr') {
+      importComponent = importComponentInServer;
+    } else {
+      importComponent = importComponentInClient;
+    }
     return `routes.push(
       {
         ...${JSON.stringify(route)},
-        component: ${target === 'web' ? dynamicImportComponent : importComponent}
+        component: ${importComponent}
       }
     );`;
   }).join('\n');
