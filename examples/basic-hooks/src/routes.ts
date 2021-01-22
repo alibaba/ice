@@ -1,4 +1,4 @@
-import Layout from '@/layouts/index';
+import Layout from '@/layouts/basic';
 import Home from '@/pages/Home';
 import About from '@/pages/About';
 import NotFound from '@/pages/NotFound';

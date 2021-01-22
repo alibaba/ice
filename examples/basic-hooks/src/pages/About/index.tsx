@@ -1,15 +1,15 @@
 import React from 'react';
+import store from '@/store';
 
-const About = (props) => {
+export default function () {
+  const [user] = store.useHooks('useUser');
+  const { name } = user;
   return (
     <>
       About
+      <div>
+        {name}
+      </div>
     </>
   );
 };
-
-About.pageConfig = {
-  title: 'About'
-};
-
-export default About;

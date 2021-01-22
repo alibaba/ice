@@ -1,15 +1,9 @@
 import React from 'react';
 
-const Home = (props) => {
+export default function() {
   return (
     <>
       Home
     </>
   );
 };
-
-Home.pageConfig = {
-  title: 'Home'
-};
-
-export default Home;

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import styles from './index.module.scss';
 
 const Layout = ({ children }) => {
   return (
     <div>
-      <h2 className={styles.title}>Header</h2>
-      <main className={styles.main}>
+      <h2>Header</h2>
+      <main>
         {children}
       </main>
     </div>
