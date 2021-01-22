@@ -8,7 +8,8 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.20",
-    "@types/react-dom": "^16.9.5"
+    "@types/react-dom": "^16.9.5",
+    "build-plugin-hooks-store": "^0.1.0"
   },
   "scripts": {
     "start": "icejs start --mode local",
