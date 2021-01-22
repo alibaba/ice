@@ -83,7 +83,7 @@ const plugin = async (api): Promise<void> => {
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
     // TODO: support options to enable nodeExternals
     // empty externals added by config external
-    config.externals(['@loadable/component']);
+    config.externals([]);
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
