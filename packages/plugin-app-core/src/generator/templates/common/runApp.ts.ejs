@@ -11,7 +11,7 @@ import { IAppConfig, IBuildConfig } from './types';
 <% } %>
 
 <% if (isRax) {%>
-  import raxAppRenderer from 'rax-app-renderer';
+  import raxAppRenderer, { getInitialData } from 'rax-app-renderer';
   import { createWithRouter } from 'create-use-router';
   const defaultWithRouter = createWithRouter({ createElement });
 <% } %>
@@ -107,8 +107,8 @@ export {
 <% if (isReact) {%>
   useSearchParams,
   withSearchParams,
-  getInitialData,
 <% } %>
+  getInitialData,
   // LifeCycles api
   usePageShow,
   usePageHide,
