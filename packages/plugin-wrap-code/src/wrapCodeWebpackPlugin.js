@@ -42,9 +42,21 @@ module.exports = class WrapCodePlugin {
     };
 
     compiler.hooks.compilation.tap('WrapCodePlugin', (compilation) => {
-      compilation.hooks.optimizeChunkAssets.tap('WrapCodePlugin', (chunks) => {
-        wrapChunks(compilation, chunks);
-      });
+      // compatible with webpack 5
+      if (typeof compilation.hooks.processAssets !== 'undefined') {
+        // eslint-disable-next-line global-require
+        const { Compilation } = require('webpack');
+        compilation.hooks.processAssets.tap({
+          name: 'WrapCodePlugin',
+          stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE
+        }, (chunks) => {
+          wrapChunks(compilation, chunks);
+        });
+      } else {
+        compilation.hooks.optimizeChunkAssets.tap('WrapCodePlugin', (chunks) => {
+          wrapChunks(compilation, chunks);
+        });
+      }
     });
   }
 };
