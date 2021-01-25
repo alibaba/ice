@@ -19,12 +19,12 @@ export interface RouterProps {
   initialIndex?: number;
   fallback?: React.ReactNode;
   history: History;
-};
+}
 
 export interface RoutesProps {
   routes: IRouterConfig[];
   fallback?: React.ReactNode;
-};
+}
 
 export interface IRouterOptions {
   caseSensitive?: boolean;

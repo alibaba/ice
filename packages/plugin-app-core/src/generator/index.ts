@@ -232,6 +232,6 @@ export default class Generator {
   public addDisableRuntimePlugin = (pluginName: string) => {
     if (!this.disableRuntimePlugins.includes(pluginName)) {
       this.disableRuntimePlugins.push(pluginName);
-    };
+    }
   }
 }
