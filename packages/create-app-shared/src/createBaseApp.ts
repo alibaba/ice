@@ -33,9 +33,12 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
     }
 
     if (!context.initialData) {
+      const pathname = history.location.pathname;
       context.initialData = await appConfig?.app?.getInitialData({
-        pathname: history.location.pathname,
-        query: getSearchParams()
+        pathname,
+        path: pathname,
+        query: getSearchParams(),
+        ssrError: (window as any)?.__ICE_SSR_ERROR__
       });
     }
 

@@ -27,37 +27,7 @@ export async function reactAppRenderer(options) {
 
   if (process.env.__IS_SERVER__) return;
 
-  let initialData = {};
-  let pageInitialProps = {};
-
-  const { href, origin, pathname, search } = window.location;
-  const path = href.replace(origin, '');
-  const query = queryString.parse(search);
-  const ssrError = (window as any).__ICE_SSR_ERROR__;
-  const initialContext = {
-    pathname,
-    path,
-    query,
-    ssrError
-  };
-
-  // ssr enabled and the server has returned data
-  if ((window as any).__ICE_APP_DATA__) {
-    initialData = (window as any).__ICE_APP_DATA__;
-    pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
-  } else {
-    // ssr not enabled, or SSR is enabled but the server does not return data
-    // eslint-disable-next-line
-    if (appConfig.app && appConfig.app.getInitialData) {
-      initialData = await appConfig.app.getInitialData(initialContext);
-    }
-  }
-
-  // set InitialData, can get the return value through getInitialData method
-  setInitialData(initialData);
-
-  const context = { initialData, pageInitialProps, initialContext };
-  renderInBrowser(context, options);
+  renderInBrowser(options);
 }
 
 export function getRenderApp(runtime, options) {
@@ -81,10 +51,19 @@ export function getRenderApp(runtime, options) {
   return App;
 }
 
-async function renderInBrowser(context, options) {
+async function renderInBrowser(options) {
   const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
-  const { runtime, history, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
+  const context: any = {};
 
+  // ssr enabled and the server has returned data
+  if ((window as any).__ICE_APP_DATA__) {
+    context.initialData = (window as any).__ICE_APP_DATA__;
+    context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
+  }
+
+  const { runtime, history, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
+  // set InitialData, can get the return value through getInitialData method
+  setInitialData(context.initialData);
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
   emitLifeCycles();
