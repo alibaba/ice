@@ -37,11 +37,11 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], fallback
       fallback
     });
   } else {
-    return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
+    return __LAZY__ ? React.lazy(() => dynamicImport().then((mod) => {
       if (routerWrappers && routerWrappers.length) {
-        return { ...m, default: wrapperRoute(m.default, routerWrappers) };
+        return { ...mod, default: wrapperRoute(mod.default, routerWrappers) };
       }
-      return m;
+      return mod;
     })) : wrapperRoute(component, routerWrappers);
   }
 }
