@@ -421,12 +421,11 @@ const sandbox = new CustomSanbox();
 />
 ```
 
-
-### AppLink
+### AppLink - depreated
 
 不推荐使用，建议使用 `@ice/stark-app` 暴露的 AppLink 组件。
 
-### appHistory
+### appHistory - depreated
 
 不推荐使用，建议使用 `@ice/stark-app` 暴露的 appHistory API。
 ## @ice/stark-app
@@ -539,7 +538,6 @@ export default class SelfLink extends React.Component {
   }
 }
 ```
-
 
 ### registerAppEnter
 
