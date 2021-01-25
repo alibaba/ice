@@ -3,22 +3,14 @@ import {
   RouteComponentProps,
 } from 'react-router-dom';
 
-interface IModifyFn {
-  (routes: RouteItemProps[]): RouteItemProps[];
-}
-
-export interface IModifyRoutes {
-  (modifyFn: IModifyFn): void;
-}
-
-export interface IRouteWrapper {
-  (props: any): React.ComponentType<any>;
-}
-
 export interface IDynamicImportComponent {
   __LAZY__: boolean;
   dynamicImport: () => Promise<{ default: React.ComponentType<any> }>;
   __LOADABLE__: boolean;
+}
+
+export interface IRouteWrapper {
+  (props: any): React.ComponentType<any>;
 }
 
 export interface RouteItemProps extends Omit<DefaultRouteProps, 'component'> {
@@ -35,4 +27,12 @@ export interface RouteItemProps extends Omit<DefaultRouteProps, 'component'> {
 
   // custom route wrappers
   wrappers?: IRouteWrapper[];
-};
+}
+
+interface IModifyFn {
+  (routes: RouteItemProps[]): RouteItemProps[];
+}
+
+export interface IModifyRoutes {
+  (modifyFn: IModifyFn): void;
+}
