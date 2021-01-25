@@ -7,8 +7,7 @@ const { WEB } = require('./constants');
 
 module.exports = (api, { target, webpackConfig }) => {
   const { context } = api;
-  const { rootDir, userConfig } = context;
-  const { ssr } = userConfig;
+  const { rootDir } = context;
   const outputPath = getWebOutputPath(context, { target });
   webpackConfig
   // SimpleProgressPlugin
@@ -28,8 +27,7 @@ module.exports = (api, { target, webpackConfig }) => {
     // HtmlWebpackPlugin
     .plugin('HtmlWebpackPlugin')
       .use(HtmlWebpackPlugin, [{
-        // do not inject when in ssr. loadable-component will inject script and link
-        inject: !ssr,
+        inject: true,
         templateParameters: {
           NODE_ENV: process.env.NODE_ENV,
         },

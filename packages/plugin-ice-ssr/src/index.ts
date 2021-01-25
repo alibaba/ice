@@ -32,6 +32,17 @@ const plugin = async (api): Promise<void> => {
     }]);
 
   onGetWebpackConfig((config) => {
+    if (config.plugins.get('HtmlWebpackPlugin')) {
+      config
+        .plugin('HtmlWebpackPlugin')
+        .tap(([args]) => {
+          return [{
+            ...args,
+            inject: false,
+          }];
+        });
+    }
+
     config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
   });
 
