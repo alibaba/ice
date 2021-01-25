@@ -40,7 +40,8 @@ const plugin = async (api): Promise<void> => {
       ...(userConfig.babelPlugins as [] || []),
       require.resolve('./babelPluginReplaceLazy'),
       '@loadable/babel-plugin',
-    ]);
+    ]
+  );
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();

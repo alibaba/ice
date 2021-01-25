@@ -58,7 +58,7 @@ export async function reactAppRenderer(options) {
   setInitialData(initialData);
 
   const context = { initialData, pageInitialProps, initialContext };
-  await renderInBrowser(context, options);
+  renderInBrowser(context, options);
 }
 
 export function getRenderApp(runtime, options) {
