@@ -1,12 +1,13 @@
 import { render, createElement } from 'rax';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken, isNode } from 'universal-env';
-import Component from '<%- resourcePath %>';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
   import '<%= globalStyle %>'
 <% } %>
+
+import Component from '<%- resourcePath %>';
 
 if (!isNode) {
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
