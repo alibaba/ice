@@ -147,7 +147,7 @@ function MyComponent() {
 
 ```jsx
 import React from 'react';
-import { useUrlState } from '@ahooks';
+import { useUrlState } from 'ahooks';
 
 export default () => {
   const [urlQuery, setUrlQuery] = useUrlState({ count: '1' });
