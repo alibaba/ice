@@ -50,8 +50,7 @@ module.exports = function (appJSON) {
     const dynamicImportComponent =
       `(routeProps) =>
       import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(pageSource)}')
-      .then((mod) => () => {
-        const reference = interopRequire(mod);
+      .then((reference) => () => {
         function Component(props) {
           ${routeTitle ? `document.title="${routeTitle}"` : ''}
           return createElement(reference, Object.assign({}, routeProps, props));
@@ -61,9 +60,9 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponentInClient = `() => () => interopRequire(require('${formatPath(pageSource)}'))`;
+    const importComponentInClient = `() => () => require('${formatPath(pageSource)}').default`;
     // without useRouter
-    const importComponentInServer = `() => interopRequire(require('${formatPath(pageSource)}'))`;
+    const importComponentInServer = `() => require('${formatPath(pageSource)}').default`;
 
     let importComponent;
     if (target === 'web') {
@@ -83,7 +82,6 @@ module.exports = function (appJSON) {
 
   return `
     import { createElement } from '${libName}';
-    const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}
     const appConfig = {
