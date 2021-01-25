@@ -65,7 +65,7 @@ Home.pageConfig = {
 };
 ```
 
-> 除了 pageConfig.auth 的方式，页面级鉴权也可通过在 `src/routes.ts` 中配置 wrappers 字段实现，可参考 [wrappers 配置](/docs/guide/basic/router?路由高阶组件) 。
+> 除了 pageConfig.auth 的方式，页面级鉴权也可通过在 `src/routes.ts` 中配置 wrappers 字段实现，可参考 [wrappers 配置](/docs/guide/basic/router#路由高阶组件) 。
 
 ## 操作权限
 

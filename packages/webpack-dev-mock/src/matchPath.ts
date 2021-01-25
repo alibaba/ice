@@ -42,6 +42,6 @@ function matchPath(req, mockConfig) {
       }
     }
   }
-};
+}
 
 export default matchPath;

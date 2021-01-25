@@ -35,17 +35,6 @@ const configCSSRule = (config, style, mode, loaders = []) => {
           .exclude.add(cssModuleReg).end();
     }
 
-    if (mode === 'development') {
-      const cssHotLoader = rule.use('css-hot-loader')
-        .loader(require.resolve('css-hot-loader'));
-      if (ruleKey === 'module') {
-        // https://www.npmjs.com/package/css-hot-loader#cssmodule
-        // TODO: now the mini-css-extract-plugin support css hot reload (since 0.6.x)
-        // use hmr option instead of css-hot-loader after mini-css-extract-plugin support css-modules hmr
-        cssHotLoader.tap(() => ({ cssModule: true }));
-      }
-    }
-
     rule
       .use('MiniCssExtractPlugin.loader')
         .loader(MiniCssExtractPlugin.loader)
