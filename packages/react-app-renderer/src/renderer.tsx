@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { createNavigation } from 'create-app-container';
 import { createUseRouter } from 'create-use-router';
 import * as queryString from 'query-string';
+import { loadableReady } from '@loadable/component';
 
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
@@ -107,7 +108,13 @@ function _render({ runtime }, options) {
     return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
-  return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
+  if ((window as any).__ICE_SSR_ENABLED__) {
+    loadableReady(() => {
+      ReactDOM.hydrate(<App />, appMountNode);
+    });
+  } else {
+    ReactDOM.render(<App />, appMountNode);
+  }
 }
 
 function _renderMobile({ runtime, history }, options) {

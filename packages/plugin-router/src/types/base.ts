@@ -6,6 +6,7 @@ import {
 export interface IDynamicImportComponent {
   __LAZY__: boolean;
   dynamicImport: () => Promise<{ default: React.ComponentType<any> }>;
+  __LOADABLE__: boolean;
 }
 
 export interface IRouteWrapper {
