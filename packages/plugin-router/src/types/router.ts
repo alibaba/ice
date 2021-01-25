@@ -20,12 +20,12 @@ export interface RouterProps {
   fallback?: React.ReactNode;
   children?: React.ReactChildren;
   history: History;
-};
+}
 
 export interface RoutesProps {
   routes: IRouterConfig[];
   fallback?: React.ReactNode;
-};
+}
 
 export interface IRouterOptions {
   caseSensitive?: boolean;

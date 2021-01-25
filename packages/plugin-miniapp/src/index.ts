@@ -41,6 +41,6 @@ module.exports = (api) => {
         // Remove default CopyWebpackPlugin
         config.plugins.delete('CopyWebpackPlugin');
       });
-    };
+    }
   });
 };
