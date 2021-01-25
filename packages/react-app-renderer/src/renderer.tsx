@@ -110,7 +110,9 @@ function _render({ runtime }, options) {
 
   if ((window as any).__ICE_SSR_ENABLED__) {
     loadableReady(() => {
+      console.log(document.body.innerHTML);
       ReactDOM.hydrate(<App />, appMountNode);
+      console.log(document.body.innerHTML);
     });
   } else {
     ReactDOM.render(<App />, appMountNode);

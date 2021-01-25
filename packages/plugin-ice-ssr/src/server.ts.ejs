@@ -10,6 +10,7 @@ import { getAppConfig } from './appConfig';
 import loadStaticModules from './loadStaticModules';
 import app from './runApp';
 import routes from '<%- routesPath %>/routes';
+import loadable from '@loadable/component';
 
 const chalk = require('chalk');
 const parseurl = require('parseurl');
@@ -61,7 +62,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loa
     setInitialData(initialData);
 
     // get page initial props
-    let PageComponent = getComponentByPath(routes, pathname);
+    let PageComponent = await getComponentByPath(routes, pathname);
     if (PageComponent && PageComponent.load) {
       const loadedPageComponent = await PageComponent.load();
       PageComponent = loadedPageComponent.default;
@@ -117,16 +118,20 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loa
   return { html, error, redirectUrl: initialContext.url };
 }
 
-function getComponentByPath(routes, currPath)  {
-  function findMatchRoute(routeList) {
-    const matchedRoute = routeList.find(route => {
+async function getComponentByPath(routes, currPath)  {
+  async function findMatchRoute(routeList) {
+    let matchedRoute = routeList.find(route => {
       return matchPath(currPath, route);
     });
+    console.log('matchedRoute===>', matchedRoute);
+    if (matchedRoute.component.__LOADABLE__) {
+      matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+    }
     if (matchedRoute) {
-      return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
+      return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
     }
   }
-  const matchedRoute = findMatchRoute(routes);
+  const matchedRoute = await findMatchRoute(routes);
   return matchedRoute && matchedRoute.component;
 }
 

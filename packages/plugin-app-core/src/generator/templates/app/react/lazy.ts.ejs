@@ -1,5 +1,13 @@
 <% if(ssr){ %>
-  export { default as lazy } from '@loadable/component';
+  // export { default as lazy } from '@loadable/component';
+  // import loadable from '@loadable/component';
+
+  export function lazy(dynamicImport) {
+    return {
+      __LOADABLE__: true,
+      dynamicImport
+    };
+  }
 <% } else { %>
   import * as React from 'react';
 

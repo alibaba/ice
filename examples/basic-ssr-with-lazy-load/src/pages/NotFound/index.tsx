@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, logger } from 'ice';
 
-const Home = (props) => {
+const NotFound = (props) => {
   logger.info('render 404', props);
 
   return (
@@ -14,4 +14,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default NotFound;

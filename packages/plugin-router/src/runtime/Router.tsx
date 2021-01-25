@@ -9,6 +9,7 @@ import {
 
   RouteComponentProps
 } from 'react-router-dom';
+import loadable from '@loadable/component';
 import { RoutesProps, RouterProps } from '../types/router';
 import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types/base';
 import { IRouterConfig } from '../types';
@@ -27,18 +28,26 @@ function wrapperRoute(component, routerWrappers) {
 }
 
 function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
-  const { __LAZY__, dynamicImport }: IDynamicImportComponent = component || {};
-  return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
-    if (routerWrappers && routerWrappers.length) {
-      return { ...m, default: wrapperRoute(m.default, routerWrappers) };
-    }
-    return m;
-  })) : wrapperRoute(component, routerWrappers);
+  const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
+  if (__LOADABLE__) {
+    return loadable(dynamicImport, {
+      resolveComponent: (component) => {
+        return wrapperRoute(component.default, routerWrappers);
+      }
+    });
+  } else {
+    return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
+      if (routerWrappers && routerWrappers.length) {
+        return { ...m, default: wrapperRoute(m.default, routerWrappers) };
+      }
+      return m;
+    })) : wrapperRoute(component, routerWrappers);
+  }
 }
 
 function parseRoutes(routes: RouteItemProps[]) {
   return routes.map((route) => {
-    const { children, component, routeWrappers, wrappers, ...others } = route;
+    const { children, component, routeWrappers, wrappers, ...others }  = route;
     // do not wrapper components to layout added by runtime api wrapperRouteComponent
     let mergedRouteWrappers = children ? [] : routeWrappers;
     if (wrappers && wrappers.length) {
