@@ -1,8 +1,8 @@
 import { createHooksStore } from 'ice';
 import useTodoList from './hooks/useTodoList';
 
-const store = createHooksStore({
+const hooksStore = createHooksStore({
   useTodoList
 });
 
-export default store;
+export default hooksStore;

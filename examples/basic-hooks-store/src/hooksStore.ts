@@ -1,8 +1,8 @@
 import { createHooksStore } from 'ice';
 import useUser from './hooks/useUser';
 
-const store = createHooksStore({
+const hooksStore = createHooksStore({
   useUser
 });
 
-export default store;
+export default hooksStore;

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import store from '@/store';
+import hooksStore from '@/hooksStore';
 
 export default function() {
-  const [user, login] = store.useHooks('useTodoList');
+  const [user, login] = hooksStore.useHooks('useUser');
 
   useEffect(function() {
     login();
