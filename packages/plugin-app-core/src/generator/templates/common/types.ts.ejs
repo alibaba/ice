@@ -18,9 +18,13 @@ interface IOnTabItemClickParams {
   index: number;
 }
 
+interface IQuery {
+  [key: string]: string
+}
+
 interface IContext {
   pathname: string;
-  query?: any;
+  query?: IQuery;
   ssrError?: any;
   path?: string;
 }
