@@ -13,7 +13,7 @@ export default [
       {
         path: '/home',
         exact: true,
-        component: Home
+        component: Home,
       },
       {
         path: '/about',

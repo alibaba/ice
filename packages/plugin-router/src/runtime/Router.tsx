@@ -27,13 +27,14 @@ function wrapperRoute(component, routerWrappers) {
   }, component);
 }
 
-function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
+function getRouteComponent(component, routerWrappers?: IRouteWrapper[], fallback?: React.ReactNode) {
   const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
       resolveComponent: (component) => {
         return wrapperRoute(component.default, routerWrappers);
-      }
+      },
+      fallback
     });
   } else {
     return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
@@ -45,7 +46,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
   }
 }
 
-function parseRoutes(routes: RouteItemProps[]) {
+function parseRoutes(routes: RouteItemProps[], fallback?: React.ReactNode) {
   return routes.map((route) => {
     const { children, component, routeWrappers, wrappers, ...others }  = route;
     // do not wrapper components to layout added by runtime api wrapperRouteComponent
@@ -55,10 +56,10 @@ function parseRoutes(routes: RouteItemProps[]) {
     }
     const parsedRoute: IRouterConfig = { ...others };
     if (component) {
-      parsedRoute.component = getRouteComponent(component, mergedRouteWrappers);
+      parsedRoute.component = getRouteComponent(component, mergedRouteWrappers, fallback);
     }
     if (children) {
-      parsedRoute.children = parseRoutes(children);
+      parsedRoute.children = parseRoutes(children, fallback);
     }
     return parsedRoute;
   });
@@ -67,7 +68,7 @@ function parseRoutes(routes: RouteItemProps[]) {
 export function IceRouter(props: RouterProps) {
   const { type, routes, fallback, ...others } = props;
   // parse routes before render
-  const parsedRoutes = parseRoutes(routes);
+  const parsedRoutes = parseRoutes(routes, fallback);
 
   const children = <Routes routes={parsedRoutes} fallback={fallback} />;
   return type === 'static' ?

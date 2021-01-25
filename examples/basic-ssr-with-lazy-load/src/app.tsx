@@ -1,4 +1,5 @@
 import { runApp, IAppConfig, config, request } from 'ice';
+import React from 'react';
 
 const appConfig: IAppConfig = {
   app: {
@@ -8,7 +9,8 @@ const appConfig: IAppConfig = {
     }
   },
   router: {
-    type: 'browser'
+    type: 'browser',
+    fallback: <div style={{background: 'red'}}>fallback</div>
   },
   request: {
     baseURL: config.baseURL
