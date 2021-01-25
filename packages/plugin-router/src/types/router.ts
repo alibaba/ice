@@ -18,6 +18,7 @@ export interface RouterProps {
   initialEntries?: string[];
   initialIndex?: number;
   fallback?: React.ReactNode;
+  children?: React.ReactChildren;
   history: History;
 }
 

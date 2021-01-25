@@ -1,0 +1,27 @@
+{
+  "name": "build-plugin-keep-alive",
+  "version": "1.8.0",
+  "description": "implementation of the keep-alive function for ice",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "dependencies": {
+    "react-activation": "^0.7.0"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
