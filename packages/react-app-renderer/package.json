@@ -12,8 +12,7 @@
   },
   "dependencies": {
     "create-app-container": "^0.1.2",
-    "create-use-router": "^0.1.1",
-    "query-string": "^6.13.7"
+    "create-use-router": "^0.1.1"
   },
   "devDependencies": {
     "react": "^16.4.1",

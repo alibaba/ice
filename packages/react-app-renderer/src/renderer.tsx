@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createNavigation } from 'create-app-container';
 import { createUseRouter } from 'create-use-router';
-import * as queryString from 'query-string';
 
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
 
