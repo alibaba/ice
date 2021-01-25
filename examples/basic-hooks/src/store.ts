@@ -1,7 +1,7 @@
-import { createStore } from 'ice';
+import { createHooksStore } from 'ice';
 import useUser from './hooks/useUser';
 
-const store = createStore({
+const store = createHooksStore({
   useUser
 });
 
