@@ -10701,9 +10701,9 @@ jest@^25.4.0:
     import-local "^3.0.2"
     jest-cli "^25.5.4"
 
-jest@^26.4.2:
+jest@^26.0.0, jest@^26.4.2:
   version "26.6.3"
-  resolved "https://registry.npm.taobao.org/jest/download/jest-26.6.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjest%2Fdownload%2Fjest-26.6.3.tgz#40e8fdbe48f00dfa1f0ce8121ca74b88ac9148ef"
+  resolved "https://registry.npm.taobao.org/jest/download/jest-26.6.3.tgz?cache=0&sync_timestamp=1607352603960&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjest%2Fdownload%2Fjest-26.6.3.tgz#40e8fdbe48f00dfa1f0ce8121ca74b88ac9148ef"
   integrity sha1-QOj9vkjwDfofDOgSHKdLiKyRSO8=
   dependencies:
     "@jest/core" "^26.6.3"
