@@ -31,8 +31,13 @@ module.exports = ({ types }, { routesPath }) => {
             (importName && types.isMemberExpression(node.callee)
               && types.isIdentifier(node.callee.object, { name: importName})
               && types.isIdentifier(node.callee.property, { name: 'lazy'})) ||
-            // case import { lazy } from 'ice';
-            (hasLazyImport && types.isIdentifier(node.callee, { name: 'lazy' }))) {
+
+            (hasLazyImport &&
+              // case import { lazy } from 'ice';
+              types.isIdentifier(node.callee, { name: 'lazy' }) ||
+              // case import { lazy as loadable } from 'ice';
+              types.isIdentifier(node.callee, { name: 'loadable' }))
+          ) {
             if (node.arguments.length === 1) {
               node.arguments.push(types.booleanLiteral(true));
             }
