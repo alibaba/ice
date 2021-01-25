@@ -1,5 +1,5 @@
 {
-  "name": "exmaple-basic-spa",
+  "name": "exmaple-basic-keep-alive",
   "description": "",
   "dependencies": {
     "ice.js": "^1.0.11",
