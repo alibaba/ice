@@ -50,7 +50,8 @@ module.exports = function (appJSON) {
     const dynamicImportComponent =
       `(routeProps) =>
       import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(pageSource)}')
-      .then((reference) => () => {
+      .then((mod) => () => {
+        const reference = mod.default;
         function Component(props) {
           ${routeTitle ? `document.title="${routeTitle}"` : ''}
           return createElement(reference, Object.assign({}, routeProps, props));
