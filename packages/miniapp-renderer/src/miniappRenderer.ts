@@ -57,6 +57,6 @@ function miniappRenderer(
       }
     };
   });
-};
+}
 
 export default miniappRenderer;

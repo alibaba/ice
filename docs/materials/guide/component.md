@@ -194,6 +194,19 @@ demo/
 
 插件支持的配置参数如下：
 
+### alias
+
+- 类型：object
+- 默认值：{}
+
+```
+{
+  "alias": {
+    "@": "./src"
+  }
+}
+```
+
 ### basicComponents
 
 - 类型： array
@@ -207,8 +220,6 @@ demo/
 - 默认值：[]
 
 业务组件通过 babel 进行编译时需要增加额外的 babel plugin 处理，可以通过 babelPlugins 进行设置。
-
-#### 示例
 
 通过配置 babel-plugin-add-module-exports 增加组件 default 的导出：
 
@@ -225,18 +236,22 @@ demo/
 
 > 注意 babelPlugins 仅影响 es/lib 目录构建产物，如需要修改 demo 预览时的 babel 配置，请通过 webpack-chain 形式进行自定义
 
-### demoTemplate
+### babelOptions
 
-- 类型：array | string
-- 默认值：`template-component-demo`
+- 类型：array
+- 默认值：[]
 
-插件内置了 npm 包 `template-component-demo` 作为组件开发及构建时的 demo 预览，可以通过指定 `demoTemplate` 对进行自定义。
+比如修改 preset-env 的配置：
 
-demo 预览组件默认接受如下参数：
-- `readmeData`：readme.md 文件中的解析数据
-- `demoData`：demo 文件夹下 markdowm 内容解析的数据
-- `env`：当前运行环境 `development|production`
-- `templateProps`：模版自定义参数，可以通过设置 `"demoTemplate": ["template-component-demo", { "platform": "h5" }]` 的方式为模版定义参数
+```json
+{
+  "babelOptions": [
+    { "name": "@babel/preset-env", "options": { "module": false } }
+  ]
+}
+```
+
+> 注意 babelOptions 仅影响 es/lib 目录构建产物，如需要修改 demo 预览时的 babel 配置，请通过 webpack-chain 形式进行自定义
 
 ### devServer
 
@@ -293,6 +308,47 @@ demo 预览组件默认接受如下参数：
 - 默认值：
 
 如果打包 library 到 dist 目录，用来配置是否需要外部 externals，用来避免三方包被打包。
+
+### subComponents
+
+- 类型：Boolean
+- 默认值：false
+
+是否包含子组件，一般用于开发类似 fusion/antd 这种大包，开启该选项之后，会为每个组件生成对应的 `style.js` 文件。
+
+### demoTemplate
+
+- 类型：array | string
+- 默认值：`template-component-demo`
+
+插件内置了 npm 包 `template-component-demo` 作为组件开发及构建时的 demo 预览，可以通过指定 `demoTemplate` 对进行自定义。
+
+demo 预览组件默认接受如下参数：
+- `readmeData`：readme.md 文件中的解析数据
+- `demoData`：demo 文件夹下 markdowm 内容解析的数据
+- `env`：当前运行环境 `development|production`
+- `templateProps`：模版自定义参数，可以通过设置 `"demoTemplate": ["template-component-demo", { "platform": "h5" }]` 的方式为模版定义参数
+
+### htmlInjection
+
+- 类型：object
+- 默认值：`{}`
+
+向 demo 预览的 html 里注入内容，比如插入一些静态脚本等：
+
+```
+{
+  "htmlInjection": {
+    "headAppend": [
+      "<script src='http://foo.com/a.js' />",
+      "<link href='http://foo.com/a.css' />"
+    ],
+    "headPrepend": [],
+    "bodyAppend": [],
+    "bodyPrepend": [],
+  }
+}
+```
 
 ## 常见问题
 

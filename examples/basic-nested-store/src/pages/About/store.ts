@@ -3,7 +3,7 @@ import modelAbout from './model';
 
 interface IAppStoreModels extends IStoreModels {
   about: typeof modelAbout;
-};
+}
 
 const appModels: IAppStoreModels = {
   about: modelAbout

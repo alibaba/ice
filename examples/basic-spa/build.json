@@ -26,6 +26,11 @@
       "options": {
         "filename": "[name]-test.css"
       }
+    },
+    "webpack.ProvidePlugin": {
+      "options": {
+        "_": "lodash"
+      }
     }
   },
   "webpackLoaders": {

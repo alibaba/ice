@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
-      chunkFileName: 'css/[id].css',
+      chunkFilename: 'css/[id].css',
     }),
     new ExtractCssAssetsPlugin({
       outputPath: 'cssassets/',

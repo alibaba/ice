@@ -6,7 +6,7 @@ class Text extends React.PureComponent {
     return (
       <div>Text</div>
     );
-  };
-};
+  }
+}
 
 export default Text;

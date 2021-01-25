@@ -2,6 +2,13 @@ import * as fse from 'fs-extra';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
 
+function parseCode(code) {
+  return parse(code, {
+    sourceType: 'module',
+    plugins: ['jsx', 'typescript', 'decorators-legacy', 'dynamicImport', 'classProperties'],
+  });
+}
+
 function checkExportDefaultDeclarationExists(sourcePath: string) {
   if (!fse.existsSync(sourcePath)) {
     const ext = ['.ts', '.js', '.tsx', '.jsx'].find((extension) => fse.existsSync(`${sourcePath}${extension}`));
@@ -21,13 +28,6 @@ function checkExportDefaultDeclarationExists(sourcePath: string) {
   });
 
   return exportDefaultDeclarationExists;
-}
-
-function parseCode(code) {
-  return parse(code, {
-    sourceType: 'module',
-    plugins: ['jsx', 'typescript', 'decorators-legacy', 'dynamicImport', 'classProperties'],
-  });
 }
 
 export default checkExportDefaultDeclarationExists;

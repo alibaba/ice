@@ -62,7 +62,7 @@ function updatePackageJson(betaPackageInfos: IBetaPackageInfo[]): void {
 
     fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
   });
-};
+}
 
 function publish(pkg: string, betaVersion: string, directory: string): void {
 
