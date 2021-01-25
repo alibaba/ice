@@ -1,6 +1,6 @@
 import Layout from '@/layouts/basic';
 import Home from '@/pages/Home';
-import About from '@/pages/About';
+import TodoList from '@/pages/TodoList';
 import NotFound from '@/pages/NotFound';
 
 export default [
@@ -14,8 +14,8 @@ export default [
         component: Home
       },
       {
-        path: '/about',
-        component: About
+        path: '/todoList',
+        component: TodoList
       },
       {
         path: '*',
