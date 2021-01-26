@@ -30,17 +30,15 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
       const location = context.initialContext ? context.initialContext.location : null;
       history = createHistory({ type, basename, location, customHistory });
       appConfig.router.history = history;
-    } else if (!initHistory) {
-      (window.history as any).location = window.location;
-      history = createHistory({ customHistory: window.history });
     }
 
     if (!context.initialData && appConfig?.app?.getInitialData) {
-      const pathname = history.location.pathname;
-      context.initialData = await appConfig?.app?.getInitialData({
+      const location = history.location ? history.location : window.location;
+      const pathname = location.pathname;
+      context.initialData = await appConfig.app.getInitialData({
         pathname,
         path: pathname,
-        query: getSearchParams(),
+        query: getSearchParams(location),
         ssrError: (window as any)?.__ICE_SSR_ERROR__
       });
     }
