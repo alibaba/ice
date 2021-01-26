@@ -1,4 +1,5 @@
 import '@/app';
+import { join } from 'path';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -8,7 +9,8 @@ import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
 import { getAppConfig } from './appConfig';
 import loadStaticModules from './loadStaticModules';
 import app from './runApp';
-import routes from '@/routes';
+import routes from '<%- routesPath %>/routes';
+import loadable from '@loadable/component';
 
 const chalk = require('chalk');
 const parseurl = require('parseurl');
@@ -17,7 +19,12 @@ const { createBaseApp, emitLifeCycles } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) => {
+const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath }) => {
+  if (process.env.NODE_ENV === 'development') {
+    // loadable-stats.json will be genreated to the build dir in development
+    loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
+  }
+  const buildConfig = { loadableStatsPath };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
   // get html template
@@ -55,7 +62,11 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
     setInitialData(initialData);
 
     // get page initial props
-    const PageComponent = getComponentByPath(routes, pathname);
+    let PageComponent = await getComponentByPath(routes, pathname);
+    if (PageComponent && PageComponent.load) {
+      const loadedPageComponent = await PageComponent.load();
+      PageComponent = loadedPageComponent.default;
+    }
     const getInitialProps = PageComponent && PageComponent.getInitialProps;
     if (getInitialProps) {
       console.log('[SSR]', 'getting initial props of page component');
@@ -64,15 +75,19 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const bundleContent = await reactAppRendererWithSSR({
+
+    const renderResult = await reactAppRendererWithSSR({
       initialContext,
       initialData,
       pageInitialProps
     }, {
       appConfig,
+      buildConfig,
       createBaseApp,
       emitLifeCycles
     });
+
+    const { bundleContent, loadableComponentExtractor } = renderResult;
 
     const helmet = Helmet.renderStatic();
 
@@ -82,6 +97,11 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
     </script>`);
+    // lazy load bundle
+    $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+    $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+    $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+    // react-helmet
     $('head').append(`${helmet.title.toString()}`);
     $('head').append(`${helmet.meta.toString()}`);
     $('head').append(`${helmet.link.toString()}`);
@@ -99,16 +119,19 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate }) =
   return { html, error, redirectUrl: initialContext.url };
 }
 
-function getComponentByPath(routes, currPath)  {
-  function findMatchRoute(routeList) {
-    const matchedRoute = routeList.find(route => {
+async function getComponentByPath(routes, currPath)  {
+  async function findMatchRoute(routeList) {
+    let matchedRoute = routeList.find(route => {
       return matchPath(currPath, route);
     });
+    if (matchedRoute.component && matchedRoute.component.__LOADABLE__) {
+      matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+    }
     if (matchedRoute) {
-      return matchedRoute.children ? findMatchRoute(matchedRoute.children) : matchedRoute;
+      return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
     }
   }
-  const matchedRoute = findMatchRoute(routes);
+  const matchedRoute = await findMatchRoute(routes);
   return matchedRoute && matchedRoute.component;
 }
 

@@ -11,6 +11,8 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "@loadable/component": "^5.14.1",
+    "@loadable/server": "^5.14.0",
     "create-app-container": "^0.1.2",
     "create-use-router": "^0.1.1"
   },

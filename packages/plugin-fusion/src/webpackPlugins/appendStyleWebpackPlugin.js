@@ -86,26 +86,37 @@ module.exports = class AppendStylePlugin {
     }
 
     compiler.hooks.compilation.tap('compilation', (compilation) => {
-      compilation.hooks.optimizeChunkAssets.tapAsync(
-        'optimize-chunk-assets',
-        (chunks, done) => {
-          chunks.forEach((chunk) => {
-            chunk.files.forEach((fileName) => {
-              if (
-                distMatch(
-                  fileName,
-                  compilerEntry,
-                  compilation._preparedEntrypoints,
-                )
-              ) {
-                const css = this.compileToCSS(srcFile, variableFile);
-                this.wrapFile(compilation, fileName, css);
-              }
-            });
+      const processEntryChunk = (chunks, done) => {
+        chunks.forEach((chunk) => {
+          chunk.files.forEach((fileName) => {
+            if (
+              distMatch(
+                fileName,
+                compilerEntry,
+                compilation.preparedEntrypoints || compilation._preparedEntrypoints,
+              )
+            ) {
+              const css = this.compileToCSS(srcFile, variableFile);
+              this.wrapFile(compilation, fileName, css);
+            }
           });
-          done();
-        },
-      );
+        });
+        done();
+      };
+      // compatible with webpack 5
+      if (typeof compilation.hooks.processAssets !== 'undefined') {
+        // eslint-disable-next-line global-require
+        const { Compilation } = require('webpack');
+        compilation.hooks.processAssets.tapAsync({
+          name: 'optimize-chunk-assets',
+          stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE
+        }, processEntryChunk);
+      } else {
+        compilation.hooks.optimizeChunkAssets.tapAsync(
+          'optimize-chunk-assets',
+          processEntryChunk,
+        );
+      }
     });
   }
 

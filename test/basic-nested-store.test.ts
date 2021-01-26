@@ -10,7 +10,7 @@ buildFixture(example);
 test('open /', async () => {
   const res = await setupBrowser({ example });
   page = res.page;
-  browser = res.page;
+  browser = res.browser;
   expect(await page.$$text('h2')).toStrictEqual(['Header', 'Index Page...']);
   expect(await page.$$text('a')).toStrictEqual(['About']);
 })
@@ -40,3 +40,7 @@ test('open /about', async () => {
   expect(await page.html()).toContain('taobao');
   expect(await page.html()).toContain('123');
 })
+
+afterAll(async () => {
+  await browser.close();
+});

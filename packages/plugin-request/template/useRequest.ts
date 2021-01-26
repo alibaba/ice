@@ -39,7 +39,7 @@ function useRequest<R = any, Item = any, U extends Item = any>(
   service: CombineService<R, PaginatedParams>,
   options: PaginatedOptionsWithFormat<R, Item, U>
 ): IcePaginatedResult<Item>
-function useRequest<R = any, Item = any, U extends Item = any>(
+function useRequest<Item = any, U extends Item = any>(
   service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
   options: BasePaginatedOptions<U>
 ): IcePaginatedResult<Item>

@@ -57,6 +57,6 @@ async function miniappRenderer(
       }
     };
   });
-};
+}
 
 export default miniappRenderer;
