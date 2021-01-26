@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-wrap-code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "build plugin for inject code to files",
   "main": "lib/index.js",
   "scripts": {
