@@ -19,12 +19,12 @@ const { createBaseApp, emitLifeCycles } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath }) => {
+const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' }) => {
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be genreated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
-  const buildConfig = { loadableStatsPath };
+  const buildConfig = { loadableStatsPath, publicPath };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
   // get html template
