@@ -1,6 +1,7 @@
 import { buildFixture, setupBrowser } from './utils/build';
 import { startFixture, setupStartBrowser } from './utils/start';
 import { IPage } from './utils/browser';
+import nextTick from './utils/nextTick';
 
 const example = 'basic-spa';
 
@@ -14,6 +15,7 @@ describe(`build ${example}`, () => {
     const res = await setupBrowser({ example });
     page = res.page;
     browser = res.browser;
+    await nextTick();
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
   });
 
