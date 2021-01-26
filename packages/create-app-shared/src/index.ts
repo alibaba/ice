@@ -37,7 +37,7 @@ function createShareAPI({ withRouter, createElement, useEffect, initHistory = tr
     addNativeEventListener,
     removeNativeEventListener
   };
-};
+}
 
 export {
   history
