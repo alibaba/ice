@@ -7,7 +7,7 @@ async function renderInServer(context, options) {
   const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
 
-  const { loadableStatsPath } = buildConfig;
+  const { loadableStatsPath, publicPath } = buildConfig;
 
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
@@ -20,7 +20,11 @@ async function renderInServer(context, options) {
 
   const App = getRenderApp(runtime, options);
 
-  const webExtractor = new ChunkExtractor({ statsFile: loadableStatsPath, entrypoints: ['index'] });
+  const webExtractor = new ChunkExtractor({
+    statsFile: loadableStatsPath,
+    entrypoints: ['index'],
+    publicPath
+  });
   const jsx = webExtractor.collectChunks(<App />);
 
   return {
