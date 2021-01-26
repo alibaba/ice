@@ -3,9 +3,9 @@ import * as ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
 
-function renderInServer(context, options) {
+async function renderInServer(context, options) {
   const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
-  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  const { runtime, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
 
   const { loadableStatsPath } = buildConfig;
 

@@ -28,7 +28,7 @@
     "miniapp-renderer": "^0.1.4",
     "prettier": "^2.0.2",
     "query-string": "^6.13.1",
-    "rax-app-renderer": "^1.0.0",
+    "rax-app-renderer": "^2.0.0",
     "rax-use-router": "^3.0.0",
     "react-app-renderer": "^2.0.0",
     "universal-env": "^3.0.0",

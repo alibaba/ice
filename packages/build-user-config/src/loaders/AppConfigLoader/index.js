@@ -51,28 +51,38 @@ module.exports = function (appJSON) {
       `(routeProps) =>
       import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(pageSource)}')
       .then((mod) => () => {
-        const reference = interopRequire(mod);
+        const reference = mod.default;
         function Component(props) {
+          ${routeTitle ? `document.title="${routeTitle}"` : ''}
           return createElement(reference, Object.assign({}, routeProps, props));
         }
-        ${routeTitle ? `document.title="${routeTitle}"` : ''}
         Component.__path = '${route.path}';
         Component.getInitialProps = reference.getInitialProps;
         return Component;
       })
     `;
-    const importComponent = `() => () => interopRequire(require('${formatPath(pageSource)}'))`;
+    const importComponentInClient = `() => () => require('${formatPath(pageSource)}').default`;
+    // without useRouter
+    const importComponentInServer = `() => require('${formatPath(pageSource)}').default`;
+
+    let importComponent;
+    if (target === 'web') {
+      importComponent = dynamicImportComponent;
+    } else if (target === 'ssr') {
+      importComponent = importComponentInServer;
+    } else {
+      importComponent = importComponentInClient;
+    }
     return `routes.push(
       {
         ...${JSON.stringify(route)},
-        component: ${target === 'web' ? dynamicImportComponent : importComponent}
+        component: ${importComponent}
       }
     );`;
   }).join('\n');
 
   return `
     import { createElement } from '${libName}';
-    const interopRequire = (mod) => mod && mod.__esModule ? mod.default : mod;
     const routes = [];
     ${assembleRoutes}
     const appConfig = {
