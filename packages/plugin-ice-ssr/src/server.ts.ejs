@@ -19,7 +19,16 @@ const { createBaseApp, emitLifeCycles } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' }) => {
+<!-- const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' }) => { -->
+const serverRender = async (context, options = {}) => {
+  let params
+  if (context.req) {
+    params = { ctx: context, ...options }
+  } else {
+    params = options
+  }
+  const { ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' } = params;
+
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be genreated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
