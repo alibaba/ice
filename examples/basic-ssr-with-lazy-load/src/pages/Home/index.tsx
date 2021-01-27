@@ -16,8 +16,6 @@ export default function Home(props) {
   const [userState] = appStore.useModel('user');
   const [counterState] = pageStore.useModel('counter');
 
-  console.log('counterState: ', counterState);
-
   return (
     <>
       <Helmet>
@@ -27,12 +25,11 @@ export default function Home(props) {
         <meta name="description" content={props.description} />
       </Helmet>
       <h2 className={styles.title}>{props.title}</h2>
-      <div>
-        <div><strong>name：</strong>{userState.name}</div>
-        <div><strong>id：</strong>{userState.id}</div>
-        <div><strong>address：</strong>{props.profile && props.profile.address}</div>
-        <div><strong>data：</strong>{dataSource.join(' ')}</div>
-      </div>
+      <div>counterState: {counterState.count}</div>
+      <div>name: {userState.name}</div>
+      <div>id: {userState.id}</div>
+      <div>address: {props.profile && props.profile.address}</div>
+      <div>data: {dataSource.join(' ')}</div>
       <br />
       <Link to="/about">about</Link>
     </>
