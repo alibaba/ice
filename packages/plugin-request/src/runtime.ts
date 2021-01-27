@@ -17,7 +17,7 @@ const module = ({ appConfig }) => {
       const axiosInstance = createAxiosInstance().default;
       setAxiosInstance(requestConfig, axiosInstance);
     }
-  };
+  }
 };
 
 /**

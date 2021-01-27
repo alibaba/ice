@@ -9,6 +9,7 @@ import {
 
   RouteComponentProps
 } from 'react-router-dom';
+import loadable from '@loadable/component';
 import { RoutesProps, RouterProps } from '../types/router';
 import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types/base';
 import { IRouterConfig } from '../types';
@@ -26,19 +27,28 @@ function wrapperRoute(component, routerWrappers) {
   }, component);
 }
 
-function getRouteComponent(component, routerWrappers?: IRouteWrapper[]) {
-  const { __LAZY__, dynamicImport }: IDynamicImportComponent = component || {};
-  return __LAZY__ ? React.lazy(() => dynamicImport().then((m) => {
-    if (routerWrappers && routerWrappers.length) {
-      return { ...m, default: wrapperRoute(m.default, routerWrappers) };
-    }
-    return m;
-  })) : wrapperRoute(component, routerWrappers);
+function getRouteComponent(component, routerWrappers?: IRouteWrapper[], fallback?: React.ReactNode) {
+  const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
+  if (__LOADABLE__) {
+    return loadable(dynamicImport, {
+      resolveComponent: (component) => {
+        return wrapperRoute(component.default, routerWrappers);
+      },
+      fallback
+    });
+  } else {
+    return __LAZY__ ? React.lazy(() => dynamicImport().then((mod) => {
+      if (routerWrappers && routerWrappers.length) {
+        return { ...mod, default: wrapperRoute(mod.default, routerWrappers) };
+      }
+      return mod;
+    })) : wrapperRoute(component, routerWrappers);
+  }
 }
 
-function parseRoutes(routes: RouteItemProps[]) {
+export function parseRoutes(routes: RouteItemProps[], fallback?: React.ReactNode) {
   return routes.map((route) => {
-    const { children, component, routeWrappers, wrappers, ...others } = route;
+    const { children, component, routeWrappers, wrappers, ...others }  = route;
     // do not wrapper components to layout added by runtime api wrapperRouteComponent
     let mergedRouteWrappers = children ? [] : routeWrappers;
     if (wrappers && wrappers.length) {
@@ -46,31 +56,33 @@ function parseRoutes(routes: RouteItemProps[]) {
     }
     const parsedRoute: IRouterConfig = { ...others };
     if (component) {
-      parsedRoute.component = getRouteComponent(component, mergedRouteWrappers);
+      parsedRoute.component = getRouteComponent(component, mergedRouteWrappers, fallback);
     }
     if (children) {
-      parsedRoute.children = parseRoutes(children);
+      parsedRoute.children = parseRoutes(children, fallback);
     }
     return parsedRoute;
   });
 }
 
 export function IceRouter(props: RouterProps) {
-  const { type, routes, fallback, ...others } = props;
-  // parse routes before render
-  const parsedRoutes = parseRoutes(routes);
-
-  const children = <Routes routes={parsedRoutes} fallback={fallback} />;
+  const { type, children, ...others } = props;
+  let renderChildren: React.ReactChild | React.ReactChildren = children;
+  if (!renderChildren && props.routes) {
+    // parse routes before render
+    const parsedRoutes = parseRoutes(props.routes, props.fallback);
+    renderChildren = <Routes routes={parsedRoutes} fallback={props.fallback} />;
+  }
   return type === 'static' ?
     <StaticRouter {...others}>
-      {children}
+      {renderChildren}
     </StaticRouter> :
     <Router {...others}>
-      {children}
+      {renderChildren}
     </Router>;
 }
 
-function Routes({ routes, fallback }: RoutesProps) {
+export function Routes({ routes, fallback }: RoutesProps) {
   return (
     <Switch>
       {routes.map((route, id) => {

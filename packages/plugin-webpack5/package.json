@@ -17,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@alib/build-scripts": "^0.1.18",
-    "typescript": "^3.8.3"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "html-webpack-plugin": "^4.3.0",

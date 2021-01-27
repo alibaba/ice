@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.20",
-    "typescript": "^3.8.3"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "@reactml/loader": "^0.1.3"

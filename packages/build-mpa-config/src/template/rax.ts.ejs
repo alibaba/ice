@@ -1,6 +1,12 @@
 import { render, createElement } from 'rax';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken, isNode } from 'universal-env';
+
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '<%= globalStyle %>'
+<% } %>
+
 import Component from '<%- resourcePath %>';
 
 if (!isNode) {

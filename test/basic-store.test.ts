@@ -10,7 +10,7 @@ buildFixture(example);
 test('open /', async () => {
   const res = await setupBrowser({ example });
   page = res.page;
-  browser = res.page;
+  browser = res.browser;
   expect(await page.$$text('h2')).toStrictEqual(['Header', 'basic store', 'Home Page']);
   expect(await page.$$text('div>span')).toStrictEqual(['0']);
   await page.click('button');
