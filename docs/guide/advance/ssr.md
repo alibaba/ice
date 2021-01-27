@@ -190,21 +190,37 @@ Home.getInitialProps = async () => {
 本地开发时 icejs 通过 webpack-dev-server 做服务端渲染，应用发布后则需要对应的服务端自行渲染，核心逻辑如下：
 
 ```ts
+const fs = require('fs');
+
 router.get('/*', async (ctx) => {
-  // 将资源下载到 server 端
-  // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
+  // 下载 loadable-stats.json 到 server 端
+  // const webStatsPath = await downloadBundle('http://cdn.com/loadable-stats.json');
+  // const serverStatsPath = await downloadBundle('http://cdn.com/server/loadable-stats.json');
+ 
+  // 将 bundle 下载到 server 端
+  // const serverStatsContent = fse.readJSONSync(serverStatsPath);
+  // const { assetsByChunkName } = serverStatsContent;
+  // for (const chunkName of Object.keys(assetsByChunkName)) {
+  //    const bundleFileName = `server/${assetsByChunkName[chunkName]}`;
+  //    await downloadBundle(`http://cdn.com/${bundleFileName}`);
+  // }
+  
   const serverRender = require(serverBundlePath);
   const { html, error, redirectUrl } = await serverRender.default({
-    // 当前请求的上下文(可选)
+    // 当前请求的上下文（可选）
     ctx,
     // 当前请求的路径（必选参数）
     pathname: ctx.req.pathname,
+    // loadable-stats.json 本地路径（必选）
+    loadableStatsPath: webStatsPath,
     // 可选
     initialData: {
       initialStates: {
         user: {}
       }
     },
+    // 打包后输出的资源的公共路径，默认为 /（可选） 
+    publicPath: 'https://cdn.com/'
   });
 
   if (redirectUrl) {
@@ -220,6 +236,8 @@ router.get('/*', async (ctx) => {
   }
 });
 ```
+
+icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。需要下载 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server` 目录下所有的 bundle 资源到 server 端。
 
 icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端调用，该方法提供两个参数：
 
