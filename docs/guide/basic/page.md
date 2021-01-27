@@ -10,14 +10,14 @@ order: 9
 ```jsx
 // src/pages/Home/index.tsx
 import React from 'react';
-import { Helmet } from 'ice';
+import { Head } from 'ice';
 
 const Home = () => {
   return (
     <div>
-      <Helmet>
+      <Head>
         <title>Hello Home</title>
-      </Helmet>
+      </Head>
       <div>Home</div>
     </div>
   );
