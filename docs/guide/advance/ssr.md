@@ -198,7 +198,7 @@ router.get('/*', async (ctx) => {
   // const serverStatsPath = await downloadBundle('http://cdn.com/server/loadable-stats.json');
  
   // 将 bundle 下载到 server 端
-  // const serverStatsContent = fse.readJSONSync(serverStatsPath);
+  // const serverStatsContent = fs.readJSONSync(serverStatsPath);
   // const { assetsByChunkName } = serverStatsContent;
   // for (const chunkName of Object.keys(assetsByChunkName)) {
   //    const bundleFileName = `server/${assetsByChunkName[chunkName]}`;
