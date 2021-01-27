@@ -237,7 +237,7 @@ router.get('/*', async (ctx) => {
 });
 ```
 
-icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。需要下载 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server` 目录下所有的 bundle 资源到 server 端。
+icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。需要把 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server/` 目录下所有的 bundle 资源下载到 server 端。
 
 icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端调用，该方法提供两个参数：
 
