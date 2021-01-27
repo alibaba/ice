@@ -10,7 +10,6 @@ interface IOptions {
   appJsonContent?: string;
 }
 
-
 // Get entries when exist app.json
 export default function (api, options?: IOptions): IEntry[] {
   const { target, appJsonPath, appJsonContent } = options || {};
