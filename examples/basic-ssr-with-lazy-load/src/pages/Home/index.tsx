@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { request, Link, logger, Helmet, store as appStore } from 'ice';
+import pageStore from './store';
 import styles from './index.module.scss';
 
 export default function Home(props) {
@@ -13,6 +14,9 @@ export default function Home(props) {
   }, []);
 
   const [userState] = appStore.useModel('user');
+  const [counterState] = pageStore.useModel('counter');
+
+  console.log('counterState: ', counterState);
 
   return (
     <>
