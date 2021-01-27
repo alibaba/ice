@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { request, Link, logger, Helmet, store as appStore } from 'ice';
+import { Link, logger, Helmet, store as appStore } from 'ice';
 import pageStore from './store';
 import styles from './index.module.scss';
 
@@ -17,7 +17,7 @@ export default function Home(props) {
   const [counterState] = pageStore.useModel('counter');
 
   return (
-    <>
+    <main>
       <Helmet>
         <meta charSet="utf-8" />
         <title>{props.title}</title>
@@ -29,14 +29,27 @@ export default function Home(props) {
       <div>name: {userState.name}</div>
       <div>id: {userState.id}</div>
       <div>address: {props.profile && props.profile.address}</div>
-      <div>data: {dataSource.join(' ')}</div>
+      <strong>data: {dataSource.join(' ')}</strong>
       <br />
       <Link to="/about">about</Link>
-    </>
+    </main>
   );
 }
 
 Home.getInitialProps = async () => {
-  const res = await request('/profile');
+  // const res = await request('/profile');
+  const res = {
+    data: {
+      profile: {
+        id: 10001,
+        name: 'Jack Ma',
+        edu: 'Hangzhou Normal University',
+        address: 'Hangzhou'
+      },
+      title: 'Home Page...',
+      content: 'Home Content...',
+      description: 'Home Description...'
+    }
+  };
   return { ...res.data, title: 'Home Page...' };
 };

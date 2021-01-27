@@ -1,11 +1,19 @@
-import { runApp, IAppConfig, config, request } from 'ice';
+import { runApp, IAppConfig, config } from 'ice';
 import React from 'react';
 
 const appConfig: IAppConfig = {
   app: {
     getInitialData: async () => {
-      const res = await request('/user');
-      return res;
+      // const res = await request('/user');
+      // return res;
+      return {
+        data: {
+          user: {
+            name: 'Jack Ma',
+            id: 10001,
+          }
+        },
+      };
     }
   },
   router: {

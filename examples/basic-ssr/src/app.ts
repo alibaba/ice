@@ -1,12 +1,20 @@
-import { runApp, IAppConfig, config, request } from 'ice';
+import { runApp, IAppConfig, config } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
-    getInitialData: async (ctx) => {
-      console.log('getInitialData ctx', ctx);
+    getInitialData: async () => {
+      // console.log('getInitialData ctx', ctx);
 
-      const res = await request('/user');
-      return res;
+      // const res = await request('/user');
+      // return res;
+      return {
+        data: {
+          user: {
+            name: 'Jack Ma',
+            id: 10001,
+          }
+        },
+      };
     }
   },
   router: {
