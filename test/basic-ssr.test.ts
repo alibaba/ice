@@ -6,6 +6,10 @@ const example = 'basic-ssr';
 
 const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
+describe(`build ${example}`, () => {
+  buildFixture(example);
+})
+
 describe(`start ${example}`, () => {
   let page: IPage = null;
   let browser = null;
