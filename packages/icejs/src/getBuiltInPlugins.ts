@@ -34,13 +34,13 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-helmet'
   ];
 
+  if (userConfig.ssr) {
+    plugins.push('build-plugin-ice-ssr');
+  }
+
   // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
     plugins.push('build-plugin-ice-store');
-  }
-
-  if (userConfig.ssr) {
-    plugins.push('build-plugin-ice-ssr');
   }
 
   const ICE_AUTH_PLUGIN_KEY = 'build-plugin-ice-auth';
