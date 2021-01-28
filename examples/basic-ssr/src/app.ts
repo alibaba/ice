@@ -1,5 +1,7 @@
 import { runApp, IAppConfig, config } from 'ice';
 
+const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
+
 const appConfig: IAppConfig = {
   app: {
     getInitialData: async () => {
@@ -7,6 +9,7 @@ const appConfig: IAppConfig = {
 
       // const res = await request('/user');
       // return res;
+      await delay(1500);
       return {
         data: {
           user: {
