@@ -1,10 +1,10 @@
-async function miniappRenderer(
+function miniappRenderer(
   { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
 
-  const { runtime } = await createBaseApp(appConfig);
+  const { runtime } = createBaseApp(appConfig);
   const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
