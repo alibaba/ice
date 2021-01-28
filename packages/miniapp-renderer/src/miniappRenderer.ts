@@ -9,6 +9,7 @@ function miniappRenderer(
   const { app = {} } = appConfig;
   const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
   let AppProvider;
+  let createdApp = false;
 
   class App extends Component {
     public render() {
@@ -36,10 +37,11 @@ function miniappRenderer(
     return {
       path: source,
       async render() {
-        if (!AppProvider) {
+        if (!createdApp) {
           // Only need await render in pagesRenderInfo
           const { runtime } = await createBaseApp(appConfig);
           AppProvider = runtime?.composeAppProvider?.();
+          createdApp = true;
         }
 
         const PageComponent = component()();
