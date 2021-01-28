@@ -207,9 +207,9 @@ router.get('/*', async (ctx) => {
   
   const serverRender = require(serverBundlePath);
   const { html, error, redirectUrl } = await serverRender.default({
-    // 当前请求的上下文（可选）
+    // 当前请求的上下文（必选）
     ctx,
-    // 当前请求的路径（必选参数）
+    // 当前请求的路径（必选）
     pathname: ctx.req.pathname,
     // loadable-stats.json 本地路径（必选）
     loadableStatsPath: webStatsPath,
