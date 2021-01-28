@@ -104,7 +104,7 @@ const plugin = async (api): Promise<void> => {
       delete require.cache[requirePath];
       // eslint-disable-next-line
       const serverRender = require(requirePath)
-      const { error, html, redirectUrl } = await serverRender.default({ ctx: { res, req }, pathname: req.path, htmlTemplate });
+      const { error, html, redirectUrl } = await serverRender.default({ res, req }, { htmlTemplate });
 
       if (redirectUrl) {
         console.log('[SSR]', `Redirect to the new path ${redirectUrl}`);

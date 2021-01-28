@@ -19,15 +19,21 @@ const { createBaseApp, emitLifeCycles } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-<!-- const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' }) => { -->
-const serverRender = async (context, options = {}) => {
-  let params
+const serverRender = async (context, opts = {}) => {
+  let options;
   if (context.req) {
-    params = { ctx: context, ...options }
+    options = { ctx: context, ...opts }
   } else {
-    params = options
+    options = { ...context }
   }
-  const { ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' } = params;
+  let {
+    ctx = {},
+    pathname: originPathname,
+    initialData,
+    htmlTemplate,
+    loadableStatsPath,
+    publicPath = '/'
+  } = options;
 
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be genreated to the build dir in development
@@ -46,7 +52,10 @@ const serverRender = async (context, options = {}) => {
   let error;
 
   const { req, res } = ctx as any;
-  const { search, hash, path } = parseurl(req);
+
+  const { search, hash, path, pathname: parsedPathname } = parseurl(req);
+  const pathname = originPathname || parsedPathname;
+
   const parsedQuery = queryString.parse(search);
   const initialContext = {
     req,
@@ -84,7 +93,7 @@ const serverRender = async (context, options = {}) => {
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const renderResult = await reactAppRendererWithSSR({
+    const { bundleContent, loadableComponentExtractor } = await reactAppRendererWithSSR({
       initialContext,
       initialData,
       pageInitialProps
@@ -94,8 +103,6 @@ const serverRender = async (context, options = {}) => {
       createBaseApp,
       emitLifeCycles
     });
-
-    const { bundleContent, loadableComponentExtractor } = renderResult;
 
     const helmet = Helmet.renderStatic();
 
