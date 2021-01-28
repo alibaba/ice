@@ -3,14 +3,12 @@ async function miniappRenderer(
   { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
-
-  const { runtime } = await createBaseApp(appConfig);
-  const AppProvider = runtime?.composeAppProvider?.();
+  emitLifeCycles();
 
   const { app = {} } = appConfig;
   const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
+  let AppProvider;
 
-  emitLifeCycles();
   class App extends Component {
     public render() {
       const { Page, ...otherProps } = this.props;
@@ -36,7 +34,12 @@ async function miniappRenderer(
   (window as any).__pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
     return {
       path: source,
-      render() {
+      async render() {
+        if (!AppProvider) {
+          const { runtime } = await createBaseApp(appConfig);
+          AppProvider = runtime?.composeAppProvider?.();
+        }
+
         const PageComponent = component()();
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
