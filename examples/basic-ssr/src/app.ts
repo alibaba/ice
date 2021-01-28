@@ -1,12 +1,23 @@
-import { runApp, IAppConfig, config, request } from 'ice';
+import { runApp, IAppConfig, config } from 'ice';
+
+const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
 const appConfig: IAppConfig = {
   app: {
-    getInitialData: async (ctx) => {
-      console.log('getInitialData ctx', ctx);
+    getInitialData: async () => {
+      // console.log('getInitialData ctx', ctx);
 
-      const res = await request('/user');
-      return res;
+      // const res = await request('/user');
+      // return res;
+      await delay(1500);
+      return {
+        data: {
+          user: {
+            name: 'Jack Ma',
+            id: 10001,
+          }
+        },
+      };
     }
   },
   router: {
