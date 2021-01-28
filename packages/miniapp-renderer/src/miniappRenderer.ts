@@ -1,16 +1,16 @@
-// miniapp renderer is a sync method
 function miniappRenderer(
   { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
   const history = createHistory({ routes: staticConfig.routes });
-  emitLifeCycles();
+
+  const { runtime } = createBaseApp(appConfig);
+  const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
   const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
-  let AppProvider;
-  let createdApp = false;
 
+  emitLifeCycles();
   class App extends Component {
     public render() {
       const { Page, ...otherProps } = this.props;
@@ -36,14 +36,7 @@ function miniappRenderer(
   (window as any).__pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
     return {
       path: source,
-      async render() {
-        if (!createdApp) {
-          // Only need await render in pagesRenderInfo
-          const { runtime } = await createBaseApp(appConfig);
-          AppProvider = runtime?.composeAppProvider?.();
-          createdApp = true;
-        }
-
+      render() {
         const PageComponent = component()();
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);

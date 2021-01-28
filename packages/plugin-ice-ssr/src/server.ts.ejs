@@ -75,7 +75,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loa
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const renderResult = await reactAppRendererWithSSR({
+    const renderResult = reactAppRendererWithSSR({
       initialContext,
       initialData,
       pageInitialProps
