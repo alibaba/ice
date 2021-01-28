@@ -1,4 +1,4 @@
-async function miniappRenderer(
+function miniappRenderer(
   { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
@@ -36,6 +36,7 @@ async function miniappRenderer(
       path: source,
       async render() {
         if (!AppProvider) {
+          // Only need await render in pagesRenderInfo
           const { runtime } = await createBaseApp(appConfig);
           AppProvider = runtime?.composeAppProvider?.();
         }
