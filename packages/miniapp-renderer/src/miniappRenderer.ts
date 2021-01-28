@@ -1,3 +1,4 @@
+// miniapp renderer is a sync method
 function miniappRenderer(
   { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
