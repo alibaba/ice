@@ -38,6 +38,10 @@ const configCSSRule = (config, style, mode, loaders = []) => {
     rule
       .use('MiniCssExtractPlugin.loader')
         .loader(MiniCssExtractPlugin.loader)
+        // compatible with commonjs syntax: const styles = require('./index.module.less')
+        .options({
+          esModule: false,
+        })
         .end()
       .use('css-loader')
         .loader(require.resolve('css-loader'))
