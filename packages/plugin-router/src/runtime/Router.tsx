@@ -67,12 +67,18 @@ export function parseRoutes(routes: RouteItemProps[], fallback?: React.ReactNode
 
 export function IceRouter(props: RouterProps) {
   const { type, children, ...others } = props;
+  let renderChildren: React.ReactChild | React.ReactChildren = children;
+  if (!renderChildren && props.routes) {
+    // parse routes before render
+    const parsedRoutes = parseRoutes(props.routes, props.fallback);
+    renderChildren = <Routes routes={parsedRoutes} fallback={props.fallback} />;
+  }
   return type === 'static' ?
     <StaticRouter {...others}>
-      {children}
+      {renderChildren}
     </StaticRouter> :
     <Router {...others}>
-      {children}
+      {renderChildren}
     </Router>;
 }
 

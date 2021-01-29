@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createNavigation } from 'create-app-container';
 import { createUseRouter } from 'create-use-router';
+import * as queryString from 'query-string';
 import { loadableReady } from '@loadable/component';
 
 const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
@@ -59,9 +60,21 @@ async function renderInBrowser(options) {
   if ((window as any).__ICE_APP_DATA__) {
     context.initialData = (window as any).__ICE_APP_DATA__;
     context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
+  } else if(appConfig?.app?.getInitialData) {
+    const { href, origin, pathname, search } = window.location;
+    const path = href.replace(origin, '');
+    const query = queryString.parse(search);
+    const ssrError = (window as any).__ICE_SSR_ERROR__;
+    const initialContext = {
+      pathname,
+      path,
+      query,
+      ssrError
+    };
+    context.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
-  const { runtime, history, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
+  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
   // set InitialData, can get the return value through getInitialData method
   setInitialData(context.initialData);
   options.appConfig = modifiedAppConfig;
