@@ -4,6 +4,10 @@ export interface IEntry {
   pageName?: string;
   source?: string;
   path?: string;
+  window?: {
+    title?: string;
+    [key: string]: string
+  }
 }
 
 export interface IRoute {
@@ -12,7 +16,11 @@ export interface IRoute {
   path?: string;
   name?: string;
   pageSource?: string;
-  frames?: [];
+  window?: {
+    title?: string;
+    [key: string]: string
+  }
+  frames?: IRoute[];
   tabHeader?: {
     source: string;
     name?: string;

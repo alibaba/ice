@@ -27,7 +27,8 @@ export default (
   return entries;
 };
 
-function getEntry({ source, name, path: pathname, pageSource }: IRoute, rootDir) {
+function getEntry(route: IRoute, rootDir) {
+  const { source, name, pageSource } = route;
   let entryName: string;
   if (name) {
     entryName = name;
@@ -37,10 +38,9 @@ function getEntry({ source, name, path: pathname, pageSource }: IRoute, rootDir)
   }
 
   return {
+    ...route,
     entryName,
-    path: pathname,
-    source,
-    entryPath: pageSource || getEntryPath(rootDir, source)
+    entryPath: pageSource || getEntryPath(rootDir, source),
   };
 }
 
