@@ -11,16 +11,23 @@ module.exports = (config, babelPresets) => {
           const [presetPath] = Array.isArray(preset) ? preset : [preset];
           let matchedPreset = null;
           extraPresets = extraPresets.filter((babelPreset) => {
-            const matched = formatPath(presetPath).indexOf(Array.isArray(babelPreset) ? babelPreset[0] : babelPreset) > -1;
+            const babelPresetPath = Array.isArray(babelPreset) ? babelPreset[0] : babelPreset;
+            const matched = formatPath(presetPath).indexOf(babelPresetPath) > -1;
             if (matched) {
+              const hasOptions = Array.isArray(babelPreset) && babelPreset.length > 1;
               matchedPreset = babelPreset;
+              // replace preset path with absolute path
+              if (hasOptions) {
+                matchedPreset[0] = presetPath;
+              } else {
+                matchedPreset = presetPath;
+              }
             }
             return !matched;
           });
           // replace current preset if match
           return matchedPreset || preset;
         });
-
         return {
           ...options,
           presets: [
