@@ -10,7 +10,7 @@ const chalk = require('chalk');
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, commandArgs, userConfig } = context;
+  const { command, commandArgs, userConfig, rootDir } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
@@ -22,6 +22,13 @@ export default (api, options) => {
       return false;
     }
     try {
+      // auto detect of jsx runtime
+      // eslint-disable-next-line
+      const tsConfig = require(path.join(rootDir, 'tsconfig.json'));
+      if (tsConfig?.compilerOptions?.jsx !== 'react-jsx') {
+        return false;
+      }
+      // ensure react/jsx-runtime
       require.resolve('react/jsx-runtime');
       return true;
     } catch (e) {
