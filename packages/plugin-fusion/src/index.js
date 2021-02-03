@@ -321,12 +321,16 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
         const nextRegex = /@(alife|alifd)\/next\/(es|lib)\/([-\w+]+)$/;
         const baseRegex = /@icedesign\/base\/lib\/([-\w+]+)$/;
         externals.push(function(_context, request, callback) {
-          const isNext = nextRegex.test(request);
-          const isDesignBase = baseRegex.test(request);
+          const isNext = nextRegex.test(_context);
+          const isDesignBase = baseRegex.test(_context);
           if (isNext || isDesignBase) {
-            const componentName = isNext ? request.match(nextRegex)[3] : request.match(baseRegex)[1];
+            const componentName = isNext ? _context.match(nextRegex)[3] : _context.match(baseRegex)[1];
+            const externalKey = isNext ? 'Next' : 'ICEDesignBase';
             if (componentName) {
-              return callback(null, [isNext ? 'Next' : 'ICEDesignBase', upperFirst(camelCase(componentName))]);
+              return callback(null, [externalKey, upperFirst(camelCase(componentName))]);
+            } else if (_context.match(/\.(scss|css)/)) {
+              // external styles
+              return callback(null, externalKey);
             }
           }
           return callback();
