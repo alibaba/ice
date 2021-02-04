@@ -1,7 +1,9 @@
 {
   "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
-  "plugins": [],
+  "plugins": [
+    "build-plugin-dev-inspector"
+  ],
   "tsChecker": true,
   "modeConfig": {
     "prod": {

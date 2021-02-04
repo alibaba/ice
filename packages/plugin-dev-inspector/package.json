@@ -1,0 +1,29 @@
+{
+  "name": "build-plugin-dev-inspector",
+  "version": "0.1.0",
+  "description": "devtool for inspecting react components and jump to local IDE for ice.js",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/alibaba/ice#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "devDependencies": {
+    "react-dev-inspector": "^1.1.4"
+  }
+}
