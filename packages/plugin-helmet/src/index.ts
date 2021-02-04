@@ -7,6 +7,6 @@ export default ({ applyMethod }) => {
     // @deprecated
     Helmet`,
     importSource: 'react-helmet',
-    exportDefault: 'Head'
+    exportMembers: ['Helmet'],
   });
 };
