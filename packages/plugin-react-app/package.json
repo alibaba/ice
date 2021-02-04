@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@builder/app-helpers": "^2.0.0",
-    "@builder/user-config": "^0.1.2",
+    "@builder/user-config": "^0.2.0",
     "build-scripts-config": "^1.0.0",
     "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",
