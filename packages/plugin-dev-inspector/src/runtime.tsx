@@ -6,9 +6,9 @@ const InspectorWrapper = process.env.NODE_ENV === 'development'
   : React.Fragment;
 
 export default ({ addProvider, appConfig }) => {
-  const { devInspector = {} } = appConfig;
+  const { inspector = {} } = appConfig;
   const InspectorProvider = ({ children }) => {
-    return <InspectorWrapper {...devInspector}>{children}</InspectorWrapper>;
+    return <InspectorWrapper {...inspector}>{children}</InspectorWrapper>;
   };
   addProvider(InspectorProvider);
 };

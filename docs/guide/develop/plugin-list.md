@@ -232,6 +232,49 @@ http://example.com/?smartDebug=true
 http://example.com/?smartDebug=true&debugPort=8080&debugPath=/dist/index.js&outputPath=dist
 ```
 
+## build-plugin-dev-inspector
+
+基于[react-dev-inspector](https://github.com/zthxxx/react-dev-inspector) 封装的 ice.js 插件。用于在本地调试时，快速定位页面上的组件所在的源码的位置。
+
+Install:
+
+```bash
+$ npm i --save-dev build-plugin-dev-inspector
+```
+
+### 基础用法
+
+在 `build.json` 中引入插件：
+
+```json
+{
+  "plugins": [
+    "build-plugin-dev-inspector"
+  ]
+}
+```
+
+完成上述配置后，则在本地调试的环境下，按下 `Control + Shift + Command + C` (macOS) 或者 `Ctrl + Shift + Win + C` (Windows) 快捷键，把鼠标 hover 到想要调试的元素，就会显示出遮罩框，包括组件名称、组件所在的路径等内容；再点击一下，会自动在编辑器中跳转到对应的文件中，并且跳转到对应的行和列。
+
+在 `src/app.ts` 中可以配置 `build-plugin-dev-inspector` 的选项：
+
+```js
+import { runApp, config } from 'ice';
+
+const appConfig = {
+  inspector: {
+    // 开启 debug 模式的快捷键
+    keys: ['control', 'shift', 'command', 'd'],
+    // 点击组件时是否打开 IDE
+    disableLaunchEditor: false
+  }
+};
+
+runApp(appConfig);
+```
+
+更多选项配置信息可查看[Inspector 组件文档](https://github.com/zthxxx/react-dev-inspector#inspector-component-props)。
+
 ## build-plugin-jsx-plus
 
 该插件支持了一种 JSX 扩展语法 JSX+，它能帮助业务开发者更爽更快地书写 JSX。JSX+ 不是一种新的概念，它是 JSX 基础上的扩展指令概念。
