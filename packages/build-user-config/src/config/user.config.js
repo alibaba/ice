@@ -224,5 +224,5 @@ module.exports = [
   {
     name: 'modularImportRuntime',
     validation: 'boolean',
-  }
+  },
 ];
