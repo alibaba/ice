@@ -70,20 +70,28 @@ export default async (api) => {
     routesPath = pagesRoutePath;
   }
 
-  modifyUserConfig('babelPlugins',
-    [
-      ...(userConfig.babelPlugins as [] || []),
-      [
-        require.resolve('./babelPluginReplacePath'),
-        {
-          routesPath,
-          alias: userConfig.alias,
-          applyMethod,
-          tempDir
-        }
-      ]
-    ]
-  );
+  const babelPlugins = userConfig.babelPlugins || [];
+  const replacePathBabelPlugin = [
+    require.resolve('./babelPluginReplacePath'),
+    {
+      routesPath,
+      alias: userConfig.alias,
+      applyMethod,
+      tempDir
+    }
+  ];
+
+  const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
+  if (loadableBabelPluginIndex > -1) {
+    // ReplacePathBabelPlugin will change the component path from original path to .ice/ dir
+    // @loadable/babel-plugin will get the transformed path
+    // so neet to ensure ReplacePathBabelPlugin is before @loadable/babel-plugin
+    babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
+  } else {
+    babelPlugins.push(replacePathBabelPlugin);
+  }
+
+  modifyUserConfig('babelPlugins', [...babelPlugins]);
 
   onGetWebpackConfig(config => {
     config.module.rule('appJSON')
