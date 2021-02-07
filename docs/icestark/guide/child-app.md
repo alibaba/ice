@@ -106,7 +106,7 @@ export function mount(props) {
   vue = new Vue(...).$mount();
   // for vue don't replace mountNode
   container.innerHTML = '';
-  mountNode.appendChild(vue.$el);
+  container.appendChild(vue.$el);
 }
 
 export function unmount() {
