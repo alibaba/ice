@@ -1,7 +1,15 @@
 import { IPlugin } from '@alib/build-scripts';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const plugin: IPlugin = ({ onGetWebpackConfig }) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, registerUserConfig }) => {
+  registerUserConfig({
+    name: 'moduleFederation',
+    validation: 'object',
+    async configWebpack(config, value, context) {
+      const { ModuleFederationPlugin } = (context.webpack as any).container;
+      config.plugin('ModuleFederationPlugin').use(ModuleFederationPlugin, [value]);
+    },
+  });
   onGetWebpackConfig((config) => {
     if (config.plugins.get('HtmlWebpackPlugin')) {
       // use html-webpack-plugin which compatible with webpack5
