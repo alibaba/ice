@@ -190,21 +190,11 @@ Home.getInitialProps = async () => {
 本地开发时 icejs 通过 webpack-dev-server 做服务端渲染，应用发布后则需要对应的服务端自行渲染，核心逻辑如下：
 
 ```ts
-const fs = require('fs');
+const path = require('path');
 
 router.get('/*', async (ctx) => {
-  // 下载 loadable-stats.json 到 server 端
-  // const webStatsPath = await downloadBundle('http://cdn.com/loadable-stats.json');
-  // const serverStatsPath = await downloadBundle('http://cdn.com/server/loadable-stats.json');
- 
-  // 将 bundle 下载到 server 端
-  // const serverStatsContent = fs.readJSONSync(serverStatsPath);
-  // const { assetsByChunkName } = serverStatsContent;
-  // for (const chunkName of Object.keys(assetsByChunkName)) {
-  //    const bundleFileName = `server/${assetsByChunkName[chunkName]}`;
-  //    await downloadBundle(`http://cdn.com/${bundleFileName}`);
-  // }
-  
+  // server/index.js 路径
+  const serverBundlePath = path.join('../build', 'server/index.js');
   const serverRender = require(serverBundlePath);
   const { html, error, redirectUrl } = await serverRender.default({
     // 当前请求的上下文（必选）
@@ -237,7 +227,7 @@ router.get('/*', async (ctx) => {
 });
 ```
 
-icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。需要把 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server/` 目录下所有的 bundle 资源下载到 server 端。
+icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。部署时需要把 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server/` 目录下所有的 bundle 资源下载到 server 端。
 
 icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端调用，该方法提供两个参数：
 
