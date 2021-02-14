@@ -11,6 +11,10 @@ const plugins = ({ onGetWebpackConfig, getValue, applyMethod }) => {
   // export InspectorConfig to the public
   applyMethod('addTypesExport', { source: './inspector/types' });
 
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
   onGetWebpackConfig((config) => {
     // inject source file path/line/column to JSX data attributes props
     config.module

@@ -25,9 +25,7 @@
     "url": "https://github.com/alibaba/ice/issues"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0"
-  },
-  "devDependencies": {
+    "fs-extra": "^8.1.0",
     "react-dev-inspector": "^1.1.4"
   }
 }
