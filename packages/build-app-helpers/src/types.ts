@@ -4,16 +4,23 @@ export interface IEntry {
   pageName?: string;
   source?: string;
   path?: string;
+  url?: string;
   window?: {
     title?: string;
     [key: string]: string
   }
 }
 
+export interface IPageHeader extends IRoute {
+  height: number;
+  position?: string;
+}
+
 export interface IRoute {
   targets?: string[];
   source?: string;
   path?: string;
+  url?: string;
   name?: string;
   pageSource?: string;
   window?: {
@@ -21,10 +28,5 @@ export interface IRoute {
     [key: string]: string
   }
   frames?: IRoute[];
-  tabHeader?: {
-    source: string;
-    name?: string;
-    height: number;
-    position?: string;
-  }
+  pageHeader?: IPageHeader;
 }

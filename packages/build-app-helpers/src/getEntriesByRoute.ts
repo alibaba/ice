@@ -7,41 +7,44 @@ export default (
   rootDir: string
 ) => {
   const entries:IEntry[] = [];
-  const { name, source, tabHeader, frames } = route;
+  const { name, source, pageHeader, frames } = route;
   if (name || source) {
-    entries.push(getEntry(route, rootDir));
-  } else {
-    if (frames) {
-      frames.forEach(frame => {
-        entries.push(getEntry(frame, rootDir));
-      });
-    }
+    const entry = getEntry(route, rootDir);
+    entry && entries.push(entry);
+  }
 
-    if (tabHeader) {
-      entries.push(getEntry(tabHeader, rootDir));
-    }
+  if (frames) {
+    frames.forEach(frame => {
+      const entry = getEntry(frame, rootDir);
+      entry && entries.push(entry);
+    });
   }
-  if (entries.length === 0) {
-    throw new Error('There is invalid info to get entry name. Please check if there is a name or source field.');
+
+  if (pageHeader) {
+    const entry = getEntry(pageHeader, rootDir);
+    entry && entries.push(entry);
   }
+
   return entries;
 };
 
-function getEntry(route: IRoute, rootDir) {
+function getEntry(route: IRoute, rootDir): IEntry | void {
   const { source, name, pageSource } = route;
   let entryName: string;
   if (name) {
     entryName = name;
-  } else {
+  } else if (source) {
     const dir = path.dirname(source);
     entryName = path.parse(dir).name.toLocaleLowerCase();
   }
 
-  return {
-    ...route,
-    entryName,
-    entryPath: pageSource || getEntryPath(rootDir, source),
-  };
+  if (entryName) {
+    return {
+      ...route,
+      entryName,
+      entryPath: pageSource || getEntryPath(rootDir, source),
+    };
+  }
 }
 
 function getEntryPath(rootDir, source) {
