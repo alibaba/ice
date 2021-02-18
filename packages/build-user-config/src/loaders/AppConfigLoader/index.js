@@ -4,7 +4,6 @@ const { formatPath } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
 
 /**
- * universal-app-config-loader
  * return {
  *  "routes": [
       {
@@ -13,7 +12,6 @@ const getRouteName = require('../../utils/getRouteName');
         "component": fn,
       }
     ]
-    "hydrate": false
   }
  */
 
@@ -37,13 +35,12 @@ module.exports = function (appJSON) {
     // Default route title: appConfig.window.title
     if (route.source) {
       assembleRoutes.push(getRouteInfo(route));
-    } else {
-      if (Array.isArray(route.frames)) {
-        route.frames.forEach(frame => assembleRoutes.push(getRouteInfo(frame)));
-      }
-      if (route.tabHeader) {
-        assembleRoutes.push(getRouteInfo(route.tabHeader));
-      }
+    }
+    if (Array.isArray(route.frames)) {
+      route.frames.forEach(frame => assembleRoutes.push(getRouteInfo(frame)));
+    }
+    if (route.pageHeader) {
+      assembleRoutes.push(getRouteInfo(route.pageHeader));
     }
   });
 
