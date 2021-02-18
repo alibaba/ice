@@ -8,10 +8,10 @@ export default (
 ) => {
   const entries:IEntry[] = [];
   const {pageHeader, frames } = route;
-  const entry = getEntry(route, rootDir);
+  const rootEntry = getEntry(route, rootDir);
 
-  if (entry) {
-    entries.push(entry);
+  if (rootEntry) {
+    entries.push(rootEntry);
   }
 
   if (frames) {
