@@ -7,22 +7,27 @@ export default (
   rootDir: string
 ) => {
   const entries:IEntry[] = [];
-  const { name, source, pageHeader, frames } = route;
-  if (name || source) {
-    const entry = getEntry(route, rootDir);
-    entry && entries.push(entry);
+  const {pageHeader, frames } = route;
+  const entry = getEntry(route, rootDir);
+
+  if (entry) {
+    entries.push(entry);
   }
 
   if (frames) {
     frames.forEach(frame => {
       const entry = getEntry(frame, rootDir);
-      entry && entries.push(entry);
+      if (entry) {
+        entries.push(entry);
+      }
     });
   }
 
   if (pageHeader) {
     const entry = getEntry(pageHeader, rootDir);
-    entry && entries.push(entry);
+    if (entry) {
+      entries.push(entry);
+    }
   }
 
   return entries;
