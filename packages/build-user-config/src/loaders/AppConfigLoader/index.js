@@ -28,23 +28,7 @@ module.exports = function (appJSON) {
       `;
   }
 
-  const assembleRoutes = [];
-
-  appConfig.routes.forEach((route) => {
-    // Set page title: Web use document.title; Weex need Native App support title api;
-    // Default route title: appConfig.window.title
-    if (route.source) {
-      assembleRoutes.push(getRouteInfo(route));
-    }
-    if (Array.isArray(route.frames)) {
-      route.frames.forEach(frame => assembleRoutes.push(getRouteInfo(frame)));
-    }
-    if (route.pageHeader) {
-      assembleRoutes.push(getRouteInfo(route.pageHeader));
-    }
-  });
-
-  function getRouteInfo(route) {
+  const getRouteInfo = (route) => {
     let routeTitle = appConfig.window && appConfig.window.title ? appConfig.window.title : '';
     if (route.window && route.window.title) {
       // Current route title: route.window.title
@@ -87,7 +71,23 @@ module.exports = function (appJSON) {
         component: ${importComponent}
       }
     );`;
-  }
+  };
+
+  const assembleRoutes = [];
+
+  appConfig.routes.forEach((route) => {
+    // Set page title: Web use document.title; Weex need Native App support title api;
+    // Default route title: appConfig.window.title
+    if (route.source) {
+      assembleRoutes.push(getRouteInfo(route));
+    }
+    if (Array.isArray(route.frames)) {
+      route.frames.forEach(frame => assembleRoutes.push(getRouteInfo(frame)));
+    }
+    if (route.pageHeader) {
+      assembleRoutes.push(getRouteInfo(route.pageHeader));
+    }
+  });
 
   return `
     import { createElement } from '${libName}';
