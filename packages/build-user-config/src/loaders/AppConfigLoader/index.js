@@ -4,7 +4,6 @@ const { formatPath } = require('@builder/app-helpers');
 const getRouteName = require('../../utils/getRouteName');
 
 /**
- * universal-app-config-loader
  * return {
  *  "routes": [
       {
@@ -13,7 +12,6 @@ const getRouteName = require('../../utils/getRouteName');
         "component": fn,
       }
     ]
-    "hydrate": false
   }
  */
 
@@ -30,13 +28,7 @@ module.exports = function (appJSON) {
       `;
   }
 
-  const assembleRoutes = appConfig.routes.map((route) => {
-    if (!route.path || !route.source) {
-      throw new Error('route object should have path and source.');
-    }
-
-    // Set page title: Web use document.title; Weex need Native App support title api;
-    // Default route title: appConfig.window.title
+  const getRouteInfo = (route) => {
     let routeTitle = appConfig.window && appConfig.window.title ? appConfig.window.title : '';
     if (route.window && route.window.title) {
       // Current route title: route.window.title
@@ -49,7 +41,7 @@ module.exports = function (appJSON) {
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route, this.rootContext).toLocaleLowerCase()}.chunk" */ '${formatPath(pageSource)}')
+      import(/* webpackChunkName: "${getRouteName(route)}.chunk" */ '${formatPath(pageSource)}')
       .then((mod) => () => {
         const reference = mod.default;
         function Component(props) {
@@ -79,12 +71,28 @@ module.exports = function (appJSON) {
         component: ${importComponent}
       }
     );`;
-  }).join('\n');
+  };
+
+  const assembleRoutes = [];
+
+  appConfig.routes.forEach((route) => {
+    // Set page title: Web use document.title; Weex need Native App support title api;
+    // Default route title: appConfig.window.title
+    if (route.source) {
+      assembleRoutes.push(getRouteInfo(route));
+    }
+    if (Array.isArray(route.frames)) {
+      route.frames.forEach(frame => assembleRoutes.push(getRouteInfo(frame)));
+    }
+    if (route.pageHeader) {
+      assembleRoutes.push(getRouteInfo(route.pageHeader));
+    }
+  });
 
   return `
     import { createElement } from '${libName}';
     const routes = [];
-    ${assembleRoutes}
+    ${assembleRoutes.join('\n')}
     const appConfig = {
       ...${appJSON},
       routes
