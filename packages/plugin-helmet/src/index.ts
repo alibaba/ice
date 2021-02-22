@@ -8,5 +8,8 @@ export default ({ applyMethod }) => {
     Helmet`,
     importSource: 'react-helmet',
     exportMembers: ['Helmet', 'Head'],
+    alias: {
+      'Head': 'Helmet'
+    }
   });
 };
