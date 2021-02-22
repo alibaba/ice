@@ -11,6 +11,9 @@ export const unmount = ({ container, customProps }) => {
   } else {
     ReactDOM.unmountComponentAtNode(container);
   }
+};
+export const bootstrap = () => {
+  console.log('bootstrap');
 };`;
 const templateModeStatement = `
 if (typeof window !== 'undefined' && window.ICESTARK && window.ICESTARK.loadMode && window.ICESTARK.loadMode !== 'umd') {
