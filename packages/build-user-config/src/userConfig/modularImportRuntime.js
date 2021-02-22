@@ -6,7 +6,6 @@ module.exports = (config, value, context, api) => {
       require.resolve('../utils/babelPluginImport'),
       {
         importDeclarations: api.getValue('importDeclarations'),
-        alias: api.getValue('importDeclarationsAlias'),
       },
     ]]);
   }

@@ -5,8 +5,6 @@ import getSourceDir from '../utils/getSourceDir';
 import { getExportApiKeys } from '../constant';
 import importDeclarations from './importDeclarations';
 
-const importDeclarationsAlias = {};
-
 export default (api, options) => {
   const { registerMethod } = api;
   const { generator } = options;
@@ -47,10 +45,8 @@ export default (api, options) => {
       }
     }
 
-    Object.keys(alias).forEach(key => {
-      importDeclarationsAlias[key] = alias[key];
-    });
-    api.setValue('importDeclarationsAlias', importDeclarationsAlias);
+    const importDeclarationsAlias = importDeclarations.__ALIAS__ || {};
+    importDeclarations.__ALIAS__ = { ...importDeclarationsAlias, ...alias };
   }
 
   registerMethod('addImportDeclaration', addImportDeclaration);

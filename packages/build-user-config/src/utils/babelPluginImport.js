@@ -1,4 +1,4 @@
-module.exports = (babel, { importDeclarations, alias }) => {
+module.exports = (babel, { importDeclarations }) => {
   const { types: t } = babel;
   return {
     visitor: {
@@ -15,6 +15,7 @@ module.exports = (babel, { importDeclarations, alias }) => {
               const importName = specifier.imported.name;
               const localName = specifier.local.name;
               const { value, type } = importDeclarations[importName];
+              const alias = importDeclarations.__ALIAS__;
               return t.importDeclaration(
                 [type === 'default' ?
                   t.importDefaultSpecifier(t.identifier(localName)) : t.importSpecifier(t.identifier(localName), t.identifier(alias[importName] ? alias[importName] : importName))
