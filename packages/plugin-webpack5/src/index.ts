@@ -1,6 +1,14 @@
 import { IPlugin } from '@alib/build-scripts';
 
-const plugin: IPlugin = ({ onGetWebpackConfig }) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, registerUserConfig }) => {
+  registerUserConfig({
+    name: 'moduleFederation',
+    validation: 'object',
+    async configWebpack(config, value, context) {
+      const { ModuleFederationPlugin } = (context.webpack as any).container;
+      config.plugin('ModuleFederationPlugin').use(ModuleFederationPlugin, [value]);
+    },
+  });
   onGetWebpackConfig((config) => {
     // compatible with process
     config
