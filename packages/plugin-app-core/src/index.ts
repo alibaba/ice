@@ -18,7 +18,7 @@ export default (api, options) => {
   setValue('FRAMEWORK', framework);
 
   const hasJsxRuntime = (() => {
-    if (process.env.DISABLE_JSX_TRANSFORM === 'true') {
+    if (userConfig.disableJSXTransform) {
       return false;
     }
     try {
