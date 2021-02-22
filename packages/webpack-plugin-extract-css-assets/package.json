@@ -27,6 +27,6 @@
     "postcss": "^7.0.32",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "webpack-sources": "^1.1.0"
+    "webpack-sources": "^2.0.0"
   }
 }

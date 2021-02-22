@@ -24,7 +24,7 @@
     "resolve-sass-import": "^0.1.0",
     "semver": "^6.1.0",
     "webpack-plugin-import": "^0.2.5",
-    "webpack-sources": "^1.3.0"
+    "webpack-sources": "^2.0.0"
   },
   "peerDependencies": {
     "node-sass": "^4.9.0",

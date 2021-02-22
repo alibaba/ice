@@ -9,7 +9,7 @@ const getThemeCode = require('./utils/getThemeCode');
 const getCalcVars = require('./utils/getCalcVars');
 
 function normalizeEntry(entry, preparedChunks) {
-  const preparedName = preparedChunks
+  const preparedName = (preparedChunks || [])
     .filter((module) => {
       return typeof module.name !== 'undefined';
     })
