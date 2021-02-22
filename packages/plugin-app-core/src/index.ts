@@ -10,12 +10,33 @@ const chalk = require('chalk');
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, commandArgs, userConfig } = context;
+  const { command, commandArgs, userConfig, rootDir } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
   // Set framework field
   setValue('FRAMEWORK', framework);
+
+  const hasJsxRuntime = (() => {
+    if (userConfig.disableJSXTransform) {
+      return false;
+    }
+    try {
+      // auto detect of jsx runtime
+      // eslint-disable-next-line
+      const tsConfig = require(path.join(rootDir, 'tsconfig.json'));
+      if (tsConfig?.compilerOptions?.jsx !== 'react-jsx') {
+        return false;
+      }
+      // ensure react/jsx-runtime
+      require.resolve('react/jsx-runtime');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
+  // Set jsx runtime value
+  setValue('HAS_JSX_RUNTIME', hasJsxRuntime);
 
   // Check target
   checkTargets(targets);
@@ -39,7 +60,7 @@ export default (api, options) => {
   setRegisterUserConfig(api);
 
   // register api method
-  const generator = initGenerator(api, { ...options, debugRuntime: commandArgs.debugRuntime });
+  const generator = initGenerator(api, { ...options, debugRuntime: commandArgs.debugRuntime, hasJsxRuntime });
   setRegisterMethod(api, { generator });
 
   // add core template for framework
@@ -61,7 +82,7 @@ export default (api, options) => {
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
   const { userConfig, rootDir } = context;
-  const { framework, debugRuntime } = options;
+  const { framework, debugRuntime, hasJsxRuntime } = options;
   const plugins = getAllPlugin();
   const { targets = [], ssr = false } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
@@ -76,6 +97,7 @@ function initGenerator(api, options) {
       isMiniapp,
       ssr,
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
+      hasJsxRuntime,
     },
     log,
     plugins,
