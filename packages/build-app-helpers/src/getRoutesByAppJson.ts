@@ -1,12 +1,6 @@
 import * as fs from 'fs-extra';
+import { IRoute } from './types';
 
-interface IRoute {
-  targets?: string[];
-  source: string;
-  path: string;
-  name?: string;
-  pageSource?: string;
-}
 interface IStaticConfig {
   routes: IRoute[];
   window: any;

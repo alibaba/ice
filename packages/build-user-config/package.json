@@ -17,7 +17,7 @@
     "eslint-loader": "^4.0.0",
     "eslint-reporting-webpack-plugin": "^0.1.0",
     "fork-ts-checker-webpack-plugin": "^5.0.5",
-    "friendly-errors-webpack-plugin": "^1.7.0",
+    "@nuxtjs/friendly-errors-webpack-plugin": "^2.1.0",
     "fs-extra": "^8.1.0",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",

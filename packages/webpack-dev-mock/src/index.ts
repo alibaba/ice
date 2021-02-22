@@ -6,6 +6,7 @@ import * as glob from 'glob';
 import * as bodyParser from 'body-parser';
 import * as chokidar from 'chokidar';
 import * as multer from 'multer';
+import * as debounce from 'lodash.debounce';
 import analyzeDenpendencies from './analyzeMockDeps';
 import matchPath from './matchPath';
 
@@ -129,7 +130,10 @@ function realApplyMock(app) {
   });
   watcher.on('all', (event, path) => {
     logWatchFile(event, path);
-    mockConfig = parseMockConfig();
+    // use debounce to avoid too much file change events
+    debounce(() => {
+      mockConfig = parseMockConfig();
+    }, 300);
   });
 
   app.use((req, res, next) => {
