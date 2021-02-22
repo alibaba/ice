@@ -1,6 +1,6 @@
 {
   "name": "build-scripts-config",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Basic configs for build-scripts and its plugins",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
