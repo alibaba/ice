@@ -14,11 +14,10 @@ module.exports = (babel, { importDeclarations }) => {
             const transformNodes = node.specifiers.map((specifier) => {
               const importName = specifier.imported.name;
               const localName = specifier.local.name;
-              const { value, type } = importDeclarations[importName];
-              const alias = importDeclarations.__ALIAS__;
+              const { value, type, alias } = importDeclarations[importName];
               return t.importDeclaration(
                 [type === 'default' ?
-                  t.importDefaultSpecifier(t.identifier(localName)) : t.importSpecifier(t.identifier(localName), t.identifier(alias[importName] ? alias[importName] : importName))
+                  t.importDefaultSpecifier(t.identifier(localName)) : t.importSpecifier(t.identifier(localName), t.identifier(alias || importName))
                 ], t.stringLiteral(value));
             });
             nodePath.replaceWithMultiple(transformNodes);

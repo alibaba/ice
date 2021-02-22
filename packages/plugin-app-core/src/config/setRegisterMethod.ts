@@ -26,7 +26,7 @@ export default (api, options) => {
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
 
   function addImportDeclaration(data) {
-    const { importSource, exportMembers, exportDefault, alias = {} } = data;
+    const { importSource, exportMembers, exportDefault, alias } = data;
     if (importSource) {
       if (exportMembers) {
         exportMembers.forEach((exportMember) => {
@@ -43,10 +43,17 @@ export default (api, options) => {
           type: 'default',
         };
       }
+      if (alias) {
+        Object.keys(alias).forEach(exportMember => {
+          // import { Head } from 'ice'; -> import { Helmet as Head } from 'react-helmet';
+          importDeclarations[exportMember] = {
+            value: importSource,
+            type: 'normal',
+            alias: alias[exportMember],
+          };
+        });
+      }
     }
-
-    const importDeclarationsAlias = importDeclarations.__ALIAS__ || {};
-    importDeclarations.__ALIAS__ = { ...importDeclarationsAlias, ...alias };
   }
 
   registerMethod('addImportDeclaration', addImportDeclaration);

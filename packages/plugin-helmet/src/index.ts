@@ -7,7 +7,7 @@ export default ({ applyMethod }) => {
     // @deprecated
     Helmet`,
     importSource: 'react-helmet',
-    exportMembers: ['Helmet', 'Head'],
+    exportMembers: ['Helmet'],
     alias: {
       'Head': 'Helmet'
     }
