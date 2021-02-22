@@ -14,6 +14,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@builder/app-helpers": "^2.1.0",
     "babel-plugin-import": "^1.11.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "find-root": "^1.1.0",
@@ -27,10 +28,7 @@
     "webpack-sources": "^2.0.0"
   },
   "peerDependencies": {
-    "node-sass": "^4.9.0",
+    "sass": "^1.0.0",
     "webpack": "^4.0.0"
-  },
-  "devDependencies": {
-    "node-sass": "^4.12.0"
   }
 }

@@ -4,7 +4,7 @@ const assert = require('assert');
 const { ConcatSource, RawSource } = require('webpack-sources');
 const fs = require('fs');
 const path = require('path');
-const sass = require('node-sass');
+const { getSassImplementation } = require('@builder/app-helpers');
 const convertCharStr2CSS = require('../utils/convertCharStr');
 
 /* eslint no-console: 0 */
@@ -30,6 +30,7 @@ function compileSass(srcPath, variableFile, coreVarCode) {
   }
 
   let cssResult = null;
+  const sass = getSassImplementation();
   try {
     cssResult = sass.renderSync({
       data: scssContent,
