@@ -55,14 +55,14 @@ if (isInIcestark()) {
 
 React 项目中使用 react-router：
 
-```js
+```diff
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { getBasename } from '@ice/stark-app';
++import { getBasename } from '@ice/stark-app';
 
 export default () => {
   return (
-    <Router basename={getBasename()}>
++   <Router basename={getBasename()}>
       <Switch>
         // ...
       </Switch>
@@ -167,3 +167,18 @@ export default function FrameworkLayout() {
   );
 }
 ```
+
+## 微应用构建产物格式
+
+icestark 1.6.0/2.0.0 之后支持渲染两种格式的微应用：
+
+1. [原有] 通过 `registerAppEnter/registerAppLeave` 注册生命周期
+2. [新增] UMD 格式，通过 `mount/unmount` 注册生命周期
+
+对于增量的微应用我们推荐使用 UMD 格式的构建产物，以下是两种格式的优缺点对比：
+
+|   纬度\格式  |    UMD(mount/unmount)  | registerAppEnter/registerAppLeave |
+|-------------|------------------------|-----------------------------------|
+|与 single-spa 兼容|  兼容               |             不兼容                 | 
+|与 icestark 耦合度|   低                |               高                  |
+|js/css 资源受跨域访问限制|   限制          |             不限制                 |
