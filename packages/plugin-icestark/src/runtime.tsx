@@ -67,6 +67,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
     });
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
+    const { onRouteChange, onAppEnter, onAppLeave} = appRouter;
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
@@ -101,15 +102,24 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
       }, []);
 
       function handleRouteChange(pathname, query, hash, routeType) {
+        if (onRouteChange) {
+          onRouteChange(pathname, query, hash, routeType);
+        }
         setRouteInfo({ pathname, query, hash, routeType });
         setAppPathname(pathname);
       }
 
       function handleAppLeave(config) {
+        if (onAppLeave) {
+          onAppLeave(config);
+        }
         setAppLeave(config);
       }
 
       function handleAppEnter(config) {
+        if (onAppEnter) {
+          onAppEnter(config);
+        }
         setAppEnter(config);
       }
 
