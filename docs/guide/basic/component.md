@@ -141,7 +141,7 @@ function MyComponent() {
 
 ## React Hooks
 
-在编写组件过程中，我们会经常用到 React Hooks，除了 React 内置的 `useState`, `useMemo` 等 Hooks，们结合大量实践沉淀了一套 ahooks 的解决方案，可以减少很多重复编码工作。
+在编写组件过程中，我们会经常用到 React Hooks，除了 React 内置的 `useState`, `useMemo` 等 Hooks，我们结合大量实践沉淀了一套 ahooks 的解决方案，可以减少很多重复编码工作。
 
 比如当我们需要监听并操作 url query，就可以直接使用 `useUrlState` 这个 hooks：
 
