@@ -162,18 +162,18 @@ export default Home;
 ```jsx
 // pages/Home/index.jsx
 import React from 'react';
-import { Helmet } from 'ice';
+import { Head } from 'ice';
 
 const Home = (props) => {
   const { title, description } = props;
 
   return (
     <div>
-      <Helmet>
+      <Head>
         <title>{title}</title>
         <meta name="description" content={props.description} />
         <meta name="keywords" content="Home Keywords" />
-      </Helmet>
+      </Head>
     </div>
   )
 }
