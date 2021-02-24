@@ -1,5 +1,1 @@
-{
-  "plugins": [
-    "build-plugin-hooks-store"
-  ]
-}
+{ "plugins": ["build-plugin-hooks-store"] }

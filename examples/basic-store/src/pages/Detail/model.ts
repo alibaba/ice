@@ -1,8 +1,9 @@
-const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+const delay = (time) =>
+  new Promise((resolve) => setTimeout(() => resolve(1), time));
 
 export default {
   state: {
-    title: 'detail'
+    title: "detail",
   },
 
   reducers: {
@@ -18,7 +19,7 @@ export default {
     async updateDetailTitle(title: string) {
       await delay(1000);
       dispatch.default.update({
-        title
+        title,
       });
     },
   }),
