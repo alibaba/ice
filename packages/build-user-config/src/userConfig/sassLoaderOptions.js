@@ -9,6 +9,11 @@ module.exports = (config, customOptions, context) => {
   }
   sassLoaderOptions.implementation = getSassImplementation(defaultSassImplPkg, rootDir);
   if (customOptions) {
+    // the prependData option was removed in favor the additionalData option in sass-loader^10.0.0
+    if (customOptions.prependData) {
+      sassLoaderOptions.additionalData = customOptions.prependData;
+      delete customOptions.prependData;
+    }
     sassLoaderOptions = { ...sassLoaderOptions, ...customOptions };
   }
   [
