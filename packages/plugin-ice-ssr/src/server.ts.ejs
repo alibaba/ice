@@ -19,7 +19,22 @@ const { createBaseApp, emitLifeCycles } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loadableStatsPath, publicPath = '/' }) => {
+const serverRender = async (context, opts = {}) => {
+  let options;
+  if (context.req) {
+    options = { ctx: context, ...opts }
+  } else {
+    options = { ...context }
+  }
+  let {
+    ctx = {},
+    pathname: originPathname,
+    initialData,
+    htmlTemplate,
+    loadableStatsPath,
+    publicPath = '/'
+  } = options;
+
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be genreated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
@@ -37,7 +52,10 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loa
   let error;
 
   const { req, res } = ctx as any;
-  const { search, hash, path } = parseurl(req);
+
+  const { search, hash, path, pathname: parsedPathname } = parseurl(req);
+  const pathname = originPathname || parsedPathname;
+
   const parsedQuery = queryString.parse(search);
   const initialContext = {
     req,
@@ -75,7 +93,7 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loa
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const renderResult = reactAppRendererWithSSR({
+    const { bundleContent, loadableComponentExtractor } = reactAppRendererWithSSR({
       initialContext,
       initialData,
       pageInitialProps
@@ -85,8 +103,6 @@ const serverRender = async ({ ctx = {}, pathname, initialData, htmlTemplate, loa
       createBaseApp,
       emitLifeCycles
     });
-
-    const { bundleContent, loadableComponentExtractor } = renderResult;
 
     const helmet = Helmet.renderStatic();
 

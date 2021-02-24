@@ -9,7 +9,7 @@ const getThemeCode = require('./utils/getThemeCode');
 const getCalcVars = require('./utils/getCalcVars');
 
 function normalizeEntry(entry, preparedChunks) {
-  const preparedName = preparedChunks
+  const preparedName = (preparedChunks || [])
     .filter((module) => {
       return typeof module.name !== 'undefined';
     })
@@ -325,9 +325,13 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
           const isDesignBase = baseRegex.test(request);
           if (isNext || isDesignBase) {
             const componentName = isNext ? request.match(nextRegex)[3] : request.match(baseRegex)[1];
+            const externalKey = isNext ? 'Next' : 'ICEDesignBase';
             if (componentName) {
-              return callback(null, [isNext ? 'Next' : 'ICEDesignBase', upperFirst(camelCase(componentName))]);
+              return callback(null, [externalKey, upperFirst(camelCase(componentName))]);
             }
+          } else if (nextRegex.test(_context) && /\.(scss|css)$/.test(request)) {
+            // external style files imported by next style.js
+            return callback(null, 'Next');
           }
           return callback();
         });

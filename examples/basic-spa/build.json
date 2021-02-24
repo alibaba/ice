@@ -3,6 +3,9 @@
   "ignoreHtmlTemplate": false,
   "plugins": [],
   "tsChecker": true,
+  "sassLoaderOptions": {
+    "prependData": ".test{color:red}"
+  },
   "modeConfig": {
     "prod": {
       "ignoreHtmlTemplate": true

@@ -1,5 +1,9 @@
 # webpack-plugin-import Changelog
 
+## 0.2.7
+
+- [chore] update webpack api
+
 ## 0.2.6
 
 - [chore] update repository
