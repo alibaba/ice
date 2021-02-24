@@ -194,13 +194,10 @@ const path = require('path');
 
 router.get('/*', async (ctx) => {
   // server/index.js 路径
-  const serverBundlePath = path.join('../build', 'server/index.js');
+  const serverBundlePath = path.resolve('../build', 'server/index.js');
+  const webStatsPath = path.resolve('../build', 'loadable-stats.json');
   const serverRender = require(serverBundlePath);
-  const { html, error, redirectUrl } = await serverRender.default({
-    // 当前请求的上下文（必选）
-    ctx,
-    // 当前请求的路径（必选）
-    pathname: ctx.req.pathname,
+  const { html, error, redirectUrl } = await serverRender.default(ctx, {
     // loadable-stats.json 本地路径（必选）
     loadableStatsPath: webStatsPath,
     // 可选
@@ -209,7 +206,7 @@ router.get('/*', async (ctx) => {
         user: {}
       }
     },
-    // 打包后输出的资源的公共路径，默认为 /（可选） 
+    // 静态资源的公共路径，默认为 /（可选） 
     publicPath: 'https://cdn.com/'
   });
 
@@ -229,10 +226,17 @@ router.get('/*', async (ctx) => {
 
 icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。部署时需要把 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server/` 目录下所有的 bundle 资源下载到 server 端。
 
-icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端调用，该方法提供两个参数：
+icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端调用，该方法提供以下参数：
 
-- pathname: 必填，当前路由的 pathname
-- initialData: 选填，如果不填写，服务端则会调用前端声明的 `getInitialData` 方法，但如果**对性能追求比较极致**，服务端则可以自行获取对应数据并通过 `initialData` 传入。（调用前端的 getInitialData 一般会发起 HTTP 请求，但是服务端有可能通过缓存/数据库来查询，速度会快一点）
+- ctx: 必填，当前请求上下文
+
+- options: 
+
+  - loadableStatsPath: 必填，loadable-stats.json 本地路径
+  - publicPath: 选填，静态资源的公共路径，默认为 `/`
+  - htmlTemplate: 选填，html 模板内容
+
+  - initialData: 选填，如果不填写，服务端则会调用前端声明的 `getInitialData` 方法，但如果**对性能追求比较极致**，服务端则可以自行获取对应数据并通过 `initialData` 传入。（调用前端的 getInitialData 一般会发起 HTTP 请求，但是服务端有可能通过缓存/数据库来查询，速度会快一点）
 
 以上即 icejs SSR 能力的使用说明，如遇到相关问题，欢迎给我们提 issue。
 
