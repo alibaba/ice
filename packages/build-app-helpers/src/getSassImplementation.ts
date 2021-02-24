@@ -4,7 +4,7 @@ function resolvePkgPath(pkg, resolvePath?: string): string {
 
 function getDefaultSassImplementation(defaultSassImplPkg: string, resolvePath?: string) {
   let sassImplPkg = defaultSassImplPkg;
-  const fallbackSassImplPkg = defaultSassImplPkg === 'sass' ? 'sass' : 'node-sass';
+  const fallbackSassImplPkg = defaultSassImplPkg === 'sass' ? 'node-sass' : 'sass';
   try {
     sassImplPkg = resolvePkgPath(defaultSassImplPkg, resolvePath);
   } catch (error) {
