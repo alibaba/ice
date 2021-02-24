@@ -197,18 +197,22 @@ router.get('/*', async (ctx) => {
   const serverBundlePath = path.resolve('../build', 'server/index.js');
   const webStatsPath = path.resolve('../build', 'loadable-stats.json');
   const serverRender = require(serverBundlePath);
-  const { html, error, redirectUrl } = await serverRender.default(ctx, {
-    // loadable-stats.json 本地路径（必选）
-    loadableStatsPath: webStatsPath,
-    // 可选
-    initialData: {
-      initialStates: {
-        user: {}
-      }
-    },
-    // 静态资源的公共路径，默认为 /（可选） 
-    publicPath: 'https://cdn.com/'
-  });
+  const { html, error, redirectUrl } = await serverRender.default(
+    // 当前请求上下文（必选）
+    ctx, 
+    {
+      // loadable-stats.json 本地路径（必选）
+      loadableStatsPath: webStatsPath,
+      // 可选
+      initialData: {
+        initialStates: {
+          user: {}
+        }
+      },
+      // 静态资源的公共路径，默认为 /（可选） 
+      publicPath: 'https://cdn.com/'
+    }
+  );
 
   if (redirectUrl) {
     console.log('[SSR Redirect]', `Redirect to the new path ${redirectUrl}`);
