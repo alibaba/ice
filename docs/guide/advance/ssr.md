@@ -199,7 +199,7 @@ router.get('/*', async (ctx) => {
   const serverRender = require(serverBundlePath);
   const { html, error, redirectUrl } = await serverRender.default(
     // 当前请求上下文（必选）
-    ctx, 
+    ctx,
     {
       // loadable-stats.json 本地路径（必选）
       loadableStatsPath: webStatsPath,
