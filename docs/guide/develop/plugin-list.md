@@ -284,7 +284,7 @@ $ npm i -save-dev build-plugin-fast-refresh
 
 ## build-plugin-webpack5
 
-> 用于 icejs 在使用 webpack5 能力上的兼容处理，工程大版本升级会对历史项目引入不确定因素，请谨慎使用该插件
+> 用于 icejs 在使用 webpack 5 能力上的兼容处理
 
 ### 开启 webpack 5
 
