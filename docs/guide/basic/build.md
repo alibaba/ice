@@ -414,6 +414,8 @@ MPA 场景下配置是否生成 vendor，如果希望禁用：
 
 为 sass-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [sass-loader options](https://webpack.js.org/loaders/sass-loader/#options)。
 
+> ice.js 内置使用 sass 进行编译，如果期望使用 node-sass，请在项目中进行依赖
+
 ### postcssOptions
 
 - 类型：`object`
@@ -644,6 +646,31 @@ dll                            // dll 构建产物文件夹
 > ice.js 1.14.0 版本以上开始支持
 
 开启后将按需加载运行时能力，以减小构建包体积
+
+
+### disableJSXTransform
+
+- 类型：`boolean`
+- 默认值：`false`
+
+用于强制关闭 react 全新的 JSX 转换
+
+#### 如何开启新的 JSX 转换
+
+icejs 将自动判断项目中相关依赖和配置，来决定是否开启新的 JSX 转换.
+而针对历史 icejs 项目，仅需修改 tsconfig.json 中的 `compilerOptions.jsx` 即可：
+
+```diff
+{
+  "compilerOptions": {
+-    "jsx": "react",
++    "jsx": "react-jsx",
+  }
+}
+```
+
+> ice.js 1.16.0 版本以上开始支持
+
 
 ## 根据环境区分工程配置
 
