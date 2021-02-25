@@ -1,4 +1,6 @@
-// fork form https://github.com/zthxxx/react-dev-inspector/blob/master/src/plugins/webpack/inspector-loader.ts
+// Credit: react-dev-inspector 1.1.4 (c) https://github.com/zthxxx
+// <https://github.com/zthxxx/react-dev-inspector/blob/master/src/plugins/webpack/inspector-loader.ts>
+
 import * as path from 'path';
 import { getOptions } from 'loader-utils';
 import { parse } from '@babel/parser';
@@ -62,7 +64,6 @@ const doJSXPathName: NodeHandler<JSXOpeningElement['name']> = (name) => {
   return dealMap[name.type](name);
 };
 
-
 const doJSXOpeningElement: NodeHandler<
 JSXOpeningElement,
 { relativePath: string }
@@ -106,7 +107,7 @@ JSXOpeningElement,
 /**
  * simple path match method, only use string and regex
  */
-export const pathMatch = (filePath: string, matches?: Array<string | RegExp>): boolean => {
+export const pathMatch = (filePath: string, matches?: (string | RegExp)[]): boolean => {
   if (!matches?.length) return false;
 
   return matches.some((match) => {
@@ -162,7 +163,6 @@ export default function inspectorLoader(this: any, source: string) {
     ],
     ...options?.babelOptions,
   });
-
 
   /**
    * astexplorer + @babel/parser
