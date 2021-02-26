@@ -135,7 +135,9 @@ module.exports = [
   },
   {
     name: 'sourceMap',
-    validation: 'boolean'
+    validation: (val) => {
+      return validation('sourceMap', val, 'string|boolean');
+    },
   },
   {
     name: 'terserOptions',
