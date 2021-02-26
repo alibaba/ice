@@ -1,7 +1,8 @@
 import * as path from 'path';
 import { spawn } from 'child_process';
+import { IPlugin } from '@alib/build-scripts';
 
-const plugins = ({ onGetWebpackConfig }: any) => {
+const plugin: IPlugin = ({ onGetWebpackConfig }: any) => {
   if (process.env.NODE_ENV === 'production') {
     return;
   }
@@ -23,21 +24,25 @@ const plugins = ({ onGetWebpackConfig }: any) => {
 
     // add webpack dev server middleware for launch IDE app with api request
     const root = process.env.PWD;
-    config.devServer.set('before', (app: any) => {
-      app.get('/vscode/goto', (req, res) => {
-        try {
-          const { query } = req;
-          const { file, line, column } = query;
-          spawn('code', ['--goto', `${root}/${file}:${line}:${column}`], { stdio: 'inherit' });
-          res.json({ success: true });
-        } catch (e) {
-          const message = `build-plugin-dev-inspector call VS Code failed: ${e}`;
-          console.log(message);
-          res.json({ success: false, message });
-        }
-      });
+    config.merge({
+      devServer: {
+        before(app) {
+          app.get('/vscode/goto', (req, res) => {
+            try {
+              const { query } = req;
+              const { file, line, column } = query;
+              spawn('code', ['--goto', `${root}/${file}:${line}:${column}`], { stdio: 'inherit' });
+              res.json({ success: true });
+            } catch (e) {
+              const message = `build-plugin-dev-inspector call VS Code failed: ${e}`;
+              console.log(message);
+              res.json({ success: false, message });
+            }
+          });
+        },
+      }
     });
   });
 };
 
-export default plugins;
+export default plugin;

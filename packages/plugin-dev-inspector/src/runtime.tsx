@@ -1,9 +1,6 @@
 import * as Inspector from 'inspector-dom';
 
-export default ({ addProvider, context: { createElement } }) => {
-  const Provider = ({ children }) => {
-    return createElement('div', null, children);
-  };
+export default () => {
 
   const inspector = Inspector({
     root: 'body', // root element
@@ -20,5 +17,4 @@ export default ({ addProvider, context: { createElement } }) => {
   });
 
   inspector.enable();
-  addProvider(Provider);
 };
