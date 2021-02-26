@@ -282,16 +282,16 @@ $ npm i -save-dev build-plugin-fast-refresh
 }
 ```
 
-## build-plugin-webpack5（实验性）
+## build-plugin-webpack5
 
-> 用于 icejs 在使用 webpack5 能力上的兼容处理，目前 webpack 5 还未正式发布，请谨慎使用该插件
+> 用于 icejs 在使用 webpack 5 能力上的兼容处理
 
-### 体验 webpack 5
+### 开启 webpack 5
 
 Install:
 
 ```bash
-$ npm i --save-dev build-plugin-webpack5 webpack@next
+$ npm i --save-dev build-plugin-webpack5 webpack
 ```
 
 `build.json` 修改如下：
@@ -306,6 +306,23 @@ $ npm i --save-dev build-plugin-webpack5 webpack@next
 ```
 
 > 通过 `customWebpack` 配置的开启，工程中使用 webpack 的版本将会以项目中依赖的 webpack 版本为准
+
+### 配置 Module Federation
+
+在上述开启 webpack 5 能力的基础上，通过配置 moduleFederation 可以配置 Module Federation 相关参数：
+
+```json
+{
+  "customWebpack": true,
+  "moduleFederation": {
+    "remotes": ["remote"],
+    "shared": ["react", "react-dom"]
+  },
+  "plugins": [
+    "build-plugin-webpack5"
+  ]
+}
+```
 
 ## build-plugin-esbuild（实验性）
 

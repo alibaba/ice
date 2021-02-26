@@ -162,18 +162,18 @@ export default Home;
 ```jsx
 // pages/Home/index.jsx
 import React from 'react';
-import { Helmet } from 'ice';
+import { Head } from 'ice';
 
 const Home = (props) => {
   const { title, description } = props;
 
   return (
     <div>
-      <Helmet>
+      <Head>
         <title>{title}</title>
         <meta name="description" content={props.description} />
         <meta name="keywords" content="Home Keywords" />
-      </Helmet>
+      </Head>
     </div>
   )
 }
@@ -190,21 +190,27 @@ Home.getInitialProps = async () => {
 本地开发时 icejs 通过 webpack-dev-server 做服务端渲染，应用发布后则需要对应的服务端自行渲染，核心逻辑如下：
 
 ```ts
+const path = require('path');
+
 router.get('/*', async (ctx) => {
-  // 将资源下载到 server 端
-  // const serverBundlePath = await downloadBundle('http://cdn.com/server/index.js');
+  // server/index.js 路径
+  const serverBundlePath = path.join('../build', 'server/index.js');
   const serverRender = require(serverBundlePath);
   const { html, error, redirectUrl } = await serverRender.default({
-    // 当前请求的上下文(可选)
+    // 当前请求的上下文（必选）
     ctx,
-    // 当前请求的路径（必选参数）
+    // 当前请求的路径（必选）
     pathname: ctx.req.pathname,
+    // loadable-stats.json 本地路径（必选）
+    loadableStatsPath: webStatsPath,
     // 可选
     initialData: {
       initialStates: {
         user: {}
       }
     },
+    // 打包后输出的资源的公共路径，默认为 /（可选） 
+    publicPath: 'https://cdn.com/'
   });
 
   if (redirectUrl) {
@@ -220,6 +226,8 @@ router.get('/*', async (ctx) => {
   }
 });
 ```
+
+icejs@1.15.0 及以上版本开始支持在开启 SSR 的应用中使用[代码分割](https://ice.work/docs/guide/advance/code-splitting)。部署时需要把 `loadable-stats.json` 、`server/loadable-stats.json` 和 `server/` 目录下所有的 bundle 资源下载到 server 端。
 
 icejs 构建出来的 `server/index.js` 会暴露出 `render` 方法供服务端调用，该方法提供两个参数：
 

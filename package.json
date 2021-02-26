@@ -65,7 +65,6 @@
     "puppeteer": "^5.5.0",
     "react-test-renderer": "^16.13.1",
     "rimraf": "^3.0.0",
-    "sass": "^1.32.0",
     "semver": "^7.3.2",
     "simple-git": "^1.132.0",
     "ts-jest": "^26.0.0",

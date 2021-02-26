@@ -1,6 +1,6 @@
 {
   "name": "@builder/babel-preset-ice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Basic babel preset",
   "main": "lib/index.js",
   "types": "types/index.d.ts",

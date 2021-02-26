@@ -107,7 +107,31 @@ $ npm install
 $ npm start
 ```
 
-同主应用一样，微应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了微应用相关的信息：
+如果不是通过模板创建，则需要按照下面的步骤进行改造：
+
+### 添加插件 build-plugin-icestark
+
+安装插件依赖：
+
+```bash
+$ npm i --save-dev build-plugin-icestark
+```
+
+在 `build.json` 里引入插件：
+
+```json
+{
+  "plugins": {
+    ["build-plugin-icestark", {
+      "umd": true
+    }]
+  }
+}
+```
+
+### 应用入口改造
+
+在应用入口 `src/app.ts` 中配置微应用相关的信息：
 
 ```diff
 import { runApp } from 'ice'
@@ -214,7 +238,7 @@ icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的微应用，在微
 
 ### 主应用对采用 UMD 规范的微应用进行声明
 
-对于 umd 类型的微应用需要在框架应用的微应用列表配置中显示声明：
+对于 umd 类型的微应用，需要在主应用中添加 `umd={true}` 的配置项：
 
 ```diff
 const apps = [{
@@ -226,4 +250,15 @@ const apps = [{
     '//ice.alicdn.com/icestark/child-seller-react/index.css',
   ],
 }];
+
+// 或者
+
+<AppRoute
++  umd={true}
+  path="/seller"
+  title="标题"
+  url={[]}
+/>
 ```
+
+如果没配置该选项，则会导致子应用无法渲染,

@@ -3,7 +3,7 @@ title: 主应用开发与接入（非 React）
 order: 3
 ---
 
-使用 API `registerMicroApps` 的方式注册子应用，该方式不再限制主应用所使用的框架，因此主应用可以使用 Vue/Angular... 等不同框架编写。
+使用 API `registerMicroApps` 的方式注册微应用，该方式不再限制主应用所使用的框架，因此主应用可以使用 Vue/Angular... 等不同框架编写。
 
 ## 管理与注册微应用
 

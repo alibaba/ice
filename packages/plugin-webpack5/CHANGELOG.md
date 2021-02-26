@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- [fix] remove depenecies of HtmlWebpackPlugin
+- [feat] support userConfig `moduleFederation`
+
 ## 1.0.4
 
 - [fix] bump version of html-webpack-plugin

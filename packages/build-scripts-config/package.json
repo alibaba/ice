@@ -1,6 +1,6 @@
 {
   "name": "build-scripts-config",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Basic configs for build-scripts and its plugins",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -36,6 +36,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-safe-parser": "^4.0.1",
     "regenerator-runtime": "^0.13.3",
+    "sass": "^1.32.0",
     "sass-loader": "^10.0.0",
     "terser-webpack-plugin": "^2.3.1",
     "time-fix-plugin": "^2.0.6",

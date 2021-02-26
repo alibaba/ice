@@ -13,10 +13,11 @@ module.exports = (babel, { importDeclarations }) => {
           if (needTransform) {
             const transformNodes = node.specifiers.map((specifier) => {
               const importName = specifier.imported.name;
-              const { value, type } = importDeclarations[importName];
+              const localName = specifier.local.name;
+              const { value, type, alias } = importDeclarations[importName];
               return t.importDeclaration(
                 [type === 'default' ?
-                  t.importDefaultSpecifier(t.identifier(importName)) : t.importSpecifier(t.identifier(importName), t.identifier(importName))
+                  t.importDefaultSpecifier(t.identifier(localName)) : t.importSpecifier(t.identifier(localName), t.identifier(alias || importName))
                 ], t.stringLiteral(value));
             });
             nodePath.replaceWithMultiple(transformNodes);
