@@ -18,9 +18,6 @@ export default (api, options) => {
   setValue('FRAMEWORK', framework);
 
   const hasJsxRuntime = (() => {
-    if (userConfig.disableJSXTransform) {
-      return false;
-    }
     try {
       // auto detect of jsx runtime
       // eslint-disable-next-line

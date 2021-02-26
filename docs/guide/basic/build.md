@@ -648,14 +648,7 @@ dll                            // dll 构建产物文件夹
 开启后将按需加载运行时能力，以减小构建包体积
 
 
-### disableJSXTransform
-
-- 类型：`boolean`
-- 默认值：`false`
-
-用于强制关闭 react 全新的 JSX 转换
-
-#### 如何开启新的 JSX 转换
+## 如何开启新的 JSX 转换
 
 icejs 将自动判断项目中相关依赖和配置，来决定是否开启新的 JSX 转换.
 而针对历史 icejs 项目，仅需修改 tsconfig.json 中的 `compilerOptions.jsx` 即可：
