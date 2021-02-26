@@ -29,10 +29,12 @@ const plugins = ({ onGetWebpackConfig }: any) => {
           const { query } = req;
           const { file, line, column } = query;
           spawn('code', ['--goto', `${root}/${file}:${line}:${column}`], { stdio: 'inherit' });
+          res.json({ success: true });
         } catch (e) {
-          // ignore
+          const message = `build-plugin-dev-inspector call VS Code failed: ${e}`;
+          console.log(message);
+          res.json({ success: false, message });
         }
-        res.json({ success: true });
       });
     });
   });

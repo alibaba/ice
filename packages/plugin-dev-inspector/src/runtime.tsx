@@ -14,7 +14,7 @@ export default ({ addProvider, context: { createElement } }) => {
       try {
         fetch(`/vscode/goto?file=${el.getAttribute('data-inspector-relative-path')}&line=${el.getAttribute('data-inspector-line')}&column=${el.getAttribute('data-inspector-column')}`);
       } catch (e) {
-        // ignore
+        console.log('build-plugin-dev-inspector fetch error: ', e);
       }
     },
   });
