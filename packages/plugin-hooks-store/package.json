@@ -17,9 +17,7 @@
     "webpack-chain": "^6.4.0"
   },
   "dependencies": {
-    "@ice/hooks-store": "^0.1.0",
-    "@types/react": "^17.0.2",
-    "fs-extra": "^9.1.0"
+    "@ice/hooks-store": "^0.1.0"
   },
   "originTemplate": "build-plugin-template"
 }

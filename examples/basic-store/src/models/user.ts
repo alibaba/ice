@@ -1,12 +1,11 @@
-import { IRootDispatch } from "ice";
+import { IRootDispatch } from 'ice';
 
-export const delay = (time) =>
-  new Promise((resolve) => setTimeout(() => resolve(1), time));
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
   state: {
-    name: "",
-    id: "",
+    name: '',
+    id: ''
   },
 
   reducers: {
@@ -22,8 +21,8 @@ export default {
     async getUserInfo() {
       await delay(1000);
       dispatch.user.update({
-        name: "taobao",
-        id: "123",
+        name: 'taobao',
+        id: '123',
       });
     },
   }),

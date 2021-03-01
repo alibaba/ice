@@ -1,13 +1,12 @@
-import { IRootDispatch, APP_MODE } from "ice";
+import { IRootDispatch, APP_MODE } from 'ice';
 
-console.log("APP_MODE:", APP_MODE);
+console.log('APP_MODE:', APP_MODE);
 
-export const delay = (time) =>
-  new Promise((resolve) => setTimeout(() => resolve(1), time));
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export default {
   state: {
-    count: 0,
+    count: 0
   },
 
   reducers: {
@@ -16,7 +15,7 @@ export default {
     },
     decrement(prevState) {
       return { count: prevState.count - 1 };
-    },
+    }
   },
 
   effects: (dispatch: IRootDispatch) => ({

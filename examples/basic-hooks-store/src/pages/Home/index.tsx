@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
-import hooksStore from "@/hooksStore";
+import React, { useEffect } from 'react';
+import hooksStore from '@/hooksStore';
 
-export default function () {
-  const { useHooks, Provider } = hooksStore;
-  const [user, login] = useHooks("useUser");
+export default function() {
+  const [user, login] = hooksStore.useHooks('useUser');
 
-  // console.log("123");
-
-  useEffect(function () {
+  useEffect(function() {
     login();
   }, []);
 
   const { name } = user;
-  return <div>Hello, {name}!</div>;
-}
+  return (
+    <div>
+      Hello, {name}!
+    </div>
+  );
+};

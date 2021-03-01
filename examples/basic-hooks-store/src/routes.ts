@@ -1,30 +1,26 @@
-import Layout from "@/layouts/basic";
-import Home from "@/pages/Home";
-import TodoList from "@/pages/TodoList";
-import NotFound from "@/pages/NotFound";
-import hooksStore from "./hooksStore";
-import todoListStore from "./pages/TodoList/hooksStore";
+import Layout from '@/layouts/basic';
+import Home from '@/pages/Home';
+import TodoList from '@/pages/TodoList';
+import NotFound from '@/pages/NotFound';
 
 export default [
   {
-    path: "/",
+    path: '/',
     component: Layout,
-    rootStore: hooksStore,
     children: [
       {
-        path: "/",
+        path: '/',
         exact: true,
-        component: Home,
+        component: Home
       },
       {
-        path: "/todoList",
-        component: TodoList,
-        store: todoListStore,
+        path: '/todoList',
+        component: TodoList
       },
       {
-        path: "*",
+        path: '*',
         component: NotFound,
-      },
-    ],
-  },
+      }
+    ]
+  }
 ];

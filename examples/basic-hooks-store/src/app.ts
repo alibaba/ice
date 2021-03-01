@@ -1,23 +1,8 @@
-import { runApp } from "ice";
+import { runApp, IAppConfig } from 'ice';
 
-import routes from "./routes";
-
-const { rootStore, children } = routes[0]; // [{path:'',compoonent:'',store}]
-
-const storesWithPath = [];
-children.forEach((child) => {
-  if (child.store) {
-    storesWithPath.push(child);
-  }
-});
-
-const appConfig = {
+const appConfig: IAppConfig = {
   app: {
-    rootId: "ice-container",
-  },
-  store: {
-    rootStore,
-    storesWithPath,
+    rootId: 'ice-container',
   },
 };
 

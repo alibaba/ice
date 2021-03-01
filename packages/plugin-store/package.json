@@ -19,8 +19,7 @@
     "url": "git@github.com:alibaba/ice.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "start": "tsc -w"
+    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
     "@ice/store": "^1.3.1",
