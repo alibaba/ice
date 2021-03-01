@@ -331,6 +331,8 @@ AppConfig 同 `regsiterMicroApps` 配置项，手动加载的情况下一般不�
 
 #### umd
 
+> @depreated
+
 标识微应用是否是一个标准的 UMD 微应用
 
 - 类型：`boolean`
@@ -421,11 +423,15 @@ const sandbox = new CustomSanbox();
 />
 ```
 
-### AppLink - depreated
+### AppLink
+
+> @depreated
 
 不推荐使用，建议使用 `@ice/stark-app` 暴露的 AppLink 组件。
 
-### appHistory - depreated
+### appHistory
+
+> @depreated
 
 不推荐使用，建议使用 `@ice/stark-app` 暴露的 appHistory API。
 ## @ice/stark-app
@@ -570,5 +576,30 @@ if (isInIcestark()) {
   });
 } else {
   ReactDOM.render(router(), document.getElementById('ice-container'));
+}
+```
+
+### setLibraryName
+
+配置微应用导出的 umd 全局变量。
+
++ 类型： `function`
++ 代码示例：
+
+```js
+import ReactDOM from 'react-dom';
+import { isInIcestark, setLibraryName } from '@ice/stark-app';
+import App from './App';
+
+setLibraryName('microApp');
+
+export function mount(props) {
+  const { container, customProps } = props;
+  ReactDOM.render(<App {...customProps} />, container);
+}
+
+export function unmount(props) {
+  const { container } = props;
+  ReactDOM.unmountComponentAtNode(container);
 }
 ```

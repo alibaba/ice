@@ -29,8 +29,11 @@ $ npm init ice icestark-child @vue-materials/icestark-child-app
 
 ```jsx
 import ReactDOM from 'react-dom';
-import { isInIcestark } from '@ice/stark-app';
+import { isInIcestark, setLibraryName } from '@ice/stark-app';
 import App from './App';
+
+// 注意：`setLibraryName` 的入参需要与 webpack 工程配置的 output.library 保持一致
+setLibraryName('microApp');
 
 export function mount(props) {
   const { container, customProps } = props;

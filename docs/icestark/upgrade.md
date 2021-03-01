@@ -22,20 +22,9 @@ order: 3
 2.x 版本之后，微应用支持两种格式的导出方式：
 
 1. [原有] 通过 `registerAppEnter/registerAppLeave` 注册生命周期
-2. [新增] UMD 格式，通过 `mount/unmount` 注册生命周期，如果微应用是 UMD 格式，则在主应用里配置时必须加上 `umd={true}` 的标识：
+2. [新增] UMD 格式，通过 `mount/unmount` 注册生命周期，并通过 `setLibraryName` 配置微应用导出的[全局名称](https://webpack.js.org/configuration/output/#outputlibrary)。
 
-```diff
-<AppRoute
-+  umd={true}
-  path="/seller"
-  title="标题"
-  url={[]}
-/>
-```
-
-当工程配置添加了 umd 相关配置，或者 `build-plugin-icestark` 版本大于 2.0 并且开启了 `umd: true`，则会构建出 UMD 格式的微应用，这种情况下必须在主应用里添加上述所说的 `umd={true}` 配置，否则微应用将无法正常渲染出来。
-
-如果无法快捷的在主应用里添加 `umd={true}` 配置，可以将微应用从 UMD 格式切回到 `registerAppEnter/registerAppLeave`。（如果微应用基于 icejs，则只需要将 build-plugin-icestark 的选项 `umd: true` 置为 `false` 即可）
+通过 `build-plugin-icestark` 构建的微应用，只需将 `build-plugin-icestark` 的版本更新至 2.x，并开启 `umd: true`。
 
 ## 0.x -> 1.x
 

@@ -235,30 +235,3 @@ icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的微应用，在微
   ]
 }
 ```
-
-### 主应用对采用 UMD 规范的微应用进行声明
-
-对于 umd 类型的微应用，需要在主应用中添加 `umd={true}` 的配置项：
-
-```diff
-const apps = [{
-  path: '/seller',
-  title: '商家平台',
-+  umd: true,
-  url: [
-    '//ice.alicdn.com/icestark/child-seller-react/index.js',
-    '//ice.alicdn.com/icestark/child-seller-react/index.css',
-  ],
-}];
-
-// 或者
-
-<AppRoute
-+  umd={true}
-  path="/seller"
-  title="标题"
-  url={[]}
-/>
-```
-
-如果没配置该选项，则会导致子应用无法渲染,
