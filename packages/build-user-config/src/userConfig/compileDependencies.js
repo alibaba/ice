@@ -12,10 +12,12 @@ const defaultCompileDependencies = [
 ];
 module.exports = (config, compileDependencies) => {
   const matchExclude = (filepath) => {
-    if ([MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName)) return false;
     // exclude the core-js for that it will fail to run in IE
     if (filepath.match(/core-js/))
       return true;
+
+    if ([MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP].includes(config.taskName)) return false;
+
     // compile build-plugin module for default
     const deps = [/build-plugin.*module/].concat(defaultCompileDependencies, compileDependencies).map(dep => {
       if (dep instanceof RegExp) {
