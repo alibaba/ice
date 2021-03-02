@@ -151,8 +151,7 @@ const appConfig = {
 runApp(appConfig)
 ```
 
-只需要这么简单，你的 SPA 应用就可以变成微前端的微应用了。
-
+只需要这么简单，你的 SPA 应用就可以变成微应用了。
 
 ## 常见问题
 
@@ -229,8 +228,7 @@ icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的微应用，在微
 {
   "plugins": [
     ["build-plugin-icestark", {
-      "umd": true,
-      "library": "microApp" // UMD 模块导出名称，选填。默认为项目 package.json 中的 name 字段
+      "umd": true
     }]
   ]
 }

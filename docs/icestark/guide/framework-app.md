@@ -5,7 +5,21 @@ order: 4
 
 对于 React 主应用，推荐使用 AppRouter/AppRoute 这种 React Component 的方式使用。
 
-## 微应用管理与注册
+## 通过官方脚手架创建
+
+> 该官方脚手架基于 icejs 框架，如需使用其他框架/工程可按下面的「已有应用改造」的方式接入。
+
+
+```bash
+$ npm init ice icestark-layout @icedesign/stark-layout-scaffold
+$ cd icestark-layout
+$ npm install
+$ npm start
+```
+
+## 已有应用改造
+
+### 微应用管理与注册
 
 通过 AppRouter/AppRoute 注册微应用：
 
@@ -49,8 +63,7 @@ import App from './App';
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-
-## AppRouter 配置项
+### AppRouter 配置项
 
 - onRouteChange：路由变化时触发
 - NotFoundComponent：未匹配到微应用时渲染的组件
@@ -60,9 +73,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 更多参数请参考 [API 介绍之 AppRouter](/docs/icestark/reference/api#AppRouter)。
 
-## AppRoute 配置项
+### AppRoute 配置项
 
-### 路由与微应用的映射关系
+#### 路由与微应用的映射关系
 
 通过 path 和 exact 两个属性配置微应用的匹配规则，建立路由和微应用的映射关系。
 
@@ -92,7 +105,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 />
 ```
 
-### 微应用入口
+#### 微应用入口 entry/entryContent/url
 
 对于 entry/entryContent/url 方式的使用请参考文档[微应用入口](/docs/icestark/guide/app-entry)。在此基础上，结合 React 的能力 AppRoute 还支持了更为灵活的 component 和 render 方式配置微应用入口：
 
@@ -109,7 +122,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 通过这种方式，可以通过 AppRoute 渲染一个 iframe 或者任意的 React 组件（比如 ReactRouter）。
 
-### 其他参数
+#### 其他参数
 
 - umd：默认 `false`，标识微应用是否为 umd 类型
 - sandbox：默认 `false`，是否开启 js 沙箱模式
@@ -118,7 +131,12 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 更多参数请参考 [API 介绍之 AppRoute](/docs/icestark/reference/api#AppRoute)。
 
-## 主应用中路由跳转
+
+
+
+## 进阶指南
+
+### 主应用中路由跳转
 
 如果在主应用里定义了一些路由页面，那么微前端主应用的层级如下：
 
@@ -155,7 +173,7 @@ export default function FrameworkLayout() {
 }
 ```
 
-## 主应用中如何包含路由页面
+### 主应用中如何包含路由页面
 
 我们不推荐主应用里包含一些具体的路由页面，但是如果业务有这种需求，比如想把登录注册之类的通用页面放在主应用里，可以按照下面的方式。
 
@@ -198,7 +216,7 @@ export default class App extends React.Component {
 }
 ```
 
-## 通过数据驱动注册微应用列表
+### 通过数据驱动注册微应用列表
 
 在很多场景下，我们的微应用可能通过一些配置平台注册，这时候可以将所有微应用的信息通过全局变量输出到 html 中，然后前端通过该数据注册微应用：
 
@@ -229,7 +247,7 @@ export default class App extends React.Component {
 }
 ```
 
-## 应用级别权限校验
+### 微应用级别权限校验
 
 icestark 支持对 `AppRoute` 再进行二次封装，统一处理容器定制/权限校验等场景：
 
@@ -302,7 +320,7 @@ export default class App extends React.Component {
 }
 ```
 
-## 不同页面 Layout 不同
+### 不同页面 Layout 不同
 
 通过 AppRouter 的 `onRouteChange` 属性可以捕获到所有的路由变化，此时可以根据不同路由对 Layout 做一些状态的变化，实现不同页面不同布局的能力。
 

@@ -5,7 +5,19 @@ order: 3
 
 使用 API `registerMicroApps` 的方式注册微应用，该方式不再限制主应用所使用的框架，因此主应用可以使用 Vue/Angular... 等不同框架编写。
 
-## 管理与注册微应用
+## 通过官方脚手架创建
+
+> 该官方脚手架基于 Vue 2.0 + Vue CLI，如需使用其他框架/工程可按下面的「已有应用改造」的方式自行接入。
+
+```bash
+$ npm init ice icestark-layout @vue-materials/icestark-layout-app
+
+$ cd icestark-layout
+$ npm install
+$ npm start
+```
+
+## 已有应用改造
 
 安装依赖：
 
@@ -44,13 +56,13 @@ registerMicroApps([
 start();
 ```
 
-## 微应用配置
+### 微应用配置项
 
-### name
+#### name
 
 `name` 字段作为微应用唯一标识，不可重复注册。注册后的微应用均通过 `name` 标识对微应用进行加载或者卸载。
 
-### activePath
+#### activePath
 
 微应用激活的路由规则，可以有四种方式配置：
 
@@ -59,10 +71,10 @@ start();
 - `PathData[]`：默认情况下设置的路由规则均为通配规则，如果想对路由进行精准匹配或者区分大小写，可以以对象方式配置每一项路由规则，其中可选配置项包括：`exact`、`strict`、`sensitive`
 - `Function`：通过函数方式执行的形式将根据函数执行结果决定微应用是否加载，函数接受参数为当前 url 地址
 
-### container
+#### container
 
 微应用挂载的 DOM 节点，通常情况下所有微应用的 container 都是同一个。
 
-### 微应用入口 url/entry/entryContent
+#### 微应用入口 url/entry/entryContent
 
 详见 [微应用入口](/docs/icestark/guide/app-entry) 。
