@@ -12,8 +12,8 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook }) => {
   });
 
   const templatePath = path.join(__dirname, 'template');
-  const appHooksStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
-  const pageHooksStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
+  const appHooksStoreTemplatePath = path.join(templatePath, 'appHooksStore.ts.ejs');
+  const pageHooksStoreTemplatePath = path.join(templatePath, 'pageHooksStore.ts.ejs');
   const targetPath = getValue('TEMP_PATH');
   const projectType = getValue('PROJECT_TYPE');
   const { rootDir, userConfig } = context;
