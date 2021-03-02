@@ -11,6 +11,10 @@
       "ignoreHtmlTemplate": true
     }
   },
+  "esbuild": {
+    "loaderOptions": {},
+    "minimizerOptions": {}
+  },
   "eslint": {
     "disable": false,
     "quiet": true

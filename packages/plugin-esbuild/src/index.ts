@@ -1,6 +1,7 @@
 import ESBuildPlugin from 'esbuild-webpack-plugin';
 
 const plugin = ({onGetWebpackConfig, context}) => {
+  console.log('[depreacted] config esbuild instead of build-plugin-esbuild');
   const { command } = context;
   onGetWebpackConfig(config => {
     if (command !== 'build') return;

@@ -2,6 +2,9 @@ const { formatPath } = require('@builder/app-helpers');
 
 module.exports = (config, presetEnvParam) => {
   ['jsx', 'tsx'].forEach((rule) => {
+    if (!config.module.rule(rule).has('babel-loader')) {
+      return;
+    }
     config.module
      .rule(rule)
      .use('babel-loader')
