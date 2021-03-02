@@ -6006,6 +6006,20 @@ create-cert@^1.0.2:
     pem "^1.9.7"
     pify "^3.0.0"
 
+create-cli-utils@0.1.5:
+  version "0.1.5"
+  resolved "https://registry.npm.taobao.org/create-cli-utils/download/create-cli-utils-0.1.5.tgz#82bbb89b001d254988613ed7439828cdff111239"
+  integrity sha1-gru4mwAdJUmIYT7XQ5gozf8REjk=
+  dependencies:
+    "@alib/build-scripts" "^0.1.24"
+    chalk "^4.1.0"
+    chokidar "^3.3.1"
+    commander "^5.0.0"
+    detect-port "^1.3.0"
+    inquirer "^7.1.0"
+    semver "^7.3.2"
+    yargs-parser "^18.1.2"
+
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.npm.taobao.org/create-ecdh/download/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"

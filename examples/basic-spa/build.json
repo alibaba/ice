@@ -11,9 +11,7 @@
       "ignoreHtmlTemplate": true
     }
   },
-  "esbuild": {
-    "loaderOptions": {}
-  },
+  "esbuild": {},
   "eslint": {
     "disable": false,
     "quiet": true
