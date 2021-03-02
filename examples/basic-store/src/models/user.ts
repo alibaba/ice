@@ -1,6 +1,6 @@
 import { IRootDispatch } from 'ice';
 
-export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(1), time));
 
 export default {
   state: {
