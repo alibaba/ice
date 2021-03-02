@@ -5,6 +5,42 @@ order: 5
 
 本文介绍如何从零开发一个微应用，同时已有应用迁移也可以参考本文档。
 
+## 微应用格式
+
+icestark 支持渲染两种格式的微应用，通过 registerAppEnter 注册或者 UMD 格式导出 mount 方法，UMD 格式跟社区的 single-spa 更好兼容，因此增量的微应用我们推荐使用 UMD 格式。
+
+### 1. registerAppEnter/registerAppLeave
+
+```jsx
+import ReactDOM from 'react-dom';
+import { getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app';
+import App from './App';
+
+registerAppEnter(() => {
+  ReactDOM.render(<App />, getMountNode());
+});
+registerAppLeave(() => {
+  ReactDOM.unmountComponentAtNode(getMountNode());
+});
+```
+
+### 2. UMD(mount/unmount)
+
+> @ice/stark 版本大于 1.6.0
+
+```jsx
+import ReactDOM from 'react-dom';
+import App from './App';
+
+export function mount(props) {
+  ReactDOM.render(<App />, props.container);
+}
+
+export function unmount(props) {
+  ReactDOM.unmountComponentAtNode(props.container);
+}
+```
+
 ## 通过脚手架创建
 
 React 项目（基于 icejs）：
@@ -13,38 +49,39 @@ React 项目（基于 icejs）：
 $ npm init ice icestark-child @icedesign/stark-child-scaffold
 ```
 
-Vue 项目：
+Vue 项目（基于 Vue CLI）：
 
 ```bash
 $ npm init ice icestark-child @vue-materials/icestark-child-app
 ```
 
-## React 项目改造为微应用
+> 如想使用其他框架/工程可参考下方的「已有项目改造为微应用」
+
+## 已有 React 项目改造为微应用
 
 如果你的项目基于 icejs，请参考文档 [icejs 接入微前端](/docs/guide/advance/icestark.md)，接入步骤非常简单。如果不是 icejs 的项目那么请参考下面的流程。
 
 ### 1. 应用入口适配
 
-将 React 应用改造为微应用，仅仅只需要导出对应的生命周期即可：
+将 React 应用改造为微应用，只需要导出对应的生命周期即可：
 
 ```jsx
 import ReactDOM from 'react-dom';
-import { isInIcestark } from '@ice/stark-app';
+import { isInIcestark, setLibraryName } from '@ice/stark-app';
 import App from './App';
 
 export function mount(props) {
-  const { container, customProps } = props;
-  ReactDOM.render(<App {...customProps} />, container);
+  ReactDOM.render(<App {...customProps} />, props.container);
 }
 
 export function unmount(props) {
-  const { container } = props;
-  ReactDOM.unmountComponentAtNode(container);
+  ReactDOM.unmountComponentAtNode(props.container);
 }
 
-if (isInIcestark()) {
-  console.log('app is running in framework app');
-} else {
+// 注意：`setLibraryName` 的入参需要与 webpack 工程配置的 output.library 保持一致
+setLibraryName('microApp');
+
+if (!isInIcestark()) {
   ReactDOM.render(<App />, document.getElementById('ice-container'));
 }
 ```
@@ -82,13 +119,13 @@ module.exports = {
   output: {
     // 设置模块导出规范为 umd
     libraryTarget: 'umd',
-    // 可选，设置模块在 window 上暴露的名称；icestark 框架不关心具体配置名称
+    // 可选，设置模块在 window 上暴露的名称
     library: 'microApp',
   }
 }
 ```
 
-## Vue 项目改造为微应用
+## 已有 Vue 项目改造为微应用
 
 ### 1. 应用入口适配
 
@@ -114,7 +151,6 @@ export function unmount() {
 }
 
 if (!isInIcestark()) {
-  // 初始化 vue 项目
   new Vue(...);  
 }
 ```
@@ -167,18 +203,3 @@ export default function FrameworkLayout() {
   );
 }
 ```
-
-## 微应用构建产物格式
-
-icestark 1.6.0/2.0.0 之后支持渲染两种格式的微应用：
-
-1. [原有] 通过 `registerAppEnter/registerAppLeave` 注册生命周期
-2. [新增] UMD 格式，通过 `mount/unmount` 注册生命周期
-
-对于增量的微应用我们推荐使用 UMD 格式的构建产物，以下是两种格式的优缺点对比：
-
-|   纬度\格式  |    UMD(mount/unmount)  | registerAppEnter/registerAppLeave |
-|-------------|------------------------|-----------------------------------|
-|与 single-spa 兼容|  兼容               |             不兼容                 | 
-|与 icestark 耦合度|   低                |               高                  |
-|js/css 资源受跨域访问限制|   限制          |             不限制                 |
