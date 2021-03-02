@@ -24,7 +24,7 @@ order: 3
 1. [原有] 通过 `registerAppEnter/registerAppLeave` 注册生命周期
 2. [新增] UMD 格式，通过 `mount/unmount` 注册生命周期，并通过 `setLibraryName` 配置微应用导出的[全局名称](https://webpack.js.org/configuration/output/#outputlibrary)。
 
-通过 `build-plugin-icestark` 构建的微应用，只需将 `build-plugin-icestark` 的版本更新至 2.x，并开启 `umd: true`。
+通过 `build-plugin-icestark` 构建的微应用，只需将 `build-plugin-icestark` 的版本更新至 2.x，并开启插件选项 `umd: true`。
 
 ## 0.x -> 1.x
 

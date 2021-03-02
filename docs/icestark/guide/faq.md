@@ -148,7 +148,6 @@ const appConfig: IAppConfig = {
       const apps = [{
         path: '/seller',
         title: '商家平台',
-        umd: true,
         sandbox: true,
 +       hashType: true,
         url: [
