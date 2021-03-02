@@ -4,12 +4,12 @@
   "dependencies": {
     "ice.js": "^1.0.0",
     "react": "^16.14.0",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "build-plugin-hooks-store": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.20",
-    "@types/react-dom": "^16.9.5",
-    "build-plugin-hooks-store": "^0.1.0"
+    "@types/react-dom": "^16.9.5"
   },
   "scripts": {
     "start": "icejs start --mode local",
