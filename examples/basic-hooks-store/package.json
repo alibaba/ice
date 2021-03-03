@@ -2,8 +2,6 @@
   "name": "example-basic-hooks",
   "description": "hooks management with icejs",
   "dependencies": {
-    "@ice/hooks-store": "^0.1.1",
-    "ice.js": "^1.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.4.1"
   },
