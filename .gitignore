@@ -39,3 +39,4 @@ examples/*/.ice
 
 build
 .history
+packages/plugin-hooks-store/.prettierrc
