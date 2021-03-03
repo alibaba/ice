@@ -73,11 +73,11 @@ export default function ExampleComponent(props) {
 
 ### 样式文件
 
-默认生成样式文件为 `src/index.scss`，根据组件开发需求可以调整为 `index.css` 或 `index.less`。
+默认生成样式文件为 `src/index.scss`，可以根据实际开发需求调整为 `index.css` 或 `index.less`。
 
 ### 模块配置
 
-模块开发工程需要在 `build.json` 中引入， `build-plugin-component` 和 `build-plugin-icestark-module` 。
+模块开发工程需要在 `build.json` 中引入 `build-plugin-component` 和 `build-plugin-icestark-module` 。
 
 ```json
 // build.json
@@ -145,7 +145,7 @@ export default function ExampleComponent(props) {
 
 #### externals
 
-构建时移除三方依赖。详见 性能优化。
+构建时移除三方依赖。详见 [使用进阶] -> [性能优化] 小节。
 
 - 类型：object
 - 默认值： {}
@@ -245,6 +245,7 @@ export default {
 ### 微模块中心化注册
 
 如果需要前置中心化注册微模块，可以使用 `registerModules` 方法。
+
 ```jsx
 import { MicroModule, registerModules, getModules } from '@ice/stark-module';
 
@@ -374,7 +375,7 @@ const App = () => {
 
 ```
 
-该插件会在三方依赖从模块中移除，并在产物目录生成一份依赖信息 `runtime.json`，模块发布时，需要将 `runtime.json` 一起发布。这样，在应用项目总，可以使用 `runtime.json` 作为依赖信息。
+该插件会将三方依赖从模块中移除，并在产物目录生成一份依赖信息 `runtime.json`，模块发布时，需要将 `runtime.json` 一起发布。这样，在应用项目总，可以使用 `runtime.json` 作为依赖信息。
 
 ```javascript
 import { MicroModule } from '@ice/stark-module';
