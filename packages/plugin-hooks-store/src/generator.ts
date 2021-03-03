@@ -98,7 +98,7 @@ export default class Generator {
     });
   }
 
-  private getPageHooks(pageName: string, pageHooksDir: string, pageHooksFile: string) {
+  private getPageHooks(pageHooksDir: string, pageHooksFile: string) {
     if (fse.pathExistsSync(pageHooksDir)) {
       const pageHooks = recursiveReaddir(pageHooksDir)
         .filter((pageHook) => matchRegex.test(pageHook))
@@ -139,7 +139,7 @@ export default class Generator {
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
 
       const pageHookFilePath = path.join(pageNameDir, 'hook');
-      const renderData = this.getPageHooks(pageName, pageHooksDir, pageHookFilePath);
+      const renderData = this.getPageHooks(pageHooksDir, pageHookFilePath);
       this.applyMethod('addRenderFile', this.pageHooksStoreTemplatePath, targetPath, renderData);
 
       this.applyMethod('removePageExport', pageName, exportName);
@@ -278,6 +278,5 @@ export default class Generator {
       // generate .ice/pages/${pageName}/Layout.tsx
       this.renderPageLayout(params);
     });
-    // part2 end
   }
 }
