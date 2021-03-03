@@ -49,8 +49,8 @@ const plugin: IPlugin = (api) => {
 
     // set page template
     onGetWebpackConfig(config => {
-      if (typeof mpa === 'object' && (mpa as any).template) {
-        setPageTemplate(rootDir, entries, (mpa as any).template, config);
+      if (mpa) {
+        setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
       }
     });
     let parsedEntries = null;
