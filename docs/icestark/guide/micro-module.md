@@ -16,7 +16,7 @@ order: 9
 $ mkdir micro-module & cd micro-module
 
 # 初始化
-$ iceworks init component
+$ iceworks init component @icedesign/template-icestark-module
 
 # 安装依赖
 $ npm install
