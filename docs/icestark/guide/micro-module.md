@@ -12,8 +12,13 @@ order: 9
 ### 通过命令行方式初始化
 
 ```shell
-$ npm init ice stark-module @icedesign/stark-module-scaffold
-$ cd stark-module
+# 创建文件夹
+$ mkdir micro-module & cd micro-module
+
+# 初始化
+$ iceworks init component
+
+# 安装依赖
 $ npm install
 $ npm start
 ```
