@@ -1,0 +1,28 @@
+<% if(!hasJsxRuntime) { %>
+import * as React from 'react';
+<% } %>
+
+<% if(hasPageHooksStore) { %>
+  <%- pageHooksStoreImport %>
+<% } %>
+
+<%- pageComponentImport %>
+
+const PageComponentName = <%= pageComponentExport %>;
+
+<% if(hasPageHooksStore) { %>
+  const PageProvider = hooksStore.Provider;
+  const StoreWrapperedPage = (props) => {
+    return (
+      <PageProvider>
+        <PageComponentName {...props} />
+      </PageProvider>
+    )
+  }
+  (StoreWrapperedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
+  (StoreWrapperedPage as any).getInitialProps = (PageComponentName as any).getInitialProps;
+  export default StoreWrapperedPage;
+  export { hooksStore };
+<% } else { %>
+  export default PageComponentName;
+<% } %>

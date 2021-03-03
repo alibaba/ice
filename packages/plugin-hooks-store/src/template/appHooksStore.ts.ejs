@@ -1,0 +1,18 @@
+<% if (importStr) { %>
+  import { createStore } from '@ice/hooks-store';
+  import { Hooks } from '../types.ts'
+  <%- importStr %>
+  interface AppHooks extends Hooks {
+    <% hooksStr.split(',').forEach(function(hooks){ %>
+      <% if (hooks) { %>
+        <%- hooks %>: typeof <%- hooks %>;
+      <% } %>
+    <% }); %>
+  }
+  const appHook: AppHooks = { <%- hooksStr %> };
+  const store = createStore(appModel);
+  export default store
+  export { appHook }
+<% } else { %>
+  export default {};
+<% } %>

@@ -1,0 +1,16 @@
+<% if (importStr) { %>
+import { createStore } from '@ice/hooks-store';
+<%- importStr %>
+<% } %>
+
+<% if (importStr && isSingleHook) { %>
+const hook = { default: <%- hooksStr %> }
+const store = createStore(hook);
+export default store;
+<% } %>
+
+<% if (importStr && !isSingleHook) { %>
+const hooks = { <%- hooksStr %> }
+const store = createStore(hooks);
+export default store;
+<% } %>
