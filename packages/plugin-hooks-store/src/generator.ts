@@ -135,7 +135,7 @@ export default class Generator {
     };
   }
 
-  private renderPageHooksStore({ pageName, pageNameDir, pageHooksDir, pageHooksFile, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
+  private renderPageHooksStore({ pageName, pageNameDir, pageHooksDir, pageHooksFile, existedPageHooksStoreFile }: IRenderPageParams) {
     if (!existedPageHooksStoreFile && (fse.pathExistsSync(pageHooksDir) || fse.pathExistsSync(pageHooksFile))) {
       const sourceFilename = 'hooksStore';
       const exportName = 'hooksStore';
@@ -210,8 +210,6 @@ export default class Generator {
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
   }
 
-
-
   public render() {
     // part1 start
     // 检查项目根目录下面是否有 hooksStore
@@ -219,7 +217,7 @@ export default class Generator {
     const appHooksStoreFile = this.applyMethod('formatPath', getAppHooksStorePath({ rootDir: this.rootDir, srcDir: this.srcDir, projectType: this.projectType }));
     const existsAppHooksStoreFile = fse.pathExistsSync(appHooksStoreFile);
     if (!existsAppHooksStoreFile) {
-      this.renderAppHooksStore({ appHooksStoreFile })
+      this.renderAppHooksStore({ appHooksStoreFile });
     }
     // part1 end
 
@@ -256,7 +254,7 @@ export default class Generator {
 
       // generate .ice/pages/${pageName}/Layout.tsx
       this.renderPageLayout(params);
-    })
+    });
     // part2 end
   }
 }

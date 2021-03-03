@@ -6,6 +6,7 @@ export default function() {
 
   useEffect(function() {
     login();
+    // eslint-disable-next-line
   }, []);
 
   const { name } = user;

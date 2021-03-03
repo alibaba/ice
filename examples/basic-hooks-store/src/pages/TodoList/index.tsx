@@ -10,6 +10,7 @@ export default function () {
   useEffect(function() {
     login();
     refresh();
+    // eslint-disable-next-line
   }, []);
 
   return (

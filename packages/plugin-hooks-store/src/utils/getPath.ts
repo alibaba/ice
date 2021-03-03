@@ -21,7 +21,6 @@ export function getAppHooksPath({ rootDir, srcDir }) {
   return path.join(rootDir, srcDir, 'hooks');
 }
 
-
 export function getPageHooksPath({ rootDir, srcDir, projectType, pagePath }) {
   pagePath = path.join('pages', pagePath);
 

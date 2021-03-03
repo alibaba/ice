@@ -1,7 +1,7 @@
 import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
-import Generator from './generator';
 import * as fse from 'fs-extra';
+import Generator from './generator';
 import { getAppHooksStorePath } from './utils/getPath';
 
 const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackConfig, modifyUserConfig }) => {
