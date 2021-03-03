@@ -1,4 +1,4 @@
-import AppHooksStore from '$store';
+import AppHooksStore from '$hooksStore';
 
 export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
 
