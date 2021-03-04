@@ -11,10 +11,6 @@ export const USER_CONFIG = [
     name: 'auth',
     validation: 'boolean'
   },
-  {
-    name: 'disableJSXTransform',
-    validation: 'boolean',
-  },
 ];
 
 export const PROJECT_TYPE = 'PROJECT_TYPE';

@@ -135,7 +135,9 @@ module.exports = [
   },
   {
     name: 'sourceMap',
-    validation: 'boolean'
+    validation: (val) => {
+      return validation('sourceMap', val, 'string|boolean');
+    },
   },
   {
     name: 'terserOptions',
@@ -224,5 +226,9 @@ module.exports = [
   {
     name: 'modularImportRuntime',
     validation: 'boolean',
+  },
+  {
+    name: 'esbuild',
+    validation: 'object'
   },
 ];
