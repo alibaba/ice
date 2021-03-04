@@ -647,6 +647,12 @@ dll                            // dll 构建产物文件夹
 
 开启后将按需加载运行时能力，以减小构建包体积
 
+### esbuild
+
+- 类型：`object`
+- 默认值：无
+
+使用 esbuild 对构建产物进行压缩，可选配置参考 [esbuild 配置文档](https://github.com/privatenumber/esbuild-loader#minifyplugin)
 
 ### disableJSXTransform
 
