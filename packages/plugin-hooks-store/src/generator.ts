@@ -63,7 +63,10 @@ export default class Generator {
     const exportName = 'hooksStore';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
-    let appHooksDir = getAppHooksPath({ rootDir: this.rootDir, srcDir: this.srcDir });
+    let appHooksDir = getAppHooksPath({
+      rootDir: this.rootDir,
+      srcDir: this.srcDir,
+    });
     let appHooks = [];
     if (fse.pathExistsSync(appHooksDir)) {
       appHooksDir = this.applyMethod('formatPath', appHooksDir);
@@ -138,12 +141,15 @@ export default class Generator {
       const exportName = 'hooksStore';
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
 
-      const pageHookFilePath = path.join(pageNameDir, 'hook');
+      const pageHookFilePath = path.join('use', pageNameDir);
       const renderData = this.getPageHooks(pageHooksDir, pageHookFilePath);
       this.applyMethod('addRenderFile', this.pageHooksStoreTemplatePath, targetPath, renderData);
 
       this.applyMethod('removePageExport', pageName, exportName);
-      this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
+      this.applyMethod('addPageExport', pageName, {
+        source: `./${sourceFilename}`,
+        exportName,
+      });
     }
   }
 
@@ -228,7 +234,11 @@ export default class Generator {
   public render() {
     const appHooksStoreFile = this.applyMethod(
       'formatPath',
-      getAppHooksStorePath({ rootDir: this.rootDir, srcDir: this.srcDir, projectType: this.projectType }),
+      getAppHooksStorePath({
+        rootDir: this.rootDir,
+        srcDir: this.srcDir,
+        projectType: this.projectType,
+      }),
     );
     const existsAppHooksStoreFile = fse.pathExistsSync(appHooksStoreFile);
     if (!existsAppHooksStoreFile) {
