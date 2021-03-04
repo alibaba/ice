@@ -227,4 +227,8 @@ module.exports = [
     name: 'modularImportRuntime',
     validation: 'boolean',
   },
+  {
+    name: 'esbuild',
+    validation: 'object'
+  },
 ];
