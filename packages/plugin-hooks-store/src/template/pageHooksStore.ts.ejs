@@ -11,6 +11,6 @@ export default store;
 
 <% if (importStr && !isSingleHook) { %>
 const hooks = { <%- hooksStr %> }
-const store = createStore(hooks);
-export default store;
+const hooksStore = createStore(hooks);
+export default hooksStore;
 <% } %>

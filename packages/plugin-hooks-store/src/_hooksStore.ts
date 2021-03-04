@@ -2,6 +2,6 @@ import { createStore } from '@ice/hooks-store';
 
 const hooks = {};
 
-const store = createStore(hooks);
+const hooksStore = createStore(hooks);
 
-export default store;
+export default hooksStore;

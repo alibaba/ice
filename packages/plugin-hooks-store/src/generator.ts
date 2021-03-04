@@ -87,7 +87,7 @@ export default class Generator {
       importStr,
       hooksStr,
       isSingleModel: false,
-      appStoreImport: `import store from '${appHooksStoreFile.replace(`.${this.projectType}`, '')}'`,
+      appStoreImport: `import hooksStore from '${appHooksStoreFile.replace(`.${this.projectType}`, '')}'`,
     };
 
     this.applyMethod('addRenderFile', this.appHooksStoreTemplatePath, targetPath, appStoreRenderData);
