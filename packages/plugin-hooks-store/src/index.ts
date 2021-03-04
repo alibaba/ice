@@ -23,7 +23,12 @@ export default async (api) => {
   const projectType = getValue('PROJECT_TYPE');
   const pages = applyMethod('getPages', rootDir, srcDir);
 
-  const storeAndModelExists = checkStoreAndHookExist({ rootDir, srcDir, projectType, applyMethod });
+  const storeAndModelExists = checkStoreAndHookExist({
+    rootDir,
+    srcDir,
+    projectType,
+    applyMethod,
+  });
   if (!storeAndModelExists) {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
@@ -44,7 +49,11 @@ export default async (api) => {
 
   if (!existsAppStoreFile) {
     // set IStore to IAppConfig
-    applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+    applyMethod('addAppConfigTypes', {
+      source: './store/types',
+      specifier: '{ IStore }',
+      exportName: 'store?: IStore',
+    });
   }
 
   // add babel plugins for ice lazy

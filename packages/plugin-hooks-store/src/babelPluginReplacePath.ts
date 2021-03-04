@@ -27,7 +27,13 @@ module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => 
                     // default alias: import Home from '@/pages/Home';
                     // custom alias: import Home from '$pages/Home';
                     // relative path: import Home from '../pages/Home'
-                    const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
+                    const newValue = formatPagePath({
+                      routesPath: state.filename,
+                      tempDir,
+                      value,
+                      alias,
+                      applyMethod,
+                    });
                     // replace to: import Home from 'ice/pages/Home'
                     if (newValue) {
                       replaceWith(t, nodePath, newValue);
@@ -51,7 +57,13 @@ module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => 
                       // default alias: const Home = lazy(() => import('@/pages/Home'));
                       // custom alias: const Home = lazy(() => import('$pages/home));
                       // relative path: const Home = lazy(() => import('../pages/Home'));
-                      const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
+                      const newValue = formatPagePath({
+                        routesPath: state.filename,
+                        tempDir,
+                        value,
+                        alias,
+                        applyMethod,
+                      });
                       // replace to: const Home =lazy (() => import('ice/Home/Home'));
                       if (newValue) {
                         args[i].value = newValue;
