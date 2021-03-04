@@ -12,7 +12,7 @@ module.exports = (config, babelPresets) => {
           let matchedPreset = null;
           extraPresets = extraPresets.filter((babelPreset) => {
             const babelPresetPath = Array.isArray(babelPreset) ? babelPreset[0] : babelPreset;
-            const matched = formatPath(presetPath).indexOf(babelPresetPath) > -1;
+            const matched = formatPath(presetPath).indexOf(formatPath(babelPresetPath)) > -1;
             if (matched) {
               const hasOptions = Array.isArray(babelPreset) && babelPreset.length > 1;
               matchedPreset = babelPreset;
