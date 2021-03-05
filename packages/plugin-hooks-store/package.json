@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "tsc -w",
-    "build": "rm -rf lib && tsc && cp -R ./src/template ./lib/template"
+    "build": "rm -rf lib && tsc"
   },
   "author": "",
   "license": "MIT",
