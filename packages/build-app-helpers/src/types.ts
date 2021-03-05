@@ -9,6 +9,8 @@ export interface IEntry {
     title?: string;
     [key: string]: string
   }
+  __frameIndex?: number;
+  __pageHeader?: boolean;
 }
 
 export interface IPageHeader extends IRoute {
