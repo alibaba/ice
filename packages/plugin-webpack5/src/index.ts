@@ -13,8 +13,11 @@ interface IOptions {
 const plugin: IPlugin = (api, options = {}) => {
   const { onGetWebpackConfig, registerUserConfig, context } = api;
   const { remoteRuntime } = options as IOptions;
-  const { pkg, userConfig, webpack } = context;
+  const { pkg, userConfig, webpack, command } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
+
+  // only active in development mode
+  const activeRemoteRuntime = command === 'start' && remoteRuntime;
 
   const cacheFolder = path.join(context.rootDir, 'node_modules', '.cache', 'runtime');
   const depsPath = path.join(cacheFolder, 'deps.json');
@@ -48,8 +51,8 @@ const plugin: IPlugin = (api, options = {}) => {
   }
   // filter dependencies
   const compileKeys = filterPackages(Object.keys(pkgDeps));
-  const needCompile = remoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
-  if (remoteRuntime) {
+  const needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+  if (activeRemoteRuntime) {
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeFolder);
     const externalBundles = [
