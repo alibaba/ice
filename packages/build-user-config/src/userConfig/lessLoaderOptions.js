@@ -1,3 +1,5 @@
+const { getLessImplementation } = require('@builder/app-helpers');
+
 module.exports = (config, lessLoaderOptions) => {
   if (lessLoaderOptions) {
     [
