@@ -124,7 +124,7 @@ export default async (api) => {
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /hooks\/.use|*.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
+    applyMethod('watchFileChange', /hooks\/use*|use*.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
       gen.render();
     });
   });
