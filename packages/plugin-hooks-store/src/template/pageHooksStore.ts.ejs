@@ -5,12 +5,11 @@ import { createStore } from '@ice/hooks-store';
 
 <% if (importStr && isSingleHook) { %>
 const hook = { default: <%- hooksStr %> }
-const store = createStore(hook);
-export default store;
 <% } %>
 
 <% if (importStr && !isSingleHook) { %>
 const hooks = { <%- hooksStr %> }
+<% } %>
+
 const hooksStore = createStore(hooks);
 export default hooksStore;
-<% } %>
