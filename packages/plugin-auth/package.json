@@ -15,7 +15,8 @@
   },
   "files": [
     "lib",
-    "template"
+    "template",
+    "src/runtime.tsx"
   ],
   "repository": {
     "type": "git",

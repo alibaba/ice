@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "logger"
+    "logger",
+    "src/runtime"
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",

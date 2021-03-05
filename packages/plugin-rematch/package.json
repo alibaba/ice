@@ -11,7 +11,8 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "src/runtime.tsx"
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
