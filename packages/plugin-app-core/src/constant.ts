@@ -11,6 +11,10 @@ export const USER_CONFIG = [
     name: 'auth',
     validation: 'boolean'
   },
+  {
+    name: 'sourceDir',
+    validation: 'string',
+  }
 ];
 
 export const PROJECT_TYPE = 'PROJECT_TYPE';
