@@ -4,7 +4,7 @@ import * as globby from 'globby';
 import formatPath from './formatPath';
 
 export default (plugins: any = [], targetDir: string, debugRuntime: boolean) => {
-  return plugins.map(({ pluginPath, name }, index) => {
+  return plugins.map(({ pluginPath, name }) => {
     // compatible with function plugin
     if (!pluginPath) return false;
     // NOTE: module.js will be discarded in future.
@@ -43,7 +43,6 @@ export default (plugins: any = [], targetDir: string, debugRuntime: boolean) => 
       console.log(`ERROR: fail to load package.json of plugin ${name}`);
     }
     return {
-      moduleName: `module${index}`,
       pluginConfig,
       modulePath: formatPath(modulePath),
     };
