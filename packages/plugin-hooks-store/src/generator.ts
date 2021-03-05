@@ -3,7 +3,6 @@ import * as fse from 'fs-extra';
 import * as recursiveReaddir from 'fs-readdir-recursive';
 import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 import { ProjectType } from './utils/types';
-
 import { getAppHooksStorePath, getAppHooksPath, getPageHookPath, getPageHookStorePath } from './utils/getPath';
 
 export interface IRenderPageParams {
@@ -141,7 +140,7 @@ export default class Generator {
       const exportName = 'hooksStore';
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
 
-      const pageHookFilePath = path.join('use', pageNameDir);
+      const pageHookFilePath = path.join(pageNameDir, `use${pageName}`);
       const renderData = this.getPageHooks(pageHooksDir, pageHookFilePath);
       this.applyMethod('addRenderFile', this.pageHooksStoreTemplatePath, targetPath, renderData);
 
