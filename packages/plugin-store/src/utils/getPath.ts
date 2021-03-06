@@ -20,7 +20,7 @@ export function getPageStorePath({ rootDir, srcDir, projectType, pagePath }) {
   const pageStoreFilePath = path.join(pageNameDir, `store.${projectType}`);
 
   return pageStoreFilePath;
-};
+}
 
 export function getPageModelPath({ rootDir, srcDir, projectType, pagePath }) {
   pagePath = path.join('pages', pagePath);
@@ -32,7 +32,7 @@ export function getPageModelPath({ rootDir, srcDir, projectType, pagePath }) {
   const pageModelFile = path.join(pageNameDir, `model.${projectType}`);
 
   return { pageNameDir, pageModelsDir, pageModelFile };
-};
+}
 
 export function getRaxPagesPath(rootDir) {
   const absoluteAppJSONPath = path.join(rootDir, 'src/app.json');
@@ -41,4 +41,4 @@ export function getRaxPagesPath(rootDir) {
   const pagesPath = routes.map(route => route.source);
 
   return pagesPath;
-};
+}

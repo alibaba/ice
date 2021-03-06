@@ -1,21 +1,25 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { minify } from 'html-minifier';
+import LoadablePlugin from '@loadable/webpack-plugin';
 import { getWebpackConfig } from 'build-scripts-config';
 
 const plugin = async (api): Promise<void> => {
-  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod } = api;
-  const { rootDir, command, webpack, userConfig, commandArgs } = context;
+  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
+  const { rootDir, command, webpack, commandArgs, userConfig } = context;
+  const { outputDir } = userConfig;
   const TEMP_PATH = getValue('TEMP_PATH');
+  const PROJECT_TYPE = getValue('PROJECT_TYPE');
   // Note: Compatible plugins to modify configuration
-  const buildDir = path.join(rootDir, userConfig.outputDir);
+  const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'server.ts');
-  applyMethod('addRenderFile', templatePath, ssrEntry);
+  const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
+  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
 
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);
@@ -26,6 +30,29 @@ const plugin = async (api): Promise<void> => {
       'process.env.APP_MODE': JSON.stringify(commandArgs.mode || command),
       'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
     }]);
+
+  onGetWebpackConfig((config) => {
+    if (config.plugins.get('HtmlWebpackPlugin')) {
+      config
+        .plugin('HtmlWebpackPlugin')
+        .tap(([args]) => {
+          return [{
+            ...args,
+            inject: false,
+          }];
+        });
+    }
+
+    config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
+  });
+
+  modifyUserConfig('babelPlugins',
+    [
+      ...(userConfig.babelPlugins as [] || []),
+      require.resolve('./babelPluginReplaceLazy'),
+      '@loadable/babel-plugin',
+    ]
+  );
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
@@ -95,8 +122,9 @@ const plugin = async (api): Promise<void> => {
       config.devServer
         .hot(true)
         .writeToDisk((filePath) => {
-          return /(server\/index\.js|index.html)$/.test(filePath);
+          return /(server\/.*|loadable-stats.json|index.html)$/.test(filePath);
         });
+
       let serverReady = false;
       let httpResponseQueue = [];
       const originalDevServeBefore = config.devServer.get('before');

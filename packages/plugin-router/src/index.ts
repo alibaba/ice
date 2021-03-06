@@ -63,6 +63,19 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     config.devServer.set('historyApiFallback', true);
   });
 
+  // copy types
+  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));
+  fse.copySync(path.join(__dirname, '../src/types/base.ts'), path.join(iceTempPath, 'router/types/base.ts'));
+  // set IAppRouterProps to IAppConfig
+  applyMethod('addAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+  // export IRouterConfig to the public
+  applyMethod('addTypesExport', { source: './router/types' });
+  // add import declarations
+  applyMethod('addImportDeclarations', {
+    importSource: '$$ice/router/types',
+    exportMembers: ['IAppRouterProps', 'IRouterConfig'],
+  });
+
   if (!disableRouter) {
     // add babel plugins for ice lazy
     modifyUserConfig('babelPlugins',
@@ -101,19 +114,6 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
         'useParams',
         'useRouteMatch'
       ]
-    });
-
-    // copy types
-    fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));
-    fse.copySync(path.join(__dirname, '../src/types/base.ts'), path.join(iceTempPath, 'router/types/base.ts'));
-    // set IAppRouterProps to IAppConfig
-    applyMethod('addAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
-    // export IRouterConfig to the public
-    applyMethod('addTypesExport', { source: './router/types' });
-    // add import declarations
-    applyMethod('addImportDeclarations', {
-      importSource: '$$ice/router/types',
-      exportMembers: ['IAppRouterProps', 'IRouterConfig'],
     });
 
     // do not watch folder pages when route config is exsits

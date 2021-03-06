@@ -41,8 +41,8 @@ interface IService {
 }
 
 export default function<S>(apiConfigs: IApiConfigs, defaultConfig?: IBaseConfing, dataHandler?: IDataHandler) {
-  type T<S> = {
-    [K in keyof S]: S[K] & IResult;
+  type T<R> = {
+    [K in keyof R]: R[K] & IResult;
   }
   const service = transform(apiConfigs, (result, config, name) => {
     const { options, dataHandler: configDataHandler } = getConfig(name);

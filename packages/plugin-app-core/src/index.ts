@@ -63,7 +63,7 @@ function initGenerator(api, options) {
   const { userConfig, rootDir } = context;
   const { framework, debugRuntime } = options;
   const plugins = getAllPlugin();
-  const { targets = [] } = userConfig;
+  const { targets = [], ssr = false } = userConfig;
   const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
@@ -74,6 +74,7 @@ function initGenerator(api, options) {
       isReact: framework === 'react',
       isRax: framework === 'rax',
       isMiniapp,
+      ssr,
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
     },
     log,

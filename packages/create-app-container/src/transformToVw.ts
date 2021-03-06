@@ -17,6 +17,6 @@ function transformToVw(value) {
   const pixels = parseFloat(value);
   const parsedVal = toFixed(pixels / defaults.viewportWidth * 100, defaults.unitPrecision);
   return parsedVal + defaults.viewportUnit;
-};
+}
 
 export default transformToVw;

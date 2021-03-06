@@ -4,6 +4,6 @@ function Auth({ children, hasAuth, fallback }) {
   } else {
     return fallback || null;
   }
-};
+}
 
 export default Auth;

@@ -5,15 +5,14 @@ order: 11
 
 在前后端分离的开发中，Mock 数据是前端开发中很重要的一个环节，前端可以不必强依赖后端接口，只需要约定好对应的数据接口，前端可以通过 Mock 模拟数据先行开发，在后端接口开发完成后，只需要切换对应的接口地址即可，可以保证项目的同步开发。
 
-在飞冰中，我们提供了完整的 Mock 方案，支持 CRUD 等操作，只需要在项目目录下新建 mock 文件夹，并配置入口文件 index.js  作为路由表的入口，在启动项目服务时工具会同步的启动 Mock 服务。
+在飞冰中，我们提供了完整的 Mock 方案，支持 CRUD 等操作，只需要在项目目录下新建 mock 文件夹，并配置入口文件 `index.ts` 作为路由表的入口，在启动项目服务时工具会同步的启动 Mock 服务。
 
 ## 编写 mock 接口
 
-在项目根目录下新建 `mock/index.js` 文件，并写入以下示例代码：
+在项目根目录下新建 `mock/index.ts` 文件，并写入以下示例代码：
 
-```js
-// mock/index.js
-module.exports = {
+```ts
+export default {
   // 同时支持 GET 和 POST
   '/api/users/1': { data: {} },
   '/api/foo/bar': { data: {} },
@@ -56,3 +55,31 @@ function ListView(props) {
   );
 }
 ```
+
+## 使用 Mock.js
+
+[Mock.js](https://github.com/nuysoft/Mock) 是一个随机生成 mock 数据的工具库：
+
+```ts
+import * as Mock from 'mockjs';
+
+export default {
+  'GET /api/list': (req, res) => {
+    const list = Mock.mock({
+      'list|1-10': [
+        {
+          'id|+1': 1,
+        },
+      ],
+    });
+    res.send({
+      status: 'SUCCESS',
+      data: {
+        list,
+      }
+    });
+  },
+};
+```
+
+完整的语法情参考 [Mock.js 文档](http://mockjs.com/examples.html) 。
