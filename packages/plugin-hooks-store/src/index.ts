@@ -8,9 +8,6 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
 
   const { rootDir, userConfig } = context;
   const { mpa: isMpa, entry } = userConfig;
-  const templatePath = path.join(__dirname, 'template');
-  const appHooksStoreTemplatePath = path.join(templatePath, 'appHooksStore.ts.ejs');
-  const pageHooksStoreTemplatePath = path.join(templatePath, 'pageHooksStore.ts.ejs');
   const targetPath = getValue('TEMP_PATH');
   const tempDir = (path.basename(targetPath) || '').split('.')[1];
   const projectType = getValue('PROJECT_TYPE');
@@ -78,8 +75,6 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
   });
 
   const gen = new Generator({
-    appHooksStoreTemplatePath,
-    pageHooksStoreTemplatePath,
     targetPath,
     rootDir,
     applyMethod,
@@ -89,7 +84,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /hooks\/.*|hook.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
+    applyMethod('watchFileChange', /hooksStore.*|pages\/\w+\/hooksStore.*/, () => {
       gen.render();
     });
   });

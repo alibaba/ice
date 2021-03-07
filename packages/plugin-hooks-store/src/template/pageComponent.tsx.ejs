@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 <% if(hasPageHooksStore) { %>
+  import * as React from 'react';
   <%- pageHooksStoreImport %>
 <% } %>
 
@@ -18,7 +17,7 @@ const PageComponentName = <%= pageComponentExport %>;
     )
   }
   (StoreWrapperedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
-  (StoreWrapperedPage as any).getInitialProps = (PageComponentName as any).getInitialProps || {} as any;
+  (StoreWrapperedPage as any).getInitialProps = (PageComponentName as any).getInitialProps;
   export default StoreWrapperedPage;
   export { hooksStore };
 <% } else { %>
