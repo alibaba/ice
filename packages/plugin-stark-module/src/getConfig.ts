@@ -3,8 +3,6 @@ import { IPluginAPI } from '@alib/build-scripts';
 import { Options } from './types';
 import { getModules } from './entry.helper';
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 interface GetConfig {
   (api: Partial<IPluginAPI>, options?: Options): any;
 }
@@ -34,11 +32,6 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
       .libraryTarget('umd');
 
     config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: './[name]/index.css' }]);
-    // config
-    //   .plugin('MiniCssExtractPlugin')
-    //   .use(MiniCssExtractPlugin, [{
-    //     filename: './[name]/index.css',
-    //   }]);
 
     config.devServer.contentBase(path.join(rootDir, 'dist'));
     config.devServer.writeToDisk(true);
