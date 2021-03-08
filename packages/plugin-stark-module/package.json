@@ -1,10 +1,10 @@
 {
   "name": "build-plugin-stark-module",
-  "version": "2.0.0-0",
+  "version": "2.0.0",
   "description": "build-scripts plugin for build stark module",
   "main": "lib/index.js",
   "files": [
-    "src",
+    "lib",
     "test",
     "tsconfig.json"
   ],
@@ -25,6 +25,7 @@
     "chalk": "^4.1.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.1.0",
+    "handlebars": "^4.7.6",
     "got": "^11.0.2",
     "jest": "^25.4.0",
     "mini-css-extract-plugin": "^1.3.5",

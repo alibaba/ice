@@ -33,11 +33,12 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
       .library((library || name || 'module') as string)
       .libraryTarget('umd');
 
-    config
-      .plugin('MiniCssExtractPlugin')
-      .use(MiniCssExtractPlugin, [{
-        filename: './[name]/index.css',
-      }]);
+    config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: './[name]/index.css' }]);
+    // config
+    //   .plugin('MiniCssExtractPlugin')
+    //   .use(MiniCssExtractPlugin, [{
+    //     filename: './[name]/index.css',
+    //   }]);
 
     config.devServer.contentBase(path.join(rootDir, 'dist'));
     config.devServer.writeToDisk(true);

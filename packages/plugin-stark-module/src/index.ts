@@ -1,11 +1,13 @@
 import { IPlugin, IUserConfig } from '@alib/build-scripts';
-import chalk from 'chalk';
 import { getWebpackConfig } from 'build-scripts-config';
 import { Options } from './types';
 import getConfig from './getConfig';
 import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
+
+// eslint-disable-next-line
+const chalk = require('chalk');
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
   const { command, userConfig } = context;
