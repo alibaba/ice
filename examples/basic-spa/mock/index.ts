@@ -1,5 +1,5 @@
 import projects from './projects';
-import exclude from './exclude';
+import exclude from './excludeMock';
 
 const status = 'SUCCESS';
 // mock/index.js
