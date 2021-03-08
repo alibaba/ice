@@ -2,7 +2,7 @@ const { getLessImplementation } = require('@builder/app-helpers');
 
 const lessSpecificOptions = ['paths', 'rootpath', 'rewriteUrls',
  'math', 'strictMath', 'relativeUrls', 'strictUnits', 'ieCompat', 'javascriptEnabled',
-'globalVars', 'modifyVars', 'urlArgs', 'dumpLineNumbers' ];
+'globalVars', 'modifyVars', 'urlArgs', 'dumpLineNumbers'];
 
 module.exports = (config, customOptions) => {
   let lessLoaderOptions = {
