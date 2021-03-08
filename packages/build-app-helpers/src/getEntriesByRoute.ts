@@ -7,7 +7,7 @@ export default (
   rootDir: string
 ) => {
   const entries:IEntry[] = [];
-  const {pageHeader, frames } = route;
+  const { pageHeader, frames } = route;
   const rootEntry = getEntry(route, rootDir);
 
   if (rootEntry) {
@@ -15,9 +15,10 @@ export default (
   }
 
   if (frames) {
-    frames.forEach(frame => {
+    frames.forEach((frame, index) => {
       const entry = getEntry(frame, rootDir);
       if (entry) {
+        entry.__frameIndex = index;
         entries.push(entry);
       }
     });
@@ -26,6 +27,7 @@ export default (
   if (pageHeader) {
     const entry = getEntry(pageHeader, rootDir);
     if (entry) {
+      entry.__pageHeader = true;
       entries.push(entry);
     }
   }
@@ -33,7 +35,7 @@ export default (
   return entries;
 };
 
-function getEntry(route: IRoute, rootDir): IEntry | void {
+function getEntry(route: IRoute, rootDir: string): IEntry | void {
   const { source, name, pageSource } = route;
   let entryName: string;
   if (name) {
