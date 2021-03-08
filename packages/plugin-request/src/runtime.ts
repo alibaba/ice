@@ -1,3 +1,4 @@
+// @ts-ignore
 import createAxiosInstance from '$ice/createAxiosInstance';
 
 const module = ({ appConfig }) => {

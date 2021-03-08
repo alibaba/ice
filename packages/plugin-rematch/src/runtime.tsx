@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { init } from '@rematch/core';
+// @ts-ignore
 import { stores } from '$ice/store';
 
 export default ({ addProvider, appConfig }) => {
