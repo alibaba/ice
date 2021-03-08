@@ -49,7 +49,7 @@ function getEntry(route: IRoute, rootDir: string): IEntry | void {
     return {
       ...route,
       entryName,
-      entryPath: pageSource || getEntryPath(rootDir, source)
+      entryPath: pageSource || getEntryPath(rootDir, source),
     };
   }
 }
