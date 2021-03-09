@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "logger"
+    "logger",
+    "src/runtime.ts"
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
