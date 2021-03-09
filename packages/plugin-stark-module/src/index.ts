@@ -10,7 +10,7 @@ import appendLifecycle from './appendLifecycle';
 const chalk = require('chalk');
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
-  const { command, userConfig } = context;
+  const { command, userConfig, webpack, commandArgs } = context;
   const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
 
   const {
@@ -43,6 +43,15 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
           { ...opts, sourceMap: true },
         ]);
   }
+
+  // definePlugin, Compatible with @ali/build-plugin-ice-def
+  const defineVariables = {
+    'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
+    'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
+  };
+  baseConfig.plugin('DefinePlugin')
+    .use((webpack as any).DefinePlugin, [defineVariables])
+    .end();
 
   // set umd
   getConfig({ context, onGetWebpackConfig }, { modules, outputDir });
