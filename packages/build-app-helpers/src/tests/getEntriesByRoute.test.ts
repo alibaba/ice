@@ -56,7 +56,7 @@ describe('Get entries by route info', () => {
         name: 'page-header',
         source: "pages/Header/index",
         pageSource: 'pages/Header/index',
-        height: 100
+        height: 100,
       }
     }, {
       source: 'pages/About/index',
@@ -64,6 +64,7 @@ describe('Get entries by route info', () => {
       name: "page-about",
       entryPath: 'pages/About/index',
       entryName: 'page-about',
+      __frameIndex: 0,
     }, {
       name: 'page-header',
       source: "pages/Header/index",
@@ -71,6 +72,7 @@ describe('Get entries by route info', () => {
       height: 100,
       entryPath: 'pages/Header/index',
       entryName: 'page-header',
+      __pageHeader: true,
     }])
   });
 });
