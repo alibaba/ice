@@ -641,7 +641,7 @@ dll                            // dll 构建产物文件夹
 ### modularImportRuntime
 
 - 类型：`boolean`
-- 默认值：`false`
+- 默认值：`true`
 
 > ice.js 1.14.0 版本以上开始支持
 
