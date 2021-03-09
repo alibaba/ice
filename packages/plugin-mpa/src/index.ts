@@ -88,11 +88,14 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
     const htmlPluginKey = `HtmlWebpackPlugin_${defaultEntryName}`;
     if (config.plugins.get(htmlPluginKey)) {
       const htmlPluginOption = {};
-      const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName] || 'index.html');
-
-      if (fs.existsSync(entryTemplate)) {
-        (htmlPluginOption as any).template = entryTemplate;
+      // modify html template if userConfig mpa.template is specified
+      if (entryNames[defaultEntryName]) {
+        const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName]);
+        if (fs.existsSync(entryTemplate)) {
+          (htmlPluginOption as any).template = entryTemplate;
+        }
       }
+      
       config.plugin(htmlPluginKey).tap(([args]) => {
         (htmlPluginOption as any).templateParameters = {
           ...(args.templateParameters || {}),
