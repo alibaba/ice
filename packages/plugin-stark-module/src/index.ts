@@ -19,6 +19,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
     minify,
     outputDir,
     sourceMap,
+    library,
   } = options as any as Options ?? {};
   const mode = command === 'start' ? 'development' : 'production';
 
@@ -54,7 +55,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
     .end();
 
   // set umd
-  getConfig({ context, onGetWebpackConfig }, { modules, outputDir });
+  getConfig({ context, onGetWebpackConfig }, { modules, outputDir, library });
 
   // set externals
   if (externals) {

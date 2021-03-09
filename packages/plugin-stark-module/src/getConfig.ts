@@ -7,9 +7,9 @@ interface GetConfig {
   (api: Partial<IPluginAPI>, options?: Options): any;
 }
 
-const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, outputDir }) => {
+const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, outputDir, library }) => {
   const { rootDir, userConfig, pkg } = context;
-  const { library } = userConfig;
+  const { library: userLibrary } = userConfig;
   const { name } = pkg ?? {};
 
   onGetWebpackConfig('icestark-module', (config) => {
@@ -28,7 +28,7 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
       .path(output)
       // set output to dist/[name]
       .filename('./[name]/index.js')
-      .library((library || name || 'module') as string)
+      .library((library || userLibrary || name || 'module') as string)
       .libraryTarget('umd');
 
     config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: './[name]/index.css' }]);

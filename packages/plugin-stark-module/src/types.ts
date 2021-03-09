@@ -23,6 +23,7 @@ export interface Options {
   minify?: boolean;
   outputDir?: string;
   sourceMap?: boolean;
+  library?: string;
 }
 
 export type PartialPlugin = Partial<IPluginAPI>;
