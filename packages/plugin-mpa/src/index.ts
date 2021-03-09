@@ -88,7 +88,7 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
     const htmlPluginKey = `HtmlWebpackPlugin_${defaultEntryName}`;
     if (config.plugins.get(htmlPluginKey)) {
       const htmlPluginOption = {};
-      const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName] || 'index.html');
+      const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName] || `${defaultEntryName}.html` || 'index.html');
 
       if (fs.existsSync(entryTemplate)) {
         (htmlPluginOption as any).template = entryTemplate;
