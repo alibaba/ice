@@ -77,21 +77,21 @@ export default function ExampleComponent(props) {
 
 ### 模块配置
 
-模块开发工程需要在 `build.json` 中引入 `build-plugin-component` 和 `build-plugin-icestark-module` 。
+模块开发工程需要在 `build.json` 中引入 `build-plugin-component` 和 `build-plugin-stark-module` 。
 
 ```json
 // build.json
 {
   "plugins": [
     "build-plugin-component",
-    ["build-plugin-icestark-module", {
+    ["build-plugin-stark-module", {
       // ...options
     }]
   ]
 }
 ```
 
-`build-plugin-component` 配置请参考 [组件工程配置](https://ice.work/docs/materials/guide/component#%E7%BB%84%E4%BB%B6%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE)。 `build-plugin-icestark-module` 的工程配置如下：
+`build-plugin-component` 配置请参考 [组件工程配置](https://ice.work/docs/materials/guide/component#%E7%BB%84%E4%BB%B6%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE)。 `build-plugin-stark-module` 的工程配置如下：
 
 #### outputDir
 
@@ -103,7 +103,7 @@ export default function ExampleComponent(props) {
 // build.json
 {
   "plugins": [
-    ["build-plugin-icestark-module", {
+    ["build-plugin-stark-module", {
       "outputDir": 'build' // umd 构建结果打包至项目 build 目录
     }]
   ]
@@ -121,7 +121,7 @@ export default function ExampleComponent(props) {
 // build.json
 {
   "plugins": [
-    ["build-plugin-icestark-module", {
+    ["build-plugin-stark-module", {
       "modules": {
         "branch-detail": "./src/branch-detail/index.tsx",
         "edit-info": "./src/edit-info/index.tsx"
@@ -154,7 +154,7 @@ export default function ExampleComponent(props) {
 {
   "plugins": [
     ...
-    ["build-plugin-icestark-module", {
+    ["build-plugin-stark-module", {
       "externals": {
         "react": {
           "root": "React",
@@ -205,7 +205,9 @@ const ModuleComponent = () => {
   const renderNode = useRef(null);
   useEffect(() => {
     mountModule(moduleInfo, renderNode.current, {});
-    return unmoutModule(moduleInfo, renderNode.current);
+    return () => {
+      unmoutModule(moduleInfo, renderNode.current);
+    }
   }, []);
   return (<div ref={renderNode}></div>);
 };
@@ -351,13 +353,13 @@ const App = () => {
 }
 ```
 
-如果使用官方 `build-plugin-icestark-module` 插件来构建的微模块，只需要在 build.json 中配置：
+如果使用官方 `build-plugin-stark-module` 插件来构建的微模块，只需要在 build.json 中配置：
 
 ```javascript
 {
   "plugins": [
     ...
-    ["build-plugin-icestark-module", {
+    ["build-plugin-stark-module", {
       "externals": {
         "react": {
           "root": "React",
