@@ -1,6 +1,6 @@
 {
   "name": "ice-skin-loader",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "ice skin loader",
   "main": "lib/index.js",
   "scripts": {
