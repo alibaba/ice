@@ -4,9 +4,10 @@ const lessSpecificOptions = ['paths', 'rootpath', 'rewriteUrls',
  'math', 'strictMath', 'relativeUrls', 'strictUnits', 'ieCompat', 'javascriptEnabled',
 'globalVars', 'modifyVars', 'urlArgs', 'dumpLineNumbers'];
 
-module.exports = (config, customOptions) => {
+module.exports = (config, customOptions, context) => {
+  const { rootDir } = context;
   let lessLoaderOptions = {
-    implementation: getLessImplementation(),
+    implementation: getLessImplementation(rootDir),
   };
   const lessOptions = {};
 

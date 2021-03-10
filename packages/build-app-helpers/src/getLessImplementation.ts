@@ -3,11 +3,11 @@ function resolvePkgPath(pkg, resolvePath?: string): string {
 }
 
 function getDefaultLessImplementation(resolvePath?: string) {
-  let lessImplPkg;
+  let lessImplPkg = 'less';
   try {
     lessImplPkg = resolvePkgPath(lessImplPkg, resolvePath);
+    // eslint-disable-next-line no-empty
   } catch (error) {
-    lessImplPkg = 'less';
   }
   // eslint-disable-next-line import/no-dynamic-require, global-require
   return require(lessImplPkg);
