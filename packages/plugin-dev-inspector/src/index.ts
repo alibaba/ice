@@ -2,12 +2,12 @@ import * as path from 'path';
 import { spawn } from 'child_process';
 import { IPlugin } from '@alib/build-scripts';
 
-const plugin: IPlugin = ({ onGetWebpackConfig }: any) => {
+const plugin: IPlugin = ({ onGetWebpackConfig }) => {
   if (process.env.NODE_ENV === 'production') {
     return;
   }
 
-  onGetWebpackConfig((config: any) => {
+  onGetWebpackConfig((config) => {
     // inject source file path/line/column to JSX data attributes props
     config.module
       .rule('inspector')
@@ -24,9 +24,10 @@ const plugin: IPlugin = ({ onGetWebpackConfig }: any) => {
 
     // add webpack dev server middleware for launch IDE app with api request
     const root = process.env.PWD;
+    const originalDevServeBefore = config.devServer.get('before');
     config.merge({
       devServer: {
-        before(app) {
+        before(app, server) {
           app.get('/vscode/goto', (req, res) => {
             try {
               const { query } = req;
@@ -39,6 +40,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig }: any) => {
               res.json({ success: false, message });
             }
           });
+          if (typeof originalDevServeBefore === 'function') {
+            originalDevServeBefore(app, server);
+          }
         },
       }
     });
