@@ -1,4 +1,8 @@
-function loadRuntimeModules(runtime) {
+interface IRuntime<T> {
+  loadModule: (module: { default: T } | T) => void;
+}
+
+function loadRuntimeModules(runtime: IRuntime) {
   <% if (runtimeModules.length) {%>
     <% runtimeModules.forEach((runtimeModule) => { %>
       <% if(!runtimeModule.staticModule){ %>
