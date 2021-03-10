@@ -1,12 +1,10 @@
-<% const moduleNames = []; %>
-<% if (runtimeModules.length) {%>
-  <% runtimeModules.filter((moduleInfo) => moduleInfo.staticModule).forEach((runtimeModule, index) => { %>
-    <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %>
-<% } %>import { IAppConfig } from './types';
-
-function loadStaticModules(appConfig: IAppConfig) {
-  <% if (moduleNames.length) {%>
-    <% moduleNames.forEach((name) => { %><%= name%>({appConfig});<% }) %>
+function loadStaticModules(appConfig) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(runtimeModule.staticModule){ %>
+        require('<%= runtimeModule.path %>').default({appConfig});
+      <% } %>
+    <% }) %>
   <% } %>
 }
 
