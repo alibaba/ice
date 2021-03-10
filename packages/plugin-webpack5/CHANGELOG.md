@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- [feat] support remote runtime by module federation
+
 ## 1.1.0
 
 - [fix] remove depenecies of HtmlWebpackPlugin

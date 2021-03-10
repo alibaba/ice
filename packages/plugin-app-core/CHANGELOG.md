@@ -1,8 +1,13 @@
 # Changelog
 
+## 1.4.0
+
+- [feat] refactor import runtime modules
+- [feat] support config sourceDir
+
 ## 1.3.3
 
-- [Fix] export useless `ErrorBoundary` in rax
+- [fix] export useless `ErrorBoundary` in rax
 
 ## 1.3.2
 

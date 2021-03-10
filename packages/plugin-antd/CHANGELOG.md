@@ -1,3 +1,9 @@
-# build-plugin-antd
+# Changelog
 
-plugin for antd component. support less modifyVars and load babel-plugin-import options for antd
+## 0.1.1
+
+- [feat] compatile with less-loader options
+
+## 0.1.0
+
+- [feat] init plugin
