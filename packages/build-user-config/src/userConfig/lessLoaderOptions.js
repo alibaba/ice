@@ -52,6 +52,11 @@ module.exports = (config, customOptions, context) => {
         .tap((options) => ({
           ...options,
           ...lessLoaderOptions,
+          // merge less options
+          lessOptions: {
+            ...(options.lessOptions || {}),
+            ...lessLoaderOptions.lessOptions,
+          }
         }));
     }
   });
