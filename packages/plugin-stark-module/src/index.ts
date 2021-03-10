@@ -15,7 +15,6 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
 
   const {
     externals,
-    modules,
     minify,
     sourceMap,
   } = options as any as Options ?? {};
