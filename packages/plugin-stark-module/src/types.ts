@@ -24,6 +24,7 @@ export interface Options {
   outputDir?: string;
   sourceMap?: boolean;
   library?: string;
+  flatten?: boolean;
 }
 
 export type PartialPlugin = Partial<IPluginAPI>;

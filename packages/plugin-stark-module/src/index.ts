@@ -17,9 +17,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
     externals,
     modules,
     minify,
-    outputDir,
     sourceMap,
-    library,
   } = options as any as Options ?? {};
   const mode = command === 'start' ? 'development' : 'production';
 
@@ -55,7 +53,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
     .end();
 
   // set umd
-  getConfig({ context, onGetWebpackConfig }, { modules, outputDir, library });
+  getConfig({ context, onGetWebpackConfig }, options as any as Options);
 
   // set externals
   if (externals) {
@@ -71,12 +69,12 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   // generate runtime.json
   onHook(`after.${command}.compile`, () => {
     if (externals) {
-      console.log(chalk.green('runtime.json starts to build:'));
+      console.log(chalk.green('runtime.json starts to build...'));
       try {
-        genRuntime({ context }, { externals, modules });
+        genRuntime({ context }, options as any as Options);
         console.log(chalk.green('build succeed!'));
       } catch (e) {
-        console.log(chalk.red('runtime.json starts to build:'));
+        console.log(chalk.red('runtime.json build error, ', e));
       }
     }
   });

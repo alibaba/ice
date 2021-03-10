@@ -7,7 +7,7 @@ interface GetConfig {
   (api: Partial<IPluginAPI>, options?: Options): any;
 }
 
-const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, outputDir, library }) => {
+const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, outputDir, library, flatten }) => {
   const { rootDir, userConfig, pkg } = context;
   const { library: userLibrary } = userConfig;
   const { name } = pkg ?? {};
@@ -27,11 +27,11 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     config.output
       .path(output)
       // set output to dist/[name]
-      .filename('./[name]/index.js')
+      .filename(flatten ? '[name].js' : './[name]/index.js')
       .library((library || userLibrary || name || 'module') as string)
       .libraryTarget('umd');
 
-    config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: './[name]/index.css' }]);
+    config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: flatten ? '[name].css' : './[name]/index.css' }]);
 
     config.devServer.contentBase(path.join(rootDir, 'dist'));
     config.devServer.writeToDisk(true);

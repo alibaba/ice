@@ -15,9 +15,7 @@ const getExternals = (externals: Externals) => {
 };
 
 const setExternals = ({ onGetWebpackConfig }: PartialPlugin, { externals }: Options) => {
-
   onGetWebpackConfig('icestark-module', (config) => {
-
     config.externals(getExternals(externals) as any);
   });
 };

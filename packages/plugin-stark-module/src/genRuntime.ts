@@ -37,14 +37,17 @@ const genRuntimesConfig = (externals: Externals) => {
     }));
 };
 
-const genRuntime = ({ context }: PartialPlugin, { externals, modules, outputDir }: Options) => {
+const genRuntime = ({ context }: PartialPlugin, { externals, modules, outputDir, flatten }: Options) => {
   const { rootDir } = context;
 
   const entries = getModules(modules);
   Object
     .keys(entries)
     .forEach(key => {
-      const outputPath = path.join(rootDir, `${outputDir ?? 'dist'}/${key}`, 'runtime.json');
+      const output = `${outputDir ?? 'dist'}${flatten ? '' : (`/${key}`)}`;
+      const filename = flatten ? `${key}.runtime.json` : 'runtime.json';
+      const outputPath = path.join(rootDir, output, filename);
+
       compileTemplate({
         template: 'runtime.hbs',
         outputPath,
