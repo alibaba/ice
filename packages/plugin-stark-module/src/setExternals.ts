@@ -8,7 +8,10 @@ const getExternals = (externals: Externals) => {
         if (!(localExternals[key] as Runtime).root) {
           throw new Error('[build-plugin-icestark-module] property root is missing in externals!');
         }
-        localExternals[key] = (localExternals[key] as Runtime).root;
+
+        if (!(localExternals[key] as Runtime)?.commonjs2) {
+          localExternals[key] = (localExternals[key] as Runtime).root;
+        }
       }
     });
   return localExternals;

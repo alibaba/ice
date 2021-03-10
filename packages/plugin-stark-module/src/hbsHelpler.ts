@@ -15,7 +15,7 @@ export const compileTemplate = ({
   outputPath,
   params,
 }: compileParams) => {
-  const hbsTemplatePath = templatePath || path.join(__dirname, `./templates/${template}`);
+  const hbsTemplatePath = templatePath || path.join(__dirname, `../templates/${template}`);
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
 
   // register helper

@@ -1,15 +1,18 @@
 import * as path from 'path';
-import { compileTemplate } from './hbs.helpler';
+import { compileTemplate } from './hbsHelpler';
 import { PartialPlugin, Externals, Runtime, Options, Depth } from './types';
-import { getModules } from './entry.helper';
+import { getModules } from './entryHelper';
+
+// eslint-disable-next-line
+const chalk = require('chalk');
 
 const any2ArrayAny= <T>(any: T) => Array.isArray(any) ? any : [any];
 
-const getVersionByUrl = (url: string | string[]): string | undefined => {
+const getVersionByUrl = (url: string | string[]): string => {
   const sevReg = /(([0-9]|([1-9]([0-9]*))).){2}([0-9]|([1-9]([0-9]*)))([-](([0-9A-Za-z]|([1-9A-Za-z]([0-9A-Za-z]*)))[.]){0,}([0-9A-Za-z]|([1-9A-Za-z]([0-9A-Za-z]*)))){0,1}([+](([0-9A-Za-z]{1,})[.]){0,}([0-9A-Za-z]{1,})){0,1}/;
 
   const matches = any2ArrayAny(url)[0].match(sevReg);
-  return matches && matches[0];
+  return matches ? matches[0] : '';
 };
 
 const formatVersion = (version: string, depth: Depth = 0): string => {
@@ -37,25 +40,35 @@ const genRuntimesConfig = (externals: Externals) => {
     }));
 };
 
-const genRuntime = ({ context }: PartialPlugin, { externals, modules, outputDir, flatten }: Options) => {
-  const { rootDir } = context;
+const genRuntime = ({ context }: PartialPlugin, { externals, modules, outputDir, filenameStrategy }: Options) => {
+  if (!externals) {
+    return;
+  }
 
-  const entries = getModules(modules);
-  Object
-    .keys(entries)
-    .forEach(key => {
-      const output = `${outputDir ?? 'dist'}${flatten ? '' : (`/${key}`)}`;
-      const filename = flatten ? `${key}.runtime.json` : 'runtime.json';
-      const outputPath = path.join(rootDir, output, filename);
+  console.log(chalk.green('runtime.json starts to build...'));
+  try {
+    const { rootDir } = context;
 
-      compileTemplate({
-        template: 'runtime.hbs',
-        outputPath,
-        params: {
-          runtimes: genRuntimesConfig(externals),
-        }
+    const entries = getModules(modules);
+    Object
+      .keys(entries)
+      .forEach(key => {
+        const flatten = !(filenameStrategy ?? './[name].index').includes('./');
+        const output = `${outputDir ?? 'dist'}${flatten ? `/${key}.runtime.json` : (`/${key}/runtime.json`)}`;
+        const outputPath = path.join(rootDir, output);
+
+        compileTemplate({
+          template: 'runtime.hbs',
+          outputPath,
+          params: {
+            runtimes: genRuntimesConfig(externals),
+          }
+        });
       });
-    });
+    console.log(chalk.green('build succeed!'));
+  } catch (e) {
+    console.log(chalk.red('runtime.json build error, ', e));
+  }
 };
 
 export default genRuntime;

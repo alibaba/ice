@@ -1,13 +1,10 @@
 import { IPlugin, IUserConfig } from '@alib/build-scripts';
 import { getWebpackConfig } from 'build-scripts-config';
 import { Options } from './types';
-import getConfig from './getConfig';
+import setUMDConfig from './setUMDConfig';
 import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
-
-// eslint-disable-next-line
-const chalk = require('chalk');
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
   const { command, userConfig, webpack, commandArgs } = context;
@@ -52,7 +49,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
     .end();
 
   // set umd
-  getConfig({ context, onGetWebpackConfig }, options as any as Options);
+  setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 
   // set externals
   if (externals) {
@@ -67,15 +64,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
 
   // generate runtime.json
   onHook(`after.${command}.compile`, () => {
-    if (externals) {
-      console.log(chalk.green('runtime.json starts to build...'));
-      try {
-        genRuntime({ context }, options as any as Options);
-        console.log(chalk.green('build succeed!'));
-      } catch (e) {
-        console.log(chalk.red('runtime.json build error, ', e));
-      }
-    }
+    genRuntime({ context }, options as any as Options);
   });
 };
 

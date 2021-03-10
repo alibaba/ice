@@ -18,13 +18,13 @@
 **Options:**
 
 - `outputDir`: final build dir
-- `modules`: entries of multi-moudles, default `src/index`
+- `modules`: entries of multi-moudles, default `{ "index": "src/index" }`
 
 ```json
 {
   "plugins": [
     ["build-plugin-icestark-module", {
-      modules: {
+      "modules": {
         "branch-detail": "./src/branch-detail/index.tsx",
         "edit-info": "./src/edit-info/index.tsx"
       }
@@ -55,6 +55,8 @@
   ]
 }
 ```
+
+- `filenameStrategy`: how to name output, default to `./[name]/index`
 
 - `minify`: see [minify](https://ice.work/docs/guide/basic/build#minify)
 
