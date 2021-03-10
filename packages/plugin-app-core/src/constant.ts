@@ -14,6 +14,12 @@ export const USER_CONFIG = [
   {
     name: 'sourceDir',
     validation: 'string',
+  },
+  {
+    // add generateRuntime in case of runtimes do not pass the ts checker
+    name: 'generateRuntime',
+    validation: 'boolean',
+    defaultValue: true,
   }
 ];
 

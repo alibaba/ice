@@ -60,7 +60,7 @@ export default (api, options) => {
   if (commandArgs.debugRuntime) {
     console.log('[deprecated] cli option --debug-runtime is deprecated, runtime file is generated as default');
   }
-  const generator = initGenerator(api, { ...options, debugRuntime: true, hasJsxRuntime });
+  const generator = initGenerator(api, { ...options, debugRuntime: userConfig.generateRuntime, hasJsxRuntime });
   setRegisterMethod(api, { generator });
 
   // add core template for framework
