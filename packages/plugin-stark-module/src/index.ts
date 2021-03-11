@@ -19,6 +19,8 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
 
   const baseConfig = getWebpackConfig(mode);
 
+  baseConfig.name('MicroModule');
+
   // minify
   const localMinify = outerMinify ?? minify;
   if (localMinify !== undefined) {
