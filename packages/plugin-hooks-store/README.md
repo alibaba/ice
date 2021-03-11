@@ -96,9 +96,9 @@ Set global `initialstates` to `src/app.ts`:
 import { runApp } from 'ice'
 
 const appConfig = {
-  // Set global initialstates
-  store: {
-    initialStates: {}
+  // Set global hooksStoreInitialStates
+  hooksStore: {
+    hooksStoreInitialStates: {}
   }
 }
 ```
@@ -115,8 +115,8 @@ const HomePage = () => {
 }
 
 HomePage.pageConfig = {
-  // Set page initialstates
-  initialstates: {}
+  // Set page hooksStoreInitialStates
+  hooksStoreInitialStates: {}
 }
 ```
 
