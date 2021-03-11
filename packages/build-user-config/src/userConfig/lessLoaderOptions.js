@@ -14,7 +14,7 @@ module.exports = (config, customOptions, context) => {
   if (customOptions) {
     const customOptionKeys = Object.keys(customOptions);
     customOptionKeys.forEach(key => {
-      if (lessSpecificOptions.includes[key]) {
+      if (lessSpecificOptions.includes(key)) {
         lessOptions[key] = customOptions[key];
         delete customOptions[key];
       }
