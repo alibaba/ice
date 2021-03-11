@@ -63,8 +63,12 @@ module.exports = [
   },
   {
     name: 'mock',
-    validation: 'boolean',
-    defaultValue: true
+    validation: (val) => {
+      return validation('sourceMap', val, 'object|boolean');
+    },
+    defaultValue: {
+      exclude: ['**/excludeMock/**'],
+    },
   },
   {
     name: 'externals',
@@ -226,6 +230,7 @@ module.exports = [
   {
     name: 'modularImportRuntime',
     validation: 'boolean',
+    defaultValue: true,
   },
   {
     name: 'esbuild',

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.3
+
+- [feat] new API of getLessImplementation
+
 ## 2.3.2
 
 - [Feat] add `__frameIndex` and `__pageHeader` as `getEntriesByRoute` return params in PHA

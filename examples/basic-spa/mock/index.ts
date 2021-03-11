@@ -1,4 +1,5 @@
 import projects from './projects';
+import exclude from './excludeMock';
 
 const status = 'SUCCESS';
 // mock/index.js
@@ -13,5 +14,6 @@ export default {
   'GET /api/projects': {
     status,
     data: projects
-  }
+  },
+  'GET /api/exclude': exclude,
 };

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+- [feat] support mock.exclude
+- [feat] modify default value of modularImportRuntime
+- [feat] compatible with less-loader options
+
 ## 0.2.3
 
 - [feat] built-in esbuild for minify

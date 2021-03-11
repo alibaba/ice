@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+
+- [feat] upgrate less and less-loader
+
 ## 2.0.0
 
 - [feat] remove dependencies of node-sass

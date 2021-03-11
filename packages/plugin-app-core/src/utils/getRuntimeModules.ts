@@ -33,6 +33,8 @@ export default (plugins: any = [], targetDir: string, debugRuntime: boolean) => 
         fse.copySync(pluginDir, tempDir);
         modulePath = path.join(tempDir, 'runtime.js');
       }
+
+      modulePath = `./${path.relative(targetDir, modulePath.replace(/.(t|j)(s|sx)$/, ''))}`;
     }
     // read package.json
     let pluginConfig = {};

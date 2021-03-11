@@ -13,8 +13,9 @@ module.exports = (config, mock, context) => {
           res.set('Access-Control-Allow-Origin', '*');
           next();
         });
+        const mockIgnore = Object.prototype.toString.call(mock) === '[object Object]' && mock.exclude;
         // keep mock server ahead of devServer.before
-        webpackDevMock(app);
+        webpackDevMock(app, mockIgnore || []);
         if (typeof originalDevServeBefore === 'function') {
           originalDevServeBefore(app, server);
         }

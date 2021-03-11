@@ -75,7 +75,7 @@ module.exports = (config, mode = 'development') => {
   [
     ['css'],
     ['scss', [['sass-loader', require.resolve('sass-loader')]]],
-    ['less', [['less-loader', require.resolve('less-loader'), { javascriptEnabled: true }]]],
+    ['less', [['less-loader', require.resolve('less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
   ].forEach(([style, loaders]) => {
     configCSSRule(config, style, mode, loaders || []);
   });

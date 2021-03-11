@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-rematch",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Easy use `rematch` in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -11,7 +11,8 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "src/runtime.tsx"
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

@@ -1,6 +1,7 @@
 import * as React from 'react';
 // @ts-ignore
-import { ErrorBoundary } from '$ice/ErrorBoundary';
+import ErrorBoundary from '$ice/ErrorBoundary';
+// @ts-ignore
 import defaultRoutes from '$ice/routes';
 import { IceRouter, Routes, parseRoutes } from './runtime/Router';
 import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
@@ -41,7 +42,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     modifyRoutes(appConfigRouter.modifyRoutes);
   }
 
-  let renderRouter = null;
+  let renderRouter: React.ReactNode | null = null;
   if (renderComponent) {
     renderRouter = ((routes: RouteItemProps[]) => () => {
       const [mainRoute] = routes;
