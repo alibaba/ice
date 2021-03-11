@@ -21,10 +21,10 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
         .entry(key)
         .add(path.join(rootDir, (entries as any)[key]));
     });
-
+    // disable splitchunks
+    config.optimization.splitChunks({ cacheGroups: {} });
     // set umd
     const output = path.resolve(rootDir, outputDir ?? 'dist');
-    console.log('fsfsfsfsa', filenameStrategy ? `${filenameStrategy}.js` : './[name]/index.js');
     config.output
       .path(output)
       // set output to outputDir/[name]
