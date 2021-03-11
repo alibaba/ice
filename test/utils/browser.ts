@@ -13,13 +13,25 @@ export interface IPage extends puppeteer.Page {
   push?: (url: string, options?: puppeteer.DirectNavigationOptions) => Promise<puppeteer.Response>;
 }
 
+interface IBrowserOptions {
+  cwd?: string;
+  port?: number;
+  server?: http.Server;
+}
+
 export default class Browser {
   private server: http.Server;
   private browser: puppeteer.Browser;
   private baseUrl: string;
 
-  constructor (cwd: string, port: number) {
-    this.server = this.createServer(cwd, port);
+  constructor (options: IBrowserOptions) {
+    const { server } = options;
+    if (server) {
+      this.server = server;
+    } else {
+      const { cwd, port } = options;
+      this.server = this.createServer(cwd, port);
+    }
   }
 
   createServer(cwd: string, port: number) {

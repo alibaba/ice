@@ -40,7 +40,7 @@ export const setupBrowser: ISetupBrowser = async (options) => {
   const { example, outputDir = 'build', defaultHtml = 'index.html' } = options;
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   const port = await getPort();
-  const browser = new Browser(path.join(rootDir, outputDir), port);
+  const browser = new Browser({ cwd: path.join(rootDir, outputDir), port });
   await browser.start();
   const page = await browser.page(`http://127.0.0.1:${port}/${defaultHtml}`);
   return {

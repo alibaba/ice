@@ -1,4 +1,5 @@
-const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(1), time));
+
+const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
 export default {
   state: {

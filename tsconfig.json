@@ -35,6 +35,7 @@
     { "path": "packages/plugin-stark-module" },
     { "path": "packages/plugin-webpack5" },
     { "path": "packages/webpack-dev-mock" },
-    { "path": "packages/plugin-hooks-store" }
+    { "path": "packages/plugin-hooks-store" },
+    { "path": "packages/plugin-keep-alive" },
   ]
 }

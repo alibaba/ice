@@ -32,4 +32,4 @@ export default function pageSourceLoader(appJSON) {
     return route;
   });
   return JSON.stringify(content);
-};
+}

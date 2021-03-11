@@ -36,7 +36,7 @@ $ npm i --save-dev build-plugin-icestark
     ["build-plugin-fusion", {
       "themeConfig": {
         // 防止与微应用里的基础组件 css prefix 冲突
-        "nextPrefix": "next-icestark-"
+        "css-prefix": "next-icestark-"
       }
     }],
   }
