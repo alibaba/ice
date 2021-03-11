@@ -45,7 +45,7 @@ export default class Generator {
 
   private renderPageComponent({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Page.tsx');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'HooksPage.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
     const pageComponentName = 'PageComponent';
@@ -61,6 +61,30 @@ export default class Generator {
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
+  }
+
+  private renderPageLayout({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
+    const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'HooksLayout.tsx');
+    const pageComponentSourcePath = this.applyMethod('formatPath', `${pageNameDir}/Layout`);
+
+    if (!fse.pathExistsSync(pageComponentSourcePath)) {
+      return;
+    }
+
+    const pageLayoutName = `${pageName}Layout`;
+    const pageLayoutRenderData = {
+      pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
+      pageComponentExport: pageLayoutName,
+      hasPageHooksStore: false,
+      pageHooksStoreImport: `import hooksStore from '${pageHooksStoreFile.replace(`.${this.projectType}`, '')}'`
+    };
+
+    if (existedPageHooksStoreFile) {
+      pageLayoutRenderData.hasPageHooksStore = true;
+    }
+
+    this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
   }
 
   public render() {
@@ -80,8 +104,11 @@ export default class Generator {
 
       const params = { pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile };
 
-      // generate .ice/pages/${pageName}/Page.tsx
+      // generate .ice/pages/${pageName}/HooksPage.tsx
       this.renderPageComponent(params);
+
+      // generate .ice/pages/${pageName}/HooksLayout.tsx
+      this.renderPageLayout(params);
 
     });
   }

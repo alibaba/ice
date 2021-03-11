@@ -122,12 +122,12 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGet
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `${tempDir}/${pageName}/Page.tsx` : '';
+      newValue = pageName ? `${tempDir}/${pageName}/HooksPage.tsx` : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
     const [, , pageName] = matchedPagePath.split('/');
-    const newValue = pageName ? `${tempDir}/${pageName}/Layout` : '';
+    const newValue = pageName ? `${tempDir}/${pageName}/HooksLayout` : '';
     return newValue;
   }
 }
