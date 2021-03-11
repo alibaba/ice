@@ -19,7 +19,7 @@ export const USER_CONFIG = [
     // add generateRuntime in case of runtimes do not pass the ts checker
     name: 'generateRuntime',
     validation: 'boolean',
-    defaultValue: true,
+    defaultValue: false,
   }
 ];
 

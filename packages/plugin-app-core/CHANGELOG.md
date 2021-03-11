@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- [chore] set default value to false of generateRuntime
+
 ## 1.4.0
 
 - [feat] refactor import runtime modules
