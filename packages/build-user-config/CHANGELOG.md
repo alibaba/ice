@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- [fix] lessLoaderOptions
+
 ## 0.3.0
 
 - [feat] support mock.exclude
