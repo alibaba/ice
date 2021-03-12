@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import hooksStore from '@/hooksStore';
+import store from '@/store';
+import { Link } from 'ice';
 
-export default function() {
-  const [user, login] = hooksStore.useHooks('useUser');
+export default function () {
+  const [user, login] = store.useHooks('useUser');
 
-  useEffect(function() {
+  useEffect(function () {
     login();
     // eslint-disable-next-line
   }, []);
@@ -12,7 +13,8 @@ export default function() {
   const { name } = user;
   return (
     <div>
-      Hello, {name}!
+      <p>Hello, {name}!</p>
+      <Link to="/home/a">PageA</Link>
     </div>
   );
 };

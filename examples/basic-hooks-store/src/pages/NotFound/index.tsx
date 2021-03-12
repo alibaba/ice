@@ -5,7 +5,7 @@ export default function() {
   return (
     <div>
       <h2>404 Page...</h2>
-      <Link to="/">Home</Link><br />
+      <Link to="/">home</Link><br />
       <Link to="/todoList">Todo List</Link><br />
     </div>
   );

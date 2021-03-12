@@ -1,10 +1,10 @@
 import React, { useEffect}  from 'react';
-import hooksStore from '@/hooksStore';
-import pageHooksStore from '@/pages/TodoList/hooksStore';
+import store from '@/store';
+import pageStore from '@/pages/TodoList/store';
 
 export default function () {
-  const [user, login] = hooksStore.useHooks('useUser');
-  const [todoList, refresh] = pageHooksStore.useHooks('useTodoList');
+  const [user, login] = store.useHooks('useUser');
+  const [todoList, refresh] = pageStore.useHooks('useTodoList');
   const { name } = user;
 
   useEffect(function() {
