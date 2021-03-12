@@ -8,7 +8,7 @@ builtin `ice/hooks-store` in icejs
 
 ```
 src
-├── hooks				  // global hooks
+├── hooks                       // global hooks
 │   └── useUser.ts
 │   └── useA.ts
 ├── pages
@@ -16,11 +16,11 @@ src
 │   │   └── index.tsx
 │   └── TodoList
 │       ├── index.tsx
-│       ├── hooksStore.ts // page hooksStore
-│       └── hooks         // page hooks
+│       ├── store.ts            // page store
+│       └── hooks               // page hooks
 │           ├── useTodoList.ts
 │           └── useB.ts
-└── hooksStore.ts		  // global hooksStore 
+└── store.ts                    // global store 
 ```
 
 ### Define a hook
@@ -47,28 +47,28 @@ export default function useUser() {
 };
 ```
 
-### Define a hooksStore
+### Define a store
 
 ```javascript
-// src/hooksStore.ts
+// src/store.ts
 import { createHooksStore } from 'ice';
 import useUser from './hooks/useUser';
 
-const hooksStore = createHooksStore({
+const store = createHooksStore({
   useUser
 });
 
-export default hooksStore;
+export default store;
 
-// src/pages/TodoList/hooksStore.ts
+// src/pages/TodoList/store.ts
 import { createHooksStore } from 'ice';
 import useTodoList from './hooks/useTodoList';
 
-const hooksStore = createHooksStore({
+const store = createHooksStore({
   useTodoList
 });
 
-export default hooksStore;
+export default store;
 ```
 
 ### With Component
@@ -76,12 +76,12 @@ export default hooksStore;
 ```javascript
 // src/pages/TodoList/index.tsx
 import React, { useEffect}  from 'react';
-import hooksStore from '@/hooksStore';
-import pageHooksStore from '@/pages/TodoList/hooksStore';
+import store from '@/store';
+import pageStore from '@/pages/TodoList/store';
 
 export default function () {
-  const [user, login] = hooksStore.useHooks('useUser');
-  const [todoList, refresh] = pageHooksStore.useHooks('useTodoList');
+  const [user, login] = store.useHooks('useUser');
+  const [todoList, refresh] = pageStore.useHooks('useTodoList');
   const { name } = user;
 
   // do something...
@@ -96,9 +96,9 @@ Set global `initialstates` to `src/app.ts`:
 import { runApp } from 'ice'
 
 const appConfig = {
-  // Set global hooksStoreInitialStates
+  // Set global initialStates
   hooksStore: {
-    hooksStoreInitialStates: {}
+    initialStates: {}
   }
 }
 ```
@@ -115,8 +115,8 @@ const HomePage = () => {
 }
 
 HomePage.pageConfig = {
-  // Set page hooksStoreInitialStates
-  hooksStoreInitialStates: {}
+  // Set page initialStates
+  initialStates: {}
 }
 ```
 
