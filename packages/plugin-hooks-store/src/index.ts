@@ -1,7 +1,7 @@
 import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
 import Generator from './generator';
-import { getAppHooksStorePath } from './utils/getPath';
+import { getAppStorePath } from './utils/getPath';
 
 const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackConfig, modifyUserConfig }) => {
 
@@ -14,7 +14,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const pages = applyMethod('getPages', rootDir, srcDir);
 
-  const appHooksStoreFile = applyMethod('formatPath', getAppHooksStorePath({ rootDir, srcDir, projectType }));
+  const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
 
   applyMethod('addExport', {
     source: '@ice/hooks-store',
@@ -69,7 +69,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
       .options({
         targetPath
       });
-    config.resolve.alias.set('$hooksStore', appHooksStoreFile);
+    config.resolve.alias.set('$store', appStoreFile);
   });
 
   const gen = new Generator({
@@ -82,7 +82,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /hooksStore.*|pages\/\w+\/hooksStore.*/, () => {
+    applyMethod('watchFileChange', /store.*|pages\/\w+\/store.*/, () => {
       gen.render();
     });
   });

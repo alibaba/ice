@@ -1,24 +1,24 @@
-import AppHooksStore from '$hooksStore';
+import AppStore from '$store';
 
 export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
 
-  const AppHooksStoreProvider = ({ children }) => {
-    const hooksStoreConfig = appConfig.hooksStore || {};
+  const StoreProvider = ({ children }) => {
+    const storeConfig = appConfig.hooksStore || {};
 
-    let hooksStoreInitialStates = {};
+    let initialStates = {};
 
     if (initialData.initialStates) {
-      hooksStoreInitialStates = initialData.initialStates;
-    } else if (hooksStoreConfig.hooksStoreInitialStates) {
-      hooksStoreInitialStates = hooksStoreConfig.hooksStoreInitialStates;
+      initialStates = initialData.initialStates;
+    } else if (storeConfig.initialStates) {
+      initialStates = storeConfig.initialStates;
     }
 
-    return createElement(AppHooksStore.Provider, {
-      hooksStoreInitialStates,
+    return createElement(AppStore.Provider, {
+      initialStates,
       children
     });
   };
-  if (AppHooksStore && AppHooksStore.Provider) {
-    addProvider(AppHooksStoreProvider);
+  if (AppStore && AppStore.Provider) {
+    addProvider(StoreProvider);
   }
 };

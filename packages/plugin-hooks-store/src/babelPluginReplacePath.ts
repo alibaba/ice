@@ -49,7 +49,7 @@ module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => 
                 // custom alias: const Home = lazy(() => import('$pages/home));
                 // relative path: const Home = lazy(() => import('../pages/Home'));
                 const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
-                // replace to: const Home =lazy (() => import('ice/Home/Home'));
+                // replace to: const Home =lazy (() => import('ice/Home'));
                 if (newValue) {
                   args[i].value = newValue;
                 }
@@ -122,12 +122,12 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGet
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `${tempDir}/${pageName}/HooksPage.tsx` : '';
+      newValue = pageName ? `${tempDir}/${pageName}` : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
     const [, , pageName] = matchedPagePath.split('/');
-    const newValue = pageName ? `${tempDir}/${pageName}/HooksLayout` : '';
+    const newValue = pageName ? `${tempDir}/${pageName}/Layout` : '';
     return newValue;
   }
 }

@@ -5,7 +5,7 @@
     "rootDir": "src",
     "outDir": "lib",
     "paths": {
-      "$hooksStore": ["./src/_hooksStore"]
+      "$store": ["./src/_store"]
     }
   },
 }

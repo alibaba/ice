@@ -2,8 +2,9 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 
 import {
-  getPageHooksStorePath
+  getPageStorePath
 } from './utils/getPath';
+import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
   pageName: string;
@@ -45,8 +46,12 @@ export default class Generator {
 
   private renderPageComponent({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'HooksPage.tsx');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
+
+    if (!fse.pathExistsSync(pageComponentSourcePath)) {
+      return;
+    }
 
     const pageComponentName = 'PageComponent';
     const pageComponentRenderData = {
@@ -58,6 +63,7 @@ export default class Generator {
 
     if (existedPageHooksStoreFile) {
       pageComponentRenderData.hasPageHooksStore = true;
+      checkPageIndexFileExists(pageComponentSourcePath, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
@@ -65,7 +71,7 @@ export default class Generator {
 
   private renderPageLayout({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
-    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'HooksLayout.tsx');
+    const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Layout.tsx');
     const pageComponentSourcePath = this.applyMethod('formatPath', `${pageNameDir}/Layout`);
 
     if (!fse.pathExistsSync(pageComponentSourcePath)) {
@@ -82,6 +88,7 @@ export default class Generator {
 
     if (existedPageHooksStoreFile) {
       pageLayoutRenderData.hasPageHooksStore = true;
+      checkPageIndexFileExists(pageComponentSourcePath, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
@@ -93,7 +100,7 @@ export default class Generator {
     pages.forEach(pageName => {
       const pageNameDir = path.join(this.rootDir, this.srcDir, 'pages', pageName);
 
-      const pageHooksStoreFile = this.applyMethod('formatPath', getPageHooksStorePath({
+      const pageHooksStoreFile = this.applyMethod('formatPath', getPageStorePath({
         rootDir: this.rootDir,
         srcDir: this.srcDir,
         pagePath: pageName,
@@ -104,10 +111,10 @@ export default class Generator {
 
       const params = { pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile };
 
-      // generate .ice/pages/${pageName}/HooksPage.tsx
+      // generate .ice/pages/${pageName}/index.tsx
       this.renderPageComponent(params);
 
-      // generate .ice/pages/${pageName}/HooksLayout.tsx
+      // generate .ice/pages/${pageName}/Layout.tsx
       this.renderPageLayout(params);
 
     });
