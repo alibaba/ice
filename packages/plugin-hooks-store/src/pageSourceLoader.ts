@@ -7,7 +7,7 @@ import { join } from 'path';
  *  "routes": [
       {
         "path": "/",
-        "source": ".rax/pages/Home/Home",
+        "source": ".rax/pages/Home/(index)",
       }
     ]
   }
@@ -19,11 +19,6 @@ export default function pageSourceLoader(appJSON) {
   content.routes = content.routes.map(route => {
     let pageSource = route.source;
     if (/^\/?pages/.test(pageSource)) {
-      if (/index$/.test(pageSource)) {
-        pageSource = pageSource.replace(/index$/, 'Page');
-      } else {
-        pageSource = join(pageSource, 'Page');
-      }
       return {
         ...route,
         pageSource: join(targetPath, pageSource)
