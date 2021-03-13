@@ -10,7 +10,8 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
   const targetPath = getValue('TEMP_PATH');
   const tempDir = (path.basename(targetPath) || '').split('.')[1];
   const projectType = getValue('PROJECT_TYPE');
-
+  const templatePath = path.join(__dirname, 'template');
+  const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const pages = applyMethod('getPages', rootDir, srcDir);
 
@@ -23,6 +24,8 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
     exportName: 'createHooksStore',
     exportMembers: ['createHooksStore'],
   });
+
+  applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
 
   // add babel plugins for ice lazy
   // @ts-ignore
@@ -77,7 +80,8 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
     rootDir,
     applyMethod,
     projectType,
-    srcDir
+    srcDir,
+    typesTemplatePath
   });
 
   gen.render();
