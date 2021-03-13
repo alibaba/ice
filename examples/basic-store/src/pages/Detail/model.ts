@@ -1,4 +1,3 @@
-
 const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
 export default {
