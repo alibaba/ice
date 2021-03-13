@@ -3,7 +3,7 @@ import AppStore from '$store';
 export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
 
   const StoreProvider = ({ children }) => {
-    const storeConfig = appConfig.hooksStore || {};
+    const storeConfig = appConfig.store || {};
 
     let initialStates = {};
 
