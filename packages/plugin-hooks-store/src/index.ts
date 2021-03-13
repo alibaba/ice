@@ -2,6 +2,7 @@ import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
 import Generator from './generator';
 import { getAppStorePath } from './utils/getPath';
+import { formatPath } from '@builder/app-helpers';
 
 const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackConfig, modifyUserConfig }) => {
 
@@ -15,7 +16,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const pages = applyMethod('getPages', rootDir, srcDir);
 
-  const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
+  const appStoreFile = formatPath(getAppStorePath({ rootDir, srcDir, projectType }));
 
   applyMethod('addExport', {
     source: '@ice/hooks-store',

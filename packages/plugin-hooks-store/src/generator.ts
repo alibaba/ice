@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import { formatPath } from '@builder/app-helpers'
 
 import {
   getPageStorePath
@@ -52,7 +53,8 @@ export default class Generator {
   private renderPageComponent({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'index.tsx');
-    const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
+    const pageComponentSourcePath = formatPath(pageNameDir);
+    
 
     if (!fse.pathExistsSync(pageComponentSourcePath)) {
       return;
@@ -77,7 +79,7 @@ export default class Generator {
   private renderPageLayout({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Layout.tsx');
-    const pageComponentSourcePath = this.applyMethod('formatPath', `${pageNameDir}/Layout`);
+    const pageComponentSourcePath = formatPath(`${pageNameDir}/Layout`);
 
     if (!fse.pathExistsSync(pageComponentSourcePath)) {
       return;
@@ -116,7 +118,7 @@ export default class Generator {
     pages.forEach(pageName => {
       const pageNameDir = path.join(this.rootDir, this.srcDir, 'pages', pageName);
 
-      const pageHooksStoreFile = this.applyMethod('formatPath', getPageStorePath({
+      const pageHooksStoreFile = formatPath(getPageStorePath({
         rootDir: this.rootDir,
         srcDir: this.srcDir,
         pagePath: pageName,

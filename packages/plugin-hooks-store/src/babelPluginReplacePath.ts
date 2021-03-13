@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { formatPath } from '@builder/app-helpers'
 
 // match:
 // eg: src/pages/home | src/pages/home/index | src/pages/home/index(.tsx|.jsx) | src/pages/index(.tsx|jsx)
@@ -88,7 +89,7 @@ function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): st
   Object.keys(alias).forEach(currKey => {
     if (value.startsWith(currKey)) {
       const [, ...args] = value.split(currKey);
-      const currAliasPath = applyMethod('formatPath', path.join(alias[currKey], ...args));
+      const currAliasPath = formatPath(path.join(alias[currKey], ...args));
       if (currAliasPath.includes('src/pages')) {
         aliasPath = currAliasPath;
       }
@@ -103,9 +104,7 @@ function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): st
 function matchRelativePath(routesPath: string, value: string, applyMethod: Function): string {
   let relativePath = '';
   if (/^(\.\/|\.{2}\/)/.test(value)) {
-    relativePath = applyMethod('formatPath',
-      path.relative(process.cwd(), path.join(routesPath, '..', value))
-    );
+    relativePath = formatPath(path.relative(process.cwd(), path.join(routesPath, '..', value)));
   }
   return relativePath;
 }
