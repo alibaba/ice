@@ -28,7 +28,6 @@ src
 ```javascript
 // src/hooks/useUser.ts
 import { useState } from 'react';
-import delay from '@/delay';
 
 export default function useUser() {
   const [user, setUser] = useState({
@@ -36,7 +35,6 @@ export default function useUser() {
   });
 
   async function login() {
-    await delay(1000);
     setUser({ name: 'Alvin' });
   };
 
@@ -97,26 +95,9 @@ import { runApp } from 'ice'
 
 const appConfig = {
   // Set global initialStates
-  hooksStore: {
+  store: {
     initialStates: {}
   }
-}
-```
-
-Set page `initialstates` to `src/pages/*/index.tsx`:
-
-```javascript
-const HomePage = () => {
-  return (
-    <>
-      <h2>HomePage</h2>
-    </>
-  )
-}
-
-HomePage.pageConfig = {
-  // Set page initialStates
-  initialStates: {}
 }
 ```
 
