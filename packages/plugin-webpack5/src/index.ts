@@ -2,12 +2,15 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin, Json } from '@alib/build-scripts';
 import analyzeNext from './analyzeNext';
-import filterPackages from './filterPackages';
+import filterPackages, { IFilterOptions } from './filterPackages';
 import remoteConfig from './remoteConfig';
 import compileRemote from './compileRemote';
 
+interface IRemoteOptions extends IFilterOptions {
+  activeInBuild: boolean;
+}
 interface IOptions {
-  remoteRuntime?: boolean;
+  remoteRuntime?: boolean | IRemoteOptions;
 }
 
 const plugin: IPlugin = (api, options = {}) => {
@@ -37,7 +40,7 @@ const plugin: IPlugin = (api, options = {}) => {
     'react-dom': 'ReactDOM',
   };
   // filter dependencies
-  const compileKeys = filterPackages(Object.keys(pkgDeps));
+  const compileKeys = filterPackages(Object.keys(pkgDeps), typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
   let needCompile = false;
 
   if (activeRemoteRuntime) {
