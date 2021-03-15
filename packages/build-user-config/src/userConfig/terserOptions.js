@@ -25,11 +25,11 @@ module.exports = (config, customOptions, context) => {
             delete customOptions[optionKey];
           }
         });
-        return {
+        return [{
           ...options,
           ...customOptions,
           terserOptions,
-        };
+        }];
       }
     });
   }
