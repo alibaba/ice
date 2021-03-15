@@ -36,23 +36,30 @@ const plugin: IPlugin = (api, options = {}) => {
     react: 'React',
     'react-dom': 'ReactDOM',
   };
-  // check @alifd/next
-  const [cssPath, removePackage] = analyzeNext(userConfig, context.rootDir);
-  if (removePackage) {
-    // compile next
-    delete pkgDeps[removePackage];
-  }
-  // read pkgDep from cache
-  let cacheContent = {};
-  try {
-    cacheContent = fse.readJSONSync(depsPath);
-  } catch(err) {
-    // ignore err
-  }
   // filter dependencies
   const compileKeys = filterPackages(Object.keys(pkgDeps));
-  const needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+  let needCompile = false;
+
   if (activeRemoteRuntime) {
+    let cssPath = '';
+    // read pkgDep from cache
+    let cacheContent = {};
+    try {
+      cacheContent = fse.readJSONSync(depsPath);
+    } catch(err) {
+      // ignore err
+    }
+    needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+
+    if (pkgDeps['@alifd/next']) {
+      // check @alifd/next
+      const [nextCSS, removePackage] = analyzeNext(userConfig, context.rootDir);
+      cssPath = nextCSS;
+      if (removePackage) {
+        // compile next
+        delete pkgDeps[removePackage];
+      }
+    }
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeFolder);
     const externalBundles = [
