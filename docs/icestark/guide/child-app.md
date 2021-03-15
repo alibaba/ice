@@ -134,9 +134,12 @@ vue 应用改造同样在入口文件中导出微应用相关生命周期即可�
 ```js
 // 应用入口文件 src/main.js
 import Vue from 'vue';
-import { isInIcestark } from '@ice/stark-app';
+import { isInIcestark, setLibraryName } from '@ice/stark-app';
 
 let vue;
+
+// 注意：`setLibraryName` 的入参需要与 webpack 工程配置的 output.library 保持一致
+setLibraryName('microApp');
 
 export function mount(props) {
   const { container } = props;
@@ -151,7 +154,33 @@ export function unmount() {
 }
 
 if (!isInIcestark()) {
-  new Vue(...);  
+  new Vue(...);
+}
+```
+
+若使用的是 Vue 3.0，则应用需要使用 Vue 3.0 的方式进行渲染。
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+import { isInIcestark, setLibraryName } from '@ice/stark-app';
+
+let vue = null;
+
+// 注意：`setLibraryName` 的入参需要与 webpack 工程配置的 output.library 保持一致
+setLibraryName('microApp')
+
+export function mount({ container }) {
+  vue = createApp(App);
+  vue.mount(container);
+}
+
+export function unmount() {
+  vue.unmount();
+}
+
+if (!isInIcestark()) {
+  createApp(App).mount('#app');
 }
 ```
 
