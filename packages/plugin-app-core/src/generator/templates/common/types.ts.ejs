@@ -29,9 +29,13 @@ interface IContext {
   path?: string;
 }
 
+interface IStoreConfig {
+  resetPageInitialStates: boolean
+}
+
 export interface IBuildConfig {
   router?: object | boolean;
-  store?: boolean;
+  store?: boolean | IStoreConfig;
   icestarkUMD?: boolean;
   web?: object;
 }
