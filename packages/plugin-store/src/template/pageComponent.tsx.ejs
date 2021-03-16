@@ -13,12 +13,10 @@ import * as React from 'react';
 <% } %>
 
 <% if (importStr && isSingleModel) { %>
-const model = { default: <%- modelsStr %> }
 const initialStates = { default: <%- modelsStr %>.state };
 <% } %>
 
 <% if (importStr && !isSingleModel) { %>
-const models = { <%- modelsStr %> }
 const initialStates = {
   <% modelsStr.split(',').forEach(function(model){ %>
     <% if (model) { %>
