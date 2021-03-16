@@ -8,13 +8,33 @@ import * as React from 'react';
 
 <%- pageComponentImport %>
 
+<% if(importStr) { %>
+<%- importStr %>
+<% } %>
+
+<% if (importStr && isSingleModel) { %>
+const model = { default: <%- modelsStr %> }
+const initialStates = { default: <%- modelsStr %>.state };
+<% } %>
+
+<% if (importStr && !isSingleModel) { %>
+const models = { <%- modelsStr %> }
+const initialStates = {
+  <% modelsStr.split(',').forEach(function(model){ %>
+    <% if (model) { %>
+      <%- model %>: <%- model %>.state,
+    <% } %>
+  <% }); %>
+}
+<% } %>
+
 const PageComponentName = <%= pageComponentExport %>;
 
 <% if(hasPageStore) { %>
   const PageProvider = store.Provider;
   const StoreWrapperedPage = (props) => {
     return (
-      <PageProvider>
+      <PageProvider initialStates={initialStates}>
         <PageComponentName {...props} />
       </PageProvider>
     )

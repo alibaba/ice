@@ -67,7 +67,9 @@ export default class Generator {
     this.srcDir = srcDir;
   }
 
-  private getPageModels(pageName: string, pageModelsDir: string, pageModelFile: string) {
+  private getPageModels(pageModelsDir: string, pageModelFile: string) {
+    let importStr = '';
+    let modelsStr = '';
     if (fse.pathExistsSync(pageModelsDir)) {
       const pageModels = recursiveReaddir(pageModelsDir)
         .filter(pageModel => matchRegex.test(pageModel))
@@ -75,8 +77,6 @@ export default class Generator {
 
       pageModelsDir = this.applyMethod('formatPath', pageModelsDir);
 
-      let importStr = '';
-      let modelsStr = '';
       pageModels.forEach(pageModel => {
         if (pageModel.dir) {
           // Note: 嵌套忽略
@@ -91,14 +91,19 @@ export default class Generator {
         importStr,
         modelsStr
       };
+    } else if (fse.pathExistsSync(pageModelFile)) {
+      const pageComponentName = 'pageModel';
+      return {
+        isSingleModel: true,
+        importStr: `import ${pageComponentName} from '${this.applyMethod('formatPath', pageModelFile.replace(`.${this.projectType}`, ''))}';`,
+        modelsStr: pageComponentName
+      };
+    } else {
+      return {
+        importStr,
+        modelsStr,
+      };
     }
-
-    const pageComponentName = 'PageComponent';
-    return {
-      isSingleModel: true,
-      importStr: `import ${pageComponentName} from '${this.applyMethod('formatPath', pageModelFile)}';`,
-      modelsStr: pageComponentName
-    };
   }
 
   private renderAppStore({ appStoreFile }) {
@@ -156,14 +161,13 @@ export default class Generator {
     });
   }
 
-  private renderPageStore({ pageName, pageNameDir, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {
+  private renderPageStore({ pageName, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {
     if (!existedStoreFile && (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile))) {
       const sourceFilename = 'store';
       const exportName = 'store';
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
 
-      const pageModelFilePath = path.join(pageNameDir, 'model');
-      const renderData = this.getPageModels(pageName, pageModelsDir, pageModelFilePath);
+      const renderData = this.getPageModels(pageModelsDir, pageModelFile);
       this.applyMethod('addRenderFile', this.pageStoreTemplatePath, targetPath, renderData);
 
       this.applyMethod('removePageExport', pageName, exportName);
@@ -177,11 +181,14 @@ export default class Generator {
     const pageComponentSourcePath = this.applyMethod('formatPath', pageNameDir);
 
     const pageComponentName = 'PageComponent';
+    const modelRenderData = this.getPageModels(pageModelsDir, pageModelFile);
+
     const pageComponentRenderData = {
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       hasPageStore: false,
-      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\''
+      pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\'',
+      ...modelRenderData
     };
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
