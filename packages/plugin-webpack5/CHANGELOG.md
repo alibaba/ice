@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- [fix] active rule of remote runtime
+
 ## 1.2.0
 
 - [feat] support remote runtime by module federation
