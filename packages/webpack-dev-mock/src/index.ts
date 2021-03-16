@@ -133,7 +133,6 @@ function realApplyMock(app, ignore: IIgnoreFolders) {
   // use debounce to avoid too much file change events
   const updateMockConfig = debounce(() => {
     mockConfig = parseMockConfig();
-    console.log('mockConfig', mockConfig);
   }, 300);
   watcher.on('all', (event, path) => {
     logWatchFile(event, path);
