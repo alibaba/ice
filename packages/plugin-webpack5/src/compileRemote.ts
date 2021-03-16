@@ -6,7 +6,7 @@ interface IExposes {
   [key: string]: string;
 }
 
-export default (api: IPluginAPI, { runtimeFolder, cacheFolder, externalMap, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps }) => {
+export default (api: IPluginAPI, { runtimeFolder, externals, cacheFolder, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps }) => {
   const { context, onHook } = api;
   const { webpack } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
@@ -22,10 +22,28 @@ export default (api: IPluginAPI, { runtimeFolder, cacheFolder, externalMap, remo
       uniqueName: 'runtime',
       path: runtimeFolder,
     },
-    externals: externalMap,
+    externals,
     optimization: {
       minimize: false,
       chunkIds: 'named',
+    },
+    module: {
+      // add simple css rule for remote debug
+      rules: [
+        {
+          test: /\.css$/,
+          use: ['css-loader', 'sass-loader'],
+        },
+        {
+          test: /\.scss$/,
+          // use built-in dependencies
+          use: ['style-loader' ,'css-loader', 'sass-loader'],
+        },
+        {
+          test: /\.less$/,
+          use: ['style-loader', 'css-loader', 'less-loader'],
+        }
+      ]
     },
     plugins: [
       new (webpack as any).ProgressPlugin({}),
