@@ -2,12 +2,15 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin, Json } from '@alib/build-scripts';
 import analyzeNext from './analyzeNext';
-import filterPackages from './filterPackages';
+import filterPackages, { IFilterOptions } from './filterPackages';
 import remoteConfig from './remoteConfig';
 import compileRemote from './compileRemote';
 
+interface IRemoteOptions extends IFilterOptions {
+  activeInBuild: boolean;
+}
 interface IOptions {
-  remoteRuntime?: boolean;
+  remoteRuntime?: boolean | IRemoteOptions;
 }
 
 const plugin: IPlugin = (api, options = {}) => {
@@ -36,23 +39,30 @@ const plugin: IPlugin = (api, options = {}) => {
     react: 'React',
     'react-dom': 'ReactDOM',
   };
-  // check @alifd/next
-  const [cssPath, removePackage] = analyzeNext(userConfig, context.rootDir);
-  if (removePackage) {
-    // compile next
-    delete pkgDeps[removePackage];
-  }
-  // read pkgDep from cache
-  let cacheContent = {};
-  try {
-    cacheContent = fse.readJSONSync(depsPath);
-  } catch(err) {
-    // ignore err
-  }
   // filter dependencies
-  const compileKeys = filterPackages(Object.keys(pkgDeps));
-  const needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+  const compileKeys = filterPackages(Object.keys(pkgDeps), typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
+  let needCompile = false;
+
   if (activeRemoteRuntime) {
+    let cssPath = '';
+    // read pkgDep from cache
+    let cacheContent = {};
+    try {
+      cacheContent = fse.readJSONSync(depsPath);
+    } catch(err) {
+      // ignore err
+    }
+    needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+
+    if (pkgDeps['@alifd/next']) {
+      // check @alifd/next
+      const [nextCSS, removePackage] = analyzeNext(userConfig, context.rootDir);
+      cssPath = nextCSS;
+      if (removePackage) {
+        // compile next
+        delete pkgDeps[removePackage];
+      }
+    }
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeFolder);
     const externalBundles = [
