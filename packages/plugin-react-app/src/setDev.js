@@ -42,6 +42,10 @@ module.exports = (api, opts) => {
       warnings: true,
       timings: true,
     });
+    // compatible with webpack 5
+    ['errors', 'warnings'].forEach((jsonKey) => {
+      statsJson[jsonKey] = (statsJson[jsonKey] || []).map((item) => (item.message || item));
+    });
     const messages = formatWebpackMessages(statsJson);
     // 包含错误时不打印 localUrl 和 assets 信息
     const isSuccessful = !messages.errors.length;
