@@ -130,12 +130,13 @@ function realApplyMock(app, ignore: IIgnoreFolders) {
     ignored: /node_modules/,
     persistent: true,
   });
+  // use debounce to avoid too much file change events
+  const updateMockConfig = debounce(() => {
+    mockConfig = parseMockConfig();
+  }, 300);
   watcher.on('all', (event, path) => {
     logWatchFile(event, path);
-    // use debounce to avoid too much file change events
-    debounce(() => {
-      mockConfig = parseMockConfig();
-    }, 300);
+    updateMockConfig();
   });
 
   app.use((req, res, next) => {
