@@ -1,7 +1,7 @@
 import { buildFixture,setupBrowser } from './utils/build';
 import { IPage } from './utils/browser';
 
-const example = 'basic-custom-app-store';
+const example = 'basic-custom-store';
 let page: IPage = null;
 let browser = null;
 
