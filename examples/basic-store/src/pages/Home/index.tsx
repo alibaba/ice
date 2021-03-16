@@ -35,9 +35,9 @@ export default () => {
           Toggle Title
       </div>
       <div style={{ marginTop: 30 }}>
-        <button type="button" onClick={counterActions.increment}>+</button>
+        <button type="button" id="increment" onClick={counterActions.increment}>+</button>
         <span>{counterState.count}</span>
-        <button type="button" onClick={counterActions.decrementAsync}>-</button>
+        <button type="button" id="decrement" onClick={counterActions.decrementAsync}>-</button>
       </div>
 
       <Link to="/about">about</Link>
