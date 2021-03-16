@@ -3,5 +3,8 @@
   "router": {
     "lazy": false
   },
+  "store": {
+    "resetPageInitialStates": true
+  },
   "tsChecker": true
 }
