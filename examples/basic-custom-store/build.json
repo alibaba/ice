@@ -1,5 +1,5 @@
 {
   "store": {
-    "resetPageInitialStates": false
+    "resetPageInitialStates": true
   }
 }
