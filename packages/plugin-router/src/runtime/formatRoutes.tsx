@@ -13,11 +13,9 @@ export default function formatRoutes(routes: IRouterConfig[], parentPath: string
     }
     if (item.children) {
       item.children = formatRoutes(item.children, item.path);
-    } else if (item.path) {
+    } else if (item.component) {
       const itemComponent = item.component as any;
-      if (itemComponent) {
-        itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
-      }
+      itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
     }
     return item;
   });
