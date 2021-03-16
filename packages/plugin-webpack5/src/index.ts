@@ -39,8 +39,15 @@ const plugin: IPlugin = (api, options = {}) => {
     react: 'React',
     'react-dom': 'ReactDOM',
   };
+  const externals = [];
+  if (userConfig?.externals) {
+    externals.push(userConfig.externals);
+  }
+  if (!(userConfig?.externals as Json)?.react) {
+    externals.push(externalMap);
+  }
   // filter dependencies
-  const compileKeys = filterPackages(Object.keys(pkgDeps), typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
+  let compileKeys = filterPackages(Object.keys(pkgDeps), typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
   let needCompile = false;
 
   if (activeRemoteRuntime) {
@@ -52,8 +59,6 @@ const plugin: IPlugin = (api, options = {}) => {
     } catch(err) {
       // ignore err
     }
-    needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
-
     if (pkgDeps['@alifd/next']) {
       // check @alifd/next
       const [nextCSS, removePackage] = analyzeNext(userConfig, context.rootDir);
@@ -61,8 +66,11 @@ const plugin: IPlugin = (api, options = {}) => {
       if (removePackage) {
         // compile next
         delete pkgDeps[removePackage];
+        compileKeys = compileKeys.filter(compileKey => compileKey !== removePackage);
       }
     }
+    // check deps after remote package
+    needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeFolder);
     const externalBundles = [
@@ -76,11 +84,11 @@ const plugin: IPlugin = (api, options = {}) => {
       fse.copyFileSync(filePath, path.join(runtimeFolder, fileName));
       injectBundles.push(`/remoteRuntime/${fileName}`);
     });
-    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externalMap, compileKeys });
+    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externals, compileKeys });
   }
   // if missmatch cache compile remote runtime
   if (needCompile) {
-    compileRemote(api, { runtimeFolder, cacheFolder, externalMap, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps });
+    compileRemote(api, { runtimeFolder, cacheFolder, externals, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps });
   }
 
   registerUserConfig({

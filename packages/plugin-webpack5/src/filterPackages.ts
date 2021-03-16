@@ -24,8 +24,8 @@ function filterPackages(packages: string[], { include, exclude }: IFilterOptions
       return true;
     }
     // built-in rule for exclude packages
-    const startsWithPrefixs = ['@babel/', 'build-plugin-', '@types/'];
-    const includesStrings = ['webpack-plugin', 'eslint-config', 'tslint-config', 'babel-plugin', 'babel-preset'];
+    const startsWithPrefixs = ['@babel/', '@types/'];
+    const includesStrings = ['webpack-plugin', 'eslint-config', 'build-plugin-', 'tslint-config', 'babel-plugin', 'babel-preset'];
     const excludePackages = ['ice.js', 'ice-scripts', 'webpack', 'eslint', '@iceworks/spec', 'stylelint'];
     if (startsWithPrefixs.some(prefix => packageName.startsWith(prefix))
       || includesStrings.some(str => packageName.includes(str))
