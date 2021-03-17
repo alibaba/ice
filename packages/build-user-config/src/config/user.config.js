@@ -24,17 +24,12 @@ module.exports = [
   {
     name: 'extensions',
     validation: 'array',
-    defaultValue: [
-      '.js',   '.jsx',
-      '.json', '.html',
-      '.ts',   '.tsx',
-      '.rml'
-    ]
+    defaultValue: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx', '.rml']
   },
   {
     name: 'modules',
     validation: 'array',
-    defaultValue: [ 'node_modules' ]
+    defaultValue: ['node_modules']
   },
   {
     name: 'devServer',
@@ -50,7 +45,7 @@ module.exports = [
       quiet: false,
       watchOptions: {
         ignored: /node_modules/,
-        aggregateTimeout: 600,
+        aggregateTimeout: 600
       },
       before(app) {
         app.use((req, res, next) => {
@@ -58,7 +53,7 @@ module.exports = [
           res.set('Access-Control-Allow-Origin', '*');
           next();
         });
-      },
+      }
     }
   },
   {
@@ -67,8 +62,8 @@ module.exports = [
       return validation('sourceMap', val, 'object|boolean');
     },
     defaultValue: {
-      exclude: ['**/excludeMock/**'],
-    },
+      exclude: ['**/excludeMock/**']
+    }
   },
   {
     name: 'externals',
@@ -111,7 +106,8 @@ module.exports = [
     validation: (val) => {
       return validation('browserslist', val, 'string|object');
     },
-    defaultValue: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4'
+    defaultValue:
+      'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4'
   },
   {
     name: 'vendor',
@@ -141,7 +137,7 @@ module.exports = [
     name: 'sourceMap',
     validation: (val) => {
       return validation('sourceMap', val, 'string|boolean');
-    },
+    }
   },
   {
     name: 'terserOptions',
@@ -213,27 +209,31 @@ module.exports = [
   },
   {
     name: 'targets',
-    validation: 'array',
+    validation: 'array'
   },
   {
     name: 'webpackLoaders',
-    validation: 'object',
+    validation: 'object'
   },
   {
     name: 'webpackPlugins',
-    validation: 'object',
+    validation: 'object'
   },
   {
     name: 'postcssOptions',
-    validation: 'object',
+    validation: 'object'
   },
   {
     name: 'modularImportRuntime',
     validation: 'boolean',
-    defaultValue: true,
+    defaultValue: true
   },
   {
     name: 'esbuild',
     validation: 'object'
   },
+  {
+    name: 'customScriptAttrs',
+    validation: 'object'
+  }
 ];
