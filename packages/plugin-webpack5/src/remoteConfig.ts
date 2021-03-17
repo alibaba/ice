@@ -3,9 +3,8 @@ import * as fse from 'fs-extra';
 import * as cheerio from 'cheerio';
 import { IPluginAPI } from '@alib/build-scripts';
 
-export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injectBundles, externalMap }) => {
-  const { context, getValue, modifyUserConfig, onGetWebpackConfig } = api;
-  const { userConfig } = context;
+export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injectBundles, externals }) => {
+  const { getValue, modifyUserConfig, onGetWebpackConfig } = api;
   // create boostrap for mf
   const bootstrapPath = path.join(getValue('TEMP_PATH'), 'bootstrap.ts');
   fse.writeFileSync(bootstrapPath, 'import(\'../src/app\')', 'utf-8');
@@ -28,11 +27,6 @@ export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injec
       return [[...args, { from: runtimeFolder, to: path.join(args[0].to, 'remoteRuntime') }]];
     });
 
-    const externals = [];
-    if (userConfig.externals) {
-      externals.push(userConfig.externals);
-    }
-    externals.push(externalMap);
     config.externals(externals);
     // inject runtime entry and externals umd
     if (config.plugins.get('HtmlWebpackPlugin')) {

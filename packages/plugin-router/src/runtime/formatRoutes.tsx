@@ -1,21 +1,21 @@
 import * as React from 'react';
 import * as path from 'path';
 import * as queryString from 'query-string';
+import { IRouterConfig } from '../types';
 
 const { useEffect, useState } = React;
 
-export default function formatRoutes(routes, parentPath) {
+export default function formatRoutes(routes: IRouterConfig[], parentPath: string) {
   return routes.map((item) => {
+    if (item.path) {
+      const joinPath = path.join(parentPath || '', item.path);
+      item.path = joinPath === '/' ? '/' : joinPath.replace(/\/$/, '');
+    }
     if (item.children) {
       item.children = formatRoutes(item.children, item.path);
-    } else if (item.path) {
-      const joinPath = path.join(parentPath || '', item.path);
-      // react-router: path=/project/ not match /project
-      item.path = joinPath === '/' ? '/' : joinPath.replace(/\/$/, '');
-      const itemComponent = item.component;
-      if (itemComponent) {
-        itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
-      }
+    } else if (item.component) {
+      const itemComponent = item.component as any;
+      itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
     }
     return item;
   });
