@@ -49,7 +49,7 @@ const plugin: IPlugin = async (api, options = {}) => {
   // filter dependencies
   let compileKeys = await filterPackages(Object.keys(pkgDeps), context.rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
   let needCompile = false;
-  console.log('compileKeys', compileKeys);
+
   if (activeRemoteRuntime) {
     let cssPath = '';
     // read pkgDep from cache
