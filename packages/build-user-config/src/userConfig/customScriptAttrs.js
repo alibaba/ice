@@ -1,4 +1,3 @@
-// @ts-nocheck
 const HtmlWebpackPlugin = require('safe-require')('html-webpack-plugin');
 
 class AddScriptAttrsWebpackPlugin {
