@@ -6,7 +6,7 @@ interface IExposes {
   [key: string]: string;
 }
 
-export default (api: IPluginAPI, { runtimeFolder, externals, cacheFolder, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps }) => {
+export default (api: IPluginAPI, { runtimeFolder, externals, cacheFolder, remoteEntry, remoteName, depsPath, compileKeys }) => {
   const { context, onHook } = api;
   const { webpack } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
@@ -66,7 +66,7 @@ export default (api: IPluginAPI, { runtimeFolder, externals, cacheFolder, remote
           reject(err);
         }
         // write cache after webpack compile success
-        fse.writeFileSync(depsPath, JSON.stringify(pkgDeps), 'utf-8');
+        fse.writeFileSync(depsPath, JSON.stringify(compileKeys), 'utf-8');
         resolve(stat);
       });
     });

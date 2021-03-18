@@ -23,6 +23,9 @@
     "@babel/traverse": "^7.13.0",
     "@babel/types": "^7.13.0",
     "cheerio": "^1.0.0-rc.5",
+    "es-module-lexer": "^0.4.1",
+    "esbuild": "^0.9.3",
+    "fast-glob": "^3.2.5",
     "fs-extra": "^9.1.0",
     "path-browserify": "^1.0.1",
     "style-loader": "^2.0.0"

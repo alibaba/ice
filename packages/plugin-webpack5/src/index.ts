@@ -13,7 +13,7 @@ interface IOptions {
   remoteRuntime?: boolean | IRemoteOptions;
 }
 
-const plugin: IPlugin = (api, options = {}) => {
+const plugin: IPlugin = async (api, options = {}) => {
   const { onGetWebpackConfig, registerUserConfig, context } = api;
   const { remoteRuntime } = options as IOptions;
   const { pkg, userConfig, webpack, command } = context;
@@ -47,9 +47,9 @@ const plugin: IPlugin = (api, options = {}) => {
     externals.push(externalMap);
   }
   // filter dependencies
-  let compileKeys = filterPackages(Object.keys(pkgDeps), typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
+  let compileKeys = await filterPackages(Object.keys(pkgDeps), context.rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
   let needCompile = false;
-
+  console.log('compileKeys', compileKeys);
   if (activeRemoteRuntime) {
     let cssPath = '';
     // read pkgDep from cache
@@ -70,7 +70,7 @@ const plugin: IPlugin = (api, options = {}) => {
       }
     }
     // check deps after remote package
-    needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+    needCompile = activeRemoteRuntime && JSON.stringify(compileKeys) !== JSON.stringify(cacheContent);
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeFolder);
     const externalBundles = [
@@ -88,7 +88,7 @@ const plugin: IPlugin = (api, options = {}) => {
   }
   // if missmatch cache compile remote runtime
   if (needCompile) {
-    compileRemote(api, { runtimeFolder, cacheFolder, externals, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps });
+    compileRemote(api, { runtimeFolder, cacheFolder, externals, remoteEntry, remoteName, depsPath, compileKeys });
   }
 
   registerUserConfig({
