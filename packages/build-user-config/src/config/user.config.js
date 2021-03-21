@@ -236,4 +236,8 @@ module.exports = [
     name: 'esbuild',
     validation: 'object'
   },
+  {
+    name: 'swc',
+    validation: 'object'
+  },
 ];
