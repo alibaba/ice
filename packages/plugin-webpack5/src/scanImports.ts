@@ -29,16 +29,20 @@ export async function scanImports(globPatterns: string | string [], rootDir: str
       if (lang === 'ts' || lang === 'tsx') {
         loader = lang;
       }
-      // transform content first since es-module-lexer can't handle ts file
-      source = (await transform(source, { loader })).code;
-      await init;
-      const imports = parse(source)[0];
-      imports.forEach((importSpecifier) => {
-        const importName = importSpecifier.n;
-        if (!importName.startsWith('.')) {
-          importSet.add(importSpecifier.n);
-        }
-      });
+      try {
+        // transform content first since es-module-lexer can't handle ts file
+        source = (await transform(source, { loader })).code;
+        await init;
+        const imports = parse(source)[0];
+        imports.forEach((importSpecifier) => {
+          const importName = importSpecifier.n;
+          if (!importName.startsWith('.')) {
+            importSet.add(importSpecifier.n);
+          }
+        });
+      } catch (err) {
+        console.log('transform error with:', filePath);
+      }
     })();
   }));
   return Array.from(importSet);

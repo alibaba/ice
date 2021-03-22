@@ -2,20 +2,24 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin, Json } from '@alib/build-scripts';
 import analyzeNext from './analyzeNext';
-import filterPackages, { IFilterOptions } from './filterPackages';
+import filterPackages, { IFilterOptions, IRule } from './filterPackages';
 import remoteConfig from './remoteConfig';
 import compileRemote from './compileRemote';
 
 interface IRemoteOptions extends IFilterOptions {
   activeInBuild: boolean;
+  include?: IRule;
+  exclude?: IRule;
+  autoDetect?: boolean;
 }
 interface IOptions {
   remoteRuntime?: boolean | IRemoteOptions;
+  bootstrap?: string;
 }
 
 const plugin: IPlugin = async (api, options = {}) => {
   const { onGetWebpackConfig, registerUserConfig, context } = api;
-  const { remoteRuntime } = options as IOptions;
+  const { remoteRuntime, bootstrap } = options as IOptions;
   const { pkg, userConfig, webpack, command } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
 
@@ -84,7 +88,7 @@ const plugin: IPlugin = async (api, options = {}) => {
       fse.copyFileSync(filePath, path.join(runtimeFolder, fileName));
       injectBundles.push(`/remoteRuntime/${fileName}`);
     });
-    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externals, compileKeys });
+    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externals, compileKeys, bootstrap });
   }
   // if missmatch cache compile remote runtime
   if (needCompile) {
