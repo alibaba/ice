@@ -4,20 +4,20 @@ import * as cheerio from 'cheerio';
 import { IPluginAPI } from '@alib/build-scripts';
 
 export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injectBundles, externals, bootstrap }) => {
-  const { getValue, modifyUserConfig, onGetWebpackConfig } = api;
+  const { getValue, modifyUserConfig, onGetWebpackConfig, context } = api;
   // create boostrap for mf
-  let bootstrapPath = '';
+  let bootstrapEntry = '';
   if (!bootstrap) {
-    bootstrapPath = path.join(getValue('TEMP_PATH'), 'bootstrap.ts');
-    fse.writeFileSync(bootstrapPath, 'import(\'../src/app\')', 'utf-8');
+    bootstrapEntry = path.join(getValue('TEMP_PATH'), 'bootstrap.ts');
+    fse.writeFileSync(bootstrapEntry, 'import(\'../src/app\')', 'utf-8');
   } else {
-    bootstrapPath = bootstrap;
+    bootstrapEntry = path.isAbsolute(bootstrap) ? bootstrap : path.join(context.rootDir, bootstrap);
   }
   modifyUserConfig((modfiyConfig) => {
     const remotePlugins = [[require.resolve('./babelPluginRemote'), { libs: compileKeys, remoteName }]];
     return {
       babelPlugins: Array.isArray(modfiyConfig.babelPlugins) ? modfiyConfig.babelPlugins.concat(remotePlugins) : remotePlugins,
-      entry: bootstrapPath,
+      entry: bootstrapEntry,
       moduleFederation: {
         name: 'app',
         remoteType: 'window',
