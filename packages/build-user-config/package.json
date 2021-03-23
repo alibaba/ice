@@ -29,7 +29,9 @@
     "regenerator-runtime": "^0.13.3",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-mock": "^1.0.1",
-    "webpack-plugin-import": "^0.2.6"
+    "webpack-plugin-import": "^0.2.6",
+    "@swc/core": "^1.2.50",
+    "swc-loader": "^0.1.12"
   },
   "files": [
     "lib"

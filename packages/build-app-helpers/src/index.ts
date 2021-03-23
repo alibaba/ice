@@ -8,3 +8,4 @@ export { default as injectTransformRuntime } from './injectTransformRuntime';
 export { default as checkExportDefaultDeclarationExists } from './checkExportDefaultDeclarationExists';
 export { default as getSassImplementation } from './getSassImplementation';
 export { default as getLessImplementation } from './getLessImplementation';
+export { default as modifySwcOptions } from './modifySwcOptions';

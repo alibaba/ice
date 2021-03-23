@@ -2947,6 +2947,19 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@napi-rs/triples@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/@napi-rs/triples/download/@napi-rs/triples-1.0.2.tgz#2ce4c6a78568358772008f564ee5009093d20a19"
+  integrity sha1-LOTGp4VoNYdyAI9WTuUAkJPSChk=
+
+"@node-rs/helper@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/@node-rs/helper/download/@node-rs/helper-1.1.0.tgz#4fcbbebae3b81932d1ff3e431c7cd3886b504742"
+  integrity sha1-T8u+uuO4GTLR/z5DHHzTiGtQR0I=
+  dependencies:
+    "@napi-rs/triples" "^1.0.2"
+    tslib "^2.1.0"
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.npm.taobao.org/@nodelib/fs.scandir/download/@nodelib/fs.scandir-2.1.4.tgz?cache=0&sync_timestamp=1609074524347&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40nodelib%2Ffs.scandir%2Fdownload%2F%40nodelib%2Ffs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"
@@ -3155,6 +3168,68 @@
   integrity sha1-KTZ0/MsyYqx4LHqt/eyoaxDHXEA=
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@swc/core-android-arm64@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-android-arm64/download/@swc/core-android-arm64-1.2.50.tgz#763e5ad1a899e2ff0a914c8ac8134e573d8dc733"
+  integrity sha1-dj5a0aiZ4v8KkUyKyBNOVz2NxzM=
+
+"@swc/core-darwin-arm64@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-darwin-arm64/download/@swc/core-darwin-arm64-1.2.50.tgz#1ed630edef1b8864d3793e4133988b7281511239"
+  integrity sha1-HtYw7e8biGTTeT5BM5iLcoFREjk=
+
+"@swc/core-darwin-x64@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-darwin-x64/download/@swc/core-darwin-x64-1.2.50.tgz#2e794feb5071cf4e7e20cedde872f4dfb77cd031"
+  integrity sha1-LnlP61Bxz05+IM7d6HL037d80DE=
+
+"@swc/core-linux-arm-gnueabihf@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-linux-arm-gnueabihf/download/@swc/core-linux-arm-gnueabihf-1.2.50.tgz#c7b9e2b35c7d9997004d6138c1c8115e14744cb7"
+  integrity sha1-x7nis1x9mZcATWE4wcgRXhR0TLc=
+
+"@swc/core-linux-arm64-gnu@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-linux-arm64-gnu/download/@swc/core-linux-arm64-gnu-1.2.50.tgz#1f41ac1fae0438641773098f254c9e1d72563d1f"
+  integrity sha1-H0GsH64EOGQXcwmPJUyeHXJWPR8=
+
+"@swc/core-linux-x64-gnu@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-linux-x64-gnu/download/@swc/core-linux-x64-gnu-1.2.50.tgz#57ca45b5b5e67a12ff90b5f50a23559be65840e6"
+  integrity sha1-V8pFtbXmehL/kLX1CiNVm+ZYQOY=
+
+"@swc/core-linux-x64-musl@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-linux-x64-musl/download/@swc/core-linux-x64-musl-1.2.50.tgz#c9225ec94618e75a5260264db7cd3122930e68f1"
+  integrity sha1-ySJeyUYY51pSYCZNt80xIpMOaPE=
+
+"@swc/core-win32-ia32-msvc@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-win32-ia32-msvc/download/@swc/core-win32-ia32-msvc-1.2.50.tgz#8aca2e009d49f2cff44fe924115104565ce59d5c"
+  integrity sha1-isouAJ1J8s/0T+kkEVEEVlzlnVw=
+
+"@swc/core-win32-x64-msvc@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core-win32-x64-msvc/download/@swc/core-win32-x64-msvc-1.2.50.tgz#383ac624bdf0d7865013c6482392319afe2e8462"
+  integrity sha1-ODrGJL3w14ZQE8ZII5Ixmv4uhGI=
+
+"@swc/core@^1.1.48", "@swc/core@^1.2.50":
+  version "1.2.50"
+  resolved "https://registry.npm.taobao.org/@swc/core/download/@swc/core-1.2.50.tgz#d70daed948c9bb0ba8084e804e7fb2b1fcf0e19c"
+  integrity sha1-1w2u2UjJuwuoCE6ATn+ysfzw4Zw=
+  dependencies:
+    "@node-rs/helper" "^1.0.0"
+  optionalDependencies:
+    "@swc/core-android-arm64" "^1.2.50"
+    "@swc/core-darwin-arm64" "^1.2.50"
+    "@swc/core-darwin-x64" "^1.2.50"
+    "@swc/core-linux-arm-gnueabihf" "^1.2.50"
+    "@swc/core-linux-arm64-gnu" "^1.2.50"
+    "@swc/core-linux-x64-gnu" "^1.2.50"
+    "@swc/core-linux-x64-musl" "^1.2.50"
+    "@swc/core-win32-ia32-msvc" "^1.2.50"
+    "@swc/core-win32-x64-msvc" "^1.2.50"
 
 "@testing-library/react-hooks@^3.2.1":
   version "3.7.0"
@@ -16920,6 +16995,14 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+swc-loader@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.npm.taobao.org/swc-loader/download/swc-loader-0.1.12.tgz#f3c336df30a3633cfd3fc7ce29aff178c72fe62a"
+  integrity sha1-88M23zCjYzz9P8fOKa/xeMcv5io=
+  dependencies:
+    "@swc/core" "^1.1.48"
+    loader-utils "^2.0.0"
+
 symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.2.0.tgz?cache=0&sync_timestamp=1604338205051&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsymbol-observable%2Fdownload%2Fsymbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
@@ -17418,7 +17501,7 @@ tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.14.1.tgz?cache=0&sync_timestamp=1609887438976&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=
 
-tslib@^2.0.1, tslib@^2.0.3:
+tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.1.0.tgz?cache=0&sync_timestamp=1609887438976&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
   integrity sha1-2mCGDxwuyqVwOrfTm8Bba/mIuXo=

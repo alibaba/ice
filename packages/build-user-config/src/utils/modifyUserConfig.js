@@ -14,8 +14,11 @@ module.exports = (api, finalyConfigs) => {
   modifyUserConfig((userConfig) => {
     // sort config key to make sure entry config is always excute before injectBabel, and filename before outputPath
     const configKeys = Object.keys(userConfig).sort((curr, next) => curr.localeCompare(next));
+    // swc should be first
+    configKeys.unshift('swc');
     const newConfig = {};
     configKeys.forEach((configKey) => {
+      if (Object.prototype.hasOwnProperty.call(newConfig, configKey)) return;
       if (!USER_CONFIG_KEY_WITHOUT_BUILD.includes(configKey)) {
         if (mergeConfigKeys.includes(configKey)) {
           newConfig[configKey] = {...defaultConfig[configKey], ...userConfig[configKey]};

@@ -238,6 +238,8 @@ module.exports = [
   },
   {
     name: 'swc',
-    validation: 'object'
+    validation: (val) => {
+      return validation('swc', val, 'boolean|object');
+    },
   },
 ];
