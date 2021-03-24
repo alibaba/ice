@@ -42,5 +42,3 @@ packages/webpack-plugin-extract-css-assets/test/actual/*
 
 build
 .history
-
-packages/build-pack/deps/*
