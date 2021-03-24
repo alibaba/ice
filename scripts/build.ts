@@ -5,8 +5,6 @@ import { run } from './fn/shell';
 
 (async () => {
   await run('npm run clean');
-  // build deps
-  await run('npm run build-deps');
 
   const fileParten = '*/src/**/!(*.ts|*.tsx)';
   console.log(`[COPY]: ${fileParten}`);
