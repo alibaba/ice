@@ -32,7 +32,13 @@ module.exports = (api, options = {}) => {
       configWebpack: (chainConfig, configValue, context) => {
         if (configFunc) {
           // enhance api params
-          configFunc(chainConfig, configValue, context, api);
+          try {
+            configFunc(chainConfig, configValue, context, api);
+          } catch (err) {
+            console.log('error ==>', name);
+            console.log(err);
+          }
+          
         }
       },
       ...config,
