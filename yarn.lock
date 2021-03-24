@@ -566,10 +566,10 @@
   resolved "https://registry.npm.taobao.org/@bcoe/v8-coverage/download/@bcoe/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha1-daLotRy3WKdVPWgEpZMteqznXDk=
 
-"@builder/pack@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npm.taobao.org/@builder/pack/download/@builder/pack-0.1.0.tgz?cache=0&sync_timestamp=1616585852348&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.1.0.tgz#2c64869d664dfdac679fc99ae70003b9a8a987b1"
-  integrity sha1-LGSGnWZN/axnn8ma5wADuaiph7E=
+"@builder/pack@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npm.taobao.org/@builder/pack/download/@builder/pack-0.1.1.tgz?cache=0&sync_timestamp=1616588780100&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.1.1.tgz#6cc76cb6a6754294d845f20ddfed2a7a1f92d26c"
+  integrity sha1-bMdstqZ1QpTYRfIN3+0qeh+S0mw=
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"

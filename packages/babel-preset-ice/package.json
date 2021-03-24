@@ -17,6 +17,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@builder/pack": "^0.1.0"
+    "@builder/pack": "^0.1.1"
   }
 }
