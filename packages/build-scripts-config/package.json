@@ -17,6 +17,7 @@
     "webpack": "^4.41.1"
   },
   "dependencies": {
+    "@builder/babel-preset-ice": "^1.0.0",
     "@builder/pack": "^0.1.0",
     "css-loader": "^3.2.0",
     "core-js": "^3.3.1",
