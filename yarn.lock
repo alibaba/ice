@@ -11493,7 +11493,7 @@ less@^3.10.3:
     native-request "^1.0.5"
     source-map "~0.6.0"
 
-less@^4.0.0, less@^4.1.1:
+less@^4.0.0:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/less/download/less-4.1.1.tgz#15bf253a9939791dc690888c3ff424f3e6c7edba"
   integrity sha1-Fb8lOpk5eR3GkIiMP/Qk8+bH7bo=

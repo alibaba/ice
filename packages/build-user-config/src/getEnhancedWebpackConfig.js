@@ -1,5 +1,6 @@
 let ESLintReportingPluginUsed = false;
 const FriendlyError =  require('@builder/pack/deps/@nuxtjs/friendly-errors-webpack-plugin');
+const ESLintReportingPlugin = require('@builder/pack/deps/eslint-reporting-webpack-plugin');
 
 module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) => {
   const { context } = api;
@@ -29,7 +30,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
     // Add friendly eslint reporting
     webpackConfig
       .plugin('ESLintReportingPlugin')
-      .use(require.resolve('@builder/pack/deps/eslint-reporting-webpack-plugin'));
+      .use(ESLintReportingPlugin);
     ESLintReportingPluginUsed = true;
   }
   // Process app.json file
