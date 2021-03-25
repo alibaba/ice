@@ -20,7 +20,7 @@ module.exports = (api, options = {}) => {
     if (module !== false) {
       try {
         // eslint-disable-next-line
-        optionDefination.configWebpack = require(path.isAbsolute(moduleName) ? `${moduleName}` : `./cliOption/${moduleName}`);
+        optionDefination.configWebpack = require(path.isAbsolute(moduleName) ? moduleName : `./cliOption/${moduleName}`);
       } catch (err) {
         log.error(err);
       }
