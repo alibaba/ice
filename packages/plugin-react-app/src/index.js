@@ -10,7 +10,7 @@ const setTest = require('./setTest');
 const logDetectedTip = require('./utils/logDetectedTip');
 
 module.exports = (api) => {
-  const { onGetWebpackConfig, context, registerTask } = api;
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig  } = api;
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
@@ -25,6 +25,11 @@ module.exports = (api) => {
   // register user config
   applyUserConfig(api, { customConfigs: getCustomConfigs(userConfig) });
 
+  // modify default babel config when jsx runtime is enabled
+  if (getValue('HAS_JSX_RUNTIME')) {
+    modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
+  }
+  
   // set webpack config
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules

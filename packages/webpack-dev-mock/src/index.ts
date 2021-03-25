@@ -6,8 +6,11 @@ import * as glob from 'glob';
 import * as bodyParser from 'body-parser';
 import * as chokidar from 'chokidar';
 import * as multer from 'multer';
+import * as debounce from 'lodash.debounce';
 import analyzeDenpendencies from './analyzeMockDeps';
 import matchPath from './matchPath';
+
+type IIgnoreFolders = string[];
 
 const debug = require('debug')('ice:mock');
 const chalk = require('chalk');
@@ -21,12 +24,12 @@ let error = null;
 const cwd = process.cwd();
 const mockDir = winPath(path.join(cwd, 'mock'));
 
-function getConfig(rootDir) {
+function getConfig(rootDir: string, ignore: IIgnoreFolders) {
   // get mock files
   const mockFiles = glob.sync('mock/**/*.[jt]s', {
     cwd: rootDir,
+    ignore,
   }).map(file => path.join(rootDir, file));
-  
   const requireDeps = mockFiles.reduce((pre, curr) => {
     return pre.concat(analyzeDenpendencies(curr));
   }, []);
@@ -76,9 +79,9 @@ function logWatchFile(event, filePath) {
   }
 }
 
-function applyMock(app) {
+function applyMock(app, ignore: IIgnoreFolders = []) {
   try {
-    realApplyMock(app);
+    realApplyMock(app, ignore);
     error = null;
   } catch (e) {
     console.log(e);
@@ -94,18 +97,18 @@ function applyMock(app) {
     watcher.on('all', (event, path) => {
       logWatchFile(event, path);
       watcher.close();
-      applyMock(app);
+      applyMock(app, ignore);
     });
   }
 }
 
-function realApplyMock(app) {
+function realApplyMock(app, ignore: IIgnoreFolders) {
   let mockConfig = [];
 
   function parseMockConfig() {
     const parsedMockConfig = [];
 
-    const config = getConfig(cwd);
+    const config = getConfig(cwd, ignore);
     Object.keys(config).forEach(key => {
       const handler = config[key];
       assert(
@@ -127,9 +130,13 @@ function realApplyMock(app) {
     ignored: /node_modules/,
     persistent: true,
   });
+  // use debounce to avoid too much file change events
+  const updateMockConfig = debounce(() => {
+    mockConfig = parseMockConfig();
+  }, 300);
   watcher.on('all', (event, path) => {
     logWatchFile(event, path);
-    mockConfig = parseMockConfig();
+    updateMockConfig();
   });
 
   app.use((req, res, next) => {

@@ -35,8 +35,8 @@ module.exports = function (source) {
   }
 
   let prefixVars = '';
-  if (useNext && themeConfig.nextPrefix) {
-    // 修改 next-prefix
+  if (themeConfig.nextPrefix && /@alifd[\\/]next[\\/](lib|es)[\\/](.+).scss$/.test(modulePath)) {
+    // 将 next 1.x 的 prefix 从 next- 改为自定义前缀，解决 0.x&1.x 混用的问题
     prefixVars = `$css-prefix: "${themeConfig.nextPrefix}";`;
   }
 

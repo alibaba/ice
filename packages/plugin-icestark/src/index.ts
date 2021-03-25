@@ -51,7 +51,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
             return {
               ...babelOptions,
               plugins: [
-                [require.resolve('./babelPluginMicroapp'), { entryList }],
+                [require.resolve('./babelPluginMicroapp'), { entryList, libraryName }],
                 ...plugins,
               ],
             };

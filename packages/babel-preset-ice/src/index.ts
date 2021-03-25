@@ -1,7 +1,7 @@
 interface IOpts {
   typescript?: boolean;
   env?: object;
-  react?: boolean;
+  react?: boolean | object;
 }
 /**
  * babel config
@@ -46,7 +46,10 @@ export default (opts: IOpts = {}) => {
         '@babel/preset-env', opts.env,
       ],
       opts.typescript && '@babel/preset-typescript',
-      opts.react && '@babel/preset-react',
+      opts.react && (typeof opts.react === 'boolean'
+        ? '@babel/preset-react'
+        : ['@babel/preset-react', opts.react]
+      ),
     ]),
     plugins: resolvePlugin(plugins),
   };

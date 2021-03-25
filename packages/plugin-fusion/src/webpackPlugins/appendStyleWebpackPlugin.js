@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle, no-useless-escape */
 
 const assert = require('assert');
-const ConcatSource = require('webpack-sources').ConcatSource;
+const { ConcatSource, RawSource } = require('webpack-sources');
 const fs = require('fs');
 const path = require('path');
-const sass = require('node-sass');
+const { getSassImplementation } = require('@builder/app-helpers');
 const convertCharStr2CSS = require('../utils/convertCharStr');
 
 /* eslint no-console: 0 */
@@ -30,6 +30,7 @@ function compileSass(srcPath, variableFile, coreVarCode) {
   }
 
   let cssResult = null;
+  const sass = getSassImplementation();
   try {
     cssResult = sass.renderSync({
       data: scssContent,
@@ -86,22 +87,17 @@ module.exports = class AppendStylePlugin {
     }
 
     compiler.hooks.compilation.tap('compilation', (compilation) => {
-      const processEntryChunk = (chunks, done) => {
-        chunks.forEach((chunk) => {
-          chunk.files.forEach((fileName) => {
-            if (
-              distMatch(
-                fileName,
-                compilerEntry,
-                compilation.preparedEntrypoints || compilation._preparedEntrypoints,
-              )
-            ) {
-              const css = this.compileToCSS(srcFile, variableFile);
-              this.wrapFile(compilation, fileName, css);
-            }
-          });
-        });
-        done();
+      const wrapStyleContent = (fileName) => {
+        if (
+          distMatch(
+            fileName,
+            compilerEntry,
+            compilation._preparedEntrypoints,
+          )
+        ) {
+          const css = this.compileToCSS(srcFile, variableFile);
+          this.wrapFile(compilation, fileName, css);
+        }
       };
       // compatible with webpack 5
       if (typeof compilation.hooks.processAssets !== 'undefined') {
@@ -110,11 +106,24 @@ module.exports = class AppendStylePlugin {
         compilation.hooks.processAssets.tapAsync({
           name: 'optimize-chunk-assets',
           stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE
-        }, processEntryChunk);
+        }, (assets, done) => {
+          const fileNames = Object.keys(assets);
+          fileNames.forEach((fileName) => {
+            wrapStyleContent(fileName);
+          });
+          done();
+        });
       } else {
         compilation.hooks.optimizeChunkAssets.tapAsync(
           'optimize-chunk-assets',
-          processEntryChunk,
+          (chunks, done) => {
+            chunks.forEach((chunk) => {
+              chunk.files.forEach((fileName) => {
+                wrapStyleContent(fileName);
+              });
+            });
+            done();
+          },
         );
       }
     });
@@ -124,13 +133,13 @@ module.exports = class AppendStylePlugin {
     // 默认按照底部添加的来
     if (this.appendPosition === 'header') {
       compilation.assets[fileName] = new ConcatSource(
-        String(content),
+        new RawSource(String(content)),
         compilation.assets[fileName],
       );
     } else {
       compilation.assets[fileName] = new ConcatSource(
         compilation.assets[fileName],
-        String(content),
+        new RawSource(String(content)),
       );
     }
   }

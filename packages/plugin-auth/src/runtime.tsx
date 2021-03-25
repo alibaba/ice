@@ -1,4 +1,5 @@
 import * as React from 'react';
+// @ts-ignore
 import AuthStore from '$ice/authStore';
 
 const wrapperComponentFn = (authConfig) => (PageComponent) => {

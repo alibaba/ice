@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.1
+
+- [fix] active rule of remote runtime
+
+## 1.2.0
+
+- [feat] support remote runtime by module federation
+
+## 1.1.0
+
+- [fix] remove depenecies of HtmlWebpackPlugin
+- [feat] support userConfig `moduleFederation`
+
 ## 1.0.4
 
 - [fix] bump version of html-webpack-plugin

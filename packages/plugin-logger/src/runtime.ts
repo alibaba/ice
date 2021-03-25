@@ -1,4 +1,5 @@
 import * as queryString from 'query-string';
+// @ts-ignore
 import logger from '$ice/logger';
 
 const module = ({ appConfig }) => {

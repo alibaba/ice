@@ -1,3 +1,4 @@
+// @ts-ignore
 import AppStore from '$store';
 
 export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {

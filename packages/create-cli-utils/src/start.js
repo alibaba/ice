@@ -54,6 +54,10 @@ function restartProcess(forkChildProcessPath) {
     const nProcessArgv = process.argv.slice(2).filter((arg) => arg.indexOf('--inspect') === -1);
     child = fork(forkChildProcessPath, nProcessArgv, { execArgv: argv });
     child.on('message', data => {
+      if (data && data.type === 'RESTART_DEV') {
+        child.kill();
+        restartProcess(forkChildProcessPath);
+      }
       if (process.send) {
         process.send(data);
       }

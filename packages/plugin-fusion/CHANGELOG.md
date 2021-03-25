@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.13
+
+- [fix] bump dependencies version
+- [feat] auto detect sass implementation
+- [feat] external next styles imported by depended components
+
+## 0.1.12
+
+- [feat] compatible with webpack 5
+
 ## 0.1.11
 
 - [fix] error condition of color variables

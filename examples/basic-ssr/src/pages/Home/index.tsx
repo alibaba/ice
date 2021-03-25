@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { request, Link, logger, Helmet, store as appStore } from 'ice';
+import { Link, logger, Head, store as appStore } from 'ice';
+import pageStore from './store';
 import styles from './index.module.scss';
 
 export default function Home(props) {
@@ -13,30 +14,45 @@ export default function Home(props) {
   }, []);
 
   const [userState] = appStore.useModel('user');
+  const [counterState] = pageStore.useModel('counter');
 
   return (
-    <>
-      <Helmet>
+    <main>
+      <Head>
         <meta charSet="utf-8" />
         <title>{props.title}</title>
         <meta name="keywords" content={props.keywords} />
         <meta name="description" content={props.description} />
-      </Helmet>
+      </Head>
       <h2 className={styles.title}>{props.title}</h2>
-      <div>
-        <div><strong>name：</strong>{userState.name}</div>
-        <div><strong>id：</strong>{userState.id}</div>
-        <div><strong>address：</strong>{props.profile && props.profile.address}</div>
-        <div><strong>data：</strong>{dataSource.join(' ')}</div>
-      </div>
+      <div>counterState: {counterState.count}</div>
+      <div>name: {userState.name}</div>
+      <div>id: {userState.id}</div>
+      <div>address: {props.profile && props.profile.address}</div>
+      <strong>data: {dataSource.join(' ')}</strong>
       <br />
       <Link to="/about">about</Link>
+      <br />
       <Link to="/dashboard">dashboard</Link>
-    </>
+    </main>
   );
 }
 
 Home.getInitialProps = async () => {
-  const res = await request('/profile');
+  // const res = await request('/profile');
+  const res = {
+    data: {
+      profile: {
+        id: 10001,
+        name: 'Jack Ma',
+        edu: 'Hangzhou Normal University',
+        address: 'Hangzhou'
+      },
+      title: 'Home Page...',
+      content: 'Home Content...',
+      description: 'Home Description...'
+    }
+  };
+
   return { ...res.data, title: 'Home Page...' };
 };

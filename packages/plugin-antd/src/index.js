@@ -10,11 +10,25 @@ module.exports = async ({ onGetWebpackConfig, log }, pluginOptions = {}) => {
         .rule(rule)
         .use('less-loader')
         .tap((options) => {
-          const modifyVars = {
-            ...options.modifyVars,
-            ...themeConfig,
+          if (options.lessOptions) {
+            return {
+              ...options, lessOptions: {
+                ...(options.lessOptions || {}),
+                modifyVars: {
+                  ...(options.lessOptions.modifyVars || {}),
+                  ...themeConfig,
+                },
+              }
+            };
+          }
+          // compatible with old less version
+          return {
+            ...options,
+            modifyVars: {
+              ...options.modifyVars,
+              ...themeConfig,
+            },
           };
-          return { ...options, modifyVars };
         });
     });
 

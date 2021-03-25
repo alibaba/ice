@@ -56,49 +56,46 @@ module.exports = class WebpackPluginImport {
     compiler.hooks.normalModuleFactory.tap(
       'normal-module-factory',
       (NormalModuleFactory) => {
-        NormalModuleFactory.hooks.afterResolve.tapPromise(
+        NormalModuleFactory.hooks.afterResolve.tap(
           'after-resolve',
           (result = {}) => {
-            return new Promise((resolve) => {
-              if (result.loaders && /\.(ts|js)x?$/i.test(result.resource)) {
-                let needAdditionalStyle = false;
-                let stylePath = 'style.js';
+            if (result.loaders && /\.(ts|js)x?$/i.test(result.resource)) {
+              let needAdditionalStyle = false;
+              let stylePath = 'style.js';
 
-                const matchedIndex = this.options.findIndex((opt) => {
-                  return this.libraryCheck(result, opt);
-                });
+              const matchedIndex = this.options.findIndex((opt) => {
+                return this.libraryCheck(result, opt);
+              });
 
-                if (matchedIndex > -1) {
-                  const matchedLibrary = this.options[matchedIndex];
-                  if (matchedLibrary.stylePath) {
-                    stylePath = matchedLibrary.stylePath;
-                  }
+              if (matchedIndex > -1) {
+                const matchedLibrary = this.options[matchedIndex];
+                if (matchedLibrary.stylePath) {
+                  stylePath = matchedLibrary.stylePath;
+                }
+                needAdditionalStyle = true;
+              }
+
+              if (!needAdditionalStyle) {
+                const customStylePath = this.getStylePath(result);
+                if (customStylePath) {
+                  stylePath = customStylePath;
                   needAdditionalStyle = true;
                 }
+              }
 
-                if (!needAdditionalStyle) {
-                  const customStylePath = this.getStylePath(result);
-                  if (customStylePath) {
-                    stylePath = customStylePath;
-                    needAdditionalStyle = true;
-                  }
-                }
+              if (needAdditionalStyle) {
+                const modPath = path.join(
+                  path.dirname(result.resource),
+                  stylePath
+                );
 
-                if (needAdditionalStyle) {
-                  const modPath = path.join(
-                    path.dirname(result.resource),
-                    stylePath
+                if (fileExists(modPath)) {
+                  result.loaders.push(
+                    `${webpackLoaderRequire}?mod=${modPath}`
                   );
-
-                  if (fileExists(modPath)) {
-                    result.loaders.push(
-                      `${webpackLoaderRequire}?mod=${modPath}`
-                    );
-                  }
                 }
               }
-              resolve(result);
-            });
+            }
           }
         );
       }

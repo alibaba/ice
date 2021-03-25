@@ -148,7 +148,6 @@ const appConfig: IAppConfig = {
       const apps = [{
         path: '/seller',
         title: '商家平台',
-        umd: true,
         sandbox: true,
 +       hashType: true,
         url: [
@@ -221,9 +220,9 @@ export default function FrameworkLayout(props: {
 }
 ```
 
-### 子应用改造
+### 微应用改造
 
-子应用的同样需要改造成 `HashRouter` 路由模式。
+微应用的同样需要改造成 `HashRouter` 路由模式。
 
 ### 应用间跳转
 

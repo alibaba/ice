@@ -3,7 +3,7 @@ title: 前后端一体化 Serverless
 order: 4
 ---
 
-> #### 如果是阿里内部同学，请参考 [文档](https://yuque.alibaba-inc.com/ice/rdy99p/ds1xv0) 
+如果是阿里内部同学，请参考 [文档](https://yuque.alibaba-inc.com/ice/rdy99p/ds1xv0) 
 
 ------
 

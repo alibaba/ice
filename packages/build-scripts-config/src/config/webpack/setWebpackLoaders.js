@@ -38,6 +38,10 @@ const configCSSRule = (config, style, mode, loaders = []) => {
     rule
       .use('MiniCssExtractPlugin.loader')
         .loader(MiniCssExtractPlugin.loader)
+        // compatible with commonjs syntax: const styles = require('./index.module.less')
+        .options({
+          esModule: false,
+        })
         .end()
       .use('css-loader')
         .loader(require.resolve('css-loader'))
@@ -71,7 +75,7 @@ module.exports = (config, mode = 'development') => {
   [
     ['css'],
     ['scss', [['sass-loader', require.resolve('sass-loader')]]],
-    ['less', [['less-loader', require.resolve('less-loader'), { javascriptEnabled: true }]]],
+    ['less', [['less-loader', require.resolve('less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
   ].forEach(([style, loaders]) => {
     configCSSRule(config, style, mode, loaders || []);
   });
