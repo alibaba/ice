@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.4
+
+- [feat] support parse tabbar
+
 ## 2.3.3
 
 - [feat] new API of getLessImplementation
