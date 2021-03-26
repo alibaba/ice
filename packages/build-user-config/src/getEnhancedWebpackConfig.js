@@ -54,12 +54,11 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
 
     webpackConfig
       .plugin('friendly-error')
-      .use(require.resolve('friendly-errors-webpack-plugin'), [
+      .use(require.resolve('@nuxtjs/friendly-errors-webpack-plugin'), [
         {
           clearConsole: false,
         },
-      ])
-      .end();
+      ]);
   } else {
     webpackConfig.optimization.minimize(true);
   }

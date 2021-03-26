@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0
+
+- [feat] upgrate less and less-loader
+
+## 2.0.0
+
+- [feat] remove dependencies of node-sass
+
+## 1.0.0
+
+- [feat] refactor config with @builder/babel-preset-ice
+
 ## 0.1.8
 
 - [fix] support css modules hmr

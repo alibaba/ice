@@ -9,7 +9,7 @@ function generateEntry(api, { framework, targetDir, pageEntry, entryName }) {
   const templatePath = path.join(__dirname, `./template/${framework}.ts.ejs`);
   const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: rootDir });
   api.applyMethod('addRenderFile', templatePath, entryPath, {
-    hydrate: Boolean(webConfig.hydrate || webConfig.ssr || webConfig.snapshot),
+    hydrate: Boolean(webConfig.hydrate || webConfig.ssr || webConfig.snapshot || webConfig.staticExport),
     resourcePath: `${formatPath(path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry)}`,
     globalStyle: globalStyles.length && formatPath(path.join(rootDir, globalStyles[0]))
   });

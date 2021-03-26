@@ -1,5 +1,9 @@
 # ice-skin-loader Changelog
 
+## 0.3.2
+
+- [fix] nextPrefix 仅用于 0.x & 1.x 混用样式处理
+
 ## 0.3.1
 
 - [fix] 修复 nextPrefix 在业务代码中不生效问题

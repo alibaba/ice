@@ -3,11 +3,15 @@
   "ignoreHtmlTemplate": false,
   "plugins": [],
   "tsChecker": true,
+  "sassLoaderOptions": {
+    "prependData": ".test{color:red}"
+  },
   "modeConfig": {
     "prod": {
       "ignoreHtmlTemplate": true
     }
   },
+  "esbuild": {},
   "eslint": {
     "disable": false,
     "quiet": true
@@ -19,6 +23,11 @@
           "chrome 68"
         ]
       }
+    }
+  },
+  "terserOptions": {
+    "compress": {
+      "unused": true
     }
   },
   "webpackPlugins": {

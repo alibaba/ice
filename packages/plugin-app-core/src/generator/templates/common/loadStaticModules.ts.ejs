@@ -1,4 +1,6 @@
-function loadStaticModules(appConfig) {
+import { IAppConfig } from './types';
+
+function loadStaticModules(appConfig: IAppConfig) {
   <% if (runtimeModules.length) {%>
     <% runtimeModules.forEach((runtimeModule) => { %>
       <% if(runtimeModule.staticModule){ %>

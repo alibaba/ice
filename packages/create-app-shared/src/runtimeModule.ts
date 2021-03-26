@@ -47,7 +47,7 @@ class RuntimeModule {
       getSearchParams
     };
 
-    if (module) module.default({
+    if (module) (module.default || module)({
       ...runtimeAPI,
       appConfig: this.appConfig,
       buildConfig: this.buildConfig,

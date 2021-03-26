@@ -100,6 +100,8 @@ registerMicroApps([
 
 #### umd
 
+> @depreated，请使用 `loadScriptMode`。
+
 标识微应用是否是一个标准的 UMD 微应用
 
 - 类型：`boolean`
@@ -222,6 +224,13 @@ removeMicroApps(['app1', 'app2']);
 - 类型：`Function(assetUrl, element)`
 - 默认值：`() => true`
 
+#### fetch
+
+自定义 fetch（选填）。
+
+- 类型：`Function(assetUrl)`
+- 默认值：`window.fetch`
+
 ### createMicroApp
 
 > 仅 2.0.0 以上支持
@@ -307,6 +316,13 @@ AppConfig 同 `regsiterMicroApps` 配置项，手动加载的情况下一般不�
 </AppRouter>
 ```
 
+#### fetch
+
+自定义 fetch（选填）。
+
+- 类型：`Function(assetUrl)`
+- 默认值：`window.fetch`
+
 ### AppRoute
 
 微应用注册组件，包含如下 props 属性：
@@ -331,74 +347,94 @@ AppConfig 同 `regsiterMicroApps` 配置项，手动加载的情况下一般不�
 
 #### umd
 
+> @depreated，请使用 `loadScriptMode`。
+
 标识微应用是否是一个标准的 UMD 微应用
 
 - 类型：`boolean`
 - 默认值：`false`
 
+#### loadScriptMode
+
+微应用 JavaScript 资源加载方式。当值 `fetch` 时，会通过 `window.fetch` (若AppRouter 提供了 `fetch` 参数，则会使用自定义 `fetch`) 请求资源；值为 `script`，会使用 `<script />` 标签加载资源，选填。
+
+- 类型： `fetch | script`
+- 默认值：`script`
+
 #### entryContent
 
-- 直接配置微应用的 html 内容（需要用 html 入口且不支持跨域获取资源场景）。当渲染微应用时，会 `append` 至动态创建的节点，选填。**entry > entryContent > url**
+直接配置微应用的 html 内容（需要用 html 入口且不支持跨域获取资源场景）。当渲染微应用时，会 `append` 至动态创建的节点，选填。**entry > entryContent > url**
+
 - 类型：`string`
 - 默认值：`-`
 
 #### component
 
-- 当路由匹配是直接渲染 react component，渲染后会带上 `location`、`match`、`history` 的 `props`, 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.component](https://reacttraining.com/react-router/web/api/Route/component)，选填
+当路由匹配是直接渲染 react component，渲染后会带上 `location`、`match`、`history` 的 `props`, 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.component](https://reacttraining.com/react-router/web/api/Route/component)，选填
+
 - 类型：`string | ReactNode`
 - 默认值：`-`
 
 #### render
 
-- 支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.render](https://reacttraining.com/react-router/web/api/Route/render-func)，选填
+支持 `AppRoute` 替代 `react-route` 的基本能力。**当配置此属性时，`url` 等配置会失效**。参考 [Route.render](https://reacttraining.com/react-router/web/api/Route/render-func)，选填
+
 - 类型：`({location, match, history}) => ReactNode`
 - 默认值：`-`
 
 #### title
 
-- 微应用渲染时展示的 documentTitle ，选填
+微应用渲染时展示的 documentTitle ，选填
+
 - 类型：`string`
 - 默认值：`-`
 
 #### cache
 
-- 切换应用时缓存该应用资源，再次渲染时无需重复加载执行，请谨慎使用该能力，因为这会增加应用样式等冲突的概率，并可能引入内存问题。另外目前仅入口通过 url 属性配置支持该能力。
+切换应用时缓存该应用资源，再次渲染时无需重复加载执行，请谨慎使用该能力，因为这会增加应用样式等冲突的概率，并可能引入内存问题。另外目前仅入口通过 url 属性配置支持该能力。
+
 - 类型：`boolean`
 - 默认值：false
 
 #### exact
 
-- 完全匹配，参考 [Route.exact](https://reacttraining.com/react-router/web/api/Route/exact-bool)，选填
+完全匹配，参考 [Route.exact](https://reacttraining.com/react-router/web/api/Route/exact-bool)，选填
+
 - 类型：`boolean`
 - 默认值：`false`
 
 #### strict
 
-- 严格匹配，参考 [Route.strict](https://reacttraining.com/react-router/web/api/Route/strict-bool)，选填
+严格匹配，参考 [Route.strict](https://reacttraining.com/react-router/web/api/Route/strict-bool)，选填
+
 - 类型：`boolean`
 - 默认值：`false`
 
 #### sensitive
 
-- 区分大小写，参考 [Route.strict](https://reacttraining.com/react-router/web/api/Route/strict-bool)，选填
+区分大小写，参考 [Route.strict](https://reacttraining.com/react-router/web/api/Route/strict-bool)，选填
+
 - 类型：`boolean`
 - 默认值：`false`
 
 #### rootId
 
-- 微应用默认加载的 DOM 节点的 id，选填
+微应用默认加载的 DOM 节点的 id，选填
+
 - 类型：`string`
 - 默认值：`icestarkNode`
 
 #### hashType
 
-- 微应用路由以 `hash` 路由的方式接入
+微应用路由以 `hash` 路由的方式接入
+
 - 类型：`boolean`
 - 默认值：`false`
 
 #### sandbox
 
-- 微应用开启沙箱运行环境
+微应用开启沙箱运行环境
+
 - 类型：`boolean | Sandbox`
 - 默认值：`false`
 
@@ -421,11 +457,15 @@ const sandbox = new CustomSanbox();
 />
 ```
 
-### AppLink - depreated
+### AppLink
+
+> @depreated
 
 不推荐使用，建议使用 `@ice/stark-app` 暴露的 AppLink 组件。
 
-### appHistory - depreated
+### appHistory
+
+> @depreated
 
 不推荐使用，建议使用 `@ice/stark-app` 暴露的 appHistory API。
 ## @ice/stark-app
@@ -497,25 +537,29 @@ export default class SelfLink extends React.Component {
 
 #### to
 
-- 目标路径，同 `Link` 中的 `to` 保持一致 ，必填
+目标路径，同 `Link` 中的 `to` 保持一致 ，必填
+
 - 类型：`string`
 - 默认值：`-`
 
 #### replace
 
-- 如果为 true，则单击链接将替换历史记录中的当前记录，而不是添加新记录。
+如果为 true，则单击链接将替换历史记录中的当前记录，而不是添加新记录。
+
 - 类型：`boolean`
 - 默认值：`false`
 
 #### message
 
-- 表示当前跳转需要弹窗确认，message 为提示文案内容，选填
+表示当前跳转需要弹窗确认，message 为提示文案内容，选填
+
 - 类型：`string`
 - 默认值：`-`
 
 #### hashType
 
-- 当前跳转以 `hash` 路由形式进行跳转，选填
+当前跳转以 `hash` 路由形式进行跳转，选填
+
 - 类型：`boolean`
 - 默认值：`false`
 
@@ -570,5 +614,30 @@ if (isInIcestark()) {
   });
 } else {
   ReactDOM.render(router(), document.getElementById('ice-container'));
+}
+```
+
+### setLibraryName
+
+配置微应用导出的 umd 全局变量。
+
++ 类型： `function`
++ 代码示例：
+
+```js
+import ReactDOM from 'react-dom';
+import { isInIcestark, setLibraryName } from '@ice/stark-app';
+import App from './App';
+
+setLibraryName('microApp');
+
+export function mount(props) {
+  const { container, customProps } = props;
+  ReactDOM.render(<App {...customProps} />, container);
+}
+
+export function unmount(props) {
+  const { container } = props;
+  ReactDOM.unmountComponentAtNode(container);
 }
 ```
