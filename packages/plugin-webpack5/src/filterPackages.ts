@@ -1,10 +1,13 @@
+import { scanImports } from './scanImports';
+
 interface ICheckFunction {
   (packageName: string): boolean;
 }
-type IRule = ICheckFunction | string | RegExp | string[];
+export type IRule = ICheckFunction | string | RegExp | string[];
 export interface IFilterOptions {
   include?: IRule;
   exclude?: IRule;
+  autoDetect?: boolean;
 }
 
 function matchRule(str: string, rule: IRule) {
@@ -18,11 +21,16 @@ function matchRule(str: string, rule: IRule) {
   return false;
 }
 
-function filterPackages(packages: string[], { include, exclude }: IFilterOptions = {}) {
+async function filterPackages(packages: string[], rootDir: string, { include, exclude, autoDetect = true }: IFilterOptions = {}) {
+  let runtimePackages = [];
+  if (autoDetect) {
+    runtimePackages = await scanImports('**/*.@(j|t)s(x)', rootDir);
+  }
   return packages.filter((packageName) => {
     if (include && matchRule(packageName, include)) {
       return true;
     }
+
     // built-in rule for exclude packages
     const startsWithPrefixs = ['@babel/', '@types/'];
     const includesStrings = ['webpack-plugin', 'eslint-config', 'build-plugin-', 'tslint-config', 'babel-plugin', 'babel-preset'];
@@ -36,7 +44,7 @@ function filterPackages(packages: string[], { include, exclude }: IFilterOptions
     if (exclude && matchRule(packageName, exclude)) {
       return false;
     }
-    return true;
+    return autoDetect ? runtimePackages.includes(packageName) : true;
   });
 }
 
