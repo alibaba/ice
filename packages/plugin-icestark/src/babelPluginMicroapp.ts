@@ -4,17 +4,17 @@ const templateIfStatement = 'if (!isInIcestark()) {}';
 
 const templateExportStatement = `
 setLibraryName(LIBRARY);
-export const mount = (props) => {
+export const mount = async (props) => {
   APP_CALLEE(APP_CONFIG);
 };
-export const unmount = ({ container, customProps }) => {
+export const unmount = async ({ container, customProps }) => {
   if (APP_CONFIG?.icestark?.regsiterAppLeave) {
     APP_CONFIG.icestark.regsiterAppLeave(container, customProps);
   } else {
     ReactDOM.unmountComponentAtNode(container);
   }
 };
-export const bootstrap = () => {
+export const bootstrap = async () => {
   console.log('bootstrap');
 };`;
 const templateModeStatement = `
