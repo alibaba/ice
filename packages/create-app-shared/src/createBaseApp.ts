@@ -22,7 +22,7 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
     // Set history
-    let history = {};
+    let history: any = {};
     if (!isMiniAppPlatform && initHistory) {
       const { router } = appConfig;
       const { type, basename, history: customHistory } = router;
@@ -39,7 +39,6 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
 
     // Collect app lifeCyle
     collectAppLifeCycle(appConfig);
-
     return {
       history,
       runtime,

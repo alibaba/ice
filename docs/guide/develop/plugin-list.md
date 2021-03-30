@@ -13,6 +13,46 @@ icejs 基于工程构建工具 build-scripts，提供了丰富的插件用于提
 
 `build-plugin-antd` 插件为项目中使用 antd 组件提供按需加载和主题定制的能力，详细使用可参考 [使用 antd 组件](/docs/guide/advance/antd.md)
 
+## plugin-keep-alive
+
+`build-plugin-keep-alive` 可以让开发者快捷开启 SPA 下基于路由级别的 Keep Alive 能力。
+
+> ice.js@1.15.0 以上版本开始支持
+
+Install:
+
+```bash
+$ npm i -save-dev build-plugin-keep-alive
+```
+
+### 基础用法
+
+```json
+{
+  "plugins": [
+    "build-plugin-keep-alive"
+  ]
+}
+```
+
+完成上述配置后，项目会按页面路由维度开启 Keep Alive 能力，如果希望关闭指定路由的 Keep Alive，可以通过设置 `pageConfig` 进行关闭：
+
+```js
+const Home = () => {
+  return <div>home</div>;
+}
+
+Home.pageConfig = {
+  keepAlive: false,
+};
+
+export default Home;
+```
+
+> 注意事项：
+> 由于开启了 Keep Alive 能力，路由发生切换时，组件对应的 mount 和 unmount 生命周期将不会重复执行
+
+
 ## plugin-modular-import
 
 用于快捷增加 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) 的配置
@@ -219,7 +259,7 @@ $ npm i --save-dev build-plugin-jsx-plus
 
 详细使用请参考 [jsx-plus](https://github.com/jsx-plus/jsx-plus/blob/master/README.zh_CN.md)
 
-## build-plugin-fast-refresh（实验性）
+## build-plugin-fast-refresh
 
 > 体验优化的实验性插件，可根据实际情况按需使用。
 
@@ -242,16 +282,16 @@ $ npm i -save-dev build-plugin-fast-refresh
 }
 ```
 
-## build-plugin-webpack5（实验性）
+## build-plugin-webpack5
 
-> 用于 icejs 在使用 webpack5 能力上的兼容处理，目前 webpack 5 还未正式发布，请谨慎使用该插件
+> 用于 icejs 在使用 webpack 5 能力上的兼容处理
 
-### 体验 webpack 5
+### 开启 webpack 5
 
 Install:
 
 ```bash
-$ npm i --save-dev build-plugin-webpack5 webpack@next
+$ npm i --save-dev build-plugin-webpack5 webpack
 ```
 
 `build.json` 修改如下：
@@ -266,6 +306,48 @@ $ npm i --save-dev build-plugin-webpack5 webpack@next
 ```
 
 > 通过 `customWebpack` 配置的开启，工程中使用 webpack 的版本将会以项目中依赖的 webpack 版本为准
+
+### 配置 Module Federation
+
+在上述开启 webpack 5 能力的基础上，通过配置 moduleFederation 可以配置 Module Federation 相关参数：
+
+```json
+{
+  "customWebpack": true,
+  "moduleFederation": {
+    "remotes": ["remote"],
+    "shared": ["react", "react-dom"]
+  },
+  "plugins": [
+    "build-plugin-webpack5"
+  ]
+}
+```
+
+## build-plugin-dev-inspector
+
+> 在本地调试时，快速定位页面上的组件所在的源码的位置。
+
+Install:
+
+```bash
+$ npm i --save-dev build-plugin-dev-inspector
+```
+### 配置
+
+在 build.json 中引入插件：
+
+```json
+{
+  "plugins": [
+    "build-plugin-dev-inspector"
+  ]
+}
+```
+
+完成上述配置后，则在本地调试的环境下，把鼠标 hover 到想要调试的元素，就会显示出遮罩框；再点击一下，会自动在编辑器中跳转到对应的文件中，并且跳转到对应的行和列。
+
+详见：[https://www.npmjs.com/package/build-plugin-dev-inspector](https://www.npmjs.com/package/build-plugin-dev-inspector)
 
 ## build-plugin-esbuild（实验性）
 

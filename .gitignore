@@ -37,5 +37,8 @@ packages/*/lib/
 # temp folder .ice
 examples/*/.ice
 
+# temp file of test
+packages/webpack-plugin-extract-css-assets/test/actual/*
+
 build
 .history

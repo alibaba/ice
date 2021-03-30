@@ -1,4 +1,6 @@
+<% if(!hasJsxRuntime) { %>
 import * as React from 'react';
+<% } %>
 
 <% if(hasPageStore) { %>
   <%- pageStoreImport %>
@@ -18,6 +20,7 @@ const PageComponentName = <%= pageComponentExport %>;
     )
   }
   (StoreWrapperedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
+  (StoreWrapperedPage as any).getInitialProps = (PageComponentName as any).getInitialProps;
   export default StoreWrapperedPage;
   export { store };
 <% } else { %>

@@ -1,10 +1,12 @@
 import * as path from 'path';
-import { formatPath } from '@builder/app-helpers';
+import { formatPath, checkExportDefaultDeclarationExists } from '@builder/app-helpers';
 import generateEntry from './generateEntry';
 
 interface IEntries {
   entryName: string;
   entryPath: string;
+  source?: string;
+  path?: string;
 }
 
 interface IConfigOptions {
@@ -27,16 +29,18 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
 
   const parsedEntries = {};
   entries.forEach((entry) => {
-    const { entryName, entryPath } = entry;
-    const pageEntry = path.join(rootDir, 'src', entryPath);
-    const useOriginEntry = /app\.(t|j)sx?$/.test(entryPath) || type === 'node';
+    const { entryName, entryPath, source } = entry;
+    const pageEntry = entryPath;
+    const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath) || type === 'node';
+    const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
     // icejs will config entry by api modifyUserConfig
-
     let finalEntry = pageEntry;
-    if (!useOriginEntry) {
+    // when the source is not the custom render page or runApp, do not generate entry
+    if (exportDefaultDeclarationExists && !useOriginEntry) {
       // generate mpa entries
       finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });
     }
+
     parsedEntries[entryName] = {
       ...entry,
       finalEntry,
@@ -60,11 +64,11 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   const matchStrs = [];
 
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, entryPath, finalEntry } = parsedEntries[entryKey];
+    const { entryName, source, finalEntry } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
 
     // get page paths for rule match
-    const matchStr = `src/${entryPath}`;
+    const matchStr = `src/${source}`;
     matchStrs.push(formatPath(matchStr));
   });
 

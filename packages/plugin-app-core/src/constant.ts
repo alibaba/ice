@@ -11,6 +11,16 @@ export const USER_CONFIG = [
     name: 'auth',
     validation: 'boolean'
   },
+  {
+    name: 'sourceDir',
+    validation: 'string',
+  },
+  {
+    // add generateRuntime in case of runtimes do not pass the ts checker
+    name: 'generateRuntime',
+    validation: 'boolean',
+    defaultValue: false,
+  }
 ];
 
 export const PROJECT_TYPE = 'PROJECT_TYPE';

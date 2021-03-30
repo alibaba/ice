@@ -1,7 +1,7 @@
 module.exports = (config, sourceMap, context) => {
   const { command } = context;
   if (sourceMap && command === 'build') {
-    config.devtool('source-map');
+    config.devtool(typeof sourceMap === 'string' ? sourceMap : 'source-map');
     config.optimization
       .minimizer('TerserPlugin')
       .tap(([options]) => [

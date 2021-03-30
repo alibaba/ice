@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '<%= globalStyle %>'
+<% } %>
 import Component from '<%- resourcePath %>';
 
 function renderApp() {

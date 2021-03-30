@@ -25,7 +25,7 @@ const plugin: IPlugin = (api) => {
     let entries = mpaEntries.reduce((acc, { entryName, entryPath }) => {
       return {
         ...acc,
-        [entryName]: `src/${entryPath}`
+        [entryName]: entryPath
       };
     }, {});
     const finalEntries = {};
@@ -49,8 +49,8 @@ const plugin: IPlugin = (api) => {
 
     // set page template
     onGetWebpackConfig(config => {
-      if (typeof mpa === 'object' && (mpa as any).template) {
-        setPageTemplate(rootDir, entries, (mpa as any).template, config);
+      if (mpa) {
+        setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
       }
     });
     let parsedEntries = null;
@@ -88,11 +88,14 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
     const htmlPluginKey = `HtmlWebpackPlugin_${defaultEntryName}`;
     if (config.plugins.get(htmlPluginKey)) {
       const htmlPluginOption = {};
-      const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName] || 'index.html');
-
-      if (fs.existsSync(entryTemplate)) {
-        (htmlPluginOption as any).template = entryTemplate;
+      // modify html template if userConfig mpa.template is specified
+      if (entryNames[defaultEntryName]) {
+        const entryTemplate = path.join(rootDir, 'public', entryNames[defaultEntryName]);
+        if (fs.existsSync(entryTemplate)) {
+          (htmlPluginOption as any).template = entryTemplate;
+        }
       }
+      
       config.plugin(htmlPluginKey).tap(([args]) => {
         (htmlPluginOption as any).templateParameters = {
           ...(args.templateParameters || {}),

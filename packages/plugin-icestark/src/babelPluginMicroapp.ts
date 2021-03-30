@@ -1,7 +1,9 @@
 import * as t from '@babel/types';
 
 const templateIfStatement = 'if (!isInIcestark()) {}';
+
 const templateExportStatement = `
+setLibraryName(LIBRARY);
 export const mount = (props) => {
   APP_CALLEE(APP_CONFIG);
 };
@@ -11,6 +13,9 @@ export const unmount = ({ container, customProps }) => {
   } else {
     ReactDOM.unmountComponentAtNode(container);
   }
+};
+export const bootstrap = () => {
+  console.log('bootstrap');
 };`;
 const templateModeStatement = `
 if (typeof window !== 'undefined' && window.ICESTARK && window.ICESTARK.loadMode && window.ICESTARK.loadMode !== 'umd') {
@@ -23,9 +28,9 @@ const getUid = () => {
   return () => `_APP_CONFIG${(uid++) || ''}`;
 };
 
-export default (api, { entryList }) => {
-  let namespaceSpecifier: string;
-  let importSpecifier: string;
+export default (api, { entryList, libraryName }) => {
+  const namespaceSpecifier: string[] = [];
+  const importSpecifier: string[] = [];
   let configIdentifier: string;
   let replaced = false;
 
@@ -35,7 +40,7 @@ export default (api, { entryList }) => {
       return filePath.includes((filename || '').replace(/\.[^/.]+$/, ''));
     });
   };
-  
+
   return {
     visitor: {
       Program(nodePath, state) {
@@ -51,22 +56,29 @@ export default (api, { entryList }) => {
               if (t.isStringLiteral(item.source, { value: 'ice'})) {
                 item.specifiers.forEach((value) => {
                   if (t.isImportNamespaceSpecifier(value)) {
-                    namespaceSpecifier = value.local.name;
+                    namespaceSpecifier.push(value.local.name);
                   }
                   if (t.isImportSpecifier(value)) {
-                    importSpecifier = value.local.name;
+                    importSpecifier.push(value.local.name);
                   }
                 });
               } else if (t.isIdentifier(item.source, { value: '@ice/stark-app'})) {
                 starkappStatement = true;
                 let importIsInIcestark = false;
+                let importSetLibraryName = false;
                 item.specifiers.forEach((value) => {
                   if (t.isImportSpecifier(value) && t.isIdentifier(value.local, { name: 'isInIcestark'})) {
                     importIsInIcestark = true;
                   }
+                  if (t.isImportSpecifier(value) && t.isIdentifier(value.local, { name: 'setLibraryName'})) {
+                    importSetLibraryName = true;
+                  }
                 });
                 if (!importIsInIcestark) {
                   item.specifiers.push(t.importSpecifier(t.identifier('isInIcestark'), t.identifier('isInIcestark')));
+                }
+                if (!importSetLibraryName) {
+                  item.specifiers.push(t.importSpecifier(t.identifier('setLibraryName'), t.identifier('setLibraryName')));
                 }
               // check import ReactDOM from 'react-dom';
               } else if (t.isIdentifier(item.source, { value: 'react-dom'})) {
@@ -87,7 +99,10 @@ export default (api, { entryList }) => {
           // import @ice/stark-app
           if (!starkappStatement) {
             const starkappImport = t.importDeclaration(
-              [t.importSpecifier(t.identifier('isInIcestark'), t.identifier('isInIcestark'))],
+              [
+                t.importSpecifier(t.identifier('isInIcestark'), t.identifier('isInIcestark')),
+                t.importSpecifier(t.identifier('setLibraryName'), t.identifier('setLibraryName'))
+              ],
               t.stringLiteral('@ice/stark-app'),
             );
             lastImportIndex += 1;
@@ -111,15 +126,21 @@ export default (api, { entryList }) => {
         if (checkEntryFile(state.filename) && !replaced) {
           const node: t.ExpressionStatement = nodePath.node;
           let callIdentifier = '';
-          if (namespaceSpecifier
+          if (namespaceSpecifier.length
             && t.isCallExpression(node.expression)
             && t.isMemberExpression(node.expression.callee)
-            && t.isIdentifier(node.expression.callee.object, { name: namespaceSpecifier})) {
+            && namespaceSpecifier.some(specifier => t.isCallExpression(node.expression) && t.isMemberExpression(node.expression.callee) && t.isIdentifier(node.expression.callee.object, { name: specifier})))
+          {
             callIdentifier = t.isIdentifier(node.expression.callee.property, { name: 'createApp'}) ? 'createApp' : 'runApp';
           }
-          const identifierCallee = importSpecifier
+
+          let identifierCallee = '';
+          if (importSpecifier.length
             && t.isCallExpression(node.expression)
-            && t.isIdentifier(node.expression.callee, { name: importSpecifier});
+            && importSpecifier.some(specifier => t.isCallExpression(node.expression) && t.isIdentifier(node.expression.callee, { name: specifier })))
+          {
+            identifierCallee = t.isIdentifier(node.expression.callee, { name: 'createApp'}) ? 'createApp' : 'runApp';
+          }
 
           if (callIdentifier || identifierCallee) {
             const expression = node.expression as t.CallExpression;
@@ -151,7 +172,8 @@ export default (api, { entryList }) => {
 
             const astExport = api.template(templateExportStatement)({
               APP_CONFIG: configIdentifier,
-              APP_CALLEE: callIdentifier || importSpecifier,
+              APP_CALLEE: callIdentifier || identifierCallee,
+              LIBRARY: t.stringLiteral(libraryName),
             });
             nodePath.insertAfter(astExport);
             replaced = true;

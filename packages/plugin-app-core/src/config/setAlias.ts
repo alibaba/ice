@@ -42,6 +42,7 @@ export default (api, options: IOptions) => {
         ['rax', rootDir]
       ];
     }
+
     basicDependencies.forEach((dep: string[] | string): void => {
       const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
       const aliasPath = searchFolder

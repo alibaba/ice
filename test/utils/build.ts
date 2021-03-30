@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as process from 'process';
 import { build } from '@alib/build-scripts';
 import * as getPort from 'get-port';
 import Browser, { IPage } from './browser';
@@ -21,6 +22,8 @@ interface IReturn {
 export const buildFixture = function(example: string) {
   test(`setup ${example}`, async () => {
     const rootDir = path.join(__dirname, `../../examples/${example}`);
+    const processCwdSpy = jest.spyOn(process, 'cwd');
+    processCwdSpy.mockReturnValue(rootDir);
     await build({
       args: {
         config: path.join(rootDir, 'build.json'),
@@ -37,7 +40,7 @@ export const setupBrowser: ISetupBrowser = async (options) => {
   const { example, outputDir = 'build', defaultHtml = 'index.html' } = options;
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   const port = await getPort();
-  const browser = new Browser(path.join(rootDir, outputDir), port);
+  const browser = new Browser({ cwd: path.join(rootDir, outputDir), port });
   await browser.start();
   const page = await browser.page(`http://127.0.0.1:${port}/${defaultHtml}`);
   return {

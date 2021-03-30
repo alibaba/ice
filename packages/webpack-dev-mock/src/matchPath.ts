@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires:0 */
-const { pathToRegexp } = require('path-to-regexp');
+import { pathToRegexp } from 'path-to-regexp';
 
 function decodeParam(val) {
   if (typeof val !== 'string' || val.length === 0) {
@@ -17,7 +17,7 @@ function decodeParam(val) {
   }
 }
 
-module.exports = function matchPath(req, mockConfig) {
+function matchPath(req, mockConfig) {
   const { path: reqPath, method: reqMethod } = req;
 
   for (let m = 0; m < mockConfig.length; m += 1) {
@@ -42,4 +42,6 @@ module.exports = function matchPath(req, mockConfig) {
       }
     }
   }
-};
+}
+
+export default matchPath;

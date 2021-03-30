@@ -36,7 +36,7 @@ $ npm i --save-dev build-plugin-icestark
     ["build-plugin-fusion", {
       "themeConfig": {
         // 防止与微应用里的基础组件 css prefix 冲突
-        "nextPrefix": "next-icestark-"
+        "css-prefix": "next-icestark-"
       }
     }],
   }
@@ -107,7 +107,31 @@ $ npm install
 $ npm start
 ```
 
-同主应用一样，微应用也会默认引入插件 `build-plugin-icestark`，同时在应用入口 `src/app.ts` 中配置了微应用相关的信息：
+如果不是通过模板创建，则需要按照下面的步骤进行改造：
+
+### 添加插件 build-plugin-icestark
+
+安装插件依赖：
+
+```bash
+$ npm i --save-dev build-plugin-icestark
+```
+
+在 `build.json` 里引入插件：
+
+```json
+{
+  "plugins": {
+    ["build-plugin-icestark", {
+      "umd": true
+    }]
+  }
+}
+```
+
+### 应用入口改造
+
+在应用入口 `src/app.ts` 中配置微应用相关的信息：
 
 ```diff
 import { runApp } from 'ice'
@@ -127,8 +151,7 @@ const appConfig = {
 runApp(appConfig)
 ```
 
-只需要这么简单，你的 SPA 应用就可以变成微前端的微应用了。
-
+只需要这么简单，你的 SPA 应用就可以变成微应用了。
 
 ## 常见问题
 
@@ -205,25 +228,8 @@ icestark 从 `1.6.0` 开始支持并推荐使用 UMD 规范的微应用，在微
 {
   "plugins": [
     ["build-plugin-icestark", {
-      "umd": true,
-      "library": "microApp" // UMD 模块导出名称，选填。默认为项目 package.json 中的 name 字段
+      "umd": true
     }]
   ]
 }
-```
-
-### 主应用对采用 UMD 规范的微应用进行声明
-
-对于 umd 类型的微应用需要在框架应用的微应用列表配置中显示声明：
-
-```diff
-const apps = [{
-  path: '/seller',
-  title: '商家平台',
-+  umd: true,
-  url: [
-    '//ice.alicdn.com/icestark/child-seller-react/index.js',
-    '//ice.alicdn.com/icestark/child-seller-react/index.css',
-  ],
-}];
 ```

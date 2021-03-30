@@ -8,7 +8,9 @@ import {
   registerAppLeave,
   getBasename,
 } from '@ice/stark-app';
+// @ts-ignore
 import { IceRouter } from '$ice/Router';
+// @ts-ignore
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IIceStark } from './types';

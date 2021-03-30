@@ -4,7 +4,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
   const { context } = api;
   const { command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
-  const subPackages = userConfig[target] && userConfig[target].subPackages;
+  const mpa = userConfig[target] && (userConfig[target].subPackages || userConfig[target].mpa);
 
   const mode = command === 'start' ? 'development' : 'production';
   // 1M = 1024 KB = 1048576 B
@@ -45,7 +45,7 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
     .options({
       libName,
       target,
-      subPackages
+      mpa
     });
 
   if (command === 'start') {
@@ -54,12 +54,11 @@ module.exports = (api, { target, webpackConfig, babelConfig, libName = 'rax' }) 
 
     webpackConfig
       .plugin('friendly-error')
-      .use(require.resolve('friendly-errors-webpack-plugin'), [
+      .use(require.resolve('@nuxtjs/friendly-errors-webpack-plugin'), [
         {
           clearConsole: false,
         },
-      ])
-      .end();
+      ]);
   } else {
     webpackConfig.optimization.minimize(true);
   }

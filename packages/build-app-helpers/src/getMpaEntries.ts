@@ -1,19 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import getRoutesByAppJson from './getRoutesByAppJson';
+import getEntriesByRoute from './getEntriesByRoute';
+import { IEntry } from './types';
 
 interface IOptions {
   target: string;
   appJsonPath?: string;
   appJsonContent?: string;
-}
-
-interface IEntry {
-  entryPath: string;
-  entryName: string;
-  pageName: string;
-  source?: string;
-  path?: string;
 }
 
 // Get entries when exist app.json
@@ -30,41 +24,17 @@ function getEntriesByJson(api, target, appJsonPath, appJsonContent): IEntry[] {
     context: { rootDir },
   } = api;
   const routes = getRoutesByAppJson(target, { appJsonPath, appJsonContent });
-  return routes.map((route) => {
-    let pageName;
-    let entryName;
-    if (route.name) {
-      entryName = route.name;
-      pageName = route.name;
-    } else {
-      const dir = path.dirname(route.source);
-      pageName = path.parse(dir).name;
-      entryName = pageName.toLocaleLowerCase();
-    }
-    return {
-      entryPath: getPageEntryByAppJson(rootDir, route.source),
-      entryName,
-      pageName,
-      source: route.source,
-      path: route.path
-    };
-  });
-}
-
-function getPageEntryByAppJson(rootDir, source) {
-  const absolutePath = path.resolve(rootDir, 'src', source);
-  const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${absolutePath}.${ext}`));
-  if (!targetExt) {
-    throw new Error(`Cannot find target file ${absolutePath}.`);
-  }
-  return `${source}.${targetExt}`;
+  return routes.reduce((prev, curr) => {
+    return [...prev, ...getEntriesByRoute(curr, rootDir)];
+  }, []);
 }
 
 function getEntriesByDir(api: any): IEntry[] {
   const {
     context: { rootDir },
   } = api;
-  const pagesPath = path.join(rootDir, 'src/pages');
+  const srcPath = path.join(rootDir, 'src');
+  const pagesPath = path.join(srcPath, 'pages');
   const pages = fs.existsSync(pagesPath)
     ? fs
       .readdirSync(pagesPath)
@@ -75,11 +45,14 @@ function getEntriesByDir(api: any): IEntry[] {
   const entries = pages.map((pageName) => {
     const entryName = pageName.toLocaleLowerCase();
     const pageEntry = getPageEntryByDir(pagesPath, pageName);
+    const source = `pages/${pageName}/${pageEntry}`;
+    const entryPath = path.join(srcPath, source);
     if (!pageEntry) return null;
     return {
       entryName,
       pageName,
-      entryPath: `pages/${pageName}/${pageEntry}`,
+      entryPath,
+      source,
     };
   }).filter(Boolean);
   return entries;

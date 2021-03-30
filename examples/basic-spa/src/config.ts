@@ -1,5 +1,5 @@
 // config runtime APP_MODE
-// eslint-disable-next-line @typescript-eslint/camelcase
+// @ts-ignore
 window.__app_mode__ = 'build';
 
 const config = {

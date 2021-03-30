@@ -1,5 +1,5 @@
 const assert = require('assert');
-const ConcatSource = require('webpack-sources').ConcatSource;
+const { ConcatSource, RawSource } = require('webpack-sources');
 
 module.exports = class WrapCodePlugin {
   constructor(options) {
@@ -24,27 +24,40 @@ module.exports = class WrapCodePlugin {
       const codeAfter = typeof addCodeAfter === 'function' ?
         addCodeAfter(fileName, entry, compilation) : addCodeAfter;
       compilation.assets[fileName] = new ConcatSource(
-        String(codeBefore),
+        new RawSource(String(codeBefore)),
         compilation.assets[fileName],
-        String(codeAfter),
+        new RawSource(String(codeAfter)),
       );
     };
 
-    const wrapChunks = (compilation, chunks) => {
-      chunks.forEach((chunk) => {
-        chunk.files.forEach((fileName) => {
-          // only wrap code when file is match
-          if (this.fileMatch(fileName, entry, compilation)) {
-            wrapFile(compilation, fileName);
-          }
-        });
+    const wrapChunks = (compilation, fileNames) => {
+      fileNames.forEach((fileName) => {
+        // only wrap code when file is match
+        if (this.fileMatch(fileName, entry, compilation)) {
+          wrapFile(compilation, fileName);
+        }
       });
     };
 
     compiler.hooks.compilation.tap('WrapCodePlugin', (compilation) => {
-      compilation.hooks.optimizeChunkAssets.tap('WrapCodePlugin', (chunks) => {
-        wrapChunks(compilation, chunks);
-      });
+      // compatible with webpack 5
+      if (typeof compilation.hooks.processAssets !== 'undefined') {
+        // eslint-disable-next-line global-require
+        const { Compilation } = require('webpack');
+        compilation.hooks.processAssets.tap({
+          name: 'WrapCodePlugin',
+          stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE
+        }, (assets) => {
+          const fileNames = Object.keys(assets);
+          wrapChunks(compilation, fileNames);
+        });
+      } else {
+        compilation.hooks.optimizeChunkAssets.tap('WrapCodePlugin', (chunks) => {
+          chunks.forEach((chunk) => {
+            wrapChunks(compilation, chunk.files);
+          });
+        });
+      }
     });
   }
 };

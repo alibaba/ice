@@ -9,7 +9,7 @@ const getThemeCode = require('./utils/getThemeCode');
 const getCalcVars = require('./utils/getCalcVars');
 
 function normalizeEntry(entry, preparedChunks) {
-  const preparedName = preparedChunks
+  const preparedName = (preparedChunks || [])
     .filter((module) => {
       return typeof module.name !== 'undefined';
     })
@@ -36,12 +36,9 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
   const { rootDir, pkg, userConfig, webpack } = context;
 
   const taskNames = getAllTask();
-  // compatible with dist output of component dev
+  // ignore externals rule and babel-plugin-import when compile dist
   const ignoreTasks = ['component-dist'];
   taskNames.forEach((taskName) => {
-    if (ignoreTasks.includes(taskName)) {
-      return;
-    }
     onGetWebpackConfig(taskName, (config) => {
       // 1. 支持主题能力
       if (themePackage) {
@@ -209,7 +206,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
       // 2. 组件（包含业务组件）按需加载&样式自动引入
       // babel-plugin-import: 基础组件
       // remove babel-plugin-import if external next
-      if (!externalNext) {
+      if (!externalNext && !ignoreTasks.includes(taskName)) {
         const importConfigs = [{
           libraryName: '@icedesign/base',
           style,
@@ -316,7 +313,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
           ]);
       }
   
-      if (externalNext) {
+      if (externalNext && !ignoreTasks.includes(taskName)) {
         const externals = [];
         if (userConfig.externals) {
           externals.push(userConfig.externals);
@@ -328,9 +325,13 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
           const isDesignBase = baseRegex.test(request);
           if (isNext || isDesignBase) {
             const componentName = isNext ? request.match(nextRegex)[3] : request.match(baseRegex)[1];
+            const externalKey = isNext ? 'Next' : 'ICEDesignBase';
             if (componentName) {
-              return callback(null, [isNext ? 'Next' : 'ICEDesignBase', upperFirst(camelCase(componentName))]);
+              return callback(null, [externalKey, upperFirst(camelCase(componentName))]);
             }
+          } else if (nextRegex.test(_context) && /\.(scss|css)$/.test(request)) {
+            // external style files imported by next style.js
+            return callback(null, 'Next');
           }
           return callback();
         });

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-helmet",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "builtin helmet in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.24",
-    "typescript": "^3.7.2"
+    "typescript": "^4.0.0"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,23 @@
+{
+  "name": "ice-skin-loader",
+  "version": "0.3.2",
+  "description": "ice skin loader",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "keywords": [
+    "ice"
+  ],
+  "author": "ICE Team",
+  "license": "MIT",
+  "dependencies": {
+    "@icedesign/skin": "^0.1.13",
+    "chalk": "^2.4.1",
+    "loader-utils": "^2.0.0",
+    "tinycolor2": "^1.4.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

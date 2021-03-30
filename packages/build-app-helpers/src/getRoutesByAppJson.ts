@@ -1,14 +1,10 @@
 import * as fs from 'fs-extra';
+import { IRoute } from './types';
 
-interface IRoute {
-  targets?: string[];
-  source: string;
-  path: string;
-  name?: string;
-}
 interface IStaticConfig {
   routes: IRoute[];
-  window: any;
+  window?: any;
+  tabBar?: any;
 }
 
 interface IOptions {
@@ -29,11 +25,20 @@ export default function (target, { appJsonPath, appJsonContent }: IOptions) {
     throw new Error('routes should be an array in app.json.');
   }
 
-  return staticConfig.routes.filter((route) => {
+  const routes = staticConfig.routes.filter((route) => {
     if (Array.isArray(route.targets) && !route.targets.includes(target)) {
       return false;
     }
 
     return true;
   });
+
+  if (staticConfig?.tabBar?.source) {
+    routes.push({
+      ...staticConfig.tabBar,
+      __tabBar: true,
+    });
+  }
+
+  return routes;
 }
