@@ -4,17 +4,17 @@ const templateIfStatement = 'if (!isInIcestark()) {}';
 
 const templateExportStatement = `
 setLibraryName(LIBRARY);
-export const mount = (props) => {
+export const mount = async (props) => {
   APP_CALLEE(APP_CONFIG);
 };
-export const unmount = ({ container, customProps }) => {
+export const unmount = async ({ container, customProps }) => {
   if (APP_CONFIG?.icestark?.regsiterAppLeave) {
     APP_CONFIG.icestark.regsiterAppLeave(container, customProps);
   } else {
     ReactDOM.unmountComponentAtNode(container);
   }
 };
-export const bootstrap = () => {
+export const bootstrap = async () => {
   console.log('bootstrap');
 };`;
 const templateModeStatement = `
@@ -62,7 +62,7 @@ export default (api, { entryList, libraryName }) => {
                     importSpecifier.push(value.local.name);
                   }
                 });
-              } else if (t.isIdentifier(item.source, { value: '@ice/stark-app'})) {
+              } else if (t.isStringLiteral(item.source, { value: '@ice/stark-app'})) {
                 starkappStatement = true;
                 let importIsInIcestark = false;
                 let importSetLibraryName = false;
@@ -81,7 +81,7 @@ export default (api, { entryList, libraryName }) => {
                   item.specifiers.push(t.importSpecifier(t.identifier('setLibraryName'), t.identifier('setLibraryName')));
                 }
               // check import ReactDOM from 'react-dom';
-              } else if (t.isIdentifier(item.source, { value: 'react-dom'})) {
+              } else if (t.isStringLiteral(item.source, { value: 'react-dom'})) {
                 reactdomStatement = true;
                 let importReactDOM = false;
                 item.specifiers.forEach((value) => {
