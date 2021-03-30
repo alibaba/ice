@@ -16,7 +16,7 @@ describe('simple test suite', () => {
         [path.join(__dirname, '../src'), {
           moduleEntry: './src/index',
           library: 'moduletest',
-          externals: {
+          moduleExternals: {
             react: 'React',
           },
         }],
