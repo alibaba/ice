@@ -4,7 +4,6 @@ import { store as pageStore } from 'ice/Home';
 
 export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');
-  const [toggleState, toggleAction] = pageStore.useModel('toggle');
   const [titleState, titleAction] = pageStore.useModel('title');
   const [appTitleState] = appStore.useModel('title');
   let input;
@@ -26,14 +25,6 @@ export default () => {
           Update Title
         </button>
       </form>
-      <div
-        style={{
-          textDecoration: toggleState.done ? 'line-through' : 'none',
-        }}
-        onClick={() => toggleAction.update()}
-      >
-          Toggle Title
-      </div>
       <div style={{ marginTop: 30 }}>
         <button type="button" id="increment" onClick={counterActions.increment}>+</button>
         <span>{counterState.count}</span>

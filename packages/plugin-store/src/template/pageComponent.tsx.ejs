@@ -8,7 +8,7 @@ import * as React from 'react';
 
 <%- pageComponentImport %>
 
-<% if(resetPageInitialStates && importStr) { %>
+<% if(restPageState && importStr) { %>
   <%- importStr %>
 
   <% if (isSingleModel) { %>
@@ -32,7 +32,7 @@ const PageComponentName = <%= pageComponentExport %>;
   const PageProvider = store.Provider;
   const StoreWrapperedPage = (props) => {
     return (
-<% if (resetPageInitialStates && importStr) { %>
+<% if (restPageState && importStr) { %>
       <PageProvider initialStates={initialStates}>
 <% } else { %>
       <PageProvider>
