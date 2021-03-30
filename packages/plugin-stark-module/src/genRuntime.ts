@@ -40,8 +40,8 @@ const genRuntimesConfig = (externals: Externals) => {
     }));
 };
 
-const genRuntime = ({ context }: PartialPlugin, { externals, modules, outputDir, filenameStrategy }: Options) => {
-  if (!externals) {
+const genRuntime = ({ context }: PartialPlugin, { moduleExternals, modules, outputDir, filenameStrategy }: Options) => {
+  if (!moduleExternals) {
     return;
   }
 
@@ -61,7 +61,7 @@ const genRuntime = ({ context }: PartialPlugin, { externals, modules, outputDir,
           template: 'runtime.hbs',
           outputPath,
           params: {
-            runtimes: genRuntimesConfig(externals),
+            runtimes: genRuntimesConfig(moduleExternals),
           }
         });
       });

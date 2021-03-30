@@ -19,7 +19,7 @@ export type Externals =
   }
 
 export interface Options {
-  externals?: Externals;
+  moduleExternals?: Externals;
   modules?: Json<string>[];
   minify?: boolean;
   outputDir?: string;

@@ -8,7 +8,7 @@
 // build.json
 {
   "plugins": [
-+    ["build-plugin-icestark-module", {
++    ["build-plugin-stark-module", {
       // ...options
     }]
   ]
@@ -23,7 +23,7 @@
 ```json
 {
   "plugins": [
-    ["build-plugin-icestark-module", {
+    ["build-plugin-stark-module", {
       "modules": {
         "branch-detail": "./src/branch-detail/index.tsx",
         "edit-info": "./src/edit-info/index.tsx"
@@ -33,14 +33,14 @@
 }
 ```
 
-- `externals`: see [webpack externals](https://webpack.js.org/configuration/externals/#root), used to optimize loading performance for micro modules.
+- `moduleExternals`: see [webpack externals](https://webpack.js.org/configuration/externals/#root), used to optimize loading performance for micro modules.
 
 ···json
 {
   "plugins": [
     ...
-    ["build-plugin-icestark-module", {
-      "externals": {
+    ["build-plugin-stark-module", {
+      "moduleExternals": {
         "react": {
           "root": "React",
           "url": "https://g.alicdn.com/code/lib/react/16.14.0/umd/react.production.min.js",

@@ -11,7 +11,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
 
   const {
-    externals,
+    moduleExternals,
     minify,
     sourceMap,
   } = options as any as Options ?? {};
@@ -53,9 +53,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   // set umd
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 
-  // set externals
-  if (externals) {
-    setExternals({ onGetWebpackConfig }, { externals });
+  // set moduleExternals
+  if (moduleExternals) {
+    setExternals({ onGetWebpackConfig }, { moduleExternals });
   }
 
   // append lifecycle
