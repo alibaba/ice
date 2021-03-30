@@ -6,10 +6,10 @@ export default (api) => {
   const { context, setValue } = api;
   const { rootDir, userConfig } = context;
   const srcDir = userConfig.sourceDir || getSourceDir(userConfig.entry);
-  const tsEntryFiles = globby.sync([`${srcDir}/app.@(ts?(x))`, `${srcDir}/pages/*/app.@(ts?(x))`], {
+  const tsFiles = globby.sync(`${srcDir}/**/*.{ts,tsx}`, {
     cwd: rootDir
   });
-  const projectType = tsEntryFiles.length ? 'ts' : 'js';
+  const projectType = tsFiles.length ? 'ts' : 'js';
 
   setValue(PROJECT_TYPE, projectType);
 };
