@@ -25,6 +25,11 @@
       }
     }
   },
+  "terserOptions": {
+    "compress": {
+      "unused": true
+    }
+  },
   "webpackPlugins": {
     "MiniCssExtractPlugin": {
       "options": {

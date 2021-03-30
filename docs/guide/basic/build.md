@@ -460,7 +460,18 @@ MPA 场景下配置是否生成 vendor，如果希望禁用：
 - 类型：`object`
 - 默认值：`{}`
 
-为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [terser options](https://webpack.js.org/plugins/terser-webpack-plugin/)
+```json
+
+{
+  "terserOptions": {
+    "compress": {
+      "unused": true
+    }
+  }
+}
+```
+
+为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [terser options](https://github.com/terser/terser#minify-options)
 
 ### babelPlugins
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- [fix] update mock config after file change
+
 ## 1.2.0
 
 - [feat] support mock exlude pattern

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.3
+
+- [feat] support resolve absolute cli options module path
+
+## 0.3.2
+
+- [fix] custom config of terserOptions
+
 ## 0.3.1
 
 - [fix] lessLoaderOptions
