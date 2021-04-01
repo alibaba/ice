@@ -85,19 +85,3 @@ export default function () {
   // do something...
 };
 ```
-
-### Config
-
-Set global `initialstates` to `src/app.ts`:
-
-```javascript
-import { runApp } from 'ice'
-
-const appConfig = {
-  // Set global initialStates
-  store: {
-    initialStates: {}
-  }
-}
-```
-

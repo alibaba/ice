@@ -1,22 +1,10 @@
 import AppStore from '$store';
 
-export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
+export default ({ addProvider, context: { createElement } }) => {
 
   const StoreProvider = ({ children }) => {
-    const storeConfig = appConfig.store || {};
 
-    let initialStates = {};
-
-    if (initialData.initialStates) {
-      initialStates = initialData.initialStates;
-    } else if (storeConfig.initialStates) {
-      initialStates = storeConfig.initialStates;
-    }
-
-    return createElement(AppStore.Provider, {
-      initialStates,
-      children
-    });
+    return createElement(AppStore.Provider, { children });
   };
   if (AppStore && AppStore.Provider) {
     addProvider(StoreProvider);
