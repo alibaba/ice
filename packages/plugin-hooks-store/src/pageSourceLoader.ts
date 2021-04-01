@@ -7,7 +7,7 @@ import { join } from 'path';
  *  "routes": [
       {
         "path": "/",
-        "source": ".rax/pages/Home/(index)",
+        "pageSource": ".rax/pages/Home/(index)",
       }
     ]
   }
