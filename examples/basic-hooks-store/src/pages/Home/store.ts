@@ -1,10 +1,10 @@
 import { createHooksStore } from 'ice';
-import useA from './hooks/a';
-import useB from './hooks/b';
+import useCounter from './hooks/useCounter';
+import useTitle from './hooks/useTitle';
 
 const store = createHooksStore({
-  useA,
-  useB
+  useCounter,
+  useTitle
 });
 
 export default store;

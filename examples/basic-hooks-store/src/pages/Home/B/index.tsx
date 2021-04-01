@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'ice';
 import pageStore from '@/pages/Home/store';
 
 export default function() {
-  const [title, sayHello] = pageStore.useHooks('useB');
-
-  useEffect(function() {
-    sayHello();
-  }, []);
+  const [title] = pageStore.useHooks('useTitle');
 
   return (
     <div>

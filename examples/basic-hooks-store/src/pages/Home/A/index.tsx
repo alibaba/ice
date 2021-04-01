@@ -3,15 +3,15 @@ import { Link } from 'ice';
 import pageStore from '@/pages/Home/store';
 
 export default function() {
-  const [title, sayHello] = pageStore.useHooks('useA');
+  const [count, plusOne] = pageStore.useHooks('useCounter');
 
   useEffect(function() {
-    sayHello();
+    plusOne();
   }, []);
 
   return (
     <div>
-      <h4>{title}!</h4>
+      <h4>{count}!</h4>
       <Link to="/home/b">PageB</Link>
     </div>
   );
