@@ -3,7 +3,8 @@ import * as fse from 'fs-extra';
 import { formatPath } from '@builder/app-helpers'
 
 import {
-  getPageStorePath
+  getPageStorePath,
+  getAppStorePath,
 } from './utils/getPath';
 import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
@@ -17,6 +18,8 @@ export interface IRenderPageParams {
 export default class Generator {
   private rootDir: string
 
+  private appStoreTemplatePath: string
+
   private targetPath: string
 
   private projectType: string
@@ -27,22 +30,41 @@ export default class Generator {
 
   constructor({
     rootDir,
+    appStoreTemplatePath,
     targetPath,
     applyMethod,
     projectType,
     srcDir,
   }: {
     rootDir: string;
+    appStoreTemplatePath: string;
     targetPath: string;
     projectType: string;
     applyMethod: Function;
     srcDir: string;
   }) {
     this.rootDir = rootDir;
+    this.appStoreTemplatePath = appStoreTemplatePath;
     this.targetPath = targetPath;
     this.applyMethod = applyMethod;
     this.projectType = projectType;
     this.srcDir = srcDir;
+  }
+
+  private renderAppStore() {
+    const sourceFilename = 'store/index';
+    const exportName = 'store';
+    const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
+
+    this.applyMethod('addRenderFile', this.appStoreTemplatePath, targetPath);
+    this.applyMethod('removeExport', exportName);
+    this.applyMethod('addExport', {
+      source: `./${sourceFilename}`,
+      specifier: 'store',
+      exportName,
+      importSource: `$$ice/${sourceFilename}`,
+      exportDefault: 'store',
+    });
   }
 
   private renderPageComponent({ pageName, pageNameDir, pageHooksStoreFile, existedPageHooksStoreFile }: IRenderPageParams) {
@@ -97,6 +119,14 @@ export default class Generator {
   }
 
   public render() {
+    const appStoreFile = formatPath(getAppStorePath({rootDir: this.rootDir, srcDir: this.srcDir, projectType: this.projectType}));
+    const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
+
+    // if store is created by user, don't create .ice/store/index.ts
+    if (!existsAppStoreFile) {
+      // generate .ice/store/index.ts
+      this.renderAppStore();
+    }
 
     const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
 

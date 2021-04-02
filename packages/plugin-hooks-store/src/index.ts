@@ -1,5 +1,6 @@
 import { IPlugin } from '@alib/build-scripts';
 import * as path from 'path';
+import * as fse from 'fs-extra';
 import Generator from './generator';
 import { getAppStorePath } from './utils/getPath';
 import { formatPath } from '@builder/app-helpers';
@@ -15,6 +16,9 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
   const pages = applyMethod('getPages', rootDir, srcDir);
 
   const appStoreFile = formatPath(getAppStorePath({ rootDir, srcDir, projectType }));
+  const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
+  const templatePath = path.join(__dirname, 'template');
+  const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
 
   applyMethod('addExport', {
     source: '@ice/hooks-store',
@@ -69,10 +73,11 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
       .options({
         targetPath
       });
-    config.resolve.alias.set('$store', appStoreFile);
+      config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
   });
 
   const gen = new Generator({
+    appStoreTemplatePath,
     targetPath,
     rootDir,
     applyMethod,
