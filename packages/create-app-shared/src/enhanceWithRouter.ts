@@ -1,4 +1,11 @@
+import { RouteComponentProps, WithRouterStatics, WithRouterProps } from 'react-router';
 import { isMiniAppPlatform } from './env';
+
+export interface IWithRouter {
+  <P extends RouteComponentProps<any>, C extends React.ComponentType<P>>(
+    component: C & React.ComponentType<P>,
+  ): React.ComponentClass<Omit<P, keyof RouteComponentProps<any>> & WithRouterProps<C>> & WithRouterStatics<C>;
+}
 
 function enhanceWithRouter({ withRouter, createElement }) {
   if (isMiniAppPlatform) {
@@ -21,7 +28,7 @@ function enhanceWithRouter({ withRouter, createElement }) {
     };
   }
 
-  return withRouter;
+  return withRouter as IWithRouter;
 }
 
 export default enhanceWithRouter;
