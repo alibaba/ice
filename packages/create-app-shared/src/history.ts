@@ -3,13 +3,26 @@ import {
   createHashHistory,
   createMemoryHistory,
   History,
+  Location
 } from 'history';
 import { createMiniAppHistory } from 'miniapp-history';
 import { isMiniAppPlatform, isWeex, isKraken } from './env';
 
 // eslint-disable-next-line
 let history: History;
-function createHistory({ routes, customHistory, type, basename, location }: any) {
+function createHistory({
+  routes,
+  customHistory,
+  type,
+  basename,
+  location
+}: {
+  routes?: any[],
+  customHistory?: History,
+  type?: string,
+  basename?: string,
+  location?: Location
+}) {
   if (process.env.__IS_SERVER__) {
     history = createMemoryHistory();
     history.location = location;

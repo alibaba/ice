@@ -1,3 +1,4 @@
+import { History } from 'history';
 import RuntimeModule from './runtimeModule';
 import { createHistory } from './history';
 import { isMiniAppPlatform } from './env';
@@ -22,7 +23,7 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
     appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
 
     // Set history
-    let history: any = {};
+    let history: History;
     if (!isMiniAppPlatform && initHistory) {
       const { router } = appConfig;
       const { type, basename, history: customHistory } = router;
