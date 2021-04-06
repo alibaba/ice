@@ -38,9 +38,9 @@ function createHistory({
     } else if (type === 'browser') {
       history = createBrowserHistory({ basename });
     } else if (isMiniAppPlatform) {
-      (window as any).history = createMiniAppHistory(routes);
+      (window as any).history = createMiniAppHistory(routes) as History;
       window.location = (window.history as any).location;
-      history = window.history as any;
+      history = (window as any).history;
     } else {
       history = createMemoryHistory();
     }
