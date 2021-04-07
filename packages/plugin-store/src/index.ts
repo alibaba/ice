@@ -114,7 +114,7 @@ export default async (api) => {
     applyMethod,
     projectType,
     srcDir,
-    restPageState: store && store.restPageState
+    resetPageState: store && store.resetPageState
   });
 
   gen.render();

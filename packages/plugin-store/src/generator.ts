@@ -37,7 +37,7 @@ export default class Generator {
 
   private srcDir: string
 
-  private restPageState: boolean
+  private resetPageState: boolean
 
   constructor({
     rootDir,
@@ -48,7 +48,7 @@ export default class Generator {
     applyMethod,
     projectType,
     srcDir,
-    restPageState
+    resetPageState
   }: {
     rootDir: string;
     appStoreTemplatePath: string;
@@ -59,7 +59,7 @@ export default class Generator {
     projectType: string;
     applyMethod: Function;
     srcDir: string;
-    restPageState: boolean
+    resetPageState: boolean
   }) {
     this.rootDir = rootDir;
     this.appStoreTemplatePath = appStoreTemplatePath;
@@ -69,7 +69,7 @@ export default class Generator {
     this.applyMethod = applyMethod;
     this.projectType = projectType;
     this.srcDir = srcDir;
-    this.restPageState = restPageState;
+    this.resetPageState = resetPageState;
   }
 
   private getPageModels(pageModelsDir: string, pageModelFile: string) {
@@ -187,7 +187,7 @@ export default class Generator {
 
     const pageComponentName = 'PageComponent';
     let modelRenderData = {};
-    if (this.restPageState) {
+    if (this.resetPageState) {
       modelRenderData = this.getPageModels(pageModelsDir, pageModelFile);
     }
 
@@ -196,7 +196,7 @@ export default class Generator {
       pageComponentExport: pageComponentName,
       hasPageStore: false,
       pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\'',
-      restPageState: this.restPageState,
+      resetPageState: this.resetPageState,
       ...modelRenderData,
     };
 
@@ -220,7 +220,7 @@ export default class Generator {
     const pageLayoutName = `${pageName}Layout`;
 
     let modelRenderData = {};
-    if (this.restPageState) {
+    if (this.resetPageState) {
       modelRenderData = this.getPageModels(pageModelsDir, pageModelFile);
     }
 
@@ -229,7 +229,7 @@ export default class Generator {
       pageComponentExport: pageLayoutName,
       hasPageStore: false,
       pageStoreImport: existedStoreFile ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : 'import store from \'./store\'',
-      restPageState: this.restPageState,
+      resetPageState: this.resetPageState,
       ...modelRenderData
     };
 
