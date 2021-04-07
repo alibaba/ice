@@ -2,7 +2,8 @@
 
 ## 1.9.6
 
-- [feat] reset page store after router switch  
+- [feat] support reset page store after router switch  
+- [feat] support watch store.ts change
 
 ## 1.9.5
 
