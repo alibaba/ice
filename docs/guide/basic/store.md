@@ -474,11 +474,13 @@ export default store.withModel('todos')(TodoList);
 如果开发者自行在 `store.ts` 中初始化 `store` 实例，需要按照以下规则进行创建：
 
 ```ts
-// src/pages/Home/
+// src/pages/Home/store.ts
 import { createStore } from 'ice';
+
 // 有 models 目录的情况
 import user from './models/user';
 import project from './models/project';
+
 // 使用 model 的文件名作为 model key
 export default createStore({
   user,
@@ -487,6 +489,7 @@ export default createStore({
 
 // 有 model.ts 文件的情况
 import store from './model';
+
 // 使用 default 作为 model key
 export default createStore({ default: store })
 ```
