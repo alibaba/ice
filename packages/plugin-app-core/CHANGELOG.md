@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.2
+
+- [feat] support resetPageStore param
+
 ## 1.4.1
 
 - [chore] set default value to false of generateRuntime
