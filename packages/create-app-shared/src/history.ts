@@ -1,15 +1,28 @@
 import {
   createBrowserHistory,
   createHashHistory,
-  createMemoryHistory
+  createMemoryHistory,
+  History,
+  Location
 } from 'history';
 import { createMiniAppHistory } from 'miniapp-history';
 import { isMiniAppPlatform, isWeex, isKraken } from './env';
 
 // eslint-disable-next-line
-let history;
-
-function createHistory({ routes, customHistory, type, basename, location }: any) {
+let history: History;
+function createHistory({
+  routes,
+  customHistory,
+  type,
+  basename,
+  location
+}: {
+  routes?: any[],
+  customHistory?: History,
+  type?: string,
+  basename?: string,
+  location?: Location
+}) {
   if (process.env.__IS_SERVER__) {
     history = createMemoryHistory();
     history.location = location;
@@ -25,9 +38,9 @@ function createHistory({ routes, customHistory, type, basename, location }: any)
     } else if (type === 'browser') {
       history = createBrowserHistory({ basename });
     } else if (isMiniAppPlatform) {
-      (window as any).history = createMiniAppHistory(routes);
+      (window as any).history = createMiniAppHistory(routes) as History;
       window.location = (window.history as any).location;
-      history = window.history;
+      history = (window as any).history;
     } else {
       history = createMemoryHistory();
     }
@@ -36,7 +49,7 @@ function createHistory({ routes, customHistory, type, basename, location }: any)
 }
 
 function getHistory() {
-  return isMiniAppPlatform ? window.history : history;
+  return history;
 }
 
 export { getHistory, createHistory, history };
