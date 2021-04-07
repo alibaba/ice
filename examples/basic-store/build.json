@@ -4,7 +4,7 @@
     "lazy": false
   },
   "store": {
-    "restPageState": true
+    "resetPageState": true
   },
   "tsChecker": true
 }

@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as recursiveReaddir from 'fs-readdir-recursive';
+import { formatPath } from '@builder/app-helpers';
 import {
   getPageModelPath,
   getPageStorePath,
@@ -100,7 +101,7 @@ export default class Generator {
       const pageComponentName = 'pageModel';
       return {
         isSingleModel: true,
-        importStr: `import ${pageComponentName} from '${this.applyMethod('formatPath', pageModelFile.replace(`.${this.projectType}`, ''))}';`,
+        importStr: `import ${pageComponentName} from '${formatPath(pageModelFile.replace(`.${this.projectType}`, ''))}';`,
         modelsStr: pageComponentName
       };
     } else {
