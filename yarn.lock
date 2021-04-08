@@ -7349,16 +7349,16 @@ es6-promisify@^6.0.0:
   resolved "https://registry.npm.taobao.org/es6-promisify/download/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
   integrity sha1-RoN2Ubewa/b/+JPQPyk5NmjQFiE=
 
-esbuild-loader@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.npm.taobao.org/esbuild-loader/download/esbuild-loader-2.9.2.tgz#ae16721aeb05018396395a95f528c778ba7361d0"
-  integrity sha1-rhZyGusFAYOWOVqV9SjHeLpzYdA=
+esbuild-loader@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.npm.taobao.org/esbuild-loader/download/esbuild-loader-2.11.0.tgz#65efc9c8ab14f2da06b9d165396f9520b4aeac96"
+  integrity sha1-Ze/JyKsU8toGudFlOW+VILSurJY=
   dependencies:
-    esbuild "^0.8.42"
-    joycon "^2.2.5"
+    esbuild "^0.10.2"
+    joycon "^3.0.1"
     json5 "^2.2.0"
     loader-utils "^2.0.0"
-    type-fest "^0.20.2"
+    type-fest "^1.0.1"
     webpack-sources "^2.2.0"
 
 esbuild-webpack-plugin@^1.0.3:
@@ -7368,15 +7368,15 @@ esbuild-webpack-plugin@^1.0.3:
   dependencies:
     esbuild "^0.7.15"
 
+esbuild@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.npm.taobao.org/esbuild/download/esbuild-0.10.2.tgz#caa65a8f3096d547d89159918039df6c5c6c90be"
+  integrity sha1-yqZajzCW1UfYkVmRgDnfbFxskL4=
+
 esbuild@^0.7.15:
   version "0.7.22"
   resolved "https://registry.npm.taobao.org/esbuild/download/esbuild-0.7.22.tgz#9149b903f8128b7c45a754046c24199d76bbe08e"
   integrity sha1-kUm5A/gSi3xFp1QEbCQZnXa74I4=
-
-esbuild@^0.8.42:
-  version "0.8.54"
-  resolved "https://registry.npm.taobao.org/esbuild/download/esbuild-0.8.54.tgz#2f32ff80e95c69a0f25b799d76a27c05e2857cdf"
-  integrity sha1-LzL/gOlcaaDyW3mddqJ8BeKFfN8=
 
 esbuild@^0.9.3:
   version "0.9.3"
@@ -10951,10 +10951,10 @@ jest@^26.0.0, jest@^26.4.2:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
-joycon@^2.2.5:
-  version "2.2.5"
-  resolved "https://registry.npm.taobao.org/joycon/download/joycon-2.2.5.tgz#8d4cf4cbb2544d7b7583c216fcdfec19f6be1615"
-  integrity sha1-jUz0y7JUTXt1g8IW/N/sGfa+FhU=
+joycon@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/joycon/download/joycon-3.0.1.tgz?cache=0&sync_timestamp=1615921440697&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjoycon%2Fdownload%2Fjoycon-3.0.1.tgz#9074c9b08ccf37a6726ff74a18485f85efcaddaf"
+  integrity sha1-kHTJsIzPN6Zyb/dKGEhfhe/K3a8=
 
 js-base64@^2.1.8, js-base64@^2.5.2:
   version "2.6.4"
@@ -17484,11 +17484,6 @@ type-fest@^0.18.0:
   resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.18.1.tgz?cache=0&sync_timestamp=1606468796224&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftype-fest%2Fdownload%2Ftype-fest-0.18.1.tgz#db4bc151a4a2cf4eebf9add5db75508db6cc841f"
   integrity sha1-20vBUaSiz07r+a3V23VQjbbMhB8=
 
-type-fest@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.20.2.tgz#1bf207f4b28f91583666cb5fbd327887301cd5f4"
-  integrity sha1-G/IH9LKPkVg2ZstfvTJ4hzAc1fQ=
-
 type-fest@^0.3.0:
   version "0.3.1"
   resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.3.1.tgz?cache=0&sync_timestamp=1606468796224&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftype-fest%2Fdownload%2Ftype-fest-0.3.1.tgz#63d00d204e059474fe5e1b7c011112bbd1dc29e1"
@@ -17503,6 +17498,11 @@ type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.8.1.tgz?cache=0&sync_timestamp=1606468796224&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftype-fest%2Fdownload%2Ftype-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha1-CeJJ696FHTseSNJ8EFREZn8XuD0=
+
+type-fest@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-1.0.1.tgz?cache=0&sync_timestamp=1616514381586&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftype-fest%2Fdownload%2Ftype-fest-1.0.1.tgz#2494455e65c59170ec98bdda05b7d7184f5b74ad"
+  integrity sha1-JJRFXmXFkXDsmL3aBbfXGE9bdK0=
 
 type-is@^1.6.16, type-is@^1.6.18, type-is@^1.6.4, type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"

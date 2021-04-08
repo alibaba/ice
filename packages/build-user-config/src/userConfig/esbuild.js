@@ -1,5 +1,4 @@
 const {
-  ESBuildPlugin,
   ESBuildMinifyPlugin
 } = require('esbuild-loader');
 
@@ -16,6 +15,5 @@ module.exports = (config, options) => {
       ...defaultOptions,
       ...options,
     }]);
-    config.plugin('ESBuildPlugin').use(ESBuildPlugin);  
   }
 };
