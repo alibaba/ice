@@ -18,6 +18,43 @@ function normalizeEntry(entry, preparedChunks) {
   return Object.keys(entry).concat(preparedName);
 }
 
+function replaceBlank(str) {
+  return str.replace(/[\r\n ]/g, '').replace(/\\/g, '\\\\');
+}
+
+function addCSSVariableCode({ rootDir, themesCssVars, defaultTheme, cssVariable, config, log }) {
+  try {
+    const tempDir = path.join(rootDir, './node_modules');
+    const jsPath = path.join(tempDir, 'change-theme.js');
+    fs.writeFileSync(jsPath, getThemeCode(themesCssVars, defaultTheme, cssVariable));
+
+    // add theme.js to entry
+    const entryNames = Object.keys(config.entryPoints.entries());
+    entryNames.forEach((name) => {
+      config.entry(name).prepend(jsPath);
+    });
+  } catch (err) {
+    log.error('fail to add theme.js to entry');
+    log.error(err);
+  }
+}
+
+function getVariablesPath({
+  packageName, filename = 'variables.scss', slient = false
+}) {
+  let filePath = '';
+  const variables = `${packageName}/${filename}`;
+  try {
+    filePath = require.resolve(variables);
+  } catch (err) {
+    console.log(err);
+    if (!slient) {
+      console.log('[ERROR]', `fail to resolve ${variables}`);
+    }
+  }
+  return filePath;
+}
+
 module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugionOptions = {}) => {
   const {
     themePackage,
@@ -31,6 +68,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
     importOptions = {},
     componentOptions = {},
     enableColorNames,
+    cssVariable,
   } = plugionOptions;
   let { uniteBaseComponent } = plugionOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
@@ -57,52 +95,44 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
       let defaultTheme = '';
       if (Array.isArray(themePackage)) {
         const themesCssVars = {};
-        let varsPath = path.join(rootDir, 'node_modules', '@alifd/next/variables.scss');
-        if (!fs.existsSync(varsPath)) {
-          varsPath = false;
-        }
+        const varsPath = !cssVariable && getVariablesPath({ packageName: '@alifd/next', slient: true });
         // get scss variables and generate css variables
         themePackage.forEach(({ name, ...themeData }) => {
-          const themePath = path.join(rootDir, 'node_modules', `${name}/variables.scss`);
-          const configData = themeData.themeConfig || {};
-          let themeVars = {};
-          let calcVars = {};
-          if (varsPath) {
-            calcVars = getCalcVars(varsPath, themePath, configData);
+          const themePath = getVariablesPath({ packageName: name, filename: `variables.${cssVariable ? 'css' : 'scss'}` });
+          if (!cssVariable) {
+            const configData = themeData.themeConfig || {};
+            let themeVars = {};
+            let calcVars = {};
+            if (varsPath) {
+              calcVars = getCalcVars(varsPath, themePath, configData);
+            }
+            try {
+              themeVars = getThemeVars(themePath, Object.assign({}, calcVars, configData ), enableColorNames);
+            } catch (err) {
+              log.error('get theme variables err:', err);
+            }
+            replaceVars = themeVars.scssVars;
+            defaultScssVars = themeVars.originTheme;
+            themesCssVars[name] = themeVars.cssVars;
+          } else if (themePath) {
+            // read css variables from css file
+            themesCssVars[name] = replaceBlank(fs.readFileSync(themePath, 'utf-8'));
           }
-          try {
-            themeVars = getThemeVars(themePath, Object.assign({}, calcVars, configData ), enableColorNames);
-          } catch (err) {
-            log.error('get theme variables err:', err);
-          }
-  
-          replaceVars = themeVars.scssVars;
-          defaultScssVars = themeVars.originTheme;
-          themesCssVars[name] = themeVars.cssVars;
+
           if (themeData.default) {
             defaultTheme = name;
           }
         });
-  
         defaultTheme = defaultTheme || (themePackage[0] && themePackage[0].name);
-  
-        try {
-          const tempDir = path.join(rootDir, './node_modules');
-          const jsPath = path.join(tempDir, 'change-theme.js');
-          fs.writeFileSync(jsPath, getThemeCode(themesCssVars, defaultTheme));
-  
-          // add theme.js to entry
-          const entryNames = Object.keys(config.entryPoints.entries());
-          entryNames.forEach((name) => {
-            config.entry(name).prepend(jsPath);
-          });
-        } catch (err) {
-          log.error('fail to add theme.js to entry');
-          log.error(err);
+        addCSSVariableCode({ defaultTheme, config, themesCssVars, rootDir, cssVariable, log });
+      } else if (cssVariable && themePackage) {
+        // add css variable code when cssVariable is true
+        const cssVariablePath = getVariablesPath({ packageName: themePackage, filename: 'variables.css'});
+        if (cssVariablePath) {
+          const cssVariables = replaceBlank(fs.readFileSync(cssVariablePath, 'utf-8'));
+          addCSSVariableCode({ defaultTheme: themePackage, config, themesCssVars: {[themePackage]: cssVariables}, rootDir, cssVariable, log });
         }
       }
-  
-      const themeFile = typeof themePackage === 'string' && path.join(rootDir, 'node_modules', `${themePackage}/variables.scss`);
   
       if (usePx2Vw) {
         ['css', 'scss', 'scss-module'].forEach(rule => {
@@ -124,7 +154,9 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             });
         });
       };
-  
+
+      const themeFile = typeof themePackage === 'string' && getVariablesPath({ packageName: themePackage, slient: true });
+
       ['scss', 'scss-module'].forEach((rule) => {
         config.module
           .rule(rule)
@@ -143,12 +175,12 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
   
       // check icons.scss
       const iconPackage = defaultTheme || themePackage;
-      const iconScssPath = iconPackage && path.join(rootDir, 'node_modules', `${iconPackage}/icons.scss`);
+      const iconScssPath = iconPackage && getVariablesPath({ packageName: iconPackage, filename: 'icons.scss', slient: true });
       if (iconScssPath && fs.existsSync(iconScssPath)) {
         const appendStylePluginOption = {
           type: 'sass',
           srcFile: iconScssPath,
-          variableFile: path.join(rootDir, 'node_modules', `${iconPackage}/variables.scss`),
+          variableFile: getVariablesPath({ packageName: iconPackage }),
           compileThemeIcon: true,
           themeConfig: themeConfig || {},
           distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
@@ -216,7 +248,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
         }, {
           libraryName: '@alifd/next',
           libraryDirectory: nextLibDir,
-          style,
+          style: cssVariable ? (name) => `${name}/style2` : style,
           ...importOptions,
         }];
         ['jsx', 'tsx'].forEach((rule) => {

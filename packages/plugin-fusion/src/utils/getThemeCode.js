@@ -1,8 +1,9 @@
-module.exports = (themesCssVars, defaultTheme) => {
+module.exports = (themesCssVars, defaultTheme, cssVariable) => {
   const themesDataStr = Object.keys(themesCssVars).map((themeKey) => {
     const cssVars = themesCssVars[themeKey];
-    const ruleStr = Object.entries(cssVars).map(([k, v]) => `${k}: ${v}`).join(';');
-    return `'${themeKey}': '{${ruleStr}}'`;
+    return !cssVariable
+      ? `'${themeKey}': ':root {${Object.entries(cssVars).map(([k, v]) => `${k}: ${v}`).join(';')}}'`
+      : `'${themeKey}': '${cssVars}'`;
   }).join(',');
   return `
 const themesData = {
@@ -30,7 +31,7 @@ function changeTheme(currentTheme) {
   const theme = themesData[currentTheme];
   if (theme) {
     // Declare the style element
-    const styles = \`:root \${theme}\`;
+    const styles = \`\${theme}\`;
     // Function call
     appendStyle(styles);
   } else {
