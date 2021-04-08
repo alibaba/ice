@@ -1,54 +1,73 @@
-import { IPlugin, Json } from '@alib/build-scripts';
+import { IPlugin, IUserConfig } from '@alib/build-scripts';
 import { getWebpackConfig } from 'build-scripts-config';
+import { Options } from './types';
+import setUMDConfig from './setUMDConfig';
+import genRuntime from './genRuntime';
+import setExternals from './setExternals';
+import appendLifecycle from './appendLifecycle';
 
-import webpack = require('webpack');
-import fse = require('fs-extra')
-import path = require('path');
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
+  const { command, userConfig, webpack, commandArgs } = context;
+  const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
 
-const plugin: IPlugin = ({ registerTask, onGetWebpackConfig, context, onHook }, pluginOptions) => {
-  const { rootDir, command, commandArgs, webpack: contextWebpack } = context;
-  const { externals, library, moduleEntry = {} } = pluginOptions as Json || {};
-  const entryKeys = Object.keys(moduleEntry);
-  if (entryKeys.length > 0) {
-    const mode = command === 'start' ? 'development' : 'production';
-    const defaultConfig = getWebpackConfig(mode);
-    defaultConfig.name('Module');
-    // DefinePlugin
-    const defineVariables = {
-      'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
-      'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
-    };
-    defaultConfig.plugin('DefinePlugin')
-      .use((contextWebpack as any).DefinePlugin, [defineVariables])
-      .end();
-    registerTask('module', defaultConfig);
-    onGetWebpackConfig('module', (config) => {
-      config.context(rootDir);
-      // clear entry
-      config.entryPoints.clear();
-      entryKeys.forEach((entryKey) => {
-        // add module entry
-        config.entry(entryKey).add(path.join(rootDir, ((moduleEntry as Json)[entryKey] as string)));
-      });
-      // disable vendor
-      const outputDir = path.resolve(rootDir, 'dist');
-      config.optimization.splitChunks({ cacheGroups: {} });
-      config.output
-        .path(outputDir)
-        .filename('[name].js')
-        .library((library as string) || 'module')
-        .libraryTarget('umd');
-      // css
-      config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: '[name].css' }]);
-      config.devServer.contentBase(path.join(rootDir, 'dist'));
-      config.devServer.writeToDisk(true);
-      config.externals(externals as webpack.ExternalsElement[]);
-      onHook('after.build.compile', () => {
-        // copy files to build/modules
-        fse.copySync(outputDir, path.join(rootDir, 'build', 'modules'));
-      });
-    });
+  const {
+    moduleExternals,
+    minify,
+    sourceMap,
+  } = options as any as Options ?? {};
+  const mode = command === 'start' ? 'development' : 'production';
+
+  const baseConfig = getWebpackConfig(mode);
+
+  baseConfig.name('MicroModule');
+
+  // minify
+  const localMinify = outerMinify ?? minify;
+  if (localMinify !== undefined) {
+    baseConfig.optimization.minimize(minify);
   }
+
+  // sourcemap
+  const localSourceMap = outerSourceMap ?? sourceMap;
+  if (localSourceMap !== undefined) {
+    baseConfig.devtool(sourceMap ? 'source-map' : false);
+    // eslint-disable-next-line no-unused-expressions
+    sourceMap
+      && (command === 'build')
+      && baseConfig.optimization
+        .minimizer('TerserPlugin')
+        .tap(([opts]: any) => [
+          { ...opts, sourceMap: true },
+        ]);
+  }
+
+  // definePlugin, Compatible with @ali/build-plugin-ice-def
+  const defineVariables = {
+    'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
+    'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
+  };
+  baseConfig.plugin('DefinePlugin')
+    .use((webpack as any).DefinePlugin, [defineVariables])
+    .end();
+
+  // set umd
+  setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
+
+  // set moduleExternals
+  if (moduleExternals) {
+    setExternals({ onGetWebpackConfig }, { moduleExternals });
+  }
+
+  // append lifecycle
+  appendLifecycle({ onGetWebpackConfig });
+
+  // registerTask
+  registerTask('icestark-module', baseConfig);
+
+  // generate runtime.json
+  onHook(`after.${command}.compile`, () => {
+    genRuntime({ context }, options as any as Options);
+  });
 };
 
 export default plugin;
