@@ -1,22 +1,22 @@
 import * as globby from 'globby';
 import * as path from 'path';
-
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 export default ({ rootDir, srcDir, projectType, pages }) => {
-  const appStoreFilePath = path.join(rootDir, srcDir, `store.${projectType}`);
-  const appStoreMatchingPaths = globby.sync(path.join(rootDir, srcDir, 'store.*'));
+  const srcPath = path.join(rootDir, srcDir);
+  const appStoreFilePath = path.join(srcPath, `store.${projectType}`);
+  const appStoreMatchingPaths = globby.sync( 'store.*', { cwd: srcPath });
   checkFileExists(appStoreMatchingPaths, appStoreFilePath);
 
   pages.forEach(page => {
-    const pagePath = path.join(rootDir, srcDir, 'pages', page);
+    const pagePath = path.join(srcPath, 'pages', page);
 
     const pageStoreFilePath = path.join(pagePath, `store.${projectType}`);
-    const pageStoreMatchingPaths = globby.sync(path.join(pagePath, 'store.*'));
+    const pageStoreMatchingPaths = globby.sync('store.*', { cwd: pagePath });
     checkFileExists(pageStoreMatchingPaths, pageStoreFilePath);
 
     const pageModelFilePath = path.join(pagePath, `model.${projectType}`);
-    const pageModelMatchingPaths = globby.sync(path.join(pagePath, 'model.*'));
+    const pageModelMatchingPaths = globby.sync('store.*', { cwd: pagePath });
     checkFileExists(pageModelMatchingPaths, pageModelFilePath);
   });
 };
