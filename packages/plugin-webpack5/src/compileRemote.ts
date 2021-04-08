@@ -55,6 +55,10 @@ export default (api: IPluginAPI, { runtimeFolder, externals, cacheFolder, remote
           return pre;
         }, {}),
       }),
+      new (webpack as any).DefinePlugin({
+        process: JSON.stringify({}),
+        'process.env': JSON.stringify({}),
+      }),
     ],
   };
 

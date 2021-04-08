@@ -11,15 +11,17 @@ interface IRemoteOptions extends IFilterOptions {
   include?: IRule;
   exclude?: IRule;
   autoDetect?: boolean;
+  remoteCoreJs?: boolean;
 }
 interface IOptions {
   remoteRuntime?: boolean | IRemoteOptions;
   bootstrap?: string;
+  cacheLog?: boolean | string;
 }
 
 const plugin: IPlugin = async (api, options = {}) => {
   const { onGetWebpackConfig, registerUserConfig, context } = api;
-  const { remoteRuntime, bootstrap } = options as IOptions;
+  const { remoteRuntime, bootstrap, cacheLog } = options as IOptions;
   const { pkg, userConfig, webpack, command } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
 
@@ -122,12 +124,20 @@ const plugin: IPlugin = async (api, options = {}) => {
     config.plugins.delete('CaseSensitivePathsPlugin');
 
     // filesystem cache
-    config.merge({
+    const cacheConfig = {
       cache: {
         type: 'filesystem',
         buildDependencies: {},
         cacheDirectory: path.join(context.rootDir, 'node_modules', '.cache', 'webpack'),
       }
+    };
+    config.merge({
+      ...cacheConfig,
+      ...(cacheLog ? {
+        infrastructureLogging: {
+          debug: typeof cacheLog === 'boolean' ? /FileSystemInfo/ : new RegExp(cacheLog),
+        }
+      }: {}),
     });
   });
 };

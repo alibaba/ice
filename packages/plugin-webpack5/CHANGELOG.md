@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3
+
+- [feat] support `cacheLog` for file system info
+- [feat] support remote core-js
+- [feat] remote built-in dependencies
+
 ## 1.2.2
 
 - [feat] auto detect package for remote runtime
