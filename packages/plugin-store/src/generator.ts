@@ -212,7 +212,8 @@ export default class Generator {
   private renderPageLayout({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, existedStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.targetPath, 'pages', pageName, 'Layout.tsx');
-    const pageComponentSourcePath = formatPath(`${pageNameDir}/Layout`);
+    const layoutDir = path.join(pageNameDir, 'Layout');
+    const pageComponentSourcePath = formatPath(layoutDir);
 
     if (!fse.pathExistsSync(pageComponentSourcePath)) {
       return;
@@ -236,7 +237,7 @@ export default class Generator {
 
     if (existedStoreFile || fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile)) {
       pageLayoutRenderData.hasPageStore = true;
-      checkPageIndexFileExists(pageComponentSourcePath, this.projectType);
+      checkPageIndexFileExists(layoutDir, this.projectType);
     }
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
