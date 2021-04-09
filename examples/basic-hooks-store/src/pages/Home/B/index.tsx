@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'ice';
-import pageStore from '@/pages/Home/store';
+import pageStore from '@/pages/Home/hooksStore';
 
 export default function() {
   const [title] = pageStore.useHooks('useTitle');

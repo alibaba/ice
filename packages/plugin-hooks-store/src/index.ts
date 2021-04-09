@@ -73,7 +73,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
       .options({
         targetPath
       });
-      config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
+      config.resolve.alias.set('$hooksStore', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'hooksStore', 'index.ts'));
   });
 
   const gen = new Generator({
@@ -87,7 +87,7 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /store.*|pages\/\w+\/store.*/, () => {
+    applyMethod('watchFileChange', /hooksStore.*|pages\/\w+\/hooksStore.*/, () => {
       gen.render();
     });
   });
