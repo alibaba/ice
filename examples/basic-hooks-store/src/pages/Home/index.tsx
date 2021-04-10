@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import store from '@/hooksStore';
+import store from '@/store';
 import { Link } from 'ice';
 
 export default function () {

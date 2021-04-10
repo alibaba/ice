@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'ice';
-import pageStore from '@/pages/Home/hooksStore';
+import pageStore from '@/pages/Home/store';
 
 export default function() {
   const [count, plusOne] = pageStore.useHooks('useCounter');

@@ -52,18 +52,18 @@ export default class Generator {
   }
 
   private renderAppStore() {
-    const sourceFilename = 'hooksStore/index';
-    const exportName = 'hooksStore';
+    const sourceFilename = 'store/index';
+    const exportName = 'store';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
     this.applyMethod('addRenderFile', this.appStoreTemplatePath, targetPath);
     this.applyMethod('removeExport', exportName);
     this.applyMethod('addExport', {
       source: `./${sourceFilename}`,
-      specifier: 'hooksStore',
+      specifier: 'store',
       exportName,
       importSource: `$$ice/${sourceFilename}`,
-      exportDefault: 'hooksStore',
+      exportDefault: 'store',
     });
   }
 

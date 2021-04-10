@@ -1,4 +1,4 @@
-import AppStore from '$hooksStore';
+import AppStore from '$store';
 
 export default ({ addProvider, context: { createElement } }) => {
 
