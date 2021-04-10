@@ -26,6 +26,9 @@ const plugin: IPlugin = ({ applyMethod, getValue, context, onHook, onGetWebpackC
     importSource: '@ice/hooks-store',
     exportName: 'createHooksStore',
     exportMembers: ['createHooksStore'],
+    alias: {
+      'createHooksStore': 'createStore'
+    }
   });
 
   // add babel plugins for ice lazy
