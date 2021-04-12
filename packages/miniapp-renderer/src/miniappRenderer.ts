@@ -1,5 +1,5 @@
 function miniappRenderer(
-  { appConfig = {} as any, createBaseApp, createHistory, staticConfig, buildConfig, pageProps, emitLifeCycles, ErrorBoundary },
+  { appConfig = {} as any, createBaseApp, createHistory, staticConfig, buildConfig = {} as any, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
   const { vendor } = buildConfig;
