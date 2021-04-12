@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- [chore] add vendor in buildConfig
+
 ## 1.4.2
 
 - [feat] support resetPageStore param

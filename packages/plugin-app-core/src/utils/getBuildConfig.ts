@@ -3,13 +3,14 @@ interface IBuildConfig {
   store?: boolean;
   icestarkUMD?: boolean;
   web?: object;
+  vendor?: boolean;
 }
 
 function getBuildConfig(userConfig): IBuildConfig{
   const { plugins } = userConfig;
   const buildConfig: IBuildConfig = {};
   // filter userConfig
-  ['router', 'store', 'web'].forEach((configKey) => {
+  ['router', 'store', 'web', 'vendor'].forEach((configKey) => {
     if (Object.prototype.hasOwnProperty.call(userConfig, configKey)) {
       buildConfig[configKey] = userConfig[configKey];
     }
