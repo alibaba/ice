@@ -1,4 +1,5 @@
 {
+  "store": false,
   "plugins": [
     "build-plugin-hooks-store"
   ]

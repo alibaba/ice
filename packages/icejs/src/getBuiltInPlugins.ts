@@ -38,24 +38,8 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     plugins.push('build-plugin-ice-ssr');
   }
 
-  const HOOKS_STORE_PLUGIN_KEY = 'build-plugin-hooks-store';
-  const existHooksStorePlugin = userConfig.plugins && userConfig.plugins.some(plugin => {
-    if (typeof plugin === 'string') {
-      return plugin === HOOKS_STORE_PLUGIN_KEY;
-    } else if (Array.isArray(plugin)) {
-      return plugin[0] === HOOKS_STORE_PLUGIN_KEY;
-    } else {
-      return false;
-    }
-  });
-
-  if(existHooksStorePlugin) {
-    console.log('');
-    console.log(chalk.magenta('You have used build-plugin-hooks-store. The build-plugin-ice-store built in has been disabled.'));
-    console.log('');
-  }
   // add store plugin
-  if (!existHooksStorePlugin && (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false)) {
+  if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {
     plugins.push('build-plugin-ice-store');
   }
 
