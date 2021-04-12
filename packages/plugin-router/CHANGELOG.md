@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.4
+
+- [fix] react-router-dom ts types not found
+
 ## 1.9.3
 
 - [chore] ts types
