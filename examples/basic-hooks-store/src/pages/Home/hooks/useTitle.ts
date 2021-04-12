@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-export default function useUser() {
-  const [title, setTitle] = useState('hello');
+export default function useTitle() {
+  const [title] = useState('hello');
   return [
     title
   ];
