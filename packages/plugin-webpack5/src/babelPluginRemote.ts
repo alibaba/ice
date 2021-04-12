@@ -48,7 +48,7 @@ export default (babel, opts: IOpts) => {
             node.arguments[0] = t.stringLiteral(`${remoteName}/${source}`);
           }
         }
-      }
+      },
     }
   };
 };

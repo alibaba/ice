@@ -17,7 +17,6 @@ export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injec
     const remotePlugins = [[require.resolve('./babelPluginRemote'), { libs: compileKeys, remoteName }]];
     return {
       babelPlugins: Array.isArray(modfiyConfig.babelPlugins) ? modfiyConfig.babelPlugins.concat(remotePlugins) : remotePlugins,
-      entry: bootstrapEntry,
       moduleFederation: {
         name: 'app',
         remoteType: 'window',
@@ -32,6 +31,14 @@ export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injec
       return [[...args, { from: runtimeFolder, to: path.join(args[0].to, 'remoteRuntime') }]];
     });
 
+    // modify entry by onGetWebpackConfig while polyfill will take effect with src/app
+    // config.entryPoints.clear();
+    config.entry('index').values().forEach(entry => {
+      if (entry.match(/\/src\/app/)) {
+        config.entry('index').delete(entry);
+      }
+    });
+    config.entry('index').add(bootstrapEntry);
     config.externals(externals);
     // inject runtime entry and externals umd
     if (config.plugins.get('HtmlWebpackPlugin')) {

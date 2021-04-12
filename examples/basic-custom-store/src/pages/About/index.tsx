@@ -7,7 +7,7 @@ export default () => {
 
   return (
     <>
-      <h2>HOME</h2>
+      <h2>About</h2>
 
       <div>
         <button type="button" onClick={() => counterActions.increment()}>+</button>
@@ -15,7 +15,7 @@ export default () => {
         <button type="button" onClick={() => counterActions.decrementAsync()}>-</button>
       </div>
 
-      <Link to="/about">about</Link>
+      <Link to="/">home</Link>
     </>
   );
 };

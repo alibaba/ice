@@ -12,7 +12,7 @@ export default async (api) => {
   const { rootDir, userConfig } = context;
 
   // get mpa entries in src/pages
-  const { mpa: isMpa, entry } = userConfig;
+  const { mpa: isMpa, entry, store } = userConfig;
 
   const targetPath = getValue('TEMP_PATH');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
@@ -113,12 +113,13 @@ export default async (api) => {
     rootDir,
     applyMethod,
     projectType,
-    srcDir
+    srcDir,
+    resetPageState: store && store.resetPageState
   });
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /models\/.*|model.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
+    applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
       gen.render();
     });
   });

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4
+
+- [fix] remove deprecated api of esbuild-loader
+
 ## 0.3.3
 
 - [feat] support resolve absolute cli options module path

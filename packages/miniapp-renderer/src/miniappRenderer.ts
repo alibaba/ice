@@ -1,7 +1,8 @@
 function miniappRenderer(
-  { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
+  { appConfig = {} as any, createBaseApp, createHistory, staticConfig, buildConfig, pageProps, emitLifeCycles, ErrorBoundary },
   { mount, unmount, createElement, Component }
 ) {
+  const { vendor } = buildConfig;
   const history = createHistory({ routes: staticConfig.routes });
 
   const { runtime } = createBaseApp(appConfig);
@@ -54,6 +55,11 @@ function miniappRenderer(
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
         document = value;
+        // @ts-ignore
+        const dispatchDocumentModify = getApp()._dispatchDocumentModify;
+        if (vendor && typeof dispatchDocumentModify === 'function') {
+          dispatchDocumentModify(value);
+        }
       }
     };
   });
