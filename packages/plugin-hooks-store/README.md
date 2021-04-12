@@ -4,6 +4,17 @@ builtin `ice/hooks-store` in icejs
 
 ## Usage
 
+### Config
+
+Disable `plugin-store`  and use `plugin-hooks-store` in `build.json`:
+
+```json
+{
+  "store": false,
+  "plugins": ["build-plugin-hooks-store"]
+}
+```
+
 ### Directory structure
 
 ```
