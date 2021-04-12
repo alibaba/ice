@@ -1,6 +1,7 @@
 import * as globby from 'globby';
 import * as path from 'path';
-import chalk from 'chalk';
+
+const chalk = require('chalk');
 
 export default ({ rootDir, srcDir, projectType, pages }) => {
   const srcPath = path.join(rootDir, srcDir);
