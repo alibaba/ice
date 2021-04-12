@@ -37,6 +37,7 @@ $ npm install build-plugin-fusion --save-dev
 * `componentOptions` 值为对象，修改业务组件的引入路径，推荐用在 PC 跨 H5 的项目中，给业务组件指定 H5 的渲染组件
 * `enableColorNames` 默认为 `false`，如果开启默认将提取 `transparent`、`red`、`blue` 等色值名称
 * `nextPrefix` 仅修改 `@alifd/next` 里的 css-prefix，一般用于 0.x&1.x 共存的场景
+* `cssVariable`  默认为 `false`，如果开启后将默认使用 css variables 的样式方案替换 sass 方案
 
 ## 通过主题包定制组件样式
 
@@ -165,6 +166,26 @@ build.json 中完成多主题包配置后，业务代码中可以直接调用 `_
 // 可以在设置的主题包 @icedesign/theme 和 @alifd/theme-ice-purple 之间切换
 window.__changeTheme__('@alifd/theme-ice-purple');
 ```
+
+## 使用 css variables 样式
+
+在 `build.json` 中开启 `cssVariable` 配置：
+
+```diff
+{
+  "plugins": [
+    ["build-plugin-fusion", {
+      "themePackage": "@alifd/theme-2",
++     "cssVariable": true
+    }]
+  ]
+}
+```
+
+使用须知：
+如果开启 `cssVariable` 主题包需要为新版主题包，即需要包含 variable.css 文件（文件内定义 css variables 变量）。不符合要求的主题包，在 fusion 官网生成最新版本主题包即可。
+
+> 该属性在 build-plugin-fusion 0.1.14 版本以上开始支持
 
 ## 跨端用法
 
