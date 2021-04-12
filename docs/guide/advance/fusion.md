@@ -182,6 +182,14 @@ window.__changeTheme__('@alifd/theme-ice-purple');
 }
 ```
 
+开启后 css 样式中用可以使用如下 css variables 变量：
+
+```css
+.color {
+  color: var(--color-brand1-6);
+}
+```
+
 使用须知：
 如果开启 `cssVariable` 主题包需要为新版主题包，即需要包含 variable.css 文件（文件内定义 css variables 变量）。不符合要求的主题包，在 fusion 官网生成最新版本主题包即可。
 
