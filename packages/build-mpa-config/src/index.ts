@@ -17,7 +17,7 @@ interface IConfigOptions {
 }
 export const generateMPAEntries = (api, options: IConfigOptions) => {
   const { context } = api;
-  const { type = 'web', framework = 'rax', targetDir = '' } = options;
+  const { framework = 'rax', targetDir = '' } = options;
   let { entries } = options;
   const { rootDir, commandArgs } = context;
   if (commandArgs.mpaEntry) {
@@ -30,20 +30,14 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath, source } = entry;
-    const pageEntry = entryPath;
-    const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath) || type === 'node';
     const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
     // icejs will config entry by api modifyUserConfig
-    let finalEntry = pageEntry;
-    // when the source is not the custom render page or runApp, do not generate entry
-    if (exportDefaultDeclarationExists && !useOriginEntry) {
-      // generate mpa entries
-      finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });
-    }
-
     parsedEntries[entryName] = {
       ...entry,
-      finalEntry,
+      finalEntry: exportDefaultDeclarationExists ?
+        // when the source has export default declaration which means that the custom render page and runApp don't exist, generate an entry
+        generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName }) :
+        entryPath
     };
   });
   return parsedEntries;
