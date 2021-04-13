@@ -12,8 +12,8 @@
     "src"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-dev-inspector"
   },
   "dependencies": {
     "@alib/build-scripts": "^0.1.31",
