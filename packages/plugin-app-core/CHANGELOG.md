@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- [fix] remove unused params in `unmount` function
+
 ## 1.4.2
 
 - [feat] support resetPageStore param
