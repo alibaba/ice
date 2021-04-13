@@ -460,18 +460,24 @@ MPA 场景下配置是否生成 vendor，如果希望禁用：
 - 类型：`object`
 - 默认值：`{}`
 
-```json
 
+
+以生产环境移除 `console` 为例，可以进行如下配置：
+
+```json
 {
   "terserOptions": {
     "compress": {
-      "unused": true
+      "unused": true,
+      "drop_console": true
     }
   }
 }
 ```
 
 为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 [terser options](https://github.com/terser/terser#minify-options)
+
+> 注意该配置方式在 ice.js 1.17.2 版本以上开始支持
 
 ### babelPlugins
 
