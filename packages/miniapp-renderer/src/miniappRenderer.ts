@@ -50,7 +50,7 @@ function miniappRenderer(
           Page: PageComponent
         }), rootEl);
 
-        (document as any).__unmount = unmount(appInstance, rootEl);
+        (document as any).__unmount = unmount(appInstance);
       },
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
