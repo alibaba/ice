@@ -4,10 +4,11 @@ const chalk = require('chalk');
 
 /**
  * Check if the src/pages/${pageName}/index.[j|t]s?(x) or src/pages/${pageName}/Layout/index.[j|t]s?(x) exists
+ * @param pagePath the page dir absoulute path. e.g. /basic-store/src/page/About
  */
-export default (pagePath: string, projectType: string) => {
+export default (pagePath: string) => {
   const matchingPaths = globby.sync(
-    [`index.${projectType}?(x)`, `Layout/index.${projectType}?(x)`],
+    ['index.@((t|j)s?(x))', 'Layout/index.@((t|j)s?(x))'],
     { cwd: pagePath }
   );
   if (!matchingPaths.length) {
