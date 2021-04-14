@@ -6,6 +6,10 @@ import { isWeex, isKraken, isNode } from 'universal-env';
   import '<%= globalStyle %>';
 <% } %>
 
+import PageComponent from '<%- resourcePath %>';
+
+const extraElements = [];
+
 <% if (needCustomTabBar) {%>
   // eslint-disable-next-line
   import CustomTabBar from  '<%= customTabBarPath %>';
@@ -17,14 +21,8 @@ import { isWeex, isKraken, isNode } from 'universal-env';
       </div>;
     }
   };
-<% } %>
 
-import PageComponent from '<%- resourcePath %>';
-
-const renderElements = [];
-
-<% if (needCustomTabBar) {%>
-  renderElements.push(<TabBarWrapper />);
+  extraElements.push(TabBarWrapper);
 <% } %>
 
 
@@ -32,8 +30,10 @@ if (!isNode) {
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    renderElements.push(<PageComponent />);
-    render(renderElements, null, { driver: DriverUniversal });
+    render([
+      extraElements.map(Element => <Element />),
+      <PageComponent />
+    ], null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
       let comProps = {};
@@ -44,8 +44,10 @@ if (!isNode) {
         comProps = await PageComponent.getInitialProps();
       }
 
-      renderElements.push(<PageComponent {...comProps} />);
-      render(renderElements, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      render([
+        extraElements.map(Element => <Element />),
+        <PageComponent {...comProps} />
+      ], document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
     }
     renderApp();
   }
