@@ -17,7 +17,7 @@ import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyRoutes, createHistory }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -57,7 +57,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
         }
       });
     });
-    setRenderRouter((routes) => () => {
+    wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
       const routerProps = {
         type,
         routes,
@@ -65,7 +65,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
         history,
         fallback
       };
-      return <IceRouter {...routerProps} />;
+      return originRender(routes, RoutesComponent, routerProps);
     });
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
