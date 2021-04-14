@@ -6,10 +6,13 @@
     "outDir": "build",
     "module": "esnext",
     "target": "es6",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "rootDir": "./",
@@ -19,17 +22,20 @@
     "noImplicitAny": false,
     "importHelpers": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": ["node", "jest"],
     "paths": {
-      "@/*": ["./src/*"],
-      "ice": [".ice/index.ts"]
+      "@/*": [
+        "./src/*"
+      ],
+      "ice": [
+        ".ice/index.ts"
+      ],
+      "ice/*": [
+        ".ice/pages/*"
+      ]
     }
-  },
-  "include": ["src", ".ice"],
-  "exclude": ["node_modules", "build", "public"]
+  }
 }
