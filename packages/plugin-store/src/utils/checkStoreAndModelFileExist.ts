@@ -30,6 +30,7 @@ function checkFileExists(absolutePath: string, matchingPaths: string[], targetFi
   if (matchingPaths.length && !matchingPaths.find(matchingPath => matchingPath === targetFilePath)) {
     console.log(chalk.yellow(
       chalk.black.bgYellow(' WARNING '),
-      `Expect ${path.join(absolutePath, targetFilePath)}, but found ${matchingPaths.map(matchingPath => path.join(absolutePath, matchingPath))}.`));
+      `Expect ${path.join(absolutePath, targetFilePath)}, but found ${matchingPaths.map(matchingPath => path.join(absolutePath, matchingPath))}.`
+    ));
   }
 }
