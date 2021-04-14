@@ -1,30 +1,50 @@
-import { render, createElement } from 'rax';
+import { render, createElement, Component } from 'rax';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken, isNode } from 'universal-env';
-
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '<%= globalStyle %>'
+  import '<%= globalStyle %>';
 <% } %>
 
-import Component from '<%- resourcePath %>';
+<% if (needCustomTabBar) {%>
+  // eslint-disable-next-line
+  import CustomTabBar from  '<%= customTabBarPath %>';
+
+  class TabBarWrapper extends Component {
+    render() {
+      return window.pha ? null : <div style={{ position: "fixed", bottom: 0, width: "750rpx" }}>
+        <CustomTabBar />
+      </div>;
+    }
+  };
+<% } %>
+
+import PageComponent from '<%- resourcePath %>';
 
 if (!isNode) {
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    render(<Component />, null, { driver: DriverUniversal });
+    render(<PageComponent />, null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
       let comProps = {};
       // process App.getInitialProps
       if (isSSR && window.__INITIAL_DATA__.pageInitialProps !== null) {
         comProps = window.__INITIAL_DATA__.pageInitialProps;
-      } else if (Component.getInitialProps) {
-        comProps = await Component.getInitialProps();
+      } else if (PageComponent.getInitialProps) {
+        comProps = await PageComponent.getInitialProps();
       }
 
-      render(<Component {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      <% if (needCustomTabBar) {%>
+        render([
+        <PageComponent {...comProps} />,
+        <TabBarWrapper />,
+        ], document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      <% } else { %>
+        render(<PageComponent {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      <% } %>
+
     }
     renderApp();
   }
