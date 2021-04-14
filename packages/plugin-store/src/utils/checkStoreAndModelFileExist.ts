@@ -1,5 +1,6 @@
 import * as globby from 'globby';
 import * as path from 'path';
+import { getPagePath } from './getPath';
 
 const chalk = require('chalk');
 
@@ -9,8 +10,8 @@ export default ({ rootDir, srcDir, projectType, pages }) => {
   const appStoreMatchingPaths = globby.sync( 'store.*', { cwd: srcPath });
   checkFileExists(srcPath, appStoreMatchingPaths, appStoreFilePath);
 
-  pages.forEach(page => {
-    const pagePath = path.join(srcPath, 'pages', page);
+  pages.forEach(pageName => {
+    const pagePath = getPagePath({ rootDir, srcDir, pageName });
 
     const pageStoreFilePath = `store.${projectType}`;
     const pageStoreMatchingPaths = globby.sync('store.*', { cwd: pagePath });
@@ -30,7 +31,7 @@ function checkFileExists(absolutePath: string, matchingPaths: string[], targetFi
   if (matchingPaths.length && !matchingPaths.find(matchingPath => matchingPath === targetFilePath)) {
     console.log(chalk.yellow(
       chalk.black.bgYellow(' WARNING '),
-      `Expect ${path.join(absolutePath, targetFilePath)}, but found ${matchingPaths.map(matchingPath => path.join(absolutePath, matchingPath))}.`
+      `Expect ${path.join(absolutePath, targetFilePath)}, but found ${matchingPaths.map(matchingPath => path.join(absolutePath, matchingPath)).join(', ')}.`
     ));
   }
 }

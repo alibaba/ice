@@ -272,18 +272,18 @@ export default class Generator {
     // generate .ice/store/types.ts
     this.renderAppStoreTypes({ hasAppModels, existsAppStoreFile });
 
-    const pages = this.applyMethod('getPages', this.rootDir, this.srcDir);
-    pages.forEach(pageName => {
+    const pageNames = this.applyMethod('getPages', this.rootDir, this.srcDir);
+    pageNames.forEach(pageName => {
       const { pageModelsDir, pageModelFile, pageNameDir } = getPageModelPath({
         rootDir: this.rootDir,
         srcDir: this.srcDir,
-        pagePath: pageName,
+        pageName,
         projectType: this.projectType,
       });
       const pageStoreFile = formatPath(getPageStorePath({
         rootDir: this.rootDir,
         srcDir: this.srcDir,
-        pagePath: pageName,
+        pageName,
         projectType: this.projectType,
       }));
       const existedStoreFile = fse.pathExistsSync(pageStoreFile);
