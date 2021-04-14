@@ -55,9 +55,10 @@ class RuntimeModule {
       addDOMRender: this.addDOMRender,
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
+      wrapperRouterRender: this.wrapperRouterRender,
       modifyRoutesComponent: this.modifyRoutesComponent,
       createHistory,
-      getSearchParams
+      getSearchParams,
     };
 
     if (module) (module.default || module)({
