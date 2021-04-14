@@ -8,7 +8,8 @@
     });
   }
 
-  export function unmount(appInstance) {
+  // @ts-ignore
+  export function unmount(appInstance, rootEl) {
     return appInstance._internal.unmountComponent.bind(appInstance._internal);
   }
 <% } else { %>
@@ -18,7 +19,8 @@
     return ReactDOM.render(appInstance, rootEl);
   }
 
-  export function unmount(rootEl) {
+  // @ts-ignore
+  export function unmount(appInstance, rootEl) {
     return () => ReactDOM.unmountComponentAtNode(rootEl);
   }
 <% } %>

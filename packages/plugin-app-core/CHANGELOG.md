@@ -2,7 +2,7 @@
 
 ## 1.4.3
 
-- [fix] remove unused params in `unmount` function
+- [chore] ignore `unmount` function param never read error
 
 ## 1.4.2
 
