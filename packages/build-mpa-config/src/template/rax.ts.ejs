@@ -21,11 +21,19 @@ import { isWeex, isKraken, isNode } from 'universal-env';
 
 import PageComponent from '<%- resourcePath %>';
 
+const renderElements = [];
+
+<% if (needCustomTabBar) {%>
+  renderElements.push(<TabBarWrapper />);
+<% } %>
+
+
 if (!isNode) {
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    render(<PageComponent />, null, { driver: DriverUniversal });
+    renderElements.push(<PageComponent />);
+    render(renderElements, null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
       let comProps = {};
@@ -36,15 +44,8 @@ if (!isNode) {
         comProps = await PageComponent.getInitialProps();
       }
 
-      <% if (needCustomTabBar) {%>
-        render([
-        <PageComponent {...comProps} />,
-        <TabBarWrapper />,
-        ], document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
-      <% } else { %>
-        render(<PageComponent {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
-      <% } %>
-
+      renderElements.push(<PageComponent {...comProps} />);
+      render(renderElements, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
     }
     renderApp();
   }
