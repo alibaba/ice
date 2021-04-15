@@ -1,4 +1,6 @@
 import * as path from 'path';
+// eslint-disable-next-line
+const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP } } = require('miniapp-builder-shared');
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
@@ -7,6 +9,7 @@ import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
+const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
@@ -85,7 +88,7 @@ function initGenerator(api, options) {
   const { framework, debugRuntime, hasJsxRuntime } = options;
   const plugins = getAllPlugin();
   const { targets = [], ssr = false } = userConfig;
-  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram') || targets.includes('bytedance-microapp');
+  const isMiniapp = targets.some((target) => miniappPlatforms.includes(target));
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
@@ -140,6 +143,6 @@ function checkTargets(targets) {
 
 function matchTargets(targets) {
   return targets.every(target => {
-    return ['web', 'miniapp', 'wechat-miniprogram', 'weex', 'kraken', 'bytedance-microapp', 'quickapp'].includes(target);
+    return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
   });
 }

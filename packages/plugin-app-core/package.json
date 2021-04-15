@@ -26,6 +26,8 @@
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",
     "history": "^4.9.0",
+    "lodash.debounce": "^4.0.8",
+    "miniapp-builder-shared": "^0.2.2",
     "miniapp-history": "^0.1.0",
     "miniapp-renderer": "^0.1.4",
     "prettier": "^2.0.2",
@@ -33,8 +35,7 @@
     "rax-app-renderer": "^2.0.0",
     "rax-use-router": "^3.0.0",
     "react-app-renderer": "^2.0.0",
-    "universal-env": "^3.0.0",
-    "lodash.debounce": "^4.0.8"
+    "universal-env": "^3.0.0"
   },
   "repository": {
     "type": "git",
