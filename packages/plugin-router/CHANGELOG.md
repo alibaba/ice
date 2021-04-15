@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.4
+
+- [fix] support customRouterProps of renderRouter
+
 ## 1.9.3
 
 - [chore] ts types

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.8
+
+- [fix] use wrapperRouterRender when render child app
+
 ## 2.0.7
 
 - [chore] publish source code of runtime
