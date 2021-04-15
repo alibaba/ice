@@ -139,7 +139,7 @@ async function getComponentByPath(routes, currPath)  {
     let matchedRoute = routeList.find(route => {
       return matchPath(currPath, route);
     });
-    if (matchedRoute.component && matchedRoute.component.__LOADABLE__) {
+    if (matchedRoute?.component?.__LOADABLE__) {
       matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
     }
     if (matchedRoute) {

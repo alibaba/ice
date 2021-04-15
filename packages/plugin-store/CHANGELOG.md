@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.7
+
+- [fix] can't find an existed store file in windows
+
 ## 1.9.6
 
 - [feat] support reset page store after router switch  
