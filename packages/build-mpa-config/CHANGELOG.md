@@ -1,4 +1,7 @@
 # Changelog
+## 3.2.1
+
+- fix: page wrapper `getInitialProps`
 
 ## 3.2.1
 
