@@ -3,6 +3,7 @@
 ## 1.9.4
 
 - [fix] support customRouterProps of renderRouter
+- [fix] react-router-dom ts types not found
 
 ## 1.9.3
 

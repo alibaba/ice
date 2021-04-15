@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@builder/app-helpers": "^2.0.2",
+    "@types/react-router-dom": "^5.1.4",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "history": "^4.10.1",
@@ -26,7 +27,6 @@
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.5",
     "@types/node": "^12.12.12",
-    "@types/react-router-dom": "^5.1.4",
     "typescript": "^4.0.0"
   },
   "files": [
