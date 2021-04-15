@@ -1,6 +1,4 @@
 import * as path from 'path';
-// eslint-disable-next-line
-const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP } } = require('miniapp-builder-shared');
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
@@ -9,6 +7,8 @@ import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
+// eslint-disable-next-line
+const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP } } = require('miniapp-builder-shared');
 const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
