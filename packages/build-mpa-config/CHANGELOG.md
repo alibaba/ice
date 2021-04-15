@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.1
+
+- chore: bump version
+
 ## 3.2.0
 
 - [feat] support render custom tab bar in MPA
