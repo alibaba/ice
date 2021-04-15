@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- [chore] ignore `unmount` function param never read error
+
 ## 1.4.2
 
 - [feat] support resetPageStore param
