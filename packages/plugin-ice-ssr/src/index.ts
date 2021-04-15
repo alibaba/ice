@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import { getWebpackConfig } from 'build-scripts-config';
+import { formatPath } from '@builder/app-helpers';
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
@@ -14,6 +15,7 @@ const plugin = async (api): Promise<void> => {
   const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
+  const serverFilePath = path.join(serverDir, serverFilename);
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
@@ -100,10 +102,9 @@ const plugin = async (api): Promise<void> => {
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
       console.log('[SSR]', 'start server render');
-      const requirePath = path.join(serverDir, serverFilename);
-      delete require.cache[requirePath];
+      delete require.cache[serverFilePath];
       // eslint-disable-next-line
-      const serverRender = require(requirePath);
+      const serverRender = require(serverFilePath);
       const ctx = { res, req };
       const { error, html, redirectUrl } = await serverRender.default(ctx, { htmlTemplate });
 
@@ -123,7 +124,8 @@ const plugin = async (api): Promise<void> => {
       config.devServer
         .hot(true)
         .writeToDisk((filePath) => {
-          return /(server\/.*|loadable-stats.json|index.html)$/.test(filePath);
+          const formatedFilePath = formatPath(filePath);
+          return /(server\/.*|loadable-stats.json|index.html)$/.test(formatedFilePath);
         });
 
       let serverReady = false;
@@ -162,7 +164,6 @@ const plugin = async (api): Promise<void> => {
   });
 
   onHook(`after.${command}.compile`, () => {
-    const serverFilePath = path.join(serverDir, serverFilename);
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
