@@ -8,7 +8,7 @@ function miniappRenderer(
   const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
-  const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
+  const { rootId = 'root', ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
 
   emitLifeCycles();
   class App extends Component {
