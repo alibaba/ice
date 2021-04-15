@@ -16,7 +16,7 @@ const extraElements = [];
 
   class TabBarWrapper extends Component {
     render() {
-      return window.pha ? null : <div style={{ position: "fixed", bottom: 0, width: "750rpx" }}>
+      return <div x-if={isNode || !window.pha} style={{ position: "fixed", bottom: 0, width: "750rpx" }}>
         <CustomTabBar />
       </div>;
     }
@@ -25,15 +25,21 @@ const extraElements = [];
   extraElements.push(TabBarWrapper);
 <% } %>
 
+class PageWrapper extends Component {
+  render() {
+    return [
+      extraElements.map((Element, index) => <Element key={index} />),
+      <PageComponent key='PageComponent' {...this.props} />,
+    ];
+  }
+}
+
 
 if (!isNode) {
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    render([
-      extraElements.map(Element => <Element />),
-      <PageComponent />
-    ], null, { driver: DriverUniversal });
+    render(<PageWrapper />, null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
       let comProps = {};
@@ -44,13 +50,10 @@ if (!isNode) {
         comProps = await PageComponent.getInitialProps();
       }
 
-      render([
-        extraElements.map(Element => <Element />),
-        <PageComponent {...comProps} />
-      ], document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      render(<PageWrapper {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
     }
     renderApp();
   }
 }
 
-export default Component;
+export default PageWrapper;
