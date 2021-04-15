@@ -57,16 +57,21 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
         }
       });
     });
-    wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
-      const routerProps = {
-        type,
-        routes,
-        basename: getBasename(),
-        history,
-        fallback
-      };
-      return originRender(routes, RoutesComponent, routerProps);
-    });
+    const routerProps = {
+      type,
+      basename: getBasename(),
+      history,
+      fallback
+    };
+    if (wrapperRouterRender) {
+      wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
+        return originRender(routes, RoutesComponent, routerProps);
+      });
+    } else {
+      setRenderRouter((routes) => () => {
+        return <IceRouter {...routerProps} routes={routes} />;
+      });
+    }
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
     if (removeRoutesLayout) {
