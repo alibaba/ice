@@ -30,10 +30,9 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath, source } = entry;
-    const pageEntry = entryPath;
     const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath);
     // icejs will config entry by api modifyUserConfig
-    let finalEntry = pageEntry;
+    let finalEntry = entryPath;
     /**
      * when to generate mpa entries
      * rax-app: the entry has export default declaration
@@ -42,7 +41,7 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
     if (framework === 'rax'|| (framework === 'react' && !useOriginEntry)) {
       const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
       if (exportDefaultDeclarationExists) {
-        finalEntry = generateEntry(api, { framework, targetDir, pageEntry, entryName });
+        finalEntry = generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName });
       }
     }
     parsedEntries[entryName] = {
