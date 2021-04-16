@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.2
+
+- fix: page wrapper `getInitialProps`
+
 ## 3.2.1
 
 - chore: bump version
