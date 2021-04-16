@@ -28,7 +28,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
   if (appType === 'child') {
     const { icestarkUMD } = buildConfig;
 
-    const childBasename = isInIcestark ? getBasename() : basename;
+    const childBasename = isInIcestark() ? getBasename() : basename;
 
     const history = createHistory({ type, basename: childBasename });
 
