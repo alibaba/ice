@@ -30,14 +30,23 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   const parsedEntries = {};
   entries.forEach((entry) => {
     const { entryName, entryPath, source } = entry;
-    const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
+    const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath);
     // icejs will config entry by api modifyUserConfig
+    let finalEntry = entryPath;
+    /**
+     * when to generate mpa entries
+     * rax-app: the entry has export default declaration
+     * icejs: the entry is not the app.ts(x) and the entry has export deafult declaration
+     */
+    if (framework === 'rax'|| (framework === 'react' && !useOriginEntry)) {
+      const exportDefaultDeclarationExists = checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source));
+      if (exportDefaultDeclarationExists) {
+        finalEntry = generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName });
+      }
+    }
     parsedEntries[entryName] = {
       ...entry,
-      finalEntry: exportDefaultDeclarationExists ?
-        // when the source has export default declaration which means that the custom render page and runApp don't exist, generate an entry
-        generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName }) :
-        entryPath
+      finalEntry
     };
   });
   return parsedEntries;

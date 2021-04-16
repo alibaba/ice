@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.3
+
+- fix: generate mpa entries when app.ts is entry in ice.js framework
+
 ## 3.2.2
 
 - fix: page wrapper `getInitialProps`
