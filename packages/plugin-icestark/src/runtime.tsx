@@ -27,7 +27,10 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
   }
   if (appType === 'child') {
     const { icestarkUMD } = buildConfig;
-    const history = createHistory({ type, basename: getBasename() });
+
+    const childBasename = isInIcestark ? getBasename() : basename;
+
+    const history = createHistory({ type, basename: childBasename });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
@@ -61,7 +64,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
       const routerProps = {
         type,
         routes,
-        basename: getBasename(),
+        basename: childBasename,
         history,
         fallback
       };
