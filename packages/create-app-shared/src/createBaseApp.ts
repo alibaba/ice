@@ -4,9 +4,6 @@ import { createHistory } from './history';
 import { isMiniAppPlatform } from './env';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
-// eslint-disable-next-line
-const deepmerge = require('deepmerge');
-
 const DEFAULE_APP_CONFIG = {
   app: {
     rootId: 'root'
@@ -16,11 +13,22 @@ const DEFAULE_APP_CONFIG = {
   }
 };
 
+function mergeDefaultConfig(defaultConfig, config) {
+  Object.keys(defaultConfig).forEach(key => {
+    if (!config[key]) {
+      config[key] = defaultConfig[key];
+    } else if (typeof config[key] === 'object') {
+      config[key] = mergeDefaultConfig(defaultConfig[key], config[key]);
+    }
+  });
+  return config;
+}
+
 export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
   const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
 
     // Merge default appConfig to user appConfig
-    appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
+    appConfig = mergeDefaultConfig(DEFAULE_APP_CONFIG, appConfig);
 
     // Set history
     let history: History;
