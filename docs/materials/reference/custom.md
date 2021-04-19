@@ -12,16 +12,17 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 |        模板 npm 包名        | 是否内置|   说明   |   备注  |
 |----------------------------|-------|----------|--------|
 |@icedesign/ice-react-ts-material-template|是| React+TypeScript   |     |
-|@icedesign/ice-react-material-template|是|  React  |     |
+|@icedesign/ice-react-material-template|是|  React+JavaScript  |     |
 |@icedesign/ice-vue-material-template|是|  Vue  | 暂不支持业务组件    |
-|@icedesign/rax-template                             |是| 无线跨端 |  |
+|@icedesign/rax-template              |是| Rax+TypeScript |  |
+@icedesign/template-rax-js            | 否 | Rax+JavaScript | |
 |@icedesign/material-chart-template|否| React+图表   | 仅支持业务组件开发    |
 
-对于没有内置的模板，可以通过 `iceworks init material @icedesign/material-chart-template` 的方式自定义模板名称。
+对于 CLI init 时没有询问的模板，可以通过 `iceworks init material @icedesign/material-chart-template` 的方式自定义模板名称。
 
 ## 开发自定义物料模板
 
-当以上这些物料模版不满足开发者需求时，可以开发自定义的物料模版。**但是我们非常不推荐开发者自定义模板**，因为这会带来非常严重的碎片化版本的问题，因此如果有此需求的话一定要跟飞冰团队沟通，一方面确认自定义的必要性，另一方面我们希望模板能统一维护与迭代，尽量将自定义模板贡献到官方模板列表里，我们非常欢迎社区共建。
+当以上这些物料模版不满足开发者需求时，可以开发自定义的物料模版。**但是我们非常不推荐开发者自定义模板**，因为这会带来非常严重的碎片化版本的问题，如果有此需求的话一定要跟飞冰团队沟通，一方面确认自定义的必要性，另一方面我们希望模板能统一维护与迭代，尽量将自定义模板贡献到[官方模板列表](https://github.com/ice-lab/material-templates/)里，我们非常欢迎社区共建。
 
 ### 物料模版的目录结构
 

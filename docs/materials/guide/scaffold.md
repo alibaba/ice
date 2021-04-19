@@ -28,3 +28,9 @@ $ npm publish
 ```
 
 执行 publish 命令的时会自动执行 `npm run build` 和 `npm run screenshot`。build 命令完成区块的构建任务，而 screenshot 命令作用是生成脚手架截图，截图被用于 iceworks 展示。当然，你也可以手动截图图片作为截图，只需要截图以 `screenshot.png` 保存在当前目录即可。
+
+项目模板对应的 npm 发布后，通过命令行工具即可使用模板创建项目：
+
+```bash
+$ npm init ice ice-app <npmName>
+```
