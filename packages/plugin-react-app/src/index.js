@@ -8,6 +8,7 @@ const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
 const logDetectedTip = require('./utils/logDetectedTip');
+const configWebpak5 = require('./webpack5');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig  } = api;
@@ -67,4 +68,5 @@ module.exports = (api) => {
   if (command === 'test') {
     setTest(api);
   }
+  configWebpak5(api);
 };

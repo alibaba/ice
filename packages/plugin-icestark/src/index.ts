@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
-import { IPlugin, Json } from '@alib/build-scripts';
+import { IPlugin, Json } from 'build-scripts';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
   const { uniqueName, umd, library } = options as Json;

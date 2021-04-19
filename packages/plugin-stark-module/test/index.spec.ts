@@ -1,4 +1,4 @@
-import Context from '@alib/build-scripts/lib/core/Context';
+import Context from 'build-scripts/lib/core/Context';
 
 import path = require('path');
 

@@ -110,9 +110,5 @@ module.exports = (config, mode = 'development') => {
       .end()
     .use('babel-loader')
       .loader(babelLoader)
-      .options({ ...deepClone(babelConfig), cacheDirectory: true })
-      .end()
-    .use('ts-loader')
-      .loader(require.resolve('ts-loader'))
-      .options({ transpileOnly: true });
+      .options({ ...deepClone(babelConfig), cacheDirectory: true });
 };

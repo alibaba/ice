@@ -1,4 +1,5 @@
 {
+  "webpack5": false,
   "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
   "plugins": [],
