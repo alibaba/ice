@@ -38,3 +38,4 @@ examples/*/.ice
 examples/*/.rax
 
 build
+.history/
