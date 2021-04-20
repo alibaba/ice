@@ -31,7 +31,7 @@ describe(`build ${example}`, () => {
   });
 });
 
-/* describe(`start ${example}`, () => {
+describe(`start ${example}`, () => {
   let page: IPage = null;
   let browser = null;
 
@@ -46,4 +46,4 @@ describe(`build ${example}`, () => {
   afterAll(async () => {
     await browser.close();
   });
-}); */
+});

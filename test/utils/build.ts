@@ -24,6 +24,7 @@ export const buildFixture = function(example: string) {
     const rootDir = path.join(__dirname, `../../examples/${example}`);
     const processCwdSpy = jest.spyOn(process, 'cwd');
     processCwdSpy.mockReturnValue(rootDir);
+    process.env.DISABLE_FS_CACHE = 'true';
     await build({
       args: {
         config: path.join(rootDir, 'build.json'),

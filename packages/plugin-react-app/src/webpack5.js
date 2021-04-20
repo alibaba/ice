@@ -8,23 +8,25 @@ module.exports = (api) => {
     // filesystem cache
     onGetWebpackConfig((config) => {
       // filesystem cache
-      const cacheConfig = {
-        cache: {
-          type: 'filesystem',
-          buildDependencies: {config: [path.join(rootDir, 'package.json')]},
-          cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
-        }
-      };
-      config.merge({
-        ...cacheConfig,
-        ...(userConfig.cacheLog ? {
-          // 缓存日志
-          infrastructureLogging: {
-            level: 'error',
-            debug: typeof cacheLog === 'boolean' ? /FileSystemInfo/ : new RegExp(userConfig.cacheLog),
+      if (!process.env.DISABLE_FS_CACHE) {
+        const cacheConfig = {
+          cache: {
+            type: 'filesystem',
+            buildDependencies: {config: [path.join(rootDir, 'package.json')]},
+            cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
           }
-        }: {}),
-      });
+        };
+        config.merge({
+          ...cacheConfig,
+          ...(userConfig.cacheLog ? {
+            // 缓存日志
+            infrastructureLogging: {
+              level: 'error',
+              debug: typeof cacheLog === 'boolean' ? /FileSystemInfo/ : new RegExp(userConfig.cacheLog),
+            }
+          }: {}),
+        });
+      }
       // remove CaseSensitivePathsPlugin which do not compatible with webpack 5
       config.plugins.delete('CaseSensitivePathsPlugin');
       // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
