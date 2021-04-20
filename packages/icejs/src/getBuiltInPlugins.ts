@@ -6,10 +6,11 @@ import { hijack } from './require-hook';
 const chalk = require('chalk');
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
-  if (userConfig.webpack5) {
+  // enable webpack 5 by default
+  if (userConfig.webpack5 !== false) {
     process.env.__WEBPACK_5__ = 'true';
   }
-  init(!!userConfig.webpack5);
+  init(!!process.env.__WEBPACK_5__);
   hijack();
 
   if (userConfig.disableRuntime) {

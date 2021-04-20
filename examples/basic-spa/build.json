@@ -1,9 +1,8 @@
 {
-  "webpack5": false,
   "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
   "plugins": [],
-  "tsChecker": true,
+  // "tsChecker": true,
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },
@@ -12,7 +11,7 @@
       "ignoreHtmlTemplate": true
     }
   },
-  "esbuild": {},
+  // "esbuild": {},
   "eslint": {
     "disable": false,
     "quiet": true
