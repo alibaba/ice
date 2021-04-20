@@ -3,6 +3,7 @@
 # 2.0.8
 
 - [fix] make `router.basename` work in a non-icestark context. ([#4234](https://github.com/alibaba/ice/issues/4234))
+- [fix] use wrapperRouterRender when render child app
 
 ## 2.0.7
 

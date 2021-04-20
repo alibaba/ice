@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-scripts/tree/master/packages/extract-css-assets-webpack-plugin"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/webpack-plugin-extract-css-assets"
   },
   "keywords": [
     "webpack",

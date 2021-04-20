@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.2.4
+
+- fix: generate mpa entries when app.ts is entry in rax-app
+
+## 3.2.3
+
+- fix: generate mpa entries when app.ts is entry in ice.js framework
+
+## 3.2.2
+
+- fix: page wrapper `getInitialProps`
+
 ## 3.2.1
 
 - chore: bump version

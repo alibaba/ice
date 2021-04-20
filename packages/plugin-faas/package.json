@@ -8,6 +8,10 @@
   },
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-faas"
+  },
   "dependencies": {
     "@midwayjs/faas-dev-pack": "^1.0.0"
   }

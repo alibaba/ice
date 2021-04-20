@@ -11,6 +11,10 @@
   ],
   "author": "tony7lee",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-jsx-plus"
+  },
   "dependencies": {
     "babel-plugin-transform-jsx-class": "^0.1.2",
     "babel-plugin-transform-jsx-condition": "^0.1.2",

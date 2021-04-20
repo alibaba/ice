@@ -17,7 +17,7 @@ import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyRoutes, createHistory }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -60,16 +60,23 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, modifyR
         }
       });
     });
-    setRenderRouter((routes) => () => {
-      const routerProps = {
-        type,
-        routes,
-        basename: childBasename,
-        history,
-        fallback
-      };
-      return <IceRouter {...routerProps} />;
-    });
+
+    const routerProps = {
+      type,
+      basename: childBasename,
+      history,
+      fallback
+    };
+
+    if (wrapperRouterRender) {
+      wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
+        return originRender(routes, RoutesComponent, routerProps);
+      });
+    } else {
+      setRenderRouter((routes) => () => {
+        return <IceRouter {...routerProps} routes={routes} />;
+      });
+    }
   } else if (appType === 'framework') {
     const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
     if (removeRoutesLayout) {
