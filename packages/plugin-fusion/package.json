@@ -32,7 +32,7 @@
     "webpack": "^4.0.0"
   },
   "repository": {
-    "type": "git",
+    "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-fusion"
   }
 }
