@@ -63,6 +63,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
       history,
       fallback
     };
+
     if (wrapperRouterRender) {
       wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
         return originRender(routes, RoutesComponent, routerProps);
