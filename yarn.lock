@@ -1110,10 +1110,10 @@
   resolved "https://registry.npm.taobao.org/@bcoe/v8-coverage/download/@bcoe/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha1-daLotRy3WKdVPWgEpZMteqznXDk=
 
-"@builder/pack@0.2.8-2":
-  version "0.2.8-2"
-  resolved "https://registry.nlark.com/@builder/pack/download/@builder/pack-0.2.8-2.tgz?cache=0&sync_timestamp=1618814561965&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.2.8-2.tgz#6058c6bea546304d87bbc589b0836243c63eb133"
-  integrity sha1-YFjGvqVGME2Hu8WJsINiQ8Y+sTM=
+"@builder/pack@0.2.8-5":
+  version "0.2.8-5"
+  resolved "https://registry.nlark.com/@builder/pack/download/@builder/pack-0.2.8-5.tgz?cache=0&sync_timestamp=1618901561234&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.2.8-5.tgz#9ec18129b73df1c751e027ff42831ad8cf6f52e0"
+  integrity sha1-nsGBKbc98cdR4Cf/QoMa2M9vUuA=
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
