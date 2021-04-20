@@ -22,7 +22,7 @@ module.exports = {
   'testPathIgnorePatterns': [
     '/node_modules/',
     '/lib/',
-    'create-cli-utils/'
+    'create-cli-utils/',
   ],
   'preset': 'ts-jest'
 };

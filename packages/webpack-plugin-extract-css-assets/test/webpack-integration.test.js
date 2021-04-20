@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const junk = require('junk');
-const webpack = require('webpack');
+const { init } = require('@builder/pack/deps/webpack/webpack');
+init();
 
 jest.setTimeout(60000);
 

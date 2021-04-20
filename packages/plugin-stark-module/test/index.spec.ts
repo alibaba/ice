@@ -1,7 +1,8 @@
 import Context from 'build-scripts/lib/core/Context';
-
+import { init } from '@builder/pack/deps/webpack/webpack';
 import path = require('path');
 
+init();
 describe('simple test suite', () => {
   const defaultOptions = {
     args: {},

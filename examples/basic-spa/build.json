@@ -2,7 +2,7 @@
   "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
   "plugins": [],
-  // "tsChecker": true,
+  "tsChecker": true,
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },
@@ -11,7 +11,9 @@
       "ignoreHtmlTemplate": true
     }
   },
-  // "esbuild": {},
+  "esbuild": {
+    "target": "es2015"
+  },
   "eslint": {
     "disable": false,
     "quiet": true
