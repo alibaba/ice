@@ -11,6 +11,7 @@ const cases = process.env.CASES
   : fs.readdirSync(path.join(__dirname, 'cases')).filter(junk.not);
 
 describe('Webpack Integration Tests', () => {
+  const webpack = require('webpack');
   cases
     .filter((testCase) => {
       // return testCase.indexOf('timeout') > -1;
