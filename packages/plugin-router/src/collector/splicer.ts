@@ -31,7 +31,12 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) 
   // nest the array stucture
   payload.nestSlice.push('[');
   // run loop
-  collect.forEach(item => {
+  const sortedCollect = collect.sort((a, b) => {
+    const depth = (item: ICollectItem) => item?.routePathAmend?.split('/').length;
+    // keep routes order by route path depth
+    return depth(b) - depth(a);
+  });
+  sortedCollect.forEach(item => {
     const {
       routePathAmend,
       component,
