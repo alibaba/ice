@@ -15,10 +15,10 @@ const DEFAULE_APP_CONFIG = {
 
 function mergeDefaultConfig(defaultConfig, config) {
   Object.keys(defaultConfig).forEach(key => {
-    if (!config[key]) {
-      config[key] = defaultConfig[key];
-    } else if (typeof config[key] === 'object') {
+    if (typeof config[key] === 'object' && config[key] !== null) {
       config[key] = mergeDefaultConfig(defaultConfig[key], config[key]);
+    } else {
+      config[key] = defaultConfig[key];
     }
   });
   return config;
