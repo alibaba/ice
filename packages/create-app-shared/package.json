@@ -7,7 +7,6 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "deepmerge": "^4.2.2",
     "history": "^4.9.0",
     "miniapp-history": "^0.1.0",
     "query-string": "^6.13.1",

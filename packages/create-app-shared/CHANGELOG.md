@@ -4,6 +4,7 @@
 
 - [fix] ts types of runtime module
 - [feat] add runtime api of wrapperRouterRender
+- [fix] remove `deepmerge`, and fix deep clone let custom config `__proto__` lost
 
 ## 0.2.3
 
