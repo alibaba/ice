@@ -31,8 +31,8 @@ function loopSplice(payload: IPlayload, collect: ICollectItem[], routerOptions) 
   // nest the array stucture
   payload.nestSlice.push('[');
   // run loop
+  const depth = (item: ICollectItem) => item?.routePathAmend?.split('/').length || 0;
   const sortedCollect = collect.sort((a, b) => {
-    const depth = (item: ICollectItem) => item?.routePathAmend?.split('/').length || 0;
     // keep routes order by route path depth
     return depth(b) - depth(a);
   });
