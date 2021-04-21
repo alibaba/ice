@@ -17,7 +17,7 @@ function mergeDefaultConfig(defaultConfig, config) {
   Object.keys(defaultConfig).forEach(key => {
     if (typeof config[key] === 'object' && config[key] !== null) {
       config[key] = mergeDefaultConfig(defaultConfig[key], config[key]);
-    } else {
+    } else if (!Object.prototype.hasOwnProperty.call(config, key)) {
       config[key] = defaultConfig[key];
     }
   });
