@@ -2,24 +2,37 @@ import { createHistory } from './history';
 import getSearchParams from './getSearchParams';
 
 type IRoutesComponent = boolean | React.ComponentType;
+// simplify route item type while it has been defined in plugin-router
+interface IRouteItem {
+  [key: string]: any;
+}
+type IRoutes = IRouteItem[];
+interface IModifyFn {
+  (routes: IRoutes): IRoutes;
+}
+interface IDOMRender {
+  ({ App, appMountNode }: { App: React.ComponentType; appMountNode: HTMLElement }): void;
+}
+type IWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props>)
+type IRenderRouter = (routes?: IRoutes, RoutesComponent?: IRoutesComponent) => React.ComponentType;
+type IWrapperRouterRender = (renderRouter: IRenderRouter) => IRenderRouter;
 
 class RuntimeModule {
-
-  private renderRouter: any;
-
-  private AppProvider: any;
-
   private appConfig: any;
 
   private buildConfig: any;
 
   private context: any;
 
-  private modifyDOMRender: any;
+  private renderRouter: IRenderRouter;
 
-  private modifyRoutesRegistration: any;
+  private AppProvider: React.ComponentType[];
 
-  private wrapperRouteRegistration: any;
+  public modifyDOMRender: IDOMRender;
+
+  private modifyRoutesRegistration: IModifyFn[];
+
+  private wrapperRouteRegistration: IWrapper<any>[];
 
   private routesComponent: IRoutesComponent;
 
@@ -42,9 +55,10 @@ class RuntimeModule {
       addDOMRender: this.addDOMRender,
       modifyRoutes: this.modifyRoutes,
       wrapperRouteComponent: this.wrapperRouteComponent,
+      wrapperRouterRender: this.wrapperRouterRender,
       modifyRoutesComponent: this.modifyRoutesComponent,
       createHistory,
-      getSearchParams
+      getSearchParams,
     };
 
     if (module) (module.default || module)({
@@ -55,11 +69,16 @@ class RuntimeModule {
     });
   }
 
-  public setRenderRouter = (renderRouter) => {
+  public setRenderRouter = (renderRouter: IRenderRouter) => {
     this.renderRouter = renderRouter;
   }
 
-  public addProvider = (Provider) => {
+  public wrapperRouterRender = (wrapper: IWrapperRouterRender) => {
+    // pass origin router render for custom requirement
+    this.renderRouter = wrapper(this.renderRouter);
+  }
+
+  public addProvider = (Provider: React.ComponentType) => {
     this.AppProvider.push(Provider);
   }
 
@@ -79,11 +98,11 @@ class RuntimeModule {
     });
   }
 
-  public addDOMRender = (render) => {
+  public addDOMRender = (render: IDOMRender) => {
     this.modifyDOMRender = render;
   }
 
-  public modifyRoutes = (modifyFn) => {
+  public modifyRoutes = (modifyFn: IModifyFn) => {
     this.modifyRoutesRegistration.push(modifyFn);
   }
 
@@ -91,11 +110,11 @@ class RuntimeModule {
     this.routesComponent = modify(this.routesComponent);
   }
 
-  public wrapperRouteComponent = (wrapperRoute) => {
+  public wrapperRouteComponent = (wrapperRoute: IWrapper<any>) => {
     this.wrapperRouteRegistration.push(wrapperRoute);
   }
 
-  public wrapperRoutes = (routes) => {
+  public wrapperRoutes = (routes: IRoutes) => {
     return routes.map((item) => {
       if (item.children) {
         item.children = this.wrapperRoutes(item.children);
@@ -107,7 +126,7 @@ class RuntimeModule {
   }
 
   public getAppRouter = () => {
-    const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc, curr) => {
+    const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IRoutes, curr) => {
       return curr(acc);
     }, []));
     return this.renderRouter(routes, this.routesComponent);

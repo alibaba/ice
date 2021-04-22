@@ -55,9 +55,10 @@ function miniappRenderer(
         // eslint-disable-next-line no-global-assign
         document = value;
         // @ts-ignore
-        const dispatchDocumentModify = getApp()._dispatchDocumentModify;
+        const MiniAppGlobalInstance = getApp();
+        const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
         if (typeof dispatchDocumentModify === 'function') {
-          dispatchDocumentModify(value);
+          dispatchDocumentModify.call(MiniAppGlobalInstance, value);
         }
       }
     };

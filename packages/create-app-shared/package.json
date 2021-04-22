@@ -1,6 +1,6 @@
 {
   "name": "create-app-shared",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -20,8 +20,8 @@
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-app-shared"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

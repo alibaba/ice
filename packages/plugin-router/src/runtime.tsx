@@ -58,10 +58,11 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     });
   } else {
     const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
-    renderRouter = (routes: RouteItemProps[], RoutesComponent: React.ComponentType<{routes: IRouterConfig[]; fallback: React.ComponentType}>) => () => {
+    renderRouter = (routes: RouteItemProps[], RoutesComponent: React.ComponentType<{routes: IRouterConfig[]; fallback: React.ComponentType}>, customRouterProps = {}) => () => {
       let routerProps = {
         ...appConfigRouter,
-        lazy
+        lazy,
+        ...customRouterProps,
       };
       if (!routerProps.history) {
         routerProps.history = createHistory({ type: appConfigRouter.type, basename: appConfigRouter.basename });
