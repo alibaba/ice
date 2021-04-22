@@ -1,5 +1,9 @@
 # Changelog
 
+# 2.0.9
+
+- [fix] compatible with the case which icejs version is locked
+
 # 2.0.8
 
 - [fix] make `router.basename` work in a non-icestark context. ([#4234](https://github.com/alibaba/ice/issues/4234))
