@@ -68,7 +68,8 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
       fallback
     };
 
-    if (wrapperRouterRender) {
+    // compatible with the case which lock icejs version
+    if (wrapperRouterRender && !!process.env.__FRAMEWORK_VERSION__) {
       wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
         return originRender(routes, RoutesComponent, routerProps);
       });
