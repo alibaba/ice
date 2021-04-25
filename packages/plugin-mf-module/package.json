@@ -31,6 +31,5 @@
     "preset": "ts-jest"
   },
   "dependencies": {},
-  "private": true,
   "originTemplate": "build-plugin-template"
 }
