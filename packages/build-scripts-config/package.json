@@ -16,6 +16,10 @@
   "peerDependencies": {
     "webpack": "^4.41.1"
   },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-scripts-config"
+  },
   "dependencies": {
     "@builder/babel-preset-ice": "^1.0.0",
     "babel-jest": "^24.9.0",

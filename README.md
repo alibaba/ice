@@ -134,7 +134,7 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
 | [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] |Visual Intelligent Development Assistant|
-| [formily]| [![formily-status]][formily-package] | [docs][formily-docs] |Performant, flexible and extensible form solusion|
+| [formily]| [![formily-status]][formily-package] | [docs][formily-docs] |Performant, flexible and extensible form solution|
 | [ahooks]| [![ahooks-status]][ahooks-package] | [docs][ahooks-docs] |React Hooks Library|
 
 [icejs]: https://github.com/alibaba/ice

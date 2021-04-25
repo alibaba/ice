@@ -29,8 +29,8 @@
     "inquirer": "^7.0.4"
   },
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-ice"
   },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
 }

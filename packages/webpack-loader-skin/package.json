@@ -11,6 +11,10 @@
   ],
   "author": "ICE Team",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/webpack-loader-skin"
+  },
   "dependencies": {
     "@icedesign/skin": "^0.1.13",
     "chalk": "^2.4.1",

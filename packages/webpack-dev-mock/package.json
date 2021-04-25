@@ -8,6 +8,10 @@
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/webpack-dev-mock"
+  },
   "dependencies": {
     "@builder/babel-preset-ice": "^1.0.0",
     "@babel/parser": "^7.12.11",
@@ -26,6 +30,5 @@
   },
   "devDependencies": {
     "express": "^4.16.3"
-  },
-  "repository": "https://github.com/ice-lab/ice-scripts/tree/master/packages/webpack-dev-mock"
+  }
 }
