@@ -7,8 +7,15 @@ import { ModuleFederation } from './types';
 // eslint-disable-next-line
 const chalk = require('chalk');
 
-const plugin: IPlugin = ({ context, registerTask  }) => {
+const plugin: IPlugin = ({ context, registerTask, registerUserConfig }) => {
   const { command, userConfig, webpack, commandArgs, pkg, rootDir } = context;
+
+  registerUserConfig([
+    {
+      name: 'moduleFederation',
+      validation: 'object',
+    }
+  ]);
 
   const moduleFederation = ((userConfig)).moduleFederation as any as ModuleFederation;
 
