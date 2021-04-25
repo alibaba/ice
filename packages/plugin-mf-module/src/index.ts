@@ -40,7 +40,7 @@ const plugin: IPlugin = ({ context, registerTask, registerUserConfig }) => {
   // clear entry point
   baseConfig.entryPoints.clear();
 
-  //
+  // for default name and shared for mf
   const { pkgName, dependencies } = getPkgInfo(pkg);
 
   // @ts-ignore
@@ -50,7 +50,7 @@ const plugin: IPlugin = ({ context, registerTask, registerUserConfig }) => {
     const expose = moduleFederation.exposes[next];
     return {
       ...pre,
-      next: path.isAbsolute(expose) ? expose: path.join(rootDir, expose),
+      [next]: path.isAbsolute(expose) ? expose: path.join(rootDir, expose),
     };
   }, {});
 
