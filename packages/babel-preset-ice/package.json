@@ -16,6 +16,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/babel-preset-ice"
+  },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-decorators": "^7.1.2",

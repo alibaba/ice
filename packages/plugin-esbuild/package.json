@@ -21,8 +21,8 @@
     "registry": "https://registry.npmjs.org"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-esbuild"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

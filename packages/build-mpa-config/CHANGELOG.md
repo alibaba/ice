@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.4
+
+- fix: generate mpa entries when app.ts is entry in rax-app
+
 ## 3.2.3
 
 - fix: generate mpa entries when app.ts is entry in ice.js framework

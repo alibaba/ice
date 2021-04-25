@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.11
+
+- [Fix] miniapp global instance bind
+
 ## 0.1.10
 
 - [Chore] remove vendor check
