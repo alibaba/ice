@@ -19,8 +19,7 @@
     "query-string": "^6.12.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "url-join": "^4.0.1"
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.24",

@@ -1,16 +1,15 @@
 import * as React from 'react';
 import * as queryString from 'query-string';
 import { IRouterConfig } from '../types';
-
-const urljoin = require('url-join');
+import joinPath from '../utils/joinPath';
 
 const { useEffect, useState } = React;
 
 export default function formatRoutes(routes: IRouterConfig[], parentPath: string) {
   return routes.map((item) => {
     if (item.path) {
-      const joinPath = urljoin(parentPath || '/', item.path);
-      item.path = joinPath === '/' ? '/' : joinPath.replace(/\/$/, '');
+      const path = joinPath(parentPath || '', item.path);
+      item.path = path === '/' ? '/' : path.replace(/\/$/, '');
     }
     if (item.children) {
       item.children = formatRoutes(item.children, item.path);
