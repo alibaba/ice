@@ -4,7 +4,7 @@ Hi! I’m really excited that you are interested in contributing to ICE. Before 
 
 - [Setup Environment](#setup-environment)
 - [Run Examples](#run-examples)
-- [Publish Packages](publish-packages)
+- [Publish Packages](#publish-packages)
 - [Pull Request Guidelines](#pull-request-guidelines)
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
 - [Git Commit Specific](#git-commit-specific)
