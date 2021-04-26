@@ -26,7 +26,11 @@
     "@types/fs-extra": "^8.0.1",
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.5",
+    "@types/jest": "^26.0.22",
     "@types/node": "^12.12.12",
+    "jest": "^26.6.3",
+    "path-to-regexp": "^6.2.0",
+    "ts-jest": "^26.5.5",
     "typescript": "^4.0.0"
   },
   "files": [
@@ -39,7 +43,13 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-router"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "jest",
+    "test:w": "jest --watch"
   },
-  "gitHead": "6bbf8de986f2e6d4820c2dc7f92fa87d917b23f7"
+  "gitHead": "6bbf8de986f2e6d4820c2dc7f92fa87d917b23f7",
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "preset": "ts-jest"
+  }
 }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as queryString from 'query-string';
+import { join } from 'path';
 import { IRouterConfig } from '../types';
 import joinPath from '../utils/joinPath';
 
