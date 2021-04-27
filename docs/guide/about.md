@@ -11,7 +11,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 - **丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
 - **自定义物料**：不同团队可基于物料开发工具快速开发构建私有的物料体系
 
-## 生态
+## 核心能力
 
 ### ice.js
 
@@ -71,6 +71,10 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 - [使用 fusion 组件](/docs/guide/advance/fusion)
 - [使用 antd 组件](/docs/guide/advance/antd)
+
+#### 飞冰跟低代码方案有什么关系？
+
+低代码方案一般指以可视化拖拽搭建为主，少量地方使用代码辅助，此类方案往往是面向具体领域而非通用场景的，飞冰是面向通用领域的，以源码研发为主，通过框架、物料、GUI 操作等能力降低研发门槛，因此飞冰并不是通俗意义的低代码方案。
 
 ## 谁在使用
 
