@@ -8,8 +8,8 @@ const { useEffect, useState } = React;
 export default function formatRoutes(routes: IRouterConfig[], parentPath: string) {
   return routes.map((item) => {
     if (item.path) {
-      const path = joinPath(parentPath || '', item.path);
-      item.path = path === '/' ? '/' : path.replace(/\/$/, '');
+      const routePath = joinPath(parentPath || '', item.path);
+      item.path = routePath === '/' ? '/' : routePath.replace(/\/$/, '');
     }
     if (item.children) {
       item.children = formatRoutes(item.children, item.path);
