@@ -30,12 +30,9 @@ function changeTheme(currentTheme) {
   // Get current theme
   const theme = themesData[currentTheme];
   if (theme) {
-    // Declare the style element
-    const styles = \`\${theme}\`;
-    // Function call
-    appendStyle(styles);
+    appendStyle(theme);
   } else {
-    console.warn(\`can not find theme: \${currentTheme}\`);
+    console.warn('can not find theme:' + currentTheme);
   }
 }
 ${defaultTheme ? `changeTheme('${defaultTheme}');` : ''}
