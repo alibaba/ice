@@ -47,7 +47,6 @@ function getVariablesPath({
   try {
     filePath = require.resolve(variables);
   } catch (err) {
-    console.log(err);
     if (!slient) {
       console.log('[ERROR]', `fail to resolve ${variables}`);
     }

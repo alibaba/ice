@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.15
+
+- [fix] remove useless string in calculated colors
+- [chore] remove err stack when config slient
+
 ## 0.1.14
 
 - [feat] support `cssVariable` to enable css variables
