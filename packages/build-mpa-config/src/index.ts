@@ -29,12 +29,13 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
 
   const parsedEntries = {};
   entries.forEach((entry) => {
-    const { entryName, entryPath, source } = entry;
+    const { entryName, entryPath, ...pageConfig } = entry;
+    const { source } = pageConfig;
     const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath);
     // icejs will config entry by api modifyUserConfig
     // when the entry has no export default declaration or is app.ts, do not generate entry
     const finalEntry = !useOriginEntry && checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source)) ?
-      generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName }) :
+      generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName, pageConfig }) :
       entryPath;
 
     parsedEntries[entryName] = {

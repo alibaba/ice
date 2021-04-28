@@ -46,16 +46,26 @@ module.exports = function (appJSON) {
         const reference = mod.default;
         function Component(props) {
           ${routeTitle ? `document.title="${routeTitle}"` : ''}
-          return createElement(reference, Object.assign({}, routeProps, props));
+          return createElement(reference, { pageConfig: ${JSON.stringify(route)}, ...routeProps, ...props });
         }
         Component.__path = '${route.path}';
         Component.getInitialProps = reference.getInitialProps;
         return Component;
       })
     `;
-    const importComponentInClient = `() => () => require('${formatPath(pageSource)}').default`;
+    const importComponentInClient = `() => () => {
+      function Component(props) {
+        return createElement(require('${formatPath(pageSource)}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
+      }
+      return Component;
+    }`;
     // without useRouter
-    const importComponentInServer = `() => require('${formatPath(pageSource)}').default`;
+    const importComponentInServer = `() => {
+      function Component(props) {
+        return createElement(require('${formatPath(pageSource)}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
+      }
+      return Component;
+    }`;
 
     let importComponent;
     if (target === 'web') {
