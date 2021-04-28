@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- fix: router path is invalid after using `path.join` function
+
 ## 1.9.5
 
 - [fix] support customRouterProps of renderRouter
