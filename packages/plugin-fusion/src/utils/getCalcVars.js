@@ -56,9 +56,10 @@ ${calcKeys.map((key) => {
     const calcVars = {};
     const calcCss = cssContent.match(CSS_REGEX);
     if (calcCss) {
+      // parse `.color-calculate-mask-background{color: #000}` as `calcVars['calculate-color-mask-background'] = '#000'`
       calcCss.forEach((item) => {
         const [key, value] = item.split('{');
-        calcVars[key.replace(/\.|\{/g, '').trim()] = value.replace(/;|\}/g, '').trim();
+        calcVars[key.replace(/\.|\{/g, '').trim()] = value.replace(/;|\}/g, '').replace('color:', '').trim();
       });
     }
     return calcVars;
