@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.5
+
+- [feat] add `props.pageConfig` in Rax App SPA page component
+
 ## 0.3.4
 
 - [fix] remove deprecated api of esbuild-loader

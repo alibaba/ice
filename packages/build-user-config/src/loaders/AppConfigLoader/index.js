@@ -53,25 +53,23 @@ module.exports = function (appJSON) {
         return Component;
       })
     `;
-    const importComponentInClient = `() => () => {
-      function Component(props) {
-        return createElement(require('${formatPath(pageSource)}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
-      }
-      return Component;
-    }`;
-    // without useRouter
-    const importComponentInServer = `() => {
+
+    const importComponentDirectly = `() => {
       function Component(props) {
         return createElement(require('${formatPath(pageSource)}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
       }
       return Component;
     }`;
 
+    // For rax-use-router lazy load page component
+    const importComponentInClient = `() => ${importComponentDirectly}`;
+
     let importComponent;
     if (target === 'web') {
       importComponent = dynamicImportComponent;
     } else if (target === 'ssr') {
-      importComponent = importComponentInServer;
+      // without useRouter
+      importComponent = importComponentDirectly;
     } else {
       importComponent = importComponentInClient;
     }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.5
+
+- feat add `props.pageConfig` in Rax App MPA page component
+
 ## 3.2.4
 
 - fix: generate mpa entries when app.ts is entry in rax-app
