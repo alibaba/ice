@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-router",
-  "version": "1.9.5",
+  "version": "1.9.6",
   "description": "build-plugin-ice-router",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -27,6 +27,7 @@
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.5",
     "@types/node": "^12.12.12",
+    "path-to-regexp": "^6.2.0",
     "typescript": "^4.0.0"
   },
   "files": [
