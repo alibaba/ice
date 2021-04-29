@@ -36,18 +36,27 @@ class PageWrapper extends Component {
 
 
 if (!isNode) {
-  const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
+  const isSSR = (window as any).__INITIAL_DATA__ && (window as any).__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    render(<PageWrapper />, null, { driver: DriverUniversal });
+    render(<PageWrapper pageConfig={<%- pageConfig %> } />, null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
-      let comProps = {};
+      let comProps = {
+        pageConfig: <%- pageConfig %>,
+      };
       // process App.getInitialProps
       if (isSSR && window.__INITIAL_DATA__.pageInitialProps !== null) {
-        comProps = window.__INITIAL_DATA__.pageInitialProps;
+        comProps = {
+          ...comProps,
+          ...window.__INITIAL_DATA__.pageInitialProps,
+        };
       } else if (PageComponent.getInitialProps) {
-        comProps = await PageComponent.getInitialProps();
+        const initialProps = await PageComponent.getInitialProps();
+        comProps = {
+          ...comProps,
+          ...initialProps,
+        };
       }
 
       render(<PageWrapper {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
