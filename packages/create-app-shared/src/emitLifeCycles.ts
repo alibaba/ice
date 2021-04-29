@@ -1,3 +1,4 @@
+import { History } from 'history';
 import { getHistory } from './history';
 import router from './router';
 import { LAUNCH, SHOW, HIDE } from './constants';
@@ -13,7 +14,7 @@ function emitLifeCycles() {
     };
   } else {
     // Get history
-    const history = getHistory();
+    const history = getHistory() as History;
     const pathname = history && history.location ?
       history.location.pathname : typeof window !== 'undefined' && window.location.pathname;
 

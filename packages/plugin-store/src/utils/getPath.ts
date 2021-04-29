@@ -12,20 +12,23 @@ export function getAppModelsPath({ rootDir, srcDir }) {
   return path.join(rootDir, srcDir, 'models');
 }
 
-export function getPageStorePath({ rootDir, srcDir, projectType, pagePath }) {
-  pagePath = path.join('pages', pagePath);
+/**
+ * return absolute page path. e.g.: /project/src/pages/Home
+ */
+export function getPagePath({ rootDir, srcDir, pageName }) {
+  return path.join(rootDir, srcDir, 'pages', pageName);
+}
 
-  const pageNameDir = path.join(rootDir, srcDir, pagePath);
+export function getPageStorePath({ rootDir, srcDir, projectType, pageName }) {
+  const pageNameDir = getPagePath({ rootDir, srcDir, pageName });
   // e.g: src/pages/${pageName}/store.ts
   const pageStoreFilePath = path.join(pageNameDir, `store.${projectType}`);
 
   return pageStoreFilePath;
 }
 
-export function getPageModelPath({ rootDir, srcDir, projectType, pagePath }) {
-  pagePath = path.join('pages', pagePath);
-
-  const pageNameDir = path.join(rootDir, srcDir, pagePath);
+export function getPageModelPath({ rootDir, srcDir, projectType, pageName }) {
+  const pageNameDir = getPagePath({ rootDir, srcDir, pageName });
   // e.g: src/pages/${pageName}/models/*
   const pageModelsDir = path.join(pageNameDir, 'models');
   // e.g: src/pages/${pageName}/model.ts

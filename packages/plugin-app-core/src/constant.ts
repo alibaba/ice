@@ -1,7 +1,11 @@
+const { validation } = require('@builder/app-helpers');
+
 export const USER_CONFIG = [
   {
     name: 'store',
-    validation: 'boolean'
+    validation: (val) => {
+      return validation('store', val, 'object|boolean');
+    }
   },
   {
     name: 'ssr',

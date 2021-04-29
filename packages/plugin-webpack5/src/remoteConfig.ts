@@ -3,16 +3,20 @@ import * as fse from 'fs-extra';
 import * as cheerio from 'cheerio';
 import { IPluginAPI } from '@alib/build-scripts';
 
-export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injectBundles, externals }) => {
-  const { getValue, modifyUserConfig, onGetWebpackConfig } = api;
+export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injectBundles, externals, bootstrap }) => {
+  const { getValue, modifyUserConfig, onGetWebpackConfig, context } = api;
   // create boostrap for mf
-  const bootstrapPath = path.join(getValue('TEMP_PATH'), 'bootstrap.ts');
-  fse.writeFileSync(bootstrapPath, 'import(\'../src/app\')', 'utf-8');
+  let bootstrapEntry = '';
+  if (!bootstrap) {
+    bootstrapEntry = path.join(getValue('TEMP_PATH'), 'bootstrap.ts');
+    fse.writeFileSync(bootstrapEntry, 'import(\'../src/app\')', 'utf-8');
+  } else {
+    bootstrapEntry = path.isAbsolute(bootstrap) ? bootstrap : path.join(context.rootDir, bootstrap);
+  }
   modifyUserConfig((modfiyConfig) => {
     const remotePlugins = [[require.resolve('./babelPluginRemote'), { libs: compileKeys, remoteName }]];
     return {
       babelPlugins: Array.isArray(modfiyConfig.babelPlugins) ? modfiyConfig.babelPlugins.concat(remotePlugins) : remotePlugins,
-      entry: bootstrapPath,
       moduleFederation: {
         name: 'app',
         remoteType: 'window',
@@ -27,6 +31,14 @@ export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injec
       return [[...args, { from: runtimeFolder, to: path.join(args[0].to, 'remoteRuntime') }]];
     });
 
+    // modify entry by onGetWebpackConfig while polyfill will take effect with src/app
+    // config.entryPoints.clear();
+    config.entry('index').values().forEach(entry => {
+      if (entry.match(/\/src\/app/)) {
+        config.entry('index').delete(entry);
+      }
+    });
+    config.entry('index').add(bootstrapEntry);
     config.externals(externals);
     // inject runtime entry and externals umd
     if (config.plugins.get('HtmlWebpackPlugin')) {

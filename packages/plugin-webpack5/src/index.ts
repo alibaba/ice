@@ -2,20 +2,26 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin, Json } from '@alib/build-scripts';
 import analyzeNext from './analyzeNext';
-import filterPackages, { IFilterOptions } from './filterPackages';
+import filterPackages, { IFilterOptions, IRule } from './filterPackages';
 import remoteConfig from './remoteConfig';
 import compileRemote from './compileRemote';
 
 interface IRemoteOptions extends IFilterOptions {
   activeInBuild: boolean;
+  include?: IRule;
+  exclude?: IRule;
+  autoDetect?: boolean;
+  remoteCoreJs?: boolean;
 }
 interface IOptions {
   remoteRuntime?: boolean | IRemoteOptions;
+  bootstrap?: string;
+  cacheLog?: boolean | string;
 }
 
-const plugin: IPlugin = (api, options = {}) => {
+const plugin: IPlugin = async (api, options = {}) => {
   const { onGetWebpackConfig, registerUserConfig, context } = api;
-  const { remoteRuntime } = options as IOptions;
+  const { remoteRuntime, bootstrap, cacheLog } = options as IOptions;
   const { pkg, userConfig, webpack, command } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
 
@@ -47,7 +53,7 @@ const plugin: IPlugin = (api, options = {}) => {
     externals.push(externalMap);
   }
   // filter dependencies
-  let compileKeys = filterPackages(Object.keys(pkgDeps), typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
+  let compileKeys = await filterPackages(Object.keys(pkgDeps), context.rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
   let needCompile = false;
 
   if (activeRemoteRuntime) {
@@ -70,7 +76,7 @@ const plugin: IPlugin = (api, options = {}) => {
       }
     }
     // check deps after remote package
-    needCompile = activeRemoteRuntime && JSON.stringify(pkgDeps) !== JSON.stringify(cacheContent);
+    needCompile = activeRemoteRuntime && JSON.stringify(compileKeys) !== JSON.stringify(cacheContent);
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeFolder);
     const externalBundles = [
@@ -84,11 +90,11 @@ const plugin: IPlugin = (api, options = {}) => {
       fse.copyFileSync(filePath, path.join(runtimeFolder, fileName));
       injectBundles.push(`/remoteRuntime/${fileName}`);
     });
-    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externals, compileKeys });
+    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externals, compileKeys, bootstrap });
   }
   // if missmatch cache compile remote runtime
   if (needCompile) {
-    compileRemote(api, { runtimeFolder, cacheFolder, externals, remoteEntry, remoteName, depsPath, compileKeys, pkgDeps });
+    compileRemote(api, { runtimeFolder, cacheFolder, externals, remoteEntry, remoteName, depsPath, compileKeys });
   }
 
   registerUserConfig({
@@ -118,12 +124,20 @@ const plugin: IPlugin = (api, options = {}) => {
     config.plugins.delete('CaseSensitivePathsPlugin');
 
     // filesystem cache
-    config.merge({
+    const cacheConfig = {
       cache: {
         type: 'filesystem',
         buildDependencies: {},
         cacheDirectory: path.join(context.rootDir, 'node_modules', '.cache', 'webpack'),
       }
+    };
+    config.merge({
+      ...cacheConfig,
+      ...(cacheLog ? {
+        infrastructureLogging: {
+          debug: typeof cacheLog === 'boolean' ? /FileSystemInfo/ : new RegExp(cacheLog),
+        }
+      }: {}),
     });
   });
 };

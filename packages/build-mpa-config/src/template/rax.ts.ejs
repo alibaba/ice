@@ -1,33 +1,59 @@
-import { render, createElement } from 'rax';
+import { render, createElement, Component } from 'rax';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken, isNode } from 'universal-env';
-
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '<%= globalStyle %>'
+  import '<%= globalStyle %>';
 <% } %>
 
-import Component from '<%- resourcePath %>';
+import PageComponent from '<%- resourcePath %>';
+
+const extraElements = [];
+
+<% if (needCustomTabBar) {%>
+  // eslint-disable-next-line
+  import CustomTabBar from  '<%= customTabBarPath %>';
+
+  class TabBarWrapper extends Component {
+    render() {
+      return <div x-if={isNode || !window.pha} style={{ position: "fixed", bottom: 0, width: "750rpx" }}>
+        <CustomTabBar />
+      </div>;
+    }
+  };
+
+  extraElements.push(TabBarWrapper);
+<% } %>
+
+class PageWrapper extends Component {
+  render() {
+    return [
+      extraElements.map((Element, index) => <Element key={index} />),
+      <PageComponent key='PageComponent' {...this.props} />,
+    ];
+  }
+}
+
 
 if (!isNode) {
   const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    render(<Component />, null, { driver: DriverUniversal });
+    render(<PageWrapper />, null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
       let comProps = {};
       // process App.getInitialProps
       if (isSSR && window.__INITIAL_DATA__.pageInitialProps !== null) {
         comProps = window.__INITIAL_DATA__.pageInitialProps;
-      } else if (Component.getInitialProps) {
-        comProps = await Component.getInitialProps();
+      } else if (PageComponent.getInitialProps) {
+        comProps = await PageComponent.getInitialProps();
       }
 
-      render(<Component {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      render(<PageWrapper {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
     }
     renderApp();
   }
 }
 
-export default Component;
+export default PageWrapper;

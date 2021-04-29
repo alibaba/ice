@@ -54,6 +54,11 @@ function miniappRenderer(
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
         document = value;
+        // @ts-ignore
+        const dispatchDocumentModify = getApp()._dispatchDocumentModify;
+        if (typeof dispatchDocumentModify === 'function') {
+          dispatchDocumentModify(value);
+        }
       }
     };
   });

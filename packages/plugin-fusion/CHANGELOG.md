@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.14
+
+- [feat] support `cssVariable` to enable css variables
+
 ## 0.1.13
 
 - [fix] bump dependencies version

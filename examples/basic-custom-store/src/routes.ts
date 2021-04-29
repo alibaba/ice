@@ -1,11 +1,6 @@
-// import { lazy } from 'ice';
-
 import Layout from '@/layouts/index';
 import Home from '@/pages/Home';
-
-// const Home = lazy(() => import('@/pages/Home'));
-// const About =lazy(() => import('@/pages/About'));
-// const NotFound = lazy(() => import('@/pages/NotFound'));
+import About from '@/pages/About';
 
 export default [
   {
@@ -16,6 +11,11 @@ export default [
         path: '/',
         exact: true,
         component: Home
+      },
+      {
+        path: '/about',
+        exact: true,
+        component: About
       },
     ]
   }

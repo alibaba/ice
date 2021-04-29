@@ -1,0 +1,8 @@
+[
+{{#each runtimes}}
+  {
+    "id": "{{ id }}",
+    "url": {{#if (isArr url)}}[{{#each url}}"{{ this }}"{{#unless @last}},{{/unless}}{{/each}}]{{else}}"{{ url }}"{{/if}}
+  }{{#unless @last}},{{/unless}}
+{{/each}}
+]
