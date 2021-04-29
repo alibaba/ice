@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as globby from 'globby';
 import { formatPath } from '@builder/app-helpers';
 
-function generateEntry(api, { framework, targetDir, pageEntry, entryName }) {
+function generateEntry(api, { framework, targetDir, pageEntry, entryName, pageConfig = {} }) {
   const { context: { userConfig: { web: webConfig = {} }, rootDir }, getValue } = api;
   const entryFolder = path.join(targetDir, 'mpaEntry');
   const entryPath = path.join(entryFolder, `${entryName}.tsx`);
@@ -16,7 +16,8 @@ function generateEntry(api, { framework, targetDir, pageEntry, entryName }) {
     resourcePath: `${formatPath(path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry)}`,
     customTabBarPath,
     needCustomTabBar,
-    globalStyle: globalStyles.length && formatPath(path.join(rootDir, globalStyles[0]))
+    globalStyle: globalStyles.length && formatPath(path.join(rootDir, globalStyles[0])),
+    pageConfig: JSON.stringify(pageConfig),
   });
   return entryPath;
 }
