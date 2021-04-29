@@ -1,8 +1,8 @@
 # Changelog
 
-## 2.0.0
+## 1.9.6
 
-- fix: router path is invalid after using `path.join` function
+- [fix] router path is invalid after using `path.join` function
 
 ## 1.9.5
 
