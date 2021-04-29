@@ -24,7 +24,7 @@
     "url": "https://github.com/alibaba/ice/issues"
   },
   "dependencies": {
-    "miniapp-builder-shared": "^0.1.1",
+    "miniapp-builder-shared": "^0.2.0",
     "miniapp-runtime-config": "^0.1.1"
   }
 }
