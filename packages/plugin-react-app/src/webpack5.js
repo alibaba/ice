@@ -27,8 +27,6 @@ module.exports = (api) => {
           }: {}),
         });
       }
-      // remove CaseSensitivePathsPlugin which do not compatible with webpack 5
-      config.plugins.delete('CaseSensitivePathsPlugin');
       // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
       // This is no longer the case. Verify if you need these module and configure a polyfill for it.
       config.resolve.merge({
@@ -37,15 +35,6 @@ module.exports = (api) => {
           process: require.resolve('process/browser'),
         }
       });
-      // compatible with process
-      config
-        .plugin('DefinePlugin')
-        // @ts-ignore
-        .tap(([args]) => [{ 
-          process: JSON.stringify({}),
-          'process.env': JSON.stringify({}),
-          ...args,
-        }]);
     });
   }
 };

@@ -52,7 +52,7 @@ export function getHookFiles() {
   ];
 }
 
-export function hijack() {
+export function hijackWebpack() {
   const hookPropertyMap = new Map(
     getHookFiles().map(([request, replacement]) => [request, require.resolve(replacement)])
   );

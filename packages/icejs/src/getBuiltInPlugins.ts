@@ -1,17 +1,15 @@
 import { IGetBuiltInPlugins, IPluginList, Json } from 'build-scripts';
 import { init } from '@builder/pack/deps/webpack/webpack';
-import { hijack } from './require-hook';
+import { hijackWebpack } from './require-hook';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   // enable webpack 5 by default
-  if (userConfig.webpack5 !== false) {
-    process.env.__WEBPACK_5__ = 'true';
-  }
-  init(!!process.env.__WEBPACK_5__);
-  hijack();
+  const useWebpack5 = true;
+  init(useWebpack5);
+  hijackWebpack();
 
   if (userConfig.disableRuntime) {
     return [
