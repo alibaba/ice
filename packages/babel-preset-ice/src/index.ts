@@ -36,7 +36,6 @@ export default (opts: IOpts = {}) => {
     // Stage 3
     '@builder/pack/deps/@babel/plugin-syntax-dynamic-import',
     '@builder/pack/deps/@babel/plugin-syntax-import-meta',
-    ['@builder/pack/deps/@babel/plugin-proposal-class-properties', { loose: true }],
     '@builder/pack/deps/@babel/plugin-proposal-json-strings',
   ];
 
