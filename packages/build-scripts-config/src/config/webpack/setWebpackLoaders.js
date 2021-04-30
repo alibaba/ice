@@ -60,16 +60,6 @@ const configCSSRule = (config, style, mode, loaders = []) => {
   });
 };
 
-const configAssetsRule = (config, type, testReg, loaderOpts = {}) => {
-  config.module.rule(type).test(testReg).use(type)
-    .loader(require.resolve('@builder/pack/deps/url-loader'))
-    .options({
-      name: 'assets/[hash].[ext]',
-      limit: URL_LOADER_LIMIT,
-      ...loaderOpts,
-    });
-};
-
 module.exports = (config, mode = 'development') => {
   // css loader
   [
@@ -78,16 +68,6 @@ module.exports = (config, mode = 'development') => {
     ['less', [['less-loader', require.resolve('@builder/pack/deps/less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
   ].forEach(([style, loaders]) => {
     configCSSRule(config, style, mode, loaders || []);
-  });
-
-  [
-    ['woff2', /\.woff2?$/, { mimetype: 'application/font-woff' }],
-    ['ttf', /\.ttf$/, { mimetype: 'application/octet-stream' }],
-    ['eot', /\.eot$/, { mimetype: 'application/vnd.ms-fontobject' }],
-    ['svg', /\.svg$/, { mimetype: 'image/svg+xml' }],
-    ['img', /\.(png|jpg|jpeg|gif)$/i],
-  ].forEach(([type, reg, opts]) => {
-    configAssetsRule(config, type, reg, opts || {});
   });
 
   const babelLoader = require.resolve('@builder/pack/deps/babel-loader');

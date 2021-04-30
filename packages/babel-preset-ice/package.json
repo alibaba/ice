@@ -17,6 +17,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@builder/pack": "0.2.8-6"
+    "@builder/pack": "0.2.8-8"
   }
 }

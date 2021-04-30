@@ -35,6 +35,8 @@ module.exports = (api) => {
           process: require.resolve('process/browser'),
         }
       });
+      // assetModuleFilename: 'assets/[hash][ext][query]',
+      config.output.assetModuleFilename('assets/[hash][ext][query]');
     });
   }
 };
