@@ -1,6 +1,6 @@
 const path = require('path');
 const fse = require('fs-extra');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const AddAssetHtmlPlugin = require('@builder/pack/deps/add-asset-html-webpack-plugin');
 const Config = require('webpack-chain');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 

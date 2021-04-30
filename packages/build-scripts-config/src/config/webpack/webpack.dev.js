@@ -1,4 +1,4 @@
-const TimeFixPlugin = require('time-fix-plugin');
+const TimeFixPlugin = require('@builder/pack/deps/time-fix-plugin');
 
 module.exports = (config) => {
   // set source map, https://webpack.js.org/configuration/devtool/#devtool

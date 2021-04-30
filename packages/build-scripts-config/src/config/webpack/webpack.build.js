@@ -1,6 +1,6 @@
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const safeParser = require('postcss-safe-parser');
+const TerserPlugin = require('@builder/pack/deps/terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('@builder/pack/deps/optimize-css-assets-webpack-plugin');
+const safeParser = require('@builder/pack/deps/postcss-safe-parser');
 
 module.exports = (config) => {
   // disable devtool of mode prod build

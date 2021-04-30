@@ -1,5 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const deepClone = require('lodash.clonedeep');
+const deepClone = require('@builder/pack/deps/lodash').cloneDeep;
 const getBabelConfig = require('../babel');
 
 const URL_LOADER_LIMIT = 8192;
@@ -44,11 +44,11 @@ const configCSSRule = (config, style, mode, loaders = []) => {
         })
         .end()
       .use('css-loader')
-        .loader(require.resolve('css-loader'))
+        .loader(require.resolve('@builder/pack/deps/css-loader'))
         .options(ruleKey === 'module' ? cssModuleLoaderOpts : cssLoaderOpts)
         .end()
       .use('postcss-loader')
-        .loader(require.resolve('postcss-loader'))
+        .loader(require.resolve('@builder/pack/deps/postcss-loader'))
         .options({ ...cssLoaderOpts, ...postcssOpts });
 
     loaders.forEach((loader) => {
@@ -62,7 +62,7 @@ const configCSSRule = (config, style, mode, loaders = []) => {
 
 const configAssetsRule = (config, type, testReg, loaderOpts = {}) => {
   config.module.rule(type).test(testReg).use(type)
-    .loader(require.resolve('url-loader'))
+    .loader(require.resolve('@builder/pack/deps/url-loader'))
     .options({
       name: 'assets/[hash].[ext]',
       limit: URL_LOADER_LIMIT,
@@ -74,8 +74,8 @@ module.exports = (config, mode = 'development') => {
   // css loader
   [
     ['css'],
-    ['scss', [['sass-loader', require.resolve('sass-loader')]]],
-    ['less', [['less-loader', require.resolve('less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
+    ['scss', [['sass-loader', require.resolve('@builder/pack/deps/sass-loader')]]],
+    ['less', [['less-loader', require.resolve('@builder/pack/deps/less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
   ].forEach(([style, loaders]) => {
     configCSSRule(config, style, mode, loaders || []);
   });
@@ -90,7 +90,7 @@ module.exports = (config, mode = 'development') => {
     configAssetsRule(config, type, reg, opts || {});
   });
 
-  const babelLoader = require.resolve('babel-loader');
+  const babelLoader = require.resolve('@builder/pack/deps/babel-loader');
   const babelConfig = getBabelConfig();
   // js loader
   config.module.rule('jsx')
@@ -110,5 +110,9 @@ module.exports = (config, mode = 'development') => {
       .end()
     .use('babel-loader')
       .loader(babelLoader)
-      .options({ ...deepClone(babelConfig), cacheDirectory: true });
+      .options({ ...deepClone(babelConfig), cacheDirectory: true })
+      .end()
+    .use('ts-loader')
+      .loader(require.resolve('@builder/pack/deps/ts-loader'))
+      .options({ transpileOnly: true });
 };

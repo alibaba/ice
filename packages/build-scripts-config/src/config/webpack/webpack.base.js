@@ -1,4 +1,4 @@
-const Config = require('webpack-chain');
+const Config = require('@builder/pack/deps/webpack-chain');
 const setWebpackLoaders = require('./setWebpackLoaders');
 const setWebpackPlugins = require('./setWebpackPlugins');
 
