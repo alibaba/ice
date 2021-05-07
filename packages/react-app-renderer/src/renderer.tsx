@@ -56,13 +56,11 @@ async function renderInBrowser(options) {
   const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const context: any = {};
 
-  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
-
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
     context.initialData = (window as any).__ICE_APP_DATA__;
     context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
-  } else if (appConfig?.app?.getInitialData) {
+  } else if(appConfig?.app?.getInitialData) {
     const { href, origin, pathname, search } = window.location;
     const path = href.replace(origin, '');
     const query = queryString.parse(search);
@@ -76,6 +74,7 @@ async function renderInBrowser(options) {
     context.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
+  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
   // set InitialData, can get the return value through getInitialData method
   setInitialData(context.initialData);
   options.appConfig = modifiedAppConfig;
