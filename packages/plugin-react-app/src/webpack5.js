@@ -3,7 +3,7 @@ const path = require('path');
 // built-in webpack 5 abilities
 module.exports = (api) => {
   const { onGetWebpackConfig, context } = api;
-  const { userConfig, rootDir } = context;
+  const { userConfig, rootDir, webpack } = context;
   if (userConfig.webpack5) {
     // filesystem cache
     onGetWebpackConfig((config) => {
@@ -29,14 +29,12 @@ module.exports = (api) => {
       }
       // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
       // This is no longer the case. Verify if you need these module and configure a polyfill for it.
-      config.resolve.merge({
-        fallback: {
-          path: require.resolve('path-browserify'),
-          process: require.resolve('process/browser'),
-        }
-      });
+      config.resolve.alias.set('path', 'path-browserify');
+      config.plugin('ProvidePlugin').use(webpack.ProvidePlugin, [{ process: 'process/browser'}]);
       // assetModuleFilename: 'assets/[hash][ext][query]',
-      config.output.assetModuleFilename('assets/[hash][ext][query]');
+      config.output.merge({
+        assetModuleFilename: 'assets/[hash][ext][query]',
+      });
     });
   }
 };

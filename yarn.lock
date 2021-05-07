@@ -365,10 +365,10 @@
   resolved "https://registry.nlark.com/@bcoe/v8-coverage/download/@bcoe/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha1-daLotRy3WKdVPWgEpZMteqznXDk=
 
-"@builder/pack@0.2.8-8":
-  version "0.2.8-8"
-  resolved "https://registry.nlark.com/@builder/pack/download/@builder/pack-0.2.8-8.tgz?cache=0&sync_timestamp=1619753726873&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.2.8-8.tgz#637258d78678415b3d4f08f0c98266546239686b"
-  integrity sha1-Y3JY14Z4QVs9TwjwyYJmVGI5aGs=
+"@builder/pack@0.2.9":
+  version "0.2.9"
+  resolved "https://registry.nlark.com/@builder/pack/download/@builder/pack-0.2.9.tgz#b7525eebeb4cb1dc8fae7ec4010838b6ac793bea"
+  integrity sha1-t1Je6+tMsdyPrn7EAQg4tqx5O+o=
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"

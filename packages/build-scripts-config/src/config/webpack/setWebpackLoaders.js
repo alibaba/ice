@@ -2,7 +2,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const deepClone = require('@builder/pack/deps/lodash').cloneDeep;
 const getBabelConfig = require('../babel');
 
-const URL_LOADER_LIMIT = 8192;
 const EXCLUDE_REGX = /node_modules/;
 // config css rules
 const configCSSRule = (config, style, mode, loaders = []) => {
@@ -93,6 +92,6 @@ module.exports = (config, mode = 'development') => {
       .options({ ...deepClone(babelConfig), cacheDirectory: true })
       .end()
     .use('ts-loader')
-      .loader(require.resolve('@builder/pack/deps/ts-loader'))
+      .loader(require.resolve('ts-loader'))
       .options({ transpileOnly: true });
 };
