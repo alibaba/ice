@@ -17,9 +17,10 @@ const configCSSRule = (config, style, mode, loaders = []) => {
     },
   };
   const postcssOpts = {
-    config: {
-      path: __dirname,
-    },
+    postcssOptions: {
+      // eslint-disable-next-line global-require
+      ...(require('./postcss.config')()),
+    }
   };
 
   // add both rule of css and css module

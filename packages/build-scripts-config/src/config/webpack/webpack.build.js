@@ -10,8 +10,6 @@ module.exports = (config) => {
   config.optimization
     .minimizer('TerserPlugin')
       .use(TerserPlugin, [{
-        sourceMap: false,
-        cache: true,
         parallel: true,
         extractComments: false,
         terserOptions: {
