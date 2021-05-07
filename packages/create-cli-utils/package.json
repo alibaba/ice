@@ -24,8 +24,8 @@
     "yargs-parser": "^18.1.2"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-cli-utils"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

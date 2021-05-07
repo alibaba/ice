@@ -9,6 +9,7 @@
     },
   },
   "exclude": [
-    "templates"
+    "templates",
+    "src/utils/__tests__"
   ]
 }

@@ -53,7 +53,7 @@ const plugin: IPlugin = async (api, options = {}) => {
     externals.push(externalMap);
   }
   // filter dependencies
-  let compileKeys = await filterPackages(Object.keys(pkgDeps), context.rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {});
+  let compileKeys = activeRemoteRuntime ? await filterPackages(Object.keys(pkgDeps), context.rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {}) : [];
   let needCompile = false;
 
   if (activeRemoteRuntime) {

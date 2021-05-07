@@ -1,6 +1,6 @@
 {
   "name": "@builder/babel-preset-ice",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Basic babel preset",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -16,7 +16,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/babel-preset-ice"
+  },
   "dependencies": {
-    "@builder/pack": "0.2.9"
+    "@builder/pack": "^0.2.9"
   }
 }

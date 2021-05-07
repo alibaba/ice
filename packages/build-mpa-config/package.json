@@ -1,6 +1,6 @@
 {
   "name": "@builder/mpa-config",
-  "version": "3.2.1",
+  "version": "3.2.5",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -13,8 +13,8 @@
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-mpa-config"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

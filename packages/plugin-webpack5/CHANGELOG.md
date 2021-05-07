@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.4
+
+- [fix] add next.css after global style
+- [fix] do not detect package when remote runtime is disabled
+
 ## 1.2.3
 
 - [feat] support `cacheLog` for file system info

@@ -17,6 +17,9 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
       'build-plugin-ice-mpa'
     ];
   }
+  // eslint-disable-next-line
+  const pkg = require('../package.json');
+  process.env.__FRAMEWORK_VERSION__ = pkg.version;
   const coreOptions = {
     'framework': 'react',
     'alias': process.env.__FRAMEWORK_NAME__ || 'ice'

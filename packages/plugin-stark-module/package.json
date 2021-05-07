@@ -17,6 +17,10 @@
   },
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-stark-module"
+  },
   "devDependencies": {
     "build-scripts": "^1.0.0-3",
     "@types/fs-extra": "^8.1.0",

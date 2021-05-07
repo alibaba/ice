@@ -12,6 +12,9 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
   onGetWebpackConfig((config) => {
+    config
+      .plugin('DefinePlugin')
+      .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
     // set alias for default layout
     config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : path.join(__dirname, 'runtime/Layout'));
     // set alias for icestark
