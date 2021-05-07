@@ -82,7 +82,10 @@ const plugin = async (api): Promise<void> => {
           .use('css-loader')
           .tap((options) => ({
             ...options,
-            onlyLocals: true
+            modules: {
+              ...(options.modules || {}),
+              exportOnlyLocals: true,
+            },
           }));
       }
     });
