@@ -35,7 +35,7 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: filenameStrategy ? `${filenameStrategy}.css` : './[name]/index.css' }]);
 
     // hack with multi publicpath
-    config.devServer.contentBase(path.join(rootDir, 'dist'));
+    config.devServer.contentBase(output);
     config.devServer.writeToDisk(true);
   });
 };
