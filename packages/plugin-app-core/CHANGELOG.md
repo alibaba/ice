@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.4
+
+- [fix] lose `errorBoundary` type define
+
 ## 1.4.3
 
 - [chore] ignore `unmount` function param never read error
