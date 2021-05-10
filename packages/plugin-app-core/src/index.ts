@@ -8,8 +8,8 @@ import getBuildConfig from './utils/getBuildConfig';
 // eslint-disable-next-line
 const chalk = require('chalk');
 // eslint-disable-next-line
-const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP } } = require('miniapp-builder-shared');
-const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
+const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP, BYTEDANCE_MICROAPP } } = require('miniapp-builder-shared');
+const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
@@ -143,6 +143,6 @@ function checkTargets(targets) {
 
 function matchTargets(targets) {
   return targets.every(target => {
-    return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
+    return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
   });
 }
