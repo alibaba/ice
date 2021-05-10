@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-miniapp",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Using icejs and React.js to write miniapp",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -24,7 +24,7 @@
     "url": "https://github.com/alibaba/ice/issues"
   },
   "dependencies": {
-    "miniapp-builder-shared": "^0.1.1",
+    "miniapp-builder-shared": "^0.2.0",
     "miniapp-runtime-config": "^0.1.1"
   }
 }

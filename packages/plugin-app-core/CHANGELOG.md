@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.4
+
+- [feat] add baidu/kuaishou env judge
+
 ## 1.4.3
 
 - [chore] ignore `unmount` function param never read error
