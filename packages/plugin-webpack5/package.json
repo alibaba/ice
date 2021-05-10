@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-webpack5",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "build-scripts plugin for compatible with webpack 5",
   "main": "lib/index.js",
   "scripts": {
@@ -15,6 +15,10 @@
   ],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-webpack5"
+  },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.18",
     "typescript": "^4.0.0"

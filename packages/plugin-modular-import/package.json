@@ -8,6 +8,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-modular-import"
+  },
   "dependencies": {
     "babel-plugin-import": "^1.11.2"
   }

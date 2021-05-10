@@ -47,11 +47,12 @@ export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injec
         .tap(([args]) => {
           const templateContent = fse.readFileSync(args.template);
           const $ = cheerio.load(templateContent);
-          injectBundles.forEach((bundleUrl) => {
+          injectBundles.forEach((bundleUrl: string) => {
             if (path.extname(bundleUrl) === '.js') {
               $('head').append(`<script src="${bundleUrl}"></script>`);
             } else {
-              $('head').append(`<link rel="stylesheet" type="text/css" href="${bundleUrl}">`);
+              // global css such as next.css should been added after global style
+              $('body').append(`<link rel="stylesheet" type="text/css" href="${bundleUrl}">`);
             }
           });
           delete args.template;

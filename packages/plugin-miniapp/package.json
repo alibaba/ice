@@ -14,8 +14,8 @@
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-miniapp"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

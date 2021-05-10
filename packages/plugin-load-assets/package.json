@@ -12,6 +12,10 @@
   ],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-load-assets"
+  },
   "dependencies": {
     "build-plugin-wrap-code": "^0.1.0"
   }

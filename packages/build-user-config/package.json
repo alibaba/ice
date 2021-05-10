@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -35,8 +35,8 @@
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-user-config"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
