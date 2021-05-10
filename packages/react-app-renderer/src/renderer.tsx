@@ -53,10 +53,8 @@ export function getRenderApp(runtime, options) {
 }
 
 async function renderInBrowser(options) {
-  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
+  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles, createHistory } = options;
   const context: any = {};
-
-  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
@@ -73,8 +71,16 @@ async function renderInBrowser(options) {
       query,
       ssrError
     };
+
+    // create history so that GID can get valid values
+    const { router } = appConfig;
+    const { type = 'hash', basename, history: customHistory } = router;
+    createHistory({ type, basename, location: null, customHistory });
+
     context.initialData = await appConfig.app.getInitialData(initialContext);
   }
+
+  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
   // set InitialData, can get the return value through getInitialData method
   setInitialData(context.initialData);
