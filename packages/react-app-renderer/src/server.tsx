@@ -48,7 +48,7 @@ function deepCloneConfig(config) {
     return config;
   }
   const ret = {};
-  Object.keys(config).forEach((key: string) => {
+  Object.getOwnPropertyNames(config).forEach((key: string) => {
     if (Object.prototype.hasOwnProperty.call(config, key)) {
       ret[key] = deepCloneConfig(config[key]);
     }
