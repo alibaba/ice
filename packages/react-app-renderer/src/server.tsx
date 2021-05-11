@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as clonedeep from 'lodash.clonedeep';
 import * as ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
@@ -35,11 +34,24 @@ function renderInServer(context, options) {
 }
 
 export default function reactAppRendererWithSSR(context, options) {
-  const appConfig = clonedeep(options.appConfig || {});
+  const appConfig = deepCloneConfig(options.appConfig || {});
   appConfig.router = appConfig.router || {};
   if (appConfig.router.type !== 'browser') {
     throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
   }
   appConfig.router.type = 'static';
   return renderInServer(context, options);
+}
+
+function deepCloneConfig(config) {
+  if(typeof config !== 'object' || config === null) {
+    return config;
+  }
+  const ret = {};
+  Object.keys(config).forEach((key: string) => {
+    if (Object.prototype.hasOwnProperty.call(config, key)) {
+      ret[key] = deepCloneConfig(config[key]);
+    }
+  });
+  return ret;
 }
