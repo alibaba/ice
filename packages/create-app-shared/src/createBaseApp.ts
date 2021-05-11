@@ -1,6 +1,6 @@
 import { History } from 'history';
 import RuntimeModule from './runtimeModule';
-import { createHistory } from './history';
+import { createHistory, getHistory } from './history';
 import { isMiniAppPlatform } from './env';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
@@ -33,11 +33,15 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
     // Set history
     let history: History;
     if (!isMiniAppPlatform && initHistory) {
-      const { router } = appConfig;
-      const { type, basename, history: customHistory } = router;
-      const location = context.initialContext ? context.initialContext.location : null;
-      history = createHistory({ type, basename, location, customHistory });
-      appConfig.router.history = history;
+      if (!getHistory()) {
+        const { router } = appConfig;
+        const { type, basename, history: customHistory } = router;
+        const location = context.initialContext ? context.initialContext.location : null;
+        createHistory({ type, basename, location, customHistory });
+      }
+
+      history = getHistory();
+      appConfig.router.history = getHistory();
     }
 
     context.createElement = createElement;
