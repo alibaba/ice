@@ -78,6 +78,7 @@
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
-    "@typescript-eslint/typescript-estree": "^4.0.0"
+    "@typescript-eslint/typescript-estree": "^4.0.0",
+    "miniapp-builder-shared": "^0.2.0"
   }
 }
