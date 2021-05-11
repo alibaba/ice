@@ -3,7 +3,7 @@ import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
 import emitLifeCycles from './emitLifeCycles';
 import createBaseApp from './createBaseApp';
-import { createHistory, getHistory, history } from './history';
+import { createHistory, getHistory, setHistory, history } from './history';
 import { pathRedirect } from './utils';
 import {
   registerNativeEventListeners,
@@ -23,6 +23,7 @@ function createShareAPI({ withRouter, createElement, useEffect, initHistory = tr
     createHistory,
     getHistory,
     getSearchParams,
+    setHistory,
     // lifeCycle api
     emitLifeCycles,
     collectAppLifeCycle,

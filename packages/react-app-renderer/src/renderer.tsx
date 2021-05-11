@@ -53,7 +53,7 @@ export function getRenderApp(runtime, options) {
 }
 
 async function renderInBrowser(options) {
-  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles, createHistory } = options;
+  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles, setHistory } = options;
   const context: any = {};
 
   // ssr enabled and the server has returned data
@@ -73,9 +73,7 @@ async function renderInBrowser(options) {
     };
 
     // create history so that GID can get valid values
-    const { router } = appConfig;
-    const { type = 'hash', basename, history: customHistory } = router;
-    createHistory({ type, basename, location: null, customHistory });
+    setHistory(appConfig, null);
 
     context.initialData = await appConfig.app.getInitialData(initialContext);
   }

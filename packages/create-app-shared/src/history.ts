@@ -7,6 +7,7 @@ import {
 } from 'history';
 import { createMiniAppHistory } from 'miniapp-history';
 import { isMiniAppPlatform, isWeex, isKraken } from './env';
+import { DEFAULE_APP_CONFIG } from './constants';
 
 // eslint-disable-next-line
 let history: History;
@@ -52,4 +53,11 @@ function getHistory() {
   return history;
 }
 
-export { getHistory, createHistory, history };
+function setHistory(appConfig, initialContext) {
+  const { router } = appConfig;
+  const { type = DEFAULE_APP_CONFIG.router.type, basename, history: customHistory } = router;
+  const location = initialContext ? initialContext.location : null;
+  createHistory({ type, basename, location, customHistory });
+}
+
+export { getHistory, createHistory, setHistory, history };
