@@ -22,7 +22,6 @@
     { "path": "packages/plugin-helmet" },
     { "path": "packages/plugin-ice-ssr" },
     { "path": "packages/plugin-fast-refresh" },
-    { "path": "packages/plugin-miniapp" },
     { "path": "packages/plugin-esbuild" },
     { "path": "packages/create-app-shared" },
     { "path": "packages/create-app-container" },
