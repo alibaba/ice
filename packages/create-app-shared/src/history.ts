@@ -54,6 +54,10 @@ function getHistory() {
 }
 
 function setHistory(appConfig, initialContext = null) {
+  if (!appConfig.router) {
+    appConfig.router = DEFAULE_APP_CONFIG.router;
+  }
+
   const { router } = appConfig;
   const { type = DEFAULE_APP_CONFIG.router.type, basename, history: customHistory } = router;
   const location = initialContext ? initialContext.location : null;

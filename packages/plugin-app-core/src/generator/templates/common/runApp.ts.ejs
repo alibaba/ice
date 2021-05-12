@@ -47,8 +47,7 @@ const {
 } = createShareAPI({
   createElement,
   useEffect,
-  withRouter: defaultWithRouter,
-  initHistory: buildConfig.router !== false,
+  withRouter: defaultWithRouter
 }, loadRuntimeModules);
 
 export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
