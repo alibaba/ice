@@ -1,7 +1,4 @@
-import { History } from 'history';
 import RuntimeModule from './runtimeModule';
-import { getHistory, setHistory } from './history';
-import { isMiniAppPlatform } from './env';
 import { DEFAULE_APP_CONFIG } from './constants';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
@@ -16,21 +13,11 @@ function mergeDefaultConfig(defaultConfig, config) {
   return config;
 }
 
-export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
+export default ({ loadRuntimeModules, createElement }) => {
   const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
 
     // Merge default appConfig to user appConfig
     appConfig = mergeDefaultConfig(DEFAULE_APP_CONFIG, appConfig);
-
-    // Set history
-    let history: History;
-    if (!isMiniAppPlatform && initHistory) {
-      if (!getHistory()) setHistory(appConfig, context.initialContext);
-
-      history = getHistory();
-      appConfig.router.history = getHistory();
-    }
-
     context.createElement = createElement;
 
     // Load runtime modules
@@ -40,7 +27,6 @@ export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
     // Collect app lifeCyle
     collectAppLifeCycle(appConfig);
     return {
-      history,
       runtime,
       appConfig
     };
