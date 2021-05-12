@@ -57,7 +57,7 @@ async function renderInBrowser(options) {
   const context: any = {};
 
   // set History before GID
-  setHistory(appConfig, null);
+  setHistory(appConfig);
 
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
