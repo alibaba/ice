@@ -53,13 +53,12 @@ function getHistory() {
   return history;
 }
 
-function setHistory(appConfig, initialContext) {
+function setHistory(appConfig, initialContext = null) {
   const { router } = appConfig;
   const { type = DEFAULE_APP_CONFIG.router.type, basename, history: customHistory } = router;
   const location = initialContext ? initialContext.location : null;
   const newHistory = createHistory({ type, basename, location, customHistory });
 
-  createHistory({ type, basename, location, customHistory });
   appConfig.router.history = newHistory;
 }
 
