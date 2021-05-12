@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.12
+
+- [Fix] miss default rootId
+
 ## 0.1.11
 
 - [Fix] miniapp global instance bind

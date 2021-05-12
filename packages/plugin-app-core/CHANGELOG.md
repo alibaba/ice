@@ -1,8 +1,12 @@
 # Changelog
 
-## 1.4.4
+## 1.4.5
 
 - [fix] lose `errorBoundary` type define
+
+## 1.4.4
+
+- [feat] add baidu/kuaishou env judge
 
 ## 1.4.3
 
