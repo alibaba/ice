@@ -10,9 +10,9 @@
     "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
-    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod",
-    "test": "../../packages/icejs/bin/ice-cli.js test --jest-watchAll"
+    "start": "icejs start --mode dev",
+    "build": "icejs build --mode prod",
+    "test": "icejs test --jest-watchAll"
   },
   "engines": {
     "node": ">=8.0.0"
