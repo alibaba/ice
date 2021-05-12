@@ -32,8 +32,7 @@ function miniappRenderer(
       return appInstance;
     }
   }
-
-  (window as any).__pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
+  const pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
     return {
       path: source,
       render() {
@@ -63,6 +62,8 @@ function miniappRenderer(
       }
     };
   });
+
+  (window as any).__pagesRenderInfo = ((window as any).__pagesRenderInfo || []).concat(pagesRenderInfo);
 }
 
 export default miniappRenderer;
