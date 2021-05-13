@@ -239,6 +239,6 @@ module.exports = [
   {
     name: 'experiments',
     validation: 'object',
-    defaultValue: true,
+    defaultValue: {},
   }
 ];
