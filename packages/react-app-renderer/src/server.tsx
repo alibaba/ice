@@ -34,11 +34,25 @@ function renderInServer(context, options) {
 }
 
 export default function reactAppRendererWithSSR(context, options) {
-  const { appConfig } = options || {};
+  const cloneOptions = deepClone(options);
+  const { appConfig } = cloneOptions || {};
   appConfig.router = appConfig.router || {};
   if (appConfig.router.type !== 'browser') {
     throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
   }
   appConfig.router.type = 'static';
-  return renderInServer(context, options);
+  return renderInServer(context, cloneOptions);
+}
+
+function deepClone(config) {
+  if(typeof config !== 'object' || config === null) {
+    return config;
+  }
+  const ret = {};
+  Object.getOwnPropertyNames(config).forEach((key: string) => {
+    if (Object.prototype.hasOwnProperty.call(config, key)) {
+      ret[key] = deepClone(config[key]);
+    }
+  });
+  return ret;
 }
