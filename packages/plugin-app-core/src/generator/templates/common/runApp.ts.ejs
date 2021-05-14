@@ -35,6 +35,7 @@ const {
   createHistory,
   getHistory,
   emitLifeCycles,
+  setHistory,
   usePageShow,
   usePageHide,
   withPageLifeCycle,
@@ -46,8 +47,7 @@ const {
 } = createShareAPI({
   createElement,
   useEffect,
-  withRouter: defaultWithRouter,
-  initHistory: buildConfig.router !== false,
+  withRouter: defaultWithRouter
 }, loadRuntimeModules);
 
 export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
@@ -69,6 +69,7 @@ export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
     createBaseApp,
     createHistory,
     getHistory,
+    setHistory,
     emitLifeCycles,
     pathRedirect,
     loadStaticModules,

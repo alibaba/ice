@@ -4,7 +4,7 @@ const defaultDeclarations = {
   '$$framework/runApp': [
     'runApp', 'createApp',
     // router api
-    'withRouter', 'history', 'getHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
+    'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
     // LifeCycles api
     'usePageShow', 'usePageHide', 'withPageLifeCycle',
     // events api
