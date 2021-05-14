@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.6
+
+- [fix] SPA `route.targets` field
+
 ## 0.3.5
 
 - [feat] add `props.pageConfig` in Rax App SPA page component
