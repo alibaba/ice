@@ -209,6 +209,23 @@ html 中使用 EJS 语法：
 
 > 注意：通过 `entry` 字段配置的多页应用不支持配置 `mpa.openPage` 字段。
 
+### 指定调试时的路径
+
+本地开发默认以 pages 下的目录名为调试路径，比如 `src/pages/Dashboard` 下的 MPA 页面，在调试时将默认在 `http://localhost:3333/dashboard` 进行调试。
+如果希望调试路径和最终部署时的路径一致，可以通过配置 `rewrite` 参数：
+
+```json
+"mpa": {
+  "rewrite": {
+    "dashboard": "site/dashboard"
+  }
+}
+```
+
+通过上述的配置，上述配置的 `site/dashboard` 可以跟前端路由的 `basename` 一致，这样可以确保部署后无需额外针对 `basename` 的订正逻辑
+
+> 如果 MPA 页面中不耦合路由，则不需要关系 rewrite 逻辑
+
 ### 通过 entry 字段更加灵活的开启 MPA
 
 `mpa: true` 是 icejs 推荐的 MPA 最佳实践，但有一些场景可能会更加灵活，比如应用整体还是一个大的 SPA 应用，只是需要增加一个轻量的 entry，这时候可以直接在 `build.json` 中配置 entry 字段：

@@ -4,6 +4,9 @@
     "openPage": "Dashboard",
     "template": {
       "web.html": ["Dashboard", "Home"]
+    },
+    "rewrites": {
+      "dashboard": "site/dashboard"
     }
   },
   "plugins": []
