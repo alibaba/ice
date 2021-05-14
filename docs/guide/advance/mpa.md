@@ -212,17 +212,17 @@ html 中使用 EJS 语法：
 ### 指定调试时的路径
 
 本地开发默认以 pages 下的目录名为调试路径，比如 `src/pages/Dashboard` 下的 MPA 页面，在调试时将默认在 `http://localhost:3333/dashboard` 进行调试。
-如果希望调试路径和最终部署时的路径一致，可以通过配置 `rewrite` 参数：
+如果希望调试路径和最终部署时的路径一致，可以通过配置 `rewrites` 参数：
 
 ```json
 "mpa": {
-  "rewrite": {
+  "rewrites": {
     "dashboard": "site/dashboard"
   }
 }
 ```
 
-通过上述的配置，上述配置的 `site/dashboard` 可以跟前端路由的 `basename` 一致，这样可以确保部署后无需额外针对 `basename` 的订正逻辑
+上述的配置可以让 MPA 页面在 `http://localhost:3333/site/dashboard` 下进行调试，前端路由的 basename 可以同该路径保持一致，这样可以确保部署后无需额外针对 `basename` 进行的订正。
 
 > 如果 MPA 页面中不耦合路由，则不需要关系 rewrite 逻辑
 
