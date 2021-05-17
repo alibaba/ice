@@ -1,6 +1,6 @@
 import { IPlugin, IUserConfig } from '@alib/build-scripts';
 import { getWebpackConfig } from 'build-scripts-config';
-import WebpackPluginImport from 'webpack-plugin-import';
+import * as WebpackPluginImport from 'webpack-plugin-import';
 import { Options } from './types';
 import setUMDConfig from './setUMDConfig';
 import genRuntime from './genRuntime';
