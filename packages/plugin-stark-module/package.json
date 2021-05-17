@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-stark-module",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "build-scripts plugin for build stark module",
   "main": "lib/index.js",
   "files": [
@@ -29,9 +29,10 @@
     "execa": "^5.0.0",
     "jest": "^25.4.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.0.0",
     "ts-jest": "^25.4.0",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.0.0",
+    "webpack-plugin-import": "^0.2.7"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
