@@ -22,7 +22,7 @@
 - 🐴 **Hooks**：提供 useModel、useHistory 等 Hooks API
 - 🐌 **插件体系**：提供插件机制，可以扩展框架的核心功能
 - 🐘 **TypeScript**：默认使用 TypeScript 
-- 🐂**Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
+- 🐂 **Modern**：支持 SPA、SSR、MPA、微前端等流行的应用类型
 
 ## 快速开始
 
