@@ -8,13 +8,13 @@ module.exports = ({ types }, { fileList }) => {
     visitor: {
       Program: {
         exit(programPath, state) {
-          programPath.traverse({
-            ImportDeclaration(nodePath) {
-              const entryFile = fileList.find((filePath) => {
-                // filePath may not have an extension
-                return filePath.includes((state.filename || '').replace(/\.[^/.]+$/, ''));
-              });
-              if (entryFile) {
+          const entryFile = fileList.find((filePath) => {
+            // filePath may not have an extension
+            return filePath.includes((state.filename || '').replace(/\.[^/.]+$/, ''));
+          });
+          if (entryFile) {
+            programPath.traverse({
+              ImportDeclaration(nodePath) {
                 const { node } = nodePath;
                 // only replace core-js/modules/xxx added by @babel/preset-env
                 if (node.source.value.startsWith('core-js/modules')) {
@@ -23,9 +23,9 @@ module.exports = ({ types }, { fileList }) => {
                   addSideEffect(file.path, node.source.value.replace('core-js/', `${coreJSPath}/`));
                   nodePath.remove();
                 }
-              }
-            },
-          });
+              },
+            });
+          }
         }
       },
     },
