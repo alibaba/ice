@@ -59,7 +59,8 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
         libraryName: /@ali\/ice-.*/,
         stylePath: 'style.js',
       },
-    ]]);
+    ]])
+    .end();
 
   // set umd
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
