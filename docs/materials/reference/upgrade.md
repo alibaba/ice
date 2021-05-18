@@ -16,7 +16,7 @@ ReactDOM.render((
   <App />
 ), mountNode);
 - ````
-+ ```js
++ ```
 `````
 
 ## 从 ice-scripts 升级到 build-scripts
