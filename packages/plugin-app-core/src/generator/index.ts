@@ -224,8 +224,8 @@ export default class Generator {
       fse.ensureDirSync(path.dirname(realTargetPath));
       fse.writeFileSync(realTargetPath, content, 'utf-8');
     } else {
-      fse.ensureDirSync(targetPath);
-      fse.copyFileSync(targetPath, targetPath);
+      fse.ensureDirSync(path.dirname(targetPath));
+      fse.copyFileSync(templatePath, targetPath);
     }
   }
 
