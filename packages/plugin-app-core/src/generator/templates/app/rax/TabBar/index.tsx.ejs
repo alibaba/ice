@@ -42,7 +42,7 @@ export default function TabBar(props) {
   } = config || {};
   const [selectedName, setSelectedName] = useState(currentPageName);
   const handleTabItemClick = (item) => {
-    setSelectedName(item.name);
+    setSelectedName(item.pageName);
     onClick(item);
   };
   return <div className='rax-app-tab-bar' style={{ backgroundColor }}>
@@ -50,13 +50,16 @@ export default function TabBar(props) {
       items.map((item, index) => {
         const itemTextColor = item.textColor || textColor;
         const itemSelectedColor = item.selectedColor || selectedColor;
-        const selected = selectedName === item.name;
+        const selected = selectedName === item.pageName;
+        if (process.env.NODE_ENV === 'development' && item.name) {
+          console.error('Please use text field instead of name in tabBar items config!');
+        }
         return <div key={`tab-${index}`} className='rax-app-tab-bar-item'
             style={{ height: 98 + safeAreaInsetBottom, paddingBottom: safeAreaInsetBottom }}
             onClick={() => handleTabItemClick(item)}>
           <img x-if={item.activeIcon && selected} className='rax-app-tab-bar-item-img' alt='' src={item.activeIcon} />
           <img x-if={item.icon && !selected} className='rax-app-tab-bar-item-img' alt='' src={item.icon} />
-          <span className='rax-app-tab-bar-item-text' style={{ color: selected ? itemSelectedColor : itemTextColor }} >{item.text}</span>
+          <span className='rax-app-tab-bar-item-text' style={{ color: selected ? itemSelectedColor : itemTextColor }} >{item.text || item.name}</span>
         </div>;
       })
     }

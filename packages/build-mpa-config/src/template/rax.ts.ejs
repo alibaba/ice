@@ -17,15 +17,15 @@ const extraElements = [];
   const currentPageName = '<%= entryName %>';
 
   class TabBarWrapper extends Component {
-    handleTabItemClick = ({ path, name }) => {
+    handleTabItemClick = ({ path, pageName }) => {
       if (path) {
-        window.location.href = path;
+        (window as any).location.href = path;
       } else {
-        window.location.href = `./${name}.html`;
+        (window as any).location.href = `./${pageName}.html`;
       }
     }
     render() {
-      return <Fragment x-if={isNode || !window.pha}>
+      return <Fragment x-if={isNode || !(window as any).pha}>
         <% if (tabBarPath.indexOf('.rax') > -1) {%>
           <TabBar config={<%- tabBarConfig %>} onClick={this.handleTabItemClick} currentPageName={currentPageName} />
         <% } else { %>
@@ -78,6 +78,6 @@ if (!isNode) {
   }
 }
 
-PageWrapper.getInitialProps = PageComponent.getInitialProps;
+PageWrapper.getInitialProps = PageComponent?.getInitialProps;
 
 export default PageWrapper;

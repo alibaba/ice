@@ -13,7 +13,7 @@ export default (api, renderData, { entryName, pageConfig }) => {
       tabBarPath = path.join(rootDir, 'src/components/CustomTabBar/index');
       showTabBar = tabBarConfig.list.indexOf(entryName) > -1;
     } else {
-      showTabBar = tabBarConfig.items.some(item => item.name === entryName);
+      showTabBar = tabBarConfig.items.some(item => item.pageName === entryName);
     }
   }
 
