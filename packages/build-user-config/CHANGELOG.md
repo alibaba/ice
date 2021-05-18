@@ -3,6 +3,7 @@
 ## 0.3.6
 
 - [fix] regexp for inject core-js
+- [fix] require order of polyfill
 
 ## 0.3.5
 
