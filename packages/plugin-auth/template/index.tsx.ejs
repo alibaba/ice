@@ -1,4 +1,6 @@
-import React from 'react';
+<% if(!hasJsxRuntime) { %>
+import * as React from 'react';
+<% } %>
 import store from './store';
 
 // 函数组件支持 hooks 用法
