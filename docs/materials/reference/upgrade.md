@@ -7,7 +7,7 @@ order: 6
 
 1.x 主要是支持了 Rax 的组件构建，跟 0.2.x 基本兼容，只需要将 `demo/a.md` 中的代码片段写法修正即可：
 
-`````
+`````diff
 - ````js
 + ```js
 import ExampleComponent from '@ali/example-component';
