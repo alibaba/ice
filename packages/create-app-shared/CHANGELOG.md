@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- [feat] add `setHistory` API
+- [fix] extract the logic of creating history from `createBaseApp`. 
+
 ## 0.2.4
 
 - [feat] add runtime api of wrapperRouterRender

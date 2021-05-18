@@ -3,7 +3,7 @@ import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
 import emitLifeCycles from './emitLifeCycles';
 import createBaseApp from './createBaseApp';
-import { createHistory, getHistory, history } from './history';
+import { createHistory, getHistory, setHistory, history } from './history';
 import { pathRedirect } from './utils';
 import {
   registerNativeEventListeners,
@@ -13,16 +13,17 @@ import {
 import getSearchParams from './getSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
 
-function createShareAPI({ withRouter, createElement, useEffect, initHistory = true }, loadRuntimeModules) {
+function createShareAPI({ withRouter, createElement, useEffect }, loadRuntimeModules) {
   const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
   return {
-    createBaseApp: createBaseApp({ loadRuntimeModules, createElement, initHistory }),
+    createBaseApp: createBaseApp({ loadRuntimeModules, createElement }),
 
     // history api
     withRouter: enhanceWithRouter({ withRouter, createElement }),
     createHistory,
     getHistory,
     getSearchParams,
+    setHistory,
     // lifeCycle api
     emitLifeCycles,
     collectAppLifeCycle,
