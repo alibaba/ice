@@ -3,6 +3,8 @@
 ## 0.3.6
 
 - [feat] add `experiments` to userConfig
+- [fix] regexp for inject core-js
+- [fix] require order of polyfill
 
 ## 0.3.5
 
