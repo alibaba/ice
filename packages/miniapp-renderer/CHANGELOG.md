@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.13
+
+- [Fix] __pagesRenderInfo in window will be replaced in subPakcages shareMemory mode
+
 ## 0.1.12
 
 - [Fix] miss default rootId
