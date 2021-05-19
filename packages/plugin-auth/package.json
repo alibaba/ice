@@ -10,9 +10,7 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "dependencies": {
-    "fs-extra": "^8.1.0"
-  },
+  "dependencies": {},
   "files": [
     "lib",
     "template",
