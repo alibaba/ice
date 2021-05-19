@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 export default (api, renderData, { entryName, pageConfig }) => {
-  const { context: { userConfig: { web: webConfig = {} }, rootDir }, getValue } = api;
+  const { context: { userConfig: { web: webConfig = {} } }, getValue } = api;
   const staticConfig = getValue('staticConfig');
 
   let tabBarPath = path.join(getValue('TEMP_PATH'), 'TabBar/index');
@@ -10,7 +10,7 @@ export default (api, renderData, { entryName, pageConfig }) => {
 
   if (tabBarConfig) {
     if (tabBarConfig.custom) {
-      tabBarPath = path.join(rootDir, 'src/components/CustomTabBar/index');
+      tabBarPath = getValue('CUSTOM_TAB_BAR_PATH');
       showTabBar = tabBarConfig.list.indexOf(entryName) > -1;
     } else {
       showTabBar = tabBarConfig.items.some(item => item.pageName === entryName);
