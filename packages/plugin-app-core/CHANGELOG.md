@@ -4,6 +4,7 @@
 
 - [feat] support to specify targetDir when call api `addTemplateDir`
 - [fix] copy file by api renderFile
+- [chore] rax template file generate logic move to build-plugin-rax-app
 
 ## 1.4.5
 
