@@ -2,6 +2,7 @@
 
 ## 0.3.6
 
+- [feat] add `experiments` to userConfig
 - [fix] SPA `route.targets` field
 - [fix] regexp for inject core-js
 - [fix] require order of polyfill
