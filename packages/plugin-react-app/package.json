@@ -23,7 +23,6 @@
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "^4.0.0",
     "lodash": "^4.17.15",
-    "mkcert": "^1.2.0",
     "path-exists": "^4.0.0",
     "postcss-plugin-rpx2vw": "^0.0.2",
     "react-dev-utils": "^10.2.1",

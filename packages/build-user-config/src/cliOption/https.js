@@ -1,13 +1,19 @@
-const getCertificate = require('../utils/getCertificate');
+const { certificateFor } = require('trusted-cert');
+const fs = require('fs');
 
-module.exports = async (config, https) => {
+module.exports = async (config, https, context) => {
+  const { commandArgs }  = context;
   let httpsConfig;
   if (https) {
     try {
-      const cert = await getCertificate();
+      const hosts = ['localhost'];
+      if (commandArgs.host !== 'localhost') hosts.push(commandArgs.host);
+      const certInfo = await certificateFor(hosts);
+      const key = fs.readFileSync(certInfo.keyFilePath, 'utf8');
+      const cert = fs.readFileSync(certInfo.certFilePath, 'utf8');
       httpsConfig = {
-        key: cert.key,
-        cert: cert.cert,
+        key,
+        cert,
       };
     } catch (e) {
       console.log('HTTPS 证书生成失败，已转换为HTTP');
