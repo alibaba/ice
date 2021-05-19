@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.6
+
+- [feat] support to specify targetDir when call api `addTemplateDir`
+- [fix] copy file by api renderFile
+
 ## 1.4.5
 
 - [fix] lose `errorBoundary` type define
