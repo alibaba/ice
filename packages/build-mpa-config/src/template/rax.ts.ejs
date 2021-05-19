@@ -41,8 +41,8 @@ const extraElements = [];
 class PageWrapper extends Component {
   render() {
     return [
-      extraElements.map((Element, index) => <Element key={index} />),
       <PageComponent key='PageComponent' {...this.props} />,
+      extraElements.map((Element, index) => <Element key={index} />),
     ];
   }
 }
