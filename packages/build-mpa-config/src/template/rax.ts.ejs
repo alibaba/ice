@@ -29,7 +29,9 @@ const extraElements = [];
         <% if (tabBarPath.indexOf('.rax') > -1) {%>
           <TabBar config={<%- tabBarConfig %>} onClick={this.handleTabItemClick} currentPageName={currentPageName} />
         <% } else { %>
-          <div style={{ position: "fixed", bottom: 0, width: "750rpx" }}></div>
+          <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
+            <TabBar config={<%- tabBarConfig %>} currentPageName={currentPageName} />
+          </div>
         <% } %>
       </Fragment>;
     }
