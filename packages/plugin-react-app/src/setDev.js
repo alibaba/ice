@@ -86,5 +86,6 @@ module.exports = (api, opts) => {
 };
 
 function getLocalUrl(url, serverPath) {
-  return serverPath ? `${url}${serverPath}` : url;
+  // lanUrlForTerminal returns undefined url when config host
+  return serverPath && url ? `${url}${serverPath}` : url;
 }
