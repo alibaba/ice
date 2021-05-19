@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.6
+
+- [chore] rax template file generate logic move to build-plugin-rax-app
+
 ## 1.4.5
 
 - [fix] lose `errorBoundary` type define
