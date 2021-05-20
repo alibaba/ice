@@ -7,8 +7,8 @@ module.exports = async (config, https, context) => {
   if (https) {
     try {
       const hosts = ['localhost'];
-      if (commandArgs.host !== 'localhost') hosts.push(commandArgs.host);
-      const certInfo = await certificateFor(hosts);
+      if (commandArgs.host && commandArgs.host !== 'localhost') hosts.push(commandArgs.host);
+      const certInfo = await certificateFor(hosts, { silent: true });
       const key = fs.readFileSync(certInfo.keyFilePath, 'utf8');
       const cert = fs.readFileSync(certInfo.certFilePath, 'utf8');
       httpsConfig = {

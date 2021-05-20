@@ -17058,9 +17058,9 @@ trough@^1.0.0:
   integrity sha1-uLY5zvrX0LsqvTfUM/+Ck++l9AY=
 
 trusted-cert@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.nlark.com/trusted-cert/download/trusted-cert-1.0.2.tgz#20c4475880712ecf8f628b0510f019bdea4bef70"
-  integrity sha1-IMRHWIBxLs+PYosFEPAZvepL73A=
+  version "1.0.3"
+  resolved "https://registry.nlark.com/trusted-cert/download/trusted-cert-1.0.3.tgz#b09768080bc038b88e4f10cd96f885e94ea00cad"
+  integrity sha1-sJdoCAvAOLiOTxDNlviF6U6gDK0=
   dependencies:
     command-exists "^1.2.9"
     commander "^5.0.0"
