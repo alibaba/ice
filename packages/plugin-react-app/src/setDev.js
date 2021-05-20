@@ -6,36 +6,16 @@ const logWebpackConfig = require('./utils/logWebpackConfig');
 const { MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 
 module.exports = (api, opts) => {
-  const { onHook, context, onGetWebpackConfig } = api;
-  const { commandArgs, userConfig: { mpa } } = context;
+  const { onHook, context, getValue } = api;
+  const { commandArgs } = context;
   const { targets, isMiniapp } = opts;
-
-  // open the specified html in MPA mode
-  let entryHtml;
-  if (mpa) {
-    if (commandArgs.mpaEntry) {
-      const arr = commandArgs.mpaEntry.split(',');
-      const pageName = arr[0].toLocaleLowerCase();
-      entryHtml = `${pageName}.html`;
-    } else {
-      onGetWebpackConfig(config => {
-        const defaultEntryNames = Object.keys(config.entryPoints.entries());
-        let pageName = '';
-        if (typeof mpa.openPage === 'string') {
-          pageName = mpa.openPage.split('.html')[0];
-        } else {
-          pageName = defaultEntryNames[0];
-        }
-        entryHtml = pageName ? `${pageName.toLocaleLowerCase()}.html` : '';
-      });
-    }
-  }
 
   onHook('before.start.run', ({ config }) => {
     logWebpackConfig(config);
   });
 
   onHook('after.start.compile', ({ urls, stats }) => {
+    const serverPath = getValue('SERVER_PATH') || '';
     const statsJson = stats.toJson({
       all: false,
       errors: true,
@@ -87,8 +67,8 @@ module.exports = (api, opts) => {
         if (process.env.CLOUDIDE_ENV) {
           console.log('   - IDE server: ', `https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}`);
         } else {
-          console.log('   - Local  : ', chalk.underline.white(getLocalUrl(urls.localUrlForBrowser, entryHtml)));
-          console.log('   - Network: ', chalk.underline.white(getLocalUrl(urls.lanUrlForTerminal, entryHtml)));
+          console.log('   - Local  : ', chalk.underline.white(getLocalUrl(urls.localUrlForBrowser, serverPath)));
+          console.log('   - Network: ', chalk.underline.white(getLocalUrl(urls.lanUrlForTerminal, serverPath)));
         }
         console.log();
       }
@@ -98,12 +78,14 @@ module.exports = (api, opts) => {
   // open browser on server start
   if (!commandArgs.disableOpen && !isMiniapp) {
     onHook('after.start.devServer', ({ url }) => {
+      const serverPath = getValue('SERVER_PATH') || '';
       // do not open browser when restart dev
-      if (!process.env.RESTART_DEV) openBrowser(getLocalUrl(url, entryHtml));
+      if (!process.env.RESTART_DEV) openBrowser(getLocalUrl(url, serverPath));
     });
   }
 };
 
-function getLocalUrl(url, entryHtml) {
-  return entryHtml ? `${url}${entryHtml}` : url;
+function getLocalUrl(url, serverPath) {
+  // lanUrlForTerminal returns undefined url when config host
+  return serverPath && url ? `${url}${serverPath}` : url;
 }

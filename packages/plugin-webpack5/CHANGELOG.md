@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.5
+
+- [fix] compatible with win32 when delete original entry
+
 ## 1.2.4
 
 - [fix] add next.css after global style
