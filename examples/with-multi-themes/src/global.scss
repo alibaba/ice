@@ -1,0 +1,30 @@
+// 引入默认全局样式
+@import "@alifd/next/reset.scss";
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.desc {
+  margin: 0 8px;
+}
+
+.large-width {
+  width: 170px;
+}
