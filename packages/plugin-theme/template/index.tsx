@@ -1,15 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-
-type ContextType = [string, React.Dispatch<React.SetStateAction<string>>] | null
+import type { ContextType, Props, Themes } from './types';
 
 const initialTheme = 'default';
 const Context = createContext<ContextType>(null);
-
-interface Props {
-  defaultThemes: string;
-}
-
-type Themes = string    // TODO: 类型优化
 
 const ThemeProvider: React.FC<Props> = ({ children, defaultThemes = initialTheme }) => {
   const share = useState<Themes>(defaultThemes);
@@ -33,5 +26,6 @@ const useTheme = () => {
 
 export {
   useTheme,
-  ThemeProvider
+  ThemeProvider,
+  Themes
 };

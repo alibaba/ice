@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as ts from 'typescript';
 import { lstatSync, pathExists, readdir } from 'fs-extra';
 import { curry } from 'lodash-es';
 
@@ -45,4 +46,53 @@ export const getEnableThemes = async (themesPath: string): Promise<boolean> => {
   if (!stylesExists) return false;
 
   return true;
+};
+
+/**
+ * 将某段 TS 代码中的 export type keyword 的类型重定义为联合类型
+ * 
+ * eg: export type keyword = any -> export type keyword = '233' | '666'
+ * 
+ * @param {string} keyword 类型名称
+ * @param {string[]} unit 联合类型数组
+ * @param {string} source 需要进行替换的 TS 代码
+ * 
+ * @return {string} 导出 TS 代码文本
+ */
+export const transformType = (keyword: string, unit: string[], source: string): string => {
+  // TS -> AST
+  const root: ts.SourceFile = ts.createSourceFile(
+    'type', source, ts.ScriptTarget.ES2015, true, ts.ScriptKind.TS
+  );
+
+  // 定义转换器
+  const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => {
+    const visitor = (node: ts.Node): ts.Node => {
+      if (ts.isTypeAliasDeclaration(node) && node.name.escapedText === keyword) {
+        const nodeList = unit.map(text => ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(text)));
+        const unionTypes = ts.factory.createUnionTypeNode(nodeList);
+
+        return ts.factory.createTypeAliasDeclaration(
+          undefined,
+          [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+          ts.factory.createIdentifier(keyword),
+          undefined,
+          unionTypes
+        );
+      }
+
+      return ts.visitEachChild(node, visitor, context);
+    };
+
+    return ts.visitNode(sourceFile, visitor);
+  };
+
+  const printer: ts.Printer = ts.createPrinter();
+  // AST -> TS
+  const result: ts.TransformationResult<ts.SourceFile> = ts.transform(
+    root, [transformer]
+  );
+  const transformedSourceFile: ts.SourceFile = result.transformed[0];
+
+  return printer.printFile(transformedSourceFile);
 };
