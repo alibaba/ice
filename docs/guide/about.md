@@ -11,7 +11,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 - **丰富的物料**：基于物料拼装提高项目开发效率，同时提供丰富的 React/Vue 物料
 - **自定义物料**：不同团队可基于物料开发工具快速开发构建私有的物料体系
 
-## 生态
+## 核心能力
 
 ### ice.js
 
@@ -46,8 +46,8 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 |    GitHub         |    npm                                 |     文档    |   描述       |
 |----------------|-----------------------------------------|--------------|-----------|
 | [icejs](https://github.com/alibaba/ice) | ![](https://img.shields.io/npm/v/ice.js.svg) | [docs](/docs/guide/intro) |基于 React 的通用框架|
-| [Iceworks](https://github.com/ice-lab/iceworks) | ![](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code) | [docs](/docs/iceworks/about) |可视化智能开发助手|
-| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](/docs/icestark/guide/about) |面向大型应用的微前端解决方案|
+| [Iceworks](https://github.com/ice-lab/iceworks) | ![](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code) | [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) |可视化智能开发助手|
+| [icestark](https://github.com/ice-lab/icestark) | ![](https://img.shields.io/npm/v/@ice/stark.svg) | [docs](https://ice-lab.github.io/icestark/) |面向大型应用的微前端解决方案|
 | [icestore](https://github.com/ice-lab/icestore) | ![](https://img.shields.io/npm/v/@ice/store.svg) | [docs](https://github.com/ice-lab/icestore#icestore) |轻量简洁的状态管理方案|
 | [ahooks](https://github.com/alibaba/hooks) | ![](https://img.shields.io/npm/v/ahooks.svg) | [docs](https://ahooks.js.org/zh-CN) |基于业务沉淀的丰富完备的 React Hooks|
 
@@ -71,6 +71,10 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 - [使用 fusion 组件](/docs/guide/advance/fusion)
 - [使用 antd 组件](/docs/guide/advance/antd)
+
+#### 飞冰跟低代码方案有什么关系？
+
+低代码方案一般指以可视化拖拽搭建为主，少量地方使用代码辅助，此类方案往往是面向具体领域而非通用场景的，飞冰是面向通用领域的，以源码研发为主，通过框架、物料、GUI 操作等能力降低研发门槛，因此飞冰并不是通俗意义的低代码方案。
 
 ## 谁在使用
 

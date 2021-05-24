@@ -1,6 +1,12 @@
+const path = require('path');
 const { injectTransformRuntime } = require('@builder/app-helpers');
 const processPresetEnv  = require('../utils/processPresetEnv');
 const addBablePlugins = require('../utils/addBabelPlugins');
+
+const getEntryRegExp = (entryPath) => {
+  const entryExtname = path.extname(entryPath);
+  return entryExtname ? entryPath : new RegExp(`${entryPath}(.jsx?|.tsx?)$`);
+};
 
 module.exports = (config, polyfill) => {
   const presetEnvParam = {
@@ -19,14 +25,14 @@ module.exports = (config, polyfill) => {
         for (let i = 0; i < entries[key].length; i += 1) {
           // filter node_modules file add by plugin
           if (!/node_modules/.test(entries[key][i])) {
-            rule.include.add(entries[key][i]);
+            rule.include.add(getEntryRegExp(entries[key][i]));
             fileList.push(entries[key][i]);
             addPolyfill = true;
             break;
           }
         }
         if (!addPolyfill) {
-          rule.include.add(entries[key][0]);
+          rule.include.add(getEntryRegExp(entries[key][0]));
           fileList.push(entries[key][0]);
         }
       });

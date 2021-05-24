@@ -34,7 +34,8 @@ export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injec
     // modify entry by onGetWebpackConfig while polyfill will take effect with src/app
     // config.entryPoints.clear();
     config.entry('index').values().forEach(entry => {
-      if (entry.match(/\/src\/app/)) {
+      // compatible with entry path in win32
+      if (entry.split(path.sep).join('/').match(/\/src\/app/)) {
         config.entry('index').delete(entry);
       }
     });

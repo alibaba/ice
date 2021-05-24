@@ -1,5 +1,5 @@
 import { createElement, useEffect, Component } from '<%- framework %>';
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isWeb } from 'universal-env';
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
 import { IAppConfig, IBuildConfig } from './types';
@@ -55,7 +55,7 @@ export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
   <% if(isRax){ %>
     renderer = raxAppRenderer;
   <% } %>
-  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) && !isWeb) {
+  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
     renderer = miniappRenderer;
   }<% if(isReact){ %> else {
     renderer = reactAppRenderer;

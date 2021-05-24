@@ -1,15 +1,15 @@
 {
   "name": "@builder/user-config",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
     "@builder/pack": "^0.2.9",
+    "@babel/helper-module-imports": "^7.13.12",
     "@builder/app-helpers": "^2.0.0",
     "core-js": "^3.3.1",
-    "debug": "^4.1.1",
     "esbuild-loader": "^2.11.0",
     "eslint-loader": "^4.0.0",
     "fs-extra": "^8.1.0",
@@ -17,7 +17,8 @@
     "loader-utils": "^2.0.0",
     "regenerator-runtime": "^0.13.3",
     "react-dev-utils": "^10.2.1",
-    "webpack-dev-mock": "^1.0.1"
+    "webpack-dev-mock": "^1.0.1",
+    "trusted-cert": "^1.0.0"
   },
   "files": [
     "lib"

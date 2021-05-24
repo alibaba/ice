@@ -226,7 +226,7 @@ icejs 中一般不允许修改该配置。
 - `false`: 不引入任何 `polyfill`。
 - `usage`: 根据源码中使用到的代码按需引入 `polyfill`。
 
-**注意：** 在这种模式下，默认不会去分析 `node_modules` 里的代码，如果需要的话，请看 `compileDependencies` 字段相关的说明，添加相关需要编译的依赖。
+**注意：** 在 `usage` 模式下，默认不会去分析 `node_modules` 里的代码，如果需要的话，请看 `compileDependencies` 字段相关的说明，添加相关需要编译的依赖。
 
 ### injectBabel
 

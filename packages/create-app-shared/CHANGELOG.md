@@ -3,7 +3,11 @@
 ## 0.3.0
 
 - [feat] add `setHistory` API
-- [fix] extract the logic of creating history from `createBaseApp`. 
+- [fix] extract the logic of creating history from `createBaseApp`.
+
+## 0.2.5
+
+- [feat] add kuaishou and baidu env judge
 
 ## 0.2.4
 

@@ -84,6 +84,8 @@ module.exports = function (appJSON) {
   const assembleRoutes = [];
 
   appConfig.routes.forEach((route) => {
+    // Only add page when route has targets field and includes target
+    if (route.targets && !route.targets.includes(target)) return;
     // Set page title: Web use document.title; Weex need Native App support title api;
     // Default route title: appConfig.window.title
     if (route.source) {

@@ -4,8 +4,19 @@ import { getMpaEntries } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
+interface ITemplate {
+  [key: string]: string[]
+}
+interface IMpaConfig {
+  template?: ITemplate;
+  openPage?: string;
+  rewrites?: {
+    [key: string]: string
+  }
+}
+
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, getValue } = api;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue } = api;
   const { rootDir, userConfig, commandArgs } = context;
   const { mpa } = userConfig;
 
@@ -31,7 +42,7 @@ const plugin: IPlugin = (api) => {
     const finalEntries = {};
     if (commandArgs.mpaEntry) {
       const arr = commandArgs.mpaEntry.split(',');
-      arr.forEach((pageName) => {
+      arr.forEach((pageName: string) => {
         const entryName = pageName.toLocaleLowerCase();
         if (entries[entryName]) {
           finalEntries[entryName] = entries[entryName];
@@ -46,12 +57,37 @@ const plugin: IPlugin = (api) => {
     } else {
       log.info('使用多页面模式 \n', JSON.stringify(entries));
     }
-
+    
+    const mpaRewrites = (mpa as IMpaConfig)?.rewrites || {};
+    let serverPath: string;
+    if (commandArgs.mpaEntry) {
+      const arr = commandArgs.mpaEntry.split(',');
+      const pageName = arr[0].toLocaleLowerCase();
+      serverPath = mpaRewrites[pageName] || pageName;
+    } else {
+      const defaultEntryNames = Object.keys(entries);
+      let pageName = '';
+      if (typeof (mpa as IMpaConfig).openPage === 'string') {
+        pageName = (mpa as IMpaConfig).openPage.split('.html')[0];
+      } else {
+        pageName = defaultEntryNames[0];
+      }
+      // compatible with openPage configured with upper camel case
+      const pageNameLowerCase = pageName.toLocaleLowerCase();
+      serverPath = mpaRewrites[pageNameLowerCase] || pageNameLowerCase;
+    }
+    setValue('SERVER_PATH', serverPath);
     // set page template
     onGetWebpackConfig(config => {
-      if (mpa) {
-        setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
-      }
+      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
+      config.devServer.historyApiFallback({
+        rewrites: Object.keys(entries).map((pageName) => {
+          return {
+            from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
+            to: `/${pageName}.html`,
+          };
+        }),
+      });
     });
     let parsedEntries = null;
     // compatible with undefined TEMP_PATH

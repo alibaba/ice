@@ -12,20 +12,21 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 |        模板 npm 包名        | 是否内置|   说明   |   备注  |
 |----------------------------|-------|----------|--------|
 |@icedesign/ice-react-ts-material-template|是| React+TypeScript   |     |
-|@icedesign/ice-react-material-template|是|  React  |     |
+|@icedesign/ice-react-material-template|是|  React+JavaScript  |     |
 |@icedesign/ice-vue-material-template|是|  Vue  | 暂不支持业务组件    |
-|@icedesign/rax-template                             |是| 无线跨端 |  |
+|@icedesign/rax-template              |是| Rax+TypeScript |  |
+@icedesign/template-rax-js            | 否 | Rax+JavaScript | |
 |@icedesign/material-chart-template|否| React+图表   | 仅支持业务组件开发    |
 
-对于没有内置的模板，可以通过 `iceworks init material @icedesign/material-chart-template` 的方式自定义模板名称。
+对于 CLI init 时没有询问的模板，可以通过 `iceworks init material @icedesign/material-chart-template` 的方式自定义模板名称。
 
 ## 开发自定义物料模板
 
-当以上这些物料模版不满足开发者需求时，可以开发自定义的物料模版。**但是我们非常不推荐开发者自定义模板**，因为这会带来非常严重的碎片化版本的问题，因此如果有此需求的话一定要跟飞冰团队沟通，一方面确认自定义的必要性，另一方面我们希望模板能统一维护与迭代，尽量将自定义模板贡献到官方模板列表里，我们非常欢迎社区共建。
+当以上这些物料模版不满足开发者需求时，可以开发自定义的物料模版。**但是我们非常不推荐开发者自定义模板**，因为这会带来非常严重的碎片化版本的问题，如果有此需求的话一定要跟飞冰团队沟通，一方面确认自定义的必要性，另一方面我们希望模板能统一维护与迭代，尽量将自定义模板贡献到[官方模板列表](https://github.com/ice-lab/material-templates/)里，我们非常欢迎社区共建。
 
 ### 物料模版的目录结构
 
-一套物料包含组件、区块、页面和项目四种不同类型的物料，因此物料模版的物料结构应该按以下规则设置：
+一套物料包含组件、区块和项目四种不同类型的物料，因此物料模版的物料结构应该按以下规则设置：
 
 ```bash
 .
@@ -34,7 +35,6 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 └── template        // 模版目录
     ├── block       // 区块模版
     ├── component   // 组件模版
-    ├── page        // 页面模版
     └── scaffold    // 项目模版
 ```
 
@@ -46,7 +46,7 @@ iceworks 初始化物料项目时可以选择一些内置的模板，同样也�
 
 ### 模板文件
 
-物料模版 `template/` 目录下包含 `block`、`component`，`page` 和 `scaffold` 四个子目录，它们即物料的模版文件，iceworks 获取到物料模版后，也是根据这四个文件生成对应的区块、组件、页面和项目代码。
+物料模版 `template/` 目录下包含 `block`、`component`，`page` 和 `scaffold` 四个子目录，它们即物料的模版文件，iceworks 获取到物料模版后，也是根据这四个文件生成对应的区块、组件和项目代码。
 
 ### 模板语法
 
@@ -84,11 +84,9 @@ iceworks 根据用户输入，提供了以下变量供物料模版开发者使�
 
 ### 特殊文件名称约定
 
-在 `block`、`component`、`page` 和 `scaffold` 三个目录下，是没有 `package.json` 的，但有一个 `_package.json` 文件，这个 `_package.json` 即物料的 `package.json` 的模版，在文件内部同样使用以上 ejs 语法。使用下划线前缀的主要目的是与 npm package.json 区分，以免安装时被 npm 解析。
+在 `block`、`component`、`page` 和 `scaffold` 三个目录下，是没有 `package.json` 的，但有一个 `_package.json` 文件，这个 `_package.json` 即物料的 `package.json` 模版，在文件内部同样使用以上 ejs 语法。使用下划线前缀的主要目的是与 npm package.json 区分，以免安装时被 npm 解析。
 
 `_gitignore` 则在物料被使用时被解析为 `.gitignore` 文件，在 iceworks 中并不处理。
-
-在开发页面模板时，需要使用 `_ejs` 文件后缀开发 `ejs` 模板，例如，您需要将页面模板代码命名为 `index.tsx._ejs`，它将被解析为 `index.tsx.ejs`。 在这里使用下划线的原因是避免页面模板在呈现给物料开发者时像其余 `ejs` 模板一样被解析，并且保证这些文件可以转化为 `ejs` 模板供开发者使用。
 
 ## 如何使用物料模版
 
