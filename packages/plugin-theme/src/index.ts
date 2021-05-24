@@ -1,10 +1,10 @@
 import * as path from 'path';
 import { IPlugin } from '@alib/build-scripts';
 import { readdir } from 'fs-extra';
-import { detectCssFile, getDefaultThemes, getEnableThemes } from './utils/common';
+import { setAPI } from './utils/setAPI';
 import { DEFAULT, THEMES } from './constant';
-import { setAPI } from './setAPI';
-import { getThemesVars } from './utils/themeCode';
+import { injectThemes } from './utils/injectThemes';
+import { detectCssFile, getDefaultThemes, getEnableThemes, getThemeName } from './utils/common';
 
 /**
  * 多主题编译时处理
@@ -28,22 +28,21 @@ const plugin: IPlugin = async (api) => {
 
   const files = await readdir(themesPath);
   const themesPathList = files.filter(detectCssFile(themesPath));
-  const themesNames = themesPathList.map(file => file.split('.')[0]);
-  setValue(THEMES, themesNames);     // 传入所引入的主题名称
+  const themesNames = themesPathList.map(getThemeName);
 
   const { isExist, defaultName } = getDefaultThemes(themesNames);
   if (!isExist) {
     log.info(`🤔 未找到默认主题文件（default），自动配置 ${defaultName} 为初始主题`);
   }
-  setValue(DEFAULT, defaultName);   // 传入默认主题名称
 
-  setAPI(api);      // 设置需要 ice 暴露出的 API (Hooks / Provider)
+  setValue(THEMES, themesNames);      // 传入所引入的主题名称
+  setValue(DEFAULT, defaultName);     // 传入默认主题名称
 
-  // 1. 将 themes 所有变量注入到 themesVar
-  // 2. 通过 themesVar 生产注入代码
-  // 3. 配置 webpack Entry
+  setAPI(api);                        // 设置需要 ice 暴露出的 API (Hooks / Provider)
+  injectThemes(api, themesPathList);  // 注入主题数据与变更能力
 
   // TODO: 正式编译过程
+  // Less/Scss 文件中的定义的变量转为 css-var
 };
 
 export default plugin;

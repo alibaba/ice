@@ -18,6 +18,13 @@ export const detectCssFile = curry((prefix: string, name: string): boolean => {
 });
 
 /**
+ * 通过文件路径名称获取主题名
+ */
+export const getThemeName = (filePath: string) => {
+  return filePath.replace(/(.*\/)*([^.]+).*/ig, '$2');
+};
+
+/**
  * 获取初始化主题，如果没有找到 default，则获取第一个主题文件为初始化主题
  * 
  * @param {string} names 文件名（无后缀）列表

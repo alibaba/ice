@@ -1,8 +1,8 @@
 import * as path from 'path';
 import { readFileSync, writeFileSync } from 'fs-extra';
 import { IPlugin } from '@alib/build-scripts';
-import { PLUGIN_DIR, THEMES } from './constant';
-import { transformType } from './utils/common';
+import { PLUGIN_DIR, THEMES, ICE_TEMP } from '../constant';
+import { transformType } from './common';
 
 /**
  * 设置暴露出的 API
@@ -12,7 +12,7 @@ const setAPI: IPlugin = ({
   onGetWebpackConfig,
   getValue
 }) => {
-  const iceTemp = getValue('TEMP_PATH');
+  const iceTemp = getValue(ICE_TEMP);
   const themes = getValue(THEMES) ?? [];
 
   // 复制模板到 .ice/themes 目录下
