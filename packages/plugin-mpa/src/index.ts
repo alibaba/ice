@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { getMpaEntries } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 const plugin: IPlugin = (api) => {
   const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, getValue } = api;

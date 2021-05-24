@@ -3,7 +3,7 @@ const {
 } = require('esbuild-loader');
 
 const defaultOptions = {
-  target: 'es5',
+  target: 'es2015',
 };
 
 module.exports = (config, options) => {

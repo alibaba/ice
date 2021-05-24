@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const parse = require('yargs-parser');
-const { build } = require('@alib/build-scripts');
-const log = require('@alib/build-scripts/lib/utils/log');
+const { build } = require('build-scripts');
+const log = require('build-scripts/lib/utils/log');
 
 module.exports = async (getBuiltInPlugins) => {
   process.env.NODE_ENV = 'production';

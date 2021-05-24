@@ -1,5 +1,5 @@
 const defaultConfig = {
-  plugins: [['postcss-preset-env', {
+  plugins: [['@builder/pack/deps/postcss-preset-env', {
     browsers: [
       'last 2 versions',
       'Firefox ESR',

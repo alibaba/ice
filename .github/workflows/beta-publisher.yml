@@ -13,7 +13,7 @@ jobs:
       - uses: nelonoel/branch-name@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm run setup
       - run: npm run publish:beta

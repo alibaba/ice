@@ -12,7 +12,7 @@ module.exports = ({rootDir = process.cwd(), regexForTestFiles, moduleNameMapper 
       '^.+\\.module\\.(css|sass|scss|less)$',
     ],
     moduleNameMapper: {
-      '\\.(css|less|sass|scss)$': require.resolve('identity-obj-proxy'),
+      '\\.(css|less|sass|scss)$': require.resolve('@builder/pack/deps/identity-obj-proxy'),
       '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': require.resolve('./fileMock.js'),
       ...moduleNameMapper,
     },

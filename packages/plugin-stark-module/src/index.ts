@@ -1,4 +1,4 @@
-import { IPlugin, IUserConfig } from '@alib/build-scripts';
+import { IPlugin, IUserConfig } from 'build-scripts';
 import { getWebpackConfig } from 'build-scripts-config';
 import { Options } from './types';
 import setUMDConfig from './setUMDConfig';

@@ -90,7 +90,7 @@ $ npm init ice <your-plugin-name>
   // src/index.ts
   import * as path from 'path';
   import * as fse from 'fs-extra';
-  import { IPlugin } from '@alib/build-scripts';
+  import { IPlugin } from 'build-scripts';
   
   const plugin: IPlugin = async ({ getValue, applyMethod }): Promise<void> => {
     const exportName = 'logger';
@@ -125,7 +125,7 @@ $ npm init ice <your-plugin-name>
   // src/index.ts
   import * as path from 'path';
   import * as fse from 'fs-extra';
-  import { IPlugin } from '@alib/build-scripts';
+  import { IPlugin } from 'build-scripts';
   
   const plugin: IPlugin = async ({ getValue, applyMethod, onGetWebpackConfig }): Promise<void> => {
     const exportName = 'logger';

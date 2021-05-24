@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
-const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const FilterWarningsPlugin = require('@builder/pack/deps/webpack-filter-warnings-plugin');
+const SimpleProgressPlugin = require('@builder/pack/deps/webpack-simple-progress-plugin');
+const CaseSensitivePathsPlugin = require('@builder/pack/deps/case-sensitive-paths-webpack-plugin');
 
 module.exports = (config) => {
   config

@@ -342,5 +342,5 @@ const iceDirPath = getValue('TEMP_PATH');  // 对应 .ice 的路径
 
 接口类型通过以下方法引入：
 ```javascript
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 ```

@@ -36,7 +36,7 @@ ReactDOM.render((
 依赖更新：
 
 ```bash
-$ npm i --save-dev @alib/build-scripts build-plugin-component build-plugin-fusion build-plugin-moment-locales
+$ npm i --save-dev build-scripts build-plugin-component build-plugin-fusion build-plugin-moment-locales
 $ npm rm --save-dev ice-scripts ice-plugin-component ice-plugin-fusion ice-plugin-moment-locales
 ```
 
