@@ -1,4 +1,4 @@
-const mkcert = require('@builder/pack/deps/mkcert');
+const mkcert = require('mkcert');
 const fs = require('fs-extra');
 const path = require('path');
 

@@ -1,5 +1,5 @@
 const TerserPlugin = require('@builder/pack/deps/terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('@builder/pack/deps/optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const safeParser = require('@builder/pack/deps/postcss-safe-parser');
 
 module.exports = (config) => {
@@ -27,12 +27,19 @@ module.exports = (config) => {
 
   // optimize css file
   config.optimization
-    .minimizer('OptimizeCSSAssetsPlugin')
-      .use(OptimizeCSSAssetsPlugin, [{
-        cssProcessorOptions: {
-          cssDeclarationSorter: false,
-          reduceIdents: false,
-          parser: safeParser,
+    .minimizer('CssMinimizerPlugin')
+      .use(CssMinimizerPlugin, [{
+        parallel: false,
+        minimizerOptions: {
+          preset: [
+            'default',
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
+          processorOptions: {
+            parser: safeParser,
+          },
         },
       }]);
 };
