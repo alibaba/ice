@@ -2,7 +2,7 @@ import * as path from 'path';
 import { readFileSync, writeFileSync } from 'fs-extra';
 import { IPlugin } from '@alib/build-scripts';
 import { PLUGIN_DIR, THEMES } from './constant';
-import { transformType } from './utils';
+import { transformType } from './utils/common';
 
 /**
  * 设置暴露出的 API
@@ -26,7 +26,7 @@ const setAPI: IPlugin = ({
 
   // 将 iceTemp 中的 types.ts 的 Themes 类型替换为为所有主题名称组成的联合类型，方便类型提示
   const typeFilePath = path.join(iceTemp, PLUGIN_DIR, 'types.ts');
-  const typeSource = readFileSync(typeFilePath, { encoding: 'utf8' });
+  const typeSource = readFileSync(typeFilePath, 'utf8');
   writeFileSync(typeFilePath, transformType('Themes', themes, typeSource));
 
   // 导出接口

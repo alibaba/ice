@@ -1,6 +1,8 @@
 // 引入默认全局样式
 @import "@alifd/next/reset.scss";
 
+$ice-example-bold: #2e2e2e;
+
 body {
   -webkit-font-smoothing: antialiased;
 }
@@ -19,10 +21,12 @@ body {
 
 .title {
   margin-bottom: 0;
+  color: $ice-example-bold
 }
 
 .desc {
   margin: 0 8px;
+  color: $ice-example-bold
 }
 
 .large-width {

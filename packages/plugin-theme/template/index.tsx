@@ -9,7 +9,9 @@ const ThemeProvider: React.FC<Props> = ({ children, defaultThemes = initialTheme
   const theme = share[0];
 
   useEffect(() => {
-    // TODO: listen theme changed and handle css var
+    // 监听 theme 变化，并触发入口文件注册的 handleTheme 函数
+    const handleTheme = (window as any).__handleTheme__;
+    if (handleTheme) handleTheme(theme);
   }, [theme]);
 
   return (

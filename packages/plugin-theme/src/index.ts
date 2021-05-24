@@ -1,9 +1,10 @@
 import * as path from 'path';
 import { IPlugin } from '@alib/build-scripts';
 import { readdir } from 'fs-extra';
-import { detectCssFile, getDefaultThemes, getEnableThemes } from './utils';
+import { detectCssFile, getDefaultThemes, getEnableThemes } from './utils/common';
 import { DEFAULT, THEMES } from './constant';
 import { setAPI } from './setAPI';
+import { getThemesVars } from './utils/themeCode';
 
 /**
  * 多主题编译时处理
@@ -36,7 +37,11 @@ const plugin: IPlugin = async (api) => {
   }
   setValue(DEFAULT, defaultName);   // 传入默认主题名称
 
-  setAPI(api);      // 设置导出的 API (Hooks / Provider)
+  setAPI(api);      // 设置需要 ice 暴露出的 API (Hooks / Provider)
+
+  // 1. 将 themes 所有变量注入到 themesVar
+  // 2. 通过 themesVar 生产注入代码
+  // 3. 配置 webpack Entry
 
   // TODO: 正式编译过程
 };
