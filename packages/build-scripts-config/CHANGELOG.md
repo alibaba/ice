@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+- [fix] lock sass version until it's define a js api for handling warnings
+
 ## 3.0.1
 
 - [feat] enable stage 3 for postcss preset env
