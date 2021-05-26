@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as postcss from 'postCSS';
 import produce from 'immer';
 import { readFileSync, writeFileSync } from 'fs-extra';
 import { IPluginAPI } from '@alib/build-scripts';
@@ -65,12 +66,14 @@ const getThemesCode = (themesData: ThemesDataType, defaultTheme: string) => {
 const getThemeVars = (filePath: string): ThemeVarsType => {
   const themeVars: ThemeVarsType = {};
   const css = readFileSync(filePath, 'utf8');
-  const themeArr = css.match(/\$[\w-]+?:.+?;/g);
 
-  themeArr.forEach((item) => {
-    const [key, value] = item.split(':');
-    themeVars[key] = value.replace(';', '').trim();
-  });
+  postcss([(root) => {
+    root.walkDecls(decl => {
+      if (decl.prop && decl.prop.slice(0, 2) === '--') {
+        themeVars[decl.prop.slice(2)] = decl.value;
+      }
+    });
+  }]).process(css).then();
 
   return themeVars;
 };
