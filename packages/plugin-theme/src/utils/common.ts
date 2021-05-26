@@ -86,13 +86,13 @@ export const transformType = (keyword: string, unit: string[], source: string): 
   const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => {
     const visitor = (node: ts.Node): ts.Node => {
       if (ts.isTypeAliasDeclaration(node) && node.name.escapedText === keyword) {
-        const nodeList = unit.map(text => ts.createLiteralTypeNode(ts.createStringLiteral(text)));
-        const unionTypes = ts.createUnionTypeNode(nodeList);
+        const nodeList = unit.map(text => ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(text)));
+        const unionTypes = ts.factory.createUnionTypeNode(nodeList);
 
-        return ts.createTypeAliasDeclaration(
+        return ts.factory.createTypeAliasDeclaration(
           undefined,
-          [ts.createModifier(ts.SyntaxKind.ExportKeyword)],
-          ts.createIdentifier(keyword),
+          [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+          ts.factory.createIdentifier(keyword),
           undefined,
           unionTypes
         );
