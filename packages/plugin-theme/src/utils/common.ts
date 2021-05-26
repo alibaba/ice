@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as ts from 'typescript';
-import { lstatSync, pathExists, readdir } from 'fs-extra';
+import { lstatSync, pathExists, readdir, writeFileSync } from 'fs-extra';
+import { mkdirp } from 'mkdirp';
 import { curry } from 'lodash';
 
 /**
@@ -53,6 +54,15 @@ export const getEnableThemes = async (themesPath: string): Promise<boolean> => {
   if (!stylesExists) return false;
 
   return true;
+};
+
+/**
+ * 写入文件并创建路径上相应文件夹
+ */
+export const writeFile = (filePath: string, data: string) => {
+  const dirPath = path.resolve(filePath, '..');
+  mkdirp.sync(dirPath);
+  writeFileSync(filePath, data);
 };
 
 /**

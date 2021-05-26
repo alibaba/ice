@@ -1,5 +1,4 @@
 import * as postcss from 'postCSS';
-import * as webpack from 'webpack';
 import { getOptions } from 'loader-utils';
 import { declVarPlugin } from './plugin';
 
@@ -14,7 +13,7 @@ interface Option {
  * Sass eg:  $color-bg: #fff; -> $color-bg: var(--color-bg, ${default});
  */
 export default function loader(
-  this: webpack.loader.LoaderContext,
+  this: any,
   source: string | Buffer
 ) {
   const { themeVars, type } = getOptions(this) as any as Option;
