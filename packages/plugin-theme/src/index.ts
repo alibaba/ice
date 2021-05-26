@@ -20,7 +20,7 @@ const plugin: IPlugin = async (api) => {
   } = api;
   const { rootDir } = context;
   const themesPath = path.resolve(rootDir, 'src/themes');
-  const enableThemes = getEnableThemes(themesPath);
+  const enableThemes = await getEnableThemes(themesPath);
   setValue(ENABLE_THEMES, enableThemes);
 
   if (!enableThemes) {
