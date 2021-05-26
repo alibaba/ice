@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as ts from 'typescript';
+import ts from 'typescript';
 import { lstatSync, pathExists, readdir } from 'fs-extra';
 import { curry } from 'lodash-es';
 
@@ -76,13 +76,13 @@ export const transformType = (keyword: string, unit: string[], source: string): 
   const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => {
     const visitor = (node: ts.Node): ts.Node => {
       if (ts.isTypeAliasDeclaration(node) && node.name.escapedText === keyword) {
-        const nodeList = unit.map(text => ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(text)));
-        const unionTypes = ts.factory.createUnionTypeNode(nodeList);
+        const nodeList = unit.map(text => ts.createLiteralTypeNode(ts.createStringLiteral(text)));
+        const unionTypes = ts.createUnionTypeNode(nodeList);
 
-        return ts.factory.createTypeAliasDeclaration(
+        return ts.createTypeAliasDeclaration(
           undefined,
-          [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-          ts.factory.createIdentifier(keyword),
+          [ts.createModifier(ts.SyntaxKind.ExportKeyword)],
+          ts.createIdentifier(keyword),
           undefined,
           unionTypes
         );
