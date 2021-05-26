@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch } from '@alifd/next';
+// import { useTheme } from 'ice';
 
 const Dashboard = () => {
   return (
