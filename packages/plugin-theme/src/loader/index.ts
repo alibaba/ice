@@ -1,5 +1,6 @@
 import * as postcss from 'postCSS';
 import { getOptions } from 'loader-utils';
+import stripComments from 'postcss-strip-inline-comments';
 import { declVarPlugin } from './plugin';
 
 interface Option {
@@ -17,5 +18,5 @@ export default function loader(
   source: string | Buffer
 ) {
   const { themeVars, type } = getOptions(this) as any as Option;
-  return postcss([declVarPlugin(themeVars, type)]).process(source).css;
+  return postcss([stripComments, declVarPlugin(themeVars, type)]).process(source).css;
 }
