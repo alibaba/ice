@@ -4,6 +4,8 @@ import { TransformCallback } from 'postCSS';
  * PossCss 插件
  * 
  * 将 Less/Sass 声明的变量的 value 转为 css var
+ * 
+ * TODO: 函数预编译
  */
 export const declVarPlugin = (varsMap: Record<string, string>, type: 'sass' | 'less' = 'less'): TransformCallback => {
   return root => {

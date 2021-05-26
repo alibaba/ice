@@ -1,11 +1,10 @@
+import postcss from 'postCSS';
 import webpack from 'webpack';
 import { getOptions } from 'loader-utils';
-import postcss from 'postCSS';
 import { declVarPlugin } from './plugin';
-import type { ThemeVarsType } from '../utils/injectThemes';
 
 interface Option {
-  themeVars: ThemeVarsType
+  themeVars: Record<string, string>
   type: 'sass' | 'less'
 }
 

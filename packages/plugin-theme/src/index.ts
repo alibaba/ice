@@ -51,14 +51,30 @@ const plugin: IPlugin = async (api) => {
   onGetWebpackConfig(config => {
     // Map 暂时先根据 default 生成
     // 如果检测到 Less/Sass 变量名存在于 Map 中，则替换变量
+    const themeVars = getThemesData()[defaultName];
+    const loaderPath = path.join(__dirname, './loader');
 
-    // ['less', 'less-module'].forEach(rule => {
-    //   config.module
-    //     .rule(rule)
-    //     .use('less-theme-loader')
-    //     .loader('233');
+    ['less', 'less-module'].forEach(rule => {
+      config.module
+        .rule(rule)
+        .use('theme-loader')
+        .loader(path.join(__dirname, loaderPath))
+        .options({
+          type: 'less',
+          themeVars
+        });
+    });
 
-    // });
+    ['scss', 'scss-module'].forEach(rule => {
+      config.module
+        .rule(rule)
+        .use('theme-loader')
+        .loader(loaderPath)
+        .options({
+          type: 'sass',
+          themeVars
+        });
+    });
   });
 };
 
