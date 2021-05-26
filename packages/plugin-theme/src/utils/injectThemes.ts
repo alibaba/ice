@@ -1,4 +1,5 @@
 import * as path from 'path';
+import produce from 'immer';
 import { readFileSync, writeFileSync } from 'fs-extra';
 import { IPluginAPI } from '@alib/build-scripts';
 import { DEFAULT, PLUGIN_DIR, ICE_TEMP } from '../constant';
@@ -12,13 +13,15 @@ interface ThemeVarsType {
   [cssVariable: string]: string
 }
 
+let __themesData__: ThemesDataType = {};
+
 /**
  * 生成注入到 entry 第一个元素的代码，注册 css 变量数据与主题变化控制函数
  */
 const getThemesCode = (themesData: ThemesDataType, defaultTheme: string) => {
   const themesDataStr = Object.keys(themesData).map((themeKey) => {
     const cssVars = themesData[themeKey];
-    return `'${themeKey}': ':root {${Object.entries(cssVars).map(([k, v]) => `${k}: ${v}`).join(';')}}'`;
+    return `'${themeKey}': ':root {${Object.entries(cssVars).map(([k, v]) => `--${k}: ${v}`).join(';')}}'`;
   }).join(',');
 
   return `
@@ -73,32 +76,51 @@ const getThemeVars = (filePath: string): ThemeVarsType => {
 };
 
 /**
- * 注入主题数据与主题动态变更逻辑
+ * 设置 Themes Data
  */
-export const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, themesPathList: string[]) => {
+const setThemesData = (themesPathList: string[]) => {
+  const data = produce(__themesData__, (draft) => {
+    themesPathList.forEach(file => {
+      const themeName = getThemeName(file);
+      const value = getThemeVars(file);
+
+      draft[themeName] = value;
+    });
+  });
+
+  __themesData__ = data;
+};
+
+const getThemesData = () => __themesData__;
+
+/**
+ * 注入主题数据与主题动态变更逻辑
+ * 
+ * TODO: Lazy Load CSS variable data
+ */
+const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, themesPathList: string[]) => {
   const defaultName: string = getValue(DEFAULT);
   const iceTemp = getValue(ICE_TEMP);
   const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');   // .ice/themes/injectTheme.js
 
-  // TODO: Lazy Load CSS variable data
-  const themesVar: ThemesDataType = {};
-
   // 将 themes 所有变量注入到 themesVar
-  themesPathList.forEach(file => {
-    const themeName = getThemeName(file);
-    const data = getThemeVars(file);
-
-    themesVar[themeName] = data;
-  });
+  setThemesData(themesPathList);
 
   // 通过 themesVar 生成注入代码
-  writeFileSync(jsPath, getThemesCode(themesVar, defaultName));
+  writeFileSync(jsPath, getThemesCode(getThemesData(), defaultName));
 
   // 配置 injectTheme.js 引入 webpack Entry
-  onGetWebpackConfig('injectTheme', config => {
+  onGetWebpackConfig(config => {
     const entryNames = Object.keys(config.entryPoints.entries());
     entryNames.forEach((name) => {
       config.entry(name).prepend(jsPath);
     });
   });
+};
+
+export {
+  getThemesData,
+  injectThemes,
+
+  ThemeVarsType
 };

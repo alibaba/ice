@@ -2,8 +2,8 @@ import * as path from 'path';
 import { IPlugin } from '@alib/build-scripts';
 import { readdir } from 'fs-extra';
 import { setAPI } from './utils/setAPI';
-import { DEFAULT, THEMES } from './constant';
-import { injectThemes } from './utils/injectThemes';
+import { DEFAULT, THEMES, ENABLE_THEMES } from './constant';
+import { injectThemes, getThemesData } from './utils/injectThemes';
 import { detectCssFile, getDefaultThemes, getEnableThemes, getThemeName } from './utils/common';
 
 /**
@@ -16,10 +16,12 @@ const plugin: IPlugin = async (api) => {
     context,
     log,
     setValue,
+    onGetWebpackConfig
   } = api;
   const { rootDir } = context;
   const themesPath = path.resolve(rootDir, 'src/themes');
   const enableThemes = getEnableThemes(themesPath);
+  setValue(ENABLE_THEMES, enableThemes);
 
   if (!enableThemes) {
     log.info('🤔 未找到主题文件，不开启多主题适配');
@@ -42,7 +44,22 @@ const plugin: IPlugin = async (api) => {
   injectThemes(api, themesPathList);  // 注入主题数据与变更能力
 
   // TODO: 正式编译过程
+  // TODO: less 函数预编译
   // Less/Scss 文件中的定义的变量转为 css-var
+
+  // Less 变量 value 转为同名 css-var
+  onGetWebpackConfig(config => {
+    // Map 暂时先根据 default 生成
+    // 如果检测到 Less/Sass 变量名存在于 Map 中，则替换变量
+
+    // ['less', 'less-module'].forEach(rule => {
+    //   config.module
+    //     .rule(rule)
+    //     .use('less-theme-loader')
+    //     .loader('233');
+
+    // });
+  });
 };
 
 export default plugin;

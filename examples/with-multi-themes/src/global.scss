@@ -2,6 +2,7 @@
 @import "@alifd/next/reset.scss";
 
 $ice-example-bold: #2e2e2e;
+$ice-example-background: #fff;
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -17,6 +18,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: $ice-example-background;
 }
 
 .title {
