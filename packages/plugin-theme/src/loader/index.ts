@@ -1,5 +1,5 @@
 import postcss from 'postCSS';
-import webpack from 'webpack';
+import * as webpack from 'webpack';
 import { getOptions } from 'loader-utils';
 import { declVarPlugin } from './plugin';
 

@@ -58,7 +58,7 @@ const plugin: IPlugin = async (api) => {
       config.module
         .rule(rule)
         .use('theme-loader')
-        .loader(path.join(__dirname, loaderPath))
+        .loader(loaderPath)
         .options({
           type: 'less',
           themeVars
