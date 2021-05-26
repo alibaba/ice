@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as ts from 'typescript';
 import { lstatSync, pathExists, readdir } from 'fs-extra';
-import { curry } from 'lodash-es';
+import { curry } from 'lodash';
 
 /**
  * 匹配后缀为 `.css` 的文件名
