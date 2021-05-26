@@ -1,5 +1,5 @@
 import * as path from 'path';
-import ts from 'typescript';
+import * as ts from 'typescript';
 import { lstatSync, pathExists, readdir } from 'fs-extra';
 import { curry } from 'lodash-es';
 

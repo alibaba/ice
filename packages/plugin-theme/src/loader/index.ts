@@ -1,4 +1,4 @@
-import postcss from 'postCSS';
+import * as postcss from 'postCSS';
 import * as webpack from 'webpack';
 import { getOptions } from 'loader-utils';
 import { declVarPlugin } from './plugin';

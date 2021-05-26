@@ -4,10 +4,7 @@
   "description": "multi themes",
   "main": "lib/index.js",
   "scripts": {
-    "start": "tsc -w",
-    "build": "rm -rf lib && tsc",
-    "test": "jest",
-    "coverage": "codecov"
+    "test": "jest"
   },
   "author": "",
   "license": "MIT",
