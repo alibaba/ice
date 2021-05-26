@@ -29,7 +29,9 @@ const plugin: IPlugin = async (api) => {
   }
 
   const files = await readdir(themesPath);
-  const themesPathList = files.filter(detectCssFile(themesPath));
+  const themesPathList = files
+    .filter(detectCssFile(themesPath))
+    .map(file => path.resolve(themesPath, file));
   const themesNames = themesPathList.map(getThemeName);
 
   const { isExist, defaultName } = getDefaultThemes(themesNames);
