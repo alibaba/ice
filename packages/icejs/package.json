@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@builder/pack": "^0.2.9",
-    "build-scripts": "1.0.2-1",
+    "build-scripts": "1.0.2-3",
     "build-plugin-app-core": "1.4.4",
     "build-plugin-helmet": "1.0.2",
     "build-plugin-ice-auth": "1.7.4",

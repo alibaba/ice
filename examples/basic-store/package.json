@@ -12,7 +12,7 @@
     "react-test-renderer": "^16.13.1"
   },
   "scripts": {
-    "start": "../../packages/icejs/bin/ice-cli.js start --mode local",
+    "start": "icejs start --mode local",
     "build": "icejs build",
     "test": "icejs test"
   },

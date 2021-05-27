@@ -161,7 +161,7 @@ export default class Generator {
 
     this.applyMethod('addRenderFile', this.typesTemplatePath, targetPath, appStoreTypesRenderData);
     this.applyMethod('addTypesExport', { source: '../plugins/store/types' });
-    this.applyMethod('appImportDeclarations', {
+    this.applyMethod('addImportDeclaration', {
       importSource: '$$ice/plugins/store/types',
       exportMembers: ['IRootDispatch', 'IRootState', 'IStore', 'IStoreModels', 'IStoreDispatch', 'IStoreRootState'],
     });
@@ -175,9 +175,6 @@ export default class Generator {
 
       const renderData = this.getPageModels(pageModelsDir, pageModelFile);
       this.applyMethod('addRenderFile', this.pageStoreTemplatePath, targetPath, renderData);
-
-      // this.applyMethod('removePageExport', pageName, exportName);
-      // this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
     }
   }
 

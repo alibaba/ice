@@ -218,20 +218,6 @@ applyMethod('addIceExport', { source: './request/request', exportName: 'request'
 this.applyMethod('removeIceExport', 'store');
 ```
 
-### addPageExport
-
-向 `ice/Home` 里注册模块，实现 `import { foo } from 'ice/Home'`，目前主要用于页面级状态管理的实现：
-
-```js
-this.applyMethod('addPageExport', 'Home', { source: './models', 'store' })
-```
-
-一般情况下需要循环向每个页面添加。
-
-### removePageExport
-
-与 `addPageExport` 对应
-
 ### addIceAppConfigTypes
 
 向 appConfig 添加类型

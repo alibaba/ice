@@ -25,10 +25,6 @@ export default (api, options) => {
   registerMethod('getRoutes', getRoutes);
   registerMethod('getSourceDir', getSourceDir);
 
-  // registerMethod for modify page
-  registerMethod('addPageExport', generator.addPageExport);
-  registerMethod('removePageExport', generator.removePageExport);
-
   // registerMethod for render content
   registerMethod('addRenderFile', generator.addRenderFile);
   registerMethod('addPluginTemplate', (pluginName?: string) => (templateOptions: string|ITemplateOptions, extraData: IRenderData) => {

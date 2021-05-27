@@ -73,7 +73,7 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   // export IRouterConfig to the public
   applyMethod('addTypesExport', { source: '../plugins/router/types' });
   // add import declarations
-  applyMethod('addImportDeclarations', {
+  applyMethod('addImportDeclaration', {
     importSource: '$$ice/plugins/router/types',
     exportMembers: ['IAppRouterProps', 'IRouterConfig'],
   });
