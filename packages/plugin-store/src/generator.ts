@@ -113,7 +113,7 @@ export default class Generator {
   }
 
   private renderAppStore({ appStoreFile }) {
-    const sourceFilename = 'store/index';
+    const sourceFilename = 'plugins/store/index';
     const exportName = 'store';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
 
@@ -152,7 +152,7 @@ export default class Generator {
   }
 
   private renderAppStoreTypes({ hasAppModels, existsAppStoreFile }) {
-    const sourceFilename = 'store/types';
+    const sourceFilename = 'plugins/store/types';
     const targetPath = path.join(this.targetPath, `${sourceFilename}.ts`);
     const appStoreTypesRenderData = {
       hasAppModels,
@@ -160,9 +160,9 @@ export default class Generator {
     };
 
     this.applyMethod('addRenderFile', this.typesTemplatePath, targetPath, appStoreTypesRenderData);
-    this.applyMethod('addTypesExport', { source: './store/types' });
+    this.applyMethod('addTypesExport', { source: '../plugins/store/types' });
     this.applyMethod('appImportDeclarations', {
-      importSource: '$$ice/store/types',
+      importSource: '$$ice/plugins/store/types',
       exportMembers: ['IRootDispatch', 'IRootState', 'IStore', 'IStoreModels', 'IStoreDispatch', 'IStoreRootState'],
     });
   }
@@ -170,14 +170,14 @@ export default class Generator {
   private renderPageStore({ pageName, pageModelsDir, pageModelFile, existedStoreFile }: IRenderPageParams) {
     if (!existedStoreFile && (fse.pathExistsSync(pageModelsDir) || fse.pathExistsSync(pageModelFile))) {
       const sourceFilename = 'store';
-      const exportName = 'store';
+      // const exportName = 'store';
       const targetPath = path.join(this.targetPath, 'pages', pageName, `${sourceFilename}.ts`);
 
       const renderData = this.getPageModels(pageModelsDir, pageModelFile);
       this.applyMethod('addRenderFile', this.pageStoreTemplatePath, targetPath, renderData);
 
-      this.applyMethod('removePageExport', pageName, exportName);
-      this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
+      // this.applyMethod('removePageExport', pageName, exportName);
+      // this.applyMethod('addPageExport', pageName, { source: `./${sourceFilename}`, exportName });
     }
   }
 

@@ -28,7 +28,7 @@ interface IRenderDataRegistration {
 }
 
 interface ITemplateOptions {
-  templateDir: string;
+  template: string;
   targetDir: string;
 }
 
@@ -192,11 +192,14 @@ export default class Generator {
     }
   }
 
-  public addTemplateDir = (template: string|ITemplateOptions, extraData: IRenderData = {}) => {
-    const { templateDir, targetDir } = typeof template === 'string' ? { templateDir: template, targetDir: ''} : template;
-    const templates = globby.sync(['**/*'], { cwd: templateDir });
+  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IRenderData = {}) => {
+    const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: ''} : templateOptions;
+    const templates = !path.extname(template) ? globby.sync(['**/*'], { cwd: template }) : [template];
     templates.forEach((templateFile) => {
-      this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, targetDir, templateFile), extraData);
+      const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
+      const targetPath = path.join(this.targetDir, targetDir, path.isAbsolute(templateFile) ? path.basename(templateFile) : templateFile);
+      
+      this.addRenderFile(templatePath, targetPath, extraData);
     });
     if (this.rerender) {
       this.debounceRender();

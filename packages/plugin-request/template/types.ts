@@ -14,3 +14,11 @@ export interface IInterceptors {
   request?: IInterceptorRequest;
   response?: IInterceptorResponse;
 }
+
+interface ICustomRequest extends AxiosRequestConfig {
+  instanceName?: string;
+  withFullResponse?: boolean;
+  interceptors?: IInterceptors;
+}
+
+export type IRequest = ICustomRequest | ICustomRequest[];

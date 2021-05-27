@@ -1,9 +1,19 @@
+import * as path from 'path';
 import getPages from '../utils/getPages';
 import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
 import { getExportApiKeys } from '../constant';
 import importDeclarations from './importDeclarations';
+
+interface IRenderData {
+  [key: string]: any;
+}
+
+interface ITemplateOptions {
+  template: string;
+  targetDir: string;
+}
 
 export default (api, options) => {
   const { registerMethod } = api;
@@ -21,7 +31,16 @@ export default (api, options) => {
 
   // registerMethod for render content
   registerMethod('addRenderFile', generator.addRenderFile);
-  registerMethod('addTemplateDir', generator.addTemplateDir);
+  registerMethod('addPluginTemplate', (pluginName?: string) => (templateOptions: string|ITemplateOptions, extraData: IRenderData) => {
+    const { template, targetDir } = typeof templateOptions === 'string'
+      ? { template: templateOptions, targetDir: pluginName ? path.basename(pluginName).replace(/^build-plugin(-ice-|-)?/, '') : 'local' }
+      : templateOptions;
+    generator.addTemplateFiles({
+      template,
+      // overwrite target dir, build-plugin-ice-request => request
+      targetDir: `plugins/${targetDir}`,
+    }, extraData);
+  }, { pluginName: true });
   registerMethod('modifyRenderData', generator.modifyRenderData);
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
 
