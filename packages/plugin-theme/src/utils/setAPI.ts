@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { IPluginAPI } from '@alib/build-scripts';
+import { getThemesDataStr } from './injectThemes';
 import { PLUGIN_DIR, ICE_TEMP } from '../constant';
 
 /**
@@ -18,7 +19,7 @@ const setAPI = ({
   applyMethod(
     'addTemplateDir',
     { templateDir: templateSourceDir, targetDir: PLUGIN_DIR },
-    { themes: themesStr, defaultTheme: `'${defaultName}'` }
+    { themes: themesStr, defaultTheme: `'${defaultName}'`, themesDataStr: getThemesDataStr() }
   );
 
   // 设置 $ice/themes -> .ice/themes/index.tsx

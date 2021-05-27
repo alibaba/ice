@@ -1,11 +1,8 @@
-import * as path from 'path';
-import * as prettier from 'prettier';
 import * as postcss from 'postCSS';
 import produce from 'immer';
 import { readFileSync } from 'fs-extra';
 import { IPluginAPI } from '@alib/build-scripts';
-import { PLUGIN_DIR, ICE_TEMP } from '../constant';
-import { getThemeName, writeFile } from '../utils/common';
+import { getThemeName } from '../utils/common';
 
 interface ThemesDataType {
   [themeKey: string]: ThemeVarsType
@@ -18,45 +15,16 @@ interface ThemeVarsType {
 let __themesData__: ThemesDataType = {};
 
 /**
- * 生成注入到 entry 第一个元素的代码，注册 css 变量数据与主题变化控制函数
+ * 生成 themesData 对象字符串
  */
-const getThemesCode = (themesData: ThemesDataType, defaultTheme: string) => {
+const getThemesDataStr = () => {
+  const themesData = getThemesData();
   const themesDataStr = Object.keys(themesData).map((themeKey) => {
     const cssVars = themesData[themeKey];
     return `'${themeKey}': ':root {${Object.entries(cssVars).map(([k, v]) => `--${k}: ${v}`).join(';')}}'`;
   }).join(',');
 
-  return `
-    const themesData = {${themesDataStr}};
-    // Append Style fn
-    let style;
-    function appendStyle(styles) {
-      if (style) style.remove();
-      style = document.createElement('style');
-      style.type = 'text/css';
-
-      if (style.styleSheet) {
-        // This is required for IE8 and below.
-        style.styleSheet.cssText = styles;
-      } else {
-        style.appendChild(document.createTextNode(styles));
-      }
-      // Append style to the head element
-      document.getElementsByTagName('head')[0].appendChild(style);
-    }
-    // Change theme fn
-    function handleTheme(currentTheme) {
-      // Get current theme
-      const theme = themesData[currentTheme];
-      if (theme) {
-        appendStyle(theme);
-      } else {
-        console.warn('can not find theme:' + currentTheme);
-      }
-    }
-    ${defaultTheme ? `handleTheme('${defaultTheme}');` : ''}
-    window.__handleTheme__ = handleTheme;
-  `;
+  return themesDataStr;
 };
 
 /**
@@ -102,17 +70,9 @@ const getThemesData = () => __themesData__;
  * 
  * TODO: Lazy Load CSS variable data
  */
-const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultName: string, themesPathList: string[]) => {
-  const iceTemp = getValue(ICE_TEMP);
-  const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');   // .ice/themes/injectTheme.js
-
+const injectThemes = ({ onGetWebpackConfig }: IPluginAPI, jsPath: string, themesPathList: string[]) => {
   // 将 themes 所有变量注入到 themesVar
   setThemesData(themesPathList);
-
-  // 通过 themesVar 生成注入代码
-  const code = getThemesCode(getThemesData(), defaultName);
-  const prettierCode = prettier.format(code);   // 美化样式注入代码
-  writeFile(jsPath, prettierCode);
 
   // 配置 injectTheme.js 引入 webpack Entry
   onGetWebpackConfig(config => {
@@ -126,6 +86,6 @@ const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultName:
 export {
   getThemesData,
   injectThemes,
-
+  getThemesDataStr,
   ThemeVarsType
 };
