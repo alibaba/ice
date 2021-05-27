@@ -1,6 +1,6 @@
 import * as postcss from 'postCSS';
-import { getOptions } from 'loader-utils';
 import stripComments from 'postcss-strip-inline-comments';
+import { getOptions } from 'loader-utils';
 import { declVarPlugin } from './plugin';
 
 interface Option {

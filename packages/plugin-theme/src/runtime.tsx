@@ -1,16 +1,12 @@
 import * as React from 'react';
 // @ts-ignore
-import { ThemeProvider, Themes } from '$ice/themes';
-import { DEFAULT, ENABLE_THEMES } from './constant';
+import { ThemeProvider } from '$ice/themes';
 
-export default ({ addProvider, getValue }: any) => {
-  const defaultTheme: Themes = getValue(DEFAULT);
-  const enableThemes = getValue(ENABLE_THEMES);
-
+export default ({ addProvider }: any) => {
   // 如果未开启，则关闭
-  if (ThemeProvider && enableThemes) {
+  if (ThemeProvider) {
     addProvider(({ children }: any) => {
-      return <ThemeProvider defaultTheme={defaultTheme}>{children}</ThemeProvider>;
+      return <ThemeProvider>{children}</ThemeProvider>;
     });
   }
 };

@@ -1,35 +1,30 @@
 import * as path from 'path';
-import { readFileSync } from 'fs-extra';
-import { IPlugin } from '@alib/build-scripts';
-import { PLUGIN_DIR, THEMES, ICE_TEMP } from '../constant';
-import { transformType, writeFile } from './common';
+import { IPluginAPI } from '@alib/build-scripts';
+import { PLUGIN_DIR, ICE_TEMP } from '../constant';
 
 /**
  * 设置暴露出的 API
  */
-const setAPI: IPlugin = ({
+const setAPI = ({
   applyMethod,
   onGetWebpackConfig,
   getValue,
-}) => {
+}: IPluginAPI, defaultName: string, themes: string[]) => {
   const iceTemp = getValue(ICE_TEMP);
-  const themes = getValue(THEMES) ?? [];
+  const themesStr = themes.map(str => `'${str}'`).join(' | ');
 
   // 复制模板到 .ice/themes 目录下
   const templateSourceDir = path.join(__dirname, '../../template');
-  applyMethod('addTemplateDir', { templateDir: templateSourceDir, targetDir: PLUGIN_DIR });
+  applyMethod(
+    'addTemplateDir',
+    { templateDir: templateSourceDir, targetDir: PLUGIN_DIR },
+    { themes: themesStr, defaultTheme: `'${defaultName}'` }
+  );
 
-  // 设置 $ice/themes -> .ice/themes/index.ts
+  // 设置 $ice/themes -> .ice/themes/index.tsx
   onGetWebpackConfig((config) => {
-    config.resolve.alias.set('$ice/themes', path.join(iceTemp, PLUGIN_DIR, 'index.ts'));
+    config.resolve.alias.set('$ice/themes', path.join(iceTemp, PLUGIN_DIR, 'index.tsx'));
   });
-
-  // 将 iceTemp 中的 types.ts 的 Themes 类型替换为为所有主题名称组成的联合类型，方便类型提示
-  const preTypeFile = path.join(__dirname, '../../template', 'types.ts');
-  const curTypeFile = path.join(iceTemp, PLUGIN_DIR, 'types.ts');
-
-  const typeSource = readFileSync(preTypeFile, 'utf8');
-  writeFile(curTypeFile, transformType('Themes', themes, typeSource));
 
   // 导出接口
   // import { useTheme } from 'ice';

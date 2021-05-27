@@ -1,10 +1,11 @@
 import * as path from 'path';
+import * as prettier from 'prettier';
 import * as postcss from 'postCSS';
 import produce from 'immer';
-import { readFileSync, writeFileSync } from 'fs-extra';
+import { readFileSync } from 'fs-extra';
 import { IPluginAPI } from '@alib/build-scripts';
-import { DEFAULT, PLUGIN_DIR, ICE_TEMP } from '../constant';
-import { getThemeName } from '../utils/common';
+import { PLUGIN_DIR, ICE_TEMP } from '../constant';
+import { getThemeName, writeFile } from '../utils/common';
 
 interface ThemesDataType {
   [themeKey: string]: ThemeVarsType
@@ -101,8 +102,7 @@ const getThemesData = () => __themesData__;
  * 
  * TODO: Lazy Load CSS variable data
  */
-const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, themesPathList: string[]) => {
-  const defaultName: string = getValue(DEFAULT);
+const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultName: string, themesPathList: string[]) => {
   const iceTemp = getValue(ICE_TEMP);
   const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');   // .ice/themes/injectTheme.js
 
@@ -110,7 +110,9 @@ const injectThemes = ({ onGetWebpackConfig, getValue }: IPluginAPI, themesPathLi
   setThemesData(themesPathList);
 
   // 通过 themesVar 生成注入代码
-  writeFileSync(jsPath, getThemesCode(getThemesData(), defaultName));
+  const code = getThemesCode(getThemesData(), defaultName);
+  const prettierCode = prettier.format(code);   // 美化样式注入代码
+  writeFile(jsPath, prettierCode);
 
   // 配置 injectTheme.js 引入 webpack Entry
   onGetWebpackConfig(config => {
