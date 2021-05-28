@@ -17,7 +17,7 @@ export default async function (api) {
 
   // 导出接口
   // import { useAuth, withAuth } from 'ice';
-  applyMethod('addExport', { source: './plugins/auth', importSource: '$$ice/auth', exportMembers: ['withAuth', 'useAuth'] });
+  applyMethod('addExport', { source: './plugins/auth', importSource: '$$ice/plugins/auth', exportMembers: ['withAuth', 'useAuth'] });
 
   // 设置类型
   // export interface IAppConfig {
