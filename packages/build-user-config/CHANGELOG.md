@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.7
+
+- [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
+
 ## 0.3.6
 
 - [feat] use trusted-cert to generate ca
