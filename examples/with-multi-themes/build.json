@@ -1,5 +1,6 @@
 {
   "plugins": [
+    "build-plugin-theme",
     [
       "build-plugin-fusion",
       {
@@ -13,7 +14,6 @@
           "zh-cn"
         ]
       }
-    ],
-    "build-plugin-theme"
+    ]
   ]
 }

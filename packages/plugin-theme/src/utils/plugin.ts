@@ -1,4 +1,9 @@
-import { TransformCallback } from 'postCSS';
+import { plugin, TransformCallback } from 'postCSS';
+
+interface Option {
+  varsMap: Record<string, string>
+  type?: 'sass' | 'less'
+}
 
 /**
  * PossCss 插件
@@ -7,7 +12,9 @@ import { TransformCallback } from 'postCSS';
  * 
  * TODO: 函数预编译
  */
-export const declVarPlugin = (varsMap: Record<string, string>, type: 'sass' | 'less' = 'less'): TransformCallback => {
+export const declVarPlugin = plugin('less-sass-to-var', (option: Option): TransformCallback => {
+  const { varsMap, type = 'less' } = option;
+
   return root => {
     if (type === 'sass') {
       root.walkDecls(decl => {
@@ -15,7 +22,7 @@ export const declVarPlugin = (varsMap: Record<string, string>, type: 'sass' | 'l
           const str = decl.prop;
           const name = str.slice(1);
 
-          if (varsMap[name]) {
+          if (varsMap[name] && str[0] === '$') {
             decl.value = `var(--${name}, ${varsMap[name]})`;
           }
         }
@@ -36,4 +43,4 @@ export const declVarPlugin = (varsMap: Record<string, string>, type: 'sass' | 'l
       });
     }
   };
-};
+});

@@ -1,12 +1,10 @@
-import stripCommentsPlugin from 'postcss-strip-inline-comments';
 import { IOnGetWebpackConfig } from '@alib/build-scripts';
 import { declVarPlugin } from './plugin';
 import { ThemeVarsType } from './injectThemes';
 
 const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, themeVars: ThemeVarsType) => {
   const pluginsFactory = (type: 'sass' | 'less') => [
-    stripCommentsPlugin,
-    declVarPlugin(themeVars, type)
+    declVarPlugin({ varsMap: themeVars, type })
   ];
 
   // Less 变量 value 转为同名 css-var
@@ -17,17 +15,19 @@ const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, themeVars: ThemeVa
     ['less', 'less-module'].forEach(rule => {
       config.module
         .rule(rule)
-        .use('less-theme-loader')
-        .loader('postcss-loader')
-        .options({ plugins: pluginsFactory('less') });
+        .use('postcss-loader')
+        .loader(require.resolve('postcss-loader'))
+        .options({ plugins: pluginsFactory('less'), parser: 'postcss-less' })
+        .after('less-loader');
     });
 
     ['scss', 'scss-module'].forEach(rule => {
       config.module
         .rule(rule)
-        .use('sass-theme-loader')
-        .loader('postcss-loader')
-        .options({ plugins: pluginsFactory('sass') });
+        .use('postcss-loader')
+        .loader(require.resolve('postcss-loader'))
+        .options({ plugins: pluginsFactory('sass'), parser: 'postcss-scss' })
+        .after('sass-loader');
     });
   });
 };
