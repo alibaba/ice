@@ -33,7 +33,7 @@ export async function reactAppRenderer(options) {
 
 export function getRenderApp(runtime, options) {
   const { ErrorBoundary, appConfig = {} } = options;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
 
@@ -42,7 +42,7 @@ export function getRenderApp(runtime, options) {
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
     if (errorBoundary) {
       return (
-        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler || onErrorBoundaryHander}>
           {rootApp}
         </ErrorBoundary>
       );
