@@ -19,7 +19,7 @@ const setAPI = ({
   applyMethod(
     'addTemplateDir',
     { templateDir: templateSourceDir, targetDir: PLUGIN_DIR },
-    { themes: themesStr, defaultTheme: `'${defaultName}'`, themesDataStr: getThemesDataStr() }
+    { themes: themesStr, defaultTheme: `'${defaultName}'`, themesDataStr: getThemesDataStr(defaultName) }
   );
 
   // 设置 $ice/themes -> .ice/themes/index.tsx

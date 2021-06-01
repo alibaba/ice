@@ -17,12 +17,16 @@ let __themesData__: ThemesDataType = {};
 /**
  * 生成 themesData 对象字符串
  */
-const getThemesDataStr = () => {
+const getThemesDataStr = (defaultName: string) => {
   const themesData = getThemesData();
-  const themesDataStr = Object.keys(themesData).map((themeKey) => {
-    const cssVars = themesData[themeKey];
-    return `'${themeKey}': ':root {${Object.entries(cssVars).map(([k, v]) => `--${k}: ${v}`).join(';')}}'`;
-  }).join(',');
+  const themesDataStr = Object
+    .keys(themesData)
+    .filter(themeKey => themeKey !== defaultName)
+    .map((themeKey) => {
+      const cssVars = themesData[themeKey];
+      return `'${themeKey}': ':root {${Object.entries(cssVars).map(([k, v]) => `--${k}: ${v}`).join(';')}}'`;
+    })
+    .join(',');
 
   return themesDataStr;
 };

@@ -1,7 +1,7 @@
 const themesData = {<%- themesDataStr %>};
 // Append Style fn
 let style;
-function appendStyle(styles) {
+function appendStyle(styles = '') {
   if (style) style.remove();
   style = document.createElement('style');
   style.type = 'text/css';
@@ -19,11 +19,6 @@ function appendStyle(styles) {
 function handleTheme(currentTheme) {
   // Get current theme
   const theme = themesData[currentTheme];
-  if (theme) {
-    appendStyle(theme);
-  } else {
-    console.warn('can not find theme:' + currentTheme);
-  }
+  appendStyle(theme);
 }
-handleTheme(<%- defaultTheme %>);
 window.__handleTheme__ = handleTheme;
