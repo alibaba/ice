@@ -239,7 +239,7 @@ export function createUseRouter(api) {
         router.removeHandle(handleId);
         unlisten();
       };
-    }, []);
+    }, [routerConfig]);
 
     return { component };
   }
