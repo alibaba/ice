@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.7
+
+- [chore] typo `onErrorBoundaryHandler`
 ## 1.4.6
 
 - [feat] support to specify targetDir when call api `addTemplateDir`

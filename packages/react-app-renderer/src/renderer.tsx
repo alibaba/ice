@@ -37,6 +37,12 @@ export function getRenderApp(runtime, options) {
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
 
+  if (process.env.NODE_ENV === 'development') {
+    if (onErrorBoundaryHandler) {
+      console.error('Please use onErrorBoundaryHandler instead of onErrorBoundaryHander');
+    }
+  }
+
   function App() {
     const appRouter = <AppRouter />;
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
