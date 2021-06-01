@@ -30,7 +30,7 @@ English | [简体中文](./README_zh-CN.md)
 
 We recommend creating a new icejs app using [AppWorks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks):
 
-![demo](https://img.alicdn.com/tfs/TB1aRI.RHr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
+![demo](https://img.alicdn.com/imgextra/i3/O1CN01ZwcNtw1oJ1PhRkykl_!!6000000005203-2-tps-2406-1536.png_790x10000.jpg)
 
 > See [Quick start by AppWorks](https://appworks.site/pack/quick-start) for more details.
 

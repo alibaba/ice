@@ -30,7 +30,7 @@
 
 我们推荐你安装 [AppWorks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)，然后通过该插件的引导进行项目的创建：
 
-![使用示例](https://img.alicdn.com/tfs/TB1oeKDSoH1gK0jSZSyXXXtlpXa-2048-1536.png_790x10000.jpg)
+![使用示例](https://img.alicdn.com/imgextra/i3/O1CN01ZwcNtw1oJ1PhRkykl_!!6000000005203-2-tps-2406-1536.png_790x10000.jpg)
 
 > 参考[AppWorks 快速开始》](https://appworks.site/pack/quick-start)了解更多细节。
 
