@@ -26,13 +26,13 @@ English | [简体中文](./README_zh-CN.md)
 
 ## Quick start
 
-### Setup by Iceworks
+### Setup by AppWorks
 
-We recommend creating a new icejs app using [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks):
+We recommend creating a new icejs app using [AppWorks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks):
 
 ![demo](https://img.alicdn.com/tfs/TB1aRI.RHr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
 
-> See [Quick start by Iceworks](https://ice.work/docs/iceworks/quick-start) for more details.
+> See [Quick start by AppWorks](https://appworks.site/pack/quick-start) for more details.
 
 ### Setup by CLI
 
@@ -133,29 +133,24 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 | [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
 | [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
-| [iceworks]| [![iceworks-status]][iceworks-package] | [docs][iceworks-docs] |Visual Intelligent Development Assistant|
 | [formily]| [![formily-status]][formily-package] | [docs][formily-docs] |Performant, flexible and extensible form solution|
 | [ahooks]| [![ahooks-status]][ahooks-package] | [docs][ahooks-docs] |React Hooks Library|
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
 [icestore]: https://github.com/ice-lab/icestore
-[iceworks]: https://github.com/ice-lab/iceworks
 
 [icejs-status]: https://img.shields.io/npm/v/ice.js.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
-[iceworks-status]: https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg
 
 [icejs-package]: https://npmjs.com/package/ice.js
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
-[iceworks-package]: https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks
 
 [icejs-docs]: https://ice.work/docs/guide/intro
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
-[iceworks-docs]: https://ice.work/docs/iceworks/about
 
 [formily]: https://github.com/alibaba/formily
 [formily-status]: https://img.shields.io/npm/v/@formily/react.svg
