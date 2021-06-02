@@ -10,7 +10,7 @@
     "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "icejs start --mode dev",
+    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
     "build": "icejs build --mode prod",
     "test": "icejs test --jest-watchAll"
   },

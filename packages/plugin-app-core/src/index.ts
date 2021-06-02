@@ -13,7 +13,7 @@ const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAID
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, commandArgs, userConfig, rootDir } = context;
+  const { command, userConfig, rootDir } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
@@ -60,10 +60,7 @@ export default (api, options) => {
   setRegisterUserConfig(api);
 
   // register api method
-  if (commandArgs.debugRuntime) {
-    console.log('[deprecated] cli option --debug-runtime is deprecated, runtime file is generated as default');
-  }
-  const generator = initGenerator(api, { ...options, debugRuntime: userConfig.generateRuntime, hasJsxRuntime });
+  const generator = initGenerator(api, { ...options, hasJsxRuntime });
   setRegisterMethod(api, { generator });
 
   // add core template for framework
@@ -85,10 +82,10 @@ export default (api, options) => {
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
   const { userConfig, rootDir } = context;
-  const { framework, debugRuntime, hasJsxRuntime } = options;
+  const { framework, hasJsxRuntime } = options;
   const plugins = getAllPlugin();
   const { targets = [], ssr = false } = userConfig;
-  const isMiniapp = targets.some((target) => miniappPlatforms.includes(target));
+  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
@@ -104,7 +101,6 @@ function initGenerator(api, options) {
     },
     log,
     plugins,
-    debugRuntime,
   });
 }
 

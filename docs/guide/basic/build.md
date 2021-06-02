@@ -228,16 +228,6 @@ icejs 中一般不允许修改该配置。
 
 **注意：** 在 `usage` 模式下，默认不会去分析 `node_modules` 里的代码，如果需要的话，请看 `compileDependencies` 字段相关的说明，添加相关需要编译的依赖。
 
-### injectBabel
-
-**已废弃**，请使用 `polyfill` 替代。
-
-- 类型：`string`
-- 默认值：`polyfill`
-- 可选值：`"polyfill"` | `"runtime"` | `false`
-
-默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 `targets` 配置的兼容浏览器进行 polyfill，实现按需添加。 开发类库项目，可以将配置设置为 `runtime`。 如果想手动 polyfill，可以将配置设置为 `false`，工程将不会进行自动的 polyfill。
-
 ### minify
 
 - 类型：`boolean`
@@ -537,51 +527,6 @@ MPA 场景下配置是否生成 vendor，如果希望禁用：
   "tsChecker": true
 }
 ```
-
-### dll
-
-- 类型：`boolean`
-- 默认值：`false`
-
-是否启用 [`DllPlugin`](https://webpack.js.org/plugins/dll-plugin/) 构建 `DLL`。
-
-配置为 `true` 时，默认为 `package.json` `dependencies` 构建 `DLL`。可通过 `dllEntry` 字段配置指定依赖。
-
-启用该选项后，进行 `Webpack` 构建时，会在目录中生成 `dll` 文件夹，包含 `dll` 相关代码。
-
-`dll` 构建产物无需 `git` 提交，建议加到 `.gitignore` 中。
-
-### dllEntry
-
-- 类型：`object`
-- 默认值：`{}`
-
-开启 `dll` 后，可通过该选项配置指定依赖。
-配置格式为：
-
-``` javascript
-{
-  [string]: string[]
-}
-```
-
-以 `react`、`react-dom` 为例:
-
-```javascript
-// build.json
-{
-  "react": ["react", "react-dom"]
-}
-```
-
-产物如下：
-
-```md
-dll                            // dll 构建产物文件夹
-├── 7265616374.dll.js          // dllEntry 中配置内容的构建产物。文件名根据 dllEntry 中键生成，此处为 react。
-├── 7265616374.manifest.json   // DllReferencePlugin 使用
-└── dll-pkg.json               // build.json 中所配置的 dllEntry 信息
-````
 
 ### webpackPlugins
 
