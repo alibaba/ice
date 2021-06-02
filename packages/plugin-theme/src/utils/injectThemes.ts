@@ -1,4 +1,4 @@
-import * as postcss from 'postCSS';
+import * as postcss from 'postcss';
 import produce from 'immer';
 import { readFileSync } from 'fs-extra';
 import { IPluginAPI } from '@alib/build-scripts';

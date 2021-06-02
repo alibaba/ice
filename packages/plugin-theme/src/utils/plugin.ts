@@ -1,4 +1,4 @@
-import { plugin, TransformCallback } from 'postCSS';
+import { plugin, TransformCallback } from 'postcss';
 
 interface Option {
   varsMap: Record<string, string>
