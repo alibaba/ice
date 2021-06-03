@@ -52,9 +52,11 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
               ReactDOM.unmountComponentAtNode(mountNode);
             }
           });
-        } else if (icestarkUMD) {
-          const mountNode = getMountNode();
-          ReactDOM.render(<App />, mountNode, resolve);
+        } else if (isInIcestark() && icestarkUMD) {
+          // const mountNode = getMountNode();
+          // @ts-ignore
+          const { container, customProps = {} } = (window.ICESTARK = window.ICESTARK || {}).$$props || {};
+          ReactDOM.render(<App {...customProps} />, container, resolve);
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }

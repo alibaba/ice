@@ -1,10 +1,11 @@
 import * as t from '@babel/types';
+// import 
 
 const templateIfStatement = 'if (!isInIcestark()) {}';
 
 const templateExportStatement = `
-setLibraryName(LIBRARY);
 export const mount = async (props) => {
+  (window.ICESTARK = window.ICESTARK || {}).$$props = props;
   APP_CALLEE(APP_CONFIG);
 };
 export const unmount = async ({ container, customProps }) => {
@@ -173,7 +174,7 @@ export default (api, { entryList, libraryName }) => {
             const astExport = api.template(templateExportStatement)({
               APP_CONFIG: configIdentifier,
               APP_CALLEE: callIdentifier || identifierCallee,
-              LIBRARY: t.stringLiteral(libraryName),
+              ICESTARK: 'ICESTARK',
             });
             nodePath.insertAfter(astExport);
             replaced = true;
