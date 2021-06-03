@@ -358,7 +358,14 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             const componentName = isNext ? request.match(nextRegex)[3] : request.match(baseRegex)[1];
             const externalKey = isNext ? 'Next' : 'ICEDesignBase';
             if (componentName) {
-              return callback(null, [externalKey, upperFirst(camelCase(componentName))]);
+              const externalInfo = [externalKey, upperFirst(camelCase(componentName))];
+              // compatible with umd export
+              return callback(null, {
+                root: externalInfo,
+                amd: externalInfo,
+                commonjs: externalInfo,
+                commonjs2: externalInfo,
+              });
             }
           } else if (nextRegex.test(_context) && /\.(scss|css)$/.test(request)) {
             // external style files imported by next style.js
