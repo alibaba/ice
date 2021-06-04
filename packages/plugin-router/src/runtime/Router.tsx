@@ -31,11 +31,12 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
   const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
-      resolveComponent: (component) => {
-        component.pageConfig = route.pageConfig;
-        component.getInitialProps = route.getInitialProps;
+      resolveComponent: (mod) => {
+        const comp = mod.default as any;
+        comp.pageConfig = route.pageConfig;
+        comp.getInitialProps = route.getInitialProps;
 
-        return wrapperRoute(component.default, routerWrappers);
+        return wrapperRoute(comp, routerWrappers);
       },
       fallback
     });
@@ -46,7 +47,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
         comp.pageConfig = route.pageConfig;
         comp.getInitialProps = route.getInitialProps;
 
-        return { ...mod, default: wrapperRoute(mod.default, routerWrappers) };
+        return { ...mod, default: wrapperRoute(comp, routerWrappers) };
       }
       return mod;
     })) : wrapperRoute(component, routerWrappers);
