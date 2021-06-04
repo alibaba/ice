@@ -17,8 +17,6 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
   // 中心化配置转为组件配置
   centre2Comp(routes, ['getInitialProps', 'pageConfig']);
 
-  console.log(routes);
-
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
     return renderComponent ? [{ component: renderComponent }] : formatRoutes(routes, '');
