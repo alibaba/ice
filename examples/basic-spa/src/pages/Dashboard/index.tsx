@@ -30,8 +30,4 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.pageConfig = {
-  title: 'Dashboard Page'
-};
-
 export default Dashboard;

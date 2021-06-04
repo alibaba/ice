@@ -21,6 +21,28 @@ export default function formatRoutes(routes: IRouterConfig[], parentPath: string
   });
 }
 
+/**
+ * @description 将中心化路由配置转化为组件路由配置
+ * 
+ * @param routes 路由配置
+ * @param configs 需要转化的配置键名
+ */
+export function centre2Comp<T extends keyof IRouterConfig>(routes: IRouterConfig[], configs: T[] = []) {
+  routes.forEach(item => {
+    if (item.path) {
+      const itemComponent = item.component as any;
+      configs.forEach(cfg => {
+        if (item[cfg]) {
+          itemComponent[cfg] = item[cfg];
+        }
+      });
+    }
+    if (item.children) {
+      centre2Comp(item.children, configs);
+    }
+  });
+}
+
 export function wrapperPageWithSSR(context) {
   const pageInitialProps = { ...context.pageInitialProps };
   const WrapperPageFn = (PageComponent) => {
