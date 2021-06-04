@@ -77,6 +77,8 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
         routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
       }
       const { fallback, ...restRouterProps } = routerProps;
+      parseRoutes(routes, fallback);
+      parseRoutes(routes, fallback);
       return (
         <IceRouter {...restRouterProps}>
           { RoutesComponent ? <RoutesComponent routes={parseRoutes(routes, fallback)} fallback={fallback} /> : null}

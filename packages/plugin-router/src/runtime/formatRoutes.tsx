@@ -59,6 +59,7 @@ export function wrapperPageWithCSR() {
     const { pageConfig } = PageComponent;
     const { title, scrollToTop } = pageConfig || {};
 
+    console.log(pageConfig);
     const RouterWrapperedPage = (props) => {
       const [data, setData] = useState((window as any).__ICE_PAGE_PROPS__);
       useEffect(() => {
