@@ -32,6 +32,9 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
       resolveComponent: (component) => {
+        component.pageConfig = route.pageConfig;
+        component.getInitialProps = route.getInitialProps;
+
         return wrapperRoute(component.default, routerWrappers);
       },
       fallback
