@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.7
+
+- [fix] `no loader specified error` is reported when using `postcssrc: true` in ssr app
+
 ## 0.3.6
 
 - [feat] use trusted-cert to generate ca
