@@ -61,32 +61,6 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }
-
-        // if (isInIcestark() && !icestarkUMD) {
-        //   registerAppEnter(() => {
-        //     const mountNode = getMountNode();
-        //     if (enterRegistration) {
-        //       enterRegistration(mountNode, App, resolve);
-        //     } else {
-        //       ReactDOM.render(<App />, mountNode, resolve);
-        //     }
-        //   });
-        //   // make sure the unmount event is triggered
-        //   registerAppLeave(() => {
-        //     const mountNode = getMountNode();
-        //     if (leaveRegistration) {
-        //       leaveRegistration(mountNode);
-        //     } else {
-        //       ReactDOM.unmountComponentAtNode(mountNode);
-        //     }
-        //   });
-        // } else if (isInIcestark() && icestarkUMD) {
-        //   // const mountNode = getMountNode();
-        //   // @ts-ignore
-        //   const { container, customProps = {} } = (window.ICESTARK = window.ICESTARK || {}).$$props || {};
-        //   ReactDOM.render(<App {...customProps} />, container, resolve);
-        // } else {
-        // }
       });
     });
 
