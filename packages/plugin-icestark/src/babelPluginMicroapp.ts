@@ -7,8 +7,7 @@ if (!OMIT_SETLIBRARY) {
   setLibraryName(LIBRARY);
 }
 export const mount = async (props) => {
-  (APP_CONFIG.app = APP_CONFIG.app || {})
-  APP_CONFIG.app.$$props = props;
+  (APP_CONFIG.app = APP_CONFIG.app || {}).$$props = props;
   APP_CALLEE(APP_CONFIG);
 };
 export const unmount = async ({ container, customProps }) => {
