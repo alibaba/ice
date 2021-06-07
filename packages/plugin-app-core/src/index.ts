@@ -103,7 +103,7 @@ function initGenerator(api, options) {
       ssr,
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
       hasJsxRuntime,
-      hasTabBar: hasTabBar(`${rootDir}/src`, framework),
+      hasTabBar: hasTabBar(framework),
     },
     log,
     plugins,
@@ -150,10 +150,10 @@ function matchTargets(targets) {
   });
 }
 
-function hasTabBar(srcDir, framework) {
+function hasTabBar(framework) {
   if (framework === 'rax') {
-    return globby.sync(['**/app.json'], { cwd: srcDir }).some((filepath) => {
-      const content = fs.readJSONSync(path.join(srcDir, filepath));
+    return globby.sync(['**/app.json'], { absolute: true }).some((filepath) => {
+      const content = fs.readJSONSync(filepath);
       return content.tabBar && !content.tabBar.custom;
     });
   }
