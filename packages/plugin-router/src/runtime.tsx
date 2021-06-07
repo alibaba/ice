@@ -12,11 +12,9 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
   const { router: appConfigRouter = {}, app = {}, renderComponent } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
 
-  const routes = appConfigRouter.routes || defaultRoutes;
-
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
-    return renderComponent ? [{ component: renderComponent }] : formatRoutes(routes, '');
+    return renderComponent ? [{ component: renderComponent }] : formatRoutes(appConfigRouter.routes || defaultRoutes, '');
   });
 
   // add default RoutesComponent
