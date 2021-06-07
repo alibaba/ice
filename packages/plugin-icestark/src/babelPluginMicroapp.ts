@@ -1,11 +1,14 @@
 import * as t from '@babel/types';
-// import 
 
 const templateIfStatement = 'if (!isInIcestark()) {}';
 
 const templateExportStatement = `
+if (!OMIT_SETLIBRARY) {
+  setLibraryName(LIBRARY);
+}
 export const mount = async (props) => {
-  (window.ICESTARK = window.ICESTARK || {}).$$props = props;
+  (APP_CONFIG.app = APP_CONFIG.app || {})
+  APP_CONFIG.app.$$props = props;
   APP_CALLEE(APP_CONFIG);
 };
 export const unmount = async ({ container, customProps }) => {
@@ -29,7 +32,7 @@ const getUid = () => {
   return () => `_APP_CONFIG${(uid++) || ''}`;
 };
 
-export default (api, { entryList, libraryName }) => {
+export default (api, { entryList, libraryName, omitSetLibraryName }) => {
   const namespaceSpecifier: string[] = [];
   const importSpecifier: string[] = [];
   let configIdentifier: string;
@@ -174,7 +177,8 @@ export default (api, { entryList, libraryName }) => {
             const astExport = api.template(templateExportStatement)({
               APP_CONFIG: configIdentifier,
               APP_CALLEE: callIdentifier || identifierCallee,
-              ICESTARK: 'ICESTARK',
+              LIBRARY: t.stringLiteral(libraryName),
+              OMIT_SETLIBRARY: t.booleanLiteral(omitSetLibraryName),
             });
             nodePath.insertAfter(astExport);
             replaced = true;
