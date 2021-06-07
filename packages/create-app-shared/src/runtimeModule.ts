@@ -87,11 +87,11 @@ class RuntimeModule {
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
       return ({ children, ...rest }) => {
         const element = CurrentProvider
-          ? this.context.createElement(CurrentProvider, {...rest}, children)
+          ? this.context.createElement(CurrentProvider, { ...rest }, children)
           : this.context.createElement(children);
         return this.context.createElement(
           ProviderComponent,
-          {...rest},
+          { ...rest },
           element
         );
       };

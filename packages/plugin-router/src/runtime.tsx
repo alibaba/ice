@@ -4,7 +4,7 @@ import ErrorBoundary from '$ice/ErrorBoundary';
 // @ts-ignore
 import defaultRoutes from '$ice/routes';
 import { IceRouter, Routes, parseRoutes } from './runtime/Router';
-import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR, centre2Comp } from './runtime/formatRoutes';
+import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
@@ -13,9 +13,6 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
   const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
 
   const routes = appConfigRouter.routes || defaultRoutes;
-
-  // 中心化配置转为组件配置
-  centre2Comp(routes, ['getInitialProps', 'pageConfig']);
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
@@ -77,8 +74,6 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
         routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
       }
       const { fallback, ...restRouterProps } = routerProps;
-      parseRoutes(routes, fallback);
-      parseRoutes(routes, fallback);
       return (
         <IceRouter {...restRouterProps}>
           { RoutesComponent ? <RoutesComponent routes={parseRoutes(routes, fallback)} fallback={fallback} /> : null}
