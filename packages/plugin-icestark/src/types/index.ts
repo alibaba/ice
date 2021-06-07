@@ -11,4 +11,6 @@ export interface IIceStark {
   Layout?: React.ComponentType;
   registerAppEnter?: (mountNode: HTMLElement, App: React.ComponentType, resolve: (value?: unknown) => void) => void;
   registerAppLeave?: (mountNode: HTMLElement) => void;
+
+  [k: string]: any;
 }

@@ -18,9 +18,8 @@ import { IIceStark } from './types';
 const { useEffect, useState } = React;
 
 const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory }) => {
-  const { icestark, router, app } = appConfig;
-  const { $$props } = app ?? {};
-  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
+  const { icestark, router } = appConfig;
+  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
 
   if (runtimeModifyRoutes) {
