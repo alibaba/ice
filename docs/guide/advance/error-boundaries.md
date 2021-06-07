@@ -13,7 +13,7 @@ icejs 中默认在应用的根组件上添加了 `ErrorBoundary` 组件，当应
 
 ![](https://img.alicdn.com/tfs/TB1rNezBAL0gK0jSZFxXXXWHVXa-2880-1754.png)
 
-同时，我们也可以通过自 `ErrorBoundaryFallback` 和 `onErrorBoundaryHander` 进行自定义：
+同时，我们也可以通过自 `ErrorBoundaryFallback` 和 `onErrorBoundaryHandler` 进行自定义：
 
 ```tsx
 import { runApp, IAppConfig } from 'ice';
@@ -25,7 +25,7 @@ const appConfig: IAppConfig = {
     // 自定义错误边界的 fallback UI
     ErrorBoundaryFallback: () => <div>渲染错误</div>,
     // 自定义错误的处理事件
-    onErrorBoundaryHander: (error: Error, componentStack: string) {
+    onErrorBoundaryHandler: (error: Error, componentStack: string) {
       // Do something with the error
     },
   }
