@@ -32,7 +32,7 @@
 
 ![使用示例](https://img.alicdn.com/imgextra/i3/O1CN01ZwcNtw1oJ1PhRkykl_!!6000000005203-2-tps-2406-1536.png_790x10000.jpg)
 
-> 参考[AppWorks 快速开始》](https://appworks.site/pack/quick-start)了解更多细节。
+> 参考[《AppWorks 快速开始》](https://appworks.site/pack/quick-start)了解更多细节。
 
 ### 使用 CLI 创建项目
 
