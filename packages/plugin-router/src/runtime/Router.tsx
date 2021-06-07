@@ -32,6 +32,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
       resolveComponent: (mod) => {
+        // 适配中心化路由配置（react-loadable）
         const comp = mod.default as any;
         comp.pageConfig = route.pageConfig;
         comp.getInitialProps = route.getInitialProps;
@@ -40,9 +41,10 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
       },
       fallback
     });
-  } else {
-    return __LAZY__ ? React.lazy(() => dynamicImport().then((mod) => {
+  } else if (__LAZY__) {
+    return React.lazy(() => dynamicImport().then((mod) => {
       if (routerWrappers && routerWrappers.length) {
+        // 适配中心化路由配置（React lazy）
         const comp = mod.default as any;
         comp.pageConfig = route.pageConfig;
         comp.getInitialProps = route.getInitialProps;
@@ -50,7 +52,13 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
         return { ...mod, default: wrapperRoute(comp, routerWrappers) };
       }
       return mod;
-    })) : wrapperRoute(component, routerWrappers);
+    }));
+  } else {
+    // 适配中心化路由配置（非按需加载）
+    component.pageConfig = route.pageConfig;
+    component.getInitialProps = route.getInitialProps;
+
+    return wrapperRoute(component, routerWrappers);
   }
 }
 
