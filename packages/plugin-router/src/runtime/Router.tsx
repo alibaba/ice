@@ -27,7 +27,7 @@ function wrapperRoute(component, routerWrappers) {
   }, component);
 }
 
-function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: any, fallback?: React.ReactNode) {
+function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: RouteItemProps, fallback?: React.ReactNode) {
   const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
