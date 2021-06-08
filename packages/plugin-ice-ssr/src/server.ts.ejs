@@ -145,7 +145,11 @@ async function getComponentByPath(routes, currPath)  {
       return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
     }
   }
-  return await findMatchRoute(routes);
+  const routeData = await findMatchRoute(routes)
+  return {
+    component: routeData?.component,
+    getInitialProps: routeData?.getInitialProps
+  };
 }
 
 function logError(msg) {
