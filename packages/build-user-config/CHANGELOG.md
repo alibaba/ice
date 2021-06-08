@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.8
+
+- [feat] add `devServer.host` to https cert 
+
 ## 0.3.7
 
 - [fix] `no loader specified error` is reported when using `postcssrc: true` in ssr app

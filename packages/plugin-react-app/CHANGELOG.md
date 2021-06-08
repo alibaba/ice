@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.5
+
+- [feat] add config.name to default task
+
 ## 1.8.4
 
 - [refactor] rework with development server path output
