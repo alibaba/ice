@@ -27,16 +27,20 @@ function wrapperRoute(component, routerWrappers) {
   }, component);
 }
 
+function setComponentAttr(comp: any, route: RouteItemProps) {
+  ['pageConfig', 'getInitialProps'].forEach(attr => {
+    comp[attr] = route[attr];
+  });
+}
+
 function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: RouteItemProps, fallback?: React.ReactNode) {
   const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
       resolveComponent: (mod) => {
-        // 适配中心化路由配置（react-loadable）
         const comp = mod.default as any;
-        comp.pageConfig = route.pageConfig;
-        comp.getInitialProps = route.getInitialProps;
-
+        // 适配中心化路由配置（react-loadable）
+        setComponentAttr(comp, route);
         return wrapperRoute(comp, routerWrappers);
       },
       fallback
@@ -44,20 +48,16 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
   } else if (__LAZY__) {
     return React.lazy(() => dynamicImport().then((mod) => {
       if (routerWrappers && routerWrappers.length) {
-        // 适配中心化路由配置（React lazy）
         const comp = mod.default as any;
-        comp.pageConfig = route.pageConfig;
-        comp.getInitialProps = route.getInitialProps;
-
+        // 适配中心化路由配置（React lazy）
+        setComponentAttr(comp, route);
         return { ...mod, default: wrapperRoute(comp, routerWrappers) };
       }
       return mod;
     }));
   } else {
     // 适配中心化路由配置（非按需加载）
-    component.pageConfig = route.pageConfig;
-    component.getInitialProps = route.getInitialProps;
-
+    setComponentAttr(component, route);
     return wrapperRoute(component, routerWrappers);
   }
 }
