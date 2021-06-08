@@ -6,6 +6,7 @@
 
 ## 0.3.7
 
+- [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
 - [fix] `no loader specified error` is reported when using `postcssrc: true` in ssr app
 
 ## 0.3.6
