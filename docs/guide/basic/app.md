@@ -69,7 +69,7 @@ const appConfig = {
     ErrorBoundaryFallback: <div>渲染错误</div>,
 
     // 可选，自定义错误的处理事件
-    onErrorBoundaryHander: (error, componentStack) {
+    onErrorBoundaryHandler: (error, componentStack) {
       // Do something with the error
     },
 
