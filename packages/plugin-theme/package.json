@@ -6,6 +6,11 @@
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "lib",
+    "template",
+    "src/runtime.tsx"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
