@@ -1,13 +1,10 @@
 # Changelog
 
-## 0.3.8
-
-- [feat] add `devServer.host` to https cert 
-
 ## 0.3.7
 
+- [feat] add `devServer.host` to https cert 
 - [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
-- [fix] `no loader specified error` is reported when using `postcssrc: true` in ssr app
+- [fix] compatible with no loader specified when using `postcssrc: true` in ssr app
 
 ## 0.3.6
 
