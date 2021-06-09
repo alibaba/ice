@@ -8,6 +8,12 @@ module.exports = function(userConfig) {
   }
   return [
     {
+      name: 'moduleFederation',
+      defaultValue: false,
+      configWebpack: require('./userConfig/moduleFederation').default,
+      validation: 'boolean|object',
+    },
+    {
       name: 'entry',
       defaultValue: 'src/index.jsx',
       configWebpack: require('./userConfig/entry'),
