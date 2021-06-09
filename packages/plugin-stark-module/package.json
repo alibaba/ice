@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-stark-module",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "build-scripts plugin for build stark module",
   "main": "lib/index.js",
   "files": [
@@ -39,7 +39,7 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "build-scripts-config": "^2.0.0",
+    "build-scripts-config": "^3.0.0",
     "fs-extra": "^9.0.0",
     "chalk": "^4.1.0",
     "handlebars": "^4.7.6",
