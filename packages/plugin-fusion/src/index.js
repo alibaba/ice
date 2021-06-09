@@ -349,7 +349,8 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
         if (userConfig.externals) {
           externals.push(userConfig.externals);
         }
-        const nextRegex = /@(alife|alifd)\/next\/(es|lib)\/([-\w+]+)$/;
+        const nextRegex = /@alifd\/next\/(es|lib)\/([-\w+]+)$/;
+        const feNextRegex = /@(alife|alifd)\/next\/(es|lib)\/([-\w+]+)$/;
         const baseRegex = /@icedesign\/base\/lib\/([-\w+]+)$/;
         externals.push(function(_context, request, callback) {
           const isNext = nextRegex.test(request);
@@ -359,12 +360,14 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             const externalKey = isNext ? 'Next' : 'ICEDesignBase';
             if (componentName) {
               const externalInfo = [externalKey, upperFirst(camelCase(componentName))];
+              const commonPackage = feNextRegex.test(request) ? '@alife/next' : '@alifd/next';
+              const commonExternal = [isNext ? commonPackage : '@icedesign/base', upperFirst(camelCase(componentName))];
               // compatible with umd export
               return callback(null, {
                 root: externalInfo,
-                amd: externalInfo,
-                commonjs: externalInfo,
-                commonjs2: externalInfo,
+                amd: commonExternal,
+                commonjs: commonExternal,
+                commonjs2: commonExternal,
               });
             }
           } else if (nextRegex.test(_context) && /\.(scss|css)$/.test(request)) {
