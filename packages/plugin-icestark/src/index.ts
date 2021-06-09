@@ -5,7 +5,8 @@ import { IPlugin, Json } from '@alib/build-scripts';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
   const { uniqueName, umd, library } = options as Json;
-  const { rootDir, webpack, pkg } = context;
+  const { rootDir, webpack, pkg, commandArgs, command, userConfig } = context;
+  const { sourceMap } = userConfig;
   const iceTempPath = getValue('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
@@ -25,6 +26,21 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
     if (!isWebpack5 && uniqueName) {
       config.output.jsonpFunction(`webpackJsonp_${uniqueName}`);
     }
+
+    // source-map
+    if (sourceMap || command === 'start') {
+      const publicPath = config.output.get('publicPath') ?? '/';
+      const port = commandArgs.port;
+      const servePath = publicPath === '/' ? `http://localhost:${port}` : publicPath;
+
+      config.devtool(false);
+      config.plugin('SourceMapDevToolPlugin')
+        .use((webpack as any).SourceMapDevToolPlugin, [{
+          append: `\n//# sourceMappingURL=${servePath}/[file].map`,
+          filename: '[file].map',
+        }]);
+    }
+
     // umd config
     if (umd) {
       const libraryName = library as string || pkg.name as string || 'microApp';

@@ -1,5 +1,9 @@
 # Changelog
 
+# 2.1.0
+
+- [fix] append absolute path for sourcemaps using `SourceMapDevToolPlugin`. ([#259](https://github.com/ice-lab/icestark/issues/259))
+
 # 2.0.9
 
 - [fix] compatible with the case which icejs version is locked
