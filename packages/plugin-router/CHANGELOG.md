@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] centralized router configuration
+
 ## 1.9.6
 
 - [fix] router path is invalid after using `path.join` function
