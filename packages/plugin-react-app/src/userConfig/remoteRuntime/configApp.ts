@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPluginAPI } from 'build-scripts';
 
-export default (api: IPluginAPI, { remoteName, bootstrap, compilePackages, runtimeDir }) => {
+export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePackages, runtimeDir }) => {
   const { context, getValue, modifyUserConfig, onGetWebpackConfig } = api;
   const { rootDir } = context;
   // create bootstrap for main app
@@ -43,5 +43,10 @@ export default (api: IPluginAPI, { remoteName, bootstrap, compilePackages, runti
       }
     });
     config.entry('index').add(bootstrapEntry);
+    // eslint-disable-next-line global-require
+    const AddAssetHtmlPlugin = require('@builder/pack/deps/add-asset-html-webpack-plugin');
+    config.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
+      filepath: '/remoteRuntime/remoteEntry.js'
+    }]).after('HtmlWebpackPlugin');
   });
 };

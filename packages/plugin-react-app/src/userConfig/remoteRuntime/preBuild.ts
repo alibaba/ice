@@ -1,15 +1,19 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import { IPluginAPI } from 'build-scripts';
 
-export default (api, options) => {
+interface IExposes {
+  [key: string]: string;
+}
+
+export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry, cacheFile, cacheContent, compilePackages }) => {
   const { context, onHook } = api;
   const { command, webpack } = context;
-  const { cacheDir, runtimeDir, cacheFile, cacheContent } = options;
   // create empty entry for build remote runtime
   const mfEntry = path.join(cacheDir, 'entry.js');
   fse.writeFileSync(mfEntry, '', 'utf-8');
 
-  onHook(`before.${command}.load`, async ({ webpackConfig }) => {
+  (onHook as any)(`before.${command}.load`, async ({ webpackConfig }) => {
     const targetConfig = webpackConfig.find(({ name }) => name === 'web');
     const preBuildConfig = {
       ...targetConfig,
@@ -25,8 +29,13 @@ export default (api, options) => {
       },
       plugins: [
         ...(targetConfig.plugins || []),
-        new webpack.ModuleFederationPlugin({
-
+        new (webpack as any).ModuleFederationPlugin({
+          name: remoteName,
+          filename: remoteEntry,
+          exposes: compilePackages.reduce((pre: IExposes, cur: string) => {
+            pre[`./${cur}`] = cur;
+            return pre;
+          }, {}),
         }),
       ]
     };

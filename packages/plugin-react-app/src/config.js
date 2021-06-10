@@ -1,5 +1,3 @@
-const { validation } = require('@builder/app-helpers');
-
 /* eslint global-require: 0 */
 module.exports = function(userConfig) {
   let polyfillDefaultValue = 'entry';
@@ -7,6 +5,11 @@ module.exports = function(userConfig) {
     polyfillDefaultValue = false;
   }
   return [
+    {
+      name: 'remoteRuntime',
+      defaultValue: false,
+      validation: 'boolean|object'
+    },
     {
       name: 'moduleFederation',
       defaultValue: false,
@@ -17,11 +20,7 @@ module.exports = function(userConfig) {
       name: 'entry',
       defaultValue: 'src/index.jsx',
       configWebpack: require('./userConfig/entry'),
-      validation: (val) => {
-        // entry: string | array
-        // entry : { [name]: string | array }
-        return validation('entry', val, 'string|array|object');
-      },
+      validation: 'string|array|object',
     },
     {
       name: 'ignoreHtmlTemplate',
@@ -38,9 +37,7 @@ module.exports = function(userConfig) {
     {
       name: 'injectBabel',
       defaultValue: 'polyfill',
-      validation: (val) => {
-        return validation('injectBabel', val, 'string|boolean');
-      }
+      validation: 'string|boolean'
     },
     {
       name: 'polyfill',
