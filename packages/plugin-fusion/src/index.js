@@ -349,8 +349,8 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
         if (userConfig.externals) {
           externals.push(userConfig.externals);
         }
-        const nextRegex = /@alifd\/next\/(es|lib)\/([-\w+]+)$/;
-        const feNextRegex = /@(alife|alifd)\/next\/(es|lib)\/([-\w+]+)$/;
+        const feNextRegex = /@alife\/next\/(es|lib)\/([-\w+]+)$/;
+        const nextRegex = /@(alife|alifd)\/next\/(es|lib)\/([-\w+]+)$/;
         const baseRegex = /@icedesign\/base\/lib\/([-\w+]+)$/;
         externals.push(function(_context, request, callback) {
           const isNext = nextRegex.test(request);
