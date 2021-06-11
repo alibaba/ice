@@ -9,7 +9,7 @@ const setBuild = require('./setBuild');
 const setTest = require('./setTest');
 const logDetectedTip = require('./utils/logDetectedTip');
 const configWebpak5 = require('./webpack5');
-const remoteRuntime = require('./userConfig/remoteRuntime');
+const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig  } = api;
@@ -47,6 +47,7 @@ module.exports = (api) => {
       target = '';
     }
     const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig, libName: 'react' });
+    enhancedWebpackConfig.name('web');
     setBase(api, { target, webpackConfig: enhancedWebpackConfig });
     registerTask(target, enhancedWebpackConfig);
   });

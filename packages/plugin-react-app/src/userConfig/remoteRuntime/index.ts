@@ -1,6 +1,8 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import type { IPluginAPI } from 'build-scripts';
 import getCompileDeps from './getCompileDeps';
+import getCacheContent from './getCacheContent';
 import preBuild from './preBuild';
 import configApp from './configApp';
 
@@ -17,9 +19,9 @@ export interface IRemoteOptions {
   bootstrap?: string;
 }
 
-const remoteRuntime = async (api, options: IRemoteOptions|boolean) => {
+const remoteRuntime = async (api: IPluginAPI, options: IRemoteOptions|boolean) => {
   const { context } = api;
-  const { pkg, command, rootDir } = context;
+  const { pkg, command, rootDir, userConfig } = context;
   const { activeInBuild = false, bootstrap = '', ...rest } = typeof options === 'boolean' ? {} : options;
 
   const activeRemoteRuntime = activeInBuild || command === 'start';
@@ -31,24 +33,24 @@ const remoteRuntime = async (api, options: IRemoteOptions|boolean) => {
   const runtimeDir = path.join(cacheDir, 'remoteRuntime');
   const remoteName = 'remote_runtime';
   const remoteEntry = 'remoteEntry.js';
+  const packageKeys = Object.keys(pkg.dependencies || {});
+  const compilePackages = await getCompileDeps(packageKeys, rootDir, rest);
 
-  const compilePackages = await getCompileDeps(pkg.dependencies, rootDir, rest);
+  // ensure cache dir
+  fse.ensureDirSync(cacheDir);
 
-  // TODO cache compile packages with version and userConfig
-
-  let lastCache = {};
+  let lastCache = '';
   try {
-    lastCache = fse.readJSONSync(cacheFile);
+    lastCache = fse.readFileSync(cacheFile, 'utf-8');
   } catch(err) {
-    // ignore err when read json
+    // ignore err when read file
   }
-  const cacheContent = JSON.stringify(compilePackages);
-  const needPreBuild = JSON.stringify(lastCache) !== cacheContent;
+  const cacheContent = getCacheContent({ compilePackages, rootDir, userConfig });
+  const needPreBuild = lastCache !== cacheContent;
 
   if (needPreBuild) {
     preBuild(api, { remoteName, remoteEntry, runtimeDir, cacheFile, cacheDir, cacheContent, compilePackages });
   }
-
   // modify webpack config for main app
   configApp(api, { remoteName, bootstrap, compilePackages, remoteEntry, runtimeDir});
 };

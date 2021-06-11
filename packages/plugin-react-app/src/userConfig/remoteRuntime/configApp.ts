@@ -5,6 +5,7 @@ import { IPluginAPI } from 'build-scripts';
 export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePackages, runtimeDir }) => {
   const { context, getValue, modifyUserConfig, onGetWebpackConfig } = api;
   const { rootDir } = context;
+  const runtimePublicPath = 'remoteRuntime';
   // create bootstrap for main app
   let bootstrapEntry = '';
   if (!bootstrap) {
@@ -23,6 +24,10 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
         name: 'app',
         remoteType: 'window',
         remotes: [remoteName],
+        shared: [
+          'react',
+          'react-dom',
+        ],
       },
       sourceDir: 'src',
     };
@@ -31,7 +36,7 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
   onGetWebpackConfig((config) => {
     config.plugin('CopyWebpackPlugin').tap(([args]) => {
       // serve remoteRuntime folder
-      return [[...args, { from: runtimeDir, to: path.join(args[0].to, 'remoteRuntime') }]];
+      return [[...args, { from: runtimeDir, to: path.join(args[0].to, runtimePublicPath) }]];
     });
 
     // modify entry by onGetWebpackConfig while polyfill will take effect with src/app
@@ -44,9 +49,10 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
     });
     config.entry('index').add(bootstrapEntry);
     // eslint-disable-next-line global-require
-    const AddAssetHtmlPlugin = require('@builder/pack/deps/add-asset-html-webpack-plugin');
+    const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
     config.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
-      filepath: '/remoteRuntime/remoteEntry.js'
+      filepath: path.resolve(runtimeDir, remoteEntry),
+      publicPath: `/${runtimePublicPath}`,
     }]).after('HtmlWebpackPlugin');
   });
 };

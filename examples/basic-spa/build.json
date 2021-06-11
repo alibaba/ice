@@ -1,4 +1,5 @@
 {
+  "remoteRuntime": true,
   "modularImportRuntime": true,
   "ignoreHtmlTemplate": false,
   "plugins": [],
