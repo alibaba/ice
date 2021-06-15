@@ -5,11 +5,11 @@ import { IPlugin, Json } from '@alib/build-scripts';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
   const { uniqueName, umd, library } = options as Json;
-  const { rootDir, webpack, pkg, commandArgs, command, userConfig } = context;
-  const { sourceMap } = userConfig;
+  const { rootDir, webpack, pkg, commandArgs, userConfig, command } = context;
   const iceTempPath = getValue('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
+  const isDev = command === 'start';
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
   onGetWebpackConfig((config) => {
@@ -27,17 +27,36 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
       config.output.jsonpFunction(`webpackJsonp_${uniqueName}`);
     }
 
-    // source-map
-    if (sourceMap || command === 'start') {
-      const publicPath = config.output.get('publicPath') ?? '/';
-      const port = commandArgs.port;
-      const servePath = publicPath === '/' ? `http://localhost:${port}` : publicPath;
+    /**
+     * For no need to change if souceMap type is inline、hidden or eval.
+     */
+    const devtool = String(config.toConfig().devtool);
+    const inlineOrHiddenSourceMap = ['inline', 'eval', 'hidden'].some(type => devtool.includes(type));
 
+    if (!inlineOrHiddenSourceMap) {
+      const { devtoolFallbackModuleFilenameTemplate, devtoolNamespace } = config.toConfig().output;
+      const cheap = devtool.includes('cheap');
+      const moduleMaps = devtool.includes('module');
+      const noSources = devtool.includes('nosources');
+
+      const publicPath = isDev ?  userConfig.devPublicPath : config.output.get('publicPath') ?? '/';
+      const port = commandArgs.port;
+      const isHttps = commandArgs?.https;
+      const servePath = publicPath === '/' ? `http${isHttps ? 's' : ''}://localhost:${port}` : publicPath;
+
+      // set devtool to false
       config.devtool(false);
+      // then set SourceMapDevToolPlugin manually.
+      // refer to https://github.com/webpack/webpack/blob/master/lib/WebpackOptionsApply.js#L188
       config.plugin('SourceMapDevToolPlugin')
         .use((webpack as any).SourceMapDevToolPlugin, [{
           append: `\n//# sourceMappingURL=${servePath}/[file].map`,
           filename: '[file].map',
+          fallbackModuleFilenameTemplate: devtoolFallbackModuleFilenameTemplate,
+          module: moduleMaps ? true : !cheap,
+          columns: !cheap,
+          noSources,
+          namespace: devtoolNamespace
         }]);
     }
 
@@ -47,7 +66,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
       config.output
         .library(libraryName)
         .libraryTarget('umd');
-      
+
       // collect entry
       const entries = config.toConfig().entry;
       const entryList = [];
