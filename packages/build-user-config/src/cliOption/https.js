@@ -3,11 +3,14 @@ const fs = require('fs');
 
 module.exports = async (config, https, context) => {
   const { commandArgs }  = context;
+  // Only generate https cert for web task
+  if (config.get('name') !== 'web') return;
   let httpsConfig;
   if (https) {
     try {
       const hosts = ['localhost'];
-      if (commandArgs.host && commandArgs.host !== 'localhost') hosts.push(commandArgs.host);
+      const host = commandArgs.host || config.devServer.get('host');
+      if (host && host !== 'localhost') hosts.push(host);
       const certInfo = await certificateFor(hosts, { silent: true });
       const key = fs.readFileSync(certInfo.keyFilePath, 'utf8');
       const cert = fs.readFileSync(certInfo.certFilePath, 'utf8');
