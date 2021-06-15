@@ -10,7 +10,7 @@ import { IRouterConfig } from './types';
 
 const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, modifyRoutesComponent, buildConfig, context, createHistory }) => {
   const { router: appConfigRouter = {}, app = {}, renderComponent } = appConfig;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander } = app;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler } = app;
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
@@ -25,7 +25,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     const WrapperedPageErrorBoundary = (props) => {
       if (pageConfig.errorBoundary) {
         return (
-          <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+          <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler || onErrorBoundaryHander}>
             <PageComponent {...props} />
           </ErrorBoundary>
         );

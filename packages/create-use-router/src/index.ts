@@ -2,8 +2,6 @@ import * as pathToRegexpModule from 'path-to-regexp';
 
 const cache = {};
 
-let _initialized = false;
-let _routerConfig = null;
 const router = {
   history: null,
   handles: [],
@@ -194,25 +192,18 @@ function matchRoute(route, baseUrl, pathname, parentParams) {
 function getInitialComponent(routerConfig) {
   let InitialComponent = [];
 
-  if (_routerConfig === null) {
-    if (typeof routerConfig === 'function') {
-      routerConfig = routerConfig();
+  if (process.env.NODE_ENV !== 'production') {
+    if (!routerConfig) {
+      throw new Error('Error: useRouter should have routerConfig.');
     }
-
-    if (process.env.NODE_ENV !== 'production') {
-      if (!routerConfig) {
-        throw new Error('Error: useRouter should have routerConfig.');
-      }
-      if (!routerConfig.history || !routerConfig.routes) {
-        throw new Error('Error: routerConfig should contain history and routes.');
-      }
+    if (!routerConfig.history || !routerConfig.routes) {
+      throw new Error('Error: routerConfig should contain history and routes.');
     }
-    _routerConfig = routerConfig;
   }
-  if (_routerConfig.InitialComponent) {
-    InitialComponent = _routerConfig.InitialComponent;
+  if (routerConfig.InitialComponent) {
+    InitialComponent = routerConfig.InitialComponent;
   }
-  router.history = _routerConfig.history;
+  router.history = routerConfig.history;
 
   return InitialComponent;
 }
@@ -224,10 +215,8 @@ export function createUseRouter(api) {
     const [component, setComponent] = useState(getInitialComponent(routerConfig));
 
     useLayoutEffect(() => {
-      if (_initialized) throw new Error('Error: useRouter can only be called once.');
-      _initialized = true;
-      const history = _routerConfig.history;
-      const routes = _routerConfig.routes;
+      const history = routerConfig.history;
+      const routes = routerConfig.routes;
 
       // @ts-ignore
       router.root = Array.isArray(routes) ? { routes } : routes;
@@ -238,7 +227,7 @@ export function createUseRouter(api) {
       });
 
       // Init path match
-      if (!_routerConfig.InitialComponent) {
+      if (!routerConfig.InitialComponent) {
         matchLocation(history.location);
       }
 
@@ -250,7 +239,7 @@ export function createUseRouter(api) {
         router.removeHandle(handleId);
         unlisten();
       };
-    }, []);
+    }, [routerConfig]);
 
     return { component };
   }
