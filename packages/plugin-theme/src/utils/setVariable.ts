@@ -1,8 +1,10 @@
 import { IOnGetWebpackConfig } from '@alib/build-scripts';
+import { DefinePlugin } from 'webpack';
 import { declVarPlugin } from './plugin';
-import { ThemeVarsType } from './injectThemes';
+import { getThemesDataStr, getThemesData } from './injectThemes';
 
-const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, themeVars: ThemeVarsType) => {
+const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: string) => {
+  const themeVars = getThemesData()[defaultName];
   const pluginsFactory = (type: 'sass' | 'less') => [
     declVarPlugin({ varsMap: themeVars, type })
   ];
@@ -29,6 +31,12 @@ const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, themeVars: ThemeVa
         .options({ plugins: pluginsFactory('sass'), parser: 'postcss-scss' })
         .after('sass-loader');
     });
+
+    config.plugin('define').use(DefinePlugin, [{
+      'THEME_DATA': DefinePlugin.runtimeValue(() => {
+        return getThemesDataStr(defaultName);
+      })
+    }]);
   });
 };
 

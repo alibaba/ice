@@ -28,7 +28,7 @@ const getThemesDataStr = (defaultName: string) => {
     })
     .join(',');
 
-  return themesDataStr;
+  return `{${themesDataStr}}`;
 };
 
 /**

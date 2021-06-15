@@ -4,7 +4,7 @@ import { readdir } from 'fs-extra';
 import { setAPI } from './utils/setAPI';
 import { setVariable } from './utils/setVariable';
 import { ICE_TEMP, PLUGIN_DIR } from './constant';
-import { injectThemes, getThemesData } from './utils/injectThemes';
+import { injectThemes } from './utils/injectThemes';
 import { detectCssFile, getDefaultThemes, getEnableThemes, getThemeName } from './utils/common';
 
 /**
@@ -47,11 +47,7 @@ const plugin: IPlugin = async (api) => {
 
   // TODO: 正式编译过程
   // TODO: less 函数预编译
-  // Less/Scss 文件中的定义的变量转为 css-var
-  const themeVars = getThemesData()[defaultName];
-
-  // Less 变量 value 转为同名 css-var
-  setVariable(onGetWebpackConfig, themeVars);
+  setVariable(onGetWebpackConfig, defaultName);
 };
 
 export default plugin;

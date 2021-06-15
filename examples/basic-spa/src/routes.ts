@@ -1,9 +1,10 @@
 import { lazy, IRouterConfig } from 'ice';
 import Layout from '@/layouts';
+import Home from '@/pages/Home';
 import wrapperPage from '@/components/WrapperPage';
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const Home = lazy(() => import('@/pages/Home'));
+// const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 const Notfound = lazy(() => import('@/pages/NotFound'));
 
