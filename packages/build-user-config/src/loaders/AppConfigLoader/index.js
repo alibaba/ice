@@ -99,14 +99,29 @@ module.exports = function (appJSON) {
     }
   });
 
+  if (appConfig.tabBar && !appConfig.tabBar.custom) {
+    appConfig.tabBar.items = formatTabBarItems(appConfig.tabBar.items);
+  }
+
   return `
     import { createElement } from '${libName}';
     const routes = [];
     ${assembleRoutes.join('\n')}
     const appConfig = {
-      ...${appJSON},
+      ...${JSON.stringify(appConfig)},
       routes
     };
     export default appConfig;
   `;
 };
+
+function formatTabBarItems(tabBarItems) {
+  return tabBarItems.map(item => {
+    const { path, name, text, pageName, ...otherConfigs } = item;
+    return {
+      ...otherConfigs,
+      text: text || name,
+      pageName: pageName || path,
+    };
+  });
+}

@@ -85,7 +85,7 @@ module.exports = (config, mode = 'development') => {
     ['ttf', /\.ttf$/, { mimetype: 'application/octet-stream' }],
     ['eot', /\.eot$/, { mimetype: 'application/vnd.ms-fontobject' }],
     ['svg', /\.svg$/, { mimetype: 'image/svg+xml' }],
-    ['img', /\.(png|jpg|jpeg|gif)$/i],
+    ['img', /\.(png|jpg|webp|jpeg|gif)$/i],
   ].forEach(([type, reg, opts]) => {
     configAssetsRule(config, type, reg, opts || {});
   });
