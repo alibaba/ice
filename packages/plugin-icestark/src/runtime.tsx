@@ -17,7 +17,7 @@ import { IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory, wrapperRouteComponent }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -54,14 +54,31 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
               }
             });
           } else {
-            const { container, customProps = {} } = $$props ?? {};
-            ReactDOM.render(<App {...customProps} />, container, resolve);
+            let { container } = $$props ?? {};
+            if (!container) {
+              container = getMountNode();
+            }
+            ReactDOM.render(<App />, container, resolve);
           }
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }
       });
     });
+
+    const wrapperPageFn = (PageComponent) => (props) => {
+      const { customProps = {} } = $$props ?? {};
+
+      const combinedProps = {
+        ...props,
+        ...customProps,
+      };
+
+      return <PageComponent { ...combinedProps } />;
+    };
+
+    // get props by props
+    wrapperRouteComponent(wrapperPageFn);
 
     const routerProps = {
       type,

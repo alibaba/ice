@@ -18,7 +18,6 @@
     "@babel/types": "^7.11.5",
     "@ice/stark": "^2.0.0",
     "@ice/stark-app": "^1.2.0",
-    "@ice/stark-data": "^0.1.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6"
   },

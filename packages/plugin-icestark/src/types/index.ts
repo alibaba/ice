@@ -12,5 +12,11 @@ export interface IIceStark {
   registerAppEnter?: (mountNode: HTMLElement, App: React.ComponentType, resolve: (value?: unknown) => void) => void;
   registerAppLeave?: (mountNode: HTMLElement) => void;
 
-  [k: string]: any;
+  /**
+   * don't use it in source code
+   */
+  $$props: {
+    container?: HTMLElement;
+    customProps?: object;
+  };
 }
