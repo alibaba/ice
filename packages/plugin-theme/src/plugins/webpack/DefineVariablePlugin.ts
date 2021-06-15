@@ -7,6 +7,9 @@ export interface Options {
   defaultName: string;
 }
 
+/**
+ * 将主题数据在 optimizeChunkAssets 阶段注入到 window 上
+ */
 export class DefineVariablePlugin implements Plugin {
   private readonly pluginName = this.constructor.name;
 
