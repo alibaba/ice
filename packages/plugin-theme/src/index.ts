@@ -45,8 +45,6 @@ const plugin: IPlugin = async (api) => {
   injectThemes(api, jsPath, themesPathList);    // 注入主题数据与变更能力
   setAPI(api, defaultName, themesNames);        // 设置需要 ice 暴露出的 API (Hooks / Provider)
 
-  // TODO: 正式编译过程
-  // TODO: less 函数预编译
   setVariable(onGetWebpackConfig, defaultName);
 };
 

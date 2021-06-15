@@ -1,6 +1,6 @@
 import * as less from 'less';
 import { plugin, TransformCallback } from 'postcss';
-import { getFunction, isFunction, walkerSome, walkerFind } from './common';
+import { getFunction, isFunction, walkerSome, walkerFind } from '../../utils/common';
 
 interface Option {
   data: Record<string, Record<string, string>>,
@@ -97,8 +97,6 @@ export const funcCollectPlugin = plugin('less-sass-analytics', (options: Option)
         data[theme][i] = funcVarMap[theme][i];
       });
     });
-
-    console.log(data);
   };
 });
 

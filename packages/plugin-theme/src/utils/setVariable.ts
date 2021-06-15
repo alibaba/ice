@@ -1,8 +1,8 @@
 import { IOnGetWebpackConfig } from '@alib/build-scripts';
-import { DefinePlugin } from 'webpack';
-import { declVarPlugin } from './plugin';
-import { funcCollectPlugin } from './analytics';
-import { getThemesDataStr, getThemesData } from './injectThemes';
+import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
+import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
+import { funcCollectPlugin } from '../plugins/postcss/funcCollectPlugin';
+import { getThemesData } from './injectThemes';
 
 const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: string) => {
   const themeVars = getThemesData()[defaultName];
@@ -34,12 +34,7 @@ const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: strin
         .after('sass-loader');
     });
 
-    config.plugin('define').use(DefinePlugin, [{
-      'THEME_DATA': DefinePlugin.runtimeValue(() => {
-        console.log(getThemesData());
-        return getThemesDataStr(defaultName);
-      })
-    }]);
+    config.plugin('define').use(DefineVariablePlugin, [{ defaultName }]);
   });
 };
 
