@@ -23,7 +23,7 @@ export class DefineVariablePlugin implements Plugin {
       compilation.hooks.optimizeChunkAssets.tap(this.pluginName, (chunks) => {
         chunks.forEach((chunk) => {
           chunk.files.forEach((fileName) => {
-            if (fileName.indexOf('index') > -1) {
+            if (fileName.includes('index')) {
               compilation.assets[fileName] = new ConcatSource(
                 `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
                 compilation.assets[fileName],

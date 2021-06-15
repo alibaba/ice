@@ -34,7 +34,7 @@ const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: strin
         .after('sass-loader');
     });
 
-    config.plugin('define').use(DefineVariablePlugin, [{ defaultName }]);
+    config.plugin('define-variable-plugin').use(DefineVariablePlugin, [{ defaultName }]);
   });
 };
 

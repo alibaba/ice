@@ -17,7 +17,8 @@ const plugin: IPlugin = async (api) => {
     context,
     log,
     onGetWebpackConfig,
-    getValue
+    getValue,
+    applyMethod
   } = api;
   const { rootDir } = context;
   const themesPath = path.resolve(rootDir, 'src/themes');
@@ -46,6 +47,12 @@ const plugin: IPlugin = async (api) => {
   setAPI(api, defaultName, themesNames);        // 设置需要 ice 暴露出的 API (Hooks / Provider)
 
   setVariable(onGetWebpackConfig, defaultName);
+
+  applyMethod('watchFileChange', /themes\/.*/, async (event: string) => {
+    if (event === 'change' || event === 'add' || event === 'unlink') {
+      log.warn('主题文件发生改变');
+    }
+  });
 };
 
 export default plugin;
