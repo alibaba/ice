@@ -1,11 +1,13 @@
 import { IOnGetWebpackConfig } from '@alib/build-scripts';
 import { DefinePlugin } from 'webpack';
 import { declVarPlugin } from './plugin';
+import { funcCollectPlugin } from './analytics';
 import { getThemesDataStr, getThemesData } from './injectThemes';
 
 const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: string) => {
   const themeVars = getThemesData()[defaultName];
   const pluginsFactory = (type: 'sass' | 'less') => [
+    funcCollectPlugin({ data: getThemesData(), type }),
     declVarPlugin({ varsMap: themeVars, type })
   ];
 
@@ -34,6 +36,7 @@ const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: strin
 
     config.plugin('define').use(DefinePlugin, [{
       'THEME_DATA': DefinePlugin.runtimeValue(() => {
+        console.log(getThemesData());
         return getThemesDataStr(defaultName);
       })
     }]);

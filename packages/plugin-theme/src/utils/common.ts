@@ -1,6 +1,41 @@
 import * as path from 'path';
 import { lstatSync, pathExists, readdir } from 'fs-extra';
 import { curry } from 'lodash';
+import type { Root } from 'postcss';
+
+interface INode {
+  name: string,
+  value: string,
+  node: any
+}
+
+const config = {
+  less: {
+    walker: 'walkAtRules',
+    node: {
+      name: 'name',
+      nameGetter: (str: string) => str,
+      value: 'params',
+    }
+  },
+  sass: {
+    walker: 'walkDecls',
+    node: {
+      name: 'prop',
+      nameGetter: (str: string) => str.slice(1),
+      value: 'value'
+    }
+  }
+};
+
+const getNode = (type: string, node: Root): INode => {
+  const { name, nameGetter, value } = config[type].node;
+  return {
+    name: nameGetter(node[name]),
+    value: node[value],
+    node: config[type].node
+  };
+};
 
 /**
  * 匹配后缀为 `.css` 的文件名
@@ -52,4 +87,50 @@ export const getEnableThemes = async (themesPath: string): Promise<boolean> => {
   if (!stylesExists) return false;
 
   return true;
+};
+
+// TODO: 目前只能做到取一个函数的名字和参数，对于嵌套情况无效...
+export const getFunction = (str: string) => {
+  const list = str.replace(/\s+/g, '').match(/[^(|,|)]+/g);
+
+  return {
+    name: list[0],
+    params: list.slice(1)
+  };
+};
+
+export const isFunction = (str: string) => {
+  // eslint-disable-next-line no-useless-escape
+  const reg = /^[A-Za-z_]+[A-Za-z0-9_-]*[\(][\s\S]*[\)]$/g;
+  return reg.test(str);
+};
+
+// 重新封装后的 postcss 遍历函数 (sync)
+export const walker = (type: string, root: Root, cb: (data: INode) => void) => {
+  return root[config[type].walker](e => cb(getNode(type, e)));
+};
+
+export const walkerSome = (type: string, root: Root, cb: (data: INode) => boolean) => {
+  let result = false;
+  walker(type, root, e => {
+    const value = cb(e);
+    if (value) {
+      result = true;
+      // break
+      return false;
+    }
+  });
+  return result;
+};
+
+export const walkerFind = <T>(type: string, root: Root, cb: (data: INode) => T) => {
+  let result: T;
+  walker(type, root, e => {
+    const value = cb(e);
+    if (value) {
+      result = value;
+      return false;
+    }
+  });
+  return result;
 };

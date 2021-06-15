@@ -3,6 +3,7 @@
 
 $ice-example-bold: #2e2e2e;
 $ice-example-background: #fff;
+$ice-example-light: lighten($ice-example-bold, 10%);
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -23,7 +24,7 @@ body {
 
 .title {
   margin-bottom: 0;
-  color: $ice-example-bold
+  color: $ice-example-light
 }
 
 .desc {
