@@ -52,7 +52,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
     .end();
 
   // register webpack-plugin-import
-  // https://github.com/ice-lab/ice-scripts/tree/master/packages/webpack-plugin-import
+  // https://github.com/alibaba/ice/tree/master/packages/webpack-plugin-import
   baseConfig.plugin('WebpackPluginImport')
     .use(WebpackPluginImport, [[
       {

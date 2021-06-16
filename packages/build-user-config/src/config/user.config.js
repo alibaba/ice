@@ -236,4 +236,9 @@ module.exports = [
     name: 'esbuild',
     validation: 'object'
   },
+  {
+    name: 'experiments',
+    validation: 'object',
+    defaultValue: {},
+  }
 ];

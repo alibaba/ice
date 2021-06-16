@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.6
+
+- chore: change custom tab bar path to `src/components/CustomTabBar/index`
+
 ## 3.2.5
 
 - feat add `props.pageConfig` in Rax App MPA page component
