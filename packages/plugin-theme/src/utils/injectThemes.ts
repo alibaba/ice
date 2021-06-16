@@ -3,6 +3,7 @@ import produce from 'immer';
 import { readFileSync } from 'fs-extra';
 import { IPluginAPI } from '@alib/build-scripts';
 import { getThemeName } from '../utils/common';
+import { getThemeVarsPlugin } from '../plugins/postcss/getThemeVarsPlugin';
 
 interface ThemesDataType {
   [themeKey: string]: ThemeVarsType
@@ -40,13 +41,7 @@ const getThemeVars = (filePath: string): ThemeVarsType => {
   const themeVars: ThemeVarsType = {};
   const css = readFileSync(filePath, 'utf8');
 
-  postcss([(root) => {
-    root.walkDecls(decl => {
-      if (decl.prop && decl.prop.slice(0, 2) === '--') {
-        themeVars[decl.prop.slice(2)] = decl.value;
-      }
-    });
-  }]).process(css).then();
+  postcss([getThemeVarsPlugin({ themeVars })]).process(css, { from: undefined }).then();
 
   return themeVars;
 };
