@@ -12,9 +12,9 @@ export interface IIceStark {
   registerAppEnter?: (mountNode: HTMLElement, App: React.ComponentType, resolve: (value?: unknown) => void) => void;
   registerAppLeave?: (mountNode: HTMLElement) => void;
 
-  /**
-   * don't use it in source code
-   */
+}
+
+export interface InnerIceStark extends IIceStark {
   $$props: {
     container?: HTMLElement;
     customProps?: object;

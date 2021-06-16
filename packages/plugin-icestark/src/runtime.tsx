@@ -13,13 +13,13 @@ import { IceRouter } from '$ice/Router';
 // @ts-ignore
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
-import { IIceStark } from './types';
+import { InnerIceStark, IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
 const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory, wrapperRouteComponent }) => {
   const { icestark, router } = appConfig;
-  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IIceStark;
+  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as InnerIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
 
   if (runtimeModifyRoutes) {
