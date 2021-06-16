@@ -30,16 +30,17 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
     /**
      * For no need to change if souceMap type is inline、hidden or eval.
      */
-    const devtool = String(config.toConfig().devtool);
+    const devtool = config.get('devtool');
     const inlineOrHiddenSourceMap = ['inline', 'eval', 'hidden'].some(type => devtool.includes(type));
 
     if (!inlineOrHiddenSourceMap) {
-      const { devtoolFallbackModuleFilenameTemplate, devtoolNamespace } = config.toConfig().output;
+      const devtoolFallbackModuleFilenameTemplate = config.output.get('devtoolFallbackModuleFilenameTemplate');
+      const devtoolNamespace = config.output.get('devtoolNamespace');
       const cheap = devtool.includes('cheap');
       const moduleMaps = devtool.includes('module');
       const noSources = devtool.includes('nosources');
 
-      const publicPath = isDev ?  userConfig.devPublicPath : config.output.get('publicPath') ?? '/';
+      const publicPath = isDev ? userConfig.devPublicPath : config.output.get('publicPath') ?? '/';
       const port = commandArgs.port;
       const isHttps = commandArgs?.https;
       const servePath = publicPath === '/' ? `http${isHttps ? 's' : ''}://localhost:${port}` : publicPath;
