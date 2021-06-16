@@ -14,7 +14,7 @@ export interface IIceStark {
 
 }
 
-export interface InnerIceStark extends IIceStark {
+export interface IPrivateIceStark extends IIceStark {
   $$props: {
     container?: HTMLElement;
     customProps?: object;
