@@ -71,7 +71,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
 
       const combinedProps = {
         ...props,
-        ...customProps,
+        frameworkProps: customProps,
       };
 
       return <PageComponent { ...combinedProps } />;
