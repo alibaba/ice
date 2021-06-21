@@ -1,15 +1,25 @@
-import { IGetBuiltInPlugins, IPluginList, Json } from '@alib/build-scripts';
+import { IGetBuiltInPlugins, IPluginList, Json } from 'build-scripts';
+import { init } from '@builder/pack/deps/webpack/webpack';
+import { hijackWebpack } from './require-hook';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
+  // enable webpack 5 by default
+  const useWebpack5 = true;
+  init(useWebpack5);
+  hijackWebpack();
+
   if (userConfig.disableRuntime) {
     return [
       'build-plugin-react-app',
       'build-plugin-ice-mpa'
     ];
   }
+  // eslint-disable-next-line
+  const pkg = require('../package.json');
+  process.env.__FRAMEWORK_VERSION__ = pkg.version;
   const coreOptions = {
     'framework': 'react',
     'alias': process.env.__FRAMEWORK_NAME__ || 'ice'

@@ -1,7 +1,11 @@
+const { validation } = require('@builder/app-helpers');
+
 export const USER_CONFIG = [
   {
     name: 'store',
-    validation: 'boolean'
+    validation: (val) => {
+      return validation('store', val, 'object|boolean');
+    }
   },
   {
     name: 'ssr',
@@ -20,6 +24,13 @@ export const USER_CONFIG = [
     name: 'generateRuntime',
     validation: 'boolean',
     defaultValue: false,
+  },
+  {
+    name: 'webpack5',
+    validation: (val) => {
+      return validation('webpack5', val, 'object|boolean');
+    },
+    defaultValue: true,
   }
 ];
 

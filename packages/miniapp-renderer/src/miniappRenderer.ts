@@ -8,7 +8,7 @@ function miniappRenderer(
   const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
-  const { rootId, ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
+  const { rootId = 'root', ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
 
   emitLifeCycles();
   class App extends Component {
@@ -32,8 +32,7 @@ function miniappRenderer(
       return appInstance;
     }
   }
-
-  (window as any).__pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
+  const pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
     return {
       path: source,
       render() {
@@ -54,9 +53,17 @@ function miniappRenderer(
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
         document = value;
+        // @ts-ignore
+        const MiniAppGlobalInstance = getApp();
+        const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
+        if (typeof dispatchDocumentModify === 'function') {
+          dispatchDocumentModify.call(MiniAppGlobalInstance, value);
+        }
       }
     };
   });
+
+  (window as any).__pagesRenderInfo = ((window as any).__pagesRenderInfo || []).concat(pagesRenderInfo);
 }
 
 export default miniappRenderer;

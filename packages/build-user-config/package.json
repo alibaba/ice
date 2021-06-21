@@ -1,44 +1,34 @@
 {
   "name": "@builder/user-config",
-  "version": "0.3.2",
+  "version": "0.3.6",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@builder/pack": "^0.2.9",
+    "@babel/helper-module-imports": "^7.13.12",
     "@builder/app-helpers": "^2.0.0",
-    "@nuxtjs/friendly-errors-webpack-plugin": "^2.1.0",
-    "add-asset-html-webpack-plugin": "^3.1.3",
-    "babel-loader": "^8.0.6",
-    "chalk": "^4.0.0",
-    "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.3.1",
-    "debug": "^4.1.1",
-    "esbuild-loader": "^2.9.2",
+    "esbuild-loader": "^2.11.0",
     "eslint-loader": "^4.0.0",
-    "eslint-reporting-webpack-plugin": "^0.1.0",
-    "fork-ts-checker-webpack-plugin": "^5.0.5",
     "fs-extra": "^8.1.0",
+    "fork-ts-checker-webpack-plugin": "^5.0.5",
     "loader-utils": "^2.0.0",
-    "lodash": "^4.17.15",
-    "mkcert": "^1.2.0",
-    "path-exists": "^4.0.0",
-    "postcss-plugin-rpx2vw": "^0.0.2",
-    "react-dev-utils": "^10.2.1",
     "regenerator-runtime": "^0.13.3",
-    "webpack-bundle-analyzer": "^3.6.0",
+    "react-dev-utils": "^10.2.1",
     "webpack-dev-mock": "^1.0.1",
     "webpack-plugin-import": "^0.2.6",
     "@swc/core": "^1.2.50",
-    "swc-loader": "^0.1.12"
+    "swc-loader": "^0.1.12",
+    "trusted-cert": "^1.0.0"
   },
   "files": [
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-user-config"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

@@ -20,12 +20,12 @@
     "loglevel": "^1.6.6"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24",
+    "build-scripts": "^1.0.0",
     "typescript": "^4.0.0"
   },
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-logger"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

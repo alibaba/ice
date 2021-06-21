@@ -27,6 +27,11 @@ interface IRenderDataRegistration {
   (renderDataFunction: IRenderData): IRenderData;
 }
 
+interface ITemplateOptions {
+  templateDir: string;
+  targetDir: string;
+}
+
 type IRenderTempalte = [string, string, IRenderData];
 
 const RENDER_WAIT = 500;
@@ -187,10 +192,11 @@ export default class Generator {
     }
   }
 
-  public addTemplateDir = (templateDir: string, extraData: IRenderData = {}) => {
+  public addTemplateDir = (template: string|ITemplateOptions, extraData: IRenderData = {}) => {
+    const { templateDir, targetDir } = typeof template === 'string' ? { templateDir: template, targetDir: ''} : template;
     const templates = globby.sync(['**/*'], { cwd: templateDir });
     templates.forEach((templateFile) => {
-      this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, templateFile), extraData);
+      this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, targetDir, templateFile), extraData);
     });
     if (this.rerender) {
       this.debounceRender();
@@ -224,8 +230,8 @@ export default class Generator {
       fse.ensureDirSync(path.dirname(realTargetPath));
       fse.writeFileSync(realTargetPath, content, 'utf-8');
     } else {
-      fse.ensureDirSync(targetPath);
-      fse.copyFileSync(targetPath, targetPath);
+      fse.ensureDirSync(path.dirname(targetPath));
+      fse.copyFileSync(templatePath, targetPath);
     }
   }
 

@@ -1,5 +1,7 @@
 const defaultConfig = {
-  plugins: [['postcss-preset-env', {
+  plugins: [['@builder/pack/deps/postcss-preset-env', {
+    // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
+    stage: 3,
     browsers: [
       'last 2 versions',
       'Firefox ESR',

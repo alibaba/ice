@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 const plugin: IPlugin = async (api): Promise<void> => {
   const { context, getValue, applyMethod } = api;

@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.3.6
+
+- [feat] use trusted-cert to generate ca
+- [feat] add `experiments` to userConfig
+- [fix] SPA `route.targets` field
+- [fix] regexp for inject core-js
+- [fix] require order of polyfill
+
+## 0.3.5
+
+- [feat] add `props.pageConfig` in Rax App SPA page component
+
+## 0.3.4
+
+- [fix] remove deprecated api of esbuild-loader
+
+## 0.3.3
+
+- [feat] support resolve absolute cli options module path
+
 ## 0.3.2
 
 - [fix] custom config of terserOptions

@@ -1,10 +1,9 @@
 const {
-  ESBuildPlugin,
   ESBuildMinifyPlugin
 } = require('esbuild-loader');
 
 const defaultOptions = {
-  target: 'es5',
+  target: 'es2015',
 };
 
 module.exports = (config, options) => {
@@ -16,6 +15,5 @@ module.exports = (config, options) => {
       ...defaultOptions,
       ...options,
     }]);
-    config.plugin('ESBuildPlugin').use(ESBuildPlugin);  
   }
 };

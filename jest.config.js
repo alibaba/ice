@@ -1,4 +1,13 @@
+const { getHookFiles } = require('./packages/icejs/lib/require-hook');
+
+const moduleNameMapper = getHookFiles().reduce((mapper, [id, value]) => {
+  mapper[`^${id}$`] = value;
+  return mapper;
+}, {});
+
 module.exports = {
+  moduleNameMapper,
+  // 'testRunner': 'jest-circus/runner',
   'coverageDirectory': './coverage/',
   'testEnvironment': 'node',
   'collectCoverage': true,
@@ -13,7 +22,7 @@ module.exports = {
   'testPathIgnorePatterns': [
     '/node_modules/',
     '/lib/',
-    'create-cli-utils/'
+    'create-cli-utils/',
   ],
   'preset': 'ts-jest'
 };

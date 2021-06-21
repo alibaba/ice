@@ -46,22 +46,30 @@ module.exports = function (appJSON) {
         const reference = mod.default;
         function Component(props) {
           ${routeTitle ? `document.title="${routeTitle}"` : ''}
-          return createElement(reference, Object.assign({}, routeProps, props));
+          return createElement(reference, { pageConfig: ${JSON.stringify(route)}, ...routeProps, ...props });
         }
         Component.__path = '${route.path}';
         Component.getInitialProps = reference.getInitialProps;
         return Component;
       })
     `;
-    const importComponentInClient = `() => () => require('${formatPath(pageSource)}').default`;
-    // without useRouter
-    const importComponentInServer = `() => require('${formatPath(pageSource)}').default`;
+
+    const importComponentDirectly = `() => {
+      function Component(props) {
+        return createElement(require('${formatPath(pageSource)}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
+      }
+      return Component;
+    }`;
+
+    // For rax-use-router lazy load page component
+    const importComponentInClient = `() => ${importComponentDirectly}`;
 
     let importComponent;
     if (target === 'web') {
       importComponent = dynamicImportComponent;
     } else if (target === 'ssr') {
-      importComponent = importComponentInServer;
+      // without useRouter
+      importComponent = importComponentDirectly;
     } else {
       importComponent = importComponentInClient;
     }
@@ -76,6 +84,8 @@ module.exports = function (appJSON) {
   const assembleRoutes = [];
 
   appConfig.routes.forEach((route) => {
+    // Only add page when route has targets field and includes target
+    if (route.targets && !route.targets.includes(target)) return;
     // Set page title: Web use document.title; Weex need Native App support title api;
     // Default route title: appConfig.window.title
     if (route.source) {

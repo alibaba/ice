@@ -1,33 +1,85 @@
-import { render, createElement } from 'rax';
+import { render, createElement, Component, Fragment } from 'rax';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken, isNode } from 'universal-env';
-
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '<%= globalStyle %>'
+  import '<%= globalStyle %>';
 <% } %>
 
-import Component from '<%- resourcePath %>';
+import PageComponent from '<%- resourcePath %>';
+
+const extraElements = [];
+
+<% if (showTabBar) {%>
+  // eslint-disable-next-line
+  import TabBar from  '<%= tabBarPath %>';
+
+  const currentPageName = '<%= entryName %>';
+
+  class TabBarWrapper extends Component {
+    handleTabItemClick = ({ path, pageName }) => {
+      if (path) {
+        (window as any).location.href = path;
+      } else {
+        (window as any).location.href = `./${pageName}.html`;
+      }
+    }
+    render() {
+      return <Fragment x-if={isNode || !(window as any).pha}>
+        <% if (tabBarPath.indexOf('.rax') > -1) {%>
+          <TabBar config={<%- tabBarConfig %>} onClick={this.handleTabItemClick} currentPageName={currentPageName} />
+        <% } else { %>
+          <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
+            <TabBar config={<%- tabBarConfig %>} currentPageName={currentPageName} />
+          </div>
+        <% } %>
+      </Fragment>;
+    }
+  };
+
+  extraElements.push(TabBarWrapper);
+<% } %>
+
+class PageWrapper extends Component {
+  render() {
+    return [
+      <PageComponent key='PageComponent' {...this.props} />,
+      extraElements.map((Element, index) => <Element key={index} />),
+    ];
+  }
+}
+
 
 if (!isNode) {
-  const isSSR = window.__INITIAL_DATA__ && window.__INITIAL_DATA__.__SSR_ENABLED__;
+  const isSSR = (window as any).__INITIAL_DATA__ && (window as any).__INITIAL_DATA__.__SSR_ENABLED__;
 
   if (isWeex || isKraken) {
-    render(<Component />, null, { driver: DriverUniversal });
+    render(<PageWrapper pageConfig={<%- pageConfig %> } />, null, { driver: DriverUniversal });
   } else {
     const renderApp = async function() {
-      let comProps = {};
+      let comProps = {
+        pageConfig: <%- pageConfig %>,
+      };
       // process App.getInitialProps
       if (isSSR && window.__INITIAL_DATA__.pageInitialProps !== null) {
-        comProps = window.__INITIAL_DATA__.pageInitialProps;
-      } else if (Component.getInitialProps) {
-        comProps = await Component.getInitialProps();
+        comProps = {
+          ...comProps,
+          ...window.__INITIAL_DATA__.pageInitialProps,
+        };
+      } else if (PageComponent.getInitialProps) {
+        const initialProps = await PageComponent.getInitialProps();
+        comProps = {
+          ...comProps,
+          ...initialProps,
+        };
       }
 
-      render(<Component {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
+      render(<PageWrapper {...comProps} />, document.getElementById('root'), { driver: DriverUniversal, hydrate: <%- hydrate %> });
     }
     renderApp();
   }
 }
 
-export default Component;
+PageWrapper.getInitialProps = PageComponent.getInitialProps;
+
+export default PageWrapper;

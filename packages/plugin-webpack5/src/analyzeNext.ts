@@ -1,4 +1,4 @@
-import { IUserConfig } from '@alib/build-scripts';
+import { IUserConfig } from 'build-scripts';
 
 interface IPluginOptions {
   themePackage?: string | object

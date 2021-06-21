@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-fast-refresh",
-  "version": "1.7.1-0",
+  "version": "1.7.1",
   "description": "A Webpack plugin to enable Fast Refresh (also previously known as Hot Reloading) for React",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -14,8 +14,8 @@
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-fast-refresh"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

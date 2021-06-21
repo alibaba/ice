@@ -1,4 +1,4 @@
-const babelJest = require('babel-jest');
+const babelJest = require('@builder/pack/deps/babel-jest');
 const getBabelConfig = require('../babel');
 const formatWinPath = require('./formatWinPath');
 

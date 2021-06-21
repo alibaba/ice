@@ -1,33 +1,37 @@
 {
   "name": "build-plugin-stark-module",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "description": "build-scripts plugin for build stark module",
   "main": "lib/index.js",
   "files": [
-    "src",
+    "lib",
+    "templates",
     "test",
     "tsconfig.json"
   ],
   "scripts": {
+    "clean": "rimraf lib",
     "start": "tsc -w",
-    "build": "rm -rf lib && tsc",
-    "prepublishOnly": "npm run build",
     "test": "jest",
     "coverage": "codecov"
   },
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-stark-module"
+  },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.20",
+    "build-scripts": "^1.0.0",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
-    "@types/webpack": "^4.41.12",
     "@types/webpack-chain": "^5.2.0",
-    "fs-extra": "^9.0.0",
+    "execa": "^5.0.0",
     "jest": "^25.4.0",
-    "ts-jest": "^25.4.0",
+    "rimraf": "^3.0.2",
     "typescript": "^4.0.0",
-    "webpack-chain": "^6.4.0"
+    "ts-jest": "^25.4.0",
+    "ts-node": "^9.1.1"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
@@ -35,7 +39,10 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "build-scripts-config": "^0.1.7",
-    "fs-extra": "^9.0.0"
+    "build-scripts-config": "^2.0.0",
+    "fs-extra": "^9.0.0",
+    "chalk": "^4.1.0",
+    "handlebars": "^4.7.6",
+    "webpack-chain": "^6.4.0"
   }
 }

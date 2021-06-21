@@ -1,4 +1,4 @@
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 import * as path from 'path';
 import * as  PrerenderSPAPlugin from 'prerender-spa-plugin';
 

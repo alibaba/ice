@@ -11,3 +11,12 @@ export const MINIAPP_PAGE_LIFECYCLE = {
   [SHOW]: 'miniapp_pageshow',
   [HIDE]: 'miniapp_pagehide'
 };
+
+export const DEFAULE_APP_CONFIG = {
+  app: {
+    rootId: 'root'
+  },
+  router: {
+    type: 'hash'
+  }
+};

@@ -243,4 +243,9 @@ module.exports = [
       return validation('swc', val, 'boolean|object');
     },
   },
+  {
+    name: 'experiments',
+    validation: 'object',
+    defaultValue: {},
+  }
 ];

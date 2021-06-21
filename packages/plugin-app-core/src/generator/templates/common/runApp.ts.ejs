@@ -1,5 +1,5 @@
 import { createElement, useEffect, Component } from '<%- framework %>';
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isWeb } from 'universal-env';
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
 import { IAppConfig, IBuildConfig } from './types';
@@ -35,6 +35,7 @@ const {
   createHistory,
   getHistory,
   emitLifeCycles,
+  setHistory,
   usePageShow,
   usePageHide,
   withPageLifeCycle,
@@ -46,8 +47,7 @@ const {
 } = createShareAPI({
   createElement,
   useEffect,
-  withRouter: defaultWithRouter,
-  initHistory: buildConfig.router !== false,
+  withRouter: defaultWithRouter
 }, loadRuntimeModules);
 
 export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
@@ -55,7 +55,7 @@ export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
   <% if(isRax){ %>
     renderer = raxAppRenderer;
   <% } %>
-  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp) && !isWeb) {
+  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
     renderer = miniappRenderer;
   }<% if(isReact){ %> else {
     renderer = reactAppRenderer;
@@ -69,6 +69,7 @@ export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
     createBaseApp,
     createHistory,
     getHistory,
+    setHistory,
     emitLifeCycles,
     pathRedirect,
     loadStaticModules,

@@ -1,4 +1,4 @@
-import { lazy } from 'ice';
+import { lazy, IRouterConfig } from 'ice';
 import Layout from '@/layouts';
 import wrapperPage from '@/components/WrapperPage';
 
@@ -7,7 +7,7 @@ const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 const Notfound = lazy(() => import('@/pages/NotFound'));
 
-export default [
+const routes: IRouterConfig[] = [
   {
     path: '/',
     component: Layout,
@@ -35,3 +35,5 @@ export default [
     ]
   }
 ];
+
+export default routes;

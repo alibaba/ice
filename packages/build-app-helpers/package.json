@@ -1,6 +1,6 @@
 {
   "name": "@builder/app-helpers",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "build helpers for app framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -13,8 +13,8 @@
     "lib"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-app-helpers"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

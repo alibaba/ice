@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-fusion",
-  "version": "0.1.13",
+  "version": "0.1.15",
   "description": "plugin for build scripts while use fusion component",
   "main": "lib/index.js",
   "scripts": {
@@ -30,5 +30,9 @@
   "peerDependencies": {
     "sass": "^1.0.0",
     "webpack": "^4.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-fusion"
   }
 }

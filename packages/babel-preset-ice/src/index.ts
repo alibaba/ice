@@ -19,36 +19,35 @@ function resolvePlugin(plugins) {
 export default (opts: IOpts = {}) => {
   const plugins = [
     // Stage 0
-    '@babel/plugin-proposal-function-bind',
+    '@builder/pack/deps/@babel/plugin-proposal-function-bind',
     // Stage 1
-    '@babel/plugin-proposal-export-default-from',
-    '@babel/plugin-proposal-logical-assignment-operators',
-    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
-    ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
-    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
-    '@babel/plugin-proposal-do-expressions',
+    '@builder/pack/deps/@babel/plugin-proposal-export-default-from',
+    '@builder/pack/deps/@babel/plugin-proposal-logical-assignment-operators',
+    ['@builder/pack/deps/@babel/plugin-proposal-optional-chaining', { loose: false }],
+    ['@builder/pack/deps/@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
+    ['@builder/pack/deps/@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
+    '@builder/pack/deps/@babel/plugin-proposal-do-expressions',
     // Stage 2
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-    '@babel/plugin-proposal-function-sent',
-    '@babel/plugin-proposal-export-namespace-from',
-    '@babel/plugin-proposal-numeric-separator',
-    '@babel/plugin-proposal-throw-expressions',
+    ['@builder/pack/deps/@babel/plugin-proposal-decorators', { legacy: true }],
+    '@builder/pack/deps/@babel/plugin-proposal-function-sent',
+    '@builder/pack/deps/@babel/plugin-proposal-export-namespace-from',
+    '@builder/pack/deps/@babel/plugin-proposal-numeric-separator',
+    '@builder/pack/deps/@babel/plugin-proposal-throw-expressions',
     // Stage 3
-    '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-syntax-import-meta',
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    '@babel/plugin-proposal-json-strings',
+    '@builder/pack/deps/@babel/plugin-syntax-dynamic-import',
+    '@builder/pack/deps/@babel/plugin-syntax-import-meta',
+    '@builder/pack/deps/@babel/plugin-proposal-json-strings',
   ];
 
   return {
     presets: resolvePlugin([
       opts.env && [
-        '@babel/preset-env', opts.env,
+        '@builder/pack/deps/@babel/preset-env', opts.env,
       ],
-      opts.typescript && '@babel/preset-typescript',
+      opts.typescript && '@builder/pack/deps/@babel/preset-typescript',
       opts.react && (typeof opts.react === 'boolean'
-        ? '@babel/preset-react'
-        : ['@babel/preset-react', opts.react]
+        ? '@builder/pack/deps/@babel/preset-react'
+        : ['@builder/pack/deps/@babel/preset-react', opts.react]
       ),
     ]),
     plugins: resolvePlugin(plugins),

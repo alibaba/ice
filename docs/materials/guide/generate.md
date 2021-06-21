@@ -21,7 +21,6 @@ iceworks 会遍历所有物料，批量查询每个物料的 npm 信息，并将
 - name：物料名称，来源自 `package.json` 中的 `name`
 - components：包含所有组件信息的数组
 - blocks：包含所有区块信息的数组
-- pages: 包含所有页面信息的数组
 - scaffolds：包含所有项目模版信息的数组
 - description：（可选）物料描述，来源自 `package.json` 中的 `description`
 - logo：（可选）物料品牌 logo，来源自 `package.json` 中的 `materialConfig`

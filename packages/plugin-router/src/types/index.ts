@@ -22,4 +22,6 @@ export interface IRouterConfig extends DefaultRouteProps {
   redirect?: string;
 
   component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+
+  wrappers?: ((PageComponent: React.ComponentType<any>) => (props: object) => JSX.Element)[];
 }
