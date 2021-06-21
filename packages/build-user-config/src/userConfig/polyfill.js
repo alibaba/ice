@@ -51,12 +51,10 @@ module.exports = (config, polyfill) => {
   modifyEnv(config, envOptions);
 };
 
-function addTransformRuntime(config, swc) {
-  if (!swc) {
-    injectTransformRuntime(config);
-  }
+function addTransformRuntime(config) {
+  injectTransformRuntime(config);
 }
 
-function modifyEnv(config, envOptions, swc) {
+function modifyEnv(config, envOptions) {
   processPresetEnv(config, envOptions);
 }
