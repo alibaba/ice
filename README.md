@@ -1,5 +1,7 @@
 English | [简体中文](./README_zh-CN.md)
 
+# icejs
+
 <p align="center">
   <a href="https://www.npmjs.com/package/ice.js"><img src="https://badgen.net/npm/dm/ice.js" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/ice.js"><img src="https://badgen.net/npm/v/ice.js" alt="Version"></a>
@@ -8,7 +10,7 @@ English | [简体中文](./README_zh-CN.md)
   <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 </p>
 
-> A universal framework based on React.js
+A universal framework based on React.js, [Docs](https://ice.work/).
 
 ## Features
 
