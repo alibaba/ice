@@ -1,10 +1,10 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPlugin, Json } from '@alib/build-scripts';
-import analyzeNext from './analyzeNext';
-import filterPackages, { IFilterOptions, IRule } from './filterPackages';
+import getCompileDeps, { IFilterOptions, IRule } from './filterPackages';
 import remoteConfig from './remoteConfig';
-import compileRemote from './compileRemote';
+import preBuild from './preBuild';
+import getCacheContent from './getCacheContent';
 
 interface IRemoteOptions extends IFilterOptions {
   activeInBuild: boolean;
@@ -22,81 +22,46 @@ interface IOptions {
 const plugin: IPlugin = async (api, options = {}) => {
   const { onGetWebpackConfig, registerUserConfig, context } = api;
   const { remoteRuntime, bootstrap, cacheLog } = options as IOptions;
-  const { pkg, userConfig, webpack, command } = context;
+  const { pkg, userConfig, webpack, command, rootDir } = context;
   const { ModuleFederationPlugin } = (webpack as any).container;
 
   // only active in development mode
   const activeRemoteRuntime = command === 'start' && remoteRuntime;
-
-  const cacheFolder = path.join(context.rootDir, 'node_modules', '.cache', 'runtime');
-  const depsPath = path.join(cacheFolder, 'deps.json');
-  const runtimeFolder = path.join(cacheFolder, 'remoteRuntime');
-  const remoteName = 'remote_runtime';
-  const remoteEntry = 'remoteEntry.js';
-  const injectBundles = [];
-
-  const pkgDeps = {
-    ...(pkg.dependencies as Json || {}),
-    ...(pkg.devDependencies as Json || {}),
-  };
-
-  // external react and react-dom in case of cause error when bundle multi instance
-  const externalMap = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  };
-  const externals = [];
-  if (userConfig?.externals) {
-    externals.push(userConfig.externals);
-  }
-  if (!(userConfig?.externals as Json)?.react) {
-    externals.push(externalMap);
-  }
-  // filter dependencies
-  let compileKeys = activeRemoteRuntime ? await filterPackages(Object.keys(pkgDeps), context.rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {}) : [];
-  let needCompile = false;
-
   if (activeRemoteRuntime) {
-    let cssPath = '';
-    // read pkgDep from cache
-    let cacheContent = {};
+    const cacheDir = path.join(rootDir, 'node_modules', '.cache', 'runtime');
+    const cacheFile = path.join(cacheDir, 'cache.json');
+    const runtimeDir = path.join(cacheDir, 'remoteRuntime');
+    const remoteName = 'remote_runtime';
+    const remoteEntry = 'remoteEntry.js';
+    let needCompile = false;
+    let lastCache = '';
+
+    const pkgDeps = {
+      ...(pkg.dependencies as Json || {}),
+      ...(pkg.devDependencies as Json || {}),
+    };
+
+    // filter dependencies
+    const compilePackages = activeRemoteRuntime ? await getCompileDeps(Object.keys(pkgDeps), rootDir, typeof remoteRuntime !== 'boolean' ? remoteRuntime : {}) : [];
+    const cacheContent = getCacheContent({ compilePackages, rootDir, userConfig });
+    
     try {
-      cacheContent = fse.readJSONSync(depsPath);
+      lastCache = fse.readFileSync(cacheFile, 'utf-8');
     } catch(err) {
-      // ignore err
-    }
-    if (pkgDeps['@alifd/next']) {
-      // check @alifd/next
-      const [nextCSS, removePackage] = analyzeNext(userConfig, context.rootDir);
-      cssPath = nextCSS;
-      if (removePackage) {
-        // compile next
-        delete pkgDeps[removePackage];
-        compileKeys = compileKeys.filter(compileKey => compileKey !== removePackage);
-      }
+      // ignore err when read file
     }
     // check deps after remote package
-    needCompile = activeRemoteRuntime && JSON.stringify(compileKeys) !== JSON.stringify(cacheContent);
+    needCompile = activeRemoteRuntime && lastCache !== cacheContent;
     // ensure folder before compile and copy
-    fse.ensureDirSync(runtimeFolder);
-    const externalBundles = [
-      ['react.js', require.resolve('react/umd/react.development.js')],
-      ['react-dom.js', require.resolve('react-dom/umd/react-dom.development.js')],
-      ...(cssPath ? [['next.css' ,cssPath]]: []),
-    ];
-    injectBundles.push(`/remoteRuntime/${remoteEntry}`);
-    // copy external bundles
-    externalBundles.forEach(([fileName, filePath]) => {
-      fse.copyFileSync(filePath, path.join(runtimeFolder, fileName));
-      injectBundles.push(`/remoteRuntime/${fileName}`);
-    });
-    remoteConfig(api, { remoteName, runtimeFolder, injectBundles, externals, compileKeys, bootstrap });
-  }
-  // if missmatch cache compile remote runtime
-  if (needCompile) {
-    compileRemote(api, { runtimeFolder, cacheFolder, externals, remoteEntry, remoteName, depsPath, compileKeys });
-  }
+    fse.ensureDirSync(runtimeDir);
+    remoteConfig(api, { remoteName, runtimeDir, remoteEntry, compilePackages, bootstrap });
 
+    // if mismatch cache compile remote runtime
+    if (needCompile) {
+      preBuild(api, { runtimeDir, cacheDir, cacheContent, remoteEntry, remoteName, cacheFile, compilePackages });
+    }
+  }
+  
   registerUserConfig({
     name: 'moduleFederation',
     validation: 'object',
