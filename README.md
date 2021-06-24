@@ -1,5 +1,7 @@
 English | [简体中文](./README_zh-CN.md)
 
+# icejs
+
 <p align="center">
   <a href="https://www.npmjs.com/package/ice.js"><img src="https://badgen.net/npm/dm/ice.js" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/ice.js"><img src="https://badgen.net/npm/v/ice.js" alt="Version"></a>
@@ -8,7 +10,7 @@ English | [简体中文](./README_zh-CN.md)
   <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
 </p>
 
-> A universal framework based on React.js
+A universal framework based on React.js, [Docs](https://ice.work/).
 
 ## Features
 
@@ -17,7 +19,6 @@ English | [简体中文](./README_zh-CN.md)
 - 🐯 **State management**：Built-in icestore, lightweight state management solution based on React Hooks
 - 🐦 **Config**：Modes and Environment Variables configuration in the config file
 - 🐶 **Logger**：Built-in logger solution, it's a flexible abstraction over using `console.log` as well
-- 🐱 **Helpers**：Built-in helpers, provide some useful utility functions
 - 🦁 **Application configuration**：Provide powerful and extensible application configuration
 - 🐴 **Hooks**：Provide Hooks APIs such as useModel and useHistory, etc
 - 🐌 **Plugin system**：The plugin system provides rich features and allow the community to build reusable solutions
@@ -26,7 +27,7 @@ English | [简体中文](./README_zh-CN.md)
 
 ## Quick start
 
-### Setup by AppWorks
+### Setup by VS Code
 
 We recommend creating a new icejs app using [AppWorks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks):
 
@@ -54,62 +55,6 @@ $ npm run start # running on http://localhost:3333.
 
 It's as simple as that!
 
-### Manual Setup
-
-icejs is really easy to get started with. Install `ice.js`, `react` and `react-dom` in your project:
-
-```bash
-$ mkdir <project-name> && cd <project-name>
-$ npm install ice.js react react-dom
-```
-
-Open `package.json` and add the following scripts:
-
-```json
-{
-  "name": "project-name",
-  "scripts": {
-    "start": "icejs start",
-    "build": "icejs build"
-  },
-  "dependencies": {
-    "ice.js": "^1.0.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  }
-}
-```
-
-Create the `pages` directory, then create the first page in `pages/index.jsx`:
-
-```jsx
-import React from 'react'
-
-const HomePage = () => {
-  return <div>Welcome to icejs!</div>
-}
-
-export default HomePage
-```
-
-Configure an application information in the `src/app.js` file, but it is optional:
-
-```js
-import { runApp } from 'ice'
-
-const appConfig = {
-  router: {
-    type: 'browser',
-  },
-
-  // more...
-}
-
-runApp(appConfig)
-```
-
-Finally, To start developing your application run `npm run start`. The application is now running on [http://localhost:3333](http://localhost:3333).
-
 ## Examples
 
 - [hello-world](https://codesandbox.io/s/github/ice-lab/icejs/tree/master/examples/hello-world)
@@ -126,37 +71,34 @@ Finally, To start developing your application run `npm run start`. The applicati
 
 Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
+## Contributors
+
 ## Ecosystem
 
-|    Project         |    Version                                 |     Docs    |   Description       |
-|----------------|-----------------------------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] |A universal framework based on react.js|
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] |Micro Frontends solution for large application|
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] |Simple and friendly state for React|
-| [formily]| [![formily-status]][formily-package] | [docs][formily-docs] |Performant, flexible and extensible form solution|
-| [ahooks]| [![ahooks-status]][ahooks-package] | [docs][ahooks-docs] |React Hooks Library|
+| Project    | Version                                | Docs                  | Description                                       |
+| ---------- | -------------------------------------- | --------------------- | ------------------------------------------------- |
+| [icejs]    | [![icejs-status]][icejs-package]       | [docs][icejs-docs]    | A universal framework based on react.js           |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | Micro Frontends solution for large application    |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React               |
+| [formily]  | [![formily-status]][formily-package]   | [docs][formily-docs]  | Performant, flexible and extensible form solution |
+| [ahooks]   | [![ahooks-status]][ahooks-package]     | [docs][ahooks-docs]   | React Hooks Library                               |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
 [icestore]: https://github.com/ice-lab/icestore
-
 [icejs-status]: https://img.shields.io/npm/v/ice.js.svg
 [icestark-status]: https://img.shields.io/npm/v/@ice/stark.svg
 [icestore-status]: https://img.shields.io/npm/v/@ice/store.svg
-
 [icejs-package]: https://npmjs.com/package/ice.js
 [icestark-package]: https://npmjs.com/package/@ice/stark
 [icestore-package]: https://npmjs.com/package/@ice/store
-
 [icejs-docs]: https://ice.work/docs/guide/intro
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
-
 [formily]: https://github.com/alibaba/formily
 [formily-status]: https://img.shields.io/npm/v/@formily/react.svg
 [formily-package]: https://npmjs.com/package/@formily/react
 [formily-docs]: https://formilyjs.org/
-
 [ahooks]: https://github.com/alibaba/hooks
 [ahooks-status]: https://img.shields.io/npm/v/ahooks.svg
 [ahooks-package]: https://npmjs.com/package/ahooks
@@ -164,9 +106,9 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 ## Community
 
-| DingTalk community                               | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
+| DingTalk community                                                                                                                      | GitHub issues | Gitter   |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]      | [gitter] |
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
