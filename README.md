@@ -69,6 +69,8 @@ It's as simple as that!
 
 Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
+## Contributors
+
 ## Ecosystem
 
 | Project    | Version                                | Docs                  | Description                                       |
