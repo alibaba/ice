@@ -36,7 +36,8 @@ async function scanImports(globPatterns: string | string [], rootDir: string): P
         const imports = parse(source)[0];
         imports.forEach((importSpecifier) => {
           const importName = importSpecifier.n;
-          if (!importName.startsWith('.')) {
+          // filter source code
+          if (!importName.startsWith('.') && !importName.startsWith('@/') && !importName.startsWith('ice/')) {
             importSet.add(importSpecifier.n);
           }
         });

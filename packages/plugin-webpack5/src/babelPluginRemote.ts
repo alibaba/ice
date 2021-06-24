@@ -21,7 +21,7 @@ const modifyDeclarationSource = (nodePath: IMatchNode, { libs, remoteName }) => 
   const { node } = nodePath;
   if (node.source) {
     const source = node.source.value;
-    if (node.source && isMatchRemote(node.source.value, libs)) {
+    if (node.source && isMatchRemote(node.source.value, libs) && process.env.RRE_BUILD !== 'true') {
       node.source = t.stringLiteral(`${remoteName}/${source}`);
     }
   }
@@ -30,22 +30,30 @@ const modifyDeclarationSource = (nodePath: IMatchNode, { libs, remoteName }) => 
 export default (babel, opts: IOpts) => {
   return {
     visitor: {
-      ImportDeclaration(nodePath: NodePath<t.ImportDeclaration>) {
-        modifyDeclarationSource(nodePath, opts);
+      ImportDeclaration: {
+        exit(nodePath: NodePath<t.ImportDeclaration>) {
+          modifyDeclarationSource(nodePath, opts);
+        }
       },
-      ExportNamedDeclaration(nodePath: NodePath<t.ExportNamedDeclaration>) {
-        modifyDeclarationSource(nodePath, opts);
+      ExportNamedDeclaration: {
+        exit(nodePath: NodePath<t.ExportNamedDeclaration>) {
+          modifyDeclarationSource(nodePath, opts);
+        }
       },
-      ExportAllDeclaration(nodePath: NodePath<t.ExportAllDeclaration>) {
-        modifyDeclarationSource(nodePath, opts);
+      ExportAllDeclaration: {
+        exit(nodePath: NodePath<t.ExportAllDeclaration>) {
+          modifyDeclarationSource(nodePath, opts);
+        }
       },
-      CallExpression(nodePath: NodePath<t.CallExpression>) {
-        const { node } = nodePath;
-        const { libs, remoteName } = opts;
-        if (t.isImport(node.callee)) {
-          const source = (node.arguments[0] as t.StringLiteral).value;
-          if (isMatchRemote(source, libs)) {
-            node.arguments[0] = t.stringLiteral(`${remoteName}/${source}`);
+      CallExpression: {
+        exit(nodePath: NodePath<t.CallExpression>) {
+          const { node } = nodePath;
+          const { libs, remoteName } = opts;
+          if (t.isImport(node.callee)) {
+            const source = (node.arguments[0] as t.StringLiteral).value;
+            if (isMatchRemote(source, libs)) {
+              node.arguments[0] = t.stringLiteral(`${remoteName}/${source}`);
+            }
           }
         }
       },

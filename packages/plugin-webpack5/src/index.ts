@@ -51,7 +51,7 @@ const plugin: IPlugin = async (api, options = {}) => {
       // ignore err when read file
     }
     // check deps after remote package
-    needCompile = activeRemoteRuntime && lastCache !== cacheContent;
+    needCompile = activeRemoteRuntime && (lastCache.trim() !== cacheContent.trim());
     // ensure folder before compile and copy
     fse.ensureDirSync(runtimeDir);
     remoteConfig(api, { remoteName, runtimeDir, remoteEntry, compilePackages, bootstrap });
