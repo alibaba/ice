@@ -345,7 +345,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
       }
 
       if (externalNext && !ignoreTasks.includes(taskName)) {
-        const isUmdTarget = config.output.get('libraryTarget') === 'umd';
+        const isUmdTarget = externalNext === 'umd';
         const externals = [];
         if (userConfig.externals) {
           externals.push(userConfig.externals);
@@ -373,6 +373,9 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
                 commonjs: commonExternal,
                 commonjs2: commonExternal,
               }) : callback(null, [externalKey, upperFirst(camelCase(componentName))]);
+            } else if (nextRegex.test(_context) && /\.(scss|css)$/.test(request)) {
+              // external style files imported by next style.js
+              return callback(null, 'Next');
             }
           }
           return callback();
