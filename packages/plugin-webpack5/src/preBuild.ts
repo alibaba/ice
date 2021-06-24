@@ -76,6 +76,7 @@ export default (api: IPluginAPI, { runtimeDir, cacheDir, remoteEntry, cacheConte
         process.env.RRE_BUILD = '';
         if (err || stats.hasErrors()) {
           reject(err);
+          return;
         }
         // write cache after webpack compile success
         fse.writeFileSync(cacheFile, cacheContent, 'utf-8');
