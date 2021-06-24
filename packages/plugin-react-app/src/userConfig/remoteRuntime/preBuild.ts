@@ -1,9 +1,15 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { IPluginAPI } from 'build-scripts';
+import writeRemoteFile from './writeRemoteFile';
 
 interface IExposes {
   [key: string]: string;
+}
+
+interface IRemoteFiles {
+  packageName: string;
+  exposePath: string;
 }
 
 export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry, cacheFile, cacheContent, compilePackages }) => {
@@ -15,6 +21,8 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
 
   (onHook as any)(`before.${command}.run`, async ({ config: webpackConfig }) => {
     const targetConfig = (webpackConfig.find(({ name }) => name === 'web'));
+    const remoteFiles = await writeRemoteFile(compilePackages, context.rootDir);
+    process.env.RRE_BUILD = 'true';
     const preBuildConfig = {
       ...targetConfig,
       entry: mfEntry,
@@ -49,8 +57,9 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
         new (webpack as any).container.ModuleFederationPlugin({
           name: remoteName,
           filename: remoteEntry,
-          exposes: compilePackages.reduce((pre: IExposes, cur: string) => {
-            pre[`./${cur}`] = cur;
+          exposes: remoteFiles.reduce((pre: IExposes, cur: IRemoteFiles) => {
+            const { packageName, exposePath } = cur;
+            pre[`./${packageName}`] = `./${exposePath}` || packageName;
             return pre;
           }, {}),
           shared: [

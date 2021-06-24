@@ -29,7 +29,7 @@ function getCacheContent(options: ICacheOptions) {
     }
     return false;
   }).filter(Boolean);
-  const cachePackages = compilePackages.map((packageName) => {
+  const cachePackages = compilePackages.sort().map((packageName) => {
     try {
       const packageJson = fse.readJSONSync(require.resolve(path.join(packageName, 'package.json'), { paths: [rootDir]}));
       return `${packageName}: ${packageJson.version}`;
