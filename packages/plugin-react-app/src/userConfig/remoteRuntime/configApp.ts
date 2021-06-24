@@ -27,6 +27,8 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
         shared: [
           'react',
           'react-dom',
+          'react-router',
+          'react-router-dom',
         ],
       },
       sourceDir: 'src',

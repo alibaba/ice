@@ -21,7 +21,7 @@ const modifyDeclarationSource = (nodePath: IMatchNode, { libs, remoteName }) => 
   const { node } = nodePath;
   if (node.source) {
     const source = node.source.value;
-    if (node.source && isMatchRemote(node.source.value, libs)) {
+    if (node.source && isMatchRemote(node.source.value, libs) && process.env.RRE_BUILD !== 'true') {
       node.source = t.stringLiteral(`${remoteName}/${source}`);
     }
   }

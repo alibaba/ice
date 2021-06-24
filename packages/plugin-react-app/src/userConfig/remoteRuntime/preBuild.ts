@@ -65,18 +65,22 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
           shared: [
             'react',
             'react-dom',
+            'react-router',
+            'react-router-dom',
           ],
         }),
       ]
     };
     await new Promise((resolve, reject) => {
-      webpack(preBuildConfig, (err, stat) => {
-        if (err) {
+      webpack(preBuildConfig, (err, stats) => {
+        console.log(err, stats);
+        if (err || stats.hasErrors()) {
           reject(err);
+          return;
         }
         // write cache after webpack compile success
         fse.writeFileSync(cacheFile, cacheContent, 'utf-8');
-        resolve(stat);
+        resolve(stats);
       });
     });
   });
