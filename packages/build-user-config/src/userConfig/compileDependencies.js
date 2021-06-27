@@ -39,7 +39,7 @@ module.exports = (config, compileDependencies) => {
     return /node_modules/.test(filepath);
   };
 
-  ['js', 'jsx', 'ts', 'tsx'].forEach((rule) => {
+  ['jsx', 'ts', 'tsx'].forEach((rule) => {
     config.module
       .rule(rule)
       .exclude.clear()

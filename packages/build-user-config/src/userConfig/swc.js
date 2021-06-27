@@ -41,6 +41,7 @@ module.exports = (config, swcOptions) => {
     const jsOptions = merge({
       jsc: {
         parser: {
+          jsx: true,
           dynamicImport: true,
           functionBind: true,
           exportDefaultFrom: true,
@@ -50,20 +51,15 @@ module.exports = (config, swcOptions) => {
       }
     }, commonOptions);
 
-    ['js', 'jsx'].forEach((ruleName) => {
-      const testRegx = new RegExp(`\\.${ruleName}$`);
-      const options = cloneDeep(jsOptions);
-      options.jsc.parser.jsx = ruleName === 'jsx';
-      config.module
-        .rule(ruleName)
-        .test(testRegx)
-        .exclude.add(EXCLUDE_REGX)
-        .end()
-        .use('swc-loader')
-        .loader(swcLoader)
-        .options(options)
-        .end();
-    });
+    config.module
+      .rule('jsx')
+      .test(/\.jsx?$/)
+      .exclude.add(EXCLUDE_REGX)
+      .end()
+      .use('swc-loader')
+      .loader(swcLoader)
+      .options(jsOptions)
+      .end();
 
     const tsOptions = merge({
       jsc: {

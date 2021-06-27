@@ -33,9 +33,8 @@ function makeLoader() {
     if (Array.isArray(programmaticOptions.presets)) {
       swcPlugins = [...swcPlugins, ...programmaticOptions.presets.reverse()];
     }
-
-    if (swcPlugins.length) {
-      programmaticOptions.plugins = (m) => plugins.call(null, swcPlugins.map((pluginInfo) => {
+    if (swcPlugins.length > 0) {
+      programmaticOptions.plugin = plugins(swcPlugins.map((pluginInfo) => {
         let pluginPath;
         let pluginArgs = {};
         if (Array.isArray(pluginInfo)) {
@@ -51,13 +50,18 @@ function makeLoader() {
         if (!Object.prototype.isPrototypeOf.apply(Visitor, Plugin)) {
           Plugin = Plugin(filename, pluginArgs);
         }
-        return new Plugin().visitProgram(m);
+        // Generate a plugin instance
+        const PluginInstance = new Plugin();
+        PluginInstance.filename = filename;
+        // Return visitProgram method for this plugin, swc plugins will execute it
+        return PluginInstance.visitProgram.bind(PluginInstance);
       }));
     }
 
     // Remove loader related options
     delete programmaticOptions.sync;
     delete programmaticOptions.parseMap;
+    delete programmaticOptions.plugins;
     delete programmaticOptions.presets;
     // auto detect development mode
     if (this.mode && programmaticOptions.jsc && programmaticOptions.jsc.transform
