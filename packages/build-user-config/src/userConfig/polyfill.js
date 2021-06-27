@@ -1,22 +1,28 @@
 const path = require('path');
-const { injectTransformRuntime } = require('@builder/app-helpers');
+const { injectTransformRuntime, modifySwcOptions } = require('@builder/app-helpers');
 const processPresetEnv  = require('../utils/processPresetEnv');
-const addBablePlugins = require('../utils/addBabelPlugins');
+const addBabelPlugins = require('../utils/addBabelPlugins');
 
 const getEntryRegExp = (entryPath) => {
   const entryExtname = path.extname(entryPath);
   return entryExtname ? entryPath : new RegExp(`${entryPath}(.jsx?|.tsx?)$`);
 };
 
-module.exports = (config, polyfill) => {
-  const envOptions = {
-    useBuiltIns: polyfill
-  };
-  if (typeof polyfill === 'string') {
-    // babel options is corejs
-    envOptions.corejs = 3;
+module.exports = (config, polyfill, { userConfig }) => {
+  const envOptions = {};
+
+  const { swc } = userConfig;
+  if (swc) {
+    envOptions.mode = polyfill || undefined;
     // swc option is coreJs
     envOptions.coreJs = 3;
+  } else {
+    envOptions.useBuiltIns = polyfill;
+    // babel options is corejs
+    envOptions.corejs = 3;
+  }
+
+  if (typeof polyfill === 'string') {
     if (polyfill === 'entry') {
       const entries = config.toConfig().entry;
       const rule = config.module.rule('polyfill').test(/\.jsx?|\.tsx?$/);
@@ -40,21 +46,29 @@ module.exports = (config, polyfill) => {
         }
       });
       rule.use('polyfill-loader').loader(require.resolve('../utils/polyfillLoader')).options({});
-      addBablePlugins(config, [[require.resolve('../utils/babelPluginCorejsLock.js'), { fileList }]]);
+      if (!swc) {
+        addBabelPlugins(config, [[require.resolve('../utils/babelPluginCorejsLock.js'), { fileList }]]);
+      }
     } else {
-      addTransformRuntime(config);
+      addTransformRuntime(config, swc);
     }
   } else if (polyfill === false) {
     // inject async/await polyfill
-    addTransformRuntime(config);
+    addTransformRuntime(config, swc);
   }
-  modifyEnv(config, envOptions);
+  modifyEnv(config, envOptions, swc);
 };
 
-function addTransformRuntime(config) {
-  injectTransformRuntime(config);
+function addTransformRuntime(config, swc) {
+  if (!swc) {
+    injectTransformRuntime(config);
+  }
 }
 
-function modifyEnv(config, envOptions) {
-  processPresetEnv(config, envOptions);
+function modifyEnv(config, envOptions, swc) {
+  if (swc) {
+    modifySwcOptions(config, { env: envOptions });
+  } else {
+    processPresetEnv(config, envOptions);
+  }
 }

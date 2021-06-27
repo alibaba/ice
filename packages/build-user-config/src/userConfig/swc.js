@@ -1,79 +1,95 @@
-const { merge } = require('lodash');
+const { cloneDeep, merge } = require('@builder/pack/deps/lodash');
+const SwcPlugin = require('webpack-plugin-swc').default;
 
 const EXCLUDE_REGX = /node_modules/;
 
 module.exports = (config, swcOptions) => {
   if (swcOptions) {
-    if(config.optimization.minimizers.has('TerserPlugin')) {
-      config.optimization.minimizers.delete('TerserPlugin');
-    }
-    const swcLoader = require.resolve('swc-loader');
-    const isDev = process.env.NODE_ENV === 'development';
-    // delete babel rule
+    // Delete babel loader
     ['jsx', 'tsx'].forEach((rule) => {
       config.module.rules.delete(rule).end();
     });
+    const swcLoader = require.resolve('@builder/swc-loader');
+
+    // Delete TerserPlugin and add swc plugin
+    if(config.optimization.minimizers.has('TerserPlugin')) {
+      config.optimization.minimizers.delete('TerserPlugin');
+      config.optimization
+        .minimizer('SwcPlugin')
+        .use(SwcPlugin, [{}]);
+    }
+
     // add swc rule
-    const transformOptions = {
-      'react': {
-        pragma: 'createElement',
-        pragmaFrag: 'Fragment',
-        throwIfNamespace: false,
-        'development': isDev,
+    const commonOptions = {
+      jsc: {
+        transform: {
+          react: {},
+          legacyDecorator: true
+        },
+        externalHelpers: true
       },
-      'legacyDecorator': true
+      module: {
+        'type': 'commonjs',
+         'noInterop': false
+      },
+      env: {
+        loose: true,
+      },
+      ...swcOptions,
     };
 
-    const customOptions = {
-      ...swcOptions,
-      minify: !isDev,
-    };
-    const jsOptions = {
+    const jsOptions = merge({
       jsc: {
         parser: {
-          jsx: true,
           dynamicImport: true,
           functionBind: true,
           exportDefaultFrom: true,
           exportNamespaceFrom: true,
           decorators: true,
         },
-        transform: transformOptions,
-        loose: true
-      },
-    };
+      }
+    }, commonOptions);
 
-    const tsOptions = {
+    ['js', 'jsx'].forEach((ruleName) => {
+      const testRegx = new RegExp(`\\.${ruleName}$`);
+      const options = cloneDeep(jsOptions);
+      options.jsc.parser.jsx = ruleName === 'jsx';
+      config.module
+        .rule(ruleName)
+        .test(testRegx)
+        .exclude.add(EXCLUDE_REGX)
+        .end()
+        .use('swc-loader')
+        .loader(swcLoader)
+        .options(options)
+        .end();
+    });
+
+    const tsOptions = merge({
       jsc: {
         parser: {
           syntax: 'typescript',
           tsx: true,
           dynamicImport: true,
           decorators: true,
-        },
-        transform: transformOptions,
-        loose: true
+        }
       },
-    };
+    }, commonOptions);
 
-    config.module
-      .rule('jsx')
-      .test(/\.jsx?$/)
-      .exclude.add(EXCLUDE_REGX)
-      .end()
-      .use('swc-loader')
-      .loader(swcLoader)
-      .options(merge(jsOptions, customOptions))
-      .end();
+    ['ts', 'tsx'].forEach((ruleName) => {
+      const testRegx = new RegExp(`\\.${ruleName}$`);
+      const options = cloneDeep(tsOptions);
+      options.jsc.parser.tsx = ruleName === 'tsx';
 
-    config.module
-      .rule('tsx')
-      .test(/\.tsx?$/)
-      .exclude.add(EXCLUDE_REGX)
-      .end()
-      .use('swc-loader')
-      .loader(swcLoader)
-      .options(tsOptions, customOptions)
-      .end();
+      config.module
+        .rule(ruleName)
+        .test(testRegx)
+        .exclude.add(EXCLUDE_REGX)
+        .end()
+        .use('swc-loader')
+        .loader(swcLoader)
+        .options(options)
+        .end();
+    });
   }
 };

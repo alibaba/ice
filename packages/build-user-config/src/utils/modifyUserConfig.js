@@ -3,7 +3,7 @@ const { USER_CONFIG_KEY_WITHOUT_BUILD } = require('../config/constants');
 const mergeConfigKeys = ['devServer'];
 
 module.exports = (api, finalyConfigs) => {
-  const { modifyUserConfig, context } = api;
+  const { modifyUserConfig } = api;
   const defaultConfig = {};
   finalyConfigs.forEach(config => {
     if (Object.prototype.hasOwnProperty.call(config, 'defaultValue')) {
@@ -29,12 +29,7 @@ module.exports = (api, finalyConfigs) => {
         delete userConfig[configKey];
       }
     });
-    // migrate sourcemap to sourceMap
-    if (Object.prototype.hasOwnProperty.call(newConfig, 'sourcemap') && !newConfig.sourceMap) {
-      newConfig.sourceMap = newConfig.sourcemap;
-    }
-    delete newConfig.sourcemap;
-    context.userConfig = newConfig;
+
     return newConfig;
   });
 };

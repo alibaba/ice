@@ -54,6 +54,7 @@ function miniappRenderer(
         // eslint-disable-next-line no-global-assign
         document = value;
         // @ts-ignore
+        // eslint-disable-next-line no-undef
         const MiniAppGlobalInstance = getApp();
         const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
         if (typeof dispatchDocumentModify === 'function') {

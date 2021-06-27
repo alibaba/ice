@@ -18,11 +18,11 @@ function createHistory({
   basename,
   location
 }: {
-  routes?: any[],
-  customHistory?: History,
-  type?: string,
-  basename?: string,
-  location?: Location
+  routes?: any[];
+  customHistory?: History;
+  type?: string;
+  basename?: string;
+  location?: Location;
 }) {
   if (process.env.__IS_SERVER__) {
     history = createMemoryHistory();

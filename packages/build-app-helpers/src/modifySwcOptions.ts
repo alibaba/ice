@@ -1,7 +1,7 @@
 const { merge } = require('lodash');
 
 export default function(config, swcOptions) {
-  ['jsx', 'tsx'].forEach((rule) => {
+  ['js', 'jsx', 'ts', 'tsx'].forEach((rule) => {
     config.module
       .rule(rule)
       .use('swc-loader')

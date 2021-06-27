@@ -60,7 +60,7 @@ export default class Generator {
     projectType: string;
     applyMethod: Function;
     srcDir: string;
-    resetPageState: boolean
+    resetPageState: boolean;
   }) {
     this.rootDir = rootDir;
     this.appStoreTemplatePath = appStoreTemplatePath;

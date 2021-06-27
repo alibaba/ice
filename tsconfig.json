@@ -1,7 +1,11 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/babel-preset-ice" },
+    { "path": "packages/build-babel-config" },
+    { "path": "packages/build-jest-config" },
+    { "path": "packages/build-webpack-config" },
+    { "path": "packages/swc-loader" },
+    { "path": "packages/webpack-plugin-swc" },
     { "path": "packages/build-user-config" },
     { "path": "packages/webpack-plugin-extract-css-assets" },
     { "path": "packages/build-app-helpers" },

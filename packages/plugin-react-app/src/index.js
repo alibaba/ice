@@ -1,6 +1,6 @@
 const path = require('path');
 const { applyCliOption, applyUserConfig, getEnhancedWebpackConfig } = require('@builder/user-config');
-const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
+const getWebpackConfig = require('@builder/webpack-config').default;
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 const getCustomConfigs = require('./config');
 const setBase = require('./setBase');
@@ -11,7 +11,7 @@ const logDetectedTip = require('./utils/logDetectedTip');
 const configWebpak5 = require('./webpack5');
 
 module.exports = (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig  } = api;
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, onHook  } = api;
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
@@ -30,7 +30,7 @@ module.exports = (api) => {
   if (getValue('HAS_JSX_RUNTIME')) {
     modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
   }
-  
+
   // set webpack config
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules
@@ -39,13 +39,13 @@ module.exports = (api) => {
 
   targets.forEach(target => {
     const webpackConfig = getWebpackConfig(mode);
-    const babelConfig = getBabelConfig();
+
     // compatible with old logic，not set target
     // output：build/*
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig, libName: 'react' });
+    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig });
     setBase(api, { target, webpackConfig: enhancedWebpackConfig });
     registerTask(target, enhancedWebpackConfig);
   });
@@ -69,4 +69,8 @@ module.exports = (api) => {
     setTest(api);
   }
   configWebpak5(api);
+
+  onHook(`after.${command}.compile`, ({ stats }) => {
+    console.log('Math.max(...stats.toJson({ timings: true }).children.map(info => info.time || 0))===>', Math.max(...stats.toJson({ timings: true }).children.map(info => info.time || 0)));
+  });
 };

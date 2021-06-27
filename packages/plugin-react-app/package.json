@@ -15,7 +15,8 @@
   "dependencies": {
     "@builder/app-helpers": "^2.0.0",
     "@builder/user-config": "^0.3.0",
-    "build-scripts-config": "^3.0.0",
+    "@builder/webpack-config": "^1.0.0",
+    "@builder/jest-config": "^1.0.0",
     "chalk": "^4.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "debug": "^4.1.1",

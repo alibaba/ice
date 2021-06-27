@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
-import { getWebpackConfig } from 'build-scripts-config';
+import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
 
 const plugin = async (api): Promise<void> => {
