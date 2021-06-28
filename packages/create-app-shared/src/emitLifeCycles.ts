@@ -1,51 +1,43 @@
-import { History } from 'history';
+import type { History } from 'history';
 import { getHistory } from './history';
 import router from './router';
 import { LAUNCH, SHOW, HIDE } from './constants';
 import { emit as appEmit } from './appLifeCycles';
 import { emit as pageEmit } from './pageLifeCycles';
-import { isMiniAppPlatform } from './env';
 
 function emitLifeCycles() {
-  if (isMiniAppPlatform) {
-    router.current = {
-      pathname: (window as any).__pageId,
-      visibiltyState: true
-    };
-  } else {
-    // Get history
-    const history = getHistory() as History;
-    const pathname = history && history.location ?
-      history.location.pathname : typeof window !== 'undefined' && window.location.pathname;
+  // Get history
+  const history = getHistory() as History;
+  const pathname = history && history.location ?
+    history.location.pathname : typeof window !== 'undefined' && window.location.pathname;
 
-    // Set current router
-    router.current = {
-      pathname,
-      visibiltyState: true
-    };
+  // Set current router
+  router.current = {
+    pathname,
+    visibilityState: true
+  };
 
-    // Emit app lifecycle
-    appEmit(LAUNCH);
-    appEmit(SHOW);
+  // Emit app lifecycle
+  appEmit(LAUNCH);
+  appEmit(SHOW);
 
-    if (history && history.listen) {
-      // Listen history change
-      history.listen((location) => {
-        if (location.pathname !== router.current.pathname) {
-          // Flow router info
-          router.prev = {
-            ...router.current
-          };
-          router.current = {
-            pathname: location.pathname,
-            visibiltyState: true
-          };
-          router.prev.visibiltyState = false;
-          pageEmit(HIDE, router.prev.pathname);
-          pageEmit(SHOW, router.current.pathname);
-        }
-      });
-    }
+  if (history && history.listen) {
+    // Listen history change
+    history.listen((location) => {
+      if (location.pathname !== router.current.pathname) {
+        // Flow router info
+        router.prev = {
+          ...router.current
+        };
+        router.current = {
+          pathname: location.pathname,
+          visibilityState: true
+        };
+        router.prev.visibiltyState = false;
+        pageEmit(HIDE, router.prev.pathname);
+        pageEmit(SHOW, router.current.pathname);
+      }
+    });
   }
 }
 

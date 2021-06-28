@@ -10,6 +10,7 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "sideEffects": false,
   "dependencies": {
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",

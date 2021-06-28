@@ -10,9 +10,7 @@ const router = {
 
 Object.defineProperty(router, 'current', {
   get() {
-    return Object.assign(current, {
-      pathname: (window as any).__pageId
-    });
+    return current;
   },
   set(value) {
     Object.assign(current, value);

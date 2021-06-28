@@ -1,13 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createNavigation } from 'create-app-container';
-import { createUseRouter } from 'create-use-router';
 import * as queryString from 'query-string';
 import { loadableReady } from '@loadable/component';
-
-const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
-
-const useRouter = createUseRouter({ useState, useLayoutEffect });
 
 let __initialData__;
 
@@ -53,7 +47,7 @@ export function getRenderApp(runtime, options) {
 }
 
 async function renderInBrowser(options) {
-  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles, setHistory, getHistory } = options;
+  const { appConfig, buildConfig = {}, createBaseApp, emitLifeCycles, setHistory } = options;
   const context: any = {};
 
   // set History before GID
@@ -84,13 +78,8 @@ async function renderInBrowser(options) {
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
   emitLifeCycles();
-
-  const isMobile = Object.keys(staticConfig).length;
-  if (isMobile) {
-    return _renderMobile({ runtime, history: getHistory(), }, options);
-  } else {
-    return _render({ runtime }, options);
-  }
+  
+  return _render({ runtime }, options);
 }
 
 function _render({ runtime }, options) {
@@ -103,64 +92,14 @@ function _render({ runtime }, options) {
     return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
-  if ((window as any).__ICE_SSR_ENABLED__) {
+  // add process.env.SSR for tree-shaking 
+  if ((window as any).__ICE_SSR_ENABLED__ && process.env.SSR) {
     loadableReady(() => {
       ReactDOM.hydrate(<App />, appMountNode);
     });
   } else {
     ReactDOM.render(<App />, appMountNode);
   }
-}
-
-function _renderMobile({ runtime, history }, options) {
-  const { staticConfig, appConfig = {} } = options;
-  const { routes } = staticConfig;
-  const { rootId, mountNode } = appConfig.app;
-  const appMountNode = _getAppMountNode(mountNode, rootId);
-
-  return _matchInitialComponent(history.location.pathname, routes)
-    .then(InitialComponent => {
-      const App = () => {
-        const { component } = useRouter({ routes, history, InitialComponent });
-        const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
-        return createElement(
-          AppNavigation,
-          {
-            staticConfig,
-            component,
-            history,
-            location: history.location,
-            routes
-          }
-        );
-      };
-
-      const AppProvider = runtime?.composeAppProvider?.();
-
-      const Root = () => {
-        if (AppProvider) {
-          return createElement(AppProvider, null, createElement(App));
-        }
-        return createElement(App);
-      };
-
-      const appInstance = createElement(Root);
-
-      ReactDOM.render(appInstance, appMountNode);
-    });
-}
-
-function _matchInitialComponent(fullpath, routes) {
-  let initialComponent = null;
-  for (let i = 0, l = routes.length; i < l; i++) {
-    if (fullpath === routes[i].path || routes[i].regexp && routes[i].regexp.test(fullpath)) {
-      initialComponent = routes[i].component;
-      if (typeof initialComponent === 'function') initialComponent = initialComponent();
-      break;
-    }
-  }
-
-  return Promise.resolve(initialComponent);
 }
 
 function _getAppMountNode(mountNode, rootId) {

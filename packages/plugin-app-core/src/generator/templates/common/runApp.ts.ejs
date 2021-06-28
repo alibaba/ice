@@ -57,7 +57,9 @@ export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
   <% } %>
   if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
     renderer = miniappRenderer;
-  }<% if(isReact){ %> else {
+    }
+  <% } %>
+  <% if(isReact){ %> else {
     renderer = reactAppRenderer;
   }
   <% } %>

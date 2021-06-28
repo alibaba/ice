@@ -1,8 +1,9 @@
 import RuntimeModule from './runtimeModule';
-import { DEFAULE_APP_CONFIG } from './constants';
+import { DEFAULT_APP_CONFIG } from './constants';
 import collectAppLifeCycle from './collectAppLifeCycle';
+import type { AppConfig, BuildConfig, Context } from './types';
 
-function mergeDefaultConfig(defaultConfig, config) {
+function mergeDefaultConfig(defaultConfig: AppConfig, config: AppConfig) {
   Object.keys(defaultConfig).forEach(key => {
     if (typeof config[key] === 'object' && config[key] !== null) {
       config[key] = mergeDefaultConfig(defaultConfig[key], config[key]);
@@ -14,10 +15,10 @@ function mergeDefaultConfig(defaultConfig, config) {
 }
 
 export default ({ loadRuntimeModules, createElement }) => {
-  const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
+  const createBaseApp = (appConfig: AppConfig, buildConfig: BuildConfig, context: Context = {}) => {
 
     // Merge default appConfig to user appConfig
-    appConfig = mergeDefaultConfig(DEFAULE_APP_CONFIG, appConfig);
+    appConfig = mergeDefaultConfig(DEFAULT_APP_CONFIG, appConfig);
     context.createElement = createElement;
 
     // Load runtime modules
