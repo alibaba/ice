@@ -10,6 +10,10 @@ import { IAppConfig, IBuildConfig } from './types';
   import genWithSearchParams from './genWithSearchParams';
 <% } %>
 
+<% if (isRax && hasTabBar) {%>
+  import TabBar from './TabBar';
+<% } %>
+
 <% if (isRax) {%>
   import raxAppRenderer, { getInitialData } from 'rax-app-renderer';
   import { createWithRouter } from 'create-use-router';
@@ -73,7 +77,10 @@ export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
     emitLifeCycles,
     pathRedirect,
     loadStaticModules,
-    ErrorBoundary
+    ErrorBoundary,
+    <% if(isRax && hasTabBar){ %>
+    TabBar,
+    <% } %>
   }, {
     createElement,
     mount,
