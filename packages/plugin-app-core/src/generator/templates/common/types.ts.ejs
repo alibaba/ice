@@ -51,6 +51,8 @@ export interface IApp {
   onShow?: () => any;
   onHide?: () => any;
   onError?: (error: Error) => any;
+  onPageNotFound?: (options?: any) => any;
+  onUnhandledRejection?: (options?: any) => any;
   onTabItemClick?: ({ from, path, text, index }: IOnTabItemClickParams) => any;
   <% if (appConfigAppTypesImports) { %>
     <%- appConfigAppTypesExports %>
