@@ -14,7 +14,7 @@ const getDeclUrl = (value) => {
   const urlIdentity = md5.update(url).digest('hex');
   return { urlIdentity, url };
 };
-
+// @ts-ignore
 export default postcss.plugin(
   'postcss-assets',
   ({ outputOptions, options }: {outputOptions: any; options: any}, opts: any = {}) => {
