@@ -1,7 +1,6 @@
-import { isMiniApp } from 'universal-env';
 import { addAppLifeCycle } from './appLifeCycles';
 import { SHOW, LAUNCH, ERROR, HIDE, TAB_ITEM_CLICK, NOT_FOUND, SHARE, UNHANDLED_REJECTION } from './constants';
-import { isMiniAppPlatform, isWeChatMiniProgram, isByteDanceMicroApp } from './env';
+import { isMiniAppPlatform } from './env';
 
 export default function collectAppLifeCycle(appConfig) {
   const { onLaunch, onShow, onError, onHide, onTabItemClick } = appConfig.app;
