@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
 import * as utils from 'axios/lib/utils';
 import createAxiosInstance from './createAxiosInstance';
 
@@ -15,6 +15,9 @@ export interface IRequestProps {
 interface IRequest extends IRequestProps {
   <T = any>(options: AxiosRequestConfig): Promise<T>;
   <T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  Cancel: CancelStatic;
+  CancelToken: CancelTokenStatic;
+  isCancel(value: any): boolean;
 }
 
 /**
@@ -59,5 +62,9 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
     }));
   };
 });
+
+request.Cancel = axios.Cancel;
+request.CancelToken = axios.CancelToken;
+request.isCancel = axios.isCancel;
 
 export default request as IRequest;
