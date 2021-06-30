@@ -11,6 +11,10 @@ function createHistory({
 }: {
   routes?: Route[];
 }) {
+  if (process.env.__IS_SERVER__) {
+    // miniapp is not support ssr
+    return null;
+  }
   (window as any).history = createMiniAppHistory(routes) as History;
   window.location = (window.history as any).location;
   return (window as any).history;
