@@ -32,7 +32,6 @@ async function getExposeContent(packageName: string, rootDir: string) {
     // ignore error
   }
   try {
-    // const packageJson = path.join(rootDir, 'node_modules', packageName, 'package.json');
     if (packageJson) {
       const { module, main } = fse.readJSONSync(packageJson);
       entryPath = path.join(path.dirname(packageJson), module || main || 'index.js');

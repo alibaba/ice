@@ -13,7 +13,7 @@ interface IRemoteFiles {
 }
 
 export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry, cacheFile, cacheContent, compilePackages }) => {
-  const { context, onHook } = api;
+  const { context, onHook, log } = api;
   const { command, webpack } = context;
   // create empty entry for build remote runtime
   const mfEntry = path.join(cacheDir, 'entry.js');
@@ -71,11 +71,10 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
         }),
       ]
     };
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       webpack(preBuildConfig, (err, stats) => {
-        console.log(err, stats);
         if (err || stats.hasErrors()) {
-          reject(err);
+          log.error('Fail to pre build dependencies');
           return;
         }
         // write cache after webpack compile success
