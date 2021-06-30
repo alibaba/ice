@@ -63,7 +63,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   };
 });
 
-request.Cancel = axios.Cancel;
 request.CancelToken = axios.CancelToken;
 request.isCancel = axios.isCancel;
 
