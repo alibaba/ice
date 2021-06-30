@@ -47,7 +47,7 @@ export interface IApp {
   getInitialData?: (ctx?: IContext) => Promise<any>;
   errorBoundary?: boolean;
   ErrorBoundaryFallback?: (error: any) => FrameworkComponentType,
-  onErrorBoundaryHander?: (error: Error, componentStack: string) => any;
+  onErrorBoundaryHandler?: (error: Error, componentStack: string) => any;
   onLaunch?: (options?: any) => any;
   onShow?: () => any;
   onHide?: () => any;

@@ -1,4 +1,6 @@
 import * as path from 'path';
+import * as globby from 'globby';
+import * as fs from 'fs-extra';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
@@ -120,6 +122,7 @@ function initGenerator(api, options) {
       ssr,
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
       hasJsxRuntime,
+      hasTabBar: hasTabBar(`${rootDir}/src`, framework),
     },
     log,
     plugins,
@@ -164,4 +167,14 @@ function matchTargets(targets) {
   return targets.every(target => {
     return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
   });
+}
+
+function hasTabBar(srcDir, framework) {
+  if (framework === 'rax') {
+    return globby.sync(['**/app.json'], { cwd: srcDir, absolute: true }).some((filepath) => {
+      const content = fs.readJSONSync(filepath);
+      return content.tabBar && !content.tabBar.custom;
+    });
+  }
+  return false;
 }
