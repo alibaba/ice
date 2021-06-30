@@ -39,6 +39,11 @@ module.exports = function(userConfig) {
     {
       name: 'polyfill',
       defaultValue: polyfillDefaultValue
+    },
+    {
+      name: 'fastRefresh',
+      defaultValue: true,
+      validation: 'boolean'
     }
   ];
 };
