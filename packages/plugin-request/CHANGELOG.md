@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.7
+
+- [feat] support axios cancel
+
 ## 1.7.6
 
 - [chore] bump version
