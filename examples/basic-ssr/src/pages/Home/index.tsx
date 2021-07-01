@@ -4,7 +4,9 @@ import pageStore from './store';
 import styles from './index.module.scss';
 
 export default function Home(props) {
-  logger.info('Home props', props);
+  if (!process.env.__IS_SERVER__) {
+    logger.info('Home props', props);
+  }
 
   const [dataSource, setData] = useState<number[]>([]);
   useEffect(() => {
@@ -46,12 +48,12 @@ Home.getInitialProps = async () => {
         id: 10001,
         name: 'Jack Ma',
         edu: 'Hangzhou Normal University',
-        address: 'Hangzhou'
+        address: 'Hangzhou',
       },
       title: 'Home Page...',
       content: 'Home Content...',
-      description: 'Home Description...'
-    }
+      description: 'Home Description...',
+    },
   };
 
   return { ...res.data, title: 'Home Page...' };
