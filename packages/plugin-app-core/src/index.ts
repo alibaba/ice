@@ -76,7 +76,7 @@ export default (api, options) => {
     dev(api, { render: generator.render });
   }
 
-  onHook(`before.${command}.run`, async () => {
+  onHook(`before.${command}.run`, () => {
     generator.render();
   });
 };
