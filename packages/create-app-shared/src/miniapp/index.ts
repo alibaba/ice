@@ -10,3 +10,4 @@ export { default as getSearchParams} from '../getSearchParams';
 export { default as collectAppLifeCycle} from './collectAppLifeCycle';
 export { default as RuntimeModule, RuntimePlugin } from '../runtimeModule';
 export { default as createBaseApp } from '../createBaseApp';
+export * from '../types';

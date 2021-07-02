@@ -62,3 +62,4 @@ export {
   RuntimeModule,
   RuntimePlugin,
 };
+export * from './types';

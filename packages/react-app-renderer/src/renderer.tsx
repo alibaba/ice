@@ -2,10 +2,40 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as queryString from 'query-string';
 import { loadableReady } from '@loadable/component';
+import type { RuntimeModule } from 'create-app-shared';
 
-let __initialData__;
+type OnError = (err: Error) => void
+interface Context {
+  pathname: string;
+  path: string;
+  query: queryString.ParsedQuery<string>;
+  ssrError: any;
+}
+type AppConfig = {
+  app?: {
+    rootId?: string;
+    mountNode?: HTMLElement;
+    onErrorBoundaryHandler?: OnError;
+    ErrorBoundaryFallback?: React.ComponentType;
+    errorBoundary?: boolean;
+    getInitialData?: (context: Context) => Promise<any>;
+  }
+};
 
-export function setInitialData(initialData) {
+interface renderOptions {
+  ErrorBoundary: React.ComponentType<{Fallback: React.ComponentType; onError: OnError}>;
+  buildConfig: any;
+  appConfig: AppConfig;
+  appLifecycle: {
+    createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
+    emitLifeCycles: () => void;
+    initAppLifeCycles: () => void;
+  }
+}
+
+let __initialData__: any;
+
+export function setInitialData(initialData: any) {
   __initialData__ = initialData;
 }
 
@@ -13,24 +43,18 @@ export function getInitialData() {
   return __initialData__;
 }
 
-export function getRenderApp(runtime, options) {
-  const { ErrorBoundary, appConfig = {} } = options;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
+export function getRenderApp(runtime: RuntimeModule, options: renderOptions) {
+  const { ErrorBoundary, appConfig = { app: {}} } = options;
+  const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
-
-  if (process.env.NODE_ENV === 'development') {
-    if (onErrorBoundaryHandler) {
-      console.error('Please use onErrorBoundaryHandler instead of onErrorBoundaryHander');
-    }
-  }
 
   function App() {
     const appRouter = <AppRouter />;
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
     if (errorBoundary) {
       return (
-        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler || onErrorBoundaryHander}>
+        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>
           {rootApp}
         </ErrorBoundary>
       );
@@ -40,7 +64,7 @@ export function getRenderApp(runtime, options) {
   return App;
 }
 
-export async function reactAppRenderer(options) {
+export async function reactAppRenderer(options: renderOptions) {
   const { appConfig, buildConfig = {}, appLifecycle: { createBaseApp, emitLifeCycles, initAppLifeCycles }} = options;
   const context: any = {};
 
@@ -63,20 +87,21 @@ export async function reactAppRenderer(options) {
   }
 
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
-  console.log(runtime, modifiedAppConfig);
   // init app life cycles after app runtime created
   initAppLifeCycles();
 
   // set InitialData, can get the return value through getInitialData method
   setInitialData(context.initialData);
-  options.appConfig = modifiedAppConfig;
   // emit app launch cycle
   emitLifeCycles();
   
-  return _render({ runtime }, options);
+  return _render(runtime, {
+    ...options,
+    appConfig: modifiedAppConfig,
+  });
 }
 
-function _render({ runtime }, options) {
+function _render(runtime: RuntimeModule, options: renderOptions) {
   const { appConfig = {} } = options;
   const { rootId, mountNode } = appConfig.app;
   const App = getRenderApp(runtime, options);
@@ -96,6 +121,6 @@ function _render({ runtime }, options) {
   }
 }
 
-function _getAppMountNode(mountNode, rootId) {
+function _getAppMountNode(mountNode: HTMLElement, rootId: string) {
   return mountNode || document.getElementById(rootId) || document.getElementById('ice-container');
 }
