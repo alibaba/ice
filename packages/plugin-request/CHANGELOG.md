@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.8
+
+- [feat] provide types lint
+
 ## 1.7.7
 
 - [feat] support axios cancel
