@@ -18,6 +18,7 @@ export interface AppConfig {
   router?: {
     type?: 'hash' | 'browser' | 'memory' | 'static';
     history?: History;
+    basename?: string;
   }
 }
 

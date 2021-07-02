@@ -1,14 +1,8 @@
-import { createBrowserHistory, createHashHistory, createMemoryHistory, History, Location } from 'history';
+import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from 'history';
+import type { CreateHistory, InitHistory } from '../createInitHistory';
+import createInitHistory from '../createInitHistory';
 
-function createHistory({
-  type,
-  basename,
-  location,
-}: {
-  type?: string;
-  basename?: string;
-  location?: Location;
-}) {
+const createHistory: CreateHistory = ({ type, basename, location }) => {
   let history: History;
   if (process.env.__IS_SERVER__) {
     history = createMemoryHistory();
@@ -22,6 +16,11 @@ function createHistory({
     history = createMemoryHistory();
   }
   return history;
-}
+};
 
+const initHistory: InitHistory = createInitHistory(createHistory);
+
+export {
+  initHistory
+};
 export default createHistory;

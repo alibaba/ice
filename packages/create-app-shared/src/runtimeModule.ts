@@ -30,6 +30,8 @@ type WrapperRouteComponent = (wrapperRoute: IWrapper<any>) => void;
 type WrapperRouterRender = (wrapper: IWrapperRouterRender) => void;
 type ModifyRoutesComponent = (modify: (routesComponent: IRoutesComponent) => IRoutesComponent) => void;
 
+type CommonJsRuntime = { default: RuntimePlugin };
+
 export interface RuntimePlugin {
   (
     apis: {
@@ -82,7 +84,7 @@ class RuntimeModule {
     this.apiRegistration = {};
   }
 
-  public loadModule(module: RuntimePlugin) {
+  public loadModule(module: RuntimePlugin | CommonJsRuntime) {
     const runtimeAPI = {
       setRenderRouter: this.setRenderRouter,
       addProvider: this.addProvider,
@@ -93,8 +95,8 @@ class RuntimeModule {
       modifyRoutesComponent: this.modifyRoutesComponent,
       applyRuntimeAPI: this.applyRuntimeAPI,
     };
-
-    if (module) module({
+    const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+    if (module) runtimeModule({
       ...runtimeAPI,
       appConfig: this.appConfig,
       buildConfig: this.buildConfig,

@@ -13,18 +13,6 @@ export function getInitialData() {
   return __initialData__;
 }
 
-export async function reactAppRenderer(options) {
-  const { appConfig, setAppConfig, loadStaticModules } = options || {};
-
-  setAppConfig(appConfig);
-
-  loadStaticModules(appConfig);
-
-  if (process.env.__IS_SERVER__) return;
-
-  renderInBrowser(options);
-}
-
 export function getRenderApp(runtime, options) {
   const { ErrorBoundary, appConfig = {} } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
@@ -52,12 +40,9 @@ export function getRenderApp(runtime, options) {
   return App;
 }
 
-async function renderInBrowser(options) {
-  const { appConfig, buildConfig = {}, createBaseApp, emitLifeCycles, setHistory } = options;
+export async function reactAppRenderer(options) {
+  const { appConfig, buildConfig = {}, appLifecycle: { createBaseApp, emitLifeCycles, initAppLifeCycles }} = options;
   const context: any = {};
-
-  // set History before GID
-  setHistory(appConfig);
 
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
@@ -78,11 +63,14 @@ async function renderInBrowser(options) {
   }
 
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  console.log(runtime, modifiedAppConfig);
+  // init app life cycles after app runtime created
+  initAppLifeCycles();
 
   // set InitialData, can get the return value through getInitialData method
   setInitialData(context.initialData);
   options.appConfig = modifiedAppConfig;
-  // Emit app launch cycle
+  // emit app launch cycle
   emitLifeCycles();
   
   return _render({ runtime }, options);

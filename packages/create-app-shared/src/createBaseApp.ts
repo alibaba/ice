@@ -14,7 +14,7 @@ function mergeDefaultConfig(defaultConfig: AppConfig, config: AppConfig) {
   return config;
 }
 
-export default ({ loadRuntimeModules, createElement }) => {
+export default ({ loadRuntimeModules, createElement, runtimeAPI = {} }) => {
   const createBaseApp = (appConfig: AppConfig, buildConfig: BuildConfig, context: Context = {}) => {
 
     // Merge default appConfig to user appConfig
@@ -23,6 +23,9 @@ export default ({ loadRuntimeModules, createElement }) => {
 
     // Load runtime modules
     const runtime = new RuntimeModule(appConfig, buildConfig, context);
+    Object.keys(runtimeAPI).forEach((apiKey: string) => {
+      runtime.registerRuntimeAPI(apiKey, runtimeAPI[apiKey]);
+    });
     loadRuntimeModules(runtime);
 
     // Collect app lifeCyle

@@ -1,16 +1,9 @@
 import { createMiniAppHistory } from 'miniapp-history';
 import type { History } from 'history';
+import createInitHistory from '../createInitHistory';
+import type { CreateHistory, InitHistory } from '../createInitHistory';
 
-interface Route {
-  path: string;
-  source: string;
-}
-
-function createHistory({
-  routes,
-}: {
-  routes?: Route[];
-}) {
+const createHistory: CreateHistory = ({ routes }) => {
   if (process.env.__IS_SERVER__) {
     // miniapp is not support ssr
     return null;
@@ -18,6 +11,10 @@ function createHistory({
   (window as any).history = createMiniAppHistory(routes) as History;
   window.location = (window.history as any).location;
   return (window as any).history;
-}
+};
 
+const initHistory: InitHistory = createInitHistory(createHistory);
+export {
+  initHistory
+};
 export default createHistory;

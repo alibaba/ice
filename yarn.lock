@@ -1709,21 +1709,6 @@
   dependencies:
     make-dir "^3.0.2"
 
-"@mapbox/node-pre-gyp@^1.0.4":
-  version "1.0.5"
-  resolved "https://registry.nlark.com/@mapbox/node-pre-gyp/download/@mapbox/node-pre-gyp-1.0.5.tgz#2a0b32fcb416fb3f2250fd24cb2a81421a4f5950"
-  integrity sha1-Kgsy/LQW+z8iUP0kyyqBQhpPWVA=
-  dependencies:
-    detect-libc "^1.0.3"
-    https-proxy-agent "^5.0.0"
-    make-dir "^3.1.0"
-    node-fetch "^2.6.1"
-    nopt "^5.0.0"
-    npmlog "^4.1.2"
-    rimraf "^3.0.2"
-    semver "^7.3.4"
-    tar "^6.1.0"
-
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
   resolved "https://registry.npm.taobao.org/@marionebl/sander/download/@marionebl/sander-0.6.1.tgz#1958965874f24bc51be48875feb50d642fc41f7b"
@@ -2391,6 +2376,14 @@
   version "1.2.3"
   resolved "https://registry.nlark.com/@types/range-parser/download/@types/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha1-fuMwunyq+5gJC+zoal7kQRWQTCw=
+
+"@types/rax@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.nlark.com/@types/rax/download/@types/rax-1.0.6.tgz#7db9c9811631e2cec47a698aea346f9731ec5c7d"
+  integrity sha1-fbnJgRYx4s7EemmK6jRvlzHsXH0=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
 
 "@types/react-redux@^7.1.16", "@types/react-redux@^7.1.7":
   version "7.1.16"
@@ -5404,11 +5397,6 @@ detect-indent@^5.0.0:
   version "5.0.0"
   resolved "https://registry.nlark.com/detect-indent/download/detect-indent-5.0.0.tgz?cache=0&sync_timestamp=1618847240598&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdetect-indent%2Fdownload%2Fdetect-indent-5.0.0.tgz#3871cc0a6a002e8c3e5b3cf7f336264675f06b9d"
   integrity sha1-OHHMCmoALow+Wzz38zYmRnXwa50=
-
-detect-libc@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/detect-libc/download/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
-  integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
 detect-newline@^3.0.0:
   version "3.1.0"
@@ -10663,11 +10651,6 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-node-addon-api@^3.0.2:
-  version "3.2.1"
-  resolved "https://registry.nlark.com/node-addon-api/download/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
-  integrity sha1-gTJeCiEXeJwBKNq2Xn448HzroWE=
-
 node-fetch-npm@^2.0.2:
   version "2.0.4"
   resolved "https://registry.npm.taobao.org/node-fetch-npm/download/node-fetch-npm-2.0.4.tgz#6507d0e17a9ec0be3bec516958a497cec54bf5a4"
@@ -10778,14 +10761,6 @@ node-source-walk@^4.2.0:
   dependencies:
     "@babel/parser" "^7.0.0"
 
-nodejieba@^2.4.1:
-  version "2.5.2"
-  resolved "https://registry.nlark.com/nodejieba/download/nodejieba-2.5.2.tgz#fc929ee29f93c28c639696bac0319bac116a296a"
-  integrity sha1-/JKe4p+Twoxjlpa6wDGbrBFqKWo=
-  dependencies:
-    "@mapbox/node-pre-gyp" "^1.0.4"
-    node-addon-api "^3.0.2"
-
 nopt@^4.0.1:
   version "4.0.3"
   resolved "https://registry.npm.taobao.org/nopt/download/nopt-4.0.3.tgz#a375cad9d02fd921278d954c2254d5aa57e15e48"
@@ -10793,13 +10768,6 @@ nopt@^4.0.1:
   dependencies:
     abbrev "1"
     osenv "^0.1.4"
-
-nopt@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.npm.taobao.org/nopt/download/nopt-5.0.0.tgz?cache=0&sync_timestamp=1597649892953&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnopt%2Fdownload%2Fnopt-5.0.0.tgz#530942bb58a512fccafe53fe210f13a25355dc88"
-  integrity sha1-UwlCu1ilEvzK/lP+IQ8TolNV3Ig=
-  dependencies:
-    abbrev "1"
 
 normalize-package-data@^2.0.0, normalize-package-data@^2.3.0, normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.3.5, normalize-package-data@^2.4.0, normalize-package-data@^2.5.0:
   version "2.5.0"
@@ -12695,6 +12663,14 @@ react@^16.12.0, react@^16.4.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
+react@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.nlark.com/react/download/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha1-0LXMUW0p6z7uOD91tihkz7aAADc=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
 read-cmd-shim@^1.0.1:
   version "1.0.5"
   resolved "https://registry.npm.taobao.org/read-cmd-shim/download/read-cmd-shim-1.0.5.tgz#87e43eba50098ba5a32d0ceb583ab8e43b961c16"
@@ -14459,7 +14435,7 @@ tar@^4.4.10, tar@^4.4.12, tar@^4.4.8:
     safe-buffer "^5.1.2"
     yallist "^3.0.3"
 
-tar@^6.0.2, tar@^6.1.0:
+tar@^6.0.2:
   version "6.1.0"
   resolved "https://registry.nlark.com/tar/download/tar-6.1.0.tgz?cache=0&sync_timestamp=1618847020118&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftar%2Fdownload%2Ftar-6.1.0.tgz#d1724e9bcc04b977b18d5c573b333a2207229a83"
   integrity sha1-0XJOm8wEuXexjVxXOzM6IgcimoM=

@@ -1,34 +1,46 @@
 /* eslint-disable import/no-mutable-exports */
-/* eslint-disable import/no-named-default */
 import { isMiniAppPlatform, isWeex, isKraken } from './env';
-import { default as miniappWithRouter } from './miniapp/enhanceWithRouter';
+import miniappWithRouter from './miniapp/enhanceWithRouter';
 import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
-import { default as createMiniappHistory } from './miniapp/history';
-import { default as createWebHistory } from './web/history';
-import { default as createWeexHistory } from './weex/history';
+import createMiniappHistory, { initHistory as initMiniappHistory } from './miniapp/history';
+import createWebHistory, { initHistory as initWebHistory } from './web/history';
+import createWeexHistory, { initHistory as initWeexHistory } from './weex/history';
+import emitAppLifeCycles from './emitLifeCycles';
+import emitMiniappLifeCycles from './miniapp/emitLifeCycles';
 import { pathRedirect } from './utils';
 import getSearchParams from './getSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
-import { default as initMiniappLifeCycles } from './miniapp/initAppLifeCycles';
-import { default as initWeexLifeCycles } from './weex/initAppLifeCycles';
-import { default as initWebLifeCycles } from './web/initAppLifeCycles';
+import initMiniappLifeCycles from './miniapp/initAppLifeCycles';
+import initWeexLifeCycles from './weex/initAppLifeCycles';
+import initWebLifeCycles from './web/initAppLifeCycles';
 import { setHistory, getHistory, history } from './storage';
+import createBaseApp from './createBaseApp';
+import type { InitHistory } from './createInitHistory';
+import RuntimeModule, { RuntimePlugin } from './runtimeModule';
 
-let initAppLifeCycles;
-let createHistory;
-let withRouter;
+let initAppLifeCycles: unknown;
+let createHistory: unknown;
+let withRouter: unknown;
+let initHistory: InitHistory;
+let emitLifeCycles: () => void;
 
 if (isMiniAppPlatform) {
   withRouter = miniappWithRouter;
   createHistory = createMiniappHistory;
   initAppLifeCycles = initMiniappLifeCycles;
+  initHistory = initMiniappHistory;
+  emitLifeCycles = emitMiniappLifeCycles;
 }  else if (isWeex || isKraken) {
   createHistory = createWeexHistory;
   initAppLifeCycles = initWeexLifeCycles;
+  initHistory = initWeexHistory;
+  emitLifeCycles = emitAppLifeCycles;
 } else {
   createHistory = createWebHistory;
   initAppLifeCycles = initWebLifeCycles;
+  initHistory = initWebHistory;
+  emitLifeCycles = emitAppLifeCycles;
 }
 
 export {
@@ -44,4 +56,9 @@ export {
   setHistory,
   getHistory,
   history,
+  createBaseApp,
+  initHistory,
+  emitLifeCycles,
+  RuntimeModule,
+  RuntimePlugin,
 };
