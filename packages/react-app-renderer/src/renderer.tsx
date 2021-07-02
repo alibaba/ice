@@ -11,7 +11,7 @@ interface Context {
   query: queryString.ParsedQuery<string>;
   ssrError: any;
 }
-type AppConfig = {
+export type RenderAppConfig = {
   app?: {
     rootId?: string;
     mountNode?: HTMLElement;
@@ -21,16 +21,17 @@ type AppConfig = {
     getInitialData?: (context: Context) => Promise<any>;
   }
 };
+type AppLifecycle = {
+  createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
+  emitLifeCycles: () => void;
+  initAppLifeCycles: () => void;
+}
 
-interface renderOptions {
-  ErrorBoundary: React.ComponentType<{Fallback: React.ComponentType; onError: OnError}>;
-  buildConfig: any;
-  appConfig: AppConfig;
-  appLifecycle: {
-    createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
-    emitLifeCycles: () => void;
-    initAppLifeCycles: () => void;
-  }
+interface renderOptions<T = RenderAppConfig, P = any> {
+  ErrorBoundary: React.ComponentType<{Fallback?: React.ComponentType; onError?: Function}>;
+  buildConfig: P;
+  appConfig: T;
+  appLifecycle: AppLifecycle
 }
 
 let __initialData__: any;
@@ -65,7 +66,8 @@ export function getRenderApp(runtime: RuntimeModule, options: renderOptions) {
 }
 
 export async function reactAppRenderer(options: renderOptions) {
-  const { appConfig, buildConfig = {}, appLifecycle: { createBaseApp, emitLifeCycles, initAppLifeCycles }} = options;
+  const { appConfig, buildConfig = {}, appLifecycle } = options;
+  const { createBaseApp, emitLifeCycles, initAppLifeCycles } = appLifecycle;
   const context: any = {};
 
   // ssr enabled and the server has returned data
@@ -86,7 +88,7 @@ export async function reactAppRenderer(options: renderOptions) {
     context.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
-  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  const { runtime, appConfig: modifiedAppConfig } = createBaseApp<any>(appConfig, buildConfig, context);
   // init app life cycles after app runtime created
   initAppLifeCycles();
 

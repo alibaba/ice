@@ -13,7 +13,7 @@ import {
   createHistory,
 <% } %>
 } from 'create-app-shared';
-<% if (isReact) {%>import reactAppRenderer, { getInitialData } from 'react-app-renderer';
+<% if (isReact) {%>import reactAppRenderer, { getInitialData, RenderAppConfig } from 'react-app-renderer';
 <% if (buildConfig.router !== false) {%>import { withRouter } from 'react-router';<% } %>
 import genWithSearchParams from './genWithSearchParams';<% } %>
 <% if (isRax && hasTabBar) {%>
@@ -96,7 +96,7 @@ export function runApp(appConfig?: IAppConfig<% if(isRax){ %>, staticConfig?: an
     initHistory(appConfig as any);
     <% } %>
     reactAppRenderer({
-      appConfig,
+      appConfig: appConfig as RenderAppConfig,
       buildConfig,
       ErrorBoundary,
       appLifecycle: {

@@ -19,7 +19,7 @@ import createBaseApp from './createBaseApp';
 import type { InitHistory } from './createInitHistory';
 import RuntimeModule, { RuntimePlugin } from './runtimeModule';
 
-let initAppLifeCycles: unknown;
+let initAppLifeCycles: () => void;
 let createHistory: unknown;
 let withRouter: unknown;
 let initHistory: InitHistory;

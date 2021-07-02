@@ -6,7 +6,7 @@ import ErrorBoundaryFallback from './ErrorBoundaryFallback';
 interface IProps {
   children?: React.ReactNode;
   Fallback?: React.ComponentType<any>;
-  onError?: Function;
+  onError?: (err: Error, componentStack: string) => void;
 };
 
 interface IErrorInfo {
