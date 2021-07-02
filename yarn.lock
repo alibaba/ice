@@ -3801,10 +3801,10 @@ build-plugin-miniapp@0.1.7:
     miniapp-builder-shared "^0.1.1"
     miniapp-runtime-config "^0.1.1"
 
-build-scripts@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.nlark.com/build-scripts/download/build-scripts-1.0.1.tgz?cache=0&sync_timestamp=1621847068296&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbuild-scripts%2Fdownload%2Fbuild-scripts-1.0.1.tgz#782f34e6ff33e2864fa2526dfd1031737523ba0a"
-  integrity sha1-eC805v8z4oZPolJt/RAxc3Ujugo=
+build-scripts@1.0.2-3:
+  version "1.0.2-3"
+  resolved "https://registry.nlark.com/build-scripts/download/build-scripts-1.0.2-3.tgz#ef5a258b05087c9fcd5089611f967df45a0e8454"
+  integrity sha1-71oliwUIfJ/NUIlhH5Z99FoOhFQ=
   dependencies:
     address "^1.1.0"
     camelcase "^5.3.1"

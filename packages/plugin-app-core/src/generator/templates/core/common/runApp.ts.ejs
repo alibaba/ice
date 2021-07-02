@@ -2,7 +2,7 @@ import { createElement, useEffect, Component } from '<%- framework %>';
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import createShareAPI, { history } from 'create-app-shared';
-import { IAppConfig, IBuildConfig } from './types';
+import { IAppConfig, IBuildConfig } from '../types';
 
 <% if (isReact) {%>
   import reactAppRenderer, { getInitialData } from 'react-app-renderer';
@@ -22,7 +22,7 @@ import { IAppConfig, IBuildConfig } from './types';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '../<%= globalStyle %>'
+  import '../../<%= globalStyle %>'
 <% } %>
 import loadRuntimeModules from './loadRuntimeModules';
 import loadStaticModules from './loadStaticModules';

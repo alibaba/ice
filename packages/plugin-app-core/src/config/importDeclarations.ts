@@ -1,7 +1,7 @@
 const importDeclarations: any = {};
 const defaultDeclarations = {
   // default export in app
-  '$$framework/runApp': [
+  '$$framework/core/runApp': [
     'runApp', 'createApp',
     // router api
     'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
@@ -14,7 +14,7 @@ const defaultDeclarations = {
     'ErrorBoundary',
   ],
   // export lazy
-  '$$ice/lazy': ['lazy'],
+  '$$ice/core/lazy': ['lazy'],
   // export types
   '$$framework/types': ['IApp', 'IAppConfig'],
 };

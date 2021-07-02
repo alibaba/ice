@@ -6,5 +6,8 @@
   }
 <% } %>
 
-export * from './runApp';
+export * from './core/runApp';
+<% if (isReact) {%>
+export { lazy } from './core/lazy';
+<% } %>
 export * from './types';

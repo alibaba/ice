@@ -69,20 +69,39 @@ export default (api, options) => {
   setRegisterMethod(api, { generator });
 
   // add core template for framework
-  const templateRoot = path.join(__dirname, './generator/templates');
-  [`./app/${framework}`, './common'].forEach((templateDir) => {
-    generator.addTemplateDir(path.join(templateRoot, templateDir));
-  });
+  renderDefaultTemplate(generator, { framework });
 
   // watch src folder
   if (command === 'start') {
     dev(api, { render: generator.render });
   }
 
-  onHook(`before.${command}.run`, async () => {
-    await generator.render();
+  onHook(`before.${command}.run`, () => {
+    generator.render();
   });
 };
+
+function renderDefaultTemplate(generator: Generator, { framework }) {
+  const templates = [{
+    dir: `./core/app/${framework}`,
+    target: 'core',
+  }, {
+    dir: './core/common',
+    target: 'core',
+  }, {
+    dir: './types',
+    target: 'types',
+  }, {
+    path: './index.ts.ejs',
+  }];
+  const templateRoot = path.join(__dirname, './generator/templates');
+  templates.forEach(({ dir, target, path: filePath }) => {
+    generator.addTemplateFiles({
+      template: path.join(templateRoot, dir || filePath),
+      targetDir: target || '',
+    });
+  });
+}
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;

@@ -1,6 +1,6 @@
 <% if (importStr) { %>
-  import { createStore, Models } from '@ice/store';
-  <%- importStr %>
+  import { createStore, Models } from '@ice/store';<%- importStr %>
+
   interface AppModel extends Models {
     <% modelsStr.split(',').forEach(function(model){ %>
       <% if (model) { %>
