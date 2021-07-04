@@ -33,16 +33,22 @@ export async function reactAppRenderer(options) {
 
 export function getRenderApp(runtime, options) {
   const { ErrorBoundary, appConfig = {} } = options;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
   const AppRouter = runtime?.getAppRouter?.();
+
+  if (process.env.NODE_ENV === 'development') {
+    if (onErrorBoundaryHandler) {
+      console.error('Please use onErrorBoundaryHandler instead of onErrorBoundaryHander');
+    }
+  }
 
   function App() {
     const appRouter = <AppRouter />;
     const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
     if (errorBoundary) {
       return (
-        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler || onErrorBoundaryHander}>
           {rootApp}
         </ErrorBoundary>
       );
@@ -53,14 +59,17 @@ export function getRenderApp(runtime, options) {
 }
 
 async function renderInBrowser(options) {
-  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
+  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles, setHistory, getHistory } = options;
   const context: any = {};
+
+  // set History before GID
+  setHistory(appConfig);
 
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
     context.initialData = (window as any).__ICE_APP_DATA__;
     context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
-  } else if(appConfig?.app?.getInitialData) {
+  } else if (appConfig?.app?.getInitialData) {
     const { href, origin, pathname, search } = window.location;
     const path = href.replace(origin, '');
     const query = queryString.parse(search);
@@ -74,7 +83,8 @@ async function renderInBrowser(options) {
     context.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
-  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+
   // set InitialData, can get the return value through getInitialData method
   setInitialData(context.initialData);
   options.appConfig = modifiedAppConfig;
@@ -83,7 +93,7 @@ async function renderInBrowser(options) {
 
   const isMobile = Object.keys(staticConfig).length;
   if (isMobile) {
-    return _renderMobile({ runtime, history }, options);
+    return _renderMobile({ runtime, history: getHistory(), }, options);
   } else {
     return _render({ runtime }, options);
   }

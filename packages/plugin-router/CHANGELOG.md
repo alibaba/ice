@@ -4,6 +4,10 @@
 
 - [feat] centralized router configuration
 
+## 1.9.7
+
+- [chore] typo `onErrorBoundaryHandler`
+
 ## 1.9.6
 
 - [fix] router path is invalid after using `path.join` function

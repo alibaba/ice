@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { IPlugin, Json } from '@alib/build-scripts';
+import { IPlugin, Json } from 'build-scripts';
 import analyzeNext from './analyzeNext';
 import filterPackages, { IFilterOptions, IRule } from './filterPackages';
 import remoteConfig from './remoteConfig';

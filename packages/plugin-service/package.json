@@ -16,7 +16,8 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "templates"
   ],
   "repository": {
     "type": "http",

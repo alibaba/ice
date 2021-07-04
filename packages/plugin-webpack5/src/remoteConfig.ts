@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as cheerio from 'cheerio';
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 
 export default (api: IPluginAPI, { remoteName, compileKeys, runtimeFolder, injectBundles, externals, bootstrap }) => {
   const { getValue, modifyUserConfig, onGetWebpackConfig, context } = api;

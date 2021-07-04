@@ -8,6 +8,7 @@ const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
 const logDetectedTip = require('./utils/logDetectedTip');
+const configWebpak5 = require('./webpack5');
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig  } = api;
@@ -29,7 +30,7 @@ module.exports = (api) => {
   if (getValue('HAS_JSX_RUNTIME')) {
     modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
   }
-  
+
   // set webpack config
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules
@@ -45,6 +46,7 @@ module.exports = (api) => {
       target = '';
     }
     const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig, libName: 'react' });
+    enhancedWebpackConfig.name('web');
     setBase(api, { target, webpackConfig: enhancedWebpackConfig });
     registerTask(target, enhancedWebpackConfig);
   });
@@ -67,4 +69,5 @@ module.exports = (api) => {
   if (command === 'test') {
     setTest(api);
   }
+  configWebpak5(api);
 };

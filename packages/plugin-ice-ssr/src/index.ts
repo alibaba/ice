@@ -82,7 +82,10 @@ const plugin = async (api): Promise<void> => {
           .use('css-loader')
           .tap((options) => ({
             ...options,
-            onlyLocals: true
+            modules: {
+              ...(options.modules || {}),
+              exportOnlyLocals: true,
+            },
           }));
       }
     });
@@ -98,6 +101,9 @@ const plugin = async (api): Promise<void> => {
     // TODO: support options to enable nodeExternals
     // empty externals added by config external
     config.externals([]);
+
+    // remove process fallback when target is node
+    config.plugins.delete('ProvidePlugin');
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');

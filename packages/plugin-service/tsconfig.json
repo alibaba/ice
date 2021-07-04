@@ -8,4 +8,7 @@
       "ice": ["./src/_ice"]
     }
   },
+  "exclude": [
+    "templates"
+  ]
 }

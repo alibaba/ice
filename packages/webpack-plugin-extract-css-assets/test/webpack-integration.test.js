@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const junk = require('junk');
-const webpack = require('webpack');
+const { init } = require('@builder/pack/deps/webpack/webpack');
 
+init(true);
 jest.setTimeout(60000);
 
 const cases = process.env.CASES
@@ -10,6 +11,7 @@ const cases = process.env.CASES
   : fs.readdirSync(path.join(__dirname, 'cases')).filter(junk.not);
 
 describe('Webpack Integration Tests', () => {
+  const webpack = require('webpack');
   cases
     .filter((testCase) => {
       // return testCase.indexOf('timeout') > -1;
