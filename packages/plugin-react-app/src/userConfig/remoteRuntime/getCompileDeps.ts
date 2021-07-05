@@ -39,7 +39,7 @@ export default async function getCompileDeps(packages: string[], rootDir: string
     const excludePackages = ['ice', 'ice.js', 'ice-scripts', 'webpack', 'eslint', '@iceworks/spec', 'stylelint'];
     if (startsWithPrefix.some(prefix => packageName.startsWith(prefix))
       || includesStrings.some(str => packageName.includes(str))
-      || excludePackages.some(str => packageName === str)) {
+      || excludePackages.includes(packageName)) {
       return false;
     }
 
