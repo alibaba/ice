@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] centralized router configuration
+
 ## 1.9.7
 
 - [chore] typo `onErrorBoundaryHandler`

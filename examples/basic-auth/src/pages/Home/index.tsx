@@ -78,8 +78,4 @@ const HomePage = () => {
   );
 };
 
-HomePage.pageConfig = {
-  auth: ['admin']
-};
-
 export default HomePage;
