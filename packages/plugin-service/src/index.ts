@@ -1,18 +1,15 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
 
 export default async (api) => {
-  const { getValue, applyMethod } = api;
+  const { applyMethod } = api;
 
-  const srcPath = path.join(__dirname, 'service');
-  const distPath = path.join(getValue('TEMP_PATH'), 'service');
+  const templatePath = path.join(__dirname, '../templates');
 
-  // move service to .ice/service
-  await fse.copy(srcPath, distPath);
+  applyMethod('addPluginTemplate', templatePath);
   applyMethod('addExport', {
-    source: './service/createService',
+    source: './plugins/service/createService',
     exportName: 'createService',
-    importSource: '$$ice/service/createService',
+    importSource: '$$ice/plugins/service/createService',
     exportDefault: 'createService',
   });
 };
