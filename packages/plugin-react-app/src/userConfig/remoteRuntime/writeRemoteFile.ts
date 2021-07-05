@@ -10,16 +10,16 @@ async function writeRemoteFile(compilePackages: string[], rootDir: string) {
   });
   const runtimeContents = await Promise.all(analyzeTasks);
   fse.ensureDirSync(path.join(rootDir, exposesTemp));
-  return runtimeContents.map(({ packageName, exposeContent }) => {
+  return runtimeContents.reduce((prev ,{ packageName, exposeContent }) => {
     if (exposeContent) {
       const exposePath = path.join(exposesTemp, packageName);
       const tempDir = path.join(rootDir, exposePath);
       fse.ensureDirSync(tempDir);
       fse.writeFileSync(path.join(tempDir, 'index.js'), exposeContent);
-      return { packageName, exposePath };
+      prev.push({ packageName, exposePath });
     }
-    return false;
-  }).filter(Boolean);
+    return prev;
+  }, []);
 }
 
 async function getExposeContent(packageName: string, rootDir: string) {

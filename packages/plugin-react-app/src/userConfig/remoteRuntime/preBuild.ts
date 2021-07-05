@@ -3,11 +3,9 @@ import * as fse from 'fs-extra';
 import { IPluginAPI } from 'build-scripts';
 import writeRemoteFile from './writeRemoteFile';
 
-interface IExposes {
-  [key: string]: string;
-}
+type IExposes = Record<string, string>
 
-interface IRemoteFiles {
+type IRemoteFiles = {
   packageName: string;
   exposePath: string;
 }

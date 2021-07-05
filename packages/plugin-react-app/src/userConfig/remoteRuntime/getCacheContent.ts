@@ -23,12 +23,12 @@ function getCacheContent(options: ICacheOptions) {
     'webpackLoaders',
     'webpackPlugins'
   ];
-  const cacheConfig = cacheKeyOfUserConfig.map((key) => {
-    if (Object.prototype.hasOwnProperty.call(userConfig, key)) {
-      return `${key}: ${JSON.stringify(userConfig[key])}`;
+  const cacheConfig = cacheKeyOfUserConfig.reduce((prev, current) => {
+    if (Object.prototype.hasOwnProperty.call(userConfig, current)) {
+      prev.push(`${current}: ${JSON.stringify(userConfig[current])}`);
     }
-    return false;
-  }).filter(Boolean);
+    return prev;
+  }, []);
   const cachePackages = compilePackages.sort().map((packageName) => {
     try {
       const packageJson = fse.readJSONSync(require.resolve(path.join(packageName, 'package.json'), { paths: [rootDir]}));

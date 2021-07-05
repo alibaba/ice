@@ -2,7 +2,6 @@
 export default [
   // runApp
   'universal-env',
-  'miniapp-renderer',
   'create-app-shared',
   'react-app-renderer',
   // plugin-router

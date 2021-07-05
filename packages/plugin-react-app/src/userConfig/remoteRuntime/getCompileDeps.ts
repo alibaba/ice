@@ -1,7 +1,7 @@
 import scanImports from './scanImports';
 import builtInDeps from './builtInDeps';
 
-interface ICheckFunction {
+type ICheckFunction = {
   (packageName: string): boolean;
 }
 export type IRule = ICheckFunction | string | RegExp | string[];
