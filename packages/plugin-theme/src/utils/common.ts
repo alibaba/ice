@@ -67,7 +67,7 @@ export const getThemeName = (filePath: string) => {
  * 
  * @param {string} names 文件名（无后缀）列表
  */
-export const getDefaultThemes = (names: string[]) => {
+export const getDefaultTheme = (names: string[]) => {
   const isExist = names.some(name => name === 'default');
   return {
     isExist,
@@ -80,7 +80,7 @@ export const getDefaultThemes = (names: string[]) => {
  * 
  * @param {string} themesPath 主题目录路径
  */
-export const getEnableThemes = async (themesPath: string): Promise<boolean> => {
+export const checkThemesEnabled = async (themesPath: string): Promise<boolean> => {
   const dirExists = await pathExists(themesPath);
   if (!dirExists) return false;
 

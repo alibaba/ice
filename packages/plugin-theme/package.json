@@ -14,7 +14,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.20",
+    "build-scripts": "^1.0.0",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
     "@types/lodash": "^4.14.170",

@@ -5,7 +5,7 @@ import { setAPI } from './utils/setAPI';
 import { setVariable } from './utils/setVariable';
 import { ICE_TEMP, PLUGIN_DIR } from './constant';
 import { injectThemes } from './utils/injectThemes';
-import { detectCssFile, getDefaultThemes, getEnableThemes, getThemeName } from './utils/common';
+import { detectCssFile, getDefaultTheme, checkThemesEnabled, getThemeName } from './utils/common';
 
 /**
  * 多主题编译时处理
@@ -22,13 +22,13 @@ const plugin: IPlugin = async (api) => {
   } = api;
   const { rootDir } = context;
   const themesPath = path.resolve(rootDir, 'src/themes');
-  const enableThemes = await getEnableThemes(themesPath);
+  const themesEnabled = await checkThemesEnabled(themesPath);
 
   const iceTemp = getValue(ICE_TEMP);
   const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');   // .ice/themes/injectTheme.js
 
-  if (!enableThemes) {
-    log.info('🤔 未找到主题文件，不开启多主题适配');
+  if (!themesEnabled) {
+    log.verbose('🤔 未找到主题文件，不开启多主题适配');
     return;
   }
 
@@ -38,9 +38,9 @@ const plugin: IPlugin = async (api) => {
     .map(file => path.resolve(themesPath, file));
   const themesNames = themesPathList.map(getThemeName);
 
-  const { isExist, defaultName } = getDefaultThemes(themesNames);
+  const { isExist, defaultName } = getDefaultTheme(themesNames);
   if (!isExist) {
-    log.info(`🤔 未找到默认主题文件（default），自动配置 ${defaultName} 为初始主题`);
+    log.info(`🤔 未找到默认主题文件（default.css），自动配置 ${defaultName} 为初始主题`);
   }
 
   injectThemes(api, jsPath, themesPathList);    // 注入主题数据与变更能力

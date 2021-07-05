@@ -2,7 +2,6 @@ import { Compiler, Plugin } from 'webpack';
 import { ConcatSource } from 'webpack-sources';
 import { getThemesDataStr } from '../../utils/injectThemes';
 
-export type VarTarget = 'const' | 'window' | 'global';
 export interface Options {
   defaultName: string;
 }
@@ -26,12 +25,10 @@ export class DefineVariablePlugin implements Plugin {
       compilation.hooks.optimizeChunkAssets.tap(this.pluginName, (chunks) => {
         chunks.forEach((chunk) => {
           chunk.files.forEach((fileName) => {
-            if (fileName.includes('index')) {
-              compilation.assets[fileName] = new ConcatSource(
-                `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
-                compilation.assets[fileName],
-              );
-            }
+            compilation.assets[fileName] = new ConcatSource(
+              `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
+              compilation.assets[fileName],
+            );
           });
         });
       });
