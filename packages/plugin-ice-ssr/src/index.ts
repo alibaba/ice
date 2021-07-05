@@ -126,9 +126,9 @@ const plugin = async (api): Promise<void> => {
     if (command === 'start') {
       config.devServer
         .hot(true)
-        .writeToDisk((filePath) => {
-          const formatedFilePath = formatPath(filePath);
-          return /(server\/.*|loadable-stats.json|index.html)$/.test(formatedFilePath);
+        .writeToDisk((filePath: string) => {
+          const formattedFilePath = formatPath(filePath);
+          return /(server\/.*|loadable-stats.json|index.html)$/.test(formattedFilePath);
         });
 
       let serverReady = false;
@@ -170,8 +170,8 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
-    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
+    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
+    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
   });
 };
