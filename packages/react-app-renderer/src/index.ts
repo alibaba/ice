@@ -1,4 +1,5 @@
-import { reactAppRenderer, getInitialData, setInitialData, RenderAppConfig } from './renderer';
+import { reactAppRenderer, getInitialData, setInitialData } from './renderer';
+import { RenderAppConfig } from './types';
 
 export { getInitialData, setInitialData, RenderAppConfig };
 export default reactAppRenderer;

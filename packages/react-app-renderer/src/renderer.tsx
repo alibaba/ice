@@ -3,36 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as queryString from 'query-string';
 import { loadableReady } from '@loadable/component';
 import type { RuntimeModule } from 'create-app-shared';
-
-type OnError = (err: Error) => void
-interface Context {
-  pathname: string;
-  path: string;
-  query: queryString.ParsedQuery<string>;
-  ssrError: any;
-}
-export type RenderAppConfig = {
-  app?: {
-    rootId?: string;
-    mountNode?: HTMLElement;
-    onErrorBoundaryHandler?: OnError;
-    ErrorBoundaryFallback?: React.ComponentType;
-    errorBoundary?: boolean;
-    getInitialData?: (context: Context) => Promise<any>;
-  }
-};
-type AppLifecycle = {
-  createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
-  emitLifeCycles: () => void;
-  initAppLifeCycles: () => void;
-}
-
-interface renderOptions<T = RenderAppConfig, P = any> {
-  ErrorBoundary: React.ComponentType<{Fallback?: React.ComponentType; onError?: Function}>;
-  buildConfig: P;
-  appConfig: T;
-  appLifecycle: AppLifecycle
-}
+import type { RenderOptions } from './types';
 
 let __initialData__: any;
 
@@ -44,7 +15,7 @@ export function getInitialData() {
   return __initialData__;
 }
 
-export function getRenderApp(runtime: RuntimeModule, options: renderOptions) {
+export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
   const { ErrorBoundary, appConfig = { app: {}} } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
@@ -65,7 +36,7 @@ export function getRenderApp(runtime: RuntimeModule, options: renderOptions) {
   return App;
 }
 
-export async function reactAppRenderer(options: renderOptions) {
+export async function reactAppRenderer(options: RenderOptions) {
   const { appConfig, buildConfig = {}, appLifecycle } = options;
   const { createBaseApp, emitLifeCycles, initAppLifeCycles } = appLifecycle;
   const context: any = {};
@@ -103,7 +74,7 @@ export async function reactAppRenderer(options: renderOptions) {
   });
 }
 
-function _render(runtime: RuntimeModule, options: renderOptions) {
+function _render(runtime: RuntimeModule, options: RenderOptions) {
   const { appConfig = {} } = options;
   const { rootId, mountNode } = appConfig.app;
   const App = getRenderApp(runtime, options);

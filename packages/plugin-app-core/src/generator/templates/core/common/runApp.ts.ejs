@@ -38,7 +38,7 @@ import { mount, unmount } from './render';
 <% } %>
 import { setAppConfig } from './appConfig';
 import ErrorBoundary from './ErrorBoundary';
-import { IAppConfig, IBuildConfig } from './types';
+import { IAppConfig, IBuildConfig } from '../types';
 
 const buildConfig: IBuildConfig = <%- buildConfig %>;
 const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
