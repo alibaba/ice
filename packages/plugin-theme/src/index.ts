@@ -43,9 +43,9 @@ const plugin: IPlugin = async (api) => {
     log.info(`🤔 未找到默认主题文件（default.css），自动配置 ${defaultName} 为初始主题`);
   }
 
-  setThemesData(themesPathList);
+  setThemesData(themesPathList);                             // 生成变量并设置 themesData
 
-  injectVariable(onGetWebpackConfig, defaultName, jsPath);   // 注入所有变量
+  injectVariable(onGetWebpackConfig, defaultName, jsPath);   // 注入所有（包括分析生成）的变量与需要注入的逻辑
   setExposeAPI(api, defaultName, themesNames);               // 设置需要 ice 暴露出的 API (Hooks / Provider)
 
   applyMethod('watchFileChange', /themes\/.*/, async (event: string) => {
