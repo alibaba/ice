@@ -70,7 +70,12 @@ module.exports = (api) => {
   }
   configWebpak5(api);
 
+  let startTime = 0;
+  // 通过 hooks 记录时间，解决 webpack 不同版本间时间计算的差异
+  onHook(`before.${command}.run`, () => {
+    startTime = Date.now();
+  });
   onHook(`after.${command}.compile`, ({ stats }) => {
-    console.log('Math.max(...stats.toJson({ timings: true }).children.map(info => info.time || 0))===>', Math.max(...stats.toJson({ timings: true }).children.map(info => info.time || 0)));
+    console.log(Date.now() - startTime);
   });
 };

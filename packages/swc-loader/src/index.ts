@@ -3,6 +3,26 @@ import { getOptions } from 'loader-utils';
 import { transform, transformSync, plugins } from '@swc/core';
 import Visitor from '@swc/core/Visitor';
 
+function preCompileTsFile(source, initOptions, inputSourceMap) {
+  const options = {
+    jsc: {
+      parser: {
+        syntax: 'typescript',
+        tsx: /\.tsx$/.test(initOptions.filename),
+        dynamicImport: true,
+        decorators: true,
+      }
+    },
+    ...initOptions,
+  };
+
+  if (initOptions.sourceMaps && inputSourceMap) {
+    options.inputSourceMap = inputSourceMap;
+  }
+
+  return transformSync(source, options);
+}
+
 function makeLoader() {
   return function (source, inputSourceMap) {
     // Make the loader async
@@ -11,16 +31,25 @@ function makeLoader() {
     const { devtool } = this._compiler.options;
     // Define sourceMaps by webpack devtool values
     const sourceMaps = !!devtool;
-
-    const loaderOptions = getOptions(this) || {};
-    const programmaticOptions = Object.assign({}, loaderOptions, {
+    const initOptions = {
       filename,
       // Ensure that Webpack will get a full absolute path in the sourcemap
       // so that it can properly map the module back to its internal cached
       // modules.
       sourceFileName: filename,
       sourceMaps,
-    });
+    };
+
+    if (/\.tsx?$/.test(filename)) {
+      const output = preCompileTsFile(source, initOptions, inputSourceMap);
+      source = output.code;
+      if (inputSourceMap) {
+        inputSourceMap = output.map;
+      }
+    }
+
+    const loaderOptions = getOptions(this) || {};
+    const programmaticOptions = Object.assign({}, loaderOptions, initOptions);
     if (sourceMaps && inputSourceMap) {
       programmaticOptions.inputSourceMap = inputSourceMap;
     }

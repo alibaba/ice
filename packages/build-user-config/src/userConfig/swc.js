@@ -1,4 +1,4 @@
-const { cloneDeep, merge } = require('@builder/pack/deps/lodash');
+const { merge } = require('@builder/pack/deps/lodash');
 const SwcPlugin = require('webpack-plugin-swc').default;
 
 const EXCLUDE_REGX = /node_modules/;
@@ -29,8 +29,8 @@ module.exports = (config, swcOptions) => {
         externalHelpers: true
       },
       module: {
-        'type': 'commonjs',
-         'noInterop': false
+        type: 'commonjs',
+        noInterop: false
       },
       env: {
         loose: true,
@@ -53,39 +53,12 @@ module.exports = (config, swcOptions) => {
 
     config.module
       .rule('jsx')
-      .test(/\.jsx?$/)
+      .test(/\.(j|t)sx?$/)
       .exclude.add(EXCLUDE_REGX)
       .end()
       .use('swc-loader')
       .loader(swcLoader)
       .options(jsOptions)
       .end();
-
-    const tsOptions = merge({
-      jsc: {
-        parser: {
-          syntax: 'typescript',
-          tsx: true,
-          dynamicImport: true,
-          decorators: true,
-        }
-      },
-    }, commonOptions);
-
-    ['ts', 'tsx'].forEach((ruleName) => {
-      const testRegx = new RegExp(`\\.${ruleName}$`);
-      const options = cloneDeep(tsOptions);
-      options.jsc.parser.tsx = ruleName === 'tsx';
-
-      config.module
-        .rule(ruleName)
-        .test(testRegx)
-        .exclude.add(EXCLUDE_REGX)
-        .end()
-        .use('swc-loader')
-        .loader(swcLoader)
-        .options(options)
-        .end();
-    });
   }
 };

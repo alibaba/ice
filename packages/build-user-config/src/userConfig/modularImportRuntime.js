@@ -15,7 +15,7 @@ module.exports = (config, value, context, api) => {
       addBabelPlugins(config, [[
         require.resolve('../utils/babelPluginImport'),
         pluginOptions,
-      ]]);
+      ]], context);
     };
   }
 };
