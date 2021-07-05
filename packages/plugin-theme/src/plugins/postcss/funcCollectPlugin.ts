@@ -1,6 +1,7 @@
 import * as less from 'less';
 import { plugin, TransformCallback } from 'postcss';
-import { getFunction, isFunction, walkerSome, walkerFind } from '../../utils/common';
+import { getFunction, isFunction } from '../../utils/common';
+import { walkerSome, walkerFind } from '../../utils/walkers';
 
 interface Option {
   data: Record<string, Record<string, string>>,
