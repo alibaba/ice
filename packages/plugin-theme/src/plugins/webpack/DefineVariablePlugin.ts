@@ -1,6 +1,6 @@
 import { Compiler, Plugin } from 'webpack';
 import { ConcatSource } from 'webpack-sources';
-import { getThemesDataStr } from '../../utils/injectThemes';
+import { getThemesDataStr } from '../../utils/themesUtil';
 
 export interface Options {
   defaultName: string;

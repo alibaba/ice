@@ -1,5 +1,5 @@
 import { plugin, TransformCallback } from 'postcss';
-import { ThemeVarsType } from '../../utils/injectThemes';
+import { ThemeVarsType } from '../../utils/themesUtil';
 
 interface Option {
   themeVars: ThemeVarsType

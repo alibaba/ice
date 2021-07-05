@@ -2,9 +2,9 @@ import { IOnGetWebpackConfig } from '@alib/build-scripts';
 import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
 import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
 import { funcCollectPlugin } from '../plugins/postcss/funcCollectPlugin';
-import { getThemesData } from './injectThemes';
+import { getThemesData } from '../utils/themesUtil';
 
-const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: string) => {
+const injectVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: string) => {
   const themeVars = getThemesData()[defaultName];
   const pluginsFactory = (type: 'sass' | 'less') => [
     funcCollectPlugin({ data: getThemesData(), type }),
@@ -39,5 +39,5 @@ const setVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: strin
 };
 
 export {
-  setVariable
+  injectVariable
 };

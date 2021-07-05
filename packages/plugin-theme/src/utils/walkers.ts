@@ -52,7 +52,7 @@ export const walker = (type: string, root: Root, cb: (data: INode) => void) => {
  * 
  * @param {String} type less / sass
  * @param {Root} root 或者称之为 node（postcss node）
- * @param {function} cb 遍历时触发的回调函数
+ * @param {Function} cb 遍历时触发的回调函数
  * 
  * @return {Boolean} 查找成功后返回 true，如果一直未找到，则返回 false
  */

@@ -5,7 +5,7 @@ import { PLUGIN_DIR, ICE_TEMP } from '../constant';
 /**
  * 设置暴露出的 API
  */
-const setAPI = ({
+const setExposeAPI = ({
   applyMethod,
   onGetWebpackConfig,
   getValue,
@@ -32,5 +32,5 @@ const setAPI = ({
 };
 
 export {
-  setAPI
+  setExposeAPI
 };
