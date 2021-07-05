@@ -13,6 +13,5 @@
   "plugins": [],
   "devServer": {
     "writeToDisk": true
-  },
-  "compileDependencies": [""]
+  }
 }

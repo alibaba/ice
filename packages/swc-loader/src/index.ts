@@ -1,9 +1,10 @@
 /* eslint-disable import/no-dynamic-require */
 import { getOptions } from 'loader-utils';
-import { transform, transformSync, plugins } from '@swc/core';
+import { transform, plugins } from '@swc/core';
 import Visitor from '@swc/core/Visitor';
+import transformCode from './transform';
 
-function preCompileTsFile(source, initOptions, inputSourceMap) {
+async function preCompileTsFile(source, initOptions, inputSourceMap) {
   const options = {
     jsc: {
       parser: {
@@ -20,97 +21,93 @@ function preCompileTsFile(source, initOptions, inputSourceMap) {
     options.inputSourceMap = inputSourceMap;
   }
 
-  return transformSync(source, options);
+  return await transform(source, options);
 }
 
 function makeLoader() {
   return function (source, inputSourceMap) {
     // Make the loader async
     const callback = this.async();
-    const filename = this.resourcePath;
-    const { devtool } = this._compiler.options;
-    // Define sourceMaps by webpack devtool values
-    const sourceMaps = !!devtool;
-    const initOptions = {
-      filename,
-      // Ensure that Webpack will get a full absolute path in the sourcemap
-      // so that it can properly map the module back to its internal cached
-      // modules.
-      sourceFileName: filename,
-      sourceMaps,
-    };
 
-    if (/\.tsx?$/.test(filename)) {
-      const output = preCompileTsFile(source, initOptions, inputSourceMap);
-      source = output.code;
-      if (inputSourceMap) {
-        inputSourceMap = output.map;
-      }
-    }
-
-    const loaderOptions = getOptions(this) || {};
-    const programmaticOptions = Object.assign({}, loaderOptions, initOptions);
-    if (sourceMaps && inputSourceMap) {
-      programmaticOptions.inputSourceMap = inputSourceMap;
-    }
-
-    const sync = programmaticOptions.sync;
-    const parseMap = programmaticOptions.parseMap;
-
-    // Add swc plugins
-    let swcPlugins = programmaticOptions.plugins || [];
-    if (Array.isArray(programmaticOptions.presets)) {
-      swcPlugins = [...swcPlugins, ...programmaticOptions.presets.reverse()];
-    }
-    if (swcPlugins.length > 0) {
-      programmaticOptions.plugin = plugins(swcPlugins.map((pluginInfo) => {
-        let pluginPath;
-        let pluginArgs = {};
-        if (Array.isArray(pluginInfo)) {
-          pluginPath = pluginInfo[0];
-          pluginArgs = pluginInfo[1];
-        } else {
-          pluginPath = pluginInfo;
-        }
-        let Plugin = interceptorRequire(pluginPath);
-        if (typeof Plugin !== 'function') {
-          throw new Error('swc plugin type should be function!');
-        }
-        if (!Object.prototype.isPrototypeOf.apply(Visitor, Plugin)) {
-          Plugin = Plugin(filename, pluginArgs);
-        }
-        // Generate a plugin instance
-        const PluginInstance = new Plugin();
-        PluginInstance.filename = filename;
-        // Return visitProgram method for this plugin, swc plugins will execute it
-        return PluginInstance.visitProgram.bind(PluginInstance);
-      }));
-    }
-
-    // Remove loader related options
-    delete programmaticOptions.sync;
-    delete programmaticOptions.parseMap;
-    delete programmaticOptions.plugins;
-    delete programmaticOptions.presets;
-    // auto detect development mode
-    if (this.mode && programmaticOptions.jsc && programmaticOptions.jsc.transform
-            && programmaticOptions.jsc.transform.react &&
-            !Object.prototype.hasOwnProperty.call(programmaticOptions.jsc.transform.react, 'development')) {
-      programmaticOptions.jsc.transform.react.development = this.mode === 'development';
-    }
-
-    try {
-      const handleTransformResult = generateResultHandler(callback, sourceMaps, inputSourceMap, parseMap);
-      if (sync) {
-        const output = transformSync(source, programmaticOptions);
-        handleTransformResult(output);
-      } else {
-        transform(source, programmaticOptions).then(handleTransformResult, callback);
-      }
-    } catch (e) {
-      callback(e);
-    }
+    loader.call(this, source, inputSourceMap).then(
+      args => callback(null, ...args),
+      err => callback(err),
+    );
   };
+}
+
+async function loader(source, inputSourceMap) {
+  const filename = this.resourcePath;
+  const { devtool } = this._compiler.options;
+  // Define sourceMaps by webpack devtool values
+  const sourceMaps = !!devtool;
+  const initOptions = {
+    filename,
+    // Ensure that Webpack will get a full absolute path in the sourcemap
+    // so that it can properly map the module back to its internal cached
+    // modules.
+    sourceFileName: filename,
+    sourceMaps,
+  };
+
+  if (/\.tsx?$/.test(filename)) {
+    const output = await preCompileTsFile(source, initOptions, inputSourceMap);
+    source = output.code;
+    if (inputSourceMap) {
+      inputSourceMap = output.map;
+    }
+  }
+
+  const loaderOptions = getOptions(this) || {};
+  const programmaticOptions = Object.assign({}, loaderOptions, initOptions);
+  if (sourceMaps && inputSourceMap) {
+    programmaticOptions.inputSourceMap = inputSourceMap;
+  }
+
+  // Add swc plugins
+  let swcPlugins = programmaticOptions.plugins || [];
+  if (Array.isArray(programmaticOptions.presets)) {
+    swcPlugins = [...swcPlugins, ...programmaticOptions.presets.reverse()];
+  }
+  if (swcPlugins.length > 0) {
+    programmaticOptions.plugin = plugins(swcPlugins.map((pluginInfo) => {
+      let pluginPath;
+      let pluginArgs = {};
+      if (Array.isArray(pluginInfo)) {
+        pluginPath = pluginInfo[0];
+        pluginArgs = pluginInfo[1];
+      } else {
+        pluginPath = pluginInfo;
+      }
+      let Plugin = interceptorRequire(pluginPath);
+      if (typeof Plugin !== 'function') {
+        throw new Error('swc plugin type should be function!');
+      }
+      if (!Object.prototype.isPrototypeOf.apply(Visitor, Plugin)) {
+        Plugin = Plugin(filename, pluginArgs);
+      }
+      // Generate a plugin instance
+      const PluginInstance = new Plugin();
+      PluginInstance.filename = filename;
+      // Return visitProgram method for this plugin, swc plugins will execute it
+      return PluginInstance.visitProgram.bind(PluginInstance);
+    }));
+  }
+
+  // Remove loader related options
+  delete programmaticOptions.plugins;
+  delete programmaticOptions.presets;
+
+  // TODO delete plugin
+  delete programmaticOptions.plugin;
+  // auto detect development mode
+  if (this.mode && programmaticOptions.jsc && programmaticOptions.jsc.transform
+          && programmaticOptions.jsc.transform.react &&
+          !Object.prototype.hasOwnProperty.call(programmaticOptions.jsc.transform.react, 'development')) {
+    programmaticOptions.jsc.transform.react.development = this.mode === 'development';
+  }
+
+  return await transformCode(source, programmaticOptions);
 }
 
 function interceptorRequire(moduleName: string) {
@@ -118,20 +115,6 @@ function interceptorRequire(moduleName: string) {
   const module = require(moduleName);
   if (module.default) return module.default;
   return module;
-}
-
-function generateResultHandler(callback, sourceMaps: boolean, inputSourceMap: string, parseMap: boolean) {
-  return (output) => {
-    let { map } = output;
-    if (!sourceMaps) {
-      map = inputSourceMap;
-    }
-    callback(
-      null,
-      output.code,
-      parseMap ? JSON.parse(map) : map
-    );
-  };
 }
 
 export default makeLoader();

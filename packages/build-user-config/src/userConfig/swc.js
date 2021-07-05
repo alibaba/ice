@@ -35,6 +35,7 @@ module.exports = (config, swcOptions) => {
       env: {
         loose: true,
       },
+      cacheDirectory: true,
       ...swcOptions,
     };
 
