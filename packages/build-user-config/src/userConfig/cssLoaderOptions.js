@@ -3,9 +3,12 @@ module.exports = (config, cssLoaderOptions) => {
     [
       'scss',
       'scss-module',
+      'scss-global',
       'css',
       'css-module',
+      'css-global',
       'less',
+      'less-module',
       'less-module',
     ].forEach(rule => {
       if (config.module.rules.get(rule)) {
