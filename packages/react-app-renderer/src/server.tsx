@@ -4,7 +4,7 @@ import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
 
 function renderInServer(context, options) {
-  const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
+  const { appConfig, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
   const { loadableStatsPath, publicPath } = buildConfig;
@@ -12,11 +12,6 @@ function renderInServer(context, options) {
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
   emitLifeCycles();
-  const isMobile = Object.keys(staticConfig).length;
-  if (isMobile) {
-    // TODO: ssr is not support in mobile mode
-    return { bundleContent: '' };
-  }
 
   const App = getRenderApp(runtime, options);
 
