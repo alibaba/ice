@@ -28,6 +28,11 @@ module.exports = function() {
     {
       name: 'polyfill',
       defaultValue: 'entry'
+    },
+    {
+      name: 'fastRefresh',
+      defaultValue: true,
+      validation: 'boolean'
     }
   ];
 };

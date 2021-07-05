@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet';
 import { matchPath } from 'ice';
 import { setInitialData } from 'react-app-renderer';
 import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
-import { getAppConfig } from './appConfig';
-import loadStaticModules from './loadStaticModules';
-import app from './runApp';
+import { getAppConfig } from './core/appConfig';
+import loadStaticModules from './core/loadStaticModules';
+import app from './core/runApp';
 import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
 

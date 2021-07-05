@@ -10,14 +10,13 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
   async function generateConfig() {
     const filePath = path.join(rootDir,configFile);
-    const distPath =  path.join(getValue('TEMP_PATH'), 'config.ts');
-    const templatePath = path.join(__dirname, './template/config.ts.ejs');
-    applyMethod('addRenderFile', templatePath, distPath, { hasConfig: fse.existsSync(filePath)});
+    const templatePath = path.join(__dirname, './template/index.ts.ejs');
+    applyMethod('addPluginTemplate', templatePath, { hasConfig: fse.existsSync(filePath)});
     applyMethod('addExport', {
-      source: './config',
+      source: './plugins/config',
       exportName: 'config, APP_MODE',
       specifier: '{ config, APP_MODE }',
-      importSource: '$$framework/config',
+      importSource: '$$framework/plugins/config',
       exportMembers: ['config', 'APP_MODE'],
     });
   }

@@ -4,6 +4,11 @@
 
 - [feat] add `setHistory` API
 
+## 1.4.7
+
+- [refactor] only inject TabBar component when developer configured it
+- [chore] typo `onErrorBoundaryHandler`
+
 ## 1.4.6
 
 - [feat] support to specify targetDir when call api `addTemplateDir`

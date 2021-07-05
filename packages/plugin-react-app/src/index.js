@@ -26,7 +26,7 @@ module.exports = (api) => {
   if (getValue('HAS_JSX_RUNTIME')) {
     modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
   }
-  
+
   // set webpack config
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules
@@ -42,6 +42,7 @@ module.exports = (api) => {
       target = '';
     }
     const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig, libName: 'react' });
+    enhancedWebpackConfig.name('web');
     setBase(api, { target, webpackConfig: enhancedWebpackConfig });
     registerTask(target, enhancedWebpackConfig);
   });
