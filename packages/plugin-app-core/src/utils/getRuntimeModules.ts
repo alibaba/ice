@@ -22,10 +22,10 @@ export default (plugins: any = [], targetDir: string) => {
       if (fse.existsSync(srcDir)) {
         const runtimePaths = globby.sync('runtime.@((t|j)s?(x))', { cwd: srcDir });
         if (runtimePaths.length > 0) {
-          // copy source code when runtime exsists
+          // copy source code when runtime exists
           fse.ensureDirSync(tempDir);
           fse.copySync(srcDir, tempDir);
-          modulePath = `./${path.relative(targetDir, path.join(tempDir, runtimePaths[0]).replace(/.(t|j)(s|sx)$/, ''))}`;
+          modulePath = `../${path.relative(targetDir, path.join(tempDir, runtimePaths[0]).replace(/.(t|j)(s|sx)$/, ''))}`;
         }
       }
     }
