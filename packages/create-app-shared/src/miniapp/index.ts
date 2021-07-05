@@ -1,6 +1,6 @@
 export { default as withRouter } from './enhanceWithRouter';
 export { addAppLifeCycle } from '../appLifeCycles';
-export { withPageLifeCycle, createUsePageLifeCycle } from '../pageLifeCycles';
+export { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
 export { default as emitLifeCycles } from './emitLifeCycles';
 export { default as createHistory, initHistory } from './history';
 export { default as initAppLifeCycles} from './initAppLifeCycles';
