@@ -1,9 +1,5 @@
 /* eslint global-require: 0 */
-module.exports = function(userConfig) {
-  let polyfillDefaultValue = 'entry';
-  if (Object.prototype.hasOwnProperty.call(userConfig, 'injectBabel') && userConfig.injectBabel === false) {
-    polyfillDefaultValue = false;
-  }
+module.exports = function() {
   return [
     {
       name: 'remoteRuntime',
@@ -35,13 +31,8 @@ module.exports = function(userConfig) {
       validation: 'string'
     },
     {
-      name: 'injectBabel',
-      defaultValue: 'polyfill',
-      validation: 'string|boolean'
-    },
-    {
       name: 'polyfill',
-      defaultValue: polyfillDefaultValue
+      defaultValue: 'entry'
     },
     {
       name: 'fastRefresh',
