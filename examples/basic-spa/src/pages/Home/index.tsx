@@ -34,11 +34,3 @@ export default function Home(props) {
     </>
   );
 }
-
-Home.getInitialProps = async () => {
-  return { count: 1 };
-};
-
-Home.pageConfig = {
-  title: 'Home Page'
-};

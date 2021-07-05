@@ -58,7 +58,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     });
   } else {
     const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
-    renderRouter = (routes: RouteItemProps[], RoutesComponent: React.ComponentType<{routes: IRouterConfig[]; fallback: React.ComponentType}>, customRouterProps = {}) => () => {
+    renderRouter = (routes: RouteItemProps[], RoutesComponent: React.ComponentType<{ routes: IRouterConfig[]; fallback: React.ComponentType }>, customRouterProps = {}) => () => {
       let routerProps = {
         ...appConfigRouter,
         lazy,
@@ -74,7 +74,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
       const { fallback, ...restRouterProps } = routerProps;
       return (
         <IceRouter {...restRouterProps}>
-          { RoutesComponent ? <RoutesComponent routes={parseRoutes(routes, fallback)} fallback={fallback} /> : null }
+          { RoutesComponent ? <RoutesComponent routes={parseRoutes(routes, fallback)} fallback={fallback} /> : null}
         </IceRouter>
       );
     };

@@ -1,11 +1,7 @@
 const { validation } = require('@builder/app-helpers');
 
 /* eslint global-require: 0 */
-module.exports = function(userConfig) {
-  let polyfillDefaultValue = 'entry';
-  if (Object.prototype.hasOwnProperty.call(userConfig, 'injectBabel') && userConfig.injectBabel === false) {
-    polyfillDefaultValue = false;
-  }
+module.exports = function() {
   return [
     {
       name: 'entry',
@@ -30,15 +26,13 @@ module.exports = function(userConfig) {
       validation: 'string'
     },
     {
-      name: 'injectBabel',
-      defaultValue: 'polyfill',
-      validation: (val) => {
-        return validation('injectBabel', val, 'string|boolean');
-      }
+      name: 'polyfill',
+      defaultValue: 'entry'
     },
     {
-      name: 'polyfill',
-      defaultValue: polyfillDefaultValue
+      name: 'fastRefresh',
+      defaultValue: true,
+      validation: 'boolean'
     }
   ];
 };

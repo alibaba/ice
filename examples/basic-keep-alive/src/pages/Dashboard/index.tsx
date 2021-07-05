@@ -15,8 +15,4 @@ const Dashboard = () => {
   );
 };
 
-Dashboard.pageConfig = {
-  keepAlive: false,
-};
-
 export default Dashboard;

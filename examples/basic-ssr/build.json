@@ -1,6 +1,4 @@
 {
-  "webpack5": false,
   "plugins": [],
-  "ssr": true,
-  "modularImportRuntime": true
+  "ssr": true
 }

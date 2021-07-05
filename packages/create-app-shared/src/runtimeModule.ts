@@ -113,7 +113,7 @@ class RuntimeModule {
           : children;
         return this.context.createElement(
           ProviderComponent,
-          {...rest},
+          { ...rest },
           element
         );
       };
