@@ -1,5 +1,5 @@
 {
-  "modularImportRuntime": true,
+  "polyfill": false,
   "ignoreHtmlTemplate": false,
   "plugins": [],
   "tsChecker": true,

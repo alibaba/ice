@@ -1,5 +1,4 @@
 {
-  "webpack5": false,
   "plugins": [],
   "ssr": true
 }

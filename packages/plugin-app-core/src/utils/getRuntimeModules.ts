@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import formatPath from './formatPath';
 
-export default (plugins: any = [], targetDir: string, debugRuntime: boolean) => {
+export default (plugins: any = [], targetDir: string) => {
   return plugins.map(({ pluginPath, name }) => {
     // compatible with function plugin
     if (!pluginPath) return false;
@@ -12,29 +12,22 @@ export default (plugins: any = [], targetDir: string, debugRuntime: boolean) => 
     let modulePath = path.join(pluginDir, 'runtime.js');
     const moduleDir = path.join(pluginDir, '..');
     if(!fse.existsSync(modulePath)){
-      modulePath = path.join(pluginDir, 'module.js');
-      if(!fse.existsSync(modulePath)){
-        return false;
-      }
-      console.log(`WARN: module.ts(x) will not be supported in the future. Please rename as runtime.ts(x) in ${modulePath}`);
-    } else if (name && debugRuntime){
+      // filter plugin without runtime
+      return false;
+    } else if (name){
       // copy module dir to target dir
       const tempDir = path.join(targetDir, 'plugins', name);
-      fse.ensureDirSync(tempDir);
       // ensure source dir
       const srcDir = path.join(moduleDir, 'src');
       if (fse.existsSync(srcDir)) {
-        fse.copySync(srcDir, tempDir);
-        const runtimePaths = globby.sync('runtime.@((t|j)s?(x))', { cwd: tempDir });
+        const runtimePaths = globby.sync('runtime.@((t|j)s?(x))', { cwd: srcDir });
         if (runtimePaths.length > 0) {
-          modulePath = path.join(tempDir, runtimePaths[0]);
+          // copy source code when runtime exists
+          fse.ensureDirSync(tempDir);
+          fse.copySync(srcDir, tempDir);
+          modulePath = `../${path.relative(targetDir, path.join(tempDir, runtimePaths[0]).replace(/.(t|j)(s|sx)$/, ''))}`;
         }
-      } else {
-        fse.copySync(pluginDir, tempDir);
-        modulePath = path.join(tempDir, 'runtime.js');
       }
-
-      modulePath = `./${path.relative(targetDir, modulePath.replace(/.(t|j)(s|sx)$/, ''))}`;
     }
     // read package.json
     let pluginConfig = {};
