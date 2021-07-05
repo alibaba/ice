@@ -102,6 +102,9 @@ const plugin = async (api): Promise<void> => {
     // empty externals added by config external
     config.externals([]);
 
+    // remove process fallback when target is node
+    config.plugins.delete('ProvidePlugin');
+
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
       console.log('[SSR]', 'start server render');

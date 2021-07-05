@@ -1,5 +1,5 @@
 {
-  "modularImportRuntime": true,
+  "polyfill": false,
   "ignoreHtmlTemplate": false,
   "plugins": [],
   "tsChecker": true,
@@ -17,15 +17,6 @@
   "eslint": {
     "disable": false,
     "quiet": true
-  },
-  "postcssOptions": {
-    "plugins": {
-      "postcss-preset-env": {
-        "browsers": [
-          "chrome 68"
-        ]
-      }
-    }
   },
   "terserOptions": {
     "compress": {
