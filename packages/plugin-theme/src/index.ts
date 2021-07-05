@@ -4,8 +4,8 @@ import { readdir } from 'fs-extra';
 import { setExposeAPI } from './workflow/setExposeAPI';
 import { injectVariable } from './workflow/injectVariable';
 import { ICE_TEMP, PLUGIN_DIR } from './constant';
-import { injectThemes } from './workflow/injectThemes';
 import { detectCssFile, getDefaultTheme, checkThemesEnabled, getThemeName } from './utils/common';
+import { setThemesData } from './utils/themesUtil';
 
 /**
  * 多主题编译时处理
@@ -43,11 +43,10 @@ const plugin: IPlugin = async (api) => {
     log.info(`🤔 未找到默认主题文件（default.css），自动配置 ${defaultName} 为初始主题`);
   }
 
-  injectThemes(api, jsPath, themesPathList);    // 注入主题数据与变更能力
-  setExposeAPI(api, defaultName, themesNames);        // 设置需要 ice 暴露出的 API (Hooks / Provider)
+  setThemesData(themesPathList);
 
-  // 注入所有变量
-  injectVariable(onGetWebpackConfig, defaultName);
+  injectVariable(onGetWebpackConfig, defaultName, jsPath);   // 注入所有变量
+  setExposeAPI(api, defaultName, themesNames);               // 设置需要 ice 暴露出的 API (Hooks / Provider)
 
   applyMethod('watchFileChange', /themes\/.*/, async (event: string) => {
     if (event === 'change' || event === 'add' || event === 'unlink') {
