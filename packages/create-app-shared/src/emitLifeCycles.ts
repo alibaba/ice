@@ -1,5 +1,5 @@
 import type { History } from 'history';
-import { getHistory } from './history';
+import { getHistory } from './storage';
 import router from './router';
 import { LAUNCH, SHOW, HIDE } from './constants';
 import { emit as appEmit } from './appLifeCycles';
