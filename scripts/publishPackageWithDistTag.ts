@@ -7,7 +7,6 @@ import { spawnSync } from 'child_process';
 import { setPublishedPackages } from './published-info';
 import { IPackageInfo, getPackageInfos, getVersionPrefix } from './getPackageInfos';
 
-console.log(process.env.PUBLISH_TYPE);
 const PUBLISH_TYPE = process.env.PUBLISH_TYPE || 'beta';
 const DIST_TAG_REG = new RegExp(`([^-]+)-${PUBLISH_TYPE}\\.(\\d+)`);
 
