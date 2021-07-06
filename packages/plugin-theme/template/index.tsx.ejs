@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import type { ContextType, Themes } from './types';
 
-const defaultTheme = <%- defaultTheme %>;
-
 const Context = createContext<ContextType>(null);
 
-const ThemeProvider: React.FC = ({ children }) => {
-  const share = useState<Themes>(defaultTheme);
+const ThemeProvider: React.FC = ({ initialTheme, children }) => {
+  const share = useState<Themes>(initialTheme || <%- defaultTheme %>);
   const theme = share[0];
 
   useEffect(() => {
@@ -30,7 +28,6 @@ const useTheme = () => {
 export {
   useTheme,
   ThemeProvider,
-  defaultTheme,
 };
 
 export type { Themes };

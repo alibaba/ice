@@ -51,6 +51,7 @@ const plugin: IPlugin = async (api) => {
   applyMethod('watchFileChange', /themes\/.*/, async (event: string) => {
     if (event === 'change' || event === 'add' || event === 'unlink') {
       log.warn('主题文件发生改变');
+      // TODO: 重新 setThemesData 并注入到 window.__themesData__
     }
   });
 };

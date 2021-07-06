@@ -6,7 +6,7 @@ interface Option {
 }
 
 /**
- * PossCss 插件
+ * PostCss 插件
  * 
  * 获取主题包定义的所有变量
  * 
@@ -14,6 +14,8 @@ interface Option {
  */
 export const getThemeVarsPlugin = plugin('get-theme-files-vars', (option: Option): TransformCallback => {
   const { themeVars } = option;
+
+  // TODO: support @import '~/@alifd/theme-design-pro/variables.css';
 
   return root => {
     root.walkDecls(decl => {
