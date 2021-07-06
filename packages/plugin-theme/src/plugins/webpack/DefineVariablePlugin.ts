@@ -1,5 +1,5 @@
 import * as webpack from 'webpack';
-import { ConcatSource, RawSource } from 'webpack-sources';
+import { ConcatSource } from 'webpack-sources';
 import { get } from 'lodash';
 import { getThemesDataStr } from '../../utils/themesUtil';
 
@@ -19,6 +19,21 @@ export class DefineVariablePlugin implements webpack.Plugin {
     this.options = { ...this.options, ...options };
   }
 
+  public injectData(fileName: string, defaultName: string, compilation: any) {
+    if (!fileName.includes('.js')) return;
+
+    const asset = compilation.getAsset(fileName);
+    const contents = asset.source.source();
+
+    compilation.updateAsset(
+      fileName,
+      new ConcatSource(
+        `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
+        String(contents),
+      )
+    );
+  }
+
   public apply(compiler: webpack.Compiler): void {
     const { defaultName } = this.options;
 
@@ -33,15 +48,7 @@ export class DefineVariablePlugin implements webpack.Plugin {
           },
           (assets: webpack.AssetInfo) => {
             Object.keys(assets).forEach(fileName => {
-              if (!fileName.includes('.js')) return;
-
-              const asset = compilation.getAsset(fileName);
-              const contents = asset.source.source();
-
-              compilation.updateAsset(
-                fileName,
-                new RawSource(`window.__themesData__ = ${getThemesDataStr(defaultName)};\n${contents}`),
-              );
+              this.injectData(fileName, defaultName, compilation);
             });
           }
         );
@@ -54,12 +61,7 @@ export class DefineVariablePlugin implements webpack.Plugin {
       compilation.hooks.optimizeChunkAssets.tap(this.pluginName, (chunks) => {
         chunks.forEach((chunk) => {
           chunk.files.forEach((fileName) => {
-            if (!fileName.includes('.js')) return;
-
-            compilation.assets[fileName] = new ConcatSource(
-              `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
-              compilation.assets[fileName],
-            );
+            this.injectData(fileName, defaultName, compilation);
           });
         });
       });
