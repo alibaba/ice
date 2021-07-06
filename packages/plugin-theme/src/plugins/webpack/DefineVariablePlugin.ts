@@ -32,12 +32,14 @@ export class DefineVariablePlugin implements webpack.Plugin {
             additionalAssets: true
           },
           (assets: webpack.AssetInfo) => {
-            Object.keys(assets).forEach(i => {
-              const asset = compilation.getAsset(i);
+            Object.keys(assets).forEach(fileName => {
+              if (!fileName.includes('.js')) return;
+
+              const asset = compilation.getAsset(fileName);
               const contents = asset.source.source();
 
               compilation.updateAsset(
-                i,
+                fileName,
                 new RawSource(`window.__themesData__ = ${getThemesDataStr(defaultName)};\n${contents}`),
               );
             });
@@ -52,12 +54,12 @@ export class DefineVariablePlugin implements webpack.Plugin {
       compilation.hooks.optimizeChunkAssets.tap(this.pluginName, (chunks) => {
         chunks.forEach((chunk) => {
           chunk.files.forEach((fileName) => {
-            if (fileName.includes('.js')) {
-              compilation.assets[fileName] = new ConcatSource(
-                `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
-                compilation.assets[fileName],
-              );
-            }
+            if (!fileName.includes('.js')) return;
+
+            compilation.assets[fileName] = new ConcatSource(
+              `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
+              compilation.assets[fileName],
+            );
           });
         });
       });
