@@ -1,10 +1,10 @@
 import * as less from 'less';
 import { plugin, TransformCallback } from 'postcss';
+import { getThemesData } from '../../utils/themesUtil';
 import { getFunction, isFunction } from '../../utils/common';
 import { walkerSome, walkerFind } from '../../utils/walkers';
 
 interface Option {
-  data: Record<string, Record<string, string>>,
   type?: 'sass' | 'less',
 }
 
@@ -14,7 +14,8 @@ interface Option {
  * 具有副作用，会改变 data 参数的某些数值
  */
 export const funcCollectPlugin = plugin('less-sass-analytics', (options: Option): TransformCallback => {
-  const { data, type = 'less' } = options;
+  const data = getThemesData();
+  const { type = 'less' } = options;
   const themes: string[] = Object.entries(data).map(([key]) => key);
   const varFlag = type === 'less' ? '@' : '$';
   const depthVarSet = new Set<string>(Object.entries(data[themes[0]]).map(i => i[0]));

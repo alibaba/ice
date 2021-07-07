@@ -2,15 +2,7 @@ import * as path from 'path';
 import { IPluginAPI } from '@alib/build-scripts';
 import { PLUGIN_DIR, ICE_TEMP } from '../constant';
 
-/**
- * 设置暴露出的 API
- */
-const setExposeAPI = ({
-  applyMethod,
-  onGetWebpackConfig,
-  getValue,
-}: IPluginAPI, defaultName: string, themes: string[]) => {
-  const iceTemp = getValue(ICE_TEMP);
+const addTemp = (applyMethod: IPluginAPI['applyMethod'], defaultName: string, themes: string[]) => {
   const themesStr = themes.map(str => `'${str}'`).join(' | ');
 
   // 复制模板到 .ice/themes 目录下
@@ -20,6 +12,19 @@ const setExposeAPI = ({
     { templateDir: templateSourceDir, targetDir: PLUGIN_DIR },
     { themes: themesStr, defaultTheme: `'${defaultName}'` }
   );
+};
+
+/**
+ * 设置暴露出的 API
+ */
+const setExposeAPI = ({
+  applyMethod,
+  onGetWebpackConfig,
+  getValue,
+}: IPluginAPI, defaultName: string, themes: string[]) => {
+  const iceTemp: string = getValue(ICE_TEMP);
+
+  addTemp(applyMethod, defaultName, themes);
 
   // 设置 $ice/themes -> .ice/themes/index.tsx
   onGetWebpackConfig((config) => {
@@ -32,5 +37,6 @@ const setExposeAPI = ({
 };
 
 export {
-  setExposeAPI
+  setExposeAPI,
+  addTemp
 };

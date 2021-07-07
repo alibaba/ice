@@ -1,7 +1,8 @@
 import { plugin, TransformCallback } from 'postcss';
+import { getThemesData } from '../../utils/themesUtil';
 
 interface Option {
-  varsMap: Record<string, string>
+  defaultName: string
   type?: 'sass' | 'less'
 }
 
@@ -12,7 +13,9 @@ interface Option {
  * 
  */
 export const declVarPlugin = plugin('less-sass-to-var', (option: Option): TransformCallback => {
-  const { varsMap, type = 'less' } = option;
+  const { defaultName, type = 'less' } = option;
+
+  const varsMap = getThemesData()[defaultName];
 
   return root => {
     if (type === 'sass') {

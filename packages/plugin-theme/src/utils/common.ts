@@ -10,7 +10,7 @@ import { curry } from 'lodash';
  * 
  * @return {Boolean} 是否是 css 文件
  */
-export const detectCssFile = curry((prefix: string, name: string): boolean => {
+const detectCssFile = curry((prefix: string, name: string): boolean => {
   const filePath = path.resolve(prefix, name);
   const stat = lstatSync(filePath);
   return !stat.isDirectory() && name.split('.').pop() === 'css';
@@ -19,7 +19,7 @@ export const detectCssFile = curry((prefix: string, name: string): boolean => {
 /**
  * 通过文件路径名称获取主题名
  */
-export const getThemeName = (filePath: string) => {
+export const getNameFromPath = (filePath: string) => {
   const arr = filePath.replace(/^.*[\\/]/, '').split('.');
   arr.pop();
   return arr.join('.');
@@ -77,4 +77,15 @@ export const isFunction = (str: string) => {
   // eslint-disable-next-line no-useless-escape
   const reg = /^[A-Za-z_]+[A-Za-z0-9_-]*[\(][\s\S]*[\)]$/g;
   return reg.test(str);
+};
+
+export const getThemesName = async (themesPath: string) => {
+  const files = await readdir(themesPath);
+  const themesPathList = files
+    .filter(detectCssFile(themesPath))
+    .map(file => path.resolve(themesPath, file));
+  return {
+    themesPathList,
+    themesNames: themesPathList.map(getNameFromPath)
+  };
 };

@@ -25,6 +25,8 @@ export class DefineVariablePlugin implements webpack.Plugin {
     const asset = compilation.getAsset(fileName);
     const contents = asset.source.source();
 
+    console.log('test');
+
     compilation.updateAsset(
       fileName,
       new ConcatSource(

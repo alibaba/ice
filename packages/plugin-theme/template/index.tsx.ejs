@@ -3,7 +3,11 @@ import type { ContextType, Themes } from './types';
 
 const Context = createContext<ContextType>(null);
 
-const ThemeProvider: React.FC = ({ initialTheme, children }) => {
+interface Props {
+  initialTheme: Themes
+}
+
+const ThemeProvider: React.FC<Props> = ({ initialTheme, children }) => {
   const share = useState<Themes>(initialTheme || <%- defaultTheme %>);
   const theme = share[0];
 

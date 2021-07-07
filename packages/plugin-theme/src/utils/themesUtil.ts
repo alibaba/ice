@@ -2,7 +2,7 @@ import * as postcss from 'postcss';
 import * as atImport from 'postcss-import';
 import produce from 'immer';
 import { readFileSync } from 'fs-extra';
-import { getThemeName } from '../utils/common';
+import { getNameFromPath } from '../utils/common';
 import { getThemeVarsPlugin } from '../plugins/postcss/getThemeVarsPlugin';
 
 interface ThemesDataType {
@@ -56,7 +56,7 @@ const getThemeVars = (filePath: string): ThemeVarsType => {
 const setThemesData = (themesPathList: string[]) => {
   const data = produce(__themesData__, (draft) => {
     themesPathList.forEach(file => {
-      const themeName = getThemeName(file);
+      const themeName = getNameFromPath(file);
       const value = getThemeVars(file);
 
       draft[themeName] = value;

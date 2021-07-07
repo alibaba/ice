@@ -1,14 +1,17 @@
-import { IOnGetWebpackConfig } from '@alib/build-scripts';
+import * as path from 'path';
+import { IPluginAPI } from '@alib/build-scripts';
 import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
 import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
+import { ICE_TEMP, PLUGIN_DIR } from '../constant';
 import { funcCollectPlugin } from '../plugins/postcss/funcCollectPlugin';
-import { getThemesData } from '../utils/themesUtil';
 
-const injectVariable = (onGetWebpackConfig: IOnGetWebpackConfig, defaultName: string, jsPath: string) => {
-  const themeVars = getThemesData()[defaultName];
+const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultName: string) => {
+  const iceTemp = getValue(ICE_TEMP);
+  const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');   // .ice/themes/injectTheme.js
+
   const pluginsFactory = (type: 'sass' | 'less') => [
-    funcCollectPlugin({ data: getThemesData(), type }),
-    declVarPlugin({ varsMap: themeVars, type })
+    funcCollectPlugin({ type }),
+    declVarPlugin({ defaultName, type })
   ];
 
   // Less 变量 value 转为同名 css-var
