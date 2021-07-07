@@ -15,8 +15,6 @@ interface Option {
 export const getThemeVarsPlugin = plugin('get-theme-files-vars', (option: Option): TransformCallback => {
   const { themeVars } = option;
 
-  // TODO: support @import '~/@alifd/theme-design-pro/variables.css';
-
   const scanVars = (root: any) => {
     root.walkDecls(decl => {
       if (decl.prop && decl.prop.slice(0, 2) === '--') {
