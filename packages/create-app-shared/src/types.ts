@@ -3,18 +3,10 @@ import type { createElement } from 'react';
 
 type VoidFunction = () => void;
 
+type App = Partial<{ rootId: string } & Record<'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick', VoidFunction>>;
+
 export interface AppConfig {
-  app?: {
-    rootId?: string;
-    onShow?: VoidFunction;
-    onHide?: VoidFunction;
-    onPageNotFound?: VoidFunction;
-    onShareAppMessage?: VoidFunction;
-    onUnhandledRejection?: VoidFunction;
-    onLaunch?: VoidFunction;
-    onError?: VoidFunction;
-    onTabItemClick?: VoidFunction;
-  },
+  app?: App,
   router?: {
     type?: 'hash' | 'browser' | 'memory' | 'static';
     history?: History;
