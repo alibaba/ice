@@ -42,7 +42,7 @@ const plugin: IPlugin = async (api, options = {}) => {
   injectVariable(api, defaultName);              // 注入所有（包括分析生成）的变量与需要注入的逻辑
   setExposeAPI(api, defaultName, themesNames);   // 设置需要 ice 暴露出的 API (Hooks / Provider)
 
-  watchThemeFiles(api, themesPath);              // 监听主题文件（src/themes）更新
+  watchThemeFiles(api, themesPath, _theme);              // 监听主题文件（src/themes）更新
 };
 
 export default plugin;
