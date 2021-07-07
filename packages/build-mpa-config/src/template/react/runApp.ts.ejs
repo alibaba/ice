@@ -1,0 +1,63 @@
+import { createElement, useEffect, Component } from 'react';
+import createShareAPI, { history } from 'create-app-shared';
+import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
+
+import reactAppRenderer, { getInitialData } from 'react-app-renderer';
+import { withRouter as defaultWithRouter } from 'react-router';
+import genWithSearchParams from './genWithSearchParams';
+
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '<%- tempPath %>/<%= globalStyle %>'
+<% } %>
+import loadRuntimeModules from '<%- tempPath %>/core/loadRuntimeModules';
+import loadStaticModules from '<%- tempPath %>/core/loadStaticModules';
+import defaultStaticConfig from '<%- tempPath %>/core/staticConfig';
+
+import { setAppConfig } from '<%- tempPath %>/core/appConfig';
+import { mount, unmount } from '<%- tempPath %>/core/render';
+import ErrorBoundary from '<%- tempPath %>/core/ErrorBoundary';
+
+const buildConfig: IBuildConfig = <%- buildConfig %>;
+const {
+  createBaseApp,
+  withRouter,
+  createHistory,
+  getHistory,
+  emitLifeCycles,
+  setHistory,
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+  pathRedirect,
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+  getSearchParams
+} = createShareAPI({
+  createElement,
+  useEffect,
+  withRouter: defaultWithRouter
+}, loadRuntimeModules);
+
+export default function runApp(appConfig?: IAppConfig, staticConfig?: any) {
+  reactAppRenderer({
+    appConfig,
+    staticConfig: staticConfig || defaultStaticConfig,
+    buildConfig,
+    setAppConfig,
+    createBaseApp,
+    createHistory,
+    getHistory,
+    setHistory,
+    emitLifeCycles,
+    pathRedirect,
+    loadStaticModules,
+    ErrorBoundary,
+  }, {
+    createElement,
+    mount,
+    unmount,
+    Component
+  })
+};

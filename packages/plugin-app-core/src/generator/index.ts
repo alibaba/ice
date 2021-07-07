@@ -195,7 +195,7 @@ export default class Generator {
     templates.forEach((templateFile) => {
       const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
       const targetPath = path.join(this.targetDir, targetDir, path.isAbsolute(templateFile) ? path.basename(templateFile) : templateFile);
-      
+
       this.addRenderFile(templatePath, targetPath, extraData);
     });
     if (this.rerender) {

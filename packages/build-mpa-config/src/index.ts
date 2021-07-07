@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { formatPath, checkExportDefaultDeclarationExists } from '@builder/app-helpers';
 import generateEntry from './generateEntry';
+import { FrameworkType } from './types';
 
 interface IEntries {
   entryName: string;
@@ -11,7 +12,7 @@ interface IEntries {
 
 interface IConfigOptions {
   type?: string;
-  framework?: string;
+  framework?: FrameworkType;
   entries?: IEntries[];
   targetDir?: string;
 }
@@ -53,8 +54,6 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   const { type = 'web' } = options;
   const parsedEntries = generateMPAEntries(api, options);
 
-  // do not splitChunks when mpa
-  config.optimization.splitChunks({ cacheGroups: {} });
   // clear entry points
   config.entryPoints.clear();
   // add mpa entries
