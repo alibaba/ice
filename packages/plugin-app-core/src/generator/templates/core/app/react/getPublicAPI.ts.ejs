@@ -1,0 +1,32 @@
+import { useEffect } from 'react';
+<% if (buildConfig.router !== false) {%>import { withRouter } from 'react-router';<% } %>
+import {
+<% if (buildConfig.router !== false) {%>
+  getSearchParams,
+  history,
+  getHistory,
+<% } %>
+  withPageLifeCycle,
+  createUsePageLifeCycle,
+} from 'create-app-shared';
+import { getInitialData } from 'react-app-renderer';
+import ErrorBoundary from './ErrorBoundary';
+
+const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
+
+// Public API
+export {
+  // router api
+<% if (buildConfig.router !== false) {%>
+  withRouter,
+  history,
+  getHistory,
+<% } %>
+  getSearchParams,
+  getInitialData,
+  // LifeCycles api
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+  ErrorBoundary,
+};

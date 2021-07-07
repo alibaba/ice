@@ -1,0 +1,106 @@
+import { createElement, useEffect, Component } from 'rax';
+import {
+  createBaseApp,
+  getSearchParams,
+  history,
+  getHistory,
+  createUsePageLifeCycle,
+  initAppLifeCycles,
+  withPageLifeCycle,
+  emitLifeCycles,
+<% if (buildConfig.router !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} from 'create-app-shared';
+
+<% if (hasTabBar) {%>
+import TabBar from './TabBar';
+<% } %>
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
+import miniappRenderer from 'miniapp-renderer';
+import raxAppRenderer, { getInitialData } from 'rax-app-renderer';
+import { createWithRouter } from 'create-use-router';
+const defaultWithRouter = createWithRouter({ createElement });
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '../../<%= globalStyle %>'
+<% } %>
+import loadStaticModules from './loadStaticModules';
+import loadRuntimeModules from './loadRuntimeModules';
+import defaultStaticConfig from './staticConfig';
+import { mount, unmount } from './render';
+import { setAppConfig } from './appConfig';
+import ErrorBoundary from './ErrorBoundary';
+import { IAppConfig, IBuildConfig } from '../types';
+
+const buildConfig: IBuildConfig = <%- buildConfig %>;
+const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
+const frameworkAppBase = createBaseApp({
+  loadRuntimeModules,
+  createElement,
+  runtimeAPI: {
+    <% if (buildConfig.router !== false) {%>
+    createHistory,
+    <% } %>
+    getSearchParams,
+  },
+});
+
+export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
+  // TODO type of renderer
+  let renderer;
+  renderer = raxAppRenderer;
+  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
+    renderer = miniappRenderer;
+  }
+  renderer({
+    appConfig,
+    staticConfig: staticConfig || defaultStaticConfig,
+    buildConfig,
+    setAppConfig,
+    createBaseApp: frameworkAppBase,
+    createHistory,
+    getHistory,
+    setHistory,
+    emitLifeCycles,
+    pathRedirect,
+    loadStaticModules,
+    ErrorBoundary,
+    <% if(isRax && hasTabBar){ %>
+    TabBar,
+    <% } %>
+  }, {
+    createElement,
+    mount,
+    unmount,
+    Component
+  })
+};
+
+// Public API
+export {
+  // router api
+<% if (buildConfig.router !== false) {%>
+  withRouter,
+  history,
+  getHistory,
+<% } %>
+  getSearchParams,
+  getInitialData,
+  // LifeCycles api
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+  // events api
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+  ErrorBoundary,
+};
+
+// Private API
+export default {
+  createBaseApp: frameworkAppBase,
+  emitLifeCycles
+}

@@ -40,7 +40,7 @@ const {
   withRouter: defaultWithRouter
 }, loadRuntimeModules);
 
-export default function runApp(appConfig?: IAppConfig, staticConfig?: any) {
+export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
   reactAppRenderer({
     appConfig,
     staticConfig: staticConfig || defaultStaticConfig,
