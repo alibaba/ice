@@ -17,7 +17,7 @@ interface APIRegistration {
 }
 
 type RegisterRuntimeAPI = (key: string, api: Function) => void;
-type ApplyRuntimeAPI = (key: string, ...args: any) => void;
+type ApplyRuntimeAPI = <T extends unknown>(key: string, ...args: any) => T;
 type IWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props>)
 type IRenderRouter = (routes?: IRoutes, RoutesComponent?: IRoutesComponent) => React.ComponentType;
 type IWrapperRouterRender = (renderRouter: IRenderRouter) => IRenderRouter;
@@ -132,7 +132,7 @@ class RuntimeModule {
     if (!this.apiRegistration[key]) {
       console.warn(`unknown api ${key}`);
     } else {
-      this.apiRegistration[key](...args);
+      return this.apiRegistration[key](...args);
     }
   }
 
