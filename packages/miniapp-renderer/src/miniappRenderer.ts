@@ -54,11 +54,15 @@ function miniappRenderer(
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
         document = value;
+        // getApp doesn't exist in plugin situation
         // @ts-ignore
-        const MiniAppGlobalInstance = getApp();
-        const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
-        if (typeof dispatchDocumentModify === 'function') {
-          dispatchDocumentModify.call(MiniAppGlobalInstance, value);
+        if (typeof getApp !== 'undefined') {
+          // @ts-ignore
+          const MiniAppGlobalInstance = getApp();
+          const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
+          if (typeof dispatchDocumentModify === 'function') {
+            dispatchDocumentModify.call(MiniAppGlobalInstance, value);
+          }
         }
       }
     };
