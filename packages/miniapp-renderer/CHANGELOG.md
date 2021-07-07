@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.13
+
+- [Feat] support plugin situation withou global getApp
+
 ## 0.1.12
 
 - [Fix] miss default rootId

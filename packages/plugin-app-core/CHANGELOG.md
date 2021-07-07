@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.5
+
+- [feat] add onPageNotFound and onUnhandledRejection types in ejs
+
 ## 1.4.4
 
 - [feat] add baidu/kuaishou env judge
