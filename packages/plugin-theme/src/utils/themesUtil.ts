@@ -1,4 +1,5 @@
 import * as postcss from 'postcss';
+import * as atImport from 'postcss-import';
 import produce from 'immer';
 import { readFileSync } from 'fs-extra';
 import { getThemeName } from '../utils/common';
@@ -40,7 +41,11 @@ const getThemeVars = (filePath: string): ThemeVarsType => {
   const themeVars: ThemeVarsType = {};
   const css = readFileSync(filePath, 'utf8');
 
-  postcss([getThemeVarsPlugin({ themeVars })]).process(css, { from: undefined }).then();
+  // eslint-disable-next-line no-unused-expressions
+  postcss([
+    atImport(),
+    getThemeVarsPlugin({ themeVars })
+  ]).process(css, { from: filePath }).css;
 
   return themeVars;
 };

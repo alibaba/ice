@@ -1,3 +1,5 @@
+@import '../test.css';
+
 :root {
   --ice-example-bold: #2e2e2e;
   --ice-example-background: #fff;

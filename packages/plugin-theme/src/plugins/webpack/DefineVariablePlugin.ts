@@ -19,7 +19,7 @@ export class DefineVariablePlugin implements webpack.Plugin {
     this.options = { ...this.options, ...options };
   }
 
-  public injectData(fileName: string, defaultName: string, compilation: any) {
+  private injectData(fileName: string, defaultName: string, compilation: any) {
     if (!fileName.includes('.js')) return;
 
     const asset = compilation.getAsset(fileName);

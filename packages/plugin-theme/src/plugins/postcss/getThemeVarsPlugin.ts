@@ -1,4 +1,4 @@
-import { plugin, TransformCallback } from 'postcss';
+import { plugin, TransformCallback, } from 'postcss';
 import { ThemeVarsType } from '../../utils/themesUtil';
 
 interface Option {
@@ -17,11 +17,16 @@ export const getThemeVarsPlugin = plugin('get-theme-files-vars', (option: Option
 
   // TODO: support @import '~/@alifd/theme-design-pro/variables.css';
 
-  return root => {
+  const scanVars = (root: any) => {
     root.walkDecls(decl => {
       if (decl.prop && decl.prop.slice(0, 2) === '--') {
+        console.log(decl.prop.slice(2));
         themeVars[decl.prop.slice(2)] = decl.value;
       }
     });
+  };
+
+  return root => {
+    scanVars(root);
   };
 });
