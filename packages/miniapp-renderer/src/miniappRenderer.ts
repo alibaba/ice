@@ -56,7 +56,7 @@ function miniappRenderer(
         document = value;
         // getApp doesn't exist in plugin situation
         // @ts-ignore
-        if (typeof getApp !== 'undefined') {
+        if (typeof getApp === 'function') {
           // @ts-ignore
           const MiniAppGlobalInstance = getApp();
           const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
