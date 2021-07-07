@@ -1,22 +1,28 @@
 import * as path from 'path';
 import { IPlugin } from '@alib/build-scripts';
+import { get } from 'lodash';
 import { setExposeAPI } from './workflow/setExposeAPI';
 import { injectVariable } from './workflow/injectVariable';
 import { getDefaultTheme, checkThemesEnabled, getThemesName } from './utils/common';
 import { setThemesData } from './utils/themesUtil';
 import { watchThemeFiles } from './workflow/watcher';
 
+interface Options {
+  ['theme']?: string
+}
+
 /**
  * 多主题编译时处理
  * 
  * RFC：https://github.com/alibaba/ice/issues/4223
  */
-const plugin: IPlugin = async (api) => {
+const plugin: IPlugin = async (api, options = {}) => {
   const {
     context,
     log,
   } = api;
   const { rootDir } = context;
+  const _theme: string = get(<Options>options, 'theme', 'default');
   const themesPath = path.resolve(rootDir, 'src/themes');
   const themesEnabled = await checkThemesEnabled(themesPath);
 
@@ -27,9 +33,9 @@ const plugin: IPlugin = async (api) => {
 
   const { themesNames, themesPathList } = await getThemesName(themesPath);
 
-  const { isExist, defaultName } = getDefaultTheme(themesNames);
+  const { isExist, defaultName } = getDefaultTheme(themesNames, _theme);
   if (!isExist) {
-    log.info(`🤔 未找到默认主题文件（default.css），自动配置 ${defaultName} 为初始主题`);
+    log.info(`🤔 未找到默认主题文件（${_theme}.css），自动配置 ${defaultName} 为初始主题`);
   }
 
   setThemesData(themesPathList);                 // 生成变量并设置 themesData
