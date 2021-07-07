@@ -22,7 +22,7 @@ const plugin: IPlugin = async (api, options = {}) => {
     log,
   } = api;
   const { rootDir } = context;
-  const _theme: string = get(<Options>options, 'theme', 'default');
+  const _theme = get(<Options>options, 'theme', 'default');
   const themesPath = path.resolve(rootDir, 'src/themes');
   const themesEnabled = await checkThemesEnabled(themesPath);
 

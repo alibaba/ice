@@ -1,6 +1,6 @@
 {
   "plugins": [
-    "build-plugin-theme",
+    ["build-plugin-theme", {"theme": "dark"}],
     [
       "build-plugin-fusion",
       {

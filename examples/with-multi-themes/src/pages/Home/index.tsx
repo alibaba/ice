@@ -3,7 +3,7 @@ import { Switch } from '@alifd/next';
 import { useTheme } from 'ice';
 
 const Dashboard = () => {
-  const [, setTheme] = useTheme();
+  const [theme, setTheme] = useTheme();
   return (
     <div className="container">
       <h1 className="title">🧊 ICE.js 多主题能力配置</h1>
@@ -11,7 +11,7 @@ const Dashboard = () => {
       <br />
       <Switch
         size="medium"
-        defaultChecked={false}
+        defaultChecked={theme === 'dark'}
         checkedChildren="🌟"
         onChange={(e) => setTheme(e ? 'dark' : 'default')}
         unCheckedChildren="☀️"
