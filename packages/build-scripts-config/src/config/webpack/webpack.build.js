@@ -1,5 +1,5 @@
 const TerserPlugin = require('@builder/pack/deps/terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CssMinimizerPlugin = require('@builder/pack/deps/css-minimizer-webpack-plugin');
 const safeParser = require('@builder/pack/deps/postcss-safe-parser');
 
 module.exports = (config) => {
