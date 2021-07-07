@@ -1,4 +1,5 @@
 {
+  "remoteRuntime": true,
   "polyfill": false,
   "ignoreHtmlTemplate": false,
   "plugins": [],
