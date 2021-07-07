@@ -1,3 +1,5 @@
+import { AppConfig } from './types';
+
 export const SHOW = 'show';
 export const HIDE = 'hide';
 export const LAUNCH = 'launch';
@@ -12,7 +14,7 @@ export const MINIAPP_PAGE_LIFECYCLE = {
   [HIDE]: 'miniapp_pagehide'
 };
 
-export const DEFAULE_APP_CONFIG = {
+export const DEFAULT_APP_CONFIG: AppConfig = {
   app: {
     rootId: 'root'
   },

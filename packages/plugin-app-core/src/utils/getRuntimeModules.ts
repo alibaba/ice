@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as globby from 'globby';
 import formatPath from './formatPath';
+import formatPluginDir from './formatPluginDir';
 
 export default (plugins: any = [], targetDir: string) => {
   return plugins.map(({ pluginPath, name }) => {
@@ -16,7 +17,7 @@ export default (plugins: any = [], targetDir: string) => {
       return false;
     } else if (name){
       // copy module dir to target dir
-      const tempDir = path.join(targetDir, 'plugins', name);
+      const tempDir = path.join(targetDir, 'plugins', formatPluginDir(name), 'pluginRuntime');
       // ensure source dir
       const srcDir = path.join(moduleDir, 'src');
       if (fse.existsSync(srcDir)) {

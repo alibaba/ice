@@ -1,8 +1,8 @@
-import * as path from 'path';
 import getPages from '../utils/getPages';
 import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
+import formatPluginDir from '../utils/formatPluginDir';
 import { getExportApiKeys } from '../constant';
 import importDeclarations from './importDeclarations';
 
@@ -29,7 +29,7 @@ export default (api, options) => {
   registerMethod('addRenderFile', generator.addRenderFile);
   registerMethod('addPluginTemplate', (pluginName?: string) => (templateOptions: string|ITemplateOptions, extraData: IRenderData) => {
     const { template, targetDir } = typeof templateOptions === 'string'
-      ? { template: templateOptions, targetDir: pluginName ? path.basename(pluginName).replace(/^build-plugin(-ice-|-)?/, '') : 'local' }
+      ? { template: templateOptions, targetDir: formatPluginDir(pluginName) }
       : templateOptions;
     generator.addTemplateFiles({
       template,
