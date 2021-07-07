@@ -6,7 +6,13 @@ export default [
   {
     path: '/rematch',
     exact: true,
-    component: PageRematch
+    component: PageRematch,
+    pageConfig: {
+      title: 'hahah',
+    },
+    getInitialProps: async () => {
+      return { a: 1 };
+    }
   },
   {
     path: '/',

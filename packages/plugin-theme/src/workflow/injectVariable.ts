@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
 import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
 import { ICE_TEMP, PLUGIN_DIR } from '../constant';

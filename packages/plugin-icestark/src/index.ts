@@ -1,10 +1,10 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
-import { IPlugin, Json } from '@alib/build-scripts';
+import { IPlugin, Json } from 'build-scripts';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
-  const { uniqueName, umd, library } = options as Json;
+  const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
   const { rootDir, webpack, pkg } = context;
   const iceTempPath = getValue('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
@@ -31,7 +31,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
       config.output
         .library(libraryName)
         .libraryTarget('umd');
-      
+
       // collect entry
       const entries = config.toConfig().entry;
       const entryList = [];
@@ -54,7 +54,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
             return {
               ...babelOptions,
               plugins: [
-                [require.resolve('./babelPluginMicroapp'), { entryList, libraryName }],
+                [require.resolve('./babelPluginMicroapp'), { entryList, libraryName, omitSetLibraryName }],
                 ...plugins,
               ],
             };

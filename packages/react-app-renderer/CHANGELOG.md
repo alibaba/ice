@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0
+
+- [fix] history referenced by GID is undefined
+
+## 2.0.4
+
+- [chore] typo `onErrorBoundaryHandler`
+
 ## 2.0.3
 
 - [fix] origin appConfig object was modified

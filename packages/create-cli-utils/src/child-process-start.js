@@ -2,8 +2,8 @@
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 const parse = require('yargs-parser');
-const { start } = require('@alib/build-scripts');
-const log = require('@alib/build-scripts/lib/utils/log');
+const { start } = require('build-scripts');
+const log = require('build-scripts/lib/utils/log');
 
 const rawArgv = parse(process.argv.slice(2), {
   configuration: { 'strip-dashed': true }

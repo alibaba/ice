@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { spawn } from 'child_process';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 const plugin: IPlugin = ({ onGetWebpackConfig }) => {
   if (process.env.NODE_ENV === 'production') {

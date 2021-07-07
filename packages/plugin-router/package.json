@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-router",
-  "version": "1.9.6",
+  "version": "1.9.7",
   "description": "build-plugin-ice-router",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -22,7 +22,7 @@
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24",
+    "build-scripts": "1.0.2-3",
     "@types/fs-extra": "^8.0.1",
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.5",

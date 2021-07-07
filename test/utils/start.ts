@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { start } from '@alib/build-scripts';
+import { start } from 'build-scripts';
 import * as getPort from 'get-port';
 import Browser, { IPage } from './browser';
 import { Server } from 'http';

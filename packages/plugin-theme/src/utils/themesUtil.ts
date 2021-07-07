@@ -1,4 +1,4 @@
-import * as postcss from 'postcss';
+import postcss from 'postcss';
 import * as atImport from 'postcss-import';
 import produce from 'immer';
 import { readFileSync } from 'fs-extra';

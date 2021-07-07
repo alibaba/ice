@@ -1,4 +1,4 @@
-import { plugin, TransformCallback, } from 'postcss';
+import { TransformCallback, } from 'postcss';
 import { ThemeVarsType } from '../../utils/themesUtil';
 
 interface Option {
@@ -12,7 +12,7 @@ interface Option {
  * 
  * 具有副作用
  */
-export const getThemeVarsPlugin = plugin('get-theme-files-vars', (option: Option): TransformCallback => {
+export const getThemeVarsPlugin = (option: Option): TransformCallback => {
   const { themeVars } = option;
 
   const scanVars = (root: any) => {
@@ -26,4 +26,4 @@ export const getThemeVarsPlugin = plugin('get-theme-files-vars', (option: Option
   return root => {
     scanVars(root);
   };
-});
+};

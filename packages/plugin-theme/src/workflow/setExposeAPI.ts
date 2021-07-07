@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 import { PLUGIN_DIR, ICE_TEMP } from '../constant';
 
 const addTemp = (applyMethod: IPluginAPI['applyMethod'], defaultName: string, themes: string[]) => {

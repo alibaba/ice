@@ -82,7 +82,10 @@ const plugin = async (api): Promise<void> => {
           .use('css-loader')
           .tap((options) => ({
             ...options,
-            onlyLocals: true
+            modules: {
+              ...(options.modules || {}),
+              exportOnlyLocals: true,
+            },
           }));
       }
     });
@@ -98,6 +101,9 @@ const plugin = async (api): Promise<void> => {
     // TODO: support options to enable nodeExternals
     // empty externals added by config external
     config.externals([]);
+
+    // remove process fallback when target is node
+    config.plugins.delete('ProvidePlugin');
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
@@ -123,9 +129,9 @@ const plugin = async (api): Promise<void> => {
     if (command === 'start') {
       config.devServer
         .hot(true)
-        .writeToDisk((filePath) => {
-          const formatedFilePath = formatPath(filePath);
-          return /(server\/.*|loadable-stats.json|index.html)$/.test(formatedFilePath);
+        .writeToDisk((filePath: string) => {
+          const formattedFilePath = formatPath(filePath);
+          return /(server\/.*|loadable-stats.json|index.html)$/.test(formattedFilePath);
         });
 
       let serverReady = false;
@@ -167,8 +173,8 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
-    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
+    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
+    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
   });
 };

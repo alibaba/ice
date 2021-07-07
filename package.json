@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "rm -rf node_modules && yarn install --registry=https://registry.npm.taobao.org/ && npm run bootstrap",
-    "bootstrap": "SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm run clean && lerna bootstrap --registry=https://registry.npm.taobao.org/ && npm run build",
+    "bootstrap": "npm run clean && npm run build",
     "watch": "ts-node ./scripts/watch.ts",
     "build": "ts-node ./scripts/build.ts",
     "version": "ts-node ./scripts/tag-version.ts",
@@ -20,8 +20,6 @@
     "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
-    "upload:oss": "node scripts/upload-oss.js",
-    "generate:docs": "node ./scripts/generate-docs-database.js",
     "clean": "lerna clean --yes && rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
@@ -40,10 +38,9 @@
     "@ice/spec": "^1.0.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.2.1",
-    "@types/node": "^14.17.4",
+    "@types/node": "^14.14.21",
     "@types/puppeteer": "^5.4.2",
-    "ali-oss": "^6.7.0",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "^1.0.0-rc.3",
     "codecov": "^3.6.5",
     "create-test-server": "^3.0.1",
     "dependency-check": "^4.1.0",
@@ -57,8 +54,6 @@
     "ice-npm-utils": "^2.0.1",
     "jest": "^26.0.0",
     "lerna": "^3.16.4",
-    "mark-twain": "^2.0.3",
-    "nodejieba": "^2.4.1",
     "npm-run-all": "^4.1.5",
     "nsfw": "1.2.6",
     "pify": "^4.0.1",
@@ -69,10 +64,10 @@
     "simple-git": "^1.132.0",
     "ts-jest": "^26.0.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
-    "core-js": "^3.15.2",
+    "core-js": "^3.6.4",
     "path-to-regexp": "6.1.0"
   },
   "resolutions": {

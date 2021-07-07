@@ -2,8 +2,18 @@ import getPages from '../utils/getPages';
 import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
+import formatPluginDir from '../utils/formatPluginDir';
 import { getExportApiKeys } from '../constant';
 import importDeclarations from './importDeclarations';
+
+interface IRenderData {
+  [key: string]: any;
+}
+
+interface ITemplateOptions {
+  template: string;
+  targetDir: string;
+}
 
 export default (api, options) => {
   const { registerMethod } = api;
@@ -15,13 +25,18 @@ export default (api, options) => {
   registerMethod('getRoutes', getRoutes);
   registerMethod('getSourceDir', getSourceDir);
 
-  // registerMethod for modify page
-  registerMethod('addPageExport', generator.addPageExport);
-  registerMethod('removePageExport', generator.removePageExport);
-
   // registerMethod for render content
   registerMethod('addRenderFile', generator.addRenderFile);
-  registerMethod('addTemplateDir', generator.addTemplateDir);
+  registerMethod('addPluginTemplate', (pluginName?: string) => (templateOptions: string|ITemplateOptions, extraData: IRenderData) => {
+    const { template, targetDir } = typeof templateOptions === 'string'
+      ? { template: templateOptions, targetDir: formatPluginDir(pluginName) }
+      : templateOptions;
+    generator.addTemplateFiles({
+      template,
+      // overwrite target dir, build-plugin-ice-request => request
+      targetDir: `plugins/${targetDir}`,
+    }, extraData);
+  }, { pluginName: true });
   registerMethod('modifyRenderData', generator.modifyRenderData);
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
 

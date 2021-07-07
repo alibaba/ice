@@ -10,6 +10,7 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "sideEffects": false,
   "dependencies": {
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
@@ -19,7 +20,8 @@
   },
   "devDependencies": {
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "create-app-shared": "^0.3.0"
   },
   "files": [
     "lib"

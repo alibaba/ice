@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- [feat] support setting getInitialProps with router configuration
+
 ## 2.1.2
 
 - [fix] not generate server bundle in Windows

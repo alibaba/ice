@@ -1,4 +1,4 @@
-import { plugin, TransformCallback } from 'postcss';
+import { Plugin, TransformCallback } from 'postcss';
 import { getThemesData } from '../../utils/themesUtil';
 
 interface Option {
@@ -12,7 +12,7 @@ interface Option {
  * 将 Less/Sass 声明的变量的 value 转为 css var
  * 
  */
-export const declVarPlugin = plugin('less-sass-to-var', (option: Option): TransformCallback => {
+export const declVarPlugin = (option: Option): TransformCallback => {
   const { defaultName, type = 'less' } = option;
 
   const varsMap = getThemesData()[defaultName];
@@ -45,4 +45,4 @@ export const declVarPlugin = plugin('less-sass-to-var', (option: Option): Transf
       });
     }
   };
-});
+};

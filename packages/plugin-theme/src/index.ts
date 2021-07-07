@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 import { get } from 'lodash';
 import { setExposeAPI } from './workflow/setExposeAPI';
 import { injectVariable } from './workflow/injectVariable';

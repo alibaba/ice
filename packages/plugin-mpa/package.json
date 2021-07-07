@@ -20,7 +20,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24"
+    "build-scripts": "1.0.2-3"
   },
   "dependencies": {
     "@builder/app-helpers": "^2.0.0",

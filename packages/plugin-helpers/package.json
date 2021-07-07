@@ -22,7 +22,7 @@
     "url-parse": "^1.4.7"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24",
+    "build-scripts": "1.0.2-3",
     "@types/fs-extra": "^8.0.1",
     "@types/glob": "^7.1.1",
     "@types/node": "^12.12.12",

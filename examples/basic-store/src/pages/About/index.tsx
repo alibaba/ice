@@ -35,8 +35,4 @@ const About = (props) => {
   );
 };
 
-About.pageConfig = {
-  title: 'About'
-};
-
 export default About;

@@ -1,4 +1,6 @@
 import * as path from 'path';
+import * as globby from 'globby';
+import * as fs from 'fs-extra';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
@@ -13,7 +15,7 @@ const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAID
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, commandArgs, userConfig, rootDir } = context;
+  const { command, userConfig, rootDir } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
@@ -60,35 +62,51 @@ export default (api, options) => {
   setRegisterUserConfig(api);
 
   // register api method
-  if (commandArgs.debugRuntime) {
-    console.log('[deprecated] cli option --debug-runtime is deprecated, runtime file is generated as default');
-  }
-  const generator = initGenerator(api, { ...options, debugRuntime: userConfig.generateRuntime, hasJsxRuntime });
+  const generator = initGenerator(api, { ...options, hasJsxRuntime });
   setRegisterMethod(api, { generator });
 
   // add core template for framework
-  const templateRoot = path.join(__dirname, './generator/templates');
-  [`./app/${framework}`, './common'].forEach((templateDir) => {
-    generator.addTemplateDir(path.join(templateRoot, templateDir));
-  });
+  renderDefaultTemplate(generator, { framework });
 
   // watch src folder
   if (command === 'start') {
     dev(api, { render: generator.render });
   }
 
-  onHook(`before.${command}.run`, async () => {
-    await generator.render();
+  onHook(`before.${command}.run`, () => {
+    generator.render();
   });
 };
+
+function renderDefaultTemplate(generator: Generator, { framework }) {
+  const templates = [{
+    dir: `./core/app/${framework}`,
+    target: 'core',
+  }, {
+    dir: './core/common',
+    target: 'core',
+  }, {
+    dir: './types',
+    target: 'types',
+  }, {
+    path: './index.ts.ejs',
+  }];
+  const templateRoot = path.join(__dirname, './generator/templates');
+  templates.forEach(({ dir, target, path: filePath }) => {
+    generator.addTemplateFiles({
+      template: path.join(templateRoot, dir || filePath),
+      targetDir: target || '',
+    });
+  });
+}
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
   const { userConfig, rootDir } = context;
-  const { framework, debugRuntime, hasJsxRuntime } = options;
+  const { framework, hasJsxRuntime } = options;
   const plugins = getAllPlugin();
   const { targets = [], ssr = false } = userConfig;
-  const isMiniapp = targets.some((target) => miniappPlatforms.includes(target));
+  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
@@ -101,10 +119,10 @@ function initGenerator(api, options) {
       ssr,
       buildConfig: JSON.stringify(getBuildConfig(userConfig)),
       hasJsxRuntime,
+      hasTabBar: hasTabBar(`${rootDir}/src`, framework),
     },
     log,
     plugins,
-    debugRuntime,
   });
 }
 
@@ -145,4 +163,14 @@ function matchTargets(targets) {
   return targets.every(target => {
     return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
   });
+}
+
+function hasTabBar(srcDir, framework) {
+  if (framework === 'rax') {
+    return globby.sync(['**/app.json'], { cwd: srcDir, absolute: true }).some((filepath) => {
+      const content = fs.readJSONSync(filepath);
+      return content.tabBar && !content.tabBar.custom;
+    });
+  }
+  return false;
 }

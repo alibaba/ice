@@ -13,13 +13,13 @@ import { IceRouter } from '$ice/Router';
 // @ts-ignore
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
-import { IIceStark } from './types';
+import { IPrivateIceStark, IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperRouteComponent }) => {
   const { icestark, router } = appConfig;
-  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
+  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
 
   if (runtimeModifyRoutes) {
@@ -30,36 +30,55 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
-    const history = createHistory({ type, basename: childBasename });
+    const history = applyRuntimeAPI('createHistory', { type, basename: childBasename });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
-        if (isInIcestark() && !icestarkUMD) {
-          registerAppEnter(() => {
-            const mountNode = getMountNode();
-            if (enterRegistration) {
-              enterRegistration(mountNode, App, resolve);
-            } else {
-              ReactDOM.render(<App />, mountNode, resolve);
+        if (isInIcestark()) {
+          if (!icestarkUMD) {
+            registerAppEnter(() => {
+              const mountNode = getMountNode();
+              if (enterRegistration) {
+                enterRegistration(mountNode, App, resolve);
+              } else {
+                ReactDOM.render(<App />, mountNode, resolve);
+              }
+            });
+            // make sure the unmount event is triggered
+            registerAppLeave(() => {
+              const mountNode = getMountNode();
+              if (leaveRegistration) {
+                leaveRegistration(mountNode);
+              } else {
+                ReactDOM.unmountComponentAtNode(mountNode);
+              }
+            });
+          } else {
+            let { container } = $$props ?? {};
+            if (!container) {
+              container = getMountNode();
             }
-          });
-          // make sure the unmount event is triggered
-          registerAppLeave(() => {
-            const mountNode = getMountNode();
-            if (leaveRegistration) {
-              leaveRegistration(mountNode);
-            } else {
-              ReactDOM.unmountComponentAtNode(mountNode);
-            }
-          });
-        } else if (icestarkUMD) {
-          const mountNode = getMountNode();
-          ReactDOM.render(<App />, mountNode, resolve);
+            ReactDOM.render(<App />, container, resolve);
+          }
         } else {
           ReactDOM.render(<App />, appMountNode, resolve);
         }
       });
     });
+
+    const wrapperPageFn = (PageComponent) => (props) => {
+      const { customProps = {} } = $$props ?? {};
+
+      const combinedProps = {
+        ...props,
+        frameworkProps: customProps,
+      };
+
+      return <PageComponent { ...combinedProps } />;
+    };
+
+    // get props by props
+    wrapperRouteComponent(wrapperPageFn);
 
     const routerProps = {
       type,
@@ -84,7 +103,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(createHistory({ type, basename }));
+      const [routerHistory] = useState(applyRuntimeAPI('createHistory' ,{ type, basename }));
       const routerProps = {
         type,
         routes,

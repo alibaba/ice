@@ -46,7 +46,7 @@ export default async (api) => {
 
   if (!existsAppStoreFile) {
     // set IStore to IAppConfig
-    applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+    applyMethod('addAppConfigTypes', { source: '../plugins/store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
   }
 
   // add babel plugins for ice lazy
@@ -101,7 +101,7 @@ export default async (api) => {
       .options({
         targetPath
       });
-    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
+    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'plugins', 'store', 'index.ts'));
   });
 
   const gen = new Generator({

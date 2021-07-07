@@ -1,5 +1,5 @@
 import * as less from 'less';
-import { plugin, TransformCallback } from 'postcss';
+import { TransformCallback } from 'postcss';
 import { getThemesData } from '../../utils/themesUtil';
 import { getFunction, isFunction } from '../../utils/common';
 import { walkerSome, walkerFind } from '../../utils/walkers';
@@ -13,7 +13,7 @@ interface Option {
  * 
  * 具有副作用，会改变 data 参数的某些数值
  */
-export const funcCollectPlugin = plugin('less-sass-analytics', (options: Option): TransformCallback => {
+export const funcCollectPlugin = (options: Option): TransformCallback => {
   const data = getThemesData();
   const { type = 'less' } = options;
   const themes: string[] = Object.entries(data).map(([key]) => key);
@@ -100,7 +100,7 @@ export const funcCollectPlugin = plugin('less-sass-analytics', (options: Option)
       });
     });
   };
-});
+};
 
 const filterParams = (params: string[]) => {
   return params.map(p => {

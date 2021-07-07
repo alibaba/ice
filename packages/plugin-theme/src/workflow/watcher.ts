@@ -1,4 +1,4 @@
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 import { addTemp } from './setExposeAPI';
 import { getDefaultTheme, getThemesName } from '../utils/common';
 import { setThemesData } from '../utils/themesUtil';
