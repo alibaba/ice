@@ -18,7 +18,6 @@ export const getThemeVarsPlugin = plugin('get-theme-files-vars', (option: Option
   const scanVars = (root: any) => {
     root.walkDecls(decl => {
       if (decl.prop && decl.prop.slice(0, 2) === '--') {
-        console.log(decl.prop.slice(2));
         themeVars[decl.prop.slice(2)] = decl.value;
       }
     });

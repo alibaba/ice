@@ -20,7 +20,9 @@ export const detectCssFile = curry((prefix: string, name: string): boolean => {
  * 通过文件路径名称获取主题名
  */
 export const getThemeName = (filePath: string) => {
-  return filePath.replace(/(.*\/)*([^.]+).*/ig, '$2');
+  const arr = filePath.replace(/^.*[\\/]/, '').split('.');
+  arr.pop();
+  return arr.join('.');
 };
 
 /**
