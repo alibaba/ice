@@ -7,6 +7,6 @@ runApp({
     },
     onHide() {
       console.log('app hide...');
-    }
-  }
+    },
+  },
 });

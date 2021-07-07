@@ -1,4 +1,4 @@
-import { render, createElement, Component } from 'rax';
+import { render, createElement, Component, Fragment } from 'rax';
 import DriverUniversal from 'driver-universal';
 import { isWeex, isKraken, isNode } from 'universal-env';
 <% if (globalStyle) {%>
@@ -10,15 +10,30 @@ import PageComponent from '<%- resourcePath %>';
 
 const extraElements = [];
 
-<% if (needCustomTabBar) {%>
+<% if (showTabBar) {%>
   // eslint-disable-next-line
-  import CustomTabBar from  '<%= customTabBarPath %>';
+  import TabBar from  '<%= tabBarPath %>';
+
+  const currentPageName = '<%= entryName %>';
 
   class TabBarWrapper extends Component {
+    handleTabItemClick = ({ path, pageName }) => {
+      if (path) {
+        (window as any).location.href = path;
+      } else {
+        (window as any).location.href = `./${pageName}.html`;
+      }
+    }
     render() {
-      return <div x-if={isNode || !window.pha} style={{ position: "fixed", bottom: 0, width: "750rpx" }}>
-        <CustomTabBar />
-      </div>;
+      return <Fragment x-if={isNode || !(window as any).pha}>
+        <% if (tabBarPath.indexOf('.rax') > -1) {%>
+          <TabBar config={<%- tabBarConfig %>} onClick={this.handleTabItemClick} currentPageName={currentPageName} />
+        <% } else { %>
+          <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
+            <TabBar config={<%- tabBarConfig %>} currentPageName={currentPageName} />
+          </div>
+        <% } %>
+      </Fragment>;
     }
   };
 
@@ -28,8 +43,8 @@ const extraElements = [];
 class PageWrapper extends Component {
   render() {
     return [
-      extraElements.map((Element, index) => <Element key={index} />),
       <PageComponent key='PageComponent' {...this.props} />,
+      extraElements.map((Element, index) => <Element key={index} />),
     ];
   }
 }

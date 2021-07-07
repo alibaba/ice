@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.3
+
+- [feat] support webp image file
+
+## 3.0.2
+
+- [fix] lock sass version until it's define a js api for handling warnings
+
+## 3.0.1
+
+- [feat] enable stage 3 for postcss preset env
+
 ## 3.0.0
 
 - [feat] upgrate less and less-loader

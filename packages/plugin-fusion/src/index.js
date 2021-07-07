@@ -343,12 +343,14 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             },
           ]);
       }
-  
+
       if (externalNext && !ignoreTasks.includes(taskName)) {
+        const isUmdTarget = externalNext === 'umd';
         const externals = [];
         if (userConfig.externals) {
           externals.push(userConfig.externals);
         }
+        const feNextRegex = /@alife\/next\/(es|lib)\/([-\w+]+)$/;
         const nextRegex = /@(alife|alifd)\/next\/(es|lib)\/([-\w+]+)$/;
         const baseRegex = /@icedesign\/base\/lib\/([-\w+]+)$/;
         externals.push(function(_context, request, callback) {
@@ -358,7 +360,19 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
             const componentName = isNext ? request.match(nextRegex)[3] : request.match(baseRegex)[1];
             const externalKey = isNext ? 'Next' : 'ICEDesignBase';
             if (componentName) {
-              return callback(null, [externalKey, upperFirst(camelCase(componentName))]);
+              const externalInfo = [externalKey, upperFirst(camelCase(componentName))];
+              const commonPackage = feNextRegex.test(request) ? '@alife/next' : '@alifd/next';
+              const commonExternal = [isNext ? commonPackage : '@icedesign/base', upperFirst(camelCase(componentName))];
+              /**
+               * An object with { root, amd, commonjs, ... } is only allowed for libraryTarget: 'umd'.
+               * It's not allowed for other library targets.
+              */
+              return isUmdTarget ? callback(null, {
+                root: externalInfo,
+                amd: commonExternal,
+                commonjs: commonExternal,
+                commonjs2: commonExternal,
+              }) : callback(null, [externalKey, upperFirst(camelCase(componentName))]);
             }
           } else if (nextRegex.test(_context) && /\.(scss|css)$/.test(request)) {
             // external style files imported by next style.js

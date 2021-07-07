@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.17
+
+- [fix] compatible with umd and other targets.
+
+## 0.1.16
+
+- [fix] compatible with umd export when external Next
+
 ## 0.1.15
 
 - [fix] remove useless string in calculated colors
