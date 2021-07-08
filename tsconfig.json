@@ -7,6 +7,7 @@
     { "path": "packages/build-app-helpers" },
     { "path": "packages/build-mpa-config" },
     { "path": "packages/plugin-app-core" },
+    { "path": "packages/plugin-react-app" },
     { "path": "packages/plugin-router" },
     { "path": "packages/plugin-helpers" },
     { "path": "packages/plugin-request" },
