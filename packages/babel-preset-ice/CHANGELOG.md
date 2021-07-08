@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] pre build dependencies
+
 ## 1.0.2
 
 - [fix] remove `@babel/plugin-proposal-class-properties` while this plugin is included in `@babel/preset-env`

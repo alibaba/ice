@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0
+
+- [feat] pre build dependencies and upgrade dependencies for webpack 5
+
 ## 3.0.3
 
 - [feat] support webp image file

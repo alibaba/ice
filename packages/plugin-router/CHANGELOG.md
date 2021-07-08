@@ -3,6 +3,7 @@
 ## 2.0.0
 
 - [feat] centralized router configuration
+- [feat] migrate plugin api and runtime api
 
 ## 1.9.7
 

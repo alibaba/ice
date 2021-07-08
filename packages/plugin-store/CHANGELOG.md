@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] migrate plugin api
+
 ## 1.9.7
 
 - [fix] can't find an existed store file in windows

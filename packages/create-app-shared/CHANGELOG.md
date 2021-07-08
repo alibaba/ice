@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0
+
+- [feat] refactor exports APIs
+- [feat] add exports field
+
 ## 0.3.0
 
 - [feat] add `setHistory` API

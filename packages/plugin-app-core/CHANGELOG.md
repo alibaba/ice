@@ -1,8 +1,11 @@
 # Changelog
 
-## 1.5.0
+## 2.0.0
 
 - [feat] add `setHistory` API
+- [feat] refactor module of runApp
+- [feat] refactor runtime folder structure
+- [feat] api of render template
 
 ## 1.4.7
 
