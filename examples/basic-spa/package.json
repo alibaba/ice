@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
-    "build": "icejs build --mode prod",
+    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod",
     "test": "icejs test --jest-watchAll"
   },
   "engines": {
