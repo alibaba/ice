@@ -3,6 +3,7 @@
 ## 0.1.14
 
 - [Feat] support plugin situation without global getApp
+- [Feat] Adjust the time of appending root to document.body
 
 ## 0.1.13
 
