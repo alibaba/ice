@@ -39,7 +39,7 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "build-scripts-config": "^3.0.0",
+    "build-scripts-config": "^4.0.0",
     "fs-extra": "^9.0.0",
     "chalk": "^4.1.0",
     "handlebars": "^4.7.6",
