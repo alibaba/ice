@@ -1,16 +1,16 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-export interface IInterceptorRequest {
-  onConfig?: (config: AxiosRequestConfig) => AxiosRequestConfig;
+export interface IInterceptorRequest <T = AxiosRequestConfig> {
+  onConfig?: (config: T) => T | Promise<T>;
   onError?: (error: AxiosError) => Promise<void>;
 }
 
-export interface IInterceptorResponse {
-  onConfig?: (response: AxiosResponse) => AxiosResponse;
+export interface IInterceptorResponse <K = AxiosResponse> {
+  onConfig?: (response: K) => K | Promise<K>;
   onError?: (error: AxiosError) => Promise<void>;
 }
 
 export interface IInterceptors {
-  request?: IInterceptorRequest;
-  response?: IInterceptorResponse;
+  request?: IInterceptorRequest<AxiosRequestConfig>;
+  response?: IInterceptorResponse<AxiosResponse>;
 }
