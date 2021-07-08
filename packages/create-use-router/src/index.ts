@@ -212,7 +212,8 @@ export function createUseRouter(api) {
   const { useState, useLayoutEffect } = api;
 
   function useRouter(routerConfig) {
-    const [component, setComponent] = useState(getInitialComponent(routerConfig));
+    const [initialComponent] = useState(getInitialComponent(routerConfig));
+    const [componentRef, setComponentRef] = useState({ component: initialComponent, path: routerConfig.history.location.pathname });
 
     useLayoutEffect(() => {
       const history = routerConfig.history;
@@ -223,7 +224,12 @@ export function createUseRouter(api) {
 
       // eslint-disable-next-line
       const handleId = router.addHandle((component) => {
-        setComponent(component);
+        const path = history.location.pathname;
+        let nextComponent = componentRef.component;
+        if (componentRef.path !== path) {
+          nextComponent = component();
+        }
+        setComponentRef({ component: nextComponent, path });
       });
 
       // Init path match
@@ -241,7 +247,7 @@ export function createUseRouter(api) {
       };
     }, [routerConfig]);
 
-    return { component };
+    return { component: componentRef.component };
   }
 
   return useRouter;
