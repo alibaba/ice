@@ -27,7 +27,8 @@ module.exports = ({ onGetWebpackConfig }) => {
             }
           });
           return options;
-        });
+        })
+        .after('ts-loader');
     });
 
     // add resolve modules for babel-runtime-jsx-plus

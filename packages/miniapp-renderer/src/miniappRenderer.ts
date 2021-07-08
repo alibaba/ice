@@ -39,7 +39,6 @@ function miniappRenderer(
         const PageComponent = component()();
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
-        document.body.appendChild(rootEl);
         const appInstance = mount(createElement(App, {
           history,
           location: history.location,
@@ -47,17 +46,22 @@ function miniappRenderer(
           source,
           Page: PageComponent
         }), rootEl);
+        document.body.appendChild(rootEl);
 
         (document as any).__unmount = unmount(appInstance, rootEl);
       },
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
         document = value;
+        // getApp doesn't exist in plugin situation
         // @ts-ignore
-        const MiniAppGlobalInstance = getApp();
-        const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
-        if (typeof dispatchDocumentModify === 'function') {
-          dispatchDocumentModify.call(MiniAppGlobalInstance, value);
+        if (typeof getApp === 'function') {
+          // @ts-ignore
+          const MiniAppGlobalInstance = getApp();
+          const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
+          if (typeof dispatchDocumentModify === 'function') {
+            dispatchDocumentModify.call(MiniAppGlobalInstance, value);
+          }
         }
       }
     };

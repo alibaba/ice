@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6
+
+- [feat] support onPageNotFound app lifecycle
+
 ## 0.2.5
 
 - [feat] add kuaishou and baidu env judge

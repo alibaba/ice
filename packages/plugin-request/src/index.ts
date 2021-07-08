@@ -19,6 +19,7 @@ export default async function (api) {
     importSource: '$$ice/request/request',
     exportDefault: 'request',
   });
+
   applyMethod('addExport', {
     source: './request/useRequest',
     exportName: 'useRequest',

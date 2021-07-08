@@ -44,6 +44,7 @@ module.exports = (config, customOptions, context) => {
   [
     'less',
     'less-module',
+    'less-global', // rule of `global.less`
   ].forEach(rule => {
     if (config.module.rules.get(rule)) {
       config.module
