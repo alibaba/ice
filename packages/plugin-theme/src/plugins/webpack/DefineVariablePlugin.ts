@@ -10,7 +10,7 @@ export interface Options {
 /**
  * 将主题数据在 optimizeChunkAssets 阶段注入到 window 上
  */
-export class DefineVariablePlugin implements webpack.Plugin {
+export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
   private readonly pluginName = this.constructor.name;
 
   private readonly options: Partial<Options> = {};
