@@ -14,19 +14,20 @@ interface Option {
  * 具有副作用，会改变 data 参数的某些数值
  */
 export const funcCollectPlugin = (options: Option): TransformCallback => {
-  const data = getThemesData();
   const { type = 'less' } = options;
-  const themes: string[] = Object.entries(data).map(([key]) => key);
   const varFlag = type === 'less' ? '@' : '$';
-  const depthVarSet = new Set<string>(Object.entries(data[themes[0]]).map(i => i[0]));
-  const funcVarMap = {};
-
-  // initial funcVarMap
-  themes.forEach(theme => {
-    funcVarMap[theme] = {};
-  });
 
   return root => {
+    const data = getThemesData();
+    const themes: string[] = Object.entries(data).map(([key]) => key);
+    const depthVarSet = new Set<string>(Object.entries(data[themes[0]]).map(i => i[0]));
+    const funcVarMap = {};
+
+    // initial funcVarMap
+    themes.forEach(theme => {
+      funcVarMap[theme] = {};
+    });
+
     const getDepthVar = (p: string) => {
       if (p[0] !== varFlag) return false;
 

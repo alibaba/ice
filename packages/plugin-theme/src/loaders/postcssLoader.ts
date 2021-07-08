@@ -11,6 +11,7 @@ export default function loader(
   this: webpack.LoaderContext<Option>,
   source: string | Buffer
 ) {
-  const { plugins = [], parser } = getOptions(this);
-  return postcss(plugins).process(source, { parser }).css;
+  const { plugins = [], parser } = getOptions(this) as Option;
+  const result = postcss(plugins).process(source, { parser } as any).css;
+  return result;
 }

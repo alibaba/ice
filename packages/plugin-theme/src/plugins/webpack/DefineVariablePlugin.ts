@@ -1,6 +1,5 @@
 import * as webpack from 'webpack';
 import { ConcatSource } from 'webpack-sources';
-import { get } from 'lodash';
 import { getThemesDataStr } from '../../utils/themesUtil';
 
 export interface Options {
@@ -38,33 +37,18 @@ export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
     const { defaultName } = this.options;
 
     compiler.hooks.compilation.tap(this.pluginName, (compilation) => {
-      // webpack 5 get version
-      if (get(compiler, 'webpack.version')?.startsWith('5')) {
-        (compilation.hooks as any).processAssets.tap(
-          {
-            name: this.pluginName,
-            stage: (webpack as any).Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
-            additionalAssets: true
-          },
-          (assets: webpack.AssetInfo) => {
-            Object.keys(assets).forEach(fileName => {
-              this.injectData(fileName, defaultName, compilation);
-            });
-          }
-        );
-        return;
-      }
-
-      /**
-       * @deprecated optimizeChunkAssets API
-       */
-      compilation.hooks.optimizeChunkAssets.tap(this.pluginName, (chunks) => {
-        chunks.forEach((chunk) => {
-          chunk.files.forEach((fileName) => {
+      compilation.hooks.processAssets.tap(
+        {
+          name: this.pluginName,
+          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+          additionalAssets: true
+        },
+        (assets) => {
+          Object.keys(assets).forEach(fileName => {
             this.injectData(fileName, defaultName, compilation);
           });
-        });
-      });
+        }
+      );
     });
   }
 }

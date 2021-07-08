@@ -13,10 +13,10 @@ const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultNam
   const iceTemp = getValue(ICE_TEMP);
   const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');
 
-  const pluginsFactory = (type: 'sass' | 'less') => [
+  const pluginsFactory = (type: 'sass' | 'less') => ([
     funcCollectPlugin({ type }),
     declVarPlugin({ defaultName, type })
-  ];
+  ]);
 
   // Less 变量 value 转为同名 css-var
   onGetWebpackConfig(config => {
