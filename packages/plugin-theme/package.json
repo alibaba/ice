@@ -11,7 +11,7 @@
     "template",
     "src/runtime.tsx"
   ],
-  "author": "",
+  "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "devDependencies": {
     "@builder/pack": "^0.2.9",
@@ -32,9 +32,11 @@
     "postcss-strip-inline-comments": "^0.1.5",
     "ts-jest": "^25.4.0",
     "typescript": "^4.0.0",
-    "webpack": "^5.0.0",
     "webpack-chain": "^6.4.0",
     "webpack-sources": "^2.3.0"
+  },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
