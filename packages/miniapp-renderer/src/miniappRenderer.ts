@@ -39,7 +39,6 @@ function miniappRenderer(
         const PageComponent = component()();
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
-        document.body.appendChild(rootEl);
         const appInstance = mount(createElement(App, {
           history,
           location: history.location,
@@ -47,6 +46,7 @@ function miniappRenderer(
           source,
           Page: PageComponent
         }), rootEl);
+        document.body.appendChild(rootEl);
 
         (document as any).__unmount = unmount(appInstance, rootEl);
       },
