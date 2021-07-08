@@ -1,11 +1,7 @@
 {
   "plugins": [
-    ["build-plugin-theme", {"theme": "dark"}],
-    [
-      "build-plugin-fusion",
-      {
-        "themePackage": "@alifd/theme-design-pro"
-      }
-    ]
+    ["build-plugin-theme", {
+      "theme": "dark"
+    }]
   ]
 }

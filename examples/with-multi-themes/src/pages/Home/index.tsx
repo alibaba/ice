@@ -13,7 +13,7 @@ const Dashboard = () => {
         size="medium"
         defaultChecked={theme === 'dark'}
         checkedChildren="🌟"
-        onChange={(e) => setTheme(e ? 'dark' : 'default')}
+        onChange={(e) => setTheme(e ? 'dark' : 'light')}
         unCheckedChildren="☀️"
         style={{ width: 55 }}
       />
