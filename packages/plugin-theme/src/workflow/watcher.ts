@@ -11,7 +11,7 @@ const watchThemeFiles = async ({ applyMethod, log }: IPluginAPI, themesPath: str
       log.warn(`主题文件发生改变 当前主题包列表：${themesNames.join(', ')}`);
 
       const { defaultName } = getDefaultTheme(themesNames, _theme);
-      setThemesData(themesPathList);
+      await setThemesData(themesPathList);
       addTemp(applyMethod, defaultName, themesNames);
     }
   });

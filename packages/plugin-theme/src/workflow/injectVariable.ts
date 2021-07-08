@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as lessParser from 'postcss-less';
 import * as scssParser from 'postcss-scss';
+import * as atImport from 'postcss-import';
 import { IPluginAPI } from 'build-scripts';
 import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
 import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
@@ -14,6 +15,7 @@ const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultNam
   const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');
 
   const pluginsFactory = (type: 'sass' | 'less') => ([
+    atImport({ parser: scssParser }),
     funcCollectPlugin({ type }),
     declVarPlugin({ defaultName, type })
   ]);

@@ -1,10 +1,11 @@
 // 引入默认全局样式
 @import "@alifd/next/reset.scss";
-@import '@alifd/next/dist/next.css';
+@import '@alifd/next/lib/switch/index.scss';
 
 $ice-example-bold: #2e2e2e;
 $ice-example-background: #fff;
 $ice-example-light: lighten($ice-example-bold, 10%);
+// $switch-normal-on-bg-color: #fff;
 
 body {
   -webkit-font-smoothing: antialiased;

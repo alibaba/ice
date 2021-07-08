@@ -15,9 +15,9 @@ interface Option {
 export const declVarPlugin = (option: Option): TransformCallback => {
   const { defaultName, type = 'less' } = option;
 
-  const varsMap = getThemesData()[defaultName];
-
   return root => {
+    const varsMap = getThemesData()[defaultName];
+
     if (type === 'sass') {
       root.walkDecls(decl => {
         if (decl.prop) {

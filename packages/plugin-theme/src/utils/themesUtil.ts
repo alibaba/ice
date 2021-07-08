@@ -1,6 +1,5 @@
 import postcss from 'postcss';
 import * as atImport from 'postcss-import';
-import produce from 'immer';
 import { readFileSync } from 'fs-extra';
 import { getNameFromPath } from '../utils/common';
 import { getThemeVarsPlugin } from '../plugins/postcss/getThemeVarsPlugin';
@@ -13,7 +12,7 @@ interface ThemeVarsType {
   [cssVariable: string]: string
 }
 
-let __themesData__: ThemesDataType = {};
+const __themesData__: ThemesDataType = {};
 
 /**
  * 生成 themesData 对象字符串
@@ -37,15 +36,14 @@ const getThemesDataStr = (defaultName: string) => {
  * 
  * @param {string} filePath 主题文件路径
  */
-const getThemeVars = (filePath: string): ThemeVarsType => {
+const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
   const themeVars: ThemeVarsType = {};
   const css = readFileSync(filePath, 'utf8');
 
-  // eslint-disable-next-line no-unused-expressions
-  postcss([
+  await postcss([
     atImport(),
     getThemeVarsPlugin({ themeVars })
-  ]).process(css, { from: filePath }).css;
+  ]).process(css, { from: filePath });
 
   return themeVars;
 };
@@ -53,17 +51,13 @@ const getThemeVars = (filePath: string): ThemeVarsType => {
 /**
  * 设置 Themes Data
  */
-const setThemesData = (themesPathList: string[]) => {
-  const data = produce(__themesData__, (draft) => {
-    themesPathList.forEach(file => {
-      const themeName = getNameFromPath(file);
-      const value = getThemeVars(file);
+const setThemesData = async (themesPathList: string[]) => {
+  themesPathList.forEach(async file => {
+    const themeName = getNameFromPath(file);
+    const value = await getThemeVars(file);
 
-      draft[themeName] = value;
-    });
+    __themesData__[themeName] = value;
   });
-
-  __themesData__ = data;
 };
 
 const getThemesData = () => __themesData__;

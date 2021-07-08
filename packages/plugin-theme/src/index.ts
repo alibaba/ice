@@ -38,7 +38,7 @@ const plugin: IPlugin = async (api, options = {}) => {
     log.info(`🤔 未找到默认主题文件（${_theme}.css），自动配置 ${defaultName} 为初始主题`);
   }
 
-  setThemesData(themesPathList);                 // 生成变量并设置 themesData
+  await setThemesData(themesPathList);                 // 生成变量并设置 themesData
   injectVariable(api, defaultName);              // 注入所有（包括分析生成）的变量与需要注入的逻辑
   setExposeAPI(api, defaultName, themesNames);   // 设置需要 ice 暴露出的 API (Hooks / Provider)
 

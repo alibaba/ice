@@ -7,11 +7,11 @@ interface Option {
   parser: Function
 }
 
-export default function loader(
+export default async function loader(
   this: webpack.LoaderContext<Option>,
   source: string | Buffer
 ) {
   const { plugins = [], parser } = getOptions(this) as Option;
-  const result = postcss(plugins).process(source, { parser } as any).css;
-  return result;
+  const { css } = await postcss(plugins).process(source, { parser, from: undefined } as any);
+  return css;
 }

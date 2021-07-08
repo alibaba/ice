@@ -7,7 +7,7 @@ module.exports = (api) => {
   // filesystem cache
   onGetWebpackConfig((config) => {
     // filesystem cache
-    if (!process.env.DISABLE_FS_CACHE) {
+    if (false) {
       const version = process.env.__FRAMEWORK_VERSION__;
       const cacheConfig = {
         cache: {
