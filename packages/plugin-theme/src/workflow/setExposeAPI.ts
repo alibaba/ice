@@ -5,11 +5,11 @@ import { PLUGIN_DIR, ICE_TEMP } from '../constant';
 const addTemp = (applyMethod: IPluginAPI['applyMethod'], defaultName: string, themes: string[]) => {
   const themesStr = themes.map(str => `'${str}'`).join(' | ');
 
-  // 复制模板到 .ice/themes 目录下
+  // 复制模板到 .ice/theme 目录下
   const templateSourceDir = path.join(__dirname, '../../template');
   applyMethod(
-    'addTemplateDir',
-    { templateDir: templateSourceDir, targetDir: PLUGIN_DIR },
+    'addPluginTemplate',
+    templateSourceDir,
     { themes: themesStr, defaultTheme: `'${defaultName}'` }
   );
 };
@@ -26,14 +26,18 @@ const setExposeAPI = ({
 
   addTemp(applyMethod, defaultName, themes);
 
-  // 设置 $ice/themes -> .ice/themes/index.tsx
+  // 设置 $ice/theme -> .ice/plugins/theme/index.tsx
   onGetWebpackConfig((config) => {
-    config.resolve.alias.set('$ice/themes', path.join(iceTemp, PLUGIN_DIR, 'index.tsx'));
+    config.resolve.alias.set('$ice/theme', path.join(iceTemp, PLUGIN_DIR, 'index.tsx'));
   });
 
   // 导出接口
   // import { useTheme } from 'ice';
-  applyMethod('addExport', { source: './themes', importSource: '$$ice/themes', exportMembers: ['useTheme'] });
+  applyMethod('addExport', {
+    source: './plugins/theme',
+    importSource: '$$ice/plugins/theme',
+    exportMembers: ['useTheme']
+  });
 };
 
 export {

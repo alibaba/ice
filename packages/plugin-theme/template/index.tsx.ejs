@@ -18,7 +18,7 @@ const ThemeProvider: React.FC<Props> = ({ initialTheme, children }) => {
   }, [theme]);
 
   return (
-    <Context.Provider value={share}>{children}</Context.Provider>
+    <Context.Provider value={share as any}>{children}</Context.Provider>
   );
 };
 

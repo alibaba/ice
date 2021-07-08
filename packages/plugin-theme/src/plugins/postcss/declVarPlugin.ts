@@ -1,4 +1,4 @@
-import { Plugin, TransformCallback } from 'postcss';
+import { TransformCallback } from 'postcss';
 import { getThemesData } from '../../utils/themesUtil';
 
 interface Option {

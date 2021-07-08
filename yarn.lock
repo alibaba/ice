@@ -10044,11 +10044,6 @@ kleur@^3.0.3:
   resolved "https://registry.npm.taobao.org/kleur/download/kleur-3.0.3.tgz?cache=0&sync_timestamp=1611346710846&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fkleur%2Fdownload%2Fkleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha1-p5yezIbuHOP6YgbRIWxQHxR/wH4=
 
-klona@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.npm.taobao.org/klona/download/klona-2.0.4.tgz#7bb1e3affb0cb8624547ef7e8f6708ea2e39dfc0"
-  integrity sha1-e7Hjr/sMuGJFR+9+j2cI6i4538A=
-
 known-css-properties@^0.11.0:
   version "0.11.0"
   resolved "https://registry.npm.taobao.org/known-css-properties/download/known-css-properties-0.11.0.tgz#0da784f115ea77c76b81536d7052e90ee6c86a8a"
@@ -12279,17 +12274,6 @@ postcss-less@^4.0.1:
   integrity sha1-c8r12sBW1LcG9MwTbO/q9OeQZ6Q=
   dependencies:
     postcss "^8.1.2"
-
-postcss-loader@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.nlark.com/postcss-loader/download/postcss-loader-4.2.0.tgz?cache=0&sync_timestamp=1625142952652&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-loader%2Fdownload%2Fpostcss-loader-4.2.0.tgz#f6993ea3e0f46600fb3ee49bbd010448123a7db4"
-  integrity sha1-9pk+o+D0ZgD7PuSbvQEESBI6fbQ=
-  dependencies:
-    cosmiconfig "^7.0.0"
-    klona "^2.0.4"
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-    semver "^7.3.4"
 
 postcss-markdown@^0.36.0:
   version "0.36.0"
