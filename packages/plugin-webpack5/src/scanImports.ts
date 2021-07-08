@@ -17,7 +17,7 @@ export async function globFiles(pattern: string | string[], rootDir: string) {
   });
 }
 
-export async function scanImports(globPatterns: string | string [], rootDir: string): Promise<string[]> {
+async function scanImports(globPatterns: string | string [], rootDir: string): Promise<string[]> {
   const importSet = new Set<string>();
   const files = await globFiles(globPatterns, rootDir);
   await Promise.all(files.map((filePath: string) => {
@@ -36,7 +36,8 @@ export async function scanImports(globPatterns: string | string [], rootDir: str
         const imports = parse(source)[0];
         imports.forEach((importSpecifier) => {
           const importName = importSpecifier.n;
-          if (!importName.startsWith('.')) {
+          // filter source code
+          if (!importName.startsWith('.') && !importName.startsWith('@/') && !importName.startsWith('ice/')) {
             importSet.add(importSpecifier.n);
           }
         });
@@ -47,3 +48,5 @@ export async function scanImports(globPatterns: string | string [], rootDir: str
   }));
   return Array.from(importSet);
 }
+
+export default scanImports;

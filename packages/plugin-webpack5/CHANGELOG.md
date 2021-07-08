@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- [refactor] refactor remoteRuntime
+
 ## 1.2.5
 
 - [fix] compatible with win32 when delete original entry
