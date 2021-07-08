@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.14
+
+- [Feat] support plugin situation without global getApp
+
 ## 0.1.13
 
 - [Fix] __pagesRenderInfo in window will be replaced in subPakcages shareMemory mode
