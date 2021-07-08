@@ -17,7 +17,7 @@
     "src/runtime.ts"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^2.0.0",
+    "@ahooksjs/use-request": "^2.8.8",
     "axios": "^0.19.2",
     "fs-extra": "^8.1.0"
   },
