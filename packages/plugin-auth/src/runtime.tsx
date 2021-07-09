@@ -5,7 +5,7 @@ import AuthStore from '$ice/authStore';
 const wrapperComponentFn = (authConfig) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
 
-  const AuthWrapperedComponent = (props) => {
+  const AuthWrappedComponent = (props) => {
     const { auth, ...rest } = props;
     const [authState] = auth;
     const pageConfigAuth = pageConfig.auth;
@@ -26,7 +26,7 @@ const wrapperComponentFn = (authConfig) => (PageComponent) => {
     }
     return <PageComponent {...rest} />;
   };
-  return AuthStore.withModel('auth')(AuthWrapperedComponent);
+  return AuthStore.withModel('auth')(AuthWrappedComponent);
 };
 
 export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {

@@ -1,8 +1,9 @@
 import * as path from 'path';
+import { IPluginAPI } from 'build-scripts';
 
 const PLUGIN_AUTH_DIR = 'auth';
 
-export default async function (api) {
+export default async function (api: IPluginAPI) {
   const { getValue, onGetWebpackConfig, applyMethod } = api;
   const iceTemp = getValue('TEMP_PATH');
 
