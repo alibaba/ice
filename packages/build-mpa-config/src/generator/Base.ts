@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { formatPath } from '@builder/app-helpers';
-import { IGeneratorOptions } from '../../types';
+import { IGeneratorOptions } from '../types';
 
 export default class BaseGenerator {
   public entryFolder: string;

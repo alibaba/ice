@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import * as globby from 'globby';
 import { formatPath } from '@builder/app-helpers';
 import Base from './Base';
-import { IGeneratorOptions } from '../../types';
+import { IGeneratorOptions } from '../types';
 
 export default class ReactGenerator extends Base {
   constructor(api: any, options: IGeneratorOptions) {
