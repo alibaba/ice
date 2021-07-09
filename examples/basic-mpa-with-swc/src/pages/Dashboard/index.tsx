@@ -3,7 +3,6 @@ import store from './store';
 
 const Dashboard = () => {
   const [pageState, pageActions] = store.useModel('counter');
-  console.log('123123');
   return (
     <>
       <h2>Dashboard Page...</h2>

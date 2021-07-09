@@ -10,7 +10,7 @@ const setTest = require('./setTest');
 const configWebpak5 = require('./webpack5');
 
 module.exports = (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, onHook  } = api;
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
@@ -66,13 +66,4 @@ module.exports = (api) => {
     setTest(api);
   }
   configWebpak5(api);
-
-  let startTime = 0;
-  // 通过 hooks 记录时间，解决 webpack 不同版本间时间计算的差异
-  onHook(`before.${command}.run`, () => {
-    startTime = Date.now();
-  });
-  onHook(`after.${command}.compile`, ({ stats }) => {
-    console.log(Date.now() - startTime);
-  });
 };
