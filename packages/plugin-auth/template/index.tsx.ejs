@@ -1,6 +1,8 @@
-import * as React from 'react';
-import { createContext, useState, useContext } from 'react';
-import { ContextType, AuthType } from './types'
+<% if(!hasJsxRuntime) { %>
+  import * as React from 'react';
+<% } %>
+import { FC, createContext, useState, useContext } from 'react';
+import { ContextType, AuthType, IAuth } from './types'
 
 const Context = createContext<any>(null);
 
@@ -8,7 +10,7 @@ interface Props {
   value: AuthType
 }
 
-const Provider: React.FC<Props> = ({ value = {}, children }) => {
+const Provider: FC<Props> = ({ value = {}, children }) => {
   const share = useState<AuthType>(value);
   return (
     <Context.Provider value={share}>{children}</Context.Provider>
@@ -17,8 +19,6 @@ const Provider: React.FC<Props> = ({ value = {}, children }) => {
 
 const useAuth = (): ContextType => {
   const value = useContext(Context);
-  if (value === null) throw new Error('Please add Provider');
-
   return value;
 };
 
@@ -26,7 +26,7 @@ const useAuth = (): ContextType => {
 function withAuth(Component) {
   const AuthWrapped = props => {
     const share = useAuth();
-    return <Component {...Object.assign({}, props, { auth: share, setAuth: share[0] })} />;
+    return <Component {...Object.assign({}, props, { auth: share, setAuth: share[1] })} />;
   };
   return AuthWrapped;
 }
@@ -35,4 +35,6 @@ export {
   useAuth,
   withAuth,
   Provider,
+
+  IAuth
 };
