@@ -25,6 +25,7 @@ module.exports = (api, options = {}) => {
     try {
       // eslint-disable-next-line
       configFunc = require(`./userConfig/${name}`);
+      configFunc = configFunc.default || configFunc;
     // eslint-disable-next-line no-empty
     } catch (err) {}
 

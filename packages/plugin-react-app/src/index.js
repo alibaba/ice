@@ -8,6 +8,7 @@ const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
 const configWebpak5 = require('./webpack5');
+const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
 module.exports = (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
@@ -66,4 +67,8 @@ module.exports = (api) => {
     setTest(api);
   }
   configWebpak5(api);
+
+  if (userConfig.remoteRuntime) {
+    remoteRuntime(api, userConfig.remoteRuntime);
+  }
 };

@@ -99,8 +99,10 @@ const serverRender = async (context, opts = {}) => {
     }, {
       appConfig,
       buildConfig,
-      createBaseApp,
-      emitLifeCycles
+      appLifecycle: {
+        createBaseApp,
+        emitLifeCycles,
+      }
     });
 
     const helmet = Helmet.renderStatic();

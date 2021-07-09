@@ -1,6 +1,7 @@
-const { formatPath, modifySwcOptions } = require('@builder/app-helpers');
+import { formatPath } from '@builder/app-helpers';
+import modifySwcOptions from '../utils/modifySwcOptions';
 
-module.exports = (config, browserslist, { userConfig }) => {
+export default (config, browserslist, { userConfig }) => {
   if (userConfig.swc) {
     modifySwcOptions(config, { env: { targets: browserslist } });
   } else {

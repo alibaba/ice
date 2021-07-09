@@ -8,9 +8,9 @@ import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, modifyRoutesComponent, buildConfig, context, createHistory }) => {
+const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
   const { router: appConfigRouter = {}, app = {}, renderComponent } = appConfig;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler } = app;
+  const { ErrorBoundaryFallback, onErrorBoundaryHandler } = app;
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
@@ -22,17 +22,17 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
 
   const wrapperPageErrorBoundary = (PageComponent) => {
     const { pageConfig = {} } = PageComponent;
-    const WrapperedPageErrorBoundary = (props) => {
+    const WrappedPageErrorBoundary = (props) => {
       if (pageConfig.errorBoundary) {
         return (
-          <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler || onErrorBoundaryHander}>
+          <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>
             <PageComponent {...props} />
           </ErrorBoundary>
         );
       }
       return <PageComponent {...props} />;
     };
-    return WrapperedPageErrorBoundary;
+    return WrappedPageErrorBoundary;
   };
 
   const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR();
@@ -48,11 +48,11 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
       const [mainRoute] = routes;
       if (mainRoute) {
         const RenderComponent = mainRoute.component as React.ComponentType;
-        let initalProps = {};
+        let initialProps = {};
         if (process.env.__IS_SERVER__) {
-          initalProps = context.initialContext || {};
+          initialProps = context.initialContext || {};
         }
-        return <RenderComponent {...initalProps} />;
+        return <RenderComponent {...initialProps} />;
       }
       return null;
     });
@@ -65,7 +65,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
         ...customRouterProps,
       };
       if (!routerProps.history) {
-        routerProps.history = createHistory({ type: appConfigRouter.type, basename: appConfigRouter.basename });
+        routerProps.history = applyRuntimeAPI('createHistory', { type: appConfigRouter.type, basename: appConfigRouter.basename });
       }
       if (process.env.__IS_SERVER__) {
         const { initialContext = {} } = context;
