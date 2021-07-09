@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
-    "build": "../../packages/icejs/bin/ice-cli.js start --mode prod"
+    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
   },
   "engines": {
     "node": ">=8.0.0"
