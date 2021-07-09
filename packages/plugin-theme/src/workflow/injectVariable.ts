@@ -1,21 +1,15 @@
 import * as path from 'path';
-import * as lessParser from 'postcss-less';
-import * as scssParser from 'postcss-scss';
-import * as atImport from 'postcss-import';
 import { IPluginAPI } from 'build-scripts';
 import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
 import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
 import { ICE_TEMP, PLUGIN_DIR } from '../constant';
 import { funcCollectPlugin } from '../plugins/postcss/funcCollectPlugin';
 
-const loaderPath = path.resolve(__dirname, '..', 'loaders', 'postcssLoader');
-
 const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultName: string) => {
   const iceTemp = getValue(ICE_TEMP);
   const jsPath = path.resolve(iceTemp, PLUGIN_DIR, 'injectTheme.js');
 
   const pluginsFactory = (type: 'sass' | 'less') => ([
-    atImport({ parser: scssParser }),
     funcCollectPlugin({ type }),
     declVarPlugin({ defaultName, type })
   ]);
@@ -33,18 +27,18 @@ const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultNam
     ['less', 'less-module'].forEach(rule => {
       config.module
         .rule(rule)
-        .use('postcss-loader')
-        .loader(loaderPath)
-        .options({ plugins: pluginsFactory('less'), parser: lessParser })
+        .use('postcss-loader-v6')
+        .loader(require.resolve('postcss-loader'))
+        .options({ postcssOptions: { plugins: pluginsFactory('less'), parser: 'postcss-less' } })
         .after('less-loader');
     });
 
     ['scss', 'scss-module'].forEach(rule => {
       config.module
         .rule(rule)
-        .use('postcss-loader')
-        .loader(loaderPath)
-        .options({ plugins: pluginsFactory('sass'), parser: scssParser })
+        .use('postcss-loader-v6')
+        .loader(require.resolve('postcss-loader'))
+        .options({ postcssOptions: { plugins: pluginsFactory('sass'), parser: 'postcss-scss' } })
         .after('sass-loader');
     });
 

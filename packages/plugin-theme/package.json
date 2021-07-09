@@ -13,27 +13,30 @@
   ],
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "@builder/pack": "^0.2.9",
+    "@types/resolve": "^1.20.1",
+    "build-scripts": "^1.0.0",
+    "fs-extra": "^9.0.0",
+    "less": "^4.1.1",
+    "lodash": "^4.17.21",
+    "postcss": "^8.3.5",
+    "postcss-import": "^14.0.2",
+    "postcss-less": "^4.0.1",
+    "postcss-loader": "^6.1.1",
+    "postcss-scss": "^3.0.5",
+    "resolve": "^1.20.0",
+    "webpack-chain": "^6.4.0",
+    "webpack-sources": "^2.3.0"
+  },
+  "devDependencies": {
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
     "@types/lodash": "^4.14.170",
     "@types/webpack-sources": "^2.1.0",
-    "build-scripts": "^1.0.0",
-    "fs-extra": "^9.0.0",
-    "immer": "^9.0.2",
     "jest": "^25.4.0",
-    "less": "^4.1.1",
-    "lodash": "^4.17.21",
-    "postcss": "^7.0.32",
-    "postcss-import": "12.0.0",
-    "postcss-less": "^4.0.1",
-    "postcss-scss": "^3.0.5",
-    "postcss-strip-inline-comments": "^0.1.5",
     "ts-jest": "^25.4.0",
-    "typescript": "^4.0.0",
-    "webpack-chain": "^6.4.0",
-    "webpack-sources": "^2.3.0"
+    "typescript": "^4.0.0"
   },
   "peerDependencies": {
     "webpack": "^5.0.0"

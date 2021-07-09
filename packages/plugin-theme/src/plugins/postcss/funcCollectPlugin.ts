@@ -85,21 +85,25 @@ export const funcCollectPlugin = (options: Option): TransformCallback => {
       });
     };
 
-    // get depthVarSet
-    getDepthVar(varFlag);
+    const run = () => {
+      // get depthVarSet
+      getDepthVar(varFlag);
 
-    // get funcVarMap
-    themes.forEach(theme => {
-      getParam(theme, varFlag);
-    });
-
-    // pick depthVarSet to funcVarMap
-    depthVarSet.forEach(i => {
+      // get funcVarMap
       themes.forEach(theme => {
-        if (data[theme][i]) return;
-        data[theme][i] = funcVarMap[theme][i];
+        getParam(theme, varFlag);
       });
-    });
+
+      // pick depthVarSet to funcVarMap
+      depthVarSet.forEach(i => {
+        themes.forEach(theme => {
+          if (data[theme][i]) return;
+          data[theme][i] = funcVarMap[theme][i];
+        });
+      });
+    };
+
+    run();
   };
 };
 
