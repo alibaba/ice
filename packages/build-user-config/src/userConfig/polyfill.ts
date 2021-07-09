@@ -1,16 +1,15 @@
 import * as path from 'path';
 import { injectTransformRuntime } from '@builder/app-helpers';
 import modifySwcOptions from '../utils/modifySwcOptions';
-
-const processPresetEnv  = require('../utils/processPresetEnv');
-const addBabelPlugins = require('../utils/addBabelPlugins');
+import * as processPresetEnv from '../utils/processPresetEnv';
+import * as addBabelPlugins from '../utils/addBabelPlugins';
 
 const getEntryRegExp = (entryPath) => {
   const entryExtname = path.extname(entryPath);
   return entryExtname ? entryPath : new RegExp(`${entryPath}(.jsx?|.tsx?)$`);
 };
 
-module.exports = (config, polyfill, { userConfig }) => {
+export default (config, polyfill, { userConfig }) => {
   const { swc } = userConfig;
   if (swc) {
     modifySwcOptions(config, { env: {

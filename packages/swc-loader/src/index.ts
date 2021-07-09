@@ -52,7 +52,7 @@ async function loader(source, inputSourceMap) {
 
   const loaderOptions = getOptions(this) || {};
 
-  if ((loaderOptions.plugins || loaderOptions.presets) && /\.tsx?$/.test(filename)) {
+  if (/\.tsx?$/.test(filename)) {
     const output = await preCompileTsFile(source, initOptions, inputSourceMap);
     source = output.code;
     if (inputSourceMap) {
