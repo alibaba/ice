@@ -2,9 +2,7 @@
 import * as React from 'react';
 <% } %>
 
-<% if(hasPageStore) { %>
-  <%- pageStoreImport %>
-<% } %>
+<%- pageStoreImport %>
 
 <%- pageComponentImport %>
 
@@ -28,7 +26,7 @@ import * as React from 'react';
 
 const PageComponentName = <%= pageComponentExport %>;
 
-<% if(hasPageStore) { %>
+<% if(storeFileExists) { %>
   const PageProvider = store.Provider;
   const StoreWrapperedPage = (props) => {
     return (

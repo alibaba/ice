@@ -1,5 +1,5 @@
 import React from 'react';
-import { store } from 'ice/Detail';
+import store from './store';
 
 class Detail extends React.Component {
   constructor(props) {

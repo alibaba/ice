@@ -9,7 +9,7 @@ import Index from '@/pages/Index';
 
 // const Home = lazy(() => import('@/pages/Home'));
 // const About =lazy(() => import('@/pages/About'));
-// const NotFound = lazy(() => import('@/pages/NotFound'));
+// const { NotFound } = lazy(() => import('@/pages/NotFound'));
 
 export default [
   {

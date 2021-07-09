@@ -129,7 +129,7 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGet
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `${tempDir}/${pageName}/Page.tsx` : '';
+      newValue = pageName ? `${tempDir}/${pageName}/index.tsx` : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {

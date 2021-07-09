@@ -32,5 +32,8 @@
   },
   "dependencies": {
     "esbuild-webpack-plugin": "^1.0.3"
+  },
+  "resolutions": {
+    "esbuild": "0.12.15"
   }
 }

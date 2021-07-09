@@ -7,23 +7,18 @@ import checkStoreAndModelFileExist from './utils/checkStoreAndModelFileExist';
 
 const { name: pluginName } = require('../package.json');
 
-export default async (api) => {
+export default async (api: any) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
 
   // get mpa entries in src/pages
   const { mpa: isMpa, entry, store } = userConfig;
 
-  const targetPath = getValue('TEMP_PATH');
+  const tempPath = getValue('TEMP_PATH');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
-  const tempDir = (path.basename(targetPath) || '').split('.')[1];
-  const templatePath = path.join(__dirname, 'template');
-  const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
-  const pageStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
-  const pageStoresTemplatePath = path.join(templatePath, 'pageStores.ts.ejs');
-  const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
+  const tempDir = (path.basename(tempPath) || '').split('.')[1];
   const projectType = getValue('PROJECT_TYPE');
-  const pages = applyMethod('getPages', rootDir, srcDir);
+  const pagesName = applyMethod('getPages', rootDir, srcDir);
 
   const storeAndModelExists = checkStoreAndModelExist({ rootDir, srcDir, projectType, applyMethod });
   if (!storeAndModelExists) {
@@ -31,7 +26,7 @@ export default async (api) => {
     return;
   }
 
-  checkStoreAndModelFileExist({ rootDir, srcDir, projectType, pages });
+  checkStoreAndModelFileExist({ rootDir, srcDir, projectType, pages: pagesName });
 
   const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
@@ -54,7 +49,7 @@ export default async (api) => {
 
   let { routesPath } = applyMethod('getRoutes', {
     rootDir,
-    tempDir: targetPath,
+    tempDir: tempPath,
     configPath,
     projectType,
     isMpa,
@@ -64,7 +59,7 @@ export default async (api) => {
   if (isMpa) {
     const routesFile = `routes.${projectType}`;
     const pagesPath = path.join(rootDir, 'src', 'pages');
-    const pagesRoutePath = pages.map(pageName => {
+    const pagesRoutePath = pagesName.map((pageName: string) => {
       return path.join(pagesPath, pageName, routesFile);
     });
     routesPath = pagesRoutePath;
@@ -93,28 +88,18 @@ export default async (api) => {
 
   modifyUserConfig('babelPlugins', [...babelPlugins]);
 
-  onGetWebpackConfig(config => {
-    config.module.rule('appJSON')
-      .test(/app\.json$/)
-      .use('page-source-loader')
-      .loader(require.resolve('./pageSourceLoader'))
-      .options({
-        targetPath
-      });
-    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'plugins', 'store', 'index.ts'));
+  onGetWebpackConfig((config: any) => {
+    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(tempPath, 'plugins', 'store', 'index.ts'));
   });
 
   const gen = new Generator({
-    appStoreTemplatePath,
-    pageStoreTemplatePath,
-    pageStoresTemplatePath,
-    typesTemplatePath,
-    targetPath,
+    tempPath,
     rootDir,
     applyMethod,
     projectType,
     srcDir,
-    resetPageState: store && store.resetPageState
+    pagesName,
+    resetPageState: store?.resetPageState
   });
 
   gen.render();
