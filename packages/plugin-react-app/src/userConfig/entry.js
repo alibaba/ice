@@ -81,7 +81,7 @@ module.exports = (config, value, context) => {
   if (config.plugins.get('CopyWebpackPlugin')) {
     config.plugin('CopyWebpackPlugin').tap(([{ patterns, ...restOptions }]) => {
       const [firstPattern, ...rest] = patterns;
-      firstPattern.globOptions.ignore = ['public/index.html'];
+      firstPattern.globOptions.ignore = ['**/public/index.html'];
       return [{
         patterns: [firstPattern, ...rest],
         ...restOptions,
