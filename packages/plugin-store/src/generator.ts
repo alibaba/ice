@@ -20,43 +20,33 @@ export interface IRenderPageParams {
 const matchRegex = /^[^._].*\.(js|ts)$/;
 
 export default class Generator {
-  private rootDir: string
+  private srcPath: string
 
   private pagesName: string[]
 
   private tempPath: string
 
-  private projectType: string
-
   private applyMethod: Function
-
-  private srcDir: string
 
   private resetPageState: boolean
 
   constructor({
-    rootDir,
+    srcPath,
     tempPath,
     pagesName,
     applyMethod,
-    projectType,
-    srcDir,
     resetPageState
   }: {
-    rootDir: string;
+    srcPath: string;
     tempPath: string;
     pagesName: string[];
-    projectType: string;
     applyMethod: Function;
-    srcDir: string;
     resetPageState: boolean;
   }) {
-    this.rootDir = rootDir;
+    this.srcPath = srcPath;
     this.tempPath = tempPath;
     this.pagesName = pagesName;
     this.applyMethod = applyMethod;
-    this.projectType = projectType;
-    this.srcDir = srcDir;
     this.resetPageState = resetPageState;
   }
 
@@ -67,18 +57,8 @@ export default class Generator {
     this.renderAppStoreTypes();
 
     this.pagesName.forEach((pageName: string) => {
-      const { pageModelsDir, pageModelFile, pageNameDir } = getPageModelPath({
-        rootDir: this.rootDir,
-        srcDir: this.srcDir,
-        pageName,
-        projectType: this.projectType,
-      });
-      const pageStoreFile = formatPath(getPageStorePath({
-        rootDir: this.rootDir,
-        srcDir: this.srcDir,
-        pageName,
-        projectType: this.projectType,
-      }));
+      const { pageModelsDir, pageModelFile, pageNameDir } = getPageModelPath(this.srcPath, pageName);
+      const pageStoreFile = formatPath(getPageStorePath(this.srcPath, pageName));
       const storeFileExists = fse.pathExistsSync(pageStoreFile);
       const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, storeFileExists };
       // generate .ice/pages/${pageName}/index.tsx
@@ -114,9 +94,10 @@ export default class Generator {
       };
     } else if (fse.pathExistsSync(pageModelFile)) {
       const pageComponentName = 'pageModel';
+      const pageModelExtname = path.extname(pageModelFile);
       return {
         isSingleModel: true,
-        importStr: `import ${pageComponentName} from '${formatPath(pageModelFile.replace(`.${this.projectType}`, ''))}';`,
+        importStr: `import ${pageComponentName} from '${formatPath(pageModelFile.replace(pageModelExtname, ''))}';`,
         modelsStr: pageComponentName
       };
     } else {
@@ -151,25 +132,23 @@ export default class Generator {
   private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, storeFileExists }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.tempPath, 'pages', pageName, 'index.tsx');
-    const pageComponentSourcePath = formatPath(pageNameDir);
-
+    const pageComponentSourcePath = formatPath(path.join(pageNameDir, 'index'));
     const pageComponentName = 'PageComponent';
     let modelRenderData = {};
     if (this.resetPageState) {
       modelRenderData = this.getPageModels(pageModelsDir, pageModelFile);
     }
-
+    const pageStoreExtname = path.extname(pageStoreFile);
     const pageComponentRenderData = {
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
       storeFileExists,
-      pageStoreImport: storeFileExists ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : '',
+      pageStoreImport: storeFileExists ? `import store from '${pageStoreFile.replace(pageStoreExtname, '')}'` : '',
       resetPageState: this.resetPageState,
       ...modelRenderData,
     };
 
     checkPageIndexFileExists(pageNameDir);
-
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
@@ -188,12 +167,12 @@ export default class Generator {
     if (this.resetPageState) {
       modelRenderData = this.getPageModels(pageModelsDir, pageModelFile);
     }
-
+    const pageStoreExtname = path.extname(pageStoreFile);
     const pageLayoutRenderData = {
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageLayoutName,
       storeFileExists,
-      pageStoreImport: storeFileExists ? `import store from '${pageStoreFile.replace(`.${this.projectType}`, '')}'` : '',
+      pageStoreImport: storeFileExists ? `import store from '${pageStoreFile.replace(pageStoreExtname, '')}'` : '',
       resetPageState: this.resetPageState,
       ...modelRenderData
     };

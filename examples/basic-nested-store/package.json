@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "../../packages/icejs/bin/ice-cli.js start",
-    "build": "icejs build",
+    "build": "../../packages/icejs/bin/ice-cli.js build",
     "test": "icejs test"
   },
   "engines": {

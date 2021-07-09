@@ -1,9 +1,9 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import Generator from './generator';
-import checkStoreAndModelExist from './utils/checkStoreAndModelExist';
+import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
-import checkStoreAndModelFileExist from './utils/checkStoreAndModelFileExist';
+import { getRouteFileType } from './utils/getFileType';
 
 const { name: pluginName } = require('../package.json');
 
@@ -16,19 +16,17 @@ export default async (api: any) => {
 
   const tempPath = getValue('TEMP_PATH');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
+  const srcPath = path.join(rootDir, srcDir);
   const tempDir = (path.basename(tempPath) || '').split('.')[1];
-  const projectType = getValue('PROJECT_TYPE');
   const pagesName = applyMethod('getPages', rootDir, srcDir);
 
-  const storeAndModelExists = checkStoreAndModelExist({ rootDir, srcDir, projectType, applyMethod });
-  if (!storeAndModelExists) {
+  const storeExists = checkStoreExists(srcPath, pagesName);
+  if (!storeExists) {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
 
-  checkStoreAndModelFileExist({ rootDir, srcDir, projectType, pages: pagesName });
-
-  const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
+  const appStoreFile = applyMethod('formatPath', getAppStorePath(srcPath));
   const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
   applyMethod('addExport', {
@@ -46,7 +44,8 @@ export default async (api: any) => {
 
   // add babel plugins for ice lazy
   const { configPath } = userConfig.router || {};
-
+  // TODO: remove PROJECT_TYPE
+  const projectType = getValue('PROJECT_TYPE');
   let { routesPath } = applyMethod('getRoutes', {
     rootDir,
     tempDir: tempPath,
@@ -57,12 +56,12 @@ export default async (api: any) => {
   });
 
   if (isMpa) {
-    const routesFile = `routes.${projectType}`;
     const pagesPath = path.join(rootDir, 'src', 'pages');
-    const pagesRoutePath = pagesName.map((pageName: string) => {
-      return path.join(pagesPath, pageName, routesFile);
+    routesPath = pagesName.map((pageName: string) => {
+      const pagePath = path.join(pagesPath, pageName);
+      const routesFileType = getRouteFileType(pagePath);
+      return path.join(pagePath, `routes${routesFileType}`);
     });
-    routesPath = pagesRoutePath;
   }
 
   const babelPlugins = userConfig.babelPlugins || [];
@@ -94,10 +93,8 @@ export default async (api: any) => {
 
   const gen = new Generator({
     tempPath,
-    rootDir,
     applyMethod,
-    projectType,
-    srcDir,
+    srcPath,
     pagesName,
     resetPageState: store?.resetPageState
   });
