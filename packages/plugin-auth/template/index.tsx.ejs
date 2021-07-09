@@ -8,7 +8,7 @@ interface Props {
   value: AuthType
 }
 
-const Provider: React.FC = ({ value = {}, children }) => {
+const Provider: React.FC<Props> = ({ value = {}, children }) => {
   const share = useState<AuthType>(value);
   return (
     <Context.Provider value={share}>{children}</Context.Provider>
