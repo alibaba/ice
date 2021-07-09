@@ -33,7 +33,7 @@
     "build-plugin-ice-request": "1.7.6",
     "build-plugin-ice-router": "1.9.7",
     "build-plugin-ice-ssr": "2.1.2",
-    "build-plugin-ice-store": "1.9.7",
+    "build-plugin-ice-store": "2.0.0-0",
     "build-plugin-react-app": "1.8.5",
     "build-plugin-miniapp": "0.1.7",
     "chalk": "^4.1.0",

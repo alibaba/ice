@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+- feat: upgrade @ice/store to 2.x
+- refactor: not support create store automatically
+- refactor: remove appJSON loader
+
 ## 1.9.7
 
 - [fix] can't find an existed store file in windows
