@@ -40,19 +40,13 @@ module.exports = (api, { target, webpackConfig }) => {
       .end()
     // CopyWebpackPlugin
     .plugin('CopyWebpackPlugin')
-      .use(CopyWebpackPlugin, [{
-        patterns: [
-          {
-            from: path.resolve(rootDir, 'public'),
-            to: path.resolve(rootDir, outputPath),
-            globOptions: {
-              gitignore: true,
-              dot: true,
-              ignore: ['**/public/index.html'],
-            }
-          },
-        ]
-      }])
+      .use(CopyWebpackPlugin, [[
+        {
+          from: path.resolve(rootDir, 'public'),
+          to: path.resolve(rootDir, outputPath),
+          ignore: ['index.html'],
+        },
+      ]])
       .end()
     // WebpackPluginImport
     .plugin('WebpackPluginImport')
