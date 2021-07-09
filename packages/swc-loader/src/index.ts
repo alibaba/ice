@@ -50,7 +50,9 @@ async function loader(source, inputSourceMap) {
     sourceMaps,
   };
 
-  if (/\.tsx?$/.test(filename)) {
+  const loaderOptions = getOptions(this) || {};
+
+  if ((loaderOptions.plugins || loaderOptions.presets) && /\.tsx?$/.test(filename)) {
     const output = await preCompileTsFile(source, initOptions, inputSourceMap);
     source = output.code;
     if (inputSourceMap) {
@@ -58,7 +60,6 @@ async function loader(source, inputSourceMap) {
     }
   }
 
-  const loaderOptions = getOptions(this) || {};
   const programmaticOptions = Object.assign({}, loaderOptions, initOptions);
   if (sourceMaps && inputSourceMap) {
     programmaticOptions.inputSourceMap = inputSourceMap;
@@ -98,8 +99,6 @@ async function loader(source, inputSourceMap) {
   delete programmaticOptions.plugins;
   delete programmaticOptions.presets;
 
-  // TODO delete plugin
-  delete programmaticOptions.plugin;
   // auto detect development mode
   if (this.mode && programmaticOptions.jsc && programmaticOptions.jsc.transform
           && programmaticOptions.jsc.transform.react &&
