@@ -4,7 +4,7 @@ const defaultDeclarations = {
   '$$framework/core/runApp': [
     'runApp',
   ],
-  '$$framework/core/getPublicAPI': [
+  '$$framework/core/publicAPI': [
     // router api
     'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
     // LifeCycles api

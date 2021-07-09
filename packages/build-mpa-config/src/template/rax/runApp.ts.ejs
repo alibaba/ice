@@ -1,0 +1,44 @@
+import { createElement } from 'rax';
+import {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+} from 'create-app-shared';
+import reactAppRenderer, { RenderAppConfig } from 'rax-app-renderer';
+
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '../../<%= globalStyle %>'
+<% } %>
+import loadStaticModules from '<%- tempPath %>/core/loadStaticModules';
+import loadRuntimeModules from '<%- tempPath %>/core/loadRuntimeModules';
+
+import { setAppConfig } from '<%- tempPath %>/core/appConfig';
+import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
+import Page from '<%- resourcePath %>';
+
+const buildConfig: IBuildConfig = <%- buildConfig %>;
+const frameworkAppBase = createBaseApp({
+  loadRuntimeModules,
+  createElement,
+});
+
+export function runApp(appConfig: IAppConfig = {}) {
+  // set page component
+  appConfig.renderComponent = Page;
+  // store appConfig in case of server side render
+  // server bundle will to get appConfig after run runApp
+  setAppConfig(appConfig as IAppConfig);
+  // load static modules before init runtime such as request
+  loadStaticModules(appConfig as IAppConfig);
+  if (process.env.__IS_SERVER__) return;
+  reactAppRenderer({
+    appConfig: appConfig as RenderAppConfig,
+    buildConfig,
+    appLifecycle: {
+      createBaseApp: frameworkAppBase,
+      initAppLifeCycles,
+      emitLifeCycles,
+    },
+  });
+};

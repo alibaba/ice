@@ -1,63 +1,44 @@
-import { createElement, useEffect, Component } from 'react';
-import createShareAPI, { history } from 'create-app-shared';
-import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
-
-import reactAppRenderer, { getInitialData } from 'react-app-renderer';
-import { withRouter as defaultWithRouter } from 'react-router';
-import genWithSearchParams from './genWithSearchParams';
+import { createElement } from 'react';
+import {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+} from 'create-app-shared';
+import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '<%- tempPath %>/<%= globalStyle %>'
+  import '../../<%= globalStyle %>'
 <% } %>
-import loadRuntimeModules from '<%- tempPath %>/core/loadRuntimeModules';
 import loadStaticModules from '<%- tempPath %>/core/loadStaticModules';
-import defaultStaticConfig from '<%- tempPath %>/core/staticConfig';
+import loadRuntimeModules from '<%- tempPath %>/core/loadRuntimeModules';
 
 import { setAppConfig } from '<%- tempPath %>/core/appConfig';
-import { mount, unmount } from '<%- tempPath %>/core/render';
-import ErrorBoundary from '<%- tempPath %>/core/ErrorBoundary';
+import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
+import Page from '<%- resourcePath %>';
 
 const buildConfig: IBuildConfig = <%- buildConfig %>;
-const {
-  createBaseApp,
-  withRouter,
-  createHistory,
-  getHistory,
-  emitLifeCycles,
-  setHistory,
-  usePageShow,
-  usePageHide,
-  withPageLifeCycle,
-  pathRedirect,
-  registerNativeEventListeners,
-  addNativeEventListener,
-  removeNativeEventListener,
-  getSearchParams
-} = createShareAPI({
+const frameworkAppBase = createBaseApp({
+  loadRuntimeModules,
   createElement,
-  useEffect,
-  withRouter: defaultWithRouter
-}, loadRuntimeModules);
+});
 
-export function runApp(appConfig?: IAppConfig, staticConfig?: any) {
+export function runApp(appConfig: IAppConfig = {}) {
+  // set page component
+  appConfig.renderComponent = Page;
+  // store appConfig in case of server side render
+  // server bundle will to get appConfig after run runApp
+  setAppConfig(appConfig as IAppConfig);
+  // load static modules before init runtime such as request
+  loadStaticModules(appConfig as IAppConfig);
+  if (process.env.__IS_SERVER__) return;
   reactAppRenderer({
-    appConfig,
-    staticConfig: staticConfig || defaultStaticConfig,
+    appConfig: appConfig as RenderAppConfig,
     buildConfig,
-    setAppConfig,
-    createBaseApp,
-    createHistory,
-    getHistory,
-    setHistory,
-    emitLifeCycles,
-    pathRedirect,
-    loadStaticModules,
-    ErrorBoundary,
-  }, {
-    createElement,
-    mount,
-    unmount,
-    Component
-  })
+    appLifecycle: {
+      createBaseApp: frameworkAppBase,
+      initAppLifeCycles,
+      emitLifeCycles,
+    },
+  });
 };

@@ -9,27 +9,29 @@ export default class ReactGenerator extends Base {
   constructor(api: any, options: IGeneratorOptions) {
     super(api, options);
     const { pageEntry, targetDir } = options;
-    const routesFile = this.getRoutesFile(pageEntry);
-    if (routesFile) {
-      this.runAppPath = path.join(this.entryFolder, 'runApp.ts');
-      this.generateRunAppFile();
-    } else {
+    const appJSONPath = this.getAppJSONPath(pageEntry);
+    if (appJSONPath) {
       this.runAppPath = path.join(targetDir, 'core/runApp.ts');
+    } else {
+      const { context: { userConfig } } = api;
+      this.runAppPath = path.join(this.entryFolder, 'runApp.ts');
+      this.generateRunAppFile(userConfig);
     }
   }
 
-  private getRoutesFile(pageEntry: string): string {
+  private getAppJSONPath(pageEntry: string): string {
     const originalEntryFolder = path.dirname(pageEntry);
-    const targetExt = ['ts', 'tsx'].find((ext) => fs.existsSync(path.join(originalEntryFolder, `routes.${ext}`)));
-    return targetExt ? path.join(originalEntryFolder, `routes.${targetExt}`) : '';
+    const appJSONPath = path.join(originalEntryFolder, 'app.json');
+    return fs.existsSync(appJSONPath) ? appJSONPath : '';
   }
 
-  public generateRunAppFile() {
+  public generateRunAppFile(userConfig) {
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     const renderData = {
       globalStyle: globalStyles.length && formatPath(path.join(this.rootDir, globalStyles[0])),
       tempPath: this.targetDir,
+      buildConfig: JSON.stringify(this.applyMethod('getBuildConfig', userConfig)),
     };
-    this.applyMethod('addRenderFile', path.join(__dirname, 'templates/react/runApp.ts.ejs'), this.entryPath, renderData);
+    this.applyMethod('addRenderFile', path.join(__dirname, '../../template/rax/runApp.ts.ejs'), this.runAppPath, renderData);
   }
 }

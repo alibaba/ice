@@ -1,0 +1,41 @@
+import { createElement, useEffect } from 'rax';
+import {
+  getSearchParams,
+  history,
+  getHistory,
+  createUsePageLifeCycle,
+  withPageLifeCycle,
+  emitLifeCycles,
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+} from 'create-app-shared';
+
+import { createWithRouter } from 'create-use-router';
+import { getInitialData } from 'rax-app-renderer';
+import ErrorBoundary from './ErrorBoundary';
+
+const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
+
+const withRouter = createWithRouter({ createElement });
+
+// Public API
+export {
+  // router api
+  withRouter,
+  history,
+  getHistory,
+  getSearchParams,
+  emitLifeCycles,
+
+  getInitialData,
+  // LifeCycles api
+  usePageShow,
+  usePageHide,
+  withPageLifeCycle,
+  // events api
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+  ErrorBoundary,
+};

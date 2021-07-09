@@ -67,7 +67,7 @@ export async function reactAppRenderer(options: RenderOptions) {
   setInitialData(context.initialData);
   // emit app launch cycle
   emitLifeCycles();
-  
+
   return _render(runtime, {
     ...options,
     appConfig: modifiedAppConfig,
@@ -84,7 +84,7 @@ function _render(runtime: RuntimeModule, options: RenderOptions) {
     return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
-  // add process.env.SSR for tree-shaking 
+  // add process.env.SSR for tree-shaking
   if ((window as any).__ICE_SSR_ENABLED__ && process.env.SSR) {
     loadableReady(() => {
       ReactDOM.hydrate(<App />, appMountNode);

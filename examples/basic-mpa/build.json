@@ -9,5 +9,6 @@
       "dashboard": "site/dashboard"
     }
   },
+  "vendor": false,
   "plugins": []
 }

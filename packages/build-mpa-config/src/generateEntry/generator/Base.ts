@@ -29,9 +29,8 @@ export default class BaseGenerator {
   }
 
   public generateEntryFile() {
-    const { pageEntry, framework } = this.options;
+    const { framework } = this.options;
     const renderData = {
-      resourcePath: `${formatPath(path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry)}`,
       runAppPath: formatPath(this.runAppPath),
       tempPath: this.targetDir,
     };
