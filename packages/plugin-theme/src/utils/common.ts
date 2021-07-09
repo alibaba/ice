@@ -29,13 +29,13 @@ export const getNameFromPath = (filePath: string) => {
  * 获取初始化主题，如果没有找到 default，则获取第一个主题文件为初始化主题
  * 
  * @param {String} names 文件名（无后缀）列表
- * @param {String} _theme 配置的默认主题名
+ * @param {String} themeProperty 配置的默认主题名
  */
-export const getDefaultTheme = (names: string[], _theme: string) => {
-  const isExist = names.some(name => name === _theme);
+export const getDefaultTheme = (names: string[], themeProperty: string) => {
+  const isExist = names.some(name => name === themeProperty);
   return {
     isExist,
-    defaultName: isExist ? _theme : names[0]
+    defaultName: isExist ? themeProperty : names[0]
   };
 };
 
