@@ -25,8 +25,8 @@ const useAuth = (): ContextType => {
 // class 组件支持 Hoc 用法
 function withAuth(Component) {
   const AuthWrapped = props => {
-    const share = useAuth();
-    return <Component {...Object.assign({}, props, { auth: share, setAuth: share[1] })} />;
+    const [auth, setAuth] = useAuth();
+    return <Component {...Object.assign({}, props, { auth, setAuth })} />;
   };
   return AuthWrapped;
 }

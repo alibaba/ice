@@ -7,7 +7,6 @@ const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
 
   const AuthWrappedComponent = (props) => {
     const { auth, ...rest } = props;
-    const [authState] = auth;
     const pageConfigAuth = pageConfig.auth;
 
     if (pageConfigAuth && !Array.isArray(pageConfigAuth)) {
@@ -16,8 +15,8 @@ const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
 
     const hasAuth =
       Array.isArray(pageConfigAuth) && pageConfigAuth.length
-        ? Object.keys(authState).filter((item) =>
-          pageConfigAuth.includes(item) ? authState[item] : false
+        ? Object.keys(auth).filter((item) =>
+          pageConfigAuth.includes(item) ? auth[item] : false
         ).length
         : true;
 
