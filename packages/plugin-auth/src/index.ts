@@ -12,8 +12,7 @@ export default async function (api: IPluginAPI) {
   applyMethod('addPluginTemplate', templateSourceDir);
 
   onGetWebpackConfig((config) => {
-    // 设置 $ice/authStore -> .ice/auth/store.ts
-    config.resolve.alias.set('$ice/authStore', path.join(iceTemp, 'plugins', PLUGIN_AUTH_DIR, 'store.ts'));
+    config.resolve.alias.set('$ice/auth', path.join(iceTemp, 'plugins', PLUGIN_AUTH_DIR, 'index.tsx'));
   });
 
   // 导出接口
