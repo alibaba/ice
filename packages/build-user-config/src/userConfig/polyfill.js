@@ -11,22 +11,20 @@ const getEntryRegExp = (entryPath) => {
 };
 
 module.exports = (config, polyfill, { userConfig }) => {
-  const envOptions = {};
-
   const { swc } = userConfig;
   if (swc) {
-    envOptions.mode = polyfill || undefined;
-    // swc option is coreJs
-    envOptions.coreJs = 3;
+    modifySwcOptions(config, { env: {
+      mode: polyfill || undefined,
+      coreJs: 3,
+    }});
   } else {
-    envOptions.useBuiltIns = polyfill;
-    // babel options is corejs
-    envOptions.corejs = 3;
+    processPresetEnv(config, {
+      useBuiltIns: polyfill,
+      corejs: 3,
+    });
   }
 
-  modifyEnv(config, envOptions, swc);
-
-  if ((polyfill === false || polyfill === 'useBuiltIns') && !swc) {
+  if ((polyfill === false || polyfill === 'usage') && !swc) {
     injectTransformRuntime(config);
     return;
   }
@@ -59,11 +57,3 @@ module.exports = (config, polyfill, { userConfig }) => {
     }
   }
 };
-
-function modifyEnv(config, envOptions, swc) {
-  if (swc) {
-    modifySwcOptions(config, { env: envOptions });
-  } else {
-    processPresetEnv(config, envOptions);
-  }
-}
