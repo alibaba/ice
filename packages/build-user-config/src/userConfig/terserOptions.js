@@ -3,8 +3,8 @@ const minifyOptions = [
 ];
 
 module.exports = (config, customOptions, context) => {
-  const { command, userConfig: { swc } } = context;
-  if (!swc && command === 'build' && customOptions && config.optimization.minimizers.get('TerserPlugin')) {
+  const { command } = context;
+  if (command === 'build' && customOptions && config.optimization.minimizers.get('TerserPlugin')) {
     config.optimization.minimizer('TerserPlugin').tap(([options]) => {
       if (customOptions.terserOptions) {
         // compatible with `{"terserOptions": {"terserOptions": {}}}`
