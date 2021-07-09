@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const { getFilePath, getWebOutputPath } = require('./utils');
-const { WEB } = require('./constants');
 
 module.exports = (api, { target, webpackConfig }) => {
   const { context } = api;
@@ -41,13 +40,19 @@ module.exports = (api, { target, webpackConfig }) => {
       .end()
     // CopyWebpackPlugin
     .plugin('CopyWebpackPlugin')
-      .use(CopyWebpackPlugin, [[
-        {
-          from: path.resolve(rootDir, 'public'),
-          to: path.resolve(rootDir, outputPath),
-          ignore: ['index.html'],
-        },
-      ]])
+      .use(CopyWebpackPlugin, [{
+        patterns: [
+          {
+            from: path.resolve(rootDir, 'public'),
+            to: path.resolve(rootDir, outputPath),
+            globOptions: {
+              gitignore: true,
+              dot: true,
+              ignore: ['**/public/index.html'],
+            }
+          },
+        ]
+      }])
       .end()
     // WebpackPluginImport
     .plugin('WebpackPluginImport')
@@ -58,29 +63,6 @@ module.exports = (api, { target, webpackConfig }) => {
         },
       ]])
       .end();
-
-  // Process rpx to vw
-  if (target === WEB) {
-    const cssPreprocessor = [ 'scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'];
-    cssPreprocessor.forEach(rule => {
-      if (webpackConfig.module.rules.get(rule)) {
-        webpackConfig.module
-          .rule(rule)
-          .use('postcss-loader')
-          .tap((options) => {
-            const { plugins = [] } = options;
-            return {
-              ...options,
-              plugins: [
-                ...plugins,
-                // eslint-disable-next-line
-                require('postcss-plugin-rpx2vw')
-              ],
-            };
-          });
-      }
-    });
-  }
 
   return webpackConfig;
 };

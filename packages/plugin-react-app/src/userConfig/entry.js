@@ -79,10 +79,14 @@ module.exports = (config, value, context) => {
   });
   // ignore html which will generate by htmlPlugin
   if (config.plugins.get('CopyWebpackPlugin')) {
-    config.plugin('CopyWebpackPlugin').tap(([args]) => [[{
-      ...(args[0] || {}),
-      ignore: ignoreFiles,
-    }]]);
+    config.plugin('CopyWebpackPlugin').tap(([{ patterns, ...restOptions }]) => {
+      const [firstPattern, ...rest] = patterns;
+      firstPattern.globOptions.ignore = ['public/index.html'];
+      return [{
+        patterns: [firstPattern, ...rest],
+        ...restOptions,
+      }];
+    });
   }
 
   // add webpackHotDevClient when execute command is start and enable HMR
