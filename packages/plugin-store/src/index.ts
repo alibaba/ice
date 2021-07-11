@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
 import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
@@ -27,7 +26,6 @@ export default async (api: any) => {
   }
 
   const appStoreFile = applyMethod('formatPath', getAppStorePath(srcPath));
-  const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
 
   applyMethod('addExport', {
     source: '@ice/store',
@@ -37,7 +35,7 @@ export default async (api: any) => {
     exportMembers: ['createStore'],
   });
 
-  if (!existsAppStoreFile) {
+  if (!appStoreFile) {
     // set IStore to IAppConfig
     applyMethod('addAppConfigTypes', { source: '../plugins/store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
   }
@@ -88,7 +86,7 @@ export default async (api: any) => {
   modifyUserConfig('babelPlugins', [...babelPlugins]);
 
   onGetWebpackConfig((config: any) => {
-    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(tempPath, 'plugins', 'store', 'index.ts'));
+    config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
   });
 
   const gen = new Generator({

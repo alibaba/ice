@@ -4,7 +4,7 @@ import { getStoreFileType, getModelFileType } from './getFileType';
 export function getAppStorePath(srcPath: string) {
   const storeFileType = getStoreFileType(srcPath);
   // e.g: src/store.ts
-  return path.join(srcPath, `store${storeFileType}`);
+  return storeFileType ? path.join(srcPath, `store${storeFileType}`) : '';
 }
 
 /**
@@ -18,7 +18,7 @@ export function getPageStorePath(srcPath: string, pageName: string) {
   const pageNameDir = getPagePath(srcPath, pageName);
   const storeFileType = getStoreFileType(pageNameDir);
   // e.g: src/pages/Home/store.ts
-  return path.join(pageNameDir, `store${storeFileType}`);
+  return storeFileType ? path.join(pageNameDir, `store${storeFileType}`) : '';
 }
 
 export function getPageModelPath(srcPath: string, pageName: string) {
@@ -27,7 +27,7 @@ export function getPageModelPath(srcPath: string, pageName: string) {
   // e.g: src/pages/${pageName}/models/*
   const pageModelsDir = path.join(pageNameDir, 'models');
   // e.g: src/pages/${pageName}/model.ts
-  const pageModelFile = path.join(pageNameDir, `model${modelFileType}`);
+  const pageModelFile = modelFileType ? path.join(pageNameDir, `model${modelFileType}`) : '';
 
   return { pageNameDir, pageModelsDir, pageModelFile };
 }

@@ -1,4 +1,3 @@
-import * as fse from 'fs-extra';
 import { getAppStorePath, getPageStorePath } from './getPath';
 
 function checkStoreExists(srcPath: string, pagesName: string[]) {
@@ -9,13 +8,13 @@ function checkStoreExists(srcPath: string, pagesName: string[]) {
 
 function checkAppStoreExists(srcPath: string) {
   const appStorePath = getAppStorePath(srcPath);
-  return fse.pathExistsSync(appStorePath);
+  return !!appStorePath;
 }
 
 function checkPageStoreExists(srcPath: string, pagesName: string[]) {
   return pagesName.some((pageName: string) => {
     const pageStorePath = getPageStorePath(srcPath, pageName);
-    return fse.pathExistsSync(pageStorePath);
+    return !!pageStorePath;
   });
 }
 

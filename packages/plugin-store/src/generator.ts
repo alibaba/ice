@@ -14,7 +14,6 @@ export interface IRenderPageParams {
   pageModelsDir: string;
   pageModelFile: string;
   pageStoreFile: string;
-  storeFileExists: boolean;
 }
 
 const matchRegex = /^[^._].*\.(js|ts)$/;
@@ -59,8 +58,7 @@ export default class Generator {
     this.pagesName.forEach((pageName: string) => {
       const { pageModelsDir, pageModelFile, pageNameDir } = getPageModelPath(this.srcPath, pageName);
       const pageStoreFile = formatPath(getPageStorePath(this.srcPath, pageName));
-      const storeFileExists = fse.pathExistsSync(pageStoreFile);
-      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, storeFileExists };
+      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile };
       // generate .ice/pages/${pageName}/index.tsx
       this.renderPageComponent(params);
       // generate .ice/pages/${pageName}/Layout.tsx
@@ -129,7 +127,7 @@ export default class Generator {
     });
   }
 
-  private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, storeFileExists }: IRenderPageParams) {
+  private renderPageComponent({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.tempPath, 'pages', pageName, 'index.tsx');
     const pageComponentSourcePath = formatPath(path.join(pageNameDir, 'index'));
@@ -142,8 +140,8 @@ export default class Generator {
     const pageComponentRenderData = {
       pageComponentImport: `import ${pageComponentName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageComponentName,
-      storeFileExists,
-      pageStoreImport: storeFileExists ? `import store from '${pageStoreFile.replace(pageStoreExtname, '')}'` : '',
+      storeFileExists: !!pageStoreFile,
+      pageStoreImport: pageStoreFile ? `import store from '${pageStoreFile.replace(pageStoreExtname, '')}'` : '',
       resetPageState: this.resetPageState,
       ...modelRenderData,
     };
@@ -152,7 +150,7 @@ export default class Generator {
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
-  private renderPageLayout({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile, storeFileExists }: IRenderPageParams) {
+  private renderPageLayout({ pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.tempPath, 'pages', pageName, 'Layout.tsx');
     const pageComponentSourcePath = formatPath(`${pageNameDir}/Layout`);
@@ -171,8 +169,8 @@ export default class Generator {
     const pageLayoutRenderData = {
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
       pageComponentExport: pageLayoutName,
-      storeFileExists,
-      pageStoreImport: storeFileExists ? `import store from '${pageStoreFile.replace(pageStoreExtname, '')}'` : '',
+      storeFileExists: !!pageStoreFile,
+      pageStoreImport: pageStoreFile ? `import store from '${pageStoreFile.replace(pageStoreExtname, '')}'` : '',
       resetPageState: this.resetPageState,
       ...modelRenderData
     };
