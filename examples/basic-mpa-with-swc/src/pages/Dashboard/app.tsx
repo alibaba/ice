@@ -11,7 +11,7 @@ const appConfig: IAppConfig = {
   },
   app: {
     addProvider({ children }) {
-      return <Provider>{children}123</Provider>;
+      return <Provider>{children}</Provider>;
     }
   }
 };
