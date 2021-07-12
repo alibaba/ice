@@ -3,7 +3,7 @@ import type { NodePath } from '@babel/traverse';
 
 type ILibs = (string|RegExp)[];
 interface IOpts {
-  libs: ILibs,
+  libs: ILibs;
   remoteName: string;
 }
 type IMatchNode = NodePath<t.ImportDeclaration> | NodePath<t.ExportNamedDeclaration> | NodePath<t.ExportAllDeclaration>
