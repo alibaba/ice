@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { store } from 'ice/Dashboard';
+import store from './store';
 
 const Dashboard = () => {
   const [pageState, pageActions] = store.useModel('counter');

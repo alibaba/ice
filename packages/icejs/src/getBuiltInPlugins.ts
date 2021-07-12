@@ -31,9 +31,6 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     // react base plugin
     'build-plugin-react-app',
 
-    // for ice/miniapp plugins
-    'build-plugin-miniapp',
-
     // for ice/react plugins
     'build-plugin-ice-router',
     'build-plugin-ice-helpers',

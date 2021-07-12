@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link, store as appStore } from 'ice';
-import { store as pageStore } from 'ice/About';
+import { Link } from 'ice';
+import appStore from '@/store';
+import pageStore from './store';
 
 const About = (props) => {
   console.log(props);

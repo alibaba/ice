@@ -25,7 +25,7 @@
     "@builder/app-helpers": "^2.3.4",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/webpack-plugin": "^5.14.0",
-    "build-scripts-config": "^4.0.0",
+    "@builder/webpack-config": "^1.0.0",
     "chalk": "^4.0.0",
     "cheerio": "^1.0.0-rc.3",
     "fs-extra": "^8.1.0",

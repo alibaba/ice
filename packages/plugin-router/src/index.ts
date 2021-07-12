@@ -32,7 +32,7 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   const srcDir = applyMethod('getSourceDir', userConfig.entry);
   const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
     rootDir,
-    tempDir: iceTempPath,
+    tempPath: iceTempPath,
     configPath,
     projectType,
     isMpa: isMpa || disableRouter,
