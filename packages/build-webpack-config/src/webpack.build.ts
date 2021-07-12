@@ -1,5 +1,5 @@
 import * as TerserPlugin from '@builder/pack/deps/terser-webpack-plugin';
-import * as CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import * as CssMinimizerPlugin from '@builder/pack/deps/css-minimizer-webpack-plugin';
 import * as safeParser from '@builder/pack/deps/postcss-safe-parser';
 
 export default (config) => {

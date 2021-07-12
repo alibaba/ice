@@ -33,7 +33,7 @@
     "build-plugin-ice-router": "2.0.0",
     "build-plugin-ice-ssr": "3.0.0",
     "build-plugin-ice-store": "2.0.0",
-    "build-plugin-react-app": "1.8.5",
+    "build-plugin-react-app": "2.0.0",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
     "commander": "^5.0.0",
