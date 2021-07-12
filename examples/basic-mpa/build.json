@@ -9,6 +9,8 @@
       "dashboard": "site/dashboard"
     }
   },
-  "vendor": false,
-  "plugins": []
+  "plugins": [],
+  "devServer": {
+    "writeToDisk": true
+  }
 }

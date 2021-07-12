@@ -6,7 +6,7 @@ export default (
   route: IRoute,
   rootDir: string
 ) => {
-  const entries:IEntry[] = [];
+  const entries: IEntry[] = [];
   const { pageHeader, frames } = route;
   const rootEntry = getEntry(route, rootDir);
 
