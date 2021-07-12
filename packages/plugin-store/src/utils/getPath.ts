@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { getStoreFileType, getModelFileType } from './getFileType';
+import { getStoreFileType } from './getFileType';
 
 export function getAppStorePath(srcPath: string) {
   const storeFileType = getStoreFileType(srcPath);
@@ -19,15 +19,4 @@ export function getPageStorePath(srcPath: string, pageName: string) {
   const storeFileType = getStoreFileType(pageNameDir);
   // e.g: src/pages/Home/store.ts
   return storeFileType ? path.join(pageNameDir, `store${storeFileType}`) : '';
-}
-
-export function getPageModelPath(srcPath: string, pageName: string) {
-  const pageNameDir = getPagePath(srcPath, pageName);
-  const modelFileType = getModelFileType(pageNameDir);
-  // e.g: src/pages/${pageName}/models/*
-  const pageModelsDir = path.join(pageNameDir, 'models');
-  // e.g: src/pages/${pageName}/model.ts
-  const pageModelFile = modelFileType ? path.join(pageNameDir, `model${modelFileType}`) : '';
-
-  return { pageNameDir, pageModelsDir, pageModelFile };
 }

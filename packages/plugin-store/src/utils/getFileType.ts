@@ -12,13 +12,6 @@ export function getStoreFileType(dirPath: string) {
 }
 
 /**
- * return the model file type: '.js' | '.ts' | ''
- */
-export function getModelFileType(dirPath: string) {
-  return fileTypes.find((fileType) => fse.pathExistsSync(path.join(dirPath, `model${fileType}`))) || '';
-}
-
-/**
  * return the route file type: '.js' | '.ts' | ''
  */
 export function getRouteFileType(dirPath: string) {

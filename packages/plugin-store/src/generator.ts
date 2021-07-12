@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { formatPath } from '@builder/app-helpers';
 import {
-  getPageModelPath,
+  getPagePath,
   getPageStorePath,
 } from './utils/getPath';
 import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
@@ -51,9 +51,9 @@ export default class Generator {
     this.renderAppStoreTypes();
 
     this.pagesName.forEach((pageName: string) => {
-      const { pageModelsDir, pageModelFile, pageNameDir } = getPageModelPath(this.srcPath, pageName);
+      const pageNameDir = getPagePath(this.srcPath, pageName);
       const pageStoreFile = formatPath(getPageStorePath(this.srcPath, pageName));
-      const params = { pageName, pageNameDir, pageModelsDir, pageModelFile, pageStoreFile };
+      const params = { pageName, pageNameDir, pageStoreFile };
       // generate .ice/pages/${pageName}/index.tsx
       this.renderPageComponent(params);
       // generate .ice/pages/${pageName}/Layout.tsx
