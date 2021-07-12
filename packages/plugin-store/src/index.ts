@@ -94,7 +94,7 @@ export default async (api: any) => {
     applyMethod,
     srcPath,
     pagesName,
-    resetPageState: store?.resetPageState
+    disableResetPageState: !!store?.disableResetPageState
   });
 
   gen.render();

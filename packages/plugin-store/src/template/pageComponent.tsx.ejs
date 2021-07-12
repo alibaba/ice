@@ -6,31 +6,16 @@ import * as React from 'react';
 
 <%- pageComponentImport %>
 
-<% if(resetPageState && importStr) { %>
-  <%- importStr %>
-
-  <% if (isSingleModel) { %>
-    const initialStates = { default: <%- modelsStr %>.state };
-  <% } %>
-
-  <% if (!isSingleModel) { %>
-    const initialStates = {
-      <% modelsStr.split(',').forEach(function(model){ %>
-        <% if (model) { %>
-          <%- model %>: <%- model %>.state,
-        <% } %>
-      <% }); %>
-    }
-  <% } %>
-<% } %>
-
 const PageComponentName = <%= pageComponentExport %>;
 
 <% if(storeFileExists) { %>
   const PageProvider = store.Provider;
-  const StoreWrapperedPage = (props) => {
+<% if(!disableResetPageState) { %>
+    const initialStates = store.getState();
+<% } %>
+  const StoreWrappedPage = (props) => {
     return (
-<% if (resetPageState && importStr) { %>
+<% if (!disableResetPageState) { %>
       <PageProvider initialStates={initialStates}>
 <% } else { %>
       <PageProvider>
@@ -39,9 +24,11 @@ const PageComponentName = <%= pageComponentExport %>;
       </PageProvider>
     )
   }
-  (StoreWrapperedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
-  (StoreWrapperedPage as any).getInitialProps = (PageComponentName as any).getInitialProps;
-  export default StoreWrapperedPage;
+
+  (StoreWrappedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
+  (StoreWrappedPage as any).getInitialProps = (PageComponentName as any).getInitialProps;
+
+  export default StoreWrappedPage;
   export { store };
 <% } else { %>
   export default PageComponentName;
