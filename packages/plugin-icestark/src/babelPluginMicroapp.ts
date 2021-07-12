@@ -102,11 +102,11 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
               lastImportIndex = index;
             }
 
-            // 遍历非 defalut 导出函数，判断是否有 unmount 和 mount 导出
+            // check lifecycle functions
             if (t.isExportNamedDeclaration(item)) {
-              // 如果是 export function mount() {} 这种形式
+              // like `export function mount() {}`
               const isFuntionDec = (name: string) => t.isFunctionDeclaration(item.declaration) && t.isIdentifier(item.declaration.id, { name });
-              // 如果是 export const mount = () => {}  这种形式
+              // like `export const mount = () => {}`
               const isVariableDec = (name: string) => t.isVariableDeclaration(item.declaration) && t.isIdentifier(item.declaration.declarations[0], { name });
 
               if (isFuntionDec('mount') || isVariableDec('mount')) {
