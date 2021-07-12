@@ -227,6 +227,11 @@ module.exports = [
     validation: 'object'
   },
   {
+    name: 'swc',
+    defaultValue: false,
+    validation: 'boolean|object',
+  },
+  {
     name: 'experiments',
     validation: 'object',
     defaultValue: {},

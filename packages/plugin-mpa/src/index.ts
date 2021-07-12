@@ -5,14 +5,14 @@ import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
 interface ITemplate {
-  [key: string]: string[]
+  [key: string]: string[];
 }
 interface IMpaConfig {
   template?: ITemplate;
   openPage?: string;
   rewrites?: {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 }
 
 const plugin: IPlugin = (api) => {
