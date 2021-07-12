@@ -1,12 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const { upperFirst, camelCase } = require('lodash');
-const WebpackPluginImport = require('webpack-plugin-import');
-const CheckIceComponentsDepsPlugin = require('./webpackPlugins/checkIceComponentsDepPlugin');
-const AppendStyleWebpackPlugin = require('./webpackPlugins/appendStyleWebpackPlugin');
-const getThemeVars = require('./utils/getThemeVars');
-const getThemeCode = require('./utils/getThemeCode');
-const getCalcVars = require('./utils/getCalcVars');
+import * as fs from 'fs';
+import * as path from 'path';
+import { upperFirst, camelCase } from 'lodash';
+import { IPlugin } from 'build-scripts';
+import AppendStyleWebpackPlugin from './webpackPlugins/appendStyleWebpackPlugin';
+
+interface PluginOptions {
+  externalNext: boolean;
+  cssVariable: boolean;
+  themePackage: string;
+  nextLibDir: string;
+  importOptions: Partial<{libraryDirectory: string; style: any}>
+}
 
 function normalizeEntry(entry, preparedChunks) {
   const preparedName = (preparedChunks || [])
@@ -53,6 +57,12 @@ function getVariablesPath({
   }
   return filePath;
 }
+
+const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
+
+};
+
+export default plugin;
 
 module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugionOptions = {}) => {
   const {

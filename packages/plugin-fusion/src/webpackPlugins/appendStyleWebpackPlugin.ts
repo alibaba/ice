@@ -1,15 +1,11 @@
-/* eslint-disable no-underscore-dangle, no-useless-escape */
+import * as fs from 'fs';
+import * as path from 'path';
+import * as assert from 'assert';
+import { ConcatSource, RawSource } from 'webpack-sources';
+import { getSassImplementation } from '@builder/app-helpers';
+import convertCharStr2CSS from '../convertCharStr';
 
-const assert = require('assert');
-const { ConcatSource, RawSource } = require('webpack-sources');
-const fs = require('fs');
-const path = require('path');
-const { getSassImplementation } = require('@builder/app-helpers');
-const convertCharStr2CSS = require('../utils/convertCharStr');
-
-/* eslint no-console: 0 */
-
-function compileSass(srcPath, variableFile, coreVarCode) {
+function compileSass(srcPath: string, variableFile: string, coreVarCode: string) {
   srcPath = String(srcPath);
   let scssContent = '';
   const basePath = path.resolve(srcPath, '..');
@@ -57,7 +53,21 @@ function compileSass(srcPath, variableFile, coreVarCode) {
   return css.replace(/^@charset "UTF-8";/, ''); // 第一行 charset 去掉
 }
 
-module.exports = class AppendStylePlugin {
+export default class AppendStylePlugin {
+  private appendPosition: string;
+
+  private type: string;
+
+  private srcFile: string;
+
+  private variableFile: string;
+
+  private compileThemeIcon: string;
+
+  private themeConfig: Record<string, string>;
+
+  private distMatch: (chunkName: string, compilerEntry: string, entryPoints: any) => boolean;
+  
   constructor(options) {
     assert.ok(
       Object.prototype.toString.call(options) === '[object Object]',
@@ -77,7 +87,7 @@ module.exports = class AppendStylePlugin {
         : options.distMatch;
   }
 
-  apply(compiler) {
+  public apply(compiler) {
     const srcFile = String(this.srcFile);
     const distMatch = this.distMatch;
     const variableFile = this.variableFile;
@@ -129,7 +139,7 @@ module.exports = class AppendStylePlugin {
     });
   }
 
-  wrapFile(compilation, fileName, content) {
+  private wrapFile(compilation, fileName, content) {
     // 默认按照底部添加的来
     if (this.appendPosition === 'header') {
       compilation.assets[fileName] = new ConcatSource(
@@ -144,7 +154,7 @@ module.exports = class AppendStylePlugin {
     }
   }
 
-  compileToCSS(srcFile, themeVariableFile) {
+  private compileToCSS(srcFile, themeVariableFile) {
     if (this.type === 'sass') {
       const themeConfig = this.themeConfig || {};
       let coreVarCode = '';

@@ -1,4 +1,4 @@
-function convertCharStr2CSS(ch) {
+function convertCharStr2CSS(ch: string) {
   let code = ch.charCodeAt(0).toString(16);
   while (code.length < 4) {
     code = `0${code}`;
@@ -6,4 +6,4 @@ function convertCharStr2CSS(ch) {
   return `\\${code}`;
 }
 
-module.exports = convertCharStr2CSS;
+export default convertCharStr2CSS;

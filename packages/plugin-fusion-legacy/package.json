@@ -1,0 +1,15 @@
+{
+  "name": "build-plugin-fusion-legacy",
+  "version": "1.0.0",
+  "description": "plugin for fusion component to solve legacy config",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fusion",
+    "build-scripts"
+  ],
+  "author": "",
+  "license": "MIT"
+}

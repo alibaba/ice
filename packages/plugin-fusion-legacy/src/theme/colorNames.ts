@@ -1,7 +1,7 @@
 // Big List of Colors
 // ------------------
 // <http://www.w3.org/TR/css3-color/#svg-color>
-const colorNames = {
+export default {
   aliceblue: 'f0f8ff',
   antiquewhite: 'faebd7',
   aqua: '0ff',
@@ -152,5 +152,3 @@ const colorNames = {
   yellow: 'ff0',
   yellowgreen: '9acd32'
 };
-
-module.exports = colorNames;

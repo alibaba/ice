@@ -1,6 +1,6 @@
-const convertCharStr2CSS = require('../utils/convertCharStr');
+import convertCharStr2CSS from '../convertCharStr';
 
-module.exports = (source) => {
+export default (source: string) => {
   return source.replace(/content:\s*(?:'|")([\u0080-\uffff])(?:'|")/g, (str, $1) => {
     return `content: "${convertCharStr2CSS($1)}"`;
   });

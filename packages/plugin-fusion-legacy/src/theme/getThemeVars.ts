@@ -1,8 +1,7 @@
-/* eslint no-useless-escape:0 */
-const fs = require('fs');
-const colorNames = require('./colorNames');
+import * as fs from 'fs';
+import colorNames from './colorNames';
 
-module.exports = (themeFile, themeConfig, enableColorNames) => {
+export default (themeFile: string, themeConfig: Record<string, string>, enableColorNames: boolean) => {
   const themeVars = {};
   try {
     const themeStr = fs.readFileSync(themeFile, 'utf8');
