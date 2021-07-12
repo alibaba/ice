@@ -1,4 +1,8 @@
 import type { Root } from 'postcss';
+import postcss from 'postcss';
+import * as path from 'path';
+import * as fs from 'fs';
+import { isFunction } from './common';
 
 interface INode {
   name: string,
@@ -88,4 +92,69 @@ export const walkerFind = <T extends any>(type: string, root: Root, cb: (data: I
     }
   });
   return result;
+};
+
+const isBlack = (list: string[], id: string): boolean => {
+  return list.some(word => id.includes(word));
+};
+
+const getValue = (str: string) => {
+  const value = str.trim();
+  return value.slice(1, value.length - 1);
+};
+
+export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = () => { }) => {
+  const deps = new Map<string, Root>();
+  const blacklist = ['reset'];
+
+  const resolve = (node: Root, url?: string) => {
+    const baseUrl = url ?? node.source.input.file;
+    const baseDir = path.dirname(baseUrl);
+    deps.set(baseUrl, node);
+    cb(node);
+
+    node.walkAtRules(decl => {
+      const isImport = decl.name === 'import';
+
+      if (isImport) {
+        let id = getValue(decl.params);
+        const ext = type === 'less' ? '.less' : '.scss';
+        id = id.endsWith(ext) ? id : `${id}${ext}`;
+
+        if (isBlack(blacklist, id)) return;
+
+        // eslint-disable-next-line no-shadow
+        let url = path.resolve(baseDir, id);
+        if (!fs.existsSync(url)) {
+          url = path.resolve(`node_modules/${id}`);
+        }
+
+        if (deps.has(url)) return;
+
+        const file = fs.readFileSync(url, 'utf8');
+        // eslint-disable-next-line global-require
+        const parser = type === 'less' ? require('postcss-less') : require('postcss-scss');
+        const rt = postcss().process(file, { parser, from: url }).root;
+        resolve(rt, url);
+      }
+    });
+  };
+
+  resolve(root);
+
+  const list = [];
+
+  deps.forEach(value => {
+    list.push(value);
+  });
+
+  return list.reverse();
+};
+
+export const getAllVars = (node: Root, type: string, cb: (name: string, value: string) => void) => {
+  walker(type, node, ({ name, value }) => {
+    if (isFunction(value) || name === 'import') return;
+    const varName = type === 'less' ? name.slice(0, name.length - 1) : name;
+    cb(varName, value);
+  });
 };

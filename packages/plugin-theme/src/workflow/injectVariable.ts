@@ -1,9 +1,11 @@
 import * as path from 'path';
 import { IPluginAPI } from 'build-scripts';
+import * as atImport from 'postcss-import';
 import { DefineVariablePlugin } from '../plugins/webpack/DefineVariablePlugin';
 import { declVarPlugin } from '../plugins/postcss/declVarPlugin';
 import { ICE_TEMP, PLUGIN_DIR } from '../constant';
 import { funcCollectPlugin } from '../plugins/postcss/funcCollectPlugin';
+import { resolver } from '../utils/resolver';
 
 const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultName: string) => {
   const iceTemp = getValue(ICE_TEMP);
@@ -11,6 +13,7 @@ const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultNam
 
   const pluginsFactory = (type: 'sass' | 'less') => ([
     funcCollectPlugin({ type }),
+    atImport({ resolve: resolver }),
     declVarPlugin({ defaultName, type })
   ]);
 
