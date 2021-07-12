@@ -16,7 +16,7 @@ export default async (api: any) => {
   const tempPath = getValue('TEMP_PATH');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const srcPath = path.join(rootDir, srcDir);
-  const tempDir = (path.basename(tempPath) || '').split('.')[1];
+  const tempDir = (path.basename(tempPath) || '').split('.')[1];  // ice
   const pagesName = applyMethod('getPages', rootDir, srcDir);
 
   const storeExists = checkStoreExists(srcPath, pagesName);
@@ -46,7 +46,7 @@ export default async (api: any) => {
   const projectType = getValue('PROJECT_TYPE');
   let { routesPath } = applyMethod('getRoutes', {
     rootDir,
-    tempDir: tempPath,
+    tempPath,
     configPath,
     projectType,
     isMpa,

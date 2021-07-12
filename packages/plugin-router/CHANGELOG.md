@@ -3,6 +3,7 @@
 ## 2.0.0
 
 - [feat] centralized router configuration
+- [refactor]  modify `getRoutes` API param from `tempDir` to `tempPath`
 
 ## 1.9.7
 
