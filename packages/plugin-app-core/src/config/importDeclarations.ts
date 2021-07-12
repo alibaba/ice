@@ -1,9 +1,5 @@
 const importDeclarations: any = {};
 const defaultDeclarations = {
-  // default export in app
-  '$$framework/core/runApp': [
-    'runApp',
-  ],
   '$$framework/core/publicAPI': [
     // router api
     'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',

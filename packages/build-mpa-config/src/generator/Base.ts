@@ -26,15 +26,16 @@ export default class BaseGenerator {
     this.targetDir = targetDir;
     this.entryFolder = path.join(targetDir, 'entries', entryName);
     this.entryPath = path.join(this.entryFolder, 'index.tsx');
-    this.runAppPath = path.join(this.entryFolder, 'runApp.ts');
+    this.runAppPath = path.join(this.entryFolder, 'runApp');
   }
 
   public generateEntryFile() {
-    const { framework } = this.options;
+    const { framework, pageEntry } = this.options;
     const renderData = {
       runAppPath: formatPath(this.runAppPath),
       tempPath: this.targetDir,
+      resourcePath: `${formatPath(path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry)}`,
     };
-    this.applyMethod('addRenderFile', path.join(__dirname, `../../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
+    this.applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
 }

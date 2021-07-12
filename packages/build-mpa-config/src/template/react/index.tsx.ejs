@@ -1,6 +1,9 @@
 import { runApp } from '<%- runAppPath %>';
 import { IAppConfig } from '<%- tempPath %>/types';
+import Page from '<%- resourcePath %>';
 
-const appConfig: IAppConfig = {};
+const appConfig: IAppConfig = {
+  renderComponent: Page,
+};
 
 runApp(appConfig);

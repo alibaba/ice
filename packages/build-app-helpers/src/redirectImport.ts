@@ -21,16 +21,16 @@ export default async function redirectImport(code: string, options) {
       const addImports = [];
       const identifiers = importedStr.split(',');
       identifiers.forEach(identifier => {
-        const targetRedirect = redirectImports.find(({ name }) => name === identifier.trim());
+        const targetRedirect = redirectImports.find(({ name }) => name === identifier.trim() );
         if (targetRedirect) {
           addImports.push(`\nimport ${targetRedirect.default ?
-            redirectImport.name : `{ ${targetRedirect.name} }`} from '${targetRedirect.redirectPath}';`);
+            redirectImport.name : `{ ${targetRedirect.name} }`} from '${targetRedirect.redirectPath}'`);
           importStr = importStr.replace(new RegExp(`${identifier},?`), '');
         }
       });
       let newImportStr = '';
       if (addImports.length !== identifiers.length) {
-        newImportStr += importStr;
+        newImportStr += `${importStr};`;
       }
       newImportStr += addImports.join('');
       return code.replace(originalImportStr, newImportStr);

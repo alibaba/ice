@@ -1,19 +1,32 @@
 import ReactGenerator from './React';
 import RaxGenerator from './Rax';
-import { IGeneratorOptions } from '../types';
+import { IGeneratorOptions, IGenerateResult } from '../types';
 
-function generateEntry(api, options: IGeneratorOptions): string {
-  const { framework } = options;
-  let genrator;
+function generatePageFiles(api, options: IGeneratorOptions): IGenerateResult {
+  const { framework, pageEntry, isAppEntry } = options;
+  let generator;
   if (framework === 'react') {
-    genrator = new ReactGenerator(api, options);
+    generator = new ReactGenerator(api, options);
   } else if (framework === 'rax') {
-    genrator = new RaxGenerator(api, options);
+    generator = new RaxGenerator(api, options);
   }
 
-  genrator.generateEntryFile();
+  const { context: { userConfig } } = api;
+  generator.generateRunAppFile(userConfig);
 
-  return genrator.entryPath;
+  // Do not modify the page entry when entryPath ends with app.ts
+  if (isAppEntry) {
+    return {
+      entryPath: pageEntry,
+      runAppPath: generator.runAppPath,
+    };
+  }
+
+  generator.generateEntryFile();
+  return {
+    entryPath: generator.entryPath,
+    runAppPath: generator.runAppPath,
+  };
 }
 
-export default generateEntry;
+export default generatePageFiles;

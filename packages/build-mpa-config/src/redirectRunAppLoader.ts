@@ -4,6 +4,7 @@ import { getOptions } from 'loader-utils';
 export default function(code, sourcemap) {
   // Make the loader async
   const callback = this.async();
+  this.cacheable();
 
   loader.call(this, code, sourcemap).then(
     args => callback(null, ...args),
@@ -20,6 +21,6 @@ async function loader(code, sourcemap) {
       default: false
     }
   ]});
-  console.log(code);
+  console.log('code===>', code);
   return [code, sourcemap];
 }
