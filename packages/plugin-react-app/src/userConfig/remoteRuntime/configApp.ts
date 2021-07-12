@@ -36,11 +36,16 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
   });
 
   onGetWebpackConfig((config) => {
-    config.plugin('CopyWebpackPlugin').tap(([args]) => {
-      // serve remoteRuntime folder
-      return [[...args, { from: runtimeDir, to: path.join(args[0].to, runtimePublicPath) }]];
+    config.plugin('CopyWebpackPlugin').tap(([{ patterns, ...restOptions }]) => {
+      return [{
+        patterns: [
+          ...patterns,
+          // serve remoteRuntime folder
+          { from: runtimeDir, to: path.join(patterns[0].to, runtimePublicPath) },
+        ],
+        ...restOptions,
+      }];
     });
-
     // modify entry by onGetWebpackConfig while polyfill will take effect with src/app
     // config.entryPoints.clear();
     config.entry('index').values().forEach((entry) => {
