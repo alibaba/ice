@@ -1,8 +1,9 @@
 import * as path from 'path';
+import { IPluginAPI } from 'build-scripts';
 
 const PLUGIN_AUTH_DIR = 'auth';
 
-export default async function (api) {
+export default async function (api: IPluginAPI) {
   const { getValue, onGetWebpackConfig, applyMethod } = api;
   const iceTemp = getValue('TEMP_PATH');
 
@@ -11,8 +12,7 @@ export default async function (api) {
   applyMethod('addPluginTemplate', templateSourceDir);
 
   onGetWebpackConfig((config) => {
-    // 设置 $ice/authStore -> .ice/auth/store.ts
-    config.resolve.alias.set('$ice/authStore', path.join(iceTemp, 'plugins', PLUGIN_AUTH_DIR, 'store.ts'));
+    config.resolve.alias.set('$ice/auth', path.join(iceTemp, 'plugins', PLUGIN_AUTH_DIR, 'index.tsx'));
   });
 
   // 导出接口

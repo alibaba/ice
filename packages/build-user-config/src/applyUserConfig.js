@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const { unionBy } = require('@builder/app-helpers');
 const modifyUserConfig = require('./utils/modifyUserConfig');
 const baseUserConfigs = require('./config/user.config');
@@ -23,8 +24,7 @@ module.exports = (api, options = {}) => {
     const { name } = config;
     let configFunc = null;
     try {
-      // eslint-disable-next-line
-      configFunc = require(`./userConfig/${name}`);
+      configFunc = interopRequire(`./userConfig/${name}`);
     // eslint-disable-next-line no-empty
     } catch (err) {}
 
@@ -46,3 +46,10 @@ module.exports = (api, options = {}) => {
   // modify user config to keep excute order
   modifyUserConfig(api, finalyConfigs);
 };
+
+function interopRequire(filepath) {
+  // eslint-disable-next-line import/no-dynamic-require
+  const configModule = require(filepath);
+  if (configModule.default) return configModule.default;
+  return configModule;
+}
