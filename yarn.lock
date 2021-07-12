@@ -1414,12 +1414,11 @@
     path-to-regexp "^1.7.0"
     url-parse "^1.1.9"
 
-"@ice/store@^1.3.1":
-  version "1.4.3"
-  resolved "https://registry.nlark.com/@ice/store/download/@ice/store-1.4.3.tgz#a0fa0abb601101ca303020a8675b740027e9aef4"
-  integrity sha1-oPoKu2ARAcowMCCoZ1t0ACfprvQ=
+"@ice/store@2.0.0-0":
+  version "2.0.0-0"
+  resolved "https://registry.nlark.com/@ice/store/download/@ice/store-2.0.0-0.tgz#4e02258da0b35f878feec703bbdab8e2200896f3"
+  integrity sha1-TgIljaCzX4eP7scDu9q44iAIlvM=
   dependencies:
-    immer "^6.0.2"
     lodash.isfunction "^3.0.9"
     react-redux "^7.2.0"
     redux "^4.0.5"
@@ -3846,11 +3845,6 @@ agent-base@4, agent-base@^4.3.0:
   integrity sha1-gWXwHENgCbzK0LHRIvBe13Dvxu4=
   dependencies:
     es6-promisify "^5.0.0"
-
-agent-base@5:
-  version "5.1.1"
-  resolved "https://registry.nlark.com/agent-base/download/agent-base-5.1.1.tgz#e8fb3f242959db44d63be665db7a8e739537a32c"
-  integrity sha1-6Ps/JClZ20TWO+Zl23qOc5U3oyw=
 
 agent-base@6:
   version "6.0.2"
@@ -6521,10 +6515,10 @@ detective@^5.0.2:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-devtools-protocol@0.0.818844:
-  version "0.0.818844"
-  resolved "https://registry.nlark.com/devtools-protocol/download/devtools-protocol-0.0.818844.tgz?cache=0&sync_timestamp=1625850156016&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdevtools-protocol%2Fdownload%2Fdevtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
-  integrity sha1-0ZRyeOyFtT5MjKWY9geij6eFup4=
+devtools-protocol@0.0.869402:
+  version "0.0.869402"
+  resolved "https://registry.nlark.com/devtools-protocol/download/devtools-protocol-0.0.869402.tgz#03ade701761742e43ae4de5dc188bcd80f156d8d"
+  integrity sha1-A63nAXYXQuQ65N5dwYi82A8VbY0=
 
 dezalgo@^1.0.0:
   version "1.0.3"
@@ -8774,14 +8768,6 @@ https-proxy-agent@^2.2.1, https-proxy-agent@^2.2.3:
     agent-base "^4.3.0"
     debug "^3.1.0"
 
-https-proxy-agent@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.nlark.com/https-proxy-agent/download/https-proxy-agent-4.0.0.tgz#702b71fb5520a132a66de1f67541d9e62154d82b"
-  integrity sha1-cCtx+1UgoTKmbeH2dUHZ5iFU2Cs=
-  dependencies:
-    agent-base "5"
-    debug "4"
-
 https-proxy-agent@^5.0.0:
   version "5.0.0"
   resolved "https://registry.nlark.com/https-proxy-agent/download/https-proxy-agent-5.0.0.tgz#e2a90542abb68a762e0a0850f6c9edadfd8506b2"
@@ -8915,11 +8901,6 @@ immer@1.10.0:
   version "1.10.0"
   resolved "https://registry.nlark.com/immer/download/immer-1.10.0.tgz?cache=0&sync_timestamp=1625499692644&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fimmer%2Fdownload%2Fimmer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha1-utZ2BbqcgQJ12R4cKkfUWC6YKG0=
-
-immer@^6.0.2:
-  version "6.0.9"
-  resolved "https://registry.nlark.com/immer/download/immer-6.0.9.tgz?cache=0&sync_timestamp=1625499692644&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fimmer%2Fdownload%2Fimmer-6.0.9.tgz#b9dd69b8e69b3a12391e87db1e3ff535d1b26485"
-  integrity sha1-ud1puOabOhI5HofbHj/1NdGyZIU=
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -13910,7 +13891,7 @@ proxy-addr@~2.0.5:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
 
-proxy-from-env@^1.0.0:
+proxy-from-env@^1.0.0, proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.nlark.com/proxy-from-env/download/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
   integrity sha1-4QLxbKNVQkhldV0sno6k8k1Yw+I=
@@ -13974,19 +13955,19 @@ puppeteer@^1.7.0:
     rimraf "^2.6.1"
     ws "^6.1.0"
 
-puppeteer@^5.5.0:
-  version "5.5.0"
-  resolved "https://registry.nlark.com/puppeteer/download/puppeteer-5.5.0.tgz#331a7edd212ca06b4a556156435f58cbae08af00"
-  integrity sha1-Mxp+3SEsoGtKVWFWQ19Yy64IrwA=
+puppeteer@^9.0.0:
+  version "9.1.1"
+  resolved "https://registry.nlark.com/puppeteer/download/puppeteer-9.1.1.tgz#f74b7facf86887efd6c6b9fabb7baae6fdce012c"
+  integrity sha1-90t/rPhoh+/Wxrn6u3uq5v3OASw=
   dependencies:
     debug "^4.1.0"
-    devtools-protocol "0.0.818844"
+    devtools-protocol "0.0.869402"
     extract-zip "^2.0.0"
-    https-proxy-agent "^4.0.0"
+    https-proxy-agent "^5.0.0"
     node-fetch "^2.6.1"
     pkg-dir "^4.2.0"
     progress "^2.0.1"
-    proxy-from-env "^1.0.0"
+    proxy-from-env "^1.1.0"
     rimraf "^3.0.2"
     tar-fs "^2.0.0"
     unbzip2-stream "^1.3.3"

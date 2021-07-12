@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] support `store.disableResetPageState`, deprecate `store.resetPageStore`
+- [refactor] rename `getRoutes` API param from `tempDir` to `tempPath`
+
 ## 1.5.0
 
 - [feat] add `setHistory` API

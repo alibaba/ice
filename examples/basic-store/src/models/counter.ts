@@ -1,4 +1,4 @@
-import { IRootDispatch, APP_MODE } from 'ice';
+import { APP_MODE } from 'ice';
 
 console.log('APP_MODE:', APP_MODE);
 
@@ -18,7 +18,7 @@ export default {
     }
   },
 
-  effects: (dispatch: IRootDispatch) => ({
+  effects: (dispatch) => ({
     async decrementAsync() {
       await delay(10);
       dispatch.counter.decrement();
