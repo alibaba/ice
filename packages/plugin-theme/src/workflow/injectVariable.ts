@@ -13,7 +13,7 @@ const injectVariable = ({ onGetWebpackConfig, getValue }: IPluginAPI, defaultNam
 
   const pluginsFactory = (type: 'sass' | 'less') => ([
     funcCollectPlugin({ type }),
-    atImport({ resolve: resolver }),
+    atImport({ resolve: resolver as any }),
     declVarPlugin({ defaultName, type })
   ]);
 

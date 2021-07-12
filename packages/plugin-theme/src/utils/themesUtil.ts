@@ -43,7 +43,7 @@ const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
   await postcss([
     atImport(),
     getThemeVarsPlugin({ themeVars })
-  ]).process(css, { from: filePath });
+  ] as any).process(css, { from: filePath });
 
   return themeVars;
 };
