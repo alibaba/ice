@@ -132,19 +132,18 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
 
         if (isBlack(blacklist, id)) return;
 
-        // eslint-disable-next-line no-shadow
-        let url = path.resolve(baseDir, id);
+        let pathUrl = path.resolve(baseDir, id);
         if (!fs.existsSync(url)) {
-          url = path.resolve(`node_modules/${id}`);
+          pathUrl = path.resolve(`node_modules/${id}`);
         }
 
-        if (deps.has(url)) return;
+        if (deps.has(pathUrl)) return;
 
-        const file = fs.readFileSync(url, 'utf8');
+        const file = fs.readFileSync(pathUrl, 'utf8');
         // eslint-disable-next-line global-require
         const parser = type === 'less' ? require('postcss-less') : require('postcss-scss');
-        const rt = postcss().process(file, { parser, from: url }).root;
-        resolve(rt, url);
+        const rt = postcss().process(file, { parser, from: pathUrl }).root;
+        resolve(rt, pathUrl);
       }
     });
   };
@@ -160,6 +159,9 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
   return list.reverse();
 };
 
+/**
+ * 获取该 node 树下的全部变量
+ */
 export const getAllVars = (node: Root, type: string, cb: (name: string, value: string) => void) => {
   walker(type, node, ({ name, value }) => {
     if (isFunction(value) || name === 'import') return;
