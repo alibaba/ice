@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+
+- [feat] pre build dependencies and refactor config for webpack 5
+
 ## 0.3.7
 
 - [feat] add `devServer.host` to https cert 

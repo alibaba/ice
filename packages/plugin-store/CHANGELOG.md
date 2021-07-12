@@ -2,10 +2,11 @@
 
 ## 2.0.0
 
-- feat: upgrade @ice/store to 2.x
-- refactor: not support create store automatically
-- refactor: remove appJSON loader
-- refactor: modify `getRoutes` API param from `tempDir` to `tempPath`
+- [feat] migrate plugin api
+- [feat] upgrade @ice/store to 2.x
+- [refactor] not support create store automatically
+- [refactor] remove appJSON loader
+- [refactor] modify `getRoutes` API param from `tempDir` to `tempPath`
 
 ## 1.9.7
 

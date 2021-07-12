@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, usePageShow, usePageHide, helpers, logger, config, getInitialData } from 'ice';
+import { Link, usePageShow, usePageHide, logger, config, getInitialData } from 'ice';
 
-logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);
 
 logger.info('=== info ===');

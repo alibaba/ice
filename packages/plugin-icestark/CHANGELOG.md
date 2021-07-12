@@ -1,5 +1,10 @@
 # Changelog
 
+# 3.0.0
+
+- [feat] migrate runtime api
+- [feat] upgrade build-scripts
+
 # 2.1.0
 
 - [fix] get rendering container through `props` instead of `getMountNode`. ([#227](https://github.com/ice-lab/icestark/issues/227))
