@@ -1,11 +1,12 @@
 import * as lessCompile from 'less';
 import type { Root, TransformCallback } from 'postcss';
-import { walkDeps, walkerSome, walkerFind, getAllVars } from '../../utils/walkers';
-import { getThemesData } from '../../utils/themesUtil';
-import { getFunction, isFunction } from '../../utils/common';
+import { walkDeps, walkerSome, walkerFind, getAllVars } from './walkers';
+import { getFunction, isFunction } from '../../../utils/common';
 
 interface Option {
   type?: 'sass' | 'less',
+  data: any
+  setThemesData: (data: any, persist?: boolean) => void
 }
 
 /**
@@ -14,9 +15,8 @@ interface Option {
  * 具有副作用，会改变 data 参数的某些数值
  */
 export const funcCollectPlugin = (options: Option): TransformCallback => {
-  const { type = 'less' } = options;
+  const { type = 'less', data, setThemesData } = options;
   const varFlag = type === 'less' ? '@' : '$';
-  const data = getThemesData();
   const themes: string[] = Object.entries(data).map(([key]) => key);
   const depthVarSet = new Set<string>(Object.entries(data[themes[0]]).map(i => i[0]));
   const funcVarMap = {};
@@ -110,6 +110,8 @@ export const funcCollectPlugin = (options: Option): TransformCallback => {
     };
 
     walkDeps(root, type).forEach(run);
+
+    setThemesData(data, true);
   };
 };
 

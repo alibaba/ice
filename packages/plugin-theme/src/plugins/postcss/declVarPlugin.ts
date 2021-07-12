@@ -1,8 +1,8 @@
 import { TransformCallback } from 'postcss';
-import { getThemesData, ThemeVarsType } from '../../utils/themesUtil';
+import type { ThemeVarsType } from '../../utils/themesUtil';
 
 interface Option {
-  defaultName: string
+  getVarsMap: () => ThemeVarsType
   type?: 'sass' | 'less'
 }
 
@@ -13,9 +13,11 @@ interface Option {
  * 
  */
 export const declVarPlugin = (option: Option): TransformCallback => {
-  const { defaultName, type = 'less' } = option;
+  const { getVarsMap, type = 'less' } = option;
 
-  const scanVars = (varsMap: ThemeVarsType, root: any) => {
+  return root => {
+    const varsMap = getVarsMap();
+
     if (type === 'sass') {
       root.walkDecls(decl => {
         if (decl.prop) {
@@ -42,11 +44,5 @@ export const declVarPlugin = (option: Option): TransformCallback => {
         }
       });
     }
-  };
-
-  return root => {
-    const varsMap = getThemesData()[defaultName];
-
-    scanVars(varsMap, root);
   };
 };

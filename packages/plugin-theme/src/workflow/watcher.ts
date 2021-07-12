@@ -1,7 +1,7 @@
 import { IPluginAPI } from 'build-scripts';
 import { addTemp } from './setExposeAPI';
 import { getDefaultTheme, getThemesName } from '../utils/common';
-import { setThemesData } from '../utils/themesUtil';
+import { setThemesData, parseThemesData } from '../utils/themesUtil';
 
 const watchThemeFiles = async ({ applyMethod, log }: IPluginAPI, themesPath: string, _theme: string) => {
   applyMethod('watchFileChange', /src\/themes\/.*/, async (event: string) => {
@@ -11,7 +11,8 @@ const watchThemeFiles = async ({ applyMethod, log }: IPluginAPI, themesPath: str
       log.warn(`主题文件发生改变 当前主题包列表：${themesNames.join(', ')}`);
 
       const { defaultName } = getDefaultTheme(themesNames, _theme);
-      await setThemesData(themesPathList);
+      const initialThemesData = await parseThemesData(themesPathList);
+      setThemesData(initialThemesData);
       addTemp(applyMethod, defaultName, themesNames);
     }
   });

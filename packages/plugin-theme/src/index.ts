@@ -1,11 +1,16 @@
 import * as path from 'path';
+import * as atImport from 'postcss-import';
 import { IPlugin } from 'build-scripts';
 import { get } from 'lodash';
+import { ICE_TEMP, PLUGIN_DIR } from './constant';
 import { setExposeAPI } from './workflow/setExposeAPI';
-import { injectVariable } from './workflow/injectVariable';
 import { getDefaultTheme, checkThemesEnabled, getThemesName } from './utils/common';
-import { setThemesData } from './utils/themesUtil';
+import { funcCollectPlugin } from './plugins/postcss/funcCollection/funcCollectPlugin';
+import { declVarPlugin } from './plugins/postcss/declVarPlugin';
+import { DefineVariablePlugin } from './plugins/webpack/DefineVariablePlugin';
+import { parseThemesData, setThemesData, getThemesData, getThemesDataStr } from './utils/themesUtil';
 import { watchThemeFiles } from './workflow/watcher';
+import { resolver } from './utils/resolver';
 
 interface Options {
   ['theme']?: string
@@ -20,8 +25,12 @@ const plugin: IPlugin = async (api, options = {}) => {
   const {
     context,
     log,
+    onGetWebpackConfig,
+    getValue
   } = api;
   const { rootDir } = context;
+  const jsPath = path.resolve(getValue(ICE_TEMP), PLUGIN_DIR, 'injectTheme.js');
+
   const themeProperty = get(<Options>options, 'theme', 'default');
   const themesPath = path.resolve(rootDir, 'src/themes');
   const themesEnabled = await checkThemesEnabled(themesPath);
@@ -38,11 +47,66 @@ const plugin: IPlugin = async (api, options = {}) => {
     log.info(`🤔 未找到默认主题文件（${themeProperty}.css），自动配置 ${defaultName} 为初始主题`);
   }
 
-  await setThemesData(themesPathList);                 // 生成变量并设置 themesData
-  injectVariable(api, defaultName);              // 注入所有（包括分析生成）的变量与需要注入的逻辑
-  setExposeAPI(api, defaultName, themesNames);   // 设置需要 ice 暴露出的 API (Hooks / Provider)
+  // extract css vars
+  const initialThemesData = await parseThemesData(themesPathList);
+  setThemesData(initialThemesData);
 
-  watchThemeFiles(api, themesPath, themeProperty);              // 监听主题文件（src/themes）更新
+  const pluginsFactory = (type: 'sass' | 'less') => ([
+    // 消费初始化生成的 initialThemesData，且生成并持久化新的 themesData
+    funcCollectPlugin({ type, data: initialThemesData, setThemesData }),
+    atImport({ resolve: resolver as any }),
+    // 获取 setThemesData 后的 varsMap
+    declVarPlugin({ getVarsMap: () => getThemesData()[defaultName], type })
+  ]);
+
+  onGetWebpackConfig(config => {
+    /**
+     * Replace less/sass vars by css vars
+     */
+    ['less', 'less-module'].forEach(rule => {
+      config.module
+        .rule(rule)
+        .use('postcss-loader-v6')
+        .loader(require.resolve('postcss-loader'))
+        .options({ postcssOptions: { plugins: pluginsFactory('less'), parser: 'postcss-less' } })
+        .after('less-loader');
+    });
+    ['scss', 'scss-module'].forEach(rule => {
+      config.module
+        .rule(rule)
+        .use('postcss-loader-v6')
+        .loader(require.resolve('postcss-loader'))
+        .options({ postcssOptions: { plugins: pluginsFactory('sass'), parser: 'postcss-scss' } })
+        .after('sass-loader');
+    });
+
+    /**
+     * inject window.__themeData__
+     */
+    config.plugin('define-variable-plugin').use(DefineVariablePlugin, [
+      { codeGen: () => `window.__themesData__ = ${getThemesDataStr(defaultName)};\n` }
+    ]);
+
+    /**
+     * inject window.__handleTheme__(themeName)
+     * 依赖 window.__themeData__
+     */
+    const entryNames = Object.keys(config.entryPoints.entries());
+    entryNames.forEach((name) => {
+      config.entry(name).prepend(jsPath);
+    });
+  });
+
+  /**
+   * import { useTheme } from 'ice'; 
+   */
+  setExposeAPI(api, defaultName, themesNames);
+
+  /**
+   * 监听主题文件（src/themes）更新 
+   */
+  watchThemeFiles(api, themesPath, themeProperty);
 };
+
 
 export default plugin;

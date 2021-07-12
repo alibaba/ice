@@ -1,3 +1,5 @@
+import * as fse from 'fs-extra';
+import * as path from 'path';
 import postcss from 'postcss';
 import * as atImport from 'postcss-import';
 import { readFileSync } from 'fs-extra';
@@ -12,12 +14,15 @@ interface ThemeVarsType {
   [cssVariable: string]: string
 }
 
-const __themesData__: ThemesDataType = {};
+let __themesData__: ThemesDataType = {};
+
+const cacheUrl = path.resolve('node_modules', '.cache', 'themes_data.json');
 
 /**
  * 生成 themesData 对象字符串
  */
 const getThemesDataStr = (defaultName: string) => {
+  // get data form cache
   const themesData = getThemesData();
   const themesDataStr = Object
     .keys(themesData)
@@ -49,22 +54,43 @@ const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
 };
 
 /**
- * 设置 Themes Data
+ * 根据主题文件导出 themesData
  */
-const setThemesData = async (themesPathList: string[]) => {
+const parseThemesData = async (themesPathList: string[]) => {
+  const data = {};
   themesPathList.forEach(async file => {
     const themeName = getNameFromPath(file);
     const value = await getThemeVars(file);
 
-    __themesData__[themeName] = value;
+    data[themeName] = value;
   });
+
+  return data;
 };
 
-const getThemesData = () => __themesData__;
+const setThemesData = (newData: ThemesDataType, persist = false) => {
+  __themesData__ = newData;
+
+  // update cache
+  if (persist) fse.outputFileSync(cacheUrl, JSON.stringify(newData));
+};
+
+const getThemesData = () => {
+  // read persist
+  if (fse.existsSync(cacheUrl)) {
+    const fileString = fse.readFileSync(cacheUrl, 'utf8');
+    const data = JSON.parse(fileString);
+
+    if (data) return data;
+  }
+
+  return __themesData__;
+};
 
 export {
-  setThemesData,
+  parseThemesData,
   getThemesData,
   getThemesDataStr,
+  setThemesData,
   ThemeVarsType
 };

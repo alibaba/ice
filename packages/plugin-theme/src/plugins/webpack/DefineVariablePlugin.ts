@@ -1,9 +1,8 @@
 import * as webpack from 'webpack';
 import { ConcatSource } from 'webpack-sources';
-import { getThemesDataStr } from '../../utils/themesUtil';
 
 export interface Options {
-  defaultName: string;
+  codeGen: () => string
 }
 
 /**
@@ -18,23 +17,23 @@ export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
     this.options = { ...this.options, ...options };
   }
 
-  private injectData(fileName: string, defaultName: string, compilation: any) {
-    if (!fileName.includes('.js')) return;
+  private injectData(codeGen: () => string,filename: string, compilation: any) {
+    if (!filename.includes('.js')) return;
 
-    const asset = compilation.getAsset(fileName);
+    const asset = compilation.getAsset(filename);
     const contents = asset.source.source();
 
     compilation.updateAsset(
-      fileName,
+      filename,
       new ConcatSource(
-        `window.__themesData__ = ${getThemesDataStr(defaultName)};\n`,
+        codeGen(),
         String(contents),
       )
     );
   }
 
   public apply(compiler: webpack.Compiler): void {
-    const { defaultName } = this.options;
+    const { codeGen } = this.options;
 
     compiler.hooks.compilation.tap(this.pluginName, (compilation) => {
       compilation.hooks.processAssets.tap(
@@ -45,7 +44,7 @@ export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
         },
         (assets) => {
           Object.keys(assets).forEach(fileName => {
-            this.injectData(fileName, defaultName, compilation);
+            this.injectData(codeGen, fileName, compilation);
           });
         }
       );
