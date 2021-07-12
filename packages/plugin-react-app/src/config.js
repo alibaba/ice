@@ -1,17 +1,22 @@
-const { validation } = require('@builder/app-helpers');
-
 /* eslint global-require: 0 */
 module.exports = function() {
   return [
     {
+      name: 'remoteRuntime',
+      defaultValue: false,
+      validation: 'boolean|object'
+    },
+    {
+      name: 'moduleFederation',
+      defaultValue: false,
+      configWebpack: require('./userConfig/moduleFederation').default,
+      validation: 'boolean|object',
+    },
+    {
       name: 'entry',
       defaultValue: 'src/index.jsx',
       configWebpack: require('./userConfig/entry'),
-      validation: (val) => {
-        // entry: string | array
-        // entry : { [name]: string | array }
-        return validation('entry', val, 'string|array|object');
-      },
+      validation: 'string|array|object',
     },
     {
       name: 'ignoreHtmlTemplate',

@@ -6,6 +6,12 @@ import Base from './Base';
 import { IGeneratorOptions } from '../types';
 
 export default class ReactGenerator extends Base {
+  constructor(api, options: IGeneratorOptions) {
+    super(api, options);
+    const { context: { userConfig } } = api;
+    this.generateRunAppFile(userConfig);
+  }
+
   public getRoutesFilePath(pageEntry: string): string {
     const originalEntryFolder = path.dirname(pageEntry);
     const targetExt = ['ts', 'tsx'].find((ext) => fs.existsSync(path.join(originalEntryFolder, `routes.${ext}`)));

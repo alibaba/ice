@@ -26,6 +26,7 @@ export default class BaseGenerator {
     this.targetDir = targetDir;
     this.entryFolder = path.join(targetDir, 'entries', entryName);
     this.entryPath = path.join(this.entryFolder, 'index.tsx');
+    this.runAppPath = path.join(this.entryFolder, 'runApp.ts');
   }
 
   public generateEntryFile() {

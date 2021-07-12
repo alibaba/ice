@@ -1,10 +1,8 @@
-import generateEntry from './entry';
-import generateRunApp from './runApp';
 import ReactGenerator from './React';
 import RaxGenerator from './Rax';
 import { IGeneratorOptions } from '../types';
 
-function init(api, options: IGeneratorOptions) {
+function generateEntry(api, options: IGeneratorOptions): string {
   const { framework } = options;
   let genrator;
   if (framework === 'react') {
@@ -13,5 +11,9 @@ function init(api, options: IGeneratorOptions) {
     genrator = new RaxGenerator(api, options);
   }
 
-  return genrator;
+  genrator.generateEntryFile();
+
+  return genrator.entryPath;
 }
+
+export default generateEntry;
