@@ -81,7 +81,10 @@ module.exports = (config, value, context) => {
   if (config.plugins.get('CopyWebpackPlugin')) {
     config.plugin('CopyWebpackPlugin').tap(([{ patterns, ...restOptions }]) => {
       const [firstPattern, ...rest] = patterns;
-      firstPattern.filter = (resourcePath) => ignoreFiles.some((ignoreFile) => resourcePath.endsWith(ignoreFile));
+      firstPattern.globOptions = {
+        ...(firstPattern.globOptions || {}),
+        ignore: ignoreFiles.map((ignoreFile) => `**/public/${ignoreFile}`),
+      };
       return [{
         patterns: [firstPattern, ...rest],
         ...restOptions,

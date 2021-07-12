@@ -45,7 +45,12 @@ module.exports = (api, { target, webpackConfig }) => {
           {
             from: path.resolve(rootDir, 'public'),
             to: path.resolve(rootDir, outputPath),
-            filter: (resourcePath) => resourcePath.endsWith('index.html'),
+            noErrorOnMissing: true,
+            globOptions: {
+              dot: true,
+              gitignore: true,
+              ignore: ['**/public/index.html'],
+            },
           },
         ]
       }])
