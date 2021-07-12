@@ -94,18 +94,27 @@ export const walkerFind = <T extends any>(type: string, root: Root, cb: (data: I
   return result;
 };
 
-const isBlack = (list: string[], id: string): boolean => {
-  return list.some(word => id.includes(word));
-};
-
-const getValue = (str: string) => {
-  const value = str.trim();
-  return value.slice(1, value.length - 1);
-};
-
+/**
+ * 实现 postcss-import
+ * 
+ * @param {Root} root less / sass
+ * @param {string} type 或者称之为 node（postcss node）
+ * @param {Function} cb 遍历时触发的回调函数 传入当前文件节点
+ * 
+ * @return {Array} 返回的 postcss 节点列表
+ */
 export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = () => { }) => {
   const deps = new Map<string, Root>();
   const blacklist = ['reset'];
+
+  const isBlack = (list: string[], id: string): boolean => {
+    return list.some(word => id.includes(word));
+  };
+
+  const getValue = (str: string) => {
+    const value = str.trim();
+    return value.slice(1, value.length - 1);
+  };
 
   const resolve = (node: Root, url?: string) => {
     const baseUrl = url ?? node.source.input.file;
