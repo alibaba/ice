@@ -36,6 +36,8 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
   const importSpecifier: string[] = [];
   let configIdentifier: string;
   let replaced = false;
+  let mountExportStatement = false;
+  let unmountExportStatement = false;
 
   const checkEntryFile = (filename: string) => {
     return !!entryList.find((filePath: string) => {
@@ -53,6 +55,7 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
           let starkappStatement = false;
           let reactdomStatement = false;
           let lastImportIndex = 0;
+
           body.forEach((item, index) => {
             // check ImportDeclaration
             if (t.isImportDeclaration(item)) {
@@ -98,7 +101,24 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
               }
               lastImportIndex = index;
             }
+
+            // 遍历非 defalut 导出函数，判断是否有 unmount 和 mount 导出
+            if (t.isExportNamedDeclaration(item)) {
+              // 如果是 export function mount() {} 这种形式
+              const isFuntionDec = (name: string) => t.isFunctionDeclaration(item.declaration) && t.isIdentifier(item.declaration.id, { name });
+              // 如果是 export const mount = () => {}  这种形式
+              const isVariableDec = (name: string) => t.isVariableDeclaration(item.declaration) && t.isIdentifier(item.declaration.declarations[0], { name });
+
+              if (isFuntionDec('mount') || isVariableDec('mount')) {
+                mountExportStatement = true;
+              }
+
+              if (isFuntionDec('unmount') || isVariableDec('unmount')) {
+                unmountExportStatement = true;
+              }
+            }
           });
+
           // import @ice/stark-app
           if (!starkappStatement) {
             const starkappImport = t.importDeclaration(
@@ -126,7 +146,10 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
         }
       },
       ExpressionStatement(nodePath, state) {
-        if (checkEntryFile(state.filename) && !replaced) {
+        if (!mountExportStatement && !unmountExportStatement) {
+          replaced = true;
+        }
+        if (!replaced && checkEntryFile(state.filename)) {
           const node: t.ExpressionStatement = nodePath.node;
           let callIdentifier = '';
           if (namespaceSpecifier.length
