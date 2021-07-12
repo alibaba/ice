@@ -1,27 +1,40 @@
 <% if(!hasJsxRuntime) { %>
-import * as React from 'react';
+  import * as React from 'react';
 <% } %>
-import store from './store';
+import { FC, createContext, useState, useContext } from 'react';
+import { ContextType, AuthType, IAuth } from './types'
 
-// 函数组件支持 hooks 用法
-function useAuth() {
-  const [auth, { setAuth }] = store.useModel('auth');
-  return [
-    auth,
-    setAuth
-  ] as [Record<string, boolean>, typeof setAuth];
+const Context = createContext<any>(null);
+
+interface Props {
+  value: AuthType
 }
+
+const Provider: FC<Props> = ({ value = {}, children }) => {
+  const share = useState<AuthType>(value);
+  return (
+    <Context.Provider value={share}>{children}</Context.Provider>
+  );
+};
+
+const useAuth = (): ContextType => {
+  const value = useContext(Context);
+  return value;
+};
 
 // class 组件支持 Hoc 用法
 function withAuth(Component) {
-  const AuthWrappered = props => {
+  const AuthWrapped = props => {
     const [auth, setAuth] = useAuth();
     return <Component {...Object.assign({}, props, { auth, setAuth })} />;
   };
-  return AuthWrappered;
+  return AuthWrapped;
 }
 
 export {
   useAuth,
-  withAuth
+  withAuth,
+  Provider,
+
+  IAuth
 };
