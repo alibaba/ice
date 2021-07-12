@@ -2369,6 +2369,11 @@
   resolved "https://registry.nlark.com/@types/json-schema/download/@types/json-schema-7.0.8.tgz#edf1bf1dbf4e04413ca8e5b17b3b7d7d54b59818"
   integrity sha1-7fG/Hb9OBEE8qOWxezt9fVS1mBg=
 
+"@types/less@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.nlark.com/@types/less/download/@types/less-3.0.3.tgz#f9451dbb9548d25391107d65d6401a0cfb15db92"
+  integrity sha1-+UUdu5VI0lOREH1l1kAaDPsV25I=
+
 "@types/lodash@^4.14.170":
   version "4.14.171"
   resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
@@ -2413,6 +2418,13 @@
   version "4.0.0"
   resolved "https://registry.nlark.com/@types/parse-json/download/@types/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha1-L4u0QUNNFjs1+4/9zNcTiSf/uMA=
+
+"@types/postcss-import@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.nlark.com/@types/postcss-import/download/@types/postcss-import-12.0.1.tgz#aff28e96c9e28abeab4f6ea952ed47ab6ef8131e"
+  integrity sha1-r/KOlsniir6rT26pUu1Hq274Ex4=
+  dependencies:
+    postcss "^7.0.27"
 
 "@types/prettier@^1.19.0":
   version "1.19.1"
@@ -12376,7 +12388,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.2, postcss-value-parser@^
   resolved "https://registry.nlark.com/postcss-value-parser/download/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha1-RD9qIM7WSBor2k+oUypuVdeJoss=
 
-postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.26, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.6, postcss@^7.0.7:
+postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.6, postcss@^7.0.7:
   version "7.0.36"
   resolved "https://registry.nlark.com/postcss/download/postcss-7.0.36.tgz#056f8cffa939662a8f5905950c07d5285644dfcb"
   integrity sha1-BW+M/6k5ZiqPWQWVDAfVKFZE38s=
