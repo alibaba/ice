@@ -146,7 +146,7 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
         }
       },
       ExpressionStatement(nodePath, state) {
-        if (!mountExportStatement && !unmountExportStatement) {
+        if (mountExportStatement || unmountExportStatement) {
           replaced = true;
         }
         if (!replaced && checkEntryFile(state.filename)) {
