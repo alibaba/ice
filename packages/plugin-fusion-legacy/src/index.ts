@@ -13,6 +13,12 @@ interface ThemeItem {
   themeConfig: Record<string, string>;
 }
 
+interface ComponentOptions {
+  bizComponent: string[];
+  customPath: string;
+  componentMap: Record<string, string>;
+}
+
 interface ThemeVars {
   scssVars?: Record<string, string>;
   originTheme?: Record<string, string>;
@@ -28,6 +34,7 @@ interface PluginOptions {
   themePackage: Partial<ThemeItem>[] | string;
   themeConfig: Record<string, string>;
   uniteNextLib: string;
+  componentOptions: ComponentOptions;
 }
 
 type GetVariablesPath = (options: { packageName: string; filename?: string; silent?: boolean }) => string;
@@ -90,6 +97,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
     enableColorNames,
     uniteNextLib,
     themeConfig,
+    componentOptions,
   } = (options || {}) as Partial<PluginOptions>;
   const { rootDir, webpack, userConfig } = context;
 
@@ -271,6 +279,35 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
         ]);
     }
 
+    const crossendBabelLoader = [];
+    if (componentOptions) {
+      const { bizComponent = [], customPath = '', componentMap = {} } = componentOptions;
+      const mixBizCom = {};
+
+      // bizComponent: ['@alifd/anchor', '@alifd/pro-components'],
+
+      if (Array.isArray(bizComponent)) {
+        bizComponent.forEach(com => {
+          mixBizCom[com] = `${com}${customPath}`;
+        });
+      }
+
+      // componentMap: {
+      //  '@alifd/pro-components': '@alifd/pro-components/lib/mobile',
+      //  '@alifd/pro-components-2': '@alifd/pro-components-2-mobile'
+      // }
+      const mapList = Object.keys(componentMap);
+      if (mapList.length > 0) {
+        mapList.forEach(orgName => {
+          mixBizCom[orgName] = componentMap[orgName];
+        });
+      }
+
+      crossendBabelLoader.push(require.resolve('babel-plugin-module-resolver'), {
+        alias: mixBizCom
+      });
+    }
+
     // babel-plugin-import for @alife/next and @icedesign/base
     const importConfigs = [{
       libraryName: '@icedesign/base',
@@ -290,6 +327,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
               return [require.resolve('babel-plugin-import'), itemConfig, itemConfig.libraryName];
             }),
           );
+          if (crossendBabelLoader.length > 0) {
+            plugins.push(crossendBabelLoader);
+          }
           return {
             ...babelOptions,
             plugins,

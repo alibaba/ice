@@ -13,6 +13,7 @@
   "dependencies": {
     "@builder/app-helpers": "^2.1.0",
     "babel-plugin-import": "^1.11.2",
+    "babel-plugin-module-resolver": "^4.0.0",
     "ice-skin-loader": "^0.3.0",
     "postcss": "^7.0.32",
     "postcss-plugin-rpx2vw": "^0.0.2",

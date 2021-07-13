@@ -7,11 +7,6 @@ interface PluginOptions {
   importOptions: Partial<{libraryDirectory: string; style: any}>
 }
 
-interface BabelOptions {
-  plugins?: [string, ...any][];
-  presets?: [string, any][];
-}
-
 const plugin: IPlugin = ({ onGetWebpackConfig, getAllTask, context }, options) => {
   const { externalNext, cssVariable = true, importOptions = { style: true, libraryDirectory: 'es' } } = (options || {}) as Partial<PluginOptions>;
   const { userConfig } = context;
@@ -32,7 +27,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, getAllTask, context }, options) =
           config.module
             .rule(rule)
             .use('babel-loader')
-            .tap((babelOptions: BabelOptions) => {
+            .tap((babelOptions) => {
               const plugins = babelOptions.plugins.concat(
                 [require.resolve('babel-plugin-import'), babelPluginImportOptions, babelPluginImportOptions.libraryName]
               );
