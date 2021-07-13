@@ -105,7 +105,7 @@ export const walkerFind = <T extends any>(type: string, root: Root, cb: (data: I
  */
 export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = () => { }) => {
   const deps = new Map<string, Root>();
-  const blacklist = ['reset'];      // 扫描文件的黑名单
+  const blacklist = ['/reset', '_shadow', '_mixin', '_function'];      // 扫描文件的黑名单
 
   /**
    * 不处理存在于黑名单内单词的路径
@@ -133,6 +133,9 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
 
       if (isImport) {
         let id = getValue(decl.params);
+        // 如果是 css 则不参与解析
+        if (id.endsWith('.css')) return;
+
         const ext = type === 'less' ? '.less' : '.scss';
         id = id.endsWith(ext) ? id : `${id}${ext}`;
 

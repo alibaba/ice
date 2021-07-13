@@ -2,6 +2,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as atImport from 'postcss-import';
 import postcss from 'postcss';
+import { pick } from 'lodash';
 import { getNameFromPath } from '../utils/common';
 import { getThemeVarsPlugin } from '../plugins/postcss/getThemeVarsPlugin';
 
@@ -56,9 +57,12 @@ const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
  * 根据主题文件导出 themesData
  * 
  * @param {String[]} themesPathList 主题文件（css）的绝对路径列表
+ * @param {String} defaultTheme 默认主题名称
  */
-const parseThemesData = async (themesPathList: string[]) => {
-  const data = {};
+const parseThemesData = async (themesPathList: string[], defaultTheme: string) => {
+  const data = {} as ThemesDataType;
+  const newData = {} as ThemesDataType;
+  const varsList = [];
 
   const task = async (file: string) => {
     const themeName = getNameFromPath(file);
@@ -66,9 +70,29 @@ const parseThemesData = async (themesPathList: string[]) => {
     data[themeName] = value;
   };
 
+  // 解析并获取 themesData
   await Promise.all(themesPathList.map(task));
 
-  return data;
+  const themesList = Object.keys(data).filter(name => name !== defaultTheme);
+  const defaultData = data[defaultTheme];
+
+  // 搜索不同的变量的列表
+  Object.keys(defaultData).forEach(varName => {
+    themesList.forEach(theme => {
+      if (defaultData[varName] !== data[theme][varName]) {
+        varsList.push(varName);
+      }
+    });
+  });
+
+  newData[defaultTheme] = data[defaultTheme];
+
+  // 去重
+  themesList.forEach(theme => {
+    newData[theme] = pick(data[theme], varsList);
+  });
+
+  return newData;
 };
 
 /**

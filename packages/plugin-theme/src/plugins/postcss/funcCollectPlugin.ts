@@ -132,9 +132,14 @@ const filterParams = (params: string[]) => {
 };
 
 const getCalc = (funcName: string, params: string[]): string => {
-  const func = (lessCompile as any).functions.functionRegistry.get(funcName);
-  if (func) {
-    return func(...filterParams(params)).toCSS();
+  try {
+    const func = (lessCompile as any).functions.functionRegistry.get(funcName);
+    if (func) {
+      if (funcName === 'rgba' && params.length === 2) return func((lessCompile as any).color('#000'), params[1]);
+      return func(...filterParams(params)).toCSS();
+    }
+    return '';
+  } catch (e) {
+    return '';
   }
-  return '';
 };

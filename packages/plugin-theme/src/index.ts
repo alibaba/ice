@@ -54,7 +54,7 @@ const plugin: IPlugin = async (api, options = {}) => {
   /** 
    * Extract css vars 
    */
-  const initialThemesData = await parseThemesData(themesPathList);
+  const initialThemesData = await parseThemesData(themesPathList, defaultName);
   setThemesData(initialThemesData);
 
   /**

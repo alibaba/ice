@@ -14,35 +14,20 @@ interface Option {
  */
 export const declVarPlugin = (option: Option): TransformCallback => {
   const { getVarsMap, type = 'less' } = option;
+  const isVar = (e: string) => e.startsWith('var(');
+  const vatFlag = type === 'less' ? '@' : '$';
 
   return root => {
     const varsMap = getVarsMap();
 
-    if (type === 'sass') {
-      root.walkDecls(decl => {
-        if (decl.prop) {
-          const str = decl.prop;
-          const name = str.slice(1);
+    root.walkDecls(decl => {
+      if (decl.prop && decl.prop[0] !== vatFlag) {
+        const value = decl.value.slice(1);
 
-          if (varsMap[name] && str[0] === '$') {
-            decl.value = `var(--${name}, ${varsMap[name]})`;
-          }
+        if (varsMap[value]) {
+          decl.value = isVar(value) ? `var(--${value})` : `var(--${value}, ${varsMap[value]})`;
         }
-      });
-      return;
-    }
-
-    if (type === 'less') {
-      root.walkAtRules(atRule => {
-        if (atRule.name) {
-          const str = atRule.name;
-          const name = str.slice(0, str.length - 1);
-
-          if (varsMap[name]) {
-            atRule.params = `var(--${name}, ${varsMap[name]})`;
-          }
-        }
-      });
-    }
+      }
+    });
   };
 };

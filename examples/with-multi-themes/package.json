@@ -3,6 +3,8 @@
   "description": "with multi themes",
   "dependencies": {
     "@alifd/next": "^1.19.4",
+    "@alifd/theme-3": "^0.5.0",
+    "@alifd/theme-design-pro": "^0.7.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
