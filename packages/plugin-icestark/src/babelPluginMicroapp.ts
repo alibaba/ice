@@ -13,7 +13,7 @@ export const mount = async (props) => {
   APP_CALLEE(APP_CONFIG);
 };
 export const unmount = async ({ container, customProps }) => {
-  if (APP_CONFIG?.icestark?.regsiterAppLeave) {
+  if(APP_CONFIG.icestark && APP_CONFIG.icestark.regsiterAppLeave) {
     APP_CONFIG.icestark.regsiterAppLeave(container, customProps);
   } else {
     ReactDOM.unmountComponentAtNode(container);
