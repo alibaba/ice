@@ -1,9 +1,10 @@
+/* eslint-disable no-useless-escape */
 import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'assert';
 import { ConcatSource, RawSource } from 'webpack-sources';
 import { getSassImplementation } from '@builder/app-helpers';
-import convertCharStr2CSS from '../convertCharStr';
+import convertCharStr2CSS from './convertCharStr';
 
 function compileSass(srcPath: string, variableFile: string, coreVarCode: string) {
   srcPath = String(srcPath);
@@ -176,4 +177,4 @@ export default class AppendStylePlugin {
     }
     return css;
   }
-};
+}

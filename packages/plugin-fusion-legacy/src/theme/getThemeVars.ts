@@ -5,7 +5,7 @@ export default (themeFile: string, themeConfig: Record<string, string>, enableCo
   const themeVars = {};
   try {
     const themeStr = fs.readFileSync(themeFile, 'utf8');
-    const themeArr = themeStr.match(/\$[\w\-]+?:.+?;/g);
+    const themeArr = themeStr.match(/\$[\w-]+?:.+?;/g);
 
     themeArr.forEach((item) => {
       const [key, value] = item.split(':');

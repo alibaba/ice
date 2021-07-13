@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+
+- [refactor] remove theme feature to build-plugin-fusion-legacy
+
 ## 0.1.16
 
 - [fix] compatible with umd export when external Next

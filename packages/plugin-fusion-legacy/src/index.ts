@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { IPlugin } from 'build-scripts';
 import postcssPluginPx2vw from './postcssPluginPx2vw';
+import AppendStyleWebpackPlugin from './webpackPlugins/appendStyleWebpackPlugin';
 import getCalcVars from './theme/getCalcVars';
 import getThemeVars from './theme/getThemeVars';
 import getThemeCode from './theme/getThemeCode';
@@ -24,10 +25,16 @@ interface PluginOptions {
   px2vwOptions: object;
   cssVariable: boolean;
   enableColorNames: boolean;
-  themePackages: Partial<ThemeItem>[];
+  themePackage: Partial<ThemeItem>[] | string;
+  themeConfig: Record<string, string>;
+  uniteNextLib: string;
 }
 
 type GetVariablesPath = (options: { packageName: string; filename?: string; silent?: boolean }) => string;
+interface Chunk {
+  name: string;
+}
+type NormalizeEntry = (entry: Record<string, string>, chunks: Chunk[]) => string[];
 
 const getVariablesPath: GetVariablesPath = (packageName, filename = 'variables.scss', silent = false) => {
   let filePath = '';
@@ -40,6 +47,16 @@ const getVariablesPath: GetVariablesPath = (packageName, filename = 'variables.s
     }
   }
   return filePath;
+};
+
+const normalizeEntry: NormalizeEntry = (entry, preparedChunks) => {
+  const preparedName = (preparedChunks || [])
+    .filter((module) => {
+      return typeof module.name !== 'undefined';
+    })
+    .map((module) => module.name);
+
+  return Object.keys(entry).concat(preparedName);
 };
 
 function replaceBlank(str: string) {
@@ -68,26 +85,39 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
     uniteBaseComponent,
     usePx2Vw,
     px2vwOptions,
-    themePackages,
+    themePackage,
     cssVariable,
     enableColorNames,
+    uniteNextLib,
+    themeConfig,
   } = (options || {}) as Partial<PluginOptions>;
-  const { rootDir } = context;
+  const { rootDir, webpack, userConfig } = context;
+
+  if (themePackage) {
+    if (Array.isArray(themePackage)) {
+      log.info('已启用 themePackage 多主题功能');
+    } else {
+      log.info('使用 Fusion 组件主题包：', themePackage);
+    }
+  }
+  if (themeConfig) {
+    log.info('自定义 Fusion 组件主题变量：', themeConfig);
+  }
 
   const baseComponent = uniteBaseComponent && (
     typeof uniteBaseComponent === 'string' ? uniteBaseComponent : '@icedesign/base');
   
   onGetWebpackConfig((config) => {
     // 基于主题包的多主题方案
-    if (themePackages && Array.isArray(themePackages)) {
+    let replaceVars = {};
+    let defaultScssVars = {};
+    let defaultTheme = '';
+    if (themePackage && Array.isArray(themePackage)) {
       const themesCssVars = {};
       const varsPath = !cssVariable && getVariablesPath({ packageName: '@alifd/next', silent: true });
 
-      let replaceVars = {};
-      let defaultScssVars = {};
-      let defaultTheme = '';
       // get scss variables and generate css variables
-      themePackages.forEach(({ name, ...themeData }) => {
+      themePackage.forEach(({ name, ...themeData }) => {
         const themePath = getVariablesPath({ packageName: name, filename: `variables.${cssVariable ? 'css' : 'scss'}` });
         if (!cssVariable) {
           const configData = themeData.themeConfig || {};
@@ -113,7 +143,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
           defaultTheme = name;
         }
       });
-      defaultTheme = defaultTheme || (themePackages[0] && themePackages[0].name);
+      defaultTheme = defaultTheme || (themePackage[0] && themePackage[0].name);
       addCSSVariableCode({ defaultTheme, config, themesCssVars, rootDir, cssVariable, log });
 
       ['scss', 'scss-module'].forEach((rule) => {
@@ -133,12 +163,70 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
             });
         }
       });
+    } else if (cssVariable && typeof themePackage === 'string') {
+      // add css variable code when cssVariable is true
+      const cssVariablePath = getVariablesPath({ packageName: themePackage, filename: 'variables.css'});
+      if (cssVariablePath) {
+        const cssVariables = replaceBlank(fs.readFileSync(cssVariablePath, 'utf-8'));
+        addCSSVariableCode({ defaultTheme: themePackage, config, themesCssVars: {[themePackage]: cssVariables}, rootDir, cssVariable, log });
+      }
+    }
+
+    const themeFile = typeof themePackage === 'string' && getVariablesPath({ packageName: themePackage, silent: true });
+
+    ['scss', 'scss-module'].forEach((rule) => {
+      config.module
+        .rule(rule)
+        .use('ice-skin-loader')
+        .loader(require.resolve('ice-skin-loader'))
+        .options({
+          themeFile,
+          themeConfig: Object.assign(
+            {},
+            defaultScssVars,
+            replaceVars,
+            themeConfig || {}
+          ),
+        });
+    });
+
+    // check icons.scss
+    const iconPackage = (defaultTheme || themePackage) as string;
+    const iconScssPath = iconPackage && getVariablesPath({ packageName: iconPackage, filename: 'icons.scss', silent: true });
+    if (iconScssPath && fs.existsSync(iconScssPath)) {
+      const appendStylePluginOption = {
+        type: 'sass',
+        srcFile: iconScssPath,
+        variableFile: getVariablesPath({ packageName: iconPackage }),
+        compileThemeIcon: true,
+        themeConfig: themeConfig || {},
+        distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
+          const entriesAndPreparedChunkNames = normalizeEntry(
+            compilerEntry,
+            compilationPreparedChunks,
+          );
+          // 仅对 css 的 chunk 做 处理
+          if (entriesAndPreparedChunkNames.length && /\.css$/.test(chunkName)) {
+            // css/index.css -> index css/index.[hash].css -> index
+            // css/_component_.usage.css -> _component_.usage
+            const assetsBaseName = path.basename(chunkName, path.extname(chunkName));
+            const assetsFromEntry = userConfig.hash
+              ? assetsBaseName.substring(0, assetsBaseName.lastIndexOf('.'))
+              : assetsBaseName;
+            if (entriesAndPreparedChunkNames.indexOf(assetsFromEntry) !== -1) {
+              return true;
+            }
+          }
+          return false;
+        },
+      };
+      config.plugin('AppendStyleWebpackPlugin').use(AppendStyleWebpackPlugin, [appendStylePluginOption]);
     }
 
     if (baseComponent) {
       // 统一基础组件包：@ali/ice, @alife/next, @icedesign/base -> @icedesign/base
       log.info('uniteBaseComponent 开启，基础包统一到：', baseComponent);
-    
+      
       const alias = {
         // @ali/ice -> uniteBaseComponent
         '@ali/ice/global.scss': `${baseComponent}/reset.scss`,
@@ -169,6 +257,18 @@ const plugin: IPlugin = ({ onGetWebpackConfig, log, context }, options) => {
           alias,
         },
       });
+    }
+
+    if (uniteNextLib) {
+      const replaceRegex = new RegExp(`(alife|alifd)/next/${uniteNextLib === 'es' ? 'lib' : 'es'}`);
+      config.plugin('UniteNextLib')
+        .use(webpack.NormalModuleReplacementPlugin, [
+          /@(alife|alifd)\/next\/(.*)/,
+          function(resource) {
+            // eslint-disable-next-line no-param-reassign
+            resource.request = resource.request.replace(replaceRegex, `alifd/next/${uniteNextLib}`);
+          },
+        ]);
     }
 
     // babel-plugin-import for @alife/next and @icedesign/base
