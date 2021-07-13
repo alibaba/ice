@@ -2,12 +2,12 @@ import type { Root } from 'postcss';
 import postcss from 'postcss';
 import * as path from 'path';
 import * as fs from 'fs';
-import { isFunction } from '../../../utils/common';
+import { isFunction } from '../../utils/common';
 
 interface INode {
   name: string,
   value: string,
-  node: any
+  node: Root
 }
 
 /**
@@ -19,7 +19,7 @@ const config = {
     node: {
       name: 'name',
       nameGetter: (str: string) => str,
-      value: 'params',
+      value: 'params'
     }
   },
   sass: {

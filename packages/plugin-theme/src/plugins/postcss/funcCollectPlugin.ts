@@ -1,7 +1,7 @@
 import * as lessCompile from 'less';
 import type { Root, TransformCallback } from 'postcss';
-import { walkDeps, walkerSome, walkerFind, getAllVars } from './walkers';
-import { getFunction, isFunction } from '../../../utils/common';
+import { walkDeps, walkerSome, walkerFind, getAllVars } from '../helper/walkers';
+import { getFunction, isFunction } from '../../utils/common';
 
 interface Option {
   type?: 'sass' | 'less',

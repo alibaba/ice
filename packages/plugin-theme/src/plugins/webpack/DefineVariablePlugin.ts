@@ -1,14 +1,17 @@
 import * as webpack from 'webpack';
+import type { WebpackPluginInstance, Compiler } from 'webpack';
 import { ConcatSource } from 'webpack-sources';
 
 export interface Options {
-  codeGen: () => string
+  getCode: () => string
 }
 
 /**
- * 将主题数据在 optimizeChunkAssets 阶段注入到 window 上
+ * loader 结束后注入代码
+ * 
+ * only webpack5
  */
-export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
+export class DefineVariablePlugin implements WebpackPluginInstance {
   private readonly pluginName = this.constructor.name;
 
   private readonly options: Partial<Options> = {};
@@ -17,7 +20,7 @@ export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
     this.options = { ...this.options, ...options };
   }
 
-  private injectData(codeGen: () => string,filename: string, compilation: any) {
+  private injectData(getCode: () => string, filename: string, compilation: any) {
     if (!filename.includes('.js')) return;
 
     const asset = compilation.getAsset(filename);
@@ -26,14 +29,14 @@ export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
     compilation.updateAsset(
       filename,
       new ConcatSource(
-        codeGen(),
+        getCode(),
         String(contents),
       )
     );
   }
 
-  public apply(compiler: webpack.Compiler): void {
-    const { codeGen } = this.options;
+  public apply(compiler: Compiler): void {
+    const { getCode } = this.options;
 
     compiler.hooks.compilation.tap(this.pluginName, (compilation) => {
       compilation.hooks.processAssets.tap(
@@ -44,7 +47,7 @@ export class DefineVariablePlugin implements webpack.WebpackPluginInstance {
         },
         (assets) => {
           Object.keys(assets).forEach(fileName => {
-            this.injectData(codeGen, fileName, compilation);
+            this.injectData(getCode, fileName, compilation);
           });
         }
       );

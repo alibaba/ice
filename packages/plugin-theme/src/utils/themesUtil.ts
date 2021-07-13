@@ -1,8 +1,7 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import postcss from 'postcss';
 import * as atImport from 'postcss-import';
-import { readFileSync } from 'fs-extra';
+import postcss from 'postcss';
 import { getNameFromPath } from '../utils/common';
 import { getThemeVarsPlugin } from '../plugins/postcss/getThemeVarsPlugin';
 
@@ -14,16 +13,16 @@ interface ThemeVarsType {
   [cssVariable: string]: string
 }
 
+// 全局主题数据，建议只通过 getThemesData 获取
 let __themesData__: ThemesDataType = {};
 
+// 主题数据缓存文件 ${project}/node_modules/.cache/themes_data.json
 const cacheUrl = path.resolve('node_modules', '.cache', 'themes_data.json');
 
 /**
- * 生成 themesData 对象字符串
+ * 组合 themesData 对象字符串
  */
-const getThemesDataStr = (defaultName: string) => {
-  // get data form cache
-  const themesData = getThemesData();
+const getThemesDataStr = (themesData: ThemesDataType, defaultName: string) => {
   const themesDataStr = Object
     .keys(themesData)
     .filter(themeKey => themeKey !== defaultName)
@@ -43,7 +42,7 @@ const getThemesDataStr = (defaultName: string) => {
  */
 const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
   const themeVars: ThemeVarsType = {};
-  const css = readFileSync(filePath, 'utf8');
+  const css = fse.readFileSync(filePath, 'utf8');
 
   await postcss([
     atImport(),
@@ -55,6 +54,8 @@ const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
 
 /**
  * 根据主题文件导出 themesData
+ * 
+ * @param {String[]} themesPathList 主题文件（css）的绝对路径列表
  */
 const parseThemesData = async (themesPathList: string[]) => {
   const data = {};
@@ -68,6 +69,12 @@ const parseThemesData = async (themesPathList: string[]) => {
   return data;
 };
 
+/**
+ * 提交主题变更
+ * 
+ * @param {ThemesDataType} newData 新主题数据
+ * @param {Boolean} persist 本次提交是否开启持久化缓存
+ */
 const setThemesData = (newData: ThemesDataType, persist = false) => {
   __themesData__ = newData;
 
@@ -75,7 +82,12 @@ const setThemesData = (newData: ThemesDataType, persist = false) => {
   if (persist) fse.outputFileSync(cacheUrl, JSON.stringify(newData));
 };
 
-const getThemesData = () => {
+/**
+ * 获取主题数据
+ * 
+ * @return {ThemesDataType} 主题数据
+ */
+const getThemesData = (): ThemesDataType => {
   // read persist
   if (fse.existsSync(cacheUrl)) {
     const fileString = fse.readFileSync(cacheUrl, 'utf8');
@@ -92,5 +104,6 @@ export {
   getThemesData,
   getThemesDataStr,
   setThemesData,
+
   ThemeVarsType
 };

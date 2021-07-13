@@ -1,18 +1,7 @@
 import * as path from 'path';
 import { IPluginAPI } from 'build-scripts';
 import { PLUGIN_DIR, ICE_TEMP } from '../constant';
-
-const addTemp = (applyMethod: IPluginAPI['applyMethod'], defaultName: string, themes: string[]) => {
-  const themesStr = themes.map(str => `'${str}'`).join(' | ');
-
-  // 复制模板到 .ice/theme 目录下
-  const templateSourceDir = path.join(__dirname, '../../template');
-  applyMethod(
-    'addPluginTemplate',
-    templateSourceDir,
-    { themes: themesStr, defaultTheme: `'${defaultName}'` }
-  );
-};
+import { addTemp } from '../utils/common';
 
 /**
  * 设置暴露出的 API
@@ -42,5 +31,4 @@ const setExposeAPI = ({
 
 export {
   setExposeAPI,
-  addTemp
 };

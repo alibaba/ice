@@ -1,6 +1,5 @@
 import { IPluginAPI } from 'build-scripts';
-import { addTemp } from './setExposeAPI';
-import { getDefaultTheme, getThemesName } from '../utils/common';
+import { getDefaultTheme, getThemesName, addTemp } from '../utils/common';
 import { setThemesData, parseThemesData } from '../utils/themesUtil';
 
 const watchThemeFiles = async ({ applyMethod, log }: IPluginAPI, themesPath: string, _theme: string) => {

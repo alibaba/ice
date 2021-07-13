@@ -1,4 +1,4 @@
-import { TransformCallback, } from 'postcss';
+import type { TransformCallback } from 'postcss';
 import { ThemeVarsType } from '../../utils/themesUtil';
 
 interface Option {
@@ -15,15 +15,11 @@ interface Option {
 export const getThemeVarsPlugin = (option: Option): TransformCallback => {
   const { themeVars } = option;
 
-  const scanVars = (root: any) => {
+  return root => {
     root.walkDecls(decl => {
       if (decl.prop && decl.prop.slice(0, 2) === '--') {
         themeVars[decl.prop.slice(2)] = decl.value;
       }
     });
-  };
-
-  return root => {
-    scanVars(root);
   };
 };
