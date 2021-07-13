@@ -59,12 +59,14 @@ const getThemeVars = async (filePath: string): Promise<ThemeVarsType> => {
  */
 const parseThemesData = async (themesPathList: string[]) => {
   const data = {};
-  themesPathList.forEach(async file => {
+
+  const task = async (file: string) => {
     const themeName = getNameFromPath(file);
     const value = await getThemeVars(file);
-
     data[themeName] = value;
-  });
+  };
+
+  await Promise.all(themesPathList.map(task));
 
   return data;
 };
