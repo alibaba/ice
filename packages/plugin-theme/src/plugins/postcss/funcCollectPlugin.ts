@@ -6,16 +6,16 @@ import { getFunction, isFunction } from '../../utils/common';
 interface Option {
   type?: 'sass' | 'less',
   data: any
-  setThemesData: (data: any, persist?: boolean) => void
+  setData: (data: any) => void
 }
 
 /**
  * 函数分析工具
  * 
- * 具有副作用，会改变 data 参数的某些数值
+ * 消费并变更 themesData
  */
 export const funcCollectPlugin = (options: Option): TransformCallback => {
-  const { type = 'less', data, setThemesData } = options;
+  const { type = 'less', data, setData } = options;
   const varFlag = type === 'less' ? '@' : '$';
   const themes: string[] = Object.entries(data).map(([key]) => key);
   const depthVarSet = new Set<string>(Object.entries(data[themes[0]]).map(i => i[0]));
@@ -51,10 +51,10 @@ export const funcCollectPlugin = (options: Option): TransformCallback => {
 
   const getParam = (theme: string, p: string, node: Root) => {
     // 参数为函数
-    // if (isFunction(p)) {
-    //   const funcData = getFunction(p)
-    //   return getCalc(funcData.name, funcData.params.map(v => getParam(theme, v)))
-    // }
+    if (isFunction(p)) {
+      const funcData = getFunction(p);
+      return getCalc(funcData.name, funcData.params.map(v => getParam(theme, v, node)));
+    }
     // 参数不为变量，到这里是参数为常数
     if (p[0] !== varFlag) return p;
 
@@ -111,7 +111,7 @@ export const funcCollectPlugin = (options: Option): TransformCallback => {
 
     walkDeps(root, type).forEach(run);
 
-    setThemesData(data, true);
+    setData(data);
   };
 };
 

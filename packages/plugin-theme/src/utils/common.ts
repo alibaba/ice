@@ -2,6 +2,7 @@ import * as path from 'path';
 import { lstatSync, pathExists, readdir } from 'fs-extra';
 import { IPluginAPI } from 'build-scripts';
 import { curry } from 'lodash';
+import * as postcssValueParser from 'postcss-value-parser';
 
 /**
  * 匹配后缀为 `.css` 的文件名
@@ -58,15 +59,25 @@ export const checkThemesEnabled = async (themesPath: string): Promise<boolean> =
   return true;
 };
 
-/**
- * TODO: 目前只能做到取一个函数的名字和参数，对于嵌套情况无效...
- */
-export const getFunction = (str: string) => {
-  const list = str.replace(/\s+/g, '').match(/[^(|,|)]+/g);
+export const getFunction = (str: string): { name: string; params: string[] } => {
+  const { nodes } = postcssValueParser(str);
+  const node: any = nodes[0];
+
+  const params = node?.nodes ? node.nodes
+    .filter((i: postcssValueParser.Node) => i.type === 'word' || i.type === 'function')
+    .reduce((acc: string[], item: postcssValueParser.Node) => {
+      if (item.type === 'word') {
+        acc.push(item.value);
+      }
+      if (item.type === 'function') {
+        acc.push(postcssValueParser.stringify(item));
+      }
+      return acc;
+    }, []) : [];
 
   return {
-    name: list[0],
-    params: list.slice(1)
+    name: node.value,
+    params
   };
 };
 
@@ -76,9 +87,10 @@ export const getFunction = (str: string) => {
  * eg: rgb(0,0,0,1) -> true
  */
 export const isFunction = (str: string) => {
-  // eslint-disable-next-line no-useless-escape
-  const reg = /^[A-Za-z_]+[A-Za-z0-9_-]*[\(][\s\S]*[\)]$/g;
-  return reg.test(str);
+  const { nodes } = postcssValueParser(str);
+  const node = nodes[0];
+
+  return node?.type === 'function';
 };
 
 export const getThemesName = async (themesPath: string) => {
@@ -92,6 +104,9 @@ export const getThemesName = async (themesPath: string) => {
   };
 };
 
+/**
+ * 封装在插件目录下新建模板的逻辑
+ */
 export const addTemp = (applyMethod: IPluginAPI['applyMethod'], defaultName: string, themes: string[]) => {
   const themesStr = themes.map(str => `'${str}'`).join(' | ');
 

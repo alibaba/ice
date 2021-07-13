@@ -25,6 +25,7 @@
     "postcss-less": "^4.0.1",
     "postcss-loader": "^6.1.1",
     "postcss-scss": "^3.0.5",
+    "postcss-value-parser": "^4.1.0",
     "resolve": "^1.20.0",
     "webpack-chain": "^6.4.0",
     "webpack-sources": "^2.3.0"

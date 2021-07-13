@@ -105,12 +105,18 @@ export const walkerFind = <T extends any>(type: string, root: Root, cb: (data: I
  */
 export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = () => { }) => {
   const deps = new Map<string, Root>();
-  const blacklist = ['reset'];
+  const blacklist = ['reset'];      // 扫描文件的黑名单
 
+  /**
+   * 不处理存在于黑名单内单词的路径
+   */
   const isBlack = (list: string[], id: string): boolean => {
     return list.some(word => id.includes(word));
   };
 
+  /**
+   * 去掉字符左右引号
+   */
   const getValue = (str: string) => {
     const value = str.trim();
     return value.slice(1, value.length - 1);
@@ -120,7 +126,7 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
     const baseUrl = url ?? node.source.input.file;
     const baseDir = path.dirname(baseUrl);
     deps.set(baseUrl, node);
-    cb(node);
+    cb(node);   // 触发回调
 
     node.walkAtRules(decl => {
       const isImport = decl.name === 'import';
@@ -133,6 +139,7 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
         if (isBlack(blacklist, id)) return;
 
         let pathUrl = path.resolve(baseDir, id);
+        // 如果项目文件目录不存在，则到 node_modules 查找
         if (!fs.existsSync(url)) {
           pathUrl = path.resolve(`node_modules/${id}`);
         }
@@ -143,6 +150,8 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
         // eslint-disable-next-line global-require
         const parser = type === 'less' ? require('postcss-less') : require('postcss-scss');
         const rt = postcss().process(file, { parser, from: pathUrl }).root;
+
+        // 递归到下一层
         resolve(rt, pathUrl);
       }
     });
@@ -156,11 +165,12 @@ export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = ()
     list.push(value);
   });
 
+  // 反转数组，保证依赖的最深层优先处理
   return list.reverse();
 };
 
 /**
- * 获取该 node 树下的全部变量
+ * 获取该 postcss node 树下的全部变量
  */
 export const getAllVars = (node: Root, type: string, cb: (name: string, value: string) => void) => {
   walker(type, node, ({ name, value }) => {

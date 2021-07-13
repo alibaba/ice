@@ -19,9 +19,6 @@ interface Options {
 /**
  * 多主题编译时处理
  * 
- * 1. 扫描 src/themes/*.css ，并获取 initialThemesData
- * 2. 
- * 
  * RFC：https://github.com/alibaba/ice/issues/4223
  */
 const plugin: IPlugin = async (api, options = {}) => {
@@ -47,7 +44,7 @@ const plugin: IPlugin = async (api, options = {}) => {
   const { themesNames, themesPathList } = await getThemesName(themesPath);
 
   /** 
-   * 获取主题默认值 
+   * 获取主题默认值
    */
   const { isExist, defaultName } = getDefaultTheme(themesNames, themeProperty);
   if (!isExist) {
@@ -65,10 +62,21 @@ const plugin: IPlugin = async (api, options = {}) => {
    */
   const pluginsFactory = (type: 'sass' | 'less') => ([
     // 消费初始化生成的 initialThemesData，且生成并持久化新的 themesData
-    funcCollectPlugin({ type, data: initialThemesData, setThemesData }),
-    atImport({ resolve: resolver as any }),
+    funcCollectPlugin({
+      type,
+      data: initialThemesData,
+      setData: (data) => setThemesData(data, true)    // 持久化存储
+    }),
+
+    atImport({
+      resolve: resolver as any
+    }),
+
     // 获取 setThemesData 后的 varsMap
-    declVarPlugin({ getVarsMap: () => getThemesData()[defaultName], type })
+    declVarPlugin({
+      type,
+      getVarsMap: () => getThemesData()[defaultName]
+    })
   ]);
 
   /**

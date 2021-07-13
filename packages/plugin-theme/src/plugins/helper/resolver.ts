@@ -8,6 +8,11 @@ function resolveModule(id: string, opts: any) {
   });
 }
 
+/**
+ * postcss-import 的 resolve 函数
+ * 
+ * 由于 postcss-import 不透出 extensions, 故再此实现 resolve
+ */
 export const resolver = async (id: string, base: string, options: any) => {
   const paths = options.path;
 
