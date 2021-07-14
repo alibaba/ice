@@ -67,7 +67,7 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
             body.forEach((item, index) => {
               // check ImportDeclaration
               if (t.isImportDeclaration(item)) {
-                if (t.isStringLiteral(item.source, { value: 'ice'})) {
+                if (t.isStringLiteral(item.source, { value: process.env.__FRAMEWORK_NAME__ || 'ice' })) {
                   item.specifiers.forEach((value) => {
                     if (t.isImportNamespaceSpecifier(value)) {
                       namespaceSpecifier.push(value.local.name);
