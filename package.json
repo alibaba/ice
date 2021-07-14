@@ -73,6 +73,7 @@
   },
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^4.0.0",
-    "@typescript-eslint/parser": "^4.0.0"
+    "@typescript-eslint/parser": "^4.0.0",
+    "postcss": "^8.3.5"
   }
 }
