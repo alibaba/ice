@@ -1,0 +1,32 @@
+{
+  "name": "build-plugin-fusion-legacy",
+  "version": "1.0.0",
+  "description": "plugin for fusion component to solve legacy config",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fusion",
+    "build-scripts"
+  ],
+  "dependencies": {
+    "@builder/app-helpers": "^2.1.0",
+    "babel-plugin-import": "^1.11.2",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "ice-skin-loader": "^0.3.0",
+    "postcss": "^7.0.32",
+    "postcss-plugin-rpx2vw": "^0.0.2",
+    "resolve-sass-import": "^0.1.0",
+    "webpack-sources": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/webpack-sources": "^2.0.0"
+  },
+  "peerDependencies": {
+    "sass": "^1.0.0",
+    "webpack": "^4.0.0"
+  },
+  "author": "",
+  "license": "MIT"
+}

@@ -1,4 +1,4 @@
-module.exports = (themesCssVars, defaultTheme, cssVariable) => {
+export default (themesCssVars: Record<string, string>, defaultTheme: string, cssVariable: boolean) => {
   const themesDataStr = Object.keys(themesCssVars).map((themeKey) => {
     const cssVars = themesCssVars[themeKey];
     return !cssVariable

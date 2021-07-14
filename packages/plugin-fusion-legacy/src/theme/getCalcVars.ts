@@ -1,6 +1,5 @@
-const path = require('path');
-const resolveSassImport = require('resolve-sass-import');
-const { getSassImplementation } = require('@builder/app-helpers');
+import * as path from 'path';
+import { getSassImplementation } from '@builder/app-helpers';
 
 // regex for match sass variables like:
 // $color-calculate-xxxx: transparentize($search-simple-dark-bg-color, 1 - $search-simple-dark-bg-opacity) !default;
@@ -10,14 +9,16 @@ const SASS_REGEX = /\$color-calculate[\w-]+?:[\s\S]+?;/g;
 const CSS_REGEX = /\.color-calculate[\w\s-]+?\{[\s\S]+?\}/g;
 
 // fix problem with importing absolute paths on windows.
-function formatPathForWin(filepath) {
+function formatPathForWin(filepath: string) {
   const isWin = process.platform === 'win32';
   return isWin ? filepath.replace(/\\/g, '/') : filepath;
-};
+}
 
-module.exports = (varsPath, themePath, themeConfig) => {
+export default (varsPath: string, themePath: string, themeConfig: Record<string, string>) => {
   let variablesContent = '';
   try {
+    // eslint-disable-next-line global-require
+    const resolveSassImport = require('resolve-sass-import');
     variablesContent = resolveSassImport(varsPath, path.dirname(varsPath));
   } catch (err) {
     console.log(err);
@@ -57,7 +58,7 @@ ${calcKeys.map((key) => {
     const calcCss = cssContent.match(CSS_REGEX);
     if (calcCss) {
       // parse `.color-calculate-mask-background{color: #000}` as `calcVars['calculate-color-mask-background'] = '#000'`
-      calcCss.forEach((item) => {
+      calcCss.forEach((item: string) => {
         const [key, value] = item.split('{');
         calcVars[key.replace(/\.|\{/g, '').trim()] = value.replace(/;|\}/g, '').replace('color:', '').trim();
       });
