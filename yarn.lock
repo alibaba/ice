@@ -1149,12 +1149,7 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/pack@0.2.16":
-  version "0.2.16"
-  resolved "https://registry.nlark.com/@builder/pack/download/@builder/pack-0.2.16.tgz?cache=0&sync_timestamp=1626242967471&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.2.16.tgz#d614c5b538b47171facd1a3bffff2d8f3c1b14c5"
-  integrity sha1-1hTFtTi0cXH6zRo7//8tjzwbFMU=
-
-"@builder/pack@^0.2.9":
+"@builder/pack@0.2.17", "@builder/pack@^0.2.9":
   version "0.2.17"
   resolved "https://registry.nlark.com/@builder/pack/download/@builder/pack-0.2.17.tgz?cache=0&sync_timestamp=1626242967471&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40builder%2Fpack%2Fdownload%2F%40builder%2Fpack-0.2.17.tgz#96f1a2c99192bbd2df1b7882c406b8fdb7862b7e"
   integrity sha1-lvGiyZGSu9LfG3iCxAa4/beGK34=
@@ -6776,7 +6771,7 @@ detective@^5.0.2:
 
 devtools-protocol@0.0.818844:
   version "0.0.818844"
-  resolved "https://registry.nlark.com/devtools-protocol/download/devtools-protocol-0.0.818844.tgz?cache=0&sync_timestamp=1626157207802&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdevtools-protocol%2Fdownload%2Fdevtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
+  resolved "https://registry.nlark.com/devtools-protocol/download/devtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
   integrity sha1-0ZRyeOyFtT5MjKWY9geij6eFup4=
 
 dezalgo@^1.0.0:
@@ -17355,22 +17350,22 @@ typedarray@^0.0.6:
 
 typescript@^3.8.3:
   version "3.9.10"
-  resolved "https://registry.nlark.com/typescript/download/typescript-3.9.10.tgz?cache=0&sync_timestamp=1626160650090&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
+  resolved "https://registry.nlark.com/typescript/download/typescript-3.9.10.tgz?cache=0&sync_timestamp=1626247113458&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha1-cPORCselHta+952ngAaQsZv3eLg=
 
 typescript@^4.0.0:
   version "4.3.5"
-  resolved "https://registry.nlark.com/typescript/download/typescript-4.3.5.tgz?cache=0&sync_timestamp=1626160650090&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  resolved "https://registry.nlark.com/typescript/download/typescript-4.3.5.tgz?cache=0&sync_timestamp=1626247113458&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
   integrity sha1-TRw3zBbok5c8RaBohrcRMjTxGfQ=
 
 typescript@~4.1.3:
   version "4.1.6"
-  resolved "https://registry.nlark.com/typescript/download/typescript-4.1.6.tgz?cache=0&sync_timestamp=1626160650090&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.1.6.tgz#1becd85d77567c3c741172339e93ce2e69932138"
+  resolved "https://registry.nlark.com/typescript/download/typescript-4.1.6.tgz?cache=0&sync_timestamp=1626247113458&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.1.6.tgz#1becd85d77567c3c741172339e93ce2e69932138"
   integrity sha1-G+zYXXdWfDx0EXIznpPOLmmTITg=
 
 typescript@~4.2.4:
   version "4.2.4"
-  resolved "https://registry.nlark.com/typescript/download/typescript-4.2.4.tgz?cache=0&sync_timestamp=1626160650090&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
+  resolved "https://registry.nlark.com/typescript/download/typescript-4.2.4.tgz?cache=0&sync_timestamp=1626247113458&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
   integrity sha1-hhC1l0feAo/aiYqK7w4QPxVtCWE=
 
 uglify-js@3.4.x:
