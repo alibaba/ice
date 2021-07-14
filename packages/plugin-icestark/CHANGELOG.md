@@ -4,6 +4,7 @@
 
 - [feat] support setting custom lifecycles. ([#337](https://github.com/ice-lab/icestark/issues/337))
 - [fix] append lifecycles for other framework.
+
 # 2.1.0
 
 - [fix] get rendering container through `props` instead of `getMountNode`. ([#227](https://github.com/ice-lab/icestark/issues/227))
