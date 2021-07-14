@@ -9,12 +9,23 @@ import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
 const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
-  const { router: appConfigRouter = {}, app = {}, renderComponent } = appConfig;
+  const { router: appConfigRouter = {}, app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler } = app;
+
+  const { parseSearchParams = true } = app;
+  const wrapperPageComponent = (PageComponent) => {
+    const WrapperedPageComponent = (props) => {
+      const searchParams = parseSearchParams && applyRuntimeAPI('getSearchParams');
+      return <PageComponent {...Object.assign({}, props, { searchParams })} />;
+    };
+    return WrapperedPageComponent;
+  };
+
+  wrapperRouteComponent(wrapperPageComponent);
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
-    return renderComponent ? [{ component: renderComponent }] : formatRoutes(appConfigRouter.routes || defaultRoutes, '');
+    return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
   });
 
   // add default RoutesComponent
@@ -42,43 +53,27 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
     modifyRoutes(appConfigRouter.modifyRoutes);
   }
 
-  let renderRouter: React.ReactNode | null = null;
-  if (renderComponent) {
-    renderRouter = ((routes: RouteItemProps[]) => () => {
-      const [mainRoute] = routes;
-      if (mainRoute) {
-        const RenderComponent = mainRoute.component as React.ComponentType;
-        let initialProps = {};
-        if (process.env.__IS_SERVER__) {
-          initialProps = context.initialContext || {};
-        }
-        return <RenderComponent {...initialProps} />;
-      }
-      return null;
-    });
-  } else {
-    const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
-    renderRouter = (routes: RouteItemProps[], RoutesComponent: React.ComponentType<{ routes: IRouterConfig[]; fallback: React.ComponentType }>, customRouterProps = {}) => () => {
-      let routerProps = {
-        ...appConfigRouter,
-        lazy,
-        ...customRouterProps,
-      };
-      if (!routerProps.history) {
-        routerProps.history = applyRuntimeAPI('createHistory', { type: appConfigRouter.type, basename: appConfigRouter.basename });
-      }
-      if (process.env.__IS_SERVER__) {
-        const { initialContext = {} } = context;
-        routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
-      }
-      const { fallback, ...restRouterProps } = routerProps;
-      return (
-        <IceRouter {...restRouterProps}>
-          { RoutesComponent ? <RoutesComponent routes={parseRoutes(routes, fallback)} fallback={fallback} /> : null}
-        </IceRouter>
-      );
+  const lazy = buildConfig && buildConfig.router && buildConfig.router.lazy;
+  const renderRouter = (routes: RouteItemProps[], RoutesComponent: React.ComponentType<{ routes: IRouterConfig[]; fallback: React.ComponentType }>, customRouterProps = {}) => () => {
+    let routerProps = {
+      ...appConfigRouter,
+      lazy,
+      ...customRouterProps,
     };
-  }
+    if (!routerProps.history) {
+      routerProps.history = applyRuntimeAPI('createHistory', { type: appConfigRouter.type, basename: appConfigRouter.basename });
+    }
+    if (process.env.__IS_SERVER__) {
+      const { initialContext = {} } = context;
+      routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
+    }
+    const { fallback, ...restRouterProps } = routerProps;
+    return (
+      <IceRouter {...restRouterProps}>
+        { RoutesComponent ? <RoutesComponent routes={parseRoutes(routes, fallback)} fallback={fallback} /> : null}
+      </IceRouter>
+    );
+  };
 
   setRenderRouter(renderRouter);
 };

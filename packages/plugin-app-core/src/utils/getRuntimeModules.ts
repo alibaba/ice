@@ -10,9 +10,10 @@ export default (plugins: any = [], targetDir: string) => {
     if (!pluginPath) return false;
     // NOTE: module.js will be discarded in future.
     const pluginDir = path.dirname(pluginPath);
-    let modulePath = path.join(pluginDir, 'runtime.js');
+    let absoluteModulePath = path.join(pluginDir, 'runtime.js');
+    let modulePath = absoluteModulePath;
     const moduleDir = path.join(pluginDir, '..');
-    if(!fse.existsSync(modulePath)){
+    if(!fse.existsSync(absoluteModulePath)){
       // filter plugin without runtime
       return false;
     } else if (name){
@@ -26,7 +27,8 @@ export default (plugins: any = [], targetDir: string) => {
           // copy source code when runtime exists
           fse.ensureDirSync(tempDir);
           fse.copySync(srcDir, tempDir);
-          modulePath = `../${path.relative(targetDir, path.join(tempDir, runtimePaths[0]).replace(/.(t|j)(s|sx)$/, ''))}`;
+          absoluteModulePath = path.join(tempDir, runtimePaths[0]).replace(/.(t|j)(s|sx)$/, '');
+          modulePath = `../${path.relative(targetDir, absoluteModulePath)}`;
         }
       }
     }
@@ -41,14 +43,18 @@ export default (plugins: any = [], targetDir: string) => {
     return {
       pluginConfig,
       modulePath: formatPath(modulePath),
+      absoluteModulePath: formatPath(absoluteModulePath),
+      name,
     };
   })
     .filter(Boolean)
-    .map(({ modulePath, pluginConfig }) => {
+    .map(({ modulePath, pluginConfig, name, absoluteModulePath }) => {
       const staticModule = (pluginConfig && pluginConfig.staticModule) || false;
       return {
         staticModule,
-        path: modulePath
+        path: modulePath,
+        absoluteModulePath,
+        name,
       };
     });
 };

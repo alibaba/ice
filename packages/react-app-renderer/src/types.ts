@@ -16,7 +16,8 @@ export type RenderAppConfig = {
     ErrorBoundaryFallback?: React.ComponentType;
     errorBoundary?: boolean;
     getInitialData?: (context: Context) => Promise<any>;
-  }
+  },
+  renderComponent?: React.ComponentType
 };
 export type AppLifecycle = {
   createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
@@ -28,5 +29,6 @@ export interface RenderOptions<T = RenderAppConfig, P = any> {
   ErrorBoundary?: React.ComponentType<{Fallback?: React.ComponentType; onError?: Function}>;
   buildConfig: P;
   appConfig: T;
-  appLifecycle: AppLifecycle
+  appLifecycle: AppLifecycle;
+  router?: boolean;
 }

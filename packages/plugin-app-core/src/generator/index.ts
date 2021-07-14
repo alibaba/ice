@@ -214,7 +214,16 @@ export default class Generator {
     const renderExt = '.ejs';
     if (path.extname(templatePath) === '.ejs') {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
-      let content = ejs.render(templateContent, { ...this.renderData, ...extraData });
+      let renderData = this.renderData;
+      if (typeof extraData === 'function') {
+        renderData = extraData(this.renderData);
+      } else {
+        renderData = {
+          ...renderData,
+          ...extraData,
+        };
+      }
+      let content = ejs.render(templateContent, renderData);
       try {
         content = prettier.format(content, {
           parser: 'typescript',

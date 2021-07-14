@@ -16,7 +16,7 @@ import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
   import '../../<%= globalStyle %>'
 <% } %>
 import loadStaticModules from '<%- tempPath %>/core/loadStaticModules';
-import loadRuntimeModules from '<%- tempPath %>/core/loadRuntimeModules';
+import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- tempPath %>/core/appConfig';
 import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
@@ -46,6 +46,7 @@ export function runApp(appConfig: IAppConfig = {}) {
   <% } %>
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
+    router: <%- Boolean(router) %>,
     buildConfig,
     appLifecycle: {
       createBaseApp: frameworkAppBase,

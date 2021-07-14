@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { formatPath, checkExportDefaultDeclarationExists } from '@builder/app-helpers';
-import generateEntry from './generator';
+import generateEntry from './generate';
 import { FrameworkType, IGenerateResult } from './types';
 
 interface IEntries {

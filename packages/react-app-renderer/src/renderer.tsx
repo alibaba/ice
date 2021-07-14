@@ -16,14 +16,14 @@ export function getInitialData() {
 }
 
 export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
-  const { ErrorBoundary, appConfig = { app: {}} } = options;
+  const { ErrorBoundary, appConfig = { app: {} }, router } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppRouter = runtime?.getAppRouter?.();
+  const AppComponent = router ? runtime?.getAppRouter?.() : appConfig.renderComponent;
 
   function App() {
-    const appRouter = <AppRouter />;
-    const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
+    const appComponent = <AppComponent />;
+    const rootApp = AppProvider ? <AppProvider>{appComponent}</AppProvider> : appComponent;
     if (errorBoundary) {
       return (
         <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>

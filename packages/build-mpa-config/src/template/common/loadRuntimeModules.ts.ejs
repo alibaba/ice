@@ -1,0 +1,15 @@
+interface IRuntime<T> {
+  loadModule: (module: { default: T } | T) => void;
+}
+
+function loadRuntimeModules(runtime: IRuntime<Function>) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.forEach((runtimeModule) => { %>
+      <% if(!runtimeModule.staticModule){ %>
+        runtime.loadModule(require('<%= runtimeModule.path %>'));
+      <% } %>
+    <% }) %>
+  <% } %>
+}
+
+export default loadRuntimeModules;

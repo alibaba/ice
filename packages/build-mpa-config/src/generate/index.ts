@@ -1,5 +1,5 @@
-import ReactGenerator from './React';
-import RaxGenerator from './Rax';
+import ReactGenerator from './ReactGenerator';
+import RaxGenerator from './RaxGenerator';
 import { IGeneratorOptions, IGenerateResult } from '../types';
 
 function generatePageFiles(api, options: IGeneratorOptions): IGenerateResult {

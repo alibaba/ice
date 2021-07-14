@@ -21,6 +21,5 @@ async function loader(code, sourcemap) {
       default: false
     }
   ]});
-  console.log('code===>', code);
   return [code, sourcemap];
 }

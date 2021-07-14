@@ -220,7 +220,7 @@ module.exports = [
   {
     name: 'modularImportRuntime',
     validation: 'boolean',
-    defaultValue: false,
+    defaultValue: true,
   },
   {
     name: 'esbuild',

@@ -12,5 +12,6 @@
   "plugins": [],
   "devServer": {
     "writeToDisk": true
-  }
+  },
+  "vendor": false
 }

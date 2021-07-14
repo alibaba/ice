@@ -1,8 +1,10 @@
 const importDeclarations: any = {};
 const defaultDeclarations = {
-  '$$framework/core/publicAPI': [
+  '$$framework/core/routerAPI': [
     // router api
     'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
+  ],
+  '$$framework/core/publicAPI': [
     // LifeCycles api
     'usePageShow', 'usePageHide', 'withPageLifeCycle',
     // events api

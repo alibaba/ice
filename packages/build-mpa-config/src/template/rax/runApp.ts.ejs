@@ -3,8 +3,13 @@ import {
   createBaseApp,
   initAppLifeCycles,
   emitLifeCycles,
+  <% if (router) {%>
+  getSearchParams,
+  initHistory,
+  createHistory,
+  <% } %>
 } from 'create-app-shared';
-import reactAppRenderer, { RenderAppConfig } from 'rax-app-renderer';
+import raxAppRenderer, { RenderAppConfig } from 'rax-app-renderer';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
@@ -15,26 +20,34 @@ import loadRuntimeModules from '<%- tempPath %>/core/loadRuntimeModules';
 
 import { setAppConfig } from '<%- tempPath %>/core/appConfig';
 import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
-import Page from '<%- resourcePath %>';
 
 const buildConfig: IBuildConfig = <%- buildConfig %>;
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
+  runtimeAPI: {
+    <% if (router) {%>
+    createHistory,
+    getSearchParams,
+    <% } %>
+  },
 });
 
 export function runApp(appConfig: IAppConfig = {}) {
-  // set page component
-  appConfig.renderComponent = Page;
   // store appConfig in case of server side render
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
   if (process.env.__IS_SERVER__) return;
-  reactAppRenderer({
+  <% if (router) {%>
+  // set History before GID
+  initHistory(appConfig as any);
+  <% } %>
+  raxAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
+    router: <%- Boolean(router) %>,
     appLifecycle: {
       createBaseApp: frameworkAppBase,
       initAppLifeCycles,
