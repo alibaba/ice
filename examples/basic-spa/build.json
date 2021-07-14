@@ -9,7 +9,7 @@
   },
   "modeConfig": {
     "prod": {
-      "ignoreHtmlTemplate": true
+      "ignoreHtmlTemplate": false
     }
   },
   "esbuild": {

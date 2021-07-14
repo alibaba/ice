@@ -1,40 +1,31 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
 import Generator from './generator';
-import checkStoreAndModelExist from './utils/checkStoreAndModelExist';
+import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
-import checkStoreAndModelFileExist from './utils/checkStoreAndModelFileExist';
+import { getRouteFileType } from './utils/getFileType';
 
 const { name: pluginName } = require('../package.json');
 
-export default async (api) => {
+export default async (api: any) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
 
   // get mpa entries in src/pages
   const { mpa: isMpa, entry, store } = userConfig;
 
-  const targetPath = getValue('TEMP_PATH');
+  const tempPath = getValue('TEMP_PATH');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
-  const tempDir = (path.basename(targetPath) || '').split('.')[1];
-  const templatePath = path.join(__dirname, 'template');
-  const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
-  const pageStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
-  const pageStoresTemplatePath = path.join(templatePath, 'pageStores.ts.ejs');
-  const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
-  const projectType = getValue('PROJECT_TYPE');
-  const pages = applyMethod('getPages', rootDir, srcDir);
+  const srcPath = path.join(rootDir, srcDir);
+  const tempDir = (path.basename(tempPath) || '').split('.')[1];  // ice
+  const pagesName = applyMethod('getPages', rootDir, srcDir);
 
-  const storeAndModelExists = checkStoreAndModelExist({ rootDir, srcDir, projectType, applyMethod });
-  if (!storeAndModelExists) {
+  const storeExists = checkStoreExists(srcPath, pagesName);
+  if (!storeExists) {
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
 
-  checkStoreAndModelFileExist({ rootDir, srcDir, projectType, pages });
-
-  const appStoreFile = applyMethod('formatPath', getAppStorePath({ rootDir, srcDir, projectType }));
-  const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
+  const appStoreFile = applyMethod('formatPath', getAppStorePath(srcPath));
 
   applyMethod('addExport', {
     source: '@ice/store',
@@ -44,17 +35,18 @@ export default async (api) => {
     exportMembers: ['createStore'],
   });
 
-  if (!existsAppStoreFile) {
+  if (!appStoreFile) {
     // set IStore to IAppConfig
     applyMethod('addAppConfigTypes', { source: '../plugins/store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
   }
 
   // add babel plugins for ice lazy
   const { configPath } = userConfig.router || {};
-
+  // TODO: remove PROJECT_TYPE
+  const projectType = getValue('PROJECT_TYPE');
   let { routesPath } = applyMethod('getRoutes', {
     rootDir,
-    tempDir: targetPath,
+    tempPath,
     configPath,
     projectType,
     isMpa,
@@ -62,12 +54,12 @@ export default async (api) => {
   });
 
   if (isMpa) {
-    const routesFile = `routes.${projectType}`;
     const pagesPath = path.join(rootDir, 'src', 'pages');
-    const pagesRoutePath = pages.map(pageName => {
-      return path.join(pagesPath, pageName, routesFile);
+    routesPath = pagesName.map((pageName: string) => {
+      const pagePath = path.join(pagesPath, pageName);
+      const routesFileType = getRouteFileType(pagePath);
+      return path.join(pagePath, `routes${routesFileType}`);
     });
-    routesPath = pagesRoutePath;
   }
 
   const babelPlugins = userConfig.babelPlugins || [];
@@ -93,28 +85,16 @@ export default async (api) => {
 
   modifyUserConfig('babelPlugins', [...babelPlugins]);
 
-  onGetWebpackConfig(config => {
-    config.module.rule('appJSON')
-      .test(/app\.json$/)
-      .use('page-source-loader')
-      .loader(require.resolve('./pageSourceLoader'))
-      .options({
-        targetPath
-      });
-    config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'plugins', 'store', 'index.ts'));
+  onGetWebpackConfig((config: any) => {
+    config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
   });
 
   const gen = new Generator({
-    appStoreTemplatePath,
-    pageStoreTemplatePath,
-    pageStoresTemplatePath,
-    typesTemplatePath,
-    targetPath,
-    rootDir,
+    tempPath,
     applyMethod,
-    projectType,
-    srcDir,
-    resetPageState: store && store.resetPageState
+    srcPath,
+    pagesName,
+    disableResetPageState: !!store?.disableResetPageState
   });
 
   gen.render();

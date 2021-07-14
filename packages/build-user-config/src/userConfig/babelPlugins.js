@@ -1,4 +1,5 @@
-module.exports = (config, babelPlugins) => {
+module.exports = (config, babelPlugins, { userConfig }) => {
+  if (userConfig.swc) return;
   ['jsx', 'tsx'].forEach((rule) => {
     config.module
       .rule(rule)

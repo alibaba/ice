@@ -1,6 +1,6 @@
 {
   "name": "react-app-renderer",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "create-app-shared": "^0.3.0"
+    "create-app-shared": "^1.0.0"
   },
   "files": [
     "lib"

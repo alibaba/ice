@@ -13,9 +13,10 @@ import {
   createHistory,
 <% } %>
 } from 'create-app-shared';
-<% if (isReact) {%>import reactAppRenderer, { getInitialData, RenderAppConfig } from 'react-app-renderer';
+<% if (isReact) {%>
+import reactAppRenderer, { getInitialData, RenderAppConfig } from 'react-app-renderer';
 <% if (buildConfig.router !== false) {%>import { withRouter } from 'react-router';<% } %>
-import genWithSearchParams from './genWithSearchParams';<% } %>
+<% } %>
 <% if (isRax && hasTabBar) {%>
 import TabBar from './TabBar';
 <% } %>
@@ -46,9 +47,7 @@ const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
   runtimeAPI: {
-    <% if (buildConfig.router !== false) {%>
-    createHistory,
-    <% } %>
+    <% if (buildConfig.router !== false) {%>createHistory,<% } %>
     getSearchParams,
   },
 });
@@ -108,35 +107,15 @@ export function runApp(appConfig?: IAppConfig<% if(isRax){ %>, staticConfig?: an
   <% } %>
 };
 
-export function createApp(appConfig?: IAppConfig<% if(isRax){ %>, staticConfig?: any<% } %>) {
-  console.warn(
-    'Detected that you are using createApp, please use runApp method, Visit https://ice.work/docs/guide/basic/api.'
-  );
-  runApp(appConfig<% if(isRax){ %>, staticConfig<% } %>);
-}
-
-<% if (isReact) {%>
-  const useSearchParams = () => {
-    // @deprecated
-​    console.warn('Detected that you are using useSearchParams, please use getSearchParams method, Visit https://ice.work/docs/guide/basic/api.');
-    return getSearchParams();
-  };
-  const withSearchParams = genWithSearchParams(getSearchParams);
-<% } %>
-
 // Public API
 export {
-  // router api
 <% if (buildConfig.router !== false) {%>
+  // router api
   withRouter,
   history,
   getHistory,
 <% } %>
   getSearchParams,
-<% if (isReact) {%>
-  useSearchParams,
-  withSearchParams,
-<% } %>
   getInitialData,
   // LifeCycles api
   usePageShow,

@@ -2,7 +2,6 @@
   "name": "example-basic-auth",
   "description": "auth management with icejs",
   "dependencies": {
-    "ice.js": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, logger, Head, store as appStore } from 'ice';
+import { Link, logger, Head } from 'ice';
+import appStore from '@/store';
 import pageStore from './store';
 import styles from './index.module.scss';
 
