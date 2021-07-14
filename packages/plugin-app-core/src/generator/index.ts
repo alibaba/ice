@@ -11,16 +11,19 @@ import getRuntimeModules from '../utils/getRuntimeModules';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
-interface IRenderData {
-  [key: string]: any;
+interface IRenderDataFunction {
+  (renderDataFunction: IRenderData): IRenderData;
 }
+type IRenderData = Record<string, unknown>;
+
+type IExtraData = IRenderData | IRenderDataFunction;
 
 interface IRegistration {
   [key: string]: any[];
 }
 
 interface IRenderFile {
-  (templatePath: string, targetDir: string, extraData?: IRenderData): void;
+  (templatePath: string, targetDir: string, extraData?: IExtraData): void;
 }
 
 interface IRenderDataRegistration {
@@ -32,7 +35,7 @@ interface ITemplateOptions {
   targetDir: string;
 }
 
-type IRenderTempalte = [string, string, IRenderData];
+type IRenderTemplate = [string, string, IExtraData];
 
 const RENDER_WAIT = 500;
 
@@ -48,7 +51,7 @@ export default class Generator {
 
   private rootDir: string;
 
-  private renderTemplates: IRenderTempalte[];
+  private renderTemplates: IRenderTemplate[];
 
   private renderDataRegistration: IRenderDataRegistration[];
 
@@ -171,7 +174,7 @@ export default class Generator {
 
   public debounceRender = debounce(this.render, RENDER_WAIT);
 
-  public addRenderFile = (templatePath: string, targetPath: string, extraData: IRenderData = {}) => {
+  public addRenderFile = (templatePath: string, targetPath: string, extraData: IExtraData = {}) => {
     // check target path if it is already been registed
     const renderIndex = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
     if (renderIndex > -1) {
@@ -189,7 +192,7 @@ export default class Generator {
     }
   }
 
-  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IRenderData = {}) => {
+  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IExtraData = {}) => {
     const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: ''} : templateOptions;
     const templates = !path.extname(template) ? globby.sync(['**/*'], { cwd: template }) : [template];
     templates.forEach((templateFile) => {

@@ -12,7 +12,7 @@ export default class ReactGenerator extends Base {
   }
 
   public generateLoadRuntimeModules(routesFile: string) {
-    this.applyMethod('addRenderFile', path.join(__dirname, '../template/common/loadRuntimeModules.ts.ejs'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
+    this.addRenderLoadRuntimeModulesFile(path.join(__dirname, '../template/common/loadRuntimeModules.ts.ejs'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
       , (renderData) => {
         let { runtimeModules } = renderData;
         if (!routesFile) {

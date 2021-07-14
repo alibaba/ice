@@ -13,3 +13,8 @@ export interface IGenerateResult {
 }
 
 export type FrameworkType = 'rax' | 'react';
+
+export type LoadRuntimeModulesPathType = {
+  entryName: string;
+  targetPath: string;
+}[];
