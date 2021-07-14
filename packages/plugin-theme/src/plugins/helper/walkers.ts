@@ -105,7 +105,7 @@ export const walkerFind = <T extends any>(type: string, root: Root, cb: (data: I
  */
 export const walkDeps = (root: Root, type: string, cb: (tree: Root) => void = () => { }) => {
   const deps = new Map<string, Root>();
-  const blacklist = ['/reset', '_shadow', '_mixin', '_function'];      // 扫描文件的黑名单
+  const blacklist = ['/reset', 'mixin', '_'];      // 扫描文件的黑名单
 
   /**
    * 不处理存在于黑名单内单词的路径
