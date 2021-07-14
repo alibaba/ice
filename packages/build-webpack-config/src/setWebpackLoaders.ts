@@ -83,6 +83,6 @@ export default (config) => {
       .end()
       .use('babel-loader')
       .loader(babelLoader)
-      .options({ ...cloneDeep(babelConfig), cacheDirectory: true });
+      .options({ ...cloneDeep(babelConfig)});
   });
 };

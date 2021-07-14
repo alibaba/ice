@@ -3284,11 +3284,6 @@
   resolved "https://registry.npm.taobao.org/@tootallnate/once/download/@tootallnate/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha1-zLkURTYBeaBOf+av94wA/8Hur4I=
 
-"@trysound/sax@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npm.taobao.org/@trysound/sax/download/@trysound/sax-0.1.1.tgz#3348564048e7a2d7398c935d466c0414ebb6a669"
-  integrity sha1-M0hWQEjnotc5jJNdRmwEFOu2pmk=
-
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.0", "@types/babel__core@^7.1.14", "@types/babel__core@^7.1.7":
   version "7.1.15"
   resolved "https://registry.nlark.com/@types/babel__core/download/@types/babel__core-7.1.15.tgz#2ccfb1ad55a02c83f8e0ad327cbc332f55eb1024"
@@ -4109,7 +4104,7 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.2, ajv@^6.12.3, ajv@^6.12.4, ajv
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-alphanum-sort@^1.0.0, alphanum-sort@^1.0.2:
+alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
@@ -4965,7 +4960,7 @@ browserslist@4.7.0:
     electron-to-chromium "^1.3.247"
     node-releases "^1.1.29"
 
-browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4.16.0, browserslist@^4.16.6, browserslist@^4.6.4:
+browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4.6.4:
   version "4.16.6"
   resolved "https://registry.nlark.com/browserslist/download/browserslist-4.16.6.tgz?cache=0&sync_timestamp=1619789072079&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.16.6.tgz#d7901277a5a88e554ed305b183ec9b0c08f66fa2"
   integrity sha1-15ASd6WojlVO0wWxg+ybDAj2b6I=
@@ -5694,11 +5689,6 @@ color@^3.0.0:
     color-convert "^1.9.1"
     color-string "^1.5.4"
 
-colord@^2.0.1:
-  version "2.1.0"
-  resolved "https://registry.nlark.com/colord/download/colord-2.1.0.tgz#28cd9d6ac874dff97ef5ec1432c5c0b4e58e49c7"
-  integrity sha1-KM2dash03/l+9ewUMsXAtOWOScc=
-
 colorette@^1.2.1, colorette@^1.2.2:
   version "1.2.2"
   resolved "https://registry.nlark.com/colorette/download/colorette-1.2.2.tgz?cache=0&sync_timestamp=1618846981554&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcolorette%2Fdownload%2Fcolorette-1.2.2.tgz#cbcc79d5e99caea2dbf10eb3a26fd8b3e6acfa94"
@@ -5748,11 +5738,6 @@ commander@^6.0.0:
   version "6.2.1"
   resolved "https://registry.nlark.com/commander/download/commander-6.2.1.tgz?cache=0&sync_timestamp=1624609539421&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcommander%2Fdownload%2Fcommander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
   integrity sha1-B5LraC37wyWZm7K4T93duhEKxzw=
-
-commander@^7.1.0:
-  version "7.2.0"
-  resolved "https://registry.nlark.com/commander/download/commander-7.2.0.tgz?cache=0&sync_timestamp=1624609539421&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcommander%2Fdownload%2Fcommander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
-  integrity sha1-o2y1fQtQHOEI5NIFWaFQo5HZerc=
 
 commander@~2.19.0:
   version "2.19.0"
@@ -6090,17 +6075,6 @@ cosmiconfig@^6.0.0:
     path-type "^4.0.0"
     yaml "^1.7.2"
 
-cosmiconfig@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npm.taobao.org/cosmiconfig/download/cosmiconfig-7.0.0.tgz?cache=0&sync_timestamp=1596310773001&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcosmiconfig%2Fdownload%2Fcosmiconfig-7.0.0.tgz#ef9b44d773959cae63ddecd122de23853b60f8d3"
-  integrity sha1-75tE13OVnK5j3ezRIt4jhTtg+NM=
-  dependencies:
-    "@types/parse-json" "^4.0.0"
-    import-fresh "^3.2.1"
-    parse-json "^5.0.0"
-    path-type "^4.0.0"
-    yaml "^1.10.0"
-
 create-cert@^1.0.2:
   version "1.0.6"
   resolved "https://registry.nlark.com/create-cert/download/create-cert-1.0.6.tgz#7ed01fff7f9f0cea500aba5eff119af4c8de84f6"
@@ -6185,24 +6159,12 @@ css-color-names@0.0.4, css-color-names@^0.0.4:
   resolved "https://registry.nlark.com/css-color-names/download/css-color-names-0.0.4.tgz?cache=0&sync_timestamp=1618846942982&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcss-color-names%2Fdownload%2Fcss-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
   integrity sha1-gIrcLnnPhHOAabZGyyDsJ762KeA=
 
-css-color-names@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.nlark.com/css-color-names/download/css-color-names-1.0.1.tgz?cache=0&sync_timestamp=1618846942982&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcss-color-names%2Fdownload%2Fcss-color-names-1.0.1.tgz#6ff7ee81a823ad46e020fa2fd6ab40a887e2ba67"
-  integrity sha1-b/fugagjrUbgIPov1qtAqIfiumc=
-
 css-declaration-sorter@^4.0.1:
   version "4.0.1"
   resolved "https://registry.nlark.com/css-declaration-sorter/download/css-declaration-sorter-4.0.1.tgz?cache=0&sync_timestamp=1620754698059&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-4.0.1.tgz#c198940f63a76d7e36c1e71018b001721054cb22"
   integrity sha1-wZiUD2OnbX42wecQGLABchBUyyI=
   dependencies:
     postcss "^7.0.1"
-    timsort "^0.3.0"
-
-css-declaration-sorter@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.nlark.com/css-declaration-sorter/download/css-declaration-sorter-6.0.3.tgz?cache=0&sync_timestamp=1620754698059&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.0.3.tgz#9dfd8ea0df4cc7846827876fafb52314890c21a9"
-  integrity sha1-nf2OoN9Mx4RoJ4dvr7UjFIkMIak=
-  dependencies:
     timsort "^0.3.0"
 
 css-has-pseudo@^0.10.0:
@@ -6231,19 +6193,6 @@ css-loader@^3.2.0:
     postcss-value-parser "^4.1.0"
     schema-utils "^2.7.0"
     semver "^6.3.0"
-
-css-minimizer-webpack-plugin@^3.0.0:
-  version "3.0.2"
-  resolved "https://registry.nlark.com/css-minimizer-webpack-plugin/download/css-minimizer-webpack-plugin-3.0.2.tgz#8fadbdf10128cb40227bff275a4bb47412534245"
-  integrity sha1-j6298QEoy0Aie/8nWku0dBJTQkU=
-  dependencies:
-    cssnano "^5.0.6"
-    jest-worker "^27.0.2"
-    p-limit "^3.0.2"
-    postcss "^8.3.5"
-    schema-utils "^3.0.0"
-    serialize-javascript "^6.0.0"
-    source-map "^0.6.1"
 
 css-prefers-color-scheme@^3.1.1:
   version "3.1.1"
@@ -6355,41 +6304,6 @@ cssnano-preset-default@^4.0.8:
     postcss-svgo "^4.0.3"
     postcss-unique-selectors "^4.0.1"
 
-cssnano-preset-default@^5.1.3:
-  version "5.1.3"
-  resolved "https://registry.nlark.com/cssnano-preset-default/download/cssnano-preset-default-5.1.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.3.tgz#caa54183a8c8df03124a9e23f374ab89df5a9a99"
-  integrity sha1-yqVBg6jI3wMSSp4j83Srid9ampk=
-  dependencies:
-    css-declaration-sorter "^6.0.3"
-    cssnano-utils "^2.0.1"
-    postcss-calc "^8.0.0"
-    postcss-colormin "^5.2.0"
-    postcss-convert-values "^5.0.1"
-    postcss-discard-comments "^5.0.1"
-    postcss-discard-duplicates "^5.0.1"
-    postcss-discard-empty "^5.0.1"
-    postcss-discard-overridden "^5.0.1"
-    postcss-merge-longhand "^5.0.2"
-    postcss-merge-rules "^5.0.2"
-    postcss-minify-font-values "^5.0.1"
-    postcss-minify-gradients "^5.0.1"
-    postcss-minify-params "^5.0.1"
-    postcss-minify-selectors "^5.1.0"
-    postcss-normalize-charset "^5.0.1"
-    postcss-normalize-display-values "^5.0.1"
-    postcss-normalize-positions "^5.0.1"
-    postcss-normalize-repeat-style "^5.0.1"
-    postcss-normalize-string "^5.0.1"
-    postcss-normalize-timing-functions "^5.0.1"
-    postcss-normalize-unicode "^5.0.1"
-    postcss-normalize-url "^5.0.2"
-    postcss-normalize-whitespace "^5.0.1"
-    postcss-ordered-values "^5.0.2"
-    postcss-reduce-initial "^5.0.1"
-    postcss-reduce-transforms "^5.0.1"
-    postcss-svgo "^5.0.2"
-    postcss-unique-selectors "^5.0.1"
-
 cssnano-util-get-arguments@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/cssnano-util-get-arguments/download/cssnano-util-get-arguments-4.0.0.tgz#ed3a08299f21d75741b20f3b81f194ed49cc150f"
@@ -6412,11 +6326,6 @@ cssnano-util-same-parent@^4.0.0:
   resolved "https://registry.nlark.com/cssnano-util-same-parent/download/cssnano-util-same-parent-4.0.1.tgz#574082fb2859d2db433855835d9a8456ea18bbf3"
   integrity sha1-V0CC+yhZ0ttDOFWDXZqEVuoYu/M=
 
-cssnano-utils@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.nlark.com/cssnano-utils/download/cssnano-utils-2.0.1.tgz#8660aa2b37ed869d2e2f22918196a9a8b6498ce2"
-  integrity sha1-hmCqKzfthp0uLyKRgZapqLZJjOI=
-
 cssnano@^4.1.10:
   version "4.1.11"
   resolved "https://registry.nlark.com/cssnano/download/cssnano-4.1.11.tgz#c7b5f5b81da269cb1fd982cb960c1200910c9a99"
@@ -6427,16 +6336,7 @@ cssnano@^4.1.10:
     is-resolvable "^1.0.0"
     postcss "^7.0.0"
 
-cssnano@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.nlark.com/cssnano/download/cssnano-5.0.6.tgz#2a91ad34c6521ae31eab3da9c90108ea3093535d"
-  integrity sha1-KpGtNMZSGuMeqz2pyQEI6jCTU10=
-  dependencies:
-    cosmiconfig "^7.0.0"
-    cssnano-preset-default "^5.1.3"
-    is-resolvable "^1.1.0"
-
-csso@^4.0.2, csso@^4.2.0:
+csso@^4.0.2:
   version "4.2.0"
   resolved "https://registry.nlark.com/csso/download/csso-4.2.0.tgz#ea3a561346e8dc9f546d6febedd50187cf389529"
   integrity sha1-6jpWE0bo3J9UbW/r7dUBh884lSk=
@@ -9201,7 +9101,7 @@ import-fresh@^2.0.0:
     caller-path "^2.0.0"
     resolve-from "^3.0.0"
 
-import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
+import-fresh@^3.0.0, import-fresh@^3.1.0:
   version "3.3.0"
   resolved "https://registry.npm.taobao.org/import-fresh/download/import-fresh-3.3.0.tgz?cache=0&sync_timestamp=1608469579940&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimport-fresh%2Fdownload%2Fimport-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
   integrity sha1-NxYsJfy566oublPVtNiM4X2eDCs=
@@ -9550,7 +9450,7 @@ is-ci@^3.0.0:
   dependencies:
     ci-info "^3.1.1"
 
-is-color-stop@^1.0.0, is-color-stop@^1.1.0:
+is-color-stop@^1.0.0:
   version "1.1.0"
   resolved "https://registry.nlark.com/is-color-stop/download/is-color-stop-1.1.0.tgz#cfff471aee4dd5c9e158598fbe12967b5cdad345"
   integrity sha1-z/9HGu5N1cnhWFmPvhKWe1za00U=
@@ -9794,7 +9694,7 @@ is-relative@^1.0.0:
   dependencies:
     is-unc-path "^1.0.0"
 
-is-resolvable@^1.0.0, is-resolvable@^1.1.0:
+is-resolvable@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/is-resolvable/download/is-resolvable-1.1.0.tgz#fb18f87ce1feb925169c9a407c19318a3206ed88"
   integrity sha1-+xj4fOH+uSUWnJpAfBkxijIG7Yg=
@@ -12444,11 +12344,6 @@ nan@^2.0.0, nan@^2.12.1:
   resolved "https://registry.nlark.com/nan/download/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha1-9TdkAGlRaPTMaUrJOT0MlYXu6hk=
 
-nanoid@^3.1.23:
-  version "3.1.23"
-  resolved "https://registry.nlark.com/nanoid/download/nanoid-3.1.23.tgz?cache=0&sync_timestamp=1620673983269&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnanoid%2Fdownload%2Fnanoid-3.1.23.tgz#f744086ce7c2bc47ee0a8472574d5c78e4183a81"
-  integrity sha1-90QIbOfCvEfuCoRyV01ceOQYOoE=
-
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.npm.taobao.org/nanomatch/download/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -12646,7 +12541,7 @@ normalize-url@^3.0.0:
   resolved "https://registry.nlark.com/normalize-url/download/normalize-url-3.3.0.tgz?cache=0&sync_timestamp=1625826787829&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnormalize-url%2Fdownload%2Fnormalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha1-suHE3E98bVd0PfczpPWXjRhlBVk=
 
-normalize-url@^6.0.1, normalize-url@^6.1.0:
+normalize-url@^6.1.0:
   version "6.1.0"
   resolved "https://registry.nlark.com/normalize-url/download/normalize-url-6.1.0.tgz?cache=0&sync_timestamp=1625826787829&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnormalize-url%2Fdownload%2Fnormalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha1-QNCIW1Nd7/4/MUe+yHfQX+TFZoo=
@@ -13064,7 +12959,7 @@ p-limit@^2.0.0, p-limit@^2.2.0, p-limit@^2.3.0:
   dependencies:
     p-try "^2.0.0"
 
-p-limit@^3.0.2, p-limit@^3.1.0:
+p-limit@^3.1.0:
   version "3.1.0"
   resolved "https://registry.nlark.com/p-limit/download/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
   integrity sha1-4drMvnjQ0TiMoYxk/qOOPlfjcGs=
@@ -13527,14 +13422,6 @@ postcss-calc@^7.0.1:
     postcss-selector-parser "^6.0.2"
     postcss-value-parser "^4.0.2"
 
-postcss-calc@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.nlark.com/postcss-calc/download/postcss-calc-8.0.0.tgz#a05b87aacd132740a5db09462a3612453e5df90a"
-  integrity sha1-oFuHqs0TJ0Cl2wlGKjYSRT5d+Qo=
-  dependencies:
-    postcss-selector-parser "^6.0.2"
-    postcss-value-parser "^4.0.2"
-
 postcss-color-functional-notation@^2.0.1:
   version "2.0.1"
   resolved "https://registry.nlark.com/postcss-color-functional-notation/download/postcss-color-functional-notation-2.0.1.tgz#5efd37a88fbabeb00a2966d1e53d98ced93f74e0"
@@ -13588,16 +13475,6 @@ postcss-colormin@^4.0.3:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-colormin@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.nlark.com/postcss-colormin/download/postcss-colormin-5.2.0.tgz#2b620b88c0ff19683f3349f4cf9e24ebdafb2c88"
-  integrity sha1-K2ILiMD/GWg/M0n0z54k69r7LIg=
-  dependencies:
-    browserslist "^4.16.6"
-    caniuse-api "^3.0.0"
-    colord "^2.0.1"
-    postcss-value-parser "^4.1.0"
-
 postcss-convert-values@^4.0.1:
   version "4.0.1"
   resolved "https://registry.nlark.com/postcss-convert-values/download/postcss-convert-values-4.0.1.tgz#ca3813ed4da0f812f9d43703584e449ebe189a7f"
@@ -13605,13 +13482,6 @@ postcss-convert-values@^4.0.1:
   dependencies:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-convert-values@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-convert-values/download/postcss-convert-values-5.0.1.tgz#4ec19d6016534e30e3102fdf414e753398645232"
-  integrity sha1-TsGdYBZTTjDjEC/fQU51M5hkUjI=
-  dependencies:
-    postcss-value-parser "^4.1.0"
 
 postcss-custom-media@^7.0.8:
   version "7.0.8"
@@ -13651,22 +13521,12 @@ postcss-discard-comments@^4.0.2:
   dependencies:
     postcss "^7.0.0"
 
-postcss-discard-comments@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-discard-comments/download/postcss-discard-comments-5.0.1.tgz?cache=0&sync_timestamp=1621449592883&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz#9eae4b747cf760d31f2447c27f0619d5718901fe"
-  integrity sha1-nq5LdHz3YNMfJEfCfwYZ1XGJAf4=
-
 postcss-discard-duplicates@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-discard-duplicates/download/postcss-discard-duplicates-4.0.2.tgz#3fe133cd3c82282e550fc9b239176a9207b784eb"
   integrity sha1-P+EzzTyCKC5VD8myORdqkge3hOs=
   dependencies:
     postcss "^7.0.0"
-
-postcss-discard-duplicates@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-discard-duplicates/download/postcss-discard-duplicates-5.0.1.tgz#68f7cc6458fe6bab2e46c9f55ae52869f680e66d"
-  integrity sha1-aPfMZFj+a6suRsn1WuUoafaA5m0=
 
 postcss-discard-empty@^4.0.1:
   version "4.0.1"
@@ -13675,22 +13535,12 @@ postcss-discard-empty@^4.0.1:
   dependencies:
     postcss "^7.0.0"
 
-postcss-discard-empty@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-discard-empty/download/postcss-discard-empty-5.0.1.tgz#ee136c39e27d5d2ed4da0ee5ed02bc8a9f8bf6d8"
-  integrity sha1-7hNsOeJ9XS7U2g7l7QK8ip+L9tg=
-
 postcss-discard-overridden@^4.0.1:
   version "4.0.1"
   resolved "https://registry.nlark.com/postcss-discard-overridden/download/postcss-discard-overridden-4.0.1.tgz#652aef8a96726f029f5e3e00146ee7a4e755ff57"
   integrity sha1-ZSrvipZybwKfXj4AFG7npOdV/1c=
   dependencies:
     postcss "^7.0.0"
-
-postcss-discard-overridden@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-discard-overridden/download/postcss-discard-overridden-5.0.1.tgz#454b41f707300b98109a75005ca4ab0ff2743ac6"
-  integrity sha1-RUtB9wcwC5gQmnUAXKSrD/J0OsY=
 
 postcss-double-position-gradients@^1.0.0:
   version "1.0.0"
@@ -13861,15 +13711,6 @@ postcss-merge-longhand@^4.0.11:
     postcss-value-parser "^3.0.0"
     stylehacks "^4.0.0"
 
-postcss-merge-longhand@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.nlark.com/postcss-merge-longhand/download/postcss-merge-longhand-5.0.2.tgz#277ada51d9a7958e8ef8cf263103c9384b322a41"
-  integrity sha1-J3raUdmnlY6O+M8mMQPJOEsyKkE=
-  dependencies:
-    css-color-names "^1.0.1"
-    postcss-value-parser "^4.1.0"
-    stylehacks "^5.0.1"
-
 postcss-merge-rules@^4.0.3:
   version "4.0.3"
   resolved "https://registry.nlark.com/postcss-merge-rules/download/postcss-merge-rules-4.0.3.tgz?cache=0&sync_timestamp=1622234641993&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-4.0.3.tgz#362bea4ff5a1f98e4075a713c6cb25aefef9a650"
@@ -13882,17 +13723,6 @@ postcss-merge-rules@^4.0.3:
     postcss-selector-parser "^3.0.0"
     vendors "^1.0.0"
 
-postcss-merge-rules@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.nlark.com/postcss-merge-rules/download/postcss-merge-rules-5.0.2.tgz?cache=0&sync_timestamp=1622234641993&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.2.tgz#d6e4d65018badbdb7dcc789c4f39b941305d410a"
-  integrity sha1-1uTWUBi629t9zHicTzm5QTBdQQo=
-  dependencies:
-    browserslist "^4.16.6"
-    caniuse-api "^3.0.0"
-    cssnano-utils "^2.0.1"
-    postcss-selector-parser "^6.0.5"
-    vendors "^1.0.3"
-
 postcss-minify-font-values@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-minify-font-values/download/postcss-minify-font-values-4.0.2.tgz#cd4c344cce474343fac5d82206ab2cbcb8afd5a6"
@@ -13900,13 +13730,6 @@ postcss-minify-font-values@^4.0.2:
   dependencies:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-minify-font-values@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-minify-font-values/download/postcss-minify-font-values-5.0.1.tgz#a90cefbfdaa075bd3dbaa1b33588bb4dc268addf"
-  integrity sha1-qQzvv9qgdb09uqGzNYi7TcJord8=
-  dependencies:
-    postcss-value-parser "^4.1.0"
 
 postcss-minify-gradients@^4.0.2:
   version "4.0.2"
@@ -13917,15 +13740,6 @@ postcss-minify-gradients@^4.0.2:
     is-color-stop "^1.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-minify-gradients@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-minify-gradients/download/postcss-minify-gradients-5.0.1.tgz?cache=0&sync_timestamp=1621449598992&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.1.tgz#2dc79fd1a1afcb72a9e727bc549ce860f93565d2"
-  integrity sha1-Lcef0aGvy3Kp5ye8VJzoYPk1ZdI=
-  dependencies:
-    cssnano-utils "^2.0.1"
-    is-color-stop "^1.1.0"
-    postcss-value-parser "^4.1.0"
 
 postcss-minify-params@^4.0.2:
   version "4.0.2"
@@ -13939,17 +13753,6 @@ postcss-minify-params@^4.0.2:
     postcss-value-parser "^3.0.0"
     uniqs "^2.0.0"
 
-postcss-minify-params@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-minify-params/download/postcss-minify-params-5.0.1.tgz#371153ba164b9d8562842fdcd929c98abd9e5b6c"
-  integrity sha1-NxFTuhZLnYVihC/c2SnJir2eW2w=
-  dependencies:
-    alphanum-sort "^1.0.2"
-    browserslist "^4.16.0"
-    cssnano-utils "^2.0.1"
-    postcss-value-parser "^4.1.0"
-    uniqs "^2.0.0"
-
 postcss-minify-selectors@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-minify-selectors/download/postcss-minify-selectors-4.0.2.tgz?cache=0&sync_timestamp=1621449593365&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-4.0.2.tgz#e2e5eb40bfee500d0cd9243500f5f8ea4262fbd8"
@@ -13959,14 +13762,6 @@ postcss-minify-selectors@^4.0.2:
     has "^1.0.0"
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
-
-postcss-minify-selectors@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.nlark.com/postcss-minify-selectors/download/postcss-minify-selectors-5.1.0.tgz?cache=0&sync_timestamp=1621449593365&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz#4385c845d3979ff160291774523ffa54eafd5a54"
-  integrity sha1-Q4XIRdOXn/FgKRd0Uj/6VOr9WlQ=
-  dependencies:
-    alphanum-sort "^1.0.2"
-    postcss-selector-parser "^6.0.5"
 
 postcss-modules-extract-imports@^2.0.0:
   version "2.0.0"
@@ -14015,11 +13810,6 @@ postcss-normalize-charset@^4.0.1:
   dependencies:
     postcss "^7.0.0"
 
-postcss-normalize-charset@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-charset/download/postcss-normalize-charset-5.0.1.tgz?cache=0&sync_timestamp=1621449593655&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz#121559d1bebc55ac8d24af37f67bd4da9efd91d0"
-  integrity sha1-EhVZ0b68VayNJK839nvU2p79kdA=
-
 postcss-normalize-display-values@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-normalize-display-values/download/postcss-normalize-display-values-4.0.2.tgz?cache=0&sync_timestamp=1621449599414&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-4.0.2.tgz#0dbe04a4ce9063d4667ed2be476bb830c825935a"
@@ -14028,14 +13818,6 @@ postcss-normalize-display-values@^4.0.2:
     cssnano-util-get-match "^4.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-normalize-display-values@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-display-values/download/postcss-normalize-display-values-5.0.1.tgz?cache=0&sync_timestamp=1621449599414&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz#62650b965981a955dffee83363453db82f6ad1fd"
-  integrity sha1-YmULllmBqVXf/ugzY0U9uC9q0f0=
-  dependencies:
-    cssnano-utils "^2.0.1"
-    postcss-value-parser "^4.1.0"
 
 postcss-normalize-positions@^4.0.2:
   version "4.0.2"
@@ -14047,13 +13829,6 @@ postcss-normalize-positions@^4.0.2:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-normalize-positions@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-positions/download/postcss-normalize-positions-5.0.1.tgz#868f6af1795fdfa86fbbe960dceb47e5f9492fe5"
-  integrity sha1-ho9q8Xlf36hvu+lg3OtH5flJL+U=
-  dependencies:
-    postcss-value-parser "^4.1.0"
-
 postcss-normalize-repeat-style@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-normalize-repeat-style/download/postcss-normalize-repeat-style-4.0.2.tgz?cache=0&sync_timestamp=1621449596114&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-4.0.2.tgz#c4ebbc289f3991a028d44751cbdd11918b17910c"
@@ -14064,14 +13839,6 @@ postcss-normalize-repeat-style@^4.0.2:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-normalize-repeat-style@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-repeat-style/download/postcss-normalize-repeat-style-5.0.1.tgz?cache=0&sync_timestamp=1621449596114&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz#cbc0de1383b57f5bb61ddd6a84653b5e8665b2b5"
-  integrity sha1-y8DeE4O1f1u2Hd1qhGU7XoZlsrU=
-  dependencies:
-    cssnano-utils "^2.0.1"
-    postcss-value-parser "^4.1.0"
-
 postcss-normalize-string@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-normalize-string/download/postcss-normalize-string-4.0.2.tgz?cache=0&sync_timestamp=1621449595099&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-4.0.2.tgz#cd44c40ab07a0c7a36dc5e99aace1eca4ec2690c"
@@ -14080,13 +13847,6 @@ postcss-normalize-string@^4.0.2:
     has "^1.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-normalize-string@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-string/download/postcss-normalize-string-5.0.1.tgz?cache=0&sync_timestamp=1621449595099&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz#d9eafaa4df78c7a3b973ae346ef0e47c554985b0"
-  integrity sha1-2er6pN94x6O5c640bvDkfFVJhbA=
-  dependencies:
-    postcss-value-parser "^4.1.0"
 
 postcss-normalize-timing-functions@^4.0.2:
   version "4.0.2"
@@ -14097,14 +13857,6 @@ postcss-normalize-timing-functions@^4.0.2:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-normalize-timing-functions@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-timing-functions/download/postcss-normalize-timing-functions-5.0.1.tgz#8ee41103b9130429c6cbba736932b75c5e2cb08c"
-  integrity sha1-juQRA7kTBCnGy7pzaTK3XF4ssIw=
-  dependencies:
-    cssnano-utils "^2.0.1"
-    postcss-value-parser "^4.1.0"
-
 postcss-normalize-unicode@^4.0.1:
   version "4.0.1"
   resolved "https://registry.nlark.com/postcss-normalize-unicode/download/postcss-normalize-unicode-4.0.1.tgz#841bd48fdcf3019ad4baa7493a3d363b52ae1cfb"
@@ -14113,14 +13865,6 @@ postcss-normalize-unicode@^4.0.1:
     browserslist "^4.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-normalize-unicode@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-unicode/download/postcss-normalize-unicode-5.0.1.tgz#82d672d648a411814aa5bf3ae565379ccd9f5e37"
-  integrity sha1-gtZy1kikEYFKpb865WU3nM2fXjc=
-  dependencies:
-    browserslist "^4.16.0"
-    postcss-value-parser "^4.1.0"
 
 postcss-normalize-url@^4.0.1:
   version "4.0.1"
@@ -14132,15 +13876,6 @@ postcss-normalize-url@^4.0.1:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-normalize-url@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.nlark.com/postcss-normalize-url/download/postcss-normalize-url-5.0.2.tgz#ddcdfb7cede1270740cf3e4dfc6008bd96abc763"
-  integrity sha1-3c37fO3hJwdAzz5N/GAIvZarx2M=
-  dependencies:
-    is-absolute-url "^3.0.3"
-    normalize-url "^6.0.1"
-    postcss-value-parser "^4.1.0"
-
 postcss-normalize-whitespace@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-normalize-whitespace/download/postcss-normalize-whitespace-4.0.2.tgz?cache=0&sync_timestamp=1621449593892&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-4.0.2.tgz#bf1d4070fe4fcea87d1348e825d8cc0c5faa7d82"
@@ -14148,13 +13883,6 @@ postcss-normalize-whitespace@^4.0.2:
   dependencies:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-normalize-whitespace@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-normalize-whitespace/download/postcss-normalize-whitespace-5.0.1.tgz?cache=0&sync_timestamp=1621449593892&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz#b0b40b5bcac83585ff07ead2daf2dcfbeeef8e9a"
-  integrity sha1-sLQLW8rINYX/B+rS2vLc++7vjpo=
-  dependencies:
-    postcss-value-parser "^4.1.0"
 
 postcss-ordered-values@^4.1.2:
   version "4.1.2"
@@ -14164,14 +13892,6 @@ postcss-ordered-values@^4.1.2:
     cssnano-util-get-arguments "^4.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-ordered-values@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.nlark.com/postcss-ordered-values/download/postcss-ordered-values-5.0.2.tgz#1f351426977be00e0f765b3164ad753dac8ed044"
-  integrity sha1-HzUUJpd74A4PdlsxZK11PayO0EQ=
-  dependencies:
-    cssnano-utils "^2.0.1"
-    postcss-value-parser "^4.1.0"
 
 postcss-overflow-shorthand@^2.0.0:
   version "2.0.0"
@@ -14263,14 +13983,6 @@ postcss-reduce-initial@^4.0.3:
     has "^1.0.0"
     postcss "^7.0.0"
 
-postcss-reduce-initial@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-reduce-initial/download/postcss-reduce-initial-5.0.1.tgz?cache=0&sync_timestamp=1621449599206&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.1.tgz#9d6369865b0f6f6f6b165a0ef5dc1a4856c7e946"
-  integrity sha1-nWNphlsPb29rFloO9dwaSFbH6UY=
-  dependencies:
-    browserslist "^4.16.0"
-    caniuse-api "^3.0.0"
-
 postcss-reduce-transforms@^4.0.2:
   version "4.0.2"
   resolved "https://registry.nlark.com/postcss-reduce-transforms/download/postcss-reduce-transforms-4.0.2.tgz#17efa405eacc6e07be3414a5ca2d1074681d4e29"
@@ -14280,14 +13992,6 @@ postcss-reduce-transforms@^4.0.2:
     has "^1.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-reduce-transforms@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-reduce-transforms/download/postcss-reduce-transforms-5.0.1.tgz#93c12f6a159474aa711d5269923e2383cedcf640"
-  integrity sha1-k8EvahWUdKpxHVJpkj4jg87c9kA=
-  dependencies:
-    cssnano-utils "^2.0.1"
-    postcss-value-parser "^4.1.0"
 
 postcss-replace-overflow-wrap@^3.0.0:
   version "3.0.0"
@@ -14374,7 +14078,7 @@ postcss-selector-parser@^5.0.0-rc.3, postcss-selector-parser@^5.0.0-rc.4:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss-selector-parser@^6.0.0, postcss-selector-parser@^6.0.2, postcss-selector-parser@^6.0.4, postcss-selector-parser@^6.0.5:
+postcss-selector-parser@^6.0.0, postcss-selector-parser@^6.0.2:
   version "6.0.6"
   resolved "https://registry.nlark.com/postcss-selector-parser/download/postcss-selector-parser-6.0.6.tgz?cache=0&sync_timestamp=1620752924836&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-selector-parser%2Fdownload%2Fpostcss-selector-parser-6.0.6.tgz#2c5bba8174ac2f6981ab631a42ab0ee54af332ea"
   integrity sha1-LFu6gXSsL2mBq2MaQqsO5UrzMuo=
@@ -14407,14 +14111,6 @@ postcss-svgo@^4.0.3:
     postcss-value-parser "^3.0.0"
     svgo "^1.0.0"
 
-postcss-svgo@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.nlark.com/postcss-svgo/download/postcss-svgo-5.0.2.tgz?cache=0&sync_timestamp=1622234649078&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.2.tgz#bc73c4ea4c5a80fbd4b45e29042c34ceffb9257f"
-  integrity sha1-vHPE6kxagPvUtF4pBCw0zv+5JX8=
-  dependencies:
-    postcss-value-parser "^4.1.0"
-    svgo "^2.3.0"
-
 postcss-syntax@^0.36.2:
   version "0.36.2"
   resolved "https://registry.nlark.com/postcss-syntax/download/postcss-syntax-0.36.2.tgz#f08578c7d95834574e5593a82dfbfa8afae3b51c"
@@ -14427,15 +14123,6 @@ postcss-unique-selectors@^4.0.1:
   dependencies:
     alphanum-sort "^1.0.0"
     postcss "^7.0.0"
-    uniqs "^2.0.0"
-
-postcss-unique-selectors@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/postcss-unique-selectors/download/postcss-unique-selectors-5.0.1.tgz?cache=0&sync_timestamp=1621449600659&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.1.tgz#3be5c1d7363352eff838bd62b0b07a0abad43bfc"
-  integrity sha1-O+XB1zYzUu/4OL1isLB6CrrUO/w=
-  dependencies:
-    alphanum-sort "^1.0.2"
-    postcss-selector-parser "^6.0.5"
     uniqs "^2.0.0"
 
 postcss-value-parser@^3.0.0, postcss-value-parser@^3.3.0:
@@ -16097,11 +15784,6 @@ source-list-map@^2.0.0, source-list-map@^2.0.1:
   resolved "https://registry.nlark.com/source-list-map/download/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
   integrity sha1-OZO9hzv8SEecyp6jpUeDXHwVSzQ=
 
-source-map-js@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.npm.taobao.org/source-map-js/download/source-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
-  integrity sha1-C7XeYxtBz72mz7qL0FqA79/SOF4=
-
 source-map-resolve@^0.5.0:
   version "0.5.3"
   resolved "https://registry.nlark.com/source-map-resolve/download/source-map-resolve-0.5.3.tgz#190866bece7553e1f8f267a2ee82c606b5509a1a"
@@ -16574,14 +16256,6 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-stylehacks@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.nlark.com/stylehacks/download/stylehacks-5.0.1.tgz?cache=0&sync_timestamp=1621449595596&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz#323ec554198520986806388c7fdaebc38d2c06fb"
-  integrity sha1-Mj7FVBmFIJhoBjiMf9rrw40sBvs=
-  dependencies:
-    browserslist "^4.16.0"
-    postcss-selector-parser "^6.0.4"
-
 stylelint-config-css-modules@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/stylelint-config-css-modules/download/stylelint-config-css-modules-2.2.0.tgz#8ed2a54b1bdf637219e37cdeea1950405fd022ff"
@@ -16765,19 +16439,6 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
-
-svgo@^2.3.0:
-  version "2.3.1"
-  resolved "https://registry.nlark.com/svgo/download/svgo-2.3.1.tgz#603a69ce50311c0e36791528f549644ec1b3f4bc"
-  integrity sha1-YDppzlAxHA42eRUo9UlkTsGz9Lw=
-  dependencies:
-    "@trysound/sax" "0.1.1"
-    chalk "^4.1.0"
-    commander "^7.1.0"
-    css-select "^4.1.3"
-    css-tree "^1.1.2"
-    csso "^4.2.0"
-    stable "^0.1.8"
 
 symbol-tree@^3.2.2, symbol-tree@^3.2.4:
   version "3.2.4"
@@ -17787,7 +17448,7 @@ vary@^1.1.2, vary@~1.1.2:
   resolved "https://registry.nlark.com/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vendors@^1.0.0, vendors@^1.0.3:
+vendors@^1.0.0:
   version "1.0.4"
   resolved "https://registry.nlark.com/vendors/download/vendors-1.0.4.tgz#e2b800a53e7a29b93506c3cf41100d16c4c4ad8e"
   integrity sha1-4rgApT56Kbk1BsPPQRANFsTErY4=
@@ -18299,7 +17960,7 @@ yallist@^4.0.0:
   resolved "https://registry.nlark.com/yallist/download/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI=
 
-yaml@^1.10.0, yaml@^1.7.2:
+yaml@^1.7.2:
   version "1.10.2"
   resolved "https://registry.nlark.com/yaml/download/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha1-IwHF/78StGfejaIzOkWeKeeSDks=
