@@ -13,7 +13,7 @@ export const mount = async (props) => {
   APP_CALLEE(APP_CONFIG);
 };
 export const unmount = async ({ container, customProps }) => {
-  if(APP_CONFIG.icestark && APP_CONFIG.icestark.regsiterAppLeave) {
+  if(APP_CONFIG?.icestark?.regsiterAppLeave) {
     APP_CONFIG.icestark.regsiterAppLeave(container, customProps);
   } else {
     ReactDOM.unmountComponentAtNode(container);
@@ -161,20 +161,68 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
               });
               body.push(setLibraryAst);
             }
+
+            // traveser
+            nodePath.traverse({
+              ExpressionStatement(expressionNodePath) {
+                if (!replaced) {
+                  const expressionNode: t.ExpressionStatement = expressionNodePath.node;
+                  if (namespaceSpecifier.length
+                    && t.isCallExpression(expressionNode.expression)
+                    && t.isMemberExpression(expressionNode.expression.callee)
+                    && namespaceSpecifier.some(specifier => t.isCallExpression(expressionNode.expression) && t.isMemberExpression(expressionNode.expression.callee) && t.isIdentifier(expressionNode.expression.callee.object, { name: specifier})))
+                  {
+                    callIdentifier = t.isIdentifier(expressionNode.expression.callee.property, { name: 'createApp'}) ? 'createApp' : 'runApp';
+                  }
+        
+                  if (importSpecifier.length
+                    && t.isCallExpression(expressionNode.expression)
+                    && importSpecifier.some(specifier => t.isCallExpression(expressionNode.expression) && t.isIdentifier(expressionNode.expression.callee, { name: specifier })))
+                  {
+                    identifierCallee = t.isIdentifier(expressionNode.expression.callee, { name: 'createApp'}) ? 'createApp' : 'runApp';
+                  }
+        
+                  if (callIdentifier || identifierCallee) {
+                    const expression = expressionNode.expression as t.CallExpression;
+                    if (t.isIdentifier(expression.arguments[0])) {
+                      configIdentifier = expression.arguments[0].name;
+                    } else {
+                      // check current scope
+                      const gid = getUid();
+                      let breakLoop = false;
+                      while(!breakLoop) {
+                        configIdentifier = gid();
+                        if (!expressionNodePath.scope.hasOwnBinding(configIdentifier)) {
+                          breakLoop = true;
+                        }
+                      }
+                      expressionNodePath.container.splice(expressionNodePath.key - 1, 0,
+                        t.variableDeclaration(
+                          'var',
+                          [t.variableDeclarator(
+                            t.identifier(configIdentifier),
+                            expression.arguments[0] as t.Expression)
+                          ]));
+                      expression.arguments = [t.identifier(configIdentifier)];
+                    }
+                    // replace with if statement
+                    const astIf = api.template(templateIfStatement)();
+                    astIf.consequent.body.push(expressionNode);
+                    expressionNodePath.replaceWith(astIf);
+        
+                    replaced = true;
+                  }
+                }
+              }
+            });
   
             // inject load mode (compatible for icestark 1.x)
             const codeAst = api.template(templateModeStatement)({
               ICESTARK: 'ICESTARK',
             });
             body.push(codeAst);
-          }
-        },
 
-        exit (nodePath, state) {
-          if (checkEntryFile(state.filename)) {
-            const node: t.Program = nodePath.node;
-            const { body } = node;
-
+            // inject lifecycles
             const noCustomLifecycles = !(mountExportStatement || unmountExportStatement);
             if (noCustomLifecycles) {
               const astExport = api.template(templateExportStatement)({
@@ -186,58 +234,9 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
               }
             }
           }
-        }
+        },
       },
-      ExpressionStatement(nodePath, state) {
-        if (!replaced && checkEntryFile(state.filename)) {
-          const node: t.ExpressionStatement = nodePath.node;
-          if (namespaceSpecifier.length
-            && t.isCallExpression(node.expression)
-            && t.isMemberExpression(node.expression.callee)
-            && namespaceSpecifier.some(specifier => t.isCallExpression(node.expression) && t.isMemberExpression(node.expression.callee) && t.isIdentifier(node.expression.callee.object, { name: specifier})))
-          {
-            callIdentifier = t.isIdentifier(node.expression.callee.property, { name: 'createApp'}) ? 'createApp' : 'runApp';
-          }
 
-          if (importSpecifier.length
-            && t.isCallExpression(node.expression)
-            && importSpecifier.some(specifier => t.isCallExpression(node.expression) && t.isIdentifier(node.expression.callee, { name: specifier })))
-          {
-            identifierCallee = t.isIdentifier(node.expression.callee, { name: 'createApp'}) ? 'createApp' : 'runApp';
-          }
-
-          if (callIdentifier || identifierCallee) {
-            const expression = node.expression as t.CallExpression;
-            if (t.isIdentifier(expression.arguments[0])) {
-              configIdentifier = expression.arguments[0].name;
-            } else {
-              // check current scope
-              const gid = getUid();
-              let breakLoop = false;
-              while(!breakLoop) {
-                configIdentifier = gid();
-                if (!nodePath.scope.hasOwnBinding(configIdentifier)) {
-                  breakLoop = true;
-                }
-              }
-              nodePath.container.splice(nodePath.key - 1, 0,
-                t.variableDeclaration(
-                  'var',
-                  [t.variableDeclarator(
-                    t.identifier(configIdentifier),
-                    expression.arguments[0] as t.Expression)
-                  ]));
-              expression.arguments = [t.identifier(configIdentifier)];
-            }
-            // replace with if statement
-            const astIf = api.template(templateIfStatement)();
-            astIf.consequent.body.push(node);
-            nodePath.replaceWith(astIf);
-
-            replaced = true;
-          }
-        }
-      }
     },
   };
 };
