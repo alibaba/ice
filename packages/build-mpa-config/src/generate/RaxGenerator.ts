@@ -1,7 +1,5 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as globby from 'globby';
-import { formatPath } from '@builder/app-helpers';
 import Base from './BaseGenerator';
 
 export default class ReactGenerator extends Base {

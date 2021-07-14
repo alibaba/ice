@@ -57,10 +57,10 @@ export default class BaseGenerator {
     this.applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public generateLoadRuntimeModules(routesFile: string) {
     throw new Error('Method not implemented.');
   }
-
 
   public getRoutesFilePath() :string {
     throw new Error('Method not implemented.');
