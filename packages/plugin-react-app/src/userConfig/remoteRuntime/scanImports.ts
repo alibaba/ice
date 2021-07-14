@@ -5,7 +5,7 @@ import { init, parse } from 'es-module-lexer';
 import { transform, Loader } from 'esbuild';
 
 async function globFiles(pattern: string | string[], rootDir: string) {
-  return glob(pattern, {
+  return await glob(pattern, {
     cwd: rootDir,
     ignore: [
       '**/node_modules/**',

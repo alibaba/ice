@@ -10,7 +10,7 @@ const setTest = require('./setTest');
 const configWebpak5 = require('./webpack5');
 const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
-module.exports = (api) => {
+module.exports = async (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
@@ -69,6 +69,6 @@ module.exports = (api) => {
   configWebpak5(api);
 
   if (userConfig.remoteRuntime) {
-    remoteRuntime(api, userConfig.remoteRuntime);
+    await remoteRuntime(api, userConfig.remoteRuntime);
   }
 };
