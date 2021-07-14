@@ -8,5 +8,9 @@
       "$ice/Router": ["./src/runtime/_Router"],
       "$ice/Layout": ["./src/runtime/Layout"]
     }
-  }
+  },
+  "exclude": [
+    "template/*",
+    "tests/*"
+  ]
 }
