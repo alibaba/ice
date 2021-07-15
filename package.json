@@ -9,6 +9,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "rm -rf node_modules && yarn install --registry=https://registry.npm.taobao.org/ && npm run build",
+    "setup:skip": "rm -rf node_modules && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install --registry=https://registry.npm.taobao.org/ && npm run build",
     "watch": "ts-node ./scripts/watch.ts",
     "build": "ts-node ./scripts/build.ts",
     "version": "ts-node ./scripts/tag-version.ts",
@@ -72,6 +73,7 @@
   },
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^4.0.0",
-    "@typescript-eslint/parser": "^4.0.0"
+    "@typescript-eslint/parser": "^4.0.0",
+    "postcss": "^8.3.5"
   }
 }
