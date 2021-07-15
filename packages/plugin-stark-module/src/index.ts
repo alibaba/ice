@@ -45,7 +45,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   // definePlugin, Compatible with @ali/build-plugin-ice-def
   const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
-    'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
+    'process.env.SERVER_PORT': JSON.stringify(commandArgs.port)
   };
   baseConfig.plugin('DefinePlugin')
     .use((webpack as any).DefinePlugin, [defineVariables])
