@@ -16,10 +16,10 @@ export function getInitialData() {
 }
 
 export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
-  const { ErrorBoundary, appConfig = { app: {} }, router } = options;
+  const { ErrorBoundary, appConfig = { app: {} } } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppComponent = router ? runtime?.getAppRouter?.() : appConfig.renderComponent;
+  const AppComponent = appConfig.renderComponent ? runtime?.getPageComponent?.() : runtime?.getAppRouter();
 
   function App() {
     const appComponent = <AppComponent />;

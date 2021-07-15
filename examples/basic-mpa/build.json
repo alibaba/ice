@@ -9,7 +9,7 @@
       "dashboard": "site/dashboard"
     }
   },
-  "plugins": [],
+  "plugins": ["./plugin"],
   "devServer": {
     "writeToDisk": true
   },

@@ -8,20 +8,20 @@ import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
+const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperPageComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
   const { router: appConfigRouter = {}, app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler } = app;
 
   const { parseSearchParams = true } = app;
-  const wrapperPageComponent = (PageComponent) => {
-    const WrapperedPageComponent = (props) => {
+  const WrappedPageComponent = (PageComponent) => {
+    const InnerWrappedPageComponent = (props) => {
       const searchParams = parseSearchParams && applyRuntimeAPI('getSearchParams');
       return <PageComponent {...Object.assign({}, props, { searchParams })} />;
     };
-    return WrapperedPageComponent;
+    return InnerWrappedPageComponent;
   };
 
-  wrapperRouteComponent(wrapperPageComponent);
+  wrapperPageComponent(WrappedPageComponent);
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
@@ -47,8 +47,8 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperRouteComponen
   };
 
   const wrapperPageFn = process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR();
-  wrapperRouteComponent(wrapperPageFn);
-  wrapperRouteComponent(wrapperPageErrorBoundary);
+  wrapperPageComponent(wrapperPageFn);
+  wrapperPageComponent(wrapperPageErrorBoundary);
   if (appConfigRouter.modifyRoutes) {
     modifyRoutes(appConfigRouter.modifyRoutes);
   }

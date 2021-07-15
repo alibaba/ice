@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { AppConfig, BuildConfig, Context } from './types';
 
 type IRoutesComponent = boolean | React.ComponentType;
@@ -26,27 +27,29 @@ type SetRenderRouter = (renderRouter: IRenderRouter) => void;
 type AddProvider = (Provider: React.ComponentType) => void;
 type AddDOMRender = (domRender: IDOMRender) => void;
 type ModifyRoutes = (modifyFn: IModifyFn) => void;
-type WrapperRouteComponent = (wrapperRoute: IWrapper<any>) => void;
+type WrapperPageComponent = (wrapperPage: IWrapper<any>) => void;
 type WrapperRouterRender = (wrapper: IWrapperRouterRender) => void;
 type ModifyRoutesComponent = (modify: (routesComponent: IRoutesComponent) => IRoutesComponent) => void;
 
 type CommonJsRuntime = { default: RuntimePlugin };
 
+interface RuntimeAPI {
+  setRenderRouter?: SetRenderRouter,
+  addProvider: AddProvider,
+  addDOMRender: AddDOMRender,
+  modifyRoutes?: ModifyRoutes,
+  wrapperRouterRender?: WrapperRouterRender,
+  modifyRoutesComponent?: ModifyRoutesComponent,
+  wrapperPageComponent?: WrapperPageComponent,
+  applyRuntimeAPI: ApplyRuntimeAPI,
+  appConfig: AppConfig,
+  buildConfig: BuildConfig,
+  context: Context,
+}
+
 export interface RuntimePlugin {
   (
-    apis: {
-      setRenderRouter: SetRenderRouter,
-      addProvider: AddProvider,
-      addDOMRender: AddDOMRender,
-      modifyRoutes: ModifyRoutes,
-      wrapperRouteComponent: WrapperRouteComponent,
-      wrapperRouterRender: WrapperRouterRender,
-      modifyRoutesComponent: ModifyRoutesComponent,
-      applyRuntimeAPI: ApplyRuntimeAPI,
-      appConfig: AppConfig,
-      buildConfig: BuildConfig,
-      context: Context,
-    }
+    apis: RuntimeAPI
   ): void
 }
 
@@ -63,7 +66,7 @@ class RuntimeModule {
 
   private modifyRoutesRegistration: IModifyFn[];
 
-  private wrapperRouteRegistration: IWrapper<any>[];
+  private wrapperPageRegistration: IWrapper<any>[];
 
   private routesComponent: IRoutesComponent;
 
@@ -72,36 +75,41 @@ class RuntimeModule {
   public modifyDOMRender: IDOMRender;
 
   constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context) {
-    this.renderRouter = () => () => context.createElement('div', null, 'No route');
-    this.routesComponent = false;
     this.AppProvider = [];
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
     this.context = context;
     this.modifyDOMRender = null;
-    this.modifyRoutesRegistration = [];
-    this.wrapperRouteRegistration = [];
     this.apiRegistration = {};
+
+    this.renderRouter = () => () => context.createElement('div', null, 'No route');
+    this.routesComponent = false;
+    this.modifyRoutesRegistration = [];
+    this.wrapperPageRegistration = [];
   }
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
-    const runtimeAPI = {
-      setRenderRouter: this.setRenderRouter,
+    const enabledRouter = !this.appConfig.renderComponent;
+    let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       addDOMRender: this.addDOMRender,
-      modifyRoutes: this.modifyRoutes,
-      wrapperRouteComponent: this.wrapperRouteComponent,
-      wrapperRouterRender: this.wrapperRouterRender,
-      modifyRoutesComponent: this.modifyRoutesComponent,
       applyRuntimeAPI: this.applyRuntimeAPI,
-    };
-    const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
-    if (module) runtimeModule({
-      ...runtimeAPI,
+      wrapperPageComponent: this.wrapperPageComponent,
       appConfig: this.appConfig,
       buildConfig: this.buildConfig,
       context: this.context
-    });
+    };
+    if (enabledRouter) {
+      runtimeAPI = {
+        ...runtimeAPI,
+        setRenderRouter: this.setRenderRouter,
+        modifyRoutes:  this.modifyRoutes,
+        wrapperRouterRender: this.wrapperRouterRender,
+        modifyRoutesComponent: this.modifyRoutesComponent,
+      };
+    }
+    const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+    if (module) runtimeModule(runtimeAPI);
   }
 
   public composeAppProvider() {
@@ -161,8 +169,8 @@ class RuntimeModule {
     this.routesComponent = modify(this.routesComponent);
   }
 
-  private wrapperRouteComponent: WrapperRouteComponent = (wrapperRoute) => {
-    this.wrapperRouteRegistration.push(wrapperRoute);
+  private wrapperPageComponent: WrapperPageComponent = (wrapperPage) => {
+    this.wrapperPageRegistration.push(wrapperPage);
   }
 
   private wrapperRoutes = (routes: IRoutes) => {
@@ -170,7 +178,7 @@ class RuntimeModule {
       if (item.children) {
         item.children = this.wrapperRoutes(item.children);
       } else if (item.component) {
-        item.routeWrappers = this.wrapperRouteRegistration;
+        item.routeWrappers = this.wrapperPageRegistration;
       }
       return item;
     });
@@ -181,6 +189,12 @@ class RuntimeModule {
       return curr(acc);
     }, []));
     return this.renderRouter(routes, this.routesComponent);
+  }
+
+  public getPageComponent = () => {
+    return this.wrapperPageRegistration.reduce((acc, curr) => {
+      return curr(acc);
+    }, this.appConfig.renderComponent);
   }
 }
 
