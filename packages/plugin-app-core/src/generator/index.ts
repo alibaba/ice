@@ -11,9 +11,7 @@ import getRuntimeModules from '../utils/getRuntimeModules';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
-interface IRenderDataFunction {
-  (renderDataFunction: IRenderData): IRenderData;
-}
+type IRenderDataFunction = (renderDataFunction: IRenderData) => IRenderData;
 type IRenderData = Record<string, unknown>;
 
 type IExtraData = IRenderData | IRenderDataFunction;

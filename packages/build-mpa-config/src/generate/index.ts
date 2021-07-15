@@ -1,8 +1,9 @@
+import { IPluginAPI } from 'build-scripts';
 import ReactGenerator from './ReactGenerator';
 import RaxGenerator from './RaxGenerator';
 import { IGeneratorOptions, IGenerateResult } from '../types';
 
-function generatePageFiles(api, options: IGeneratorOptions): IGenerateResult {
+function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenerateResult {
   const { framework, pageEntry, isAppEntry } = options;
   let generator;
   if (framework === 'react') {

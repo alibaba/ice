@@ -24,5 +24,8 @@
     "fs-extra": "^8.1.0",
     "loader-utils": "^2.0.0",
     "globby": "^11.0.2"
+  },
+  "peerDependencies": {
+    "build-scripts": "^1.0.1"
   }
 }

@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { formatPath } from '@builder/app-helpers';
 import * as globby from 'globby';
+import { IPluginAPI } from 'build-scripts';
 import { IGeneratorOptions, LoadRuntimeModulesPathType } from '../types';
 
 const LOAD_RUNTIME_MODULES_PATH = 'LOAD_RUNTIME_MODULES_PATH';
@@ -26,7 +27,7 @@ export default class BaseGenerator {
 
   public routesFilePath: string;
 
-  constructor(api: any, options: IGeneratorOptions) {
+  constructor(api: IPluginAPI, options: IGeneratorOptions) {
     const { context: { rootDir }, applyMethod, getValue, setValue } = api;
     const { targetDir, entryName } = options;
     this.rootDir = rootDir;
