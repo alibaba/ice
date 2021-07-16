@@ -3,9 +3,7 @@ import { formatPath } from '@builder/app-helpers';
 import * as globby from 'globby';
 import { IPluginAPI } from 'build-scripts';
 import { getTemplate } from '@builder/app-templates';
-import { IGeneratorOptions, LoadRuntimeModulesPathType } from '../types';
-
-const LOAD_RUNTIME_MODULES_PATH = 'LOAD_RUNTIME_MODULES_PATH';
+import { IGeneratorOptions } from '../types';
 
 export default class BaseGenerator {
   public entryFolder: string;
