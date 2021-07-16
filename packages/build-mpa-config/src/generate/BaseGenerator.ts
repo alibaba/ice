@@ -2,6 +2,7 @@ import * as path from 'path';
 import { formatPath } from '@builder/app-helpers';
 import * as globby from 'globby';
 import { IPluginAPI } from 'build-scripts';
+import { getTemplate } from '@builder/app-templates';
 import { IGeneratorOptions, LoadRuntimeModulesPathType } from '../types';
 
 const LOAD_RUNTIME_MODULES_PATH = 'LOAD_RUNTIME_MODULES_PATH';
@@ -60,13 +61,17 @@ export default class BaseGenerator {
     const { applyMethod } = this.builtInMethods;
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     const routesFile = this.getRoutesFilePath();
+
     const renderData = {
       globalStyle: globalStyles.length && formatPath(path.join(this.rootDir, globalStyles[0])),
       tempPath: this.targetDir,
-      buildConfig: JSON.stringify(applyMethod('getBuildConfig', userConfig)),
-      router: !!routesFile
+      buildConfig: {
+        ...applyMethod('getBuildConfig', userConfig),
+        router: !!routesFile,
+      },
+      errorBoundary: false,
     };
-    applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/runApp.ts.ejs`), `${this.runAppPath}.ts`, renderData);
+    applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
     this.generateLoadRuntimeModules(routesFile);
   }
 

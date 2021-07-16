@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as globby from 'globby';
 import * as fs from 'fs-extra';
+import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
@@ -79,22 +80,23 @@ export default (api, options) => {
 };
 
 function renderDefaultTemplate(generator: Generator, { framework }) {
+  const templateRoot = path.join(__dirname, './generator/templates');
+
   const templates = [{
-    dir: `./core/app/${framework}`,
+    dir: getFrameworkTemplateDir(framework),
     target: 'core',
   }, {
-    dir: './core/common',
+    dir: getCommonTemplateDir(),
     target: 'core',
   }, {
-    dir: './types',
+    dir:  path.join(templateRoot, 'types'),
     target: 'types',
   }, {
-    path: './index.ts.ejs',
+    path: path.join(templateRoot, './index.ts.ejs'),
   }];
-  const templateRoot = path.join(__dirname, './generator/templates');
   templates.forEach(({ dir, target, path: filePath }) => {
     generator.addTemplateFiles({
-      template: path.join(templateRoot, dir || filePath),
+      template: dir || filePath,
       targetDir: target || '',
     });
   });
@@ -117,9 +119,11 @@ function initGenerator(api, options) {
       isRax: framework === 'rax',
       isMiniapp,
       ssr,
-      buildConfig: JSON.stringify(getBuildConfig(userConfig)),
+      buildConfig: getBuildConfig(userConfig),
       hasJsxRuntime,
       hasTabBar: hasTabBar(`${rootDir}/src`, framework),
+      errorBoundary: true,
+      tempPath: targetDir,
     },
     log,
     plugins,

@@ -23,7 +23,8 @@
     "@builder/app-helpers": "^2.0.0",
     "fs-extra": "^8.1.0",
     "loader-utils": "^2.0.0",
-    "globby": "^11.0.2"
+    "globby": "^11.0.2",
+    "@builder/app-templates": "^1.0.0"
   },
   "peerDependencies": {
     "build-scripts": "^1.0.1"

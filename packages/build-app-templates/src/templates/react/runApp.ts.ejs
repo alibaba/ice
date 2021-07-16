@@ -13,16 +13,18 @@ import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '../../<%= globalStyle %>'
+  import '<%= globalStyle %>'
 <% } %>
-import loadStaticModules from './loadStaticModules';
+import loadStaticModules from '<%- tempPath %>/core/loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 
-import { setAppConfig } from './appConfig';
-import ErrorBoundary from './ErrorBoundary';
-import { IAppConfig, IBuildConfig } from '../types';
+import { setAppConfig } from '<%- tempPath %>/core/appConfig';
+<% if (errorBoundary) { %>
+import ErrorBoundary from '<%- tempPath %>/core/ErrorBoundary';
+<% } %>
+import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
 
-const buildConfig: IBuildConfig = <%- buildConfig %>;
+const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
@@ -48,7 +50,9 @@ export function runApp(appConfig?: IAppConfig) {
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
+    <% if (errorBoundary) { %>
     ErrorBoundary,
+    <% } %>
     appLifecycle: {
       createBaseApp: frameworkAppBase,
       initAppLifeCycles,
