@@ -16,6 +16,7 @@ const plugin = async (api): Promise<void> => {
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
   const serverFilePath = path.join(serverDir, serverFilename);
+  console.log('🚀 ~ file: index.ts ~ line 19 ~ plugin ~ serverFilePath', serverFilePath);
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
