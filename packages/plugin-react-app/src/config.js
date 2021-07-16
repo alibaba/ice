@@ -2,6 +2,11 @@
 module.exports = function() {
   return [
     {
+      name: 'vite',
+      defaultValue: false,
+      validation: 'boolean|object'
+    },
+    {
       name: 'remoteRuntime',
       defaultValue: false,
       validation: 'boolean|object'
