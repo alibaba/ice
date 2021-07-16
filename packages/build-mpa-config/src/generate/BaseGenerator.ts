@@ -44,18 +44,6 @@ export default class BaseGenerator {
     this.runAppPath = path.join(this.entryFolder, 'runApp');
   }
 
-  public addRenderLoadRuntimeModulesFile(templatePath, targetPath, renderData) {
-    const { applyMethod, getValue, setValue } = this.builtInMethods;
-    const { entryName } = this.options;
-    const loadRuntimeModulesPath: LoadRuntimeModulesPathType = getValue(LOAD_RUNTIME_MODULES_PATH) || [];
-    loadRuntimeModulesPath.push({
-      entryName,
-      targetPath,
-    });
-    setValue(LOAD_RUNTIME_MODULES_PATH, loadRuntimeModulesPath);
-    applyMethod('addRenderFile', templatePath, targetPath, renderData);
-  }
-
   public generateRunAppFile(userConfig) {
     const { framework } = this.options;
     const { applyMethod } = this.builtInMethods;

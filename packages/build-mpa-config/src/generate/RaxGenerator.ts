@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { getTemplate } from '@builder/app-templates';
 import Base from './BaseGenerator';
 
 export default class ReactGenerator extends Base {
@@ -12,7 +13,8 @@ export default class ReactGenerator extends Base {
   }
 
   public generateLoadRuntimeModules(routesFile: string) {
-    this.addRenderLoadRuntimeModulesFile(path.join(__dirname, '../template/common/loadRuntimeModules.ts.ejs'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
+    const { applyMethod } = this.builtInMethods;
+    applyMethod('addRenderFile', getTemplate('loadRuntimeModules.ts'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
       , (renderData) => {
         let { runtimeModules } = renderData;
         if (!routesFile) {
