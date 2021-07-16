@@ -134,7 +134,7 @@ export default class Generator {
       ...this.renderData,
       ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
-      globalStyle: globalStyles.length && globalStyles[0],
+      globalStyle: globalStyles.length && path.join(this.rootDir, globalStyles[0]),
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
       entryCodeBefore: this.contentRegistration.addEntryCode_before || '',
