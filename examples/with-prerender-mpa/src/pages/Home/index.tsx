@@ -8,8 +8,4 @@ const Home = () => {
   );
 };
 
-Home.pageConfig = {
-  title: 'Home Page',
-};
-
 export default Home;

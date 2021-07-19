@@ -1,0 +1,43 @@
+// 引入默认全局样式
+@import "@alifd/next/reset.scss";
+@import '@alifd/next/index.scss';
+
+* {
+  transition: all 0.2s ease;
+}
+
+$ice-example-bold: #2e2e2e;
+$ice-example-background: #fff;
+$ice-example-light: lighten($ice-example-bold, 10%);
+$switch-normal-on-bg-color: #fff;
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $ice-example-background;
+}
+
+.title {
+  margin-bottom: 0;
+  color: $ice-example-light
+}
+
+.desc {
+  margin: 0 8px;
+  color: $ice-example-bold
+}
+
+.large-width {
+  width: 170px;
+}

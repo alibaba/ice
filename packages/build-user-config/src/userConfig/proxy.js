@@ -1,4 +1,4 @@
-const merge = require('lodash/merge');
+const merge = require('@builder/pack/deps/lodash').merge;
 
 module.exports = (config, proxyConfig) => {
   const proxyRules = Object.entries(proxyConfig);

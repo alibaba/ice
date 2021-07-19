@@ -7,6 +7,6 @@ export function addNativeEventListener(eventName, callback) {
   document.addEventListener(eventName, callback);
 }
 
-export function removeNativeEventListener(evetName, callback) {
-  document.removeEventListener(evetName, callback);
+export function removeNativeEventListener(eventName, callback) {
+  document.removeEventListener(eventName, callback);
 }

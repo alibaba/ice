@@ -36,6 +36,7 @@ const tsRules = deepmerge(tslint, {
     "no-use-before-define": 0,
     "no-unused-vars": 0,
     "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/ban-ts-ignore": 0
   },
 });
 

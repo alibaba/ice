@@ -17,7 +17,7 @@ import { IPrivateIceStark, IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, createHistory, wrapperRouteComponent }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperRouteComponent }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -30,7 +30,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
-    const history = createHistory({ type, basename: childBasename });
+    const history = applyRuntimeAPI('createHistory', { type, basename: childBasename });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
@@ -103,7 +103,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(createHistory({ type, basename }));
+      const [routerHistory] = useState(applyRuntimeAPI('createHistory' ,{ type, basename }));
       const routerProps = {
         type,
         routes,

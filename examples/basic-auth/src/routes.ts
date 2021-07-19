@@ -6,6 +6,9 @@ export default [
   {
     path: '/',
     exact: true,
-    component: Home
+    component: Home,
+    pageConfig: {
+      auth: ['admin']
+    }
   }
 ];

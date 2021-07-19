@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 import { Options } from './types';
 import { getModules } from './entryHelper';
 

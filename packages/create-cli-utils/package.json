@@ -1,6 +1,6 @@
 {
   "name": "create-cli-utils",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -14,7 +14,7 @@
     "lib"
   ],
   "dependencies": {
-    "@alib/build-scripts": "^0.1.24",
+    "build-scripts": "1.0.2-3",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
     "commander": "^5.0.0",

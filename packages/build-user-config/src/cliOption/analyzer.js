@@ -1,4 +1,4 @@
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('@builder/pack/deps/webpack-bundle-analyzer');
 
 module.exports = (config, analyzer) => {
   if (analyzer) {

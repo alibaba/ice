@@ -35,7 +35,10 @@ export default [
       },
       {
         path: '/about',
-        component: About
+        component: About,
+        pageConfig: {
+          title: 'About'
+        }
       },
       {
         path: '*',

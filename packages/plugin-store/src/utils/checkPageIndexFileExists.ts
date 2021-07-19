@@ -14,7 +14,7 @@ export default (pagePath: string) => {
   if (!matchingPaths.length) {
     console.log(chalk.yellow(
       chalk.black.bgYellow(' WARNING '),
-      `The page ${pagePath} has no index.[js|jsx|tsx]. Please wrap the <Provider> in this page by yourself. For more detail, please see https://ice.work/docs/guide/basic/store.`
+      `The page ${pagePath} has no index.[js|jsx|tsx] or Layout/index.[js|jsx|tsx]. Please wrap the <Provider> in this page by yourself. For more detail, please see https://ice.work/docs/guide/basic/store.`
     ));
   }
 };

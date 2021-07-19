@@ -1,0 +1,22 @@
+{
+  "name": "example-with-multi-themes",
+  "description": "with multi themes",
+  "dependencies": {
+    "@alifd/next": "^1.19.4",
+    "@alifd/theme-3": "^0.5.0",
+    "@alifd/theme-design-pro": "^0.7.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

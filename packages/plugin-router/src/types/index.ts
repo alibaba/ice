@@ -20,6 +20,8 @@ export interface IRouterConfig extends DefaultRouteProps {
   path?: string;
   // for rediect ability
   redirect?: string;
+  pageConfig?: any;
+  getInitialProps?: any;
 
   component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 

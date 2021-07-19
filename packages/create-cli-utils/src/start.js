@@ -4,7 +4,7 @@ const parse = require('yargs-parser');
 const chokidar = require('chokidar');
 const detect = require('detect-port');
 const path = require('path');
-const log = require('@alib/build-scripts/lib/utils/log');
+const log = require('build-scripts/lib/utils/log');
 
 let child = null;
 const rawArgv = parse(process.argv.slice(2));

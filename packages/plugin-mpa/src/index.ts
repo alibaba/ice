@@ -2,17 +2,17 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { getMpaEntries } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 interface ITemplate {
-  [key: string]: string[]
+  [key: string]: string[];
 }
 interface IMpaConfig {
   template?: ITemplate;
   openPage?: string;
   rewrites?: {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 }
 
 const plugin: IPlugin = (api) => {

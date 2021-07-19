@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, usePageShow, usePageHide, helpers, logger, config, getInitialData } from 'ice';
+import { Link, usePageShow, usePageHide, logger, config, getInitialData } from 'ice';
 
-logger.debug('helpers from ice', helpers.urlParse);
 logger.debug('logger from ice', logger.debug);
 
 logger.info('=== info ===');
@@ -34,11 +33,3 @@ export default function Home(props) {
     </>
   );
 }
-
-Home.getInitialProps = async () => {
-  return { count: 1 };
-};
-
-Home.pageConfig = {
-  title: 'Home Page'
-};

@@ -1,8 +1,6 @@
-import { isMiniAppPlatform } from './env';
-
 const current = {
   pathname: '/',
-  visibiltyState: true
+  visibilityState: true
 };
 
 const router = {
@@ -12,9 +10,6 @@ const router = {
 
 Object.defineProperty(router, 'current', {
   get() {
-    if (!isMiniAppPlatform) {
-      return current;
-    }
     return Object.assign(current, {
       pathname: (window as any).__pageId
     });

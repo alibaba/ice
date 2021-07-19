@@ -26,7 +26,7 @@ export default function pageSourceLoader(appJSON) {
       }
       return {
         ...route,
-        pageSource: join(targetPath, pageSource)
+        pageSource: join(String(targetPath), pageSource)
       };
     }
     return route;

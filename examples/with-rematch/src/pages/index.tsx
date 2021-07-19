@@ -14,12 +14,4 @@ const Home = (props) => {
   );
 };
 
-Home.getInitialProps = async () => {
-  return {a: 1};
-};
-
-Home.pageConfig = {
-  title: 'hahah',
-};
-
 export default Home;

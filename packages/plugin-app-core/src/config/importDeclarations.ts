@@ -1,10 +1,10 @@
 const importDeclarations: any = {};
 const defaultDeclarations = {
   // default export in app
-  '$$framework/runApp': [
+  '$$framework/core/runApp': [
     'runApp', 'createApp',
     // router api
-    'withRouter', 'history', 'getHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
+    'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
     // LifeCycles api
     'usePageShow', 'usePageHide', 'withPageLifeCycle',
     // events api
@@ -14,7 +14,7 @@ const defaultDeclarations = {
     'ErrorBoundary',
   ],
   // export lazy
-  '$$ice/lazy': ['lazy'],
+  '$$ice/core/lazy': ['lazy'],
   // export types
   '$$framework/types': ['IApp', 'IAppConfig'],
 };

@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.0
+
+- [feat] remove miniapp render
+- [feat] refactor web app render
+
+## 2.1.0
+
+- [fix] history referenced by GID is undefined
+
 ## 2.0.4
 
 - [chore] typo `onErrorBoundaryHandler`

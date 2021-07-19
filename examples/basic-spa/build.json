@@ -1,5 +1,6 @@
 {
-  "modularImportRuntime": true,
+  "remoteRuntime": true,
+  "polyfill": false,
   "ignoreHtmlTemplate": false,
   "plugins": [],
   "tsChecker": true,
@@ -8,22 +9,15 @@
   },
   "modeConfig": {
     "prod": {
-      "ignoreHtmlTemplate": true
+      "ignoreHtmlTemplate": false
     }
   },
-  "esbuild": {},
+  "esbuild": {
+    "target": "es2015"
+  },
   "eslint": {
     "disable": false,
     "quiet": true
-  },
-  "postcssOptions": {
-    "plugins": {
-      "postcss-preset-env": {
-        "browsers": [
-          "chrome 68"
-        ]
-      }
-    }
   },
   "terserOptions": {
     "compress": {

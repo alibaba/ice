@@ -1,46 +1,75 @@
-import enhanceWithRouter from './enhanceWithRouter';
+/* eslint-disable import/no-mutable-exports */
+import { isMiniAppPlatform, isWeex, isKraken } from './env';
+import miniappWithRouter from './miniapp/enhanceWithRouter';
 import { addAppLifeCycle } from './appLifeCycles';
-import { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
-import emitLifeCycles from './emitLifeCycles';
-import createBaseApp from './createBaseApp';
-import { createHistory, getHistory, history } from './history';
+import { withPageLifeCycle as defaultWithPageLifeCycle, createUsePageLifeCycle as defaultCreateUsePageLifeCycle } from './pageLifeCycles';
+import { withPageLifeCycle as miniappWithPageLifeCycle, createUsePageLifeCycle as miniappCreateUsePageLifeCycle } from './miniapp/pageLifeCycles';
+import createMiniappHistory, { initHistory as initMiniappHistory } from './miniapp/history';
+import createWebHistory, { initHistory as initWebHistory } from './web/history';
+import createWeexHistory, { initHistory as initWeexHistory } from './weex/history';
+import emitAppLifeCycles from './emitLifeCycles';
+import emitMiniappLifeCycles from './miniapp/emitLifeCycles';
 import { pathRedirect } from './utils';
-import {
-  registerNativeEventListeners,
-  addNativeEventListener,
-  removeNativeEventListener
-} from './nativeEventListener';
 import getSearchParams from './getSearchParams';
 import collectAppLifeCycle from './collectAppLifeCycle';
+import initMiniappLifeCycles from './miniapp/initAppLifeCycles';
+import initWeexLifeCycles from './weex/initAppLifeCycles';
+import initWebLifeCycles from './web/initAppLifeCycles';
+import { setHistory, getHistory, history } from './storage';
+import createBaseApp from './createBaseApp';
+import type { InitHistory } from './createInitHistory';
+import RuntimeModule, { RuntimePlugin } from './runtimeModule';
+import type { WithPageLifeCycle, CreateUsePageLifeCycle } from './types';
 
-function createShareAPI({ withRouter, createElement, useEffect, initHistory = true }, loadRuntimeModules) {
-  const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
-  return {
-    createBaseApp: createBaseApp({ loadRuntimeModules, createElement, initHistory }),
+let initAppLifeCycles: () => void;
+let createHistory: unknown;
+let withRouter: unknown;
+let initHistory: InitHistory;
+let emitLifeCycles: () => void;
+let withPageLifeCycle: WithPageLifeCycle;
+let createUsePageLifeCycle: CreateUsePageLifeCycle;
 
-    // history api
-    withRouter: enhanceWithRouter({ withRouter, createElement }),
-    createHistory,
-    getHistory,
-    getSearchParams,
-    // lifeCycle api
-    emitLifeCycles,
-    collectAppLifeCycle,
-    usePageShow,
-    usePageHide,
-    withPageLifeCycle,
-    addAppLifeCycle,
-
-    // utils api
-    pathRedirect,
-    registerNativeEventListeners,
-    addNativeEventListener,
-    removeNativeEventListener
-  };
+if (isMiniAppPlatform) {
+  withRouter = miniappWithRouter;
+  createHistory = createMiniappHistory;
+  initAppLifeCycles = initMiniappLifeCycles;
+  initHistory = initMiniappHistory;
+  emitLifeCycles = emitMiniappLifeCycles;
+  withPageLifeCycle = miniappWithPageLifeCycle;
+  createUsePageLifeCycle = miniappCreateUsePageLifeCycle;
+}  else if (isWeex || isKraken) {
+  createHistory = createWeexHistory;
+  initAppLifeCycles = initWeexLifeCycles;
+  initHistory = initWeexHistory;
+  emitLifeCycles = emitAppLifeCycles;
+  withPageLifeCycle = defaultWithPageLifeCycle;
+  createUsePageLifeCycle = defaultCreateUsePageLifeCycle;
+} else {
+  createHistory = createWebHistory;
+  initAppLifeCycles = initWebLifeCycles;
+  initHistory = initWebHistory;
+  emitLifeCycles = emitAppLifeCycles;
+  withPageLifeCycle = defaultWithPageLifeCycle;
+  createUsePageLifeCycle = defaultCreateUsePageLifeCycle;
 }
 
 export {
-  history
+  initAppLifeCycles,
+  createHistory,
+  withRouter,
+  addAppLifeCycle,
+  withPageLifeCycle,
+  createUsePageLifeCycle,
+  pathRedirect,
+  getSearchParams,
+  collectAppLifeCycle,
+  setHistory,
+  getHistory,
+  history,
+  createBaseApp,
+  initHistory,
+  emitLifeCycles,
+  RuntimeModule,
+  RuntimePlugin,
 };
-
-export default createShareAPI;
+export * from './types';

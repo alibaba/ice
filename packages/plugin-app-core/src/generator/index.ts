@@ -28,7 +28,7 @@ interface IRenderDataRegistration {
 }
 
 interface ITemplateOptions {
-  templateDir: string;
+  template: string;
   targetDir: string;
 }
 
@@ -60,9 +60,7 @@ export default class Generator {
 
   private plugins: any[];
 
-  private debugRuntime: boolean;
-
-  constructor({ rootDir, targetDir, defaultData, log, plugins, debugRuntime }) {
+  constructor({ rootDir, targetDir, defaultData, log, plugins }) {
     this.rootDir = rootDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
@@ -73,7 +71,6 @@ export default class Generator {
     this.renderTemplates = [];
     this.renderDataRegistration = [];
     this.plugins = plugins;
-    this.debugRuntime = debugRuntime;
     this.disableRuntimePlugins = [];
   }
 
@@ -112,7 +109,7 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   }
 
-  private getExportStr(registerKey, dataKeys) {
+  private getExportStr(registerKey: string, dataKeys: string[]) {
     const exportList = this.contentRegistration[registerKey] || [];
     const { importStr, exportStr } = generateExports(exportList);
     const [importStrKey, exportStrKey] = dataKeys;
@@ -144,7 +141,7 @@ export default class Generator {
     };
   }
 
-  public generateImportStr(apiName) {
+  public generateImportStr(apiName: string) {
     const imports = this.contentRegistration[apiName] || [];
     return imports.map(({ source, specifier }) => {
       return specifier ?
@@ -165,7 +162,7 @@ export default class Generator {
       return previousValue;
     }, this.parseRenderData());
 
-    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, this.debugRuntime);
+    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir);
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
@@ -192,11 +189,14 @@ export default class Generator {
     }
   }
 
-  public addTemplateDir = (template: string|ITemplateOptions, extraData: IRenderData = {}) => {
-    const { templateDir, targetDir } = typeof template === 'string' ? { templateDir: template, targetDir: ''} : template;
-    const templates = globby.sync(['**/*'], { cwd: templateDir });
+  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IRenderData = {}) => {
+    const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: ''} : templateOptions;
+    const templates = !path.extname(template) ? globby.sync(['**/*'], { cwd: template }) : [template];
     templates.forEach((templateFile) => {
-      this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, targetDir, templateFile), extraData);
+      const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
+      const targetPath = path.join(this.targetDir, targetDir, path.isAbsolute(templateFile) ? path.basename(templateFile) : templateFile);
+      
+      this.addRenderFile(templatePath, targetPath, extraData);
     });
     if (this.rerender) {
       this.debounceRender();

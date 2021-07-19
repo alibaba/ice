@@ -1,15 +1,14 @@
 import React from 'react';
+import store from './store';
 
 const Home = () => {
+  const [state] = store.useModel('default');
+
   return (
     <>
-      <h2>Home Page</h2>
+      <h2>{state.title}</h2>
     </>
   );
 };
 
-Home.pageConfig = {
-  title: 'Home Page',
-};
-
-export default Home;
+export default () => (<store.Provider><Home /></store.Provider>);

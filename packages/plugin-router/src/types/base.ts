@@ -27,6 +27,9 @@ export interface RouteItemProps extends Omit<DefaultRouteProps, 'component'> {
 
   // custom route wrappers
   wrappers?: IRouteWrapper[];
+
+  pageConfig?: any;
+  getInitialProps?: any;
 }
 
 interface IModifyFn {

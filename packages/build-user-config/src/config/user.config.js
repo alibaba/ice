@@ -195,16 +195,6 @@ module.exports = [
     defaultValue: false
   },
   {
-    name: 'dll',
-    validation: 'boolean',
-    defaultValue: false
-  },
-  {
-    name: 'dllEntry',
-    validation: 'object',
-    defaultValue: {}
-  },
-  {
     name: 'polyfill',
     validation: (val) => {
       return validation('polyfill', val, 'string|boolean|object');
@@ -235,6 +225,11 @@ module.exports = [
   {
     name: 'esbuild',
     validation: 'object'
+  },
+  {
+    name: 'swc',
+    defaultValue: false,
+    validation: 'boolean|object',
   },
   {
     name: 'experiments',

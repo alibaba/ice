@@ -1,4 +1,4 @@
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 
 type ExternalsObjectElement = Record<'root' | 'amd' | 'commonjs' | 'commonjs2', string>;
 

@@ -15,7 +15,7 @@ export default function(config) {
           regenerator: true,
           useESModules: false,
         };
-        let addedTransformPlugin;
+        let addedTransformPlugin: boolean;
         const plugins = babelPlugins.map((plugin) => {
           if (typeof plugin === 'string' && formatPath(plugin).indexOf(targetPlugin) > -1
             || Array.isArray(plugin) && formatPath(plugin[0]).indexOf(targetPlugin) > -1 ) {

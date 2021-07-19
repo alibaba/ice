@@ -2,7 +2,6 @@
   "name": "example-basic-store",
   "description": "store management with icejs",
   "dependencies": {
-    "ice.js": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
@@ -13,8 +12,8 @@
     "react-test-renderer": "^16.13.1"
   },
   "scripts": {
-    "start": "icejs start",
-    "build": "icejs build",
+    "start": "../../packages/icejs/bin/ice-cli.js start",
+    "build": "../../packages/icejs/bin/ice-cli.js build",
     "test": "icejs test"
   },
   "engines": {

@@ -1,5 +1,9 @@
 # changelog
 
+## 2.0.0
+
+- [feat] upgrade build-scripts
+
 ## 1.9.0
 
 - [feat] enable historyApiFallback rewrites rule as default

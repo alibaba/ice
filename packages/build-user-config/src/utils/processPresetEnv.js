@@ -15,6 +15,10 @@ module.exports = (config, presetEnvParam) => {
           options.sourceType = 'unambiguous';
         }
         presetEnv[1] = { ...presetEnv[1], ...presetEnvParam };
+        if (!presetEnvParam.useBuiltIns) {
+          // The `corejs` option only has an effect when the `useBuiltIns` option is not `false`
+          delete presetEnv[1].corejs;
+        }
         return options;
      });
   });

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, store as appStore } from 'ice';
-import { store as pageStore } from 'ice/Home';
+import { Link } from 'ice';
+import appStore from '@/store';
+import pageStore from './store';
 
 export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');

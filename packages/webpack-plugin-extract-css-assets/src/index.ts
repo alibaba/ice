@@ -34,6 +34,7 @@ class ExtractCssAssetsPlugin {
             if (filename.endsWith('.css')) {
               const css = asset.source();
               return new Promise<void>((resolve) => {
+                // @ts-ignore
                 postcss()
                   .use(
                     // @ts-ignore
