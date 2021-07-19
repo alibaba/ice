@@ -1,0 +1,5 @@
+{
+  "vite": true,
+  "disableRuntime": true,
+  "plugins": []
+}
