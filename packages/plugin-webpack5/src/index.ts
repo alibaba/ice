@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import * as TerserPlugin from 'terser-webpack-plugin';
 import { IPlugin, Json } from '@alib/build-scripts';
 import analyzeNext from './analyzeNext';
 import filterPackages, { IFilterOptions, IRule } from './filterPackages';
@@ -139,6 +140,14 @@ const plugin: IPlugin = async (api, options = {}) => {
         }
       }: {}),
     });
+
+    // compatibility cache feature with webpack@5 of webpack-terser-plugin
+    if((config as any).optimization.minimizers.has('TerserPlugin')) {
+      const pluginConfig = { ...config.optimization.minimizer('TerserPlugin').get('args')[0] };
+      (config as any).optimization.minimizers.delete('TerserPlugin');
+      config.optimization.minimizer('TerserPlugin')
+        .use(TerserPlugin, [pluginConfig]);
+    }
   });
 };
 
