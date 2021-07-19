@@ -1,0 +1,19 @@
+{
+  "name": "@builder/app-templates",
+  "version": "1.0.0",
+  "description": "App templates for ice.js and rax-app",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-app-templates"
+  }
+}

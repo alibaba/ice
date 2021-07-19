@@ -11,16 +11,17 @@ import getRuntimeModules from '../utils/getRuntimeModules';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
-interface IRenderData {
-  [key: string]: any;
-}
+type IRenderDataFunction = (renderDataFunction: IRenderData) => IRenderData;
+type IRenderData = Record<string, unknown>;
+
+type IExtraData = IRenderData | IRenderDataFunction;
 
 interface IRegistration {
   [key: string]: any[];
 }
 
 interface IRenderFile {
-  (templatePath: string, targetDir: string, extraData?: IRenderData): void;
+  (templatePath: string, targetDir: string, extraData?: IExtraData): void;
 }
 
 interface IRenderDataRegistration {
@@ -32,7 +33,7 @@ interface ITemplateOptions {
   targetDir: string;
 }
 
-type IRenderTempalte = [string, string, IRenderData];
+type IRenderTemplate = [string, string, IExtraData];
 
 const RENDER_WAIT = 500;
 
@@ -48,7 +49,7 @@ export default class Generator {
 
   private rootDir: string;
 
-  private renderTemplates: IRenderTempalte[];
+  private renderTemplates: IRenderTemplate[];
 
   private renderDataRegistration: IRenderDataRegistration[];
 
@@ -133,7 +134,7 @@ export default class Generator {
       ...this.renderData,
       ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
-      globalStyle: globalStyles.length && globalStyles[0],
+      globalStyle: globalStyles.length && path.join(this.rootDir, globalStyles[0]),
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
       entryCodeBefore: this.contentRegistration.addEntryCode_before || '',
@@ -171,7 +172,7 @@ export default class Generator {
 
   public debounceRender = debounce(this.render, RENDER_WAIT);
 
-  public addRenderFile = (templatePath: string, targetPath: string, extraData: IRenderData = {}) => {
+  public addRenderFile = (templatePath: string, targetPath: string, extraData: IExtraData = {}) => {
     // check target path if it is already been registed
     const renderIndex = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
     if (renderIndex > -1) {
@@ -189,13 +190,13 @@ export default class Generator {
     }
   }
 
-  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IRenderData = {}) => {
+  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IExtraData = {}) => {
     const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: ''} : templateOptions;
     const templates = !path.extname(template) ? globby.sync(['**/*'], { cwd: template }) : [template];
     templates.forEach((templateFile) => {
       const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
       const targetPath = path.join(this.targetDir, targetDir, path.isAbsolute(templateFile) ? path.basename(templateFile) : templateFile);
-      
+
       this.addRenderFile(templatePath, targetPath, extraData);
     });
     if (this.rerender) {
@@ -214,7 +215,16 @@ export default class Generator {
     const renderExt = '.ejs';
     if (path.extname(templatePath) === '.ejs') {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
-      let content = ejs.render(templateContent, { ...this.renderData, ...extraData });
+      let renderData = this.renderData;
+      if (typeof extraData === 'function') {
+        renderData = extraData(this.renderData);
+      } else {
+        renderData = {
+          ...renderData,
+          ...extraData,
+        };
+      }
+      let content = ejs.render(templateContent, renderData);
       try {
         content = prettier.format(content, {
           parser: 'typescript',

@@ -53,6 +53,8 @@ if (isMiniAppPlatform) {
   createUsePageLifeCycle = defaultCreateUsePageLifeCycle;
 }
 
+export * from './nativeEventListener';
+
 export {
   initAppLifeCycles,
   createHistory,

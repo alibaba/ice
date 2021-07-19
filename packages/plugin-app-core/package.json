@@ -35,7 +35,8 @@
     "rax-app-renderer": "^2.0.0",
     "rax-use-router": "^3.0.0",
     "react-app-renderer": "^3.0.0",
-    "universal-env": "^3.0.0"
+    "universal-env": "^3.0.0",
+    "@builder/app-templates": "^1.0.0"
   },
   "repository": {
     "type": "http",

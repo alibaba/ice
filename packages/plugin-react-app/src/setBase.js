@@ -65,5 +65,9 @@ module.exports = (api, { target, webpackConfig }) => {
       ]])
       .end();
 
+  webpackConfig.resolve.merge({
+    conditionNames: ['web'],
+  });
+
   return webpackConfig;
 };

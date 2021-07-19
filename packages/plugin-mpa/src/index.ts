@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { getMpaEntries } from '@builder/app-helpers';
-import { generateMPAEntries } from '@builder/mpa-config';
+import { generateMPAEntries, addRedirectRunAppLoader } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
 interface ITemplate {
@@ -57,7 +57,7 @@ const plugin: IPlugin = (api) => {
     } else {
       log.info('使用多页面模式 \n', JSON.stringify(entries));
     }
-    
+
     const mpaRewrites = (mpa as IMpaConfig)?.rewrites || {};
     let serverPath: string;
     if (commandArgs.mpaEntry) {
@@ -77,9 +77,36 @@ const plugin: IPlugin = (api) => {
       serverPath = mpaRewrites[pageNameLowerCase] || pageNameLowerCase;
     }
     setValue('SERVER_PATH', serverPath);
+
+    let parsedEntries = null;
+    const redirectEntries = [];
+    // compatible with undefined TEMP_PATH
+    // if disableRuntime is true, do not generate mpa entries
+    if (getValue('TEMP_PATH')) {
+      parsedEntries = generateMPAEntries(api, { entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
+    }
+    let finalMPAEntries = {};
+    if (parsedEntries) {
+      Object.keys(parsedEntries).forEach((entryKey) => {
+        const { finalEntry, shouldRedirectRunApp, runAppPath } = parsedEntries[entryKey];
+        finalMPAEntries[entryKey] = finalEntry;
+        if (shouldRedirectRunApp) {
+          redirectEntries.push({
+            entryPath: finalEntry,
+            runAppPath,
+          });
+        }
+      });
+    } else {
+      finalMPAEntries = entries;
+    }
+    // modify entry
+    modifyUserConfig('entry', finalMPAEntries);
+
     // set page template
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
+      addRedirectRunAppLoader(config, 'ice', redirectEntries);
       config.devServer.historyApiFallback({
         rewrites: Object.keys(entries).map((pageName) => {
           return {
@@ -89,22 +116,6 @@ const plugin: IPlugin = (api) => {
         }),
       });
     });
-    let parsedEntries = null;
-    // compatible with undefined TEMP_PATH
-    // if disableRuntime is true, do not generate mpa entries
-    if (getValue('TEMP_PATH')) {
-      parsedEntries = generateMPAEntries(api, { entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
-    }
-    let finalMPAEntries = {};
-    if (parsedEntries) {
-      Object.keys(parsedEntries).forEach((entryKey) => {
-        finalMPAEntries[entryKey] = parsedEntries[entryKey].finalEntry;
-      });
-    } else {
-      finalMPAEntries = entries;
-    }
-    // modify entry
-    modifyUserConfig('entry', finalMPAEntries);
   }
 };
 
@@ -131,7 +142,7 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
           (htmlPluginOption as any).template = entryTemplate;
         }
       }
-      
+
       config.plugin(htmlPluginKey).tap(([args]) => {
         (htmlPluginOption as any).templateParameters = {
           ...(args.templateParameters || {}),

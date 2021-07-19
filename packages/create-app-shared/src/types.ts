@@ -1,5 +1,5 @@
 import type { History } from 'history';
-import type { createElement } from 'react';
+import type { createElement, ComponentType } from 'react';
 
 type VoidFunction = () => void;
 
@@ -11,7 +11,8 @@ export interface AppConfig {
     type?: 'hash' | 'browser' | 'memory' | 'static';
     history?: History;
     basename?: string;
-  }
+  },
+  renderComponent?: ComponentType
 }
 
 export type BuildConfig = Record<string, any>;

@@ -1,0 +1,15 @@
+import { createElement } from 'rax';
+import { createWithRouter } from 'create-use-router';
+import {
+  history,
+  getHistory,
+} from 'create-app-shared';
+
+const withRouter = createWithRouter({ createElement });
+
+// router api
+export {
+  withRouter,
+  history,
+  getHistory,
+};

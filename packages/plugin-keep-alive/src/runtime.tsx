@@ -1,7 +1,7 @@
 import * as React from 'react';
 import KeepAlive, { AliveScope } from 'react-activation';
 
-const runtimeModule = ({ wrapperRouteComponent, modifyRoutesComponent }) => {
+const runtimeModule = ({ wrapperPageComponent, modifyRoutesComponent }) => {
   const wrapperKeepAlive = (PageComponent) => {
     const { pageConfig = {} } = PageComponent;
     // set pageConfig.keepAlive false to disable KeepAlive provider
@@ -18,7 +18,7 @@ const runtimeModule = ({ wrapperRouteComponent, modifyRoutesComponent }) => {
       return WrapperedKeepAlive;
     }
   };
-  wrapperRouteComponent(wrapperKeepAlive);
+  wrapperPageComponent(wrapperKeepAlive);
   // add provider for routes component
   modifyRoutesComponent((RoutesComponent: React.ComponentType) => {
     return (props) => (

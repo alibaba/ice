@@ -16,14 +16,13 @@ export function getInitialData() {
 }
 
 export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
-  const { ErrorBoundary, appConfig = { app: {}} } = options;
+  const { ErrorBoundary, appConfig = { app: {} } } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppRouter = runtime?.getAppRouter?.();
-
+  const AppComponent = runtime?.getAppComponent?.();
   function App() {
-    const appRouter = <AppRouter />;
-    const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
+    const appComponent = <AppComponent />;
+    const rootApp = AppProvider ? <AppProvider>{appComponent}</AppProvider> : appComponent;
     if (errorBoundary) {
       return (
         <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>
@@ -67,7 +66,7 @@ export async function reactAppRenderer(options: RenderOptions) {
   setInitialData(context.initialData);
   // emit app launch cycle
   emitLifeCycles();
-  
+
   return _render(runtime, {
     ...options,
     appConfig: modifiedAppConfig,
@@ -84,7 +83,7 @@ function _render(runtime: RuntimeModule, options: RenderOptions) {
     return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
-  // add process.env.SSR for tree-shaking 
+  // add process.env.SSR for tree-shaking
   if ((window as any).__ICE_SSR_ENABLED__ && process.env.SSR) {
     loadableReady(() => {
       ReactDOM.hydrate(<App />, appMountNode);

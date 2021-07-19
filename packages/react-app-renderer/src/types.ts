@@ -1,7 +1,7 @@
 import * as queryString from 'query-string';
 import type { RuntimeModule } from 'create-app-shared';
 
-export type OnError = (err: Error) => void
+export type OnError = (err: Error, componentStack: string) => void
 export interface Context {
   pathname: string;
   path: string;
@@ -16,7 +16,8 @@ export type RenderAppConfig = {
     ErrorBoundaryFallback?: React.ComponentType;
     errorBoundary?: boolean;
     getInitialData?: (context: Context) => Promise<any>;
-  }
+  },
+  renderComponent?: React.ComponentType
 };
 export type AppLifecycle = {
   createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
@@ -25,8 +26,9 @@ export type AppLifecycle = {
 }
 
 export interface RenderOptions<T = RenderAppConfig, P = any> {
-  ErrorBoundary: React.ComponentType<{Fallback?: React.ComponentType; onError?: Function}>;
+  ErrorBoundary?: React.ComponentType<{Fallback?: React.ComponentType; onError?: Function}>;
   buildConfig: P;
   appConfig: T;
-  appLifecycle: AppLifecycle
+  appLifecycle: AppLifecycle;
+  router?: boolean;
 }
