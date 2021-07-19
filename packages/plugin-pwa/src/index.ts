@@ -31,7 +31,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
     const publicPath = config.output.get('publicPath');
     const swDest = path.join(outputPath, sw);
 
-    const swPath = isDev ? `./${sw}` : `${publicPath}/${sw}`;
+    const swPath = isDev ? `./${sw}` : `${publicPath}${sw}`;
 
     console.log('');
 
