@@ -43,7 +43,7 @@ export default async function redirectImport(code: string, options: IRedirectImp
       if (redirectImports.length > 1) {
         console.error('redirectImports length should be 1 with default export!');
       }
-      return generateImport(redirectImports[0]);
+      return `${code.substring(0, targetImport.ss)}${generateImport(redirectImports[0])}${code.substring(targetImport.se)}`;
     }
   }
   return code;
