@@ -6,10 +6,17 @@ export interface Option {
   dev?: boolean;
   scope?: string;
   /**
-  * Service Worker script file name
+  * service worker script file name
   * @default: `sw.js`
   */
   sw?: string;
-  runtimeCaching?: []; // 类型待补充
+  runtimeCaching?: [];
+  /**
+   * whether to call skipWaiting immediately
+   * @default true
+   */
+  skipWaiting?: boolean;
+
+  additionalManifestEntries?: any;
   // ... other remains
 }

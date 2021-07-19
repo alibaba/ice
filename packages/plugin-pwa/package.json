@@ -1,6 +1,6 @@
 {
-  "name": "build-plugin-template",
-  "version": "0.1.0",
+  "name": "build-plugin-pwa",
+  "version": "0.1.0-0",
   "description": "build-scripts plugin template for developers",
   "main": "lib/index.js",
   "scripts": {
@@ -30,8 +30,8 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "workbox-webpack-plugin": "^6.1.5"
+    "workbox-webpack-plugin": "^6.1.5",
+    "workbox-window": "^6.1.5"
   },
-  "private": true,
   "originTemplate": "build-plugin-template"
 }
