@@ -24,10 +24,10 @@ const plugin: IPlugin = ({ onGetWebpackConfig }) => {
 
     // add webpack dev server middleware for launch IDE app with api request
     const root = process.env.PWD;
-    const originalDevServeBefore = config.devServer.get('before');
+    const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
     config.merge({
       devServer: {
-        before(app, server) {
+        onBeforeSetupMiddleware(app, server) {
           app.get('/vscode/goto', (req, res) => {
             try {
               const { query } = req;

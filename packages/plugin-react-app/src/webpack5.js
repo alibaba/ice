@@ -17,15 +17,18 @@ module.exports = (api) => {
           cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
         }
       };
+      const defaultLogging = {
+        level: 'warn',
+      };
       config.merge({
         ...cacheConfig,
-        ...(userConfig.cacheLog ? {
+        ...(userConfig.logging ? {
           // 缓存日志
           infrastructureLogging: {
-            level: 'error',
-            debug: typeof cacheLog === 'boolean' ? /FileSystemInfo/ : new RegExp(userConfig.cacheLog),
+            ...defaultLogging,
+            ...userConfig.logging,
           }
-        }: {}),
+        }: { infrastructureLogging : defaultLogging }),
       });
     }
     // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
