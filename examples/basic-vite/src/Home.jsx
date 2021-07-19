@@ -15,7 +15,7 @@ function App() {
             🪂 Click me : {count}
           </button>
 
-          <p> Don&apos;t forgot to install Eslint and Prettier in Your Vscode.</p>
+          <p> Don&apos;t forgot to install <a href="https://appworks.site/">AppWorks</a> in Your Vscode.</p>
           <p>
             <a
               className="App-link"

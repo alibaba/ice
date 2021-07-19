@@ -41,4 +41,5 @@ examples/*/.ice
 packages/webpack-plugin-extract-css-assets/test/actual/*
 
 build
+dist
 .history
