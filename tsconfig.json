@@ -36,5 +36,6 @@
     { "path": "packages/plugin-keep-alive" },
     { "path": "packages/plugin-dev-inspector" },
     { "path": "packages/plugin-theme" },
+    { "path": "packages/vite-service" }
   ]
 }

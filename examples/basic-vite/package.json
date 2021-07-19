@@ -1,0 +1,17 @@
+{
+  "name": "basic-vite",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build"
+  },
+  "dependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "license": "MIT"
+}

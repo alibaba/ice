@@ -3455,7 +3455,7 @@
   resolved "https://registry.nlark.com/@types/less/download/@types/less-3.0.3.tgz#f9451dbb9548d25391107d65d6401a0cfb15db92"
   integrity sha1-+UUdu5VI0lOREH1l1kAaDPsV25I=
 
-"@types/lodash@^4.14.170":
+"@types/lodash@^4.14.147", "@types/lodash@^4.14.170":
   version "4.14.171"
   resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
   integrity sha1-8Bs6X+NJnjS2IsNipGpgn9sjVzs=
@@ -8620,7 +8620,7 @@ has@^1.0.0, has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-he@1.2.x, he@^1.2.0:
+he@1.2.0, he@1.2.x, he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.nlark.com/he/download/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha1-hK5l+n6vsWX922FWauFLrwVmTw8=
@@ -15205,6 +15205,13 @@ rimraf@^3.0.0, rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
+rollup@^2.38.5:
+  version "2.53.2"
+  resolved "https://registry.nlark.com/rollup/download/rollup-2.53.2.tgz#3279f9bfba1fe446585560802e418c5fbcaefa51"
+  integrity sha1-Mnn5v7of5EZYVWCALkGMX7yu+lE=
+  optionalDependencies:
+    fsevents "~2.3.2"
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.nlark.com/rsvp/download/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
@@ -17385,6 +17392,18 @@ vfile@^3.0.0:
     replace-ext "1.0.0"
     unist-util-stringify-position "^1.0.0"
     vfile-message "^1.0.0"
+
+vite@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.nlark.com/vite/download/vite-2.4.2.tgz#07d00615775c808530bc9f65641062b349b67929"
+  integrity sha1-B9AGFXdcgIUwvJ9lZBBis0m2eSk=
+  dependencies:
+    esbuild "^0.12.8"
+    postcss "^8.3.5"
+    resolve "^1.20.0"
+    rollup "^2.38.5"
+  optionalDependencies:
+    fsevents "~2.3.2"
 
 w3c-hr-time@^1.0.1, w3c-hr-time@^1.0.2:
   version "1.0.2"
