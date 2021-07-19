@@ -1,4 +1,5 @@
 import reactRefresh from '@vitejs/plugin-react-refresh';
+import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject, pick } from 'lodash';
 import { InlineConfig, BuildOptions } from 'vite';

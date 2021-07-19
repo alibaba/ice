@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { ITaskConfig } from 'build-scripts';
 import { ViteDevServer, createServer } from 'vite';
 import { wp2vite } from './wp2vite';

@@ -27,6 +27,7 @@
     "chalk": "^2.4.1",
     "deepmerge": "^4.2.2",
     "lodash": "^4.17.15",
+    "npmlog": "^4.1.2",
     "vite": "^2.4.2"
   },
   "devDependencies": {
