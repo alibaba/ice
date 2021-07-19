@@ -35,10 +35,10 @@ export interface IRoute {
 
 export interface IRedirectImportOptions {
   source: string;
-  redirectImports: RedirectImport[];
+  redirectImports: RedirectImportType[];
 }
 
-export type RedirectImport = {
+export type RedirectImportType = {
   name: string;
   redirectPath: string;
   default: boolean;

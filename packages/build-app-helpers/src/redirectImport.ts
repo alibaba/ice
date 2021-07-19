@@ -1,11 +1,11 @@
 import { init, parse } from 'es-module-lexer';
-import { IRedirectImportOptions } from './types';
+import { IRedirectImportOptions, RedirectImportType } from './types';
 
 let initd = false;
 
 const MATCH_REG_EXP = /\{(.*?)\}/;
 
-export default async function redirectImport(code: string, options: IRedirectImportOptions) {
+export default async function redirectImport(code: string, options: IRedirectImportOptions): Promise<string> {
   if (!initd) {
     await init;
     initd = true;
@@ -27,8 +27,7 @@ export default async function redirectImport(code: string, options: IRedirectImp
         const targetRedirect = redirectImports.find(({ name }) => name === identifier.trim() );
         if (targetRedirect) {
           // import { runApp } from 'ice/entries/home/runApp';
-          addImports.push(`\nimport ${targetRedirect.default ?
-            redirectImport.name : `{ ${targetRedirect.name} }`} from '${targetRedirect.redirectPath}';`);
+          addImports.push(`\n${generateImport(targetRedirect)}`);
           importStr = importStr.replace(new RegExp(`${identifier},?`), '');
         }
       });
@@ -39,7 +38,21 @@ export default async function redirectImport(code: string, options: IRedirectImp
       }
       newImportStr += addImports.join('');
       return `${code.substring(0, targetImport.ss)}${newImportStr}${code.substring(targetImport.se)}`;
+    } else {
+      // Default condition: import runApp from 'ice';
+      if (redirectImports.length > 1) {
+        console.error('redirectImports length should be 1 with default export!');
+      }
+      return generateImport(redirectImports[0]);
     }
   }
   return code;
+}
+
+function generateImport(redirectImportInfo: RedirectImportType): string {
+  const { name, redirectPath, default: exportDefault } = redirectImportInfo;
+  if (exportDefault) {
+    return `import ${name} from '${redirectPath}';`;
+  }
+  return `import { ${name} } from '${redirectPath}';`;
 }
