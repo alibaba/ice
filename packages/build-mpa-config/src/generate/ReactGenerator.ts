@@ -9,7 +9,7 @@ export default class ReactGenerator extends Base {
     if (this.routesFilePath !== undefined) return this.routesFilePath;
     const { pageEntry } = this.options;
     const originalEntryFolder = path.dirname(pageEntry);
-    const targetExt = ['ts', 'tsx'].find((ext) => fs.existsSync(path.join(originalEntryFolder, `routes.${ext}`)));
+    const targetExt = ['ts', 'tsx', 'js', 'jsx'].find((ext) => fs.existsSync(path.join(originalEntryFolder, `routes.${ext}`)));
     return this.routesFilePath = targetExt ? path.join(originalEntryFolder, 'routes') : '';
   }
 

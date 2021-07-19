@@ -55,19 +55,19 @@ import { usePageShow } from 'ice/entries/home/publicAPI';`);
     done();
   });
 
-  it('should transform export default', async (done) => {
-    const code = `import runApp from 'ice'`;
+  it('should transform alias', async (done) => {
+    const code = `import { runApp as customRunApp } from 'ice'`;
     const result = await redirectImport(code, {
       source: 'ice',
       redirectImports: [
         {
-          name: 'runApp',
+          name: 'customRunApp',
           redirectPath: 'ice/entries/home/runApp',
-          default: true,
+          default: false,
         }
       ]
     });
-    expect(result).toEqual(`import runApp from 'ice/entries/home/runApp';`);
+    expect(result).toEqual(`\nimport { runApp } from 'ice/entries/home/runApp';`);
     done();
   });
 });

@@ -30,8 +30,9 @@ type ModifyRoutes = (modifyFn: IModifyFn) => void;
 type WrapperPageComponent = (wrapperPage: IWrapper<any>) => void;
 type WrapperRouterRender = (wrapper: IWrapperRouterRender) => void;
 type ModifyRoutesComponent = (modify: (routesComponent: IRoutesComponent) => IRoutesComponent) => void;
-
 type CommonJsRuntime = { default: RuntimePlugin };
+
+type GetAppComponent = () => React.ComponentType;
 
 interface RuntimeAPI {
   setRenderRouter?: SetRenderRouter,
@@ -184,17 +185,16 @@ class RuntimeModule {
     });
   }
 
-  public getAppRouter = () => {
+  public getAppComponent: GetAppComponent = () => {
+    if (this.appConfig.renderComponent) {
+      return this.wrapperPageRegistration.reduce((acc, curr) => {
+        return curr(acc);
+      }, this.appConfig.renderComponent);
+    }
     const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IRoutes, curr) => {
       return curr(acc);
     }, []));
     return this.renderRouter(routes, this.routesComponent);
-  }
-
-  public getPageComponent = () => {
-    return this.wrapperPageRegistration.reduce((acc, curr) => {
-      return curr(acc);
-    }, this.appConfig.renderComponent);
   }
 }
 

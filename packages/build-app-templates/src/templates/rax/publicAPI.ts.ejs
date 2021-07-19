@@ -6,6 +6,7 @@ import {
   registerNativeEventListeners,
   addNativeEventListener,
   removeNativeEventListener,
+  getSearchParams,
 } from 'create-app-shared';
 
 import { getInitialData } from 'rax-app-renderer';
@@ -15,6 +16,7 @@ const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
 
 // Public API
 export {
+  getSearchParams,
   emitLifeCycles,
   getInitialData,
   // LifeCycles api

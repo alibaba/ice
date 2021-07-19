@@ -4,6 +4,7 @@ import { IRedirectImportOptions, RedirectImportType } from './types';
 let initd = false;
 
 const MATCH_REG_EXP = /\{(.*?)\}/;
+const AS_ALIAS_REG_EXP = /^(\w+)\s+as\s+(\w+)/;
 
 export default async function redirectImport(code: string, options: IRedirectImportOptions): Promise<string> {
   if (!initd) {
@@ -24,6 +25,10 @@ export default async function redirectImport(code: string, options: IRedirectImp
       // ['runApp', 'usePageShow']
       const identifiers = importedStr.split(',');
       identifiers.forEach(identifier => {
+        if (AS_ALIAS_REG_EXP.test(identifier)) {
+          console.warn('Not support `as` alias with redirect: ', importStr);
+          return;
+        }
         const targetRedirect = redirectImports.find(({ name }) => name === identifier.trim() );
         if (targetRedirect) {
           // import { runApp } from 'ice/entries/home/runApp';

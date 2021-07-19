@@ -19,7 +19,7 @@ export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
   const { ErrorBoundary, appConfig = { app: {} } } = options;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppComponent = appConfig.renderComponent ? runtime?.getPageComponent?.() : runtime?.getAppRouter();
+  const AppComponent = runtime?.getAppComponent?.();
   function App() {
     const appComponent = <AppComponent />;
     const rootApp = AppProvider ? <AppProvider>{appComponent}</AppProvider> : appComponent;

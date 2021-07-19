@@ -2,7 +2,7 @@ const importDeclarations: any = {};
 const defaultDeclarations = {
   '$$framework/core/routerAPI': [
     // router api
-    'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams',
+    'withRouter', 'history', 'getHistory', 'setHistory',
   ],
   '$$framework/core/publicAPI': [
     // LifeCycles api
@@ -13,6 +13,7 @@ const defaultDeclarations = {
     'removeNativeEventListener',
     'ErrorBoundary',
     'getInitialData',
+    'getSearchParams',
   ],
   // export lazy
   '$$ice/core/lazy': ['lazy'],

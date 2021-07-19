@@ -3,8 +3,8 @@ import {
   createBaseApp,
   initAppLifeCycles,
   emitLifeCycles,
-<% if (buildConfig.router !== false) {%>
   getSearchParams,
+<% if (buildConfig.router !== false) {%>
   initHistory,
   createHistory,
 <% } %>
@@ -31,8 +31,8 @@ const frameworkAppBase = createBaseApp({
   runtimeAPI: {
     <% if (buildConfig.router !== false) {%>
     createHistory,
-    getSearchParams,
     <% } %>
+    getSearchParams,
   },
 });
 

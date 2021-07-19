@@ -11,6 +11,5 @@
   },
   "devServer": {
     "writeToDisk": true
-  },
-  "vendor": false
+  }
 }
