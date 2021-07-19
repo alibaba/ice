@@ -1,16 +1,18 @@
 import { ViteDevServer, Plugin } from 'vite';
+import * as fs from 'fs';
 import * as path from 'path';
 
 interface HtmlOption {
   entry: string
   temp: string
+  rootDir: string
 }
 
 /**
  * 1. public/index.html -> /index.html
  * 2. add script entry
  */
-export const indexHtmlPlugin = ({ entry, temp }: HtmlOption): Plugin => {
+export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin => {
   return {
     name: 'index-html-plugin',
     transformIndexHtml: {
@@ -30,6 +32,14 @@ export const indexHtmlPlugin = ({ entry, temp }: HtmlOption): Plugin => {
     configureServer(app: ViteDevServer) {
       return () => {
         app.middlewares.use(async (req, res, next) => {
+          const defaultUrl = path.resolve(rootDir, 'index.html');
+          const isExist = fs.existsSync(defaultUrl);
+
+          if (isExist) {
+            next();
+            return;
+          }
+
           if (!req.originalUrl.endsWith('.html') && req.originalUrl !== '/') {
             req.url = `/${temp}/${req.originalUrl}.html`;
           } else if (req.url === '/index.html') {

@@ -1,20 +1,30 @@
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import { all } from 'deepmerge';
 import { isObject, pick } from 'lodash';
-import { InlineConfig } from 'vite';
+import { InlineConfig, BuildOptions } from 'vite';
 import { indexHtmlPlugin, externalsPlugin } from './plugins';
 
-export const wp2vite = (context: any, isDev = false): InlineConfig => {
-  const { commandArgs = {}, userConfig } = context;
+type Option = BuildOptions & InlineConfig
+
+type Result = {
+  devConfig: InlineConfig
+  prodConfig: BuildOptions
+}
+
+export const wp2vite = (context: any): Result => {
+  const { commandArgs = {}, userConfig, rootDir } = context;
   const configArr = context.getWebpackConfig();
   const config = configArr[0];
 
-  const viteConfig = {
+  let viteConfig: Partial<Record<keyof Option, any>> = {
     publicDir: userConfig.publicDir,
     define: userConfig.define,
+    minify: userConfig.minify
   };
 
   if (isObject(userConfig.vite)) {
-    // merge
-    // deep(userConfig.vite, viteConfig)
+    // userConfig.vite 优先级最高
+    viteConfig = all([viteConfig, userConfig.vite]);
   }
 
   const devServerConfig = {
@@ -25,18 +35,37 @@ export const wp2vite = (context: any, isDev = false): InlineConfig => {
     open: true,
   };
 
-  return {
+  const devConfig = {
     mode: config.mode,
     configFile: false,
-    server: isDev ? devServerConfig : null,
-    resolve: pick(config.resolve, 'alias', 'extensions') as any,
+    server: devServerConfig,
+    resolve: pick(config.resolve, 'alias', 'extensions'),
     plugins: [
+      reactRefresh(),
       indexHtmlPlugin({
         entry: userConfig.entry,
-        temp: 'public'
+        temp: 'public',
+        rootDir
       }),
       externalsPlugin(userConfig.externals)
     ],
     ...viteConfig
   };
+
+  const prodConfig = {
+    mode: config.mode,
+    configFile: false,
+    resolve: pick(config.resolve, 'alias', 'extensions'),
+    plugins: [
+      indexHtmlPlugin({
+        entry: userConfig.entry,
+        temp: 'public',
+        rootDir
+      }),
+      externalsPlugin(userConfig.externals)
+    ],
+    ...viteConfig
+  };
+
+  return { devConfig, prodConfig };
 };
