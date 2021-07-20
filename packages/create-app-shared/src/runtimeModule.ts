@@ -98,12 +98,12 @@ class RuntimeModule {
       wrapperPageComponent: this.wrapperPageComponent,
       appConfig: this.appConfig,
       buildConfig: this.buildConfig,
-      context: this.context
+      context: this.context,
+      setRenderApp: this.setRenderApp,
     };
     if (enabledRouter) {
       runtimeAPI = {
         ...runtimeAPI,
-        setRenderApp: this.setRenderApp,
         modifyRoutes:  this.modifyRoutes,
         wrapperRouterRender: this.wrapperRouterRender,
         modifyRoutesComponent: this.modifyRoutesComponent,
