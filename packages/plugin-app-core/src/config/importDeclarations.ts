@@ -1,10 +1,10 @@
 const importDeclarations: any = {};
 const defaultDeclarations = {
-  // default export in app
-  '$$framework/core/runApp': [
-    'runApp', 'createApp',
+  '$$framework/core/routerAPI': [
     // router api
-    'withRouter', 'history', 'getHistory', 'setHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
+    'withRouter', 'history', 'getHistory', 'setHistory',
+  ],
+  '$$framework/core/publicAPI': [
     // LifeCycles api
     'usePageShow', 'usePageHide', 'withPageLifeCycle',
     // events api
@@ -12,6 +12,8 @@ const defaultDeclarations = {
     'addNativeEventListener',
     'removeNativeEventListener',
     'ErrorBoundary',
+    'getInitialData',
+    'getSearchParams',
   ],
   // export lazy
   '$$ice/core/lazy': ['lazy'],

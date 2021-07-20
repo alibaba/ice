@@ -24,6 +24,7 @@
     "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/traverse": "^7.12.12",
     "fs-extra": "^8.1.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "es-module-lexer": "^0.7.1"
   }
 }

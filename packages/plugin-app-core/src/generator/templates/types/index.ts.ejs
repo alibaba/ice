@@ -46,7 +46,7 @@ export interface IApp {
   addProvider?: ({ children }: { children: FrameworkNode }) => FrameworkElement;
   getInitialData?: (ctx?: IContext) => Promise<any>;
   errorBoundary?: boolean;
-  ErrorBoundaryFallback?: (error: any) => FrameworkComponentType,
+  ErrorBoundaryFallback?: FrameworkComponentType,
   onErrorBoundaryHandler?: (error: Error, componentStack: string) => any;
   onLaunch?: (options?: any) => any;
   onShow?: () => any;
