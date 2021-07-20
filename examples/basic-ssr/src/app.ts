@@ -1,9 +1,11 @@
 import { runApp, IAppConfig, config } from 'ice';
 
-const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
+const delay = (time) =>
+  new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
 const appConfig: IAppConfig = {
   app: {
+    rootId: 'root',
     getInitialData: async () => {
       // console.log('getInitialData ctx', ctx);
 
@@ -15,13 +17,13 @@ const appConfig: IAppConfig = {
           user: {
             name: 'Jack Ma',
             id: 10001,
-          }
+          },
         },
       };
-    }
+    },
   },
   router: {
-    type: 'browser'
+    type: 'browser',
   },
   request: {
     baseURL: config.baseURL

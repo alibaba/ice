@@ -5,7 +5,9 @@ import pageStore from './store';
 import styles from './index.module.scss';
 
 export default function Home(props) {
-  logger.info('Home props', props);
+  if (!process.env.__IS_SERVER__) {
+    logger.info('Home props', props);
+  }
 
   const [dataSource, setData] = useState<number[]>([]);
   useEffect(() => {

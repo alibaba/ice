@@ -109,7 +109,7 @@ const serverRender = async (context, opts = {}) => {
 
     const helmet = Helmet.renderStatic();
 
-    $('#ice-container').append(bundleContent);
+    $(`#${appConfig.app.rootId || 'ice-container'}`).append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};

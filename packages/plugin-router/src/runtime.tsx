@@ -8,7 +8,7 @@ import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
-const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperPageComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
+const module = ({ setRenderApp, appConfig, modifyRoutes, wrapperPageComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
   const { router: appConfigRouter = {}, app = {} } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler } = app;
 
@@ -75,7 +75,7 @@ const module = ({ setRenderRouter, appConfig, modifyRoutes, wrapperPageComponent
     );
   };
 
-  setRenderRouter(renderRouter);
+  setRenderApp(renderRouter);
 };
 
 export default module;

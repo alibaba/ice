@@ -26,6 +26,8 @@ export default class BaseGenerator {
 
   public routesFilePath: string;
 
+  public disableRuntimeList: string[];
+
   constructor(api: IPluginAPI, options: IGeneratorOptions) {
     const { context: { rootDir }, applyMethod, getValue, setValue } = api;
     const { targetDir, entryName } = options;
@@ -73,9 +75,29 @@ export default class BaseGenerator {
     applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public generateLoadRuntimeModules(routesFile: string) {
-    throw new Error('Method not implemented.');
+    const { applyMethod } = this.builtInMethods;
+    applyMethod('addRenderFile', getTemplate('loadRuntimeModules.ts'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
+      , (renderData) => {
+        let { runtimeModules } = renderData;
+        if (!routesFile) {
+          runtimeModules = runtimeModules.filter(({ name }) => {
+            return !this.disableRuntimeList.includes(name);
+          });
+        }
+        return {
+          ...renderData,
+          runtimeModules: runtimeModules.map(({ path: pluginPath, staticModule, absoluteModulePath }) => {
+            if (!staticModule) {
+              pluginPath = path.relative(this.entryFolder, absoluteModulePath);
+            }
+            return {
+              path: pluginPath,
+              staticModule,
+            };
+          }),
+        };
+      });
   }
 
   public getRoutesFilePath() :string {
