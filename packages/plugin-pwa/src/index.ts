@@ -2,7 +2,8 @@ import * as path from 'path';
 import { IPlugin } from '@alib/build-scripts';
 import * as WorkboxPlugin from 'workbox-webpack-plugin';
 import { Option } from './types';
-import defaultRuntimeCaching from './defaultRuntimeCache';
+import defaultRuntimeCaching from './runtimeCaching';
+import { hasWebManifest, appendManifestToHtml } from './webManifestHelper';
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
   const { command } = context;
@@ -12,8 +13,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
     sw = 'sw.js',
     dev = true,
     skipWaiting = true,
+    basename = '/',
     additionalManifestEntries = [],
-    scope = '/',
+    scope = basename,
     runtimeCaching = []
   } = (options ?? {}) as Option;
 
@@ -24,47 +26,83 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
 
   const registerEntry = path.join(__dirname, 'register.js');
   const swScope = path.join(scope, '/');
+  let devOptions = {};
 
   onGetWebpackConfig((config) => {
     const outputPath = config.output.get('path');
-    // FIXME: must know last publicPath setting of all plugins
-    const publicPath = config.output.get('publicPath');
+
     const swDest = path.join(outputPath, sw);
+    const swPath = path.join(basename, sw);
 
-    const swPath = isDev ? `./${sw}` : `${publicPath}${sw}`;
+    console.info(`[PWA]: ${sw} compiled to ${swDest}`);
 
-    console.log('');
-
+    // service worker registration
     config
       .entry('index')
       .add(registerEntry);
 
+    /**
+    * Define global varibles for registration
+     */
     config
       .plugin('DefinePlugin')
       .tap(([args]) => [{
         ...args,
-        // FIXME: how to get exact path
         __ICE_PWA_SW__: `'${swPath}'`,
-        __ICE_START_URL__: '\'/\'',
+        __ICE_START_URL__: `'${basename}'`,
         __ICE_SW_SCOPE__: `'${swScope}'`
       }]);
+
+    if (hasWebManifest) {
+      appendManifestToHtml(config);
+    }
+
+    if (isDev) {
+      log.info('[PWA]: PWA is running in DEV mode. That means hot-reload is enabled for service worker serves all older files.');
+      devOptions = {
+        exclude: [/hot-update\.(?:js|json)$/i],
+        runtimeCaching: [
+          ...defaultRuntimeCaching.filter(cache => ['ice-js-assets', 'others'].some (type => cache.options.cacheName === type)),
+          {
+            urlPattern: /(?<!(hot-update))\.(?:js|json)$/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'ice-pwa-dev'
+            }
+          }
+        ],
+      };
+    }
 
     config
       .plugin('workbox-webpack-plugin')
       .use(WorkboxPlugin.GenerateSW, [
         {
-          cacheId: 'ice-precaches',
+          cacheId: 'ice',
           swDest,
-          cleanupOutdatedCaches: true,
-          // inlineWorkboxRuntime: true,
-          clientsClaim: true,
-          skipWaiting,
-          // exclude: [/\.(?:html)$/i],
-          maximumFileSizeToCacheInBytes: '10240000',
-          // setting for runtime Caching
-          runtimeCaching: runtimeCaching.concat(defaultRuntimeCaching as any),
 
+          // auto clean outdated caches
+          cleanupOutdatedCaches: true,
+
+          // bundle workbox to sw.js
+          inlineWorkboxRuntime: true,
+
+          // make service worker controls any existing clients once actived.
+          clientsClaim: true,
+
+          // default to slient
+          skipWaiting,
+
+          // precache assets which under 10M
+          maximumFileSizeToCacheInBytes: '10240000',
+
+          // custom runtim caching
+          runtimeCaching: runtimeCaching.concat(defaultRuntimeCaching),
+
+          // custom manifests
           additionalManifestEntries,
+
+          ...devOptions
         }
       ]);
   });

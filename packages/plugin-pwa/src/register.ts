@@ -23,7 +23,7 @@ if ('serviceWorker' in navigator && typeof caches !== 'undefined') {
 
   workbox.register();
 
-  // 
+  //
   workbox.addEventListener('activated', (event) => {
     if (!event.isUpdate) {
       // inform offline is ready to use

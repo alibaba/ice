@@ -1,13 +1,7 @@
-// workbox runtime config: https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.RuntimeCachingEntry
+import { RuntimeCachingEntry } from 'workbox-build';
 
+// workbox runtime config: https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.RuntimeCachingEntry
 export default [
-  {
-    urlPattern: '/',
-    handler: 'NetworkFirst',
-    options: {
-      cacheName: 'ice-start-url',
-    }
-  },
   /**
   * Sometimes it's need to cache opaque responses for images/fonts ...
   * And use StaleWhileRevalidate to handle opaque responses. Learn more at
@@ -18,7 +12,7 @@ export default [
       const isSameOrigin = self.origin === url.origin;
       return !isSameOrigin && ['.jpg', '.jpeg', '.gif', '.png', '.svg', '.ico', '.webp'].some(type => url.pathname.endsWith(type));
     },
-    handler: 'StaleWhileRevalidate',
+    name: 'crossOriginImageAssets',
     options: {
       cacheName: 'ice-cross-origin-images-assets',
       expiration: {
@@ -133,4 +127,4 @@ export default [
       networkTimeoutSeconds: 10
     }
   },
-];
+] as RuntimeCachingEntry[];
