@@ -7,9 +7,17 @@ import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
 
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig }, options) => {
   const { command, userConfig, webpack, commandArgs } = context;
   const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
+
+  if(!userConfig.outputDir){
+    registerUserConfig({
+      name: 'outputDir',
+      defaultValue: 'build',
+      validation: 'string',
+    });
+  }
 
   const {
     moduleExternals,
