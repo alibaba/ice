@@ -2,6 +2,7 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { runApp, IAppConfig } from 'ice';
 
 import App from './Home';
 

@@ -1,5 +1,5 @@
 {
   "vite": true,
-  "disableRuntime": true,
-  "plugins": []
+  "plugins": [],
+  "entry": "src/app.jsx"
 }

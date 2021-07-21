@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as log from 'npmlog';
 
 interface HtmlOption {
-  entry: string
+  entry: any // only spa
   temp: string
   rootDir: string
 }
@@ -30,14 +30,16 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
       };
     },
     async closeBundle() {
-      const outPath = path.resolve(rootDir, outDir, 'index.html');
-      const sourcePath = path.resolve(rootDir, outDir, temp, 'index.html');
+      // SPA
+      const distPath = path.resolve(rootDir, outDir);
+      const outPath = path.resolve(distPath, 'index.html');
+      const sourcePath = path.resolve(distPath, temp, 'index.html');
 
       if (fs.existsSync(sourcePath)) {
         fs.copyFileSync(sourcePath, outPath);
         fs.rmSync(sourcePath);
 
-        log.info(`导出文件入口设置为${outDir}/index.html`);
+        log.info(`导出文件入口设置为 ${outDir}/index.html`);
       }
     },
     transformIndexHtml: {
