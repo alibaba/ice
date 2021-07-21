@@ -5065,10 +5065,10 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
-build-scripts@^1.1.0-5:
-  version "1.1.0-5"
-  resolved "https://registry.nlark.com/build-scripts/download/build-scripts-1.1.0-5.tgz#852e3b8d6db571c5f75262cbaa5c280c8174a3b8"
-  integrity sha1-hS47jW21ccX3UmLLqlwoDIF0o7g=
+build-scripts@^1.1.0-7:
+  version "1.1.0-7"
+  resolved "https://registry.nlark.com/build-scripts/download/build-scripts-1.1.0-7.tgz#9a4379b789a5423aff198389815d161d6e2407a1"
+  integrity sha1-mkN5t4mlQjr/GYOJgV0WHW4kB6E=
   dependencies:
     address "^1.1.0"
     camelcase "^5.3.1"

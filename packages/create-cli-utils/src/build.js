@@ -1,19 +1,7 @@
 #!/usr/bin/env node
 const parse = require('yargs-parser');
-const { viteBuild } = require('@builder/vite-service/lib/build');
-const { WebpackService } = require('build-scripts');
 const log = require('build-scripts/lib/utils/log');
-
-class ViteService extends WebpackService {
-  getCommandModule(options) {
-    const { userConfig } = options;
-    if (!userConfig.vite) {
-      return super.getCommandModule(options);
-    } else {
-      return viteBuild;
-    }
-  }
-};
+const BuildServer = require('./buildService');
 
 module.exports = async (getBuiltInPlugins) => {
   process.env.NODE_ENV = 'production';
@@ -23,7 +11,7 @@ module.exports = async (getBuiltInPlugins) => {
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    const service = new ViteService({
+    const service = new BuildServer({
       command: 'build',
       args: { ...rawArgv },
       getBuiltInPlugins

@@ -2,7 +2,7 @@
   "name": "basic-vite",
   "version": "0.0.1",
   "scripts": {
-    "start": "icejs start",
+    "start": "../../packages/icejs/bin/ice-cli.js start",
     "build": "icejs build"
   },
   "dependencies": {
