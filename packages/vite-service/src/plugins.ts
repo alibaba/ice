@@ -17,7 +17,7 @@ interface HtmlOption {
 export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin => {
   let outDir = '';
   return {
-    name: 'index-html-plugin',
+    name: 'vite-plugin-index-html',
     config(cfg, { command }) {
       if (command === 'build') {
         outDir = cfg.build?.outDir ?? 'dist';
@@ -80,9 +80,22 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
   };
 };
 
+export const runtimePlugin = (): Plugin => {
+  return {
+    name: 'vite-plugin-runtime',
+    configureServer(app: ViteDevServer) {
+      return () => {
+        app.middlewares.use(async (req, res, next) => {
+          // .ice -> /src/.ice
+        });
+      };
+    }
+  };
+};
+
 export const externalsPlugin = (externals: Record<string, string> = {}): Plugin => {
   return {
-    name: 'resolve-externals',
+    name: 'vite-plugin-resolve-externals',
     resolveId(id) {
       if (externals[id]) {
         return id;

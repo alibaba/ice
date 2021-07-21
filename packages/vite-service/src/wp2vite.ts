@@ -23,7 +23,7 @@ type ConfigMap = Record<string, string | {
 const transformPlugin = (pluginName: string): Transformer => {
   return (...args) => {
     if (!args[2]) return;
-    const opts = args[2].plugin(pluginName)?.values()?.[2] ?? [];
+    const opts = args[2].plugin(pluginName)?.get('args') ?? [];
     return opts[0];
   };
 };
