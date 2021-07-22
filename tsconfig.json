@@ -35,5 +35,6 @@
     { "path": "packages/webpack-dev-mock" },
     { "path": "packages/plugin-keep-alive" },
     { "path": "packages/plugin-dev-inspector" },
+    { "path": "packages/plugin-pwa" }
   ]
 }
