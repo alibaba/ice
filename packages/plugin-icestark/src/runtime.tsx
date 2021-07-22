@@ -17,7 +17,7 @@ import { IPrivateIceStark, IIceStark } from './types';
 
 const { useEffect, useState } = React;
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperRouteComponent }) => {
+const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperPageComponent }) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
@@ -78,7 +78,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
     };
 
     // get props by props
-    wrapperRouteComponent(wrapperPageFn);
+    wrapperPageComponent(wrapperPageFn);
 
     const routerProps = {
       type,
@@ -93,7 +93,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
         return originRender(routes, RoutesComponent, routerProps);
       });
     } else {
-      setRenderRouter((routes) => () => {
+      setRenderApp((routes) => () => {
         return <IceRouter {...routerProps} routes={routes} />;
       });
     }
@@ -183,7 +183,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderRouter, wrapper
         </BasicLayout>
       );
     };
-    setRenderRouter(frameworkRouter);
+    setRenderApp(frameworkRouter);
   }
 };
 

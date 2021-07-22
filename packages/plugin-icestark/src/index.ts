@@ -6,7 +6,7 @@ import { IPlugin, Json } from 'build-scripts';
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
   const { rootDir, webpack, pkg } = context;
-  const iceTempPath: string = getValue('TEMP_PATH') || path.join(rootDir, '.ice');
+  const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
 

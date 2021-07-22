@@ -32,3 +32,14 @@ export interface IRoute {
   frames?: IRoute[];
   pageHeader?: IPageHeader;
 }
+
+export interface IRedirectImportOptions {
+  source: string;
+  redirectImports: RedirectImportType[];
+}
+
+export type RedirectImportType = {
+  name: string;
+  redirectPath: string;
+  default: boolean;
+}

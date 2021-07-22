@@ -107,7 +107,7 @@ const plugin = async (api): Promise<void> => {
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
-      console.log('[SSR]', 'start server render');
+      log.info('[SSR]', 'start server render');
       delete require.cache[serverFilePath];
       // eslint-disable-next-line
       const serverRender = require(serverFilePath);
@@ -115,14 +115,15 @@ const plugin = async (api): Promise<void> => {
       const { error, html, redirectUrl } = await serverRender.default(ctx, { htmlTemplate });
 
       if (redirectUrl) {
-        console.log('[SSR]', `Redirect to the new path ${redirectUrl}`);
+        log.info('[SSR]', `Redirect to the new path ${redirectUrl}`);
         res.redirect(302, redirectUrl);
       } else {
         if (error) {
           log.error('[SSR] Server side rendering error, downgraded to client side rendering');
           log.error(error);
         }
-        console.log('[SSR]', `output html content\n${html}\n`);
+        log.info('[SSR] SSR success', 'output html content');
+        log.verbose('[SSR] ssr html content', html);
         res.send(html);
       }
     }
@@ -136,8 +137,8 @@ const plugin = async (api): Promise<void> => {
 
       let serverReady = false;
       let httpResponseQueue = [];
-      const originalDevServeBefore = config.devServer.get('before');
-      config.devServer.set('before', (app, server) => {
+      const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
+      config.devServer.set('onBeforeSetupMiddleware', (app, server) => {
         if (typeof originalDevServeBefore === 'function') {
           originalDevServeBefore(app, server);
         }

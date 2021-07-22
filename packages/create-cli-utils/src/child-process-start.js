@@ -2,20 +2,8 @@
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 const parse = require('yargs-parser');
-const { viteStart } = require('@builder/vite-service/lib/start');
-const { WebpackService } = require('build-scripts');
 const log = require('build-scripts/lib/utils/log');
-
-class ViteService extends WebpackService {
-  getCommandModule(options) {
-    const { userConfig } = options;
-    if (!userConfig.vite) {
-      return super.getCommandModule(options);
-    } else {
-      return viteStart;
-    }
-  }
-};
+const BuildService = require('./buildService');
 
 const rawArgv = parse(process.argv.slice(2), {
   configuration: { 'strip-dashed': true }
@@ -48,7 +36,7 @@ module.exports = async (getBuiltInPlugins) => {
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    const service = new ViteService({
+    const service = new BuildService({
       command: 'start',
       args: { ...rawArgv },
       getBuiltInPlugins
