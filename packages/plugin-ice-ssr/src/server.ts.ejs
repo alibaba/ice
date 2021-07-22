@@ -8,13 +8,15 @@ import { setInitialData } from 'react-app-renderer';
 import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
 import { getAppConfig } from './core/appConfig';
 import loadStaticModules from './core/loadStaticModules';
+import { emitLifeCycles } from './core/publicAPI';
 import app from './core/runApp';
 import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
 
 const chalk = require('chalk');
 const parseurl = require('parseurl');
-const { createBaseApp, emitLifeCycles } = app;
+
+const { createBaseApp } = app;
 
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
@@ -107,7 +109,7 @@ const serverRender = async (context, opts = {}) => {
 
     const helmet = Helmet.renderStatic();
 
-    $('#ice-container').append(bundleContent);
+    $(`#${appConfig.app.rootId || 'ice-container'}`).append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};

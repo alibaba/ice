@@ -34,7 +34,7 @@ const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
   return withAuth(AuthWrappedComponent);
 };
 
-export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {
+export default ({ context, appConfig, addProvider, wrapperPageComponent }) => {
   const initialData = context && context.initialData ? context.initialData : {};
   const initialAuth = initialData.auth || {};
   const authConfig = appConfig.auth || {};
@@ -44,5 +44,5 @@ export default ({ context, appConfig, addProvider, wrapperRouteComponent }) => {
   };
 
   addProvider(AuthStoreProvider);
-  wrapperRouteComponent(wrapperComponentFn(authConfig));
+  wrapperPageComponent(wrapperComponentFn(authConfig));
 };

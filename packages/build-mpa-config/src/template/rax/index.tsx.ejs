@@ -1,0 +1,17 @@
+import { runApp } from '<%- runAppPath %>';
+import { IAppConfig } from '<%- tempPath %>/types';
+<% if (routesFilePath) {%>
+import appJSON from '<%- routesFilePath %>';
+
+const appConfig: IAppConfig = {};
+
+runApp(appConfig, appJSON);
+<% } else { %>
+import Page from '<%- resourcePath %>';
+
+const appConfig: IAppConfig = {
+  renderComponent: Page,
+};
+
+runApp(appConfig);
+<% } %>

@@ -4,6 +4,10 @@
 
 - [feat] pre build dependencies and refactor config for webpack 5
 
+## 0.3.8
+
+- [feat] support global rules of rax-app
+
 ## 0.3.7
 
 - [feat] add `devServer.host` to https cert 

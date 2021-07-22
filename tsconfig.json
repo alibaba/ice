@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/build-app-templates" },
     { "path": "packages/build-app-helpers" },
     { "path": "packages/build-babel-config" },
     { "path": "packages/build-jest-config" },

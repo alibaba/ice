@@ -46,12 +46,14 @@ export interface IApp {
   addProvider?: ({ children }: { children: FrameworkNode }) => FrameworkElement;
   getInitialData?: (ctx?: IContext) => Promise<any>;
   errorBoundary?: boolean;
-  ErrorBoundaryFallback?: (error: any) => FrameworkComponentType,
+  ErrorBoundaryFallback?: FrameworkComponentType,
   onErrorBoundaryHandler?: (error: Error, componentStack: string) => any;
   onLaunch?: (options?: any) => any;
   onShow?: () => any;
   onHide?: () => any;
   onError?: (error: Error) => any;
+  onPageNotFound?: (options?: any) => any;
+  onUnhandledRejection?: (options?: any) => any;
   onTabItemClick?: ({ from, path, text, index }: IOnTabItemClickParams) => any;
   <% if (appConfigAppTypesImports) { %>
     <%- appConfigAppTypesExports %>
