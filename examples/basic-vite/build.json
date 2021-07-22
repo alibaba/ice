@@ -1,5 +1,13 @@
 {
   "vite": true,
   "plugins": [],
-  "entry": "src/app.jsx"
+  "entry": "src/app.jsx",
+  "terserOptions": {
+    "compress": {
+      "unused": true
+    }
+  },
+  "sassLoaderOptions": {
+    "prependData": ".test{color:red}"
+  }
 }

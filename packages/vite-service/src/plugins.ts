@@ -83,13 +83,18 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
 export const runtimePlugin = (): Plugin => {
   return {
     name: 'vite-plugin-runtime',
-    configureServer(app: ViteDevServer) {
-      return () => {
-        app.middlewares.use(async (req, res, next) => {
-          // .ice -> /src/.ice
-        });
-      };
-    }
+    // configureServer(app: ViteDevServer) {
+    //   return () => {
+    //     app.middlewares.use(async (req, res, next) => {
+    //       // .ice -> /src/.ice
+    //       if (req.originalUrl.includes('.ice')) {
+    //         req.url = `/.ice/${req.originalUrl}`;
+    //       }
+    //       console.log(req.originalUrl);
+    //       next();
+    //     });
+    //   };
+    // }
   };
 };
 
