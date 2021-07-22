@@ -5,7 +5,7 @@ const PLUGIN_AUTH_DIR = 'auth';
 
 export default async function (api: IPluginAPI) {
   const { getValue, onGetWebpackConfig, applyMethod } = api;
-  const iceTemp = getValue('TEMP_PATH');
+  const iceTemp = getValue<string>('TEMP_PATH');
 
   // 复制模板到 .ice/auth 目录下
   const templateSourceDir = path.join(__dirname, '../template');

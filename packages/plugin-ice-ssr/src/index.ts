@@ -137,8 +137,8 @@ const plugin = async (api): Promise<void> => {
 
       let serverReady = false;
       let httpResponseQueue = [];
-      const originalDevServeBefore = config.devServer.get('before');
-      config.devServer.set('before', (app, server) => {
+      const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
+      config.devServer.set('onBeforeSetupMiddleware', (app, server) => {
         if (typeof originalDevServeBefore === 'function') {
           originalDevServeBefore(app, server);
         }

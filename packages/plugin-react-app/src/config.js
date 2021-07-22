@@ -2,6 +2,11 @@
 module.exports = function() {
   return [
     {
+      name: 'logging',
+      defaultValue: {},
+      validation: 'object'
+    },
+    {
       name: 'remoteRuntime',
       defaultValue: false,
       validation: 'boolean|object'
