@@ -106,7 +106,7 @@ const plugin: IPlugin = (api) => {
     // set page template
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
-      addRedirectRunAppLoader(config, 'ice', redirectEntries);
+      addRedirectRunAppLoader(api, {config, framework: 'ice', redirectEntries});
       config.devServer.historyApiFallback({
         rewrites: Object.keys(entries).map((pageName) => {
           return {

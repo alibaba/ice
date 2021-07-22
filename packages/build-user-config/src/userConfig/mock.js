@@ -7,7 +7,8 @@ module.exports = (config, mock, context) => {
     const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
     // replace devServer before function
     config.merge({ devServer: {
-      onBeforeSetupMiddleware(app, server) {
+      onBeforeSetupMiddleware(server) {
+        const { app } = server;
         // set cors before all served files
         app.use((req, res, next) => {
           res.set('Access-Control-Allow-Origin', '*');
@@ -17,7 +18,7 @@ module.exports = (config, mock, context) => {
         // keep mock server ahead of devServer.before
         webpackDevMock(app, mockIgnore || []);
         if (typeof originalDevServeBefore === 'function') {
-          originalDevServeBefore(app, server);
+          originalDevServeBefore(server);
         }
       },
     }});

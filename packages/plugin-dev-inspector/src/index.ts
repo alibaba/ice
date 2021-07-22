@@ -27,7 +27,8 @@ const plugin: IPlugin = ({ onGetWebpackConfig }) => {
     const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
     config.merge({
       devServer: {
-        onBeforeSetupMiddleware(app, server) {
+        onBeforeSetupMiddleware(server) {
+          const { app } = server;
           app.get('/vscode/goto', (req, res) => {
             try {
               const { query } = req;
@@ -41,7 +42,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig }) => {
             }
           });
           if (typeof originalDevServeBefore === 'function') {
-            originalDevServeBefore(app, server);
+            originalDevServeBefore(server);
           }
         },
       }
