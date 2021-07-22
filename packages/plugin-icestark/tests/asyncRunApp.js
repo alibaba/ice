@@ -54,7 +54,7 @@ const output = "import { runApp } from 'ice';\n" +
 '  container,\n' +
 '  customProps\n' +
 '}) => {\n' +
-'  if (appConfig.icestark && appConfig.icestark.regsiterAppLeave) {\n' +
+'  if (appConfig?.icestark?.regsiterAppLeave) {\n' +
 '    appConfig.icestark.regsiterAppLeave(container, customProps);\n' +
 '  } else {\n' +
 '    ReactDOM.unmountComponentAtNode(container);\n' +
