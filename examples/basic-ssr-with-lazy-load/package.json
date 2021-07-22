@@ -10,7 +10,7 @@
     "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
+    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev --disable-reload",
     "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
   },
   "engines": {

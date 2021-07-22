@@ -9,6 +9,10 @@
 - [feat] refactor runtime folder structure
 - [feat] api of render template
 
+## 1.4.8
+
+- [feat] add onPageNotFound and onUnhandledRejection types in ejs
+
 ## 1.4.7
 
 - [refactor] only inject TabBar component when developer configured it

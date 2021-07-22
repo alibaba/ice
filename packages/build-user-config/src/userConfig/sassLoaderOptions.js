@@ -19,6 +19,7 @@ module.exports = (config, customOptions, context) => {
   [
     'scss',
     'scss-module',
+    'scss-global' // rule of `global.scss`
   ].forEach(rule => {
     if (config.module.rules.get(rule)) {
       config.module

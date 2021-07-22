@@ -1,5 +1,6 @@
 import { IPlugin, IUserConfig } from 'build-scripts';
 import { getWebpackConfig } from 'build-scripts-config';
+import * as WebpackPluginImport from 'webpack-plugin-import';
 import { Options } from './types';
 import setUMDConfig from './setUMDConfig';
 import genRuntime from './genRuntime';
@@ -48,6 +49,17 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   };
   baseConfig.plugin('DefinePlugin')
     .use((webpack as any).DefinePlugin, [defineVariables])
+    .end();
+
+  // register webpack-plugin-import
+  // https://github.com/alibaba/ice/tree/master/packages/webpack-plugin-import
+  baseConfig.plugin('WebpackPluginImport')
+    .use(WebpackPluginImport, [[
+      {
+        libraryName: /@ali\/ice-.*/,
+        stylePath: 'style.js',
+      },
+    ]])
     .end();
 
   // set umd

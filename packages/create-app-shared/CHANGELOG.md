@@ -4,11 +4,12 @@
 
 - [feat] refactor exports APIs
 - [feat] add exports field
-
-## 0.3.0
-
 - [feat] add `setHistory` API
 - [fix] extract the logic of creating history from `createBaseApp`.
+
+## 0.2.6
+
+- [feat] support onPageNotFound app lifecycle
 
 ## 0.2.5
 
