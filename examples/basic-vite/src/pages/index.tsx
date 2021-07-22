@@ -1,9 +1,9 @@
-import './Home.css';
+import './index.css';
 
 import React, { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
 
   return (
     <div className="App">
