@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as log from 'npmlog';
 
 interface HtmlOption {
-  entry: string
+  entry: any // only spa
   temp: string
   rootDir: string
 }
@@ -17,7 +17,7 @@ interface HtmlOption {
 export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin => {
   let outDir = '';
   return {
-    name: 'index-html-plugin',
+    name: 'vite-plugin-index-html',
     config(cfg, { command }) {
       if (command === 'build') {
         outDir = cfg.build?.outDir ?? 'dist';
@@ -30,14 +30,16 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
       };
     },
     async closeBundle() {
-      const outPath = path.resolve(rootDir, outDir, 'index.html');
-      const sourcePath = path.resolve(rootDir, outDir, temp, 'index.html');
+      // SPA
+      const distPath = path.resolve(rootDir, outDir);
+      const outPath = path.resolve(distPath, 'index.html');
+      const sourcePath = path.resolve(distPath, temp, 'index.html');
 
       if (fs.existsSync(sourcePath)) {
         fs.copyFileSync(sourcePath, outPath);
         fs.rmSync(sourcePath);
 
-        log.info(`导出文件入口设置为${outDir}/index.html`);
+        log.info(`导出文件入口设置为 ${outDir}/index.html`);
       }
     },
     transformIndexHtml: {
@@ -78,9 +80,27 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
   };
 };
 
+export const runtimePlugin = (): Plugin => {
+  return {
+    name: 'vite-plugin-runtime',
+    // configureServer(app: ViteDevServer) {
+    //   return () => {
+    //     app.middlewares.use(async (req, res, next) => {
+    //       // .ice -> /src/.ice
+    //       if (req.originalUrl.includes('.ice')) {
+    //         req.url = `/.ice/${req.originalUrl}`;
+    //       }
+    //       console.log(req.originalUrl);
+    //       next();
+    //     });
+    //   };
+    // }
+  };
+};
+
 export const externalsPlugin = (externals: Record<string, string> = {}): Plugin => {
   return {
-    name: 'resolve-externals',
+    name: 'vite-plugin-resolve-externals',
     resolveId(id) {
       if (externals[id]) {
         return id;
