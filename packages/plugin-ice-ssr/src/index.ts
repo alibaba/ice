@@ -128,19 +128,22 @@ const plugin = async (api): Promise<void> => {
       }
     }
     if (command === 'start') {
-      config.devServer
-        .hot(true)
-        .writeToDisk((filePath: string) => {
+      const originalDevMiddleware = config.devServer.get('devMiddleware');
+      config.devServer.set('devMiddleware', {
+        ...originalDevMiddleware,
+        writeToDisk: (filePath: string) => {
           const formattedFilePath = formatPath(filePath);
           return /(server\/.*|loadable-stats.json|index.html)$/.test(formattedFilePath);
-        });
+        },
+      });
 
       let serverReady = false;
       let httpResponseQueue = [];
       const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
-      config.devServer.set('onBeforeSetupMiddleware', (app, server) => {
+      config.devServer.set('onBeforeSetupMiddleware', (server) => {
+        const { app } = server;
         if (typeof originalDevServeBefore === 'function') {
-          originalDevServeBefore(app, server);
+          originalDevServeBefore(server);
         }
         let compilerDoneCount = 0;
         server.compiler.compilers.forEach((compiler) => {

@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { formatPath, checkExportDefaultDeclarationExists } from '@builder/app-helpers';
+import { IPluginAPI } from 'build-scripts';
 import generateEntry from './generate';
 import { FrameworkType, IGenerateResult } from './types';
 
@@ -16,7 +17,10 @@ interface IConfigOptions {
   entries?: IEntries[];
   targetDir?: string;
 }
-export const generateMPAEntries = (api, options: IConfigOptions) => {
+
+type ImportDeclarations = Record<string, {value: string}>;
+
+export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => {
   const { context } = api;
   const { framework = 'rax', targetDir = '' } = options;
   let { entries } = options;
@@ -52,17 +56,26 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   return parsedEntries;
 };
 
-export const addRedirectRunAppLoader = (config: any, framework, redirectEntries: IGenerateResult[] = []) => {
+export const addRedirectRunAppLoader = (api: IPluginAPI, { config, framework, redirectEntries = [] }: {
+  config: any;
+  framework: string;
+  redirectEntries: IGenerateResult[];
+}) => {
   // TODO: esbuild preCompile ts to js
   config.module.rule('redirect-runApp')
     .enforce('post')
-    .test(filepath => redirectEntries.some(({ entryPath }) => entryPath === filepath))
+    .test((filepath: string) => redirectEntries.some(({ entryPath }) => entryPath === filepath))
     .use('redirect-runApp-loader')
     .loader(require.resolve(path.join(__dirname, 'redirectRunAppLoader')))
     .options({
       framework,
       redirectEntries,
     });
+
+  // filter runApp while redirect-runApp-loader will handle it
+  const importDeclarations = api.getValue<ImportDeclarations>('importDeclarations');
+  delete importDeclarations.runApp;
+  api.setValue<ImportDeclarations>('importDeclarations', importDeclarations);
 };
 
 const setMPAConfig = (api, config, options: IConfigOptions) => {
@@ -91,7 +104,11 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
     matchStrs.push(formatPath(matchStr));
   });
 
-  addRedirectRunAppLoader(config, redirectEntries);
+  addRedirectRunAppLoader(api, {
+    config,
+    framework: 'rax',
+    redirectEntries,
+  });
 
   if (config.plugins.has('document')) {
     config.plugin('document').tap(args => {

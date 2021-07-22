@@ -49,13 +49,6 @@ module.exports = async (api) => {
   });
 
   if (command === 'start') {
-    onGetWebpackConfig(config => {
-      if (isMiniapp) {
-        config.plugins.delete('HotModuleReplacementPlugin');
-        config.devServer.set('writeToDisk', isMiniapp);
-        config.devServer.hot(false).inline(false);
-      }
-    });
     setDev(api, { targets, isMiniapp });
   }
 
