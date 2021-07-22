@@ -12,6 +12,8 @@
   "swc": true,
   "plugins": [],
   "devServer": {
-    "writeToDisk": true
+    "devMiddleware": {
+      "writeToDisk": true
+    }
   }
 }

@@ -40,11 +40,12 @@ module.exports = [
     name: 'devServer',
     validation: 'object',
     defaultValue: {
-      firewall: false,
       compress: true,
-      transportMode: 'ws',
-      static: {
+      webSocketServer: 'ws',
+      devMiddleware: {
         publicPath: '/',
+      },
+      static: {
         watch: {
           ignored: /node_modules/,
           aggregateTimeout: 600,
@@ -52,9 +53,9 @@ module.exports = [
       },
       client: {
         overlay: false,
-        logging: 'verbose',
+        logging: 'info',
       },
-      onBeforeSetupMiddleware(app) {
+      onBeforeSetupMiddleware({ app }) {
         app.use((req, res, next) => {
           // set cros for all served files
           res.set('Access-Control-Allow-Origin', '*');
