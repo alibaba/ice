@@ -14,6 +14,7 @@
     "lib"
   ],
   "dependencies": {
+    "@builder/vite-service": "^1.0.0",
     "build-scripts": "^1.1.0-7",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
