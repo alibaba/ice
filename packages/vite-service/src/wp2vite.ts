@@ -123,7 +123,7 @@ export const wp2vite = (context: Context): Result => {
     ]
   };
 
-  console.log(viteConfig);
+  // console.log(viteConfig);
 
   if (isObject(userConfig.vite)) {
     // userConfig.vite 优先级最高

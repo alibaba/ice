@@ -1,5 +1,5 @@
 // import { runApp, IAppConfig } from 'ice';
-import './global.css';
+import './global.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/index';

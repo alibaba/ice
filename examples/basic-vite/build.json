@@ -1,7 +1,6 @@
 {
   "vite": true,
   "plugins": [],
-  "entry": "src/app.jsx",
   "terserOptions": {
     "compress": {
       "unused": true
