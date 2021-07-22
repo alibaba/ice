@@ -12,7 +12,7 @@ export default [
       const isSameOrigin = self.origin === url.origin;
       return !isSameOrigin && ['.jpg', '.jpeg', '.gif', '.png', '.svg', '.ico', '.webp'].some(type => url.pathname.endsWith(type));
     },
-    name: 'crossOriginImageAssets',
+    handler: 'StaleWhileRevalidate',
     options: {
       cacheName: 'ice-cross-origin-images-assets',
       expiration: {
