@@ -1,7 +1,7 @@
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import * as path from 'path';
 import { all } from 'deepmerge';
-import { isObject, set, get, isArray } from 'lodash';
+import { isObject, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import { indexHtmlPlugin, externalsPlugin, runtimePlugin } from './plugins';
@@ -61,15 +61,7 @@ const configMap: ConfigMap = {
     name: 'resolve.extensions',
     transform: (value) => (['.mjs', ...value])
   },
-  'devServer.watchOptions': {
-    name: 'server.watch',
-    transform: (value) => {
-      if (!isArray(value.ignored)) {
-        value.ignored = [value.ignored];
-      }
-      return value;
-    }
-  },
+  'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': 'server.proxy',
   'plugins.DefinePlugin': {
     name: 'defined',
@@ -116,8 +108,8 @@ export const wp2vite = (context: Context): Result => {
   const { commandArgs = {}, userConfig, rootDir } = context;
   const configArr = context.getWebpackConfig();
   const config = configArr[0];
-
-  // console.log(config.chainConfig.toConfig().module.rules);
+  
+  // console.log(config.chainConfig.toConfig());
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     ...recordMap(config.chainConfig, context),
