@@ -26,6 +26,7 @@
     "build-scripts": "^1.1.0-7",
     "chalk": "^2.4.1",
     "deepmerge": "^4.2.2",
+    "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
     "npmlog": "^4.1.2",
     "rollup-plugin-friendly-type-imports": "^1.0.1",

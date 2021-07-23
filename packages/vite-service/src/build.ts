@@ -10,6 +10,7 @@ export async function viteBuild(context: any): Promise<BuildResult> {
 
   try {
     await build(prodConfig);
+    context.applyHook('after.build.compile');
   } catch (err) {
     console.error('CONFIG', chalk.red('Failed to load vite config.'));
     throw err;
