@@ -1,5 +1,5 @@
 import { ViteDevServer, Plugin } from 'vite';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as log from 'npmlog';
 
@@ -37,7 +37,7 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
 
       if (fs.existsSync(sourcePath)) {
         fs.copyFileSync(sourcePath, outPath);
-        fs.rmSync(sourcePath);
+        fs.removeSync(sourcePath);
 
         log.info(`导出文件入口设置为 ${outDir}/index.html`);
       }
