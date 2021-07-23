@@ -11,14 +11,16 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
   const { command, userConfig, webpack, commandArgs } = context;
   const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
 
-  if(!userConfig.outputDir){
+  try {
     registerUserConfig({
       name: 'outputDir',
       defaultValue: 'build',
       validation: 'string',
     });
+  } catch (error) {
+    console.log('error :>> ', error);
   }
-
+  
   const {
     moduleExternals,
     minify,

@@ -7,9 +7,9 @@ interface GetConfig {
   (api: Partial<IPluginAPI>, options?: Options): any;
 }
 
-const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, outputDir, library, filenameStrategy }) => {
+const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, outputDir: optionOutputDir, library, filenameStrategy }) => {
   const { rootDir, userConfig, pkg } = context;
-  const { library: userLibrary } = userConfig;
+  const { library: userLibrary, outputDir: userConfigOutputDir } = userConfig;
   const { name } = pkg ?? {};
 
   onGetWebpackConfig('icestark-module', (config) => {
@@ -24,7 +24,9 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     // disable splitchunks
     config.optimization.splitChunks({ cacheGroups: {} });
     // set umd
-    const output = path.resolve(rootDir, outputDir ?? 'dist');
+    const finalOutputDir: string = optionOutputDir ? optionOutputDir : userConfigOutputDir.toString();
+    const output = path.resolve(rootDir, finalOutputDir ?? 'dist');
+        
     config.output
       .path(output)
       // set output to outputDir/[name]
