@@ -1,5 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
-import envVar, { isMiniAppPlatform } from './env';
+import { isMiniAppPlatform, isWeex } from './env';
 import miniappWithRouter from './miniapp/enhanceWithRouter';
 import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle as defaultWithPageLifeCycle, createUsePageLifeCycle as defaultCreateUsePageLifeCycle } from './pageLifeCycles';
@@ -37,7 +37,7 @@ if (isMiniAppPlatform) {
   emitLifeCycles = emitMiniappLifeCycles;
   withPageLifeCycle = miniappWithPageLifeCycle;
   createUsePageLifeCycle = miniappCreateUsePageLifeCycle;
-}  else if (envVar.isWeex) {
+}  else if (isWeex) {
   createHistory = createWeexHistory;
   initAppLifeCycles = initWeexLifeCycles;
   initHistory = initWeexHistory;

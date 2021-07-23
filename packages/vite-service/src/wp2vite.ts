@@ -120,6 +120,9 @@ export const wp2vite = (context: Context): Result => {
   let viteConfig: Partial<Record<keyof Option, any>> = {
     ...recordMap(config.chainConfig, context),
     configFile: false,
+    optimizeDeps: {
+      include: ['react-app-renderer', 'create-app-shared']
+    },
     plugins: [
       friendlyTypeImports(),
       externalsPlugin(userConfig.externals as any),
@@ -145,6 +148,12 @@ export const wp2vite = (context: Context): Result => {
 
   const devConfig = all([{
     server: devServerConfig,
+    define: {
+      'process.env': {},
+      global: {
+        __app_mode__: 'start'
+      }
+    },
     plugins: [
       reactRefresh(),
       runtimePlugin(),
