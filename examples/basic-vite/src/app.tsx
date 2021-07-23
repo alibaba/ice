@@ -1,21 +1,20 @@
-// import { runApp, IAppConfig } from 'ice';
-import './global.scss';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './pages/index';
+import { runApp, IAppConfig } from 'ice';
+// import './global.scss';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import App from './pages/index';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  // eslint-disable-next-line no-undef
-  document.getElementById('ice-container'),
-);
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>,
+//   document.getElementById('ice-container'),
+// );
 
-// const appConfig = {
-//   app: {
-//     rootId: 'ice-container'
-//   }
-// }
+const appConfig: IAppConfig = {
+  app: {
+    rootId: 'ice-container',
+  },
+};
 
-// runApp(appConfig)
+runApp(appConfig);

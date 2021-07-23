@@ -1,5 +1,6 @@
-import reactRefresh from '@vitejs/plugin-react-refresh';
 import * as path from 'path';
+import * as friendlyTypeImports from 'rollup-plugin-friendly-type-imports';
+import reactRefresh from '@vitejs/plugin-react-refresh';
 import { all } from 'deepmerge';
 import { isObject, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
@@ -47,12 +48,16 @@ const configMap: ConfigMap = {
   'output.publicPath': 'base',
   'resolve.alias': {
     name: 'resolve.alias',
-    transform: (value) => {
+    transform: (value, ctx) => {
+      const { rootDir } = ctx;
       const blackList = ['webpack/hot', 'node_modules'];
       const data: Record<string, any> = Object.keys(value).reduce((acc, key) => {
         if (!blackList.some(word => value[key]?.includes(word))) acc[key] = value[key];
         return acc;
       }, {});
+
+      // TODO: remove
+      data.ice = path.resolve(rootDir, '.ice/index.ts');
 
       return data;
     }
@@ -85,9 +90,10 @@ const recordMap = (
   chain: ITaskConfig['chainConfig'],
   ctx: Context
 ): Partial<Record<keyof Option, any>> => {
+  const cfg = chain.toConfig();
   return Object.keys(configMap).reduce((acc, key) => {
     const viteConfig = configMap[key];
-    const webpackValue = get(chain.toConfig(), key);
+    const webpackValue = get(cfg, key);
 
     if (typeof viteConfig !== 'string') {
       const value = viteConfig.transform(webpackValue, ctx, chain);
@@ -108,12 +114,14 @@ export const wp2vite = (context: Context): Result => {
   const { commandArgs = {}, userConfig, rootDir } = context;
   const configArr = context.getWebpackConfig();
   const config = configArr[0];
-  
+
   // console.log(config.chainConfig.toConfig());
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     ...recordMap(config.chainConfig, context),
+    configFile: false,
     plugins: [
+      friendlyTypeImports(),
       externalsPlugin(userConfig.externals as any),
       indexHtmlPlugin({
         entry: userConfig.entry,
@@ -122,8 +130,6 @@ export const wp2vite = (context: Context): Result => {
       }),
     ]
   };
-
-  // console.log(viteConfig);
 
   if (isObject(userConfig.vite)) {
     // userConfig.vite 优先级最高
@@ -138,7 +144,6 @@ export const wp2vite = (context: Context): Result => {
   };
 
   const devConfig = all([{
-    configFile: false,
     server: devServerConfig,
     plugins: [
       reactRefresh(),
@@ -147,8 +152,9 @@ export const wp2vite = (context: Context): Result => {
   }, viteConfig]);
 
   const prodConfig = all([{
-    configFile: false,
   }, viteConfig]);
+
+  console.log(devConfig);
 
   return { devConfig, prodConfig };
 };

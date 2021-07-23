@@ -15264,6 +15264,13 @@ rimraf@^3.0.0, rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
+rollup-plugin-friendly-type-imports@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-friendly-type-imports/-/rollup-plugin-friendly-type-imports-1.0.1.tgz#a3fe9253d3bbbf5c987c664dcc8ccbfbf1e2fa65"
+  integrity sha512-Z7E+fb4hzWqWk3B+QGt1IvDQN+DN+GNSJBxlYHkB07N3zhK1OfbUH7amZTr29rttVcXAWQ1AYGZz7fNR5MdQoA==
+  dependencies:
+    typescript "^4"
+
 rollup@^2.38.5:
   version "2.53.3"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.53.3.tgz#14b0e57f0874d4ad23bdbb13050cf70bcd1eabf7"
@@ -16969,7 +16976,7 @@ typescript@^3.8.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
 
-typescript@^4.0.0:
+typescript@^4, typescript@^4.0.0:
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
   integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==

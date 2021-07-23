@@ -1,11 +1,29 @@
-import { ITaskConfig } from 'build-scripts';
+import { ITaskConfig, Context } from 'build-scripts';
 import { ViteDevServer, createServer } from 'vite';
 import chalk = require('chalk');
 import { wp2vite } from './wp2vite';
 
 type StartResult = void | ITaskConfig[] | ViteDevServer;
 
-export async function viteStart(context: any): Promise<StartResult> {
+export async function viteStart(context: Context): Promise<StartResult> {
+  const { applyHook, command, commandArgs } = context;
+  
+  const configArr = context.getWebpackConfig();
+  await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr });
+  
+  if (!configArr.length) {
+    const errorMsg = 'No config found.';
+    await applyHook('error', { err: new Error(errorMsg) });
+    return;
+  }
+
+  const config = configArr[0].chainConfig.toConfig();
+
+  await applyHook(`before.${command}.run`, {
+    args: commandArgs,
+    config,
+  });
+
   const { devConfig } = wp2vite(context);
 
   let devServer: ViteDevServer;
@@ -13,6 +31,7 @@ export async function viteStart(context: any): Promise<StartResult> {
     devServer = await createServer(devConfig);
   } catch (err) {
     console.error('CONFIG', chalk.red('Failed to load vite config.'));
+    await applyHook('error', { err });
     throw err;
   }
 
