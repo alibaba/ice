@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "../../packages/icejs/bin/ice-cli.js start",
-    "build": "icejs build"
+    "build": "../../packages/icejs/bin/ice-cli.js build"
   },
   "dependencies": {
     "react": "^17.0.0",

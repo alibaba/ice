@@ -5,7 +5,7 @@ import { all } from 'deepmerge';
 import { isObject, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
-import { indexHtmlPlugin, externalsPlugin, runtimePlugin } from './plugins';
+import { indexHtmlPlugin, externalsPlugin } from './plugins';
 
 type Option = BuildOptions & InlineConfig
 
@@ -49,15 +49,15 @@ const configMap: ConfigMap = {
   'resolve.alias': {
     name: 'resolve.alias',
     transform: (value, ctx) => {
-      // const { rootDir } = ctx;
+      const { rootDir } = ctx;
       const blackList = ['webpack/hot', 'node_modules'];
       const data: Record<string, any> = Object.keys(value).reduce((acc, key) => {
         if (!blackList.some(word => value[key]?.includes(word))) acc[key] = value[key];
         return acc;
       }, {});
 
-      // TODO: remove
-      data.ice = '/.ice/index.ts';
+      // alias 到指向 ice runtime 入口
+      data.ice = path.resolve(rootDir, '.ice/index.ts');
 
       return data;
     }
@@ -119,8 +119,6 @@ export const wp2vite = (context: Context): Result => {
   const configArr = context.getWebpackConfig();
   const config = configArr[0];
 
-  // console.log(config.chainConfig.toConfig());
-
   let viteConfig: Partial<Record<keyof Option, any>> = {
     ...recordMap(config.chainConfig, context),
     configFile: false,
@@ -139,7 +137,6 @@ export const wp2vite = (context: Context): Result => {
   };
 
   if (isObject(userConfig.vite)) {
-    // userConfig.vite 优先级最高
     viteConfig = all([viteConfig, userConfig.vite]);
   }
 
@@ -160,14 +157,8 @@ export const wp2vite = (context: Context): Result => {
     },
     plugins: [
       reactRefresh(),
-      runtimePlugin(),
     ],
   }, viteConfig]);
 
-  const prodConfig = all([{
-  }, viteConfig]);
-
-  console.log(devConfig);
-
-  return { devConfig, prodConfig };
+  return { devConfig, prodConfig: viteConfig };
 };

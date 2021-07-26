@@ -6,6 +6,15 @@ import { wp2vite } from './wp2vite';
 type BuildResult = void | ITaskConfig[];
 
 export async function viteBuild(context: any): Promise<BuildResult> {
+  const { applyHook, command, commandArgs } = context;
+  
+  const configArr = context.getWebpackConfig();
+  await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr });
+  await applyHook(`before.${command}.run`, {
+    args: commandArgs,
+    config: configArr,
+  });
+
   const { prodConfig } = wp2vite(context);
 
   try {
