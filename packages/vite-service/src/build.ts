@@ -15,7 +15,7 @@ export async function viteBuild(context: any): Promise<BuildResult> {
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,
-    config: configArr,
+    config: prodConfig,
   });
 
   try {
