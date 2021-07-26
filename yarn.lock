@@ -17480,16 +17480,6 @@ vfile@^3.0.0:
     unist-util-stringify-position "^1.0.0"
     vfile-message "^1.0.0"
 
-vite-aliases@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.npmjs.org/vite-aliases/-/vite-aliases-0.8.4.tgz#c6a6bf6e43231ab4f63ec63a3312e59f1590c8f1"
-  integrity sha512-p5nH0EuisN3mW0sTUl2bUNJWVMmatv6L15G10w/hn36GgnqhMCPQ4KjEqc0ZQYnrXdEczP36/bFv4N3ThQuxvw==
-  dependencies:
-    chalk "^4.1.1"
-    chokidar "^3.5.2"
-    jsonc-parser "^3.0.0"
-    vite "^2.4.3"
-
 vite@^2.4.2, vite@^2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.4.3.tgz#fe4aa78e9dd7d36bcb12eccbd52313b26cfadf77"
