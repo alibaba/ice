@@ -49,7 +49,7 @@ const configMap: ConfigMap = {
   'resolve.alias': {
     name: 'resolve.alias',
     transform: (value, ctx) => {
-      const { rootDir } = ctx;
+      // const { rootDir } = ctx;
       const blackList = ['webpack/hot', 'node_modules'];
       const data: Record<string, any> = Object.keys(value).reduce((acc, key) => {
         if (!blackList.some(word => value[key]?.includes(word))) acc[key] = value[key];
@@ -57,7 +57,7 @@ const configMap: ConfigMap = {
       }, {});
 
       // TODO: remove
-      data.ice = path.resolve(rootDir, '.ice/index.ts');
+      data.ice = '/.ice/index.ts';
 
       return data;
     }
@@ -65,6 +65,10 @@ const configMap: ConfigMap = {
   'resolve.extensions': {
     name: 'resolve.extensions',
     transform: (value) => (['.mjs', ...value])
+  },
+  'dedupe': {
+    name: 'resolve.dedupe',
+    transform: () => ['react', 'react-dom']
   },
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': 'server.proxy',
