@@ -7,10 +7,13 @@ type StartResult = void | ITaskConfig[] | ViteDevServer;
 
 export async function viteStart(context: Context): Promise<StartResult> {
   const { applyHook, command, commandArgs } = context;
-  
+
   const configArr = context.getWebpackConfig();
-  await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr });
-  
+  await applyHook(`before.${command}.load`, {
+    args: commandArgs,
+    webpackConfig: configArr,
+  });
+
   if (!configArr.length) {
     const errorMsg = 'No config found.';
     await applyHook('error', { err: new Error(errorMsg) });
@@ -19,12 +22,12 @@ export async function viteStart(context: Context): Promise<StartResult> {
 
   const config = configArr[0].chainConfig.toConfig();
 
+  const { devConfig } = wp2vite(context);
+
   await applyHook(`before.${command}.run`, {
     args: commandArgs,
     config,
   });
-
-  const { devConfig } = wp2vite(context);
 
   let devServer: ViteDevServer;
   try {
