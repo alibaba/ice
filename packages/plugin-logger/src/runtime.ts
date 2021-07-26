@@ -1,6 +1,8 @@
 import * as queryString from 'query-string';
-// @ts-ignore
-import logger from '$ice/logger';
+import Logger from './runtime/Logger';
+
+const logger = new Logger();
+console.log('logger plugin load');
 
 const module = ({ appConfig }) => {
   const { logger: userLogger = {} } = appConfig;

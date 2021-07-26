@@ -27,6 +27,9 @@
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-logger"
   },
+  "pluginConfig": {
+    "staticModule": true
+  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
