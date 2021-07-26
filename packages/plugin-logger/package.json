@@ -15,10 +15,6 @@
     "logger",
     "src/runtime.ts"
   ],
-  "dependencies": {
-    "fs-extra": "^8.1.0",
-    "loglevel": "^1.6.6"
-  },
   "devDependencies": {
     "build-scripts": "^1.1.0-5",
     "typescript": "^4.0.0"
