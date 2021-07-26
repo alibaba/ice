@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import * as friendlyTypeImports from 'rollup-plugin-friendly-type-imports';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { all } from 'deepmerge';
@@ -7,14 +8,18 @@ import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import { indexHtmlPlugin, externalsPlugin } from './plugins';
 
-type Option = BuildOptions & InlineConfig
+type Option = BuildOptions & InlineConfig;
 
 type Result = {
-  devConfig: InlineConfig
-  prodConfig: BuildOptions
-}
+  devConfig: InlineConfig;
+  prodConfig: BuildOptions;
+};
 
-type Transformer = (value: any, ctx?: Context, chain?: ITaskConfig['chainConfig']) => any
+type Transformer = (
+  value: any,
+  ctx?: Context,
+  chain?: ITaskConfig['chainConfig']
+) => any;
 
 type ConfigMap = Record<string, string | {
   name: string
@@ -43,7 +48,7 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
 const configMap: ConfigMap = {
   'output.path': {
     name: 'build.outDir',
-    transform: (value, ctx) => path.relative(ctx.rootDir, value)
+    transform: (value, ctx) => path.relative(ctx.rootDir, value),
   },
   'output.publicPath': 'base',
   'resolve.alias': {
@@ -51,43 +56,47 @@ const configMap: ConfigMap = {
     transform: (value, ctx) => {
       const { rootDir } = ctx;
       const blackList = ['webpack/hot', 'node_modules'];
-      const data: Record<string, any> = Object.keys(value).reduce((acc, key) => {
-        if (!blackList.some(word => value[key]?.includes(word))) acc[key] = value[key];
-        return acc;
-      }, {});
+      const data: Record<string, any> = Object.keys(value).reduce(
+        (acc, key) => {
+          if (!blackList.some((word) => value[key]?.includes(word)))
+            acc[key] = value[key];
+          return acc;
+        },
+        {}
+      );
 
       // alias 到指向 ice runtime 入口
       data.ice = path.resolve(rootDir, '.ice/index.ts');
 
       return data;
-    }
+    },
   },
   'resolve.extensions': {
     name: 'resolve.extensions',
-    transform: (value) => (['.mjs', ...value])
+    transform: (value) => ['.mjs', ...value],
   },
-  'dedupe': {
+  dedupe: {
     name: 'resolve.dedupe',
-    transform: () => ['react', 'react-dom']
+    transform: () => ['react', 'react-dom'],
   },
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': 'server.proxy',
   'plugins.DefinePlugin': {
     name: 'defined',
-    transform: transformPlugin('DefinePlugin')
+    transform: transformPlugin('DefinePlugin'),
   },
   'plugins.TerserPlugin': {
     name: 'build.terserOptions',
-    transform: transformPlugin('TerserPlugin')
+    transform: transformPlugin('TerserPlugin'),
   },
-  'sass': {
+  sass: {
     name: 'css.preprocessorOptions.scss',
-    transform: transformPreProcess('sass-loader', 'scss')
+    transform: transformPreProcess('sass-loader', 'scss'),
   },
-  'less': {
+  less: {
     name: 'css.preprocessorOptions.less',
-    transform: transformPreProcess('less-loader', 'less')
-  }
+    transform: transformPreProcess('less-loader', 'less'),
+  },
 };
 
 const recordMap = (
@@ -123,17 +132,27 @@ export const wp2vite = (context: Context): Result => {
     ...recordMap(config.chainConfig, context),
     configFile: false,
     optimizeDeps: {
-      include: ['react-app-renderer', 'create-app-shared']
+      include: ['react-app-renderer', 'create-app-shared'],
     },
     plugins: [
-      friendlyTypeImports(),
+      friendlyTypeImports({
+        readFile: async (id) => {
+          if (!['ts', 'tsx'].some((i) => id.endsWith(i))) return null;
+
+          try {
+            return await fs.promises.readFile(id, 'utf8');
+          } catch {
+            return null;
+          }
+        },
+      }),
       externalsPlugin(userConfig.externals as any),
       indexHtmlPlugin({
         entry: userConfig.entry,
         temp: 'public',
-        rootDir
+        rootDir,
       }),
-    ]
+    ],
   };
 
   if (isObject(userConfig.vite)) {
@@ -147,18 +166,19 @@ export const wp2vite = (context: Context): Result => {
     open: true,
   };
 
-  const devConfig = all([{
-    server: devServerConfig,
-    define: {
-      'process.env': {},
-      global: {
-        __app_mode__: 'start'
-      }
+  const devConfig = all([
+    {
+      server: devServerConfig,
+      define: {
+        'process.env': {},
+        global: {
+          __app_mode__: 'start',
+        },
+      },
+      plugins: [reactRefresh()],
     },
-    plugins: [
-      reactRefresh(),
-    ],
-  }, viteConfig]);
+    viteConfig,
+  ]);
 
   return { devConfig, prodConfig: viteConfig };
 };
