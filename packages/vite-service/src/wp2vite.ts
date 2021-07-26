@@ -75,6 +75,7 @@ const configMap: ConfigMap = {
     name: 'resolve.extensions',
     transform: (value) => ['.mjs', ...value],
   },
+  // 保证在 link 开发调试时引入的 react 是一个实例
   dedupe: {
     name: 'resolve.dedupe',
     transform: () => ['react', 'react-dom'],
@@ -99,6 +100,9 @@ const configMap: ConfigMap = {
   },
 };
 
+/**
+ * 配置转化函数
+ */
 const recordMap = (
   chain: ITaskConfig['chainConfig'],
   ctx: Context
@@ -131,13 +135,16 @@ export const wp2vite = (context: Context): Result => {
   let viteConfig: Partial<Record<keyof Option, any>> = {
     ...recordMap(config.chainConfig, context),
     configFile: false,
+    // ice 开发调试时保证 cjs 依赖转为 esm 文件
     optimizeDeps: {
       include: ['react-app-renderer', 'create-app-shared'],
     },
     plugins: [
+      // 避免 import re-exported types 时 crash 并提示 "does not provide an export named XXX"
       friendlyTypeImports({
         readFile: async (id) => {
-          if (!['ts', 'tsx'].some((i) => id.endsWith(i))) return null;
+          // 只对 .ts 与 .tsx 后缀进行导出转换
+          if (!['.ts', '.tsx'].some((i) => id.endsWith(i))) return null;
 
           try {
             return await fs.promises.readFile(id, 'utf8');
@@ -156,6 +163,7 @@ export const wp2vite = (context: Context): Result => {
   };
 
   if (isObject(userConfig.vite)) {
+    // 保证 userConfig.vite 优先级最高
     viteConfig = all([viteConfig, userConfig.vite]);
   }
 
