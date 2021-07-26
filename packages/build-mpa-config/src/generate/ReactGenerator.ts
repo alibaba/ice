@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 
 import Base from './BaseGenerator';
+import relative from '../relative';
 
 export default class ReactGenerator extends Base {
   public disableRuntimeList = ['build-plugin-ice-router']
@@ -11,6 +12,6 @@ export default class ReactGenerator extends Base {
     const { pageEntry } = this.options;
     const originalEntryFolder = path.dirname(pageEntry);
     const targetExt = ['ts', 'tsx', 'js', 'jsx'].find((ext) => fs.existsSync(path.join(originalEntryFolder, `routes.${ext}`)));
-    return this.routesFilePath = targetExt ? path.relative(this.entryFolder, path.join(originalEntryFolder, 'routes')) : '';
+    return this.routesFilePath = targetExt ? relative(this.entryFolder, path.join(originalEntryFolder, 'routes')) : '';
   }
 }
