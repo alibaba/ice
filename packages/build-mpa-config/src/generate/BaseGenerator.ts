@@ -52,7 +52,8 @@ export default class BaseGenerator {
 
     const renderData = {
       globalStyle: globalStyles.length && formatPath(path.join(this.rootDir, globalStyles[0])),
-      tempPath: this.targetDir,
+      relativeCorePath: path.relative(this.entryFolder, path.join(this.targetDir, 'core')),
+      typesPath: path.relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
         router: !!routesFile,
@@ -67,10 +68,10 @@ export default class BaseGenerator {
     const { framework, pageEntry } = this.options;
     const { applyMethod } = this.builtInMethods;
     const renderData = {
-      runAppPath: formatPath(path.join(this.entryFolder, 'runApp')),
-      tempPath: this.targetDir,
+      runAppPath: './runApp',
+      typesPath: path.relative(this.entryFolder, path.join(this.targetDir, 'types')),
       routesFilePath: this.getRoutesFilePath(),
-      resourcePath: `${formatPath(path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry)}`,
+      resourcePath: path.relative(this.entryFolder, path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry),
     };
     applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
