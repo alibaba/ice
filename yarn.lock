@@ -1156,16 +1156,6 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/mpa-config@^3.0.0":
-  version "3.2.6"
-  resolved "https://registry.npmjs.org/@builder/mpa-config/-/mpa-config-3.2.6.tgz#9776d93c06fc74ea79a83f9d4bc4b14c6b4fb46b"
-  integrity sha512-f5s8l5GIbTYAsJ3sclX93m3yOXSHx8l25r7BFuHeKp7H97m2/nH9XxUVt+W2yjrSN5E5Lu9huRq87g+gQQ3CHg==
-  dependencies:
-    "@builder/app-helpers" "^2.0.0"
-    fs-extra "^8.1.0"
-    globby "^11.0.2"
-    loader-utils "^2.0.0"
-
 "@builder/pack@0.2.17", "@builder/pack@^0.2.9":
   version "0.2.17"
   resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.2.17.tgz#96f1a2c99192bbd2df1b7882c406b8fdb7862b7e"
@@ -5051,15 +5041,6 @@ buffer@^5.2.1, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-build-plugin-ice-mpa@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.npmjs.org/build-plugin-ice-mpa/-/build-plugin-ice-mpa-1.9.0.tgz#d60e19a2823b76476b1324473abd4c894bf82502"
-  integrity sha512-vxDORKtwLw+/bWIG9j5YzYIlFyFKMmNJPkpM6lXacpMATKVJHmaCA4nO+erzMhBuDwwEBUj35oWDYInPYZRMjA==
-  dependencies:
-    "@builder/app-helpers" "^2.0.0"
-    "@builder/mpa-config" "^3.0.0"
-    fs-extra "^8.1.0"
-
 build-scripts-config@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/build-scripts-config/-/build-scripts-config-3.0.3.tgz#bd97743a87f7f19fc36e799a2de06168352cd046"
@@ -5379,7 +5360,7 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
   integrity sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
@@ -5446,7 +5427,7 @@ cheerio@^1.0.0-rc.3:
     parse5-htmlparser2-tree-adapter "^6.0.1"
     tslib "^2.2.0"
 
-"chokidar@>=3.0.0 <4.0.0", chokidar@^3.3.0, chokidar@^3.3.1, chokidar@^3.4.1, chokidar@^3.5.1, chokidar@^3.5.2:
+"chokidar@>=3.0.0 <4.0.0", chokidar@^3.3.0, chokidar@^3.3.1, chokidar@^3.4.1, chokidar@^3.5.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
   integrity sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==
@@ -11267,11 +11248,6 @@ json5@^1.0.1:
   integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
   dependencies:
     minimist "^1.2.0"
-
-jsonc-parser@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/jsonc-parser/-/jsonc-parser-3.0.0.tgz#abdd785701c7e7eaca8a9ec8cf070ca51a745a22"
-  integrity sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==
 
 jsonfile@^4.0.0:
   version "4.0.0"
@@ -17480,7 +17456,7 @@ vfile@^3.0.0:
     unist-util-stringify-position "^1.0.0"
     vfile-message "^1.0.0"
 
-vite@^2.4.2, vite@^2.4.3:
+vite@^2.4.2:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.4.3.tgz#fe4aa78e9dd7d36bcb12eccbd52313b26cfadf77"
   integrity sha512-iT6NPeiUUZ2FkzC3eazytOEMRaM4J+xgRQcNcpRcbmfYjakCFP4WKPJpeEz1U5JEKHAtwv3ZBQketQUFhFU3ng==
