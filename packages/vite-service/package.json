@@ -30,7 +30,8 @@
     "lodash": "^4.17.15",
     "npmlog": "^4.1.2",
     "rollup-plugin-friendly-type-imports": "^1.0.1",
-    "vite": "^2.4.2"
+    "vite": "^2.4.2",
+    "vite-aliases": "^0.8.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.147"
