@@ -65,7 +65,10 @@ export default async (api: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
     config.module
       .rule('replace-router-path')
-      .enforce('post')
+      // replace-router-path-loader will change the component path from original path to .ice/ dir
+      // @loadable/babel-plugin will get the transformed path
+      // so need to ensure replace-router-path-loader is before babel-loader
+      .before('babel-loader')
       .test((filePath: string) => routesPath.includes(filePath))
       .use('replace-router-path-loader')
       .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))

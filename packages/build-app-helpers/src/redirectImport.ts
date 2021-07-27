@@ -9,7 +9,7 @@ const IMPORT_MATCH_REG_EXP = /\{(.*?)\}/;
 // import About, { Home } from './About';
 const IMPORT_DEFAULT_MATCH_REG_EXP = /^import\s+([^\s{},]+)/;
 // import('/modules/my-module.js')
-const DYNAMIC_IMPORT_MATCH_REG_EXP = /^import\(.*['"](.*)['"]/;
+const DYNAMIC_IMPORT_MATCH_REG_EXP = /^import\([\S\s]*['"](.*)['"]/;
 
 const AS_ALIAS_REG_EXP = /^(\w+)\s+as\s+(\w+)/;
 
@@ -54,7 +54,7 @@ export default async function redirectImport(code: string, options: IRedirectImp
       if (addImports.length !== identifiers.length) {
         newImportStr += `${importStr};`;
       }
-      newImportStr += addImports.join('');
+      newImportStr += addImports.join(';');
       return `${code.substring(0, targetImport.ss)}${newImportStr}${code.substring(targetImport.se)}`;
     } else if (dynamicImportMatchResult) {
       const originModule = dynamicImportMatchResult[1];
