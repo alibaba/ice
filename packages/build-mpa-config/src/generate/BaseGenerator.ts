@@ -1,9 +1,9 @@
 import * as path from 'path';
-import { formatPath } from '@builder/app-helpers';
 import * as globby from 'globby';
 import { IPluginAPI } from 'build-scripts';
 import { getTemplate } from '@builder/app-templates';
 import { IGeneratorOptions } from '../types';
+import relative from '../relative';
 
 export default class BaseGenerator {
   public entryFolder: string;
@@ -51,8 +51,9 @@ export default class BaseGenerator {
     const routesFile = this.getRoutesFilePath();
 
     const renderData = {
-      globalStyle: globalStyles.length && formatPath(path.join(this.rootDir, globalStyles[0])),
-      tempPath: this.targetDir,
+      globalStyle: globalStyles.length && relative(this.entryFolder, path.join(this.rootDir, globalStyles[0])),
+      relativeCorePath: relative(this.entryFolder, path.join(this.targetDir, 'core')),
+      typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
         router: !!routesFile,
@@ -67,10 +68,10 @@ export default class BaseGenerator {
     const { framework, pageEntry } = this.options;
     const { applyMethod } = this.builtInMethods;
     const renderData = {
-      runAppPath: formatPath(path.join(this.entryFolder, 'runApp')),
-      tempPath: this.targetDir,
+      runAppPath: './runApp',
+      typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       routesFilePath: this.getRoutesFilePath(),
-      resourcePath: `${formatPath(path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry)}`,
+      resourcePath: relative(this.entryFolder, path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry),
     };
     applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
@@ -89,7 +90,7 @@ export default class BaseGenerator {
           ...renderData,
           runtimeModules: runtimeModules.map(({ path: pluginPath, staticModule, absoluteModulePath }) => {
             if (!staticModule) {
-              pluginPath = path.relative(this.entryFolder, absoluteModulePath);
+              pluginPath = relative(this.entryFolder, absoluteModulePath);
             }
             return {
               path: pluginPath,

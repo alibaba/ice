@@ -20,12 +20,12 @@ import raxAppRenderer from 'rax-app-renderer';
   // eslint-disable-next-line
   import '../../<%= globalStyle %>'
 <% } %>
-import loadStaticModules from './loadStaticModules';
+import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 import defaultStaticConfig from './staticConfig';
-import { setAppConfig } from './appConfig';
-import ErrorBoundary from './ErrorBoundary';
-import { IAppConfig, IBuildConfig } from '../types';
+import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
+import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
+import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- buildConfig %>;
 const frameworkAppBase = createBaseApp({
