@@ -1,11 +1,6 @@
 {
   "vite": true,
   "plugins": [],
-  "terserOptions": {
-    "compress": {
-      "unused": true
-    }
-  },
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   }

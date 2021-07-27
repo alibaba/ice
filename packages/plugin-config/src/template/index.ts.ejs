@@ -12,6 +12,10 @@ interface IUserConfig {
   readonly [key: string]: any;
 }
 
+if (typeof (window as any).global === 'undefined') {
+  (window as any).global = window;
+}
+
 const config: Config = {
   ...((<IUserConfig>userConfig).default || {}),
   // webpack will automatically convert global to window when target is web

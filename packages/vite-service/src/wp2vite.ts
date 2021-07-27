@@ -189,6 +189,9 @@ export const wp2vite = (context: Context): Result => {
   ]);
 
   const prodConfig = all([{
+    define: {
+      __app_mode__: 'build'
+    }
   }, viteConfig]);
 
   return { devConfig, prodConfig };
