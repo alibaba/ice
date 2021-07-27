@@ -1,4 +1,5 @@
 import { ViteDevServer, Plugin } from 'vite';
+import { redirectImport } from '@builder/app-helpers';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as log from 'npmlog';
@@ -101,5 +102,31 @@ export const externalsPlugin = (externals: Record<string, string> = {}): Plugin 
         return `const externals = window.${externals[id]};export default externals`;
       }
     },
+  };
+};
+
+export const importPlugin = ({ rootDir }): Plugin => {
+  const iceTempPath = path.resolve(rootDir, '.ice/core/runApp');
+  return {
+    name: 'vite-plugin-import',
+    transform: async (code, id) => {
+      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
+
+      // 获取相对路径
+      const url = path.relative(path.resolve(id, '..'), iceTempPath);
+      const result = await redirectImport(code, {
+        source: 'ice', redirectImports: [
+          {
+            name: 'runApp',
+            redirectPath: url,
+            default: false,
+          }
+        ]
+      });
+      return {
+        code: result,
+        map: null
+      };
+    }
   };
 };

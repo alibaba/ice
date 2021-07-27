@@ -1,12 +1,16 @@
+<% const moduleNames = []; %>
+<% if (runtimeModules.length) {%>
+  <% runtimeModules.filter((moduleInfo) => !moduleInfo.staticModule).forEach((runtimeModule, index) => { %>
+    <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %>
+<% } %>
+
 interface IRuntime<T> {
   loadModule: (module: { default: T } | T) => void;
 }
 
 async function loadRuntimeModules(runtime: IRuntime<Function>) {
-  <% if (runtimeModules.length) {%>
-    <% runtimeModules.filter((moduleInfo) => !moduleInfo.staticModule).forEach((runtimeModule) => { %>
-      runtime.loadModule(await import('<%= runtimeModule.path %>'));
-    <% }) %>
+  <% if (moduleNames.length) {%>
+    <% moduleNames.forEach((name) => { %>runtime.loadModule(<%= name%>);<% }) %>
   <% } %>
 }
 

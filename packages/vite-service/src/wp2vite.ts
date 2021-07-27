@@ -6,7 +6,7 @@ import { all } from 'deepmerge';
 import { isObject, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
-import { indexHtmlPlugin, externalsPlugin } from './plugins';
+import { indexHtmlPlugin, externalsPlugin, importPlugin } from './plugins';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -154,6 +154,7 @@ export const wp2vite = (context: Context): Result => {
         },
       }),
       externalsPlugin(userConfig.externals as any),
+      importPlugin({ rootDir }),
       indexHtmlPlugin({
         entry: userConfig.entry,
         temp: 'public',
