@@ -56,6 +56,11 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
             type: 'module',
             src: path.resolve('/', entry)
           }
+        },
+        {
+          tag: 'script',
+          injectTo: 'head',
+          children: 'global = globalThis'
         }]
       })
     },
