@@ -59,7 +59,7 @@ async function loader(content: string, sourceMap: SourceMap) {
         absoluteSourcePath = path.join(currentRoutesDir, originSourcePath);
       }
 
-      return absoluteSourcePath === absolutePagePath || absoluteSourcePath === absolutePageLayoutPath;
+      return [absolutePagePath, absolutePageLayoutPath].includes(absoluteSourcePath);
     };
 
     // eslint-disable-next-line no-await-in-loop

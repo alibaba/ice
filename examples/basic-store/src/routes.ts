@@ -1,14 +1,14 @@
-// import { lazy } from 'ice';
+import { lazy } from 'ice';
 
 import Layout from '@/layouts/index';
-import Home from '@/pages/Home';
-import About from '@/pages/About';
+// import Home from '@/pages/Home';
+// import About from '@/pages/About';
 import Detail from '@/pages/Detail';
 import { NotFound } from '@/pages/NotFound';
 import Index from '@/pages/Index';
 
-// const Home = lazy(() => import('@/pages/Home'));
-// const About =lazy(() => import('@/pages/About'));
+const Home = lazy(() => import('@/pages/Home'));
+const About = lazy(() => import('@/pages/About'));
 // const NotFound = lazy(() => import('@/pages/NotFound'));
 
 export default [

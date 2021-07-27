@@ -3,8 +3,14 @@ import { IRedirectImportOptions, RedirectImportType } from './types';
 
 let initd = false;
 
+// import { About } from './About';
 const IMPORT_MATCH_REG_EXP = /\{(.*?)\}/;
+// import About from './About';
+// import About, { Home } from './About';
 const IMPORT_DEFAULT_MATCH_REG_EXP = /^import\s+([^\s{},]+)/;
+// import('/modules/my-module.js')
+const DYNAMIC_IMPORT_MATCH_REG_EXP = /^import\(.*['"](.*)['"]/;
+
 const AS_ALIAS_REG_EXP = /^(\w+)\s+as\s+(\w+)/;
 
 export default async function redirectImport(code: string, options: IRedirectImportOptions): Promise<string> {
@@ -24,9 +30,10 @@ export default async function redirectImport(code: string, options: IRedirectImp
     // importStr => 'import { runApp, usePageShow } from "ice"'
     let importStr = code.substring(targetImport.ss, targetImport.se);
     // Get runApp, usePageShow
-    const result = IMPORT_MATCH_REG_EXP.exec(importStr);
-    if (result) {
-      const importedStr = result[1];
+    const importMatchResult = IMPORT_MATCH_REG_EXP.exec(importStr);
+    const dynamicImportMatchResult = DYNAMIC_IMPORT_MATCH_REG_EXP.exec(importStr);
+    if (importMatchResult) {
+      const importedStr = importMatchResult[1];
       const addImports = [];
       // ['runApp', 'usePageShow']
       const identifiers = importedStr.split(',');
@@ -48,6 +55,10 @@ export default async function redirectImport(code: string, options: IRedirectImp
         newImportStr += `${importStr};`;
       }
       newImportStr += addImports.join('');
+      return `${code.substring(0, targetImport.ss)}${newImportStr}${code.substring(targetImport.se)}`;
+    } else if (dynamicImportMatchResult) {
+      const originModule = dynamicImportMatchResult[1];
+      const newImportStr = importStr.replace(originModule, redirectImports[0].redirectPath);
       return `${code.substring(0, targetImport.ss)}${newImportStr}${code.substring(targetImport.se)}`;
     } else {
       // Default condition: import runApp from 'ice';
