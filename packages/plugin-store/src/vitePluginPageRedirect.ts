@@ -15,7 +15,7 @@ const vitePluginPageRedirect = (): Plugin => {
     resolveId(id, importer) {
       if (importer.match(routesRegExp)) {
         const pageName = getPageName(id);
-        return pageName ? `/.ice/pages/${pageName}` : id;
+        if (pageName) return `/.ice/pages/${pageName}`;
       }
     },
   };
