@@ -1,5 +1,5 @@
 import { IRouterConfig } from 'ice';
-import Home from './pages/index';
+import Home from './pages/Home';
 
 const routes: IRouterConfig[] = [
   {

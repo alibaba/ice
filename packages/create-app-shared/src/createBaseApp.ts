@@ -15,7 +15,7 @@ function mergeDefaultConfig(defaultConfig: AppConfig, config: AppConfig) {
 }
 
 export default ({ loadRuntimeModules, createElement, runtimeAPI = {} }) => {
-  const createBaseApp = <T = AppConfig, P = BuildConfig, S = Context>(appConfig: T, buildConfig: P, context: S) => {
+  const createBaseApp = async <T = AppConfig, P = BuildConfig, S = Context>(appConfig: T, buildConfig: P, context: S) => {
 
     // Merge default appConfig to user appConfig
     appConfig = mergeDefaultConfig(DEFAULT_APP_CONFIG, appConfig) as T;
@@ -26,7 +26,7 @@ export default ({ loadRuntimeModules, createElement, runtimeAPI = {} }) => {
     Object.keys(runtimeAPI).forEach((apiKey: string) => {
       runtime.registerRuntimeAPI(apiKey, runtimeAPI[apiKey]);
     });
-    loadRuntimeModules(runtime);
+    await loadRuntimeModules(runtime);
 
     // Collect app lifeCyle
     collectAppLifeCycle(appConfig);

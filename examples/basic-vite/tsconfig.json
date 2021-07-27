@@ -36,6 +36,9 @@
       ],
       "ice/*": [
         ".ice/pages/*"
+      ],
+      "$store": [
+        "src/store.ts"
       ]
     }
   }

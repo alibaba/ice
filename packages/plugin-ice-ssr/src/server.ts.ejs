@@ -48,7 +48,7 @@ const serverRender = async (context, opts = {}) => {
   const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
 
   // load module to run before createApp ready
-  loadStaticModules(appConfig);
+  await loadStaticModules(appConfig);
 
   let pageInitialProps;
   let error;
@@ -94,7 +94,7 @@ const serverRender = async (context, opts = {}) => {
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const { bundleContent, loadableComponentExtractor } = reactAppRendererWithSSR({
+    const { bundleContent, loadableComponentExtractor } = await reactAppRendererWithSSR({
       initialContext,
       initialData,
       pageInitialProps

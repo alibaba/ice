@@ -188,5 +188,8 @@ export const wp2vite = (context: Context): Result => {
     viteConfig,
   ]);
 
-  return { devConfig, prodConfig: viteConfig };
+  const prodConfig = all([{
+  }, viteConfig]);
+
+  return { devConfig, prodConfig };
 };

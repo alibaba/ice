@@ -25,7 +25,7 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
       cfg.build = {
         ...cfg.build,
         commonjsOptions: {
-          exclude: ['react-app-renderer', 'create-app-shared']
+          exclude: ['react-app-renderer', 'create-app-shared'],
         },
         rollupOptions: {
           input: path.resolve(rootDir, temp, 'index.html'),

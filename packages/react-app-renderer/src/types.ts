@@ -20,7 +20,7 @@ export type RenderAppConfig = {
   renderComponent?: React.ComponentType
 };
 export type AppLifecycle = {
-  createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };
+  createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => Promise<{ runtime: RuntimeModule; appConfig: T }>;
   emitLifeCycles: () => void;
   initAppLifeCycles: () => void;
 }

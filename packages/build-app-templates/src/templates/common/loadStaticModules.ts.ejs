@@ -1,14 +1,10 @@
 import { IAppConfig } from '../types';
 
-<% const moduleNames = []; %>
-<% if (runtimeModules.length) {%>
-  <% runtimeModules.filter((moduleInfo) => moduleInfo.staticModule).forEach((runtimeModule, index) => { %>
-    <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %>
-<% } %>
-
-function loadStaticModules(appConfig: IAppConfig) {
-  <% if (moduleNames.length) {%>
-    <% moduleNames.forEach((name) => { %><%= name%>({appConfig});<% }) %>
+async function loadStaticModules(appConfig: IAppConfig) {
+  <% if (runtimeModules.length) {%>
+    <% runtimeModules.filter((moduleInfo) => moduleInfo.staticModule).forEach((runtimeModule) => { %>
+      (await import('<%= runtimeModule.path %>')).default({ appConfig });
+    <% }) %>
   <% } %>
 }
 

@@ -4,10 +4,10 @@ import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
 import type { Context, RenderOptions } from './types';
 
-function renderInServer(context: Context, options: RenderOptions) {
+async function renderInServer(context: Context, options: RenderOptions) {
   const { appConfig, buildConfig = {}, appLifecycle } = options;
   const { createBaseApp, emitLifeCycles } = appLifecycle;
-  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
+  const { runtime, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
 
   const { loadableStatsPath, publicPath } = buildConfig;
 
@@ -30,7 +30,7 @@ function renderInServer(context: Context, options: RenderOptions) {
   };
 }
 
-export default function reactAppRendererWithSSR(context: Context, options: RenderOptions) {
+export default async function reactAppRendererWithSSR(context: Context, options: RenderOptions) {
   const cloneOptions = deepClone(options);
   const { appConfig } = cloneOptions || {};
   appConfig.router = appConfig.router || {};
@@ -38,7 +38,7 @@ export default function reactAppRendererWithSSR(context: Context, options: Rende
     throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
   }
   appConfig.router.type = 'static';
-  return renderInServer(context, cloneOptions);
+  return await renderInServer(context, cloneOptions);
 }
 
 function deepClone(config) {
