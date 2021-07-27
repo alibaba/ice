@@ -12,7 +12,7 @@ interface IUserConfig {
   readonly [key: string]: any;
 }
 
-if (typeof (window as any).global === 'undefined') {
+if (typeof(window) && typeof (window as any).global === 'undefined') {
   (window as any).global = window;
 }
 
