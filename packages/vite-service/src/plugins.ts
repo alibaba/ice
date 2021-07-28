@@ -1,4 +1,5 @@
 import { ViteDevServer, Plugin } from 'vite';
+import { redirectImport } from '@builder/app-helpers';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as log from 'npmlog';
@@ -24,8 +25,11 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
       }
       cfg.build = {
         ...cfg.build,
+        commonjsOptions: {
+          exclude: ['react-app-renderer', 'create-app-shared'],
+        },
         rollupOptions: {
-          input: path.resolve(rootDir, temp, 'index.html')
+          input: path.resolve(rootDir, temp, 'index.html'),
         },
       };
     },
@@ -53,6 +57,11 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
             type: 'module',
             src: path.resolve('/', entry)
           }
+        },
+        {
+          tag: 'script',
+          injectTo: 'head',
+          children: 'global = globalThis'
         }]
       })
     },
@@ -80,24 +89,6 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
   };
 };
 
-export const runtimePlugin = (): Plugin => {
-  return {
-    name: 'vite-plugin-runtime',
-    // configureServer(app: ViteDevServer) {
-    //   return () => {
-    //     app.middlewares.use(async (req, res, next) => {
-    //       // .ice -> /src/.ice
-    //       if (req.originalUrl.includes('.ice')) {
-    //         req.url = `/.ice/${req.originalUrl}`;
-    //       }
-    //       console.log(req.originalUrl);
-    //       next();
-    //     });
-    //   };
-    // }
-  };
-};
-
 export const externalsPlugin = (externals: Record<string, string> = {}): Plugin => {
   return {
     name: 'vite-plugin-resolve-externals',
@@ -111,5 +102,27 @@ export const externalsPlugin = (externals: Record<string, string> = {}): Plugin 
         return `const externals = window.${externals[id]};export default externals`;
       }
     },
+  };
+};
+
+export const importPlugin = ({ rootDir }): Plugin => {
+  const iceTempPath = path.resolve(rootDir, '.ice/core/runApp');
+  return {
+    name: 'vite-plugin-import',
+    transform: async (code, id) => {
+      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
+
+      // 获取相对路径
+      const url = path.relative(path.resolve(id, '..'), iceTempPath);
+      return await redirectImport(code, {
+        source: 'ice', redirectImports: [
+          {
+            name: 'runApp',
+            redirectPath: url,
+            default: false,
+          }
+        ]
+      });
+    }
   };
 };

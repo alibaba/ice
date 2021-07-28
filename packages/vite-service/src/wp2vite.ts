@@ -1,19 +1,25 @@
-import reactRefresh from '@vitejs/plugin-react-refresh';
 import * as path from 'path';
+import * as fs from 'fs';
+import * as friendlyTypeImports from 'rollup-plugin-friendly-type-imports';
+import reactRefresh from '@vitejs/plugin-react-refresh';
 import { all } from 'deepmerge';
 import { isObject, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
-import { indexHtmlPlugin, externalsPlugin, runtimePlugin } from './plugins';
+import { indexHtmlPlugin, externalsPlugin, importPlugin } from './plugins';
 
-type Option = BuildOptions & InlineConfig
+type Option = BuildOptions & InlineConfig;
 
 type Result = {
-  devConfig: InlineConfig
-  prodConfig: BuildOptions
-}
+  devConfig: InlineConfig;
+  prodConfig: BuildOptions;
+};
 
-type Transformer = (value: any, ctx?: Context, chain?: ITaskConfig['chainConfig']) => any
+type Transformer = (
+  value: any,
+  ctx?: Context,
+  chain?: ITaskConfig['chainConfig']
+) => any;
 
 type ConfigMap = Record<string, string | {
   name: string
@@ -42,52 +48,69 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
 const configMap: ConfigMap = {
   'output.path': {
     name: 'build.outDir',
-    transform: (value, ctx) => path.relative(ctx.rootDir, value)
+    transform: (value, ctx) => path.relative(ctx.rootDir, value),
   },
   'output.publicPath': 'base',
   'resolve.alias': {
     name: 'resolve.alias',
-    transform: (value) => {
+    transform: (value, ctx) => {
+      const { rootDir } = ctx;
       const blackList = ['webpack/hot', 'node_modules'];
-      const data: Record<string, any> = Object.keys(value).reduce((acc, key) => {
-        if (!blackList.some(word => value[key]?.includes(word))) acc[key] = value[key];
-        return acc;
-      }, {});
+      const data: Record<string, any> = Object.keys(value).reduce(
+        (acc, key) => {
+          if (!blackList.some((word) => value[key]?.includes(word)))
+            acc[key] = value[key];
+          return acc;
+        },
+        {}
+      );
+
+      // alias 到指向 ice runtime 入口
+      data.ice = path.resolve(rootDir, '.ice/index.ts');
 
       return data;
-    }
+    },
   },
   'resolve.extensions': {
     name: 'resolve.extensions',
-    transform: (value) => (['.mjs', ...value])
+    transform: (value) => ['.mjs', ...value],
+  },
+  // 保证在 link 开发调试时引入的 react 是一个实例
+  dedupe: {
+    name: 'resolve.dedupe',
+    transform: () => ['react', 'react-dom'],
   },
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': 'server.proxy',
   'plugins.DefinePlugin': {
     name: 'defined',
-    transform: transformPlugin('DefinePlugin')
+    transform: transformPlugin('DefinePlugin'),
   },
   'plugins.TerserPlugin': {
     name: 'build.terserOptions',
-    transform: transformPlugin('TerserPlugin')
+    transform: transformPlugin('TerserPlugin'),
   },
-  'sass': {
+  sass: {
     name: 'css.preprocessorOptions.scss',
-    transform: transformPreProcess('sass-loader', 'scss')
+    transform: transformPreProcess('sass-loader', 'scss'),
   },
-  'less': {
+  less: {
     name: 'css.preprocessorOptions.less',
-    transform: transformPreProcess('less-loader', 'less')
-  }
+    transform: transformPreProcess('less-loader', 'less'),
+  },
 };
 
+/**
+ * 配置转化函数
+ */
 const recordMap = (
   chain: ITaskConfig['chainConfig'],
   ctx: Context
 ): Partial<Record<keyof Option, any>> => {
+  const cfg = chain.toConfig();
   return Object.keys(configMap).reduce((acc, key) => {
     const viteConfig = configMap[key];
-    const webpackValue = get(chain.toConfig(), key);
+    const webpackValue = get(cfg, key);
 
     if (typeof viteConfig !== 'string') {
       const value = viteConfig.transform(webpackValue, ctx, chain);
@@ -108,25 +131,40 @@ export const wp2vite = (context: Context): Result => {
   const { commandArgs = {}, userConfig, rootDir } = context;
   const configArr = context.getWebpackConfig();
   const config = configArr[0];
-  
-  // console.log(config.chainConfig.toConfig());
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     ...recordMap(config.chainConfig, context),
+    configFile: false,
+    // ice 开发调试时保证 cjs 依赖转为 esm 文件
+    optimizeDeps: {
+      include: ['react-app-renderer', 'create-app-shared'],
+    },
     plugins: [
+      // 避免 import re-exported types 时 crash 并提示 "does not provide an export named XXX"
+      friendlyTypeImports({
+        readFile: async (id) => {
+          // 只对 .ts 与 .tsx 后缀进行导出转换
+          if (!['.ts', '.tsx'].some((i) => id.endsWith(i))) return null;
+
+          try {
+            return await fs.promises.readFile(id, 'utf8');
+          } catch {
+            return null;
+          }
+        },
+      }),
       externalsPlugin(userConfig.externals as any),
+      importPlugin({ rootDir }),
       indexHtmlPlugin({
         entry: userConfig.entry,
         temp: 'public',
-        rootDir
+        rootDir,
       }),
-    ]
+    ],
   };
 
-  // console.log(viteConfig);
-
   if (isObject(userConfig.vite)) {
-    // userConfig.vite 优先级最高
+    // 保证 userConfig.vite 优先级最高
     viteConfig = all([viteConfig, userConfig.vite]);
   }
 
@@ -137,17 +175,24 @@ export const wp2vite = (context: Context): Result => {
     open: true,
   };
 
-  const devConfig = all([{
-    configFile: false,
-    server: devServerConfig,
-    plugins: [
-      reactRefresh(),
-      runtimePlugin(),
-    ],
-  }, viteConfig]);
+  const devConfig = all([
+    {
+      server: devServerConfig,
+      define: {
+        'process.env': {},
+        global: {
+          __app_mode__: 'start',
+        },
+      },
+      plugins: [reactRefresh()],
+    },
+    viteConfig,
+  ]);
 
   const prodConfig = all([{
-    configFile: false,
+    define: {
+      __app_mode__: 'build'
+    }
   }, viteConfig]);
 
   return { devConfig, prodConfig };
