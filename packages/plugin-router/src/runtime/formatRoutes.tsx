@@ -5,7 +5,7 @@ import joinPath from '../utils/joinPath';
 
 const { useEffect, useState } = React;
 
-export default function formatRoutes(routes: IRouterConfig[], parentPath: string) {
+export default function formatRoutes(routes: IRouterConfig[], parentPath?: string) {
   return routes.map((item) => {
     if (item.path) {
       const routePath = joinPath(parentPath || '', item.path);
