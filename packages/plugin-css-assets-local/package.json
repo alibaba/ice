@@ -14,5 +14,9 @@
   },
   "dependencies": {
     "extract-css-assets-webpack-plugin": "^0.2.5"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

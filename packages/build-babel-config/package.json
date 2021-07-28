@@ -22,5 +22,9 @@
   },
   "dependencies": {
     "@builder/pack": "0.2.17"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

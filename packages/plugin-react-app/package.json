@@ -47,5 +47,9 @@
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-react-app"
   },
-  "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
+  "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498",
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

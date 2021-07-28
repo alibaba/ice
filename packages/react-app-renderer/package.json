@@ -24,7 +24,8 @@
     "create-app-shared": "^1.0.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",
