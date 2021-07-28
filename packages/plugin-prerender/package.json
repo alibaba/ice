@@ -16,6 +16,10 @@
     "prerender-spa-plugin": "^3.4.0"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-9"
-  }
+    "build-scripts": "^1.1.0-5"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

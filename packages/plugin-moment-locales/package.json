@@ -15,5 +15,9 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-moment-locales"
   },
   "author": "ICE Team",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

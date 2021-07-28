@@ -10,7 +10,8 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",

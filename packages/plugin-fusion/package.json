@@ -34,5 +34,9 @@
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-fusion"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

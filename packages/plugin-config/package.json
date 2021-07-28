@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "config"
+    "config",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",

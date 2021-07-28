@@ -123,7 +123,8 @@ function initGenerator(api, options) {
       hasJsxRuntime,
       hasTabBar: hasTabBar(`${rootDir}/src`, framework),
       errorBoundary: true,
-      tempPath: targetDir,
+      relativeCorePath: '.',
+      typesPath: '../types'
     },
     log,
     plugins,

@@ -9,7 +9,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",

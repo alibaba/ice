@@ -15,14 +15,14 @@ import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
   // eslint-disable-next-line
   import '<%= globalStyle %>'
 <% } %>
-import loadStaticModules from '<%- tempPath %>/core/loadStaticModules';
+import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 
-import { setAppConfig } from '<%- tempPath %>/core/appConfig';
+import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 <% if (errorBoundary) { %>
-import ErrorBoundary from '<%- tempPath %>/core/ErrorBoundary';
+import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 <% } %>
-import { IAppConfig, IBuildConfig } from '<%- tempPath %>/types';
+import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const frameworkAppBase = createBaseApp({

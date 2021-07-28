@@ -35,7 +35,8 @@
   "files": [
     "lib",
     "src",
-    "templates"
+    "templates",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",

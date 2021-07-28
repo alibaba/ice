@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "!lib/**/*.map"
   ],
   "dependencies": {
     "@babel/types": "^7.11.5",
