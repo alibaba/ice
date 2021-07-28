@@ -1156,10 +1156,12 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/pack@0.2.17", "@builder/pack@^0.2.9":
-  version "0.2.17"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.2.17.tgz#96f1a2c99192bbd2df1b7882c406b8fdb7862b7e"
-  integrity sha512-OwNOSbycujP6qaWRgoDTlESK8jPDOqu9vd0dw7aCaaScKr96Dej62TVfwGlpuMyrc2MzhJVxUL/VwADCv6sLeA==
+"@builder/pack@0.2.18":
+  version "0.2.18"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.2.18.tgz#6a69d938ff8edb4774674a1c99a3b77dd9da020e"
+  integrity sha512-ujjn2t2DLWuM4zEPis/VUNRQePWNazX4sP78CzAovIN3Yez6w979OOCgYvqxlbHCJ+/3OEotpjTy27DSZ1/EJA==
+  dependencies:
+    jest-worker "27.0.6"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -5076,10 +5078,10 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
-build-scripts@^1.1.0-7:
-  version "1.1.0-7"
-  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-7.tgz#9a4379b789a5423aff198389815d161d6e2407a1"
-  integrity sha512-xgsMuup5P1PAfG84RnMFdicTDFQDjOlzqd+y0lpCTFDodAFQdJIuYO5jd8quHc3Uq8Wyp0AuGuMJOT2bFs6IJQ==
+build-scripts@^1.1.0-9:
+  version "1.1.0-9"
+  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-9.tgz#f578d5e6bbe9b95b831e463550a3b5f5fa949745"
+  integrity sha512-Sxx6dKS9sZtRvImwjDkHYap7Mlz5rzv8gU9Zx6q72/2Aq41zv3CXCedvB4bPFHJEsJ4wQcbB4evkxa2yEz6/fA==
   dependencies:
     address "^1.1.0"
     camelcase "^5.3.1"
@@ -5088,6 +5090,7 @@ build-scripts@^1.1.0-7:
     commander "^2.19.0"
     deepmerge "^4.0.0"
     detect-port "^1.3.0"
+    esbuild "^0.12.16"
     fs-extra "^8.1.0"
     json5 "^2.1.3"
     lodash "^4.17.15"
@@ -7185,6 +7188,11 @@ esbuild@^0.11.19:
   version "0.11.23"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.23.tgz#c42534f632e165120671d64db67883634333b4b8"
   integrity sha512-iaiZZ9vUF5wJV8ob1tl+5aJTrwDczlvGP0JoMmnpC2B0ppiMCu8n8gmy5ZTGl5bcG081XBVn+U+jP+mPFm5T5Q==
+
+esbuild@^0.12.16:
+  version "0.12.16"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.16.tgz#c397144ce13b445a6ead9c1f747da11f79ec5e67"
+  integrity sha512-XqI9cXP2bmQ6MREIqrYBb13KfYFSERsV1+e5jSVWps8dNlLZK+hln7d0mznzDIpfISsg/AgQW0DW3kSInXWhrg==
 
 esbuild@^0.12.8:
   version "0.12.15"
@@ -11026,6 +11034,15 @@ jest-watcher@^27.0.6:
     jest-util "^27.0.6"
     string-length "^4.0.1"
 
+jest-worker@27.0.6, jest-worker@^27.0.2, jest-worker@^27.0.6:
+  version "27.0.6"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-27.0.6.tgz#a5fdb1e14ad34eb228cfe162d9f729cdbfa28aed"
+  integrity sha512-qupxcj/dRuA3xHPMUd40gr2EaAurFbkwzOh7wfPaeE9id7hyjURRQoqNfHifHK3XjJU6YJJUQKILGUnwGPEOCA==
+  dependencies:
+    "@types/node" "*"
+    merge-stream "^2.0.0"
+    supports-color "^8.0.0"
+
 jest-worker@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-24.9.0.tgz#5dbfdb5b2d322e98567898238a9697bcce67b3e5"
@@ -11050,15 +11067,6 @@ jest-worker@^26.6.2:
     "@types/node" "*"
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
-
-jest-worker@^27.0.2, jest-worker@^27.0.6:
-  version "27.0.6"
-  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-27.0.6.tgz#a5fdb1e14ad34eb228cfe162d9f729cdbfa28aed"
-  integrity sha512-qupxcj/dRuA3xHPMUd40gr2EaAurFbkwzOh7wfPaeE9id7hyjURRQoqNfHifHK3XjJU6YJJUQKILGUnwGPEOCA==
-  dependencies:
-    "@types/node" "*"
-    merge-stream "^2.0.0"
-    supports-color "^8.0.0"
 
 jest@^25.4.0:
   version "25.5.4"
@@ -14130,7 +14138,7 @@ postcss-values-parser@^2.0.0, postcss-values-parser@^2.0.1:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.5, postcss@^7.0.6, postcss@^7.0.7, postcss@^8.1.2, postcss@^8.2.7, postcss@^8.3.5:
+postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.5, postcss@^7.0.6, postcss@^7.0.7, postcss@^8.1.2, postcss@^8.2.7, postcss@^8.3.5, postcss@^8.3.6:
   version "8.3.6"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.6.tgz#2730dd76a97969f37f53b9a6096197be311cc4ea"
   integrity sha512-wG1cc/JhRgdqB6WHEuyLTedf3KIRuD0hG6ldkFEZNCjRxiC+3i6kkWUUbiJQayP28iwG35cEmAbe98585BYV0A==
@@ -17448,6 +17456,18 @@ vfile@^3.0.0:
     replace-ext "1.0.0"
     unist-util-stringify-position "^1.0.0"
     vfile-message "^1.0.0"
+
+vite@^2.3.4, vite@^2.4.3:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.4.4.tgz#8c402a07ad45f168f6eb5428bead38f3e4363e47"
+  integrity sha512-m1wK6pFJKmaYA6AeZIUXyiAgUAAJzVXhIMYCdZUpCaFMGps0v0IlNJtbmPvkUhVEyautalajmnW5X6NboUPsnw==
+  dependencies:
+    esbuild "^0.12.8"
+    postcss "^8.3.6"
+    resolve "^1.20.0"
+    rollup "^2.38.5"
+  optionalDependencies:
+    fsevents "~2.3.2"
 
 vite@^2.4.2:
   version "2.4.3"

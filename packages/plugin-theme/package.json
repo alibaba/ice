@@ -14,7 +14,7 @@
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "dependencies": {
-    "@builder/pack": "^0.2.9",
+    "@builder/pack": "0.2.18",
     "fs-extra": "^9.0.0",
     "less": "^4.1.1",
     "lodash": "^4.17.21",
@@ -36,7 +36,7 @@
     "@types/postcss-import": "^12.0.1",
     "@types/resolve": "^1.20.1",
     "@types/webpack-sources": "^2.1.0",
-    "build-scripts": "^1.1.0-7",
+    "build-scripts": "^1.1.0-9",
     "jest": "^25.4.0",
     "ts-jest": "^25.4.0",
     "typescript": "^4.0.0"
