@@ -3,6 +3,7 @@ import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
+import vitePluginPageRedirect from './vitePluginPageRedirect';
 
 const { name: pluginName } = require('../package.json');
 
@@ -72,6 +73,13 @@ export default async (api: any) => {
       tempDir
     }
   ];
+
+  // add vite plugin for redirect page component
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', (plugins: Plugin[] | undefined) => {
+      return [vitePluginPageRedirect(rootDir), ...(plugins || [])];
+    });
+  }
 
   const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
   if (loadableBabelPluginIndex > -1) {
