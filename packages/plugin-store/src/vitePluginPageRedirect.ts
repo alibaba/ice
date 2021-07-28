@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { Plugin } from 'vite';
+import { formatPath } from '@builder/app-helpers';
 
 const getPageName = (resolveId: string): { type: string; pageName: string; } => {
   const layoutRegExp = /src\/pages\/(\w+)\/Layout/;
@@ -14,17 +15,18 @@ const getPageName = (resolveId: string): { type: string; pageName: string; } => 
   return { type, pageName };
 };
 
-const vitePluginPageRedirect = (rootDir: string): Plugin => {
-  const routesRegExp = /src\/routes\.(j|t)s(x)?$/;
+const vitePluginPageRedirect = (routesPath: string[] | string): Plugin => {
+  const routesPaths = Array.isArray(routesPath) ? routesPath : [routesPath];
   return {
     enforce: 'pre',
     name: 'vite-plugin-page-redirect',
     resolveId(id, importer) {
-      if (importer.match(routesRegExp)) {
+      console.log('importer', importer);
+      if (routesPaths.includes(importer)) {
         let importPath = id;
         // relative path
         if (/^(\.\/|\.{2}\/)/.test(importPath)) {
-          importPath = path.join(rootDir, 'src', importPath);
+          importPath = formatPath(path.join(path.basename(importer), importPath));
         }
         // if import path includes alias, it will be resolved as absolute path
         const { type, pageName } = getPageName(importPath);
