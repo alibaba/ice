@@ -1,5 +1,6 @@
-import { IRouterConfig } from 'ice';
-import Home from './pages/Home';
+import { IRouterConfig, lazy } from 'ice';
+
+const Home = lazy(() => import('@/pages/Home'));
 
 const routes: IRouterConfig[] = [
   {

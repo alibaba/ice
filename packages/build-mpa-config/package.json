@@ -27,6 +27,6 @@
     "@builder/app-templates": "^1.0.0"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-7"
+    "build-scripts": "^1.1.0-9"
   }
 }

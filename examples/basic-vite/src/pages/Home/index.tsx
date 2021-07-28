@@ -1,14 +1,15 @@
-import './index.css';
-
 import React, { useState } from 'react';
+import store from './store';
+import './index.css';
 
 function App() {
   const [count, setCount] = useState<number>(0);
+  const [titleState, titleAction] = store.useModel('title');
 
   return (
     <div className="App">
       <header className="App-header">
-        <p className="header">🚀 Vite + Icejs</p>
+        <p className="header">{titleState.title}</p>
 
         <div className="body">
           <button type="button" onClick={() => setCount((e) => e + 1)}>

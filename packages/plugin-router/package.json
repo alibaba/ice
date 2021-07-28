@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@builder/app-helpers": "^2.0.2",
+    "@builder/pack": "0.2.18",
     "@types/react-router-dom": "^5.1.4",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
@@ -22,13 +23,14 @@
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-7",
+    "build-scripts": "^1.1.0-9",
     "@types/fs-extra": "^8.0.1",
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.5",
     "@types/node": "^12.12.12",
     "path-to-regexp": "^6.2.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "vite": "^2.3.4"
   },
   "files": [
     "lib",
