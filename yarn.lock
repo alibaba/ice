@@ -5078,7 +5078,7 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
-build-scripts@^1.1.0-7, build-scripts@^1.1.0-9:
+build-scripts@^1.1.0-5, build-scripts@^1.1.0-7, build-scripts@^1.1.0-9:
   version "1.1.0-9"
   resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-9.tgz#f578d5e6bbe9b95b831e463550a3b5f5fa949745"
   integrity sha512-Sxx6dKS9sZtRvImwjDkHYap7Mlz5rzv8gU9Zx6q72/2Aq41zv3CXCedvB4bPFHJEsJ4wQcbB4evkxa2yEz6/fA==
