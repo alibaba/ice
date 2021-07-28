@@ -48,4 +48,4 @@ const appConfig: IAppConfig = {
 
 runApp(appConfig);
 
-console.error(111);
+console.error('error log after runApp');

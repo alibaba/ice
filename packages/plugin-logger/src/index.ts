@@ -19,26 +19,24 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
     const { userConfig: { esbuild, dropLogLevel } } = context;
     if (dropLogLevel) {
       if (esbuild) {
-        config.optimization.minimizer('ESBuild').tap(options => {
-          const pluginOptions = options[0];
+        config.optimization.minimizer('ESBuild').tap(([options]) => {
           return [
             {
-              ...pluginOptions,
+              ...options,
               pure: getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]),
             }
           ];
         });
         // @ts-ignore
       } else if (config.optimization.minimizers.has('TerserPlugin')) {
-        config.optimization.minimizer('TerserPlugin').tap(options => {
-          const pluginOptions = options[0];
+        config.optimization.minimizer('TerserPlugin').tap(([options]) => {
           return [
             {
-              ...pluginOptions,
+              ...options,
               terserOptions: {
-                ...pluginOptions.terserOptions,
+                ...options.terserOptions,
                 compress: {
-                  ...pluginOptions.terserOptions.compress,
+                  ...options.terserOptions.compress,
                   drop_console: false,
                   pure_funcs: getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]),
                 }

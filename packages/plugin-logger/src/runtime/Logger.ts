@@ -1,7 +1,7 @@
 import levels from '../levels';
 
 export default class Logger {
-  private level: number;
+  private level = 0;
 
   constructor() {
     ['trace', 'log', 'debug', 'info', 'warn', 'error'].forEach((methodName) => {

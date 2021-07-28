@@ -8,7 +8,7 @@ const defaultOptions = {
 
 module.exports = (config, options, context, { log }) => {
   if (options) {
-    log.info('Enabled EsBuild');
+    log.info('EsBuild Enabled');
     if(config.optimization.minimizers.has('TerserPlugin')) {
       config.optimization.minimizers.delete('TerserPlugin');
     }
