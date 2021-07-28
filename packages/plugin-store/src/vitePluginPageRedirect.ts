@@ -21,12 +21,11 @@ const vitePluginPageRedirect = (routesPath: string[] | string): Plugin => {
     enforce: 'pre',
     name: 'vite-plugin-page-redirect',
     resolveId(id, importer) {
-      console.log('importer', importer);
       if (routesPaths.includes(importer)) {
         let importPath = id;
         // relative path
         if (/^(\.\/|\.{2}\/)/.test(importPath)) {
-          importPath = formatPath(path.join(path.basename(importer), importPath));
+          importPath = formatPath(path.join(path.dirname(importer), importPath));
         }
         // if import path includes alias, it will be resolved as absolute path
         const { type, pageName } = getPageName(importPath);
