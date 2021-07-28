@@ -114,7 +114,7 @@ export const importPlugin = ({ rootDir }): Plugin => {
 
       // 获取相对路径
       const url = path.relative(path.resolve(id, '..'), iceTempPath);
-      const result = await redirectImport(code, {
+      return await redirectImport(code, {
         source: 'ice', redirectImports: [
           {
             name: 'runApp',
@@ -123,10 +123,6 @@ export const importPlugin = ({ rootDir }): Plugin => {
           }
         ]
       });
-      return {
-        code: result,
-        map: null
-      };
     }
   };
 };

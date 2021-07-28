@@ -36,18 +36,18 @@ const frameworkAppBase = createBaseApp({
   },
 });
 
-export async function runApp(appConfig?: IAppConfig) {
+export function runApp(appConfig?: IAppConfig) {
   // store appConfig in case of server side render
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
-  await loadStaticModules(appConfig as IAppConfig);
+  loadStaticModules(appConfig as IAppConfig);
   if (process.env.__IS_SERVER__) return;
   <% if (buildConfig.router !== false) {%>
   // set History before GID
   initHistory(appConfig as any);
   <% } %>
-  await reactAppRenderer({
+  reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
     <% if (errorBoundary) { %>

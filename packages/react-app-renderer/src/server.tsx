@@ -30,7 +30,7 @@ async function renderInServer(context: Context, options: RenderOptions) {
   };
 }
 
-export default async function reactAppRendererWithSSR(context: Context, options: RenderOptions) {
+export default function reactAppRendererWithSSR(context: Context, options: RenderOptions) {
   const cloneOptions = deepClone(options);
   const { appConfig } = cloneOptions || {};
   appConfig.router = appConfig.router || {};
@@ -38,7 +38,7 @@ export default async function reactAppRendererWithSSR(context: Context, options:
     throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
   }
   appConfig.router.type = 'static';
-  return await renderInServer(context, cloneOptions);
+  return renderInServer(context, cloneOptions);
 }
 
 function deepClone(config) {

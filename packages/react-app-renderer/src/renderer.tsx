@@ -58,7 +58,7 @@ export async function reactAppRenderer(options: RenderOptions) {
     context.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
-  const { runtime, appConfig: modifiedAppConfig } = await createBaseApp<any>(appConfig, buildConfig, context);
+  const { runtime, appConfig: modifiedAppConfig } = createBaseApp<any>(appConfig, buildConfig, context);
   // init app life cycles after app runtime created
   initAppLifeCycles();
 

@@ -8,7 +8,7 @@ interface IRuntime<T> {
   loadModule: (module: { default: T } | T) => void;
 }
 
-async function loadRuntimeModules(runtime: IRuntime<Function>) {
+function loadRuntimeModules(runtime: IRuntime<Function>) {
   <% if (moduleNames.length) {%>
     <% moduleNames.forEach((name) => { %>runtime.loadModule(<%= name%>);<% }) %>
   <% } %>

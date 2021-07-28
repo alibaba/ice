@@ -6,7 +6,7 @@ import { IAppConfig } from '../types';
     <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %>
 <% } %>
 
-async function loadStaticModules(appConfig: IAppConfig) {
+function loadStaticModules(appConfig: IAppConfig) {
   <% if (moduleNames.length) {%>
     <% moduleNames.forEach((name) => { %><%= name%>({appConfig});<% }) %>
   <% } %>
