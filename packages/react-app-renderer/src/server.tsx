@@ -4,10 +4,10 @@ import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
 import type { Context, RenderOptions } from './types';
 
-async function renderInServer(context: Context, options: RenderOptions) {
+function renderInServer(context: Context, options: RenderOptions) {
   const { appConfig, buildConfig = {}, appLifecycle } = options;
   const { createBaseApp, emitLifeCycles } = appLifecycle;
-  const { runtime, appConfig: modifiedAppConfig } = await createBaseApp(appConfig, buildConfig, context);
+  const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
   const { loadableStatsPath, publicPath } = buildConfig;
 
