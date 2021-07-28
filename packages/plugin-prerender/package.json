@@ -17,5 +17,9 @@
   },
   "devDependencies": {
     "build-scripts": "^1.1.0-5"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

@@ -14,5 +14,9 @@
   },
   "dependencies": {
     "babel-plugin-import": "^1.11.2"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

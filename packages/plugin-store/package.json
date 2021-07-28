@@ -13,7 +13,8 @@
   "files": [
     "lib",
     "src/types",
-    "src/runtime.tsx"
+    "src/runtime.tsx",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",

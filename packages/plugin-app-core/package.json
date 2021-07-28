@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "src/runtime.tsx"
+    "src/runtime.tsx",
+    "!lib/**/*.map"
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
