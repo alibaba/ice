@@ -27,7 +27,8 @@ function wrapperRoute(component, routerWrappers) {
   }, component);
 }
 
-function setComponentAttr(comp: any, route: RouteItemProps) {
+function setComponentAttr(comp: any, route?: RouteItemProps) {
+  if(!route) return;
   ['pageConfig', 'getInitialProps'].forEach(attr => {
     comp[attr] = route[attr];
   });

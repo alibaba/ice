@@ -2,8 +2,8 @@
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 const parse = require('yargs-parser');
-const { start } = require('build-scripts');
 const log = require('build-scripts/lib/utils/log');
+const BuildService = require('./buildService');
 
 const rawArgv = parse(process.argv.slice(2), {
   configuration: { 'strip-dashed': true }
@@ -36,14 +36,18 @@ module.exports = async (getBuiltInPlugins) => {
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    const devServer = await start({
+    const service = new BuildService({
+      command: 'start',
       args: { ...rawArgv },
       getBuiltInPlugins
     });
+    const devServer = await service.run({});
 
-    ['SIGINT', 'SIGTERM'].forEach(function(sig) {
-      process.on(sig, function() {
-        devServer.close();
+    ['SIGINT', 'SIGTERM'].forEach(function (sig) {
+      process.on(sig, function () {
+        if (devServer) {
+          devServer.close();
+        }
         process.exit(0);
       });
     });

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const parse = require('yargs-parser');
-const { build } = require('build-scripts');
 const log = require('build-scripts/lib/utils/log');
+const BuildServer = require('./buildService');
 
 module.exports = async (getBuiltInPlugins) => {
   process.env.NODE_ENV = 'production';
@@ -11,10 +11,12 @@ module.exports = async (getBuiltInPlugins) => {
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    await build({
+    const service = new BuildServer({
+      command: 'build',
       args: { ...rawArgv },
-      getBuiltInPlugins,
+      getBuiltInPlugins
     });
+    await service.run({});
   } catch (err) {
     log.error(err.message);
     console.error(err);
