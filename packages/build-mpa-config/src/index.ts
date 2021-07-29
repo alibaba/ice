@@ -61,9 +61,7 @@ export const addRedirectRunAppLoader = (api: IPluginAPI, { config, framework, re
   framework: string;
   redirectEntries: IGenerateResult[];
 }) => {
-  // TODO: esbuild preCompile ts to js
   config.module.rule('redirect-runApp')
-    .enforce('post')
     .test((filepath: string) => redirectEntries.some(({ entryPath }) => entryPath === filepath))
     .use('redirect-runApp-loader')
     .loader(require.resolve(path.join(__dirname, 'redirectRunAppLoader')))
