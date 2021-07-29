@@ -50,6 +50,14 @@ module.exports = (config, swcOptions, context, { log }) => {
     }, commonOptions);
 
     config.module
+      .rule('pre-compile-loader')
+      .test(/\.tsx?$/)
+      .enforce('pre')
+      .use('pre-compile-loader')
+      .loader(path.join(__dirname, '../Loaders/PreCompileLoader'))
+      .end();
+
+    config.module
       .rule('swc')
       .test(/\.(j|t)sx?$/)
       .exclude.add(EXCLUDE_REGEX)
