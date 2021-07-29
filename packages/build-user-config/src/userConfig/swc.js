@@ -1,6 +1,5 @@
 const path = require('path');
 const { merge } = require('@builder/pack/deps/lodash');
-const path = require('path');
 
 const EXCLUDE_REGEX = /node_modules/;
 
@@ -49,7 +48,7 @@ module.exports = (config, swcOptions, context, { log }) => {
         },
       }
     }, commonOptions);
-    console.log((path.join(__dirname, '../Loaders/RedirectPathLoader')));
+
     config.module
       .rule('pre-compile-loader')
       .test(/\.tsx?$/)

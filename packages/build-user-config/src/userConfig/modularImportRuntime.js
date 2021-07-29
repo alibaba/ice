@@ -12,6 +12,7 @@ module.exports = (config, value, context, api) => {
         name,
         ...importDeclarations[name]
       }));
+
       config.module.rule('redirect-path-loader')
         .test(filePath => filePath.includes(path.join(rootDir, 'src')))
         .use('redirect-path-loader')

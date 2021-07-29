@@ -26,7 +26,15 @@ async function loader(code, sourcemap) {
           source,
           redirectImports: redirects
             .map((redirect) => {
-              const { name, value, type, alias } = redirect;
+              const { name, value, type, alias, multipleSource = [] } = redirect;
+              const matchedSource = multipleSource.find(({ filename }) => filename === this.resourcePath);
+              if (matchedSource) {
+                return {
+                  name,
+                  redirectPath: matchedSource.value,
+                  default: matchedSource.type === 'default',
+                };
+              }
               return {
                 name,
                 redirectPath: alias || value,

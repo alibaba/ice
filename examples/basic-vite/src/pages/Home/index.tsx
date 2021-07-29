@@ -4,7 +4,7 @@ import './index.css';
 
 function App() {
   const [count, setCount] = useState<number>(0);
-  const [titleState, titleAction] = store.useModel('title');
+  const [titleState] = store.useModel('title');
 
   return (
     <div className="App">
