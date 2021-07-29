@@ -1,4 +1,16 @@
-const importDeclarations: any = {};
+export interface SourceData {
+  filename: string;
+  value: string;
+  type?: 'normal' | 'default';
+}
+export interface ImportDeclarations {
+  value: string;
+  type?: 'normal' | 'default';
+  alias?: string;
+  multipleSource?: SourceData[];
+}
+
+const importDeclarations: Record<string, ImportDeclarations> = {};
 const defaultDeclarations = {
   '$$framework/core/runApp': [
     'runApp',
