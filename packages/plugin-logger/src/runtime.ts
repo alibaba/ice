@@ -10,7 +10,7 @@ const module = ({ appConfig }) => {
     return logger.setLevel(userLogger.level);
   }
 
-  let loglevel = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
+  let loglevel = process.env.NODE_ENV === 'development' ? 'trace' : 'warn';
   if (userLogger.smartLoglevel) {
     const searchParams: any = getSearchParams();
     if (searchParams.__loglevel__) {
