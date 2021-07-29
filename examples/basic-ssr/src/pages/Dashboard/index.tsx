@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, logger } from 'ice';
+import { Link } from 'ice';
 
 const Dashboard = (props) => {
-  logger.info('Dashboard props', props);
+  console.info('Dashboard props', props);
   return (
     <>
       <h2>{props.title}</h2>

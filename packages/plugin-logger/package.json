@@ -16,10 +16,6 @@
     "src/runtime.ts",
     "!lib/**/*.map"
   ],
-  "dependencies": {
-    "fs-extra": "^8.1.0",
-    "loglevel": "^1.6.6"
-  },
   "devDependencies": {
     "build-scripts": "^1.1.0-9",
     "typescript": "^4.0.0"
@@ -27,6 +23,9 @@
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-logger"
+  },
+  "pluginConfig": {
+    "staticModule": true
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

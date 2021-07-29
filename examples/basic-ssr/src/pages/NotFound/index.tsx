@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, logger } from 'ice';
+import { Link } from 'ice';
 
 const Home = (props) => {
-  logger.info('render 404', props);
+  console.info('render 404', props);
 
   return (
     <>

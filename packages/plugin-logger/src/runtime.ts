@@ -1,6 +1,7 @@
 import * as queryString from 'query-string';
-// @ts-ignore
-import logger from '$ice/logger';
+import Logger from './runtime/Logger';
+
+const logger = new Logger();
 
 const module = ({ appConfig }) => {
   const { logger: userLogger = {} } = appConfig;
@@ -9,7 +10,7 @@ const module = ({ appConfig }) => {
     return logger.setLevel(userLogger.level);
   }
 
-  let loglevel = process.env.NODE_ENV === 'development' ? 'DEBUG' : 'WARN';
+  let loglevel = process.env.NODE_ENV === 'development' ? 'trace' : 'warn';
   if (userLogger.smartLoglevel) {
     const searchParams: any = getSearchParams();
     if (searchParams.__loglevel__) {
