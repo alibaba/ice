@@ -18,8 +18,6 @@ interface IConfigOptions {
   targetDir?: string;
 }
 
-type ImportDeclarations = Record<string, {value: string}>;
-
 export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => {
   const { context } = api;
   const { framework = 'rax', targetDir = '' } = options;
@@ -71,11 +69,6 @@ export const addRedirectRunAppLoader = (api: IPluginAPI, { config, framework, re
       framework,
       redirectEntries,
     });
-
-  // filter runApp while redirect-runApp-loader will handle it
-  const importDeclarations = api.getValue<ImportDeclarations>('importDeclarations');
-  delete importDeclarations.runApp;
-  api.setValue<ImportDeclarations>('importDeclarations', importDeclarations);
 };
 
 const setMPAConfig = (api, config, options: IConfigOptions) => {
