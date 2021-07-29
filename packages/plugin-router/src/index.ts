@@ -1,7 +1,9 @@
 import * as path from 'path';
 import { validation } from '@builder/app-helpers';
+import { Plugin } from 'vite';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
+import vitePluginLazy from './vitePluginLazy';
 
 // compatible with $ice/routes
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
@@ -88,6 +90,13 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
           { routesPath }
         ]
       ]);
+
+    // if mode vite, add vite plugin for transform lazy
+    if (userConfig.vite) {
+      modifyUserConfig('vite.plugins', (plugins: Plugin[] | undefined) => {
+        return [vitePluginLazy(routesPath), ...(plugins || [])];
+      });
+    }
 
     // copy templates and export react-router-dom/history apis to ice
     const routerTemplatesPath = path.join(__dirname, '../templates');

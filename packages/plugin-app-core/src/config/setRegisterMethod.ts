@@ -5,7 +5,7 @@ import getSourceDir from '../utils/getSourceDir';
 import formatPluginDir from '../utils/formatPluginDir';
 import getBuildConfig from '../utils/getBuildConfig';
 import { getExportApiKeys } from '../constant';
-import importDeclarations from './importDeclarations';
+import importDeclarations, { SourceData } from './importDeclarations';
 
 interface IRenderData {
   [key: string]: any;
@@ -14,6 +14,14 @@ interface IRenderData {
 interface ITemplateOptions {
   template: string;
   targetDir: string;
+}
+
+interface ImportDeclarationData {
+  importSource?: string;
+  exportMembers?: string[];
+  exportDefault?: string;
+  alias?: Record<string, string>
+  multipleSource?: Record<string, SourceData[]>
 }
 
 export default (api, options) => {
@@ -42,13 +50,14 @@ export default (api, options) => {
   registerMethod('modifyRenderData', generator.modifyRenderData);
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
 
-  function addImportDeclaration(data) {
-    const { importSource, exportMembers, exportDefault, alias } = data;
+  function addImportDeclaration(data: ImportDeclarationData) {
+    const { importSource, exportMembers, exportDefault, alias, multipleSource } = data;
     if (importSource) {
       if (exportMembers) {
-        exportMembers.forEach((exportMember) => {
+        exportMembers.forEach((exportMember: string) => {
           // import { withAuth } from 'ice' -> import { withAuth } from 'ice/auth';
           importDeclarations[exportMember] = {
+            ...importDeclarations[exportMember],
             value: importSource,
             type: 'normal',
           };
@@ -56,6 +65,7 @@ export default (api, options) => {
       } else if (exportDefault) {
         // import { Helmet } from 'ice' -> import Helmet from 'ice/helmet';
         importDeclarations[exportDefault] = {
+          ...importDeclarations[exportDefault],
           value: importSource,
           type: 'default',
         };
@@ -64,12 +74,22 @@ export default (api, options) => {
         Object.keys(alias).forEach(exportMember => {
           // import { Head } from 'ice'; -> import { Helmet as Head } from 'react-helmet';
           importDeclarations[exportMember] = {
+            ...importDeclarations[exportMember],
             value: importSource,
             type: 'normal',
             alias: alias[exportMember],
           };
         });
       }
+    }
+
+    if (multipleSource) {
+      Object.keys(multipleSource).forEach(exportMember => {
+        importDeclarations[exportMember] = {
+          ...importDeclarations[exportMember],
+          multipleSource: multipleSource[exportMember],
+        };
+      });
     }
   }
 

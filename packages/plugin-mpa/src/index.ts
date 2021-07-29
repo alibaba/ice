@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { getMpaEntries } from '@builder/app-helpers';
-import { generateMPAEntries, addRedirectRunAppLoader } from '@builder/mpa-config';
+import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
 interface ITemplate {
@@ -16,7 +16,7 @@ interface IMpaConfig {
 }
 
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue } = api;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue, applyMethod } = api;
   const { rootDir, userConfig, commandArgs } = context;
   const { mpa } = userConfig;
 
@@ -102,11 +102,18 @@ const plugin: IPlugin = (api) => {
     }
     // modify entry
     modifyUserConfig('entry', finalMPAEntries);
-
+    applyMethod('addImportDeclaration', {
+      multipleSource: {
+        runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
+          filename: entryPath,
+          value: runAppPath,
+          type: 'normal',
+        })),
+      },
+    });
     // set page template
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
-      addRedirectRunAppLoader(api, {config, framework: 'ice', redirectEntries});
       config.devServer.historyApiFallback({
         rewrites: Object.keys(entries).map((pageName) => {
           return {

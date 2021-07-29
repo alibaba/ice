@@ -2,6 +2,11 @@
 module.exports = function() {
   return [
     {
+      name: 'vite',
+      defaultValue: false,
+      validation: 'boolean|object'
+    },
+    {
       name: 'logging',
       defaultValue: {},
       validation: 'object'
