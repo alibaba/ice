@@ -21,7 +21,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/build-babel-config"
   },
   "dependencies": {
-    "@builder/pack": "0.2.18"
+    "@builder/pack": "0.2.19"
   },
   "files": [
     "lib",

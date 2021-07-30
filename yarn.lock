@@ -1156,11 +1156,12 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/pack@0.2.18":
-  version "0.2.18"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.2.18.tgz#6a69d938ff8edb4774674a1c99a3b77dd9da020e"
-  integrity sha512-ujjn2t2DLWuM4zEPis/VUNRQePWNazX4sP78CzAovIN3Yez6w979OOCgYvqxlbHCJ+/3OEotpjTy27DSZ1/EJA==
+"@builder/pack@0.2.19":
+  version "0.2.19"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.2.19.tgz#9225d63ae9a7f7b419ec3de79cf153c0aa892c2f"
+  integrity sha512-w/91Gn1ngDqNO8ZQQDq5K0jROZH/LUjsoAp0BWgVTEYxKYwDsNdPZeYV/3OGNgC7sdjIBABnqph5PNsktrm+tg==
   dependencies:
+    eslint "6.8.0"
     jest-worker "27.0.6"
 
 "@cnakazawa/watch@^1.0.3":
@@ -7388,7 +7389,7 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
-eslint@^6.8.0:
+eslint@6.8.0, eslint@^6.8.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.8.0.tgz#62262d6729739f9275723824302fb227c8c93ffb"
   integrity sha512-K+Iayyo2LtyYhDSYwz5D5QdWw0hCacNzyq1Y821Xna2xSJj7cijoLLYmLxTQgcgZ9mC61nryMy9S7GRbYpI5Ig==
