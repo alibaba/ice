@@ -192,7 +192,26 @@ export const wp2vite = (context: Context): Result => {
   const prodConfig = all([{
     define: {
       __app_mode__: 'build'
-    }
+    },
+    build: {
+      // default build options for vite
+      // TODO transform config form webpack config
+      assetsDir: '',
+      rollupOptions: {
+        output: {
+          assetFileNames: (assetInfo: { name: string }) => {
+            if (path.extname(assetInfo.name) === '.css') {
+              return 'css/[name][extname]';
+            }
+            return '[name][extname]';
+          },
+          entryFileNames: 'js/[name].js',
+          chunkFileNames: 'js/[name].js',
+          // remove vendor
+          manualChunks: [],
+        }
+      }
+    },
   }, viteConfig]);
 
   return { devConfig, prodConfig };
