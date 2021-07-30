@@ -15,7 +15,7 @@ const getPageName = (resolveId: string): { type: string; pageName: string; } => 
   return { type, pageName };
 };
 
-const vitePluginPageRedirect = (routesPath: string[] | string): Plugin => {
+const vitePluginPageRedirect = (rootDir: string ,routesPath: string[] | string): Plugin => {
   const routesPaths = Array.isArray(routesPath) ? routesPath : [routesPath];
   return {
     enforce: 'pre',
@@ -29,7 +29,7 @@ const vitePluginPageRedirect = (routesPath: string[] | string): Plugin => {
         }
         // if import path includes alias, it will be resolved as absolute path
         const { type, pageName } = getPageName(importPath);
-        if (pageName && type) return `/.ice/pages/${pageName}${type === 'layout' ? '/Layout' : ''}`;
+        if (pageName && type) return path.join(rootDir, `/.ice/pages/${pageName}${type === 'layout' ? '/Layout' : ''}/index.tsx`);
       }
     },
   };

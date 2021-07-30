@@ -77,7 +77,7 @@ export default async (api: any) => {
   // add vite plugin for redirect page component
   if (userConfig.vite) {
     modifyUserConfig('vite.plugins', (plugins: Plugin[] | undefined) => {
-      return [vitePluginPageRedirect(routesPath), ...(plugins || [])];
+      return [vitePluginPageRedirect(rootDir, routesPath), ...(plugins || [])];
     });
   }
 
