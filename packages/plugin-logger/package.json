@@ -13,7 +13,7 @@
   "files": [
     "lib",
     "logger",
-    "src/runtime.ts",
+    "src",
     "!lib/**/*.map"
   ],
   "devDependencies": {
