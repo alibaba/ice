@@ -1,4 +1,6 @@
 {
+  "hash": true,
+  "minify": false,
   "vite": true,
   "plugins": [],
   "sassLoaderOptions": {

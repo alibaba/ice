@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as friendlyTypeImports from 'rollup-plugin-friendly-type-imports';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { all } from 'deepmerge';
-import { isObject, set, get } from 'lodash';
+import { isObject, isArray, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import { indexHtmlPlugin, externalsPlugin, importPlugin } from './plugins';
@@ -21,10 +21,22 @@ type Transformer = (
   chain?: ITaskConfig['chainConfig']
 ) => any;
 
-type ConfigMap = Record<string, string | {
-  name: string
+type ConfigMap = Record<string, string | string[] | {
+  name: string | string[]
   transform: Transformer
 }>
+
+/**
+ * 设置 vite 字段的值
+ */
+const setViteConfig = (acc: object, value: any, viteRow: string | string[], isTransform = false) => {
+  if (value === undefined) return;
+
+  const config = isArray(viteRow) ? viteRow : [viteRow];
+  config.forEach((cfg, index) => {
+    set(acc, cfg, isTransform && isArray(viteRow) ? value[index] : value);
+  });
+};
 
 const transformPlugin = (pluginName: string): Transformer => {
   return (...args) => {
@@ -75,11 +87,15 @@ const configMap: ConfigMap = {
     name: 'resolve.extensions',
     transform: (value) => ['.mjs', ...value],
   },
-  // 保证在 link 开发调试时引入的 react 是一个实例
-  dedupe: {
-    name: 'resolve.dedupe',
-    transform: () => ['react', 'react-dom'],
+  // minify
+  'optimization.minimize': {
+    name: 'build.minify',
+    transform: (value) => {
+      // TODO: Warning
+      return value && 'terser';
+    },
   },
+  'config.devtool': 'build.sourcemap',
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': 'server.proxy',
   'plugins.DefinePlugin': {
@@ -98,6 +114,39 @@ const configMap: ConfigMap = {
     name: 'css.preprocessorOptions.less',
     transform: transformPreProcess('less-loader', 'less'),
   },
+  // 保证在 link 开发调试时引入的 react 是一个实例
+  dedupe: {
+    name: 'resolve.dedupe',
+    transform: () => ['react', 'react-dom'],
+  },
+  // hash & outputAssetsPath (OAP)
+  hashAndOAP: {
+    name: [
+      'build.rollupOptions.output.entryFileNames',
+      'build.rollupOptions.output.chunkFileNames',
+      'build.rollupOptions.output.assetFileNames',
+    ],
+    transform: (e, { userConfig }) => {
+      const data = userConfig.outputAssetsPath as Record<string, string>;
+      const hash = userConfig.hash === true ? 'hash' : userConfig.hash;
+      const hashStr = hash ? `.[${hash}]` : '';
+
+      const { js, css } = data;
+
+      const assetFileNames = (assetInfo: { name: string }) => {
+        if (path.extname(assetInfo.name) === '.css') {
+          return `${css}/[name]${hashStr}[extname]`;
+        }
+        return `[name]${hashStr}[extname]`;
+      };
+
+      return [
+        `${js}/[name]${hashStr}.js`,
+        `${js}/[name]${hashStr}.js`,
+        assetFileNames,
+      ];
+    }
+  },
 };
 
 /**
@@ -112,17 +161,14 @@ const recordMap = (
     const viteConfig = configMap[key];
     const webpackValue = get(cfg, key);
 
-    if (typeof viteConfig !== 'string') {
+    // 如果后面接的是对象
+    if (isObject(viteConfig) && !isArray(viteConfig)) {
       const value = viteConfig.transform(webpackValue, ctx, chain);
-      if (value) {
-        set(acc, viteConfig.name, value);
-      }
+      setViteConfig(acc, value, viteConfig.name, true);
       return acc;
     }
 
-    if (webpackValue) {
-      set(acc, viteConfig, webpackValue);
-    }
+    setViteConfig(acc, webpackValue, viteConfig);
     return acc;
   }, {});
 };
@@ -167,6 +213,8 @@ export const wp2vite = (context: Context): Result => {
     // 保证 userConfig.vite 优先级最高
     viteConfig = all([viteConfig, userConfig.vite]);
   }
+
+  console.log(viteConfig);
 
   const devServerConfig = {
     port: commandArgs.port || 3333,
