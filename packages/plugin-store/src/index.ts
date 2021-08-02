@@ -3,11 +3,12 @@ import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
+import vitePluginPageRedirect from './vitePluginPageRedirect';
 
 const { name: pluginName } = require('../package.json');
 
 export default async (api: any) => {
-  const { context, getValue, onHook, applyMethod, onGetWebpackConfig } = api;
+  const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, userConfig } = context;
 
   // get mpa entries in src/pages
@@ -58,6 +59,12 @@ export default async (api: any) => {
       const pagePath = path.join(rootDir, 'src', 'pages', pageName);
       const routesFileType = getRouteFileType(pagePath);
       return path.join(pagePath, `routes${routesFileType}`);
+    });
+  }
+  // add vite plugin for redirect page component
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', (plugins: Plugin[] | undefined) => {
+      return [vitePluginPageRedirect(rootDir, routesPath), ...(plugins || [])];
     });
   }
 

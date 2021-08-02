@@ -27,13 +27,13 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   const plugins: IPluginList = [
     // common plugins
     ['build-plugin-app-core', coreOptions],
+    'build-plugin-ice-logger',
 
     // react base plugin
     'build-plugin-react-app',
 
     // for ice/react plugins
     'build-plugin-ice-router',
-    'build-plugin-ice-logger',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
     'build-plugin-ice-request',

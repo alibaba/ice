@@ -1,6 +1,6 @@
 {
   "name": "@builder/mpa-config",
-  "version": "3.2.6",
+  "version": "4.0.0",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -10,7 +10,8 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",
@@ -27,6 +28,6 @@
     "@builder/app-templates": "^1.0.0"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-7"
+    "build-scripts": "^1.1.0-9"
   }
 }

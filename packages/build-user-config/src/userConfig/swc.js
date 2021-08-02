@@ -1,12 +1,19 @@
+const path = require('path');
 const { merge } = require('@builder/pack/deps/lodash');
 
-const EXCLUDE_REGX = /node_modules/;
+const EXCLUDE_REGEX = /node_modules/;
 
-module.exports = (config, swcOptions) => {
+module.exports = (config, swcOptions, context, { log }) => {
+  const { rootDir } = context;
   if (swcOptions) {
-    // Delete babel loader
+    log.info('[swc]', 'swc enabled, configurations about babel will be ignored');
     ['jsx', 'tsx'].forEach((rule) => {
-      config.module.rules.delete(rule).end();
+      if (config.module.rules.get(rule)) {
+        // add include rule while source file will never matched
+        config.module.rule(rule)
+          .exclude.clear().end()
+          .include.clear().add(path.join(rootDir, '__not_exists_file__.js'));
+      }
     });
     const swcLoader = require.resolve('@builder/swc-loader');
 
@@ -43,9 +50,17 @@ module.exports = (config, swcOptions) => {
     }, commonOptions);
 
     config.module
-      .rule('jsx')
+      .rule('pre-compile-loader')
+      .test(/\.tsx?$/)
+      .enforce('pre')
+      .use('pre-compile-loader')
+      .loader(path.join(__dirname, '../Loaders/PreCompileLoader'))
+      .end();
+
+    config.module
+      .rule('swc')
       .test(/\.(j|t)sx?$/)
-      .exclude.add(EXCLUDE_REGX)
+      .exclude.add(EXCLUDE_REGEX)
       .end()
       .use('swc-loader')
       .loader(swcLoader)

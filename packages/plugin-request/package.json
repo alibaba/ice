@@ -14,7 +14,8 @@
     "lib",
     "request",
     "template",
-    "src/runtime.ts"
+    "src/runtime.ts",
+    "!lib/**/*.map"
   ],
   "dependencies": {
     "@ahooksjs/use-request": "^2.0.0",

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+- [feat] support api redirectImport
+
 ## 2.3.4
 
 - [feat] support parse tabbar

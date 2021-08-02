@@ -13,7 +13,8 @@
   "files": [
     "lib",
     "src/types",
-    "src/runtime.tsx"
+    "src/runtime.tsx",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",
@@ -31,5 +32,8 @@
     "fs-readdir-recursive": "^1.1.0",
     "loader-utils": "^2.0.0",
     "globby": "^11.0.1"
+  },
+  "devDependencies": {
+    "vite": "^2.4.3"
   }
 }

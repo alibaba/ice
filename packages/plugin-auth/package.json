@@ -18,7 +18,8 @@
   "files": [
     "lib",
     "template",
-    "src/runtime.tsx"
+    "src/runtime.tsx",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",

@@ -24,6 +24,7 @@
       "unused": true
     }
   },
+  "dropLogLevel": "warn",
   "webpackPlugins": {
     "MiniCssExtractPlugin": {
       "options": {

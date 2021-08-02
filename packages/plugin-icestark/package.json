@@ -12,7 +12,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "!lib/**/*.map"
   ],
   "dependencies": {
     "@babel/types": "^7.11.5",
@@ -22,7 +23,7 @@
     "glob": "^7.1.6"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-5",
+    "build-scripts": "^1.1.0-9",
     "@types/glob": "^7.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

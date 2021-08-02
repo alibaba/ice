@@ -1,28 +1,8 @@
 /* eslint-disable import/no-dynamic-require */
 import { getOptions } from 'loader-utils';
-import { transform, plugins } from '@swc/core';
+import { plugins } from '@swc/core';
 import Visitor from '@swc/core/Visitor';
 import transformCode from './transform';
-
-async function preCompileTsFile(source, initOptions, inputSourceMap) {
-  const options = {
-    jsc: {
-      parser: {
-        syntax: 'typescript',
-        tsx: /\.tsx$/.test(initOptions.filename),
-        dynamicImport: true,
-        decorators: true,
-      }
-    },
-    ...initOptions,
-  };
-
-  if (initOptions.sourceMaps && inputSourceMap) {
-    options.inputSourceMap = inputSourceMap;
-  }
-
-  return await transform(source, options);
-}
 
 function makeLoader() {
   return function (source, inputSourceMap) {
@@ -43,27 +23,13 @@ async function loader(source, inputSourceMap) {
   const sourceMaps = !!devtool;
   const initOptions = {
     filename,
-    // Ensure that Webpack will get a full absolute path in the sourcemap
-    // so that it can properly map the module back to its internal cached
-    // modules.
-    sourceFileName: filename,
     sourceMaps,
+    inputSourceMap,
   };
 
   const loaderOptions = getOptions(this) || {};
 
-  if (/\.tsx?$/.test(filename)) {
-    const output = await preCompileTsFile(source, initOptions, inputSourceMap);
-    source = output.code;
-    if (inputSourceMap) {
-      inputSourceMap = output.map;
-    }
-  }
-
   const programmaticOptions = Object.assign({}, loaderOptions, initOptions);
-  if (sourceMaps && inputSourceMap) {
-    programmaticOptions.inputSourceMap = inputSourceMap;
-  }
 
   // Add swc plugins
   let swcPlugins = programmaticOptions.plugins || [];

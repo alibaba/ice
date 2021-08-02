@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, logger, Head } from 'ice';
+import { Link, Head } from 'ice';
 import appStore from '@/store';
 import pageStore from './store';
 import styles from './index.module.scss';
 
 export default function Home(props) {
-  logger.info('Home props', props);
+  console.info('Home props', props);
 
   const [dataSource, setData] = useState<number[]>([]);
   useEffect(() => {
