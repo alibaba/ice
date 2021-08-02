@@ -6,7 +6,7 @@ import { all } from 'deepmerge';
 import { isObject, isArray, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
-import { indexHtmlPlugin, externalsPlugin, importPlugin } from './plugins';
+import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin } from './plugins';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -119,6 +119,12 @@ const configMap: ConfigMap = {
     name: 'resolve.dedupe',
     transform: () => ['react', 'react-dom'],
   },
+  postcss: {
+    name: 'css.postcss',
+    transform: (e, { userConfig }) => {
+      return userConfig.postcssOptions;
+    }
+  },
   // hash & outputAssetsPath (OAP)
   hashAndOAP: {
     name: [
@@ -179,7 +185,6 @@ export const wp2vite = (context: Context): Result => {
   const config = configArr[0];
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
-    ...recordMap(config.chainConfig, context),
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     optimizeDeps: {
@@ -206,12 +211,17 @@ export const wp2vite = (context: Context): Result => {
         temp: 'public',
         rootDir,
       }),
+      polyfillPlugin({ value: userConfig.polyfill as any })
     ],
   };
 
   if (isObject(userConfig.vite)) {
     // 保证 userConfig.vite 优先级最高
-    viteConfig = all([viteConfig, userConfig.vite]);
+    viteConfig = all([
+      recordMap(config.chainConfig, context),
+      viteConfig,
+      userConfig.vite
+    ]);
   }
 
   console.log(viteConfig);

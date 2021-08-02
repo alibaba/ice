@@ -1,5 +1,7 @@
 import { ViteDevServer, Plugin } from 'vite';
 import { redirectImport } from '@builder/app-helpers';
+import legacy from '@vitejs/plugin-legacy';
+import * as browserslist from 'browserslist';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as log from 'npmlog';
@@ -131,4 +133,11 @@ export const importPlugin = ({ rootDir }): Plugin => {
       });
     }
   };
+};
+
+export const polyfillPlugin = (option: { value: 'usage' | 'entry' | false }): Plugin => {
+  console.log(option);
+  return legacy({
+
+  });
 };
