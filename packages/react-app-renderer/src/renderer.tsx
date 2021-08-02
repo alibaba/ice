@@ -17,17 +17,33 @@ export function getInitialData() {
 
 export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
   const { ErrorBoundary, appConfig = { app: {} } } = options;
-  const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary } = appConfig.app;
   const AppProvider = runtime?.composeAppProvider?.();
   const AppComponent = runtime?.getAppComponent?.();
+
+  let rootApp = <AppComponent />;
+  if (AppProvider) {
+    rootApp = (
+      <AppProvider>
+        {rootApp}
+      </AppProvider>
+    );
+  }
+
+  const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary, strict = false } = appConfig.app;
+
   function App() {
-    const appComponent = <AppComponent />;
-    const rootApp = AppProvider ? <AppProvider>{appComponent}</AppProvider> : appComponent;
     if (errorBoundary) {
-      return (
+      rootApp = (
         <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>
           {rootApp}
         </ErrorBoundary>
+      );
+    }
+    if (strict) {
+      rootApp = (
+        <React.StrictMode>
+          {rootApp}
+        </React.StrictMode>
       );
     }
     return rootApp;

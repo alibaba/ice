@@ -10,6 +10,7 @@ export interface Context {
 }
 export type RenderAppConfig = {
   app?: {
+    strict?: boolean;
     rootId?: string;
     mountNode?: HTMLElement;
     onErrorBoundaryHandler?: OnError;
