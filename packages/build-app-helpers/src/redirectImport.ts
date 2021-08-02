@@ -21,10 +21,10 @@ export default async function redirectImport(code: string, options: IRedirectImp
   const { source, redirectImports } = options;
   const [imports] = parse(code);
   const targetImport = imports.find(({ n }) => {
-    if (typeof source === 'string') {
-      return n === source;
+    if (typeof source === 'function') {
+      return source(n);
     }
-    return source(n);
+    return n === source;
   });
   if (targetImport) {
     // importStr => 'import { runApp, usePageShow } from "ice"'
