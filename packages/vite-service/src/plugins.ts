@@ -38,11 +38,16 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
       // SPA
       const distPath = path.resolve(rootDir, outDir);
       const outPath = path.resolve(distPath, 'index.html');
-      const sourcePath = path.resolve(distPath, temp, 'index.html');
+      const publicPath = path.resolve(distPath, temp);
+      const sourcePath = path.resolve(publicPath, 'index.html');
 
       if (fs.existsSync(sourcePath)) {
         fs.copyFileSync(sourcePath, outPath);
         fs.removeSync(sourcePath);
+        // 如果 /build/public 文件夹内部不存在文件
+        if (fs.readdirSync(publicPath).length === 0) {
+          fs.removeSync(publicPath);
+        }
 
         log.info(`导出文件入口设置为 ${outDir}/index.html`);
       }
