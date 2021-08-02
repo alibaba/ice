@@ -21,11 +21,6 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "browserslist": [
-    "last 1 version",
-    "> 1%",
-    "IE 10"
-  ],
   "dependencies": {
     "@builder/app-helpers": "^2.0.0",
     "@vitejs/plugin-legacy": "^1.5.0",

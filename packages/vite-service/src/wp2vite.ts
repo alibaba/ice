@@ -211,7 +211,10 @@ export const wp2vite = (context: Context): Result => {
         temp: 'public',
         rootDir,
       }),
-      polyfillPlugin({ value: userConfig.polyfill as any })
+      polyfillPlugin({ 
+        value: userConfig.polyfill as any, 
+        browserslist: userConfig.browserslist as any 
+      })
     ],
   };
 
