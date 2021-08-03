@@ -9,6 +9,7 @@ interface HtmlOption {
   entry: any // only spa
   temp: string
   rootDir: string
+  ignoreHtmlTemplate: boolean
 }
 
 /**
@@ -16,12 +17,21 @@ interface HtmlOption {
  * 2. add script entry
  * 3. TODO: MPA
  */
-export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin => {
+export const indexHtmlPlugin = ({ entry, temp, rootDir, ignoreHtmlTemplate }: HtmlOption): Plugin => {
   let outDir = '';
+  let isBuild = false;
+
+  const clearEmptyDir = (dirPath: string) => {
+    if (fs.readdirSync(dirPath).length === 0) {
+      fs.removeSync(dirPath);
+    }
+  };
+
   return {
     name: 'vite-plugin-index-html',
     config(cfg, { command }) {
       if (command === 'build') {
+        isBuild = true;
         outDir = cfg.build?.outDir ?? 'dist';
       }
       cfg.build = {
@@ -42,13 +52,18 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin =>
       const publicPath = path.resolve(distPath, temp);
       const sourcePath = path.resolve(publicPath, 'index.html');
 
+      if (isBuild && ignoreHtmlTemplate) {
+        fs.removeSync(sourcePath);
+        fs.removeSync(outPath);
+
+        clearEmptyDir(publicPath);
+      }
+
       if (fs.existsSync(sourcePath)) {
         fs.copyFileSync(sourcePath, outPath);
         fs.removeSync(sourcePath);
-        // 如果 /build/public 文件夹内部不存在文件
-        if (fs.readdirSync(publicPath).length === 0) {
-          fs.removeSync(publicPath);
-        }
+
+        clearEmptyDir(publicPath);
 
         log.info(`导出文件入口设置为 ${outDir}/index.html`);
       }

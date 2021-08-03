@@ -209,11 +209,12 @@ export const wp2vite = (context: Context): Result => {
       indexHtmlPlugin({
         entry: userConfig.entry,
         temp: 'public',
+        ignoreHtmlTemplate: userConfig.ignoreHtmlTemplate as boolean,
         rootDir,
       }),
-      polyfillPlugin({ 
-        value: userConfig.polyfill as any, 
-        browserslist: userConfig.browserslist as any 
+      polyfillPlugin({
+        value: userConfig.polyfill as any,
+        browserslist: userConfig.browserslist as any
       })
     ],
   };
