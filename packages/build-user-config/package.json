@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
