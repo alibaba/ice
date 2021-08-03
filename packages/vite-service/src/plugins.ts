@@ -4,6 +4,7 @@ import legacy from '@vitejs/plugin-legacy';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as log from 'npmlog';
+import { all } from 'deepmerge';
 
 interface HtmlOption {
   entry: any // only spa
@@ -34,16 +35,16 @@ export const indexHtmlPlugin = ({ entry, temp, rootDir, ignoreHtmlTemplate }: Ht
         isBuild = true;
         outDir = cfg.build?.outDir ?? 'dist';
       }
-      cfg.build = {
-        ...cfg.build,
+      const build = {
         commonjsOptions: {
           exclude: ['react-app-renderer', 'create-app-shared'],
         },
         rollupOptions: {
-          ...cfg.build?.rollupOptions,
           input: path.resolve(rootDir, temp, 'index.html'),
         },
       };
+
+      cfg.build = all([cfg.build, build]);
     },
     async closeBundle() {
       // SPA

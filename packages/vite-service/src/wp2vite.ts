@@ -125,6 +125,15 @@ const configMap: ConfigMap = {
       return userConfig.postcssOptions;
     }
   },
+  vendor: {
+    name: 'build.rollupOptions.output.manualChunks',
+    transform: (e, { userConfig }) => {
+      if (!userConfig.vendor) {
+        return false;
+      }
+      // Tips: userConfig.vendor === true 时不会去设置 manualChunks，正常导出 vendor
+    }
+  },
   // hash & outputAssetsPath (OAP)
   hashAndOAP: {
     name: [
@@ -227,8 +236,6 @@ export const wp2vite = (context: Context): Result => {
       userConfig.vite
     ]);
   }
-
-  console.log(viteConfig);
 
   const devServerConfig = {
     port: commandArgs.port || 3333,

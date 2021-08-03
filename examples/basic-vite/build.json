@@ -2,6 +2,7 @@
   "hash": true,
   "minify": false,
   "vite": true,
+  "vendor": false,
   "plugins": [],
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
