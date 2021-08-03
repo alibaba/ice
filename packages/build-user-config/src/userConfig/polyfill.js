@@ -5,7 +5,8 @@ const addBablePlugins = require('../utils/addBabelPlugins');
 
 const getEntryRegExp = (entryPath) => {
   const entryExtname = path.extname(entryPath);
-  return entryExtname ? entryPath : new RegExp(`${entryPath}(.jsx?|.tsx?)$`);
+  // this will work in both windows and Unix : { test: /path[\\\/]to[\\\/]file/ }
+  return entryExtname ? entryPath : new RegExp(`${entryPath.split(path.sep).join('[\\\\\\/]')}(.jsx?|.tsx?)$`);
 };
 
 module.exports = (config, polyfill) => {

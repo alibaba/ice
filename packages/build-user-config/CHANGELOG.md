@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.9
+
+- [fix] polyfill loader include rules in windows
+
 ## 0.3.8
 
 - [feat] support global rules of rax-app
