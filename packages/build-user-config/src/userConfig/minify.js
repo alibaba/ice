@@ -1,6 +1,6 @@
 const {
   ESBuildMinifyPlugin
-} = require('esbuild-loader');
+} = require('@builder/pack/deps/esbuild-loader');
 
 module.exports = (config, value, context, { log }) => {
   const { command } = context;
