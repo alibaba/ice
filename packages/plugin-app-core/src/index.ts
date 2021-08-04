@@ -1,6 +1,4 @@
 import * as path from 'path';
-import * as globby from 'globby';
-import * as fs from 'fs-extra';
 import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
@@ -121,10 +119,11 @@ function initGenerator(api, options) {
       ssr,
       buildConfig: getBuildConfig(userConfig),
       hasJsxRuntime,
-      hasTabBar: hasTabBar(`${rootDir}/src`, framework),
+      tabBarPath: getValue('TAB_BAR_PATH'),
       errorBoundary: true,
       relativeCorePath: '.',
-      typesPath: '../types'
+      typesPath: '../types',
+      routesFilePath: '',
     },
     log,
     plugins,
@@ -168,14 +167,4 @@ function matchTargets(targets) {
   return targets.every(target => {
     return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
   });
-}
-
-function hasTabBar(srcDir, framework) {
-  if (framework === 'rax') {
-    return globby.sync(['**/app.json'], { cwd: srcDir, absolute: true }).some((filepath) => {
-      const content = fs.readJSONSync(filepath);
-      return content.tabBar && !content.tabBar.custom;
-    });
-  }
-  return false;
 }

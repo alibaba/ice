@@ -10,24 +10,24 @@ import {
 <% } %>
 } from 'create-app-shared';
 
-<% if (hasTabBar) {%>
-import TabBar from './TabBar';
+<% if (tabBarPath) {%>
+import TabBar from '<%- tabBarPath %>';
 <% } %>
 import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
-import raxAppRenderer from 'rax-app-renderer';
+import raxAppRenderer, { RenderAppConfig }  from 'rax-app-renderer';
 <% if (globalStyle) {%>
   // eslint-disable-next-line
-  import '../../<%= globalStyle %>'
+  import '<%= globalStyle %>'
 <% } %>
 import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
-import defaultStaticConfig from './staticConfig';
+
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
-const buildConfig: IBuildConfig = <%- buildConfig %>;
+const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
@@ -39,7 +39,7 @@ const frameworkAppBase = createBaseApp({
   },
 });
 
-export function runApp(appConfig?: IAppConfig, staticConfig = defaultStaticConfig) {
+export function runApp(appConfig?: IAppConfig) {
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
@@ -62,7 +62,9 @@ export function runApp(appConfig?: IAppConfig, staticConfig = defaultStaticConfi
       initAppLifeCycles,
       emitLifeCycles,
     },
+    <% if (tabBarPath) {%>
     TabBar,
+    <% } %>
   });
 };
 

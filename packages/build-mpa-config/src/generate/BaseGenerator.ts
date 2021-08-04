@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as globby from 'globby';
 import { IPluginAPI } from 'build-scripts';
 import { getTemplate } from '@builder/app-templates';
-import { IGeneratorOptions } from '../types';
+import { IGeneratorOptions, IRunAppRenderData } from '../types';
 import relative from '../relative';
 
 export default class BaseGenerator {
@@ -28,6 +28,8 @@ export default class BaseGenerator {
 
   public disableRuntimeList: string[];
 
+  public runAppRenderData: IRunAppRenderData = {};
+
   constructor(api: IPluginAPI, options: IGeneratorOptions) {
     const { context: { rootDir }, applyMethod, getValue, setValue } = api;
     const { targetDir, entryName } = options;
@@ -48,40 +50,42 @@ export default class BaseGenerator {
     const { framework } = this.options;
     const { applyMethod } = this.builtInMethods;
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
-    const routesFile = this.getRoutesFilePath();
-
+    const routesFilePath = this.getRoutesFilePath();
     const renderData = {
+      ...this.runAppRenderData,
       globalStyle: globalStyles.length && relative(this.entryFolder, path.join(this.rootDir, globalStyles[0])),
       relativeCorePath: relative(this.entryFolder, path.join(this.targetDir, 'core')),
       typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
-        router: !!routesFile,
+        router: !!routesFilePath,
       },
-      errorBoundary: false,
+      errorBoundary: false
     };
+
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
-    this.generateLoadRuntimeModules(routesFile);
+    this.generateLoadRuntimeModules(routesFilePath);
   }
 
   public generateEntryFile() {
     const { framework, pageEntry } = this.options;
     const { applyMethod } = this.builtInMethods;
+    const routesFilePath = this.getRoutesFilePath();
     const renderData = {
       runAppPath: './runApp',
       typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
-      routesFilePath: this.getRoutesFilePath(),
+      routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       resourcePath: relative(this.entryFolder, path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry),
     };
     applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
 
-  public generateLoadRuntimeModules(routesFile: string) {
+  public generateLoadRuntimeModules(routesFilePath: string) {
     const { applyMethod } = this.builtInMethods;
     applyMethod('addRenderFile', getTemplate('loadRuntimeModules.ts'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
       , (renderData) => {
         let { runtimeModules } = renderData;
-        if (!routesFile) {
+        if (!routesFilePath) {
           runtimeModules = runtimeModules.filter(({ name }) => {
             return !this.disableRuntimeList.includes(name);
           });

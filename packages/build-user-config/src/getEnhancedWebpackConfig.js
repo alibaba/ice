@@ -1,6 +1,7 @@
 let ESLintReportingPluginUsed = false;
 const FriendlyError =  require('@builder/pack/deps/@nuxtjs/friendly-errors-webpack-plugin');
 const ESLintReportingPlugin = require('@builder/pack/deps/eslint-reporting-webpack-plugin');
+const configWebpack5 = require('./webpack5');
 
 module.exports = (api, { webpackConfig }) => {
   const { context } = api;
@@ -46,6 +47,8 @@ module.exports = (api, { webpackConfig }) => {
   } else {
     webpackConfig.optimization.minimize(true);
   }
+
+  configWebpack5(webpackConfig, context);
 
   return webpackConfig;
 };
