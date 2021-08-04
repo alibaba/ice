@@ -18,7 +18,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
       validation: 'string',
     });
   } catch (error) {
-    console.log('error :>> ', error);
+    if(error.message !== 'outputDir already registered in userConfig'){
+      throw new Error(error.message);
+    }
   }
   
   const {
