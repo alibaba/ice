@@ -136,9 +136,6 @@ export const wp2vite = (context: Context): Result => {
     ...recordMap(config.chainConfig, context),
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
-    optimizeDeps: {
-      include: ['react-app-renderer', 'create-app-shared'],
-    },
     plugins: [
       // 避免 import re-exported types 时 crash 并提示 "does not provide an export named XXX"
       friendlyTypeImports({
@@ -175,8 +172,14 @@ export const wp2vite = (context: Context): Result => {
     open: true,
   };
 
+  const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;
+
   const devConfig = all([
     {
+      optimizeDeps: {
+        entries: entryExts.exec(userConfig.entry as string) ? userConfig.entry : `${userConfig.entry}.*`,
+        include: ['react-app-renderer', 'create-app-shared'],
+      },
       server: devServerConfig,
       define: {
         'process.env': {},
