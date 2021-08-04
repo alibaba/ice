@@ -56,7 +56,7 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
     });
     config.entry('index').add(bootstrapEntry);
     // eslint-disable-next-line global-require
-    const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+    const AddAssetHtmlPlugin = require('@builder/pack/deps/add-asset-html-webpack-plugin');
     config.plugin('AddAssetHtmlPlugin').use(AddAssetHtmlPlugin, [{
       filepath: path.resolve(runtimeDir, remoteEntry),
       publicPath: `/${runtimePublicPath}`,

@@ -1,4 +1,4 @@
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as MiniCssExtractPlugin from '@builder/pack/deps/mini-css-extract-plugin';
 import getBabelConfig from '@builder/babel-config';
 import { cloneDeep } from '@builder/pack/deps/lodash';
 

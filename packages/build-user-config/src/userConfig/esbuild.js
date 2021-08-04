@@ -1,6 +1,6 @@
 const {
   ESBuildMinifyPlugin
-} = require('esbuild-loader');
+} = require('@builder/pack/deps/esbuild-loader');
 
 const defaultOptions = {
   target: 'es2015',
