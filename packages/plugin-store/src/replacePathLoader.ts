@@ -32,9 +32,8 @@ async function loader(content: string, sourceMap: SourceMap) {
 
     const source = (originSourcePath: string) => {
       const originSourceBasename = path.basename(originSourcePath);
-      if (['index', 'index.js'].includes(originSourceBasename)) {
-        // ./pages/Home/index.js -> ./pages/Home
-        // .pages/Home/index -> ./pages/Home
+      if (['index', 'index.js', 'index.jsx', 'index.tsx'].includes(originSourceBasename)) {
+        // ./pages/Home/index[.js|.jsx|.tsx] -> ./pages/Home
         originSourcePath = path.dirname(originSourcePath);
       }
       if (!Object.keys(alias).length) {
