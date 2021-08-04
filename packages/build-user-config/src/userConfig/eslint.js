@@ -15,7 +15,7 @@ module.exports = (config, eslint, { rootDir }) => {
         .end()
       .enforce('pre')
       .use('eslint')
-        .loader(require.resolve('eslint-loader'))
+        .loader(require.resolve('@builder/pack/deps/eslint-loader'))
         .tap((options) => ({
             emitError: true,
             eslintPath: require.resolve('eslint'),

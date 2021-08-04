@@ -34,12 +34,12 @@ export interface IRoute {
 }
 
 export interface IRedirectImportOptions {
-  source: string;
+  source: string | Function;
   redirectImports: RedirectImportType[];
 }
 
 export type RedirectImportType = {
-  name: string;
+  name?: string;
   redirectPath: string;
   default: boolean;
 }

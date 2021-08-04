@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import * as findUp from 'find-up';
 import { init, parse } from 'es-module-lexer';
 
 async function writeRemoteFile(compilePackages: string[], rootDir: string) {
@@ -27,7 +28,7 @@ async function getExposeContent(packageName: string, rootDir: string) {
   let exposeContent = '';
   let packageJson = '';
   try {
-    packageJson = require.resolve(path.join(packageName, 'package.json'));
+    packageJson = await findUp('package.json', { cwd: require.resolve(packageName) });
   } catch(err) {
     // ignore error
   }
