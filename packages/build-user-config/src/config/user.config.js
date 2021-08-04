@@ -87,7 +87,8 @@ module.exports = [
   },
   {
     name: 'minify',
-    validation: 'boolean'
+    validation: 'boolean|string',
+    defaultValue: 'terser',
   },
   {
     name: 'outputAssetsPath',

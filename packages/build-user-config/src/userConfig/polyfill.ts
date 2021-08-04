@@ -27,7 +27,6 @@ export default (config, polyfill, { userConfig }) => {
     injectTransformRuntime(config);
     return;
   }
-
   if (polyfill === 'entry') {
     const entries = config.toConfig().entry;
     const rule = config.module.rule('polyfill').test(/\.jsx?|\.tsx?$/);
