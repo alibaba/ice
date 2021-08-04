@@ -13,7 +13,7 @@ describe('Redirect import', () => {
         }
       ]
     });
-    expect(result).toEqual(`\nimport { runApp } from 'ice/entries/home/runApp';`);
+    expect(result).toEqual(`\nimport { runApp } from 'ice/entries/home/runApp'`);
     done();
   });
   it('should retain original import with multiple import', async (done) => {
@@ -29,7 +29,7 @@ describe('Redirect import', () => {
       ]
     });
     expect(result).toEqual(`import { usePageShow } from 'ice';
-import { runApp } from 'ice/entries/home/runApp';`);
+import { runApp } from 'ice/entries/home/runApp'`);
     done();
   });
 
@@ -51,7 +51,7 @@ import { runApp } from 'ice/entries/home/runApp';`);
       ]
     });
     expect(result).toEqual(`\nimport { runApp } from 'ice/entries/home/runApp';
-import { usePageShow } from 'ice/entries/home/publicAPI';`);
+import { usePageShow } from 'ice/entries/home/publicAPI'`);
     done();
   });
 
@@ -67,7 +67,7 @@ import { usePageShow } from 'ice/entries/home/publicAPI';`);
         }
       ]
     });
-    expect(result).toEqual(`import runApp from 'ice/entries/home/runApp';`);
+    expect(result).toEqual(`import runApp from 'ice/entries/home/runApp'`);
     done();
   });
 });

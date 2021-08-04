@@ -6,7 +6,7 @@ const pagePathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/
 // eg：src/pages/home/Layout
 const layoutPathRegExp = /src\/pages\/\w+\/Layout/;
 
-module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => {
+module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod, rootDir }) => {
   return {
     visitor: {
       Program: {
@@ -27,7 +27,7 @@ module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => 
                     // default alias: import Home from '@/pages/Home';
                     // custom alias: import Home from '$pages/Home';
                     // relative path: import Home from '../pages/Home'
-                    const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
+                    const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod, rootDir });
                     // replace to: import Home from 'ice/pages/Home'
                     if (newValue) {
                       replaceWith(t, nodePath, newValue);
@@ -51,7 +51,7 @@ module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod }) => 
                       // default alias: const Home = lazy(() => import('@/pages/Home'));
                       // custom alias: const Home = lazy(() => import('$pages/home));
                       // relative path: const Home = lazy(() => import('../pages/Home'));
-                      const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod });
+                      const newValue = formatPagePath({ routesPath: state.filename, tempDir, value, alias, applyMethod, rootDir });
                       // replace to: const Home =lazy (() => import('ice/Home/Home'));
                       if (newValue) {
                         args[i].value = newValue;
@@ -73,12 +73,13 @@ interface IAlias {
   [key: string]: string;
 }
 
-interface IGetConfigRoutePathParmas {
+interface IGetConfigRoutePathParams {
   routesPath: string;
   value: string;
   tempDir: string;
   alias: IAlias;
   applyMethod: Function;
+  rootDir: string;
 }
 
 // enum alias:
@@ -120,7 +121,7 @@ function matchRelativePath(routesPath: string, value: string, applyMethod: Funct
 /**
  * 格式化路由的替换路径值
  */
-function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGetConfigRoutePathParmas): string {
+function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDir }: IGetConfigRoutePathParams): string {
   const matchedPagePath = matchRelativePath(routesPath, value, applyMethod) || matchAliasPath(alias, value, applyMethod);
   if (matchedPagePath && pagePathRegExp.test(matchedPagePath)) {
     let newValue = '';
@@ -129,12 +130,12 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod }: IGet
       return newValue;
     } else {
       const [, , pageName] = matchedPagePath.split('/');
-      newValue = pageName ? `${tempDir}/${pageName}/index.tsx` : '';
+      newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx') : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
     const [, , pageName] = matchedPagePath.split('/');
-    const newValue = pageName ? `${tempDir}/${pageName}/Layout` : '';
+    const newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'Layout') : '';
     return newValue;
   }
 }

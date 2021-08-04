@@ -7,6 +7,7 @@
 - [refactor] not support create store automatically
 - [refactor] remove appJSON loader
 - [refactor] modify `getRoutes` API param from `tempDir` to `tempPath`
+- [refactor] use webpack loader to replace route path
 
 ## 1.9.7
 
