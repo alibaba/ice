@@ -13,15 +13,12 @@
   ],
   "author": "",
   "license": "MIT",
-  "peerDependencies": {
-    "webpack": "^5.0.0"
-  },
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/build-babel-config"
   },
   "dependencies": {
-    "@builder/pack": "0.2.19"
+    "@builder/pack": "0.2.20"
   },
   "files": [
     "lib",

@@ -38,13 +38,11 @@ module.exports = (api, options = {}) => {
       ...config,
     };
   });
-
-  const finalyConfigs = unionBy(defaultConfig.concat(customConfigs), 'name');
+  const finallyConfigs = unionBy(defaultConfig.concat(customConfigs), 'name');
   // register user config
-  // sort config key to make sure entry config is always excute before injectBabel
-  registerUserConfig(finalyConfigs);
-  // modify user config to keep excute order
-  modifyUserConfig(api, finalyConfigs);
+  registerUserConfig(finallyConfigs);
+  // modify user config to keep execute order
+  modifyUserConfig(api, finallyConfigs);
 };
 
 function interopRequire(filepath) {

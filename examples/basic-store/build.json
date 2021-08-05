@@ -6,5 +6,6 @@
   "store": {
     "disableResetPageState": true
   },
-  "tsChecker": true
+  "tsChecker": true,
+  "swc": true
 }
