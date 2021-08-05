@@ -30,7 +30,7 @@ const serverRender = async (context, opts = {}) => {
   }
   let {
     ctx = {},
-    pathname: originPathname,
+    pathname,
     initialData,
     htmlTemplate,
     loadableStatsPath,
@@ -38,7 +38,7 @@ const serverRender = async (context, opts = {}) => {
   } = options;
 
   if (process.env.NODE_ENV === 'development') {
-    // loadable-stats.json will be genreated to the build dir in development
+    // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
   const buildConfig = { loadableStatsPath, publicPath };
@@ -54,18 +54,18 @@ const serverRender = async (context, opts = {}) => {
   let error;
 
   const { req, res } = ctx as any;
-
-  const { search, hash, path, pathname: parsedPathname } = parseurl(req);
-  const pathname = originPathname || parsedPathname;
-
-  const parsedQuery = queryString.parse(search);
-  const initialContext = {
-    req,
-    res,
-    pathname,
-    query: parsedQuery,
-    path,
-    location: { pathname, search, hash, state: null },
+  let initialContext = { pathname, location: { pathname } } as any;
+  if (req) {
+    const { search, hash, path, pathname } = parseurl(req);
+    const parsedQuery = queryString.parse(search);
+    initialContext = {
+      req,
+      res,
+      pathname,
+      query: parsedQuery,
+      path,
+      location: { pathname, search, hash, state: null },
+    };
   }
 
   try {
@@ -82,7 +82,7 @@ const serverRender = async (context, opts = {}) => {
     setInitialData(initialData);
 
     // get page initial props
-    let { component, getInitialProps } = await getComponentByPath(routes, pathname);
+    let { component, getInitialProps } = await getComponentByPath(routes, initialContext.pathname);
     if (component && component.load) {
       const loadedPageComponent = await component.load();
       component = loadedPageComponent.default;

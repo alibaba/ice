@@ -1,5 +1,10 @@
 import React from 'react';
+import { useParams } from 'ice';
 
-export default () => (
-  <h2>About</h2>
-);
+export default () => {
+  const { id } = useParams();
+
+  return (
+    <h2>About {id}</h2>
+  );
+};

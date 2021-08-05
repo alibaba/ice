@@ -1,0 +1,150 @@
+import '@/app';
+import { join } from 'path';
+import { matchPath } from 'ice';
+import * as cheerio from 'cheerio';
+import { Helmet } from 'react-helmet';
+import * as queryString from 'query-string';
+import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
+import { getAppConfig } from './core/appConfig';
+import { emitLifeCycles } from './core/publicAPI';
+import app from './core/runApp';
+import routes from '<%- routesPath %>/routes';
+import loadable from '@loadable/component';
+
+const parseurl = require('parseurl');
+const { createBaseApp } = app;
+
+// appConfig set by: import '@/app'
+const appConfig = getAppConfig();
+
+export default async function render(options: any = {}) {
+  let {
+    htmlTemplate,
+    // TODO: read publicPath from config
+    publicPath = '/',
+    command,
+    ctx,
+  } = options;
+  // TODO: read build dir from config
+  const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
+
+  const buildConfig = { loadableStatsPath, publicPath };
+
+  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+
+  if (command === 'build') {
+    return await renderStaticInProd({ htmlTemplateContent, buildConfig });
+  } else {
+    return await renderStaticInDev({ htmlTemplateContent, buildConfig, ctx });
+  }
+};
+
+async function renderStaticInProd({ htmlTemplateContent, buildConfig }) {
+  const routesHtml = [];
+  const flatRoutes = getFlatRoutes(routes);
+  for (const flatRoute of flatRoutes) {
+    const { path, getInitialProps } = flatRoute;
+    const initialContext = { pathname: path, location: { pathname: path } } as any;
+    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, getInitialProps, initialContext });
+    routesHtml.push({ html, path });
+  }
+  return routesHtml;
+}
+
+async function renderStaticInDev({ htmlTemplateContent, buildConfig, ctx }) {
+  console.log();
+  const { req, res } = ctx;
+  const { search, hash, path, pathname } = parseurl(req);
+  const parsedQuery = queryString.parse(search);
+  const initialContext = {
+    req,
+    res,
+    pathname,
+    query: parsedQuery,
+    path,
+    location: { pathname, search, hash, state: null },
+  }
+  let { getInitialProps } = await getComponentByPath(routes, pathname);
+
+  return await renderStatic({ htmlTemplateContent, getInitialProps, buildConfig, initialContext });
+}
+
+async function renderStatic({ htmlTemplateContent, getInitialProps, buildConfig, initialContext }) {
+  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
+  try {
+    let pageInitialProps = {};
+      if (getInitialProps) {
+        pageInitialProps = await getInitialProps(initialContext);
+      }
+      const { bundleContent, loadableComponentExtractor } =
+        reactAppRendererWithSSR(
+          {
+            initialContext,
+            pageInitialProps,
+          },
+          {
+            appConfig,
+            buildConfig,
+            appLifecycle: { createBaseApp, emitLifeCycles },
+          }
+        );
+
+      const helmet = Helmet.renderStatic();
+
+      $(`#${appConfig.app.rootId || 'ice-container'}`).append(bundleContent);
+      $('head').append(`<script>
+        window.__ICE_SSR_ENABLED__=true;
+        window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
+      </script>`);
+      // lazy load bundle
+      $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+      $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+      $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+      // react-helmet
+      $('head').append(`${helmet.title.toString()}`);
+      $('head').append(`${helmet.meta.toString()}`);
+      $('head').append(`${helmet.link.toString()}`);
+      $('head').append(`${helmet.script.toString()}`);
+  } catch (error) {
+    console.error(error);
+  }
+  const html = $.html();
+  return { html, redirectUrl: initialContext.redirectUrl };
+}
+
+function getFlatRoutes(routes, parentPath = '') {
+  return routes.reduce((prev, route) => {
+    const { children, path: currentPath, redirect } = route;
+    if (children) {
+      prev = prev.concat(getFlatRoutes(children, currentPath));
+    } else {
+      route.path = join(parentPath, currentPath);
+      if (route?.component?.__LOADABLE__) {
+        route.component = loadable(route.component.dynamicImport);
+      }
+      if (!redirect && currentPath && currentPath.indexOf('*') === -1) {
+        prev.push(route);
+      }
+    }
+    return prev;
+  }, []);
+}
+
+async function getComponentByPath(routes, currPath)  {
+  async function findMatchRoute(routeList) {
+    let matchedRoute = routeList.find(route => {
+      return matchPath(currPath, route);
+    });
+    if (matchedRoute?.component?.__LOADABLE__) {
+      matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+    }
+    if (matchedRoute) {
+      return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
+    }
+  }
+  const routeData = await findMatchRoute(routes)
+  return {
+    component: routeData?.component,
+    getInitialProps: routeData?.getInitialProps
+  };
+}
