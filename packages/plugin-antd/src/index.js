@@ -1,5 +1,25 @@
-module.exports = async ({ onGetWebpackConfig, log }, pluginOptions = {}) => {
+module.exports = async ({ onGetWebpackConfig, log, context, modifyUserConfig }, pluginOptions = {}) => {
   const { themeConfig = {}, importOptions = {} } = pluginOptions;
+  const { userConfig } = context;
+
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', (vitePlugins) => {
+      return [
+        ...(vitePlugins || []),
+        // eslint-disable-next-line global-require
+        require('vite-plugin-style-import').default({
+          libs: [{
+            libraryName: 'antd',
+            esModule: true,
+            resolveStyle: (name) => {
+              return `antd/es/${name}/style/index`;
+            },
+          }]
+        }),
+      ];
+    });
+  }
+
   onGetWebpackConfig((config) => {
     // support less modify vars
     if (themeConfig) {
