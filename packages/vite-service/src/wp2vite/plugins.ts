@@ -1,13 +1,16 @@
 import { ViteDevServer, Plugin } from 'vite';
 import { redirectImport } from '@builder/app-helpers';
+import legacy from '@vitejs/plugin-legacy';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as log from 'npmlog';
+import { all } from 'deepmerge';
 
 interface HtmlOption {
   entry: any // only spa
   temp: string
   rootDir: string
+  ignoreHtmlTemplate: boolean
 }
 
 /**
@@ -15,34 +18,53 @@ interface HtmlOption {
  * 2. add script entry
  * 3. TODO: MPA
  */
-export const indexHtmlPlugin = ({ entry, temp, rootDir }: HtmlOption): Plugin => {
+export const indexHtmlPlugin = ({ entry, temp, rootDir, ignoreHtmlTemplate }: HtmlOption): Plugin => {
   let outDir = '';
+  let isBuild = false;
+
+  const clearEmptyDir = (dirPath: string) => {
+    if (fs.readdirSync(dirPath).length === 0) {
+      fs.removeSync(dirPath);
+    }
+  };
+
   return {
     name: 'vite-plugin-index-html',
     config(cfg, { command }) {
       if (command === 'build') {
+        isBuild = true;
         outDir = cfg.build?.outDir ?? 'dist';
       }
-      cfg.build = {
-        ...cfg.build,
+      const build = {
         commonjsOptions: {
           exclude: ['react-app-renderer', 'create-app-shared'],
         },
         rollupOptions: {
-          ...cfg.build?.rollupOptions,
           input: path.resolve(rootDir, temp, 'index.html'),
         },
       };
+
+      cfg.build = all([cfg.build, build]);
     },
     async closeBundle() {
       // SPA
       const distPath = path.resolve(rootDir, outDir);
       const outPath = path.resolve(distPath, 'index.html');
-      const sourcePath = path.resolve(distPath, temp, 'index.html');
+      const publicPath = path.resolve(distPath, temp);
+      const sourcePath = path.resolve(publicPath, 'index.html');
+
+      if (isBuild && ignoreHtmlTemplate) {
+        fs.removeSync(sourcePath);
+        fs.removeSync(outPath);
+
+        clearEmptyDir(publicPath);
+      }
 
       if (fs.existsSync(sourcePath)) {
         fs.copyFileSync(sourcePath, outPath);
         fs.removeSync(sourcePath);
+
+        clearEmptyDir(publicPath);
 
         log.info(`导出文件入口设置为 ${outDir}/index.html`);
       }
@@ -126,4 +148,17 @@ export const importPlugin = ({ rootDir }): Plugin => {
       });
     }
   };
+};
+
+export const polyfillPlugin = (
+  option: { value: 'usage' | 'entry' | false, browserslist: any }
+): Plugin => {
+  const { value, browserslist } = option;
+
+  if (!value) return;
+
+  return legacy({
+    targets: browserslist,
+    polyfills: value === 'usage'
+  });
 };
