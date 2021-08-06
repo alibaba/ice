@@ -1,19 +1,18 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
-import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import setSSGWebpackConfig from './setSSGWebpackConfig';
 import setSSRWebpackConfig from './setSSRWebpackConfig';
 
 const plugin = async (api): Promise<void> => {
-  const { context, onGetWebpackConfig, onHook, modifyUserConfig } = api;
+  const { context, onGetWebpackConfig, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
   const { outputDir, ssr } = userConfig;
 
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
+
   // const serverFilename = 'index.js';
   // const serverFilePath = path.join(serverDir, serverFilename);
 

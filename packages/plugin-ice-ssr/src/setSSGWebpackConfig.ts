@@ -5,15 +5,13 @@ import { formatPath } from '@builder/app-helpers';
 import SSGWebpackPlugin from './SSGWebpackPlugin';
 
 export default ({ api, serverDir, buildDir, mode }) => {
-  const { context, registerTask, getValue, onGetWebpackConfig, applyMethod, log } = api;
+  const { context, registerTask, getValue, onGetWebpackConfig, applyMethod, log, onHook } = api;
   const { rootDir, command, webpack, userConfig } = context;
-  const { outputDir } = userConfig;
-
-  const webpackConfig = getWebpackConfig(mode);
+  const { outputDir, publicPath = '/', devPublicPath = '/' } = userConfig;
 
   const TEMP_PATH = getValue('TEMP_PATH');
   const PROJECT_TYPE = getValue('PROJECT_TYPE');
-  // Note: Compatible plugins to modify configuration
+
   const renderFilename = 'ssg.js';
   const renderFilePath = path.join(serverDir, renderFilename);
 
@@ -21,8 +19,17 @@ export default ({ api, serverDir, buildDir, mode }) => {
   const templatePath = path.join(__dirname, './ssg.ts.ejs');
   const ssgEntry = path.join(TEMP_PATH, 'ssg.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
-  applyMethod('addRenderFile', templatePath, ssgEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
+  applyMethod(
+    'addRenderFile',
+    templatePath,
+    ssgEntry,
+    {
+      outputDir,
+      routesPath: routesFileExists ? '@' : '.',
+      publicPath: command === 'build' ? publicPath : devPublicPath
+    });
 
+  const webpackConfig = getWebpackConfig(mode);
   registerTask('ssg', webpackConfig);
 
   onGetWebpackConfig('ssg', (config) => {
@@ -90,7 +97,7 @@ export default ({ api, serverDir, buildDir, mode }) => {
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
-      log.info('[SSR]', 'start server render');
+      log.info('[SSG]', 'start server render');
       delete require.cache[renderFilePath];
       // eslint-disable-next-line
       const render = require(renderFilePath);
@@ -104,15 +111,15 @@ export default ({ api, serverDir, buildDir, mode }) => {
         if (error) {
           log.error('[SSG] Server side rendering error, downgraded to client side rendering');
           log.error(error);
+        } else {
+          log.info('[SSG] SSG success', 'output html content');
         }
-        log.info('[SSG] SSG success', 'output html content');
-        log.verbose('[SSG] ssr html content', html);
+        log.verbose('[SSG] SSG html content', html);
         res.send(html);
       }
     }
 
     if (command === 'start') {
-      // TODO:
       const originalDevMiddleware = config.devServer.get('devMiddleware');
       config.devServer.set('devMiddleware', {
         ...originalDevMiddleware,
@@ -156,5 +163,6 @@ export default ({ api, serverDir, buildDir, mode }) => {
         });
       });
     }
+
   });
 };

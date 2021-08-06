@@ -1,19 +1,29 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import { minify } from 'html-minifier';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
 
 export default ({ api, serverDir, buildDir, mode }) => {
-  const { context, registerTask, getValue, onGetWebpackConfig, log, applyMethod } = api;
+  const { context, registerTask, getValue, onGetWebpackConfig, log, applyMethod, onHook } = api;
   const { rootDir, command, webpack, userConfig } = context;
-  const { outputDir } = userConfig;
+  const { outputDir, publicPath = '/', devPublicPath = '/' } = userConfig;
+
   const PROJECT_TYPE = getValue('PROJECT_TYPE');
   const TEMP_PATH = getValue('TEMP_PATH');
   // render ssr entry
   const templatePath = path.join(__dirname, '../src/ssr.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'ssr.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
-  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
+  applyMethod(
+    'addRenderFile',
+    templatePath,
+    ssrEntry,
+    {
+      outputDir,
+      routesPath: routesFileExists ? '@' : '.',
+      publicPath: command === 'build' ? publicPath : devPublicPath
+    });
 
   const renderFilename = 'ssr.js';
   const renderFilePath = path.join(serverDir, renderFilename);
@@ -137,5 +147,14 @@ export default ({ api, serverDir, buildDir, mode }) => {
         });
       });
     }
+  });
+
+  onHook(`after.${command}.compile`, () => {
+    const htmlFilePath = path.join(buildDir, 'index.html');
+    const bundle = fse.readFileSync(renderFilePath, 'utf-8');
+    const html = fse.readFileSync(htmlFilePath, 'utf-8');
+    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
+    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
+    fse.writeFileSync(renderFilePath, newBundle, 'utf-8');
   });
 };
