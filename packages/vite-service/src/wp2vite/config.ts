@@ -132,7 +132,7 @@ const configMap: ConfigMap = {
       'build.rollupOptions.output.assetFileNames',
     ],
     transform: (e, { userConfig }) => {
-      const data = userConfig.outputAssetsPath as Record<string, string>;
+      const data = userConfig.outputAssetsPath as { css: string; js: string };
       const hash = userConfig.hash === true ? 'hash' : userConfig.hash;
       const hashStr = hash ? `.[${hash}]` : '';
 
