@@ -2,11 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('@builder/pack/deps/copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+const componentStyle = require('vite-plugin-component-style');
 const { getFilePath, getWebOutputPath } = require('./utils');
 
 module.exports = (api, { target, webpackConfig }) => {
-  const { context } = api;
-  const { rootDir } = context;
+  const { context, modifyUserConfig } = api;
+  const { rootDir, userConfig } = context;
   const outputPath = getWebOutputPath(context, { target });
   webpackConfig
   // SimpleProgressPlugin
@@ -64,6 +65,12 @@ module.exports = (api, { target, webpackConfig }) => {
         },
       ]])
       .end();
+  // auto inject style.js of component (webpack-plugin-import) in mode vite
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', (vitePlugins) => {
+      return [...(vitePlugins || []), componentStyle.default()];
+    });
+  }
 
   webpackConfig.resolve.merge({
     conditionNames: ['web'],
