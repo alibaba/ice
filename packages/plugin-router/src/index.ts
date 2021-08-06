@@ -1,6 +1,5 @@
 import * as path from 'path';
 import { validation } from '@builder/app-helpers';
-import { Plugin } from 'vite';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 import vitePluginLazy from './vitePluginLazy';
@@ -93,9 +92,7 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
 
     // if mode vite, add vite plugin for transform lazy
     if (userConfig.vite) {
-      modifyUserConfig('vite.plugins', (plugins: Plugin[] | undefined) => {
-        return [vitePluginLazy(routesPath), ...(plugins || [])];
-      });
+      modifyUserConfig('vite.plugins', [vitePluginLazy(routesPath)], { deepmerge: true });
     }
 
     // copy templates and export react-router-dom/history apis to ice

@@ -5074,7 +5074,27 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
-build-scripts@^1.1.0-5, build-scripts@^1.1.0-9:
+build-scripts@^1.1.0-11:
+  version "1.1.0-11"
+  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-11.tgz#db511d1f6239825e360a48338ff817fa65f5eab6"
+  integrity sha512-PAUpWum+pb/JQ07Jz7zkzk6LaC+hvcpq1oudKeC0FPHG6A244b0KLywC5V4IxHx9I4b/nOoOzOdOIF+95xN2mw==
+  dependencies:
+    address "^1.1.0"
+    camelcase "^5.3.1"
+    chalk "^2.4.1"
+    chokidar "^3.3.1"
+    commander "^2.19.0"
+    deepmerge "^4.0.0"
+    detect-port "^1.3.0"
+    esbuild "^0.12.16"
+    fs-extra "^8.1.0"
+    json5 "^2.1.3"
+    lodash "^4.17.15"
+    npmlog "^4.1.2"
+    semver "^7.3.2"
+    yargs-parser "^14.0.0"
+
+build-scripts@^1.1.0-5:
   version "1.1.0-9"
   resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-9.tgz#f578d5e6bbe9b95b831e463550a3b5f5fa949745"
   integrity sha512-Sxx6dKS9sZtRvImwjDkHYap7Mlz5rzv8gU9Zx6q72/2Aq41zv3CXCedvB4bPFHJEsJ4wQcbB4evkxa2yEz6/fA==

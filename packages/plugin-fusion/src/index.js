@@ -73,22 +73,19 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask, modifyUs
   const { rootDir, pkg, userConfig, webpack } = context;
 
   if (userConfig.vite) {
-    modifyUserConfig('vite.plugins', (vitePlugins) => {
-      return [
-        ...(vitePlugins || []),
-        // eslint-disable-next-line global-require
-        require('vite-plugin-style-import').default({
-          libs: [{
-            libraryName: '@alifd/next',
-            esModule: true,
-            resolveStyle: (name) => {
-              // use css variable style for default
-              return `@alifd/next/es/${name}/style2`;
-            },
-          }]
-        }),
-      ];
-    });
+    modifyUserConfig('vite.plugins', [
+      // eslint-disable-next-line global-require
+      require('vite-plugin-style-import').default({
+        libs: [{
+          libraryName: '@alifd/next',
+          esModule: true,
+          resolveStyle: (name) => {
+            // use css variable style for default
+            return `@alifd/next/es/${name}/style2`;
+          },
+        }]
+      }),
+    ], { deepmerge: true });
   }
 
   const taskNames = getAllTask();
