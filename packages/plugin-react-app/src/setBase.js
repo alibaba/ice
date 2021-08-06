@@ -5,8 +5,8 @@ const WebpackPluginImport = require('webpack-plugin-import');
 const { getFilePath, getWebOutputPath } = require('./utils');
 
 module.exports = (api, { target, webpackConfig }) => {
-  const { context } = api;
-  const { rootDir } = context;
+  const { context, modifyUserConfig } = api;
+  const { rootDir, userConfig } = context;
   const outputPath = getWebOutputPath(context, { target });
   webpackConfig
   // SimpleProgressPlugin
@@ -64,6 +64,13 @@ module.exports = (api, { target, webpackConfig }) => {
         },
       ]])
       .end();
+  // auto inject style.js of component (webpack-plugin-import) in mode vite
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', (vitePlugins) => {
+      // eslint-disable-next-line global-require
+      return [...(vitePlugins || []), require('vite-plugin-component-style').default()];
+    });
+  }
 
   webpackConfig.resolve.merge({
     conditionNames: ['web'],
