@@ -11,19 +11,14 @@ import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin } from '
 
 type Option = BuildOptions & InlineConfig;
 
-type Result = {
-  devConfig: InlineConfig;
-  prodConfig: BuildOptions;
-};
-
 const getAnalyzer = (config: ITaskConfig['chainConfig']) => {
   if (!config.plugins.get('webpack-bundle-analyzer')) return;
 
   return analyzer({ open: true, brotliSize: true, filename: 'ice-stats.html' });
 };
 
-export const wp2vite = (context: Context): Result => {
-  const { commandArgs = {}, userConfig, rootDir } = context;
+export const wp2vite = (context: Context): InlineConfig => {
+  const { commandArgs = {}, userConfig, rootDir, command } = context;
   const configArr = context.getWebpackConfig();
   const config = configArr[0];
 
@@ -45,14 +40,17 @@ export const wp2vite = (context: Context): Result => {
         },
       }),
       getAnalyzer(config.chainConfig),
+      // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
       importPlugin({ rootDir }),
       indexHtmlPlugin({
         entry: userConfig.entry,
         temp: 'public',
+        // TODO: User Config Type Completion
         ignoreHtmlTemplate: userConfig.ignoreHtmlTemplate as boolean,
         rootDir,
       }),
+      // TODO: User Config Type Completion
       polyfillPlugin({
         value: userConfig.polyfill as any,
         browserslist: userConfig.browserslist as any
@@ -78,29 +76,30 @@ export const wp2vite = (context: Context): Result => {
 
   const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;
 
-  const devConfig = all([
-    {
-      optimizeDeps: {
-        entries: entryExts.exec(userConfig.entry as string) ? userConfig.entry : `${userConfig.entry}.*`,
-        include: ['react-app-renderer', 'create-app-shared'],
-      },
-      server: devServerConfig,
-      define: {
-        'process.env': {},
-        global: {
-          __app_mode__: 'start',
+  if (command === 'start') {
+    return all([
+      {
+        optimizeDeps: {
+          entries: entryExts.exec(userConfig.entry as string) ? userConfig.entry : `${userConfig.entry}.*`,
+          // vite 无法分析 link 的依赖，需要手动加入以下依赖，防止 ice 维护时报错
+          include: ['react-app-renderer', 'create-app-shared'],
         },
+        server: devServerConfig,
+        define: {
+          'process.env': {},
+          global: {
+            __app_mode__: 'start',
+          },
+        },
+        plugins: [reactRefresh()],
       },
-      plugins: [reactRefresh()],
-    },
-    viteConfig,
-  ]);
-
-  const prodConfig = all([{
-    define: {
-      __app_mode__: 'build'
-    }
-  }, viteConfig]);
-
-  return { devConfig, prodConfig };
+      viteConfig,
+    ]);
+  } else {
+    return all([{
+      define: {
+        __app_mode__: 'build'
+      }
+    }, viteConfig]);
+  }
 };
