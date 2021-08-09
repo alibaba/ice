@@ -6,10 +6,10 @@ function render(ctx, data) {
   const { req, res } = ctx;
   const { pathname } = parseurl(req);
 
-  const { defaultHtml = '', routes = [] } = data;
+  const { defaultHtml = '', renderRoutes = [] } = data;
 
   // check if there are already pre-rendered routes
-  const route = routes.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
+  const renderRoute = renderRoutes.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
     try {
       const regexp = pathToRegexp(path, [], { end, strict, sensitive });
       return regexp.test(pathname);
@@ -18,8 +18,8 @@ function render(ctx, data) {
     }
   });
 
-  if (route) {
-    const { html } = route;
+  if (renderRoute) {
+    const { html } = renderRoute;
     return html;
   } else {
     return defaultHtml;

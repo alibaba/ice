@@ -1,10 +1,6 @@
 import { join } from 'path';
 import * as fse from 'fs-extra';
 
-function SSGWebpackPlugin(options) {
-  this.options = options;
-}
-
 interface RenderRoute {
   path: string;
   html: string;
@@ -13,36 +9,35 @@ interface RenderRoute {
   exact?: boolean;
 }
 
+// this webpack plugin only works on build mode
+function SSGWebpackPlugin(options) {
+  this.options = options;
+}
+
 SSGWebpackPlugin.prototype.apply = function (compiler) {
-  const { renderFilePath, buildDir, command } = this.options;
+  const { serverFilePath, buildDir } = this.options;
   compiler.hooks.afterEmit.tap('SSGWebpackPlugin', async () => {
-    const routeConfigsPath = join(buildDir, 'server', 'ssg-data.json');
-    const routeConfigs = [];
+    const renderDataPath = join(buildDir, 'server', 'render-data.json');
+    const renderData = [];
 
     // eslint-disable-next-line
-    const render = require(renderFilePath);
+    const server = require(serverFilePath);
     const htmlTemplate = fse.readFileSync(join(buildDir, 'index.html'), 'utf8');
-    const renderRoutes: RenderRoute[] = await render.default({ htmlTemplate, command });
+    const renderRoutes: RenderRoute[] = await server.default({ htmlTemplate });
     const defaultRoute = renderRoutes.find(renderRoute => renderRoute.path === '/__ice_default_route__');
     renderRoutes.forEach((renderRoute) => {
       const { html, path } = renderRoute;
       const htmlPath = join(buildDir, path, 'index.html');
-      // write html
+      // write route html
       fse.ensureFileSync(htmlPath);
       fse.writeFileSync(htmlPath, html);
-      // write html and other route configs to json, ensure  ssgRender function can find the html
-      // e.g.
-      // [
-      //   {
-      //     "path": "/",
-      //     "html": "<html>xx</html>",
-      //     "strict": true
-      //   }
-      // ]
-      routeConfigs.push(renderRoute);
+      // save html and other route configs to json, ensure ssgRender function can find the html
+      // e.g.: const renderRoute = { path: "/", html: "<html>xx</html>",  strict: true }
+      renderData.push(renderRoute);
     });
-    fse.ensureFileSync(routeConfigsPath);
-    fse.writeJSONSync(routeConfigsPath, { defaultHtml: defaultRoute.html, routes: routeConfigs }, { spaces: 2 });
+    // write
+    fse.ensureFileSync(renderDataPath);
+    fse.writeJSONSync(renderDataPath, { defaultHtml: defaultRoute.html, renderRoutes: renderData }, { spaces: 2 });
   });
 };
 

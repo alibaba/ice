@@ -12,6 +12,10 @@ export const USER_CONFIG = [
     validation: 'boolean'
   },
   {
+    name: 'target',
+    validation: 'string'
+  },
+  {
     name: 'auth',
     validation: 'boolean'
   },

@@ -38,9 +38,11 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-mpa',
     'build-plugin-ice-request',
     'build-plugin-helmet',
-    // server render
-    'build-plugin-ice-ssr'
   ];
+
+  if (userConfig.ssr) {
+    plugins.push('build-plugin-ice-ssr');
+  }
 
   // add store plugin
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'store') || userConfig.store !== false) {

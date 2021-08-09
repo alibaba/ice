@@ -1,0 +1,82 @@
+import '@/app';
+import { join } from 'path';
+import { pathToRegexp } from 'path-to-regexp';
+import { getAppConfig } from './core/appConfig';
+import routes from '<%- routesPath %>/routes';
+import loadable from '@loadable/component';
+
+const { renderStatic } = require('./server');
+
+// appConfig set by: import '@/app'
+const appConfig = getAppConfig();
+
+export default async function serverRender(options: any = {}) {
+  let {
+    htmlTemplate,
+  } = options;
+  const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
+  const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
+  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+  const routesHtml = [];
+  const flatRoutes = await getFlatRoutes(routes || []);
+  const defaultRoutePath = '/__ice_default_route__';
+  const defaultRoute = { path: defaultRoutePath };
+  flatRoutes.push(defaultRoute);
+  for (const flatRoute of flatRoutes) {
+    const { path = '', getInitialProps, ...rest } = flatRoute;
+
+    const keys = [];
+    let appendContent = true;
+    if (path === defaultRoutePath) {
+      appendContent = false;
+    } else {
+      try {
+        pathToRegexp(path, keys);
+        if (keys.length > 0) {
+          // don't render and export static page when the route is dynamic
+          continue;
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    const initialContext = { pathname: path, location: { pathname: path } } as any;
+    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext, appendContent });
+
+    delete rest.component;
+    delete rest.routeWrappers;
+    routesHtml.push({ html, path, ...rest });
+  }
+
+  return routesHtml;
+};
+
+async function getFlatRoutes(routes, parentPath = '') {
+  return await routes.reduce(async (asyncPrev, route) => {
+    let prev = await asyncPrev;
+    const { children, path: currentPath, redirect, getStaticPaths } = route;
+    if (children) {
+      prev = prev.concat(await getFlatRoutes(children, currentPath));
+    } else if (!redirect) {
+      route.path = join(parentPath, currentPath);
+      if (route?.component?.__LOADABLE__) {
+        route.component = loadable(route.component.dynamicImport);
+      }
+      prev.push(route);
+      if (typeof getStaticPaths === 'function') {
+        const staticPaths = await getStaticPaths();
+        if (Array.isArray(staticPaths)) {
+          // add static paths to render
+          staticPaths.forEach((staticPath) => {
+            prev.push({
+              ...route,
+              path: staticPath
+            })
+          })
+        }
+      }
+    }
+    return prev;
+  }, Promise.resolve([]));
+}

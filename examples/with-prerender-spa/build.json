@@ -1,1 +1,4 @@
-{}
+{
+  "ssr": true,
+  "target": "static"
+}

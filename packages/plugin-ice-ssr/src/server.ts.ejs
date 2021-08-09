@@ -21,6 +21,17 @@ const { createBaseApp } = app;
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
+interface GenerateHtml {
+  htmlTemplateContent: string;
+  loadableComponentExtractor?: any;
+  helmet?: any;
+  bundleContent?: string;
+  pageInitialProps?: any;
+  initialData?: any;
+  appendContent?: boolean;
+  error?: Error;
+}
+
 const serverRender = async (context, opts = {}) => {
   let options;
   if (context.req) {
@@ -31,7 +42,7 @@ const serverRender = async (context, opts = {}) => {
   let {
     ctx = {},
     pathname,
-    initialData,
+    initialData = {},
     htmlTemplate,
     loadableStatsPath,
   } = options;
@@ -43,14 +54,9 @@ const serverRender = async (context, opts = {}) => {
   const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
-  // get html template
-  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
 
   // load module to run before createApp ready
   loadStaticModules(appConfig);
-
-  let pageInitialProps;
-  let error;
 
   const { req, res } = ctx as any;
   let initialContext = { pathname, location: { pathname } } as any;
@@ -67,6 +73,12 @@ const serverRender = async (context, opts = {}) => {
     };
   }
 
+  return await renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
+}
+
+export async function renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig, appendContent = true }) {
+  let error;
+  let html = htmlTemplateContent;
   try {
     // get initial data
     if (!initialData) {
@@ -86,6 +98,7 @@ const serverRender = async (context, opts = {}) => {
       const loadedPageComponent = await component.load();
       component = loadedPageComponent.default;
     }
+    let pageInitialProps = {};
     if (getInitialProps) {
       console.log('[SSR]', 'getting initial props of page component');
       pageInitialProps = await getInitialProps(initialContext);
@@ -93,50 +106,83 @@ const serverRender = async (context, opts = {}) => {
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
-    const { bundleContent, loadableComponentExtractor } = reactAppRendererWithSSR({
-      initialContext,
-      initialData,
-      pageInitialProps
-    }, {
-      appConfig,
-      buildConfig,
-      appLifecycle: {
-        createBaseApp,
-        emitLifeCycles,
-      }
-    });
+    const { bundleContent, loadableComponentExtractor } =
+      reactAppRendererWithSSR(
+        {
+          initialContext,
+          initialData,
+          pageInitialProps,
+        },
+        {
+          appConfig,
+          buildConfig,
+          appLifecycle: { createBaseApp, emitLifeCycles },
+        }
+      );
 
     const helmet = Helmet.renderStatic();
 
-    $(`#${appConfig.app.rootId || 'ice-container'}`).append(bundleContent);
+    html = generateHtml({
+      htmlTemplateContent,
+      loadableComponentExtractor,
+      helmet,
+      bundleContent,
+      initialData,
+      pageInitialProps,
+      appendContent
+    });
+  } catch (e) {
+    error = e;
+    html = generateHtml({
+      htmlTemplateContent,
+      error,
+    });
+    logError('[SSR] generate html template error' + error.message);
+  }
+
+  return { html, error, redirectUrl: initialContext.redirectUrl };
+}
+
+export function generateHtml({
+  htmlTemplateContent,
+  loadableComponentExtractor,
+  helmet,
+  bundleContent,
+  initialData,
+  pageInitialProps,
+  appendContent,
+  error
+ }: GenerateHtml) {
+  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
+  if (error) {
+    $('head').append(`
+      <script>
+        window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
+      </script>`)
+    return $.html();
+  }
+  if (appendContent) {
+    $(`#${appConfig?.app?.rootId || 'ice-container'}`).append(bundleContent);
     $('head').append(`<script>
       window.__ICE_SSR_ENABLED__=true;
       window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
       window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
     </script>`);
-    // lazy load bundle
-    $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
-    $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
-    $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
-    // react-helmet
-    $('head').append(`${helmet.title.toString()}`);
-    $('head').append(`${helmet.meta.toString()}`);
-    $('head').append(`${helmet.link.toString()}`);
-    $('head').append(`${helmet.script.toString()}`);
-  } catch (e) {
-    error = e;
-    $('head').append(`
-    <script>
-      window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
-    </script>`)
-    logError('[SSR] generate html template error', error);
   }
+  // inject assets
+  $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+  $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+  $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+  // inject tags to header
+  $('head').append(`${helmet.title.toString()}`);
+  $('head').append(`${helmet.meta.toString()}`);
+  $('head').append(`${helmet.link.toString()}`);
+  $('head').append(`${helmet.script.toString()}`);
 
-  const html = $.html();
-  return { html, error, redirectUrl: initialContext.url };
+  return $.html();
 }
 
-async function getComponentByPath(routes, currPath)  {
+export async function getComponentByPath(routes, currPath)  {
   async function findMatchRoute(routeList) {
     let matchedRoute = routeList.find(route => {
       return matchPath(currPath, route);
