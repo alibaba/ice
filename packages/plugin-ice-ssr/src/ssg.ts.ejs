@@ -1,6 +1,7 @@
 import '@/app';
 import { join } from 'path';
 import { matchPath } from 'ice';
+import { pathToRegexp } from 'path-to-regexp';
 import * as cheerio from 'cheerio';
 import { Helmet } from 'react-helmet';
 import * as queryString from 'query-string';
@@ -12,6 +13,7 @@ import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
 
 const parseurl = require('parseurl');
+
 const { createBaseApp } = app;
 
 // appConfig set by: import '@/app'
@@ -38,12 +40,35 @@ export default async function render(options: any = {}) {
 
 async function renderStaticInProd({ htmlTemplateContent, buildConfig }) {
   const routesHtml = [];
-  const flatRoutes = await getFlatRoutes(routes);
+  const flatRoutes = await getFlatRoutes(routes || []);
+  const defaultRoutePath = '/__ice_default_route__';
+  const defaultRoute = { path: defaultRoutePath };
+  flatRoutes.push(defaultRoute);
   for (const flatRoute of flatRoutes) {
-    const { path, getInitialProps } = flatRoute;
+    const { path = '', getInitialProps, ...rest } = flatRoute;
+
+    const keys = [];
+    let appendContent = true;
+    if (path === defaultRoutePath) {
+      appendContent = false;
+    } else {
+      try {
+        pathToRegexp(path, keys);
+        if (keys.length > 0) {
+          // don't render and export static page when the route is dynamic
+          continue;
+        }
+      } catch {
+        continue;
+      }
+    }
+
     const initialContext = { pathname: path, location: { pathname: path } } as any;
-    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, getInitialProps, initialContext });
-    routesHtml.push({ html, path });
+    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, getInitialProps, initialContext, appendContent });
+
+    delete rest.component;
+    delete rest.routeWrappers;
+    routesHtml.push({ html, path, ...rest });
   }
   return routesHtml;
 }
@@ -66,8 +91,8 @@ async function renderStaticInDev({ htmlTemplateContent, buildConfig, ctx }) {
   return await renderStatic({ htmlTemplateContent, getInitialProps, buildConfig, initialContext });
 }
 
-async function renderStatic({ htmlTemplateContent, getInitialProps, buildConfig, initialContext }) {
-  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
+async function renderStatic({ htmlTemplateContent, getInitialProps, buildConfig, initialContext, appendContent = true }) {
+  let html = htmlTemplateContent;
   try {
     let pageInitialProps = {};
       if (getInitialProps) {
@@ -88,25 +113,48 @@ async function renderStatic({ htmlTemplateContent, getInitialProps, buildConfig,
 
       const helmet = Helmet.renderStatic();
 
-      $(`#${appConfig.app.rootId || 'ice-container'}`).append(bundleContent);
-      $('head').append(`<script>
-        window.__ICE_SSR_ENABLED__=true;
-        window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-      </script>`);
-      // lazy load bundle
-      $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
-      $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
-      $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
-      // react-helmet
-      $('head').append(`${helmet.title.toString()}`);
-      $('head').append(`${helmet.meta.toString()}`);
-      $('head').append(`${helmet.link.toString()}`);
-      $('head').append(`${helmet.script.toString()}`);
+      html = generateHtml({
+        htmlTemplateContent,
+        loadableComponentExtractor,
+        helmet,
+        bundleContent,
+        pageInitialProps,
+        appendContent
+      });
   } catch (error) {
     console.error(error);
   }
-  const html = $.html();
+
   return { html, redirectUrl: initialContext.redirectUrl };
+}
+
+function generateHtml({
+  htmlTemplateContent,
+  loadableComponentExtractor,
+  helmet,
+  bundleContent,
+  pageInitialProps,
+  appendContent
+ }) {
+  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
+  if (appendContent) {
+    $(`#${appConfig?.app?.rootId || 'ice-container'}`).append(bundleContent);
+    $('head').append(`<script>
+      window.__ICE_SSR_ENABLED__=true;
+      window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
+    </script>`);
+  }
+  // inject assets
+  $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+  $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+  $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+  // inject tags to header
+  $('head').append(`${helmet.title.toString()}`);
+  $('head').append(`${helmet.meta.toString()}`);
+  $('head').append(`${helmet.link.toString()}`);
+  $('head').append(`${helmet.script.toString()}`);
+
+  return $.html();
 }
 
 async function getFlatRoutes(routes, parentPath = '') {
@@ -138,10 +186,10 @@ async function getFlatRoutes(routes, parentPath = '') {
   }, Promise.resolve([]));
 }
 
-async function getComponentByPath(routes, currPath)  {
+async function getComponentByPath(routes, currentPath)  {
   async function findMatchRoute(routeList) {
     let matchedRoute = routeList.find(route => {
-      return matchPath(currPath, route);
+      return matchPath(currentPath, route);
     });
     if (matchedRoute?.component?.__LOADABLE__) {
       matchedRoute.component = loadable(matchedRoute.component.dynamicImport);

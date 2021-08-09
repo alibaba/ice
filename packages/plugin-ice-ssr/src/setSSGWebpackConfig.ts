@@ -5,7 +5,7 @@ import { formatPath } from '@builder/app-helpers';
 import SSGWebpackPlugin from './SSGWebpackPlugin';
 
 export default ({ api, serverDir, buildDir, mode }) => {
-  const { context, registerTask, getValue, onGetWebpackConfig, applyMethod, log, onHook } = api;
+  const { context, registerTask, getValue, onGetWebpackConfig, applyMethod, log } = api;
   const { rootDir, command, webpack, userConfig } = context;
   const { outputDir, publicPath = '/', devPublicPath = '/' } = userConfig;
 
@@ -16,12 +16,12 @@ export default ({ api, serverDir, buildDir, mode }) => {
   const renderFilePath = path.join(serverDir, renderFilename);
 
   // render ssg entry
-  const templatePath = path.join(__dirname, './ssg.ts.ejs');
+  const ssgTemplatePath = path.join(__dirname, './ssg.ts.ejs');
   const ssgEntry = path.join(TEMP_PATH, 'ssg.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
   applyMethod(
     'addRenderFile',
-    templatePath,
+    ssgTemplatePath,
     ssgEntry,
     {
       outputDir,
@@ -35,7 +35,7 @@ export default ({ api, serverDir, buildDir, mode }) => {
   onGetWebpackConfig('ssg', (config) => {
     config.entryPoints.clear();
 
-    config.entry('server').add(ssgEntry);
+    config.entry('ssg').add(ssgEntry);
 
     config.target('node');
 
@@ -69,7 +69,7 @@ export default ({ api, serverDir, buildDir, mode }) => {
 
     config.output
       .path(serverDir)
-      .filename(renderFilename)
+      .filename('[name].js')
       .publicPath('/')
       .libraryTarget('commonjs2');
 
@@ -83,6 +83,16 @@ export default ({ api, serverDir, buildDir, mode }) => {
     config.plugins.delete('ProvidePlugin');
 
     if (command === 'build') {
+      const renderTemplatePath = path.join(__dirname, './ssgRender.ts.ejs');
+      const renderEntryPath = path.join(TEMP_PATH, 'ssgRender.ts');
+      applyMethod(
+        'addRenderFile',
+        renderTemplatePath,
+        renderEntryPath
+      );
+
+      config.entry('ssgRender').add(renderEntryPath);
+
       config
         .plugin('SSGWebpackPlugin')
         .after('HtmlWebpackPlugin')
@@ -163,6 +173,5 @@ export default ({ api, serverDir, buildDir, mode }) => {
         });
       });
     }
-
   });
 };

@@ -1,0 +1,31 @@
+import { pathToRegexp } from 'path-to-regexp';
+
+const parseurl = require('parseurl');
+
+function render(ctx, data) {
+  const { req, res } = ctx;
+  const { pathname } = parseurl(req);
+
+  const { defaultHtml = '', routes = [] } = data;
+
+  // check if there are already pre-rendered routes
+  const route = routes.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
+    try {
+      const regexp = pathToRegexp(path, [], { end, strict, sensitive });
+      return regexp.test(pathname);
+    } catch (e) {
+      return false;
+    }
+  });
+
+  if (route) {
+    const { html } = route;
+    return html;
+  } else {
+    return defaultHtml;
+  }
+
+  return defaultHtml;
+}
+
+export default render;

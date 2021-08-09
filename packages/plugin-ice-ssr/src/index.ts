@@ -50,6 +50,7 @@ const plugin = async (api): Promise<void> => {
       '@loadable/babel-plugin',
     ]
   );
+
   if (ssr) {
     // ssr webpack node config
     setSSRWebpackConfig({ api, mode, serverDir, buildDir });

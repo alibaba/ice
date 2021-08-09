@@ -25,7 +25,7 @@ export default ({ api, serverDir, buildDir, mode }) => {
       publicPath: command === 'build' ? publicPath : devPublicPath
     });
 
-  const renderFilename = 'ssr.js';
+  const renderFilename = 'server.js';
   const renderFilePath = path.join(serverDir, renderFilename);
 
   const webpackConfig = getWebpackConfig(mode);

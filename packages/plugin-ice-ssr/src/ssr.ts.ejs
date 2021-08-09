@@ -129,7 +129,7 @@ const serverRender = async (context, opts = {}) => {
     <script>
       window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
     </script>`)
-    logError('[SSR] generate html template error');
+    logError('[SSR] generate html template error', error);
   }
 
   const html = $.html();
