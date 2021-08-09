@@ -49,6 +49,8 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
             'HtmlWebpackPlugin',
             'AddAssetHtmlPlugin',
             'CopyPlugin',
+            'ReactRefreshWebpackPlugin',
+            'HotModuleReplacementPlugin',
           ].includes(plugin?.constructor?.name);
         }),
         new (webpack as any).ProgressPlugin({}),
