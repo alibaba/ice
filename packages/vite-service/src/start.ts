@@ -20,7 +20,7 @@ export async function viteStart(context: Context): Promise<StartResult> {
     return;
   }
 
-  const { devConfig } = wp2vite(context);
+  const devConfig = wp2vite(context);
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,

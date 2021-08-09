@@ -11,7 +11,7 @@ export async function viteBuild(context: any): Promise<BuildResult> {
   const configArr = context.getWebpackConfig();
   await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr });
 
-  const { prodConfig } = wp2vite(context);
+  const prodConfig = wp2vite(context);
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,

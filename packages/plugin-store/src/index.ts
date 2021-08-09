@@ -63,9 +63,7 @@ export default async (api: any) => {
   }
   // add vite plugin for redirect page component
   if (vite) {
-    modifyUserConfig('vite.plugins', (plugins: Plugin[] | undefined) => {
-      return [vitePluginPageRedirect(rootDir, routesPath), ...(plugins || [])];
-    });
+    modifyUserConfig('vite.plugins', [vitePluginPageRedirect(rootDir, routesPath)], { deepmerge: true });
   }
 
   if (swc) {
