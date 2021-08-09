@@ -49,7 +49,7 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
             'HtmlWebpackPlugin',
             'AddAssetHtmlPlugin',
             'CopyPlugin',
-            'ReactRefreshWebpackPlugin',
+            'ReactRefreshPlugin',
             'HotModuleReplacementPlugin',
           ].includes(plugin?.constructor?.name);
         }),
