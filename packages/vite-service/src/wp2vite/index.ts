@@ -55,6 +55,7 @@ export const wp2vite = (context: Context): InlineConfig => {
         value: userConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
         hash: userConfig.hash as boolean,
+        outputAssetsPath: userConfig.outputAssetsPath as any,
         rootDir,
       })
     ],
