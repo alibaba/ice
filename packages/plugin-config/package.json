@@ -27,7 +27,7 @@
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-9",
+    "build-scripts": "^1.1.0-11",
     "@types/fs-extra": "^8.1.0"
   }
 }
