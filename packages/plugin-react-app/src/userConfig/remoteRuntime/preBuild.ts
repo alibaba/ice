@@ -72,7 +72,7 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
     await new Promise((resolve) => {
       webpack(preBuildConfig, (err, stats) => {
         if (err || stats.hasErrors()) {
-          log.error('Fail to pre build dependencies');
+          log.error('Fail to pre build dependencies', err);
           return;
         }
         // write cache after webpack compile success

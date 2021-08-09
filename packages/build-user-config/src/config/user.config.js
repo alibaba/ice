@@ -40,7 +40,6 @@ module.exports = [
     name: 'devServer',
     validation: 'object',
     defaultValue: {
-      hot: true,
       compress: true,
       webSocketServer: 'ws',
       devMiddleware: {
