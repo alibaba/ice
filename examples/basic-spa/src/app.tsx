@@ -26,7 +26,7 @@ const appConfig: IAppConfig = {
     },
   },
   logger: {
-    level: APP_MODE === 'build' ? 'error' : 'debug',
+    level: APP_MODE === 'build' ? 'error' : 'error',
   },
   router: {
     basename: '/ice',
