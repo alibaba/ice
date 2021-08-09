@@ -3,6 +3,7 @@ import { redirectImport } from '@builder/app-helpers';
 import legacy from '@vitejs/plugin-legacy';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as glob from 'fast-glob';
 import * as log from 'npmlog';
 import { all } from 'deepmerge';
 
@@ -151,14 +152,45 @@ export const importPlugin = ({ rootDir }): Plugin => {
 };
 
 export const polyfillPlugin = (
-  option: { value: 'usage' | 'entry' | false, browserslist: any }
-): Plugin => {
-  const { value, browserslist } = option;
+  option: { value: 'usage' | 'entry' | false, browserslist: any, rootDir: string, hash: boolean }
+): Plugin[] => {
+  const { value, browserslist, rootDir, hash } = option;
 
   if (!value) return;
 
-  return legacy({
-    targets: browserslist,
-    polyfills: value === 'usage'
-  });
+  let outDir = '';
+  let assetsDirName = '';
+
+  /**
+   * hash 为开启时，清除 polyfill hash 后缀
+   */
+  const plugin: Plugin = {
+    name: 'rollup-plugin-polyfills-clear',
+    config(cfg, { command }) {
+      if (command === 'build') {
+        outDir = cfg.build?.outDir ?? 'dist';
+        assetsDirName = cfg.build?.assetsDir ?? 'assets';
+      }
+    },
+    async closeBundle() {
+      if (hash) return;
+      const distPath = path.resolve(rootDir, outDir);
+      const assetsPath = path.resolve(distPath, assetsDirName);
+      const polyfillsFiles = glob.sync(path.resolve(assetsPath, 'polyfills-legacy.*.js'));
+
+      if (polyfillsFiles.length) {
+        polyfillsFiles.forEach(file => {
+          fs.renameSync(file, path.resolve(assetsPath, 'polyfills-legacy.js'));
+        });
+      }
+    }
+  };
+
+  return [
+    plugin,
+    legacy({
+      targets: browserslist,
+      polyfills: value === 'usage'
+    })
+  ];
 };

@@ -53,7 +53,9 @@ export const wp2vite = (context: Context): InlineConfig => {
       // TODO: User Config Type Completion
       polyfillPlugin({
         value: userConfig.polyfill as any,
-        browserslist: userConfig.browserslist as any
+        browserslist: userConfig.browserslist as any,
+        hash: userConfig.hash as boolean,
+        rootDir,
       })
     ],
   };
