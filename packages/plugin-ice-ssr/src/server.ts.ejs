@@ -3,6 +3,7 @@ import { join } from 'path';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { Helmet } from 'react-helmet';
+import { pathToRegexp } from 'path-to-regexp';
 import { matchPath } from 'ice';
 import { setInitialData } from 'react-app-renderer';
 import reactAppRendererWithSSR from 'react-app-renderer/lib/server';
@@ -45,6 +46,7 @@ const serverRender = async (context, opts = {}) => {
     initialData,
     htmlTemplate,
     loadableStatsPath,
+    renderData = {},
   } = options;
 
   if (process.env.NODE_ENV === 'development') {
@@ -73,6 +75,26 @@ const serverRender = async (context, opts = {}) => {
     };
   }
 
+  if (process.env.NODE_ENV === 'development') {
+    return await renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
+  }
+  const { defaultHtml = '', renderRoutes = [] } = renderData;
+  const renderRoute = renderRoutes.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
+    try {
+      const regexp = pathToRegexp(path, [], { end, strict, sensitive });
+      return regexp.test(initialContext.pathname);
+    } catch (e) {
+      return false;
+    }
+  });
+  if (renderRoute) {
+    // enable pre-render pages
+    const { html, ssr } = renderRoute;
+    if (ssr) {
+      return await renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
+    }
+    return { html };
+  }
   return await renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
 }
 

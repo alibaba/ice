@@ -7,19 +7,20 @@ export default [
   {
     path: '/',
     exact: true,
-    component: Home
+    component: Home,
+    getInitialProps: async () => {
+      return await Promise.resolve({ data: [Math.random(), Math.random(), Math.random()] });
+    }
   },
   {
     path: '/about/:id',
     exact: true,
     component: About,
-    getStaticPaths: async () => {
-      return await Promise.resolve(['/about/a', '/about/b', '/about/c']);
-    }
   },
   {
     path: '/dashboard',
     exact: true,
+    ssr: true,             // this route will use ssr in production
     component: Dashboard
   },
   {

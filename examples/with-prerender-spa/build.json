@@ -1,4 +1,3 @@
 {
-  "ssr": true,
-  "target": "static"
+  "ssr": "static"
 }

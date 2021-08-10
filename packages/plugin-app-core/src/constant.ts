@@ -9,11 +9,7 @@ export const USER_CONFIG = [
   },
   {
     name: 'ssr',
-    validation: 'boolean'
-  },
-  {
-    name: 'target',
-    validation: 'string'
+    validation: 'boolean|string'
   },
   {
     name: 'auth',

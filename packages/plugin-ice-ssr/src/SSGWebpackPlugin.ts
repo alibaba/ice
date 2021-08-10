@@ -24,7 +24,7 @@ SSGWebpackPlugin.prototype.apply = function (compiler) {
     const server = require(serverFilePath);
     const htmlTemplate = fse.readFileSync(join(buildDir, 'index.html'), 'utf8');
     const renderRoutes: RenderRoute[] = await server.default({ htmlTemplate });
-    const defaultRoute = renderRoutes.find(renderRoute => renderRoute.path === '/__ice_default_route__');
+    const defaultRoute = renderRoutes.find(renderRoute => renderRoute.path === '/__ice_default_page__');
     renderRoutes.forEach((renderRoute) => {
       const { html, path } = renderRoute;
       const htmlPath = join(buildDir, path, 'index.html');

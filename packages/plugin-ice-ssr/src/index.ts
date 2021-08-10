@@ -9,7 +9,7 @@ import SSGWebpackPlugin from './SSGWebpackPlugin';
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir, target = 'server',  publicPath = '/', devPublicPath = '/' } = userConfig;
+  const { outputDir, ssr, publicPath = '/', devPublicPath = '/' } = userConfig;
   const PROJECT_TYPE = getValue('PROJECT_TYPE');
   const TEMP_PATH = getValue('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
@@ -184,15 +184,15 @@ const plugin = async (api): Promise<void> => {
       });
     }
 
-    if (command === 'build' && target === 'static') {
-      // enable ssg
-      const ssgServerTemplatePath = path.join(__dirname, './ssgServer.ts.ejs');
-      const ssgServerEntryPath = path.join(TEMP_PATH, './ssgServer.ts');
-      const ssgServerBundlePath = path.join(serverDir, 'ssgServer.js');
+    if (command === 'build' && ssr === 'static') {
+      // SSG, pre-render page in production
+      const ssgRenderTemplatePath = path.join(__dirname, './ssgRender.ts.ejs');
+      const ssgRenderEntryPath = path.join(TEMP_PATH, './ssgRender.ts');
+      const ssgRenderBundlePath = path.join(serverDir, 'ssgRender.js');
       applyMethod(
         'addRenderFile',
-        ssgServerTemplatePath,
-        ssgServerEntryPath,
+        ssgRenderTemplatePath,
+        ssgRenderEntryPath,
         {
           outputDir,
           routesPath: routesFileExists ? '@' : '.',
@@ -200,23 +200,14 @@ const plugin = async (api): Promise<void> => {
         }
       );
 
-      const renderTemplatePath = path.join(__dirname, './ssgRender.ts.ejs');
-      const renderEntryPath = path.join(TEMP_PATH, 'ssgRender.ts');
-      applyMethod(
-        'addRenderFile',
-        renderTemplatePath,
-        renderEntryPath
-      );
-
-      config.entry('ssgServer').add(ssgServerEntryPath);
-      config.entry('ssgRender').add(renderEntryPath);
+      config.entry('ssgRender').add(ssgRenderEntryPath);
 
       config
         .plugin('SSGWebpackPlugin')
         .after('HtmlWebpackPlugin')
         .use(SSGWebpackPlugin, [
           {
-            serverFilePath: ssgServerBundlePath,
+            serverFilePath: ssgRenderBundlePath,
             buildDir,
             command
           }
