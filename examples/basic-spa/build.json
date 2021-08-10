@@ -12,9 +12,7 @@
       "ignoreHtmlTemplate": false
     }
   },
-  "esbuild": {
-    "target": "es2015"
-  },
+  "minify": "esbuild",
   "eslint": {
     "disable": false,
     "quiet": true

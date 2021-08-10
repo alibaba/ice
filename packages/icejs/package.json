@@ -22,8 +22,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/pack": "0.2.19",
-    "build-scripts": "^1.1.0-9",
+    "@builder/pack": "0.2.20",
+    "build-scripts": "^1.1.0-11",
     "build-plugin-app-core": "2.0.0",
     "build-plugin-helmet": "1.0.2",
     "build-plugin-ice-auth": "2.0.0",

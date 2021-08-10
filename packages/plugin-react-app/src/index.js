@@ -24,7 +24,7 @@ module.exports = async (api) => {
 
   // modify default babel config when jsx runtime is enabled
   if (getValue('HAS_JSX_RUNTIME')) {
-    modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
+    modifyUserConfig('babelPresets', (userConfig.babelPresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
   }
 
   // set webpack config
