@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import * as friendlyTypeImports from 'rollup-plugin-friendly-type-imports';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import analyzer from 'rollup-plugin-visualizer';
 import { all } from 'deepmerge';
@@ -26,19 +24,6 @@ export const wp2vite = (context: Context): InlineConfig => {
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
-      // 避免 import re-exported types 时 crash 并提示 "does not provide an export named XXX"
-      friendlyTypeImports({
-        readFile: async (id) => {
-          // 只对 .ts 与 .tsx 后缀进行导出转换
-          if (!['.ts', '.tsx'].some((i) => id.endsWith(i))) return null;
-
-          try {
-            return await fs.promises.readFile(id, 'utf8');
-          } catch {
-            return null;
-          }
-        },
-      }),
       getAnalyzer(config.chainConfig),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
