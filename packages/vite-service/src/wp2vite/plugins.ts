@@ -138,7 +138,7 @@ export const importPlugin = ({ rootDir }): Plugin => {
       if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
 
       // 获取相对路径
-      const url = path.relative(path.resolve(id, '..'), iceTempPath);
+      const url = path.relative(path.dirname(id), iceTempPath);
       return await redirectImport(code, {
         source: 'ice', redirectImports: [
           {

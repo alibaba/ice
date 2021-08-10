@@ -79,7 +79,10 @@ export const wp2vite = (context: Context): InlineConfig => {
             __app_mode__: 'start',
           },
         },
-        plugins: [reactRefresh()],
+        plugins: [reactRefresh({
+          // Exclude node_modules and ice runtime
+          exclude: [/node_modules/, /\.ice/],
+        })],
       },
       viteConfig,
     ]);
