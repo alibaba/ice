@@ -113,9 +113,7 @@ module.exports = [
   },
   {
     name: 'browserslist',
-    validation: (val) => {
-      return validation('browserslist', val, 'string|object');
-    },
+    validation: 'array|string|object',
     defaultValue: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4'
   },
   {
