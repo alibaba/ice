@@ -16,7 +16,7 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       }
     });
     const swcLoader = require.resolve('@builder/swc-loader');
-    const reactRuntimeConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic', refresh: true } : {};
+    const reactRuntimeConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic' } : {};
     // add swc rule
     const commonOptions = {
       jsc: {
