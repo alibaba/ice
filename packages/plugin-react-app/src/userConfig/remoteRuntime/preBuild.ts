@@ -10,6 +10,16 @@ type IRemoteFiles = {
   exposePath: string;
 }
 
+interface WebpackLoader {
+  loader: string;
+  options?: any;
+}
+
+interface WebpackRule {
+  test?: RegExp;
+  use?: WebpackLoader[];
+}
+
 export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry, cacheFile, cacheContent, compilePackages }) => {
   const { context, onHook, log } = api;
   const { command, webpack } = context;
@@ -38,6 +48,32 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
         chunkIds: 'named',
       },
       devtool: false,
+      module: {
+        rules: targetConfig?.module?.rules.map((rule: WebpackRule) => {
+          if (rule?.test?.source?.match(/\.(j|t)sx/)) {
+            return {
+              ...rule,
+              use: rule?.use?.map((use) => {
+                const { loader, options } = use;
+                if (loader.match(/babel-loader/) && options?.plugins) {
+                  return {
+                    ...use,
+                    options: {
+                      ...options,
+                      plugins: options.plugins.filter((plugin: string) => {
+                        // filter react-refresh
+                        return typeof plugin !== 'string' || !plugin.match(/react-refresh/);
+                      }),
+                    }
+                  };
+                }
+                return use;
+              }),
+            };
+          }
+          return rule;
+        }),
+      },
       plugins: [
         ...(targetConfig.plugins || []).filter((plugin) => {
           // filter unnecessary plugins
@@ -49,6 +85,8 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
             'HtmlWebpackPlugin',
             'AddAssetHtmlPlugin',
             'CopyPlugin',
+            'ReactRefreshPlugin',
+            'HotModuleReplacementPlugin',
           ].includes(plugin?.constructor?.name);
         }),
         new (webpack as any).ProgressPlugin({}),
@@ -72,7 +110,12 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
     await new Promise((resolve) => {
       webpack(preBuildConfig, (err, stats) => {
         if (err || stats.hasErrors()) {
-          log.error('Fail to pre build dependencies');
+          log.error('Fail to pre build dependencies', stats.toJson({
+            all: false,
+            errors: true,
+            warnings: true,
+            timings: true,
+          }));
           return;
         }
         // write cache after webpack compile success

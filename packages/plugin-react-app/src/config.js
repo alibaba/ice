@@ -47,7 +47,8 @@ module.exports = function() {
     {
       name: 'fastRefresh',
       defaultValue: true,
-      validation: 'boolean'
+      validation: 'boolean',
+      configWebpack: require('./userConfig/fastRefresh'),
     }
   ];
 };

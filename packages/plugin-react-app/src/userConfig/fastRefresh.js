@@ -1,13 +1,12 @@
-const ReactRefreshWebpackPlugin = require('@builder/pack/deps/@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = (config, value, context) => {
   const { command } = context;
-  if (command === 'start' && value) {
+  if (command === 'start' && value && process.env.NODE_ENV !== 'test') {
     config.plugin('ReactRefreshWebpackPlugin')
       .use(ReactRefreshWebpackPlugin, [{
         overlay: false,
       }]);
-    
     // add babel plugin for react-refresh
     ['jsx', 'tsx'].forEach((rule) => {
       config.module
