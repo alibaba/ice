@@ -5,7 +5,7 @@ import { isObject } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import { recordMap } from './config';
-import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin, serverHistoryPlugin } from './plugins';
+import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin, serverHistoryPlugin } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
 
