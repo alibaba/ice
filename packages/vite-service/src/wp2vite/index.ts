@@ -5,7 +5,7 @@ import { isObject } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import { recordMap } from './config';
-import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin } from './plugins';
+import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin, serverHistoryPlugin } from './plugins';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -24,6 +24,7 @@ export const wp2vite = (context: Context): InlineConfig => {
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
+      serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getAnalyzer(config.chainConfig),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
