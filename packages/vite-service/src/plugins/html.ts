@@ -27,12 +27,12 @@ interface Option {
   filename: string
   template: string
   entry: string
+  rootDir: string
   data?: object
 }
 
-export const htmlPlugin = ({ filename, template, entry, data = {} }: Option): Plugin => {
+export const htmlPlugin = ({ filename, template, entry, rootDir, data = {} }: Option): Plugin => {
   let config: ResolvedConfig;
-  const rootDir = process.cwd();
   const pageName = path.basename(filename).replace('.html', '');
   const tempPath = `.ice/html/${pageName}.html`;
   const htmlPath = path.resolve(rootDir, tempPath);

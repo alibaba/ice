@@ -113,15 +113,19 @@ const plugin: IPlugin = (api) => {
     });
     // set page template
     onGetWebpackConfig(config => {
-      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
-      config.devServer.historyApiFallback({
-        rewrites: Object.keys(entries).map((pageName) => {
-          return {
-            from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
-            to: `/${pageName}.html`,
-          };
-        }),
+      const pages = setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
+
+      const rewrites = Object.keys(entries).map((pageName) => {
+        return {
+          from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
+          to: `/${pageName}.html`,
+        };
       });
+
+      config.devServer.historyApiFallback({ rewrites });
+
+      setValue('MPA_PAGES', pages);
+      setValue('MPA_REWRITES', rewrites);
     });
   }
 };
@@ -136,6 +140,8 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
       entryNames[key] = templateName;
     });
   });
+
+  const pages = {};
 
   const defaultEntryNames = Object.keys(entries);
   defaultEntryNames.forEach(defaultEntryName => {
@@ -155,15 +161,19 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
           ...(args.templateParameters || {}),
           pageName: defaultEntryName,
         };
-        return [
-          {
-            ...args,
-            ...htmlPluginOption,
-          }
-        ];
+
+        const item = {
+          ...args,
+          ...htmlPluginOption,
+        };
+
+        pages[defaultEntryName] = (item);
+        return [item];
       });
     }
   });
+
+  return pages;
 }
 
 export default plugin;

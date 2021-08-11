@@ -22,10 +22,36 @@ const getAnalyzer = (config: ITaskConfig['chainConfig']) => {
   return analyzer({ open: true, brotliSize: true, filename: 'ice-stats.html' });
 };
 
+const getWebpackConfig = (context: Context) => {
+  const configArr = context.getWebpackConfig();
+  return configArr[0];
+};
+
+const getHtmlPlugin = (context: Context) => {
+  const { getValue, userConfig, rootDir } = context;
+
+  const isMpa = userConfig.mpa as boolean;
+
+  if (!isMpa) {
+    return htmlPlugin({
+      entry: userConfig.entry as string,    // webpack entry
+      template: path.resolve(rootDir, 'public', 'index.html'),
+      filename: 'index.html',
+      rootDir
+    });
+  }
+
+  const pages = getValue('MPA_PAGES') as any;
+  console.log('pages: ', pages);
+  return null;
+};
+
+/**
+ * Exposed
+ */
 export const wp2vite = (context: Context): InlineConfig => {
   const { commandArgs = {}, userConfig, rootDir, command } = context;
-  const configArr = context.getWebpackConfig();
-  const config = configArr[0];
+  const config = getWebpackConfig(context);
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     configFile: false,
@@ -36,11 +62,8 @@ export const wp2vite = (context: Context): InlineConfig => {
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
       importPlugin({ rootDir }),
-      htmlPlugin({
-        entry: userConfig.entry as string,
-        template: path.resolve(rootDir, 'public', 'index.html'),
-        filename: 'index.html',
-      }),
+      // spa 与 mpa 中对 html 的处理
+      getHtmlPlugin(context),
       polyfillPlugin({
         value: userConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
