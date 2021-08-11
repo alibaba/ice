@@ -29,6 +29,15 @@ const getWebpackConfig = (context: Context) => {
 
 const getHtmlPlugin = (context: Context) => {
   const { getValue, userConfig, rootDir } = context;
+  type Opt = {
+    inject: boolean
+    templateParameters: Record<string, string>
+    favicon: string
+    template: string
+    minify: boolean
+    filename: string
+    excludeChunks: string[]
+  }
 
   const isMpa = userConfig.mpa as boolean;
 
@@ -41,9 +50,21 @@ const getHtmlPlugin = (context: Context) => {
     });
   }
 
-  const pages = getValue('MPA_PAGES') as any;
-  console.log('pages: ', pages);
-  return null;
+  const pages = getValue('MPA_PAGES') as Record<string, Opt>;
+  const entries = userConfig.entry as Record<string, string[]>;
+
+  // TODO: inject data
+  return Object.keys(pages).map(pageName => {
+    const singlePage = pages[pageName];
+
+    return htmlPlugin({
+      entry: entries[pageName][0],    // webpack entry
+      template: singlePage.template,
+      filename: singlePage.filename,
+      data: singlePage.templateParameters,
+      rootDir
+    });
+  });
 };
 
 /**
@@ -92,11 +113,26 @@ export const wp2vite = (context: Context): InlineConfig => {
 
   const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;
 
+  // 依赖预构建解析入口
+  const opdEntries = () => {
+    let _entry = userConfig.entry;
+    if (!userConfig.mpa) {
+      _entry = { index: [_entry] };
+    }
+
+    const entries = Object.keys(_entry).map(e => {
+      const url = _entry[e][0];
+      return entryExts.exec(url) ? url : `${url}.*`;
+    });
+
+    return entries;
+  };
+
   if (command === 'start') {
     return all([
       {
         optimizeDeps: {
-          entries: entryExts.exec(userConfig.entry as string) ? userConfig.entry : `${userConfig.entry}.*`,
+          entries: opdEntries(),
           // vite 无法分析 link 的依赖，需要手动加入以下依赖，防止 ice 维护时报错
           include: ['react-app-renderer', 'create-app-shared'],
         },

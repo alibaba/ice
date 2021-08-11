@@ -13,7 +13,11 @@ const getHtmlContent = ({
 
   if (data) {
     const compiled = templateComplier(html);
-    html = compiled(data);
+    try {
+      html = compiled(data);
+    } catch (e) {
+      console.log('');
+    }
   }
 
   const $ = cheerio.load(html);
@@ -33,7 +37,7 @@ interface Option {
 
 export const htmlPlugin = ({ filename, template, entry, rootDir, data = {} }: Option): Plugin => {
   let config: ResolvedConfig;
-  const pageName = path.basename(filename).replace('.html', '');
+  const pageName = filename.replace('.html', '');
   const tempPath = `.ice/html/${pageName}.html`;
   const htmlPath = path.resolve(rootDir, tempPath);
 
