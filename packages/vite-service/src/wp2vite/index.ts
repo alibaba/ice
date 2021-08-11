@@ -11,7 +11,7 @@ import {
   importPlugin,
   polyfillPlugin,
   serverHistoryPlugin,
-  htmlPlugin
+  htmlPlugin,
 } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
@@ -51,20 +51,22 @@ const getHtmlPlugin = (context: Context) => {
   }
 
   const pages = getValue('MPA_PAGES') as Record<string, Opt>;
+  const rewrites = getValue('MPA_REWRITES') as any;
   const entries = userConfig.entry as Record<string, string[]>;
 
-  // TODO: inject data
-  return Object.keys(pages).map(pageName => {
+  const mpaHtmlPlugins = Object.keys(pages).map(pageName => {
     const singlePage = pages[pageName];
 
     return htmlPlugin({
+      ...singlePage,
       entry: entries[pageName][0],    // webpack entry
-      template: singlePage.template,
-      filename: singlePage.filename,
-      data: singlePage.templateParameters,
       rootDir
     });
   });
+
+  const serverPlugin = serverHistoryPlugin({ rewrites });
+
+  return [...mpaHtmlPlugins, serverPlugin];
 };
 
 /**

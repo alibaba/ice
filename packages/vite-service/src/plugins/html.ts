@@ -7,14 +7,14 @@ import cheerio from 'cheerio';
 const getHtmlContent = ({
   template,
   entry,
-  data
+  templateParameters
 }) => {
   let html = fs.readFileSync(template, 'utf-8');
 
-  if (data) {
+  if (templateParameters) {
     const compiled = templateComplier(html);
     try {
-      html = compiled(data);
+      html = compiled(templateParameters);
     } catch (e) {
       console.log('');
     }
@@ -32,26 +32,26 @@ interface Option {
   template: string
   entry: string
   rootDir: string
-  data?: object
+  templateParameters?: object
 }
 
-export const htmlPlugin = ({ filename, template, entry, rootDir, data = {} }: Option): Plugin => {
+export const htmlPlugin = ({ filename, template, entry, rootDir, templateParameters = {} }: Option): Plugin => {
   let config: ResolvedConfig;
   const pageName = filename.replace('.html', '');
   const tempPath = `.ice/html/${pageName}.html`;
   const htmlPath = path.resolve(rootDir, tempPath);
 
   const html = getHtmlContent({
-    entry,
+    entry: entry.includes(rootDir) ? `/${path.relative(rootDir, entry)}` : entry,
     template,
-    data,
+    templateParameters,
   });
 
   fs.mkdirpSync(path.dirname(htmlPath));
   fs.writeFileSync(htmlPath, html);
 
   return {
-    name: 'vite-plugin-html',
+    name: `vite-plugin-html-${pageName}`,
     enforce: 'pre',
     configResolved(_config) {
       config = _config;
@@ -67,7 +67,9 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, data = {} }: Op
           }
 
           if (req.url === `/${filename}`) {
-            return res.end(await server.transformIndexHtml(req.url, html));
+            res.end(await server.transformIndexHtml(req.url, html));
+          } else {
+            next();
           }
         });
       };
