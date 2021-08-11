@@ -26,7 +26,6 @@ const getHtmlContent = ({
 interface Option {
   filename: string
   template: string
-  pageName: string
   entry: string
   data?: object
 }

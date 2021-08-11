@@ -37,10 +37,9 @@ export const wp2vite = (context: Context): InlineConfig => {
       externalsPlugin(userConfig.externals as any),
       importPlugin({ rootDir }),
       htmlPlugin({
-        entry: path.resolve('/', userConfig.entry as string),
+        entry: userConfig.entry as string,
         template: path.resolve(rootDir, 'public', 'index.html'),
         filename: 'index.html',
-        pageName: 'index'
       }),
       polyfillPlugin({
         value: userConfig.polyfill as any,
