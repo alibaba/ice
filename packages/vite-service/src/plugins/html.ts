@@ -54,15 +54,7 @@ export const htmlPlugin = ({ filename, template, entry, data = {} }: Option): Pl
       config = _config;
     },
     config(cfg) {
-      // cfg.server.open = 
-      // copy html and remake
       cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, htmlPath);
-    },
-    resolveId(id) {
-      if(id.endsWith('.html')) {
-        console.log(id);
-      }
-      return null;
     },
     configureServer(server: ViteDevServer) {
       return () => {
