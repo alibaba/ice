@@ -1,11 +1,18 @@
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import analyzer from 'rollup-plugin-visualizer';
+import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import { recordMap } from './config';
-import { indexHtmlPlugin, externalsPlugin, importPlugin, polyfillPlugin, serverHistoryPlugin } from '../plugins';
+import {
+  externalsPlugin,
+  importPlugin,
+  polyfillPlugin,
+  serverHistoryPlugin,
+  htmlPlugin
+} from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -29,14 +36,12 @@ export const wp2vite = (context: Context): InlineConfig => {
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
       importPlugin({ rootDir }),
-      indexHtmlPlugin({
-        entry: userConfig.entry,
-        temp: 'public',
-        // TODO: User Config Type Completion
-        ignoreHtmlTemplate: userConfig.ignoreHtmlTemplate as boolean,
-        rootDir,
+      htmlPlugin({
+        entry: path.resolve('/', userConfig.entry as string),
+        template: path.resolve(rootDir, 'public', 'index.html'),
+        filename: 'index.html',
+        pageName: 'index'
       }),
-      // TODO: User Config Type Completion
       polyfillPlugin({
         value: userConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
@@ -80,15 +85,22 @@ export const wp2vite = (context: Context): InlineConfig => {
             __app_mode__: 'start',
           },
         },
-        plugins: [reactRefresh({
-          // Exclude node_modules and ice runtime
-          exclude: [/node_modules/, /\.ice/],
-        })],
+        plugins: [
+          reactRefresh({
+            // Exclude node_modules and ice runtime
+            exclude: [/node_modules/, /\.ice/],
+          })
+        ],
       },
       viteConfig,
     ]);
   } else {
     return all([{
+      build: {
+        commonjsOptions: {
+          exclude: ['react-app-renderer', 'create-app-shared'],
+        },
+      },
       define: {
         __app_mode__: 'build'
       }

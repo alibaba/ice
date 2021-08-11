@@ -1,0 +1,93 @@
+import type { ViteDevServer, Plugin, ResolvedConfig } from 'vite';
+import { template as templateComplier, set } from 'lodash';
+import * as fs from 'fs-extra';
+import * as path from 'path';
+import cheerio from 'cheerio';
+
+const getHtmlContent = ({
+  template,
+  entry,
+  data
+}) => {
+  let html = fs.readFileSync(template, 'utf-8');
+
+  if (data) {
+    const compiled = templateComplier(html);
+    html = compiled(data);
+  }
+
+  const $ = cheerio.load(html);
+  $('body').append(`<script type="module" src="${entry}" />`);
+  $('head').append('<script>global = globalThis</script>');
+
+  return $.html({});
+};
+
+interface Option {
+  filename: string
+  template: string
+  pageName: string
+  entry: string
+  data?: object
+}
+
+export const htmlPlugin = ({ filename, template, entry, data = {} }: Option): Plugin => {
+  let config: ResolvedConfig;
+  const rootDir = process.cwd();
+  const pageName = path.basename(filename).replace('.html', '');
+  const tempPath = `.ice/html/${pageName}.html`;
+  const htmlPath = path.resolve(rootDir, tempPath);
+
+  const html = getHtmlContent({
+    entry,
+    template,
+    data,
+  });
+
+  fs.mkdirpSync(path.dirname(htmlPath));
+  fs.writeFileSync(htmlPath, html);
+
+  return {
+    name: 'vite-plugin-html',
+    enforce: 'pre',
+    configResolved(_config) {
+      config = _config;
+    },
+    config(cfg) {
+      // cfg.server.open = 
+      // copy html and remake
+      cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, htmlPath);
+    },
+    resolveId(id) {
+      if(id.endsWith('.html')) {
+        console.log(id);
+      }
+      return null;
+    },
+    configureServer(server: ViteDevServer) {
+      return () => {
+        server.middlewares.use(async (req, res, next) => {
+          if (!req.url?.endsWith('.html') && req.url !== '/') {
+            return next();
+          }
+
+          if (req.url === `/${filename}`) {
+            return res.end(await server.transformIndexHtml(req.url, html));
+          }
+        });
+      };
+    },
+    async closeBundle() {
+      // SPA
+      const outDir = config.build.outDir;
+      const distPath = path.resolve(rootDir, outDir);
+      const outPath = path.resolve(distPath, `${pageName}.html`);
+      const sourcePath = path.resolve(distPath, tempPath);
+
+      if (fs.existsSync(sourcePath)) {
+        fs.copyFileSync(sourcePath, outPath);
+        fs.removeSync(sourcePath);
+      }
+    },
+  };
+};
