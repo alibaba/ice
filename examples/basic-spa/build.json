@@ -7,6 +7,9 @@
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },
+  "browserslist": {
+    "chrome": 58
+  },
   "modeConfig": {
     "prod": {
       "ignoreHtmlTemplate": false
