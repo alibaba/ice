@@ -1,7 +1,8 @@
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const deepmerge = require('deepmerge');
 
 module.exports = (config, value, context) => {
-  const { command } = context;
+  const { command, userConfig } = context;
   if (command === 'start' && value && process.env.NODE_ENV !== 'test') {
     config.plugin('ReactRefreshWebpackPlugin')
       .use(ReactRefreshWebpackPlugin, [{
@@ -23,5 +24,17 @@ module.exports = (config, value, context) => {
             };
         });
     });
+    if (userConfig.swc) {
+      const refreshOptions = {
+        jsc: {
+          transform: {
+            react: {
+              refresh: true,
+            },
+          },
+        },
+      };
+      config.module.rule('swc').use('swc-loader').tap((options) => deepmerge(options || {}, refreshOptions));
+    }
   }
 };

@@ -3,7 +3,7 @@ const { merge } = require('@builder/pack/deps/lodash');
 
 const EXCLUDE_REGEX = /node_modules/;
 
-module.exports = (config, swcOptions, context, { log }) => {
+module.exports = (config, swcOptions, context, { log, getValue }) => {
   const { rootDir } = context;
   if (swcOptions) {
     log.info('[swc]', 'swc enabled, configurations about babel will be ignored');
@@ -16,12 +16,12 @@ module.exports = (config, swcOptions, context, { log }) => {
       }
     });
     const swcLoader = require.resolve('@builder/swc-loader');
-
+    const reactRuntimeConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic' } : {};
     // add swc rule
     const commonOptions = {
       jsc: {
         transform: {
-          react: {},
+          react: reactRuntimeConfig,
           legacyDecorator: true
         },
         externalHelpers: true
@@ -55,6 +55,13 @@ module.exports = (config, swcOptions, context, { log }) => {
       .enforce('pre')
       .use('pre-compile-loader')
       .loader(path.join(__dirname, '../Loaders/PreCompileLoader'))
+      .options({
+        jsc: {
+          transform: {
+            react: reactRuntimeConfig,
+          },
+        },
+      })
       .end();
 
     config.module
