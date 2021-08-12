@@ -60,12 +60,14 @@ export const polyfillPlugin = (
       fs.rmdirSync(assetsPath);
 
       // html 字符替换
-      const htmlPath = path.resolve(distPath, 'index.html');
-      const html = fs.readFileSync(htmlPath, 'utf-8');
-      fs.writeFileSync(
-        htmlPath,
-        replace(html, `/${assetsDirName}/${hashName}`, `/${outputAssetsPath.js}/${fileName}`)
-      );
+      const htmlPaths = glob.sync(path.resolve(distPath, '*.html'));
+      htmlPaths.forEach(p => {
+        const html = fs.readFileSync(p, 'utf-8');
+        fs.writeFileSync(
+          p,
+          replace(html, `/${assetsDirName}/${hashName}`, `/${outputAssetsPath.js}/${fileName}`)
+        );
+      });
     }
   };
 

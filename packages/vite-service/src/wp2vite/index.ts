@@ -116,7 +116,7 @@ export const wp2vite = (context: Context): InlineConfig => {
   const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;
 
   // 依赖预构建解析入口
-  const opdEntries = () => {
+  const getAnalysisEntries = () => {
     let _entry = userConfig.entry;
     if (!userConfig.mpa) {
       _entry = { index: [_entry] };
@@ -134,7 +134,7 @@ export const wp2vite = (context: Context): InlineConfig => {
     return all([
       {
         optimizeDeps: {
-          entries: opdEntries(),
+          entries: getAnalysisEntries(),
           // vite 无法分析 link 的依赖，需要手动加入以下依赖，防止 ice 维护时报错
           include: ['react-app-renderer', 'create-app-shared'],
         },

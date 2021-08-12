@@ -36,28 +36,40 @@ interface Option {
 }
 
 export const htmlPlugin = ({ filename, template, entry, rootDir, templateParameters = {} }: Option): Plugin => {
-  let config: ResolvedConfig;
   const pageName = filename.replace('.html', '');
-  const tempPath = `.ice/html/${pageName}.html`;
-  const htmlPath = path.resolve(rootDir, tempPath);
+
+  const getEntry = () => {
+    let entryPath: string = entry;
+    if (entry.includes(rootDir)) {
+      entryPath = path.relative(rootDir, entry);
+    }
+
+    return `/${entryPath}`;
+  };
 
   const html = getHtmlContent({
-    entry: entry.includes(rootDir) ? `/${path.relative(rootDir, entry)}` : entry,
+    entry: getEntry(),
     template,
     templateParameters,
   });
 
-  fs.mkdirpSync(path.dirname(htmlPath));
-  fs.writeFileSync(htmlPath, html);
-
   return {
     name: `vite-plugin-html-${pageName}`,
-    enforce: 'pre',
-    configResolved(_config) {
-      config = _config;
-    },
+    enforce: 'post',
     config(cfg) {
-      cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, htmlPath);
+      cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, filename);
+    },
+    resolveId(id) {
+      if (id.includes('.html')) {
+        return id;
+      }
+      return null;
+    },
+    load(id) {
+      if (id.includes(filename)) {
+        return html;
+      }
+      return null;
     },
     configureServer(server: ViteDevServer) {
       return () => {
@@ -67,24 +79,17 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
           }
 
           if (req.url === `/${filename}`) {
-            res.end(await server.transformIndexHtml(req.url, html));
-          } else {
-            next();
+            try {
+              const src = await server.transformIndexHtml(req.url, html);
+              res.end(src);
+            } catch (e) {
+              return next(e);
+            }
           }
+
+          next();
         });
       };
-    },
-    async closeBundle() {
-      // SPA
-      const outDir = config.build.outDir;
-      const distPath = path.resolve(rootDir, outDir);
-      const outPath = path.resolve(distPath, `${pageName}.html`);
-      const sourcePath = path.resolve(distPath, tempPath);
-
-      if (fs.existsSync(sourcePath)) {
-        fs.copyFileSync(sourcePath, outPath);
-        fs.removeSync(sourcePath);
-      }
-    },
+    }
   };
 };
