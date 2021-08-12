@@ -15,7 +15,8 @@ const plugin = async (api): Promise<void> => {
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
-  const serverFilePath = path.join(serverDir, 'server.js');
+  const serverFilename = 'index.js';
+  const serverFilePath = path.join(serverDir, serverFilename);
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
@@ -103,7 +104,7 @@ const plugin = async (api): Promise<void> => {
 
     config.output
       .path(serverDir)
-      .filename('[name].js')
+      .filename(serverFilename)
       .publicPath('/')
       .libraryTarget('commonjs2');
 

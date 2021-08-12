@@ -1,4 +1,4 @@
 {
   "mpa": true,
-  "ssr": true
+  "ssr": "static"
 }
