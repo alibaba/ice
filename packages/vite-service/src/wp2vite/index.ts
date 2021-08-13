@@ -66,6 +66,18 @@ const getHtmlPlugin = (context: Context) => {
   return mpaHtmlPlugins;
 };
 
+const getOpen = (context: Context) => {
+  const { getValue } = context;
+  // if spa : SERVER_PATH is undefined
+  let page: string = getValue('SERVER_PATH');
+
+  if (page && !page.startsWith('/')) {
+    page = `/${page}`;
+  }
+
+  return page ?? true;
+};
+
 /**
  * Exposed
  */
@@ -107,7 +119,7 @@ export const wp2vite = (context: Context): InlineConfig => {
     port: commandArgs.port || 3333,
     host: commandArgs.host || '0.0.0.0',
     https: commandArgs.https || false,
-    open: true,
+    open: getOpen(context)
   };
 
   const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;
