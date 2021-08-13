@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite';
 import { isBoolean } from 'lodash';
+import { all } from 'deepmerge';
 import * as history from 'connect-history-api-fallback';
 
 /**
@@ -14,12 +15,12 @@ export const serverHistoryPlugin = (opt: history.Options | boolean): Plugin => {
     name: 'vite-plugin-server-history',
     enforce: 'pre',
     configureServer({ middlewares: app }) {
-      const handler = history(opt);
-
-      app.use((req, res, next) => {
-        req.url = req.originalUrl;
-        next();
-      });
+      const handler = history(all([opt, {
+        rewrites: [{
+          from: /.*/,
+          to: (ctx: history.Context) => ctx.parsedUrl.pathname
+        }]
+      }]));
 
       app.use(handler);
     },

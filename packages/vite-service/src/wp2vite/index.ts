@@ -82,7 +82,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       externalsPlugin(userConfig.externals as any),
       importPlugin({ rootDir, entries: userConfig.entry as any }),
       // spa 与 mpa 中对 html 的处理
-      // serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
+      serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
       polyfillPlugin({
         value: userConfig.polyfill as any,
