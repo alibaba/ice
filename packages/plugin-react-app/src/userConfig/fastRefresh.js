@@ -1,4 +1,4 @@
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@builder/pack/deps/@pmmmwh/react-refresh-webpack-plugin');
 const deepmerge = require('deepmerge');
 
 module.exports = (config, value, context) => {
