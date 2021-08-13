@@ -115,17 +115,16 @@ const plugin: IPlugin = (api) => {
     onGetWebpackConfig(config => {
       const pages = setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
 
-      const rewrites = Object.keys(entries).map((pageName) => {
-        return {
-          from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
-          to: `/${pageName}.html`,
-        };
+      config.devServer.historyApiFallback({
+        rewrites: Object.keys(entries).map((pageName) => {
+          return {
+            from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
+            to: `/${pageName}.html`,
+          };
+        })
       });
 
-      config.devServer.historyApiFallback({ rewrites });
-
       setValue('MPA_PAGES', pages);
-      setValue('MPA_REWRITES', rewrites);
     });
   }
 };

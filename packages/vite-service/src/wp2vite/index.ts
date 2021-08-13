@@ -51,7 +51,6 @@ const getHtmlPlugin = (context: Context) => {
   }
 
   const pages = getValue('MPA_PAGES') as Record<string, Opt>;
-  const rewrites = getValue('MPA_REWRITES') as any;
   const entries = userConfig.entry as Record<string, string[]>;
 
   const mpaHtmlPlugins = Object.keys(pages).map(pageName => {
@@ -64,9 +63,7 @@ const getHtmlPlugin = (context: Context) => {
     });
   });
 
-  const serverPlugin = serverHistoryPlugin({ rewrites });
-
-  return [...mpaHtmlPlugins, serverPlugin];
+  return mpaHtmlPlugins;
 };
 
 /**
@@ -80,12 +77,12 @@ export const wp2vite = (context: Context): InlineConfig => {
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
-      serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getAnalyzer(config.chainConfig),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
-      importPlugin({ rootDir }),
+      importPlugin({ rootDir, entries: userConfig.entry as any }),
       // spa 与 mpa 中对 html 的处理
+      // serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
       polyfillPlugin({
         value: userConfig.polyfill as any,

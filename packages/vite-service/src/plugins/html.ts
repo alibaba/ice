@@ -1,4 +1,4 @@
-import type { ViteDevServer, Plugin, ResolvedConfig } from 'vite';
+import type { ViteDevServer, Plugin } from 'vite';
 import { template as templateComplier, set } from 'lodash';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -55,7 +55,7 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
 
   return {
     name: `vite-plugin-html-${pageName}`,
-    enforce: 'post',
+    enforce: 'pre',
     config(cfg) {
       cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, filename);
     },
@@ -66,7 +66,7 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
       return null;
     },
     load(id) {
-      if (id.includes(filename)) {
+      if (id === filename) {
         return html;
       }
       return null;
