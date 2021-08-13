@@ -113,7 +113,7 @@ const plugin: IPlugin = (api) => {
     });
     // set page template
     onGetWebpackConfig(config => {
-      const pages = setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
+      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
 
       config.devServer.historyApiFallback({
         rewrites: Object.keys(entries).map((pageName) => {
@@ -123,13 +123,11 @@ const plugin: IPlugin = (api) => {
           };
         })
       });
-
-      setValue('MPA_PAGES', pages);
     });
   }
 };
 
-function setPageTemplate(rootDir, entries, template = {}, config) {
+function setPageTemplate(rootDir, entries, template = {}, config, setValue) {
   const templateNames = Object.keys(template);
   const entryNames = {};
 
@@ -166,13 +164,13 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
           ...htmlPluginOption,
         };
 
-        pages[defaultEntryName] = (item);
+        pages[defaultEntryName] = item;
         return [item];
       });
     }
   });
 
-  return pages;
+  setValue('MPA_PAGES', pages);
 }
 
 export default plugin;

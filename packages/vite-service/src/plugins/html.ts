@@ -80,8 +80,7 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
 
           if (req.url === `/${filename}`) {
             try {
-              const src = await server.transformIndexHtml(req.url, html);
-              res.end(src);
+              res.end(await server.transformIndexHtml(req.url, html));
             } catch (e) {
               return next(e);
             }
