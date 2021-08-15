@@ -23,4 +23,5 @@ export interface IRunAppRenderData {
     router: boolean,
   };
   errorBoundary?: boolean;
+  pageConfig?: any;
 }

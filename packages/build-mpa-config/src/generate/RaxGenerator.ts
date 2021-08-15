@@ -12,6 +12,8 @@ export default class ReactGenerator extends Base {
   }
 
   private addRunAppRenderData() {
+    const { pageConfig } = this.options;
+    this.runAppRenderData.pageConfig = pageConfig;
     const routesFilePath = this.getRoutesFilePath();
     if (routesFilePath) {
       const content = fs.readJSONSync(routesFilePath);

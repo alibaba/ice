@@ -47,7 +47,7 @@ export default class BaseGenerator {
   }
 
   public generateRunAppFile(userConfig) {
-    const { framework, pageConfig } = this.options;
+    const { framework } = this.options;
     const { applyMethod } = this.builtInMethods;
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     const routesFilePath = this.getRoutesFilePath();
@@ -58,11 +58,10 @@ export default class BaseGenerator {
       typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
-        router: !!routesFilePath,
+        router: Boolean(routesFilePath),
       },
-      routesFilePath,
+      routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       errorBoundary: false,
-      pageConfig,
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);

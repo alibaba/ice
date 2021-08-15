@@ -1,4 +1,5 @@
 import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from 'history';
+import { isNode } from 'universal-env';
 import type { CreateHistory, InitHistory } from '../createInitHistory';
 import createInitHistory from '../createInitHistory';
 

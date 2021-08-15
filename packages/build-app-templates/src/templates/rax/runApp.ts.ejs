@@ -13,7 +13,7 @@ import {
 <% if (tabBarPath) {%>
 import TabBar from '<%- tabBarPath %>';
 <% } %>
-import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb, isNode } from 'universal-env';
 import miniappRenderer from 'miniapp-renderer';
 import raxAppRenderer, { RenderAppConfig }  from 'rax-app-renderer';
 <% if (globalStyle) {%>
@@ -63,7 +63,7 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
   // set History before GID
   initHistory && initHistory(appConfig as any);
   <% } %>
-  if (process.env.__IS_SERVER__) return;
+  if (process.env.__IS_SERVER__ || isNode) return;
 
   let renderer;
   renderer = raxAppRenderer;
