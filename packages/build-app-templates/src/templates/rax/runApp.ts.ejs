@@ -27,7 +27,7 @@ import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
-let staticConfig
+let staticConfig;
 
 <% if (routesFilePath)  { %>
 import defaultStaticConfig from '<%- routesFilePath %>';
@@ -45,6 +45,10 @@ const frameworkAppBase = createBaseApp({
     getSearchParams,
   },
 });
+
+<% if (typeof pageConfig !== 'undefined') {%>
+const pageConfig = <%- JSON.stringify(pageConfig) %>;
+<% } %>
 
 export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== false) {%>customStaticConfig?: any<% } %>) {
   // server bundle will to get appConfig after run runApp
@@ -75,6 +79,9 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
       initAppLifeCycles,
       emitLifeCycles,
     },
+    <% if (typeof pageConfig !== 'undefined') {%>
+    pageConfig,
+    <% } %>
     <% if (tabBarPath) {%>
     TabBar,
     <% } %>
@@ -84,4 +91,7 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
 export default {
   createBaseApp: frameworkAppBase,
   staticConfig,
+  <% if (typeof pageConfig !== 'undefined') {%>
+  pageConfig,
+  <% } %>
 }

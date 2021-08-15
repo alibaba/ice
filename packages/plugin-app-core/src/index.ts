@@ -102,32 +102,51 @@ function renderDefaultTemplate(generator: Generator, { framework }) {
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
-  const { userConfig, rootDir } = context;
-  const { framework, hasJsxRuntime } = options;
+  const { rootDir } = context;
   const plugins = getAllPlugin();
-  const { targets = [], ssr = false } = userConfig;
-  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
     targetDir,
-    defaultData: {
+    defaultData: getDefaultRenderData(api, options),
+    log,
+    plugins,
+  });
+}
+
+function getDefaultRenderData(api, options) {
+  const { context, getValue } = api;
+  const { userConfig } = context;
+  const { framework, hasJsxRuntime } = options;
+  const { targets = [], ssr = false } = userConfig;
+  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
+  if (framework === 'rax') {
+    return {
       framework,
-      isReact: framework === 'react',
-      isRax: framework === 'rax',
+      isReact: false,
+      isRax: true,
       isMiniapp,
-      ssr,
       buildConfig: getBuildConfig(userConfig),
       hasJsxRuntime,
       tabBarPath: getValue('TAB_BAR_PATH'),
       errorBoundary: true,
       relativeCorePath: '.',
       typesPath: '../types',
-      routesFilePath: framework === 'rax' ? './staticConfig' : '',
-    },
-    log,
-    plugins,
-  });
+      routesFilePath: './staticConfig',
+    };
+  } else {
+    return {
+      framework,
+      isReact: true,
+      isRax: false,
+      ssr,
+      buildConfig: getBuildConfig(userConfig),
+      hasJsxRuntime,
+      errorBoundary: true,
+      relativeCorePath: '.',
+      typesPath: '../types',
+    };
+  }
 }
 
 function checkTargets(targets) {
