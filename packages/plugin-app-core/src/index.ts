@@ -123,7 +123,7 @@ function initGenerator(api, options) {
       errorBoundary: true,
       relativeCorePath: '.',
       typesPath: '../types',
-      routesFilePath: '',
+      routesFilePath: framework === 'rax' ? './staticConfig' : '',
     },
     log,
     plugins,

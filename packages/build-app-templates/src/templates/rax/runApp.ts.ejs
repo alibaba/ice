@@ -1,4 +1,4 @@
-import { createElement, useEffect, Component } from 'rax';
+import { createElement } from 'rax';
 import {
   createBaseApp,
   initAppLifeCycles,
@@ -17,8 +17,8 @@ import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgra
 import miniappRenderer from 'miniapp-renderer';
 import raxAppRenderer, { RenderAppConfig }  from 'rax-app-renderer';
 <% if (globalStyle) {%>
-  // eslint-disable-next-line
-  import '<%= globalStyle %>'
+// eslint-disable-next-line
+import '<%= globalStyle %>';
 <% } %>
 import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
@@ -27,6 +27,13 @@ import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
+let staticConfig
+
+<% if (routesFilePath)  { %>
+import defaultStaticConfig from '<%- routesFilePath %>';
+
+staticConfig = defaultStaticConfig;
+<% } %>
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
@@ -39,20 +46,26 @@ const frameworkAppBase = createBaseApp({
   },
 });
 
-export function runApp(appConfig?: IAppConfig) {
+export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== false) {%>customStaticConfig?: any<% } %>) {
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
+
+  <% if (buildConfig.router !== false) {%>
+  if (customStaticConfig) {
+    staticConfig = customStaticConfig;
+  }
+  // set History before GID
+  initHistory && initHistory(appConfig as any);
+  <% } %>
+  if (process.env.__IS_SERVER__) return;
+
   let renderer;
   renderer = raxAppRenderer;
   if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
     renderer = miniappRenderer;
   }
-  <% if (buildConfig.router !== false) {%>
-  // set History before GID
-  initHistory(appConfig as any);
-  <% } %>
   renderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
@@ -70,4 +83,5 @@ export function runApp(appConfig?: IAppConfig) {
 
 export default {
   createBaseApp: frameworkAppBase,
+  staticConfig,
 }

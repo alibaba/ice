@@ -60,6 +60,7 @@ export default class BaseGenerator {
         ...applyMethod('getBuildConfig', userConfig),
         router: !!routesFilePath,
       },
+      routesFilePath,
       errorBoundary: false
     };
 

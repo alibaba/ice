@@ -4,7 +4,6 @@ const path = require('path');
 module.exports = (config, context) => {
   const { userConfig, rootDir, webpack } = context;
   // filesystem cache
-  // filesystem cache
   if (!process.env.DISABLE_FS_CACHE) {
     const version = process.env.__FRAMEWORK_VERSION__;
     const cacheConfig = {
