@@ -24,4 +24,5 @@ export interface IRunAppRenderData {
   };
   errorBoundary?: boolean;
   pageConfig?: any;
+  entryName?: string;
 }

@@ -9,11 +9,18 @@ export default class ReactGenerator extends Base {
   constructor(api, options) {
     super(api, options);
     this.addRunAppRenderData();
+    const { getValue } = api;
+    const tabBarConfig = getValue('staticConfig').tabBar;
+    if (tabBarConfig) {
+      this.runAppRenderData.tabBarPath = './TabBar';
+      this.generateTabBarFile(tabBarConfig);
+    }
   }
 
   private addRunAppRenderData() {
     const { pageConfig } = this.options;
     this.runAppRenderData.pageConfig = pageConfig;
+
     const routesFilePath = this.getRoutesFilePath();
     if (routesFilePath) {
       const content = fs.readJSONSync(routesFilePath);
@@ -25,6 +32,19 @@ export default class ReactGenerator extends Base {
         }
       }
     }
+  }
+
+  private generateTabBarFile(tabBarConfig) {
+    const { getValue, applyMethod } = this.builtInMethods;
+    const { entryName } = this.options;
+
+    const renderData = {
+      tabBarPath: relative(this.entryFolder, getValue('TAB_BAR_PATH')),
+      entryName,
+      tabBarConfig,
+    };
+
+    applyMethod('addRenderFile', path.join(__dirname, '../template/rax/TabBar.tsx.ejs'), path.join(this.entryFolder, 'TabBar.tsx'), renderData);
   }
 
   public getRoutesFilePath(): string {
