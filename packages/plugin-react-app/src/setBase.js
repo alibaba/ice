@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
 const CopyWebpackPlugin = require('@builder/pack/deps/copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const { getFilePath, getWebOutputPath } = require('./utils');
