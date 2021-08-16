@@ -57,7 +57,9 @@ export const polyfillPlugin = (
       }
 
       // remove assets dir
-      fs.rmdirSync(assetsPath);
+      if (!fs.readdirSync(assetsPath).length) {
+        fs.rmdirSync(assetsPath);
+      }
 
       // html 字符替换
       const htmlPaths = glob.sync(path.resolve(distPath, '*.html'));
