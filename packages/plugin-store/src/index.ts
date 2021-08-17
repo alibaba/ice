@@ -121,7 +121,7 @@ export default async (api: any) => {
 
   gen.render();
   onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
+    applyMethod('watchFileChange', /models\/.*|model.*|store.*/, () => {
       gen.render();
     });
   });
