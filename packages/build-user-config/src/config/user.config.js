@@ -1,6 +1,6 @@
 const { validation } = require('@builder/app-helpers');
 
-const watchIgnoredRegexp = process.env.DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
+const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
 
 module.exports = [
   {
