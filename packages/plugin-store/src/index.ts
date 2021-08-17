@@ -18,7 +18,7 @@ export default async (api: any) => {
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const srcPath = path.join(rootDir, srcDir);
   const tempDir = (path.basename(tempPath) || '');  // .ice
-  const pagesName: string[] = applyMethod('getPages', rootDir, srcDir);
+  const pagesName: string[] = applyMethod('getPages', srcPath);
 
   const storeExists = checkStoreExists(srcPath, pagesName);
   if (!storeExists) {
@@ -115,14 +115,14 @@ export default async (api: any) => {
     tempPath,
     applyMethod,
     srcPath,
-    pagesName,
     disableResetPageState: !!store?.disableResetPageState
   });
 
   gen.render();
-  onHook('before.start.run', async () => {
+
+  onHook('before.start.run', () => {
     applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
-      gen.render();
+      gen.render(true);
     });
   });
 };

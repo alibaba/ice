@@ -37,6 +37,14 @@ module.exports = [
     defaultValue: [ 'node_modules' ]
   },
   {
+    name: 'watchOptions',
+    validation: 'object',
+    defaultValue: {
+      aggregateTimeout: 600,
+      ignored: /node_modules|\.ice|\.rax/,
+    }
+  },
+  {
     name: 'devServer',
     validation: 'object',
     defaultValue: {
@@ -45,12 +53,6 @@ module.exports = [
       webSocketServer: 'ws',
       devMiddleware: {
         publicPath: '/',
-      },
-      static: {
-        watch: {
-          ignored: /node_modules/,
-          aggregateTimeout: 600,
-        },
       },
       client: {
         overlay: false,
