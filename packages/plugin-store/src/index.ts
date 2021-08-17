@@ -124,5 +124,11 @@ export default async (api: any) => {
     applyMethod('watchFileChange', /models\/.*|model.*|store.*/, () => {
       gen.render();
     });
+
+    applyMethod('watchFileChange', /pages\/\w+\/index(.jsx?|.tsx)/, (event) => {
+      if (event === 'unlink' || event === 'add') {
+        gen.render();
+      }
+    });
   });
 };
