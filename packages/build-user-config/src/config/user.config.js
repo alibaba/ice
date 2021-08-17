@@ -1,5 +1,7 @@
 const { validation } = require('@builder/app-helpers');
 
+const watchIgnoredRegexp = process.env.DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
+
 module.exports = [
   {
     name: 'alias',
@@ -40,8 +42,7 @@ module.exports = [
     name: 'watchOptions',
     validation: 'object',
     defaultValue: {
-      aggregateTimeout: 600,
-      ignored: /node_modules|\.ice|\.rax/,
+      ignored: watchIgnoredRegexp,
     }
   },
   {
@@ -53,6 +54,11 @@ module.exports = [
       webSocketServer: 'ws',
       devMiddleware: {
         publicPath: '/',
+      },
+      static: {
+        watch: {
+          ignored: watchIgnoredRegexp,
+        }
       },
       client: {
         overlay: false,

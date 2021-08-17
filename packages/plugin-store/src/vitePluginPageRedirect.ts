@@ -15,8 +15,7 @@ const getPageName = (resolveId: string): { type: string; pageName: string; } => 
   return { type, pageName };
 };
 
-const vitePluginPageRedirect = (rootDir: string ,routesPath: string[] | string): Plugin => {
-  const routesPaths = Array.isArray(routesPath) ? routesPath : [routesPath];
+const vitePluginPageRedirect = (rootDir: string ,routesPaths: string[]): Plugin => {
   return {
     enforce: 'pre',
     name: 'vite-plugin-page-redirect',
