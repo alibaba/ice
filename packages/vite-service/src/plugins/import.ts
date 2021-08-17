@@ -24,6 +24,11 @@ const getTransformedCode = async (code: string, id: string, tempPath: string) =>
         name: 'runApp',
         redirectPath: url,
         default: false,
+      },
+      {
+        name: 'createStore',
+        redirectPath: '@ice/store',
+        default: false,
       }
     ]
   });
@@ -34,6 +39,7 @@ const getTransformedCode = async (code: string, id: string, tempPath: string) =>
  * @to import { runApp } from '../.ice/core/runApp'
  * 
  * @tip both support spa and mpa
+ * @variable runApp icestore
  */
 export const importPlugin = ({ rootDir, entries }: Option): Plugin => {
   const isMpa = isObject(entries);

@@ -157,7 +157,7 @@ export const wp2vite = (context: Context): InlineConfig => {
         plugins: [
           userConfig.fastRefresh ? reactRefresh({
             // Exclude node_modules and ice runtime
-            exclude: [/node_modules/, /\.ice/],
+            exclude: [/node_modules/, /\.ice/]
           }) : null
         ],
       },

@@ -123,7 +123,6 @@ export default async (api: any) => {
   });
 
   gen.render();
-
   onHook('before.start.run', () => {
     applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, (event: string) => {
       if (event === 'add' || event === 'unlink') {
