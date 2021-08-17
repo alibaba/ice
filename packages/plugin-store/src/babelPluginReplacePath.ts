@@ -6,14 +6,14 @@ const pagePathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/
 // eg：src/pages/home/Layout
 const layoutPathRegExp = /src\/pages\/\w+\/Layout/;
 
-module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod, rootDir }) => {
+module.exports = ({ types: t }, { routesPaths, alias, tempDir, applyMethod, rootDir }) => {
   return {
     visitor: {
       Program: {
         enter(programPath, state) {
           programPath.traverse({
             ImportDeclaration(nodePath) {
-              const isRoutesFile = routesPath.includes(state.filename);
+              const isRoutesFile = routesPaths.includes(state.filename);
               if (isRoutesFile) {
                 const { source, specifiers } = nodePath.node;
                 // issue: https://github.com/ice-lab/icejs/issues/271
@@ -38,7 +38,7 @@ module.exports = ({ types: t }, { routesPath, alias, tempDir, applyMethod, rootD
             },
 
             CallExpression(nodePath) {
-              const isRoutesFile = routesPath.includes(state.filename);
+              const isRoutesFile = routesPaths.includes(state.filename);
               if (isRoutesFile) {
                 if (t.isImport(nodePath.node.callee)) {
                   const args = nodePath.node.arguments;

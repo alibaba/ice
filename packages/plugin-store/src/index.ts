@@ -18,7 +18,7 @@ export default async (api: any) => {
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
   const srcPath = path.join(rootDir, srcDir);
   const tempDir = (path.basename(tempPath) || '');  // .ice
-  const pagesName: string[] = applyMethod('getPages', rootDir, srcDir);
+  const pagesName: string[] = applyMethod('getPages', srcPath);
 
   const storeExists = checkStoreExists(srcPath, pagesName);
   if (!storeExists) {
@@ -45,25 +45,29 @@ export default async (api: any) => {
   const { configPath } = router || {};
   // TODO: remove PROJECT_TYPE
   const projectType = getValue('PROJECT_TYPE');
-  let { routesPath } = applyMethod('getRoutes', {
-    rootDir,
-    tempPath,
-    configPath,
-    projectType,
-    isMpa,
-    srcDir
-  });
 
+  let routesPaths;
   if (isMpa) {
-    routesPath = pagesName.map((pageName: string) => {
+    routesPaths = pagesName.map((pageName: string) => {
       const pagePath = path.join(rootDir, 'src', 'pages', pageName);
       const routesFileType = getRouteFileType(pagePath);
       return path.join(pagePath, `routes${routesFileType}`);
     });
+  } else {
+    const routes = applyMethod('getRoutes', {
+      rootDir,
+      tempPath,
+      configPath,
+      projectType,
+      isMpa,
+      srcDir
+    });
+    routesPaths = [routes.routesPath];
   }
+
   // add vite plugin for redirect page component
   if (vite) {
-    modifyUserConfig('vite.plugins', [vitePluginPageRedirect(rootDir, routesPath)], { deepmerge: true });
+    modifyUserConfig('vite.plugins', [vitePluginPageRedirect(rootDir, routesPaths)], { deepmerge: true });
   }
 
   if (swc) {
@@ -73,23 +77,23 @@ export default async (api: any) => {
         // ensure that replace-router-path-loader is before babel-loader
         // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
         .before('babel-loader')
-        .test((filePath: string) => routesPath.includes(filePath))
+        .test((filePath: string) => routesPaths.includes(filePath))
         .use('replace-router-path-loader')
         .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
         .options({
           alias,
           tempDir,
           applyMethod,
-          pagesName,
-          routesPath: Array.isArray(routesPath) ? routesPath : [routesPath],
-          rootDir
+          routesPaths,
+          rootDir,
+          srcPath
         });
     });
   } else {
     const replacePathBabelPlugin = [
       require.resolve('./babelPluginReplacePath'),
       {
-        routesPath,
+        routesPaths,
         alias,
         applyMethod,
         tempDir,
@@ -115,19 +119,14 @@ export default async (api: any) => {
     tempPath,
     applyMethod,
     srcPath,
-    pagesName,
     disableResetPageState: !!store?.disableResetPageState
   });
 
   gen.render();
-  onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /models\/.*|model.*|store.*/, () => {
-      gen.render();
-    });
-
-    applyMethod('watchFileChange', /pages\/\w+\/index(.jsx?|.tsx)/, (event) => {
-      if (event === 'unlink' || event === 'add') {
-        gen.render();
+  onHook('before.start.run', () => {
+    applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, (event: string) => {
+      if (event === 'add' || event === 'unlink') {
+        gen.render(true);
       }
     });
   });

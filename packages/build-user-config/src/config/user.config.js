@@ -1,5 +1,7 @@
 const { validation } = require('@builder/app-helpers');
 
+const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
+
 module.exports = [
   {
     name: 'alias',
@@ -37,6 +39,13 @@ module.exports = [
     defaultValue: [ 'node_modules' ]
   },
   {
+    name: 'watchOptions',
+    validation: 'object',
+    defaultValue: {
+      ignored: watchIgnoredRegexp,
+    }
+  },
+  {
     name: 'devServer',
     validation: 'object',
     defaultValue: {
@@ -48,9 +57,8 @@ module.exports = [
       },
       static: {
         watch: {
-          ignored: /node_modules/,
-          aggregateTimeout: 600,
-        },
+          ignored: watchIgnoredRegexp,
+        }
       },
       client: {
         overlay: false,

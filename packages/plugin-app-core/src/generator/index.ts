@@ -35,7 +35,7 @@ interface ITemplateOptions {
 
 type IRenderTemplate = [string, string, IExtraData];
 
-const RENDER_WAIT = 500;
+const RENDER_WAIT = 200;
 
 export default class Generator {
 
@@ -170,7 +170,9 @@ export default class Generator {
     });
   };
 
-  public debounceRender = debounce(this.render, RENDER_WAIT);
+  public debounceRender = debounce(() => {
+    this.render();
+  }, RENDER_WAIT);
 
   public addRenderFile = (templatePath: string, targetPath: string, extraData: IExtraData = {}) => {
     // check target path if it is already been registed
