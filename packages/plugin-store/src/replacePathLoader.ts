@@ -18,12 +18,14 @@ export default function (content: string, sourceMap: SourceMap) {
 }
 
 async function loader(content: string, sourceMap: SourceMap) {
-  const { alias, tempDir, pagesName, rootDir, routesPath } = getOptions(this);
+  const { alias, tempDir, srcPath, rootDir, routesPaths, applyMethod } = getOptions(this);
   const currentRoutesPath = this.resourcePath;
-  if (!routesPath.includes(currentRoutesPath)) {
-    // if this.resourcePath === htmlWebpackPluginPublicPath, skip it
+  if (!routesPaths.includes(currentRoutesPath)) {
+    // if this.resourcePath is htmlWebpackPluginPublicPath, skip it
     return [content, sourceMap];
   }
+  // ensure get the latest pages value
+  const pagesName: string[] = applyMethod('getPages', srcPath);
 
   // eslint-disable-next-line no-restricted-syntax
   for (const pageName of pagesName) {
