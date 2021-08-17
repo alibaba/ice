@@ -24,6 +24,11 @@ const getTransformedCode = async (code: string, id: string, tempPath: string) =>
         name: 'runApp',
         redirectPath: url,
         default: false,
+      },
+      {
+        name: 'createStore',
+        redirectPath: '@ice/store',
+        default: false,
       }
     ]
   });
