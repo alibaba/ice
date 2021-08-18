@@ -15,7 +15,7 @@ export default async function ssgRender(options) {
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
-  const routesHtml = [];
+  const pagesData = [];
   const flatRoutes = await getFlatRoutes(routes || []);
 
   for (const flatRoute of flatRoutes) {
@@ -37,10 +37,10 @@ export default async function ssgRender(options) {
 
     delete rest.component;
     delete rest.routeWrappers;
-    routesHtml.push({ html, path, ...rest });
+    pagesData.push({ html, path, ...rest });
   }
 
-  return routesHtml;
+  return pagesData;
 };
 
 async function getFlatRoutes(routes, parentPath = '') {
