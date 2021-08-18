@@ -8,6 +8,7 @@ export default () => {
       },
       modules: 'commonjs',
     },
-    typescript: true
+    typescript: { onlyRemoveTypeImports: true },
+    parameterDecorator: true,
   });
 };

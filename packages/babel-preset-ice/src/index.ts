@@ -1,5 +1,6 @@
 interface IOpts {
-  typescript?: boolean;
+  typescript?: boolean | object;
+  parameterDecorator?: boolean;
   env?: object;
   react?: boolean | object;
 }
@@ -29,6 +30,7 @@ export default (opts: IOpts = {}) => {
     '@babel/plugin-proposal-do-expressions',
     // Stage 2
     ['@babel/plugin-proposal-decorators', { legacy: true }],
+    opts.parameterDecorator && 'babel-plugin-parameter-decorator',
     '@babel/plugin-proposal-function-sent',
     '@babel/plugin-proposal-export-namespace-from',
     '@babel/plugin-proposal-numeric-separator',
@@ -44,7 +46,9 @@ export default (opts: IOpts = {}) => {
       opts.env && [
         '@babel/preset-env', opts.env,
       ],
-      opts.typescript && '@babel/preset-typescript',
+      opts.typescript && (typeof opts.typescript === 'boolean'
+        ? '@babel/preset-typescript'
+        : ['@babel/preset-typescript', opts.typescript]),
       opts.react && (typeof opts.react === 'boolean'
         ? '@babel/preset-react'
         : ['@babel/preset-react', opts.react]
