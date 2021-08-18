@@ -1,10 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { formatPath } from '@builder/app-helpers';
-import {
-  getPageDir,
-  getPageStorePath,
-} from './utils/getPath';
+import { getPageDir, getPageStorePath } from './utils/getPath';
 import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
