@@ -20,7 +20,7 @@ const plugin = async (api): Promise<void> => {
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
-  const ssrEntry = path.join(TEMP_PATH, 'server.ts');
+  const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
   applyMethod(
     'addRenderFile',
@@ -190,7 +190,7 @@ const plugin = async (api): Promise<void> => {
     if (command === 'build' && ssr === 'static') {
       // SSG, pre-render page in production
       const ssgTemplatePath = path.join(__dirname, './renderPages.ts.ejs');
-      const ssgEntryPath = path.join(TEMP_PATH, './renderPages.ts');
+      const ssgEntryPath = path.join(TEMP_PATH, 'plugins/ssr/renderPages.ts');
       const ssgBundlePath = path.join(serverDir, 'renderPages.js');
       applyMethod(
         'addRenderFile',
