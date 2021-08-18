@@ -1,12 +1,12 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0, react/jsx-filename-extension: 0, no-shadow: 0, @typescript-eslint/no-explicit-any:0 */
 import * as React from 'react';
+import { Suspense, lazy } from 'react';
 import {
   Router,
   StaticRouter,
   Switch,
   Route,
   Redirect,
-
   RouteComponentProps
 } from 'react-router-dom';
 import loadable from '@loadable/component';
@@ -47,7 +47,7 @@ function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: 
       fallback
     });
   } else if (__LAZY__) {
-    return React.lazy(() => dynamicImport().then((mod) => {
+    return lazy(() => dynamicImport().then((mod) => {
       if (routerWrappers && routerWrappers.length) {
         const comp = mod.default as any;
         // 适配中心化路由配置（React lazy）
@@ -119,9 +119,9 @@ export function Routes({ routes, fallback }: RoutesProps) {
                 ? (props: RouteComponentProps) => <RouteComponent {...props} />
                 : (props: RouteComponentProps) => {
                   return (
-                    <React.Suspense fallback={fallback || <div>loading</div>}>
+                    <Suspense fallback={fallback || <div>loading</div>}>
                       <RouteComponent {...props} />
-                    </React.Suspense>
+                    </Suspense>
                   );
                 };
 
