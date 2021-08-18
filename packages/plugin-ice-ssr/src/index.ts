@@ -4,7 +4,7 @@ import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
-import SSGWebpackPlugin from './SSGWebpackPlugin';
+import generateStaticPages from './generateStaticPages';
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
@@ -70,7 +70,7 @@ const plugin = async (api): Promise<void> => {
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
 
-    config.entry('server').add(ssrEntry);
+    config.entry('index').add(ssrEntry);
 
     config.target('node');
 
@@ -82,7 +82,6 @@ const plugin = async (api): Promise<void> => {
 
     config
       .plugin('DefinePlugin')
-      .use(webpack.DefinePlugin)
       .tap(([args]) => [{ ...args, 'process.env.__IS_SERVER__': true }]);
 
     config.plugins.delete('MiniCssExtractPlugin');
@@ -104,9 +103,12 @@ const plugin = async (api): Promise<void> => {
 
     config.output
       .path(serverDir)
-      .filename(serverFilename)
+      .filename('[name].js')
       .publicPath('/')
       .libraryTarget('commonjs2');
+
+    // not generate vendor
+    config.optimization.splitChunks({ cacheGroups: {} });
 
     // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
@@ -187,13 +189,13 @@ const plugin = async (api): Promise<void> => {
 
     if (command === 'build' && ssr === 'static') {
       // SSG, pre-render page in production
-      const ssgRenderTemplatePath = path.join(__dirname, './ssgRender.ts.ejs');
-      const ssgRenderEntryPath = path.join(TEMP_PATH, './ssgRender.ts');
-      const ssgRenderBundlePath = path.join(serverDir, 'ssgRender.js');
+      const ssgTemplatePath = path.join(__dirname, './renderPages.ts.ejs');
+      const ssgEntryPath = path.join(TEMP_PATH, './renderPages.ts');
+      const ssgBundlePath = path.join(serverDir, 'renderPages.js');
       applyMethod(
         'addRenderFile',
-        ssgRenderTemplatePath,
-        ssgRenderEntryPath,
+        ssgTemplatePath,
+        ssgEntryPath,
         {
           outputDir,
           routesPath: routesFileExists ? '@' : '.',
@@ -201,18 +203,12 @@ const plugin = async (api): Promise<void> => {
         }
       );
 
-      config.entry('ssgRender').add(ssgRenderEntryPath);
+      config.entry('renderPages').add(ssgEntryPath);
 
-      config
-        .plugin('SSGWebpackPlugin')
-        .after('HtmlWebpackPlugin')
-        .use(SSGWebpackPlugin, [
-          {
-            serverFilePath: ssgRenderBundlePath,
-            buildDir,
-            command
-          }
-        ]);
+      onHook('after.build.compile', async () => {
+        await generateStaticPages(buildDir, ssgBundlePath);
+        await fse.remove(ssgBundlePath);
+      });
     }
   });
 

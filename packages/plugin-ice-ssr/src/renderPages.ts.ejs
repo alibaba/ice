@@ -10,39 +10,30 @@ const { renderStatic } = require('./server');
 // appConfig set by: import '@/app'
 const appConfig = getAppConfig();
 
-export default async function ssgRender(options: any = {}) {
-  let {
-    htmlTemplate,
-  } = options;
+export default async function ssgRender(options) {
+  let { htmlTemplate } = options;
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
   const routesHtml = [];
   const flatRoutes = await getFlatRoutes(routes || []);
-  const defaultRoutePath = '/__ice_default_page__';
-  const defaultRoute = { path: defaultRoutePath };
-  flatRoutes.push(defaultRoute);
+
   for (const flatRoute of flatRoutes) {
     const { path = '', getInitialProps, ...rest } = flatRoute;
 
-    const keys = [];
-    let appendContent = true;
-    if (path === defaultRoutePath) {
-      appendContent = false;
-    } else {
-      try {
-        pathToRegexp(path, keys);
-        if (keys.length > 0) {
-          // don't render and export static page when the route is dynamic
-          continue;
-        }
-      } catch {
+    try {
+      const keys = [];
+      pathToRegexp(path, keys);
+      if (keys.length > 0) {
+        // don't render and export static page when the route is dynamic, e.g.: /news/:id
         continue;
       }
+    } catch {
+      continue;
     }
 
-    const initialContext = { pathname: path, location: { pathname: path } } as any;
-    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext, appendContent });
+    const initialContext = { pathname: path, location: { pathname: path } };
+    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext });
 
     delete rest.component;
     delete rest.routeWrappers;
