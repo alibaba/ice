@@ -70,7 +70,10 @@ const configMap: ConfigMap = {
       // alias 到指向 ice runtime 入口
       data.ice = path.resolve(rootDir, '.ice/index.ts');
 
-      return data;
+      // Object to Array
+      return Object.entries(data).map(([find, replacement]) => {
+        return { find, replacement };
+      });
     },
   },
   'resolve.extensions': {
