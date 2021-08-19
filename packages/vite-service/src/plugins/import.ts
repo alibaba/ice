@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite';
-import { redirectImport } from '@builder/app-helpers';
+import { redirectImport, formatPath } from '@builder/app-helpers';
 import * as path from 'path';
 import { isObject } from 'lodash';
 
@@ -16,7 +16,7 @@ const getMpaRunAppPathsMap = (rootDir: string, list: string[]) => {
 };
 
 const getTransformedCode = async (code: string, id: string, tempPath: string) => {
-  const url = path.relative(path.dirname(id), tempPath);
+  const url = formatPath(path.relative(path.dirname(id), tempPath));
 
   return await redirectImport(code, {
     source: 'ice', redirectImports: [
