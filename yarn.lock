@@ -4881,10 +4881,10 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
-build-scripts@^1.1.0-12:
-  version "1.1.0-12"
-  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-12.tgz#aec48e362fa305fa9d9ed53a0d96ce95cc02ab37"
-  integrity sha512-2upLLuedRwstO4q+Q+11iclPiF5ytKI/a+lb/yDmIHq+RdDZ9jV0Dv+99qEqMG9a1VNm0ZXAfUMHcgn3Pd5/HA==
+build-scripts@^1.1.0-13:
+  version "1.1.0-13"
+  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.0-13.tgz#6079de2837acbf54e9e327f87c70791fe0ad3dab"
+  integrity sha512-j6U9sD5s0G1zv51pbEFNIKnS6KRx/3n6p+eRxKi3yJ5QR7NRG/603CjLKZ2hrn64aq6k55dVemYa9pGXdFd3bQ==
   dependencies:
     address "^1.1.0"
     camelcase "^5.3.1"
@@ -9079,11 +9079,6 @@ is-absolute-url@^2.0.0:
   resolved "https://registry.yarnpkg.com/is-absolute-url/-/is-absolute-url-2.1.0.tgz#50530dfb84fcc9aa7dbe7852e83a37b93b9f2aa6"
   integrity sha1-UFMN+4T8yap9vnhS6Do3uTufKqY=
 
-is-absolute-url@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/is-absolute-url/-/is-absolute-url-3.0.3.tgz#96c6a22b6a23929b11ea0afb1836c36ad4a5d698"
-  integrity sha512-opmNIX7uFnS96NtPmhWQgQx6/NYFgsUXYMllcfzwWKUMwfo8kku1TvE6hkNcH+Q1ts5cMVrsY7j0bxXQDciu9Q==
-
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/is-accessor-descriptor/-/is-accessor-descriptor-0.1.6.tgz#a9e12cb3ae8d876727eeef3843f8a0897b5c98d6"
@@ -10675,11 +10670,6 @@ keygrip@~1.1.0:
   integrity sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==
   dependencies:
     tsscmp "1.0.6"
-
-killable@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
-  integrity sha512-LzqtLKlUwirEUyl/nicirVmNiPvYs7l5n8wOPP7fyJVpUPkvCnW/vuiXGpylGUlnPDnB7311rARzAt3Mhswpjg==
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -16957,14 +16947,15 @@ webpack-dev-middleware@^5.0.0:
     range-parser "^1.2.1"
     schema-utils "^3.0.0"
 
-webpack-dev-server@^4.0.0-beta.3:
-  version "4.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-4.0.0-rc.0.tgz#56099f1e1e877d15a1fc28a928f38bbc600e33da"
-  integrity sha512-9S+MywBN/ecr8AbXNVUnmbFji8UTtzLR6M5Dgy6sB5Ti/73UgHn8TMhLaSBZBkY/cmSmWHDSwUXFs8lOeARpOw==
+webpack-dev-server@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-4.0.0.tgz#fb4906e91182154bba54a66e6e06f84c1e3c0a80"
+  integrity sha512-ya5cjoBSf3LqrshZn2HMaRZQx8YRNBE+tx+CQNFGaLLHrvs4Y1aik0sl5SFhLz2cW1O9/NtyaZhthc+8UiuvkQ==
   dependencies:
     ansi-html "^0.0.7"
     bonjour "^3.5.0"
     chokidar "^3.5.1"
+    colorette "^1.2.2"
     compression "^1.7.4"
     connect-history-api-fallback "^1.6.0"
     del "^6.0.0"
@@ -16974,8 +16965,6 @@ webpack-dev-server@^4.0.0-beta.3:
     http-proxy-middleware "^2.0.0"
     internal-ip "^6.2.0"
     ipaddr.js "^2.0.1"
-    is-absolute-url "^3.0.3"
-    killable "^1.0.1"
     open "^8.0.9"
     p-retry "^4.5.0"
     portfinder "^1.0.28"
@@ -16987,7 +16976,7 @@ webpack-dev-server@^4.0.0-beta.3:
     strip-ansi "^7.0.0"
     url "^0.11.0"
     webpack-dev-middleware "^5.0.0"
-    ws "^7.5.3"
+    ws "^8.1.0"
 
 webpack-filter-warnings-plugin@^1.2.1:
   version "1.2.1"
@@ -17277,10 +17266,15 @@ ws@^6.1.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.0.0, ws@^7.2.3, ws@^7.4.6, ws@^7.5.3:
+ws@^7.0.0, ws@^7.2.3, ws@^7.4.6:
   version "7.5.3"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.3.tgz#160835b63c7d97bfab418fc1b8a9fced2ac01a74"
   integrity sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==
+
+ws@^8.1.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.0.tgz#0b738cd484bfc9303421914b11bb4011e07615bb"
+  integrity sha512-uYhVJ/m9oXwEI04iIVmgLmugh2qrZihkywG9y5FfZV2ATeLIzHf93qs+tUNqlttbQK957/VX3mtwAS+UfIwA4g==
 
 x-is-string@^0.1.0:
   version "0.1.0"
