@@ -163,7 +163,7 @@ export default class Generator {
       return previousValue;
     }, this.parseRenderData());
 
-    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir);
+    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, !!this.renderData.hasJsxRuntime);
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
