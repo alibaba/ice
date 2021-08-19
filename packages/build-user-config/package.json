@@ -17,7 +17,7 @@
     "regenerator-runtime": "^0.13.3",
     "react-dev-utils": "^11.0.4",
     "webpack-dev-mock": "^1.0.1",
-    "webpack-dev-server": "^4.0.0-beta.3",
+    "webpack-dev-server": "^4.0.0",
     "webpack-plugin-import": "^0.2.6",
     "@swc/core": "^1.2.50",
     "@swc/helpers": "^0.2.12",
