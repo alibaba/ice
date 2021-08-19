@@ -4,7 +4,7 @@ import HomeLayout from '@/pages/Home/Layout';
 import A from '@/pages/Home/A';
 import B from '@/pages/Home/B';
 import About from '@/pages/About';
-import Index from '@/pages/Index';
+import Index from '@/pages/index';
 import { NotFound } from '@/pages/NotFound';
 
 export default [

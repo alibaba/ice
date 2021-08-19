@@ -1,10 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { formatPath } from '@builder/app-helpers';
-import {
-  getPagePath,
-  getPageStorePath,
-} from './utils/getPath';
+import { getPageDir, getPageStorePath } from './utils/getPath';
 import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
@@ -51,7 +48,7 @@ export default class Generator {
 
     const pagesName: string[] = this.applyMethod('getPages', this.srcPath);
     pagesName.forEach((pageName: string) => {
-      const pageNameDir = getPagePath(this.srcPath, pageName);
+      const pageNameDir = getPageDir(this.srcPath, pageName);
       const pageStoreFile = formatPath(getPageStorePath(this.srcPath, pageName));
       const params = { pageName, pageNameDir, pageStoreFile };
       // generate .ice/pages/${pageName}/index.tsx
