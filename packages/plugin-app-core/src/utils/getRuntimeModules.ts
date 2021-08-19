@@ -46,7 +46,7 @@ export default (plugins: any = [], targetDir: string, hasJsxRuntime: boolean) =>
     }
     imports.forEach((importName) => {
       if (importName.startsWith('.')) {
-        const importPath = path.join(path.dirname(filePath), importName);
+        const importPath = formatPath(path.join(path.dirname(filePath), importName));
         const importFile = globby.sync(path.extname(importPath) ? importPath : [`${importPath}.@((t|j)s?(x))`, `${importPath}/index.@((t|j)s?(x))`]);
         if (importFile.length > 0) {
           relativeFiles.push(importFile[0]);

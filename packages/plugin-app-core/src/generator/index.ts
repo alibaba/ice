@@ -8,6 +8,7 @@ import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
 import getRuntimeModules from '../utils/getRuntimeModules';
+import formatPath from '../utils/formatPath';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
@@ -134,7 +135,7 @@ export default class Generator {
       ...this.renderData,
       ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
-      globalStyle: globalStyles.length && path.join(this.rootDir, globalStyles[0]),
+      globalStyle: globalStyles.length && formatPath(path.join(this.rootDir, globalStyles[0])),
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
       entryCodeBefore: this.contentRegistration.addEntryCode_before || '',
