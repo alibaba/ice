@@ -91,6 +91,7 @@ const configMap: ConfigMap = {
   'config.devtool': 'build.sourcemap',
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': 'server.proxy',
+  'devServer.https': 'server.https',
   'plugins.DefinePlugin': {
     name: 'defined',
     transform: transformPlugin('DefinePlugin'),
