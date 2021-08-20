@@ -38,9 +38,16 @@ const transformPlugin = (pluginName: string): Transformer => {
 };
 
 const transformPreProcess = (loaderName: string, rule: string): Transformer => {
+  // filter options for sassOptions and lessOptions
+  const optionsMap = {
+    scss: 'sassOptions',
+    less: 'lessOptions',
+  };
+  const optionsKey: string = optionsMap[rule];
+
   return (...args) => {
     const opt = args[2].module.rules.get(rule).use(loaderName).get('options');
-    return opt;
+    return optionsKey ? opt && opt[optionsKey] || undefined : opt;
   };
 };
 
