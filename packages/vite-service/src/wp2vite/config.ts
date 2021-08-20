@@ -47,7 +47,7 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
 
   return (...args) => {
     const opt = args[2].module.rules.get(rule).use(loaderName).get('options');
-    return optionsKey ? opt && opt[optionsKey] : opt;
+    return optionsKey ? opt?.[optionsKey] : opt;
   };
 };
 
