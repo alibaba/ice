@@ -47,7 +47,7 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
           ];
         });
         // @ts-ignore
-      } else if (config.optimization.minimizer.has('SWC')) {
+      } else if (config.optimization.minimizers.has('SWC')) {
         config.optimization.minimizer('SWC').tap(([options]) => {
           return [
             {
