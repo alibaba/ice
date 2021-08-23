@@ -8,8 +8,8 @@ export default [
     path: '/',
     exact: true,
     component: Home,
-    getInitialProps: async () => {
-      return await Promise.resolve({ data: [Math.random(), Math.random(), Math.random()] });
+    getInitialProps: () => {
+      return Promise.resolve({ data: [Math.random(), Math.random(), Math.random()] });
     }
   },
   {

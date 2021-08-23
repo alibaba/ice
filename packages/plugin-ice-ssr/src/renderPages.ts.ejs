@@ -1,17 +1,13 @@
 import '@/app';
 import { join } from 'path';
-import { pathToRegexp } from 'path-to-regexp';
-import { getAppConfig } from '../../core/appConfig';
 import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
 
+const pathToRegexp = require('path-to-regexp');
 const { renderStatic } = require('./server');
 
-// appConfig set by: import '@/app'
-const appConfig = getAppConfig();
-
 export default async function ssgRender(options) {
-  let { htmlTemplate } = options;
+  const { htmlTemplate } = options;
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
@@ -21,14 +17,10 @@ export default async function ssgRender(options) {
   for (const flatRoute of flatRoutes) {
     const { path = '', getInitialProps, ...rest } = flatRoute;
 
-    try {
-      const keys = [];
-      pathToRegexp(path, keys);
-      if (keys.length > 0) {
-        // don't render and export static page when the route is dynamic, e.g.: /news/:id
-        continue;
-      }
-    } catch {
+    const keys = [];
+    pathToRegexp(path, keys);
+    if (keys.length > 0) {
+      // don't render and export static page when the route is dynamic, e.g.: /news/:id, /*
       continue;
     }
 

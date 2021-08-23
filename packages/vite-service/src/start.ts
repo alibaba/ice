@@ -1,7 +1,8 @@
 import { ITaskConfig, Context } from 'build-scripts';
 import { ViteDevServer, createServer } from 'vite';
-import chalk = require('chalk');
 import { wp2vite } from './wp2vite';
+
+const chalk = require('chalk');
 
 type StartResult = void | ITaskConfig[] | ViteDevServer;
 

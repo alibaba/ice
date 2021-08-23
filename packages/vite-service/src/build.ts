@@ -1,13 +1,14 @@
-import * as chalk from 'chalk';
 import { ITaskConfig } from 'build-scripts';
 import { build } from 'vite';
 import { wp2vite } from './wp2vite';
+
+const chalk = require('chalk');
 
 type BuildResult = void | ITaskConfig[];
 
 export async function viteBuild(context: any): Promise<BuildResult> {
   const { applyHook, command, commandArgs } = context;
-  
+
   const configArr = context.getWebpackConfig();
   await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr });
 

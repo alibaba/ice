@@ -22,7 +22,7 @@
     "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
-    "clean": "lerna clean --yes && rimraf packages/*/lib",
+    "clean": "rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest --forceExit",
