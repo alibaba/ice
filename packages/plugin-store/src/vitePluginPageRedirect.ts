@@ -16,11 +16,12 @@ const getPageName = (resolveId: string): { type: string; pageName: string; } => 
 };
 
 const vitePluginPageRedirect = (rootDir: string ,routesPaths: string[]): Plugin => {
+  const formattedRoutes = routesPaths.map(formatPath);
   return {
     enforce: 'pre',
     name: 'vite-plugin-page-redirect',
     resolveId(id, importer) {
-      if (routesPaths.includes(importer)) {
+      if (formattedRoutes.includes(formatPath(importer))) {
         let importPath = id;
         // relative path
         if (/^(\.\/|\.{2}\/)/.test(importPath)) {
