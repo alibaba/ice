@@ -1,4 +1,4 @@
-import pathToRegexp = require('path-to-regexp');
+import * as pathToRegexp from 'path-to-regexp';
 import joinPath from '../joinPath';
 
 const joinTests: [string[], string][] = [

@@ -69,8 +69,7 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
-    "path-to-regexp": "6.1.0"
+    "core-js": "^3.6.4"
   },
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^4.0.0",

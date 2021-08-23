@@ -1,5 +1,6 @@
 import '@/app';
 import { join } from 'path';
+import * as pathToRegexp from 'path-to-regexp';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -15,7 +16,6 @@ import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
 
 const chalk = require('chalk');
-const pathToRegexp = require('path-to-regexp');
 const parseurl = require('parseurl');
 
 const { createBaseApp, initAppLifeCycles } = app;
