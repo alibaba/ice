@@ -18,13 +18,14 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
   onGetWebpackConfig((config) => {
     const { userConfig: { dropLogLevel } } = context;
     if (dropLogLevel) {
+      const pureFuncs = getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]);
       // @ts-ignore
       if (config.optimization.minimizers.has('ESBuild')) {
         config.optimization.minimizer('ESBuild').tap(([options]) => {
           return [
             {
               ...options,
-              pure: getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]),
+              pure: pureFuncs,
             }
           ];
         });
@@ -39,7 +40,27 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
                 compress: {
                   ...options.terserOptions.compress,
                   drop_console: false,
-                  pure_funcs: getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]),
+                  pure_funcs: pureFuncs,
+                }
+              }
+            }
+          ];
+        });
+        // @ts-ignore
+      } else if (config.optimization.minimizers.has('SWC')) {
+        config.optimization.minimizer('SWC').tap(([options]) => {
+          return [
+            {
+              ...options,
+              jsc: {
+                ...options.jsc,
+                minify: {
+                  ...options.jsc?.minify,
+                  compress: {
+                    ...options.jsc?.minify?.compress,
+                    drop_console: false,
+                    pure_funcs: pureFuncs,
+                  }
                 }
               }
             }

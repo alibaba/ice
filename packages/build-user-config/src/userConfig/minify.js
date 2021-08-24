@@ -1,11 +1,12 @@
 const {
   ESBuildMinifyPlugin
 } = require('@builder/pack/deps/esbuild-loader');
+const { SWCMinifyPlugin } = require('swc-webpack-plugin');
 
 module.exports = (config, value, context, { log }) => {
   const { command } = context;
   if (typeof value === 'string' && command === 'build') {
-    const availableMinifier = ['terser', 'esbuild'];
+    const availableMinifier = ['terser', 'esbuild', 'swc'];
     if (!availableMinifier.includes(value)) {
       log.info(`invalid minify value ${value}, available minifier is 'terser | esbuild'`);
       return;
@@ -20,6 +21,25 @@ module.exports = (config, value, context, { log }) => {
         config.optimization.minimizers.delete('TerserPlugin');
       }
       config.optimization.minimizer('ESBuild').use(ESBuildMinifyPlugin, [defaultOptions]);
+    }
+    if (value === 'swc') {
+      log.info('swc is specified as default minification');
+      const defaultOptions = {
+        jsc: {
+          minify: {
+            compress: {
+              unused: false,
+            },
+            mangle: true,
+          },
+          target: 'es2021',
+        },
+        sync: false,
+      };
+      if(config.optimization.minimizers.has('TerserPlugin')) {
+        config.optimization.minimizers.delete('TerserPlugin');
+      }
+      config.optimization.minimizer('SWC').use(SWCMinifyPlugin, [defaultOptions]);
     }
   } else if (!value) {
     config.optimization.minimize(false);
