@@ -1,6 +1,9 @@
 // reference： https://github.com/bvaughn/react-error-boundary
 /* eslint @typescript-eslint/explicit-member-accessibility:0 */
+<% if(!hasJsxRuntime) { %>
 import * as React from 'react';
+<% } %>
+import { Component } from 'react';
 import ErrorBoundaryFallback from './ErrorBoundaryFallback';
 
 interface IProps {
@@ -18,7 +21,7 @@ interface IState {
   info?: IErrorInfo;
 };
 
-class ErrorBoundary extends React.Component<IProps, IState> {
+class ErrorBoundary extends Component<IProps, IState> {
   static defaultProps: IProps = {
     Fallback: ErrorBoundaryFallback,
   };

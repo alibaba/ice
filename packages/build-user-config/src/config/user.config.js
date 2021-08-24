@@ -1,5 +1,7 @@
 const { validation } = require('@builder/app-helpers');
 
+const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
+
 module.exports = [
   {
     name: 'alias',
@@ -37,9 +39,17 @@ module.exports = [
     defaultValue: [ 'node_modules' ]
   },
   {
+    name: 'watchOptions',
+    validation: 'object',
+    defaultValue: {
+      ignored: watchIgnoredRegexp,
+    }
+  },
+  {
     name: 'devServer',
     validation: 'object',
     defaultValue: {
+      hot: true,
       compress: true,
       webSocketServer: 'ws',
       devMiddleware: {
@@ -47,9 +57,8 @@ module.exports = [
       },
       static: {
         watch: {
-          ignored: /node_modules/,
-          aggregateTimeout: 600,
-        },
+          ignored: watchIgnoredRegexp,
+        }
       },
       client: {
         overlay: false,
@@ -87,7 +96,8 @@ module.exports = [
   },
   {
     name: 'minify',
-    validation: 'boolean'
+    validation: 'boolean|string',
+    defaultValue: 'terser',
   },
   {
     name: 'outputAssetsPath',
@@ -111,9 +121,7 @@ module.exports = [
   },
   {
     name: 'browserslist',
-    validation: (val) => {
-      return validation('browserslist', val, 'string|object');
-    },
+    validation: 'array|string|object',
     defaultValue: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4'
   },
   {

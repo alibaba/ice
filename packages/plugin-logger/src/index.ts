@@ -16,9 +16,10 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
   applyMethod('addAppConfigTypes', { source: `../plugins/${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });
 
   onGetWebpackConfig((config) => {
-    const { userConfig: { esbuild, dropLogLevel } } = context;
+    const { userConfig: { dropLogLevel } } = context;
     if (dropLogLevel) {
-      if (esbuild) {
+      // @ts-ignore
+      if (config.optimization.minimizers.has('ESBuild')) {
         config.optimization.minimizer('ESBuild').tap(([options]) => {
           return [
             {

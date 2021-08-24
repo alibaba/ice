@@ -1,20 +1,13 @@
-const {
-  ESBuildMinifyPlugin
-} = require('esbuild-loader');
-
-const defaultOptions = {
-  target: 'es2015',
-};
-
 module.exports = (config, options, context, { log }) => {
-  if (options) {
-    log.info('EsBuild Enabled');
-    if(config.optimization.minimizers.has('TerserPlugin')) {
-      config.optimization.minimizers.delete('TerserPlugin');
+  const { command } = context;
+  if (command === 'build' && options) {
+    if (config.optimization.minimizers.has('ESBuild')) {
+      config.optimization.minimizer('ESBuild').tap(([buildOptions]) => [{
+        ...buildOptions,
+        ...options,
+      }]);
+    } else {
+      log.info('set minify to "esbuild" to enable esbuild options for minification');
     }
-    config.optimization.minimizer('ESBuild').use(ESBuildMinifyPlugin, [{
-      ...defaultOptions,
-      ...options,
-    }]);
   }
 };

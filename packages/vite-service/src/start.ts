@@ -1,8 +1,7 @@
 import { ITaskConfig, Context } from 'build-scripts';
+import chalk from 'chalk';
 import { ViteDevServer, createServer } from 'vite';
 import { wp2vite } from './wp2vite';
-
-const chalk = require('chalk');
 
 type StartResult = void | ITaskConfig[] | ViteDevServer;
 
@@ -21,7 +20,7 @@ export async function viteStart(context: Context): Promise<StartResult> {
     return;
   }
 
-  const { devConfig } = wp2vite(context);
+  const devConfig = wp2vite(context);
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,

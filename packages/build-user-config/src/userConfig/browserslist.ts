@@ -1,7 +1,25 @@
 import { formatPath } from '@builder/app-helpers';
 import modifySwcOptions from '../utils/modifySwcOptions';
 
-export default (config, browserslist, { userConfig }) => {
+type BrowserList = string | string[] | Record<string, string>;
+
+const getTargetStr = (browserslist: BrowserList): string => {
+  if (typeof browserslist === 'string') {
+    return browserslist;
+  } else if (Array.isArray(browserslist)) {
+    return browserslist.join(',');
+  } else if (Object.prototype.toString.call(browserslist) === '[object Object]') {
+    return Object.keys(browserslist).map((browserKey) => `${browserKey} >= ${browserslist[browserKey]}`).join(',');
+  }
+  return '';
+};
+
+export default (config, browserslist: BrowserList, { userConfig }) => {
+  if (browserslist) {
+    // ignore old data log
+    process.env.BROWSERSLIST_IGNORE_OLD_DATA = 'true';
+    config.target(`browserslist:${getTargetStr(browserslist)}`);
+  }
   if (userConfig.swc) {
     modifySwcOptions(config, { env: { targets: browserslist } });
   } else {

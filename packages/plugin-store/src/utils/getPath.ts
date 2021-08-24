@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fse from 'fs-extra';
 import { getStoreFileType } from './getFileType';
 
 export function getAppStorePath(srcPath: string) {
@@ -8,14 +9,17 @@ export function getAppStorePath(srcPath: string) {
 }
 
 /**
- * return absolute page path. e.g.: /project/src/pages/Home
+ * return absolute page dir path. e.g.: /project/src/pages/Home
  */
-export function getPagePath(srcPath: string, pageName: string) {
-  return path.join(srcPath, 'pages', pageName);
+export function getPageDir(srcPath: string, pageName: string) {
+  const pagesDir = path.join(srcPath, 'pages');
+  const pagePath = path.join(pagesDir, pageName);
+  // if page path is /src/pages/index.tsx, return /src/pages
+  return fse.pathExistsSync(pagePath) ? pagePath : pagesDir;
 }
 
 export function getPageStorePath(srcPath: string, pageName: string) {
-  const pageNameDir = getPagePath(srcPath, pageName);
+  const pageNameDir = getPageDir(srcPath, pageName);
   const storeFileType = getStoreFileType(pageNameDir);
   // e.g: src/pages/Home/store.ts
   return storeFileType ? path.join(pageNameDir, `store${storeFileType}`) : '';

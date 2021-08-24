@@ -7,7 +7,7 @@ const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
-const configWebpak5 = require('./webpack5');
+const configWebpack5 = require('./webpack5');
 const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
 module.exports = async (api) => {
@@ -25,7 +25,11 @@ module.exports = async (api) => {
 
   // modify default babel config when jsx runtime is enabled
   if (getValue('HAS_JSX_RUNTIME')) {
-    modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
+    modifyUserConfig('babelPresets', (userConfig.babelPresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
+
+    if (userConfig.vite) {
+      modifyUserConfig('vite.esbuild', { jsxInject: 'import React from \'react\''}, { deepmerge: true });
+    }
   }
 
   // set webpack config
@@ -59,7 +63,7 @@ module.exports = async (api) => {
   if (command === 'test') {
     setTest(api);
   }
-  configWebpak5(api);
+  configWebpack5(api);
 
   if (userConfig.remoteRuntime) {
     await remoteRuntime(api, userConfig.remoteRuntime);

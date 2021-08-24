@@ -23,7 +23,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-stark-module"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0-9",
+    "build-scripts": "^1.1.0-13",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
     "@types/webpack-chain": "^5.2.0",

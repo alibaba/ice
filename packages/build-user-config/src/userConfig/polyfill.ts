@@ -4,9 +4,10 @@ import modifySwcOptions from '../utils/modifySwcOptions';
 import * as processPresetEnv from '../utils/processPresetEnv';
 import * as addBabelPlugins from '../utils/addBabelPlugins';
 
-const getEntryRegExp = (entryPath) => {
+const getEntryRegExp = (entryPath: string) => {
   const entryExtname = path.extname(entryPath);
-  return entryExtname ? entryPath : new RegExp(`${entryPath}(.jsx?|.tsx?)$`);
+  // this will work in both windows and Unix : { test: /path[\\\/]to[\\\/]file/ }
+  return entryExtname ? entryPath : new RegExp(`${entryPath.split(path.sep).join('[\\\\\\/]')}(.jsx?|.tsx?)$`);
 };
 
 export default (config, polyfill, { userConfig }) => {
@@ -27,7 +28,6 @@ export default (config, polyfill, { userConfig }) => {
     injectTransformRuntime(config);
     return;
   }
-
   if (polyfill === 'entry') {
     const entries = config.toConfig().entry;
     const rule = config.module.rule('polyfill').test(/\.jsx?|\.tsx?$/);

@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
 
 const resolveEntryPath = (entry, rootDir) => {
   if (typeof entry === 'string') {

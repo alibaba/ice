@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { lazy as reactLazy } from 'react';
 
 export function lazy(dynamicImport, isRouteComponent?: boolean): any {
   if (isRouteComponent) {
@@ -11,6 +11,6 @@ export function lazy(dynamicImport, isRouteComponent?: boolean): any {
       dynamicImport,
     };
   } else {
-    return React.lazy(dynamicImport);
+    return reactLazy(dynamicImport);
   }
 }

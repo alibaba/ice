@@ -13,15 +13,12 @@
   ],
   "author": "",
   "license": "MIT",
-  "peerDependencies": {
-    "webpack": "^5.0.0"
-  },
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/build-jest-config"
   },
   "dependencies": {
-    "@builder/pack": "0.2.19",
+    "@builder/pack": "0.3.0",
     "@builder/babel-config": "^1.0.0",
     "regenerator-runtime": "^0.13.3",
     "core-js": "^3.3.1"
