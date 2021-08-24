@@ -7,7 +7,6 @@
     "module": "esnext",
     "target": "es6",
     "jsx": "react",
-    "isolatedModules": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": [

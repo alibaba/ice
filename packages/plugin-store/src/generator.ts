@@ -1,10 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { formatPath } from '@builder/app-helpers';
-import {
-  getPagePath,
-  getPageStorePath,
-} from './utils/getPath';
+import { getPageDir, getPageStorePath } from './utils/getPath';
 import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
@@ -16,8 +13,6 @@ export interface IRenderPageParams {
 export default class Generator {
   private srcPath: string
 
-  private pagesName: string[]
-
   private tempPath: string
 
   private applyMethod: Function
@@ -27,31 +22,33 @@ export default class Generator {
   constructor({
     srcPath,
     tempPath,
-    pagesName,
     applyMethod,
     disableResetPageState,
   }: {
     srcPath: string;
     tempPath: string;
-    pagesName: string[];
     applyMethod: Function;
     disableResetPageState: boolean;
   }) {
     this.srcPath = srcPath;
     this.tempPath = tempPath;
-    this.pagesName = pagesName;
     this.applyMethod = applyMethod;
     this.disableResetPageState = disableResetPageState;
   }
 
-  public render() {
-    // generate .ice/store/index.ts
-    this.renderAppStore();
-    // generate .ice/store/types.ts
-    this.renderAppStoreTypes();
+  public render(rerender = false) {
+    if (!rerender) {
+      // avoid rerendering files
 
-    this.pagesName.forEach((pageName: string) => {
-      const pageNameDir = getPagePath(this.srcPath, pageName);
+      // generate .ice/store/index.ts
+      this.renderAppStore();
+      // generate .ice/store/types.ts
+      this.renderAppStoreTypes();
+    }
+
+    const pagesName: string[] = this.applyMethod('getPages', this.srcPath);
+    pagesName.forEach((pageName: string) => {
+      const pageNameDir = getPageDir(this.srcPath, pageName);
       const pageStoreFile = formatPath(getPageStorePath(this.srcPath, pageName));
       const params = { pageName, pageNameDir, pageStoreFile };
       // generate .ice/pages/${pageName}/index.tsx
@@ -98,6 +95,7 @@ export default class Generator {
     };
 
     checkPageIndexFileExists(pageNameDir);
+
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 

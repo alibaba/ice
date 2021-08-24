@@ -113,20 +113,21 @@ const plugin: IPlugin = (api) => {
     });
     // set page template
     onGetWebpackConfig(config => {
-      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
+      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
+
       config.devServer.historyApiFallback({
         rewrites: Object.keys(entries).map((pageName) => {
           return {
             from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
             to: `/${pageName}.html`,
           };
-        }),
+        })
       });
     });
   }
 };
 
-function setPageTemplate(rootDir, entries, template = {}, config) {
+function setPageTemplate(rootDir, entries, template = {}, config, setValue) {
   const templateNames = Object.keys(template);
   const entryNames = {};
 
@@ -136,6 +137,8 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
       entryNames[key] = templateName;
     });
   });
+
+  const pages = {};
 
   const defaultEntryNames = Object.keys(entries);
   defaultEntryNames.forEach(defaultEntryName => {
@@ -155,15 +158,19 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
           ...(args.templateParameters || {}),
           pageName: defaultEntryName,
         };
-        return [
-          {
-            ...args,
-            ...htmlPluginOption,
-          }
-        ];
+
+        const item = {
+          ...args,
+          ...htmlPluginOption,
+        };
+
+        pages[defaultEntryName] = item;
+        return [item];
       });
     }
   });
+
+  setValue('MPA_PAGES', pages);
 }
 
 export default plugin;

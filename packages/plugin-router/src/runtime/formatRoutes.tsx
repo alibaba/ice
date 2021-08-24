@@ -1,9 +1,8 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import * as queryString from 'query-string';
 import { IRouterConfig } from '../types';
 import joinPath from '../utils/joinPath';
-
-const { useEffect, useState } = React;
 
 export default function formatRoutes(routes: IRouterConfig[], parentPath?: string) {
   return routes.map((item) => {
