@@ -66,10 +66,11 @@ export default (plugins: any = [], targetDir: string, hasJsxRuntime: boolean) =>
     if (!pluginPath) return false;
     // NOTE: module.js will be discarded in future.
     const pluginDir = path.dirname(pluginPath);
-    let absoluteModulePath = path.join(pluginDir, 'runtime.js');
+    // compatible with output file extension of .jsx
+    let [absoluteModulePath] = globby.sync('runtime.@((t|j)s?(x))', { cwd: pluginDir, absolute: true });
     let modulePath = absoluteModulePath;
     const moduleDir = path.join(pluginDir, '..');
-    if(!fse.existsSync(absoluteModulePath)){
+    if(!absoluteModulePath){
       // filter plugin without runtime
       return false;
     } else if (name){

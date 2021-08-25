@@ -3027,85 +3027,85 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@swc/core-android-arm64@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-android-arm64/download/@swc/core-android-arm64-1.2.80.tgz#712158918c935ddfa0c5e3dac427731aa8396b50"
-  integrity sha1-cSFYkYyTXd+gxePaxCdzGqg5a1A=
+"@swc/core-android-arm64@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-android-arm64/download/@swc/core-android-arm64-1.2.81.tgz#f934ad5f728a6a7c7c7e3f4d0ae28ea26d50395b"
+  integrity sha1-+TStX3KKanx8fj9NCuKOom1QOVs=
 
-"@swc/core-darwin-arm64@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-darwin-arm64/download/@swc/core-darwin-arm64-1.2.80.tgz#36ec0f75debb66074d891424208e5f743789ef8a"
-  integrity sha1-NuwPdd67ZgdNiRQkII5fdDeJ74o=
+"@swc/core-darwin-arm64@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-darwin-arm64/download/@swc/core-darwin-arm64-1.2.81.tgz#a81ca78a4865a2c2ae6edd645b9ec5da5ae23204"
+  integrity sha1-qBynikhlosKubt1kW57F2lriMgQ=
 
-"@swc/core-darwin-x64@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-darwin-x64/download/@swc/core-darwin-x64-1.2.80.tgz#795a9909f00b760d5b9c05eb9907cd7dfbdcb75f"
-  integrity sha1-eVqZCfALdg1bnAXrmQfNffvct18=
+"@swc/core-darwin-x64@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-darwin-x64/download/@swc/core-darwin-x64-1.2.81.tgz#76b2a7a1169062fa15244026679acfd3213f6014"
+  integrity sha1-drKnoRaQYvoVJEAmZ5rP0yE/YBQ=
 
-"@swc/core-freebsd-x64@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-freebsd-x64/download/@swc/core-freebsd-x64-1.2.80.tgz#4e8afd62d2916efe46f5b20c64f3a5b7075c2aa5"
-  integrity sha1-Tor9YtKRbv5G9bIMZPOltwdcKqU=
+"@swc/core-freebsd-x64@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-freebsd-x64/download/@swc/core-freebsd-x64-1.2.81.tgz#e7737efdddfad586655f0b5ea60318d2c38526e0"
+  integrity sha1-53N+/d361YZlXwtepgMY0sOFJuA=
 
-"@swc/core-linux-arm-gnueabihf@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-arm-gnueabihf/download/@swc/core-linux-arm-gnueabihf-1.2.80.tgz#21679cb710c4cd5f33e309d1ad846901696e0fdf"
-  integrity sha1-IWectxDEzV8z4wnRrYRpAWluD98=
+"@swc/core-linux-arm-gnueabihf@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-arm-gnueabihf/download/@swc/core-linux-arm-gnueabihf-1.2.81.tgz#bed775cc4ba356140de512baa81af0a9ad1f8faa"
+  integrity sha1-vtd1zEujVhQN5RK6qBrwqa0fj6o=
 
-"@swc/core-linux-arm64-gnu@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-arm64-gnu/download/@swc/core-linux-arm64-gnu-1.2.80.tgz#866c0e744b1e0dc6f87264deac56ee4359fb02ef"
-  integrity sha1-hmwOdEseDcb4cmTerFbuQ1n7Au8=
+"@swc/core-linux-arm64-gnu@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-arm64-gnu/download/@swc/core-linux-arm64-gnu-1.2.81.tgz#14e5ad4f8a3c27116253ba569a11746041d786ce"
+  integrity sha1-FOWtT4o8JxFiU7pWmhF0YEHXhs4=
 
-"@swc/core-linux-arm64-musl@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-arm64-musl/download/@swc/core-linux-arm64-musl-1.2.80.tgz#e392a6afdf81ceba72c9fa491e311856e4e9588e"
-  integrity sha1-45Kmr9+BzrpyyfpJHjEYVuTpWI4=
+"@swc/core-linux-arm64-musl@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-arm64-musl/download/@swc/core-linux-arm64-musl-1.2.81.tgz#9b47abccdd870ed0aa3a40e43581e5b52c7f7b11"
+  integrity sha1-m0erzN2HDtCqOkDkNYHltSx/exE=
 
-"@swc/core-linux-x64-gnu@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-x64-gnu/download/@swc/core-linux-x64-gnu-1.2.80.tgz#c714be0c6c151fcb817e525f043a6541e7174403"
-  integrity sha1-xxS+DGwVH8uBflJfBDplQecXRAM=
+"@swc/core-linux-x64-gnu@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-x64-gnu/download/@swc/core-linux-x64-gnu-1.2.81.tgz#4fe564c83c97f3e46cfd8d46c1226ec6e0d62e43"
+  integrity sha1-T+VkyDyX8+Rs/Y1GwSJuxuDWLkM=
 
-"@swc/core-linux-x64-musl@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-x64-musl/download/@swc/core-linux-x64-musl-1.2.80.tgz#84070aeb59bac104aaf59f94cff2ab8be28f430b"
-  integrity sha1-hAcK61m6wQSq9Z+Uz/Kri+KPQws=
+"@swc/core-linux-x64-musl@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-linux-x64-musl/download/@swc/core-linux-x64-musl-1.2.81.tgz#bce10e6b31aa4a562efce38411e43a406126be19"
+  integrity sha1-vOEOazGqSlYu/OOEEeQ6QGEmvhk=
 
-"@swc/core-win32-arm64-msvc@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-win32-arm64-msvc/download/@swc/core-win32-arm64-msvc-1.2.80.tgz#f4eaca0d7093a876b767574aa462c63d1a525493"
-  integrity sha1-9OrKDXCTqHa3Z1dKpGLGPRpSVJM=
+"@swc/core-win32-arm64-msvc@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-win32-arm64-msvc/download/@swc/core-win32-arm64-msvc-1.2.81.tgz#9a952ee575140904e9c02533360ef20acb6438e5"
+  integrity sha1-mpUu5XUUCQTpwCUzNg7yCstkOOU=
 
-"@swc/core-win32-ia32-msvc@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-win32-ia32-msvc/download/@swc/core-win32-ia32-msvc-1.2.80.tgz#e868057b4fede433964b4cd8e404bfda131621a7"
-  integrity sha1-6GgFe0/t5DOWS0zY5AS/2hMWIac=
+"@swc/core-win32-ia32-msvc@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-win32-ia32-msvc/download/@swc/core-win32-ia32-msvc-1.2.81.tgz#726ca8b5835670039578749e1ca96b8fa422cbbe"
+  integrity sha1-cmyotYNWcAOVeHSeHKlrj6Qiy74=
 
-"@swc/core-win32-x64-msvc@^1.2.80":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core-win32-x64-msvc/download/@swc/core-win32-x64-msvc-1.2.80.tgz#961d4c07da33da70f102aa5926f1018532a02349"
-  integrity sha1-lh1MB9oz2nDxAqpZJvEBhTKgI0k=
+"@swc/core-win32-x64-msvc@^1.2.81":
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core-win32-x64-msvc/download/@swc/core-win32-x64-msvc-1.2.81.tgz#b211a511f63e1dd9f1018295efdd7c41fecd9d42"
+  integrity sha1-shGlEfY+HdnxAYKV7918Qf7NnUI=
 
 "@swc/core@^1.2.50", "@swc/core@^1.2.52":
-  version "1.2.80"
-  resolved "https://registry.npm.alibaba-inc.com/@swc/core/download/@swc/core-1.2.80.tgz#d6754200e4f1b4815e7cbbe7da26583354ec6a30"
-  integrity sha1-1nVCAOTxtIFefLvn2iZYM1TsajA=
+  version "1.2.81"
+  resolved "https://registry.npm.alibaba-inc.com/@swc/core/download/@swc/core-1.2.81.tgz#d829514237da372f39f8f907df030ea68731fea5"
+  integrity sha1-2ClRQjfaNy85+PkH3wMOpocx/qU=
   dependencies:
     "@node-rs/helper" "^1.0.0"
   optionalDependencies:
-    "@swc/core-android-arm64" "^1.2.80"
-    "@swc/core-darwin-arm64" "^1.2.80"
-    "@swc/core-darwin-x64" "^1.2.80"
-    "@swc/core-freebsd-x64" "^1.2.80"
-    "@swc/core-linux-arm-gnueabihf" "^1.2.80"
-    "@swc/core-linux-arm64-gnu" "^1.2.80"
-    "@swc/core-linux-arm64-musl" "^1.2.80"
-    "@swc/core-linux-x64-gnu" "^1.2.80"
-    "@swc/core-linux-x64-musl" "^1.2.80"
-    "@swc/core-win32-arm64-msvc" "^1.2.80"
-    "@swc/core-win32-ia32-msvc" "^1.2.80"
-    "@swc/core-win32-x64-msvc" "^1.2.80"
+    "@swc/core-android-arm64" "^1.2.81"
+    "@swc/core-darwin-arm64" "^1.2.81"
+    "@swc/core-darwin-x64" "^1.2.81"
+    "@swc/core-freebsd-x64" "^1.2.81"
+    "@swc/core-linux-arm-gnueabihf" "^1.2.81"
+    "@swc/core-linux-arm64-gnu" "^1.2.81"
+    "@swc/core-linux-arm64-musl" "^1.2.81"
+    "@swc/core-linux-x64-gnu" "^1.2.81"
+    "@swc/core-linux-x64-musl" "^1.2.81"
+    "@swc/core-win32-arm64-msvc" "^1.2.81"
+    "@swc/core-win32-ia32-msvc" "^1.2.81"
+    "@swc/core-win32-x64-msvc" "^1.2.81"
 
 "@swc/helpers@^0.2.12":
   version "0.2.13"
@@ -3307,6 +3307,11 @@
   version "7.0.9"
   resolved "https://registry.npm.alibaba-inc.com/@types/json-schema/download/@types/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha1-l+3JA36gw4WFMgsolk3eOznkZg0=
+
+"@types/json5@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.npm.alibaba-inc.com/@types/json5/download/@types/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
+  integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/less@^3.0.3":
   version "3.0.3"
@@ -4303,9 +4308,9 @@ aws4@^1.8.0:
   integrity sha1-1h9G2DslGSUOJ4Ta9bCUeai0HFk=
 
 axe-core@^4.0.2:
-  version "4.3.2"
-  resolved "https://registry.npm.alibaba-inc.com/axe-core/download/axe-core-4.3.2.tgz#fcf8777b82c62cfc69c7e9f32c0d2226287680e7"
-  integrity sha1-/Ph3e4LGLPxpx+nzLA0iJih2gOc=
+  version "4.3.3"
+  resolved "https://registry.npm.alibaba-inc.com/axe-core/download/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
+  integrity sha1-tVzY6N32Wf6JsGRoDhxqTc6rAyU=
 
 axios@^0.19.2:
   version "0.19.2"
@@ -4778,7 +4783,7 @@ browserslist@4.14.2:
     escalade "^3.0.2"
     node-releases "^1.1.61"
 
-browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4.16.7, browserslist@^4.6.4:
+browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4.16.8, browserslist@^4.6.4:
   version "4.16.8"
   resolved "https://registry.npm.alibaba-inc.com/browserslist/download/browserslist-4.16.8.tgz#cb868b0b554f137ba6e33de0ecff2eda403c4fb0"
   integrity sha1-y4aLC1VPE3um4z3g7P8u2kA8T7A=
@@ -5831,17 +5836,17 @@ copy-to@^2.0.1:
   integrity sha1-JoD7uAaKSNCGVrYJgJK9r8kG9KU=
 
 core-js-compat@^3.14.0, core-js-compat@^3.16.0:
-  version "3.16.2"
-  resolved "https://registry.npm.alibaba-inc.com/core-js-compat/download/core-js-compat-3.16.2.tgz#442ef1d933ca6fc80859bd5a1db7a3ba716aaf56"
-  integrity sha1-RC7x2TPKb8gIWb1aHbejunFqr1Y=
+  version "3.16.3"
+  resolved "https://registry.npm.alibaba-inc.com/core-js-compat/download/core-js-compat-3.16.3.tgz#ae12a6e20505a1d79fbd16b6689dfc77fc989114"
+  integrity sha1-rhKm4gUFodefvRa2aJ38d/yYkRQ=
   dependencies:
-    browserslist "^4.16.7"
+    browserslist "^4.16.8"
     semver "7.0.0"
 
 core-js-pure@^3.16.0, core-js-pure@^3.8.1:
-  version "3.16.2"
-  resolved "https://registry.npm.alibaba-inc.com/core-js-pure/download/core-js-pure-3.16.2.tgz#0ef4b79cabafb251ea86eb7d139b42bd98c533e8"
-  integrity sha1-DvS3nKuvslHqhut9E5tCvZjFM+g=
+  version "3.16.3"
+  resolved "https://registry.npm.alibaba-inc.com/core-js-pure/download/core-js-pure-3.16.3.tgz#41ccb9b6027535f8dd51a0af004c1c7f0a8c9ca7"
+  integrity sha1-Qcy5tgJ1NfjdUaCvAEwcfwqMnKc=
 
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.12"
@@ -5849,9 +5854,9 @@ core-js@^2.4.0, core-js@^2.5.0:
   integrity sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=
 
 core-js@^3.16.0, core-js@^3.3.1, core-js@^3.6.4:
-  version "3.16.2"
-  resolved "https://registry.npm.alibaba-inc.com/core-js/download/core-js-3.16.2.tgz#3f485822889c7fc48ef463e35be5cc2a4a01a1f4"
-  integrity sha1-P0hYIoicf8SO9GPjW+XMKkoBofQ=
+  version "3.16.3"
+  resolved "https://registry.npm.alibaba-inc.com/core-js/download/core-js-3.16.3.tgz#1f2d43c51a9ed014cc6c83440af14697ae4b75f2"
+  integrity sha1-Hy1DxRqe0BTMbINECvFGl65LdfI=
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -6720,9 +6725,9 @@ ejs@^3.0.1, ejs@^3.1.3:
     jake "^10.6.1"
 
 electron-to-chromium@^1.3.378, electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.811:
-  version "1.3.816"
-  resolved "https://registry.npm.alibaba-inc.com/electron-to-chromium/download/electron-to-chromium-1.3.816.tgz#ab6488b126de92670a6459fe3e746050e0c6276f"
-  integrity sha1-q2SIsSbekmcKZFn+PnRgUODGJ28=
+  version "1.3.817"
+  resolved "https://registry.npm.alibaba-inc.com/electron-to-chromium/download/electron-to-chromium-1.3.817.tgz#911b4775b5d9fa0c4729d4694adc81de85d8d8f6"
+  integrity sha1-kRtHdbXZ+gxHKdRpStyB3oXY2PY=
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -6986,9 +6991,9 @@ eslint-module-utils@^2.6.2:
     pkg-dir "^2.0.0"
 
 eslint-plugin-import@^2.18.0:
-  version "2.24.1"
-  resolved "https://registry.npm.alibaba-inc.com/eslint-plugin-import/download/eslint-plugin-import-2.24.1.tgz#64aba8b567a1ba9921d5465586e86c491b8e2135"
-  integrity sha1-ZKuotWehupkh1UZVhuhsSRuOITU=
+  version "2.24.2"
+  resolved "https://registry.npm.alibaba-inc.com/eslint-plugin-import/download/eslint-plugin-import-2.24.2.tgz#2c8cd2e341f3885918ee27d18479910ade7bb4da"
+  integrity sha1-LIzS40HziFkY7ifRhHmRCt57tNo=
   dependencies:
     array-includes "^3.1.3"
     array.prototype.flat "^1.2.4"
@@ -7004,7 +7009,7 @@ eslint-plugin-import@^2.18.0:
     pkg-up "^2.0.0"
     read-pkg-up "^3.0.0"
     resolve "^1.20.0"
-    tsconfig-paths "^3.10.1"
+    tsconfig-paths "^3.11.0"
 
 eslint-plugin-jsx-a11y@^6.2.3:
   version "6.4.1"
@@ -10550,7 +10555,7 @@ json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   resolved "https://registry.npm.alibaba-inc.com/json-stringify-safe/download/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
-json5@2.x, json5@^2.1.2, json5@^2.1.3, json5@^2.2.0:
+json5@2.x, json5@^2.1.2, json5@^2.1.3:
   version "2.2.0"
   resolved "https://registry.npm.alibaba-inc.com/json5/download/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
   integrity sha1-Lf7+cgxrpSXZ69kJlQ8FFTFsiaM=
@@ -11667,9 +11672,9 @@ natural-compare@^1.4.0:
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
 needle@^2.5.2:
-  version "2.8.0"
-  resolved "https://registry.npm.alibaba-inc.com/needle/download/needle-2.8.0.tgz#1c8ef9c1a2c29dcc1e83d73809d7bc681c80a048"
-  integrity sha1-HI75waLCncweg9c4Cde8aByAoEg=
+  version "2.9.0"
+  resolved "https://registry.npm.alibaba-inc.com/needle/download/needle-2.9.0.tgz#c680e401f99b6c3d8d1f315756052edf3dc3bdff"
+  integrity sha1-xoDkAfmbbD2NHzFXVgUu3z3Dvf8=
   dependencies:
     debug "^3.2.6"
     iconv-lite "^0.4.4"
@@ -15726,6 +15731,14 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+swc-webpack-plugin@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.alibaba-inc.com/swc-webpack-plugin/download/swc-webpack-plugin-1.0.0.tgz#2930fc4777c29550662235d1b52ce14e9c68cc2f"
+  integrity sha1-KTD8R3fClVBmIjXRtSzhTpxozC8=
+  dependencies:
+    type-fest "^1.1.3"
+    webpack-sources "^2.2.0"
+
 symbol-tree@^3.2.2, symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.npm.alibaba-inc.com/symbol-tree/download/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -15870,9 +15883,9 @@ terser@^4.6.12:
     source-map-support "~0.5.12"
 
 terser@^5.7.0:
-  version "5.7.1"
-  resolved "https://registry.npm.alibaba-inc.com/terser/download/terser-5.7.1.tgz#2dc7a61009b66bb638305cb2a824763b116bf784"
-  integrity sha1-LcemEAm2a7Y4MFyyqCR2OxFr94Q=
+  version "5.7.2"
+  resolved "https://registry.npm.alibaba-inc.com/terser/download/terser-5.7.2.tgz#d4d95ed4f8bf735cb933e802f2a1829abf545e3f"
+  integrity sha1-1Nle1Pi/c1y5M+gC8qGCmr9UXj8=
   dependencies:
     commander "^2.20.0"
     source-map "~0.7.2"
@@ -16190,12 +16203,13 @@ ts-node@^9.0.0, ts-node@^9.1.1:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
-tsconfig-paths@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.npm.alibaba-inc.com/tsconfig-paths/download/tsconfig-paths-3.10.1.tgz#79ae67a68c15289fdf5c51cb74f397522d795ed7"
-  integrity sha1-ea5npowVKJ/fXFHLdPOXUi15Xtc=
+tsconfig-paths@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.npm.alibaba-inc.com/tsconfig-paths/download/tsconfig-paths-3.11.0.tgz#954c1fe973da6339c78e06b03ce2e48810b65f36"
+  integrity sha1-lUwf6XPaYznHjgawPOLkiBC2XzY=
   dependencies:
-    json5 "^2.2.0"
+    "@types/json5" "^0.0.29"
+    json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
@@ -16269,6 +16283,11 @@ type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.npm.alibaba-inc.com/type-fest/download/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha1-CeJJ696FHTseSNJ8EFREZn8XuD0=
+
+type-fest@^1.1.3:
+  version "1.4.0"
+  resolved "https://registry.npm.alibaba-inc.com/type-fest/download/type-fest-1.4.0.tgz#e9fb813fe3bf1744ec359d55d1affefa76f14be1"
+  integrity sha1-6fuBP+O/F0TsNZ1V0a/++nbxS+E=
 
 type-is@^1.6.16, type-is@^1.6.18, type-is@^1.6.4, type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
@@ -16782,9 +16801,9 @@ vite-plugin-style-import@^1.1.1:
     magic-string "^0.25.7"
 
 vite@^2.3.4, vite@^2.4.2, vite@^2.4.3, vite@^2.4.4:
-  version "2.5.0"
-  resolved "https://registry.npm.alibaba-inc.com/vite/download/vite-2.5.0.tgz#111ba3679432d426e44566acf480005a7914cbd6"
-  integrity sha1-ERujZ5Qy1CbkRWas9IAAWnkUy9Y=
+  version "2.5.1"
+  resolved "https://registry.npm.alibaba-inc.com/vite/download/vite-2.5.1.tgz#953c71a034c07b3ae0448d57664ec9c6862f23a8"
+  integrity sha1-lTxxoDTAezrgRI1XZk7JxoYvI6g=
   dependencies:
     esbuild "^0.12.17"
     postcss "^8.3.6"
@@ -16940,7 +16959,7 @@ webpack-sources@^1.1.0, webpack-sources@^1.4.3:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack-sources@^2.0.0, webpack-sources@^2.3.0:
+webpack-sources@^2.0.0, webpack-sources@^2.2.0, webpack-sources@^2.3.0:
   version "2.3.1"
   resolved "https://registry.npm.alibaba-inc.com/webpack-sources/download/webpack-sources-2.3.1.tgz#570de0af163949fe272233c2cefe1b56f74511fd"
   integrity sha1-Vw3grxY5Sf4nIjPCzv4bVvdFEf0=

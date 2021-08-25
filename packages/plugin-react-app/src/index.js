@@ -12,7 +12,7 @@ const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
 module.exports = async (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
-  const { command, rootDir, userConfig } = context;
+  const { command, rootDir, userConfig, originalUserConfig } = context;
   const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
@@ -30,6 +30,11 @@ module.exports = async (api) => {
     if (userConfig.vite) {
       modifyUserConfig('vite.esbuild', { jsxInject: 'import React from \'react\''}, { deepmerge: true });
     }
+  }
+
+  // modify minify options
+  if (userConfig.swc && !Object.prototype.hasOwnProperty.call(originalUserConfig, 'minify')) {
+    modifyUserConfig('minify', 'swc');
   }
 
   // set webpack config
