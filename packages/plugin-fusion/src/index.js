@@ -72,39 +72,49 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask, modifyUs
   let { uniteBaseComponent } = pluginOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
-  if (userConfig.vite) {
-    modifyUserConfig('vite.plugins', [
-      // eslint-disable-next-line global-require
-      require('vite-plugin-style-import').default({
-        libs: [{
-          libraryName: '@alifd/next',
-          esModule: true,
-          resolveStyle: (name) => {
-            // use css variable style for default
-            return `@alifd/next/es/${name}/style2`;
-          },
-        }]
-      }),
-    ], { deepmerge: true });
-  }
-
   const taskNames = getAllTask();
   // ignore externals rule and babel-plugin-import when compile dist
   const ignoreTasks = ['component-dist'];
+  // 1. 支持主题能力
+  if (themePackage) {
+    if (userConfig.vite) {
+      log.info('vite 模式下推荐使用 css variables 方式注入主题');
+    } else if (Array.isArray(themePackage)) {
+      log.info('已启用 themePackage 多主题功能');
+    } else {
+      log.info('使用 Fusion 组件主题包：', themePackage);
+    }
+  }
+  if (themeConfig) {
+    log.info('自定义 Fusion 组件主题变量：', themeConfig);
+  }
+
+  if (userConfig.vite) {
+    modifyUserConfig('vite', {
+      plugins: [
+        // eslint-disable-next-line global-require
+        require('vite-plugin-style-import').default({
+          libs: [{
+            libraryName: '@alifd/next',
+            esModule: true,
+            resolveStyle: (name) => {
+              // use css variable style for default
+              return `@alifd/next/es/${name}/style2`;
+            },
+          }]
+        }),
+      ],
+      resolve: {
+        alias: [
+          // compatible with `@import '~@alifd/next/reset.scss';`
+          { find: /^~/, replacement: '' },
+        ],
+      },
+    }, { deepmerge: true });
+  }
+
   taskNames.forEach((taskName) => {
     onGetWebpackConfig(taskName, (config) => {
-      // 1. 支持主题能力
-      if (themePackage) {
-        if (Array.isArray(themePackage)) {
-          log.info('已启用 themePackage 多主题功能');
-        } else {
-          log.info('使用 Fusion 组件主题包：', themePackage);
-        }
-      }
-      if (themeConfig) {
-        log.info('自定义 Fusion 组件主题变量：', themeConfig);
-      }
-  
       let replaceVars = {};
       let defaultScssVars = {};
       let defaultTheme = '';
