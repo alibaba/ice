@@ -122,7 +122,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
 
       const [apps, setApps] = useState(null);
       const BasicLayout = Layout || DefaultLayout;
-      const RenderAppRoute = CustomAppRoute || AppRoute;
+      const RenderAppRoute = (CustomAppRoute || AppRoute) as typeof AppRoute;
 
       useEffect(() => {
         (async () => {
