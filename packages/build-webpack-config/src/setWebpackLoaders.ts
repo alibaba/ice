@@ -1,6 +1,7 @@
 import * as MiniCssExtractPlugin from '@builder/pack/deps/mini-css-extract-plugin';
 import getBabelConfig from '@builder/babel-config';
 import { cloneDeep } from '@builder/pack/deps/lodash';
+import { ITaskConfig } from 'build-scripts';
 
 const EXCLUDE_REGX = /node_modules/;
 
@@ -39,7 +40,7 @@ const configCSSRule = (config, style, loaders = []) => {
     rule
       .use('MiniCssExtractPlugin.loader')
       .loader(MiniCssExtractPlugin.loader)
-    // compatible with commonjs syntax: const styles = require('./index.module.less')
+      // compatible with commonjs syntax: const styles = require('./index.module.less')
       .options({
         esModule: false,
       })
@@ -61,6 +62,13 @@ const configCSSRule = (config, style, loaders = []) => {
   });
 };
 
+// config assets rules
+const configAssetsRule = (config: ITaskConfig['chainConfig'], type, testReg, loaderOpts = {}) => {
+  config.module.rule(type).test(testReg).set('type', 'asset/inline').set('generator', {
+    dataUrl: loaderOpts
+  });
+};
+
 export default (config) => {
   // css loader
   [
@@ -69,6 +77,16 @@ export default (config) => {
     ['less', [['less-loader', require.resolve('@builder/pack/deps/less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
   ].forEach(([style, loaders]) => {
     configCSSRule(config, style, (loaders as any) || []);
+  });
+
+  [
+    ['woff2', /\.woff2?$/, { mimetype: 'application/font-woff' }],
+    ['ttf', /\.ttf$/, { mimetype: 'application/octet-stream' }],
+    ['eot', /\.eot$/, { mimetype: 'application/vnd.ms-fontobject' }],
+    ['svg', /\.svg$/, { mimetype: 'image/svg+xml' }],
+    ['img', /\.(png|jpg|webp|jpeg|gif)$/i],
+  ].forEach(([type, reg, opts]) => {
+    configAssetsRule(config, type, reg, opts || {});
   });
 
   // Add babel loader
@@ -83,6 +101,6 @@ export default (config) => {
       .end()
       .use('babel-loader')
       .loader(babelLoader)
-      .options({ ...cloneDeep(babelConfig)});
+      .options({ ...cloneDeep(babelConfig) });
   });
 };
