@@ -1,0 +1,36 @@
+{
+  "name": "@builder/config-types",
+  "version": "1.0.0",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ],
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-config-types"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "dependencies": {
+    "@types/eslint": "^7.28.0",
+    "@types/sass-loader": "^8.0.2",
+    "@types/less": "^3.0.3",
+    "@types/webpack-dev-server": "^4.0.0",
+    "type-fest": "^1.4.0"
+  },
+  "devDependencies": {
+    "terser": "^5.7.2",
+    "vite": "^2.0.0",
+    "esbuild": "^0.12.8",
+    "http-proxy-middleware": "^2.0.1",
+    "postcss": "^8.3.6",
+    "@swc/core": "^1.2.82"
+  }
+}
