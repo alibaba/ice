@@ -4,7 +4,7 @@ import { MinifyOptions } from 'terser';
 import * as SassLoader from 'sass-loader';
 import type { ESLint } from 'eslint';
 import { transform, TransformOptions } from 'esbuild';
-import { Config } from '@swc/core';
+import { Config, JsMinifyOptions } from '@swc/core';
 import { ProcessOptions } from 'postcss';
 import { Except } from 'type-fest';
 
@@ -147,6 +147,12 @@ interface LessLoaderOptions {
   implementation?: any;
 }
 
+type Minification = 'terser' | 'esbuild' | 'swc';
+interface MinificationConfig {
+  type: Minification;
+  options: JsMinifyOptions | MinifyOptions | MinifyPluginOptions;
+}
+
 export interface BaseUserConfig {
   alias?: Record<string, string>;
   define?: Record<string, string>;
@@ -160,7 +166,7 @@ export interface BaseUserConfig {
   mock?: boolean | Mock;
   externals?: ExternalsElement | ExternalsElement[];
   hash?: boolean | string;
-  minify?: boolean | 'terser' | 'esbuild' | 'swc';
+  minify?: boolean | Minification | MinificationConfig;
   outputAssetsPath?: {
     js?: string;
     css?: string;
@@ -173,7 +179,6 @@ export interface BaseUserConfig {
   library?: string | Record<string, string>;
   libraryExport?: string | string[];
   sourceMap?: boolean | Devtool;
-  terserOptions?: MinifyOptions;
   sassLoaderOptions?: SassLoader.Options;
   cssLoaderOptions?: CSSLoaderOptions;
   lessLoaderOptions?: LessLoaderOptions;
@@ -188,6 +193,5 @@ export interface BaseUserConfig {
   targets?: string[];
   webpackLoaders?: WebpackLoaders;
   webpackPlugins?: WebpackPlugins;
-  esbuild?: MinifyPluginOptions;
   swc?: boolean | Config;
 }
