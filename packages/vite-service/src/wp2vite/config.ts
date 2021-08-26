@@ -16,7 +16,7 @@ type ConfigMap = Record<string, string | string[] | {
   transform: Transformer
 }>
 
-interface MinificationConfig {
+interface MinifierConfig {
   type: 'esbuild' | 'swc' | 'terser';
   options?: Record<string, any>;
 }
@@ -109,7 +109,7 @@ const configMap: ConfigMap = {
       if (value) {
         const { minify } = userConfig;
         if (minify) {
-          const minifier = (minify as unknown as MinificationConfig).type
+          const minifier = (minify as unknown as MinifierConfig).type
             || (typeof minify === 'boolean' ? 'terser' : minify) as string;
           if (['esbuild', 'terser'].includes(minifier)) {
             return minifier;
