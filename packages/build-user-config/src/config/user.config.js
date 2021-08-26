@@ -155,11 +155,6 @@ module.exports = [
     },
   },
   {
-    name: 'terserOptions',
-    validation: 'object',
-    defaultValue: {}
-  },
-  {
     name: 'cssLoaderOptions',
     validation: 'object',
     defaultValue: {}
@@ -232,10 +227,6 @@ module.exports = [
     name: 'modularImportRuntime',
     validation: 'boolean',
     defaultValue: true,
-  },
-  {
-    name: 'esbuild',
-    validation: 'object'
   },
   {
     name: 'swc',
