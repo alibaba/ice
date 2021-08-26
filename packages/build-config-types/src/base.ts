@@ -147,9 +147,9 @@ interface LessLoaderOptions {
   implementation?: any;
 }
 
-type Minification = 'terser' | 'esbuild' | 'swc';
-interface MinificationConfig {
-  type: Minification;
+type Minifier = 'terser' | 'esbuild' | 'swc';
+interface MinifierConfig {
+  type: Minifier;
   options: JsMinifyOptions | MinifyOptions | MinifyPluginOptions;
 }
 
@@ -166,7 +166,7 @@ export interface BaseUserConfig {
   mock?: boolean | Mock;
   externals?: ExternalsElement | ExternalsElement[];
   hash?: boolean | string;
-  minify?: boolean | Minification | MinificationConfig;
+  minify?: boolean | Minifier | MinifierConfig;
   outputAssetsPath?: {
     js?: string;
     css?: string;
