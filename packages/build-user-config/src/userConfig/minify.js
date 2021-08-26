@@ -6,7 +6,7 @@ const { SWCMinifyPlugin } = require('swc-webpack-plugin');
 module.exports = (config, minify, context, { log }) => {
   const { command } = context;
   if ( minify && command === 'build') {
-    const minificationConfig = minify.type ? minify : { type: minify };
+    const minificationConfig = minify.type ? minify : { type: typeof minify === 'boolean' ? 'terser' : minify };
     const { type, options } = minificationConfig;
     const availableMinifier = ['terser', 'esbuild', 'swc'];
     if (!availableMinifier.includes(type)) {

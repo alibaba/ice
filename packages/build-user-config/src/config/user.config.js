@@ -96,7 +96,7 @@ module.exports = [
   },
   {
     name: 'minify',
-    validation: 'boolean|string',
+    validation: 'boolean|string|object',
     defaultValue: 'terser',
   },
   {

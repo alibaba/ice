@@ -1,6 +1,7 @@
 {
   "hash": false,
-  "minify": false,
+  "minify": "esbuild",
+  "polyfill": false,
   "vite": true,
   "vendor": false,
   "plugins": [],
