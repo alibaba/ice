@@ -3,16 +3,28 @@ import * as fs from 'fs-extra';
 import Base from './BaseGenerator';
 import relative from '../relative';
 
-export default class ReactGenerator extends Base {
+export default class RaxGenerator extends Base {
   public disableRuntimeList = ['build-plugin-rax-router']
 
   constructor(api, options) {
     super(api, options);
     this.addRunAppRenderData();
-    const { getValue } = api;
+    this.injectTabBar();
+  }
+
+  private injectTabBar() {
+    const { getValue } = this.builtInMethods;
+    const { isAppEntry } = this.options;
+    const routePath = this.getRoutesFilePath();
     const tabBarConfig = getValue('staticConfig').tabBar;
-    if (tabBarConfig) {
-      this.runAppRenderData.tabBarPath = './TabBar';
+
+    if (routePath && isAppEntry) {
+      // Read app.json
+      const routesInfo = fs.readJSONSync(routePath);
+      if (routesInfo.tabBar) {
+        this.generateTabBarFile(routesInfo.tabBar);
+      }
+    } else if (tabBarConfig) {
       this.generateTabBarFile(tabBarConfig);
     }
   }
@@ -35,6 +47,7 @@ export default class ReactGenerator extends Base {
   }
 
   private generateTabBarFile(tabBarConfig) {
+    this.runAppRenderData.tabBarPath = './TabBar';
     const { getValue, applyMethod } = this.builtInMethods;
     const { entryName } = this.options;
 

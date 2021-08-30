@@ -9,6 +9,7 @@
   "dependencies": {
     "universal-env": "^3.0.0"
   },
+  "sideEffects": false,
   "directories": {
     "lib": "lib",
     "test": "__tests__"
