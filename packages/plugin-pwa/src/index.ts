@@ -1,12 +1,13 @@
 import * as path from 'path';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 import * as WorkboxPlugin from 'workbox-webpack-plugin';
 import { Option } from './types';
 import defaultRuntimeCaching from './runtimeCaching';
-import { hasWebManifest, appendManifestToHtml } from './webManifestHelper';
+import hasWebManifest from './hasWebManifest';
+import ManifestPlugin from './ManifestPlugin';
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
-  const { command } = context;
+  const { command, rootDir } = context;
   const isDev = command === 'start';
 
   const {
@@ -16,7 +17,8 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
     basename = '/',
     additionalManifestEntries = [],
     scope = basename,
-    runtimeCaching = []
+    runtimeCaching = [],
+    dynamicStartUrl = true,
   } = (options ?? {}) as Option;
 
   if (isDev && !dev) {
@@ -50,11 +52,12 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
         ...args,
         __ICE_PWA_SW__: `'${swPath}'`,
         __ICE_START_URL__: `'${basename}'`,
-        __ICE_SW_SCOPE__: `'${swScope}'`
+        __ICE_SW_SCOPE__: `'${swScope}'`,
+        __ICE_DYNAMIC_START_URL__: `'${dynamicStartUrl}'`
       }]);
 
-    if (hasWebManifest) {
-      appendManifestToHtml(config);
+    if (hasWebManifest(rootDir)) {
+      config.plugin('ManifestPlugin').use(ManifestPlugin);
     }
 
     if (isDev) {
@@ -94,13 +97,19 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
           skipWaiting,
 
           // precache assets which under 10M
-          maximumFileSizeToCacheInBytes: '10240000',
+          maximumFileSizeToCacheInBytes: 10240000,
 
           // custom runtim caching
           runtimeCaching: runtimeCaching.concat(defaultRuntimeCaching),
 
           // custom manifests
           additionalManifestEntries,
+
+          mode: 'development',
+
+          navigateFallback: '/index.html',
+
+          exclude: [/index\.(?:js|html)$/i],
 
           ...devOptions
         }

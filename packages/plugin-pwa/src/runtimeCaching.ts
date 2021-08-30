@@ -1,4 +1,4 @@
-import { RuntimeCachingEntry } from 'workbox-build';
+import { RuntimeCaching } from 'workbox-build';
 
 // workbox runtime config: https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.RuntimeCachingEntry
 export default [
@@ -127,4 +127,4 @@ export default [
       networkTimeoutSeconds: 10
     }
   },
-] as RuntimeCachingEntry[];
+] as RuntimeCaching[];

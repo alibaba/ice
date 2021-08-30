@@ -1,4 +1,4 @@
-import { RuntimeCachingEntry, ManifestEntry } from 'workbox-build';
+import { RuntimeCaching, ManifestEntry } from 'workbox-build';
 
 export interface Option {
   /**
@@ -25,7 +25,7 @@ export interface Option {
    * additional runtime caching strategies
    * @default []
    */
-  runtimeCaching?: RuntimeCachingEntry[];
+  runtimeCaching?: RuntimeCaching[];
   /**
    * whether to call skipWaiting immediately
    * @default true
@@ -36,4 +36,9 @@ export interface Option {
    * additonal manifests to precache
    */
   additionalManifestEntries?: ManifestEntry[];
+
+  /**
+   * If one's start url returns different HTML document on every service worker updated
+   */
+  dynamicStartUrl?: boolean;
 }

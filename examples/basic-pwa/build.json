@@ -1,0 +1,8 @@
+{
+  "entry": "src/index.tsx",
+  "disableRuntime": true,
+  "publicPath": "dev.gll.cnd",
+  "plugins": [
+    "build-plugin-pwa"
+  ]
+}
