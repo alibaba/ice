@@ -2,7 +2,7 @@
   "entry": "src/index.tsx",
   "disableRuntime": true,
   "publicPath": "https://dev.alicdn.com/",
+  "pwa": true,
   "plugins": [
-    "build-plugin-pwa"
   ]
 }

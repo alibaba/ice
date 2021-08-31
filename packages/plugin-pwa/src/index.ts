@@ -6,16 +6,26 @@ import defaultRuntimeCaching from './runtimeCaching';
 import hasWebManifest from './hasWebManifest';
 import ManifestPlugin from './ManifestPlugin';
 
-const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options = {}) => {
   const { command, rootDir, userConfig } = context;
-  const { pwa } = userConfig;
 
   // register pwa in build.json
   registerUserConfig({
-    name: 'pwa'
+    name: 'pwa',
+    validation: (val) => {
+      return typeof val === 'boolean' || typeof val === 'object';
+    }
   });
 
   const isDev = command === 'start';
+
+  let pwa = {};
+
+  if (userConfig?.pwa) {
+    pwa = (userConfig.pwa !== true) && userConfig.pwa;
+  } else {
+    pwa = options;
+  }
 
   const {
     sw = 'sw.js',
@@ -26,9 +36,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
     scope = basename,
     runtimeCaching = [],
     dynamicStartUrl = true,
-  } = (pwa ?? options ?? {}) as Option;
+  } = pwa as Option;
 
-  if (isDev && !dev) {
+  if ((isDev && !dev) || userConfig?.pwa === false) {
     log.info('[PWA]: PWA is disabled.');
     return;
   }
