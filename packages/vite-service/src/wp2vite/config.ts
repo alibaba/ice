@@ -132,7 +132,10 @@ const configMap: ConfigMap = {
   },
   'plugins.TerserPlugin': {
     name: 'build.terserOptions',
-    transform: transformMinimizer('TerserPlugin'),
+    transform: (...args) => {
+      const terserPluginOptions = transformMinimizer('TerserPlugin')(...args);
+      return terserPluginOptions?.terserOptions;
+    },
   },
   'plugin.ESBuild': {
     name: 'build.target',

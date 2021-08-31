@@ -99,7 +99,7 @@ const getOpen = (context: Context) => {
  * Exposed
  */
 export const wp2vite = (context: Context): InlineConfig => {
-  const { commandArgs = {}, userConfig, rootDir, command } = context;
+  const { commandArgs = {}, userConfig, originalUserConfig, rootDir, command } = context;
   const config = getWebpackConfig(context);
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
@@ -114,7 +114,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
       polyfillPlugin({
-        value: userConfig.polyfill as any,
+        value: originalUserConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
         hash: userConfig.hash as boolean,
         outputAssetsPath: userConfig.outputAssetsPath as any,
