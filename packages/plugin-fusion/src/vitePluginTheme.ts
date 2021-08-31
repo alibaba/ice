@@ -48,6 +48,7 @@ function vitePluginTheme(options: PluginOptions): Plugin {
       }
       let prefixVars = '';
       if (themeConfig.nextPrefix && /@alifd[\\/]next[\\/](lib|es)[\\/](.+).scss$/.test(id)) {
+        // @deprecated
         // 将 next 1.x 的 prefix 从 next- 改为自定义前缀，解决 0.x&1.x 混用的问题
         prefixVars = `$css-prefix: "${themeConfig.nextPrefix}";`;
       }
@@ -57,7 +58,7 @@ function vitePluginTheme(options: PluginOptions): Plugin {
         importVarsCode = '@import \'@alifd/next/variables.scss\';';
       }
 
-      if (!prefixVars && !themeConfigVars && !themeFileVars) {
+      if (!prefixVars && !themeConfigVars && !themeFileVars && !importVarsCode) {
         return null;
       } else {
         return `${themeFileVars}\n${themeConfigVars}\n${prefixVars}\n${importVarsCode}\n${code}`;
