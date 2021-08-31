@@ -24,7 +24,6 @@ function emitLifeCycles() {
   if (history && history.listen) {
     // Listen history change
     history.listen((location) => {
-      console.log('location change');
       if (location.pathname !== router.current.pathname) {
         // Flow router info
         router.prev = {

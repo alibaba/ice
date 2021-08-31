@@ -1,4 +1,5 @@
 {
+  "router": false,
   "vite": false,
   "mpa": {
     "openPage": "Dashboard",
