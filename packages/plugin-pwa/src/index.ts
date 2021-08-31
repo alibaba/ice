@@ -36,7 +36,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log }, options) => {
     const swDest = path.join(outputPath, sw);
     const swPath = path.join(basename, sw);
 
-    console.info(`[PWA]: ${sw} compiled to ${swDest}`);
+    log.info(`[PWA]: ${sw} compiled to ${swDest}`);
 
     // service worker registration
     config
