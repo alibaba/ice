@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.7
+
+- fix: tabBar window path wrong
+
 ## 3.2.6
 
 - chore: change custom tab bar path to `src/components/CustomTabBar/index`
