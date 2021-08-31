@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.10
+
+- [feat] support global style rule custom `postcssOptions`
+
 ## 0.3.9
 
 - [fix] polyfill loader include rules in windows
