@@ -23,5 +23,8 @@
     "workbox-webpack-plugin": "^6.1.5",
     "workbox-window": "^6.1.5"
   },
+  "peerDependencies": {
+    "html-webpack-plugin": "^4.0.0"
+  },
   "originTemplate": "build-plugin-template"
 }
