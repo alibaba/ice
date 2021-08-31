@@ -16,6 +16,11 @@ type ConfigMap = Record<string, string | string[] | {
   transform: Transformer
 }>
 
+interface MinifierConfig {
+  type: 'esbuild' | 'swc' | 'terser';
+  options?: Record<string, any>;
+}
+
 /**
  * 设置 vite 字段的值
  */
@@ -29,18 +34,35 @@ const setViteConfig = (acc: object, value: any, viteRow: string | string[], isTr
 };
 
 const transformPlugin = (pluginName: string): Transformer => {
-  return (...args) => {
-    if (!args[2] || !args[2].plugins.has(pluginName)) return;
+  return (...[,,webpackChain]) => {
+    if (!webpackChain || !webpackChain.plugins.has(pluginName)) return;
 
-    const opts = args[2].plugin(pluginName).get('args') ?? [];
+    const opts = webpackChain.plugin(pluginName).get('args') ?? [];
+    return opts[0];
+  };
+};
+
+const transformMinimizer = (minimizerName: string): Transformer => {
+  return (...[,,webpackChain]) => {
+    // @ts-ignore
+    if (!webpackChain || !webpackChain.optimization.minimizers.has(minimizerName)) return;
+
+    const opts = webpackChain.optimization.minimizer(minimizerName).get('args') ?? [];
     return opts[0];
   };
 };
 
 const transformPreProcess = (loaderName: string, rule: string): Transformer => {
+  // filter options for sassOptions and lessOptions
+  const optionsMap = {
+    scss: 'sassOptions',
+    less: 'lessOptions',
+  };
+  const optionsKey: string = optionsMap[rule];
+
   return (...args) => {
     const opt = args[2].module.rules.get(rule).use(loaderName).get('options');
-    return opt;
+    return optionsKey ? opt?.[optionsKey] : opt;
   };
 };
 
@@ -83,9 +105,21 @@ const configMap: ConfigMap = {
   // minify
   'optimization.minimize': {
     name: 'build.minify',
-    transform: (value) => {
-      // TODO: Warning
-      return value && 'terser';
+    transform: (value, { userConfig }) => {
+      if (value) {
+        const { minify } = userConfig;
+        if (minify) {
+          const minifier = (minify as unknown as MinifierConfig).type
+            || (typeof minify === 'boolean' ? 'terser' : minify) as string;
+          if (['esbuild', 'terser'].includes(minifier)) {
+            return minifier;
+          } else {
+            console.log(`minify '${minifier}' is not supported in vite mode, specify 'terser' as minifier`);
+          }
+        }
+      } else {
+        return false;
+      }
     },
   },
   'config.devtool': 'build.sourcemap',
@@ -98,7 +132,15 @@ const configMap: ConfigMap = {
   },
   'plugins.TerserPlugin': {
     name: 'build.terserOptions',
-    transform: transformPlugin('TerserPlugin'),
+    transform: transformMinimizer('TerserPlugin'),
+  },
+  'plugin.ESBuild': {
+    name: 'build.target',
+    transform: (...args) => {
+      // build.target is performed with esbuild and the value should be a valid esbuild target option
+      const esbuildMinifyOptions = transformMinimizer('ESBuild')(...args);
+      return esbuildMinifyOptions?.target;
+    },
   },
   sass: {
     name: 'css.preprocessorOptions.scss',

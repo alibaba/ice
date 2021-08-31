@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires:0 */
-import { pathToRegexp } from 'path-to-regexp';
+import * as pathToRegexp from 'path-to-regexp';
 
 function decodeParam(val) {
   if (typeof val !== 'string' || val.length === 0) {

@@ -3,18 +3,26 @@ module.exports = async ({ onGetWebpackConfig, log, context, modifyUserConfig }, 
   const { userConfig } = context;
 
   if (userConfig.vite) {
-    modifyUserConfig('vite.plugins', [
-      // eslint-disable-next-line global-require
-      require('vite-plugin-style-import').default({
-        libs: [{
-          libraryName: 'antd',
-          esModule: true,
-          resolveStyle: (name) => {
-            return `antd/es/${name}/style/index`;
-          },
-        }]
-      }),
-    ], { deepmerge: true });
+    modifyUserConfig('vite', {
+      plugins: [
+        // eslint-disable-next-line global-require
+        require('vite-plugin-style-import').default({
+          libs: [{
+            libraryName: 'antd',
+            esModule: true,
+            resolveStyle: (name) => {
+              return `antd/es/${name}/style/index`;
+            },
+          }]
+        }),
+      ],
+      resolve: {
+        alias: [
+          // compatible with `@import '~antd/es/style/themes/default.less';`
+          { find: /^~/, replacement: '' },
+        ],
+      },
+    }, { deepmerge: true });
   }
 
   onGetWebpackConfig((config) => {

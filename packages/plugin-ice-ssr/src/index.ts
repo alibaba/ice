@@ -4,13 +4,14 @@ import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
+import generateStaticPages from './generateStaticPages';
 
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir } = userConfig;
-  const TEMP_PATH = getValue('TEMP_PATH');
+  const { outputDir, ssr, publicPath = '/', devPublicPath = '/' } = userConfig;
   const PROJECT_TYPE = getValue('PROJECT_TYPE');
+  const TEMP_PATH = getValue('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
@@ -19,11 +20,20 @@ const plugin = async (api): Promise<void> => {
 
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
-  const ssrEntry = path.join(TEMP_PATH, 'server.ts');
+  const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
-  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
+  applyMethod(
+    'addRenderFile',
+    templatePath,
+    ssrEntry,
+    {
+      outputDir,
+      routesPath: routesFileExists ? '@' : '.',
+      publicPath: command === 'build' ? publicPath : devPublicPath
+    });
 
   const mode = command === 'start' ? 'development' : 'production';
+
   const webpackConfig = getWebpackConfig(mode);
   // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config
   webpackConfig
@@ -40,6 +50,7 @@ const plugin = async (api): Promise<void> => {
         .tap(([args]) => {
           return [{
             ...args,
+            // will add assets by @loadable/component
             inject: false,
           }];
         });
@@ -59,7 +70,7 @@ const plugin = async (api): Promise<void> => {
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
 
-    config.entry('server').add(ssrEntry);
+    config.entry('index').add(ssrEntry);
 
     config.target('node');
 
@@ -92,9 +103,12 @@ const plugin = async (api): Promise<void> => {
 
     config.output
       .path(serverDir)
-      .filename(serverFilename)
+      .filename('[name].js')
       .publicPath('/')
       .libraryTarget('commonjs2');
+
+    // not generate vendor
+    config.optimization.splitChunks({ cacheGroups: {} });
 
     // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
@@ -127,6 +141,7 @@ const plugin = async (api): Promise<void> => {
         res.send(html);
       }
     }
+
     if (command === 'start') {
       const originalDevMiddleware = config.devServer.get('devMiddleware');
       config.devServer.set('devMiddleware', {
@@ -169,6 +184,30 @@ const plugin = async (api): Promise<void> => {
             httpResponseQueue.push([req, res]);
           }
         });
+      });
+    }
+
+    if (command === 'build' && ssr === 'static') {
+      // SSG, pre-render page in production
+      const ssgTemplatePath = path.join(__dirname, './renderPages.ts.ejs');
+      const ssgEntryPath = path.join(TEMP_PATH, 'plugins/ssr/renderPages.ts');
+      const ssgBundlePath = path.join(serverDir, 'renderPages.js');
+      applyMethod(
+        'addRenderFile',
+        ssgTemplatePath,
+        ssgEntryPath,
+        {
+          outputDir,
+          routesPath: routesFileExists ? '@' : '.',
+          publicPath: command === 'build' ? publicPath : devPublicPath
+        }
+      );
+
+      config.entry('renderPages').add(ssgEntryPath);
+
+      onHook('after.build.compile', async () => {
+        await generateStaticPages(buildDir, ssgBundlePath);
+        await fse.remove(ssgBundlePath);
       });
     }
   });
