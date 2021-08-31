@@ -2,7 +2,7 @@
 
 ## 0.3.10
 
-- [feat] support `inlineStyle.forceEnableCSS` custom `postcssOptions`
+- [feat] support global style rule custom `postcssOptions`
 
 ## 0.3.9
 
