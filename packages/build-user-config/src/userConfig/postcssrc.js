@@ -4,10 +4,13 @@ module.exports = (config, postcssrc) => {
     [
       'scss',
       'scss-module',
+      'scss-global',
       'css',
       'css-module',
+      'css-global',
       'less',
       'less-module',
+      'less-global',
     ].forEach(rule => {
       if (
         config.module.rules.has(rule) &&
