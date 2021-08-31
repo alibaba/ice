@@ -28,6 +28,9 @@
     "webpack-plugin-import": "^0.2.5",
     "webpack-sources": "^2.0.0"
   },
+  "devDependencies": {
+    "vite": "^2.5.0"
+  },
   "peerDependencies": {
     "sass": "^1.0.0",
     "webpack": "^4.0.0"

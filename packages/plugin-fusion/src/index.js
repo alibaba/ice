@@ -7,6 +7,7 @@ const AppendStyleWebpackPlugin = require('./webpackPlugins/appendStyleWebpackPlu
 const getThemeVars = require('./utils/getThemeVars');
 const getThemeCode = require('./utils/getThemeCode');
 const getCalcVars = require('./utils/getCalcVars');
+const vitePluginTheme = require('./vitePluginTheme').default;
 
 function normalizeEntry(entry, preparedChunks) {
   const preparedName = (preparedChunks || [])
@@ -79,6 +80,9 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask, modifyUs
   if (themePackage) {
     if (userConfig.vite) {
       log.info('vite 模式下推荐使用 css variables 方式注入主题');
+      if (Array.isArray(themePackage)) {
+        log.info('vite 模式下暂不支持多主题');
+      }
     } else if (Array.isArray(themePackage)) {
       log.info('已启用 themePackage 多主题功能');
     } else {
@@ -99,9 +103,13 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask, modifyUs
             esModule: true,
             resolveStyle: (name) => {
               // use css variable style for default
-              return `@alifd/next/es/${name}/style2`;
+              return `@alifd/next/es/${name}/${cssVariable ? 'style2' : 'style'}`;
             },
           }]
+        }),
+        vitePluginTheme({
+          themeConfig: themeConfig || {},
+          themeFile: typeof themePackage === 'string' && getVariablesPath({ packageName: themePackage }),
         }),
       ],
       resolve: {
