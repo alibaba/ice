@@ -3,7 +3,7 @@ import { useRequest } from 'ice';
 import { getRepo } from '../../apis/lambda';
 
 export default function Dashboard() {
-  const { data, loading, request } = useRequest(() => getRepo());
+  const { data, request } = useRequest(() => getRepo());
 
   useEffect(() => {
     request();
@@ -12,6 +12,8 @@ export default function Dashboard() {
   return (
     <div>
       <h2>Dashboard page</h2>
+      <div>method: {data?.method}</div>
+      <div>name: {data?.dataSource[0].name}</div>
     </div>
   );
 }
