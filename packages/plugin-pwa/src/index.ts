@@ -5,26 +5,34 @@ import { Option } from './types';
 import defaultRuntimeCaching from './runtimeCaching';
 import hasWebManifest from './hasWebManifest';
 import ManifestPlugin from './ManifestPlugin';
+import isPluginExist from './isPluginExist';
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options = {}) => {
   const { command, rootDir, userConfig } = context;
+  const { plugins = [] } = userConfig;
 
-  // register pwa in build.json
+  // Register pwa in build.json
   registerUserConfig({
     name: 'pwa',
     validation: (val) => {
+      // Be compatible for build-scripts 1.x
       return typeof val === 'boolean' || typeof val === 'object';
     }
   });
 
   const isDev = command === 'start';
 
-  let pwa = {};
+  // If pwa no exists in userConfig.
+  if (!isPluginExist(plugins) && (!!userConfig.pwa || userConfig?.pwa === false )) {
+    return;
+  }
+
+  let pwaOptions = {};
 
   if (userConfig?.pwa) {
-    pwa = (userConfig.pwa !== true) && userConfig.pwa;
+    pwaOptions = (userConfig.pwa !== true) && userConfig.pwa;
   } else {
-    pwa = options;
+    pwaOptions = options;
   }
 
   const {
@@ -36,9 +44,9 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
     scope = basename,
     runtimeCaching = [],
     dynamicStartUrl = true,
-  } = pwa as Option;
+  } = pwaOptions as Option;
 
-  if ((isDev && !dev) || userConfig?.pwa === false) {
+  if (isDev && !dev) {
     log.info('[PWA]: PWA is disabled.');
     return;
   }
