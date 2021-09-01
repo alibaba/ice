@@ -14,8 +14,8 @@ class ManifestPlugin {
     compiler.hooks.compilation.tap('ManifestPlugin', compilation => {
       let alterAssetTagsHook;
 
-      if (HtmlWebpackPlugin.version >= 4) {
-        const hooks = HtmlWebpackPlugin.getHooks(compilation);
+      if ((HtmlWebpackPlugin as any).version >= 4) {
+        const hooks = (HtmlWebpackPlugin as any).getHooks(compilation);
         alterAssetTagsHook = hooks.alterAssetTags;
 
       } else {
