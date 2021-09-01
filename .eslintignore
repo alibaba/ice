@@ -21,3 +21,8 @@ coverage/
 **/*.min.js
 
 workspace/
+
+packages/midway/
+packages/midway-hooks/
+
+examples/basic-faas/

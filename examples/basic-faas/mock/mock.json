@@ -1,0 +1,7 @@
+{
+  "dep": {
+    "diamond": {
+      "limiter...NODEJS_FAAS_TPS_LIMITER_LAYER": null
+    }
+  }
+}

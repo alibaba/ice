@@ -1,0 +1,13 @@
+service: yh-faas-test1
+
+provider:
+  name: aliyun
+  runtime: alinode5
+
+aggregation:
+  all:
+    functionsPattern:
+      - '*'
+custom:
+  customDomain:
+    domainName: yh-faas-test1.fc.alibaba-inc.com

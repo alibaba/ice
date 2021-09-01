@@ -33,7 +33,8 @@ coverage
 
 # Packages
 packages/*/lib/
-
+packages/midway-hooks/
+packages/midway/
 # temp folder .ice
 examples/*/.ice
 
