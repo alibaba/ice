@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.0
+
+- [feat] resolve runtime in server module
+- [feat] update loader options for webpack 5
+
+## 2.2.0
+
+- [feat] support setting getInitialProps with router configuration
+
 # 2.1.3
 
 - [fix] make `appConfig.app.rootId` works when ssr

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-request",
-  "version": "1.7.8",
+  "version": "2.0.0",
   "description": "request for build-plugin-ice-request",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -14,7 +14,8 @@
     "lib",
     "request",
     "template",
-    "src/runtime.ts"
+    "src/runtime.ts",
+    "!lib/**/*.map"
   ],
   "dependencies": {
     "@ahooksjs/use-request": "^2.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@builder/app-helpers",
-  "version": "2.3.4",
+  "version": "2.4.0",
   "description": "build helpers for app framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -10,7 +10,8 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",
@@ -21,8 +22,10 @@
   },
   "dependencies": {
     "@babel/parser": "^7.12.11",
+    "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/traverse": "^7.12.12",
     "fs-extra": "^8.1.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "es-module-lexer": "^0.7.1"
   }
 }

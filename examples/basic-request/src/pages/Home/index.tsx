@@ -39,7 +39,9 @@ const BuiltInRequestDemo1 = () => {
       <button type='button' onClick={fetchUser1}>直接调用 request</button>
       <button type='button' onClick={() => {
         // use slow network for test
-        source && source.cancel('主动取消');
+        if (source) {
+          source.cancel('主动取消');
+        }
       }}>取消调用</button>
       <button type='button' onClick={fetchUser2}>调用 request + withFullResponse</button>
       <button type='button' onClick={fetchUser3}>直接调用 useRequest</button>

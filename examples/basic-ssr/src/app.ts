@@ -13,7 +13,7 @@ const appConfig: IAppConfig = {
       // return res;
       await delay(1500);
       return {
-        data: {
+        initialStates: {
           user: {
             name: 'Jack Ma',
             id: 10001,
@@ -26,13 +26,8 @@ const appConfig: IAppConfig = {
     type: 'browser',
   },
   request: {
-    baseURL: config.baseURL,
-  },
-  store: {
-    getInitialStates: (initialData) => {
-      return initialData.data;
-    },
-  },
+    baseURL: config.baseURL
+  }
 };
 
 runApp(appConfig);

@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as globby from 'globby';
 import * as fs from 'fs-extra';
+import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
@@ -15,7 +16,7 @@ const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAID
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, commandArgs, userConfig, rootDir } = context;
+  const { command, userConfig, rootDir } = context;
   const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
@@ -62,35 +63,52 @@ export default (api, options) => {
   setRegisterUserConfig(api);
 
   // register api method
-  if (commandArgs.debugRuntime) {
-    console.log('[deprecated] cli option --debug-runtime is deprecated, runtime file is generated as default');
-  }
-  const generator = initGenerator(api, { ...options, debugRuntime: userConfig.generateRuntime, hasJsxRuntime });
+  const generator = initGenerator(api, { ...options, hasJsxRuntime });
   setRegisterMethod(api, { generator });
 
   // add core template for framework
-  const templateRoot = path.join(__dirname, './generator/templates');
-  [`./app/${framework}`, './common'].forEach((templateDir) => {
-    generator.addTemplateDir(path.join(templateRoot, templateDir));
-  });
+  renderDefaultTemplate(generator, { framework });
 
   // watch src folder
   if (command === 'start') {
     dev(api, { render: generator.render });
   }
 
-  onHook(`before.${command}.run`, async () => {
-    await generator.render();
+  onHook(`before.${command}.run`, () => {
+    generator.render();
   });
 };
+
+function renderDefaultTemplate(generator: Generator, { framework }) {
+  const templateRoot = path.join(__dirname, './generator/templates');
+
+  const templates = [{
+    dir: getFrameworkTemplateDir(framework),
+    target: 'core',
+  }, {
+    dir: getCommonTemplateDir(),
+    target: 'core',
+  }, {
+    dir:  path.join(templateRoot, 'types'),
+    target: 'types',
+  }, {
+    path: path.join(templateRoot, './index.ts.ejs'),
+  }];
+  templates.forEach(({ dir, target, path: filePath }) => {
+    generator.addTemplateFiles({
+      template: dir || filePath,
+      targetDir: target || '',
+    });
+  });
+}
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
   const { userConfig, rootDir } = context;
-  const { framework, debugRuntime, hasJsxRuntime } = options;
+  const { framework, hasJsxRuntime } = options;
   const plugins = getAllPlugin();
   const { targets = [], ssr = false } = userConfig;
-  const isMiniapp = targets.some((target) => miniappPlatforms.includes(target));
+  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
@@ -101,13 +119,15 @@ function initGenerator(api, options) {
       isRax: framework === 'rax',
       isMiniapp,
       ssr,
-      buildConfig: JSON.stringify(getBuildConfig(userConfig)),
+      buildConfig: getBuildConfig(userConfig),
       hasJsxRuntime,
       hasTabBar: hasTabBar(`${rootDir}/src`, framework),
+      errorBoundary: true,
+      relativeCorePath: '.',
+      typesPath: '../types'
     },
     log,
     plugins,
-    debugRuntime,
   });
 }
 

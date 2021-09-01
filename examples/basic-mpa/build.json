@@ -1,5 +1,6 @@
 {
   "router": false,
+  "vite": true,
   "mpa": {
     "openPage": "Dashboard",
     "template": {
@@ -9,5 +10,9 @@
       "dashboard": "site/dashboard"
     }
   },
-  "plugins": []
+  "devServer": {
+    "devMiddleware": {
+      "writeToDisk": true
+    }
+  }
 }

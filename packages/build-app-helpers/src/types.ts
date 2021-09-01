@@ -7,8 +7,8 @@ export interface IEntry {
   url?: string;
   window?: {
     title?: string;
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
   __frameIndex?: number;
   __pageHeader?: boolean;
 }
@@ -27,8 +27,19 @@ export interface IRoute {
   pageSource?: string;
   window?: {
     title?: string;
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
   frames?: IRoute[];
   pageHeader?: IPageHeader;
+}
+
+export interface IRedirectImportOptions {
+  source: string | Function;
+  redirectImports: RedirectImportType[];
+}
+
+export type RedirectImportType = {
+  name?: string;
+  redirectPath: string;
+  default: boolean;
 }

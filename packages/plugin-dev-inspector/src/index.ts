@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { spawn } from 'child_process';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 const plugin: IPlugin = ({ onGetWebpackConfig }) => {
   if (process.env.NODE_ENV === 'production') {
@@ -24,10 +24,11 @@ const plugin: IPlugin = ({ onGetWebpackConfig }) => {
 
     // add webpack dev server middleware for launch IDE app with api request
     const root = process.env.PWD;
-    const originalDevServeBefore = config.devServer.get('before');
+    const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
     config.merge({
       devServer: {
-        before(app, server) {
+        onBeforeSetupMiddleware(server) {
+          const { app } = server;
           app.get('/vscode/goto', (req, res) => {
             try {
               const { query } = req;
@@ -41,7 +42,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig }) => {
             }
           });
           if (typeof originalDevServeBefore === 'function') {
-            originalDevServeBefore(app, server);
+            originalDevServeBefore(server);
           }
         },
       }

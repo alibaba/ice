@@ -1,0 +1,71 @@
+import { createElement, useEffect, Component } from 'rax';
+import {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+  getSearchParams,
+<% if (buildConfig.router !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} from 'create-app-shared';
+
+<% if (hasTabBar) {%>
+import TabBar from './TabBar';
+<% } %>
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
+import miniappRenderer from 'miniapp-renderer';
+import raxAppRenderer from 'rax-app-renderer';
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '../../<%= globalStyle %>'
+<% } %>
+import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
+import loadRuntimeModules from './loadRuntimeModules';
+import defaultStaticConfig from './staticConfig';
+import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
+import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
+import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
+
+const buildConfig: IBuildConfig = <%- buildConfig %>;
+const frameworkAppBase = createBaseApp({
+  loadRuntimeModules,
+  createElement,
+  runtimeAPI: {
+    <% if (buildConfig.router !== false) {%>
+    createHistory,
+    <% } %>
+    getSearchParams,
+  },
+});
+
+export function runApp(appConfig?: IAppConfig, staticConfig = defaultStaticConfig) {
+  // server bundle will to get appConfig after run runApp
+  setAppConfig(appConfig as IAppConfig);
+  // load static modules before init runtime such as request
+  loadStaticModules(appConfig as IAppConfig);
+  let renderer;
+  renderer = raxAppRenderer;
+  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
+    renderer = miniappRenderer;
+  }
+  <% if (buildConfig.router !== false) {%>
+  // set History before GID
+  initHistory(appConfig as any);
+  <% } %>
+  renderer({
+    appConfig: appConfig as RenderAppConfig,
+    buildConfig,
+    ErrorBoundary,
+    appLifecycle: {
+      createBaseApp: frameworkAppBase,
+      initAppLifeCycles,
+      emitLifeCycles,
+    },
+    TabBar,
+  });
+};
+
+export default {
+  createBaseApp: frameworkAppBase,
+}

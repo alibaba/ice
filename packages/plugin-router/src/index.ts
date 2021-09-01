@@ -1,8 +1,8 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
 import { validation } from '@builder/app-helpers';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
+import vitePluginLazy from './vitePluginLazy';
 
 // compatible with $ice/routes
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
@@ -33,7 +33,7 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   const srcDir = applyMethod('getSourceDir', userConfig.entry);
   const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
     rootDir,
-    tempDir: iceTempPath,
+    tempPath: iceTempPath,
     configPath,
     projectType,
     isMpa: isMpa || disableRouter,
@@ -53,7 +53,7 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'router/history'));
 
     // alias for runtime/ErrorBoundary
-    config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'ErrorBoundary'));
+    config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
 
     // alias for react-router-dom
     const routerName = 'react-router-dom';
@@ -64,15 +64,18 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   });
 
   // copy types
-  fse.copySync(path.join(__dirname, '../src/types/index.ts'), path.join(iceTempPath, 'router/types/index.ts'));
-  fse.copySync(path.join(__dirname, '../src/types/base.ts'), path.join(iceTempPath, 'router/types/base.ts'));
+  applyMethod('addPluginTemplate', {
+    template: path.join(__dirname, '../src/types'),
+    targetDir: 'router/types',
+  });
+
   // set IAppRouterProps to IAppConfig
-  applyMethod('addAppConfigTypes', { source: './router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
+  applyMethod('addAppConfigTypes', { source: '../plugins/router/types', specifier: '{ IAppRouterProps }', exportName: 'router?: IAppRouterProps' });
   // export IRouterConfig to the public
-  applyMethod('addTypesExport', { source: './router/types' });
+  applyMethod('addTypesExport', { source: '../plugins/router/types' });
   // add import declarations
-  applyMethod('addImportDeclarations', {
-    importSource: '$$ice/router/types',
+  applyMethod('addImportDeclaration', {
+    importSource: '$$ice/plugins/router/types',
     exportMembers: ['IAppRouterProps', 'IRouterConfig'],
   });
 
@@ -87,14 +90,17 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
         ]
       ]);
 
+    // if mode vite, add vite plugin for transform lazy
+    if (userConfig.vite) {
+      modifyUserConfig('vite.plugins', [vitePluginLazy(routesPath)], { deepmerge: true });
+    }
+
     // copy templates and export react-router-dom/history apis to ice
     const routerTemplatesPath = path.join(__dirname, '../templates');
-    const routerTargetPath = path.join(iceTempPath, 'router');
-    fse.ensureDirSync(routerTargetPath);
-    fse.copySync(routerTemplatesPath, routerTargetPath);
+    applyMethod('addPluginTemplate', routerTemplatesPath);
     applyMethod('addExport', {
-      source: './router',
-      importSource: '$$ice/router',
+      source: './plugins/router',
+      importSource: '$$ice/plugins/router',
       exportMembers: [
         'createBrowserHistory',
         'createHashHistory',

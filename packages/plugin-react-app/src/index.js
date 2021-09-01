@@ -1,23 +1,21 @@
 const path = require('path');
 const { applyCliOption, applyUserConfig, getEnhancedWebpackConfig } = require('@builder/user-config');
-const { getWebpackConfig, getBabelConfig } = require('build-scripts-config');
+const getWebpackConfig = require('@builder/webpack-config').default;
 const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 const getCustomConfigs = require('./config');
 const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
-const logDetectedTip = require('./utils/logDetectedTip');
+const configWebpack5 = require('./webpack5');
+const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
-module.exports = (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig  } = api;
+module.exports = async (api) => {
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
   const { command, rootDir, userConfig } = context;
   const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
   const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
-
-  // tip detected injectBabel
-  logDetectedTip(userConfig);
 
   // register cli option
   applyCliOption(api);
@@ -27,7 +25,11 @@ module.exports = (api) => {
 
   // modify default babel config when jsx runtime is enabled
   if (getValue('HAS_JSX_RUNTIME')) {
-    modifyUserConfig('babelPresets', (userConfig.babalePresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
+    modifyUserConfig('babelPresets', (userConfig.babelPresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
+
+    if (userConfig.vite) {
+      modifyUserConfig('vite.esbuild', { jsxInject: 'import React from \'react\''}, { deepmerge: true });
+    }
   }
 
   // set webpack config
@@ -38,26 +40,19 @@ module.exports = (api) => {
 
   targets.forEach(target => {
     const webpackConfig = getWebpackConfig(mode);
-    const babelConfig = getBabelConfig();
+
     // compatible with old logic，not set target
     // output：build/*
     if (target === WEB && !userConfig.targets) {
       target = '';
     }
-    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig, babelConfig, libName: 'react' });
+    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig });
     enhancedWebpackConfig.name('web');
     setBase(api, { target, webpackConfig: enhancedWebpackConfig });
     registerTask(target, enhancedWebpackConfig);
   });
 
   if (command === 'start') {
-    onGetWebpackConfig(config => {
-      if (isMiniapp) {
-        config.plugins.delete('HotModuleReplacementPlugin');
-        config.devServer.set('writeToDisk', isMiniapp);
-        config.devServer.hot(false).inline(false);
-      }
-    });
     setDev(api, { targets, isMiniapp });
   }
 
@@ -67,5 +62,10 @@ module.exports = (api) => {
 
   if (command === 'test') {
     setTest(api);
+  }
+  configWebpack5(api);
+
+  if (userConfig.remoteRuntime) {
+    await remoteRuntime(api, userConfig.remoteRuntime);
   }
 };

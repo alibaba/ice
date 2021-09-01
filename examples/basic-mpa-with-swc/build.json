@@ -1,0 +1,19 @@
+{
+  "router": false,
+  "mpa": {
+    "openPage": "Dashboard",
+    "template": {
+      "web.html": ["Dashboard", "Home"]
+    },
+    "rewrites": {
+      "dashboard": "site/dashboard"
+    }
+  },
+  "swc": true,
+  "plugins": [],
+  "devServer": {
+    "devMiddleware": {
+      "writeToDisk": true
+    }
+  }
+}

@@ -24,5 +24,9 @@
     "babel-plugin-transform-jsx-slot": "^0.1.1",
     "babel-runtime-jsx-plus": "^0.1.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

@@ -54,7 +54,7 @@ function getVariablesPath({
   return filePath;
 }
 
-module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugionOptions = {}) => {
+module.exports = async ({ onGetWebpackConfig, log, context, getAllTask, modifyUserConfig }, pluginOptions = {}) => {
   const {
     themePackage,
     themeConfig,
@@ -68,9 +68,25 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
     componentOptions = {},
     enableColorNames,
     cssVariable,
-  } = plugionOptions;
-  let { uniteBaseComponent } = plugionOptions;
+  } = pluginOptions;
+  let { uniteBaseComponent } = pluginOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
+
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', [
+      // eslint-disable-next-line global-require
+      require('vite-plugin-style-import').default({
+        libs: [{
+          libraryName: '@alifd/next',
+          esModule: true,
+          resolveStyle: (name) => {
+            // use css variable style for default
+            return `@alifd/next/es/${name}/style2`;
+          },
+        }]
+      }),
+    ], { deepmerge: true });
+  }
 
   const taskNames = getAllTask();
   // ignore externals rule and babel-plugin-import when compile dist
@@ -207,7 +223,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
   
       const crossendBabelLoader = [];
   
-      if ('componentOptions' in plugionOptions) {
+      if ('componentOptions' in pluginOptions) {
         const { bizComponent = [], customPath = '', componentMap = {} } = componentOptions;
         const mixBizCom = {};
   

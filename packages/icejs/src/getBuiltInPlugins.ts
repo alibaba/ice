@@ -1,9 +1,16 @@
-import { IGetBuiltInPlugins, IPluginList, Json } from '@alib/build-scripts';
+import { IGetBuiltInPlugins, IPluginList, Json } from 'build-scripts';
+import { init } from '@builder/pack/deps/webpack/webpack';
+import { hijackWebpack } from './require-hook';
 
 // eslint-disable-next-line
 const chalk = require('chalk');
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
+  // enable webpack 5 by default
+  const useWebpack5 = true;
+  init(useWebpack5);
+  hijackWebpack();
+
   if (userConfig.disableRuntime) {
     return [
       'build-plugin-react-app',
@@ -20,17 +27,13 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   const plugins: IPluginList = [
     // common plugins
     ['build-plugin-app-core', coreOptions],
+    'build-plugin-ice-logger',
 
     // react base plugin
     'build-plugin-react-app',
 
-    // for ice/miniapp plugins
-    'build-plugin-miniapp',
-
     // for ice/react plugins
     'build-plugin-ice-router',
-    'build-plugin-ice-helpers',
-    'build-plugin-ice-logger',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
     'build-plugin-ice-request',

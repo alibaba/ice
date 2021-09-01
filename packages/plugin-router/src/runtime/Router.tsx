@@ -1,12 +1,12 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0, react/jsx-filename-extension: 0, no-shadow: 0, @typescript-eslint/no-explicit-any:0 */
 import * as React from 'react';
+import { Suspense, lazy } from 'react';
 import {
   Router,
   StaticRouter,
   Switch,
   Route,
   Redirect,
-
   RouteComponentProps
 } from 'react-router-dom';
 import loadable from '@loadable/component';
@@ -27,36 +27,53 @@ function wrapperRoute(component, routerWrappers) {
   }, component);
 }
 
-function getRouteComponent(component, routerWrappers?: IRouteWrapper[], fallback?: React.ReactNode) {
+function setComponentAttr(comp: any, route?: RouteItemProps) {
+  if(!route) return;
+  ['pageConfig', 'getInitialProps'].forEach(attr => {
+    comp[attr] = route[attr];
+  });
+}
+
+function getRouteComponent(component, routerWrappers?: IRouteWrapper[], route?: RouteItemProps, fallback?: React.ReactNode) {
   const { __LAZY__, dynamicImport, __LOADABLE__ }: IDynamicImportComponent = component || {};
   if (__LOADABLE__) {
     return loadable(dynamicImport, {
-      resolveComponent: (component) => {
-        return wrapperRoute(component.default, routerWrappers);
+      resolveComponent: (mod) => {
+        const comp = mod.default as any;
+        // 适配中心化路由配置（react-loadable）
+        setComponentAttr(comp, route);
+        return wrapperRoute(comp, routerWrappers);
       },
       fallback
     });
-  } else {
-    return __LAZY__ ? React.lazy(() => dynamicImport().then((mod) => {
+  } else if (__LAZY__) {
+    return lazy(() => dynamicImport().then((mod) => {
       if (routerWrappers && routerWrappers.length) {
-        return { ...mod, default: wrapperRoute(mod.default, routerWrappers) };
+        const comp = mod.default as any;
+        // 适配中心化路由配置（React lazy）
+        setComponentAttr(comp, route);
+        return { ...mod, default: wrapperRoute(comp, routerWrappers) };
       }
       return mod;
-    })) : wrapperRoute(component, routerWrappers);
+    }));
+  } else {
+    // 适配中心化路由配置（非按需加载）
+    setComponentAttr(component, route);
+    return wrapperRoute(component, routerWrappers);
   }
 }
 
 export function parseRoutes(routes: RouteItemProps[], fallback?: React.ReactNode) {
   return routes.map((route) => {
-    const { children, component, routeWrappers, wrappers, ...others }  = route;
-    // do not wrapper components to layout added by runtime api wrapperRouteComponent
+    const { children, component, routeWrappers, wrappers, ...others } = route;
+    // do not wrapper components to layout added by runtime api wrapperPageComponent
     let mergedRouteWrappers = children ? [] : routeWrappers as IRouteWrapper[];
     if (wrappers && wrappers.length) {
       mergedRouteWrappers = mergedRouteWrappers.concat(wrappers);
     }
     const parsedRoute: IRouterConfig = { ...others };
     if (component) {
-      parsedRoute.component = getRouteComponent(component, mergedRouteWrappers, fallback);
+      parsedRoute.component = getRouteComponent(component, mergedRouteWrappers, route, fallback);
     }
     if (children) {
       parsedRoute.children = parseRoutes(children, fallback);
@@ -102,9 +119,9 @@ export function Routes({ routes, fallback }: RoutesProps) {
                 ? (props: RouteComponentProps) => <RouteComponent {...props} />
                 : (props: RouteComponentProps) => {
                   return (
-                    <React.Suspense fallback={fallback || <div>loading</div>}>
+                    <Suspense fallback={fallback || <div>loading</div>}>
                       <RouteComponent {...props} />
-                    </React.Suspense>
+                    </Suspense>
                   );
                 };
 

@@ -9,14 +9,15 @@
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "scripts": {
-    "setup": "rm -rf node_modules && yarn install --registry=https://registry.npm.taobao.org/ && npm run bootstrap",
-    "bootstrap": "SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm run clean && lerna bootstrap --registry=https://registry.npm.taobao.org/ && npm run build",
+    "setup": "rm -rf node_modules && yarn install && npm run build",
+    "setup:skip": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && npm run build",
     "watch": "ts-node ./scripts/watch.ts",
     "build": "ts-node ./scripts/build.ts",
     "version": "ts-node ./scripts/tag-version.ts",
     "version:check": "ts-node ./scripts/version-check.ts",
     "publish": "ts-node ./scripts/publish-package.ts",
-    "publish:beta": "ts-node ./scripts/publish-beta-package.ts",
+    "publish:beta": "PUBLISH_TYPE=beta ts-node ./scripts/publishPackageWithDistTag.ts",
+    "publish:next": "PUBLISH_TYPE=next ts-node ./scripts/publishPackageWithDistTag.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
@@ -74,7 +75,6 @@
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
-    "@typescript-eslint/typescript-estree": "^4.0.0",
-    "miniapp-builder-shared": "^0.2.0"
+    "postcss": "^8.3.5"
   }
 }

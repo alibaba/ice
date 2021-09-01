@@ -18,5 +18,9 @@
   },
   "dependencies": {
     "build-plugin-wrap-code": "^0.1.0"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

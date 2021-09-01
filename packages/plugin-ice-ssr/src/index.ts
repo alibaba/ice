@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
-import { getWebpackConfig } from 'build-scripts-config';
+import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
 
 const plugin = async (api): Promise<void> => {
@@ -82,7 +82,10 @@ const plugin = async (api): Promise<void> => {
           .use('css-loader')
           .tap((options) => ({
             ...options,
-            onlyLocals: true
+            modules: {
+              ...(options.modules || {}),
+              exportOnlyLocals: true,
+            },
           }));
       }
     });
@@ -98,6 +101,9 @@ const plugin = async (api): Promise<void> => {
     // TODO: support options to enable nodeExternals
     // empty externals added by config external
     config.externals([]);
+
+    // remove process fallback when target is node
+    config.plugins.delete('ProvidePlugin');
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
@@ -122,19 +128,22 @@ const plugin = async (api): Promise<void> => {
       }
     }
     if (command === 'start') {
-      config.devServer
-        .hot(true)
-        .writeToDisk((filePath) => {
-          const formatedFilePath = formatPath(filePath);
-          return /(server\/.*|loadable-stats.json|index.html)$/.test(formatedFilePath);
-        });
+      const originalDevMiddleware = config.devServer.get('devMiddleware');
+      config.devServer.set('devMiddleware', {
+        ...originalDevMiddleware,
+        writeToDisk: (filePath: string) => {
+          const formattedFilePath = formatPath(filePath);
+          return /(server\/.*|loadable-stats.json|index.html)$/.test(formattedFilePath);
+        },
+      });
 
       let serverReady = false;
       let httpResponseQueue = [];
-      const originalDevServeBefore = config.devServer.get('before');
-      config.devServer.set('before', (app, server) => {
+      const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
+      config.devServer.set('onBeforeSetupMiddleware', (server) => {
+        const { app } = server;
         if (typeof originalDevServeBefore === 'function') {
-          originalDevServeBefore(app, server);
+          originalDevServeBefore(server);
         }
         let compilerDoneCount = 0;
         server.compiler.compilers.forEach((compiler) => {
@@ -168,8 +177,8 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
-    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifedHtml);
+    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
+    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
   });
 };

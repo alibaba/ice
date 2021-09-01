@@ -1,21 +1,32 @@
-const { validation } = require('@builder/app-helpers');
-
 /* eslint global-require: 0 */
-module.exports = function(userConfig) {
-  let polyfillDefaultValue = 'entry';
-  if (Object.prototype.hasOwnProperty.call(userConfig, 'injectBabel') && userConfig.injectBabel === false) {
-    polyfillDefaultValue = false;
-  }
+module.exports = function() {
   return [
+    {
+      name: 'vite',
+      defaultValue: false,
+      validation: 'boolean|object'
+    },
+    {
+      name: 'logging',
+      defaultValue: {},
+      validation: 'object'
+    },
+    {
+      name: 'remoteRuntime',
+      defaultValue: false,
+      validation: 'boolean|object'
+    },
+    {
+      name: 'moduleFederation',
+      defaultValue: false,
+      configWebpack: require('./userConfig/moduleFederation').default,
+      validation: 'boolean|object',
+    },
     {
       name: 'entry',
       defaultValue: 'src/index.jsx',
       configWebpack: require('./userConfig/entry'),
-      validation: (val) => {
-        // entry: string | array
-        // entry : { [name]: string | array }
-        return validation('entry', val, 'string|array|object');
-      },
+      validation: 'string|array|object',
     },
     {
       name: 'ignoreHtmlTemplate',
@@ -30,15 +41,14 @@ module.exports = function(userConfig) {
       validation: 'string'
     },
     {
-      name: 'injectBabel',
-      defaultValue: 'polyfill',
-      validation: (val) => {
-        return validation('injectBabel', val, 'string|boolean');
-      }
+      name: 'polyfill',
+      defaultValue: 'entry'
     },
     {
-      name: 'polyfill',
-      defaultValue: polyfillDefaultValue
+      name: 'fastRefresh',
+      defaultValue: true,
+      validation: 'boolean',
+      configWebpack: require('./userConfig/fastRefresh'),
     }
   ];
 };

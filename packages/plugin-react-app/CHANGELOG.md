@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] deprecate configs
+- [feat] built-in module federation speed up
+- [feat] support fast refresh
+- [feat] upgrade dependencies for webpack 5
+
 ## 1.8.5
 
 - [feat] add config.name to default task

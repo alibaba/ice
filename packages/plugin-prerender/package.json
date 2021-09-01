@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-prerender",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "Prerender Plugin",
   "main": "lib/index.js",
   "scripts": {
@@ -16,6 +16,10 @@
     "prerender-spa-plugin": "^3.4.0"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24"
-  }
+    "build-scripts": "^1.1.0-5"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

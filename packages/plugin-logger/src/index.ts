@@ -1,27 +1,59 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
+import levels from './levels';
 
-const plugin: IPlugin = async ({ getValue, applyMethod, onGetWebpackConfig }): Promise<void> => {
+const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackConfig, context }): Promise<void> => {
+  registerUserConfig([
+    {
+      name: 'dropLogLevel',
+      validation: 'string'
+    }
+  ]);
   const exportName = 'logger';
-  const distPath = path.join(getValue('TEMP_PATH'), exportName);
-  await fse.copy(path.join(__dirname, `../${exportName}`), distPath);
-  await fse.copy(path.join(__dirname, './types'), path.join(distPath, 'types'));
-  // add ice exports
-  applyMethod('addExport', {
-    source: `./${exportName}`,
-    exportName,
-    importSource: `$$ice/${exportName}`,
-    exportDefault: exportName,
-  });
+  applyMethod('addPluginTemplate', path.join(__dirname, `../${exportName}`));
 
-  // add iceTypes exports
-  applyMethod('addAppConfigTypes', { source: `./${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });
+  // add types exports
+  applyMethod('addAppConfigTypes', { source: `../plugins/${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });
 
   onGetWebpackConfig((config) => {
-    // add alias for runtime.ts use $ice/logger
-    config.resolve.alias.set('$ice/logger', distPath);
+    const { userConfig: { dropLogLevel } } = context;
+    if (dropLogLevel) {
+      // @ts-ignore
+      if (config.optimization.minimizers.has('ESBuild')) {
+        config.optimization.minimizer('ESBuild').tap(([options]) => {
+          return [
+            {
+              ...options,
+              pure: getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]),
+            }
+          ];
+        });
+        // @ts-ignore
+      } else if (config.optimization.minimizers.has('TerserPlugin')) {
+        config.optimization.minimizer('TerserPlugin').tap(([options]) => {
+          return [
+            {
+              ...options,
+              terserOptions: {
+                ...options.terserOptions,
+                compress: {
+                  ...options.terserOptions.compress,
+                  drop_console: false,
+                  pure_funcs: getPureFuncs(levels[(dropLogLevel as string).toLowerCase()]),
+                }
+              }
+            }
+          ];
+        });
+      }
+    }
   });
 };
+
+function getPureFuncs(level: number) {
+  return Object.keys(levels)
+    .filter((methodName) => levels[methodName] < level)
+    .map(methodName => `console.${methodName}`);
+}
 
 export default plugin;
