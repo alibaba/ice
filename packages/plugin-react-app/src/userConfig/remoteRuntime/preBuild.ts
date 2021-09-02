@@ -55,7 +55,7 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
               ...rule,
               use: rule?.use?.map((use) => {
                 const { loader, options } = use;
-                if (loader.match(/babel-loader/) && options?.plugins) {
+                if (loader?.match(/babel-loader/) && options?.plugins) {
                   return {
                     ...use,
                     options: {
