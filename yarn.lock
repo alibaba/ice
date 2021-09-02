@@ -14684,13 +14684,6 @@ sass@1.32.13:
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
-sass@^1.32.0:
-  version "1.38.1"
-  resolved "https://registry.nlark.com/sass/download/sass-1.38.1.tgz#54dfb17fb168846b5850324b82fc62dc68f51bad"
-  integrity sha1-VN+xf7FohGtYUDJLgvxi3Gj1G60=
-  dependencies:
-    chokidar ">=3.0.0 <4.0.0"
-
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.nlark.com/sax/download/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
