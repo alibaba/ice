@@ -12,6 +12,7 @@ import {
   polyfillPlugin,
   serverHistoryPlugin,
   htmlPlugin,
+  ignoreHtmlPlugin
 } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
@@ -27,16 +28,18 @@ const getWebpackConfig = (context: Context) => {
   return configArr[0];
 };
 
+const isBuild = (command: string) => command === 'build';
+
 const getHtmlPlugin = (context: Context) => {
   const { getValue, userConfig, rootDir } = context;
   type Opt = {
-    inject: boolean
-    templateParameters: Record<string, string>
-    favicon: string
     template: string
-    minify: boolean
     filename: string
-    excludeChunks: string[]
+    inject?: boolean
+    templateParameters?: Record<string, string>
+    favicon?: string
+    minify?: boolean
+    excludeChunks?: string[]
   }
 
   const isMpa = userConfig.mpa as boolean;
@@ -50,15 +53,29 @@ const getHtmlPlugin = (context: Context) => {
     });
   }
 
-  const pages = getValue('MPA_PAGES') as Record<string, Opt>;
+  const pages = {
+    index: {
+      template: path.resolve(rootDir, 'public', 'index.html'),
+      filename: 'index.html',
+    },
+    ...getValue('MPA_PAGES'),
+  } as Record<string, Opt>;
   const entries = userConfig.entry as Record<string, string[]>;
 
-  const mpaHtmlPlugins = Object.keys(pages).map(pageName => {
-    const singlePage = pages[pageName];
+  const mpaHtmlPlugins = Object.keys(entries).map(entryName => {
+    const singlePage = pages[entryName] ?? pages.index;
+
+    if (entryName === 'index') {
+      return htmlPlugin({
+        ...singlePage,
+        entry: entries[entryName][0],    // webpack entry
+        rootDir
+      });
+    }
 
     return htmlPlugin({
       ...singlePage,
-      entry: entries[pageName][0],    // webpack entry
+      entry: entries[entryName][0],    // webpack entry
       rootDir
     });
   });
@@ -82,7 +99,7 @@ const getOpen = (context: Context) => {
  * Exposed
  */
 export const wp2vite = (context: Context): InlineConfig => {
-  const { commandArgs = {}, userConfig, rootDir, command } = context;
+  const { commandArgs = {}, userConfig, originalUserConfig, rootDir, command } = context;
   const config = getWebpackConfig(context);
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
@@ -97,12 +114,13 @@ export const wp2vite = (context: Context): InlineConfig => {
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
       polyfillPlugin({
-        value: userConfig.polyfill as any,
+        value: originalUserConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
         hash: userConfig.hash as boolean,
         outputAssetsPath: userConfig.outputAssetsPath as any,
         rootDir,
-      })
+      }),
+      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null
     ],
   };
 
@@ -139,7 +157,7 @@ export const wp2vite = (context: Context): InlineConfig => {
     return entries;
   };
 
-  if (command === 'start') {
+  if (!isBuild(command)) {
     return all([
       {
         optimizeDeps: {
