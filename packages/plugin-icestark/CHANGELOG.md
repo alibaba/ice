@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 2.2.1
+
+- [fix] move all identifiers to vistor to avoid wrong execution results.
+
 # 2.2.0
 
 - [feat] support setting custom lifecycles. ([#337](https://github.com/ice-lab/icestark/issues/337))
