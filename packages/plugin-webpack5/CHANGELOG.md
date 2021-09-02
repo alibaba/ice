@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.7
+
+- [fix] OOM when use filesystem cache with cnpm
+
 ## 1.2.6
 
 - [fix] compatibility cache feature with webpack@5 of webpack-terser-plugin
