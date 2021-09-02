@@ -3,7 +3,7 @@
 
 ## 2.2.1
 
-- [fix] hot update may escape `replaced` flag.
+- [fix] move all identifiers to vistor to avoid wrong execution results.
 
 # 2.2.0
 
