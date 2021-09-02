@@ -34,17 +34,6 @@ const getUid = () => {
 };
 
 export default (api, { entryList, libraryName, omitSetLibraryName }) => {
-  const namespaceSpecifier: string[] = [];
-  const importSpecifier: string[] = [];
-  let configIdentifier: string;
-  let callIdentifier = '';
-  let identifierCallee = '';
-
-  let replaced = false;
-  let mountExportStatement = false;
-  let unmountExportStatement = false;
-  let setLibraryNameStatement = false;
-
   const checkEntryFile = (filename: string) => {
     return !!entryList.find((filePath: string) => {
       // filePath may not have an extension
@@ -59,11 +48,24 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
           if (checkEntryFile(state.filename)) {
             const node: t.Program = nodePath.node;
             const { body } = node;
+
+            const namespaceSpecifier: string[] = [];
+            const importSpecifier: string[] = [];
+
             let starkappStatement = false;
             let reactdomStatement = false;
-  
+            let replaced = false;
+
+            let configIdentifier: string;
+            let callIdentifier = '';
+            let identifierCallee = '';
+
+            let mountExportStatement = false;
+            let unmountExportStatement = false;
+            let setLibraryNameStatement = false;
+
             let lastImportIndex = 0;
-  
+
             body.forEach((item, index) => {
               // check ImportDeclaration
               if (t.isImportDeclaration(item)) {
@@ -209,7 +211,6 @@ export default (api, { entryList, libraryName, omitSetLibraryName }) => {
                     const astIf = api.template(templateIfStatement)();
                     astIf.consequent.body.push(expressionNode);
                     expressionNodePath.replaceWith(astIf);
-        
                     replaced = true;
                   }
                 }

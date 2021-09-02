@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 2.2.1
+
+- [fix] hot update may escape `replaced` flag.
+
 # 2.2.0
 
 - [feat] support setting custom lifecycles. ([#337](https://github.com/ice-lab/icestark/issues/337))
