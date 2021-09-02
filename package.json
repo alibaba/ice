@@ -17,12 +17,12 @@
     "version:check": "ts-node ./scripts/version-check.ts",
     "publish": "ts-node ./scripts/publish-package.ts",
     "publish:beta": "PUBLISH_TYPE=beta ts-node ./scripts/publishPackageWithDistTag.ts",
-    "publish:next": "PUBLISH_TYPE=next ts-node ./scripts/publishPackageWithDistTag.ts",
+    "publish:next": "PUBLISH_TYPE=next VERSION_PREFIX=rc ts-node ./scripts/publishPackageWithDistTag.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "rollback": "ts-node ./scripts/rollback.ts",
     "owner": "ts-node ./scripts/owner.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
-    "clean": "lerna clean --yes && rimraf packages/*/lib",
+    "clean": "rimraf packages/*/lib",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest --forceExit",
@@ -69,8 +69,7 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
-    "path-to-regexp": "6.1.0"
+    "core-js": "^3.6.4"
   },
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^4.0.0",

@@ -2,12 +2,32 @@ import * as queryString from 'query-string';
 import type { RuntimeModule } from 'create-app-shared';
 
 export type OnError = (err: Error, componentStack: string) => void
+
 export interface Context {
-  pathname: string;
-  path: string;
-  query: queryString.ParsedQuery<string>;
-  ssrError: any;
+  initialContext: InitialContext,
+  initialData: { [k: string]: any },
+  pageInitialProps: { [k: string]: any }
 }
+
+export interface ServerContext {
+  req?: Request;
+  res?: Response;
+}
+
+export interface Location {
+  pathname: string;
+  search?: string;
+  hash?: string;
+  state?: string | null;
+}
+
+export interface InitialContext extends ServerContext {
+  pathname: string;
+  location?: Location;
+  path?: string;
+  query?: queryString.ParsedQuery<string>;
+}
+
 export type RenderAppConfig = {
   app?: {
     rootId?: string;
@@ -15,7 +35,7 @@ export type RenderAppConfig = {
     onErrorBoundaryHandler?: OnError;
     ErrorBoundaryFallback?: React.ComponentType;
     errorBoundary?: boolean;
-    getInitialData?: (context: Context) => Promise<any>;
+    getInitialData?: (context: InitialContext) => Promise<any>;
   },
   renderComponent?: React.ComponentType
 };

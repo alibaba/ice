@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "babel-plugin-import": "^1.11.2",
-    "vite-plugin-style-import": "^1.1.1"
+    "vite-plugin-style-import": "1.1.1"
   },
   "files": [
     "lib",
