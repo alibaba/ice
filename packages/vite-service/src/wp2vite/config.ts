@@ -127,7 +127,7 @@ const configMap: ConfigMap = {
   'devServer.proxy': 'server.proxy',
   'devServer.https': 'server.https',
   'plugins.DefinePlugin': {
-    name: 'defined',
+    name: 'define',
     transform: transformPlugin('DefinePlugin'),
   },
   'plugins.TerserPlugin': {
