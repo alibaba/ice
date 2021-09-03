@@ -8,6 +8,10 @@ export const USER_CONFIG = [
     }
   },
   {
+    name: 'server',
+    validation: 'object'
+  },
+  {
     name: 'ssr',
     validation: 'boolean|string'
   },

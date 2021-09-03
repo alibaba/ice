@@ -4,7 +4,7 @@
     "outDir": "build",
     "module": "ESNext",
     "target": "ES6",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
