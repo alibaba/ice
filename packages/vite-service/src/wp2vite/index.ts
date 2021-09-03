@@ -12,7 +12,8 @@ import {
   polyfillPlugin,
   serverHistoryPlugin,
   htmlPlugin,
-  ignoreHtmlPlugin
+  ignoreHtmlPlugin,
+  mockPlugin,
 } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
@@ -106,6 +107,7 @@ export const wp2vite = (context: Context): InlineConfig => {
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
+      userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
       getAnalyzer(config.chainConfig),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
