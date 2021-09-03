@@ -1,9 +1,8 @@
 {
-  "sourcemap": true,
-  "router": {
-    "lazy": true
-  },
+  "vite": true,
   "plugins": [
-    "build-plugin-icestark"
+    ["build-plugin-icestark", {
+      "umd": true
+    }]
   ]
 }
