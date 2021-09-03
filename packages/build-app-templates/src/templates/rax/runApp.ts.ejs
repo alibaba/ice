@@ -25,13 +25,14 @@ import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
-import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
-
-let staticConfig;
-
+import { IAppConfig, IBuildConfig, IStaticConfig } from '<%- typesPath  %>';
 <% if (routesFilePath)  { %>
 import defaultStaticConfig from '<%- routesFilePath %>';
+<% } %>
 
+let staticConfig: IStaticConfig | undefined;
+
+<% if (routesFilePath)  { %>
 staticConfig = defaultStaticConfig;
 <% } %>
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
@@ -50,7 +51,7 @@ const frameworkAppBase = createBaseApp({
 const pageConfig = <%- JSON.stringify(pageConfig) %>;
 <% } %>
 
-export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== false) {%>customStaticConfig?: any<% } %>) {
+export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request

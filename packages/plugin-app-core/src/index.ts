@@ -115,36 +115,33 @@ function initGenerator(api, options) {
 }
 
 function getDefaultRenderData(api, options) {
-  const { context, getValue } = api;
+  const { context } = api;
   const { userConfig } = context;
   const { framework, hasJsxRuntime } = options;
   const { targets = [], ssr = false } = userConfig;
   const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
+  const renderData = {
+    framework,
+    buildConfig: getBuildConfig(userConfig),
+    hasJsxRuntime,
+    errorBoundary: true,
+    relativeCorePath: '.',
+    typesPath: '../types',
+  };
   if (framework === 'rax') {
     return {
-      framework,
+      ...renderData,
       isReact: false,
       isRax: true,
       isMiniapp,
-      buildConfig: getBuildConfig(userConfig),
-      hasJsxRuntime,
-      tabBarPath: getValue('TAB_BAR_PATH'),
-      errorBoundary: true,
-      relativeCorePath: '.',
-      typesPath: '../types',
       routesFilePath: './staticConfig',
     };
   } else {
     return {
-      framework,
+      ...renderData,
       isReact: true,
       isRax: false,
       ssr,
-      buildConfig: getBuildConfig(userConfig),
-      hasJsxRuntime,
-      errorBoundary: true,
-      relativeCorePath: '.',
-      typesPath: '../types',
     };
   }
 }

@@ -37,11 +37,9 @@ export default class RaxGenerator extends Base {
     if (routesFilePath) {
       const content = fs.readJSONSync(routesFilePath);
       if (content.tabBar) {
-        if (content.tabBar.custom) {
-          this.runAppRenderData.tabBarPath = relative(this.entryFolder, path.join(this.rootDir, 'src/components/CustomTabBar/index'));
-        } else {
-          this.runAppRenderData.tabBarPath = relative(this.entryFolder, path.join(this.targetDir, 'plugins/rax-app/TabBar'));
-        }
+        this.runAppRenderData.tabBarPath = content.tabBar.custom ?
+          relative(this.entryFolder, path.join(this.rootDir, 'src/components/CustomTabBar/index'))
+          : relative(this.entryFolder, path.join(this.targetDir, 'plugins/rax-app/TabBar'));
       }
     }
   }
