@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppConfig, AppRouter, AppRoute } from '@ice/stark';
 import {
@@ -14,8 +15,6 @@ import { IceRouter } from '$ice/Router';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IPrivateIceStark, IIceStark } from './types';
-
-const { useEffect, useState } = React;
 
 const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperPageComponent }) => {
   const { icestark, router } = appConfig;
@@ -121,7 +120,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
       const [appLeave, setAppLeave] = useState({});
 
       const [apps, setApps] = useState(null);
-      const BasicLayout = Layout || DefaultLayout;
+      const BasicLayout = Layout || DefaultLayout || ((props) => (<>{props.children}</>));
       const RenderAppRoute = (CustomAppRoute || AppRoute) as typeof AppRoute;
 
       useEffect(() => {
