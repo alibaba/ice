@@ -12,7 +12,8 @@ import {
   polyfillPlugin,
   serverHistoryPlugin,
   htmlPlugin,
-  ignoreHtmlPlugin
+  ignoreHtmlPlugin,
+  mockPlugin,
 } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
@@ -99,13 +100,14 @@ const getOpen = (context: Context) => {
  * Exposed
  */
 export const wp2vite = (context: Context): InlineConfig => {
-  const { commandArgs = {}, userConfig, rootDir, command } = context;
+  const { commandArgs = {}, userConfig, originalUserConfig, rootDir, command } = context;
   const config = getWebpackConfig(context);
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     configFile: false,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
+      userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
       getAnalyzer(config.chainConfig),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
@@ -114,7 +116,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
       polyfillPlugin({
-        value: userConfig.polyfill as any,
+        value: originalUserConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
         hash: userConfig.hash as boolean,
         outputAssetsPath: userConfig.outputAssetsPath as any,

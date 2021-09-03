@@ -48,6 +48,7 @@ module.exports = (api, { webpackConfig }) => {
     webpackConfig.optimization.minimize(true);
   }
 
+  // TODO: rax-app need compat with webpack4
   configWebpack5(webpackConfig, context);
 
   return webpackConfig;

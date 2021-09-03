@@ -127,12 +127,15 @@ const configMap: ConfigMap = {
   'devServer.proxy': 'server.proxy',
   'devServer.https': 'server.https',
   'plugins.DefinePlugin': {
-    name: 'defined',
+    name: 'define',
     transform: transformPlugin('DefinePlugin'),
   },
   'plugins.TerserPlugin': {
     name: 'build.terserOptions',
-    transform: transformMinimizer('TerserPlugin'),
+    transform: (...args) => {
+      const terserPluginOptions = transformMinimizer('TerserPlugin')(...args);
+      return terserPluginOptions?.terserOptions;
+    },
   },
   'plugin.ESBuild': {
     name: 'build.target',

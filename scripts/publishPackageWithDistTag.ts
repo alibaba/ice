@@ -8,7 +8,8 @@ import { setPublishedPackages } from './published-info';
 import { IPackageInfo, getPackageInfos, getVersionPrefix } from './getPackageInfos';
 
 const PUBLISH_TYPE = process.env.PUBLISH_TYPE || 'beta';
-const DIST_TAG_REG = new RegExp(`([^-]+)-${PUBLISH_TYPE}\\.(\\d+)`);
+const VERSION_PREFIX = process.env.VERSION_PREFIX || PUBLISH_TYPE;
+const DIST_TAG_REG = new RegExp(`([^-]+)-${VERSION_PREFIX}\\.(\\d+)`);
 
 interface ITagPackageInfo extends IPackageInfo {
   distTagVersion: string;
@@ -34,7 +35,7 @@ function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo
     if (matched && matched[1] === localVersion && matched[2]) {
       distTagVersion = Number(matched[2]) + 1;
     }
-    version += `-${tag}.${distTagVersion}`;
+    version += `-${VERSION_PREFIX}.${distTagVersion}`;
   }
 
   return Object.assign({}, packageInfo, { distTagVersion: version });

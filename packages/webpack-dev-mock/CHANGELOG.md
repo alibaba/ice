@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- [feat] compatible with server create by http
+
 ## 1.2.1
 
 - [fix] update mock config after file change

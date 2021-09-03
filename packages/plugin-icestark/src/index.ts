@@ -5,7 +5,7 @@ import { IPlugin, Json } from 'build-scripts';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
-  const { rootDir, webpack, pkg } = context;
+  const { rootDir, webpack, pkg, userConfig } = context;
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
@@ -16,7 +16,8 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
       .plugin('DefinePlugin')
       .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
     // set alias for default layout
-    config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : path.join(__dirname, 'runtime/Layout'));
+    const layoutPath = userConfig.vite ? path.join(__dirname, '../src/runtime/Layout.tsx') : path.join(__dirname, 'runtime/Layout');
+    config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
     // set alias for icestark
     ['@ice/stark', '@ice/stark-app'].forEach((pkgName) => {
       config.resolve.alias.set(pkgName, require.resolve(pkgName));
