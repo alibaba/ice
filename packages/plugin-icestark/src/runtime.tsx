@@ -16,10 +16,24 @@ import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IPrivateIceStark, IIceStark } from './types';
 
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperPageComponent }) => {
+const module = ({
+  appConfig,
+  addDOMRender,
+  buildConfig,
+  setRenderApp,
+  wrapperRouterRender,
+  modifyRoutes,
+  applyRuntimeAPI,
+  createHistory,
+  wrapperPageComponent,
+  wrapperRouteComponent
+}) => {
   const { icestark, router } = appConfig;
   const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
+  // compatible with deprecated runtime API
+  const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
+  const createAppHistory = createHistory || ((options: any) => applyRuntimeAPI('createHistory', options));
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
@@ -29,7 +43,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
-    const history = applyRuntimeAPI('createHistory', { type, basename: childBasename });
+    const history = createAppHistory({ type, basename: childBasename });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
@@ -77,7 +91,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
     };
 
     // get props by props
-    wrapperPageComponent(wrapperPageFn);
+    wrapperComponent(wrapperPageFn);
 
     const routerProps = {
       type,
@@ -102,7 +116,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(applyRuntimeAPI('createHistory' ,{ type, basename }));
+      const [routerHistory] = useState(createAppHistory({ type, basename }));
       const routerProps = {
         type,
         routes,
