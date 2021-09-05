@@ -47,7 +47,7 @@ export default (api, options) => {
       targetDir: `plugins/${targetDir}`,
     }, extraData);
   }, { pluginName: true });
-  registerMethod('modifyRenderData', generator.modifyRenderData);
+  registerMethod('modifyRenderData', generator.modifyRenderData.bind(generator));
   registerMethod('addDisableRuntimePlugin', generator.addDisableRuntimePlugin);
 
   function addImportDeclaration(data: ImportDeclarationData) {

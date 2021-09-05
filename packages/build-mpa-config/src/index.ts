@@ -54,21 +54,6 @@ export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => 
   return parsedEntries;
 };
 
-export const addRedirectRunAppLoader = (api: IPluginAPI, { config, framework, redirectEntries = [] }: {
-  config: any;
-  framework: string;
-  redirectEntries: IGenerateResult[];
-}) => {
-  config.module.rule('redirect-runApp')
-    .test((filepath: string) => redirectEntries.some(({ entryPath }) => entryPath === filepath))
-    .use('redirect-runApp-loader')
-    .loader(require.resolve(path.join(__dirname, 'redirectRunAppLoader')))
-    .options({
-      framework,
-      redirectEntries,
-    });
-};
-
 const setMPAConfig = (api, config, options: IConfigOptions) => {
   if (!options) {
     throw new Error('There need pass options param to setMPAConfig method');
@@ -95,10 +80,14 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
     matchStrs.push(formatPath(matchStr));
   });
 
-  addRedirectRunAppLoader(api, {
-    config,
-    framework: 'rax',
-    redirectEntries,
+  api.applyMethod('addImportDeclaration', {
+    multipleSource: {
+      runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
+        filename: entryPath,
+        value: runAppPath,
+        type: 'normal',
+      })),
+    },
   });
 
   if (config.plugins.has('document')) {

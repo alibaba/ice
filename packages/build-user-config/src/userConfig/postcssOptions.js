@@ -24,7 +24,7 @@ module.exports = (config, postcssOptions) => {
         } else {
           // compatible with rax config
           finalPostcssOptions = builtInOptions || { plugins: []};
-        } 
+        }
       }
     }
     if (!finalPostcssOptions.plugins) {

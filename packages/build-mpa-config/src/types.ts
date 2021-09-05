@@ -13,3 +13,16 @@ export interface IGenerateResult {
 }
 
 export type FrameworkType = 'rax' | 'react';
+
+export interface IRunAppRenderData {
+  tabBarPath?: undefined | string;
+  globalStyle?: undefined | string;
+  relativeCorePath?: string;
+  typesPath?: string;
+  buildConfig?: {
+    router: boolean,
+  };
+  errorBoundary?: boolean;
+  pageConfig?: any;
+  entryName?: string;
+}
