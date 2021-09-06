@@ -22,7 +22,6 @@ const getHtmlContent = ({
 
   const $ = cheerio.load(html);
   $('body').append(`<script type="module" src="${entry}" />`);
-  $('head').append('<script>global = globalThis</script>');
 
   return $.html({});
 };
