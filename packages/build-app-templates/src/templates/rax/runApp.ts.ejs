@@ -7,7 +7,6 @@ import {
 <% if (buildConfig.router !== false) {%>
   initHistory,
   createHistory,
-  setHistory,
 <% } %>
 } from 'create-app-shared';
 
@@ -65,8 +64,7 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
     staticConfig = customStaticConfig;
   }
   // set History before GID
-  const history = initHistory && initHistory(appConfig as any);
-  history && setHistory(history);
+  initHistory && initHistory(appConfig as any);
   <% } %>
 
   let renderer;

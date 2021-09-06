@@ -27,6 +27,4 @@ export default (createHistory: CreateHistory) => (appConfig: AppConfig, initialC
   const newHistory = createHistory({ type, basename, location, customHistory });
 
   appConfig.router.history = newHistory;
-
-  return newHistory;
 };
