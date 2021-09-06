@@ -168,12 +168,6 @@ export const wp2vite = (context: Context): InlineConfig => {
           include: ['react-app-renderer', 'create-app-shared'],
         },
         server: devServerConfig,
-        define: {
-          'process.env': {},
-          global: {
-            __app_mode__: 'start',
-          },
-        },
         plugins: [
           userConfig.fastRefresh ? reactRefresh({
             // Exclude node_modules and ice runtime
@@ -190,9 +184,6 @@ export const wp2vite = (context: Context): InlineConfig => {
           exclude: ['react-app-renderer', 'create-app-shared'],
         },
       },
-      define: {
-        __app_mode__: 'build'
-      }
     }, viteConfig]);
   }
 };
