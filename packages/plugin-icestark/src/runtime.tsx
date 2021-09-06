@@ -39,7 +39,9 @@ const module = ({
     modifyRoutes(runtimeModifyRoutes);
   }
   if (appType === 'child') {
-    const { icestarkUMD } = buildConfig;
+    const { icestarkUMD, icestarkType } = buildConfig;
+
+    const localIcestarkType = icestarkType || (icestarkUMD ? 'umd' : 'normal');
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
@@ -48,7 +50,7 @@ const module = ({
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
-          if (!icestarkUMD) {
+          if (localIcestarkType === 'normal') {
             registerAppEnter(() => {
               const mountNode = getMountNode();
               if (enterRegistration) {

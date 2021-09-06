@@ -1,11 +1,20 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
-import { IPlugin, Json } from 'build-scripts';
+import type { IPlugin, Json } from 'build-scripts';
+import { icestarkPlugin } from './vitePluginIcetark';
 
-const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
-  const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
+const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context }, options = {}) => {
+  const { uniqueName, umd, library, omitSetLibraryName = false, command } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
+  const { vite } = userConfig as any;
+
+  const isProd = command === 'build';
+
+  if (isProd && userConfig.vite) {
+    modifyUserConfig('vite.plugins', [icestarkPlugin(context)], { deepmerge: true });
+  }
+
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
@@ -16,7 +25,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
       .plugin('DefinePlugin')
       .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
     // set alias for default layout
-    const layoutPath = userConfig.vite ? path.join(__dirname, '../src/runtime/Layout.tsx') : path.join(__dirname, 'runtime/Layout');
+    const layoutPath = vite ? path.join(__dirname, '../src/runtime/Layout.tsx') : path.join(__dirname, 'runtime/Layout');
     config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
     // set alias for icestark
     ['@ice/stark', '@ice/stark-app'].forEach((pkgName) => {

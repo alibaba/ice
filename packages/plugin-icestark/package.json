@@ -23,11 +23,12 @@
     "glob": "^7.1.6"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0",
     "@types/glob": "^7.1.1",
+    "build-scripts": "^1.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "vite": "^2.5.3"
   },
   "repository": {
     "type": "http",
