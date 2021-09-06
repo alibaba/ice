@@ -15,7 +15,7 @@ export type CreateHistory = (options: {
   customHistory?: History;
 }) => History<unknown>
 type InitialContext = null | { location?: Location }
-export type InitHistory = (appConfig: AppConfig, initialContext?: InitialContext) => void;
+export type InitHistory = (appConfig: AppConfig, initialContext?: InitialContext) => History<unknown>;
 
 export default (createHistory: CreateHistory) => (appConfig: AppConfig, initialContext = null) => {
   if (!appConfig.router) {
