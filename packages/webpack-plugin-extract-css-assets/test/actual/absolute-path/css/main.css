@@ -1,11 +1,11 @@
 body {
   color: red;
-  background-image: url(//img.alicdn.com/tfs/TB1zSOZrFGWBuNjy0FbXXb4sXXa-1024-1024.png);
+  background-image: url('../cssassets/cd7e3c88d4211a9b0b2335d1e417bb12.png');
 }
 
 .a {
   color: red;
-  background: url(//img.alicdn.com/tfs/TB1zSOZrFGWBuNjy0FbXXb4sXXa-1024-1024.png);
+  background: url('../cssassets/cd7e3c88d4211a9b0b2335d1e417bb12.png');
 }
 
 .b {
