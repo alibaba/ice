@@ -23,10 +23,6 @@ function getBuildConfig(userConfig): IBuildConfig{
     return false;
   });
 
-  if (vite) {
-    buildConfig.icestarkType = 'es';
-  }
-
   // eslint-disable-next-line no-nested-ternary
   buildConfig.icestarkType = vite ? 'es' : (isIcestarkUMD ? 'umd' : 'normal');
 
