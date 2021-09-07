@@ -1,9 +1,2 @@
-import * as React from 'react';
-
-const Layout = ({ children }) => (
-  <>
-    {children}
-  </>
-);
-
-export default Layout;
+// empty file for alias
+export default false;

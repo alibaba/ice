@@ -7,7 +7,6 @@ const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
-const configWebpack5 = require('./webpack5');
 const remoteRuntime = require('./userConfig/remoteRuntime').default;
 
 module.exports = async (api) => {
@@ -68,7 +67,6 @@ module.exports = async (api) => {
   if (command === 'test') {
     setTest(api);
   }
-  configWebpack5(api);
 
   if (userConfig.remoteRuntime) {
     await remoteRuntime(api, userConfig.remoteRuntime);
