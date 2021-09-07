@@ -8,7 +8,8 @@ import { formatPath } from '@builder/app-helpers';
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir, publicPath = '/', devPublicPath = '/' } = userConfig;
+  const { outputDir, publicPath, devPublicPath } = userConfig;
+
   const TEMP_PATH = getValue('TEMP_PATH');
   const PROJECT_TYPE = getValue('PROJECT_TYPE');
   // Note: Compatible plugins to modify configuration
