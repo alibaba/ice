@@ -2,7 +2,7 @@
 
 ## 2.1.4
 
-- [feat] get `publicPath` from build config
+- [fix] remove default value of `publicPath` while @loadable/webpack-plugin will get it form webpack stats
 
 ## 2.1.3
 
