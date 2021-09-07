@@ -134,6 +134,7 @@ function getDefaultRenderData(api, options) {
       isReact: false,
       isRax: true,
       isMiniapp,
+      isMPA: false,
       routesFilePath: './staticConfig',
     };
   } else {
