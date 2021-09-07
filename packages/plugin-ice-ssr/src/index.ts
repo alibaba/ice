@@ -9,6 +9,7 @@ const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
   const { outputDir } = userConfig;
+
   const TEMP_PATH = getValue('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, outputDir);
@@ -24,6 +25,7 @@ const plugin = async (api): Promise<void> => {
 
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);
+
   // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config
   webpackConfig
     .plugin('DefinePlugin')

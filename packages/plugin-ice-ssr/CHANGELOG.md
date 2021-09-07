@@ -1,6 +1,10 @@
 # Changelog
 
-# 2.1.3
+## 2.1.4
+
+- [feat] get `publicPath` from build config
+
+## 2.1.3
 
 - [fix] make `appConfig.app.rootId` works when ssr
 
