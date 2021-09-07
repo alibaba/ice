@@ -5,11 +5,9 @@ import { Option } from './types';
 import defaultRuntimeCaching from './runtimeCaching';
 import hasWebManifest from './hasWebManifest';
 import ManifestPlugin from './ManifestPlugin';
-import isPluginExist from './isPluginExist';
 
-const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options = {}) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options) => {
   const { command, rootDir, userConfig } = context;
-  const { plugins = [] } = userConfig;
 
   // Register pwa in build.json
   registerUserConfig({
@@ -22,18 +20,15 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
 
   const isDev = command === 'start';
 
+  // Get ice.js version
+  const version = process.env.__FRAMEWORK_VERSION__;
+
   // If pwa no exists in userConfig.
-  if (!isPluginExist(plugins) && (!!userConfig.pwa || userConfig?.pwa === false )) {
+  if (Number(version[0]) > 1 && (!!userConfig.pwa || userConfig?.pwa === false )) {
     return;
   }
 
-  let pwaOptions = {};
-
-  if (userConfig?.pwa) {
-    pwaOptions = (userConfig.pwa !== true) && userConfig.pwa;
-  } else {
-    pwaOptions = options;
-  }
+  const pwaOptions = (userConfig?.pwa && userConfig?.pwa !== true) ? userConfig?.pwa : options;
 
   const {
     sw = 'sw.js',
@@ -44,7 +39,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
     scope = basename,
     runtimeCaching = [],
     dynamicStartUrl = true,
-  } = pwaOptions as Option;
+  } = (pwaOptions ?? {}) as Option;
 
   if (isDev && !dev) {
     log.info('[PWA]: PWA is disabled.');
