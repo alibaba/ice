@@ -22,19 +22,10 @@ const plugin = async (api): Promise<void> => {
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'server.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
+  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
+
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);
-
-  applyMethod(
-    'addRenderFile',
-    templatePath,
-    ssrEntry,
-    {
-      outputDir,
-      routesPath: routesFileExists ? '@' : '.',
-      publicPath: webpackConfig.output.get('publicPath')
-    }
-  );
 
   // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config
   webpackConfig
