@@ -14,7 +14,7 @@ module.exports = (config, cssLoaderOptions) => {
       'less-global',
     ].forEach(rule => {
       if (config.module.rules.get(rule)) {
-        const isCSSModule = /\-module$/.test(rule);
+        const isCSSModule = /-module$/.test(rule);
 
         config.module
           .rule(rule)
