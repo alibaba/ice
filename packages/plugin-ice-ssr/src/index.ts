@@ -8,7 +8,7 @@ import { formatPath } from '@builder/app-helpers';
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir } = userConfig;
+  const { outputDir, publicPath = '/', devPublicPath = '/' } = userConfig;
   const TEMP_PATH = getValue('TEMP_PATH');
   const PROJECT_TYPE = getValue('PROJECT_TYPE');
   // Note: Compatible plugins to modify configuration
@@ -21,7 +21,16 @@ const plugin = async (api): Promise<void> => {
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'server.ts');
   const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
-  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
+  applyMethod(
+    'addRenderFile',
+    templatePath,
+    ssrEntry,
+    {
+      outputDir,
+      routesPath: routesFileExists ? '@' : '.',
+      publicPath: command === 'build' ? publicPath : devPublicPath
+    }
+  );
 
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);
