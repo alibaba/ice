@@ -30,7 +30,7 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa, srcDir }:
 
   const routesPath = configPath
     ? path.join(rootDir, configPath)
-    : getSourceFile(path.join(srcDir, 'routes'), rootDir);
+    : getSourceFile(`${srcDir}/routes`, rootDir);
 
   // 配置式路由
   const configPathExists = fse.existsSync(routesPath);
