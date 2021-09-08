@@ -1,14 +1,19 @@
 import type { Plugin } from 'vite';
-import type { PluginContext } from 'build-scripts';
 
-export const icestarkPlugin = ({ userConfig }: PluginContext): Plugin => {
-  const { entry } = userConfig;
+export interface Entries {
+  [index: string]: string | string[];
+}
 
-  // FIXME: 1. handle mpa
-  // FIXME: 2. output correct html
-  const input = {
-    index: entry as string,
-  };
+export const icestarkPlugin = (entries: Entries): Plugin => {
+
+  // FIXME: 1. output correct html
+  // Turn vite input to js files
+  const input = Object.keys(entries).reduce((pre, next) => {
+    return {
+      ...pre,
+      [next]: Array.isArray(entries[next]) ? entries[next][0] : entries[next]
+    };
+  }, {});
 
   return ({
     name: 'vite-plugin-icestark',

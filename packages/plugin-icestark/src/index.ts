@@ -5,15 +5,11 @@ import type { IPlugin, Json } from 'build-scripts';
 import { icestarkPlugin } from './vitePluginIcetark';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context }, options = {}) => {
-  const { uniqueName, umd, library, omitSetLibraryName = false, command } = options as Json;
-  const { rootDir, webpack, pkg, userConfig } = context;
-  const { vite } = userConfig as any;
+  const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
+  const { rootDir, webpack, pkg, userConfig, command } = context;
+  const { vite } = userConfig;
 
   const isProd = command === 'build';
-
-  if (isProd && userConfig.vite) {
-    modifyUserConfig('vite.plugins', [icestarkPlugin(context)], { deepmerge: true });
-  }
 
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
@@ -21,6 +17,12 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
   onGetWebpackConfig((config) => {
+    const entries = config.toConfig().entry;
+
+    if (isProd && userConfig.vite) {
+      modifyUserConfig('vite.plugins', [icestarkPlugin(entries as any)], { deepmerge: true });
+    }
+
     config
       .plugin('DefinePlugin')
       .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
@@ -43,7 +45,6 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
         .libraryTarget('umd');
 
       // collect entry
-      const entries = config.toConfig().entry;
       const entryList = [];
       Object.keys(entries).forEach((key) => {
         // only include entry path

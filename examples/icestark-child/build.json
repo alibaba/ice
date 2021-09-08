@@ -1,8 +1,6 @@
 {
   "vite": true,
   "plugins": [
-    ["build-plugin-icestark", {
-      "umd": true
-    }]
+    "build-plugin-icestark"
   ]
 }
