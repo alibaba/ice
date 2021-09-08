@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.10
+
+- [fix] globby pattern do not support path of win32
+
 ## 1.4.9
 
 - [fix] ignore project type when get source file
