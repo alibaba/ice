@@ -42,7 +42,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
   } = (pwaOptions ?? {}) as Option;
 
   if (isDev && !dev) {
-    log.info('[PWA]: PWA is disabled.');
+    log.info('[PWA]: PWA is disabled in DEV mode');
     return;
   }
 
