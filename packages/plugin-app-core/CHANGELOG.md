@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.9
+
+- [fix] ignore project type when get source file
+- [feat] register method of getSourceFile
+
 ## 1.4.8
 
 - [feat] add onPageNotFound and onUnhandledRejection types in ejs

@@ -2,6 +2,7 @@ import getPages from '../utils/getPages';
 import getRoutes from '../utils/getRoutes';
 import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
+import getSourceFile from '../utils/getSourceFile';
 import { getExportApiKeys } from '../constant';
 import importDeclarations from './importDeclarations';
 
@@ -14,6 +15,7 @@ export default (api, options) => {
   registerMethod('formatPath', formatPath);
   registerMethod('getRoutes', getRoutes);
   registerMethod('getSourceDir', getSourceDir);
+  registerMethod('getSourceFile', getSourceFile);
 
   // registerMethod for modify page
   registerMethod('addPageExport', generator.addPageExport);

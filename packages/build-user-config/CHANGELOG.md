@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.11
+
+- [fix] only pass modules to css module rule
+
 ## 0.3.10
 
 - [feat] support global style rule custom `postcssOptions`
