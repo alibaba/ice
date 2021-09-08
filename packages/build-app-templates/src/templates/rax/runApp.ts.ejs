@@ -48,7 +48,7 @@ const frameworkAppBase = createBaseApp({
   runtimeValue: {
   <% if (tabBarPath) {%>
     TabBar,
-    tabBarConfig: <%- isMPA ? JSON.stringify('') : 'staticConfig.tabBar' %> ,
+    tabBarConfig: <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %> ,
   <% } %>
   }
 });
