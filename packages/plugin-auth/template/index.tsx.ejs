@@ -2,19 +2,17 @@
   import * as React from 'react';
 <% } %>
 import { FC, createContext, useState, useContext } from 'react';
-import { ContextType, AuthType, IAuth } from './types'
+import { ContextType, AuthType, IAuth } from './types';
 
 const Context = createContext<any>(null);
 
 interface Props {
-  value: AuthType
+  value: AuthType;
 }
 
 const Provider: FC<Props> = ({ value = {}, children }) => {
   const share = useState<AuthType>(value);
-  return (
-    <Context.Provider value={share}>{children}</Context.Provider>
-  );
+  return <Context.Provider value={share}>{children}</Context.Provider>;
 };
 
 const useAuth = (): ContextType => {
@@ -22,19 +20,21 @@ const useAuth = (): ContextType => {
   return value;
 };
 
-// class 组件支持 Hoc 用法
-function withAuth(Component) {
-  const AuthWrapped = props => {
-    const [auth, setAuth] = useAuth();
-    return <Component {...Object.assign({}, props, { auth, setAuth })} />;
-  };
-  return AuthWrapped;
+interface InjectProps {
+  auth: ContextType[0];
+  useAuth: ContextType[1];
 }
-
-export {
-  useAuth,
-  withAuth,
-  Provider,
+// class 组件支持 Hoc 用法
+function withAuth<Props extends InjectProps>(Component: React.ComponentType<Props>) {
+  type OriginalProps = Omit<Props, keyof InjectProps>;
+  const AuthWrapped = (props: OriginalProps) => {
+    const [auth, setAuth] = useAuth();
+    const WrappedComponent = Component as React.ComponentType<OriginalProps>;
+    return <WrappedComponent {...props} auth={auth} setAuth={setAuth} />;
+  }
+  return AuthWrapped;
 };
 
-export type { IAuth }
+export { useAuth, withAuth, Provider };
+
+export type { IAuth };
