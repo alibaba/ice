@@ -4,6 +4,9 @@ export default {
     "@ali/build-plugin-faas"
   ],
   server: {
-    outDir: "./build-abc"
+    outDir: "./build-abc",
+    ignorePattern: (...args) => {
+      return true;
+    },
   }
 }

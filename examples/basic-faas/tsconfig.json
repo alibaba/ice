@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "outDir": "build",
     "module": "ESNext",
-    "target": "ES6",
+    "target": "es2018",
     "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,

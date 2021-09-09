@@ -33,7 +33,13 @@
   "originTemplate": "@ali/ice-scaffold-faas-hooks",
   "private": true,
   "resolutions": {
-    "@midwayjs/cli-plugin-dev": "1.2.83-beta.2",
-    "@midwayjs/serverless-dev-pack": "1.2.83-beta.2"
+    "@midwayjs/cli-plugin-dev": "1.2.83-beta.5",
+    "@midwayjs/serverless-dev-pack": "1.2.83-beta.5",
+    "@midwayjs/bootstrap": "3.0.0-alpha.9",
+    "@midwayjs/core": "3.0.0-alpha.9",
+    "@midwayjs/decorator": "3.0.0-alpha.6",
+    "@midwayjs/runtime-mock": "3.0.0-alpha.6",
+    "@midwayjs/mock": "3.0.0-alpha.9",
+    "@midwayjs/runtime-engine": "3.0.0-alpha.6"
   }
 }
