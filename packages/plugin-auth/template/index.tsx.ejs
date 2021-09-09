@@ -27,12 +27,12 @@ interface InjectProps {
 // class 组件支持 Hoc 用法
 function withAuth<Props extends InjectProps>(Component: React.ComponentType<Props>) {
   type OriginalProps = Omit<Props, keyof InjectProps>;
-  const AuthWrapper = (props: OriginalProps) => {
+  const AuthWrapped = (props: OriginalProps) => {
     const [auth, setAuth] = useAuth();
-    const NewComponent = Component as React.ComponentType<OriginalProps>;
-    return <NewComponent {...props} auth={auth} setAuth={setAuth} />;
+    const WrappedComponent = Component as React.ComponentType<OriginalProps>;
+    return <WrappedComponent {...props} auth={auth} setAuth={setAuth} />;
   }
-  return AuthWrapper;
+  return AuthWrapped;
 };
 
 export { useAuth, withAuth, Provider };
