@@ -1,6 +1,6 @@
 {
   "name": "ice.js",
-  "version": "1.18.4",
+  "version": "1.18.5",
   "description": "command line interface and builtin plugin for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@alib/build-scripts": "^0.1.13",
-    "build-plugin-app-core": "1.4.9",
+    "build-plugin-app-core": "1.4.10",
     "build-plugin-helmet": "1.0.2",
     "build-plugin-ice-auth": "1.7.4",
     "build-plugin-ice-config": "1.8.2",
