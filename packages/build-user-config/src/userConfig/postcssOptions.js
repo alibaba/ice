@@ -2,7 +2,7 @@ const checkPostcssLoader = (config, ruleName) => config.module.rules.has(ruleNam
 
 module.exports = (config, postcssOptions) => {
   if (postcssOptions) {
-    const styleRules = ['css', 'css-module', 'scss', 'scss-module', 'less', 'less-module'];
+    const styleRules = ['css', 'css-module', 'css-global', 'scss', 'scss-module', 'scss-global', 'less', 'less-module', 'less-global'];
     let finalPostcssOptions = {};
     let restLoaderOptions = {};
     // get default post css config
@@ -24,7 +24,7 @@ module.exports = (config, postcssOptions) => {
         } else {
           // compatible with rax config
           finalPostcssOptions = builtInOptions || { plugins: []};
-        } 
+        }
       }
     }
     if (!finalPostcssOptions.plugins) {

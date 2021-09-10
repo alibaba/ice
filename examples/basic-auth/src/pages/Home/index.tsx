@@ -3,33 +3,30 @@ import React from 'react';
 import { useAuth, withAuth } from 'ice';
 import Auth from '@/components/Auth';
 
-@withAuth
-class Demo1 extends React.PureComponent {
-  public render() {
-    const {auth} = this.props;
-    return (
+const Demo1 = withAuth(({ auth }) => {
+  return (
+    <div>
+      <h3>Class 组件演示：</h3>
       <div>
-        <h3>Class 组件演示：</h3>
-        <div>
-          <span>权限列表：</span>
-          <code>{JSON.stringify(auth)}</code>
-        </div>
+        <span>权限列表：</span>
+        <code>{JSON.stringify(auth)}</code>
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
 
 const Demo2 = () => {
   const [auth, setAuth]= useAuth();
-
   function addAuth() {
     setAuth({
+      ...auth,
       deleteRepo: true
     });
   }
 
   function resetAuth() {
     setAuth({
+      ...auth,
       followRepo: true,
       starRepo: true,
     });
@@ -37,6 +34,7 @@ const Demo2 = () => {
 
   function deleteAuth() {
     setAuth({
+      ...auth,
       starRepo: false,
       followRepo: false
     });
@@ -76,6 +74,11 @@ const HomePage = () => {
       <Demo2 />
     </div>
   );
+};
+
+HomePage.pageConfig = {
+  title: 'test',
+  auth: ['admin'],
 };
 
 export default HomePage;

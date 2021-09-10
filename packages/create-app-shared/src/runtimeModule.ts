@@ -46,6 +46,7 @@ interface RuntimeAPI {
   appConfig: AppConfig,
   buildConfig: BuildConfig,
   context: Context,
+  staticConfig: any,
 }
 
 export interface RuntimePlugin {
@@ -61,6 +62,8 @@ class RuntimeModule {
 
   private context: Context;
 
+  private staticConfig: any;
+
   private renderApp: IRenderApp;
 
   private AppProvider: React.ComponentType[];
@@ -75,11 +78,12 @@ class RuntimeModule {
 
   public modifyDOMRender: IDOMRender;
 
-  constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context) {
+  constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context, staticConfig?: any) {
     this.AppProvider = [];
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
     this.context = context;
+    this.staticConfig = staticConfig;
     this.modifyDOMRender = null;
     this.apiRegistration = {};
 
@@ -100,6 +104,7 @@ class RuntimeModule {
       buildConfig: this.buildConfig,
       context: this.context,
       setRenderApp: this.setRenderApp,
+      staticConfig: this.staticConfig,
     };
     if (enabledRouter) {
       runtimeAPI = {

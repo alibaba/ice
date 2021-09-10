@@ -15,14 +15,14 @@ function mergeDefaultConfig(defaultConfig: AppConfig, config: AppConfig) {
 }
 
 export default ({ loadRuntimeModules, createElement, runtimeAPI = {} }) => {
-  const createBaseApp = <T = AppConfig, P = BuildConfig, S = Context>(appConfig: T, buildConfig: P, context: S) => {
+  const createBaseApp = <T = AppConfig, P = BuildConfig, S = Context>(appConfig: T, buildConfig: P, context: S, staticConfig?: any) => {
 
     // Merge default appConfig to user appConfig
     appConfig = mergeDefaultConfig(DEFAULT_APP_CONFIG, appConfig) as T;
     (context as Context).createElement = createElement;
 
     // Load runtime modules
-    const runtime = new RuntimeModule(appConfig, buildConfig, context);
+    const runtime = new RuntimeModule(appConfig, buildConfig, context, staticConfig);
     Object.keys(runtimeAPI).forEach((apiKey: string) => {
       runtime.registerRuntimeAPI(apiKey, runtimeAPI[apiKey]);
     });

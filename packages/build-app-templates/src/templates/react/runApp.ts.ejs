@@ -45,7 +45,7 @@ export function runApp(appConfig?: IAppConfig) {
   if (process.env.__IS_SERVER__) return;
   <% if (buildConfig.router !== false) {%>
   // set History before GID
-  initHistory(appConfig as any);
+  initHistory && initHistory(appConfig as any);
   <% } %>
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,

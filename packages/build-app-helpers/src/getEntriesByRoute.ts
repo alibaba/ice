@@ -55,7 +55,7 @@ function getEntry(route: IRoute, rootDir: string): IEntry | void {
 }
 
 function getEntryPath(rootDir, source) {
-  const absolutePath = path.resolve(rootDir, 'src', source);
+  const absolutePath = path.join(rootDir, 'src', source);
   const targetExt = ['ts', 'tsx', 'js', 'jsx'].find(ext => fs.existsSync(`${absolutePath}.${ext}`));
   if (!targetExt) {
     throw new Error(`Cannot find target file ${absolutePath}.`);

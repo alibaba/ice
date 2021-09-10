@@ -1,6 +1,4 @@
 import * as path from 'path';
-import * as globby from 'globby';
-import * as fs from 'fs-extra';
 import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
@@ -104,31 +102,48 @@ function renderDefaultTemplate(generator: Generator, { framework }) {
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
-  const { userConfig, rootDir } = context;
-  const { framework, hasJsxRuntime } = options;
+  const { rootDir } = context;
   const plugins = getAllPlugin();
-  const { targets = [], ssr = false } = userConfig;
-  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
   const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
     targetDir,
-    defaultData: {
-      framework,
-      isReact: framework === 'react',
-      isRax: framework === 'rax',
-      isMiniapp,
-      ssr,
-      buildConfig: getBuildConfig(userConfig),
-      hasJsxRuntime,
-      hasTabBar: hasTabBar(`${rootDir}/src`, framework),
-      errorBoundary: true,
-      relativeCorePath: '.',
-      typesPath: '../types'
-    },
+    defaultData: getDefaultRenderData(api, options),
     log,
     plugins,
   });
+}
+
+function getDefaultRenderData(api, options) {
+  const { context } = api;
+  const { userConfig } = context;
+  const { framework, hasJsxRuntime } = options;
+  const { targets = [], ssr = false } = userConfig;
+  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
+  const renderData = {
+    framework,
+    buildConfig: getBuildConfig(userConfig),
+    hasJsxRuntime,
+    errorBoundary: true,
+    relativeCorePath: '.',
+    typesPath: '../types',
+  };
+  if (framework === 'rax') {
+    return {
+      ...renderData,
+      isReact: false,
+      isRax: true,
+      isMiniapp,
+      routesFilePath: './staticConfig',
+    };
+  } else {
+    return {
+      ...renderData,
+      isReact: true,
+      isRax: false,
+      ssr,
+    };
+  }
 }
 
 function checkTargets(targets) {
@@ -168,14 +183,4 @@ function matchTargets(targets) {
   return targets.every(target => {
     return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
   });
-}
-
-function hasTabBar(srcDir, framework) {
-  if (framework === 'rax') {
-    return globby.sync(['**/app.json'], { cwd: srcDir, absolute: true }).some((filepath) => {
-      const content = fs.readJSONSync(filepath);
-      return content.tabBar && !content.tabBar.custom;
-    });
-  }
-  return false;
 }

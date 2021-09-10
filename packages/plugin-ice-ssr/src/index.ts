@@ -9,8 +9,8 @@ import generateStaticPages from './generateStaticPages';
 const plugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir, ssr, publicPath = '/', devPublicPath = '/' } = userConfig;
-  const PROJECT_TYPE = getValue('PROJECT_TYPE');
+  const { outputDir, ssr } = userConfig;
+
   const TEMP_PATH = getValue('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, outputDir);
@@ -21,20 +21,13 @@ const plugin = async (api): Promise<void> => {
   // render server entry
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
-  const routesFileExists = fse.existsSync(path.join(rootDir, 'src', `routes.${PROJECT_TYPE}`));
-  applyMethod(
-    'addRenderFile',
-    templatePath,
-    ssrEntry,
-    {
-      outputDir,
-      routesPath: routesFileExists ? '@' : '.',
-      publicPath: command === 'build' ? publicPath : devPublicPath
-    });
+  const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
+  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
 
   const mode = command === 'start' ? 'development' : 'production';
 
   const webpackConfig = getWebpackConfig(mode);
+
   // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config
   webpackConfig
     .plugin('DefinePlugin')
@@ -199,7 +192,6 @@ const plugin = async (api): Promise<void> => {
         {
           outputDir,
           routesPath: routesFileExists ? '@' : '.',
-          publicPath: command === 'build' ? publicPath : devPublicPath
         }
       );
 

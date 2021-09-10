@@ -78,6 +78,8 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
             };
           });
       });
+    } else {
+      log.warn('It is much more preferable to configure umd format when using icestark 2.x. For more upgrade info: https://ice.work/docs/guide/advanced/icestark#umd-%E8%A7%84%E8%8C%83%E5%BE%AE%E5%BA%94%E7%94%A8');
     }
   });
 

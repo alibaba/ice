@@ -162,6 +162,13 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
+        <a href=https://github.com/fengzilong>
+            <img src=https://avatars.githubusercontent.com/u/9125255?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=MO/>
+            <br />
+            <sub style="font-size:14px"><b>MO</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
         <a href=https://github.com/purple-force>
             <img src=https://avatars.githubusercontent.com/u/16146970?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=chenliandong/>
             <br />
@@ -201,13 +208,6 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
             <img src=https://avatars.githubusercontent.com/u/1716558?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Far Tseng/>
             <br />
             <sub style="font-size:14px"><b>Far Tseng</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
-        <a href=https://github.com/fengzilong>
-            <img src=https://avatars.githubusercontent.com/u/9125255?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=MO/>
-            <br />
-            <sub style="font-size:14px"><b>MO</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
