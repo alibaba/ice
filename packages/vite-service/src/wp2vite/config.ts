@@ -124,7 +124,29 @@ const configMap: ConfigMap = {
   },
   'config.devtool': 'build.sourcemap',
   'devServer.watchOptions.static.watch': 'server.watch',
-  'devServer.proxy': 'server.proxy',
+  'devServer.proxy': {
+    name: 'server.proxy',
+    transform: (value: Record<string, any>[]) => {
+      // vite proxy do not support config of onProxyRes, onError, logLevel
+      // transform devServer.proxy to server.proxy
+      const proxyConfig = {};
+      (value || []).forEach(({ context, enable, onProxyRes, onError, ...rest }) => {
+        if (enable !== false) {
+          proxyConfig[context] = {
+            ...rest,
+            configure: (proxy, options) => {
+              if (rest.configure) {
+                rest.configure(proxy, options);
+              }
+              proxy.on('proxyRes', onProxyRes);
+              proxy.on('error', onError);
+            },
+          };
+        }
+      });
+      return proxyConfig;
+    },
+  },
   'devServer.https': 'server.https',
   'plugins.DefinePlugin': {
     name: 'define',
