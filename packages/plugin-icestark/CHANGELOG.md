@@ -1,9 +1,10 @@
 # Changelog
 
-# 3.0.0
+# 2.3.0
 
 - [feat] migrate runtime api
 - [feat] upgrade build-scripts
+- [feat] support es module out of box
 
 ## 2.2.1
 
