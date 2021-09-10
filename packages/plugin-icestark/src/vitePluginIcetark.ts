@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite';
 
 export interface Entries {
-  [index: string]: any
+  [index: string]: string | string[];
 }
 
 export const icestarkPlugin = (entries: Entries): Plugin => {
