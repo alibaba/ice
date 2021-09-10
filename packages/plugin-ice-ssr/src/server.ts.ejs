@@ -48,13 +48,14 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     htmlTemplate,
     loadableStatsPath,
     pagesData = [],
+    publicPath,
   } = options;
 
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
-  const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
+  const buildConfig = { loadableStatsPath, publicPath };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
 

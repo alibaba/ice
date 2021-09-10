@@ -3,7 +3,7 @@ import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import { IPlugin, Json } from 'build-scripts';
 
-const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
+const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
@@ -61,6 +61,8 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
             };
           });
       });
+    } else {
+      log.warn('It is much more preferable to configure umd format when using icestark 2.x. For more upgrade info: https://ice.work/docs/guide/advanced/icestark#umd-%E8%A7%84%E8%8C%83%E5%BE%AE%E5%BA%94%E7%94%A8');
     }
   });
 

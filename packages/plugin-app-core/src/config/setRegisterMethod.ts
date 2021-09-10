@@ -4,6 +4,7 @@ import formatPath from '../utils/formatPath';
 import getSourceDir from '../utils/getSourceDir';
 import formatPluginDir from '../utils/formatPluginDir';
 import getBuildConfig from '../utils/getBuildConfig';
+import getSourceFile from '../utils/getSourceFile';
 import { getExportApiKeys } from '../constant';
 import importDeclarations, { SourceData } from './importDeclarations';
 
@@ -34,6 +35,11 @@ export default (api, options) => {
   registerMethod('getRoutes', getRoutes);
   registerMethod('getSourceDir', getSourceDir);
   registerMethod('getBuildConfig', getBuildConfig);
+  registerMethod('getSourceFile', getSourceFile);
+
+  // registerMethod for modify page
+  registerMethod('addPageExport', generator.addPageExport);
+  registerMethod('removePageExport', generator.removePageExport);
 
   // registerMethod for render content
   registerMethod('addRenderFile', generator.addRenderFile);

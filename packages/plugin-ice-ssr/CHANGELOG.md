@@ -9,7 +9,11 @@
 
 - [feat] support setting getInitialProps with router configuration
 
-# 2.1.3
+## 2.1.4
+
+- [fix] remove default value of `publicPath` while @loadable/webpack-plugin will get it from webpack stats
+
+## 2.1.3
 
 - [fix] make `appConfig.app.rootId` works when ssr
 
