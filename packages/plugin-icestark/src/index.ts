@@ -3,6 +3,7 @@ import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
 import { icestarkPlugin } from './vitePluginIcetark';
+import { htmlPlugin } from './htmlPlugin';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
@@ -20,7 +21,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     const entries = config.toConfig().entry;
 
     if (isProd && userConfig.vite) {
-      modifyUserConfig('vite.plugins', [icestarkPlugin(entries as any)], { deepmerge: true });
+      modifyUserConfig('vite.plugins', [icestarkPlugin(entries as any), htmlPlugin(rootDir)], { deepmerge: true });
     }
 
     config
