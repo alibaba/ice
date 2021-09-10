@@ -4,12 +4,13 @@
   "description": "icejs & midway hooks",
   "dependencies": {
     "@ali/ice-faas-render": "^1.3.0",
+    "@ali/midway-buc-login": "^1.0.10",
     "@midwayjs/faas": "^2.10.14",
     "@midwayjs/hooks": "^2.2.0",
     "@midwayjs/serverless-app": "^2.10.15",
+    "koa-session": "^6.2.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "@ice/server": "^1.0.0"
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "@ali/build-plugin-faas": "2.1.1-0",

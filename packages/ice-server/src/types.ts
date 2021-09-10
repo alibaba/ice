@@ -1,10 +1,10 @@
 import { IMidwayContainer, IMidwayApplication } from '@midwayjs/core';
 import { IComponentInfo } from '@midwayjs/decorator';
 
+export type AppModule = (string | IComponentInfo | { Configuration: any })
+
 export interface AppConfig {
-  modules?: (string | IComponentInfo | {
-    Configuration: any;
-  })[];
+  modules?: AppModule[];
 
   app?: {
     // life cycle
@@ -14,4 +14,13 @@ export interface AppConfig {
   };
 
   bucLogin?: boolean;
+}
+
+type LifeCycleFunc = (app: any) => void;
+export interface MidwayConfiguration {
+  importConfigs: any[];
+  imports: AppModule[];
+  onConfigLoadQueue?: LifeCycleFunc[];
+  onReadyLoadQueue?: LifeCycleFunc[];
+  onStopLoadQueue?: LifeCycleFunc[];
 }

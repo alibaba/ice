@@ -1,3 +1,3 @@
 export * from './runApp';
-export * from './appConfig';
+export * from './midwayConfiguration';
 export * from './types';

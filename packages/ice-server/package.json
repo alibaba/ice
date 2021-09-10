@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Server API for icejs.",
   "author": "ice-admin@alibaba-inc.com",
-  "homepage": "",
+  "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
   "files": [
-    "bin",
     "lib",
     "!lib/**/*.map"
   ],
@@ -16,7 +15,10 @@
     "url": "git@github.com:alibaba/ice.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "prePublishOnly": "rm -rf lib && tsc"
+  },
+  "dependencies": {
+    "@midwayjs/hooks": "^2.3.0"
   },
   "devDependencies": {
     "@midwayjs/core": "^3.0.0-alpha.9",
