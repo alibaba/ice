@@ -5,12 +5,12 @@ import About from '@/pages/About';
 
 const routes: IRouterConfig[] = [
   {
-    path: '/dashboard',
+    path: '/list',
     exact: true,
     component: Dashboard,
   },
   {
-    path: '/about',
+    path: '/detail',
     exact: true,
     component: About
   },
