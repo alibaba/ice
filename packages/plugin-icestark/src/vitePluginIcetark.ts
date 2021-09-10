@@ -5,8 +5,6 @@ export interface Entries {
 }
 
 export const icestarkPlugin = (entries: Entries): Plugin => {
-
-  // FIXME: 1. output correct html
   // Turn vite input to js files
   const input = Object.keys(entries).reduce((pre, next) => {
     return {
