@@ -4,6 +4,7 @@ import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
 import { icestarkPlugin } from './vitePluginIcetark';
 import { htmlPlugin } from './htmlPlugin';
+import type { Entries } from './vitePluginIcetark';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
@@ -18,10 +19,10 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
   onGetWebpackConfig((config) => {
-    const entries = config.toConfig().entry;
+    const entries = config.toConfig().entry as Entries;
 
     if (isProd && userConfig.vite) {
-      modifyUserConfig('vite.plugins', [icestarkPlugin(entries as any), htmlPlugin(rootDir)], { deepmerge: true });
+      modifyUserConfig('vite.plugins', [icestarkPlugin(entries), htmlPlugin(rootDir)], { deepmerge: true });
     }
 
     config
