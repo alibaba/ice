@@ -36,6 +36,7 @@
     { "path": "packages/webpack-dev-mock" },
     { "path": "packages/plugin-keep-alive" },
     { "path": "packages/plugin-dev-inspector" },
+    { "path": "packages/plugin-pwa" },
     { "path": "packages/plugin-theme" },
     { "path": "packages/vite-service" },
     { "path": "packages/vite-plugin-component-style" },
