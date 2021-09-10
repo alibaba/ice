@@ -1436,10 +1436,10 @@
   resolved "https://registry.npm.taobao.org/@ice/stark-app/download/@ice/stark-app-1.4.1.tgz#6559733c5075c754688de0c65542a37a74b00ef3"
   integrity sha1-ZVlzPFB1x1RojeDGVUKjenSwDvM=
 
-"@ice/stark@^2.0.0":
-  version "2.5.3"
-  resolved "https://registry.nlark.com/@ice/stark/download/@ice/stark-2.5.3.tgz#6789963624ae1719dc0fdd65e07fc6b12967315d"
-  integrity sha1-Z4mWNiSuFxncD91l4H/GsSlnMV0=
+"@ice/stark@^2.6.0-1":
+  version "2.6.0-1"
+  resolved "https://registry.yarnpkg.com/@ice/stark/-/stark-2.6.0-1.tgz#4087445ce75798c078d3f518fd8eda805c57716d"
+  integrity sha512-Bf2LdGkRBk7IvioIFjnjN2biDstaAsgkgBA2yO8Wajs8D2nUD2IOPW4y7t5NXBmpycKxMnginrYs3NyPwWnHQw==
   dependencies:
     "@ice/sandbox" "^1.0.4"
     lodash.isempty "^4.4.0"
@@ -14586,7 +14586,7 @@ rollup-plugin-visualizer@^5.5.2:
     source-map "^0.7.3"
     yargs "^16.2.0"
 
-rollup@^2.38.5:
+rollup@^2.38.5, rollup@^2.56.3:
   version "2.56.3"
   resolved "https://registry.nlark.com/rollup/download/rollup-2.56.3.tgz#b63edadd9851b0d618a6d0e6af8201955a77aeff"
   integrity sha1-tj7a3ZhRsNYYptDmr4IBlVp3rv8=

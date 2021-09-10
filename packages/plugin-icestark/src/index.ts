@@ -6,7 +6,7 @@ import { icestarkPlugin } from './vitePluginIcetark';
 import { htmlPlugin } from './htmlPlugin';
 import type { Entries } from './vitePluginIcetark';
 
-const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context }, options = {}) => {
+const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
   const { rootDir, webpack, pkg, userConfig, command } = context;
   const { vite } = userConfig;
@@ -18,10 +18,15 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const isWebpack5 = (webpack as any).version?.startsWith('5');
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
+
+  if (vite && umd) {
+    log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark option.');
+  }
+
   onGetWebpackConfig((config) => {
     const entries = config.toConfig().entry as Entries;
 
-    if (isProd && userConfig.vite) {
+    if (isProd && vite) {
       modifyUserConfig('vite.plugins', [icestarkPlugin(entries), htmlPlugin(rootDir)], { deepmerge: true });
     }
 
