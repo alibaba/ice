@@ -9,17 +9,17 @@ const addTrailingSlash = (str: string) => {
 };
 
 const getFiles = (bundle: OutputBundle) => {
-  const allFiles =  Object.keys(bundle)
-    .map(key => ({
-      filename: bundle[key].fileName,
-      name: bundle[key].name,
-      type: bundle[key].type
-    }));
+  return Object.keys(bundle)
+    .map(key => {
+      const { fileName, name, type } = bundle[key];
 
-  return [
-    allFiles.filter(file => file.type === 'chunk'),
-    allFiles.filter(file => file.type === 'asset')
-  ];
+      return {
+        fileName,
+        name,
+        type,
+        extension: path.extname(fileName)
+      };
+    });
 };
 
 export const htmlPlugin = (rootDir: string): Plugin => {
@@ -35,19 +35,23 @@ export const htmlPlugin = (rootDir: string): Plugin => {
     },
 
     async generateBundle (output: NormalizedOutputOptions, bundle: OutputBundle) {
-      const [ chunks, assets ] = getFiles(bundle);
+      const allFiles = getFiles(bundle);
 
       const template = fs.readFileSync(path.resolve(rootDir, 'public', 'index.html'), 'utf-8');
 
       const $ = cheerio.load(template);
 
-      chunks.forEach(chunk => {
-        $('body').append(`<script type="module" src="${addTrailingSlash(base)}${chunk.filename}" />`);
-      });
+      allFiles
+        .filter(file => file.extension === '.js')
+        .forEach(chunk => {
+          $('body').append(`<script type="module" src="${addTrailingSlash(base)}${chunk.fileName}" />`);
+        });
 
-      assets.forEach(asset => {
-        $('head').append(`<link rel="stylesheet" href="${addTrailingSlash(base)}${asset.filename}" />`);
-      });
+      allFiles
+        .filter(file => file.extension === '.css')
+        .forEach(asset => {
+          $('head').append(`<link rel="stylesheet" href="${addTrailingSlash(base)}${asset.fileName}" />`);
+        });
 
       this.emitFile({
         type: 'asset',
