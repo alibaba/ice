@@ -1,0 +1,30 @@
+{
+  "name": "@ice/server",
+  "version": "1.0.0",
+  "description": "Server API for icejs.",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "lib",
+    "!lib/**/*.map"
+  ],
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/ice.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "devDependencies": {
+    "@midwayjs/core": "^3.0.0-alpha.9",
+    "@midwayjs/decorator": "^3.0.0-alpha.6"
+  },
+  "engines": {
+    "node": ">=10.13.0",
+    "npm": ">=3.0.0"
+  },
+  "gitHead": "cf40d079714b437417e77b444b078cf83286f2fc"
+}

@@ -8,7 +8,8 @@
     "@midwayjs/hooks": "^2.2.0",
     "@midwayjs/serverless-app": "^2.10.15",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "@ice/server": "^1.0.0"
   },
   "devDependencies": {
     "@ali/build-plugin-faas": "2.1.1-0",
