@@ -1,4 +1,5 @@
 {
+  "vite": true,
   "minify": false,
   "plugins": [
     "build-plugin-icestark",

@@ -1464,10 +1464,10 @@
   resolved "https://registry.yarnpkg.com/@ice/stark-app/-/stark-app-1.4.1.tgz#6559733c5075c754688de0c65542a37a74b00ef3"
   integrity sha512-FSSN5VK4jTku1EHX8Ue6DVmQKPGWdH4PEHm7pNN1rUQhHy7+4c3AwVH9QU9V4bKI0R1k3gcpu97gTbQ7hQ2CHQ==
 
-"@ice/stark@^2.6.0-1":
-  version "2.6.0-1"
-  resolved "https://registry.yarnpkg.com/@ice/stark/-/stark-2.6.0-1.tgz#4087445ce75798c078d3f518fd8eda805c57716d"
-  integrity sha512-Bf2LdGkRBk7IvioIFjnjN2biDstaAsgkgBA2yO8Wajs8D2nUD2IOPW4y7t5NXBmpycKxMnginrYs3NyPwWnHQw==
+"@ice/stark@^2.6.0-2":
+  version "2.6.0-2"
+  resolved "https://registry.yarnpkg.com/@ice/stark/-/stark-2.6.0-2.tgz#d9be4cdd510224e425407e026828e4ab63796b29"
+  integrity sha512-udyPNRATgqc2A6ZtNNXz4PFvB0yjYYvHcBBT/y8Eb9ZSjzBdirDxqanlsF8Xsn0bQNZPJ9pQLEQcy2TEmfmzXQ==
   dependencies:
     "@ice/sandbox" "^1.0.4"
     lodash.isempty "^4.4.0"
