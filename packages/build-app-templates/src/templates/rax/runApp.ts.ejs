@@ -45,12 +45,12 @@ const frameworkAppBase = createBaseApp({
     <% } %>
     getSearchParams,
   },
-  runtimeValue: {
   <% if (tabBarPath) {%>
+  runtimeValue: {
     TabBar,
     tabBarConfig: <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %> ,
+  },
   <% } %>
-  }
 });
 
 <% if (typeof pageConfig !== 'undefined') {%>

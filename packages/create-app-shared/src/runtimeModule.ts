@@ -22,7 +22,7 @@ interface InternalValue {
 
 type RegisterRuntimeAPI = (key: string, api: Function) => void;
 type SetRuntimeValue = (key: string, value: any) => void;
-type GetRuntimeValue = (key: string) => any;
+type GetRuntimeValue = <T extends unknown>(key: string) => T;
 type ApplyRuntimeAPI = <T extends unknown>(key: string, ...args: any) => T;
 type IWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props>)
 type IRenderApp = (page?: IPage | React.ComponentType, PageComponent?: IPageComponent) => React.ComponentType;
