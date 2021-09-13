@@ -23,6 +23,11 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark option.');
   }
 
+  // copy runtime/Layout.tsx to .ice while it can not been analyzed with alias `$ice/Layout`
+  const layoutSource = path.join(__dirname, '../src/runtime/Layout.tsx');
+  const layoutPath = path.join(iceTempPath, 'plugins/icestark/pluginRuntime/runtime/Layout.tsx');
+  applyMethod('addRenderFile', layoutSource, layoutPath);
+
   onGetWebpackConfig((config) => {
     const entries = config.toConfig().entry as Entries;
 
@@ -34,7 +39,6 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
       .plugin('DefinePlugin')
       .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
     // set alias for default layout
-    const layoutPath = vite ? path.join(__dirname, '../src/runtime/Layout.tsx') : path.join(__dirname, 'runtime/Layout');
     config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
     // set alias for icestark
     ['@ice/stark', '@ice/stark-app'].forEach((pkgName) => {
