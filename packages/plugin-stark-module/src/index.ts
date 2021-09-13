@@ -7,20 +7,17 @@ import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
 
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig }, options) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options) => {
   const { command, userConfig, webpack, commandArgs } = context;
   const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
 
-  try {
+  const hasOutputDirRegistered = hasRegistration('outputDir', 'userConfig');
+  if (!hasOutputDirRegistered) {
     registerUserConfig({
       name: 'outputDir',
       defaultValue: 'build',
       validation: 'string',
     });
-  } catch (error) {
-    if(error.message !== 'outputDir already registered in userConfig'){
-      throw new Error(error.message);
-    }
   }
   
   const {
