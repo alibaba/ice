@@ -33,6 +33,7 @@ coverage
 
 # Packages
 packages/*/lib/
+packages/swc/target/
 
 # temp folder .ice
 examples/*/.ice

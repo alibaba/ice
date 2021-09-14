@@ -1,0 +1,29 @@
+{
+  "name": "@builder/swc",
+  "version": "0.1.0",
+  "napi": {
+    "name": "builder-swc",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin"
+      ]
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@node-rs/helper": "^1.1.0"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^1.1.0"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepublishOnly": "napi prepublish -t npm",
+    "version": "napi version"
+  }
+}
