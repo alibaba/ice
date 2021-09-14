@@ -2,7 +2,9 @@ import React from 'react';
 import { runApp, APP_MODE, IAppConfig, logger } from 'ice';
 
 console.log('APP_MODE', APP_MODE);
-logger.log('test');
+logger.info('APP_MODE', APP_MODE);
+logger.debug('test');
+
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',

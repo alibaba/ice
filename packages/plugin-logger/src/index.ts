@@ -14,7 +14,7 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
 
   // add ice exports
   applyMethod('addExport', {
-    source: `./${exportName}`,
+    source: `./plugins/${exportName}`,
     exportName,
     importSource: `$$ice/plugins/${exportName}`,
     exportDefault: exportName,
