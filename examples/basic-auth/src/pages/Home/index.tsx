@@ -63,8 +63,7 @@ const Demo2 = () => {
   );
 };
 
-const HomePage = (props) => {
-  console.log('props', props);
+const HomePage = () => {
   return (
     <div>
       <h2>Home Page</h2>
