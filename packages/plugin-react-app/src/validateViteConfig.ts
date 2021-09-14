@@ -6,7 +6,7 @@ const invalidConfig = {
   mode: false,
   base: 'publicPath',
   define: 'define',
-  'plugins': 'vitePlugins',
+  plugins: 'vitePlugins',
   publicDir: false,
   'resolve.alias': 'alias',
   'css.postcss': 'postcssOptions',
