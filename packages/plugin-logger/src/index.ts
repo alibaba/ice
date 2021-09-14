@@ -12,8 +12,13 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
   const exportName = 'logger';
   applyMethod('addPluginTemplate', path.join(__dirname, `../${exportName}`));
 
-  // add types exports
-  applyMethod('addAppConfigTypes', { source: `../plugins/${exportName}/types`, specifier: '{ ILogger }', exportName: `${exportName}?: ILogger` });
+  // add ice exports
+  applyMethod('addExport', {
+    source: `./${exportName}`,
+    exportName,
+    importSource: `$$ice/plugins/${exportName}`,
+    exportDefault: exportName,
+  });
 
   onGetWebpackConfig((config) => {
     const { userConfig: { dropLogLevel } } = context;
