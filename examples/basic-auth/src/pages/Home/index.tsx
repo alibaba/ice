@@ -19,14 +19,12 @@ const Demo2 = () => {
   const [auth, setAuth]= useAuth();
   function addAuth() {
     setAuth({
-      ...auth,
       deleteRepo: true
     });
   }
 
   function resetAuth() {
     setAuth({
-      ...auth,
       followRepo: true,
       starRepo: true,
     });
@@ -34,7 +32,6 @@ const Demo2 = () => {
 
   function deleteAuth() {
     setAuth({
-      ...auth,
       starRepo: false,
       followRepo: false
     });
@@ -66,7 +63,8 @@ const Demo2 = () => {
   );
 };
 
-const HomePage = () => {
+const HomePage = (props) => {
+  console.log('props', props);
   return (
     <div>
       <h2>Home Page</h2>
