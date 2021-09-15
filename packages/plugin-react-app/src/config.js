@@ -7,6 +7,11 @@ module.exports = function() {
       validation: 'boolean|object'
     },
     {
+      name: 'vitePlugins',
+      defaultValue: [],
+      validation: 'array',
+    },
+    {
       name: 'logging',
       defaultValue: {},
       validation: 'object'
