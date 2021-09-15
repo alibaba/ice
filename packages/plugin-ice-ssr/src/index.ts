@@ -111,6 +111,8 @@ const plugin = async (api): Promise<void> => {
 
     // remove process fallback when target is node
     config.plugins.delete('ProvidePlugin');
+    // no need to generate the loadable-stats.json because it will not be used in anywhere
+    config.plugins.delete('@loadable/webpack-plugin');
 
     async function serverRender(res, req) {
       const htmlTemplate = fse.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
@@ -211,6 +213,12 @@ const plugin = async (api): Promise<void> => {
     const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
     const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
+
+    // @deprecated
+    // In the future, the loadable-stats.json file in the server dir will be removed because it will be used in anywhere.
+    // copy web loadable-stats.json to server directory in order to be compatible
+    const statsFileName = 'loadable-stats.json';
+    fse.copyFileSync(path.join(buildDir, statsFileName), path.join(serverDir, statsFileName));
   });
 };
 
