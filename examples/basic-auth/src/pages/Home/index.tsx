@@ -19,14 +19,12 @@ const Demo2 = () => {
   const [auth, setAuth]= useAuth();
   function addAuth() {
     setAuth({
-      ...auth,
       deleteRepo: true
     });
   }
 
   function resetAuth() {
     setAuth({
-      ...auth,
       followRepo: true,
       starRepo: true,
     });
@@ -34,7 +32,6 @@ const Demo2 = () => {
 
   function deleteAuth() {
     setAuth({
-      ...auth,
       starRepo: false,
       followRepo: false
     });
