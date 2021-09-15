@@ -13,7 +13,8 @@
   "files": [
     "lib",
     "request",
-    "template",
+    "src/types",
+    "src/template",
     "src/runtime.ts"
   ],
   "dependencies": {

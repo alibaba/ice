@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 import { IInterceptors } from './base';
 
 interface ICustomRequest extends AxiosRequestConfig {

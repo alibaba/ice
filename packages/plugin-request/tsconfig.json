@@ -5,7 +5,8 @@
     "rootDir": "src",
     "outDir": "lib",
     "paths": {
-      "$ice/createAxiosInstance": ["./src/_createAxiosInstance"]
+      "$ice/createAxiosInstance": ["./src/_createAxiosInstance"],
+      "$$locked/axios": ["../../node_modules/axios"]
     }
   },
   "exclude": [

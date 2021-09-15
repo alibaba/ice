@@ -1,5 +1,8 @@
-import axios, { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
-import * as utils from 'axios/lib/utils';
+import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
+// @ts-ignore
+import axios from '$$locked/axios';
+// @ts-ignore
+import * as utils from '$$locked/axios/lib/utils';
 import createAxiosInstance from './createAxiosInstance';
 
 interface IRequestConfig extends AxiosRequestConfig {
@@ -68,7 +71,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   };
 });
 
-request.CancelToken = axios.CancelToken;
-request.isCancel = axios.isCancel;
+request.CancelToken = axios.CancelToken as CancelTokenStatic;
+request.isCancel = axios.isCancel as (value: any) => boolean;
 
 export default request as IRequest;

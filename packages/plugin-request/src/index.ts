@@ -3,12 +3,12 @@ import * as fse from 'fs-extra';
 
 export default async function (api) {
   const { getValue, applyMethod, onGetWebpackConfig } = api;
-  const templatePath = path.join(__dirname, '..', 'template');
+  const templatePath = path.join(__dirname, '../src/template');
   const distPath = path.join(getValue('TEMP_PATH'), 'request');
 
   // move template to .ice/request
   await fse.copy(templatePath, distPath);
-  await fse.copy(path.join(__dirname, 'types'), path.join(distPath, 'types'));
+  await fse.copy(path.join(__dirname, '../src/types'), path.join(distPath, 'types'));
 
   // .ice/index.ts:
   // export * from './request';
@@ -33,5 +33,6 @@ export default async function (api) {
   onGetWebpackConfig((config) => {
     // add alias for runtime.ts use $ice/createAxiosInstance
     config.resolve.alias.set('$ice/createAxiosInstance', path.join(distPath, 'createAxiosInstance.ts'));
+    config.resolve.alias.set('$$locked/axios', path.dirname(require.resolve('axios')));
   });
 }
