@@ -30,6 +30,7 @@ export interface InitialContext extends ServerContext {
 
 export type RenderAppConfig = {
   app?: {
+    strict?: boolean;
     rootId?: string;
     mountNode?: HTMLElement;
     onErrorBoundaryHandler?: OnError;
