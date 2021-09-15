@@ -1,6 +1,6 @@
 import * as createTestServer from 'create-test-server';
 import { act, renderHook } from '@testing-library/react-hooks';
-import useRequest from '../template/useRequest';
+import useRequest from '../src/template/useRequest';
 
 const MOCK_DATA = {
   data: {

@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios';
 // @ts-ignore
-import axios from '$$locked/axios';
+import axios from '@@locked/axios';
 
 // https://github.com/axios/axios#request-config
 const DEFAULT_CONFIG = {};

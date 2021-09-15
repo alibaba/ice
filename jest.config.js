@@ -15,6 +15,11 @@ module.exports = {
     '/lib/',
     'create-cli-utils/'
   ],
+  'moduleDirectories': ['node_modules'],
+  'moduleNameMapper': {
+    '^@@locked/axios$': 'axios',
+    '^@@locked/axios/lib/utils$': 'axios/lib/utils'
+  },
   // copy from jest config
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
   'preset': 'ts-jest'

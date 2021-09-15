@@ -1,8 +1,8 @@
 import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
 // @ts-ignore
-import axios from '$$locked/axios';
+import axios from '@@locked/axios';
 // @ts-ignore
-import * as utils from '$$locked/axios/lib/utils';
+import * as utils from '@@locked/axios/lib/utils';
 import createAxiosInstance from './createAxiosInstance';
 
 interface IRequestConfig extends AxiosRequestConfig {

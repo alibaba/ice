@@ -1,5 +1,5 @@
 import * as createTestServer from 'create-test-server';
-import request from '../template/request';
+import request from '../src/template/request';
 
 const MOCK_DATA = {
   data: {

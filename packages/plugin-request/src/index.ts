@@ -33,6 +33,7 @@ export default async function (api) {
   onGetWebpackConfig((config) => {
     // add alias for runtime.ts use $ice/createAxiosInstance
     config.resolve.alias.set('$ice/createAxiosInstance', path.join(distPath, 'createAxiosInstance.ts'));
-    config.resolve.alias.set('$$locked/axios', path.dirname(require.resolve('axios')));
+    config.resolve.alias.set('@@locked/axios$', require.resolve('axios'));
+    config.resolve.alias.set('@@locked/axios/lib/utils', require.resolve('axios/lib/utils'));
   });
 }
