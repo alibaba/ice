@@ -24,7 +24,7 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     // disable splitchunks
     config.optimization.splitChunks({ cacheGroups: {} });
     // set umd
-    const finalOutputDir: string = optionOutputDir ?? userConfigOutputDir?.toString();
+    const finalOutputDir = optionOutputDir ?? userConfigOutputDir as string;
     const output = path.resolve(rootDir, finalOutputDir ?? 'dist');
         
     config.output
