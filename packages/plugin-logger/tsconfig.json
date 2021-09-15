@@ -3,10 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "lib",
-    "paths": {
-      "$ice/logger": ["./src/_logger"]
-    }
+    "outDir": "lib"
   },
   "exclude": [
     "logger/*"
