@@ -37,11 +37,8 @@ export default class Generator {
   }
 
   public render(rerender = false) {
+    // avoid rerendering files
     if (!rerender) {
-      // avoid rerendering files
-
-      // generate .ice/store/index.ts
-      this.renderAppStore();
       // generate .ice/store/types.ts
       this.renderAppStoreTypes();
     }
@@ -56,14 +53,6 @@ export default class Generator {
       // generate .ice/pages/${pageName}/Layout.tsx
       this.renderPageLayout(params);
     });
-  }
-
-  private renderAppStore() {
-    const sourceFilename = 'plugins/store/index';
-    const appStoreTemplatePath = path.join(__dirname, './template/appStore.ts.ejs');
-    const targetPath = path.join(this.tempPath, `${sourceFilename}.ts`);
-
-    this.applyMethod('addRenderFile', appStoreTemplatePath, targetPath);
   }
 
   private renderAppStoreTypes() {
