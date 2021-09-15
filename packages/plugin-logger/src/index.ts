@@ -78,7 +78,7 @@ const plugin: IPlugin = async ({ applyMethod, registerUserConfig, onGetWebpackCo
 
 function getPureFuncs(level: number) {
   return Object.keys(levels)
-    .filter((methodName) => levels[methodName] < level)
+    .filter((methodName) => levels[methodName] <= level)
     .map(methodName => `console.${methodName}`);
 }
 
