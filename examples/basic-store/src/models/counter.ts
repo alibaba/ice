@@ -6,15 +6,18 @@ export const delay = (time) => new Promise<void>((resolve) => setTimeout(() => r
 
 export default {
   state: {
-    count: 0
+    count: 0,
+    countHistory: []
   },
 
   reducers: {
     increment(prevState) {
-      return { count: prevState.count + 1 };
+      prevState.count += 1;
+      prevState.countHistory.push(prevState.count);
     },
     decrement(prevState) {
-      return { count: prevState.count - 1 };
+      prevState.count -= 1;
+      prevState.countHistory.push(prevState.count);
     }
   },
 
