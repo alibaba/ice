@@ -16,6 +16,7 @@
     "version": "ts-node ./scripts/tag-version.ts",
     "version:check": "ts-node ./scripts/version-check.ts",
     "publish": "ts-node ./scripts/publish-package.ts",
+    "publish:stable": "PUBLISH_TAG=stable ts-node ./scripts/publish-package.ts",
     "publish:beta": "ts-node ./scripts/publish-beta-package.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "rollback": "ts-node ./scripts/rollback.ts",
