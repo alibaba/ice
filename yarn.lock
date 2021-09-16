@@ -1475,11 +1475,12 @@
     path-to-regexp "^1.7.0"
     url-parse "^1.1.9"
 
-"@ice/store@2.0.0-0":
-  version "2.0.0-0"
-  resolved "https://registry.yarnpkg.com/@ice/store/-/store-2.0.0-0.tgz#4e02258da0b35f878feec703bbdab8e2200896f3"
-  integrity sha512-YfjWo+XjmFzI4mkULPH569hsABWtjbQmjupAuMxLR86nPz0ahpFx5nORr6hGIjnaTTGkQXl3MQRBOOExuWirww==
+"@ice/store@^2.0.0-3":
+  version "2.0.0-3"
+  resolved "https://registry.nlark.com/@ice/store/download/@ice/store-2.0.0-3.tgz?cache=0&sync_timestamp=1631759758314&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40ice%2Fstore%2Fdownload%2F%40ice%2Fstore-2.0.0-3.tgz#5051fb23676379b001e1d27c94b184620ab90b62"
+  integrity sha1-UFH7I2djebAB4dJ8lLGEYgq5C2I=
   dependencies:
+    immer "^9.0.6"
     lodash.isfunction "^3.0.9"
     react-redux "^7.2.0"
     redux "^4.0.5"
@@ -8933,6 +8934,11 @@ immer@8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
   integrity sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
+
+immer@^9.0.6:
+  version "9.0.6"
+  resolved "https://registry.nlark.com/immer/download/immer-9.0.6.tgz?cache=0&sync_timestamp=1630438107716&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fimmer%2Fdownload%2Fimmer-9.0.6.tgz#7a96bf2674d06c8143e327cbf73539388ddf1a73"
+  integrity sha1-epa/JnTQbIFD4yfL9zU5OI3fGnM=
 
 import-cwd@^2.0.0:
   version "2.1.0"
