@@ -16,6 +16,7 @@
     "!lib/**/*.map"
   ],
   "dependencies": {
+    "@babel/preset-typescript": "^7.15.0",
     "@babel/types": "^7.11.5",
     "@ice/stark": "^2.6.0-2",
     "@ice/stark-app": "^1.2.0",
