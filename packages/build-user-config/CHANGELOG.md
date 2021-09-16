@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.12
+
+- [fix] order of core-js modules
+
 ## 0.3.11
 
 - [fix] only pass modules to css module rule
