@@ -5,9 +5,7 @@
   "napi": {
     "name": "builder-swc",
     "triples": {
-      "additional": [
-        "aarch64-apple-darwin"
-      ]
+      "defaults": true
     }
   },
   "license": "MIT",
@@ -22,9 +20,6 @@
   },
   "scripts": {
     "artifacts": "napi artifacts",
-    "build": "napi build --platform --release",
-    "build:debug": "napi build --platform",
-    "prepublishOnly": "napi prepublish -t npm",
-    "version": "napi version"
+    "build": "napi build --platform --release native"
   }
 }

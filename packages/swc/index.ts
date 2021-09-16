@@ -1,4 +1,5 @@
 import { loadBinding } from '@node-rs/helper';
+import * as path from 'path';
 
 /**
  * __dirname means load native addon from current dir
@@ -8,7 +9,7 @@ import { loadBinding } from '@node-rs/helper';
  * `loadBinding` helper will load `swc.[PLATFORM].node` from `__dirname` first
  * If failed to load addon, it will fallback to load from `swc-[PLATFORM]`
  */
-const bindings = loadBinding(__dirname, 'builder-swc', '@builder/swc');
+const bindings = loadBinding(path.join(__dirname, '../native'), 'builder-swc', '@builder/swc');
 
 async function transform(src, options) {
   const isModule = typeof src !== 'string';
