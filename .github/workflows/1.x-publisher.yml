@@ -1,4 +1,4 @@
-name: Stable Publisher
+name: 1.x Publisher
 
 on:
   push:
