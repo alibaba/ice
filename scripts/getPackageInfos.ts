@@ -28,8 +28,8 @@ function checkBuildSuccess(directory: string, mainFile: string): boolean {
 function checkVersionExists(pkg: string, version: string, distTag: string): Promise<boolean> {
   const tag = distTag || 'latest';
   return getNpmInfo(pkg).then((data) => {
-    if (!data['dist-tags'] || !data['dist-tags'][tag] || !data['dist-tags'].latest) {
-      console.error(`没有 ${tag} 和 latest 版本号`, data);
+    if (!data['dist-tags'] || (!data['dist-tags'][tag] && !data['dist-tags'].latest)) {
+      console.error(`${pkg} 没有 ${tag} 和 latest 版本号`, data);
       return Promise.reject(new Error('Error: 没有版本号信息'));
     }
     // 如果该 tag 未发布，用 latest
