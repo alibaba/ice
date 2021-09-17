@@ -17,10 +17,5 @@
   },
   "engines": {
     "node": ">= 10"
-  },
-  "scripts": {
-    "artifacts": "napi artifacts",
-    "build": "napi build --platform --release ./native",
-    "version": "napi version"
   }
 }

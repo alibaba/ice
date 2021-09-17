@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: 12
           check-latest: true
+        run: npm run setup
       - name: Install
         uses: actions-rs/toolchain@v1
         with:
@@ -58,7 +59,7 @@ jobs:
       - name: Cross build aarch64 setup
         if: ${{ matrix.target == 'aarch64-apple-darwin' }}
         run: |
-          sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*;
+          sudo rm -rf /Library/Developer/CommandLineTools/SDKs/*;
           export CC=$(xcrun -f clang);
           export CXX=$(xcrun -f clang++);
           SYSROOT=$(xcrun --sdk macosx --show-sdk-path);
@@ -66,7 +67,7 @@ jobs:
           rustup target install aarch64-apple-darwin;
       - name: 'Build'
         if: steps.binary-cache.outputs.cache-hit != true
-        run: yarn build --target ${{ matrix.target }}
+        run: yarn build:swc --target ${{ matrix.target }}
         env:
           MACOSX_DEPLOYMENT_TARGET: '10.13'
         working-directory: ./
