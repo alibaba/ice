@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.13
+
+- [fix] SourceMapDevtoolPlugin will block the builder when chunk name includes `:`
+
 ## 0.3.12
 
 - [fix] order of core-js modules
