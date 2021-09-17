@@ -15,6 +15,7 @@ interface ITagPackageInfo extends IPackageInfo {
   distTagVersion: string;
 }
 
+const publishTag = process.env.PUBLISH_TAG || '';
 function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo {
   const { name, localVersion } = packageInfo;
 
@@ -79,7 +80,7 @@ function publish(pkg: string, distTagVersion: string, directory: string, tag: st
 
 // Entry
 console.log(`[PUBLISH ${PUBLISH_TYPE.toUpperCase()}] Start:`);
-getPackageInfos().then((packageInfos: IPackageInfo[]) => {
+getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
 
   const shouldPublishPackages = packageInfos
     .filter(packageInfo => packageInfo.shouldPublish)
