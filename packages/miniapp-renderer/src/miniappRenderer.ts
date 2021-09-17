@@ -46,7 +46,6 @@ function miniappRenderer(
           history,
           location: history.location,
           ...pageProps,
-          source,
           Page: PageComponent
         }), rootEl);
         document.body.appendChild(rootEl);
