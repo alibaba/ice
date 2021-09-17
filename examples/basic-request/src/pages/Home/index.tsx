@@ -39,7 +39,9 @@ const BuiltInRequestDemo1 = () => {
       <button type='button' onClick={fetchUser1}>直接调用 request</button>
       <button type='button' onClick={() => {
         // use slow network for test
-        source && source.cancel('主动取消');
+        if (source) {
+          source.cancel('主动取消');
+        }
       }}>取消调用</button>
       <button type='button' onClick={fetchUser2}>调用 request + withFullResponse</button>
       <button type='button' onClick={fetchUser3}>直接调用 useRequest</button>
@@ -81,13 +83,13 @@ const CustomRequestDemo = () => {
   const { data, loading, error, request: fetchRepo } = useRequest(service.getRepo);
   console.log('自定义请求进行调用:', { data, loading, error });
   useEffect(() => {
-    fetchRepo();
+    fetchRepo(1);
   }, [fetchRepo]);
 
   return (
     <div>
       <h4>自定义请求演示</h4>
-      <button type='button' onClick={fetchRepo}>自定义请求进行调用</button>
+      <button type='button' onClick={() => fetchRepo(2)}>自定义请求进行调用</button>
       {
         loading ?
           <div>loading...</div> :

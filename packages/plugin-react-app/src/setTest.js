@@ -1,4 +1,4 @@
-const { getJestConfig } = require('build-scripts-config');
+const getJestConfig = require('@builder/jest-config').default;
 const logWebpackConfig = require('./utils/logWebpackConfig');
 
 module.exports = (api) => {

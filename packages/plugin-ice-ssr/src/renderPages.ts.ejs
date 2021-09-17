@@ -1,0 +1,66 @@
+import '@/app';
+import { join } from 'path';
+import routes from '<%- routesPath %>/routes';
+import loadable from '@loadable/component';
+import * as pathToRegexp from 'path-to-regexp';
+
+const { renderStatic } = require('./server');
+
+export default async function ssgRender(options) {
+  const { htmlTemplate } = options;
+  const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
+  const buildConfig = { loadableStatsPath };
+  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+  const pagesData = [];
+  const flatRoutes = await getFlatRoutes(routes || []);
+
+  for (const flatRoute of flatRoutes) {
+    const { path = '', getInitialProps, ...rest } = flatRoute;
+
+    const keys = [];
+    pathToRegexp(path, keys);
+    if (keys.length > 0) {
+      // don't render and export static page when the route is dynamic, e.g.: /news/:id, /*
+      continue;
+    }
+
+    const initialContext = { pathname: path, location: { pathname: path } };
+    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext });
+
+    delete rest.component;
+    delete rest.routeWrappers;
+    pagesData.push({ html, path, ...rest });
+  }
+
+  return pagesData;
+};
+
+async function getFlatRoutes(routes, parentPath = '') {
+  return await routes.reduce(async (asyncPrev, route) => {
+    let prev = await asyncPrev;
+    const { children, path: currentPath, redirect } = route;
+    if (children) {
+      prev = prev.concat(await getFlatRoutes(children, currentPath));
+    } else if (!redirect) {
+      route.path = join(parentPath, currentPath);
+      if (route?.component?.__LOADABLE__) {
+        route.component = loadable(route.component.dynamicImport);
+      }
+      prev.push(route);
+      const getStaticPaths = route.getStaticPaths || route.component.getStaticPaths;
+      if (typeof getStaticPaths === 'function') {
+        const staticPaths = await getStaticPaths();
+        if (Array.isArray(staticPaths)) {
+          // add static paths to render
+          staticPaths.forEach((staticPath) => {
+            prev.push({
+              ...route,
+              path: staticPath
+            })
+          })
+        }
+      }
+    }
+    return prev;
+  }, Promise.resolve([]));
+}

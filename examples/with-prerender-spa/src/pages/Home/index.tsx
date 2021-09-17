@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'ice';
 
-const Home = () => {
+const Home = ({ data = [] }) => {
   return (
     <>
       <div id="menu">
@@ -14,8 +14,11 @@ const Home = () => {
             <Link to="/Dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about/1">About</Link>
           </li>
+          {
+            data.map((item: number) => (<li key={item}><strong>{item}</strong></li>))
+          }
         </ul>
       </div>
       <div>Home</div>

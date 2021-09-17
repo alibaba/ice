@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- [feat] support style import in mode vite
+
 ## 0.1.1
 
 - [feat] compatile with less-loader options

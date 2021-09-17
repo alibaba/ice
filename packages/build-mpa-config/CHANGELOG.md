@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0
+
+- refactor: mpa runtime for each entry
+
 ## 3.2.7
 
 - fix: tabBar window path wrong

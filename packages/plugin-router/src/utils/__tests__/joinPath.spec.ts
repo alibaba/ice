@@ -1,4 +1,4 @@
-import { pathToRegexp } from 'path-to-regexp';
+import * as pathToRegexp from 'path-to-regexp';
 import joinPath from '../joinPath';
 
 const joinTests: [string[], string][] = [
@@ -54,8 +54,6 @@ const regexpPathTests: [string[], string, string[] | null][]  = [
   [['/login', '/:path(abc|xyz)*'], '/login/abc/abc', ['/login/abc/abc', 'abc/abc']],
   [['/login', '/:path(abc|xyz)*'], '/login/xxx', null],
   [['/login', '/(.*)'], '/login/xxx', ['/login/xxx', 'xxx']],
-  [['/abc', '/:test((?!login)[^/]+)'], '/abc/xxx', ['/abc/xxx', 'xxx']],
-  [['/abc', '/:test((?!login)[^/]+)'], '/abc/login', null],
   [['/abc', '/user(s)?/:user'], '/abc/user/123', ['/abc/user/123', undefined, '123']],
   [['/abc', '/user(s)?/:user'], '/abc/users/123', ['/abc/users/123', 's', '123']],
 ];

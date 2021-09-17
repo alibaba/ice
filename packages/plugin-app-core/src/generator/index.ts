@@ -8,19 +8,21 @@ import generateExports from '../utils/generateExports';
 import checkExportData from '../utils/checkExportData';
 import removeExportData from '../utils/removeExportData';
 import getRuntimeModules from '../utils/getRuntimeModules';
+import formatPath from '../utils/formatPath';
 import { IExportData } from '../types/base';
 import { getExportApiKeys, EXPORT_API_MPA } from '../constant';
 
-interface IRenderData {
-  [key: string]: any;
-}
+type IRenderDataFunction = (renderDataFunction: IRenderData) => IRenderData;
+type IRenderData = Record<string, unknown>;
+
+type IExtraData = IRenderData | IRenderDataFunction;
 
 interface IRegistration {
   [key: string]: any[];
 }
 
 interface IRenderFile {
-  (templatePath: string, targetDir: string, extraData?: IRenderData): void;
+  (templatePath: string, targetDir: string, extraData?: IExtraData): void;
 }
 
 interface IRenderDataRegistration {
@@ -28,13 +30,13 @@ interface IRenderDataRegistration {
 }
 
 interface ITemplateOptions {
-  templateDir: string;
+  template: string;
   targetDir: string;
 }
 
-type IRenderTempalte = [string, string, IRenderData];
+type IRenderTemplate = [string, string, IExtraData];
 
-const RENDER_WAIT = 500;
+const RENDER_WAIT = 200;
 
 export default class Generator {
 
@@ -48,7 +50,7 @@ export default class Generator {
 
   private rootDir: string;
 
-  private renderTemplates: IRenderTempalte[];
+  private renderTemplates: IRenderTemplate[];
 
   private renderDataRegistration: IRenderDataRegistration[];
 
@@ -60,9 +62,7 @@ export default class Generator {
 
   private plugins: any[];
 
-  private debugRuntime: boolean;
-
-  constructor({ rootDir, targetDir, defaultData, log, plugins, debugRuntime }) {
+  constructor({ rootDir, targetDir, defaultData, log, plugins }) {
     this.rootDir = rootDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
@@ -73,7 +73,6 @@ export default class Generator {
     this.renderTemplates = [];
     this.renderDataRegistration = [];
     this.plugins = plugins;
-    this.debugRuntime = debugRuntime;
     this.disableRuntimePlugins = [];
   }
 
@@ -112,7 +111,7 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   }
 
-  private getExportStr(registerKey, dataKeys) {
+  private getExportStr(registerKey: string, dataKeys: string[]) {
     const exportList = this.contentRegistration[registerKey] || [];
     const { importStr, exportStr } = generateExports(exportList);
     const [importStrKey, exportStrKey] = dataKeys;
@@ -124,7 +123,7 @@ export default class Generator {
 
   public parseRenderData() {
     const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
-    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
+    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir, absolute: true });
     let exportsData = {};
     EXPORT_API_MPA.forEach(item => {
       item.name.forEach(key => {
@@ -136,7 +135,7 @@ export default class Generator {
       ...this.renderData,
       ...exportsData,
       staticConfig: staticConfig.length && staticConfig[0],
-      globalStyle: globalStyles.length && globalStyles[0],
+      globalStyle: globalStyles.length && formatPath(path.relative(path.join(this.targetDir, 'core'), globalStyles[0])),
       entryImportsBefore: this.generateImportStr('addEntryImports_before'),
       entryImportsAfter: this.generateImportStr('addEntryImports_after'),
       entryCodeBefore: this.contentRegistration.addEntryCode_before || '',
@@ -144,7 +143,7 @@ export default class Generator {
     };
   }
 
-  public generateImportStr(apiName) {
+  public generateImportStr(apiName: string) {
     const imports = this.contentRegistration[apiName] || [];
     return imports.map(({ source, specifier }) => {
       return specifier ?
@@ -165,16 +164,18 @@ export default class Generator {
       return previousValue;
     }, this.parseRenderData());
 
-    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, this.debugRuntime);
+    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, !!this.renderData.hasJsxRuntime);
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
     });
   };
 
-  public debounceRender = debounce(this.render, RENDER_WAIT);
+  public debounceRender = debounce(() => {
+    this.render();
+  }, RENDER_WAIT);
 
-  public addRenderFile = (templatePath: string, targetPath: string, extraData: IRenderData = {}) => {
+  public addRenderFile = (templatePath: string, targetPath: string, extraData: IExtraData = {}) => {
     // check target path if it is already been registed
     const renderIndex = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
     if (renderIndex > -1) {
@@ -192,11 +193,14 @@ export default class Generator {
     }
   }
 
-  public addTemplateDir = (template: string|ITemplateOptions, extraData: IRenderData = {}) => {
-    const { templateDir, targetDir } = typeof template === 'string' ? { templateDir: template, targetDir: ''} : template;
-    const templates = globby.sync(['**/*'], { cwd: templateDir });
+  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IExtraData = {}) => {
+    const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: ''} : templateOptions;
+    const templates = !path.extname(template) ? globby.sync(['**/*'], { cwd: template }) : [template];
     templates.forEach((templateFile) => {
-      this.addRenderFile(path.join(templateDir, templateFile), path.join(this.targetDir, targetDir, templateFile), extraData);
+      const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
+      const targetPath = path.join(this.targetDir, targetDir, path.isAbsolute(templateFile) ? path.basename(templateFile) : templateFile);
+
+      this.addRenderFile(templatePath, targetPath, extraData);
     });
     if (this.rerender) {
       this.debounceRender();
@@ -214,7 +218,16 @@ export default class Generator {
     const renderExt = '.ejs';
     if (path.extname(templatePath) === '.ejs') {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
-      let content = ejs.render(templateContent, { ...this.renderData, ...extraData });
+      let renderData = this.renderData;
+      if (typeof extraData === 'function') {
+        renderData = extraData(this.renderData);
+      } else {
+        renderData = {
+          ...renderData,
+          ...extraData,
+        };
+      }
+      let content = ejs.render(templateContent, renderData);
       try {
         content = prettier.format(content, {
           parser: 'typescript',

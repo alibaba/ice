@@ -14,7 +14,8 @@ const commonRules = {
   "react/react-in-jsx-scope": 0,
   "jsx-a11y/html-has-lang": 0,
   "react/static-property-placement": 0,
-  "no-multiple-empty-lines": 1
+  "no-multiple-empty-lines": 1,
+  "react/jsx-no-bind": 0
 };
 
 const jsRules = deepmerge(eslint, {
@@ -36,6 +37,7 @@ const tsRules = deepmerge(tslint, {
     "no-use-before-define": 0,
     "no-unused-vars": 0,
     "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/ban-ts-ignore": 0
   },
 });
 

@@ -1,26 +1,23 @@
-import { isMiniAppPlatform } from './env';
-import { SHOW, HIDE, MINIAPP_PAGE_LIFECYCLE } from './constants';
+import * as React from 'react';
+import { SHOW, HIDE } from './constants';
 import router from './router';
+import type { UseEffect, Listener } from './types';
 
 // visibleListeners => { [pathname]: { show: [], hide: [] } }
 const visibleListeners = {};
 
-function addPageLifeCycle(cycle, callback) {
-  if (isMiniAppPlatform) {
-    document.addEventListener(MINIAPP_PAGE_LIFECYCLE[cycle], callback);
-  } else {
-    const pathname = router.current.pathname;
-    if (!visibleListeners[pathname]) {
-      visibleListeners[pathname] = {
-        [SHOW]: [],
-        [HIDE]: []
-      };
-    }
-    visibleListeners[pathname][cycle].push(callback);
+function addPageLifeCycle(cycle: string, callback: Listener) {
+  const pathname = router.current.pathname;
+  if (!visibleListeners[pathname]) {
+    visibleListeners[pathname] = {
+      [SHOW]: [],
+      [HIDE]: []
+    };
   }
+  visibleListeners[pathname][cycle].push(callback);
 }
 
-export function emit(cycle: any, pathname?: string, ...args) {
+export function emit(cycle: string, pathname?: string, ...args: any) {
   // Ensure queue exists
   if (visibleListeners[pathname] && visibleListeners[pathname][cycle]) {
     for (let i = 0, l = visibleListeners[pathname][cycle].length; i < l; i++) {
@@ -29,8 +26,8 @@ export function emit(cycle: any, pathname?: string, ...args) {
   }
 }
 
-function createPageLifeCycle(useEffect) {
-  return (cycle, callback) => {
+function createPageLifeCycle(useEffect: UseEffect) {
+  return (cycle: string, callback: Listener) => {
     useEffect(() => {
       // When component did mount, it will trigger usePageShow callback
       if (cycle === SHOW) {
@@ -53,15 +50,19 @@ function createPageLifeCycle(useEffect) {
   };
 }
 
-export function withPageLifeCycle(Component) {
+export function withPageLifeCycle<P>(Component: React.ComponentClass<P>) {
   class Wrapper extends Component {
-    constructor(...args) {
-      super(...args);
+    private onShow: () => void;
+
+    private onHide: () => void;
+
+    private pathname: string;
+
+    constructor(props: P, context?: any) {
+      super(props, context);
       if (this.onShow) {
-        if (!isMiniAppPlatform) {
-          // In MiniApp platform show event will trigger after addPageLifeCycle, so it needn't be execute in constructor
-          this.onShow();
-        }
+        // trigger onShow after addPageLifeCycle
+        this.onShow();
         addPageLifeCycle(SHOW, this.onShow.bind(this));
       }
       if (this.onHide) {
@@ -71,22 +72,22 @@ export function withPageLifeCycle(Component) {
       this.pathname = router.current.pathname;
     }
 
-    private componentWillUnmount() {
+    public componentWillUnmount() {
       // eslint-disable-next-line no-unused-expressions
       super.componentWillUnmount?.();
       visibleListeners[this.pathname] = null;
     }
   }
   Wrapper.displayName = `withPageLifeCycle(${  Component.displayName || Component.name  })`;
-  return Wrapper as any;
+  return Wrapper as React.ComponentClass;
 }
 
 export function createUsePageLifeCycle({ useEffect }) {
-  const usePageShow = (callback) => {
+  const usePageShow = (callback: Listener) => {
     createPageLifeCycle(useEffect)(SHOW, callback);
   };
 
-  const usePageHide = (callback) => {
+  const usePageHide = (callback: Listener) => {
     createPageLifeCycle(useEffect)(HIDE, callback);
   };
 

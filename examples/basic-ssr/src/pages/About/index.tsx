@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, logger, Head } from 'ice';
+import { Link, Head } from 'ice';
 
 const About = (props) => {
-  logger.info('About props', props);
+  console.info('About props', props);
   return (
     <>
       <Head>
@@ -16,10 +16,6 @@ const About = (props) => {
       <Link to="/">home</Link>
     </>
   );
-};
-
-About.getInitialProps = async () => {
-  return { title: 'About Page...' };
 };
 
 export default About;

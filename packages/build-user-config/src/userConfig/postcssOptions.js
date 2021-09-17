@@ -41,7 +41,7 @@ module.exports = (config, postcssOptions) => {
         if (options) {
           pluginOptions = options;
         }
-        return typeof name === 'string' && name === pluginName;
+        return typeof name === 'string' && name.indexOf(pluginName) > -1;
       });
       const options = postcssOptions.plugins[pluginName];
       if (targetIndex > -1) {
@@ -73,9 +73,11 @@ module.exports = (config, postcssOptions) => {
           // merge postcss-loader options
           return {
             ...restLoaderOptions,
-            ...postcssOptions,
-            ...finalPostcssOptions,
-            plugins: postcssPlugins,
+            postcssOptions: {
+              ...postcssOptions,
+              ...finalPostcssOptions,
+              plugins: postcssPlugins,
+            }
           };
         });
       }

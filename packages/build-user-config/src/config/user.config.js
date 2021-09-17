@@ -1,5 +1,7 @@
 const { validation } = require('@builder/app-helpers');
 
+const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
+
 module.exports = [
   {
     name: 'alias',
@@ -37,22 +39,32 @@ module.exports = [
     defaultValue: [ 'node_modules' ]
   },
   {
+    name: 'watchOptions',
+    validation: 'object',
+    defaultValue: {
+      ignored: watchIgnoredRegexp,
+    }
+  },
+  {
     name: 'devServer',
     validation: 'object',
     defaultValue: {
-      disableHostCheck: true,
-      compress: true,
-      transportMode: 'ws',
-      logLevel: 'silent',
-      clientLogLevel: 'none',
       hot: true,
-      publicPath: '/',
-      quiet: false,
-      watchOptions: {
-        ignored: /node_modules/,
-        aggregateTimeout: 600,
+      compress: true,
+      webSocketServer: 'ws',
+      devMiddleware: {
+        publicPath: '/',
       },
-      before(app) {
+      static: {
+        watch: {
+          ignored: watchIgnoredRegexp,
+        }
+      },
+      client: {
+        overlay: false,
+        logging: 'info',
+      },
+      onBeforeSetupMiddleware({ app }) {
         app.use((req, res, next) => {
           // set cros for all served files
           res.set('Access-Control-Allow-Origin', '*');
@@ -84,7 +96,8 @@ module.exports = [
   },
   {
     name: 'minify',
-    validation: 'boolean'
+    validation: 'boolean|string|object',
+    defaultValue: 'terser',
   },
   {
     name: 'outputAssetsPath',
@@ -108,9 +121,7 @@ module.exports = [
   },
   {
     name: 'browserslist',
-    validation: (val) => {
-      return validation('browserslist', val, 'string|object');
-    },
+    validation: 'array|string|object',
     defaultValue: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4'
   },
   {
@@ -142,11 +153,6 @@ module.exports = [
     validation: (val) => {
       return validation('sourceMap', val, 'string|boolean');
     },
-  },
-  {
-    name: 'terserOptions',
-    validation: 'object',
-    defaultValue: {}
   },
   {
     name: 'cssLoaderOptions',
@@ -195,16 +201,6 @@ module.exports = [
     defaultValue: false
   },
   {
-    name: 'dll',
-    validation: 'boolean',
-    defaultValue: false
-  },
-  {
-    name: 'dllEntry',
-    validation: 'object',
-    defaultValue: {}
-  },
-  {
     name: 'polyfill',
     validation: (val) => {
       return validation('polyfill', val, 'string|boolean|object');
@@ -233,8 +229,9 @@ module.exports = [
     defaultValue: true,
   },
   {
-    name: 'esbuild',
-    validation: 'object'
+    name: 'swc',
+    defaultValue: false,
+    validation: 'boolean|object',
   },
   {
     name: 'experiments',

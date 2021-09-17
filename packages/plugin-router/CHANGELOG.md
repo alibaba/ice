@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] centralized router configuration
+- [feat] migrate plugin api and runtime api
+- [refactor]  modify `getRoutes` API param from `tempDir` to `tempPath`
+
 ## 1.9.7
 
 - [chore] typo `onErrorBoundaryHandler`

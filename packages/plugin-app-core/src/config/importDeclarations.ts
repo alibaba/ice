@@ -1,10 +1,25 @@
-const importDeclarations: any = {};
+export interface SourceData {
+  filename: string;
+  value: string;
+  type?: 'normal' | 'default';
+}
+export interface ImportDeclarations {
+  value: string;
+  type?: 'normal' | 'default';
+  alias?: string;
+  multipleSource?: SourceData[];
+}
+
+const importDeclarations: Record<string, ImportDeclarations> = {};
 const defaultDeclarations = {
-  // default export in app
-  '$$framework/runApp': [
-    'runApp', 'createApp',
+  '$$framework/core/runApp': [
+    'runApp',
+  ],
+  '$$framework/core/routerAPI': [
     // router api
-    'withRouter', 'history', 'getHistory', 'getSearchParams', 'useSearchParams', 'withSearchParams', 'getInitialData',
+    'withRouter', 'history', 'getHistory', 'setHistory',
+  ],
+  '$$framework/core/publicAPI': [
     // LifeCycles api
     'usePageShow', 'usePageHide', 'withPageLifeCycle',
     // events api
@@ -12,9 +27,11 @@ const defaultDeclarations = {
     'addNativeEventListener',
     'removeNativeEventListener',
     'ErrorBoundary',
+    'getInitialData',
+    'getSearchParams',
   ],
   // export lazy
-  '$$ice/lazy': ['lazy'],
+  '$$ice/core/lazy': ['lazy'],
   // export types
   '$$framework/types': ['IApp', 'IAppConfig'],
 };

@@ -1,6 +1,7 @@
 const { formatPath } = require('@builder/app-helpers');
 
-module.exports = (config, babelPresets) => {
+module.exports = (config, babelPresets, { userConfig }) => {
+  if (userConfig.swc) return;
   ['jsx', 'tsx'].forEach((rule) => {
     config.module
       .rule(rule)
