@@ -1,9 +1,9 @@
 on:
   push:
     branches:
-      - 'swc'
+      - '^swc'
 
-name: Build builder-swc native binaries
+name: Build @builder/swc native binaries
 
 jobs:
   build-native:
