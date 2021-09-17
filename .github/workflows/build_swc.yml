@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 12
           check-latest: true
-        run: npm run setup
+      - run: npm run setup
       - name: Install
         uses: actions-rs/toolchain@v1
         with:
