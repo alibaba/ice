@@ -13,6 +13,7 @@
     "setup:skip": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && npm run build",
     "watch": "ts-node ./scripts/watch.ts",
     "build": "ts-node ./scripts/build.ts",
+    "build:swc": "rm -rf packages/swc/native/** && napi build --platform --release --cargo-cwd packages/swc packages/swc/native",
     "version": "ts-node ./scripts/tag-version.ts",
     "version:check": "ts-node ./scripts/version-check.ts",
     "publish": "ts-node ./scripts/publish-package.ts",
@@ -66,7 +67,8 @@
     "simple-git": "^1.132.0",
     "ts-jest": "^26.0.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "@napi-rs/cli": "^1.1.0"
   },
   "dependencies": {
     "core-js": "^3.6.4"
@@ -76,5 +78,8 @@
     "@typescript-eslint/parser": "^4.0.0",
     "postcss": "^8.3.5",
     "eslint-plugin-react": "7.24.0"
+  },
+  "napi": {
+    "name": "builder-swc"
   }
 }

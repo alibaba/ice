@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "swc.win32-x64-msvc.node",
+  "main": "builder-swc.win32-x64-msvc.node",
   "files": [
-    "swc.win32-x64-msvc.node"
+    "builder-swc.win32-x64-msvc.node"
   ],
   "license": "MIT",
   "engines": {

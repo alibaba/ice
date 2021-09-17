@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "swc.linux-x64-gnu.node",
+  "main": "builder-swc.linux-x64-gnu.node",
   "files": [
-    "swc.linux-x64-gnu.node"
+    "builder-swc.linux-x64-gnu.node"
   ],
   "license": "MIT",
   "engines": {

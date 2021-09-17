@@ -5,6 +5,9 @@
   "napi": {
     "name": "builder-swc",
     "triples": {
+      "additional": [
+        "aarch64-apple-darwin"
+      ],
       "defaults": true
     }
   },
@@ -12,14 +15,12 @@
   "dependencies": {
     "@node-rs/helper": "^1.1.0"
   },
-  "devDependencies": {
-    "@napi-rs/cli": "^1.1.0"
-  },
   "engines": {
     "node": ">= 10"
   },
   "scripts": {
     "artifacts": "napi artifacts",
-    "build": "napi build --platform --release native"
+    "build": "napi build --platform --release ./native",
+    "version": "napi version"
   }
 }
