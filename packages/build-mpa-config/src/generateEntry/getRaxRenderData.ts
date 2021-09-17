@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { formatPath } from '@builder/app-helpers';
 
 export default (api, renderData, { entryName, pageConfig }) => {
   const { context: { userConfig: { web: webConfig = {} } }, getValue } = api;
@@ -20,7 +21,7 @@ export default (api, renderData, { entryName, pageConfig }) => {
   return {
     ...renderData,
     hydrate: Boolean(webConfig.hydrate || webConfig.ssr || webConfig.snapshot || webConfig.staticExport),
-    tabBarPath,
+    tabBarPath: formatPath(tabBarPath),
     showTabBar,
     tabBarConfig: JSON.stringify(tabBarConfig),
     pageConfig: JSON.stringify(pageConfig),

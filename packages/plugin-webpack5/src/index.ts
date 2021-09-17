@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import * as TerserPlugin from 'terser-webpack-plugin';
 import { IPlugin, Json } from '@alib/build-scripts';
 import analyzeNext from './analyzeNext';
 import filterPackages, { IFilterOptions, IRule } from './filterPackages';
@@ -131,6 +132,21 @@ const plugin: IPlugin = async (api, options = {}) => {
         cacheDirectory: path.join(context.rootDir, 'node_modules', '.cache', 'webpack'),
       }
     };
+
+    // tnpm / cnpm 安装时，webpack 5 的持久缓存无法生成，长时间将导致 OOM
+    // 原因：[managedPaths](https://webpack.js.org/configuration/other-options/#managedpaths) 在 tnpm / cnpm 安装的情况下失效，导致持久缓存在处理 node_modules
+    // 通过指定 [immutablePaths](https://webpack.js.org/configuration/other-options/#immutablepaths) 进行兼容
+    // 依赖路径中同时包含包名和版本号即可满足 immutablePaths 的使用
+
+    // 通过安装后的 package.json 中是否包含 __npminstall_done 字段来判断是否为 tnpm / cnpm 安装模式
+    // eslint-disable-next-line global-require
+    if (require('../package.json').__npminstall_done) {
+      const nodeModulesPath = path.join(context.rootDir, 'node_modules');
+      (cacheConfig as any).snapshot = {
+        immutablePaths: [nodeModulesPath],
+      };
+    }
+
     config.merge({
       ...cacheConfig,
       ...(cacheLog ? {
@@ -139,6 +155,14 @@ const plugin: IPlugin = async (api, options = {}) => {
         }
       }: {}),
     });
+
+    // compatibility cache feature with webpack@5 of webpack-terser-plugin
+    if((config as any).optimization.minimizers.has('TerserPlugin')) {
+      const pluginConfig = { ...config.optimization.minimizer('TerserPlugin').get('args')[0] };
+      (config as any).optimization.minimizers.delete('TerserPlugin');
+      config.optimization.minimizer('TerserPlugin')
+        .use(TerserPlugin, [pluginConfig]);
+    }
   });
 };
 

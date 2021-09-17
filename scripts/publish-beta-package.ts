@@ -13,6 +13,8 @@ interface IBetaPackageInfo extends IPackageInfo {
   betaVersion: string;
 }
 
+const publishTag = process.env.PUBLISH_TAG || '';
+
 function getBetaVersionInfo(packageInfo: IPackageInfo): IBetaPackageInfo {
   const { name, localVersion } = packageInfo;
 
@@ -78,7 +80,7 @@ function publish(pkg: string, betaVersion: string, directory: string): void {
 
 // Entry
 console.log('[PUBLISH BETA] Start:');
-getPackageInfos().then((packageInfos: IPackageInfo[]) => {
+getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
 
   const shouldPublishPackages = packageInfos
     .filter(packageInfo => packageInfo.shouldPublish)

@@ -1,6 +1,6 @@
 # plugin-icestark
 
-> Easy use `rematch` in icejs.
+> Easy use [`icestark`](https://github.com/ice-lab/icestark) in icejs.
 
 ## Usage
 

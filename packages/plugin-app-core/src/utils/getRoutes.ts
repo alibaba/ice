@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import getSourceFile from './getSourceFile';
 
 interface IParams {
   rootDir: string;
@@ -29,7 +30,7 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa, srcDir }:
 
   const routesPath = configPath
     ? path.join(rootDir, configPath)
-    : path.join(rootDir, srcDir, `/routes.${projectType}`);
+    : getSourceFile(`${srcDir}/routes`, rootDir);
 
   // 配置式路由
   const configPathExists = fse.existsSync(routesPath);
