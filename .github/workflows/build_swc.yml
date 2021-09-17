@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: packages/swc/native/**
-          key: builder-swc-nightly-2021-08-12-${{ matrix.target }}-${{ hashFiles('.github/workflows/build_native.yml', 'packages/swc/**') }}
+          key: builder-swc-nightly-2021-08-12-${{ matrix.target }}-${{ hashFiles('.github/workflows/build_swc.yml', 'packages/swc/**') }}
       - name: Cross build aarch64 setup
         if: ${{ matrix.target == 'aarch64-apple-darwin' }}
         run: |
