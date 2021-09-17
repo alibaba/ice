@@ -39,6 +39,9 @@ module.exports = function (appJSON) {
 
     if (route.pageSource) {
       route.pageSource = pageSource;
+    } else if (mpa) {
+      // Compat miniapp subpackages
+      route.source = pageSource.replace(formatPath(`${this.rootContext}/src/`), '');
     }
 
     // First level function to support hooks will autorun function type state,

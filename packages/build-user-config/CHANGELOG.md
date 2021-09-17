@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.14
+
+- [fix] miniapp subspackages source error
+
 ## 0.3.13
 
 - [fix] SourceMapDevtoolPlugin will block the builder when chunk name includes `:`
