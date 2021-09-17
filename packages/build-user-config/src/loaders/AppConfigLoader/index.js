@@ -34,14 +34,18 @@ module.exports = function (appJSON) {
       // Current route title: route.window.title
       routeTitle = route.window.title;
     }
-    const pageSource = (route.pageSource || join(dirname(this.resourcePath), route.source));
-    route.source = formatPath(pageSource).replace(`${formatPath(this.rootContext)}/src/`, '');
+
+    const pageSource = formatPath(route.pageSource || join(dirname(this.resourcePath), route.source));
+
+    if (route.pageSource) {
+      route.pageSource = pageSource;
+    }
 
     // First level function to support hooks will autorun function type state,
     // Second level function to support rax-use-router rule autorun function type component.
     const dynamicImportComponent =
       `(routeProps) =>
-      import(/* webpackChunkName: "${getRouteName(route)}.chunk" */ '${formatPath(pageSource)}')
+      import(/* webpackChunkName: "${getRouteName(route)}.chunk" */ '${pageSource}')
       .then((mod) => () => {
         const reference = mod.default;
         function Component(props) {
@@ -56,7 +60,7 @@ module.exports = function (appJSON) {
 
     const importComponentDirectly = `() => {
       function Component(props) {
-        return createElement(require('${formatPath(pageSource)}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
+        return createElement(require('${pageSource}').default, { pageConfig: ${JSON.stringify(route)}, ...props })
       }
       return Component;
     }`;

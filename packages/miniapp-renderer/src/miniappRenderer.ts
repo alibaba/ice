@@ -8,8 +8,11 @@ function miniappRenderer(
   const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
-  const { rootId = 'root', ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = app;
+  const { rootId = 'root', ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = app;
 
+  if (onErrorBoundaryHander) {
+    console.error('Please use onErrorBoundaryHandler instead of onErrorBoundaryHander');
+  }
   emitLifeCycles();
   class App extends Component {
     public render() {
@@ -26,15 +29,15 @@ function miniappRenderer(
       if (errorBoundary) {
         appInstance = createElement(ErrorBoundary, {
           Fallback: ErrorBoundaryFallback,
-          onError: onErrorBoundaryHander
+          onError: onErrorBoundaryHander || onErrorBoundaryHandler,
         }, appInstance);
       }
       return appInstance;
     }
   }
-  const pagesRenderInfo = staticConfig.routes.map(({ source, component }: any) => {
+  const pagesRenderInfo = staticConfig.routes.map(({ source, component, pageSource }: any) => {
     return {
-      path: source,
+      path: pageSource || source,
       render() {
         const PageComponent = component()();
         const rootEl = document.createElement('div');

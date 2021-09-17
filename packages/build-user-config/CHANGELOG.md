@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.10
+
+- [fix] SourceMapDevtoolPlugin will block the builder when chunk name includes `:`
+
 ## 0.3.9
 
 - [fix] polyfill loader include rules in windows
