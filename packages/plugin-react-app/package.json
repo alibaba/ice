@@ -35,6 +35,7 @@
     "react-dev-utils": "^11.0.0",
     "react-refresh": "^0.10.0",
     "react-router-dom": "^5.1.2",
+    "react-router": "^5.2.1",
     "vite-plugin-component-style": "^1.0.0",
     "webpack-plugin-import": "^0.2.6"
   },
