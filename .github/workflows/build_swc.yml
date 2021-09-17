@@ -1,6 +1,9 @@
 name: Build @builder/swc binaries
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - swc
 
 jobs:
   build-native:
