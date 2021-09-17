@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/runtime" },
     { "path": "packages/plugin-fusion" },
     { "path": "packages/build-app-templates" },
     { "path": "packages/build-app-helpers" },
