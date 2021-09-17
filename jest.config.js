@@ -15,9 +15,6 @@ module.exports = {
   'coveragePathIgnorePatterns': [
     '<rootDir>/node_modules/'
   ],
-  'transform': {
-    '^.+\\.jsx?$': 'babel-jest'
-  },
   'roots': [
     '<rootDir>/packages',
     '<rootDir>/test',
