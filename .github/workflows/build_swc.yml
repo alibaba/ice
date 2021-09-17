@@ -3,7 +3,7 @@ name: Build build-swc binaries
 on:
   push:
     branches:
-      - '^swc'
+      - 'swc'
 
 jobs:
   build-native:
