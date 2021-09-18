@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@builder/swc": "^0.1.0",
-    "webpack-source": "^2.0.0"
+    "webpack-sources": "^2.0.0"
   },
   "peerDependencies": {
     "webpack": ">=4.0.0"
