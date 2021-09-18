@@ -1,5 +1,6 @@
 import { loadBinding } from '@node-rs/helper';
 import * as path from 'path';
+import { Options, JsMinifyOptions, Output } from './types';
 
 /**
  * __dirname means load native addon from current dir
@@ -11,32 +12,22 @@ import * as path from 'path';
  */
 const bindings = loadBinding(path.join(__dirname, '../native'), 'builder-swc', '@builder/swc');
 
-async function transform(src, options) {
+async function transform(src: string, options: Options): Promise<Output> {
   const isModule = typeof src !== 'string';
   options = options || {};
 
   if (options?.jsc?.parser) {
     options.jsc.parser.syntax = options.jsc.parser.syntax ?? 'ecmascript';
-  }
-
-  const { plugin, ...newOptions } = options;
-
-  if (plugin) {
-    const m =
-      typeof src === 'string'
-        ? await this.parse(src, options?.jsc?.parser)
-        : src;
-    return this.transform(plugin(m), newOptions);
   }
 
   return bindings.transform(
     isModule ? JSON.stringify(src) : src,
     isModule,
-    toBuffer(newOptions)
+    toBuffer(options)
   );
 }
 
-function transformSync(src, options) {
+function transformSync(src: string, options: Options): Output {
   const isModule = typeof src !== 'string';
   options = options || {};
 
@@ -44,18 +35,10 @@ function transformSync(src, options) {
     options.jsc.parser.syntax = options.jsc.parser.syntax ?? 'ecmascript';
   }
 
-  const { plugin, ...newOptions } = options;
-
-  if (plugin) {
-    const m =
-      typeof src === 'string' ? this.parseSync(src, options?.jsc?.parser) : src;
-    return this.transformSync(plugin(m), newOptions);
-  }
-
   return bindings.transformSync(
     isModule ? JSON.stringify(src) : src,
     isModule,
-    toBuffer(newOptions)
+    toBuffer(options)
   );
 }
 
@@ -63,13 +46,15 @@ function toBuffer(t) {
   return Buffer.from(JSON.stringify(t));
 }
 
-async function minify(src, opts) {
+async function minify(src: string, opts: JsMinifyOptions): Promise<string> {
   return bindings.minify(toBuffer(src), toBuffer(opts ?? {}));
 }
 
-function minifySync(src, opts) {
+function minifySync(src: string, opts: JsMinifyOptions): string {
   return bindings.minifySync(toBuffer(src), toBuffer(opts ?? {}));
 }
+
+export * from './types';
 
 export {
   transform,

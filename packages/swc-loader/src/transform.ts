@@ -1,4 +1,4 @@
-import { transform } from '@swc/core';
+import { transform } from '@builder/swc';
 
 export default async function(source, programmaticOptions) {
   const output = await transform(source, programmaticOptions);

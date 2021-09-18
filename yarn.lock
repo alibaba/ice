@@ -2872,7 +2872,7 @@
   resolved "https://registry.yarnpkg.com/@napi-rs/triples/-/triples-1.0.3.tgz#76d6d0c3f4d16013c61e45dfca5ff1e6c31ae53c"
   integrity sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==
 
-"@node-rs/helper@^1.0.0", "@node-rs/helper@^1.1.0":
+"@node-rs/helper@^1.1.0":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@node-rs/helper/-/helper-1.2.1.tgz#e079b05f21ff4329d82c4e1f71c0290e4ecdc70c"
   integrity sha512-R5wEmm8nbuQU0YGGmYVjEc0OHtYsuXdpRG+Ut/3wZ9XAvQWyThN08bTh2cBJgoZxHQUPtvRfeQuxcAgLuiBISg==
@@ -3107,86 +3107,6 @@
   dependencies:
     ejs "^2.6.1"
     magic-string "^0.25.0"
-
-"@swc/core-android-arm64@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-android-arm64/-/core-android-arm64-1.2.84.tgz#797d58882b5e76a58b40d3658c1654a78a82de8a"
-  integrity sha512-GmPFlDXRQmIIdJ5mR2O47ac6EkWPvo5aDFsNYSzu58ZLBO8pBGiK/EZyrCL/agPpYjr9l9ZEdEjPCFynaUxppA==
-
-"@swc/core-darwin-arm64@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-darwin-arm64/-/core-darwin-arm64-1.2.84.tgz#c46e93ec44e20815c5fc479afafa5113b0c3e916"
-  integrity sha512-Wr+L3vGTf1MMNgR8UYRZbclPYVIcNnYyh7dm6RrHNS30zsAyjsuDt6O5xcdI+j9+diciBaOqD33wOc22jDI0ZQ==
-
-"@swc/core-darwin-x64@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-darwin-x64/-/core-darwin-x64-1.2.84.tgz#140347c9cc9cdcacb222df47664216217600b50b"
-  integrity sha512-1gBUEK0sDI+zYoGsNknYSCvD9rrgl89Kaq9IxY6Q55efNFRG5FkmlpHQW3URt0JLCzMEPAqn0KtteTOkZpL0aA==
-
-"@swc/core-freebsd-x64@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-freebsd-x64/-/core-freebsd-x64-1.2.84.tgz#ec080efc16766d4f5e14146c5517d5dd26c7ac40"
-  integrity sha512-BJdCyJy4hYDuw5wvneNKwONidlOZTd5+iUhic6pCKRTjAsVjzsAX5BvPBnSfR60iQ0Idp9J3fgefVxqgG8rcrw==
-
-"@swc/core-linux-arm-gnueabihf@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-linux-arm-gnueabihf/-/core-linux-arm-gnueabihf-1.2.84.tgz#af526a902fb96ca23f6c3d28cd1d68dc458ed094"
-  integrity sha512-ZQ1yqcXKoEVQ9Zs3DQ9LOv+fZkl+NbH3lXlJBMmlYf6Mw3L+u1JakU8OZO8UitYelLwzruoM7WsGdpvHSfv1KQ==
-
-"@swc/core-linux-arm64-gnu@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-linux-arm64-gnu/-/core-linux-arm64-gnu-1.2.84.tgz#226d935a4aed6931d27b01cc5371199dc372024b"
-  integrity sha512-Gocc0Xf8oWVcjcGlWqHODmtKwETzGudpQUtA8XhpjYQCKIo+q6xXdZvP/sEiYm6cqAWOPjLsN0CoQasJL+huDg==
-
-"@swc/core-linux-arm64-musl@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-linux-arm64-musl/-/core-linux-arm64-musl-1.2.84.tgz#ca48a0ddf83945dd32678e919b81cdf5592c45ac"
-  integrity sha512-oFmGUdxfXiJCgclCiKqxNltNj+nIiA9vrf0TV5KAK9d1aUPlhAuVgxHW3uGi1eeNxh/ViY4QbURCK4xOvQuxXA==
-
-"@swc/core-linux-x64-gnu@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-linux-x64-gnu/-/core-linux-x64-gnu-1.2.84.tgz#e7095a2b3c0a9582af8b23d56fd75e8687a8a6eb"
-  integrity sha512-AZWb/DCkHRN1T0a73tDIJrWGBq4tRgCDPsd25a2vtlwykfopFc9UttM5WRhnzrGF20KQN5RG6MosMrkCwGAnxQ==
-
-"@swc/core-linux-x64-musl@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-linux-x64-musl/-/core-linux-x64-musl-1.2.84.tgz#633d4b9686a25c613339f3d9a6972fba4e82e299"
-  integrity sha512-PydBMAmZcNtRCU+M6kUa4rHo3J80HjGl/Vo+IbEUOL8Ollhozwfuw4c9H7lwigoLwRbLa5dNYipGBGvIZLonkg==
-
-"@swc/core-win32-arm64-msvc@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-win32-arm64-msvc/-/core-win32-arm64-msvc-1.2.84.tgz#8134af53eba2638bef36792c1cc2876dbd032af5"
-  integrity sha512-RkBqz9/ITnApxTNu3Q4iZEUp8uaqCUyJUL/OH7IBDLrU8q6yYY6/01s8/GsHJQ3AUa1KsR72kB66TO20p5Qe0Q==
-
-"@swc/core-win32-ia32-msvc@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-win32-ia32-msvc/-/core-win32-ia32-msvc-1.2.84.tgz#e7bc361e131bc30f699b25f36ebb6e8bfb138a1f"
-  integrity sha512-N/WPD8z/uaZGq19my9+i0nrW7JyW1oR9fAQFhNHamvDY8iQ66FnejTKMc6J8SEzxhMpT2gXykTOGBXFy0U95UA==
-
-"@swc/core-win32-x64-msvc@^1.2.84":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.2.84.tgz#f30183ab532a1ec8408a606f9bad4cfc7e5a1a87"
-  integrity sha512-EamduVSJSrDEMUhI94OZLrURrPFKRhEsYB7kVl3hruEYTNLjKNqONFIq3qw8yl8iNv8Y9P+FQaWh/UtUzna0cg==
-
-"@swc/core@^1.2.50", "@swc/core@^1.2.52":
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/@swc/core/-/core-1.2.84.tgz#4b33556222dd035c6583521b7eaaa0f72f100ae0"
-  integrity sha512-TEoYuMna8+G1zdtvU4qTVTuJ9AatGLK26WyigwHz56aFBRDiVOZSB506FbU7RIc56oRi33zhPtpxLSqQhLGtJQ==
-  dependencies:
-    "@node-rs/helper" "^1.0.0"
-  optionalDependencies:
-    "@swc/core-android-arm64" "^1.2.84"
-    "@swc/core-darwin-arm64" "^1.2.84"
-    "@swc/core-darwin-x64" "^1.2.84"
-    "@swc/core-freebsd-x64" "^1.2.84"
-    "@swc/core-linux-arm-gnueabihf" "^1.2.84"
-    "@swc/core-linux-arm64-gnu" "^1.2.84"
-    "@swc/core-linux-arm64-musl" "^1.2.84"
-    "@swc/core-linux-x64-gnu" "^1.2.84"
-    "@swc/core-linux-x64-musl" "^1.2.84"
-    "@swc/core-win32-arm64-msvc" "^1.2.84"
-    "@swc/core-win32-ia32-msvc" "^1.2.84"
-    "@swc/core-win32-x64-msvc" "^1.2.84"
 
 "@swc/helpers@^0.2.12":
   version "0.2.13"
@@ -3460,10 +3380,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.23.tgz#d0d5885bb885ee9b1ed114a04ea586540a1b2e2a"
   integrity sha512-FW0q7NI8UnjbKrJK8NGr6QXY69ATw9IFe6ItIo5yozPwA9DU/xkhiPddctUVyrmFXvyFYerYgQak/qu200UBDw==
 
-"@types/node@^14.14.21":
-  version "14.17.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.14.tgz#6fda9785b41570eb628bac27be4b602769a3f938"
-  integrity sha512-rsAj2u8Xkqfc332iXV12SqIsjVi07H479bOP4q94NAcjzmAvapumEhuVIt53koEf7JFrpjgNKjBga5Pnn/GL8A==
+"@types/node@^14.17.15":
+  version "14.17.17"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.17.tgz#4ec7b71bbcb01a4e55455b60b18b1b6a783fe31d"
+  integrity sha512-niAjcewgEYvSPCZm3OaM9y6YQrL2SEPH9PymtE6fuZAvFiP6ereCcvApGl2jKTq7copTIguX3PBvfP08LN4LvQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
