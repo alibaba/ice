@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { getLatestVersion } from 'ice-npm-utils';
+import { getNpmInfo } from 'ice-npm-utils';
 import * as semver from 'semver';
 
 const TARGET_DIRECTORY = join(__dirname, '../packages');
@@ -25,15 +25,23 @@ function checkBuildSuccess(directory: string, mainFile: string): boolean {
   return isExist;
 }
 
-function checkVersionExists(pkg: string, version: string): Promise<boolean> {
-  return getLatestVersion(pkg).then(latestVersion => version === latestVersion).catch(() => false);
+function checkVersionExists(pkg: string, version: string, distTag: string): Promise<boolean> {
+  const tag = distTag || 'latest';
+  return getNpmInfo(pkg).then((data) => {
+    if (!data['dist-tags'] || (!data['dist-tags'][tag] && !data['dist-tags'].latest)) {
+      console.error(`${pkg} 没有 ${tag} 和 latest 版本号`, data);
+      return Promise.reject(new Error('Error: 没有版本号信息'));
+    }
+    // 如果该 tag 未发布，用 latest
+    return data['dist-tags'][tag] || data['dist-tags'].latest;
+  }).then(tagVersion => version === tagVersion).catch(() => false);
 }
 
 export function getVersionPrefix(version): string {
   return isNaN(version[0]) ? version[0] : '';
 }
 
-export async function getPackageInfos(): Promise<IPackageInfo[]> {
+export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
   const packageInfos: IPackageInfo[] = [];
   if (!existsSync(TARGET_DIRECTORY)) {
     console.log(`[ERROR] Directory ${TARGET_DIRECTORY} not exist!`);
@@ -64,7 +72,7 @@ export async function getPackageInfos(): Promise<IPackageInfo[]> {
             // If localVersion not exist, publish it
             shouldPublish:
               checkBuildSuccess(directory, packageInfo.main) &&
-              !await checkVersionExists(packageName, publishVersion)
+              !await checkVersionExists(packageName, publishVersion, distTag)
           });
         } catch (e) {
           console.log(`[ERROR] get ${packageName} information failed: `, e);

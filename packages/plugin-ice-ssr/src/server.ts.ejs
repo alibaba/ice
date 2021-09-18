@@ -91,6 +91,8 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   if (pageData) {
     // enable pre-render pages
     const { html, ssr } = pageData;
+    // @deprecated
+    // will not supported in the future because there are too few cases.
     if (ssr) {
       return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
     }

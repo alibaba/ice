@@ -1,5 +1,5 @@
 // just for plugin local tsc build
-import axios from 'axios';
+import { axios } from '@ice/runtime';
 
 const axiosInstance = {
   default: axios.create({})

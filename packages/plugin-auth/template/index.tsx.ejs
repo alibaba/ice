@@ -10,9 +10,20 @@ interface Props {
   value: AuthType;
 }
 
+interface InjectProps {
+  auth: ContextType[0];
+  useAuth: ContextType[1];
+}
+
 const Provider: FC<Props> = ({ value = {}, children }) => {
-  const share = useState<AuthType>(value);
-  return <Context.Provider value={share}>{children}</Context.Provider>;
+  const [state, setState] = useState<AuthType>(value);
+  const updateState: InjectProps['useAuth'] = (value = {}) => {
+    setState({
+      ...state,
+      ...value,
+    });
+  };
+  return <Context.Provider value={[state, updateState]}>{children}</Context.Provider>;
 };
 
 const useAuth = (): ContextType => {
@@ -20,10 +31,6 @@ const useAuth = (): ContextType => {
   return value;
 };
 
-interface InjectProps {
-  auth: ContextType[0];
-  useAuth: ContextType[1];
-}
 // class 组件支持 Hoc 用法
 function withAuth<Props extends InjectProps>(Component: React.ComponentType<Props>) {
   type OriginalProps = Omit<Props, keyof InjectProps>;

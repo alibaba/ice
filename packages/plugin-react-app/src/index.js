@@ -7,12 +7,22 @@ const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
 const remoteRuntime = require('./userConfig/remoteRuntime').default;
+const getInvalidMessage = require('./validateViteConfig').default;
 
 module.exports = async (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log } = api;
   const { command, rootDir, userConfig, originalUserConfig } = context;
   const mode = command === 'start' ? 'development' : 'production';
 
+  const invalidMsg = getInvalidMessage(originalUserConfig);
+  if (invalidMsg) {
+    log.info(invalidMsg);
+  }
+
+  if (userConfig.vitePlugin) {
+    // transform vitePlugin to vite.plugin
+    modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
+  }
   // register cli option
   applyCliOption(api);
 
