@@ -9,6 +9,7 @@
     { "path": "packages/build-babel-config" },
     { "path": "packages/build-jest-config" },
     { "path": "packages/build-webpack-config" },
+    { "path": "packages/webpack-plugin-swc" },
     { "path": "packages/swc-loader" },
     { "path": "packages/build-user-config" },
     { "path": "packages/webpack-plugin-extract-css-assets" },

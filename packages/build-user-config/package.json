@@ -23,7 +23,7 @@
     "@swc/helpers": "^0.2.12",
     "@builder/swc-loader": "^1.0.0",
     "trusted-cert": "^1.0.0",
-    "swc-webpack-plugin": "^1.0.0"
+    "@builder/webpack-plugin-swc": "^1.0.0"
   },
   "files": [
     "lib",

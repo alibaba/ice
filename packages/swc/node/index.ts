@@ -46,11 +46,11 @@ function toBuffer(t) {
   return Buffer.from(JSON.stringify(t));
 }
 
-async function minify(src: string, opts: JsMinifyOptions): Promise<string> {
+async function minify(src: string, opts: JsMinifyOptions): Promise<Output> {
   return bindings.minify(toBuffer(src), toBuffer(opts ?? {}));
 }
 
-function minifySync(src: string, opts: JsMinifyOptions): string {
+function minifySync(src: string, opts: JsMinifyOptions): Output {
   return bindings.minifySync(toBuffer(src), toBuffer(opts ?? {}));
 }
 

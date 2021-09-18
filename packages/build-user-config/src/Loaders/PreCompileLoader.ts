@@ -10,7 +10,10 @@ export default function(source) {
   // Define sourceMaps by webpack devtool values
   const loaderOptions = getOptions(this) || {};
   const sourceMaps = !!devtool;
+
   const compileOptions: Options = deepmerge({
+    filename,
+    sourceFileName: filename,
     sourceMaps,
     jsc: {
       parser: {
