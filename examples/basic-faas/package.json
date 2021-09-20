@@ -7,7 +7,7 @@
     "@ali/midway-buc-login": "^1.0.10",
     "@midwayjs/faas": "^2.10.14",
     "@midwayjs/hooks": "^2.2.0",
-    "@midwayjs/serverless-app": "^2.10.15",
+    "@midwayjs/serverless-app": "^3.0.0-alpha.28",
     "koa-session": "^6.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
@@ -17,10 +17,11 @@
     "@ali/faas-middleware-interface": "^1.2.1",
     "@midwayjs/build-plugin-hooks": "^2.2.0",
     "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4"
+    "@types/react-dom": "^16.9.4",
+    "@ali/serverless-app": "latest"
   },
   "scripts": {
-    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev --config config.ts",
+    "start": "RUNTIME_DEBUG=true ../../packages/icejs/bin/ice-cli.js start --mode dev --config config.ts",
     "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
   },
   "ideMode": {
@@ -37,11 +38,12 @@
   "resolutions": {
     "@midwayjs/cli-plugin-dev": "1.2.83-beta.5",
     "@midwayjs/serverless-dev-pack": "1.2.83-beta.5",
-    "@midwayjs/bootstrap": "3.0.0-alpha.9",
-    "@midwayjs/core": "3.0.0-alpha.9",
-    "@midwayjs/decorator": "3.0.0-alpha.6",
-    "@midwayjs/runtime-mock": "3.0.0-alpha.6",
-    "@midwayjs/mock": "3.0.0-alpha.9",
-    "@midwayjs/runtime-engine": "3.0.0-alpha.6"
+    "@midwayjs/bootstrap": "^3.0.0-alpha.9",
+    "@midwayjs/core": "^3.0.0-alpha.9",
+    "@midwayjs/decorator": "^3.0.0-alpha.6",
+    "@midwayjs/runtime-mock": "^3.0.0-alpha.6",
+    "@midwayjs/mock": "^3.0.0-alpha.9",
+    "@midwayjs/runtime-engine": "^3.0.0-alpha.6",
+    "@midwayjs/serverless-app": "^3.0.0-alpha.28"
   }
 }

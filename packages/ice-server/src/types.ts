@@ -3,24 +3,28 @@ import { IComponentInfo } from '@midwayjs/decorator';
 
 export type AppModule = (string | IComponentInfo | { Configuration: any })
 
+export type LifeCycleFunc = (container: IMidwayContainer, app?: IMidwayApplication) => void;
+
 export interface AppConfig {
+  // midway 组件
   modules?: AppModule[];
 
-  app?: {
-    // life cycle
-    onConfigLoad?(container: IMidwayContainer, app?: IMidwayApplication): Promise<void>;
-    onReady?(container: IMidwayContainer, app?: IMidwayApplication): Promise<void>;
-    onStop?(container: IMidwayContainer, app?: IMidwayApplication): Promise<void>;
-  };
+  // 中间件
+  middlewares?: any[];
 
-  bucLogin?: boolean;
+  app?: {
+    // 生命周期
+    onConfigLoad?: LifeCycleFunc;
+    onReady?: LifeCycleFunc;
+    onStop?: LifeCycleFunc;
+  };
 }
 
-type LifeCycleFunc = (app: any) => void;
 export interface MidwayConfiguration {
   importConfigs: any[];
-  imports: AppModule[];
-  onConfigLoadQueue?: LifeCycleFunc[];
-  onReadyLoadQueue?: LifeCycleFunc[];
-  onStopLoadQueue?: LifeCycleFunc[];
+  modules: AppModule[];
+  middlewares: any[];
+  onConfigLoad?: LifeCycleFunc;
+  onReady?: LifeCycleFunc;
+  onStop?: LifeCycleFunc;
 }

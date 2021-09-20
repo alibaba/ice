@@ -1,83 +1,39 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { hooks } from '@midwayjs/hooks';
-import { BucLoginModule, ModuleImpl } from '@ice/server-internal';
 import { setMidwayConfiguration } from './midwayConfiguration';
-import { AppConfig, AppModule } from './types';
+import { AppConfig } from './types';
 
 export * from '@ice/server-internal';
 
-console.log('cwd in ice-server ===>', process.cwd());
-
-const defaultModules = {
-  bucLogin: new BucLoginModule(),
-};
-const defaultModuleKeys = Reflect.ownKeys(defaultModules);
-
 export function runApp(appConfig: AppConfig = {}) {
-  const importConfigs = generateImportConfigs();
-  const importModules = generateImportModules(appConfig);
-  const lifeCycleQueue = generateLifeCycleQueue(appConfig);
-  const { onConfigLoad, onReady, onStop } = lifeCycleQueue;
+  const { modules = [], middlewares = [], app: { onConfigLoad, onReady, onStop }} = appConfig;
+
+  const defaultImportConfigs = generateDefaultImportConfigs();
+  const defaultModules = generateDefaultModules();
 
   const configuration = {
-    importConfigs,
-    imports: importModules,
-    onConfigLoadQueue: onConfigLoad,
-    onReadyQueue: onReady,
-    onStopQueue: onStop,
+    importConfigs: [...defaultImportConfigs],
+    modules: [...defaultModules, ...modules],
+    // TODO: 区分 function(hooks) 和 class 类型的中间件
+    middlewares,
+    onConfigLoad,
+    onReady,
+    onStop,
   };
+
   // server will get the appConfig after runApp
   setMidwayConfiguration(configuration);
 }
 
-function generateImportModules(appConfig: AppConfig) {
-  const importModules: AppModule[] = [hooks()];
-
-  defaultModuleKeys.forEach((moduleKey: string) => {
-    if (appConfig[moduleKey]) {
-      const module = defaultModules[moduleKey];
-      importModules.push(...module.getModules());
-    }
-  });
-
-  importModules.push(...(appConfig.modules || []));
-
-  return importModules;
+function generateDefaultModules() {
+  return [hooks()];
 }
 
-function generateLifeCycleQueue(appConfig: AppConfig) {
-  const lifeCycleQueue = {
-    onReady: [],
-    onStop: [],
-    onConfigLoad: [],
-  };
-
-  // add module life cycle to its queue
-  defaultModuleKeys.forEach((moduleKey: string) => {
-    if (appConfig[moduleKey]) {
-      const module: ModuleImpl = defaultModules[moduleKey];
-      Object.keys(lifeCycleQueue).forEach((key: string) => {
-        if (module[key]) {
-          lifeCycleQueue[key].push(module[key]);
-        }
-      });
-    }
-  });
-  // add user life cycle
-  Object.keys(lifeCycleQueue).forEach((key: string) => {
-    if (appConfig[key]) {
-      lifeCycleQueue[key].push(appConfig[key]);
-    }
-  });
-
-  return lifeCycleQueue;
-}
-
-function generateImportConfigs() {
+function generateDefaultImportConfigs() {
   const importConfigs = [];
 
-  const configDir = path.join(process.cwd(), 'src/apis/config');
+  const configDir = path.join(process.cwd(), 'src/apis/config/');
   if (fs.existsSync(configDir)) {
     importConfigs.push(configDir);
   }
