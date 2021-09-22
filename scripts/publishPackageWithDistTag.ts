@@ -29,7 +29,12 @@ function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo
     ], {
       encoding: 'utf-8'
     });
-    const distTags = JSON.parse(childProcess.stdout) || {};
+
+    let distTags = {};
+    try {
+      distTags = JSON.parse(childProcess.stdout) || {};
+    // eslint-disable-next-line no-empty
+    } catch (err) {}
     const matched = (distTags[tag] || '').match(DIST_TAG_REG);
 
     // 1.0.0-beta.1 -> ["1.0.0-beta.1", "1.0.0", "1"] -> 1.0.0-beta.2

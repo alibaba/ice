@@ -17,5 +17,11 @@
   },
   "engines": {
     "node": ">= 10"
+  },
+  "optionalDependencies": {
+    "@builder/swc-darwin-x64": "0.1.1",
+    "@builder/swc-linux-x64-gnu": "0.1.1",
+    "@builder/swc-darwin-arm64": "0.1.1",
+    "@builder/swc-win32-x64-msvc": "0.1.1"
   }
 }
