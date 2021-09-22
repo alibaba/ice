@@ -1,7 +1,0 @@
-{
-  "minify": false,
-  "vite": true,
-  "plugins": [
-    "build-plugin-icestark"
-  ]
-}
