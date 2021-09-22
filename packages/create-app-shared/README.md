@@ -1,1 +1,0 @@
-# `create-app-shared`
