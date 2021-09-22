@@ -1,6 +1,3 @@
-/**
- * ICE 渲染页面函数配置文档：https://yuque.antfin-inc.com/ice/rdy99p/ds1xv0#uR3mM
- */
 import { useContext, useInject } from '@midwayjs/hooks';
 import renderPage from '@ali/ice-faas-render';
 
