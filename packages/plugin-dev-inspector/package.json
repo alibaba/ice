@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-dev-inspector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "devtool for inspecting react components and jump to local IDE for ice.js and rax-app",
   "license": "MIT",
   "main": "lib/index.js",
