@@ -33,14 +33,7 @@ const getUid = () => {
   return () => `_APP_CONFIG${(uid++) || ''}`;
 };
 
-export default (api, { entryList, libraryName, omitSetLibraryName }) => {
-  const checkEntryFile = (filename: string) => {
-    return !!entryList.find((filePath: string) => {
-      // filePath may not have an extension
-      return filePath.includes((filename || '').replace(/\.[^/.]+$/, ''));
-    });
-  };
-
+export default (api, { checkEntryFile, libraryName, omitSetLibraryName }) => {
   return {
     visitor: {
       Program: {

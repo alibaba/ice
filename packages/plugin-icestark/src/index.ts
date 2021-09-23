@@ -3,6 +3,7 @@ import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
 import { icestarkPlugin } from './vitePluginIcetark';
+import checkEntryFile from './checkEntryFile';
 import { htmlPlugin } from './htmlPlugin';
 import lifecyclePlugin from './lifecyclePlugin';
 import type { Entries } from './vitePluginIcetark';
@@ -75,7 +76,11 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
             return {
               ...babelOptions,
               plugins: [
-                [require.resolve('./babelPluginMicroapp'), { entryList, libraryName, omitSetLibraryName }],
+                [require.resolve('./babelPluginMicroapp'), {
+                  checkEntryFile: (filename: string) => checkEntryFile(entryList, filename),
+                  libraryName,
+                  omitSetLibraryName
+                }],
                 ...plugins,
               ],
             };
