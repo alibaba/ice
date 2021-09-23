@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite';
 import * as babel from '@babel/core';
+import type { ParserPlugin } from '@babel/parser';
 
 export interface Entries {
   [index: string]: string | string[];
@@ -28,24 +29,49 @@ const lifecyclePlugin = (entries: Entries): Plugin => {
 
     async transform(code, id) {
       const isEntryFile = entryNames.some((name: string) => id.includes(name));
-      if (isEntryFile) {
-        // Use babel plugin to do entry ast currently.
-        // Is it more preferable to use esbuild plugin?
-        return babel.transformSync(code, {
-          filename: 'file.ts',
-          plugins: [
-            [require.resolve('./babelPluginMicroapp'), {
-              checkEntryFile: () => true,
-              libraryName: 'microApp',
-              omitSetLibraryName: false,
-            }],
-          ],
-          presets: [require.resolve('@babel/preset-typescript')]
-        }).code;
 
+      if (!isEntryFile) {
+        return;
       }
 
-      return code;
+      const parserPlugins: ParserPlugin[] = [
+        'jsx',
+        'importMeta',
+        'topLevelAwait',
+        'classProperties',
+        'classPrivateMethods',
+      ];
+
+      if (/\.tsx?$/.test(id)) {
+        // when routes file is a typescript file,
+        // add ts parser plugins
+        parserPlugins.push('typescript');
+        parserPlugins.push('decorators-legacy');  // allowing decorators by default
+      }
+      // Use babel plugin to do entry ast currently.
+      // Is it more preferable to use esbuild plugin?
+      return babel.transformSync(code, {
+        babelrc: false,
+        configFile: false,
+        filename: id,
+        parserOpts: {
+          sourceType: 'module',
+          allowAwaitOutsideFunction: true,
+          plugins: parserPlugins,
+        },
+        generatorOpts: {
+          decoratorsBeforeExport: true
+        },
+        plugins: [
+          [require.resolve('./babelPluginMicroapp'), {
+            checkEntryFile: () => true,
+            libraryName: 'microApp',
+            omitSetLibraryName: true,
+          }]
+        ],
+        sourceFileName: id,
+      });
+
     }
   }
 
