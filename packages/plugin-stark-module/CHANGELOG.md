@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- [feat] allow to register `outputDir` in root.
+
 ## 2.0.3
 
 - [fix] register [`webpack-plugin-import`](https://github.com/ice-lab/ice-scripts/tree/master/packages/webpack-plugin-import) plugin. ([#300](https://github.com/ice-lab/icestark/issues/300))
