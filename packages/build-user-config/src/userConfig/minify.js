@@ -1,7 +1,7 @@
 const {
   ESBuildMinifyPlugin
 } = require('@builder/pack/deps/esbuild-loader');
-const { SWCMinifyPlugin } = require('swc-webpack-plugin');
+const { SWCMinifyPlugin } = require('@builder/webpack-plugin-swc');
 
 module.exports = (config, minify, context, { log }) => {
   const { command } = context;

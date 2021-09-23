@@ -5,13 +5,15 @@ import { spawnSync } from 'child_process';
 import { setPublishedPackages } from './published-info';
 import { IPackageInfo, getPackageInfos } from './getPackageInfos';
 
+const publishTag = process.env.PUBLISH_TAG || '';
+
 function publish(pkg: string, version: string, directory: string): void {
   console.log('[PUBLISH]', `${pkg}@${version}`);
-
-  spawnSync('npm', [
-    'publish',
-    // use default registry
-  ], {
+  const npmCommand = ['publish'];
+  if (publishTag) {
+    npmCommand.push(`--tag=${publishTag}`);
+  }
+  spawnSync('npm', npmCommand, {
     stdio: 'inherit',
     cwd: directory,
   });
@@ -19,7 +21,7 @@ function publish(pkg: string, version: string, directory: string): void {
 
 // Entry
 console.log('[PUBLISH] Start:');
-getPackageInfos().then((packageInfos: IPackageInfo[]) => {
+getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
   // Publish
   let publishedCount = 0;
   const publishedPackages = [];

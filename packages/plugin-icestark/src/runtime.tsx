@@ -21,6 +21,7 @@ const module = ({
   addDOMRender,
   buildConfig,
   setRenderApp,
+  setRenderRouter,
   wrapperRouterRender,
   modifyRoutes,
   applyRuntimeAPI,
@@ -34,12 +35,15 @@ const module = ({
   // compatible with deprecated runtime API
   const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
   const createAppHistory = createHistory || ((options: any) => applyRuntimeAPI('createHistory', options));
+  const setRenderComponent = setRenderApp || setRenderRouter;
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
   if (appType === 'child') {
-    const { icestarkUMD } = buildConfig;
+    const { icestarkUMD, icestarkType } = buildConfig;
+
+    const localIcestarkType = icestarkType || (icestarkUMD ? 'umd' : 'normal');
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
@@ -48,7 +52,7 @@ const module = ({
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
-          if (!icestarkUMD) {
+          if (localIcestarkType === 'normal') {
             registerAppEnter(() => {
               const mountNode = getMountNode();
               if (enterRegistration) {
@@ -106,7 +110,7 @@ const module = ({
         return originRender(routes, RoutesComponent, routerProps);
       });
     } else {
-      setRenderApp((routes) => () => {
+      setRenderComponent((routes) => () => {
         return <IceRouter {...routerProps} routes={routes} />;
       });
     }
@@ -196,7 +200,7 @@ const module = ({
         </BasicLayout>
       );
     };
-    setRenderApp(frameworkRouter);
+    setRenderComponent(frameworkRouter);
   }
 };
 

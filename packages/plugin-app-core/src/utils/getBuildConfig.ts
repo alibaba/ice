@@ -1,12 +1,12 @@
 interface IBuildConfig {
   router?: object | boolean;
   store?: boolean;
-  icestarkUMD?: boolean;
+  icestarkType?: 'es' | 'umd' | 'normal';
   web?: object;
 }
 
 function getBuildConfig(userConfig): IBuildConfig{
-  const { plugins } = userConfig;
+  const { plugins, vite } = userConfig;
   const buildConfig: IBuildConfig = {};
   // filter userConfig
   ['router', 'store', 'web'].forEach((configKey) => {
@@ -14,14 +14,18 @@ function getBuildConfig(userConfig): IBuildConfig{
       buildConfig[configKey] = userConfig[configKey];
     }
   });
-  // get icestark umd config
-  buildConfig.icestarkUMD = plugins && !!plugins.find((plugin) => {
+
+  const isIcestarkUMD = plugins && plugins.some(plugin => {
     if (Array.isArray(plugin)) {
       const [pluginName, pluginOptions] = plugin;
       return pluginName === 'build-plugin-icestark' && pluginOptions?.umd;
     }
     return false;
   });
+
+  // eslint-disable-next-line no-nested-ternary
+  buildConfig.icestarkType = vite ? 'es' : (isIcestarkUMD ? 'umd' : 'normal');
+
   return buildConfig;
 }
 

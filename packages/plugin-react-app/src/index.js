@@ -1,21 +1,28 @@
 const path = require('path');
 const { applyCliOption, applyUserConfig, getEnhancedWebpackConfig } = require('@builder/user-config');
 const getWebpackConfig = require('@builder/webpack-config').default;
-const { WEB, MINIAPP, WECHAT_MINIPROGRAM} = require('./constants');
 const getCustomConfigs = require('./config');
 const setBase = require('./setBase');
 const setDev = require('./setDev');
 const setBuild = require('./setBuild');
 const setTest = require('./setTest');
 const remoteRuntime = require('./userConfig/remoteRuntime').default;
+const getInvalidMessage = require('./validateViteConfig').default;
 
 module.exports = async (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig } = api;
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log } = api;
   const { command, rootDir, userConfig, originalUserConfig } = context;
-  const { targets = [WEB] } = userConfig;
   const mode = command === 'start' ? 'development' : 'production';
-  const isMiniapp = targets.includes(MINIAPP) || targets.includes(WECHAT_MINIPROGRAM);
 
+  const invalidMsg = getInvalidMessage(originalUserConfig);
+  if (invalidMsg) {
+    log.info(invalidMsg);
+  }
+
+  if (userConfig.vitePlugin) {
+    // transform vitePlugin to vite.plugin
+    modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
+  }
   // register cli option
   applyCliOption(api);
 
@@ -42,26 +49,19 @@ module.exports = async (api) => {
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
   });
 
-  targets.forEach(target => {
-    const webpackConfig = getWebpackConfig(mode);
-
-    // compatible with old logic，not set target
-    // output：build/*
-    if (target === WEB && !userConfig.targets) {
-      target = '';
-    }
-    const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { target, webpackConfig });
-    enhancedWebpackConfig.name('web');
-    setBase(api, { target, webpackConfig: enhancedWebpackConfig });
-    registerTask(target, enhancedWebpackConfig);
-  });
+  const taskName = 'web';
+  const webpackConfig = getWebpackConfig(mode);
+  const enhancedWebpackConfig = getEnhancedWebpackConfig(api, { webpackConfig });
+  enhancedWebpackConfig.name(taskName);
+  setBase(api, { webpackConfig: enhancedWebpackConfig });
+  registerTask(taskName, enhancedWebpackConfig);
 
   if (command === 'start') {
-    setDev(api, { targets, isMiniapp });
+    setDev(api);
   }
 
   if (command === 'build') {
-    setBuild(api, { targets });
+    setBuild(api);
   }
 
   if (command === 'test') {

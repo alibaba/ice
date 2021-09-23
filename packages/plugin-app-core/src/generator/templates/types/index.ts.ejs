@@ -36,7 +36,7 @@ interface IStoreConfig {
 export interface IBuildConfig {
   router?: object | boolean;
   store?: boolean | IStoreConfig;
-  icestarkUMD?: boolean;
+  icestarkType?: 'es' | 'umd' | 'normal';
   web?: object;
 }
 

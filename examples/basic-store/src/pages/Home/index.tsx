@@ -31,6 +31,7 @@ export default () => {
         <span>{counterState.count}</span>
         <button type="button" id="decrement" onClick={counterActions.decrementAsync}>-</button>
       </div>
+      <div>countHistory：{counterState.countHistory}</div>
 
       <Link to="/about">about</Link>
     </>

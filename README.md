@@ -132,22 +132,6 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
-        <a href=https://github.com/LanceZhu>
-            <img src=https://avatars.githubusercontent.com/u/26158863?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=f00bar/>
-            <br />
-            <sub style="font-size:14px"><b>f00bar</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
-        <a href=https://github.com/alvinhui>
-            <img src=https://avatars.githubusercontent.com/u/4392234?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=许文涛/>
-            <br />
-            <sub style="font-size:14px"><b>许文涛</b></sub>
-        </a>
-    </td>
-</tr>
-<tr>
-    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
         <a href=https://github.com/FuzzyFade>
             <img src=https://avatars.githubusercontent.com/u/25416941?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Rhuzerv/>
             <br />
@@ -155,10 +139,33 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
+        <a href=https://github.com/LanceZhu>
+            <img src=https://avatars.githubusercontent.com/u/26158863?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=f00bar/>
+            <br />
+            <sub style="font-size:14px"><b>f00bar</b></sub>
+        </a>
+    </td>
+</tr>
+<tr>
+    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
+        <a href=https://github.com/alvinhui>
+            <img src=https://avatars.githubusercontent.com/u/4392234?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=许文涛/>
+            <br />
+            <sub style="font-size:14px"><b>许文涛</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
         <a href=https://github.com/sspku-yqLiu>
             <img src=https://avatars.githubusercontent.com/u/56879942?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=sspku-yqLiu/>
             <br />
             <sub style="font-size:14px"><b>sspku-yqLiu</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
+        <a href=https://github.com/fengzilong>
+            <img src=https://avatars.githubusercontent.com/u/9125255?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=MO/>
+            <br />
+            <sub style="font-size:14px"><b>MO</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
@@ -201,13 +208,6 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
             <img src=https://avatars.githubusercontent.com/u/1716558?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Far Tseng/>
             <br />
             <sub style="font-size:14px"><b>Far Tseng</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
-        <a href=https://github.com/fengzilong>
-            <img src=https://avatars.githubusercontent.com/u/9125255?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=MO/>
-            <br />
-            <sub style="font-size:14px"><b>MO</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">

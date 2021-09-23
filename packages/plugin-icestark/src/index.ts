@@ -1,22 +1,44 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
-import { IPlugin, Json } from 'build-scripts';
+import type { IPlugin, Json } from 'build-scripts';
+import { icestarkPlugin } from './vitePluginIcetark';
+import { htmlPlugin } from './htmlPlugin';
+import type { Entries } from './vitePluginIcetark';
 
-const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
+const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
-  const { rootDir, webpack, pkg, userConfig } = context;
+  const { rootDir, webpack, pkg, userConfig, command } = context;
+  const { vite } = userConfig;
+
+  const isProd = command === 'build';
+
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
   // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
+
+  if (vite && umd) {
+    log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark option.');
+  }
+
+  // copy runtime/Layout.tsx to .ice while it can not been analyzed with alias `$ice/Layout`
+  const layoutSource = path.join(__dirname, '../src/runtime/Layout.tsx');
+  const layoutPath = path.join(iceTempPath, 'plugins/icestark/pluginRuntime/runtime/Layout.tsx');
+  applyMethod('addRenderFile', layoutSource, layoutPath);
+
   onGetWebpackConfig((config) => {
+    const entries = config.toConfig().entry as Entries;
+
+    if (isProd && vite) {
+      modifyUserConfig('vite.plugins', [icestarkPlugin(entries), htmlPlugin(rootDir)], { deepmerge: true });
+    }
+
     config
       .plugin('DefinePlugin')
       .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
     // set alias for default layout
-    const layoutPath = userConfig.vite ? path.join(__dirname, '../src/runtime/Layout.tsx') : path.join(__dirname, 'runtime/Layout');
     config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
     // set alias for icestark
     ['@ice/stark', '@ice/stark-app'].forEach((pkgName) => {
@@ -34,7 +56,6 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
         .libraryTarget('umd');
 
       // collect entry
-      const entries = config.toConfig().entry;
       const entryList = [];
       Object.keys(entries).forEach((key) => {
         // only include entry path

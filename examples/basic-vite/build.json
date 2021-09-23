@@ -7,5 +7,11 @@
   "plugins": [],
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
+  },
+  "proxy": {
+    "/todos": {
+      "target": "http://jsonplaceholder.typicode.com",
+      "changeOrigin": true
+    }
   }
 }

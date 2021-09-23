@@ -1,9 +1,19 @@
 # Changelog
 
-# 3.0.0
+# 2.3.0
 
 - [feat] migrate runtime api
 - [feat] upgrade build-scripts
+- [feat] support es module out of box
+
+## 2.2.1
+
+- [fix] move all identifiers to visitor to avoid wrong execution results.
+
+# 2.2.0
+
+- [feat] support setting custom lifecycles. ([#337](https://github.com/ice-lab/icestark/issues/337))
+- [fix] append lifecycles for other framework.
 
 # 2.1.0
 

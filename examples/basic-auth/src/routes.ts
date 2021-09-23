@@ -7,8 +7,5 @@ export default [
     path: '/',
     exact: true,
     component: Home,
-    pageConfig: {
-      auth: ['admin']
-    }
   }
 ];

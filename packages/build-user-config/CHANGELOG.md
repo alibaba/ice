@@ -1,8 +1,28 @@
 # Changelog
 
+## 1.0.1
+
+- [chore] use @builder/swc instead of @swc/core
+
 ## 1.0.0
 
 - [feat] pre build dependencies and refactor config for webpack 5
+
+## 0.3.13
+
+- [fix] SourceMapDevtoolPlugin will block the builder when chunk name includes `:`
+
+## 0.3.12
+
+- [fix] order of core-js modules
+
+## 0.3.11
+
+- [fix] only pass modules to css module rule
+
+## 0.3.10
+
+- [feat] support global style rule custom `postcssOptions`
 
 ## 0.3.9
 
