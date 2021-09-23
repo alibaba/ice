@@ -1,6 +1,10 @@
 # Changelog
 
-# 2.3.0
+## 2.3.1
+
+- [feat] append icestark lifecycles automatically using babel parser.
+
+## 2.3.0
 
 - [feat] migrate runtime api
 - [feat] upgrade build-scripts
