@@ -6,7 +6,7 @@ import { run } from './fn/shell';
 (async () => {
   await run('npm run clean');
 
-  const fileParten = '*/src/**/!(*.ts|*.tsx)';
+  const fileParten = '*/src/**/!(*.ts|*.tsx|*.rs)';
   console.log(`[COPY]: ${fileParten}`);
 
   const cwd = path.join(__dirname, '../packages');

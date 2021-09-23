@@ -1,6 +1,6 @@
 {
   "name": "@builder/swc-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "swc module loader for webpack",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -23,7 +23,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@swc/core": "^1.2.52",
+    "@builder/swc": "^0.1.0",
     "loader-utils": "^2.0.0"
   }
 }

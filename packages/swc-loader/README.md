@@ -1,1 +1,1 @@
-# @builder/swc-loader
+# @builder/webpack-plugin-swc

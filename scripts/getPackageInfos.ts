@@ -4,6 +4,7 @@ import { getNpmInfo } from 'ice-npm-utils';
 import * as semver from 'semver';
 
 const TARGET_DIRECTORY = join(__dirname, '../packages');
+const NATIVE_NPM_DIRECTORY = join(TARGET_DIRECTORY, 'swc/npm');
 
 export interface IPackageInfo {
   name: string;
@@ -46,32 +47,34 @@ export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
   if (!existsSync(TARGET_DIRECTORY)) {
     console.log(`[ERROR] Directory ${TARGET_DIRECTORY} not exist!`);
   } else {
-    const packageFolders: string[] = readdirSync(TARGET_DIRECTORY).filter((filename) => filename[0] !== '.');
+    const packageFolders: string[] = readdirSync(TARGET_DIRECTORY)
+      .filter((filename) => filename[0] !== '.')
+      .map((packageFolder) => join(TARGET_DIRECTORY, packageFolder))
+      .concat(
+        readdirSync(NATIVE_NPM_DIRECTORY)
+          .map((packageFolder) => join(NATIVE_NPM_DIRECTORY, packageFolder))
+      );
     console.log('[PUBLISH] Start check with following packages:');
     await Promise.all(packageFolders.map(async (packageFolder) => {
-
-      const directory = join(TARGET_DIRECTORY, packageFolder);
-      const packageInfoPath = join(directory, 'package.json');
-
+      const packageInfoPath = join(packageFolder, 'package.json');
       // Process package info.
       if (existsSync(packageInfoPath)) {
-
         const packageInfo = JSON.parse(readFileSync(packageInfoPath, 'utf8'));
-        const packageName = packageInfo.name || packageFolder;
+        const packageName = packageInfo.name;
         const publishVersion = semver.valid(semver.coerce(packageInfo.version));
         console.log(`- ${packageName}`);
 
         try {
           packageInfos.push({
             name: packageName,
-            directory,
+            directory: packageFolder,
             localVersion: packageInfo.version,
             publishVersion,
             mainFile: packageInfo.main,
             packageInfo,
             // If localVersion not exist, publish it
             shouldPublish:
-              checkBuildSuccess(directory, packageInfo.main) &&
+              checkBuildSuccess(packageFolder, packageInfo.main) &&
               !await checkVersionExists(packageName, publishVersion, distTag)
           });
         } catch (e) {
