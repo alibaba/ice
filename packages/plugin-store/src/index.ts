@@ -1,5 +1,5 @@
 import * as path from 'path';
-import Generator from './Generator';
+import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
