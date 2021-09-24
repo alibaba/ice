@@ -17,11 +17,11 @@ interface APIRegistration {
   [key: string]: Function;
 }
 interface InternalValue {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 type RegisterRuntimeAPI = (key: string, api: Function) => void;
-type SetRuntimeValue = (key: string, value: any) => void;
+type SetRuntimeValue = (key: string, value: unknown) => void;
 type GetRuntimeValue = <T extends unknown>(key: string) => T;
 type ApplyRuntimeAPI = <T extends unknown>(key: string, ...args: any) => T;
 type IWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props>)
