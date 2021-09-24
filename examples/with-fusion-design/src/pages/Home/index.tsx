@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button } from '@alifd/next';
+import { Button, Calendar } from '@alifd/next';
+import moment from 'moment';
+import 'moment/dist/locale/ru';
+
+moment.locale('ru');
+
+console.log(moment().format('LL'));
 
 const Dashboard = () => {
   return (
@@ -8,6 +14,7 @@ const Dashboard = () => {
       <Button type="primary">Primary</Button>
       <Button type="secondary">secondary</Button>
       <Button type="normal">Normal</Button>
+      <Calendar shape="card" defaultValue={moment().add(1, 'days')} />
     </>
   );
 };

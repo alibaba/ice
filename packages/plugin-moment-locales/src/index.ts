@@ -1,7 +1,13 @@
-module.exports = ({ onGetWebpackConfig, context }, options = {}) => {
+import type { IPlugin } from 'build-scripts';
+
+interface PluginOptions {
+  locales: string | string[];
+}
+
+const plugin: IPlugin = ({ onGetWebpackConfig, context }, options) => {
   const { webpack } = context;
   onGetWebpackConfig((config) => {
-    const { locales } = options;
+    const { locales } = options as unknown as PluginOptions || {};
     const localeArray = typeof locales === 'string' ? [locales] : locales;
     if (localeArray.length) {
       const localesRegExp = new RegExp(localeArray.join('|'));
@@ -10,3 +16,5 @@ module.exports = ({ onGetWebpackConfig, context }, options = {}) => {
     }
   });
 };
+
+export default plugin;
