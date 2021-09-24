@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-moment-locales",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "build-scripts plugins for moment locale",
   "main": "lib/index.js",
   "scripts": {
@@ -16,6 +16,13 @@
   },
   "author": "ICE Team",
   "license": "MIT",
+  "dependencies": {
+    "@rollup/pluginutils": "^4.1.1"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.1.0",
+    "vite": "^2.0.0"
+  },
   "files": [
     "lib",
     "!lib/**/*.map"

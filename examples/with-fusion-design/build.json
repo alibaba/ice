@@ -6,14 +6,14 @@
       {
         "themePackage": "@alifd/theme-design-pro"
       }
-    ]
-    /* [
+    ],
+    [
       "build-plugin-moment-locales",
       {
         "locales": [
-          "zh-cn"
+          "zh-cn", "ru"
         ]
       }
-    ] */
+    ]
   ]
 }

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button, Calendar } from '@alifd/next';
 import moment from 'moment';
-import 'moment/dist/locale/ru';
 
 moment.locale('ru');
-
 console.log(moment().format('LL'));
 
 const Dashboard = () => {
