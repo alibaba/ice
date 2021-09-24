@@ -71,7 +71,7 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
     staticConfig = customStaticConfig;
   }
   // set History before GID
-  initHistory && initHistory(appConfig as any);
+  initHistory && initHistory(appConfig as any, { staticConfig });
   <% } %>
 
   let renderer;
