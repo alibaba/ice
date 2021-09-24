@@ -2,11 +2,11 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
-import { icestarkPlugin } from './vitePluginIcetark';
 import checkEntryFile from './checkEntryFile';
-import { htmlPlugin } from './htmlPlugin';
+import buildPlugin from './buildPlugin';
+import htmlPlugin from './htmlPlugin';
 import lifecyclePlugin from './lifecyclePlugin';
-import type { Entries } from './vitePluginIcetark';
+import type { Entries } from './buildPlugin';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type = 'framework' } = options as Json;
@@ -35,7 +35,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
 
     // Only micro-applications need to be compiled to specific format.
     if (_type === 'child' && vite) {
-      modifyUserConfig('vite.plugins', [icestarkPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
+      modifyUserConfig('vite.plugins', [buildPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
     }
 
     config
