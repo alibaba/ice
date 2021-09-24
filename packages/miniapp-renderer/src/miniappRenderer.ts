@@ -1,10 +1,20 @@
-function miniappRenderer(
-  { appConfig = {} as any, createBaseApp, createHistory, staticConfig, pageProps, emitLifeCycles, ErrorBoundary },
-  { mount, unmount, createElement, Component }
-) {
-  const history = createHistory({ routes: staticConfig.routes });
+import { createElement, Component, ComponentType, ClassAttributes } from 'rax';
+import type { History } from 'history';
 
-  const { runtime } = createBaseApp(appConfig);
+interface IAppProps extends ClassAttributes<any> {
+  Page: ComponentType;
+  history: History;
+  location: unknown;
+}
+
+function miniappRenderer(
+  { appConfig = {} as any, buildConfig, staticConfig, pageProps, ErrorBoundary, appLifecycle: { createBaseApp, emitLifeCycles, initAppLifeCycles } },
+  { mount, unmount }
+) {
+  const history = appConfig.router.history;
+
+  const { runtime } = createBaseApp(appConfig, buildConfig, {}, staticConfig);
+  initAppLifeCycles();
   const AppProvider = runtime?.composeAppProvider?.();
 
   const { app = {} } = appConfig;
@@ -16,7 +26,7 @@ function miniappRenderer(
   emitLifeCycles();
   class App extends Component {
     public render() {
-      const { Page, ...otherProps } = this.props;
+      const { Page, ...otherProps } = this.props as IAppProps;
       const PageComponent = createElement(Page, {
         ...otherProps
       });
@@ -39,14 +49,13 @@ function miniappRenderer(
     return {
       path: pageSource || source,
       render() {
-        const PageComponent = component()();
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
         const appInstance = mount(createElement(App, {
           history,
           location: history.location,
           ...pageProps,
-          Page: PageComponent
+          Page: component,
         }), rootEl);
         document.body.appendChild(rootEl);
 
