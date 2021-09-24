@@ -9,12 +9,14 @@ import lifecyclePlugin from './lifecyclePlugin';
 import type { Entries } from './vitePluginIcetark';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
-  const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
+  const { uniqueName, umd, library, omitSetLibraryName = false, type = 'framework' } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
   const { vite } = userConfig;
 
+  // Be compatible with child's unique properties.
+  const _type = (umd !== undefined  || library !== undefined) ? 'child' : type;
+
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
-  // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
@@ -31,13 +33,20 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   onGetWebpackConfig((config) => {
     const entries = config.toConfig().entry as Entries;
 
-    if (vite) {
+    // Only micro-applications need to be compiled to specific format.
+    if (_type === 'child' && vite) {
       modifyUserConfig('vite.plugins', [icestarkPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
     }
 
     config
       .plugin('DefinePlugin')
-      .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
+      .tap(([args]) => [
+        {
+          ...args,
+          'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__),
+          'process.env.__ICESTARK_TYPE__':  JSON.stringify(_type)
+        }]);
+
     // set alias for default layout
     config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
     // set alias for icestark
@@ -45,11 +54,14 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
       config.resolve.alias.set(pkgName, require.resolve(pkgName));
     });
 
+    // `uniqueName` is shared by framework and child
+    // Remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
     if (!isWebpack5 && uniqueName) {
       config.output.jsonpFunction(`webpackJsonp_${uniqueName}`);
     }
+
     // umd config
-    if (umd) {
+    if (_type === 'child' && umd) {
       const libraryName = library as string || pkg.name as string || 'microApp';
       config.output
         .library(libraryName)
