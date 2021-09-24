@@ -15,6 +15,7 @@ interface ITagPackageInfo extends IPackageInfo {
   distTagVersion: string;
 }
 
+const publishTag = process.env.PUBLISH_TAG || '';
 function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo {
   const { name, localVersion } = packageInfo;
 
@@ -28,7 +29,12 @@ function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo
     ], {
       encoding: 'utf-8'
     });
-    const distTags = JSON.parse(childProcess.stdout) || {};
+
+    let distTags = {};
+    try {
+      distTags = JSON.parse(childProcess.stdout) || {};
+    // eslint-disable-next-line no-empty
+    } catch (err) {}
     const matched = (distTags[tag] || '').match(DIST_TAG_REG);
 
     // 1.0.0-beta.1 -> ["1.0.0-beta.1", "1.0.0", "1"] -> 1.0.0-beta.2
@@ -79,7 +85,7 @@ function publish(pkg: string, distTagVersion: string, directory: string, tag: st
 
 // Entry
 console.log(`[PUBLISH ${PUBLISH_TYPE.toUpperCase()}] Start:`);
-getPackageInfos().then((packageInfos: IPackageInfo[]) => {
+getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
 
   const shouldPublishPackages = packageInfos
     .filter(packageInfo => packageInfo.shouldPublish)

@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -19,11 +19,11 @@
     "webpack-dev-mock": "^1.0.1",
     "webpack-dev-server": "^4.0.0",
     "webpack-plugin-import": "^0.2.6",
-    "@swc/core": "^1.2.50",
+    "@builder/swc": "^0.1.0",
     "@swc/helpers": "^0.2.12",
     "@builder/swc-loader": "^1.0.0",
     "trusted-cert": "^1.0.0",
-    "swc-webpack-plugin": "^1.0.0"
+    "@builder/webpack-plugin-swc": "^1.0.0"
   },
   "files": [
     "lib",

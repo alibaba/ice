@@ -13,6 +13,7 @@ module.exports = ({ types }, { fileList }) => {
             return filePath.includes((state.filename || '').replace(/\.[^/.]+$/, ''));
           });
           if (entryFile) {
+            const importList = [];
             programPath.traverse({
               ImportDeclaration(nodePath) {
                 const { node } = nodePath;
@@ -20,10 +21,13 @@ module.exports = ({ types }, { fileList }) => {
                 if (node.source.value.startsWith('core-js/modules')) {
                   const file = nodePath && nodePath.hub && nodePath.hub.file || state && state.file;
                   // add core-js import declaration at the top of file, Fix: https://github.com/alibaba/ice/issues/4276
-                  addSideEffect(file.path, node.source.value.replace('core-js/', `${coreJSPath}/`));
+                  importList.push([file.path, node.source.value.replace('core-js/', `${coreJSPath}/`)]);
                   nodePath.remove();
                 }
               },
+            });
+            importList.reverse().forEach(([filePath, identifier]) => {
+              addSideEffect(filePath, identifier);
             });
           }
         }

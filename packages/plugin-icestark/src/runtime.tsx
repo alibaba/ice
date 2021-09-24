@@ -21,6 +21,7 @@ const module = ({
   addDOMRender,
   buildConfig,
   setRenderApp,
+  setRenderRouter,
   wrapperRouterRender,
   modifyRoutes,
   applyRuntimeAPI,
@@ -34,6 +35,7 @@ const module = ({
   // compatible with deprecated runtime API
   const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
   const createAppHistory = createHistory || ((options: any) => applyRuntimeAPI('createHistory', options));
+  const setRenderComponent = setRenderApp || setRenderRouter;
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
@@ -108,7 +110,7 @@ const module = ({
         return originRender(routes, RoutesComponent, routerProps);
       });
     } else {
-      setRenderApp((routes) => () => {
+      setRenderComponent((routes) => () => {
         return <IceRouter {...routerProps} routes={routes} />;
       });
     }
@@ -198,7 +200,7 @@ const module = ({
         </BasicLayout>
       );
     };
-    setRenderApp(frameworkRouter);
+    setRenderComponent(frameworkRouter);
   }
 };
 

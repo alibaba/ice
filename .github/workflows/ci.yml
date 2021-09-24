@@ -23,6 +23,7 @@ jobs:
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
+      - run: npm run copy:swc
       - run: npm run version:check
       - run: npm run coverage
         env:

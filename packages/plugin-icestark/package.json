@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/core": "^7.15.5",
     "@babel/types": "^7.11.5",
-    "@ice/stark": "^2.6.0-2",
+    "@ice/stark": "^2.0.0",
     "@ice/stark-app": "^1.2.0",
     "cheerio": "^1.0.0-rc.10",
     "fs-extra": "^8.1.0",
