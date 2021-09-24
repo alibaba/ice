@@ -1,9 +1,12 @@
 import * as path from 'path';
-import Generator from './generator';
+import * as fse from 'fs-extra';
+import Generator from './Generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
 import vitePluginPageRedirect from './vitePluginPageRedirect';
+
+const chalk = require('chalk');
 
 const { name: pluginName } = require('../package.json');
 
@@ -21,7 +24,20 @@ export default async (api: any) => {
   const pagesName: string[] = applyMethod('getPages', srcPath);
 
   const storeExists = checkStoreExists(srcPath, pagesName);
+
   if (!storeExists) {
+    applyMethod('watchFileChange', /store.*/, (event: string, filePath: string) => {
+      if (event === 'add') {
+        // restart WDS
+        console.log('\n');
+        console.log(chalk.magenta(`${filePath} has been created`));
+        console.log(chalk.magenta('restart dev server'));
+        // TODO: why must delete it
+        fse.removeSync(path.join(rootDir, 'node_modules/.cache'));
+        process.send({ type: 'RESTART_DEV' });
+
+      }
+    });
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
@@ -123,6 +139,7 @@ export default async (api: any) => {
   });
 
   gen.render();
+
   onHook('before.start.run', () => {
     applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, (event: string) => {
       if (event === 'add' || event === 'unlink') {
