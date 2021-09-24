@@ -24,13 +24,6 @@ export const USER_CONFIG = [
     name: 'generateRuntime',
     validation: 'boolean',
     defaultValue: false,
-  },
-  {
-    name: 'webpack5',
-    validation: (val) => {
-      return validation('webpack5', val, 'object|boolean');
-    },
-    defaultValue: true,
   }
 ];
 
