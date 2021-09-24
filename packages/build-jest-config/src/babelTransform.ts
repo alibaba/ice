@@ -1,4 +1,4 @@
-import * as babelJest from '@builder/pack/deps/babel-jest';
+import * as babelJest from 'babel-jest';
 import getBabelConfig from '@builder/babel-config';
 import formatWinPath from './formatWinPath';
 
@@ -17,4 +17,5 @@ const jestBabelConfig = {
     return preset;
   }),
 };
-export default babelJest.createTransformer(jestBabelConfig);
+
+module.exports = babelJest.createTransformer(jestBabelConfig);
