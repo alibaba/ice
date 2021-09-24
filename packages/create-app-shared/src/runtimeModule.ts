@@ -17,7 +17,7 @@ interface APIRegistration {
   [key: string]: Function;
 }
 interface InternalValue {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 type RegisterRuntimeAPI = (key: string, api: Function) => void;
