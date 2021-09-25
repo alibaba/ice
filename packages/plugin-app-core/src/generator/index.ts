@@ -123,7 +123,8 @@ export default class Generator {
 
   public parseRenderData() {
     const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
-    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir, absolute: true });
+    // fix https://github.com/raxjs/rax-app/issues/831
+    const globalStyles = globby.sync(['src/global.@(scss|less|styl|css)'], { cwd: this.rootDir, absolute: true });
     let exportsData = {};
     EXPORT_API_MPA.forEach(item => {
       item.name.forEach(key => {
