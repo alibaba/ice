@@ -123,7 +123,8 @@ export default class Generator {
 
   public parseRenderData() {
     const staticConfig = globby.sync(['src/app.json'], { cwd: this.rootDir });
-    const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir, absolute: true });
+    // fix rax-app #831
+    const globalStyles = globby.sync(['src/global.@(scss|less|styl|css)'], { cwd: this.rootDir, absolute: true });
     let exportsData = {};
     EXPORT_API_MPA.forEach(item => {
       item.name.forEach(key => {
@@ -193,8 +194,8 @@ export default class Generator {
     }
   }
 
-  public addTemplateFiles = (templateOptions: string|ITemplateOptions, extraData: IExtraData = {}) => {
-    const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: ''} : templateOptions;
+  public addTemplateFiles = (templateOptions: string | ITemplateOptions, extraData: IExtraData = {}) => {
+    const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: '' } : templateOptions;
     const templates = !path.extname(template) ? globby.sync(['**/*'], { cwd: template }) : [template];
     templates.forEach((templateFile) => {
       const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
