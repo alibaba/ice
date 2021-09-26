@@ -49,7 +49,7 @@ module.exports = (api, { webpackConfig }) => {
   }
 
   // TODO: rax-app need compat with webpack4
-  configWebpack5(webpackConfig, context);
+  configWebpack5(webpackConfig, api);
 
   return webpackConfig;
 };

@@ -20,6 +20,7 @@ export default (api, options) => {
 
   // Set framework field
   setValue('FRAMEWORK', framework);
+  setValue('WEBPACK_CACHE_ID', JSON.stringify(userConfig));
 
   const hasJsxRuntime = (() => {
     try {

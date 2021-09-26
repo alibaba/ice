@@ -1,6 +1,5 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
-import Generator from './Generator';
+import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
@@ -32,10 +31,7 @@ export default async (api: any) => {
         console.log('\n');
         console.log(chalk.magenta(`${filePath} has been created`));
         console.log(chalk.magenta('restart dev server'));
-        // TODO: why must delete it
-        fse.removeSync(path.join(rootDir, 'node_modules/.cache'));
         process.send({ type: 'RESTART_DEV' });
-
       }
     });
     applyMethod('addDisableRuntimePlugin', pluginName);
@@ -129,6 +125,11 @@ export default async (api: any) => {
 
   onGetWebpackConfig((config: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
+    config.merge({
+      cache: {
+        version: `${getValue('WEBPACK_CACHE_ID')}&store=true`
+      }
+    });
   });
 
   const gen = new Generator({
