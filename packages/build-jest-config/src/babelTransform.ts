@@ -17,5 +17,5 @@ const jestBabelConfig = {
     return preset;
   }),
 };
-
+// cjs export while babelTransform will been directly required
 module.exports = babelJest.createTransformer(jestBabelConfig);
