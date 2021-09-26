@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- [fix] set history value after initHistory
+
 ## 1.0.0
 
 - [feat] refactor exports APIs
