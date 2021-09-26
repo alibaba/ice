@@ -6,7 +6,7 @@ import checkPageIndexFileExists from './utils/checkPageIndexFileExists';
 
 export interface IRenderPageParams {
   pageName: string;
-  pageNameDir: string;
+  pageDir: string;
   pageStoreFile: string;
 }
 
@@ -48,9 +48,9 @@ export default class Generator {
 
     const pagesName: string[] = this.applyMethod('getPages', this.srcPath);
     pagesName.forEach((pageName: string) => {
-      const pageNameDir = getPageDir(this.srcPath, pageName);
-      const pageStoreFile = formatPath(getPageStorePath(this.srcPath, pageName));
-      const params = { pageName, pageNameDir, pageStoreFile };
+      const pageDir = getPageDir(this.srcPath, pageName);
+      const pageStoreFile = formatPath(getPageStorePath(pageDir));
+      const params = { pageName, pageDir, pageStoreFile };
       // generate .ice/pages/${pageName}/index.tsx
       this.renderPageComponent(params);
       // generate .ice/pages/${pageName}/Layout.tsx
@@ -79,10 +79,10 @@ export default class Generator {
     });
   }
 
-  private renderPageComponent({ pageName, pageNameDir, pageStoreFile }: IRenderPageParams) {
+  private renderPageComponent({ pageName, pageDir, pageStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.tempPath, 'pages', pageName, 'index.tsx');
-    const pageComponentSourcePath = formatPath(path.join(pageNameDir, 'index'));
+    const pageComponentSourcePath = formatPath(path.join(pageDir, 'index'));
     const pageComponentName = 'PageComponent';
 
     const pageStoreExtname = path.extname(pageStoreFile);
@@ -94,15 +94,15 @@ export default class Generator {
       disableResetPageState: this.disableResetPageState,
     };
 
-    checkPageIndexFileExists(pageNameDir);
+    checkPageIndexFileExists(pageDir);
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
-  private renderPageLayout({ pageName, pageNameDir, pageStoreFile }: IRenderPageParams) {
+  private renderPageLayout({ pageName, pageDir, pageStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.tempPath, 'pages', pageName, 'Layout.tsx');
-    const pageComponentSourcePath = formatPath(`${pageNameDir}/Layout`);
+    const pageComponentSourcePath = formatPath(`${pageDir}/Layout`);
 
     if (!fse.pathExistsSync(pageComponentSourcePath)) {
       return;
@@ -118,7 +118,7 @@ export default class Generator {
       disableResetPageState: this.disableResetPageState,
     };
 
-    checkPageIndexFileExists(pageNameDir);
+    checkPageIndexFileExists(pageDir);
 
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageLayoutRenderData);
   }

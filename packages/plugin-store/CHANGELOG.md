@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] display warning message but the page has no store
+
 ## 2.0.0
 
 - [feat] migrate plugin api
