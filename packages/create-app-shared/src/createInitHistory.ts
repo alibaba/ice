@@ -4,8 +4,9 @@ import { AppConfig } from './types';
 import { setHistory } from './storage';
 
 interface Route {
-  path: string;
+  path?: string;
   source: string;
+  [key: string]: unknown;
 }
 
 export type CreateHistory = (options: {
