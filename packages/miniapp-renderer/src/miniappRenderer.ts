@@ -35,41 +35,20 @@ function miniappRenderer(
       return appInstance;
     }
   }
-  const pagesRenderInfo = staticConfig.routes.map(({ source, component, pageSource }: any) => {
-    return {
-      path: pageSource || source,
-      render() {
-        const PageComponent = component()();
-        const rootEl = document.createElement('div');
-        rootEl.setAttribute('id', rootId);
-        const appInstance = mount(createElement(App, {
-          history,
-          location: history.location,
-          ...pageProps,
-          Page: PageComponent
-        }), rootEl);
-        document.body.appendChild(rootEl);
+  (window as any).__pagesRenderInfo = [];
+  (window as any).__render = function(pageComponent) {
+    const rootEl = document.createElement('div');
+    rootEl.setAttribute('id', rootId);
+    const appInstance = mount(createElement(App, {
+      history,
+      location: history.location,
+      ...pageProps,
+      Page: pageComponent
+    }), rootEl);
+    document.body.appendChild(rootEl);
 
-        (document as any).__unmount = unmount(appInstance, rootEl);
-      },
-      setDocument(value) {
-        // eslint-disable-next-line no-global-assign
-        document = value;
-        // getApp doesn't exist in plugin situation
-        // @ts-ignore
-        if (typeof getApp === 'function') {
-          // @ts-ignore
-          const MiniAppGlobalInstance = getApp();
-          const dispatchDocumentModify = MiniAppGlobalInstance._dispatchDocumentModify;
-          if (typeof dispatchDocumentModify === 'function') {
-            dispatchDocumentModify.call(MiniAppGlobalInstance, value);
-          }
-        }
-      }
-    };
-  });
-
-  (window as any).__pagesRenderInfo = ((window as any).__pagesRenderInfo || []).concat(pagesRenderInfo);
+    (document as any).__unmount = unmount(appInstance, rootEl);
+  };
 }
 
 export default miniappRenderer;
