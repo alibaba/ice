@@ -17,5 +17,8 @@ const jestBabelConfig = {
     return preset;
   }),
 };
+// compatible with babel-jest v27
+// @ts-ignore
+const babelTransform: typeof babelJest = babelJest.default || babelJest;
 // cjs export while babelTransform will been directly required
-module.exports = babelJest.createTransformer(jestBabelConfig);
+module.exports = babelTransform.createTransformer(jestBabelConfig);
