@@ -1,4 +1,4 @@
-import { getAppStorePath, getPageStorePath } from './getPath';
+import { getAppStorePath, getPageDir, getPageStorePath } from './getPath';
 
 function checkStoreExists(srcPath: string, pagesName: string[]) {
   const appStoreExists = checkAppStoreExists(srcPath);
@@ -13,7 +13,8 @@ function checkAppStoreExists(srcPath: string) {
 
 function checkPageStoreExists(srcPath: string, pagesName: string[]) {
   return pagesName.some((pageName: string) => {
-    const pageStorePath = getPageStorePath(srcPath, pageName);
+    const pageDir = getPageDir(srcPath, pageName);
+    const pageStorePath = getPageStorePath(pageDir);
     return !!pageStorePath;
   });
 }
