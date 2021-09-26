@@ -1,3 +1,4 @@
+// jest、babel-jest 推荐在项目依赖中添加，控制两者版本一直（一般情况下 jest 中已依赖 babel-jest）
 import * as babelJest from 'babel-jest';
 import getBabelConfig from '@builder/babel-config';
 import formatWinPath from './formatWinPath';
