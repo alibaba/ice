@@ -9,12 +9,19 @@ import lifecyclePlugin from './lifecyclePlugin';
 import type { Entries } from './buildPlugin';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
-  const { uniqueName, umd, library, omitSetLibraryName = false, type = 'framework' } = options as Json;
+  const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
   const { vite } = userConfig;
 
   // Be compatible with child's unique properties.
-  const appType = (umd !== undefined  || library !== undefined) ? 'child' : type;
+  const appType = type || (umd !== undefined  || library !== undefined) ? 'child' : 'framework';
+
+  if (!type && ((umd !== undefined  || library !== undefined))) {
+    log.warn(`
+      [plugin-icestark]: supposed to be child type. and It is more preferable set type option with child.
+      see https://ice.work/docs/guide/advanced/icestark
+    `);
+  }
 
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
   const isWebpack5 = (webpack as any).version?.startsWith('5');
@@ -22,7 +29,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
 
   if (vite && umd) {
-    log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark option.');
+    log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark options.');
   }
 
   // copy runtime/Layout.tsx to .ice while it can not been analyzed with alias `$ice/Layout`
