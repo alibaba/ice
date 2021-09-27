@@ -14,14 +14,27 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const { vite } = userConfig;
 
   let appType = type;
-  // Be compatible with child's unique properties.
-  if (appType === undefined && (umd !== undefined  || library !== undefined) ) {
-    appType = 'child';
 
-    log.warn(`
-    [plugin-icestark]: supposed to be child type. and it is more preferable set type option with child.
-    see https://ice.work/docs/guide/advanced/icestark
-  `);
+  if (umd || library) {
+    if (appType === 'framework') {
+      log.warn(`
+      [plugin-icestark]: Option umd and library should not be setted where type is 'framework'.
+      see https://ice.work/docs/guide/advanced/icestark
+    `);
+    }
+
+    if (!appType) {
+      appType = 'child';
+
+      log.warn(`
+      [plugin-icestark]: supposed to be child type. and it is more preferable set type option with child.
+      see https://ice.work/docs/guide/advanced/icestark
+    `);
+    }
+  }
+
+  if (!appType) {
+    appType = 'framework';
   }
 
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
