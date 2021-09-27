@@ -13,14 +13,15 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const { rootDir, webpack, pkg, userConfig } = context;
   const { vite } = userConfig;
 
+  let appType = type;
   // Be compatible with child's unique properties.
-  const appType = type || (umd !== undefined  || library !== undefined) ? 'child' : 'framework';
+  if (appType === undefined && (umd !== undefined  || library !== undefined) ) {
+    appType = 'child';
 
-  if (!type && ((umd !== undefined  || library !== undefined))) {
     log.warn(`
-      [plugin-icestark]: supposed to be child type. and It is more preferable set type option with child.
-      see https://ice.work/docs/guide/advanced/icestark
-    `);
+    [plugin-icestark]: supposed to be child type. and it is more preferable set type option with child.
+    see https://ice.work/docs/guide/advanced/icestark
+  `);
   }
 
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
@@ -29,6 +30,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
 
   if (vite && umd) {
+    // FIXME: support UMD format in vite mode
     log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark options.');
   }
 
