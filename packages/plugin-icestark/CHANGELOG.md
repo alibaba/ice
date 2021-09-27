@@ -1,6 +1,11 @@
 # Changelog
 
-# 2.3.0
+## 2.4.0
+
+- [feat] an extra `type` option is configured to distinguish between framework and child. And now, `type` in `appconfig.icestark` is deprecated.
+- [feat] append icestark lifecycles automatically using babel parser.
+
+## 2.3.0
 
 - [feat] migrate runtime api
 - [feat] upgrade build-scripts

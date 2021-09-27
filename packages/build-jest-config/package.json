@@ -1,6 +1,6 @@
 {
   "name": "@builder/jest-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Basic jest config for build-scripts",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -20,8 +20,12 @@
   "dependencies": {
     "@builder/pack": "0.3.0",
     "@builder/babel-config": "^1.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "regenerator-runtime": "^0.13.3",
     "core-js": "^3.3.1"
+  },
+  "devDependencies": {
+    "babel-jest": "^25.0.0"
   },
   "files": [
     "lib",

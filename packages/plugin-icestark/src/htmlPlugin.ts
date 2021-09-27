@@ -22,7 +22,7 @@ const getFiles = (bundle: OutputBundle) => {
     });
 };
 
-export const htmlPlugin = (rootDir: string): Plugin => {
+const htmlPlugin = (rootDir: string): Plugin => {
   let base = '/';
 
   return ({
@@ -64,3 +64,5 @@ export const htmlPlugin = (rootDir: string): Plugin => {
 
   );
 };
+
+export default htmlPlugin;

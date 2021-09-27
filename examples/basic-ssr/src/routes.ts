@@ -13,16 +13,6 @@ export default [
         path: '/dashboard',
         exact: true,
         component: Dashboard,
-        getInitialProps: async (ctx) => {
-          console.log('Dashboard ctx', ctx);
-
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({ title: 'Dashboard Page xxxx...' });
-            }, 1 * 1000);
-          });
-          // return { title: 'Dashboard Page...' }
-        }
       },
       {
         path: '/home',

@@ -164,7 +164,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     logError('[SSR] generate html template error' + error.message);
   }
 
-  return { html, error, redirectUrl: initialContext.redirectUrl };
+  return { html, error, redirectUrl: initialContext.url };
 }
 
 export function generateHtml({
@@ -218,7 +218,7 @@ export async function getComponentByPath(routes, currPath)  {
   const routeData = await findMatchRoute(routes)
   return {
     component: routeData?.component,
-    getInitialProps: routeData?.getInitialProps
+    getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps
   };
 }
 

@@ -4,6 +4,9 @@ interface Storage {
   history: History | null;
 }
 
+// eslint-disable-next-line import/no-mutable-exports
+let history: Storage['history'] = null;
+
 const storage: Storage = {
   history: null,
 };
@@ -13,10 +16,9 @@ function getHistory() {
 }
 
 function setHistory(customHistory: History) {
+  history = customHistory;
   storage.history = customHistory;
 }
-
-const history = storage.history;
 
 export {
   getHistory,

@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.1
+
+- [fix] redirectUrl is undefined
+- [fix] `PageComponent.getInitialProps` is not be executed
+
 ## 3.0.0
 
 - [feat] resolve runtime in server module

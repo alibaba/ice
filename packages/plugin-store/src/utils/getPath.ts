@@ -18,9 +18,8 @@ export function getPageDir(srcPath: string, pageName: string) {
   return fse.pathExistsSync(pagePath) ? pagePath : pagesDir;
 }
 
-export function getPageStorePath(srcPath: string, pageName: string) {
-  const pageNameDir = getPageDir(srcPath, pageName);
-  const storeFileType = getStoreFileType(pageNameDir);
+export function getPageStorePath(pagePath: string) {
+  const storeFileType = getStoreFileType(pagePath);
   // e.g: src/pages/Home/store.ts
-  return storeFileType ? path.join(pageNameDir, `store${storeFileType}`) : '';
+  return storeFileType ? path.join(pagePath, `store${storeFileType}`) : '';
 }
