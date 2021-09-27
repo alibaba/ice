@@ -7,7 +7,7 @@ function joinPath(...strArray: string[]): string {
   if (strArray.length === 0) {
     return '';
   }
-  const resultArray = [];
+  const resultArray: any[] = [];
   const filterStrArray = strArray.filter(str => str !== '');
   filterStrArray.forEach((str, index) => {
     if (typeof str !== 'string') {

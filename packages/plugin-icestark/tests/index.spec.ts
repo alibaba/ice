@@ -3,6 +3,7 @@ import * as path from 'path';
 
 const transformSync = (code, entry, libraryName = 'microApp', omitSetLibraryName = false) => {
   return babel.transformSync(code, {
+    configFile: false,
     plugins: [
       [require.resolve('../src/babelPluginMicroapp'), {
         entryList: [path.join(__dirname, entry)],

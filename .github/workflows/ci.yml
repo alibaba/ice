@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
       - name: Set branch name
@@ -23,6 +23,7 @@ jobs:
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
+      - run: npm run copy:swc
       - run: npm run version:check
       - run: npm run coverage
         env:

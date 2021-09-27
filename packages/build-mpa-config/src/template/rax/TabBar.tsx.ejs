@@ -1,0 +1,26 @@
+import { createElement, Component, Fragment } from 'rax';
+import { isNode } from 'universal-env';
+import TabBar from  '<%= tabBarPath %>';
+
+const currentPageName = '<%= entryName %>';
+
+export default class TabBarWrapper extends Component {
+  handleTabItemClick = ({ path, pageName }) => {
+    if (path) {
+      (window as any).location.href = path;
+    } else {
+      (window as any).location.href = `./${pageName}.html`;
+    }
+  }
+  render() {
+    return <Fragment x-if={isNode || !(window as any).pha}>
+      <% if (tabBarPath.indexOf('src') > -1) {%>
+        <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
+          <TabBar config={<%- JSON.stringify(tabBarConfig) %>} currentPageName={currentPageName} />
+        </div>
+      <% } else { %>
+        <TabBar config={<%- JSON.stringify(tabBarConfig) %>} onClick={this.handleTabItemClick} currentPageName={currentPageName} />
+        <% } %>
+      </Fragment>;
+  }
+};

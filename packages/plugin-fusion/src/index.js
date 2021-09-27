@@ -7,6 +7,7 @@ const AppendStyleWebpackPlugin = require('./webpackPlugins/appendStyleWebpackPlu
 const getThemeVars = require('./utils/getThemeVars');
 const getThemeCode = require('./utils/getThemeCode');
 const getCalcVars = require('./utils/getCalcVars');
+const vitePluginTheme = require('./vitePluginTheme').default;
 
 function normalizeEntry(entry, preparedChunks) {
   const preparedName = (preparedChunks || [])
@@ -54,7 +55,7 @@ function getVariablesPath({
   return filePath;
 }
 
-module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugionOptions = {}) => {
+module.exports = async ({ onGetWebpackConfig, log, context, getAllTask, modifyUserConfig }, pluginOptions = {}) => {
   const {
     themePackage,
     themeConfig,
@@ -68,27 +69,60 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
     componentOptions = {},
     enableColorNames,
     cssVariable,
-  } = plugionOptions;
-  let { uniteBaseComponent } = plugionOptions;
+  } = pluginOptions;
+  let { uniteBaseComponent } = pluginOptions;
   const { rootDir, pkg, userConfig, webpack } = context;
 
   const taskNames = getAllTask();
   // ignore externals rule and babel-plugin-import when compile dist
   const ignoreTasks = ['component-dist'];
+  // 1. 支持主题能力
+  if (themePackage) {
+    if (userConfig.vite) {
+      log.info('vite 模式下推荐使用 css variables 方式注入主题');
+      if (Array.isArray(themePackage)) {
+        log.info('vite 模式下暂不支持多主题');
+      }
+    } else if (Array.isArray(themePackage)) {
+      log.info('已启用 themePackage 多主题功能');
+    } else {
+      log.info('使用 Fusion 组件主题包：', themePackage);
+    }
+  }
+  if (themeConfig) {
+    log.info('自定义 Fusion 组件主题变量：', themeConfig);
+  }
+
+  if (userConfig.vite) {
+    modifyUserConfig('vite', {
+      plugins: [
+        // eslint-disable-next-line global-require
+        require('vite-plugin-style-import').default({
+          libs: [{
+            libraryName: '@alifd/next',
+            esModule: true,
+            resolveStyle: (name) => {
+              // use css variable style for default
+              return `@alifd/next/es/${name}/${cssVariable ? 'style2' : 'style'}`;
+            },
+          }]
+        }),
+        vitePluginTheme({
+          themeConfig: themeConfig || {},
+          themeFile: typeof themePackage === 'string' && getVariablesPath({ packageName: themePackage }),
+        }),
+      ],
+      resolve: {
+        alias: [
+          // compatible with `@import '~@alifd/next/reset.scss';`
+          { find: /^~/, replacement: '' },
+        ],
+      },
+    }, { deepmerge: true });
+  }
+
   taskNames.forEach((taskName) => {
     onGetWebpackConfig(taskName, (config) => {
-      // 1. 支持主题能力
-      if (themePackage) {
-        if (Array.isArray(themePackage)) {
-          log.info('已启用 themePackage 多主题功能');
-        } else {
-          log.info('使用 Fusion 组件主题包：', themePackage);
-        }
-      }
-      if (themeConfig) {
-        log.info('自定义 Fusion 组件主题变量：', themeConfig);
-      }
-  
       let replaceVars = {};
       let defaultScssVars = {};
       let defaultTheme = '';
@@ -207,7 +241,7 @@ module.exports = async ({ onGetWebpackConfig, log, context, getAllTask }, plugio
   
       const crossendBabelLoader = [];
   
-      if ('componentOptions' in plugionOptions) {
+      if ('componentOptions' in pluginOptions) {
         const { bizComponent = [], customPath = '', componentMap = {} } = componentOptions;
         const mixBizCom = {};
   

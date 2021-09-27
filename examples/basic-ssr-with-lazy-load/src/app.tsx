@@ -11,7 +11,7 @@ const appConfig: IAppConfig = {
       await delay(1500);
 
       return {
-        data: {
+        initialStates: {
           user: {
             name: 'Jack Ma',
             id: 10001,
@@ -26,11 +26,6 @@ const appConfig: IAppConfig = {
   },
   request: {
     baseURL: config.baseURL
-  },
-  store: {
-    getInitialStates: (initialData) => {
-      return initialData.data;
-    }
   }
 };
 

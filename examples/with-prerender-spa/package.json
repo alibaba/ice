@@ -1,8 +1,7 @@
 {
-  "name": "exmaple-basic-prerender",
+  "name": "with-prerender-spa-example",
   "description": "",
   "dependencies": {
-    "ice.js": "^1.4.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
@@ -11,8 +10,8 @@
     "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "icejs start --mode dev",
-    "build": "icejs build --mode prod"
+    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
+    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
   },
   "engines": {
     "node": ">=8.0.0"

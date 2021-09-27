@@ -1,27 +1,47 @@
 <% if(!hasJsxRuntime) { %>
-import * as React from 'react';
+  import * as React from 'react';
 <% } %>
-import store from './store';
+import { FC, createContext, useState, useContext } from 'react';
+import { ContextType, AuthType, IAuth } from './types';
 
-// 函数组件支持 hooks 用法
-function useAuth() {
-  const [auth, { setAuth }] = store.useModel('auth');
-  return [
-    auth,
-    setAuth
-  ] as [Record<string, boolean>, typeof setAuth];
+const Context = createContext<any>(null);
+
+interface Props {
+  value: AuthType;
 }
+
+interface InjectProps {
+  auth: ContextType[0];
+  useAuth: ContextType[1];
+}
+
+const Provider: FC<Props> = ({ value = {}, children }) => {
+  const [state, setState] = useState<AuthType>(value);
+  const updateState: InjectProps['useAuth'] = (value = {}) => {
+    setState({
+      ...state,
+      ...value,
+    });
+  };
+  return <Context.Provider value={[state, updateState]}>{children}</Context.Provider>;
+};
+
+const useAuth = (): ContextType => {
+  const value = useContext(Context);
+  return value;
+};
 
 // class 组件支持 Hoc 用法
-function withAuth(Component) {
-  const AuthWrappered = props => {
+function withAuth<Props extends InjectProps>(Component: React.ComponentType<Props>) {
+  type OriginalProps = Omit<Props, keyof InjectProps>;
+  const AuthWrapped = (props: OriginalProps) => {
     const [auth, setAuth] = useAuth();
-    return <Component {...Object.assign({}, props, { auth, setAuth })} />;
-  };
-  return AuthWrappered;
-}
-
-export {
-  useAuth,
-  withAuth
+    const WrappedComponent = Component as React.ComponentType<OriginalProps>;
+    return <WrappedComponent {...props} auth={auth} setAuth={setAuth} />;
+  }
+  return AuthWrapped;
 };
+
+export { useAuth, withAuth, Provider };
+
+export type { IAuth };

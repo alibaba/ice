@@ -4,5 +4,6 @@
     "rootDir": "src",
     "outDir": "lib",
     "esModuleInterop": true
-  }
+  },
+  "exclude": ["bin"]
 }

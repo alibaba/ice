@@ -4,19 +4,16 @@
   "dependencies": {
     "@alifd/next": "^1.19.12",
     "@icedesign/theme": "^1.2.0",
-    "ice.js": "^1.0.11",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4",
-    "build-plugin-fusion": "^0.1.0",
-    "build-plugin-icestark": "^2.0.0"
+    "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "icejs start",
-    "build": "icejs build"
+    "start": "../../packages/icejs/bin/ice-cli.js start",
+    "build": "../../packages/icejs/bin/ice-cli.js build"
   },
   "engines": {
     "node": ">=8.0.0"

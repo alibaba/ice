@@ -14,5 +14,9 @@
   },
   "dependencies": {
     "@midwayjs/faas-dev-pack": "^1.0.0"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

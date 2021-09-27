@@ -1,9 +1,14 @@
 # Changelog
 
+# 2.3.0
+
+- [feat] migrate runtime api
+- [feat] upgrade build-scripts
+- [feat] support es module out of box
 
 ## 2.2.1
 
-- [fix] move all identifiers to vistor to avoid wrong execution results.
+- [fix] move all identifiers to visitor to avoid wrong execution results.
 
 # 2.2.0
 

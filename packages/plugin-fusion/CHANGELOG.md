@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.18
+
+- [feat] support style import in mode vite
+
 ## 0.1.17
 
 - [fix] compatible with umd and other targets.

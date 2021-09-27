@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] migrate runtime api
+
 ## 1.8.2
 
 - [fix] get config file by plugin method

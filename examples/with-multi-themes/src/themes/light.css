@@ -1,0 +1,7 @@
+@import "@alifd/theme-design-pro/variables.css";
+
+:root {
+  --ice-example-bold: #2e2e2e;
+  --ice-example-background: #fff;
+  --switch-normal-on-bg-color: #FF204A;
+}

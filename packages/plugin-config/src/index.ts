@@ -1,23 +1,22 @@
 import * as path from 'path';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 const plugin: IPlugin = async (api): Promise<void> => {
-  const { context, getValue, applyMethod } = api;
+  const { context, applyMethod } = api;
   const { command, rootDir } = context;
   const configFilePattern = 'src/config';
 
   async function generateConfig() {
     const configFile = applyMethod('getSourceFile', configFilePattern, rootDir);
-    const distPath =  path.join(getValue('TEMP_PATH'), 'config.ts');
-    const templatePath = path.join(__dirname, './template/config.ts.ejs');
-    applyMethod('addRenderFile', templatePath, distPath, { hasConfig: !!configFile });
+    const templatePath = path.join(__dirname, './template/index.ts.ejs');
+    applyMethod('addPluginTemplate', templatePath, { hasConfig: !!configFile });
     const exportName = 'config, APP_MODE';
     applyMethod('removeExport', exportName);
     applyMethod('addExport', {
-      source: './config',
+      source: './plugins/config',
       exportName,
       specifier: '{ config, APP_MODE }',
-      importSource: '$$framework/config',
+      importSource: '$$framework/plugins/config',
       exportMembers: ['config', 'APP_MODE'],
     });
   }

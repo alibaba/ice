@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] support `store.disableResetPageState`, deprecate `store.resetPageStore`
+- [refactor] rename `getRoutes` API param from `tempDir` to `tempPath`
+- [feat] add `setHistory` API
+- [feat] refactor module of runApp
+- [feat] refactor runtime folder structure
+- [feat] api of render template
+
 ## 1.4.10
 
 - [fix] globby pattern do not support path of win32

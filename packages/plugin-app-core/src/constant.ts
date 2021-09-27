@@ -9,7 +9,7 @@ export const USER_CONFIG = [
   },
   {
     name: 'ssr',
-    validation: 'boolean'
+    validation: 'boolean|string'
   },
   {
     name: 'auth',
@@ -24,6 +24,13 @@ export const USER_CONFIG = [
     name: 'generateRuntime',
     validation: 'boolean',
     defaultValue: false,
+  },
+  {
+    name: 'webpack5',
+    validation: (val) => {
+      return validation('webpack5', val, 'object|boolean');
+    },
+    defaultValue: true,
   }
 ];
 
