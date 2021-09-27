@@ -1,8 +1,11 @@
 # Changelog
 
-## 2.1.0
+## 2.2.0
 
 - [feat] allow to register `outputDir` in root.
+
+## 2.1.0
+
 - [feat] update `build-script` to 1.x.
 
 ## 2.0.3
