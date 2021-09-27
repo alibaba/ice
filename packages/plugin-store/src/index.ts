@@ -130,6 +130,7 @@ export default async (api: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
     config.merge({
       cache: {
+        type: 'filesystem',
         version: `${getValue('WEBPACK_CACHE_ID')}&store=true`
       }
     });
