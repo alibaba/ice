@@ -4,7 +4,7 @@ export interface Entries {
   [index: string]: string | string[];
 }
 
-export const icestarkPlugin = (entries: Entries): Plugin => {
+const buildPlugin = (entries: Entries): Plugin => {
   // Turn vite input to js files
   const input = Object.keys(entries).reduce((pre, next) => {
     return {
@@ -35,3 +35,5 @@ export const icestarkPlugin = (entries: Entries): Plugin => {
 
   );
 };
+
+export default buildPlugin;

@@ -30,7 +30,7 @@ const module = ({
   wrapperRouteComponent
 }) => {
   const { icestark, router } = appConfig;
-  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
+  const { type: appType = process.env.__ICESTARK_TYPE__, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
   // compatible with deprecated runtime API
   const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
@@ -40,6 +40,7 @@ const module = ({
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
+
   if (appType === 'child') {
     const { icestarkUMD, icestarkType } = buildConfig;
 
