@@ -25,16 +25,14 @@ export default async (api: any) => {
   const storeExists = checkStoreExists(srcPath, pagesName);
 
   if (!storeExists) {
-    onHook('before.start.run', () => {
-      applyMethod('watchFileChange', /store.*/, (event: string, filePath: string) => {
-        if (event === 'add') {
-        // restart WDS
-          console.log('\n');
-          console.log(chalk.magenta(`${filePath} has been created`));
-          console.log(chalk.magenta('restart dev server'));
-          process.send({ type: 'RESTART_DEV' });
-        }
-      });
+    applyMethod('watchFileChange', /store.*/, (event: string, filePath: string) => {
+      if (event === 'add') {
+      // restart WDS
+        console.log('\n');
+        console.log(chalk.magenta(`${filePath} has been created`));
+        console.log(chalk.magenta('restart dev server'));
+        process.send({ type: 'RESTART_DEV' });
+      }
     });
 
     applyMethod('addDisableRuntimePlugin', pluginName);
