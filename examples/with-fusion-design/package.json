@@ -4,18 +4,15 @@
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "moment": "^2.24.0",
-    "ice.js": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "@alifd/theme-design-pro": "^0.x",
-    "build-plugin-fusion": "^0.1.0",
-    "build-plugin-moment-locales": "^0.1.0"
+    "@alifd/theme-design-pro": "^0.x"
   },
   "scripts": {
-    "start": "icejs start",
-    "build": "icejs build"
+    "start": "../../packages/icejs/bin/ice-cli.js start",
+    "build": "../../packages/icejs/bin/ice-cli.js build"
   },
   "engines": {
     "node": ">=8.0.0"
