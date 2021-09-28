@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- [fix] add dependency of eslint-reporting-webpack-plugin
+
 ## 1.0.1
 
 - [chore] use @builder/swc instead of @swc/core
