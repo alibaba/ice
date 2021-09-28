@@ -5,7 +5,7 @@
   "dependencies": {
     "@ali/ice-faas-render": "^1.3.0",
     "@ali/midway-buc-login": "^1.0.10",
-    "@midwayjs/faas": "^2.10.14",
+    "@midwayjs/faas": "^3.0.0-alpha.43",
     "@midwayjs/hooks": "^2.2.0",
     "@midwayjs/serverless-app": "^3.0.0-alpha.28",
     "koa-session": "^6.2.0",
@@ -36,14 +36,22 @@
   "originTemplate": "@ali/ice-scaffold-faas-hooks",
   "private": true,
   "resolutions": {
-    "@midwayjs/cli-plugin-dev": "1.2.83-beta.5",
-    "@midwayjs/serverless-dev-pack": "1.2.83-beta.5",
-    "@midwayjs/bootstrap": "^3.0.0-alpha.9",
-    "@midwayjs/core": "^3.0.0-alpha.9",
-    "@midwayjs/decorator": "^3.0.0-alpha.6",
-    "@midwayjs/runtime-mock": "^3.0.0-alpha.6",
-    "@midwayjs/mock": "^3.0.0-alpha.9",
-    "@midwayjs/runtime-engine": "^3.0.0-alpha.6",
-    "@midwayjs/serverless-app": "^3.0.0-alpha.28"
+    "@midwayjs/faas": "3.0.0-alpha.43",
+    "@midwayjs/cli-plugin-dev": "^1.2.83-beta.5",
+    "@midwayjs/serverless-dev-pack": "^1.2.83-beta.5",
+    "@midwayjs/bootstrap": "3.0.0-alpha.43",
+    "@midwayjs/core": "3.0.0-alpha.43",
+    "@midwayjs/decorator": "3.0.0-alpha.43",
+    "@midwayjs/runtime-mock": "3.0.0-alpha.43",
+    "@midwayjs/mock": "3.0.0-alpha.43",
+    "@midwayjs/runtime-engine": "3.0.0-alpha.43",
+    "@midwayjs/serverless-app": "3.0.0-alpha.43",
+    "@midwayjs/build-plugin-hooks": "^3.0.0-alpha.0",
+    "@midwayjs/hooks-core": "^3.0.0-alpha.0",
+    "@midwayjs/hooks-loader": "^3.0.0-alpha.0",
+    "@midwayjs/hooks-miniprogram-client": "^3.0.0-alpha.0",
+    "@midwayjs/hooks-testing-library": "^3.0.0-alpha.0",
+    "@midwayjs/hooks": "^3.0.0-alpha.0",
+    "@midwayjs/vite-plugin-hooks": "^3.0.0-alpha.0"
   }
 }

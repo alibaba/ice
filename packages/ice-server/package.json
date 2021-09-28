@@ -18,11 +18,11 @@
     "prePublishOnly": "rm -rf lib && tsc"
   },
   "dependencies": {
-    "@midwayjs/hooks": "^2.3.0"
+    "@midwayjs/hooks": "^3.0.0-alpha.0"
   },
   "devDependencies": {
-    "@midwayjs/core": "^3.0.0-alpha.9",
-    "@midwayjs/decorator": "^3.0.0-alpha.6"
+    "@midwayjs/core": "3.0.0-alpha.43",
+    "@midwayjs/decorator": "^3.0.0-alpha.43"
   },
   "engines": {
     "node": ">=10.13.0",

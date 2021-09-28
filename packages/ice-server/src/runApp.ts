@@ -4,7 +4,7 @@ import { hooks } from '@midwayjs/hooks';
 import { setMidwayConfiguration } from './midwayConfiguration';
 import { AppConfig } from './types';
 
-export * from '@ice/server-internal';
+// export * from '@ice/server-internal';
 
 export function runApp(appConfig: AppConfig = {}) {
   const { modules = [], middlewares = [], app: { onConfigLoad, onReady, onStop }} = appConfig;

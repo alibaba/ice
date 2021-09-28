@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { request } from 'ice';
-// import { useRequest } from 'ice';
-// import { getRepo } from '../../apis/lambda';
+import { getRepo } from '../../apis/lambda';
 
 export default function Dashboard() {
-  const [text, setText] = useState('');
-  // const { data, request } = useRequest(() => getRepo());
-
-  // useEffect(() => {
-  //   request();
-  // }, []);
-  // console.log('data: ', data);
+  const [dataSource, setDataSource] = useState<any[]>([]);
 
   useEffect(() => {
-    request('/hello').then((res) => {
-      setText(res)
+    getRepo().then(repoData => {
+      setDataSource(repoData.dataSource)
     })
-  }, []);
+  }, [])
   return (
     <div>
       <h2>Dashboard page</h2>
-      <div>/hello Response: {text}</div>
-      {/* <div>method: {data?.method}</div>
-      <div>name: {data?.dataSource[0].name}</div> */}
+      {
+        dataSource.map(item => {
+          return (
+            <div key={item.id} style={{marginBottom: 10}}>
+              <div>name: {item.name}</div>
+              <div>description: {item.description}</div>
+            </div>
+          )
+        })
+      }
     </div>
   );
 }
