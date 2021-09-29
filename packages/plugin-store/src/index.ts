@@ -1,11 +1,10 @@
 import * as path from 'path';
+import * as chalk from 'chalk';
 import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
 import vitePluginPageRedirect from './vitePluginPageRedirect';
-
-const chalk = require('chalk');
 
 const { name: pluginName } = require('../package.json');
 
