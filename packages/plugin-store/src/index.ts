@@ -127,12 +127,12 @@ export default async (api: any) => {
 
   onGetWebpackConfig((config: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
-    // config.cache({
-    //   type: 'filesystem',
-    //   version: 'store',
-    //   buildDependencies: {config: [path.join(rootDir, 'package.json')]},
-    //   cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
-    // });
+    config.cache({
+      type: 'filesystem',
+      version: 'store',
+      buildDependencies: {config: [path.join(rootDir, 'package.json')]},
+      cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
+    });
     console.log('config===>', config.toConfig());
   });
 
