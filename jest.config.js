@@ -31,8 +31,6 @@ module.exports = {
     'test/basic-mpa.test.ts',
     'test/basic-keep-alive.test.ts',
     'test/basic-nested-store.test.ts',
-    'test/basic-ssr-with-lazy-load.test.ts',
-    'test/basic-ssr.test.ts',
   ],
   // copy from jest config
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
