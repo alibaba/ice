@@ -27,7 +27,6 @@ module.exports = {
     '/node_modules/',
     '/lib/',
     'create-cli-utils/',
-    'test/basic-spa.test.ts',
     'test/basic-mpa.test.ts',
   ],
   // copy from jest config
