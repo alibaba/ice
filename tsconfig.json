@@ -2,10 +2,10 @@
   "files": [],
   "references": [
     { "path": "packages/runtime" },
-    { "path": "packages/plugin-fusion" },
     { "path": "packages/swc" },
     { "path": "packages/build-app-templates" },
     { "path": "packages/build-app-helpers" },
+    { "path": "packages/plugin-fusion" },
     { "path": "packages/build-babel-config" },
     { "path": "packages/build-jest-config" },
     { "path": "packages/build-webpack-config" },

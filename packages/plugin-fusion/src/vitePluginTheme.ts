@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { formatPath } from '@builder/app-helpers';
 import type { Plugin } from 'vite';
 
 interface PluginOptions {
@@ -64,7 +65,7 @@ function vitePluginTheme(options: PluginOptions): Plugin {
       // theme icon only inject once
       const needInjectIcon = !mainSassFile || mainSassFile === id;
       if (iconFile && needInjectIcon) {
-        iconImport = `@import '${iconFile}';`;
+        iconImport = `@import '${formatPath(iconFile)}';`;
         mainSassFile = id;
       }
 
