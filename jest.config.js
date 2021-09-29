@@ -29,8 +29,6 @@ module.exports = {
     'create-cli-utils/',
     'test/basic-spa.test.ts',
     'test/basic-mpa.test.ts',
-    'test/basic-keep-alive.test.ts',
-    'test/basic-nested-store.test.ts',
   ],
   // copy from jest config
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
