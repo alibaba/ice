@@ -7,6 +7,8 @@ import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
 
+// TODO: remove this line next update
+// @ts-ignore
 const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options) => {
   const { command, userConfig, webpack, commandArgs } = context;
   const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
