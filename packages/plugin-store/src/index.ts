@@ -130,7 +130,9 @@ export default async (api: any) => {
     config.merge({
       cache: {
         type: 'filesystem',
-        version: 'store'
+        version: 'store',
+        buildDependencies: {config: [path.join(rootDir, 'package.json')]},
+        cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
       }
     });
     console.log('config===>', config.toConfig());
