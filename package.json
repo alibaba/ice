@@ -30,7 +30,7 @@
     "clean:swc": "rimraf packages/swc/native/**",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest --forceExit",
+    "test": "jest -i --forceExit",
     "test:watch": "jest --watch",
     "coverage": "codecov"
   },

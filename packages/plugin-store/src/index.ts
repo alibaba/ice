@@ -128,12 +128,12 @@ export default async (api: any) => {
 
   onGetWebpackConfig((config: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
-    // config.merge({
-    //   cache: {
-    //     type: 'filesystem',
-    //     version: 'store=true'
-    //   }
-    // });
+    config.merge({
+      cache: {
+        type: 'filesystem',
+        version: 'store=true'
+      }
+    });
   });
 
   const gen = new Generator({
