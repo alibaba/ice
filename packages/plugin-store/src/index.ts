@@ -131,7 +131,7 @@ export default async (api: any) => {
     config.merge({
       cache: {
         type: 'filesystem',
-        version: `${getValue('WEBPACK_CACHE_ID')}&store=true`
+        version: 'store=true'
       }
     });
   });
