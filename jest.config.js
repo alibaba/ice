@@ -15,6 +15,10 @@ module.exports = {
   'coveragePathIgnorePatterns': [
     '<rootDir>/node_modules/'
   ],
+  'transform': {
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.tsx?$': 'ts-jest'
+  },
   'roots': [
     '<rootDir>/packages',
     '<rootDir>/test',
@@ -24,5 +28,6 @@ module.exports = {
     '/lib/',
     'create-cli-utils/',
   ],
-  'preset': 'ts-jest'
+  // copy from jest config
+  'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
 };

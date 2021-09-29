@@ -48,13 +48,14 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     htmlTemplate,
     loadableStatsPath,
     pagesData = [],
+    publicPath,
   } = options;
 
   if (process.env.NODE_ENV === 'development') {
     // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
-  const buildConfig = { loadableStatsPath, publicPath: '<%- publicPath %>' };
+  const buildConfig = { loadableStatsPath, publicPath };
 
   const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
 
@@ -90,6 +91,8 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   if (pageData) {
     // enable pre-render pages
     const { html, ssr } = pageData;
+    // @deprecated
+    // will not supported in the future because there are too few cases.
     if (ssr) {
       return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
     }
@@ -161,7 +164,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     logError('[SSR] generate html template error' + error.message);
   }
 
-  return { html, error, redirectUrl: initialContext.redirectUrl };
+  return { html, error, redirectUrl: initialContext.url };
 }
 
 export function generateHtml({
@@ -215,7 +218,7 @@ export async function getComponentByPath(routes, currPath)  {
   const routeData = await findMatchRoute(routes)
   return {
     component: routeData?.component,
-    getInitialProps: routeData?.getInitialProps
+    getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps
   };
 }
 

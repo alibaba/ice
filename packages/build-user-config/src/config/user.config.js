@@ -96,7 +96,7 @@ module.exports = [
   },
   {
     name: 'minify',
-    validation: 'boolean|string',
+    validation: 'boolean|string|object',
     defaultValue: 'terser',
   },
   {
@@ -153,11 +153,6 @@ module.exports = [
     validation: (val) => {
       return validation('sourceMap', val, 'string|boolean');
     },
-  },
-  {
-    name: 'terserOptions',
-    validation: 'object',
-    defaultValue: {}
   },
   {
     name: 'cssLoaderOptions',
@@ -232,10 +227,6 @@ module.exports = [
     name: 'modularImportRuntime',
     validation: 'boolean',
     defaultValue: true,
-  },
-  {
-    name: 'esbuild',
-    validation: 'object'
   },
   {
     name: 'swc',

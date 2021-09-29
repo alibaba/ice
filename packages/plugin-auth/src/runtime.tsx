@@ -6,7 +6,9 @@ const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
 
   const AuthWrappedComponent = (props) => {
-    const { auth, ...rest } = props;
+    // filter setAuth
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { auth, setAuth, ...rest } = props;
     const pageConfigAuth = pageConfig.auth;
 
     if (pageConfigAuth && !Array.isArray(pageConfigAuth)) {

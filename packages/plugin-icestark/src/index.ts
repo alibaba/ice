@@ -1,39 +1,95 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
-import { IPlugin, Json } from 'build-scripts';
+import type { IPlugin, Json } from 'build-scripts';
+import checkEntryFile from './checkEntryFile';
+import buildPlugin from './buildPlugin';
+import htmlPlugin from './htmlPlugin';
+import lifecyclePlugin from './lifecyclePlugin';
+import type { Entries } from './buildPlugin';
 
-const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, context }, options = {}) => {
-  const { uniqueName, umd, library, omitSetLibraryName = false } = options as Json;
-  const { rootDir, webpack, pkg } = context;
+const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
+  const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
+  const { rootDir, webpack, pkg, userConfig } = context;
+  const { vite } = userConfig;
+
+  let appType = type;
+
+  if (umd || library) {
+    if (appType === 'framework') {
+      log.warn(`
+      [plugin-icestark]: Option umd and library should not be setted where type is 'framework'.
+      see https://ice.work/docs/guide/advanced/icestark
+    `);
+    }
+
+    if (!appType) {
+      appType = 'child';
+
+      log.warn(`
+      [plugin-icestark]: supposed to be child type. and it is more preferable set type option with child.
+      see https://ice.work/docs/guide/advanced/icestark
+    `);
+    }
+  }
+
+  if (!appType) {
+    appType = 'framework';
+  }
+
   const iceTempPath = getValue<string>('TEMP_PATH') || path.join(rootDir, '.ice');
-  // remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
   const isWebpack5 = (webpack as any).version?.startsWith('5');
 
   const hasDefaultLayout = glob.sync(`${path.join(rootDir, 'src/layouts/index')}.@(ts?(x)|js?(x))`).length;
+
+  if (vite && umd) {
+    // FIXME: support UMD format in vite mode
+    log.warn('[plugin-icestark]: umd do not work since vite is enabled. Just remove umd from build-plugin-icestark options.');
+  }
+
+  // copy runtime/Layout.tsx to .ice while it can not been analyzed with alias `$ice/Layout`
+  const layoutSource = path.join(__dirname, '../src/runtime/Layout.tsx');
+  const layoutPath = path.join(iceTempPath, 'plugins/icestark/pluginRuntime/runtime/Layout.tsx');
+  applyMethod('addRenderFile', layoutSource, layoutPath);
+
   onGetWebpackConfig((config) => {
+    const entries = config.toConfig().entry as Entries;
+
+    // Only micro-applications need to be compiled to specific format.
+    if (appType === 'child' && vite) {
+      modifyUserConfig('vite.plugins', [buildPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
+    }
+
     config
       .plugin('DefinePlugin')
-      .tap(([args]) => [{ ...args, 'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__) }]);
+      .tap(([args]) => [
+        {
+          ...args,
+          'process.env.__FRAMEWORK_VERSION__': JSON.stringify(process.env.__FRAMEWORK_VERSION__),
+          'process.env.__ICESTARK_TYPE__':  JSON.stringify(appType)
+        }]);
+
     // set alias for default layout
-    config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : path.join(__dirname, 'runtime/Layout'));
+    config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
     // set alias for icestark
     ['@ice/stark', '@ice/stark-app'].forEach((pkgName) => {
       config.resolve.alias.set(pkgName, require.resolve(pkgName));
     });
 
+    // `uniqueName` is shared by framework and child
+    // Remove output.jsonpFunction in webpack5 see: https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
     if (!isWebpack5 && uniqueName) {
       config.output.jsonpFunction(`webpackJsonp_${uniqueName}`);
     }
+
     // umd config
-    if (umd) {
+    if (appType === 'child' && umd) {
       const libraryName = library as string || pkg.name as string || 'microApp';
       config.output
         .library(libraryName)
         .libraryTarget('umd');
 
       // collect entry
-      const entries = config.toConfig().entry;
       const entryList = [];
       Object.keys(entries).forEach((key) => {
         // only include entry path
@@ -54,7 +110,11 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, cont
             return {
               ...babelOptions,
               plugins: [
-                [require.resolve('./babelPluginMicroapp'), { entryList, libraryName, omitSetLibraryName }],
+                [require.resolve('./babelPluginMicroapp'), {
+                  checkEntryFile: (filename: string) => checkEntryFile(entryList, filename),
+                  libraryName,
+                  omitSetLibraryName
+                }],
                 ...plugins,
               ],
             };

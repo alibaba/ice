@@ -1,0 +1,27 @@
+{
+  "name": "@builder/swc",
+  "version": "0.1.1",
+  "main": "lib/index.js",
+  "napi": {
+    "name": "builder-swc",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin"
+      ],
+      "defaults": true
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@node-rs/helper": "^1.1.0"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "optionalDependencies": {
+    "@builder/swc-darwin-x64": "^0.1.0",
+    "@builder/swc-linux-x64-gnu": "^0.1.0",
+    "@builder/swc-darwin-arm64": "^0.1.0",
+    "@builder/swc-win32-x64-msvc": "^0.1.0"
+  }
+}

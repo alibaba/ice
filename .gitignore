@@ -35,6 +35,9 @@ coverage
 packages/*/lib/
 packages/midway-hooks/
 packages/midway/
+packages/swc/target/
+packages/swc/npm/**/*.node
+
 # temp folder .ice
 examples/*/.ice
 

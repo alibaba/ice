@@ -47,10 +47,10 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
       config.resolve.alias.set(i, routesPath);
     });
     // alias for runtime/Router
-    config.resolve.alias.set('$ice/Router', path.join(__dirname, 'runtime/Router'));
+    config.resolve.alias.set('$ice/Router', path.join(iceTempPath, 'plugins/router/pluginRuntime/runtime/Router.tsx'));
 
     // alias for runtime/history
-    config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'router/history'));
+    config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'plugins/router/history.ts'));
 
     // alias for runtime/ErrorBoundary
     config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));

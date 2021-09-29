@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppConfig, AppRouter, AppRoute } from '@ice/stark';
 import {
@@ -15,27 +16,44 @@ import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IPrivateIceStark, IIceStark } from './types';
 
-const { useEffect, useState } = React;
-
-const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRouterRender, modifyRoutes, applyRuntimeAPI, wrapperPageComponent }) => {
+const module = ({
+  appConfig,
+  addDOMRender,
+  buildConfig,
+  setRenderApp,
+  setRenderRouter,
+  wrapperRouterRender,
+  modifyRoutes,
+  applyRuntimeAPI,
+  createHistory,
+  wrapperPageComponent,
+  wrapperRouteComponent
+}) => {
   const { icestark, router } = appConfig;
-  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
+  const { type: appType = process.env.__ICESTARK_TYPE__, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
+  // compatible with deprecated runtime API
+  const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
+  const createAppHistory = createHistory || ((options: any) => applyRuntimeAPI('createHistory', options));
+  const setRenderComponent = setRenderApp || setRenderRouter;
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
+
   if (appType === 'child') {
-    const { icestarkUMD } = buildConfig;
+    const { icestarkUMD, icestarkType } = buildConfig;
+
+    const localIcestarkType = icestarkType || (icestarkUMD ? 'umd' : 'normal');
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
-    const history = applyRuntimeAPI('createHistory', { type, basename: childBasename });
+    const history = createAppHistory({ type, basename: childBasename });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
-          if (!icestarkUMD) {
+          if (localIcestarkType === 'normal') {
             registerAppEnter(() => {
               const mountNode = getMountNode();
               if (enterRegistration) {
@@ -78,7 +96,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
     };
 
     // get props by props
-    wrapperPageComponent(wrapperPageFn);
+    wrapperComponent(wrapperPageFn);
 
     const routerProps = {
       type,
@@ -93,7 +111,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
         return originRender(routes, RoutesComponent, routerProps);
       });
     } else {
-      setRenderApp((routes) => () => {
+      setRenderComponent((routes) => () => {
         return <IceRouter {...routerProps} routes={routes} />;
       });
     }
@@ -103,7 +121,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(applyRuntimeAPI('createHistory' ,{ type, basename }));
+      const [routerHistory] = useState(createAppHistory({ type, basename }));
       const routerProps = {
         type,
         routes,
@@ -121,7 +139,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
       const [appLeave, setAppLeave] = useState({});
 
       const [apps, setApps] = useState(null);
-      const BasicLayout = Layout || DefaultLayout;
+      const BasicLayout = Layout || DefaultLayout || ((props) => (<>{props.children}</>));
       const RenderAppRoute = (CustomAppRoute || AppRoute) as typeof AppRoute;
 
       useEffect(() => {
@@ -183,7 +201,7 @@ const module = ({ appConfig, addDOMRender, buildConfig, setRenderApp, wrapperRou
         </BasicLayout>
       );
     };
-    setRenderApp(frameworkRouter);
+    setRenderComponent(frameworkRouter);
   }
 };
 

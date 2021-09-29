@@ -20,11 +20,6 @@
     "disable": false,
     "quiet": true
   },
-  "terserOptions": {
-    "compress": {
-      "unused": true
-    }
-  },
   "dropLogLevel": "warn",
   "webpackPlugins": {
     "MiniCssExtractPlugin": {

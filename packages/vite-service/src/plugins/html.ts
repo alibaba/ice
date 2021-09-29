@@ -3,6 +3,7 @@ import { template as templateComplier, set } from 'lodash';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import cheerio from 'cheerio';
+import { formatPath } from '@builder/app-helpers';
 
 const getHtmlContent = ({
   template,
@@ -22,7 +23,6 @@ const getHtmlContent = ({
 
   const $ = cheerio.load(html);
   $('body').append(`<script type="module" src="${entry}" />`);
-  $('head').append('<script>global = globalThis</script>');
 
   return $.html({});
 };
@@ -52,12 +52,14 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
     template,
     templateParameters,
   });
-
+  // vite will get relative path by `path.posix.relative(config.root, id)`
+  // path.posix.relative will get error path when pass relative path of index html
+  const absoluteHtmlPath = formatPath(path.join(rootDir, filename));
   return {
     name: `vite-plugin-html-${pageName}`,
     enforce: 'pre',
     config(cfg) {
-      cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, filename);
+      cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, absoluteHtmlPath);
     },
     resolveId(id) {
       if (id.includes('.html')) {
@@ -66,7 +68,7 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
       return null;
     },
     load(id) {
-      if (id === filename) {
+      if (id === absoluteHtmlPath) {
         return html;
       }
       return null;

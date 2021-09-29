@@ -1,7 +1,10 @@
 import React from 'react';
-import { runApp, APP_MODE, IAppConfig } from 'ice';
+import { runApp, APP_MODE, IAppConfig, logger, history, getHistory } from 'ice';
 
 console.log('APP_MODE', APP_MODE);
+logger.info('APP_MODE', APP_MODE);
+logger.debug('test');
+
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
@@ -19,14 +22,13 @@ const appConfig: IAppConfig = {
       return result;
     },
     onShow() {
+      console.log('getHistory ==>', getHistory());
+      console.log('history ==>', history);
       console.log('app show...');
     },
     onHide() {
       console.log('app hide...');
     },
-  },
-  logger: {
-    level: APP_MODE === 'build' ? 'error' : 'warn',
   },
   router: {
     basename: '/ice',

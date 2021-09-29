@@ -20,7 +20,7 @@ export default function Home(props) {
   const [counterState] = pageStore.useModel('counter');
 
   return (
-    <main>
+    <main className={styles.main}>
       <Head>
         <meta charSet="utf-8" />
         <title>{props.title}</title>

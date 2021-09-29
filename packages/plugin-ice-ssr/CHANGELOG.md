@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.1
+
+- [fix] redirectUrl is undefined
+- [fix] `PageComponent.getInitialProps` is not be executed
+
 ## 3.0.0
 
 - [feat] resolve runtime in server module
@@ -9,7 +14,11 @@
 
 - [feat] support setting getInitialProps with router configuration
 
-# 2.1.3
+## 2.1.4
+
+- [fix] remove default value of `publicPath` while @loadable/webpack-plugin will get it from webpack stats
+
+## 2.1.3
 
 - [fix] make `appConfig.app.rootId` works when ssr
 

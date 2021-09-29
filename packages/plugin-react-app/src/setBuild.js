@@ -1,17 +1,23 @@
+const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
 const { getWebOutputPath, logWebpackConfig } = require('./utils');
 
-module.exports = (api, opts) => {
+module.exports = (api) => {
   const { context, onHook, onGetWebpackConfig } = api;
-  const { targets } = opts;
 
   onHook('before.build.run', ({ config }) => {
     logWebpackConfig(config);
   });
-
-  targets.forEach((target) => {
-    onGetWebpackConfig(target, (config) => {
-      const outputPath = getWebOutputPath(context, { target });
-      config.output.path(outputPath);
-    });
+  onGetWebpackConfig((config) => {
+    const outputPath = getWebOutputPath(context);
+    config.output.path(outputPath);
+    // make a copy of html-webpack-plugin to generate 404.html
+    if (config.plugins.get('HtmlWebpackPlugin')) {
+      config
+        .plugin('HtmlWebpackPlugin_404')
+        .use(HtmlWebpackPlugin, [{
+          ...config.plugin('HtmlWebpackPlugin').get('args')[0],
+          filename: '404.html',
+        }]);
+    }
   });
 };

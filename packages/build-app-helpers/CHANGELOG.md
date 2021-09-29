@@ -4,6 +4,10 @@
 
 - [feat] support api redirectImport
 
+## 2.3.5
+
+- [fix] entry file path
+
 ## 2.3.4
 
 - [feat] support parse tabbar

@@ -1,6 +1,6 @@
 {
   "name": "webpack-plugin-import",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"test\"",

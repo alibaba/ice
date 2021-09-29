@@ -30,7 +30,9 @@ function wrapperRoute(component, routerWrappers) {
 function setComponentAttr(comp: any, route?: RouteItemProps) {
   if(!route) return;
   ['pageConfig', 'getInitialProps'].forEach(attr => {
-    comp[attr] = route[attr];
+    if (Object.prototype.hasOwnProperty.call(route, attr)) {
+      comp[attr] = route[attr];
+    }
   });
 }
 

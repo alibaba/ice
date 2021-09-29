@@ -1,5 +1,5 @@
-import axios, { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
-import * as utils from 'axios/lib/utils';
+import { axios, axiosUtils } from '@ice/runtime';
+import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
 import createAxiosInstance from './createAxiosInstance';
 
 interface IRequestConfig extends AxiosRequestConfig {
@@ -49,18 +49,18 @@ const request = async function <T = any>(options): Promise<T> {
 };
 
 // Provide aliases for supported request methods
-utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+axiosUtils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   request[method] = function <T = any>(url, config) {
-    return request<T>(utils.merge(config || {}, {
+    return request<T>(axiosUtils.merge(config || {}, {
       method,
       url
     }));
   };
 });
 
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+axiosUtils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   request[method] = function <T = any>(url, data, config) {
-    return request<T>(utils.merge(config || {}, {
+    return request<T>(axiosUtils.merge(config || {}, {
       method,
       url,
       data

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-dynamic-require */
-import { transformSync, Options } from '@swc/core';
+import { transformSync, Options } from '@builder/swc';
 import { getOptions } from 'loader-utils';
 import * as deepmerge from 'deepmerge';
 
@@ -10,7 +10,10 @@ export default function(source) {
   // Define sourceMaps by webpack devtool values
   const loaderOptions = getOptions(this) || {};
   const sourceMaps = !!devtool;
+
   const compileOptions: Options = deepmerge({
+    filename,
+    sourceFileName: filename,
     sourceMaps,
     jsc: {
       parser: {
@@ -20,7 +23,7 @@ export default function(source) {
       target: 'es2021'
     },
   }, loaderOptions);
-  
+
   try {
     const { code, map } = transformSync(source, compileOptions);
     callback(null, code, map);

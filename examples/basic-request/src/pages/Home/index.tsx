@@ -83,13 +83,13 @@ const CustomRequestDemo = () => {
   const { data, loading, error, request: fetchRepo } = useRequest(service.getRepo);
   console.log('自定义请求进行调用:', { data, loading, error });
   useEffect(() => {
-    fetchRepo();
+    fetchRepo(1);
   }, [fetchRepo]);
 
   return (
     <div>
       <h4>自定义请求演示</h4>
-      <button type='button' onClick={fetchRepo}>自定义请求进行调用</button>
+      <button type='button' onClick={() => fetchRepo(2)}>自定义请求进行调用</button>
       {
         loading ?
           <div>loading...</div> :

@@ -1,10 +1,17 @@
 {
   "hash": false,
-  "minify": false,
+  "minify": "esbuild",
+  "polyfill": false,
   "vite": true,
   "vendor": false,
   "plugins": [],
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
+  },
+  "proxy": {
+    "/todos": {
+      "target": "http://jsonplaceholder.typicode.com",
+      "changeOrigin": true
+    }
   }
 }

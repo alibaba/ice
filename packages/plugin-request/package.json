@@ -19,8 +19,11 @@
   ],
   "dependencies": {
     "@ahooksjs/use-request": "^2.0.0",
-    "axios": "^0.19.2",
+    "@ice/runtime": "^0.1.0",
     "fs-extra": "^8.1.0"
+  },
+  "devDependencies": {
+    "axios": "^0.21.4"
   },
   "pluginConfig": {
     "staticModule": true
