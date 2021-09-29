@@ -27,6 +27,7 @@ module.exports = {
     '/node_modules/',
     '/lib/',
     'create-cli-utils/',
+    'test/basic-store.test.ts'
   ],
   // copy from jest config
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
