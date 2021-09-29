@@ -1,19 +1,19 @@
 {
-  "name": "@ali/ice-scaffold-faas-hooks",
+  "name": "basic-faas",
   "version": "0.1.0",
   "description": "icejs & midway hooks",
   "dependencies": {
     "@ali/ice-faas-render": "^1.3.0",
     "@ali/midway-buc-login": "^1.0.10",
     "@midwayjs/faas": "^3.0.0-alpha.43",
-    "@midwayjs/hooks": "^2.2.0",
+    "@midwayjs/hooks": "^3.0.0-alpha.0",
     "@midwayjs/serverless-app": "^3.0.0-alpha.28",
     "koa-session": "^6.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "@ali/build-plugin-faas": "2.1.1-0",
+    "@ali/build-plugin-faas": "^2.1.1",
     "@ali/faas-middleware-interface": "^1.2.1",
     "@midwayjs/build-plugin-hooks": "^2.2.0",
     "@types/react": "^16.9.13",
@@ -24,16 +24,9 @@
     "start": "RUNTIME_DEBUG=true ../../packages/icejs/bin/ice-cli.js start --mode dev --config config.ts",
     "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
   },
-  "ideMode": {
-    "name": "ice-react"
-  },
-  "iceworks": {
-    "type": "react"
-  },
   "engines": {
     "node": ">=8.0.0"
   },
-  "originTemplate": "@ali/ice-scaffold-faas-hooks",
   "private": true,
   "resolutions": {
     "@midwayjs/faas": "3.0.0-alpha.43",
