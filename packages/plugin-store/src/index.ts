@@ -130,9 +130,10 @@ export default async (api: any) => {
     config.merge({
       cache: {
         type: 'filesystem',
-        version: 'store=true'
+        version: 'store'
       }
     });
+    console.log('config===>', config.toConfig());
   });
 
   const gen = new Generator({
