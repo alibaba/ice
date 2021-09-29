@@ -14108,10 +14108,10 @@ npmlog@^4.1.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nsfw@1.2.7:
-  version "1.2.7"
-  resolved "https://registry.nlark.com/nsfw/download/nsfw-1.2.7.tgz#e8579c107cdecba13d6dad0e2be10ae1ae1a6f3e"
-  integrity sha1-6FecEHzey6E9ba0OK+EK4a4abz4=
+nsfw@1.2.6:
+  version "1.2.6"
+  resolved "https://registry.nlark.com/nsfw/download/nsfw-1.2.6.tgz#efbe189ce256082e4addc3a1c2da736278143d5a"
+  integrity sha1-774YnOJWCC5K3cOhwtpzYngUPVo=
   dependencies:
     fs-extra "^7.0.0"
     lodash.isinteger "^4.0.4"
