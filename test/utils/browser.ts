@@ -10,7 +10,7 @@ export interface IPage extends puppeteer.Page {
   $$text?: (selector: string, trim?: boolean) => Promise<(string|null)[]>;
   $attr?: (selector: string, attr: string) => Promise<string|null>;
   $$attr?: (selector: string, attr: string) => Promise<(string|null)[]>;
-  push?: (url: string, options?: any) => Promise<any>;
+  push?: (url: string, options?: puppeteer.DirectNavigationOptions) => Promise<puppeteer.Response>;
 }
 
 interface IBrowserOptions {
@@ -100,11 +100,11 @@ export default class Browser {
         return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent
       }), trim);
     page.$attr = (selector, attr) =>
-      page.$eval(selector, (el, ...attr: any[]) => el.getAttribute(attr[0]), attr);
+      page.$eval(selector, (el, attr: string) => el.getAttribute(attr), attr);
     page.$$attr = (selector, attr) =>
       page.$$eval(
         selector,
-        (els, ...attr: any[]) => els.map(el => el.getAttribute(attr[0])),
+        (els, attr: string) => els.map(el => el.getAttribute(attr)),
         attr
       );
     return page;
