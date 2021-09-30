@@ -22,7 +22,8 @@
   },
   "devDependencies": {
     "@midwayjs/core": "3.0.0-alpha.43",
-    "@midwayjs/decorator": "^3.0.0-alpha.43"
+    "@midwayjs/decorator": "^3.0.0-alpha.43",
+    "@midwayjs/faas": "^3.0.0-alpha.43"
   },
   "engines": {
     "node": ">=10.13.0",

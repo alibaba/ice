@@ -1,5 +1,6 @@
 export default {
-   plugins: [
+  ssr: true,
+  plugins: [
     "@midwayjs/build-plugin-hooks",
     "@ali/build-plugin-faas"
   ],
