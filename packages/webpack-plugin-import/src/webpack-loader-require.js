@@ -22,10 +22,11 @@ module.exports = function webpackLoaderRequire(source) {
     this.cacheable();
   }
 
-  const query = loaderUtils.parseQuery(this.query);
-  if (query && query.mod) {
+  const options = loaderUtils.getOptions(this);
+
+  if (options && options.mod) {
     // 兼容 windows
-    callback(null, convert(source, query.mod.replace(/\\/g, '/')));
+    callback(null, convert(source, options.mod.replace(/\\/g, '/')));
   } else {
     callback(null, source);
   }
