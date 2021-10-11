@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.20
+
+- [fix] icon path in win32
+
+## 0.1.19
+
+- [fix] theme icon in vite mode
+
 ## 0.1.18
 
 - [feat] support style import in mode vite

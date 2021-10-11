@@ -1,8 +1,10 @@
 import * as fs from 'fs';
+import { formatPath } from '@builder/app-helpers';
 import type { Plugin } from 'vite';
 
 interface PluginOptions {
   themeFile?: string;
+  iconFile?: string;
   themeConfig?: Record<string, string>;
 }
 
@@ -21,7 +23,8 @@ function deleteEmptyLine(str: string) {
 }
 
 function vitePluginTheme(options: PluginOptions): Plugin {
-  const { themeFile, themeConfig } = options;
+  const { themeFile, themeConfig, iconFile } = options;
+  let mainSassFile = '';
   let themeFileVars = '';
   let themeConfigVars = '';
   if (themeFile) {
@@ -58,10 +61,18 @@ function vitePluginTheme(options: PluginOptions): Plugin {
         importVarsCode = '@import \'@alifd/next/variables.scss\';';
       }
 
+      let iconImport = '';
+      // theme icon only inject once
+      const needInjectIcon = !mainSassFile || mainSassFile === id;
+      if (iconFile && needInjectIcon) {
+        iconImport = `@import '${formatPath(iconFile)}';`;
+        mainSassFile = id;
+      }
+
       if (!prefixVars && !themeConfigVars && !themeFileVars && !importVarsCode) {
         return null;
       } else {
-        return `${themeFileVars}\n${themeConfigVars}\n${prefixVars}\n${importVarsCode}\n${code}`;
+        return `${themeFileVars}\n${themeConfigVars}\n${prefixVars}\n${importVarsCode}\n${iconImport}\n${code}`;
       }
     }
   };

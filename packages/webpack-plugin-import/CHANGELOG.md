@@ -1,5 +1,13 @@
 # webpack-plugin-import Changelog
 
+## 0.2.9
+
+- [fix] change loader options involved in object
+
+## 0.2.8
+
+- [fix] compatible with webpack5
+
 ## 0.2.7
 
 - [chore] update webpack api

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-fusion",
-  "version": "0.1.18",
+  "version": "0.1.20",
   "description": "plugin for build scripts while use fusion component",
   "main": "lib/index.js",
   "scripts": {

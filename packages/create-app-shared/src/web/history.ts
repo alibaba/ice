@@ -1,6 +1,7 @@
 import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from 'history';
 import type { CreateHistory, InitHistory } from '../createInitHistory';
 import createInitHistory from '../createInitHistory';
+import { setHistory } from '../storage';
 
 const createHistory: CreateHistory = ({ type, basename, location }) => {
   let history: History;
@@ -15,6 +16,7 @@ const createHistory: CreateHistory = ({ type, basename, location }) => {
   } else {
     history = createMemoryHistory();
   }
+  setHistory(history);
   return history;
 };
 

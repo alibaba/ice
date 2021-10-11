@@ -58,7 +58,8 @@ module.exports = class WebpackPluginImport {
       (NormalModuleFactory) => {
         NormalModuleFactory.hooks.afterResolve.tap(
           'after-resolve',
-          (result = {}) => {
+          (resolveData = {}) => {
+            const result = resolveData.createData || resolveData;
             if (result.loaders && /\.(ts|js)x?$/i.test(result.resource)) {
               let needAdditionalStyle = false;
               let stylePath = 'style.js';
@@ -90,9 +91,12 @@ module.exports = class WebpackPluginImport {
                 );
 
                 if (fileExists(modPath)) {
-                  result.loaders.push(
-                    `${webpackLoaderRequire}?mod=${modPath}`
-                  );
+                  result.loaders.push({
+                    loader: webpackLoaderRequire,
+                    options: {
+                      mod: modPath
+                    }
+                  });
                 }
               }
             }
