@@ -58,11 +58,20 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
     scss: 'sassOptions',
     less: 'lessOptions',
   };
+  // additionalData is special option for pre processor
+  // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/css.ts#L1035
+  const pickOptions = ['additionalData'];
   const optionsKey: string = optionsMap[rule];
 
   return (...args) => {
     const opt = args[2].module.rules.get(rule).use(loaderName).get('options');
-    return optionsKey ? opt?.[optionsKey] : opt;
+    const preProcessOptions = (optionsKey ? opt?.[optionsKey] : opt) || {};
+    pickOptions.forEach(pickKey => {
+      if (opt[pickKey]) {
+        preProcessOptions[pickKey] = opt[pickKey];
+      }
+    });
+    return preProcessOptions;
   };
 };
 
