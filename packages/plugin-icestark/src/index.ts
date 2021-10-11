@@ -15,6 +15,12 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
 
   let appType = type;
 
+  if (!type) {
+    log.warn(`
+    [plugin-icestark]: type should to be included, which we truly suggested. see https://ice.work/docs/guide/advanced/icestark/#type-1
+  `);
+  }
+
   if (umd || library) {
     if (appType === 'framework') {
       log.warn(`

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.1
+
+- [chore] provide more prompt information.
+
 ## 2.4.0
 
 - [feat] an extra `type` option is configured to distinguish between framework and child. And now, `type` in `appconfig.icestark` is deprecated.
