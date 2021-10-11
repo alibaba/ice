@@ -212,7 +212,10 @@ const module = ({
   }
 
   if (appType === 'framework' && !getApps) {
-    console.warn('[plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app; otherwise, If not，please make sure appConfgi.icestark.type is enabled.');
+    console.warn(`
+      [plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app; If not，please make sure appConfgi.icestark.type exist.
+      see https://ice.work/docs/guide/advanced/icestark/
+    `);
   }
 };
 
