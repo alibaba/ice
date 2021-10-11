@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- [fix] set history when call createHistory in runtime plugins
+
 ## 1.0.1
 
 - [fix] set history value after initHistory
