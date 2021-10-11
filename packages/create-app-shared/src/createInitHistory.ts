@@ -4,8 +4,9 @@ import { AppConfig } from './types';
 import { setHistory } from './storage';
 
 interface Route {
-  path: string;
+  path?: string;
   source: string;
+  [key: string]: unknown;
 }
 
 export type CreateHistory = (options: {
@@ -16,17 +17,26 @@ export type CreateHistory = (options: {
   customHistory?: History;
 }) => History<unknown>
 type InitialContext = null | { location?: Location }
-export type InitHistory = (appConfig: AppConfig, initialContext?: InitialContext) => void;
+type Options = {
+  initialContext?: InitialContext,
+  staticConfig?: {
+    routes: Route[];
+    [key: string]: unknown;
+  };
+}
+export type InitHistory = (appConfig: AppConfig, options?: Options) => void;
 
-export default (createHistory: CreateHistory) => (appConfig: AppConfig, initialContext = null) => {
-  if (!appConfig.router) {
-    appConfig.router = DEFAULT_APP_CONFIG.router;
-  }
-  const { router } = appConfig;
-  const { type = DEFAULT_APP_CONFIG.router.type, basename, history: customHistory } = router;
-  const location = initialContext ? initialContext.location : null;
-  const newHistory = createHistory({ type, basename, location, customHistory });
+export default (createHistory: CreateHistory) =>
+  (appConfig: AppConfig, options: Options = { staticConfig: { routes: [] } }) => {
+    if (!appConfig.router) {
+      appConfig.router = DEFAULT_APP_CONFIG.router;
+    }
+    const { initialContext = null, staticConfig = { routes: [] } } = options;
+    const { router } = appConfig;
+    const { type = DEFAULT_APP_CONFIG.router.type, basename, history: customHistory } = router;
+    const location = initialContext ? initialContext.location : null;
+    const newHistory = createHistory({ type, basename, location, customHistory, routes: staticConfig.routes });
 
-  appConfig.router.history = newHistory;
-  setHistory(newHistory);
-};
+    appConfig.router.history = newHistory;
+    setHistory(newHistory);
+  };

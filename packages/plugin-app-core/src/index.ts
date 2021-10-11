@@ -134,6 +134,8 @@ function getDefaultRenderData(api, options) {
       isReact: false,
       isRax: true,
       isMiniapp,
+      isMPA: false,
+      tabBarPath: '', // avoid ejs error
       routesFilePath: './staticConfig',
     };
   } else {

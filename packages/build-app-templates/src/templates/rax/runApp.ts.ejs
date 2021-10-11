@@ -25,7 +25,8 @@ import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
-import { IAppConfig, IBuildConfig, IStaticConfig } from '<%- typesPath  %>';
+import { IAppConfig, IBuildConfig, IStaticConfig, IRuntimeValue } from '<%- typesPath  %>';
+import { mount, unmount } from '<%- relativeCorePath %>/render';
 <% if (routesFilePath)  { %>
 import defaultStaticConfig from '<%- routesFilePath %>';
 <% } %>
@@ -35,7 +36,16 @@ let staticConfig: IStaticConfig | undefined;
 <% if (routesFilePath)  { %>
 staticConfig = defaultStaticConfig;
 <% } %>
+const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+const runtimeValue: IRuntimeValue = {};
+
+<% if (tabBarPath) {%>
+if (!inMiniApp) {
+  runtimeValue.TabBar = TabBar;
+  runtimeValue.tabBarConfig = <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %>;
+}
+<% } %>
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
@@ -45,6 +55,7 @@ const frameworkAppBase = createBaseApp({
     <% } %>
     getSearchParams,
   },
+  runtimeValue,
 });
 
 <% if (typeof pageConfig !== 'undefined') {%>
@@ -64,12 +75,12 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
     staticConfig = customStaticConfig;
   }
   // set History before GID
-  initHistory && initHistory(appConfig as any);
+  initHistory && initHistory(appConfig as any, { staticConfig });
   <% } %>
 
   let renderer;
   renderer = raxAppRenderer;
-  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
+  if (inMiniApp) {
     renderer = miniappRenderer;
   }
   renderer({
@@ -85,9 +96,12 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
     <% if (typeof pageConfig !== 'undefined') {%>
     pageConfig,
     <% } %>
-    <% if (tabBarPath) {%>
+    <% if (tabBarPath && isMPA) {%>
     TabBar,
     <% } %>
+  }, {
+    mount,
+    unmount,
   });
 };
 
