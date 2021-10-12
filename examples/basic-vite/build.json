@@ -8,6 +8,7 @@
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },
+  "tsChecker": true,
   "proxy": {
     "/todos": {
       "target": "http://jsonplaceholder.typicode.com",
