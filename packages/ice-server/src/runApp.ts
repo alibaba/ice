@@ -10,11 +10,11 @@ export function runApp(appConfig: AppConfig = {}) {
   const { modules = [], addMiddlewares, app: { onConfigLoad, onReady, onStop }} = appConfig;
 
   const defaultImportConfigs = generateDefaultImportConfigs();
-  const hooksModule = generateHooksModule();
+  const defaultModules = generateDefaultModules();
 
   const configuration = {
     importConfigs: [...defaultImportConfigs],
-    modules: [hooksModule, ...modules],
+    modules: [...defaultModules, ...modules],
     addMiddlewares,
     onConfigLoad,
     onReady,
@@ -25,8 +25,8 @@ export function runApp(appConfig: AppConfig = {}) {
   setMidwayConfiguration(configuration);
 }
 
-function generateHooksModule() {
-  return hooks();
+function generateDefaultModules() {
+  return [hooks()];
 }
 
 function generateDefaultImportConfigs() {
