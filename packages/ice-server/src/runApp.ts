@@ -26,10 +26,7 @@ export function runApp(appConfig: AppConfig = {}) {
 }
 
 function generateHooksModule() {
-  return hooks({
-    // TODO how to get middleware
-    middleware: []
-  });
+  return hooks();
 }
 
 function generateDefaultImportConfigs() {
