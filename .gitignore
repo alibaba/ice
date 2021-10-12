@@ -42,7 +42,7 @@ packages/swc/npm/**/*.node
 examples/*/.ice
 
 # faas example config
-examples/basic-faas/apis/config
+examples/basic-faas/src/apis/config/
 
 # temp file of test
 packages/webpack-plugin-extract-css-assets/test/actual/*
