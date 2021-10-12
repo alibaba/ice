@@ -67,7 +67,7 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
     const opt = args[2].module.rules.get(rule).use(loaderName).get('options');
     const preProcessOptions = (optionsKey ? opt?.[optionsKey] : opt) || {};
     pickOptions.forEach(pickKey => {
-      if (opt[pickKey]) {
+      if (opt?.[pickKey]) {
         preProcessOptions[pickKey] = opt[pickKey];
       }
     });
