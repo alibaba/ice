@@ -36,4 +36,4 @@ export default (createHistory: CreateHistory) =>
     const location = initialContext ? initialContext.location : null;
     const newHistory = createHistory({ type, basename, location, customHistory, routes: staticConfig.routes });
     appConfig.router.history = newHistory;
-};
+  };
