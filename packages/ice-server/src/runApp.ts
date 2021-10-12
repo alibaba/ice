@@ -10,12 +10,11 @@ export function runApp(appConfig: AppConfig = {}) {
   const { modules = [], addMiddlewares, app: { onConfigLoad, onReady, onStop }} = appConfig;
 
   const defaultImportConfigs = generateDefaultImportConfigs();
-  const defaultModules = generateDefaultModules();
+  const hooksModule = generateHooksModule();
 
   const configuration = {
     importConfigs: [...defaultImportConfigs],
-    modules: [...defaultModules, ...modules],
-    // TODO: 区分 function(hooks) 和 class 类型的中间件
+    modules: [hooksModule, ...modules],
     addMiddlewares,
     onConfigLoad,
     onReady,
@@ -26,8 +25,11 @@ export function runApp(appConfig: AppConfig = {}) {
   setMidwayConfiguration(configuration);
 }
 
-function generateDefaultModules() {
-  return [hooks()];
+function generateHooksModule() {
+  return hooks({
+    // TODO how to get middleware
+    middleware: []
+  });
 }
 
 function generateDefaultImportConfigs() {
