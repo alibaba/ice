@@ -10,7 +10,7 @@ export interface AppConfig {
   modules?: AppModule[];
 
   // 中间件
-  middlewares?: any[];
+  addMiddlewares?: ({ app }) => Promise<any[]>;
 
   app?: {
     // 生命周期
@@ -23,7 +23,7 @@ export interface AppConfig {
 export interface MidwayConfiguration {
   importConfigs: any[];
   modules: AppModule[];
-  middlewares: any[];
+  addMiddlewares?: ({ app }) => Promise<any[]>;
   onConfigLoad?: LifeCycleFunc;
   onReady?: LifeCycleFunc;
   onStop?: LifeCycleFunc;

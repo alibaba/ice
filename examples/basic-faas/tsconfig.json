@@ -41,7 +41,7 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "src/",
+    "src",
     ".ice"
   ],
   "exclude": [

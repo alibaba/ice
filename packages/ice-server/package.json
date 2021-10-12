@@ -15,18 +15,26 @@
     "url": "git@github.com:alibaba/ice.git"
   },
   "scripts": {
-    "prePublishOnly": "rm -rf lib && tsc"
+    "prePublishOnly": "rm -rf lib && tsc",
+    "yalc-watch": "yalc-watch"
   },
   "dependencies": {
     "@midwayjs/hooks": "^3.0.0-alpha.0"
   },
   "devDependencies": {
     "@midwayjs/core": "3.0.0-alpha.43",
-    "@midwayjs/decorator": "^3.0.0-alpha.43"
+    "@midwayjs/decorator": "3.0.0-alpha.43",
+    "typescript": "^4.4.3",
+    "yalc-watch": "^0.0.6"
   },
   "engines": {
     "node": ">=10.13.0",
     "npm": ">=3.0.0"
+  },
+  "yalcWatch": {
+    "watchFolder": "lib",
+    "buildWatchCommand": "tsc --watch",
+    "extensions": "js"
   },
   "gitHead": "cf40d079714b437417e77b444b078cf83286f2fc"
 }

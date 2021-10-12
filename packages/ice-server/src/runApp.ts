@@ -7,7 +7,7 @@ import { AppConfig } from './types';
 // export * from '@ice/server-internal';
 
 export function runApp(appConfig: AppConfig = {}) {
-  const { modules = [], middlewares = [], app: { onConfigLoad, onReady, onStop }} = appConfig;
+  const { modules = [], addMiddlewares, app: { onConfigLoad, onReady, onStop }} = appConfig;
 
   const defaultImportConfigs = generateDefaultImportConfigs();
   const defaultModules = generateDefaultModules();
@@ -16,7 +16,7 @@ export function runApp(appConfig: AppConfig = {}) {
     importConfigs: [...defaultImportConfigs],
     modules: [...defaultModules, ...modules],
     // TODO: 区分 function(hooks) 和 class 类型的中间件
-    middlewares,
+    addMiddlewares,
     onConfigLoad,
     onReady,
     onStop,
