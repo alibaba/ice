@@ -10,6 +10,7 @@ export default async function render() {
     title: 'ICE & Midway Hooks',
     g_config: {},
     baseDir,
+    vite: true,
     favicon: 'https://img.alicdn.com/tfs/TB1.WE9xkL0gK0jSZFAXXcA9pXa-200-200.png',
   });
 }

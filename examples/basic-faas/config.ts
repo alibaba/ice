@@ -4,6 +4,7 @@ export default {
     "@ali/build-plugin-faas"
   ],
   server: {
-    outDir: "./build-abc",
-  }
+    outDir: "./build-abc"
+  },
+  vite: true
 }
