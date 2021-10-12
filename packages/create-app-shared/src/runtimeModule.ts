@@ -169,11 +169,7 @@ class RuntimeModule {
   }
 
   public getRuntimeValue: GetRuntimeValue = (key) => {
-    if (!Object.prototype.hasOwnProperty.call(this.internalValue, key)) {
-      console.warn(`unknown internal value ${key}`);
-    } else {
-      return this.internalValue[key];
-    }
+    return this.internalValue[key];
   }
 
   private setRenderApp: SetRenderApp = (renderRouter) => {
