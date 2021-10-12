@@ -42,10 +42,7 @@ const createTsDiagnostic = (rootDir: string) => {
       options,
       errorCount
     ) => {
-      if (diagnostic.code === 6031) return;
       // https://github.com/microsoft/TypeScript/issues/32542
-      // https://github.com/microsoft/TypeScript/blob/dc237b317ed4bbccd043ddda802ffde00362a387/src/compiler/diagnosticMessages.json#L4086-L4088
-      // eslint-disable-next-line default-case
       switch (diagnostic.code) {
         case 6031:  // Initial build
         case 6032:  // Incremental build
@@ -58,6 +55,9 @@ const createTsDiagnostic = (rootDir: string) => {
           if (errorCount === 0) {
             logChunk = '';
           }
+          break;
+        default:
+          break;
       }
       console.log(`${logChunk}${os.EOL}${diagnostic.messageText.toString()}`);
     };
