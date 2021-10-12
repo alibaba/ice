@@ -5,7 +5,7 @@ export type AppModule = (string | IComponentInfo | { Configuration: any })
 
 export type LifeCycleFunc = (container: IMidwayContainer, app?: IMidwayApplication) => void;
 
-type AddMiddlewares = ({ app, baseDir, appDir, ctx, useConfig }) => Promise<any[]>;
+type AddMiddlewares = ({ app, baseDir, appDir }) => Promise<any[]>;
 
 export interface AppConfig {
   // midway 组件
