@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/vite-plugin-ts-checker"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

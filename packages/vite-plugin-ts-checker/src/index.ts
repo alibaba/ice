@@ -30,28 +30,28 @@ const vitePluginTsChecker = (): Plugin => {
     config: (config, env) => {
       viteMode = env.command;
       rootDir = config.root;
-      // only work in dev mode
-      if (viteMode === 'serve') {
-        // eslint-disable-next-line global-require
-        worker = require('./tsChecker').default;
-      }
     },
     buildStart: () => {
       // run a bin command in a separated process when build
-      if (viteMode !== 'build') return;
-      // spawn an async runner that we don't wait for in order to avoid blocking the build from continuing in parallel
-      (async () => {
-        const exitCode = await spawnTsChecker();
-        if (exitCode !== 0) process.exit(exitCode);
-      })();
+      if (viteMode === 'build') {
+        // spawn an async runner that we don't wait for in order to avoid blocking the build from continuing in parallel
+        (async () => {
+          // just run tsc --noEmit when build no need to get createProgram for ts check
+          const exitCode = await spawnTsChecker();
+          if (exitCode !== 0) process.exit(exitCode);
+        })();
+      }
+      
     },
     configureServer() {
-      if (worker) {
-        worker.postMessage({
-          type: 'configTsCheck',
-          payload: { rootDir },
-        });
-      }
+      // only work in dev mode
+      // require tsChecker in case of file of will run in worker thread
+      // eslint-disable-next-line global-require
+      worker = require('./tsChecker').default;
+      worker.postMessage({
+        type: 'configTsCheck',
+        payload: { rootDir },
+      });
     }
   };
 };

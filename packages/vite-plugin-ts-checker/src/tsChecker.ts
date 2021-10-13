@@ -45,6 +45,8 @@ const createTsDiagnostic = (rootDir: string) => {
       // https://github.com/microsoft/TypeScript/issues/32542
       switch (diagnostic.code) {
         case 6031:  // Initial build
+          // return function when it is unnecessary to log message when initial build
+          return;
         case 6032:  // Incremental build
           // clear current error and use the newer errors
           logChunk = '';
