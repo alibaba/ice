@@ -104,7 +104,6 @@ export default class Browser {
         selector,
         (el: Element, ...args: unknown[]) => {
           const [] = args;
-          console.log('args===>', args);
           return el.getAttribute(attr)
         },
         attr
@@ -114,7 +113,6 @@ export default class Browser {
      return page.$$eval(
         selector,
         (els, ...args: unknown[]) => {
-          console.log('$$attr args===>', args);
           return els.map(el => el.getAttribute(attr))
         },
         attr
