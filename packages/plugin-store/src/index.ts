@@ -133,7 +133,13 @@ export default async (api: any) => {
     //   buildDependencies: {config: [path.join(rootDir, 'package.json')]},
     //   cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
     // });
-    console.log('config===>', config.toConfig());
+    config.merge({
+      cache: {
+        type: 'filesystem',
+        version: `${getValue('WEBPACK_CACHE_ID')}&store`
+      }
+    });
+    console.log('config is ===>', config.toConfig());
   });
 
   const gen = new Generator({
