@@ -91,9 +91,12 @@ module.exports = class WebpackPluginImport {
                 );
 
                 if (fileExists(modPath)) {
-                  result.loaders.push(
-                    `${webpackLoaderRequire}?mod=${modPath}`
-                  );
+                  result.loaders.push({
+                    loader: webpackLoaderRequire,
+                    options: {
+                      mod: modPath
+                    }
+                  });
                 }
               }
             }

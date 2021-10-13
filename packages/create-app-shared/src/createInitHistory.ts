@@ -1,7 +1,6 @@
 import { History, Location } from 'history';
 import { DEFAULT_APP_CONFIG } from './constants';
 import { AppConfig } from './types';
-import { setHistory } from './storage';
 
 interface Route {
   path: string;
@@ -28,5 +27,4 @@ export default (createHistory: CreateHistory) => (appConfig: AppConfig, initialC
   const newHistory = createHistory({ type, basename, location, customHistory });
 
   appConfig.router.history = newHistory;
-  setHistory(newHistory);
 };
