@@ -10,7 +10,7 @@ export interface IPage extends puppeteer.Page {
   $$text?: (selector: string, trim?: boolean) => Promise<(string|null)[]>;
   $attr?: (selector: string, attr: string) => Promise<string|null>;
   $$attr?: (selector: string, attr: string) => Promise<(string|null)[]>;
-  push?: (url: string, options ?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
+  push?: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
 }
 
 interface IBrowserOptions {

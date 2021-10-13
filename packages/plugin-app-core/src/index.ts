@@ -20,7 +20,7 @@ export default (api, options) => {
 
   // Set framework field
   setValue('FRAMEWORK', framework);
-  setValue('WEBPACK_CACHE_ID', 'ice.js');
+  setValue('WEBPACK_CACHE_ID', process.env.__FRAMEWORK_VERSION__);
 
   const hasJsxRuntime = (() => {
     try {
