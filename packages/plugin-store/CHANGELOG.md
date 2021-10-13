@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] not restart after first use store
+- [fix] not regenerate webpack cache after first use store
+
 ## 2.0.1
 
 - [fix] display warning message but the page has no store

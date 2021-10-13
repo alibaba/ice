@@ -26,7 +26,7 @@ module.exports = {
   'testPathIgnorePatterns': [
     '/node_modules/',
     '/lib/',
-    'create-cli-utils/'
+    'create-cli-utils/',
   ],
   // copy from jest config
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
