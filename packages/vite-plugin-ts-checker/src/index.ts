@@ -23,7 +23,6 @@ const spawnTsChecker = () => {
 const vitePluginTsChecker = (): Plugin => {
   let rootDir = process.cwd();
   let viteMode: ConfigEnv['command'] | undefined;
-  let worker: Worker;
   
   return {
     name: 'vite-plugin-ts-checker',
@@ -47,7 +46,7 @@ const vitePluginTsChecker = (): Plugin => {
       // only work in dev mode
       // require tsChecker in case of file of will run in worker thread
       // eslint-disable-next-line global-require
-      worker = require('./tsChecker').default;
+      const worker: Worker = require('./tsChecker').default;
       worker.postMessage({
         type: 'configTsCheck',
         payload: { rootDir },
