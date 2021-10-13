@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-eslint-reporting",
+  "name": "vite-plugin-eslint-report",
   "version": "1.0.0",
   "description": "A vite plugin for eslint",
   "main": "lib/index.js",
@@ -8,13 +8,19 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/vite-plugin-eslint-reporting"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/vite-plugin-eslint-report"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@rollup/pluginutils": "^4.1.1",
+    "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
-    "vite": "^2.0.0"
+    "vite": "^2.0.0",
+    "eslint": "^7.0.0"
+  },
+  "peerDependencies": {
+    "eslint": ">7.0.0"
   }
 }
