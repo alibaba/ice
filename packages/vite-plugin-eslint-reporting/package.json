@@ -1,0 +1,20 @@
+{
+  "name": "vite-plugin-eslint-reporting",
+  "version": "1.0.0",
+  "description": "A vite plugin for eslint",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/vite-plugin-eslint-reporting"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "vite": "^2.0.0"
+  }
+}
