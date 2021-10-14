@@ -1,6 +1,9 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = (config, eslint, context, { log }) => {
+  if (eslint === false) {
+    return;
+  }
   const { command } = context;
   let enableESlint = false;
   let eslintOptions = {
