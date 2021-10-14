@@ -24,7 +24,7 @@
   "dependencies": {
     "@builder/pack": "0.3.0",
     "build-scripts": "^1.1.0",
-    "build-plugin-app-core": "2.0.0",
+    "build-plugin-app-core": "2.0.1",
     "build-plugin-helmet": "1.0.2",
     "build-plugin-ice-auth": "2.0.0",
     "build-plugin-ice-config": "2.0.0",
