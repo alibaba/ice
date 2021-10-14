@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as hash from 'object-hash';
 import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
@@ -20,7 +21,7 @@ export default (api, options) => {
 
   // Set framework field
   setValue('FRAMEWORK', framework);
-  setValue('WEBPACK_CACHE_ID', process.env.__FRAMEWORK_VERSION__);
+  setValue('WEBPACK_CACHE_ID', hash(userConfig));
 
   const hasJsxRuntime = (() => {
     try {
