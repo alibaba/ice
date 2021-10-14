@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [fix] use eslint-webpack-plugin instead of eslint-reporting-webpack-plugin
+
 ## 1.0.2
 
 - [fix] add dependency of eslint-reporting-webpack-plugin

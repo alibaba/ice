@@ -1,27 +1,49 @@
-const path = require('path');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-module.exports = (config, eslint, { rootDir }) => {
+module.exports = (config, eslint, context, { log }) => {
+  const { command } = context;
+  let enableESlint = false;
+  let eslintOptions = {
+    extensions: ['js', 'ts', 'jsx', 'tsx'],
+    lintDirtyModulesOnly: false,
+    failOnError: true,
+  };
+
   if (!eslint) {
-    return config;
+    enableESlint = true;
+    // lint only changed files, skip lint on start
+    eslintOptions.lintDirtyModulesOnly = true;
+    if (command === 'build') {
+      // do not break build when lint error
+      eslintOptions.failOnError = false;
+    }
   }
-  const { disable, ...args } = eslint;
-  if (!disable) {
-    const appSrc = path.join(rootDir, 'src');
-    config.module
-      .rule('eslint')
-      .test(/\.(jsx?|tsx?)$/)
-      .include
-        .add(appSrc)
-        .end()
-      .enforce('pre')
-      .use('eslint')
-        .loader(require.resolve('@builder/pack/deps/eslint-loader'))
-        .tap((options) => ({
-            emitError: true,
-            eslintPath: require.resolve('eslint'),
-            formatter: require.resolve('react-dev-utils/eslintFormatter'),
-            ...options,
-            ...args
-          }));
+
+  if (eslint && !eslint.disable) {
+    const { disable, ...rest } = eslint;
+    enableESlint = true;
+    eslintOptions = {
+      ...eslintOptions,
+      ...rest,
+    };
+  }
+
+  const dependenciesMsg = 'Please check dependencies of eslint(> 7.0.0)';
+
+  try {
+    // eslint-disable-next-line global-require
+    const { ESLint } = require('eslint');
+    const [mainVersion] = ESLint.version.split('.');
+    if (mainVersion < 7) {
+      enableESlint = false;
+      log.info(dependenciesMsg);
+    }
+  } catch (e) {
+    enableESlint = false;
+    log.info(dependenciesMsg);
+  }
+
+  if (enableESlint) {
+    config.plugin('ESLintPlugin').use(ESLintPlugin, [eslintOptions]);
   }
 };
