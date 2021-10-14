@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [feat] get webpack cache version by `WEBPACK_CACHE_ID`
+
 ## 1.0.2
 
 - [fix] add dependency of eslint-reporting-webpack-plugin

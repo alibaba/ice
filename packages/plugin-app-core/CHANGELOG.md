@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [feat] set `WEBPACK_CACHE_ID` value
+
 ## 2.0.0
 
 - [feat] support `store.disableResetPageState`, deprecate `store.resetPageStore`
