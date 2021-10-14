@@ -3,6 +3,7 @@ import analyzer from 'rollup-plugin-visualizer';
 import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
+import tsChecker from 'vite-plugin-tschecker';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import eslintReport from 'vite-plugin-eslint-report';
@@ -116,6 +117,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       // spa 与 mpa 中对 html 的处理
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
+      userConfig.tsChecker && tsChecker(),
       polyfillPlugin({
         value: originalUserConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,

@@ -42,7 +42,8 @@
     { "path": "packages/plugin-pwa" },
     { "path": "packages/plugin-theme" },
     { "path": "packages/vite-plugin-eslint-report" },
-    { "path": "packages/vite-service" },
     { "path": "packages/vite-plugin-component-style" },
+    { "path": "packages/vite-plugin-ts-checker" },
+    { "path": "packages/vite-service" },
   ]
 }

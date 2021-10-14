@@ -22,6 +22,9 @@ module.exports = (api, { webpackConfig }) => {
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
 
+  // set alias for webpack/hot while webpack has been prepacked
+  webpackConfig.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
+
   webpackConfig
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);

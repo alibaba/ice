@@ -31,8 +31,7 @@ module.exports = (config, context) => {
   // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
   // This is no longer the case. Verify if you need these module and configure a polyfill for it.
   config.resolve.alias.set('path', 'path-browserify');
-  // set alias for webpack/hot while webpack has been prepacked
-  config.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
+
   config.plugin('ProvidePlugin').use(webpack.ProvidePlugin, [{ process: 'process/browser'}]);
   // assetModuleFilename: 'assets/[hash][ext][query]',
   config.output.merge({
