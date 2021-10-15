@@ -38,6 +38,7 @@ type ModifyRoutesComponent = (modify: (routesComponent: IPageComponent) => IPage
 type CommonJsRuntime = { default: RuntimePlugin };
 
 type GetAppComponent = () => React.ComponentType;
+type GetWrapperPageRegistration = () => IWrapper<any>[];
 
 interface RuntimeAPI {
   setRenderApp?: SetRenderApp,
@@ -210,6 +211,10 @@ class RuntimeModule {
       }
       return item;
     });
+  }
+
+  public getWrapperPageRegistration: GetWrapperPageRegistration = () => {
+    return this.wrapperPageRegistration;
   }
 
   public getAppComponent: GetAppComponent = () => {
