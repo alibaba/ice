@@ -77,9 +77,10 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
   <% } %>
 
   let renderer;
-  renderer = raxAppRenderer;
   if (inMiniApp) {
     renderer = miniappRenderer;
+  } else {
+    renderer = raxAppRenderer;
   }
   renderer({
     appConfig: appConfig as RenderAppConfig,
