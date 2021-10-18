@@ -21,7 +21,6 @@ export default (api, options) => {
 
   // Set framework field
   setValue('FRAMEWORK', framework);
-  setValue('WEBPACK_CACHE_ID', hash(userConfig));
 
   const hasJsxRuntime = (() => {
     try {
@@ -40,6 +39,9 @@ export default (api, options) => {
   })();
   // Set jsx runtime value
   setValue('HAS_JSX_RUNTIME', hasJsxRuntime);
+
+  // Set webpack cache id
+  setValue('WEBPACK_CACHE_ID', hash({ ...userConfig, hasJsxRuntime }));
 
   // Check target
   checkTargets(targets);
