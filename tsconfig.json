@@ -42,5 +42,6 @@
     { "path": "packages/plugin-theme" },
     { "path": "packages/vite-service" },
     { "path": "packages/vite-plugin-component-style" },
+    { "path": "packages/plugin-ignore-style" },
   ]
 }
