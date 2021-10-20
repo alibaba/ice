@@ -171,12 +171,11 @@ const module = ({
         updateApps: setApps,
       };
 
-      /**
-      * RootApp will re-render on every AppRoute's update if AppRoute were matched.
-      */
+      // RootApp will re-render on every AppRoute's update if RootApp were matched.
       const MemoRootApp = useMemo(
         () => React.memo(() => <RootApp routes={routes} />),
-        []);
+        []
+      );
 
       return (
         <BasicLayout {...appInfo}>
