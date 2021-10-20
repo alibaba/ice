@@ -3,7 +3,7 @@ const configWebpack5 = require('./webpack5');
 
 module.exports = (api, { webpackConfig }) => {
   const { context } = api;
-  const { command, webpack, commandArgs } = context;
+  const { command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
 
   const mode = command === 'start' ? 'development' : 'production';
