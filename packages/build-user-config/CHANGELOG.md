@@ -1,9 +1,13 @@
 # Changelog
 
-## 1.0.3
+## 1.1.0
 
 - [feat] get webpack cache version by `WEBPACK_CACHE_ID`
 - [fix] use eslint-webpack-plugin instead of eslint-reporting-webpack-plugin
+- [fix] bump version of `@builder/pack`
+- [feat] refactor config of eslint
+- [feat] support active minify in dev
+
 
 ## 1.0.2
 

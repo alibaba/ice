@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- [feat] support runtime value
+- [feat] getSearchParams for miniapp
+
 ## 1.0.2
 
 - [fix] set history when call createHistory in runtime plugins
