@@ -3,8 +3,10 @@ import analyzer from 'rollup-plugin-visualizer';
 import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
+import tsChecker from 'vite-plugin-tschecker';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
+import eslintReport from 'vite-plugin-eslint-report';
 import { recordMap } from './config';
 import {
   externalsPlugin,
@@ -115,6 +117,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       // spa 与 mpa 中对 html 的处理
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
+      userConfig.tsChecker && tsChecker(),
       polyfillPlugin({
         value: originalUserConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
@@ -122,8 +125,9 @@ export const wp2vite = (context: Context): InlineConfig => {
         outputAssetsPath: userConfig.outputAssetsPath as any,
         rootDir,
       }),
-      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null
-    ],
+      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
+      userConfig.eslint === undefined && eslintReport({ ignoreInitial: true }),
+    ].filter(Boolean),
   };
 
   if (isObject(userConfig.vite)) {

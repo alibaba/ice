@@ -1,6 +1,6 @@
 {
-  "name": "ice.js",
-  "version": "1.18.2",
+  "name": "icejs-project",
+  "version": "0.0.0",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -51,7 +51,7 @@
     "codecov": "^3.6.5",
     "create-test-server": "^3.0.1",
     "dependency-check": "^4.1.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "esm": "^3.2.25",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",

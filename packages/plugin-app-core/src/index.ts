@@ -128,7 +128,6 @@ function getDefaultRenderData(api, options) {
     framework,
     buildConfig: getBuildConfig(userConfig),
     hasJsxRuntime,
-    errorBoundary: true,
     relativeCorePath: '.',
     typesPath: '../types',
   };
@@ -138,6 +137,8 @@ function getDefaultRenderData(api, options) {
       isReact: false,
       isRax: true,
       isMiniapp,
+      isMPA: false,
+      tabBarPath: '', // avoid ejs error
       routesFilePath: './staticConfig',
     };
   } else {

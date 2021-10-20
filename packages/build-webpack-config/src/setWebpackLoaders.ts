@@ -20,6 +20,7 @@ const configCSSRule = (config, style, loaders = []) => {
   };
   const postcssOpts = {
     postcssOptions: {
+      config: false,
       // eslint-disable-next-line global-require
       ...(require('./postcss.config').default()),
     }

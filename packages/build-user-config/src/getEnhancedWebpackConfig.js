@@ -1,11 +1,9 @@
-let ESLintReportingPluginUsed = false;
 const FriendlyError =  require('@builder/pack/deps/@nuxtjs/friendly-errors-webpack-plugin');
-const ESLintReportingPlugin = require('eslint-reporting-webpack-plugin');
 const configWebpack5 = require('./webpack5');
 
 module.exports = (api, { webpackConfig }) => {
   const { context } = api;
-  const { command, webpack, commandArgs, userConfig } = context;
+  const { command, webpack, commandArgs } = context;
   const appMode = commandArgs.mode || command;
 
   const mode = command === 'start' ? 'development' : 'production';
@@ -13,7 +11,7 @@ module.exports = (api, { webpackConfig }) => {
   webpackConfig.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
 
   // setup DefinePlugin and CopyWebpackPlugin out of onGetWebpackConfig
-  // in case of registerUserConfig will be excute before onGetWebpackConfig
+  // in case of registerUserConfig will be execute before onGetWebpackConfig
 
   // DefinePlugin
   const defineVariables = {
@@ -22,17 +20,12 @@ module.exports = (api, { webpackConfig }) => {
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
 
+  // set alias for webpack/hot while webpack has been prepacked
+  webpackConfig.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
+
   webpackConfig
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
-
-  if (userConfig.eslint === undefined && !ESLintReportingPluginUsed) {
-    // Add friendly eslint reporting
-    webpackConfig
-      .plugin('ESLintReportingPlugin')
-      .use(ESLintReportingPlugin);
-    ESLintReportingPluginUsed = true;
-  }
 
   if (command === 'start') {
     // disable build-scripts stats output
@@ -48,8 +41,10 @@ module.exports = (api, { webpackConfig }) => {
     webpackConfig.optimization.minimize(true);
   }
 
-  // TODO: rax-app need compat with webpack4
-  configWebpack5(webpackConfig, api);
+  // rax-app will add webpack5 field to userConfig
+  if (!Object.prototype.hasOwnProperty.call(userConfig, 'webpack5') || userConfig.webpack5) {
+    configWebpack5(webpackConfig, api);
+  }
 
   return webpackConfig;
 };
