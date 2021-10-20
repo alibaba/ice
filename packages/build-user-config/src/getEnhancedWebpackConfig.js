@@ -1,11 +1,9 @@
-let ESLintReportingPluginUsed = false;
 const FriendlyError =  require('@builder/pack/deps/@nuxtjs/friendly-errors-webpack-plugin');
-const ESLintReportingPlugin = require('eslint-reporting-webpack-plugin');
 const configWebpack5 = require('./webpack5');
 
 module.exports = (api, { webpackConfig }) => {
   const { context } = api;
-  const { command, webpack, commandArgs, userConfig } = context;
+  const { command, webpack, commandArgs } = context;
   const appMode = commandArgs.mode || command;
 
   const mode = command === 'start' ? 'development' : 'production';
@@ -13,7 +11,7 @@ module.exports = (api, { webpackConfig }) => {
   webpackConfig.performance.maxAssetSize(1048576).maxEntrypointSize(1048576);
 
   // setup DefinePlugin and CopyWebpackPlugin out of onGetWebpackConfig
-  // in case of registerUserConfig will be excute before onGetWebpackConfig
+  // in case of registerUserConfig will be execute before onGetWebpackConfig
 
   // DefinePlugin
   const defineVariables = {
@@ -28,14 +26,6 @@ module.exports = (api, { webpackConfig }) => {
   webpackConfig
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
-
-  if (userConfig.eslint === undefined && !ESLintReportingPluginUsed) {
-    // Add friendly eslint reporting
-    webpackConfig
-      .plugin('ESLintReportingPlugin')
-      .use(ESLintReportingPlugin);
-    ESLintReportingPluginUsed = true;
-  }
 
   if (command === 'start') {
     // disable build-scripts stats output
