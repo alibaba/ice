@@ -124,7 +124,6 @@ function getDefaultRenderData(api, options) {
     framework,
     buildConfig: getBuildConfig(userConfig),
     hasJsxRuntime,
-    errorBoundary: true,
     relativeCorePath: '.',
     typesPath: '../types',
   };

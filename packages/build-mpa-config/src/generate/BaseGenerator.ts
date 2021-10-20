@@ -61,7 +61,6 @@ export default class BaseGenerator {
         router: Boolean(routesFilePath),
       },
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
-      errorBoundary: false,
       isMPA: true,
     };
 
