@@ -22,7 +22,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/pack": "0.3.0",
+    "@builder/pack": "^0.4.0",
     "build-scripts": "^1.1.0",
     "build-plugin-app-core": "2.0.1",
     "build-plugin-helmet": "1.0.2",
