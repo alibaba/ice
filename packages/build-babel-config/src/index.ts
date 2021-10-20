@@ -1,5 +1,6 @@
 import getBabelPreset from './preset-ice';
 
+export { getBabelPreset };
 export default () => {
   return getBabelPreset({
     react: {},
