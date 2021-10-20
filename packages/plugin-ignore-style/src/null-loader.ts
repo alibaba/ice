@@ -1,4 +1,1 @@
-export default () => {
-  console.log('test');
-  return '';
-};
+export default () => '';

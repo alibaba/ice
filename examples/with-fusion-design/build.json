@@ -1,12 +1,7 @@
 {
   "vite": true,
   "plugins": [
-    [
-      "build-plugin-fusion",
-      {
-        "themePackage": "@alifd/theme-design-pro"
-      }
-    ],
+    ["build-plugin-ignore-style", { "libraryName": "@alifd/next"}],
     [
       "build-plugin-moment-locales",
       {

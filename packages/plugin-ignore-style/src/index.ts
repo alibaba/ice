@@ -1,11 +1,13 @@
 import type { IPlugin } from 'build-scripts';
+import type { Plugin } from 'vite';
 
 interface Options {
   libraryName: string;
   style?: string;
 }
 
-const getStyleRule = (libraryName: string, style = 'style'): string => `${libraryName}/(es|lib)/[-\\w+]+/(${style}|${style}.js|${style}/index.js)$`;
+const getStyleRule = (libraryName: string, style = 'style'): string => `${libraryName}/(es|lib)/[-\\w+]+/(${style}|${style}.js|${style}/index.js)`;
+const flattenId = (id: string): string => id.replace(/(\s*>\s*)/g, '__').replace(/[/.]/g, '_');
 
 const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context }, options) => {
   const { userConfig } = context;
@@ -18,9 +20,12 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
       const {libraryName, style = 'style'} = value as unknown as Options;
       return getStyleRule(libraryName, style);
     }).join('|');
-
     onGetWebpackConfig((config) => {
-      config.module.rule('ignore-style').test(new RegExp(externalRule)).use('null-loader');
+      config.module
+        .rule('ignore-style')
+        .test(new RegExp(externalRule))
+        .before('jsx')
+        .use('null-loader').loader(require.resolve('./null-loader'));
     });
     if (userConfig.vite) {
       modifyUserConfig('vite', {
@@ -28,19 +33,19 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
           {
             name: 'vite-ignore-style',
             enforce: 'pre',
-            resolveId(id, importer) {
-              if (id.match(/next/)) {
-                console.log('idres ==>', id, importer);
+            resolveId(id) {
+              // vite will flattenId when pre build dependencies
+              if (id.match(new RegExp(flattenId(externalRule))) || id.match(new RegExp(externalRule))) {
+                console.log(id);
+                return '@null-module';
               }
-              
             },
             load(id: string) {
-              // console.log('id ==>', id)
-              if (new RegExp(externalRule).test(id)) {
+              if (id === '@null-module') {
                 return '';
               }
             },
-          }
+          } as Plugin
         ],
       }, { deepmerge: true });
     }

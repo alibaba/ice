@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Icon } from '@alifd/next';
+import '@alifd/next/es/button/style';
 
 const Dashboard = () => {
   return (
