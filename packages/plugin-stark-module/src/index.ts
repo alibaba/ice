@@ -9,19 +9,20 @@ import appendLifecycle from './appendLifecycle';
 
 // TODO: remove this line next update
 // @ts-ignore
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options: Options ) => {
   const { command, userConfig, webpack, commandArgs } = context;
-  const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
+  const { minify: outerMinify, sourceMap: outerSourceMap, outputDir: outerOutputDir  } = (userConfig || {}) as IUserConfig;
 
   const hasOutputDirRegistered = hasRegistration('outputDir', 'userConfig');
   if (!hasOutputDirRegistered) {
     registerUserConfig({
       name: 'outputDir',
-      defaultValue: 'build',
       validation: 'string',
     });
   }
-  
+
+  options.outputDir = options.outputDir ?? (outerOutputDir as string);
+
   const {
     moduleExternals,
     minify,
