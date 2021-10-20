@@ -19,10 +19,10 @@ const TERSER_DEFAULT_OPTIONS = {
   },
 };
 
-module.exports = (config, minify, context, { log, getValue }) => {
+module.exports = (config, minify, context, { log }) => {
   const { command, taskName } = context;
-  const minifyTasks = getValue('MINIFY_TASKS') || [];
-  if ( minify && (command === 'build' || minifyTasks.includes(taskName))) {
+  const includedInMinifyTasks = minify === true && (minify.activeInDev || []).includes(taskName);
+  if ( minify && (command === 'build' || includedInMinifyTasks)) {
     const minifierConfig = minify.type ? minify : { type: typeof minify === 'boolean' ? 'terser' : minify };
     const { type, options } = minifierConfig;
     const availableMinifier = ['terser', 'esbuild', 'swc'];
