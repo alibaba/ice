@@ -50,9 +50,10 @@ export default (): Plugin => {
           // ignore errors
         }
         if (packageJsonPath) {
-          const { stylePath, componentConfig } = fse.readJSONSync(packageJsonPath);
+          const { stylePath, componentConfig, module, main } = fse.readJSONSync(packageJsonPath);
           if (stylePath || componentConfig) {
-            const styleFilePath = path.join(path.dirname(require.resolve(n)), stylePath || 'style.js');
+            const mainEntry = path.join(path.dirname(packageJsonPath), module || main);
+            const styleFilePath = path.join(path.dirname(mainEntry), stylePath || 'style.js');
             if (fse.existsSync(styleFilePath)) {
               const matches = fse.readFileSync(styleFilePath, 'utf-8').match(new RegExp(REGEX_REQUIRE.source, 'g'));
               if (matches) {
