@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.1
+
+- [fix] avoid RootApp re-rendering when route changes. ([#427](https://github.com/ice-lab/icestark/issues/427))
+
 ## 2.4.0
 
 - [feat] an extra `type` option is configured to distinguish between framework and child. And now, `type` in `appconfig.icestark` is deprecated.
