@@ -6,6 +6,7 @@ import { isObject } from 'lodash';
 import tsChecker from 'vite-plugin-tschecker';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
+import eslintReport from 'vite-plugin-eslint-report';
 import { recordMap } from './config';
 import {
   externalsPlugin,
@@ -124,8 +125,9 @@ export const wp2vite = (context: Context): InlineConfig => {
         outputAssetsPath: userConfig.outputAssetsPath as any,
         rootDir,
       }),
-      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null
-    ],
+      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
+      userConfig.eslint === undefined && eslintReport({ ignoreInitial: true }),
+    ].filter(Boolean),
   };
 
   if (isObject(userConfig.vite)) {
