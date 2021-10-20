@@ -19,9 +19,7 @@ import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
-<% if (errorBoundary) { %>
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
-<% } %>
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
@@ -50,9 +48,7 @@ export function runApp(appConfig?: IAppConfig) {
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
-    <% if (errorBoundary) { %>
     ErrorBoundary,
-    <% } %>
     appLifecycle: {
       createBaseApp: frameworkAppBase,
       initAppLifeCycles,
