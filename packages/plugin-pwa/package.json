@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-pwa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ICE pwa plugin",
   "main": "lib/index.js",
   "scripts": {
@@ -10,8 +10,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@builder/pack": "0.3.0",
     "@types/fs-extra": "^8.1.0",
-    "@types/html-webpack-plugin": "^3.2.6",
     "@types/jest": "^25.2.1",
     "@types/webpack-chain": "^5.2.0",
     "@types/workbox-build": "^5.0.1",
@@ -23,9 +23,6 @@
     "fs-extra": "^9.1.0",
     "workbox-webpack-plugin": "^6.1.5",
     "workbox-window": "^6.1.5"
-  },
-  "peerDependencies": {
-    "html-webpack-plugin": "^4.0.0"
   },
   "originTemplate": "build-plugin-template"
 }

@@ -1,4 +1,4 @@
-import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as HtmlWebpackPlugin from '@builder/pack/deps/html-webpack-plugin';
 
 function ensureTrailingSlash(str: string) {
   if (str.length && str.substr(-1, 1) !== '/') {
