@@ -61,6 +61,7 @@ export default class BaseGenerator {
         router: Boolean(routesFilePath),
       },
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
+      isMPA: true,
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);

@@ -22,6 +22,9 @@ module.exports = (api, { webpackConfig }) => {
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
 
+  // set alias for webpack/hot while webpack has been prepacked
+  webpackConfig.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
+
   webpackConfig
     .plugin('DefinePlugin')
     .use(webpack.DefinePlugin, [defineVariables]);
@@ -48,8 +51,10 @@ module.exports = (api, { webpackConfig }) => {
     webpackConfig.optimization.minimize(true);
   }
 
-  // TODO: rax-app need compat with webpack4
-  configWebpack5(webpackConfig, context);
+  // rax-app will add webpack5 field to userConfig
+  if (!Object.prototype.hasOwnProperty.call(userConfig, 'webpack5') || userConfig.webpack5) {
+    configWebpack5(webpackConfig, context);
+  }
 
   return webpackConfig;
 };
