@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as hash from 'object-hash';
 import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
@@ -38,6 +39,9 @@ export default (api, options) => {
   })();
   // Set jsx runtime value
   setValue('HAS_JSX_RUNTIME', hasJsxRuntime);
+
+  // Set webpack cache id
+  setValue('WEBPACK_CACHE_ID', hash({ ...userConfig, hasJsxRuntime }));
 
   // Check target
   checkTargets(targets);

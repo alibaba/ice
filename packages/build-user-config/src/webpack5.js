@@ -1,11 +1,12 @@
 const path = require('path');
 
 // built-in webpack 5 abilities
-module.exports = (config, context) => {
+module.exports = (config, api) => {
+  const { context, getValue } = api;
   const { userConfig, rootDir, webpack } = context;
   // filesystem cache
   if (!process.env.DISABLE_FS_CACHE) {
-    const version = process.env.__FRAMEWORK_VERSION__;
+    const version = getValue('WEBPACK_CACHE_ID');
     const cacheConfig = {
       cache: {
         type: 'filesystem',

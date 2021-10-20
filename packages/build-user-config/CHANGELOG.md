@@ -2,6 +2,7 @@
 
 ## 1.0.3
 
+- [feat] get webpack cache version by `WEBPACK_CACHE_ID`
 - [fix] use eslint-webpack-plugin instead of eslint-reporting-webpack-plugin
 
 ## 1.0.2

@@ -3,7 +3,7 @@ const configWebpack5 = require('./webpack5');
 
 module.exports = (api, { webpackConfig }) => {
   const { context } = api;
-  const { command, webpack, commandArgs } = context;
+  const { command, webpack, commandArgs, userConfig } = context;
   const appMode = commandArgs.mode || command;
 
   const mode = command === 'start' ? 'development' : 'production';
@@ -43,7 +43,7 @@ module.exports = (api, { webpackConfig }) => {
 
   // rax-app will add webpack5 field to userConfig
   if (!Object.prototype.hasOwnProperty.call(userConfig, 'webpack5') || userConfig.webpack5) {
-    configWebpack5(webpackConfig, context);
+    configWebpack5(webpackConfig, api);
   }
 
   return webpackConfig;

@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as chalk from 'chalk';
 import Generator from './generator';
 import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
@@ -21,7 +22,20 @@ export default async (api: any) => {
   const pagesName: string[] = applyMethod('getPages', srcPath);
 
   const storeExists = checkStoreExists(srcPath, pagesName);
+
   if (!storeExists) {
+    onHook('before.start.run', () => {
+      applyMethod('watchFileChange', /store.*/, (event: string, filePath: string) => {
+        if (event === 'add') {
+          // restart WDS
+          console.log('\n');
+          console.log(chalk.magenta(`${filePath} has been created`));
+          console.log(chalk.magenta('restart dev server'));
+          process.send({ type: 'RESTART_DEV' });
+        }
+      });
+    });
+
     applyMethod('addDisableRuntimePlugin', pluginName);
     return;
   }
@@ -113,6 +127,15 @@ export default async (api: any) => {
 
   onGetWebpackConfig((config: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
+
+    if (config.get('cache')) {
+      config.merge({
+        cache: {
+          type: 'filesystem',
+          version: `${getValue('WEBPACK_CACHE_ID')}&store=true`
+        }
+      });
+    }
   });
 
   const gen = new Generator({
@@ -123,6 +146,7 @@ export default async (api: any) => {
   });
 
   gen.render();
+
   onHook('before.start.run', () => {
     applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, (event: string) => {
       if (event === 'add' || event === 'unlink') {
