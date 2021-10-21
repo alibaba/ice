@@ -35,8 +35,9 @@ export async function viteStart(context: Context): Promise<StartResult> {
     await applyHook('error', { err });
     throw err;
   }
-  devServer.printUrls();
+
   const viteServer = await devServer.listen();
+  devServer.printUrls();
 
   return viteServer;
 }
