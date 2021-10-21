@@ -4,6 +4,7 @@
 
 - [fix] not restart after first use store
 - [fix] not regenerate webpack cache after first use store
+- [fix] `AppStore.Provider` ts type error
 
 ## 2.0.1
 

@@ -19,7 +19,7 @@ export default ({ addProvider, appConfig, context: { initialData = {} as any, cr
       children
     });
   };
-  if (AppStore && AppStore.Provider) {
+  if (AppStore && Object.prototype.hasOwnProperty.call(AppStore, 'Provider')) {
     addProvider(StoreProvider);
   }
 };
