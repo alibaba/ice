@@ -72,7 +72,7 @@ const configAssetsRule = (config: ITaskConfig['chainConfig'], type, testReg, loa
     })
     .set('parser', {
       dataUrlCondition: {
-        maxSize: 4 * 1024 // 4kb
+        maxSize: 8 * 1024 // 8kb
       }
     });
 };
