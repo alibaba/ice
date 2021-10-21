@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-tschecker",
+  "name": "vite-plugin-ts-types",
   "version": "1.0.0",
   "description": "A vite plugin for typescript check",
   "main": "lib/index.js",

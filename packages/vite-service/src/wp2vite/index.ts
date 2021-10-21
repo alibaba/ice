@@ -3,7 +3,7 @@ import analyzer from 'rollup-plugin-visualizer';
 import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
-import tsChecker from 'vite-plugin-tschecker';
+import tsChecker from 'vite-plugin-ts-types';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
 import eslintReport from 'vite-plugin-eslint-report';

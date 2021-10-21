@@ -3,6 +3,7 @@
 ## 2.0.1
 
 - [feat] set `WEBPACK_CACHE_ID` value
+- [fix] modify types template for rax
 
 ## 2.0.0
 

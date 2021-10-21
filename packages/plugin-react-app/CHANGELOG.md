@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] bump version of `@builder/pack`
+
 ## 2.0.0
 
 - [feat] deprecate configs
