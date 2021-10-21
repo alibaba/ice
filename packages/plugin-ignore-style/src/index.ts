@@ -36,7 +36,6 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
             resolveId(id) {
               // vite will flattenId when pre build dependencies
               if (id.match(new RegExp(flattenId(externalRule))) || id.match(new RegExp(externalRule))) {
-                console.log(id);
                 return '@null-module';
               }
             },
