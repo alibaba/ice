@@ -3,6 +3,7 @@
 ## 1.0.2
 
 - [fix] bump version of `@builder/pack`
+- [fix] asset rule for static resources
 
 ## 1.0.1
 
