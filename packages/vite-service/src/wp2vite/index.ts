@@ -129,10 +129,15 @@ export const wp2vite = (context: Context): InlineConfig => {
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
-    const eslintOptions = { ignoreInitial: false };
+    let eslintOptions = { ignoreInitial: false };
     if (!userConfig.eslint) {
       // lint only changed files, skip lint on start
       eslintOptions.ignoreInitial = true;
+    } else {
+      eslintOptions = {
+        ...eslintOptions,
+        ...(userConfig.eslint as Object),
+      };
     }
     viteConfig.plugins.push(eslintReport(eslintOptions));
   }
