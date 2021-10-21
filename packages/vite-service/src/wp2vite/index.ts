@@ -126,9 +126,16 @@ export const wp2vite = (context: Context): InlineConfig => {
         rootDir,
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
-      userConfig.eslint === undefined && eslintReport({ ignoreInitial: true }),
     ].filter(Boolean),
   };
+  if (userConfig.eslint !== false) {
+    const eslintOptions = { ignoreInitial: false };
+    if (!userConfig.eslint) {
+      // lint only changed files, skip lint on start
+      eslintOptions.ignoreInitial = true;
+    }
+    viteConfig.plugins.push(eslintReport(eslintOptions));
+  }
 
   if (isObject(userConfig.vite)) {
     // 保证 userConfig.vite 优先级最高
