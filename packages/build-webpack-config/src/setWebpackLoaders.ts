@@ -65,9 +65,16 @@ const configCSSRule = (config, style, loaders = []) => {
 
 // config assets rules
 const configAssetsRule = (config: ITaskConfig['chainConfig'], type, testReg, loaderOpts = {}) => {
-  config.module.rule(type).test(testReg).set('type', 'asset/inline').set('generator', {
-    dataUrl: loaderOpts
-  });
+  config.module.rule(type).test(testReg)
+    .set('type', 'asset')
+    .set('generator', {
+      dataUrl: loaderOpts,
+    })
+    .set('parser', {
+      dataUrlCondition: {
+        maxSize: 8 * 1024 // 8kb
+      }
+    });
 };
 
 export default (config) => {
