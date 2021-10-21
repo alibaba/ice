@@ -1192,9 +1192,9 @@
     "@babel/preset-typescript" "^7.3.3"
 
 "@builder/pack@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.0.tgz#8ce41d6c0e2f24485573451755c9eb3259d4a87e"
-  integrity sha512-WyTqo/rCEk3Aibux9srajShVDytsZCGHLoT5rBuedDNKWOZuzAN/b0xZucWcgqEQBI+TWrVC72l797p6FHyk9g==
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.1.tgz#b5f0725f296c9238abd14b8034f919c6095c6f31"
+  integrity sha512-4nZ65OHNMuOxGX0iXh5VDoDE1vU+1guf+ldKksa3NFo7OFvAhI6tm8mPKJmat2/zcrFgeEkQUdsIg7hoCsU9QQ==
   dependencies:
     ansi-html "^0.0.7"
     core-js-pure "^3.8.1"
