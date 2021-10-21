@@ -1,6 +1,6 @@
 {
   "name": "miniapp-renderer",
-  "version": "0.1.15",
+  "version": "0.2.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -8,6 +8,9 @@
   "main": "lib/index.js",
   "dependencies": {
     "universal-env": "^3.0.0"
+  },
+  "devDependencies": {
+    "rax": "^1.0.0"
   },
   "sideEffects": false,
   "directories": {

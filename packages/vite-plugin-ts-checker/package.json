@@ -1,0 +1,23 @@
+{
+  "name": "vite-plugin-ts-types",
+  "version": "1.0.0",
+  "description": "A vite plugin for typescript check",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/vite-plugin-ts-checker"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/code-frame": "^7.12.13",
+    "chalk": "^4.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "vite": "^2.0.0"
+  }
+}

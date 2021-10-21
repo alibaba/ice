@@ -192,8 +192,11 @@ module.exports = [
   {
     name: 'eslint',
     validation: (val) => {
+      // for default value
+      if (val === null) return true;
       return validation('eslint', val, 'boolean|object');
-    }
+    },
+    defaultValue: null,
   },
   {
     name: 'tsChecker',

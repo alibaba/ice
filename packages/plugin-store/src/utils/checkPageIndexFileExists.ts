@@ -1,7 +1,6 @@
 import * as globby from 'globby';
+import * as chalk from 'chalk';
 import { getPageStorePath } from './getPath';
-
-const chalk = require('chalk');
 
 /**
  * Check if the src/pages/${pageName}/index.[j|t]s?(x) or src/pages/${pageName}/Layout/index.[j|t]s?(x) exists

@@ -3,8 +3,10 @@ import analyzer from 'rollup-plugin-visualizer';
 import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
+import tsChecker from 'vite-plugin-ts-types';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
+import eslintReport from 'vite-plugin-eslint-report';
 import { recordMap } from './config';
 import {
   externalsPlugin,
@@ -115,6 +117,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       // spa 与 mpa 中对 html 的处理
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
+      userConfig.tsChecker && tsChecker(),
       polyfillPlugin({
         value: originalUserConfig.polyfill as any,
         browserslist: userConfig.browserslist as any,
@@ -122,9 +125,22 @@ export const wp2vite = (context: Context): InlineConfig => {
         outputAssetsPath: userConfig.outputAssetsPath as any,
         rootDir,
       }),
-      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null
-    ],
+      userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
+    ].filter(Boolean),
   };
+  if (userConfig.eslint !== false) {
+    let eslintOptions = { ignoreInitial: false };
+    if (!userConfig.eslint) {
+      // lint only changed files, skip lint on start
+      eslintOptions.ignoreInitial = true;
+    } else {
+      eslintOptions = {
+        ...eslintOptions,
+        ...(userConfig.eslint as Object),
+      };
+    }
+    viteConfig.plugins.push(eslintReport(eslintOptions));
+  }
 
   if (isObject(userConfig.vite)) {
     // 保证 userConfig.vite 优先级最高

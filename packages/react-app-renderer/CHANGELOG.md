@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- [fix] build with es module
+
 ## 3.0.0
 
 - [feat] remove miniapp render

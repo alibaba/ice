@@ -7,5 +7,5 @@
     "disableResetPageState": true
   },
   "tsChecker": true,
-  "swc": true
+  "swc": false
 }

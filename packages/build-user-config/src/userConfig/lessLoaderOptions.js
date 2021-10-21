@@ -10,7 +10,6 @@ module.exports = (config, customOptions, context) => {
     implementation: getLessImplementation(rootDir),
   };
   const lessOptions = {};
-
   if (customOptions) {
     const customOptionKeys = Object.keys(customOptions);
     customOptionKeys.forEach(key => {

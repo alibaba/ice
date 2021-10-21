@@ -3,10 +3,15 @@ const { merge } = require('@builder/pack/deps/lodash');
 
 const EXCLUDE_REGEX = /node_modules/;
 
+let logged = false;
+
 module.exports = (config, swcOptions, context, { log, getValue }) => {
   const { rootDir } = context;
   if (swcOptions) {
-    log.info('[swc]', 'swc enabled, configurations about babel will be ignored');
+    if (!logged) {
+      logged = true;
+      log.info('[swc]', 'swc enabled, configurations about babel will be ignored');
+    }
     ['jsx', 'tsx'].forEach((rule) => {
       if (config.module.rules.get(rule)) {
         // add include rule while source file will never matched
@@ -16,12 +21,15 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       }
     });
     const swcLoader = require.resolve('@builder/swc-loader');
-    const reactRuntimeConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic' } : {};
+    let reactTransformConfig = getValue('REACT_TRANSFORM_CONFIG');
+    if (!reactTransformConfig) {
+      reactTransformConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic' } : {};
+    }
     // add swc rule
     const commonOptions = {
       jsc: {
         transform: {
-          react: reactRuntimeConfig,
+          react: reactTransformConfig,
           legacyDecorator: true
         },
         externalHelpers: true
@@ -58,7 +66,7 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       .options({
         jsc: {
           transform: {
-            react: reactRuntimeConfig,
+            react: reactTransformConfig,
           },
         },
       })

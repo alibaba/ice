@@ -16,8 +16,13 @@ interface IDOMRender {
 interface APIRegistration {
   [key: string]: Function;
 }
+interface InternalValue {
+  [key: string]: any;
+}
 
 type RegisterRuntimeAPI = (key: string, api: Function) => void;
+type SetRuntimeValue = (key: string, value: unknown) => void;
+type GetRuntimeValue = <T extends unknown>(key: string) => T;
 type ApplyRuntimeAPI = <T extends unknown>(key: string, ...args: any) => T;
 type IWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props>)
 type IRenderApp = (page?: IPage | React.ComponentType, PageComponent?: IPageComponent) => React.ComponentType;
@@ -33,6 +38,7 @@ type ModifyRoutesComponent = (modify: (routesComponent: IPageComponent) => IPage
 type CommonJsRuntime = { default: RuntimePlugin };
 
 type GetAppComponent = () => React.ComponentType;
+type GetWrapperPageRegistration = () => IWrapper<any>[];
 
 interface RuntimeAPI {
   setRenderApp?: SetRenderApp,
@@ -47,6 +53,7 @@ interface RuntimeAPI {
   buildConfig: BuildConfig,
   context: Context,
   staticConfig: any,
+  getRuntimeValue: GetRuntimeValue,
 }
 
 export interface RuntimePlugin {
@@ -76,6 +83,8 @@ class RuntimeModule {
 
   private apiRegistration: APIRegistration;
 
+  private internalValue: InternalValue;
+
   public modifyDOMRender: IDOMRender;
 
   constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context, staticConfig?: any) {
@@ -86,6 +95,7 @@ class RuntimeModule {
     this.staticConfig = staticConfig;
     this.modifyDOMRender = null;
     this.apiRegistration = {};
+    this.internalValue = {};
 
     this.renderApp = (AppComponent: React.ComponentType) => AppComponent;
     this.routesComponent = false;
@@ -105,6 +115,7 @@ class RuntimeModule {
       context: this.context,
       setRenderApp: this.setRenderApp,
       staticConfig: this.staticConfig,
+      getRuntimeValue: this.getRuntimeValue,
     };
     if (enabledRouter) {
       runtimeAPI = {
@@ -150,6 +161,18 @@ class RuntimeModule {
     }
   }
 
+  public setRuntimeValue: SetRuntimeValue = (key, value) => {
+    if (Object.prototype.hasOwnProperty.call(this.internalValue, key)) {
+      console.warn(`internal value ${key} had already been registered`);
+    } else {
+      this.internalValue[key] = value;
+    }
+  }
+
+  public getRuntimeValue: GetRuntimeValue = (key) => {
+    return this.internalValue[key];
+  }
+
   private setRenderApp: SetRenderApp = (renderRouter) => {
     this.renderApp = renderRouter;
   }
@@ -188,6 +211,10 @@ class RuntimeModule {
       }
       return item;
     });
+  }
+
+  public getWrapperPageRegistration: GetWrapperPageRegistration = () => {
+    return this.wrapperPageRegistration;
   }
 
   public getAppComponent: GetAppComponent = () => {

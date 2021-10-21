@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1
+
+- feat add renderData of `isMPA`
+
 ## 4.0.0
 
 - refactor: mpa runtime for each entry
