@@ -4,7 +4,7 @@ import { formatPath } from '@builder/app-helpers';
 
 const getPageName = (resolveId: string): { type: string; pageName: string; } => {
   const layoutRegExp = /src\/pages\/(\w+)\/Layout/;
-  const pageRegExp = /src\/pages\/(\w+)(\/index)?((.(j|t)s(x)?)$|(\/index(.(j|t)s(x)?)?)?$)/;
+  const pageRegExp = /src\/pages\/(\w+)(\/index)?(.(j|t)s(x)?)?$/;
   let type = '';
   if (resolveId.match(pageRegExp)) {
     type = 'page';
