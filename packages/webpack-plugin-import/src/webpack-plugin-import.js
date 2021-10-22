@@ -23,6 +23,12 @@ module.exports = class WebpackPluginImport {
     } else {
       this.options = [];
     }
+    // default config for packages with name of `@ali/ice-`
+    const defaultLibraryConfig = {
+      libraryName: /@ali\/ice-.*/,
+      stylePath: 'style.js',
+    };
+    this.options.unshift(defaultLibraryConfig);
   }
 
   getStylePath(result) {
@@ -32,10 +38,6 @@ module.exports = class WebpackPluginImport {
       result.resourceResolveData.descriptionFileData &&
       result.resourceResolveData.descriptionFileData.name === result.rawRequest
     ) {
-      // 存量 ice 组件通过 componentConfig 字段标记是否为组件，如果是 ICE 组件，则需要引入样式
-      if (result.resourceResolveData.descriptionFileData.componentConfig) {
-        return 'style.js';
-      }
       // 在 package.json 中通过 stylePath 字段标记是否需要自动引入样式，如果配置 style path，则自动引入对应样式
       return result.resourceResolveData.descriptionFileData.stylePath;
     }
