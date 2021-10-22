@@ -26,15 +26,10 @@ import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig, IStaticConfig, IRuntimeValue } from '<%- typesPath  %>';
 import { mount, unmount } from '<%- relativeCorePath %>/render';
-<% if (routesFilePath)  { %>
-import defaultStaticConfig from '<%- routesFilePath %>';
-<% } %>
+import defaultStaticConfig from '<%- relativeCorePath/staticConfig %>';
 
-let staticConfig: IStaticConfig | undefined;
+let staticConfig: IStaticConfig = defaultStaticConfig;
 
-<% if (routesFilePath)  { %>
-staticConfig = defaultStaticConfig;
-<% } %>
 const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const runtimeValue: IRuntimeValue = {};
@@ -74,6 +69,8 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
   }
   // set History before GID
   initHistory && initHistory(appConfig as any, { staticConfig });
+  <% }  else if (typeof pageConfig !== 'undefined') { %>
+    appConfig.renderComponent.__pageConfig = pageConfig;
   <% } %>
 
   let renderer;
