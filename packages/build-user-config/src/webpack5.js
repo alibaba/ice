@@ -1,11 +1,12 @@
 const path = require('path');
 
 // built-in webpack 5 abilities
-module.exports = (config, context) => {
+module.exports = (config, api) => {
+  const { context, getValue } = api;
   const { userConfig, rootDir, webpack } = context;
   // filesystem cache
   if (!process.env.DISABLE_FS_CACHE) {
-    const version = process.env.__FRAMEWORK_VERSION__;
+    const version = getValue('WEBPACK_CACHE_ID');
     const cacheConfig = {
       cache: {
         type: 'filesystem',
@@ -31,8 +32,7 @@ module.exports = (config, context) => {
   // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
   // This is no longer the case. Verify if you need these module and configure a polyfill for it.
   config.resolve.alias.set('path', 'path-browserify');
-  // set alias for webpack/hot while webpack has been prepacked
-  config.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
+
   config.plugin('ProvidePlugin').use(webpack.ProvidePlugin, [{ process: 'process/browser'}]);
   // assetModuleFilename: 'assets/[hash][ext][query]',
   config.output.merge({

@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as hash from 'object-hash';
 import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
@@ -38,6 +39,9 @@ export default (api, options) => {
   })();
   // Set jsx runtime value
   setValue('HAS_JSX_RUNTIME', hasJsxRuntime);
+
+  // Set webpack cache id
+  setValue('WEBPACK_CACHE_ID', hash({ ...userConfig, hasJsxRuntime }));
 
   // Check target
   checkTargets(targets);
@@ -124,7 +128,6 @@ function getDefaultRenderData(api, options) {
     framework,
     buildConfig: getBuildConfig(userConfig),
     hasJsxRuntime,
-    errorBoundary: true,
     relativeCorePath: '.',
     typesPath: '../types',
   };
@@ -134,6 +137,8 @@ function getDefaultRenderData(api, options) {
       isReact: false,
       isRax: true,
       isMiniapp,
+      isMPA: false,
+      tabBarPath: '', // avoid ejs error
       routesFilePath: './staticConfig',
     };
   } else {

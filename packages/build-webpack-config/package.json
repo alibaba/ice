@@ -1,6 +1,6 @@
 {
   "name": "@builder/webpack-config",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Basic webpack config for build-scripts",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -18,7 +18,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/build-webpack-config"
   },
   "dependencies": {
-    "@builder/pack": "0.3.0",
+    "@builder/pack": "^0.4.0",
     "@builder/babel-config": "^1.0.0",
     "less": "^4.0.0",
     "sass": "1.32.13",

@@ -6,7 +6,7 @@
       "build-plugin-moment-locales",
       {
         "locales": [
-          "zh-cn"
+          "zh-cn", "ru"
         ]
       }
     ]

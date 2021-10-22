@@ -1,6 +1,8 @@
 {
   "extends": "../../tsconfig.settings.json",
   "compilerOptions": {
+    "target": "ES2016",
+    "jsxFactory": "createElement",
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "lib"
