@@ -9,7 +9,7 @@ import appendLifecycle from './appendLifecycle';
 
 // TODO: remove this line next update
 // @ts-ignore
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options: Options ) => {
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options: Options = {} ) => {
   const { command, userConfig, webpack, commandArgs } = context;
   const { minify: outerMinify, sourceMap: outerSourceMap, outputDir: outerOutputDir  } = (userConfig || {}) as IUserConfig;
 
