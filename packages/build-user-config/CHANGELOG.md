@@ -2,7 +2,7 @@
 
 ## 1.1.1
 
-- [fix] remove useless package of `webpack-plugin-import`
+- [fix] remove unused package of `webpack-plugin-import`
 
 ## 1.1.0
 
