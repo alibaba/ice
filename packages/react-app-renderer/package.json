@@ -1,6 +1,6 @@
 {
   "name": "react-app-renderer",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -23,8 +23,7 @@
     "create-app-shared": "^1.0.0"
   },
   "files": [
-    "lib",
-    "!lib/**/*.map"
+    "lib"
   ],
   "repository": {
     "type": "http",

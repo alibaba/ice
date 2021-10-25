@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- [chore] publish with sourceMap
+
 ## 1.1.0
 
 - [feat] support runtime value

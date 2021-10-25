@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+- [chore] publish with sourceMap
+
 ## 3.0.1
 
 - [fix] build with es module
