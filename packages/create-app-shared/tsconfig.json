@@ -5,6 +5,7 @@
     "rootDir": "src",
     "outDir": "lib",
     "module": "ES6",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "sourceMap": false
   },
 }

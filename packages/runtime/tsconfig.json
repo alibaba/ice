@@ -5,6 +5,7 @@
     "rootDir": "src",
     "outDir": "lib",
     "module": "esnext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "sourceMap": false
   }
 }

@@ -28,8 +28,7 @@
     "test": "__tests__"
   },
   "files": [
-    "lib",
-    "src"
+    "lib"
   ],
   "repository": {
     "type": "http",
