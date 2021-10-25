@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- [chore] bump version
+
 ## 1.1.1
 
 - [chore] publish with sourceMap

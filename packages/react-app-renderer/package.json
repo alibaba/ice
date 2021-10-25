@@ -23,7 +23,8 @@
     "create-app-shared": "^1.0.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "repository": {
     "type": "http",
