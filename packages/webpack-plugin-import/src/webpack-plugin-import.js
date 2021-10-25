@@ -29,7 +29,16 @@ const packagesNeedImportStyle = [
   '@icedesign/img',
   '@icedesign/foundation-symbol',
   '@icedesign/dynamic-icon',
-  '@icedesign/container'
+  '@icedesign/container',
+  '@icedesign/balloon-confirm',
+  '@icedesign/ellipsis',
+  '@ice/form',
+  '@icedesign/label',
+  '@icedesign/layout',
+  '@icedesign/list',
+  '@icedesign/notification',
+  '@icedesign/panel',
+  '@icedesign/styled-menu',
 ];
 
 // 在 resolve 阶段, 修改上下文中的 loaders 属性, 让 next 包的 index.js 经过以下 loader 加工
