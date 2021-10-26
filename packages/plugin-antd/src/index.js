@@ -1,21 +1,23 @@
 module.exports = async ({ onGetWebpackConfig, log, context, modifyUserConfig }, pluginOptions = {}) => {
-  const { themeConfig = {}, importOptions = {} } = pluginOptions;
+  const { themeConfig = {}, importOptions = {}, disableModularImport = false } = pluginOptions;
   const { userConfig } = context;
 
   if (userConfig.vite) {
     modifyUserConfig('vite', {
       plugins: [
-        // eslint-disable-next-line global-require
-        require('vite-plugin-style-import').default({
-          libs: [{
-            libraryName: 'antd',
-            esModule: true,
-            resolveStyle: (name) => {
-              return `antd/es/${name}/style/index`;
-            },
-          }]
-        }),
-      ],
+        
+        !disableModularImport &&
+          // eslint-disable-next-line global-require
+          require('vite-plugin-style-import').default({
+            libs: [{
+              libraryName: 'antd',
+              esModule: true,
+              resolveStyle: (name) => {
+                return `antd/es/${name}/style/index`;
+              },
+            }]
+          }),
+      ].filter(Boolean),
       resolve: {
         alias: [
           // compatible with `@import '~antd/es/style/themes/default.less';`
@@ -56,30 +58,31 @@ module.exports = async ({ onGetWebpackConfig, log, context, modifyUserConfig }, 
           };
         });
     });
-
-    // add babel-plugin-import for antd
-    const defaultOptions = {
-      libraryName: 'antd',
-      libraryDirectory: 'es',
-      style: true,
-    };
-    ['jsx', 'tsx'].forEach((rule) => {
-      config.module
-        .rule(rule)
-        .use('babel-loader')
-        .tap((options) => {
-          options.plugins.push(
-            [
-              require.resolve('babel-plugin-import'),
-              {
-                ...defaultOptions,
-                ...importOptions,
-              },
-              'antd',
-            ],
-          );
-          return options;
-        });
-    });
+    if (!disableModularImport) {
+      // add babel-plugin-import for antd
+      const defaultOptions = {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      };
+      ['jsx', 'tsx'].forEach((rule) => {
+        config.module
+          .rule(rule)
+          .use('babel-loader')
+          .tap((options) => {
+            options.plugins.push(
+              [
+                require.resolve('babel-plugin-import'),
+                {
+                  ...defaultOptions,
+                  ...importOptions,
+                },
+                'antd',
+              ],
+            );
+            return options;
+          });
+      });
+    }
   });
 };
