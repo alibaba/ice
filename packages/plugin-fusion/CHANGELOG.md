@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.21
+
+- [feat] option `disableModularImport` for disable modular import of `@alifd/next`
+
 ## 0.1.20
 
 - [fix] icon path in win32
