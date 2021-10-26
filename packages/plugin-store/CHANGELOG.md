@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] nested routes not render in vite mode
+
 ## 2.0.2
 
 - [fix] not restart after first use store
