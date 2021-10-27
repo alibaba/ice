@@ -3,6 +3,7 @@
 ## 2.0.2
 
 - [feat] support config `tildeResolve` to compatible with using `~` to import style
+- [fix] bump version of `webpack-plugin-import`
 
 ## 2.0.1
 

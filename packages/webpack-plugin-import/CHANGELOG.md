@@ -1,5 +1,9 @@
 # webpack-plugin-import Changelog
 
+## 0.3.0
+
+- [fix] deprecate check of `pkg.componentConfig`
+
 ## 0.2.9
 
 - [fix] change loader options involved in object
