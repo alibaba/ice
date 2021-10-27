@@ -3,6 +3,7 @@
 ## 2.0.2
 
 - [feat] support `queryLoader`
+- [fix] bump version of `webpack-plugin-import`
 
 ## 2.0.1
 

@@ -20,6 +20,7 @@ function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenera
     return {
       entryPath: pageEntry,
       runAppPath: generator.runAppPath,
+      routesFilePath: generator.routesFilePath,
     };
   }
 
@@ -27,6 +28,7 @@ function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenera
   return {
     entryPath: generator.entryPath,
     runAppPath: generator.runAppPath,
+    routesFilePath: generator.routesFilePath,
   };
 }
 

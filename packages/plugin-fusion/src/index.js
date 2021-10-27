@@ -78,6 +78,7 @@ module.exports = async (
     usePx2Vw = false,
     px2vwOptions = {},
     style = true,
+    disableModularImport = false,
     uniteNextLib,
     externalNext,
     importOptions = {},
@@ -113,7 +114,7 @@ module.exports = async (
       {
         plugins: [
           // eslint-disable-next-line global-require
-          require('vite-plugin-style-import').default({
+          !disableModularImport && require('vite-plugin-style-import').default({
             libs: [
               {
                 libraryName: '@alifd/next',
@@ -140,7 +141,7 @@ module.exports = async (
                 silent: true,
               }),
           }),
-        ],
+        ].filter(Boolean),
         resolve: {
           alias: [
             // compatible with `@import '~@alifd/next/reset.scss';`
@@ -358,7 +359,7 @@ module.exports = async (
       // 2. 组件（包含业务组件）按需加载&样式自动引入
       // babel-plugin-import: 基础组件
       // remove babel-plugin-import if external next
-      if (!externalNext && !ignoreTasks.includes(taskName)) {
+      if (!externalNext && !ignoreTasks.includes(taskName) && !disableModularImport) {
         const importConfigs = [
           {
             libraryName: '@icedesign/base',
@@ -401,15 +402,7 @@ module.exports = async (
       // 业务组件：不可枚举，使用 webpack-plugin-import，内置逻辑（pkg.componentConfig || pkg.stylePath）
       // compatible with build-plugin which do not set up WebpackPluginImport
       if (!config.plugins.get('WebpackPluginImport')) {
-        config.plugin('WebpackPluginImport').use(WebpackPluginImport, [
-          [
-            // 老的业务组件里没有 stylePath or componentConfig
-            {
-              libraryName: /@ali\/ice-.*/,
-              stylePath: 'style.js',
-            },
-          ],
-        ]);
+        config.plugin('WebpackPluginImport').use(WebpackPluginImport);
       }
 
       // 3. uniteBaseComponent
