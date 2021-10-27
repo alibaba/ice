@@ -1,5 +1,5 @@
 export default {
   state: {
-    title: 'Home Page'
+    title: 'Home Page...'
   }
 };

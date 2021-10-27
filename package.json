@@ -13,6 +13,7 @@
     "setup:skip": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && npm run build",
     "watch": "ts-node ./scripts/watch.ts",
     "build": "ts-node ./scripts/build.ts",
+    "bundle:dts": "ts-node ./scripts/bundle-dts.ts",
     "build:swc": "rm -rf packages/swc/native/** && napi build --platform --release --cargo-cwd packages/swc packages/swc/native",
     "version": "ts-node ./scripts/tag-version.ts && napi version -p packages/swc/npm -c packages/swc/package.json",
     "version:check": "ts-node ./scripts/version-check.ts",
@@ -44,6 +45,7 @@
     "@commitlint/cli": "^8.2.0",
     "@ice/spec": "^1.0.0",
     "@testing-library/react-hooks": "^3.2.1",
+    "@types/dts-bundle": "^0.0.32",
     "@types/jest": "^25.2.1",
     "@types/node": "^14.17.15",
     "@types/puppeteer": "^5.4.2",
@@ -51,6 +53,7 @@
     "codecov": "^3.6.5",
     "create-test-server": "^3.0.1",
     "dependency-check": "^4.1.0",
+    "dts-bundle": "^0.7.3",
     "eslint": "^7.0.0",
     "esm": "^3.2.25",
     "execa": "^4.0.0",
@@ -71,8 +74,7 @@
     "simple-git": "^1.132.0",
     "ts-jest": "^26.0.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.0",
-    "@napi-rs/cli": "^1.1.0"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "core-js": "^3.6.4"
