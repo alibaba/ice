@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
 const CopyWebpackPlugin = require('@builder/pack/deps/copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+const WebpackPluginQueryLoader = require('webpack-plugin-query-loader').default;
 const { getFilePath, getWebOutputPath } = require('./utils');
 
 module.exports = (api, { target, webpackConfig }) => {
@@ -64,6 +65,11 @@ module.exports = (api, { target, webpackConfig }) => {
         },
       ]])
       .end();
+  if (userConfig.queryLoader) {
+    webpackConfig.plugin('WebpackPluginQueryLoader')
+      .use(WebpackPluginQueryLoader);
+  }
+    
   // auto inject style.js of component (webpack-plugin-import) in mode vite
   if (userConfig.vite) {
     modifyUserConfig('vite.plugins', (vitePlugins) => {

@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/webpack-plugin-query-loader"},
     { "path": "packages/runtime" },
     { "path": "packages/swc" },
     { "path": "packages/build-app-templates" },
@@ -45,6 +46,6 @@
     { "path": "packages/vite-plugin-component-style" },
     { "path": "packages/plugin-ignore-style" },
     { "path": "packages/vite-plugin-ts-checker" },
-    { "path": "packages/vite-service" }
+    { "path": "packages/vite-service" },
   ]
 }

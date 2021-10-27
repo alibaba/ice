@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [feat] support `queryLoader`
+
 ## 2.0.1
 
 - [fix] bump version of `@builder/pack`
