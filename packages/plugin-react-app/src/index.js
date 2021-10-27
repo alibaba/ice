@@ -43,6 +43,12 @@ module.exports = async (api) => {
     modifyUserConfig('minify', 'swc');
   }
 
+  // modify vite alias to support using ~ to import Sass/Less/CSS modules from node_modules
+  if (userConfig.tildeResolve && userConfig.vite) {
+    log.warn('Using ~ to import Sass/Less/CSS modules from node_modules is deprecated and can be removed from your code');
+    modifyUserConfig('vite.resolve.alias', [{ find: /^~/, replacement: ''}], { deepmerge: true });
+  }
+
   // set webpack config
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules

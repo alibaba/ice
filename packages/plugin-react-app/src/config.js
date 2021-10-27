@@ -12,6 +12,11 @@ module.exports = function() {
       validation: 'array',
     },
     {
+      name: 'tildeResolve',
+      defaultValue: false,
+      validation: 'boolean',
+    },
+    {
       name: 'logging',
       defaultValue: {},
       validation: 'object'

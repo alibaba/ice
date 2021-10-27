@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [feat] support config `tildeResolve` to compatible with using `~` to import style
+
 ## 2.0.1
 
 - [fix] bump version of `@builder/pack`
