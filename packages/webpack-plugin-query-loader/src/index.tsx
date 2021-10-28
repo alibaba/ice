@@ -60,7 +60,6 @@ class WebpackPluginQueryLoader implements WebpackPluginInstance {
           // rewrite request
           const loaderConfig = this.options[matchedQuery] as LoaderConfig;
           // add loader as preLoaders
-          console.log('moduleData', moduleData);
           moduleData.loaders.push({
             ident: null,
             type: null,

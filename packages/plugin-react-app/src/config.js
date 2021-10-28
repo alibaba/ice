@@ -17,11 +17,6 @@ module.exports = function() {
       validation: 'object'
     },
     {
-      name: 'queryLoader',
-      defaultValue: false,
-      validation: 'boolean',
-    },
-    {
       name: 'remoteRuntime',
       defaultValue: false,
       validation: 'boolean|object'

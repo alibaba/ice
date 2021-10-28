@@ -58,12 +58,10 @@ module.exports = (api, { target, webpackConfig }) => {
       .end()
     // WebpackPluginImport
     .plugin('WebpackPluginImport')
-      .use(WebpackPluginImport);
-
-  if (userConfig.queryLoader) {
-    webpackConfig.plugin('WebpackPluginQueryLoader')
+      .use(WebpackPluginImport)
+      .end()
+    .plugin('WebpackPluginQueryLoader')
       .use(WebpackPluginQueryLoader);
-  }
   // auto inject style.js of component (webpack-plugin-import) in mode vite
   if (userConfig.vite) {
     modifyUserConfig('vite.plugins', (vitePlugins) => {
