@@ -6,7 +6,7 @@
     "outDir": "build",
     "module": "esnext",
     "target": "es6",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": [
@@ -37,7 +37,7 @@
         ".ice/pages/*"
       ],
       "$store": [
-        "src/store.ts"
+        "src/store1.ts"
       ]
     }
   }
