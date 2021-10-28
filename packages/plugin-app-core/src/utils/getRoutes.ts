@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import * as log from 'npmlog';
 import getSourceFile from './getSourceFile';
 
 interface IParams {
@@ -41,6 +42,7 @@ function getRoutes({ rootDir, tempPath, configPath, projectType, isMpa, srcDir }
     };
   }
 
+  log.warn(`路由配置文件 src/routes.${projectType} 不存在，开启文件路由模式（约定式路由）`);
   // 约定式路由
   return {
     routesPath: path.join(tempPath, `routes.${projectType}`),

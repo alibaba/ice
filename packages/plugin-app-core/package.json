@@ -29,6 +29,7 @@
     "history": "^4.9.0",
     "lodash.debounce": "^4.0.8",
     "miniapp-builder-shared": "^0.2.2",
+    "npmlog": "^5.0.1",
     "object-hash": "^2.2.0",
     "prettier": "^2.0.2",
     "query-string": "^6.13.1"

@@ -8,7 +8,7 @@ import vitePluginLazy from './vitePluginLazy';
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
 const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
-const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig }) => {
+const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig, log }) => {
   const { rootDir, userConfig, command } = context;
 
   // register router in build.json
@@ -20,7 +20,6 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   });
 
   const disableRouter = userConfig.router === false;
-
   // [enum] js or ts
   const projectType = getValue('PROJECT_TYPE');
 
@@ -39,6 +38,11 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     isMpa: isMpa || disableRouter,
     srcDir
   });
+
+  if (disableRouter && !isMpa) {
+    // router: false 仅在 SPA 下生效，用于支持 renderComponent 场景
+    log.info('通过 router: false 禁用路由相关能力，请使用 app.renderComponent 自行渲染组件');
+  }
 
   // modify webpack config
   onGetWebpackConfig((config) => {
@@ -88,7 +92,8 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
           require.resolve('./babelPluginLazy'),
           { routesPath }
         ]
-      ]);
+      ]
+    );
 
     // if mode vite, add vite plugin for transform lazy
     if (userConfig.vite) {
@@ -128,10 +133,13 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
       const pagesDir = path.join(rootDir, routerMatch);
       const walkerOptions = { rootDir, routerOptions, routesTempPath, pagesDir };
       walker(walkerOptions);
+      log.verbose('根据 src/pages 结构生成路由配置：', routesTempPath);
+
       if (command === 'start') {
         // watch folder change when dev
         applyMethod('watchFileChange', routerMatch, () => {
           walker(walkerOptions);
+          log.verbose('监听到 src/pages 目录变化，重新生成路由配置：', routesTempPath);
         });
       }
     }

@@ -10,6 +10,7 @@ const appConfig: IAppConfig = {
     rootId: 'ice-container',
     errorBoundary: true,
     parseSearchParams: true,
+    // renderComponent: () => <>HELLO</>,
     getInitialData: async() => {
       // const result = await request('/repo');
       const result = {
@@ -33,7 +34,8 @@ const appConfig: IAppConfig = {
   router: {
     basename: '/ice',
     type: 'hash',
-    fallback: <div>加载中...</div>
+    fallback: <div>加载中...</div>,
+    // routes: [{path: '/home', component: () => <>He</>}]
   },
   request: {
     timeout: 5000,

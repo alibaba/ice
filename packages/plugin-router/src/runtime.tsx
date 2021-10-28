@@ -23,6 +23,11 @@ const module = ({ setRenderApp, appConfig, modifyRoutes, wrapperPageComponent, m
 
   wrapperPageComponent(WrappedPageComponent);
 
+  // TODO：MPA 下不应该打印，runtime 如何判断 MPA 是否启用
+  if (defaultRoutes && appConfigRouter.routes) {
+    console.warn('[icejs]', '配置了 app.router.routes 字段，src/routes 配置&文件路由将失效。');
+  }
+
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
     return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
