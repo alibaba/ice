@@ -3,11 +3,16 @@ const fs = require('fs');
 
 const dtsBundleFile = 'ice.d.ts';
 const iceTempDir = path.join(process.cwd(), '.ice');
-const libDir = path.join(__dirname, '..', 'lib');
+const iceTempDtsBundlePath = path.join(iceTempDir, dtsBundleFile);
+const dtsBundlePath = path.join(__dirname, '..', 'lib', dtsBundleFile);
 
-fs.mkdirSync(iceTempDir);
+if (fs.existsSync(dtsBundlePath)) {
+  if (!fs.existsSync(iceTempDir)) {
+    fs.mkdirSync(iceTempDir);
+  }
 
-fs.copyFileSync(
-  path.join(libDir, dtsBundleFile),
-  path.join(iceTempDir, dtsBundleFile)
-);
+  fs.copyFileSync(
+    dtsBundlePath,
+    iceTempDtsBundlePath
+  );
+}
