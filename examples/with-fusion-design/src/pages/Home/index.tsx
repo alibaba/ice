@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Calendar, Icon } from '@alifd/next';
 import moment from 'moment';
+import '@alifd/next/es/button/style';
 
 moment.locale('ru');
 console.log(moment().format('LL'));

@@ -4975,6 +4975,27 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
+build-scripts@^1.0.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.2.tgz#53cca23a7d8342508404bd7da7ceb93606bc79d7"
+  integrity sha512-n9scM4d98bL6dY8VfWKxRpPEmaES0YPDyIBQ0g9Lqz0xjVm+GFWj5tziHosuymCVRQNCUp8U2XNoiU3d4q/b9A==
+  dependencies:
+    address "^1.1.0"
+    camelcase "^5.3.1"
+    chalk "^2.4.1"
+    chokidar "^3.3.1"
+    commander "^2.19.0"
+    deepmerge "^4.0.0"
+    detect-port "^1.3.0"
+    esbuild "^0.12.16"
+    fs-extra "^8.1.0"
+    inquirer "^6.5.1"
+    json5 "^2.1.3"
+    lodash "^4.17.15"
+    npmlog "^4.1.2"
+    semver "^7.3.2"
+    yargs-parser "^14.0.0"
+
 build-scripts@^1.0.1, build-scripts@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.1.1.tgz#4eebd8c42ddfa884862ddae4e14089d3231317df"
@@ -7003,6 +7024,11 @@ es6-promisify@^6.0.0:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
   integrity sha512-HBL8I3mIki5C1Cc9QjKUenHtnG0A5/xA8Q/AllRcfiwl2CZFXGK7ddBiCoRwAix4i2KxcQfjtIVcrVbB3vbmwg==
+
+esbuild@^0.12.16, esbuild@^0.12.17, esbuild@^0.12.8:
+  version "0.12.25"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.25.tgz#c2131cef022cf9fe94aaa5e00110b27fc976221a"
+  integrity sha512-woie0PosbRSoN8gQytrdCzUbS2ByKgO8nD1xCZkEup3D9q92miCze4PqEI9TZDYAuwn6CruEnQpJxgTRWdooAg==
 
 esbuild-android-arm64@0.13.5:
   version "0.13.5"
@@ -9100,7 +9126,7 @@ init-package-json@^1.10.3:
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^3.0.0"
 
-inquirer@^6.2.0:
+inquirer@^6.2.0, inquirer@^6.5.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.2.tgz#ad50942375d036d327ff528c08bd5fab089928ca"
   integrity sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ==

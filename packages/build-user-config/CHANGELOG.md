@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2
+
+- [fix] remove unused package of `webpack-plugin-import`
+
+## 1.1.1
+
+- [fix] OOM when use filesystem cache 
+
 ## 1.1.0
 
 - [feat] get webpack cache version by `WEBPACK_CACHE_ID`

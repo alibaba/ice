@@ -37,6 +37,7 @@ export async function viteStart(context: Context): Promise<StartResult> {
   }
 
   const viteServer = await devServer.listen();
+  devServer.printUrls();
 
   return viteServer;
 }
