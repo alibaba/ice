@@ -15,12 +15,12 @@ export default (config, polyfill, { userConfig }) => {
   if (swc) {
     modifySwcOptions(config, { env: {
       mode: polyfill || undefined,
-      coreJs: 3,
+      coreJs: '3.8',
     }});
   } else {
     processPresetEnv(config, {
       useBuiltIns: polyfill,
-      corejs: 3,
+      corejs: '3.8',
     });
   }
 
