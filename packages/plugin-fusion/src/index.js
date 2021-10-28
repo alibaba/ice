@@ -142,12 +142,6 @@ module.exports = async (
               }),
           }),
         ].filter(Boolean),
-        resolve: {
-          alias: [
-            // compatible with `@import '~@alifd/next/reset.scss';`
-            { find: /^~/, replacement: '' },
-          ],
-        },
       },
       { deepmerge: true }
     );
