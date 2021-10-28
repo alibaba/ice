@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppConfig, AppRouter, AppRoute } from '@ice/stark';
 import {
@@ -178,6 +178,12 @@ const module = ({
         updateApps: setApps,
       };
 
+      // RootApp will re-render on every AppRoute's update if RootApp were matched.
+      const MemoRootApp = useMemo(
+        () => React.memo(() => <RootApp routes={routes} />),
+        []
+      );
+
       return (
         <BasicLayout {...appInfo}>
           {apps && (
@@ -199,7 +205,7 @@ const module = ({
                 <RenderAppRoute
                   path="/"
                   render={() => {
-                    return <RootApp routes={routes} />;
+                    return <MemoRootApp />;
                   }}
                 />
               )}

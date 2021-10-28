@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] bump version of `webpack-plugin-import`
+
+## 2.0.1
+
+- [fix] bump version of `@builder/pack`
+
 ## 2.0.0
 
 - [feat] deprecate configs

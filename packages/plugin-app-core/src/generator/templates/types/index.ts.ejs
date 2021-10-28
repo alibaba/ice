@@ -71,10 +71,17 @@ export interface IRouter {
 }
 <% } %>
 
+<% if (isRax) {%>
+export interface IRuntimeValue {
+  [key: string]: unknown;
+}
+<% } %>
+
 export interface IAppConfig {
-  app?: IApp,
+  app?: IApp;
+  renderComponent?: FrameworkElement;
   <% if (isRax) {%>
-  router?: IRouter
+  router?: IRouter;
   <% } %>
   <% if (appConfigTypesImports) { %>
     <%- appConfigTypesExports %>

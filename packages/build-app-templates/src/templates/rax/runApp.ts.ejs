@@ -3,7 +3,6 @@ import {
   createBaseApp,
   initAppLifeCycles,
   emitLifeCycles,
-  getSearchParams,
 <% if (buildConfig.router !== false) {%>
   initHistory,
   createHistory,
@@ -25,17 +24,22 @@ import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
-import { IAppConfig, IBuildConfig, IStaticConfig } from '<%- typesPath  %>';
-<% if (routesFilePath)  { %>
-import defaultStaticConfig from '<%- routesFilePath %>';
-<% } %>
+import { IAppConfig, IBuildConfig, IStaticConfig, IRuntimeValue } from '<%- typesPath  %>';
+import { mount, unmount } from '<%- relativeCorePath %>/render';
+import defaultStaticConfig from '<%- relativeCorePath %>/staticConfig';
 
-let staticConfig: IStaticConfig | undefined;
+let staticConfig: IStaticConfig = defaultStaticConfig;
 
-<% if (routesFilePath)  { %>
-staticConfig = defaultStaticConfig;
-<% } %>
+const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+const runtimeValue: IRuntimeValue = {};
+
+<% if (tabBarPath) {%>
+if (!inMiniApp) {
+  runtimeValue.TabBar = TabBar;
+  runtimeValue.tabBarConfig = <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %>;
+}
+<% } %>
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
@@ -43,8 +47,8 @@ const frameworkAppBase = createBaseApp({
     <% if (buildConfig.router !== false) {%>
     createHistory,
     <% } %>
-    getSearchParams,
   },
+  runtimeValue,
 });
 
 <% if (typeof pageConfig !== 'undefined') {%>
@@ -64,13 +68,16 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
     staticConfig = customStaticConfig;
   }
   // set History before GID
-  initHistory && initHistory(appConfig as any);
+  initHistory && initHistory(appConfig as any, { staticConfig });
+  <% }  else if (typeof pageConfig !== 'undefined') { %>
+    appConfig.renderComponent.__pageConfig = pageConfig;
   <% } %>
 
   let renderer;
-  renderer = raxAppRenderer;
-  if ((isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb) {
+  if (inMiniApp) {
     renderer = miniappRenderer;
+  } else {
+    renderer = raxAppRenderer;
   }
   renderer({
     appConfig: appConfig as RenderAppConfig,
@@ -85,9 +92,12 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
     <% if (typeof pageConfig !== 'undefined') {%>
     pageConfig,
     <% } %>
-    <% if (tabBarPath) {%>
+    <% if (tabBarPath && isMPA) {%>
     TabBar,
     <% } %>
+  }, {
+    mount,
+    unmount,
   });
 };
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] nested routes not render in vite mode
+
+## 2.0.2
+
+- [fix] not restart after first use store
+- [fix] not regenerate webpack cache after first use store
+- [fix] `AppStore.Provider` ts type error
+
 ## 2.0.1
 
 - [fix] display warning message but the page has no store

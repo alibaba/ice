@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.2
+
+- [fix] remove unused package of `webpack-plugin-import`
+
+## 1.1.1
+
+- [fix] OOM when use filesystem cache 
+
+## 1.1.0
+
+- [feat] get webpack cache version by `WEBPACK_CACHE_ID`
+- [fix] use eslint-webpack-plugin instead of eslint-reporting-webpack-plugin
+- [fix] bump version of `@builder/pack`
+- [feat] refactor config of eslint
+- [feat] support active minify in dev
+
+
 ## 1.0.2
 
 - [fix] add dependency of eslint-reporting-webpack-plugin

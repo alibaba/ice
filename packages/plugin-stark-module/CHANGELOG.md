@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+- [fix] remove default value of root's config to avoid changing the default behavior.
+
 ## 2.2.0
 
 - [feat] allow to register `outputDir` in root.

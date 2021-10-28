@@ -6,6 +6,10 @@ export default function(array, key) {
     let target = item;
     if (result[item[key]]) {
       target = merge(result[item[key]], item);
+      // Override defaultValue
+      if (Object.prototype.hasOwnProperty.call(item, 'defaultValue')) {
+        target.defaultValue = item.defaultValue;
+      }
     }
     result[item[key]] = target;
   });

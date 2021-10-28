@@ -2,6 +2,7 @@
 
 ## 2.4.1
 
+- [fix] avoid RootApp re-rendering when route changes. ([#427](https://github.com/ice-lab/icestark/issues/427))
 - [chore] provide more prompt information.
 
 ## 2.4.0
