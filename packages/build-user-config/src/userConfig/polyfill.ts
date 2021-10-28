@@ -15,12 +15,13 @@ export default (config, polyfill, { userConfig }) => {
   if (swc) {
     modifySwcOptions(config, { env: {
       mode: polyfill || undefined,
-      coreJs: '3.8',
+      coreJs: 3,
     }});
   } else {
     processPresetEnv(config, {
       useBuiltIns: polyfill,
-      corejs: '3.8',
+      // Set latest polyfills (until ECMAScript 2021). https://unpkg.alibaba-inc.com/browse/core-js-compat@3.18.3/modules-by-versions.json
+      corejs: '3.7',
     });
   }
 

@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.1.2
+
+- [feat] provide lastest polyfills (untill ECMAScript 2021) by default
+
 ## 1.1.1
 
-- [fix] OOM when use filesystem cache 
+- [fix] OOM when use filesystem cache
 
 ## 1.1.0
 
