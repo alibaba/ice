@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+
+- [fix] sourcemap does not work with mode vite
+
 ## 1.1.0
 
 - [feat] built-in alias for ～antd and ～@alifd/next which commonly unused in style files

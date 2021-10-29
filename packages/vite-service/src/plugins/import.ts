@@ -1,11 +1,12 @@
 import type { Plugin } from 'vite';
 import { redirectImport, formatPath } from '@builder/app-helpers';
+import MagicString from 'magic-string';
 import * as path from 'path';
 import { isObject } from 'lodash';
 
 interface Option {
   rootDir: string;
-  entries: string | Record<string, string[]>
+  entries?: string | Record<string, string[]>
 }
 
 const getMpaRunAppPathsMap = (rootDir: string, list: string[]) => {
@@ -34,6 +35,51 @@ const getTransformedCode = async (code: string, id: string, tempPath: string) =>
   });
 };
 
+const pluginImportMPA = ({ rootDir, entries }: Option): Plugin => {
+  const entryList = Object.keys(entries);
+  const mpaRunAppPathsMap = getMpaRunAppPathsMap(rootDir, entryList);
+  let needSourcemap = false;
+  return {
+    name: 'vite-plugin-import-mpa',
+    configResolved(resolvedConfig) {
+      needSourcemap = !!resolvedConfig.build.sourcemap;
+    },
+    transform: async (code, id) => {
+      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
+
+      const relativePath = path.relative(rootDir, id).toLocaleLowerCase();
+      const name = entryList.find(pageName => relativePath.includes(pageName));
+      const iceTempPath = mpaRunAppPathsMap[name];
+
+      if (!iceTempPath) return;
+      const sourceCode = await getTransformedCode(code, id, iceTempPath);
+      return {
+        map: needSourcemap ? (new MagicString(sourceCode)).generateMap({ hires: true }) : null,
+        code: sourceCode,
+      };
+    }
+  };
+};
+
+const pluginImportSPA = ({ rootDir }: Option): Plugin => {
+  let needSourcemap = false;
+  return {
+    name: 'vite-plugin-import-spa',
+    configResolved(resolvedConfig) {
+      needSourcemap = !!resolvedConfig.build.sourcemap;
+    },
+    transform: async (code, id) => {
+      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
+
+      const sourceCode = await getTransformedCode(code, id, path.resolve(rootDir, '.ice/core/runApp'));
+      return {
+        map: needSourcemap ? (new MagicString(sourceCode)).generateMap({ hires: true }) : null,
+        code: sourceCode,
+      };
+    }
+  };
+};
+
 /**
  * @from import { runApp } from 'ice'
  * @to import { runApp } from '../.ice/core/runApp'
@@ -43,32 +89,5 @@ const getTransformedCode = async (code: string, id: string, tempPath: string) =>
  */
 export const importPlugin = ({ rootDir, entries }: Option): Plugin => {
   const isMpa = isObject(entries);
-
-  if (isMpa) {
-    const entryList = Object.keys(entries);
-    const mpaRunAppPathsMap = getMpaRunAppPathsMap(rootDir, entryList);
-    return {
-      name: 'vite-plugin-import-mpa',
-      transform: async (code, id) => {
-        if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
-
-        const relativePath = path.relative(rootDir, id).toLocaleLowerCase();
-        const name = entryList.find(pageName => relativePath.includes(pageName));
-        const iceTempPath = mpaRunAppPathsMap[name];
-
-        if (!iceTempPath) return code;
-
-        return await getTransformedCode(code, id, iceTempPath);
-      }
-    };
-  }
-
-  return {
-    name: 'vite-plugin-import-spa',
-    transform: async (code, id) => {
-      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
-
-      return await getTransformedCode(code, id, path.resolve(rootDir, '.ice/core/runApp'));
-    }
-  };
+  return isMpa ? pluginImportSPA({ rootDir }) : pluginImportMPA({ rootDir, entries });
 };
