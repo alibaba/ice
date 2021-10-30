@@ -1,19 +1,21 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import { IPluginAPI } from 'build-scripts';
 import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
 import generateStaticPages from './generateStaticPages';
+import viteSSR from './vite';
 
-const plugin = async (api): Promise<void> => {
+const plugin = async (api: IPluginAPI): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir, ssr } = userConfig;
+  const { outputDir, ssr, vite } = userConfig;
 
-  const TEMP_PATH = getValue('TEMP_PATH');
+  const TEMP_PATH: string = getValue('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
-  const buildDir = path.join(rootDir, outputDir);
+  const buildDir = path.join(rootDir, outputDir as string);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
   const serverFilePath = path.join(serverDir, serverFilename);
@@ -26,6 +28,9 @@ const plugin = async (api): Promise<void> => {
 
   const mode = command === 'start' ? 'development' : 'production';
 
+  if (vite) {
+    viteSSR(api, ssrEntry);
+  }
   const webpackConfig = getWebpackConfig(mode);
 
   // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config
@@ -35,7 +40,6 @@ const plugin = async (api): Promise<void> => {
       'process.env.APP_MODE': JSON.stringify(commandArgs.mode || command),
       'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
     }]);
-
   onGetWebpackConfig((config) => {
     if (config.plugins.get('HtmlWebpackPlugin')) {
       config
@@ -43,15 +47,12 @@ const plugin = async (api): Promise<void> => {
         .tap(([args]) => {
           return [{
             ...args,
-            // will add assets by @loadable/component
-            inject: false,
+            inject: false, // will add assets by @loadable/component
           }];
         });
     }
-
     config.plugin('@loadable/webpack-plugin').use(LoadablePlugin);
   });
-
   modifyUserConfig('babelPlugins',
     [
       ...(userConfig.babelPlugins as [] || []),
@@ -59,6 +60,7 @@ const plugin = async (api): Promise<void> => {
       '@loadable/babel-plugin',
     ]
   );
+
   registerTask('ssr', webpackConfig);
   onGetWebpackConfig('ssr', (config) => {
     config.entryPoints.clear();
