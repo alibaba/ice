@@ -4,7 +4,9 @@
   "polyfill": false,
   "vite": true,
   "vendor": false,
-  "plugins": [],
+  "plugins": [
+    "build-plugin-jsx-plus"
+  ],
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },

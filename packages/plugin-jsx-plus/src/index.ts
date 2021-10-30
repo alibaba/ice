@@ -1,7 +1,14 @@
-const path = require('path');
+import * as path from 'path';
+import jsxPlusPlugin from 'vite-plugin-jsx-plus';
+
+interface Json {
+  [index: string]: unknown;
+}
+
+type Plugins = string | [string, Json];
 
 // Babel plugins list for jsx plus
-const babelPlugins = [
+const babelPlugins: Plugins[] = [
   'babel-plugin-transform-jsx-list',
   'babel-plugin-transform-jsx-condition',
   'babel-plugin-transform-jsx-memo',
@@ -10,7 +17,14 @@ const babelPlugins = [
   'babel-plugin-transform-jsx-class',
 ];
 
-module.exports = ({ onGetWebpackConfig }) => {
+export default ({ context, onGetWebpackConfig, modifyUserConfig }) => {
+  const { userConfig: { vite } } = context;
+
+  if (vite) {
+    modifyUserConfig('vite.plugins', [jsxPlusPlugin()], { deepmerge: true });
+    return;
+  }
+
   onGetWebpackConfig(config => {
     // modify babel config to add jsx plus plugins
     ['jsx', 'tsx'].forEach(rule => {
