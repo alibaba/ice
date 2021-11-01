@@ -123,9 +123,20 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     }
   });
 
-  await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(iceTempPath, 'types/icestark.ts'));
-  await fse.copy(path.join(__dirname, '..', 'src/types/base.ts'), path.join(iceTempPath, 'types/base.ts'));
-  applyMethod('addAppConfigTypes', { source: './types/icestark', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  const isVersion2 = Number(process.env.__FRAMEWORK_VERSION__[0]) > 1;
+
+  if (isVersion2) {
+    // copy type files to .ice/plugins/icestark
+    applyMethod('addPluginTemplate', {
+      template: path.join(__dirname, './types'),
+      targetDir: 'icestark/types',
+    });
+    applyMethod('addAppConfigTypes', { source: '../plugins/icestark/types', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  } else {
+    await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(iceTempPath, 'types/icestark.ts'));
+    await fse.copy(path.join(__dirname, '..', 'src/types/base.ts'), path.join(iceTempPath, 'types/base.ts'));
+    applyMethod('addAppConfigTypes', { source: './types/icestark', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  }
 };
 
 export default plugin;

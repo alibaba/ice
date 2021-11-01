@@ -14,7 +14,9 @@ import { IceRouter } from '$ice/Router';
 // @ts-ignore
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
-import { IPrivateIceStark, IIceStark } from './types';
+import { IPrivateIceStark, IIceStark, IStarkAppConfig } from './types';
+
+type Nullish = () => void;
 
 const module = ({
   appConfig,
@@ -59,7 +61,7 @@ const module = ({
               if (enterRegistration) {
                 enterRegistration(mountNode, App, resolve);
               } else {
-                ReactDOM.render(<App />, mountNode, resolve);
+                ReactDOM.render(<App />, mountNode, resolve as Nullish);
               }
             });
             // make sure the unmount event is triggered
@@ -76,10 +78,10 @@ const module = ({
             if (!container) {
               container = getMountNode();
             }
-            ReactDOM.render(<App />, container, resolve);
+            ReactDOM.render(<App />, container, resolve as Nullish);
           }
         } else {
-          ReactDOM.render(<App />, appMountNode, resolve);
+          ReactDOM.render(<App />, appMountNode, resolve as Nullish);
         }
       });
     });
@@ -138,7 +140,7 @@ const module = ({
       const [appEnter, setAppEnter] = useState({});
       const [appLeave, setAppLeave] = useState({});
 
-      const [apps, setApps] = useState(null);
+      const [apps, setApps] = useState<IStarkAppConfig[] | null>(null);
       const BasicLayout = Layout || DefaultLayout || ((props) => (<>{props.children}</>));
       const RenderAppRoute = (CustomAppRoute || AppRoute) as typeof AppRoute;
 
