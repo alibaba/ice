@@ -16,7 +16,7 @@ import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IPrivateIceStark, IIceStark, IStarkAppConfig } from './types';
 
-type Nullish = () => void;
+type Noop = () => void;
 
 const module = ({
   appConfig,
@@ -61,7 +61,7 @@ const module = ({
               if (enterRegistration) {
                 enterRegistration(mountNode, App, resolve);
               } else {
-                ReactDOM.render(<App />, mountNode, resolve as Nullish);
+                ReactDOM.render(<App />, mountNode, resolve as Noop);
               }
             });
             // make sure the unmount event is triggered
@@ -78,10 +78,10 @@ const module = ({
             if (!container) {
               container = getMountNode();
             }
-            ReactDOM.render(<App />, container, resolve as Nullish);
+            ReactDOM.render(<App />, container, resolve as Noop);
           }
         } else {
-          ReactDOM.render(<App />, appMountNode, resolve as Nullish);
+          ReactDOM.render(<App />, appMountNode, resolve as Noop);
         }
       });
     });
