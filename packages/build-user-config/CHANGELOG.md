@@ -2,7 +2,7 @@
 
 ## 1.1.2
 
-- [feat] provide lastest polyfills (untill ECMAScript 2021) by default
+- [fix] set `corejs: '3.7'` to meet the ECMAScript 2021 polyfills.
 
 ## 1.1.1
 
