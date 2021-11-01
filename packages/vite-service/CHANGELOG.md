@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+
+- [fix] transform config `postcssOptions` for vite
+
 ## 1.1.0
 
 - [feat] built-in alias for ～antd and ～@alifd/next which commonly unused in style files
