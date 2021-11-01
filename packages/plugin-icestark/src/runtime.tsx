@@ -30,7 +30,13 @@ const module = ({
   wrapperRouteComponent
 }) => {
   const { icestark, router } = appConfig;
-  const { type: appType = process.env.__ICESTARK_TYPE__, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration, $$props } = (icestark || {}) as IPrivateIceStark;
+  const {
+    type: appType = process.env.__ICESTARK_TYPE__,
+    registerAppEnter: enterRegistration,
+    registerAppLeave: leaveRegistration,
+    getApps,
+    $$props
+  } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
   // compatible with deprecated runtime API
   const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
@@ -115,8 +121,9 @@ const module = ({
         return <IceRouter {...routerProps} routes={routes} />;
       });
     }
-  } else if (appType === 'framework') {
-    const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
+  } else if (appType === 'framework' && getApps) {
+    const { appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
+
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
@@ -208,6 +215,13 @@ const module = ({
       );
     };
     setRenderComponent(frameworkRouter);
+  }
+
+  if (appType === 'framework' && !getApps) {
+    console.warn(`
+      [plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app; If not，please make sure appConfgi.icestark.type exist.
+      see https://ice.work/docs/guide/advanced/icestark/
+    `);
   }
 };
 
