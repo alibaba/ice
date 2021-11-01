@@ -2,11 +2,13 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
+import htmlPlugin from 'vite-plugin-index-html';
 import checkEntryFile from './checkEntryFile';
-import buildPlugin from './buildPlugin';
-import htmlPlugin from './htmlPlugin';
 import lifecyclePlugin from './lifecyclePlugin';
-import type { Entries } from './buildPlugin';
+
+export interface Entries {
+  [index: string]: string | string[];
+}
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
@@ -57,7 +59,23 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
 
     // Only micro-applications need to be compiled to specific format.
     if (appType === 'child' && vite) {
-      modifyUserConfig('vite.plugins', [buildPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
+
+      const input = Object.keys(entries).reduce((pre, next) => {
+        return {
+          ...pre,
+          [next]: Array.isArray(entries[next]) ? entries[next][0] : entries[next]
+        };
+      }, {});
+
+      console.log('fsfdsfs', input);
+      modifyUserConfig('vite.plugins', [
+        htmlPlugin({
+          // @ts-ignore temporarily only support spa
+          input: input.index,
+          template: path.resolve(rootDir, 'public/index.html')
+        }),
+        lifecyclePlugin(entries)
+      ], { deepmerge: true });
     }
 
     config

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- [feat] use `vite-plugin-index-html` as a substitute in Vite mode.
+
 ## 2.4.0
 
 - [feat] an extra `type` option is configured to distinguish between framework and child. And now, `type` in `appconfig.icestark` is deprecated.
