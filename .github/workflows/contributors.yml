@@ -17,7 +17,7 @@ jobs:
           CONTRIBUTOR: "## Contributors"
           COLUMN_PER_ROW: "10"
           ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          BRANCH: 'update/contributors'
+          BRANCH: ‘’
           PULL_REQUEST: 'master'
           IMG_WIDTH: "60"
           FONT_SIZE: "14"
