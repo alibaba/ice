@@ -1,12 +1,13 @@
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import react from '@vitejs/plugin-react';
 import analyzer from 'rollup-plugin-visualizer';
 import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
 import tsChecker from 'vite-plugin-ts-types';
-import { Context, ITaskConfig } from 'build-scripts';
-import { InlineConfig, BuildOptions } from 'vite';
+import { Context, ITaskConfig, IUserConfig } from 'build-scripts';
+import type { TransformOptions } from '@babel/core';
 import eslintReport from 'vite-plugin-eslint-report';
+import type { InlineConfig, BuildOptions, PluginOption, Plugin } from 'vite';
 import { recordMap } from './config';
 import {
   externalsPlugin,
@@ -98,9 +99,41 @@ const getOpen = (context: Context) => {
   return page ?? true;
 };
 
-/**
- * Exposed
- */
+type BabelPreset = [string, Record<string, any>];
+
+const getPluginReact = (config: ITaskConfig['chainConfig'], context: Context): PluginOption[] => {
+  const { userConfig, originalUserConfig, command  } = context;
+  const fastRefresh = userConfig.fastRefresh && command === 'build';
+  const jsxRuntimeConfig = userConfig.babelPresets
+    && (userConfig.babelPresets as BabelPreset[]).find(([pluginName, pluginOptions]) => pluginName.includes('@babel/preset-react') && pluginOptions?.runtime === 'automatic');
+  const babelPlugins = userConfig.babelPlugins as TransformOptions['plugins'];
+  if (fastRefresh || babelPlugins.length > 0 || jsxRuntimeConfig || originalUserConfig.babelPresets) {
+    // get exclude rule for babel-loader
+    const babelExclude = config.module.rules.has('jsx') ? config.module.rule('jsx').exclude.values() : [/node_modules/];
+    console.log('babelExclude', babelExclude);
+    console.log('jsxRuntimeConfig', babelPlugins);
+    return react({
+      // exclude rule for fast refresh
+      exclude: [/node_modules/, /[\\/]\.ice[\\/]/],
+      fastRefresh,
+      jsxRuntime: jsxRuntimeConfig ? 'automatic' : 'classic',
+      babel: {
+        // exclude rule for babel
+        /* exclude: (filePath) => {
+          console.log('filePath', filePath);
+          return filePath.includes('node_modules');
+        }, */
+        exclude: [/node_modules/],
+        plugins: babelPlugins,
+        // 仅用户配置的 babelPresets 生效
+        // 通过插件修改后的配置如 ['@babel/preset-react', { runtime: 'automatic' }]，通过 jsxRuntime 配置设置
+        presets: originalUserConfig.babelPresets as TransformOptions['presets'],
+      }
+    });
+  }
+  return [];
+};
+
 export const wp2vite = (context: Context): InlineConfig => {
   const { commandArgs = {}, userConfig, originalUserConfig, rootDir, command } = context;
   const config = getWebpackConfig(context);
@@ -126,6 +159,7 @@ export const wp2vite = (context: Context): InlineConfig => {
         rootDir,
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
+      ...getPluginReact(config.chainConfig, context).filter(Boolean),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
@@ -184,12 +218,6 @@ export const wp2vite = (context: Context): InlineConfig => {
           include: ['react-app-renderer', 'create-app-shared'],
         },
         server: devServerConfig,
-        plugins: [
-          userConfig.fastRefresh ? reactRefresh({
-            // Exclude node_modules and ice runtime
-            exclude: [/node_modules/, /\.ice/]
-          }) : null
-        ],
       },
       viteConfig,
     ]);
