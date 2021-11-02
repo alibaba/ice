@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, memo } from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppConfig, AppRouter, AppRoute } from '@ice/stark';
 import {
@@ -82,7 +82,7 @@ const module = ({
           } else {
             let { container } = $$props ?? {};
             if (!container) {
-              container = getMountNode();
+              container = getMountNode() as HTMLElement;
             }
             ReactDOM.render(<App />, container, () => {
               resolve(true);
@@ -186,7 +186,7 @@ const module = ({
 
       // RootApp will re-render on every AppRoute's update if RootApp were matched.
       const MemoRootApp = useMemo(
-        () => React.memo(() => <RootApp routes={routes} />),
+        () => memo(() => <RootApp routes={routes} />),
         []
       );
 
