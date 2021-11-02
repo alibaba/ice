@@ -7,7 +7,8 @@
     "paths": {
       "$ice/Router": ["./src/runtime/_Router"],
       "$ice/Layout": ["./src/runtime/Layout"]
-    }
+    },
+    "esModuleInterop": true
   },
   "exclude": [
     "template/*",
