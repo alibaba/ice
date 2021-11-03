@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] bump `esbuild` version to `^0.13.12`
+
 ## 2.0.2
 
 - [fix] bump version of `webpack-plugin-import`
