@@ -20,7 +20,7 @@ module.exports = async (api) => {
   }
 
   if (userConfig.vitePlugins) {
-    // transform vitePlugin to vite.plugin
+    // transform vitePlugins to vite.plugins
     modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
   }
   // register cli option
