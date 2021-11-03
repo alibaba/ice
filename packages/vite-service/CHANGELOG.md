@@ -3,6 +3,7 @@
 ## 1.1.1
 
 - [fix] sourcemap does not work with mode vite
+- [fix] transform config `postcssOptions` for vite
 
 ## 1.1.0
 
