@@ -10,11 +10,22 @@ use backtrace::Backtrace;
 use napi::{CallContext, Env, JsObject, JsUndefined};
 use std::{env, panic::set_hook, sync::Arc};
 use swc::{Compiler, TransformOutput};
-use swc_common::{self, sync::Lazy, FilePathMapping, SourceMap};
+use swc_common::{self, chain, pass::Optional, sync::Lazy, FileName, FilePathMapping, SourceMap};
+use swc_ecmascript::{
+    visit::Fold,
+};
+use swc_ecmascript::transforms::pass::noop;
 
-mod minify;
-mod transform;
+pub mod amp_attributes;
+pub mod minify;
+pub mod transform;
 mod util;
+
+
+pub fn custom_before_pass(name: &FileName) -> impl Fold {
+  // custom before pass
+  noop()
+}
 
 static COMPILER: Lazy<Arc<Compiler>> = Lazy::new(|| {
     let cm = Arc::new(SourceMap::new(FilePathMapping::empty()));

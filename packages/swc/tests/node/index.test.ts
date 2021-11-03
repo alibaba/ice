@@ -1,4 +1,4 @@
-import { transformSync } from '..';
+import { transformSync } from '../../lib';
 
 describe('swc transform code', () => {
   it('should transform es6 code to es5', () => {
