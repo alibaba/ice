@@ -1,4 +1,4 @@
-# webpack-plugin-query-loader
+# query-loader-webpack-plugin
 
 webpack plugin for handling static assets with specified query
 

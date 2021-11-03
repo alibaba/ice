@@ -1,5 +1,5 @@
 {
-  "name": "webpack-plugin-query-loader",
+  "name": "query-loader-webpack-plugin",
   "version": "1.0.0",
   "description": "webpack plugin for enable loader rule with query suffix",
   "main": "lib/index.js",

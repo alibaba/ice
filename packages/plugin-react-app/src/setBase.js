@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
 const CopyWebpackPlugin = require('@builder/pack/deps/copy-webpack-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
-const WebpackPluginQueryLoader = require('webpack-plugin-query-loader').default;
+const WebpackPluginQueryLoader = require('query-loader-webpack-plugin').default;
 const { getFilePath, getWebOutputPath } = require('./utils');
 
 module.exports = (api, { target, webpackConfig }) => {
