@@ -19,7 +19,7 @@ module.exports = async (api) => {
     log.info(invalidMsg);
   }
 
-  if (userConfig.vitePlugin) {
+  if (userConfig.vitePlugins) {
     // transform vitePlugin to vite.plugin
     modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
   }
