@@ -2,12 +2,12 @@
 
 ## 2.0.3
 
+- [feat] support apply static loader with query like `?worker|?url|?raw|?worker&inline`
 - [fix] typo of `vitePlugins`
 - [fix] bump `esbuild` version to `^0.13.12`
 
 ## 2.0.2
 
-- [feat] support `queryLoader`
 - [fix] bump version of `webpack-plugin-import`
 
 ## 2.0.1
