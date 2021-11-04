@@ -83,8 +83,8 @@ pub fn minify_sync(cx: CallContext) -> napi::Result<JsObject> {
 
     let fm = code.to_file(c.cm.clone());
 
-    let output =
-        try_with_handler(c.cm.clone(), true, |handler| c.minify(fm, &handler, &opts)).convert_err()?;
+    let output = try_with_handler(c.cm.clone(), true, |handler| c.minify(fm, &handler, &opts))
+        .convert_err()?;
 
     complete_output(&cx.env, output)
 }

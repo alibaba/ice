@@ -1,11 +1,7 @@
-use builder_swc::{
-    amp_attributes::amp_attributes
-};
+use builder_swc::amp_attributes::amp_attributes;
 use std::path::PathBuf;
 use swc_ecma_transforms_testing::{test, test_fixture};
-use swc_ecmascript::{
-    parser::{EsConfig, Syntax},
-};
+use swc_ecmascript::parser::{EsConfig, Syntax};
 use testing::fixture;
 
 fn syntax() -> Syntax {
