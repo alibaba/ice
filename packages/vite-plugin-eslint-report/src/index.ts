@@ -55,7 +55,9 @@ const eslintPlugin = (options: Options): Plugin => {
     handleHotUpdate({ file }) {
       // hot update will get current changed file
       // debounce for lint in case of flush too many changes in short time
-      debounceLintFile(worker, file);
+      if (filter(file)) {
+        debounceLintFile(worker, file);
+      }
     },
     async transform(_, id) {
       // skip eslint when first compile
