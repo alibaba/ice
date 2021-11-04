@@ -1,4 +1,4 @@
-use builder_swc::amp_attributes::amp_attributes;
+use builder_swc::remove_multiple_ends_code::{remove_multiple_ends_code, RemoveMutipleEndsCode};
 use std::path::PathBuf;
 use swc_ecma_transforms_testing::{test, test_fixture};
 use swc_ecmascript::parser::{EsConfig, Syntax};
@@ -12,8 +12,16 @@ fn syntax() -> Syntax {
     })
 }
 
-#[fixture("tests/fixture/amp/**/input.js")]
+#[fixture("tests/fixture/remove_multiple_ends_code/**/input.js")]
 fn amp_attributes_fixture(input: PathBuf) {
     let output = input.parent().unwrap().join("output.js");
-    test_fixture(syntax(), &|_tr| amp_attributes(), &input, &output);
+    let config = RemoveMutipleEndsCode {
+        platforms: vec![String::from("web")],
+    };
+    test_fixture(
+        syntax(),
+        &|_tr| remove_multiple_ends_code(config.clone()),
+        &input,
+        &output,
+    );
 }

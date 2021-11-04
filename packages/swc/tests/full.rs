@@ -1,4 +1,4 @@
-use builder_swc::{custom_before_pass, transform::TransformOptions};
+use builder_swc::{custom_before_pass, TransformOptions};
 use serde::de::DeserializeOwned;
 use std::path::{Path, PathBuf};
 use swc::Compiler;
@@ -52,13 +52,14 @@ fn test(input: &Path, minify: bool) {
                     },
                     ..Default::default()
                 },
+                ..Default::default()
             };
 
             match c.process_js_with_custom_pass(
                 fm.clone(),
                 &handler,
                 &options.swc,
-                custom_before_pass(&fm.name),
+                custom_before_pass(&fm.name, &options),
                 noop(),
             ) {
                 Ok(v) => {

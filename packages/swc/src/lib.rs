@@ -8,20 +8,52 @@ extern crate swc_node_base;
 
 use backtrace::Backtrace;
 use napi::{CallContext, Env, JsObject, JsUndefined};
+use serde::Deserialize;
 use std::{env, panic::set_hook, sync::Arc};
 use swc::{Compiler, TransformOutput};
 use swc_common::{self, chain, pass::Optional, sync::Lazy, FileName, FilePathMapping, SourceMap};
 use swc_ecmascript::transforms::pass::noop;
 use swc_ecmascript::visit::Fold;
 
-pub mod amp_attributes;
+use crate::remove_multiple_ends_code::{
+    remove_multiple_ends_code, RemoveMutipleEndsCode, RemoveMutipleEndsCodeConfig,
+};
+
 pub mod minify;
+pub mod remove_multiple_ends_code;
 pub mod transform;
 mod util;
 
-pub fn custom_before_pass(name: &FileName) -> impl Fold {
+#[derive(Debug, Deserialize, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct TransformOptions {
+    #[serde(flatten)]
+    pub swc: swc::config::Options,
+    #[serde(default)]
+    pub remove_multiple_ends_code: RemoveMutipleEndsCodeConfig,
+}
+
+pub fn custom_before_pass(name: &FileName, options: &TransformOptions) -> impl Fold {
+    let mut remove_multiple_ends_code_options = RemoveMutipleEndsCode {
+        platforms: Vec::new(),
+    };
+    let enable_remove_multiple_ends_code: bool = match options.remove_multiple_ends_code.clone() {
+        RemoveMutipleEndsCodeConfig::RemoveMutipleEndsCode { platforms } => {
+            remove_multiple_ends_code_options = RemoveMutipleEndsCode { platforms };
+            true
+        }
+        RemoveMutipleEndsCodeConfig::Bool(val) => val,
+        _ => false,
+    };
+
     // custom before pass
-    noop()
+    chain!(
+        Optional::new(
+            remove_multiple_ends_code(remove_multiple_ends_code_options),
+            enable_remove_multiple_ends_code
+        ),
+        noop()
+    )
 }
 
 static COMPILER: Lazy<Arc<Compiler>> = Lazy::new(|| {

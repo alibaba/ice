@@ -1,10 +1,10 @@
 use crate::{
     complete_output, custom_before_pass, get_compiler,
     util::{deserialize_json, CtxtExt, MapErr},
+    TransformOptions,
 };
 use anyhow::{anyhow, Context as _, Error};
 use napi::{CallContext, Env, JsBoolean, JsObject, JsString, Status, Task};
-use serde::Deserialize;
 use std::{
     panic::{catch_unwind, AssertUnwindSafe},
     sync::Arc,
@@ -19,12 +19,6 @@ use swc_ecmascript::transforms::pass::noop;
 pub enum Input {
     /// Raw source code.
     Source { src: String },
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TransformOptions {
-    pub swc: swc::config::Options,
 }
 
 pub struct TransformTask {
@@ -52,7 +46,7 @@ impl Task for TransformTask {
 
                         let fm = self.c.cm.new_source_file(filename, src.to_string());
 
-                        let before_pass = custom_before_pass(&fm.name);
+                        let before_pass = custom_before_pass(&fm.name, &options);
                         self.c.process_js_with_custom_pass(
                             fm.clone(),
                             &handler,
