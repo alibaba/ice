@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.3
+
+- feat: not render tabbar in frm container
+
 ## 4.0.2
 
 - fix match rules for app.json
