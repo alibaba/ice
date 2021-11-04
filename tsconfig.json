@@ -47,5 +47,6 @@
     { "path": "packages/plugin-ignore-style" },
     { "path": "packages/vite-plugin-ts-checker" },
     { "path": "packages/vite-service" },
+    { "path": "packages/plugin-jsx-plus" }
   ]
 }
