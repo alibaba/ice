@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0
+## 0.1.3
 
 - [feat] support jsx+ syntax in Vite mode ([#4768](https://github.com/alibaba/ice/issues/4768)).
 
