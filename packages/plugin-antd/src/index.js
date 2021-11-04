@@ -5,7 +5,6 @@ module.exports = async ({ onGetWebpackConfig, log, context, modifyUserConfig }, 
   if (userConfig.vite) {
     modifyUserConfig('vite', {
       plugins: [
-        
         !disableModularImport &&
           // eslint-disable-next-line global-require
           require('vite-plugin-style-import').default({
@@ -18,12 +17,6 @@ module.exports = async ({ onGetWebpackConfig, log, context, modifyUserConfig }, 
             }]
           }),
       ].filter(Boolean),
-      resolve: {
-        alias: [
-          // compatible with `@import '~antd/es/style/themes/default.less';`
-          { find: /^~/, replacement: '' },
-        ],
-      },
     }, { deepmerge: true });
   }
 

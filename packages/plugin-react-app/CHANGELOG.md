@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] typo of `vitePlugins`
+- [fix] bump `esbuild` version to `^0.13.12`
+
 ## 2.0.2
 
 - [feat] support `queryLoader`
