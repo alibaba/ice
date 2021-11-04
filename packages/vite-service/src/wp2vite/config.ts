@@ -143,14 +143,17 @@ const configMap: ConfigMap = {
   },
   'devtool': {
     name: 'build.sourcemap',
-    transform: (devtool = '') => {
+    transform: (devtool) => {
       // build.sourcemap of support inline | hidden
-      const sourcemap = ['inline', 'hidden'].find((mapType) => {
-        return !!devtool.match(new RegExp(mapType));
-      });
-      return sourcemap || !!devtool;
+      if (devtool) {
+        const sourcemap = ['inline', 'hidden'].find((mapType) => {
+          return !!devtool.match(new RegExp(mapType));
+        });
+        return sourcemap || !!devtool;
+      }
+      return false;
     },
-  }, 
+  },
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': {
     name: 'server.proxy',
