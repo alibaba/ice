@@ -11,20 +11,17 @@ use napi::{CallContext, Env, JsObject, JsUndefined};
 use std::{env, panic::set_hook, sync::Arc};
 use swc::{Compiler, TransformOutput};
 use swc_common::{self, chain, pass::Optional, sync::Lazy, FileName, FilePathMapping, SourceMap};
-use swc_ecmascript::{
-    visit::Fold,
-};
 use swc_ecmascript::transforms::pass::noop;
+use swc_ecmascript::visit::Fold;
 
 pub mod amp_attributes;
 pub mod minify;
 pub mod transform;
 mod util;
 
-
 pub fn custom_before_pass(name: &FileName) -> impl Fold {
-  // custom before pass
-  noop()
+    // custom before pass
+    noop()
 }
 
 static COMPILER: Lazy<Arc<Compiler>> = Lazy::new(|| {
