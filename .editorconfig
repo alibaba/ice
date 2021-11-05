@@ -16,6 +16,6 @@ trim_trailing_whitespace = false
 indent_style = tab
 indent_size = 4
 
-[rust]
+[*.rs]
 indent_style = space
 indent_size = 4
