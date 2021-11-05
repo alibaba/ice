@@ -34,8 +34,9 @@ function miniappRenderer(
       render() {
         // Add page config to page component
         // @ts-ignore
-        component.__pageConfig = route;
-        const appInstance = mount(getRenderApp(component, runtime, {
+        const Page = component();
+        Page.__pageConfig = route;
+        const appInstance = mount(getRenderApp(Page, runtime, {
           ErrorBoundary,
           ErrorBoundaryFallback,
           onError,
