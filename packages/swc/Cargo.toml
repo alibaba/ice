@@ -30,6 +30,7 @@ retain_mut = "0.1.3"
 pathdiff = "0.2.0"
 rustc-hash = "1.1.0"
 tracing = { version = "0.1.28", features = ["release_max_level_off"] }
+lazy_static = "1.4.0"
 
 [dev-dependencies]
 swc_ecma_transforms_testing = "0.43.1"

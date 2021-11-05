@@ -15,7 +15,7 @@ jobs:
       - name: Install
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly-2021-08-12
+          toolchain: nightly-2021-11-05
           profile: minimal
       - run: cd packages/swc && cargo test
 

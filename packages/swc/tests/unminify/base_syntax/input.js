@@ -1,3 +1,5 @@
+
+
 import fs from 'fs'
 import other from 'other'
 
@@ -12,6 +14,7 @@ export async function getStaticProps() {
 }
 
 class Foo {}
+
 
 export default function Home() {
   return <div />

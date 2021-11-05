@@ -1,5 +1,7 @@
 use builder_swc::{custom_before_pass, TransformOptions};
+use builder_swc::remove_multiple_ends_code::{RemoveMultipleEndsCodeConfig};
 use serde::de::DeserializeOwned;
+use swc::config::{OptimizerConfig, TransformConfig};
 use std::path::{Path, PathBuf};
 use swc::Compiler;
 use swc_ecmascript::{
@@ -8,18 +10,38 @@ use swc_ecmascript::{
 };
 use testing::{fixture, NormalizedOutput, Tester};
 
-#[fixture("tests/full/**/input.js")]
-fn full(input: PathBuf) {
-    test(&input, true);
+#[fixture("tests/minify/base_syntax/input.js")]
+fn base_minify(input: PathBuf) {
+    test(&input, true, "".to_string());
 }
 
-#[fixture("tests/loader/**/input.js")]
-fn loader(input: PathBuf) {
-    test(&input, false);
+#[fixture("tests/minify/remove_platform_code/web/input.js")]
+fn save_web_code(input: PathBuf) {
+    test(&input, true, "web".to_string());
 }
 
-fn test(input: &Path, minify: bool) {
+#[fixture("tests/minify/remove_platform_code/kraken/input.js")]
+fn save_kraken_code(input: PathBuf) {
+    test(&input, true, "kraken".to_string());
+}
+
+#[fixture("tests/unminify/**/input.js")]
+fn unminify(input: PathBuf) {
+    test(&input, false, "".to_string());
+}
+
+fn test(input: &Path, minify: bool, platform: String) {
     let output = input.parent().unwrap().join("output.js");
+
+    let remove_multiple_ends_code: RemoveMultipleEndsCodeConfig;
+
+    if platform == "" {
+      remove_multiple_ends_code = RemoveMultipleEndsCodeConfig::Bool(false);
+    } else {
+      remove_multiple_ends_code = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
+        platform: platform,
+      };
+    }
 
     Tester::new()
         .print_errors(|cm, handler| {
@@ -36,7 +58,7 @@ fn test(input: &Path, minify: bool) {
                     config: swc::config::Config {
                         jsc: swc::config::JscConfig {
                             minify: if minify {
-                                Some(assert_json("{ \"compress\": true, \"mangle\": true }"))
+                                Some(assert_json("{ \"compress\": { \"dead_code\": true }, \"mangle\": true }"))
                             } else {
                                 None
                             },
@@ -45,6 +67,13 @@ fn test(input: &Path, minify: bool) {
                                 dynamic_import: true,
                                 ..Default::default()
                             })),
+                            transform: Some(TransformConfig {
+                              optimizer: Some(OptimizerConfig {
+                                simplify: minify,
+                                ..Default::default()
+                              }),
+                              ..Default::default()
+                            }),
                             ..Default::default()
                         },
                         minify: minify,
@@ -52,6 +81,7 @@ fn test(input: &Path, minify: bool) {
                     },
                     ..Default::default()
                 },
+                remove_multiple_ends_code: remove_multiple_ends_code,
                 ..Default::default()
             };
 
