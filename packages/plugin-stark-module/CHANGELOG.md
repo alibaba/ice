@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+
+- [fix] move `webpack-plugin-import` to dependencies
 ## 2.2.2
 
 - [fix] avoid undefined error when providing empty options.
