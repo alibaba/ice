@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- [fix] error occurred when config sourceMap
+
 ## 1.1.2
 
 - [fix] remove unused package of `webpack-plugin-import`
