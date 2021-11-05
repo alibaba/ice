@@ -3,9 +3,9 @@
 
 #[macro_use]
 extern crate napi_derive;
+extern crate lazy_static;
 /// Explicit extern crate to use allocator.
 extern crate swc_node_base;
-extern crate lazy_static;
 
 use backtrace::Backtrace;
 use lazy_static::lazy_static;

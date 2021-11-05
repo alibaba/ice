@@ -1,8 +1,8 @@
+use builder_swc::remove_multiple_ends_code::RemoveMultipleEndsCodeConfig;
 use builder_swc::{custom_before_pass, TransformOptions};
-use builder_swc::remove_multiple_ends_code::{RemoveMultipleEndsCodeConfig};
 use serde::de::DeserializeOwned;
-use swc::config::{OptimizerConfig, TransformConfig};
 use std::path::{Path, PathBuf};
+use swc::config::{OptimizerConfig, TransformConfig};
 use swc::Compiler;
 use swc_ecmascript::{
     parser::{Syntax, TsConfig},
@@ -36,11 +36,10 @@ fn test(input: &Path, minify: bool, platform: String) {
     let remove_multiple_ends_code: RemoveMultipleEndsCodeConfig;
 
     if platform == "" {
-      remove_multiple_ends_code = RemoveMultipleEndsCodeConfig::Bool(false);
+        remove_multiple_ends_code = RemoveMultipleEndsCodeConfig::Bool(false);
     } else {
-      remove_multiple_ends_code = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
-        platform: platform,
-      };
+        remove_multiple_ends_code =
+            RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform: platform };
     }
 
     Tester::new()
@@ -58,7 +57,9 @@ fn test(input: &Path, minify: bool, platform: String) {
                     config: swc::config::Config {
                         jsc: swc::config::JscConfig {
                             minify: if minify {
-                                Some(assert_json("{ \"compress\": { \"dead_code\": true }, \"mangle\": true }"))
+                                Some(assert_json(
+                                    "{ \"compress\": { \"dead_code\": true }, \"mangle\": true }",
+                                ))
                             } else {
                                 None
                             },
@@ -68,11 +69,11 @@ fn test(input: &Path, minify: bool, platform: String) {
                                 ..Default::default()
                             })),
                             transform: Some(TransformConfig {
-                              optimizer: Some(OptimizerConfig {
-                                simplify: minify,
+                                optimizer: Some(OptimizerConfig {
+                                    simplify: minify,
+                                    ..Default::default()
+                                }),
                                 ..Default::default()
-                              }),
-                              ..Default::default()
                             }),
                             ..Default::default()
                         },
