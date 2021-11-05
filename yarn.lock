@@ -3053,6 +3053,13 @@
   dependencies:
     "@octokit/openapi-types" "^11.2.0"
 
+"@originjs/vite-plugin-commonjs@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@originjs/vite-plugin-commonjs/-/vite-plugin-commonjs-1.0.1.tgz#3bbdd18ed90c5ff1a396c485cf685c3dd0626183"
+  integrity sha512-7TJFrFxT6UZIn175095vBNSYMtu+8cwgLb+R2AtuRoz/+h8eaa/Fn7D4QtL9fZMRVHJgYxNVW3Ze3FHk9fGGCQ==
+  dependencies:
+    esbuild "^0.12.6"
+
 "@rematch/core@^1.3.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@rematch/core/-/core-1.4.0.tgz#686ce814e1cf125029c5e9fba23ef3ab7c3eb2a7"
@@ -7025,11 +7032,6 @@ es6-promisify@^6.0.0:
   resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
   integrity sha512-HBL8I3mIki5C1Cc9QjKUenHtnG0A5/xA8Q/AllRcfiwl2CZFXGK7ddBiCoRwAix4i2KxcQfjtIVcrVbB3vbmwg==
 
-esbuild@^0.12.16, esbuild@^0.12.17, esbuild@^0.12.8:
-  version "0.12.25"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.25.tgz#c2131cef022cf9fe94aaa5e00110b27fc976221a"
-  integrity sha512-woie0PosbRSoN8gQytrdCzUbS2ByKgO8nD1xCZkEup3D9q92miCze4PqEI9TZDYAuwn6CruEnQpJxgTRWdooAg==
-
 esbuild-android-arm64@0.13.5:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/esbuild-android-arm64/-/esbuild-android-arm64-0.13.5.tgz#a299a18fd8a016ae19fd948fc659b3f65d1b992f"
@@ -7110,7 +7112,7 @@ esbuild-windows-arm64@0.13.5:
   resolved "https://registry.yarnpkg.com/esbuild-windows-arm64/-/esbuild-windows-arm64-0.13.5.tgz#e0501e82b88f4165cce7cd017db83428f459f775"
   integrity sha512-KKRDmUOIE4oCvJp0I4p4QyazK2X79spF29vsZr2U8qHhmxbTLSQWvYmb2WlF5Clb1URRsX0L013rhwHx1SEu0w==
 
-esbuild@^0.12.16, esbuild@^0.12.8:
+esbuild@^0.12.16, esbuild@^0.12.6, esbuild@^0.12.8:
   version "0.12.29"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.29.tgz#be602db7c4dc78944a9dbde0d1ea19d36c1f882d"
   integrity sha512-w/XuoBCSwepyiZtIRsKsetiLDUVGPVw1E/R3VTFSecIy8UR7Cq3SOtwKHJMFoVqqVG36aGkzh4e8BvpO1Fdc7g==
@@ -17137,10 +17139,22 @@ vite@^2.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vite@^2.3.4, vite@^2.4.2, vite@^2.4.3, vite@^2.4.4, vite@^2.5.0, vite@^2.5.3:
+vite@^2.3.4, vite@^2.4.2, vite@^2.4.3, vite@^2.5.0, vite@^2.5.3:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.6.7.tgz#e15c1d8327950720b5d7c4ec3fb36a5a58ccf7cb"
   integrity sha512-ewk//jve9k6vlU8PfJmWUHN8k0YYdw4VaKOMvoQ3nT2Pb6k5OSMKQi4jPOzVH/TlUqMsCrq7IJ80xcuDDVyigg==
+  dependencies:
+    esbuild "^0.13.2"
+    postcss "^8.3.8"
+    resolve "^1.20.0"
+    rollup "^2.57.0"
+  optionalDependencies:
+    fsevents "~2.3.2"
+
+vite@^2.6.0:
+  version "2.6.13"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.6.13.tgz#16b3ec85a66d5b461ac29a903874d4357f9af432"
+  integrity sha512-+tGZ1OxozRirTudl4M3N3UTNJOlxdVo/qBl2IlDEy/ZpTFcskp+k5ncNjayR3bRYTCbqSOFz2JWGN1UmuDMScA==
   dependencies:
     esbuild "^0.13.2"
     postcss "^8.3.8"
@@ -17282,6 +17296,13 @@ webpack-filter-warnings-plugin@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/webpack-filter-warnings-plugin/-/webpack-filter-warnings-plugin-1.2.1.tgz#dc61521cf4f9b4a336fbc89108a75ae1da951cdb"
   integrity sha512-Ez6ytc9IseDMLPo0qCuNNYzgtUl8NovOqjIq4uAU8LTD4uoa1w1KpZyyzFtLTEMZpkkOkLfL9eN+KGYdk1Qtwg==
+
+webpack-plugin-import@^0.2.5, webpack-plugin-import@^0.2.7:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/webpack-plugin-import/-/webpack-plugin-import-0.2.9.tgz#f7bd2651307039403722e9949fda9f82e04492a6"
+  integrity sha512-DNnhws1goLfIIPM2jG1nHKzT6Zv634ZSgrra2pEBqLTs77i37ttpM5uhXVKFYq3Ru74RiMFkeYZ+uzGie+cRaw==
+  dependencies:
+    loader-utils "^2.0.0"
 
 webpack-simple-progress-plugin@0.0.4:
   version "0.0.4"

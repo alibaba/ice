@@ -21,8 +21,8 @@ const plugin = async (api: IPluginAPI): Promise<void> => {
   const serverFilePath = path.join(serverDir, serverFilename);
 
   // render server entry
-  const templatePath = path.join(__dirname, '../src/server.ts.ejs');
-  const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
+  const templatePath = path.join(__dirname, '../src/server.tsx.ejs');
+  const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.tsx');
   const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
   applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '.' });
 
@@ -31,6 +31,7 @@ const plugin = async (api: IPluginAPI): Promise<void> => {
   if (vite) {
     viteSSR(api, ssrEntry);
   }
+
   const webpackConfig = getWebpackConfig(mode);
 
   // config DefinePlugin out of onGetWebpackConfig, so it can be modified by user config

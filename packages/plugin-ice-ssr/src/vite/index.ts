@@ -1,32 +1,11 @@
 import { IPluginAPI } from 'build-scripts';
-import { InlineConfig, build } from 'vite';
-import { rollup, OutputOptions, InputOptions } from 'rollup';
-import { cloneDeep } from 'lodash';
-import { join } from 'path';
-// import typescript from '@rollup/plugin-typescript';
-
-// console.log(typeof typescript);
+import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
+import vitePluginSSR from './vitePluginSSR';
 
 function viteSSR(api: IPluginAPI, ssrEntry: string) {
-  const { onHook } = api;
+  const { modifyUserConfig, context: { rootDir } } = api;
 
-  onHook('before.start.run', async ({ config }: { config: InlineConfig }) => {
-    //  compile and bundle ssrEntry(server.js)
-    const serverBuildConfig = cloneDeep(config);
-    serverBuildConfig.build.rollupOptions = {
-      input: ssrEntry,
-      output: {
-        entryFileNames:'server/index.js',
-        format: 'cjs',
-        manualChunks: {}
-      }
-    };
-    delete serverBuildConfig.css;
-    delete serverBuildConfig.plugins[6];
-    delete serverBuildConfig.plugins[4];
-
-    await build(serverBuildConfig);
-  });
+  modifyUserConfig('vite.plugins', [viteCommonjs(), vitePluginSSR(ssrEntry, rootDir)], { deepmerge: true });
 }
 
 export default viteSSR;

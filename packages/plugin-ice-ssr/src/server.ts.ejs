@@ -1,4 +1,4 @@
-import '@/app';
+// import '@/app';
 import { join } from 'path';
 import * as pathToRegexp from 'path-to-regexp';
 import * as cheerio from 'cheerio';
@@ -13,17 +13,16 @@ import loadStaticModules from '../../core/loadStaticModules';
 import { emitLifeCycles } from '../../core/publicAPI';
 import app from '../../core/runApp';
 import routes from '<%- routesPath %>/routes';
-import loadable from '@loadable/component';
+  import loadable from '@loadable/component';
+  import chalk = require('chalk');
+  import parseurl = require('parseurl');
 
-const chalk = require('chalk');
-const parseurl = require('parseurl');
+  const { createBaseApp, initAppLifeCycles } = app;
 
-const { createBaseApp, initAppLifeCycles } = app;
+  // appConfig set by: import '@/app'
+  const appConfig = getAppConfig();
 
-// appConfig set by: import '@/app'
-const appConfig = getAppConfig();
-
-interface GenerateHtml {
+  interface GenerateHtml {
   htmlTemplateContent: string;
   loadableComponentExtractor?: any;
   helmet?: any;
@@ -31,201 +30,202 @@ interface GenerateHtml {
   pageInitialProps?: any;
   initialData?: any;
   error?: Error;
-}
+  }
 
-const serverRender = async (context: ServerContext, opts = {}) => {
+  const serverRender = async (context: ServerContext, opts = {}) => {
   let options;
   if (context.req) {
-    options = { ctx: context, ...opts }
+  options = { ctx: context, ...opts }
   } else {
-    options = { ...context }
+  options = { ...context }
   }
   let {
-    ctx = {},
-    pathname,
-    initialData,
-    htmlTemplate,
-    loadableStatsPath,
-    pagesData = [],
-    publicPath,
+  ctx = {},
+  pathname,
+  initialData,
+  htmlTemplate,
+  loadableStatsPath,
+  pagesData = [],
+  publicPath,
   } = options;
 
   if (process.env.NODE_ENV === 'development') {
-    // loadable-stats.json will be generated to the build dir in development
-    loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
-  }
-  const buildConfig = { loadableStatsPath, publicPath };
+  // loadable-stats.json will be generated to the build dir in development
+  loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
+    }
+    const buildConfig = { loadableStatsPath, publicPath };
 
-  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+    const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
 
-  // load module to run before createApp ready
-  loadStaticModules(appConfig);
+    // load module to run before createApp ready
+    loadStaticModules(appConfig);
 
-  const { req, res } = ctx as any;
-  let initialContext: InitialContext = { pathname, location: { pathname } };
-  if (req) {
+    const { req, res } = ctx as any;
+    let initialContext: InitialContext = { pathname, location: { pathname } };
+    if (req) {
     const { search, hash, path, pathname } = parseurl(req);
     const parsedQuery = queryString.parse(search);
     initialContext = {
-      req,
-      res,
-      pathname,
-      query: parsedQuery,
-      path,
-      location: { pathname, search, hash, state: null },
+    req,
+    res,
+    pathname,
+    query: parsedQuery,
+    path,
+    location: { pathname, search, hash, state: null },
     };
-  }
-
-  if (process.env.NODE_ENV === 'development') {
-    return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
-  }
-  const pageData = pagesData.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
-    try {
-      const regexp = pathToRegexp(path, [], { end, strict, sensitive });
-      return regexp.test(initialContext.pathname);
-    } catch (e) {
-      return false;
     }
-  });
-  if (pageData) {
+
+    if (process.env.NODE_ENV === 'development') {
+    const { error, redirectUrl, ...rest } = await renderPage({ initialContext, initialData, buildConfig });
+    const html = generateHtml({ htmlTemplateContent, error, ...rest });
+    return { html, error, redirectUrl }
+    }
+
+    const pageData = pagesData.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
+    try {
+    const regexp = pathToRegexp(path, [], { end, strict, sensitive });
+    return regexp.test(initialContext.pathname);
+    } catch (e) {
+    return false;
+    }
+    });
+    if (pageData) {
     // enable pre-render pages
     const { html, ssr } = pageData;
     // @deprecated
     // will not supported in the future because there are too few cases.
     if (ssr) {
-      return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
+    const { error, redirectUrl, ...rest } = await renderPage({ initialContext, initialData, buildConfig });
+    const html = generateHtml({ htmlTemplateContent, error, ...rest });
+    return { html, error, redirectUrl }
     }
     return { html };
-  }
-  return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
-}
-
-export async function renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig }) {
-  let error;
-  let html = htmlTemplateContent;
-  try {
-    // get initial data
-    if (!initialData) {
-      const getInitialData = appConfig.app && appConfig.app.getInitialData;
-      if (getInitialData) {
-        console.log('[SSR]', 'getting initial data of app');
-        initialData = await getInitialData(initialContext);
-      }
+    }
+    const { error, redirectUrl, ...rest } = await renderPage({ initialContext, initialData, buildConfig });
+    const html = generateHtml({ htmlTemplateContent, error, ...rest });
+    return { html, error, redirectUrl }
     }
 
+    export async function renderPage({ initialContext, initialData, buildConfig }) {
+    let error;
+    try {
+    // get initial data
+    if (!initialData) {
+    const getInitialData = appConfig.app && appConfig.app.getInitialData;
+    if (getInitialData) {
+    console.log('[SSR]', 'getting initial data of app');
+    initialData = await getInitialData(initialContext);
+    }
+    }
     // set initial data
     setInitialData(initialData);
 
     // get page initial props
     let { component, getInitialProps } = await getComponentByPath(routes, initialContext.pathname);
     if (component && component.load) {
-      const loadedPageComponent = await component.load();
-      component = loadedPageComponent.default;
+    const loadedPageComponent = await component.load();
+    component = loadedPageComponent.default;
     }
     let pageInitialProps = {};
     if (getInitialProps) {
-      console.log('[SSR]', 'getting initial props of page component');
-      pageInitialProps = await getInitialProps(initialContext);
+    console.log('[SSR]', 'getting initial props of page component');
+    pageInitialProps = await getInitialProps(initialContext);
     }
 
     // generate bundle content and register global variables in html
     console.log('[SSR]', 'generating html content');
     const { bundleContent, loadableComponentExtractor } =
-      reactAppRendererWithSSR(
-        {
-          initialContext,
-          initialData,
-          pageInitialProps,
-        },
-        {
-          appConfig,
-          buildConfig,
-          appLifecycle: { createBaseApp, emitLifeCycles, initAppLifeCycles },
-        }
-      );
+    reactAppRendererWithSSR(
+    {
+    initialContext,
+    initialData,
+    pageInitialProps,
+    },
+    {
+    appConfig,
+    buildConfig,
+    appLifecycle: { createBaseApp, emitLifeCycles, initAppLifeCycles },
+    }
+    );
 
     const helmet = Helmet.renderStatic();
-
-    html = generateHtml({
-      htmlTemplateContent,
-      loadableComponentExtractor,
-      helmet,
-      bundleContent,
-      initialData,
-      pageInitialProps,
-    });
-  } catch (e) {
+    return {
+    loadableComponentExtractor,
+    helmet,
+    bundleContent,
+    initialData,
+    pageInitialProps,
+    redirectUrl: initialContext.url,
+    }
+    } catch (e) {
     error = e;
-    html = generateHtml({
-      htmlTemplateContent,
-      error,
-    });
-    logError('[SSR] generate html template error' + error.message);
-  }
+    logError('[SSR] generate html template error' + error);
+    return {
+    error
+    }
+    }
+    }
 
-  return { html, error, redirectUrl: initialContext.url };
-}
-
-export function generateHtml({
-  htmlTemplateContent,
-  loadableComponentExtractor,
-  helmet,
-  bundleContent,
-  initialData,
-  pageInitialProps,
-  error
- }: GenerateHtml) {
-  const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
-  if (error) {
+    export function generateHtml({
+    htmlTemplateContent,
+    loadableComponentExtractor,
+    helmet,
+    bundleContent,
+    initialData,
+    pageInitialProps,
+    error
+    }: GenerateHtml) {
+    const $ = cheerio.load(htmlTemplateContent, { decodeEntities: false });
+    if (error) {
     $('head').append(`
-      <script>
-        window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
-      </script>`)
+    <script>
+      window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
+    </script>`)
     return $.html();
-  }
-  $(`#${appConfig?.app?.rootId || 'ice-container'}`).append(bundleContent);
-  $('head').append(`<script>
-    window.__ICE_SSR_ENABLED__=true;
-    window.__ICE_APP_DATA__=${JSON.stringify(initialData)};
-    window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
-  </script>`);
-  // inject assets
-  $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
-  $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
-  $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
-  // inject tags to header
-  $('head').append(`${helmet.title.toString()}`);
-  $('head').append(`${helmet.meta.toString()}`);
-  $('head').append(`${helmet.link.toString()}`);
-  $('head').append(`${helmet.script.toString()}`);
+    }
+    $(`#${appConfig?.app?.rootId || 'ice-container'}`).append(bundleContent);
+    $('head').append(`
+    <script>
+          window.__ICE_SSR_ENABLED__ = true;
+          window.__ICE_APP_DATA__ = ${ JSON.stringify(initialData) };
+          window.__ICE_PAGE_PROPS__ = ${ JSON.stringify(pageInitialProps)    </script>`);
+    // inject assets
+    $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+    $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+    $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+    // inject tags to header
+    $('head').append(`${helmet.title.toString()}`);
+    $('head').append(`${helmet.meta.toString()}`);
+    $('head').append(`${helmet.link.toString()}`);
+    $('head').append(`${helmet.script.toString()}`);
 
-  return $.html();
-}
+    return $.html();
+    }
 
-export async function getComponentByPath(routes, currPath)  {
-  async function findMatchRoute(routeList) {
+    export async function getComponentByPath(routes, currPath) {
+    async function findMatchRoute(routeList) {
     let matchedRoute = routeList.find(route => {
-      return matchPath(currPath, route);
+    return matchPath(currPath, route);
     });
     if (matchedRoute?.component?.__LOADABLE__) {
-      matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+    matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
     }
     if (matchedRoute) {
-      return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
+    return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
     }
-  }
-  const routeData = await findMatchRoute(routes)
-  return {
+    }
+    const routeData = await findMatchRoute(routes)
+    return {
     component: routeData?.component,
     getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps
-  };
-}
+    };
+    }
 
-function logError(msg) {
-  console.log(
+    function logError(msg) {
+    console.log(
     chalk.red('ERR!'),
     chalk.magenta(msg),
-  );
-}
+    );
+    }
 
-export default serverRender;
+    export default serverRender;

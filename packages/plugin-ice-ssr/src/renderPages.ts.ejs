@@ -4,7 +4,7 @@ import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
 import * as pathToRegexp from 'path-to-regexp';
 
-const { renderStatic } = require('./server');
+const { renderPage } = require('./server');
 
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
@@ -25,7 +25,7 @@ export default async function ssgRender(options) {
     }
 
     const initialContext = { pathname: path, location: { pathname: path } };
-    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext });
+    const { html } = await renderPage({ htmlTemplateContent, buildConfig, initialContext });
 
     delete rest.component;
     delete rest.routeWrappers;

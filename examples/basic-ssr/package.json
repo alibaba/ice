@@ -2,12 +2,12 @@
   "name": "exmaple-basic-ssr",
   "description": "",
   "dependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4"
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0"
   },
   "scripts": {
     "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
