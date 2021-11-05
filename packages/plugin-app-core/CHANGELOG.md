@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] ts type of renderComponent
+
 ## 2.0.2
 
 - [feat] support load `styl` style

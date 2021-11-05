@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] remove type injection while type of renderComponent is defined in template
+
 ## 2.0.1
 
 - [fix] bump version of `@builder/pack`

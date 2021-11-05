@@ -135,8 +135,6 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
         });
       }
     }
-  } else {
-    applyMethod('addAppConfigTypes', { exportName: 'renderComponent?: FrameworkComponentType' });
   }
 };
 

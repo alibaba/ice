@@ -79,7 +79,7 @@ export interface IRuntimeValue {
 
 export interface IAppConfig {
   app?: IApp;
-  renderComponent?: FrameworkElement;
+  renderComponent?: FrameworkComponentType;
   <% if (isRax) {%>
   router?: IRouter;
   <% } %>
