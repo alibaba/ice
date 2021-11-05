@@ -54,7 +54,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-08-12
+          toolchain: nightly-2021-11-05
           target: ${{ matrix.target }}
       - name: Cache cargo registry
         uses: actions/cache@v1
