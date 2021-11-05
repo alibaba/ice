@@ -1,6 +1,6 @@
 {
   "name": "ice.js",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "command line interface and builtin plugin for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@builder/pack": "^0.4.0",
     "build-scripts": "^1.1.0",
-    "build-plugin-app-core": "2.0.1",
+    "build-plugin-app-core": "2.0.2",
     "build-plugin-helmet": "1.0.2",
     "build-plugin-ice-auth": "2.0.0",
     "build-plugin-ice-config": "2.0.0",
@@ -33,8 +33,8 @@
     "build-plugin-ice-request": "2.0.0",
     "build-plugin-ice-router": "2.0.1",
     "build-plugin-ice-ssr": "3.0.1",
-    "build-plugin-ice-store": "2.0.2",
-    "build-plugin-react-app": "2.0.1",
+    "build-plugin-ice-store": "2.0.3",
+    "build-plugin-react-app": "2.0.3",
     "build-plugin-pwa": "1.0.0",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
@@ -45,7 +45,7 @@
     "yargs-parser": "^18.1.2"
   },
   "engines": {
-    "node": ">=10.13.0",
+    "node": ">=12.22.0",
     "npm": ">=3.0.0"
   },
   "gitHead": "cf40d079714b437417e77b444b078cf83286f2fc"

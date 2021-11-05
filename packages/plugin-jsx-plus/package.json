@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-jsx-plus",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "build plugin for jsx plus",
   "main": "lib/index.js",
   "scripts": {
@@ -22,7 +22,8 @@
     "babel-plugin-transform-jsx-list": "^0.1.0",
     "babel-plugin-transform-jsx-memo": "^0.1.3",
     "babel-plugin-transform-jsx-slot": "^0.1.1",
-    "babel-runtime-jsx-plus": "^0.1.4"
+    "babel-runtime-jsx-plus": "^0.1.4",
+    "vite-plugin-jsx-plus": "^0.1.0"
   },
   "devDependencies": {},
   "files": [

@@ -142,12 +142,6 @@ module.exports = async (
               }),
           }),
         ].filter(Boolean),
-        resolve: {
-          alias: [
-            // compatible with `@import '~@alifd/next/reset.scss';`
-            { find: /^~/, replacement: '' },
-          ],
-        },
       },
       { deepmerge: true }
     );
@@ -402,15 +396,7 @@ module.exports = async (
       // 业务组件：不可枚举，使用 webpack-plugin-import，内置逻辑（pkg.componentConfig || pkg.stylePath）
       // compatible with build-plugin which do not set up WebpackPluginImport
       if (!config.plugins.get('WebpackPluginImport')) {
-        config.plugin('WebpackPluginImport').use(WebpackPluginImport, [
-          [
-            // 老的业务组件里没有 stylePath or componentConfig
-            {
-              libraryName: /@ali\/ice-.*/,
-              stylePath: 'style.js',
-            },
-          ],
-        ]);
+        config.plugin('WebpackPluginImport').use(WebpackPluginImport);
       }
 
       // 3. uniteBaseComponent

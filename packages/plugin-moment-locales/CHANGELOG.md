@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- [fix] pre build moment locales
+
 ## 0.1.2
 
 - [fix] generate sourceMap if necessary

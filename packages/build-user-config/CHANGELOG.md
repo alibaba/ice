@@ -1,8 +1,16 @@
 # Changelog
 
-## 1.1.2
+## 1.1.4
 
 - [fix] set `corejs: '3.7'` to meet the ECMAScript 2021 polyfills.
+
+## 1.1.3
+
+- [fix] error occurred when config sourceMap
+
+## 1.1.2
+
+- [fix] remove unused package of `webpack-plugin-import`
 
 ## 1.1.1
 

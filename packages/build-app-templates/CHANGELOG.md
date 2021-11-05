@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- [fix] add default static config of rax app render
+
 ## 1.0.1
 
 - [fix] add rax template of render
