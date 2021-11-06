@@ -36,9 +36,7 @@ pub struct TransformOptions {
 }
 
 pub fn custom_before_pass(name: &FileName, options: &TransformOptions) -> impl Fold {
-    let mut remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
-        platform: "web".to_string(),
-    };
+    let mut remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::Bool(false);
     let enable_remove_multiple_ends_code: bool = match options.remove_multiple_ends_code.clone() {
         RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform } => {
             remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform };
