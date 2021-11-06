@@ -1,4 +1,4 @@
-use builder_swc::remove_multiple_ends_code::{remove_multiple_ends_code, RemoveMultipleEndsCode};
+use builder_swc::remove_multiple_ends_code::{remove_multiple_ends_code, RemoveMultipleEndsCodeConfig};
 use std::path::PathBuf;
 use swc_ecma_transforms_testing::{test, test_fixture};
 use swc_ecmascript::parser::{EsConfig, Syntax};
@@ -13,7 +13,7 @@ fn unminify_syntax() -> Syntax {
 #[fixture("tests/fixture/remove_mutilple_ends_code/web/input.js")]
 fn transform_web_flag_fixture(input: PathBuf) {
     let output = input.parent().unwrap().join("output.js");
-    let config = RemoveMultipleEndsCode {
+    let config = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
         platform: String::from("web"),
     };
     test_fixture(
@@ -27,7 +27,7 @@ fn transform_web_flag_fixture(input: PathBuf) {
 #[fixture("tests/fixture/remove_mutilple_ends_code/kraken/input.js")]
 fn transform_kraken_flag_fixture(input: PathBuf) {
     let output = input.parent().unwrap().join("output.js");
-    let config = RemoveMultipleEndsCode {
+    let config = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
         platform: String::from("kraken"),
     };
     test_fixture(

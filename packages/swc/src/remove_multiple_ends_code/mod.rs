@@ -10,7 +10,7 @@ use swc_ecmascript::ast::{
 use swc_ecmascript::visit::Fold;
 
 #[derive(Debug, Deserialize, Default, Clone)]
-pub struct RemoveMultipleEndsCode {
+pub struct RemoveMultipleEndsCodePatcher {
     pub platform: String,
 }
 
@@ -19,7 +19,9 @@ pub struct RemoveMultipleEndsCode {
 #[serde(untagged)]
 pub enum RemoveMultipleEndsCodeConfig {
     Bool(bool),
-    RemoveMultipleEndsCode { platform: String },
+    RemoveMultipleEndsCode {
+        platform: String
+    },
 }
 
 impl Default for RemoveMultipleEndsCodeConfig {
@@ -28,9 +30,14 @@ impl Default for RemoveMultipleEndsCodeConfig {
     }
 }
 
-pub fn remove_multiple_ends_code(options: RemoveMultipleEndsCode) -> impl Fold {
-    let platform = options.platform;
-    RemoveMultipleEndsCode { platform: platform }
+pub fn remove_multiple_ends_code(options: RemoveMultipleEndsCodeConfig) -> impl Fold {
+    let platform: String = match options {
+        RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform } => {
+            platform
+        },
+        _ => "".to_string()
+    };
+    RemoveMultipleEndsCodePatcher { platform: platform }
 }
 
 // platform maps
@@ -66,7 +73,7 @@ lazy_static! {
     ]);
 }
 
-impl Fold for RemoveMultipleEndsCode {
+impl Fold for RemoveMultipleEndsCodePatcher {
     fn fold_module_items(&mut self, items: Vec<ModuleItem>) -> Vec<ModuleItem> {
         // Get platform flag, such as ["isWeb"]
         let platform_flags: Vec<String> = match PLATFORM_MAP.get(&self.platform.to_string()) {

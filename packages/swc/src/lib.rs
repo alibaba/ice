@@ -18,7 +18,7 @@ use swc_ecmascript::transforms::pass::noop;
 use swc_ecmascript::visit::Fold;
 
 use crate::remove_multiple_ends_code::{
-    remove_multiple_ends_code, RemoveMultipleEndsCode, RemoveMultipleEndsCodeConfig,
+    remove_multiple_ends_code, RemoveMultipleEndsCodeConfig,
 };
 
 pub mod minify;
@@ -36,15 +36,17 @@ pub struct TransformOptions {
 }
 
 pub fn custom_before_pass(name: &FileName, options: &TransformOptions) -> impl Fold {
-    let mut remove_multiple_ends_code_options = RemoveMultipleEndsCode {
+    let mut remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
         platform: "web".to_string(),
     };
     let enable_remove_multiple_ends_code: bool = match options.remove_multiple_ends_code.clone() {
         RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform } => {
-            remove_multiple_ends_code_options = RemoveMultipleEndsCode { platform };
+            remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform };
             true
         }
-        RemoveMultipleEndsCodeConfig::Bool(val) => val,
+        RemoveMultipleEndsCodeConfig::Bool(val) => {
+            val
+        },
     };
 
     // custom before pass
