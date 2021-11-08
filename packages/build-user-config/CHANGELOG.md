@@ -2,7 +2,8 @@
 
 ## 1.1.4
 
-- [fix] handle unexpected merge with `devServer.allowedHosts`
+- [fix] handle unexpected merge with `devServer.allowedHosts`.
+- [fix] set `corejs: '3.7'` to meet the ECMAScript 2021 polyfills.
 
 ## 1.1.3
 
