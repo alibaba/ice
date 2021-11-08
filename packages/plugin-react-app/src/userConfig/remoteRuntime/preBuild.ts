@@ -37,6 +37,8 @@ export default (api: IPluginAPI, { cacheDir, runtimeDir, remoteName, remoteEntry
       devServer: {
         hot: false,
       },
+      // get externals package form global to keep same reference with main app
+      externalsType: 'global',
       output: {
         chunkLoadingGlobal: 'webpackJsonp',
         uniqueName: 'runtime',
