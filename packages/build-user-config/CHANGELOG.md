@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4
+
+- [fix] Regexp for runtime folder
+
 ## 1.1.3
 
 - [fix] error occurred when config sourceMap
