@@ -332,9 +332,7 @@ export interface Options extends Config {
    * of source map files and swc does not write output to this path.
    */
   outputPath?: string;
-  removeMultipleEndsCode?: {
-    platform: string
-  };
+  keepPlatform ?: string;
 }
 
 export interface CallerOptions {

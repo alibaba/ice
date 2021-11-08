@@ -117,7 +117,7 @@ where
                 let fm =
                     op(&c, s.as_str()?.to_string(), &options).context("failed to load file")?;
                 let before_pass = custom_before_pass(&fm.name, &options);
-                c.process_js_with_custom_pass(fm, &handler,  &options.swc, before_pass, noop())
+                c.process_js_with_custom_pass(fm, &handler, &options.swc, before_pass, noop())
             }
         })
     })

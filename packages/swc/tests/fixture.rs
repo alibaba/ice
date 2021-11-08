@@ -1,4 +1,4 @@
-use builder_swc::remove_multiple_ends_code::{remove_multiple_ends_code, RemoveMultipleEndsCodeConfig};
+use builder_swc::keep_platform::{keep_platform, KeepPlatformConfig};
 use std::path::PathBuf;
 use swc_ecma_transforms_testing::{test, test_fixture};
 use swc_ecmascript::parser::{EsConfig, Syntax};
@@ -10,29 +10,25 @@ fn unminify_syntax() -> Syntax {
     })
 }
 
-#[fixture("tests/fixture/remove_mutilple_ends_code/web/input.js")]
+#[fixture("tests/fixture/keep_platform/web/input.js")]
 fn transform_web_flag_fixture(input: PathBuf) {
     let output = input.parent().unwrap().join("output.js");
-    let config = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
-        platform: String::from("web"),
-    };
+    let config = KeepPlatformConfig::KeepPlatform(String::from("web"));
     test_fixture(
         unminify_syntax(),
-        &|_tr| remove_multiple_ends_code(config.clone()),
+        &|_tr| keep_platform(config.clone()),
         &input,
         &output,
     );
 }
 
-#[fixture("tests/fixture/remove_mutilple_ends_code/kraken/input.js")]
+#[fixture("tests/fixture/keep_platform/kraken/input.js")]
 fn transform_kraken_flag_fixture(input: PathBuf) {
     let output = input.parent().unwrap().join("output.js");
-    let config = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode {
-        platform: String::from("kraken"),
-    };
+    let config = KeepPlatformConfig::KeepPlatform(String::from("kraken"));
     test_fixture(
         unminify_syntax(),
-        &|_tr| remove_multiple_ends_code(config.clone()),
+        &|_tr| keep_platform(config.clone()),
         &input,
         &output,
     );

@@ -17,12 +17,10 @@ use swc_common::{self, chain, pass::Optional, sync::Lazy, FileName, FilePathMapp
 use swc_ecmascript::transforms::pass::noop;
 use swc_ecmascript::visit::Fold;
 
-use crate::remove_multiple_ends_code::{
-    remove_multiple_ends_code, RemoveMultipleEndsCodeConfig,
-};
+use crate::keep_platform::{keep_platform, KeepPlatformConfig};
 
+pub mod keep_platform;
 pub mod minify;
-pub mod remove_multiple_ends_code;
 pub mod transform;
 mod util;
 
@@ -32,27 +30,22 @@ pub struct TransformOptions {
     #[serde(flatten)]
     pub swc: swc::config::Options,
     #[serde(default)]
-    pub remove_multiple_ends_code: RemoveMultipleEndsCodeConfig,
+    pub keep_platform: KeepPlatformConfig,
 }
 
 pub fn custom_before_pass(name: &FileName, options: &TransformOptions) -> impl Fold {
-    let mut remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::Bool(false);
-    let enable_remove_multiple_ends_code: bool = match options.remove_multiple_ends_code.clone() {
-        RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform } => {
-            remove_multiple_ends_code_options = RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform };
+    let mut keep_platform_config = KeepPlatformConfig::Bool(false);
+    let enable_keep_platform: bool = match options.keep_platform.clone() {
+        KeepPlatformConfig::KeepPlatform(platform) => {
+            keep_platform_config = KeepPlatformConfig::KeepPlatform(platform);
             true
         }
-        RemoveMultipleEndsCodeConfig::Bool(val) => {
-            val
-        },
+        KeepPlatformConfig::Bool(val) => val,
     };
 
     // custom before pass
     chain!(
-        Optional::new(
-            remove_multiple_ends_code(remove_multiple_ends_code_options),
-            enable_remove_multiple_ends_code
-        ),
+        Optional::new(keep_platform(keep_platform_config), enable_keep_platform),
         noop()
     )
 }

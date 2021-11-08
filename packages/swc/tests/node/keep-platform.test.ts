@@ -46,9 +46,7 @@ if (isWeb) {
         },
         target: 'es5'
       },
-      removeMultipleEndsCode: {
-        platform: 'web'
-      }
+      keepPlatform: 'web'
     });
 
     expect(code).toEqual(`var isWeb = true;
@@ -88,9 +86,7 @@ if (isWeb) {
           }
         }
       },
-      removeMultipleEndsCode: {
-        platform: 'web'
-      },
+      keepPlatform: 'web',
       minify: true
     });
 

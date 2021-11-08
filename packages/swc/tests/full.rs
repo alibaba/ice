@@ -1,4 +1,4 @@
-use builder_swc::remove_multiple_ends_code::RemoveMultipleEndsCodeConfig;
+use builder_swc::keep_platform::KeepPlatformConfig;
 use builder_swc::{custom_before_pass, TransformOptions};
 use serde::de::DeserializeOwned;
 use std::path::{Path, PathBuf};
@@ -33,13 +33,12 @@ fn unminify(input: PathBuf) {
 fn test(input: &Path, minify: bool, platform: String) {
     let output = input.parent().unwrap().join("output.js");
 
-    let remove_multiple_ends_code: RemoveMultipleEndsCodeConfig;
+    let keep_platform: KeepPlatformConfig;
 
     if platform == "" {
-        remove_multiple_ends_code = RemoveMultipleEndsCodeConfig::Bool(false);
+        keep_platform = KeepPlatformConfig::Bool(false);
     } else {
-        remove_multiple_ends_code =
-            RemoveMultipleEndsCodeConfig::RemoveMultipleEndsCode { platform: platform };
+        keep_platform = KeepPlatformConfig::KeepPlatform(platform);
     }
 
     Tester::new()
@@ -82,7 +81,7 @@ fn test(input: &Path, minify: bool, platform: String) {
                     },
                     ..Default::default()
                 },
-                remove_multiple_ends_code: remove_multiple_ends_code,
+                keep_platform: keep_platform,
                 ..Default::default()
             };
 
