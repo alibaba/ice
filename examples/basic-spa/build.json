@@ -15,7 +15,7 @@
       "ignoreHtmlTemplate": false
     }
   },
-  "minify": false,
+  "minify": "esbuild",
   "eslint": {
     "disable": false,
     "quiet": true
