@@ -9,7 +9,7 @@ module.exports = (config, customOptions, context) => {
   }
   sassLoaderOptions.implementation = getSassImplementation(defaultSassImplPkg, rootDir);
 
-  // To prevent minimize .scss by default. And let css-minimizer-webpack-plugin take in controll.
+  // To prevent minimize .scss by default. And let css-minimizer-webpack-plugin take in control.
   sassLoaderOptions.sassOptions = {
     outputStyle: 'expanded'
   };
@@ -20,6 +20,14 @@ module.exports = (config, customOptions, context) => {
       sassLoaderOptions.additionalData = customOptions.prependData;
       delete customOptions.prependData;
     }
+
+    if (customOptions.sassOptions) {
+      sassLoaderOptions.sassOptions = {
+        ...sassLoaderOptions.sassOptions,
+        ...customOptions.sassOptions
+      };
+    }
+
     sassLoaderOptions = { ...sassLoaderOptions, ...customOptions };
   }
   [
