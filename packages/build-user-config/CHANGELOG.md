@@ -19,7 +19,7 @@
 
 ## 1.1.1
 
-- [fix] OOM when use filesystem cache 
+- [fix] OOM when use filesystem cache
 
 ## 1.1.0
 

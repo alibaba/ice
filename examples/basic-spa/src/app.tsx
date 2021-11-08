@@ -1,6 +1,8 @@
 import React from 'react';
 import { runApp, APP_MODE, IAppConfig, logger, history, getHistory } from 'ice';
 
+import './app.css';
+
 console.log('APP_MODE', APP_MODE);
 logger.info('APP_MODE', APP_MODE);
 logger.debug('test');
