@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- [fix] avoid undefined error when providing empty options.
+
 ## 2.2.1
 
 - [fix] remove default value of root's config to avoid changing the default behavior.

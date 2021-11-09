@@ -2,6 +2,7 @@ import * as path from 'path';
 import { isObject, isArray, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
+import type { ProcessOptions } from 'postcss';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -19,6 +20,10 @@ type ConfigMap = Record<string, string | string[] | {
 interface MinifierConfig {
   type: 'esbuild' | 'swc' | 'terser';
   options?: Record<string, any>;
+}
+
+interface PostcssOptions extends ProcessOptions {
+  plugins?: { [pluginName: string]: Record<string, any> };
 }
 
 /**
@@ -136,7 +141,19 @@ const configMap: ConfigMap = {
       }
     },
   },
-  'config.devtool': 'build.sourcemap',
+  'devtool': {
+    name: 'build.sourcemap',
+    transform: (devtool) => {
+      // build.sourcemap of support inline | hidden
+      if (devtool) {
+        const sourcemap = ['inline', 'hidden'].find((mapType) => {
+          return !!devtool.match(new RegExp(mapType));
+        });
+        return sourcemap || !!devtool;
+      }
+      return false;
+    },
+  },
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': {
     name: 'server.proxy',
@@ -197,7 +214,16 @@ const configMap: ConfigMap = {
   postcss: {
     name: 'css.postcss',
     transform: (e, { userConfig }) => {
-      return userConfig.postcssOptions;
+      if (userConfig?.postcssOptions) {
+        const postcssPlugins = (userConfig?.postcssOptions as PostcssOptions)?.plugins || {};
+        const normalizedPlugins = Object.keys(postcssPlugins)
+          .filter((pluginKey) => !postcssPlugins[pluginKey])
+          .map(pluginKey => [pluginKey, postcssPlugins[pluginKey]]);
+        return {
+          ...(userConfig?.postcssOptions as PostcssOptions),
+          plugins: normalizedPlugins.length > 1 ? normalizedPlugins : [],
+        };
+      }
     }
   },
   vendor: {
