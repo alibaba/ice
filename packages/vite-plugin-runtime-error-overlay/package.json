@@ -1,0 +1,21 @@
+{
+  "name": "vite-plugin-runtime-error-overlay",
+  "version": "1.0.0",
+  "description": "A vite plugin for show error overlay of runtime",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/vite-plugin-runtime-error-overlay"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "source-map": "^0.5.7"
+  },
+  "devDependencies": {
+    "vite": "^2.0.0"
+  }
+}

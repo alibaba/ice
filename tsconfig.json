@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/vite-plugin-runtime-error-overlay"},
     { "path": "packages/webpack-plugin-query-loader"},
     { "path": "packages/runtime" },
     { "path": "packages/swc" },
