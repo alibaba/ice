@@ -2,8 +2,8 @@
 
 ## 2.2.3
 
-
 - [fix] move `webpack-plugin-import` to dependencies
+
 ## 2.2.2
 
 - [fix] avoid undefined error when providing empty options.
@@ -29,6 +29,7 @@
 - [fix] update `build-scripts-config` to solve lessOption compatible error. ([#4217](https://github.com/alibaba/ice/issues/4217))
 
 ## 2.0.1
+
 - [fix] set `devServer.contentBase` the right way.
 
 ## 2.0.0
