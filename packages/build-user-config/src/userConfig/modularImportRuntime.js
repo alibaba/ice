@@ -14,6 +14,8 @@ module.exports = (config, value, context, api) => {
       }));
 
       config.module.rule('redirect-path-loader')
+        // es-module-lexer couldn't parse jsx
+        .after('tsx')
         .test(filePath => filePath.includes(path.join(rootDir, 'src')) && filePath.match(/\.(j|t)sx?$/))
         .use('redirect-path-loader')
         .loader(require.resolve(path.join(__dirname, '../Loaders/RedirectPathLoader')))
