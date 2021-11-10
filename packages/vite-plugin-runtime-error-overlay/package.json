@@ -2,7 +2,7 @@
   "name": "vite-plugin-runtime-error-overlay",
   "version": "1.0.0",
   "description": "A vite plugin for show error overlay of runtime",
-  "main": "lib/index.js",
+  "main": "lib/plugin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
