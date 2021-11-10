@@ -51,7 +51,6 @@ module.exports = (config, eslint, context, { log }) => {
     }
   }
 
-
   if (enableESlint) {
     config.plugin('ESLintPlugin').use(ESLintPlugin, [eslintOptions]);
   }
