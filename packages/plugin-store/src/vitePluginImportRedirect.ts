@@ -11,11 +11,11 @@ function vitePluginImportRedirect(): Plugin {
       needSourcemap = !!resolvedConfig.build.sourcemap;
     },
     transform(code, id) {
-      const appStoreRegExp = /src\/store.(?:j|t)s$/;
-      const pageStoreRegExp = /src\/pages\/(?:\w+)\/store.(?:j|t)s$/;
+      const appStoreRegExp = /src\/store.[jt]s$/;
+      const pageStoreRegExp = /src\/pages\/\w+\/store.[jt]s$/;
       if (appStoreRegExp.test(id) || pageStoreRegExp.test(id)) {
         const s = new MagicString(code);
-        const matchedResult = code.match(/(createStore\s*,?)(?:.*)} from (?:"|')ice(?:'|")/);
+        const matchedResult = code.match(/(createStore\s*,?).*} from ["']ice['"]/);
         if (matchedResult) {
           s.overwrite(matchedResult.index, matchedResult.index + matchedResult[1].length, '');
           s.prepend('import { createStore } from "@ice/store";\n');
