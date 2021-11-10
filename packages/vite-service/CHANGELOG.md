@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.2
+
+- [fix] alias path allow with node_modules
+
 ## 1.1.1
 
 - [fix] sourcemap does not work with mode vite
