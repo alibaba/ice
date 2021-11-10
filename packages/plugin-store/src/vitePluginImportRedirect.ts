@@ -18,7 +18,7 @@ function vitePluginImportRedirect(): Plugin {
       const pageStoreRegExp = /src\/pages\/\w+\/store.[jt]s$/;
       if (appStoreRegExp.test(id) || pageStoreRegExp.test(id)) {
         const s = new MagicString(code);
-        const matchedResult = code.match(/(createStore\s*,?).*} from ["']ice['"]/);
+        const matchedResult = code.match(/(createStore\s*,?).*}\s+from\s+["']ice['"]/);
         if (matchedResult) {
           /**
            * before: import { createStore, Plugin } from 'ice';
