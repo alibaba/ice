@@ -13,9 +13,6 @@ class ScriptLine {
   }
 }
 
-/**
- * A representation of a stack frame.
- */
 class StackFrame {
   public functionName: string | null;
 
@@ -78,17 +75,10 @@ class StackFrame {
     this.originalScriptCode = sourceScriptCode;
   }
 
-  /**
-   * Returns the name of this function.
-   */
   public getFunctionName(): string {
     return this.functionName || '(anonymous function)';
   }
 
-  /**
-   * Returns the source of the frame.
-   * This contains the file name, line number, and column number when available.
-   */
   public getSource(): string {
     let str = '';
     if (this.fileName != null) {
@@ -103,9 +93,6 @@ class StackFrame {
     return str.slice(0, -1);
   }
 
-  /**
-   * Returns a pretty version of this stack frame.
-   */
   public toString(): string {
     const functionName = this.getFunctionName();
     const source = this.getSource();
