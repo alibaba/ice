@@ -4,10 +4,10 @@ import * as path from 'path';
 import { all } from 'deepmerge';
 import { isObject } from 'lodash';
 import tsChecker from 'vite-plugin-ts-types';
-import { Context, ITaskConfig, IUserConfig } from 'build-scripts';
+import { Context, ITaskConfig } from 'build-scripts';
 import type { TransformOptions } from '@babel/core';
 import eslintReport from 'vite-plugin-eslint-report';
-import type { InlineConfig, BuildOptions, PluginOption, Plugin } from 'vite';
+import type { InlineConfig, BuildOptions, PluginOption } from 'vite';
 import { recordMap } from './config';
 import {
   externalsPlugin,
@@ -30,6 +30,11 @@ const getAnalyzer = (config: ITaskConfig['chainConfig']) => {
 const getWebpackConfig = (context: Context) => {
   const configArr = context.getWebpackConfig();
   return configArr[0];
+};
+
+// simple array merge for config merge
+const arrayMerge = (destinationArray: any[], sourceArray: any[]) => {
+  return [...(destinationArray || []), ...(sourceArray || [])];
 };
 
 const isBuild = (command: string) => command === 'build';
@@ -110,8 +115,6 @@ const getPluginReact = (config: ITaskConfig['chainConfig'], context: Context): P
   if (fastRefresh || babelPlugins.length > 0 || jsxRuntimeConfig || originalUserConfig.babelPresets) {
     // get exclude rule for babel-loader
     const babelExclude = config.module.rules.has('jsx') ? config.module.rule('jsx').exclude.values() : [/node_modules/];
-    console.log('babelExclude', babelExclude);
-    console.log('jsxRuntimeConfig', babelPlugins);
     return react({
       // exclude rule for fast refresh
       exclude: [/node_modules/, /[\\/]\.ice[\\/]/],
@@ -119,14 +122,10 @@ const getPluginReact = (config: ITaskConfig['chainConfig'], context: Context): P
       jsxRuntime: jsxRuntimeConfig ? 'automatic' : 'classic',
       babel: {
         // exclude rule for babel
-        /* exclude: (filePath) => {
-          console.log('filePath', filePath);
-          return filePath.includes('node_modules');
-        }, */
-        exclude: [/node_modules/],
+        exclude: babelExclude,
         plugins: babelPlugins,
         // 仅用户配置的 babelPresets 生效
-        // 通过插件修改后的配置如 ['@babel/preset-react', { runtime: 'automatic' }]，通过 jsxRuntime 配置设置
+        // 通过插件修改后的配置如 ['@babel/preset-react', { runtime: 'automatic' }]，通过 jsxRuntime 配置生效
         presets: originalUserConfig.babelPresets as TransformOptions['presets'],
       }
     });
@@ -159,7 +158,7 @@ export const wp2vite = (context: Context): InlineConfig => {
         rootDir,
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
-      ...getPluginReact(config.chainConfig, context).filter(Boolean),
+      ...getPluginReact(config.chainConfig, context),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
@@ -182,7 +181,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       recordMap(config.chainConfig, context),
       viteConfig,
       userConfig.vite
-    ]);
+    ], { arrayMerge });
   }
 
   const devServerConfig = {
@@ -220,7 +219,7 @@ export const wp2vite = (context: Context): InlineConfig => {
         server: devServerConfig,
       },
       viteConfig,
-    ]);
+    ], { arrayMerge });
   } else {
     return all([{
       build: {
@@ -228,6 +227,6 @@ export const wp2vite = (context: Context): InlineConfig => {
           exclude: ['react-app-renderer', 'create-app-shared'],
         },
       },
-    }, viteConfig]);
+    }, viteConfig], { arrayMerge });
   }
 };
