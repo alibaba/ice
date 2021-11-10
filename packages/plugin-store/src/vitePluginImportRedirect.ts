@@ -1,6 +1,9 @@
 import { Plugin } from 'vite';
 import MagicString from 'magic-string';
 
+/**
+ * Redirect createStore API import source from 'ice' to '@ice/store';
+ */
 function vitePluginImportRedirect(): Plugin {
   let needSourcemap = false;
 
@@ -17,6 +20,13 @@ function vitePluginImportRedirect(): Plugin {
         const s = new MagicString(code);
         const matchedResult = code.match(/(createStore\s*,?).*} from ["']ice['"]/);
         if (matchedResult) {
+          /**
+           * before: import { createStore, Plugin } from 'ice';
+           * 
+           * after:
+           * import { Plugin } from 'ice';
+           * import { createStore } from '@ice/store';
+           */
           s.overwrite(matchedResult.index, matchedResult.index + matchedResult[1].length, '');
           s.prepend('import { createStore } from "@ice/store";\n');
         }
