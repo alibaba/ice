@@ -28,6 +28,7 @@
     "@ice/store": "^2.0.0-3",
     "chalk": "^4.1.0",
     "enhanced-resolve": "^4.3.0",
+    "es-module-lexer": "^0.9.3",
     "fs-extra": "^8.1.0",
     "fs-readdir-recursive": "^1.1.0",
     "globby": "^11.0.1",

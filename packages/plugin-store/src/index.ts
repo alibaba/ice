@@ -80,11 +80,13 @@ export default async (api: any) => {
     routesPaths = [routes.routesPath];
   }
 
-  // add vite plugin for redirect page component
+  function getImportDeclarations() {
+    return api.getValue('importDeclarations');
+  }
   if (vite) {
     modifyUserConfig(
       'vite.plugins', 
-      [vitePluginPageRedirect(rootDir, routesPaths), vitePluginImportRedirect()], 
+      [vitePluginPageRedirect(rootDir, routesPaths), vitePluginImportRedirect(getImportDeclarations)], 
       { deepmerge: true }
     );
   }
