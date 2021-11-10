@@ -10,7 +10,7 @@ function vitePluginImportRedirect(getImportDeclarations): Plugin {
   const importDeclarations = getImportDeclarations();
 
   return {
-    enforce: 'pre',
+    enforce: 'post', // after transformed ts file to avoid ts syntax error
     name: 'vite-plugin-store-import-redirect',
     configResolved(resolvedConfig) {
       needSourcemap = !!resolvedConfig.build.sourcemap;
@@ -22,8 +22,9 @@ function vitePluginImportRedirect(getImportDeclarations): Plugin {
         await init;
         const [imports] = parse(code);
         const s = new MagicString(code);
+
         for (let index = 0; index < imports.length; index++) {
-          const importSpecifier = imports[0];
+          const importSpecifier = imports[index];
           const importSource = code.substring(importSpecifier.s, importSpecifier.e);
           if (importSource !== 'ice') {
             // eslint-disable-next-line no-continue
@@ -49,10 +50,17 @@ function vitePluginImportRedirect(getImportDeclarations): Plugin {
             /**
              * e.g.: importDeclarationSources = { '@ice/store': ['createStore', 'IStore'] }
              */
-            const normalImportSources: { [key: string]: string[] } = {};
-        
-            importIdentifiersArray.forEach((importIdentifier: string) => {
-              const { value, type } = importDeclarations[importIdentifier];
+            let normalImportSources: { [key: string]: string[] } = {};
+
+            for (let idx = 0; idx < importIdentifiersArray.length; idx++) {
+              const importIdentifier = importIdentifiersArray[idx];
+              const importDeclaration = importDeclarations[importIdentifier];
+              if (!importDeclaration) {
+                console.log(`[vite-plugin-store-import-redirect]: Don't recognize the importIdentifier '${importIdentifier}'. Stop transforming import declaration.`);
+                normalImportSources = {}; // set to `{}` for not to generate normal import strings
+                break;
+              }
+              const { value, type } = importDeclaration;
               if (type === 'default') {
                 newImportStr += `import ${importIdentifier} from '${value}';\n`;
               } else {
@@ -64,7 +72,7 @@ function vitePluginImportRedirect(getImportDeclarations): Plugin {
                   normalImportSources[value] = [importIdentifier];
                 }
               } 
-            });
+            }
             // generate normal import strings
             Object.keys(normalImportSources).forEach(sourceKey => {
               const importIdentifiers = normalImportSources[sourceKey];
