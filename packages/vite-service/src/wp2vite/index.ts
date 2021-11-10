@@ -106,23 +106,21 @@ const getOpen = (context: Context) => {
 
 type BabelPreset = [string, Record<string, any>];
 
-const getPluginReact = (config: ITaskConfig['chainConfig'], context: Context): PluginOption[] => {
+const getPluginReact = (context: Context): PluginOption[] => {
   const { userConfig, originalUserConfig, command  } = context;
   const fastRefresh = userConfig.fastRefresh && command === 'build';
   const jsxRuntimeConfig = userConfig.babelPresets
-    && (userConfig.babelPresets as BabelPreset[]).find(([pluginName, pluginOptions]) => pluginName.includes('@babel/preset-react') && pluginOptions?.runtime === 'automatic');
+    && (userConfig.babelPresets as BabelPreset[])
+      .find(([pluginName, pluginOptions]) => pluginName.includes('@babel/preset-react') && pluginOptions?.runtime === 'automatic');
   const babelPlugins = userConfig.babelPlugins as TransformOptions['plugins'];
   if (fastRefresh || babelPlugins.length > 0 || jsxRuntimeConfig || originalUserConfig.babelPresets) {
     // get exclude rule for babel-loader
-    const babelExclude = config.module.rules.has('jsx') ? config.module.rule('jsx').exclude.values() : [/node_modules/];
     return react({
       // exclude rule for fast refresh
       exclude: [/node_modules/, /[\\/]\.ice[\\/]/],
       fastRefresh,
       jsxRuntime: jsxRuntimeConfig ? 'automatic' : 'classic',
       babel: {
-        // exclude rule for babel
-        exclude: babelExclude,
         plugins: babelPlugins,
         // 仅用户配置的 babelPresets 生效
         // 通过插件修改后的配置如 ['@babel/preset-react', { runtime: 'automatic' }]，通过 jsxRuntime 配置生效
@@ -158,7 +156,7 @@ export const wp2vite = (context: Context): InlineConfig => {
         rootDir,
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
-      ...getPluginReact(config.chainConfig, context),
+      ...getPluginReact(context),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
