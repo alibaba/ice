@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- [fix] store error in vite HMR
+
 ## 2.0.3
 
 - [fix] nested routes not render in vite mode

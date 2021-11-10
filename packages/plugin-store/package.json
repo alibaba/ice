@@ -1,7 +1,7 @@
 {
   "name": "build-plugin-ice-store",
-  "version": "2.0.3",
-  "description": "builtin `icestore` in icejs",
+  "version": "2.0.4",
+  "description": "builtin `@ice/store` in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
@@ -31,7 +31,8 @@
     "fs-extra": "^8.1.0",
     "fs-readdir-recursive": "^1.1.0",
     "globby": "^11.0.1",
-    "loader-utils": "^2.0.0"
+    "loader-utils": "^2.0.0",
+    "magic-string": "^0.25.7"
   },
   "devDependencies": {
     "vite": "^2.4.3"

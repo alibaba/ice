@@ -5,6 +5,7 @@ import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
 import vitePluginPageRedirect from './vitePluginPageRedirect';
+import vitePluginImportRedirect from './vitePluginImportRedirect';
 
 const { name: pluginName } = require('../package.json');
 
@@ -81,7 +82,11 @@ export default async (api: any) => {
 
   // add vite plugin for redirect page component
   if (vite) {
-    modifyUserConfig('vite.plugins', [vitePluginPageRedirect(rootDir, routesPaths)], { deepmerge: true });
+    modifyUserConfig(
+      'vite.plugins', 
+      [vitePluginPageRedirect(rootDir, routesPaths), vitePluginImportRedirect()], 
+      { deepmerge: true }
+    );
   }
 
   if (swc) {
