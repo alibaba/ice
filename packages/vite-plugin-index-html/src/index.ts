@@ -1,6 +1,6 @@
 import { extname, resolve } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
-import type { Plugin, ResolvedConfig, HtmlTagDescriptor, ConfigEnv } from 'vite';
+import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk } from 'rollup';
 import { isAbsoluteUrl, addTrailingSlash } from './utils';
 import minifyHtml from './minifyHtml';
