@@ -49,6 +49,7 @@ module.exports = [
     name: 'devServer',
     validation: 'object',
     defaultValue: {
+      allowedHosts: 'all',
       hot: true,
       compress: true,
       webSocketServer: 'ws',

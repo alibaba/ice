@@ -1,4 +1,4 @@
-import { transformSync } from '..';
+import { transformSync } from '../../node';
 
 describe('swc transform code', () => {
   it('should transform es6 code to es5', () => {
@@ -84,7 +84,7 @@ var b = _objectSpread({
     expect(code).toEqual(`const a = {
     name: 'Hello'
 };
-`)
+`);
   });
 
   it('should transform JSX to createElement', () => {
@@ -108,6 +108,6 @@ var b = _objectSpread({
 export default function Home() {
     return(/*#__PURE__*/ React.createElement("div", null, "home page"));
 };
-`)
+`);
   });
 });
