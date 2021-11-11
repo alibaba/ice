@@ -43,9 +43,6 @@ export default (api, options) => {
   // Set webpack cache id
   setValue('WEBPACK_CACHE_ID', hash({ ...userConfig, hasJsxRuntime }));
 
-  // Check target
-  checkTargets(targets);
-
   // Set temporary directory
   // eg: .ice or .rax
   setTempDir(api, options);
@@ -149,43 +146,4 @@ function getDefaultRenderData(api, options) {
       ssr,
     };
   }
-}
-
-function checkTargets(targets) {
-  let hasError = false;
-
-  if (Object.prototype.toString.call(targets) === '[object Object]') {
-    hasError = true;
-  }
-
-  if (typeof targets === 'string') {
-    hasError = true;
-  }
-
-  if (Array.isArray(targets) && !matchTargets(targets)) {
-    hasError = true;
-  }
-
-  if (hasError) {
-    const msg = `
-  targets must be the array type in build.json.
-
-    e.g. { "targets": ["miniapp", "wechat-miniprogram"] }
-
-  if you want to describes the browserslist environments for your project.
-  you should set browserslist in build.json.
-
-    e.g. { "browserslist": { "chrome": "58", "ie": 11 } }
-`;
-    console.log();
-    console.log(chalk.red(msg));
-    console.log();
-    process.exit(1);
-  }
-}
-
-function matchTargets(targets) {
-  return targets.every(target => {
-    return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
-  });
 }
