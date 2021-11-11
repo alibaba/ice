@@ -1,4 +1,9 @@
 # Changelog
+
+## 1.0.0
+
+- [feat] support minify html using html-minifier-terser.
+
 ## 0.1。3
 
 - [feat] return original html when non-matches.

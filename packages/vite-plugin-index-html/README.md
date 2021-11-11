@@ -17,7 +17,7 @@ import './src/main.ts';
 ## Features
 
 - [x] 修改应用入口
-- [ ] 支持 Minify
+- [x] 支持 Minify
 - [ ] 支持模板
 - [ ] 支持 MPA
 
@@ -67,7 +67,13 @@ template 地址，默认为 `./src/index.html`。
 
 公共基础路径。默认为 [base](https://vitejs.dev/guide/build.html#public-base-path)。
 
+- `minify`
 
+是否压缩 html 代码。默认为 `auto`，development 下默认不压缩，production 下默认压缩。
+
+类型：boolean | 'auto' | object
+
+object 详细配置参考 [html-minifier-terser](https://www.npmjs.com/package/html-minifier-terser)
 ## License
 
 MIT

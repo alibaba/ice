@@ -1,8 +1,9 @@
 import { extname, resolve } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
-import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
+import type { Plugin, ResolvedConfig, HtmlTagDescriptor, ConfigEnv } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk } from 'rollup';
 import { isAbsoluteUrl, addTrailingSlash } from './utils';
+import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
 
@@ -53,6 +54,12 @@ export interface HtmlPluginOptions {
    * Default: `auto`.
    */
   publicPath?: 'auto' | string;
+
+  /**
+   * Minify html using html-minifier-terser
+   * Default: `auto`.
+   */
+  minify?: 'auto' | boolean | object;
 }
 
 export type OutputBundleExt =
@@ -68,6 +75,10 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
     } else {
       return;
     }
+  }
+
+  if (userOptions.minify === undefined) {
+    userOptions.minify = 'auto';
   }
 
   return {
@@ -107,15 +118,17 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         htmlTags,
       );
 
+      const htmlAfterMinification = await minifyHtml(html, userOptions.minify === 'auto' ? true : userOptions.minify);
+
       this.emitFile({
         type: 'asset',
-        source: html,
+        source: htmlAfterMinification,
         name: 'html',
         fileName: 'index.html',
       });
     },
 
-    transformIndexHtml(html) {
+    async transformIndexHtml(html) {
       const entryTag: HtmlTagDescriptor = {
         tag: 'script',
         attrs: {
@@ -124,10 +137,11 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         },
         injectTo: 'body',
       };
-      return injectToHtml(
+      const _html = injectToHtml(
         removeHtmlEntryScript(html, userOptions.input),
         [entryTag],
       );
+      return await minifyHtml(_html, userOptions.minify === 'auto' ? false : userOptions.minify);
     },
   };
 }
