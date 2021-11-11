@@ -73,7 +73,6 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
         };
       }, {});
 
-      console.log('fsfdsfs', input);
       modifyUserConfig('vite.plugins', [
         htmlPlugin({
           // @ts-ignore temporarily only support spa
