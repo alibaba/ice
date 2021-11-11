@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- [fix] build error when active `remoteRuntime`
+
 ## 2.0.3
 
 - [feat] support apply static loader with query like `?worker|?url|?raw|?worker&inline`
