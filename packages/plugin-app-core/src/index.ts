@@ -16,7 +16,6 @@ const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAID
 export default (api, options) => {
   const { onHook, context, setValue } = api;
   const { command, userConfig, rootDir } = context;
-  const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
   // Set framework field
