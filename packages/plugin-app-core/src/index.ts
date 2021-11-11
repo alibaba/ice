@@ -8,8 +8,6 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
-const chalk = require('chalk');
-// eslint-disable-next-line
 const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP, BYTEDANCE_MICROAPP } } = require('miniapp-builder-shared');
 const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
