@@ -23,6 +23,8 @@ import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+
+// TODO: createBaseApp() 返回一个 createBaseApp，命名需要优化下
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,

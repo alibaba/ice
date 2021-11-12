@@ -7,7 +7,7 @@ const Provider = store.Provider;
 
 const appConfig: IAppConfig = {
   router: {
-    routes,
+    // routes,
   },
   app: {
     addProvider({ children }) {
