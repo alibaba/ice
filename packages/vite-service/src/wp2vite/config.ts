@@ -93,7 +93,8 @@ const configMap: ConfigMap = {
     name: 'resolve.alias',
     transform: (value, ctx) => {
       const { rootDir } = ctx;
-      const blackList = ['webpack/hot', 'node_modules'];
+      // webpack/hot is not necessary in mode vite
+      const blackList = ['webpack/hot'];
       const data: Record<string, any> = Object.keys(value).reduce(
         (acc, key) => {
           if (!blackList.some((word) => value[key]?.includes(word)))

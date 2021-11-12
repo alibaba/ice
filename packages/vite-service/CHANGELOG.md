@@ -3,6 +3,7 @@
 ## 1.1.2
 
 - [feat] add lifecycle of `after.start.devServer`
+- [fix] alias path allow with node_modules
 
 ## 1.1.1
 
