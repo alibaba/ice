@@ -37,8 +37,8 @@ export type RenderAppConfig = {
     ErrorBoundaryFallback?: React.ComponentType;
     errorBoundary?: boolean;
     getInitialData?: (context: InitialContext) => Promise<any>;
+    renderComponent?: React.ComponentType;
   },
-  renderComponent?: React.ComponentType
 };
 export type AppLifecycle = {
   createBaseApp: <T>(appConfig: T, buildConfig: any, context: any) => { runtime: RuntimeModule; appConfig: T };

@@ -44,6 +44,7 @@ export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
   addProvider?: ({ children }: { children: FrameworkNode }) => FrameworkElement;
+  renderComponent?: FrameworkComponentType;
   getInitialData?: (ctx?: IContext) => Promise<any>;
   errorBoundary?: boolean;
   ErrorBoundaryFallback?: FrameworkComponentType,

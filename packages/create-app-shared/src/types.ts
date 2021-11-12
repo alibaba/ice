@@ -3,7 +3,10 @@ import type { createElement, ComponentType } from 'react';
 
 type VoidFunction = () => void;
 
-type App = Partial<{ rootId: string } & Record<'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick', VoidFunction>>;
+type App = Partial<{
+  rootId: string,
+  renderComponent?: ComponentType,
+} & Record<'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick', VoidFunction>>;
 
 export interface AppConfig {
   app?: App,
@@ -12,7 +15,6 @@ export interface AppConfig {
     history?: History;
     basename?: string;
   },
-  renderComponent?: ComponentType
 }
 
 export type BuildConfig = Record<string, any>;
