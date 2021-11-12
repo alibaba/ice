@@ -104,7 +104,7 @@ class RuntimeModule {
   }
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
-    const enabledRouter = !this.appConfig.renderComponent;
+    const enabledRouter = !this.appConfig.app?.renderComponent;
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       addDOMRender: this.addDOMRender,
@@ -117,6 +117,8 @@ class RuntimeModule {
       staticConfig: this.staticConfig,
       getRuntimeValue: this.getRuntimeValue,
     };
+
+    // TODO: router: false 并且没配置 renderComponent 也是 enable
     if (enabledRouter) {
       runtimeAPI = {
         ...runtimeAPI,
@@ -173,10 +175,12 @@ class RuntimeModule {
     return this.internalValue[key];
   }
 
+  // plugin-router 会调用
   private setRenderApp: SetRenderApp = (renderRouter) => {
     this.renderApp = renderRouter;
   }
 
+  // plugin-icestark 会调用
   private wrapperRouterRender: WrapperRouterRender = (wrapper) => {
     // pass origin router render for custom requirement
     this.renderApp = wrapper(this.renderApp);
@@ -218,15 +222,32 @@ class RuntimeModule {
   }
 
   public getAppComponent: GetAppComponent = () => {
-    if (this.modifyRoutesRegistration.length > 0) {
+    const buildConfig = this.buildConfig;
+    const hasRoutes = this.modifyRoutesRegistration.length > 0;
+
+    if (hasRoutes) {
       const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IPage, curr) => {
         return curr(acc);
       }, []));
+      // renderApp define by plugin-router
       return this.renderApp(routes, this.routesComponent);
+    } else {
+      // 1. SPA + router: false 2. MPA + no routes.[j|t]s file
+      const renderComponent = this.appConfig.app?.renderComponent;
+      if (!buildConfig.mpa) {
+        if (!renderComponent) {
+          throw new Error('开启 router: false 后需要结合 app.renderComponent 渲染组件，请在 src/app 中补充相关逻辑');
+        }
+        if (this.appConfig.router) {
+          console.warn('[icejs]', '已通过 router: false 禁用路由，src/app router 配置失效，建议删除对应字段。');
+        }
+      }
+
+      // default renderApp
+      return this.renderApp(this.wrapperPageRegistration.reduce((acc, curr) => {
+        return curr(acc);
+      }, renderComponent));
     }
-    return this.renderApp(this.wrapperPageRegistration.reduce((acc, curr) => {
-      return curr(acc);
-    }, this.appConfig.renderComponent));
   }
 }
 
