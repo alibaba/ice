@@ -66,6 +66,7 @@ export default (api, options) => {
 
   // register api method
   const generator = initGenerator(api, { ...options, hasJsxRuntime });
+
   setRegisterMethod(api, { generator });
 
   // add core template for framework

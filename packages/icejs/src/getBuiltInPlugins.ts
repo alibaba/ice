@@ -61,7 +61,7 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'framework': 'react',
     'alias': process.env.__FRAMEWORK_NAME__ || 'ice'
   } as Json;
-  const plugins: IPluginList = [
+  let plugins: IPluginList = [
     // common plugins
     ['build-plugin-app-core', coreOptions],
     'build-plugin-ice-logger',
@@ -76,6 +76,16 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-request',
     'build-plugin-helmet'
   ];
+
+  // TODO: 类似字段的冲突检测看下统一放在哪里是不是更合适
+  if (userConfig.mpa && userConfig.router === false) {
+    console.warn('Warning:', 'MPA 模式下无需配置 router: false 选项');
+  }
+
+  if (!userConfig.mpa && userConfig.router === false) {
+    // SPA 并且设置了 router: false 则过滤 router 插件
+    plugins = plugins.filter((name) => name !== 'build-plugin-ice-router');
+  }
 
   const dynamicPlugins = getDynamicPlugins(userConfig);
 

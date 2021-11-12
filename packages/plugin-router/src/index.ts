@@ -19,7 +19,6 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     },
   });
 
-  const disableRouter = userConfig.router === false;
   // [enum] js or ts
   const projectType = getValue('PROJECT_TYPE');
 
@@ -30,18 +29,18 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
   const { mpa: isMpa } = userConfig;
   const routesTempPath = path.join(iceTempPath, `routes.${projectType}`);
   const srcDir = applyMethod('getSourceDir', userConfig.entry);
+  // MPA 下 isConfigRoutes 永远是 true
   const { routesPath, isConfigRoutes } = applyMethod('getRoutes', {
     rootDir,
     tempPath: iceTempPath,
     configPath,
     projectType,
-    isMpa: isMpa || disableRouter,
+    isMpa,
     srcDir
   });
 
-  if (disableRouter && !isMpa) {
-    // router: false 仅在 SPA 下生效，用于支持 renderComponent 场景
-    log.info('通过 router: false 禁用路由相关能力，请使用 app.renderComponent 自行渲染组件');
+  if (!isConfigRoutes) {
+    log.info('开启文件约定式路由能力');
   }
 
   // modify webpack config
@@ -83,68 +82,64 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     exportMembers: ['IAppRouterProps', 'IRouterConfig'],
   });
 
-  if (!disableRouter) {
-    // add babel plugins for ice lazy
-    modifyUserConfig('babelPlugins',
+  // add babel plugins for ice lazy
+  modifyUserConfig('babelPlugins',
+    [
+      ...(userConfig.babelPlugins as [] || []),
       [
-        ...(userConfig.babelPlugins as [] || []),
-        [
-          require.resolve('./babelPluginLazy'),
-          { routesPath }
-        ]
+        require.resolve('./babelPluginLazy'),
+        { routesPath }
       ]
-    );
+    ]
+  );
 
-    // if mode vite, add vite plugin for transform lazy
-    if (userConfig.vite) {
-      modifyUserConfig('vite.plugins', [vitePluginLazy(routesPath)], { deepmerge: true });
+  // if mode vite, add vite plugin for transform lazy
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', [vitePluginLazy(routesPath)], { deepmerge: true });
+  }
+
+  // copy templates and export react-router-dom/history apis to ice
+  const routerTemplatesPath = path.join(__dirname, '../templates');
+  applyMethod('addPluginTemplate', routerTemplatesPath);
+  applyMethod('addExport', {
+    source: './plugins/router',
+    importSource: '$$ice/plugins/router',
+    exportMembers: [
+      'createBrowserHistory',
+      'createHashHistory',
+      'createMemoryHistory',
+      // react-router-dom
+      'Link',
+      'NavLink',
+      'Prompt',
+      'Redirect',
+      'Route',
+      'Switch',
+      'matchPath',
+      'generatePath',
+      // hooks
+      'useHistory',
+      'useLocation',
+      'useParams',
+      'useRouteMatch'
+    ]
+  });
+
+  if (!isConfigRoutes) {
+    // 文件约定路由
+    const routerMatch = 'src/pages';
+    const pagesDir = path.join(rootDir, routerMatch);
+    const walkerOptions = { rootDir, routerOptions, routesTempPath, pagesDir };
+    walker(walkerOptions);
+    log.verbose('根据 src/pages 结构生成路由配置：', routesTempPath);
+
+    if (command === 'start') {
+      // watch folder change when dev
+      applyMethod('watchFileChange', routerMatch, () => {
+        walker(walkerOptions);
+        log.verbose('监听到 src/pages 目录变化，重新生成路由配置：', routesTempPath);
+      });
     }
-
-    // copy templates and export react-router-dom/history apis to ice
-    const routerTemplatesPath = path.join(__dirname, '../templates');
-    applyMethod('addPluginTemplate', routerTemplatesPath);
-    applyMethod('addExport', {
-      source: './plugins/router',
-      importSource: '$$ice/plugins/router',
-      exportMembers: [
-        'createBrowserHistory',
-        'createHashHistory',
-        'createMemoryHistory',
-        // react-router-dom
-        'Link',
-        'NavLink',
-        'Prompt',
-        'Redirect',
-        'Route',
-        'Switch',
-        'matchPath',
-        'generatePath',
-        // hooks
-        'useHistory',
-        'useLocation',
-        'useParams',
-        'useRouteMatch'
-      ]
-    });
-
-    // do not watch folder pages when route config is exsits
-    if (!isConfigRoutes) {
-      const routerMatch = 'src/pages';
-      const pagesDir = path.join(rootDir, routerMatch);
-      const walkerOptions = { rootDir, routerOptions, routesTempPath, pagesDir };
-      walker(walkerOptions);
-      log.verbose('根据 src/pages 结构生成路由配置：', routesTempPath);
-
-      if (command === 'start') {
-        // watch folder change when dev
-        applyMethod('watchFileChange', routerMatch, () => {
-          walker(walkerOptions);
-          log.verbose('监听到 src/pages 目录变化，重新生成路由配置：', routesTempPath);
-        });
-      }
-    }
-  } else {
-    applyMethod('addAppConfigTypes', { exportName: 'renderComponent?: FrameworkComponentType' });
   }
 };
 
