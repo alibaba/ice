@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.2
+
+- [feat] add lifecycle of `after.start.devServer`
+
 ## 1.1.1
 
 - [fix] sourcemap does not work with mode vite
