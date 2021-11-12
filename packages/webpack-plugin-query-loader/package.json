@@ -1,0 +1,19 @@
+{
+  "name": "query-loader-webpack-plugin",
+  "version": "1.0.0",
+  "description": "webpack plugin for enable loader rule with query suffix",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "raw-loader": "^4.0.2",
+    "url-loader": "^4.1.1",
+    "worker-loader": "^3.0.8"
+  }
+}

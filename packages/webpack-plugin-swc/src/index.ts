@@ -6,6 +6,7 @@ const { version } = require('../package.json');
 
 export interface MinifyPluginOptions extends Options {
   sync?: boolean;
+  minify?: boolean;
 }
 
 const isWebpack5 = (compilation: webpack.Compilation) => 'processAssets' in compilation.hooks;

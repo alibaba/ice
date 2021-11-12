@@ -6,7 +6,7 @@ interface Options {
   style?: string;
 }
 
-const getStyleRule = (libraryName: string, style = 'style'): string => `${libraryName}/(es|lib)/[-\\w+]+/(${style}|${style}.js|${style}/index.js)`;
+const getStyleRule = (libraryName: string, style = 'style'): string => `${libraryName}/(es|lib)/[-\\w+]+/(${style}|${style}.js|${style}/index.js)$`;
 const flattenId = (id: string): string => id.replace(/(\s*>\s*)/g, '__').replace(/[/.]/g, '_');
 
 const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context }, options) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import store from './store';
 import './index.css';
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p className="header">{titleState.title}</p>
+        <p x-if={titleState.title} className="header">{titleState.title}</p>
 
         <div className="body">
           <button type="button" onClick={() => setCount((e) => e + 1)}>

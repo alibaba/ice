@@ -10,6 +10,7 @@ export interface IGeneratorOptions {
 export interface IGenerateResult {
   entryPath: string;
   runAppPath: string;
+  routesFilePath: string | undefined;
 }
 
 export type FrameworkType = 'rax' | 'react';

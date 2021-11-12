@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-eslint-report",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A vite plugin for eslint",
   "main": "lib/index.js",
   "scripts": {
