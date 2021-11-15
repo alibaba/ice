@@ -2,6 +2,7 @@
 
 ## 1.1.2
 
+- [feat] add lifecycle of `after.start.devServer`
 - [fix] alias path allow with node_modules
 - [fix] error filter for `postcssOptions` 
 
