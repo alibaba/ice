@@ -3,6 +3,7 @@
 ## 1.1.2
 
 - [fix] alias path allow with node_modules
+- [fix] error filter for `postcssOptions` 
 
 ## 1.1.1
 

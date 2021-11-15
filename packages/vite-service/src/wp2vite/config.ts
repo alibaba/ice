@@ -218,11 +218,12 @@ const configMap: ConfigMap = {
       if (userConfig?.postcssOptions) {
         const postcssPlugins = (userConfig?.postcssOptions as PostcssOptions)?.plugins || {};
         const normalizedPlugins = Object.keys(postcssPlugins)
-          .filter((pluginKey) => !postcssPlugins[pluginKey])
-          .map(pluginKey => [pluginKey, postcssPlugins[pluginKey]]);
+          .filter((pluginKey) => !!postcssPlugins[pluginKey])
+          // eslint-disable-next-line global-require,import/no-dynamic-require
+          .map(pluginKey => require(pluginKey)(postcssPlugins[pluginKey]));
         return {
           ...(userConfig?.postcssOptions as PostcssOptions),
-          plugins: normalizedPlugins.length > 1 ? normalizedPlugins : [],
+          plugins: normalizedPlugins.length > 0 ? normalizedPlugins : [],
         };
       }
     }
