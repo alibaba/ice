@@ -34,7 +34,11 @@ const remoteRuntime = async (api: IPluginAPI, options: IRemoteOptions|boolean) =
   const remoteName = 'remote_runtime';
   const remoteEntry = 'remoteEntry.js';
   const packageKeys = Object.keys(pkg.dependencies || {});
-  const compilePackages = await getCompileDeps(packageKeys, rootDir, rest);
+  const compilePackages = (await getCompileDeps(packageKeys, rootDir, rest)).filter((compilePackage: string) => {
+    const hasExternal = userConfig?.externals && userConfig.externals[compilePackage];
+    // filter package when config as external dependencies
+    return !hasExternal;
+  });
 
   // ensure cache dir
   fse.ensureDirSync(cacheDir);
@@ -47,7 +51,6 @@ const remoteRuntime = async (api: IPluginAPI, options: IRemoteOptions|boolean) =
   }
   const cacheContent = getCacheContent({ compilePackages, rootDir, userConfig });
   const needPreBuild = lastCache !== cacheContent;
-
   if (needPreBuild) {
     preBuild(api, { remoteName, remoteEntry, runtimeDir, cacheFile, cacheDir, cacheContent, compilePackages });
   }
