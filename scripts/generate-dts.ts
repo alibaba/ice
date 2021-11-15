@@ -5,7 +5,7 @@ import { join, basename } from 'path';
 
 async function bundleDts() {
   const dtsBundleName = 'ice';
-  const exampleDir = join(__dirname, '..', 'examples', 'basic-spa');
+  const exampleDir = join(__dirname, '..', 'examples', 'dts-generation');
   const iceTempCompileDir = join(exampleDir, 'dist', '.ice');
   const iceMainDtsFilePath = join(iceTempCompileDir, 'index.d.ts');
   const iceDtsBundleFilePath = join(iceTempCompileDir, `${dtsBundleName}.d.ts`);
@@ -43,6 +43,8 @@ async function copyDtsBundleToIceJsLib(dtsBundleFilePath: string) {
   const dtsBundleFile = basename(dtsBundleFilePath);
   const iceJsLibDir = join(__dirname, '..', 'packages', 'icejs', 'lib', dtsBundleFile);
   await fse.copyFile(dtsBundleFilePath, iceJsLibDir);
+  console.log('Successfully copy icejs dts to: ', iceJsLibDir);
+
 }
 
 (async function() {

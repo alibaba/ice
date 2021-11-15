@@ -3,10 +3,10 @@
   "buildOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "build",
+    "outDir": "dist",
     "module": "esnext",
     "target": "es6",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": [
@@ -16,6 +16,7 @@
     "sourceMap": true,
     "allowJs": true,
     "rootDir": "./",
+    "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -25,10 +26,10 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "types": ["node", "jest"],
+    "types": ["node"],
     "paths": {
       "@/*": [
-        "./src/*"
+        "./src"
       ],
       "ice": [
         ".ice/index.ts"
