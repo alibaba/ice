@@ -1,7 +1,7 @@
 {
   "name": "@builder/user-config",
-  "version": "1.1.4",
-  "description": "Includes methods which are related to set base user config for framework",
+  "version": "1.1.5",
+  "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
   "main": "lib/index.js",

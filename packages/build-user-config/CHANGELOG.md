@@ -1,8 +1,14 @@
 # Changelog
 
+## 1.1.5
+
+- [fix] prevent minimize `.scss` by default.
+- [fix] Regexp for runtime folder
+
 ## 1.1.4
 
-- [fix] Regexp for runtime folder
+- [fix] handle unexpected merge with `devServer.allowedHosts`.
+- [fix] set `corejs: '3.7'` to meet the ECMAScript 2021 polyfills.
 
 ## 1.1.3
 
@@ -14,7 +20,7 @@
 
 ## 1.1.1
 
-- [fix] OOM when use filesystem cache 
+- [fix] OOM when use filesystem cache
 
 ## 1.1.0
 
