@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable camelcase */
+export interface Binding {
+  transformSync: (src: string, isModule: boolean, options: Buffer) => Output;
+  transform: (src: string, isModule: boolean, options: Buffer) => Promise<Output>;
+  minifySync: (src: Buffer, options: Buffer) => Output;
+  minify: (src: Buffer, options: Buffer) => Promise<Output>;
+}
+
 export type TerserEcmaVersion = 5 | 2015 | 2016 | string | number;
 
 export interface JsMinifyOptions {
@@ -324,7 +331,8 @@ export interface Options extends Config {
    * Destination path. Note that this value is used only to fix source path
    * of source map files and swc does not write output to this path.
    */
-  outputPath?: string
+  outputPath?: string;
+  keepPlatform ?: string;
 }
 
 export interface CallerOptions {
@@ -434,7 +442,8 @@ export interface JscConfig {
 
   paths?: {
     [from: string]: [string]
-  }
+  },
+  minify?: JsMinifyOptions
 }
 
 export type JscTarget =
@@ -626,10 +635,10 @@ export interface ConstModulesConfig {
 
 /// https://swc.rs/docs/configuring-swc.html#jsctransformoptimizerjsonify
 export interface OptimizerConfig {
-  /// https://swc.rs/docs/configuring-swc.html#jsctransformoptimizerglobals
+  /// https://swc.rs/docs/configuring-swc#jsctransformoptimizer
   globals?: GlobalPassOption;
-  /// https://swc.rs/docs/configuring-swc.html#jsctransformoptimizerjsonify
   jsonify?: { minCost: number };
+  simplify?: boolean;
 }
 
 /**

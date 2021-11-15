@@ -78,6 +78,7 @@ module.exports = async (
     usePx2Vw = false,
     px2vwOptions = {},
     style = true,
+    disableModularImport = false,
     uniteNextLib,
     externalNext,
     importOptions = {},
@@ -113,7 +114,7 @@ module.exports = async (
       {
         plugins: [
           // eslint-disable-next-line global-require
-          require('vite-plugin-style-import').default({
+          !disableModularImport && require('vite-plugin-style-import').default({
             libs: [
               {
                 libraryName: '@alifd/next',
@@ -140,13 +141,7 @@ module.exports = async (
                 silent: true,
               }),
           }),
-        ],
-        resolve: {
-          alias: [
-            // compatible with `@import '~@alifd/next/reset.scss';`
-            { find: /^~/, replacement: '' },
-          ],
-        },
+        ].filter(Boolean),
       },
       { deepmerge: true }
     );
@@ -358,7 +353,7 @@ module.exports = async (
       // 2. 组件（包含业务组件）按需加载&样式自动引入
       // babel-plugin-import: 基础组件
       // remove babel-plugin-import if external next
-      if (!externalNext && !ignoreTasks.includes(taskName)) {
+      if (!externalNext && !ignoreTasks.includes(taskName) && !disableModularImport) {
         const importConfigs = [
           {
             libraryName: '@icedesign/base',

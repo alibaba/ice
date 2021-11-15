@@ -9,14 +9,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p className="header">{titleState.title}</p>
+        <p x-if={titleState.title} className="header">{titleState.title}</p>
 
         <div className="body">
           <button type="button" onClick={() => setCount((e) => e + 1)}>
             🪂 Click me : {count}
           </button>
 
-          <p> Don&apos;t forgot to install <a href="https://appworks.site/">AppWorks</a> in Your Vscode.</p>
+          <p> Don&apos;t forget to install <a href="https://appworks.site/">AppWorks</a> in Your Vscode.</p>
           <p>
             <a
               className="App-link"

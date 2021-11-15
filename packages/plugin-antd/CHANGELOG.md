@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- [fix] remove alias config of `~` for vite
+
 ## 0.1.3
 
 - [feat] option `disableModularImport` for disable modular import of antd
