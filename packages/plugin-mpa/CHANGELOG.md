@@ -1,5 +1,9 @@
 # changelog
 
+## 2.0.1
+
+- [feat] support disable rewrite rules for FaaS render
+
 ## 2.0.0
 
 - [feat] upgrade build-scripts

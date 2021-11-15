@@ -10,9 +10,7 @@ interface ITemplate {
 interface IMpaConfig {
   template?: ITemplate;
   openPage?: string;
-  rewrites?: {
-    [key: string]: string;
-  };
+  rewrites?: {[key: string]: string} | boolean;
 }
 
 const plugin: IPlugin = (api) => {
@@ -115,14 +113,17 @@ const plugin: IPlugin = (api) => {
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
 
-      config.devServer.historyApiFallback({
-        rewrites: Object.keys(entries).map((pageName) => {
-          return {
-            from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
-            to: `/${pageName}.html`,
-          };
-        })
-      });
+      // disable mpa rewrite rules when config mpa.rewrites as false
+      if ((mpa as IMpaConfig)?.rewrites !== false) {
+        config.devServer.historyApiFallback({
+          rewrites: Object.keys(entries).map((pageName) => {
+            return {
+              from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
+              to: `/${pageName}.html`,
+            };
+          })
+        });
+      }
     });
   }
 };
