@@ -6,6 +6,19 @@ on:
 name: Build @builder/swc native binaries
 
 jobs:
+  test-native:
+    name: Unit Test Native Code
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly-2021-11-05
+          profile: minimal
+      - run: cd packages/swc && cargo test
+
   build-native:
     strategy:
       matrix:
@@ -41,7 +54,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-08-12
+          toolchain: nightly-2021-11-05
           target: ${{ matrix.target }}
       - name: Cache cargo registry
         uses: actions/cache@v1

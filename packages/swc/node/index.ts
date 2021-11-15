@@ -1,6 +1,14 @@
-import { loadBinding } from '@node-rs/helper';
+/* eslint-disable global-require */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable import/no-dynamic-require */
 import * as path from 'path';
-import { Options, JsMinifyOptions, Output } from './types';
+import * as fs from 'fs';
+import { platform, arch } from 'os';
+import { platformArchTriples } from '@napi-rs/triples';
+import { Options, JsMinifyOptions, Output, Binding } from './types';
+
+const ArchName = arch();
+const PlatformName = platform();
 
 /**
  * __dirname means load native addon from current dir
@@ -10,10 +18,31 @@ import { Options, JsMinifyOptions, Output } from './types';
  * `loadBinding` helper will load `swc.[PLATFORM].node` from `__dirname` first
  * If failed to load addon, it will fallback to load from `swc-[PLATFORM]`
  */
-const bindings = loadBinding(path.join(__dirname, '../native'), 'builder-swc', '@builder/swc');
+const bindings: Binding = loadBinding();
+
+function loadBinding() {
+  const triples = platformArchTriples[PlatformName][ArchName];
+  for (const triple of triples) {
+    const localFilePath = path.join(
+      __dirname,
+      '../native',
+      `builder-swc.${triple.platformArchABI}.node`
+    );
+    if (fs.existsSync(localFilePath)) {
+      console.log('Load local native module.');
+      return require(localFilePath);
+    }
+
+    try {
+      return require(`@builder/swc-${triple.platformArchABI}`);
+    // eslint-disable-next-line no-empty
+    } catch (e) {}
+  }
+
+  throw new Error('Cannot find target @builder/swc native module!');
+}
 
 async function transform(src: string, options: Options): Promise<Output> {
-  const isModule = typeof src !== 'string';
   options = options || {};
 
   if (options?.jsc?.parser) {
@@ -21,14 +50,13 @@ async function transform(src: string, options: Options): Promise<Output> {
   }
 
   return bindings.transform(
-    isModule ? JSON.stringify(src) : src,
-    isModule,
+    src,
+    false,
     toBuffer(options)
   );
 }
 
 function transformSync(src: string, options: Options): Output {
-  const isModule = typeof src !== 'string';
   options = options || {};
 
   if (options?.jsc?.parser) {
@@ -36,8 +64,8 @@ function transformSync(src: string, options: Options): Output {
   }
 
   return bindings.transformSync(
-    isModule ? JSON.stringify(src) : src,
-    isModule,
+    src,
+    false,
     toBuffer(options)
   );
 }

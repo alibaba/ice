@@ -93,7 +93,8 @@ const configMap: ConfigMap = {
     name: 'resolve.alias',
     transform: (value, ctx) => {
       const { rootDir } = ctx;
-      const blackList = ['webpack/hot', 'node_modules'];
+      // webpack/hot is not necessary in mode vite
+      const blackList = ['webpack/hot'];
       const data: Record<string, any> = Object.keys(value).reduce(
         (acc, key) => {
           if (!blackList.some((word) => value[key]?.includes(word)))
@@ -217,11 +218,12 @@ const configMap: ConfigMap = {
       if (userConfig?.postcssOptions) {
         const postcssPlugins = (userConfig?.postcssOptions as PostcssOptions)?.plugins || {};
         const normalizedPlugins = Object.keys(postcssPlugins)
-          .filter((pluginKey) => !postcssPlugins[pluginKey])
-          .map(pluginKey => [pluginKey, postcssPlugins[pluginKey]]);
+          .filter((pluginKey) => !!postcssPlugins[pluginKey])
+          // eslint-disable-next-line global-require,import/no-dynamic-require
+          .map(pluginKey => require(pluginKey)(postcssPlugins[pluginKey]));
         return {
           ...(userConfig?.postcssOptions as PostcssOptions),
-          plugins: normalizedPlugins.length > 1 ? normalizedPlugins : [],
+          plugins: normalizedPlugins.length > 0 ? normalizedPlugins : [],
         };
       }
     }
