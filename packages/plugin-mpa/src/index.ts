@@ -112,9 +112,8 @@ const plugin: IPlugin = (api) => {
     // set page template
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
-
       // disable mpa rewrite rules when config mpa.rewrites as false
-      if ((mpa as IMpaConfig)?.rewrites !== false) {
+      if ((userConfig.mpa as IMpaConfig)?.rewrites !== false) {
         config.devServer.historyApiFallback({
           rewrites: Object.keys(entries).map((pageName) => {
             return {
