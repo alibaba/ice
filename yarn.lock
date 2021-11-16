@@ -1194,8 +1194,8 @@
 
 "@builder/pack@^0.4.0":
   version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.1.tgz#29a46d51fb69b02fd744575459c01ab6c3f63fac"
-  integrity sha512-APjBf3MXWRvR+UtV2E43oKu7dd2fC7hjDRMZ9YmvH+3TCgaZTDgzx81gGWsf32ghM59eN+xy4JMH97HHG/kPhQ==
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.1.tgz#b5f0725f296c9238abd14b8034f919c6095c6f31"
+  integrity sha512-4nZ65OHNMuOxGX0iXh5VDoDE1vU+1guf+ldKksa3NFo7OFvAhI6tm8mPKJmat2/zcrFgeEkQUdsIg7hoCsU9QQ==
   dependencies:
     ansi-html "^0.0.7"
     core-js-pure "^3.8.1"
