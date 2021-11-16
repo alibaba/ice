@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@builder/pack": "^0.4.0",
+    "@builder/pack": "0.4.2-beta.2",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
     "@types/webpack-chain": "^5.2.0",
