@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+- [fix] ssr can't work when using promissory routes
+
 ## 3.0.1
 
 - [fix] redirectUrl is undefined

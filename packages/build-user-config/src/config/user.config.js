@@ -1,6 +1,6 @@
 const { validation } = require('@builder/app-helpers');
 
-const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|\.ice|\.rax/;
+const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|[/\\]\.ice[/\\]|[/\\]\.rax[/\\]/;
 
 module.exports = [
   {
@@ -49,6 +49,7 @@ module.exports = [
     name: 'devServer',
     validation: 'object',
     defaultValue: {
+      allowedHosts: 'all',
       hot: true,
       compress: true,
       webSocketServer: 'ws',

@@ -24,7 +24,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
   const version = process.env.__FRAMEWORK_VERSION__;
 
   // If pwa no exists in userConfig.
-  if (Number(version[0]) > 1 && (!!userConfig.pwa || userConfig?.pwa === false )) {
+  if (Number(version[0]) > 1 && !userConfig.pwa) {
     return;
   }
 
