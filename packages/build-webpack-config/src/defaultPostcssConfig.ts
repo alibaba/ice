@@ -1,6 +1,6 @@
 export default {
   plugins: [
-    // ['@builder/pack/deps/postcss-nested'],
+    ['@builder/pack/deps/postcss-nested'],
     ['@builder/pack/deps/postcss-preset-env', {
       // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
       stage: 3,
