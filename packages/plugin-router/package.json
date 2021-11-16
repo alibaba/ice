@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@builder/app-helpers": "^2.0.2",
-    "@builder/pack": "0.4.2-beta.1",
+    "@builder/pack": "0.4.2-beta.2",
     "@types/react-router-dom": "^5.1.4",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",

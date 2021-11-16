@@ -1192,10 +1192,10 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/pack@0.4.2-beta.1":
-  version "0.4.2-beta.1"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.2-beta.1.tgz#597408314b6f109fbf285ad09e869b824ef5acfb"
-  integrity sha512-X6dD99FIApFK5n1kNhjWg2CQFBO7/obCY39s7P0zdJny1BxvYrydxY6JYVNfUrcyJAljieyJOERqI6SNVwCoCQ==
+"@builder/pack@0.4.2-beta.2":
+  version "0.4.2-beta.2"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.2-beta.2.tgz#109ea58be569f6c5980e2adf7b3fb5325ce21b2f"
+  integrity sha512-uqNMCx84oQ1yOP2fbkzGC6A0HHuLZBvTZfqWBMEBolqlBxK6LE5ntmKx6gQoiQmXET/drn083wXCdfKTxMyl7Q==
   dependencies:
     ansi-html "^0.0.7"
     core-js-pure "^3.8.1"
