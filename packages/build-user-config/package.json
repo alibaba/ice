@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "@builder/pack": "^0.4.0",
+    "@builder/pack": "^0.4.2-beta.1",
     "@babel/helper-module-imports": "^7.13.12",
     "@builder/app-helpers": "^2.0.0",
     "core-js": "^3.3.1",
