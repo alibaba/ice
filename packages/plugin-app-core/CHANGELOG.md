@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- [feat] format rax plugin name
+
 ## 2.0.2
 
 - [feat] support load `styl` style

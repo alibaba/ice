@@ -17,6 +17,7 @@ import {
   htmlPlugin,
   ignoreHtmlPlugin,
   mockPlugin,
+  ImportDeclarations,
 } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
@@ -131,6 +132,19 @@ const getPluginReact = (context: Context): PluginOption[] => {
   return [];
 };
 
+const getRedirectImport = (context: Context) => {
+  const importDeclarations = context.getValue('importDeclarations') || {};
+  // formate importDeclarations
+  const redirects = Object.keys(importDeclarations).map((name) => ({
+    name,
+    ...importDeclarations[name]
+  })) as ImportDeclarations[];
+  return redirects;
+};
+
+/**
+ * Exposed
+ */
 export const wp2vite = (context: Context): InlineConfig => {
   const { commandArgs = {}, userConfig, originalUserConfig, rootDir, command } = context;
   const config = getWebpackConfig(context);
@@ -143,7 +157,8 @@ export const wp2vite = (context: Context): InlineConfig => {
       getAnalyzer(config.chainConfig),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
-      importPlugin({ rootDir, entries: userConfig.entry as any }),
+      // import xx from 'ice' 的重定向逻辑
+      importPlugin({ source: 'ice', redirectImports: getRedirectImport(context) }),
       // spa 与 mpa 中对 html 的处理
       serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.1.2
+
+- [feat] add lifecycle of `after.start.devServer`
+- [fix] alias path allow with node_modules
+- [fix] error filter for `postcssOptions` 
+- [fix] redirect import from ice
+
 ## 1.1.1
 
 - [fix] sourcemap does not work with mode vite

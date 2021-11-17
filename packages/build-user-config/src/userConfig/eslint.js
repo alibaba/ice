@@ -1,5 +1,7 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 
+let logged = false;
+
 module.exports = (config, eslint, context, { log }) => {
   if (eslint === false) {
     return;
@@ -33,17 +35,20 @@ module.exports = (config, eslint, context, { log }) => {
 
   const dependenciesMsg = 'Please check dependencies of eslint(> 7.0.0)';
 
-  try {
-    // eslint-disable-next-line global-require
-    const { ESLint } = require('eslint');
-    const [mainVersion] = ESLint.version.split('.');
-    if (mainVersion < 7) {
+  if (!logged) {
+    logged = true;
+    try {
+      // eslint-disable-next-line global-require
+      const { ESLint } = require('eslint');
+      const [mainVersion] = ESLint.version.split('.');
+      if (mainVersion < 7) {
+        enableESlint = false;
+        log.info(dependenciesMsg);
+      }
+    } catch (e) {
       enableESlint = false;
       log.info(dependenciesMsg);
     }
-  } catch (e) {
-    enableESlint = false;
-    log.info(dependenciesMsg);
   }
 
   if (enableESlint) {
