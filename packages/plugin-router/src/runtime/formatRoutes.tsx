@@ -6,17 +6,39 @@ import joinPath from '../utils/joinPath';
 
 export default function formatRoutes(routes: IRouterConfig[], parentPath?: string) {
   return routes.map((item) => {
+    let path = item.path;
+    let children = item.children;
+    const itemComponent = item.component as any;
+
     if (item.path) {
       const routePath = joinPath(parentPath || '', item.path);
-      item.path = routePath === '/' ? '/' : routePath.replace(/\/$/, '');
+      path = routePath === '/' ? '/' : routePath.replace(/\/$/, '');
     }
     if (item.children) {
-      item.children = formatRoutes(item.children, item.path);
-    } else if (item.component) {
-      const itemComponent = item.component as any;
-      itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
+      children = formatRoutes(item.children, item.path);
+
+      return {
+        ...item,
+        path,
+        children
+      };
     }
-    return item;
+
+    if (item.component) {
+      itemComponent.pageConfig = Object.assign({}, itemComponent.pageConfig, { componentName: itemComponent.name });
+
+      return {
+        ...item,
+        path,
+        component: itemComponent
+      };
+    }
+
+    return {
+      ...item,
+      path
+    };
+
   });
 }
 
