@@ -2,6 +2,7 @@
 
 ## 2.0.2
 
+- [fix] never modified origin routes.
 - [fix] optimize alias for `react-router-dom`
 
 ## 2.0.1
