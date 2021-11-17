@@ -12,9 +12,10 @@
   },
   "tsChecker": true,
   "proxy": {
-    "/todos": {
+    "/api": {
       "target": "http://jsonplaceholder.typicode.com",
-      "changeOrigin": true
+      "changeOrigin": true,
+      "pathRewrite": { "^/api": "/todos" }
     }
   }
 }
