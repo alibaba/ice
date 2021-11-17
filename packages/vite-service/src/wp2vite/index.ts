@@ -108,7 +108,7 @@ type BabelPreset = [string, Record<string, any>];
 
 const getPluginReact = (context: Context): PluginOption[] => {
   const { userConfig, originalUserConfig, command  } = context;
-  const fastRefresh = userConfig.fastRefresh && command === 'build';
+  const fastRefresh = userConfig.fastRefresh && command === 'start';
   const jsxRuntimeConfig = userConfig.babelPresets
     && (userConfig.babelPresets as BabelPreset[])
       .find(([pluginName, pluginOptions]) => pluginName.includes('@babel/preset-react') && pluginOptions?.runtime === 'automatic');
