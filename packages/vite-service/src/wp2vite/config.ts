@@ -159,13 +159,22 @@ const configMap: ConfigMap = {
   'devServer.proxy': {
     name: 'server.proxy',
     transform: (value: Record<string, any>[]) => {
-      // vite proxy do not support config of onProxyRes, onError, logLevel
+      // vite proxy do not support config of onProxyRes, onError, logLevel, pathRewrite
       // transform devServer.proxy to server.proxy
       const proxyConfig = {};
-      (value || []).forEach(({ context, enable, onProxyRes, onError, ...rest }) => {
+      (value || []).forEach(({ context, enable, onProxyRes, onError, pathRewrite, ...rest }) => {
         if (enable !== false) {
           proxyConfig[context] = {
             ...rest,
+            rewrite: (requestPath: string) => {
+              if (pathRewrite && isObject(pathRewrite)) {
+                return Object.keys(pathRewrite).reduce((acc, rewriteRule) => {
+                  return acc.replace(new RegExp(rewriteRule), pathRewrite[rewriteRule]);
+                }, requestPath);
+              } else {
+                return requestPath;
+              }
+            },
             configure: (proxy, options) => {
               if (rest.configure) {
                 rest.configure(proxy, options);

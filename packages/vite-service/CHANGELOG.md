@@ -5,6 +5,8 @@
 - [feat] add lifecycle of `after.start.devServer`
 - [fix] alias path allow with node_modules
 - [fix] error filter for `postcssOptions` 
+- [fix] support transform proxy.pathRewrite
+- [fix] redirect import from ice
 
 ## 1.1.1
 
