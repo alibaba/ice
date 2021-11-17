@@ -83,11 +83,11 @@ const pluginImportSPA = ({ rootDir }: Option): Plugin => {
 /**
  * @from import { runApp } from 'ice'
  * @to import { runApp } from '../.ice/core/runApp'
- * 
+ *
  * @tip both support spa and mpa
  * @variable runApp icestore
  */
 export const importPlugin = ({ rootDir, entries }: Option): Plugin => {
   const isMpa = isObject(entries);
-  return isMpa ? pluginImportSPA({ rootDir }) : pluginImportMPA({ rootDir, entries });
+  return isMpa ? pluginImportMPA({ rootDir, entries }) : pluginImportSPA({ rootDir });
 };

@@ -71,11 +71,13 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   Object.keys(parsedEntries).forEach((entryKey) => {
     const { entryName, finalEntry, runAppPath, routesFilePath } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
-    redirectEntries.push({
-      entryPath: finalEntry,
-      runAppPath,
-      routesFilePath,
-    });
+    if (runAppPath) {
+      redirectEntries.push({
+        entryPath: finalEntry,
+        runAppPath,
+        routesFilePath,
+      });
+    }
     // get page paths for rule match
     matchStrs.push(formatPath(routesFilePath));
   });

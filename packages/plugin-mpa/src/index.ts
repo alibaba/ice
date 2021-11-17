@@ -86,9 +86,9 @@ const plugin: IPlugin = (api) => {
     let finalMPAEntries = {};
     if (parsedEntries) {
       Object.keys(parsedEntries).forEach((entryKey) => {
-        const { finalEntry, shouldRedirectRunApp, runAppPath } = parsedEntries[entryKey];
+        const { finalEntry, runAppPath } = parsedEntries[entryKey];
         finalMPAEntries[entryKey] = finalEntry;
-        if (shouldRedirectRunApp) {
+        if (runAppPath) {
           redirectEntries.push({
             entryPath: finalEntry,
             runAppPath,
