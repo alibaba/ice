@@ -1,11 +1,11 @@
 import { createElement, Component, Fragment } from 'rax';
-import { isNode } from 'universal-env';
+import { isNode, isWeb } from 'universal-env';
 import TabBar from  '<%= tabBarPath %>';
 
 const currentPageName = '<%= entryName %>';
 
-const isPHA = (window as any).pha;
-const isFRM = typeof my !== 'undefined' && my.isFRM === true;
+const isPHA = isWeb && (window as any).pha;
+const isFRM = isWeb && typeof my !== 'undefined' && my.isFRM === true;
 const shouldRenderTabBar = isNode || (!isPHA && !isFRM);
 
 export default class TabBarWrapper extends Component {
