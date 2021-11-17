@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@builder/app-helpers": "^2.0.0",
+    "@rollup/pluginutils": "^4.1.1",
     "@vitejs/plugin-legacy": "^1.5.0",
     "@vitejs/plugin-react": "^1.0.7",
     "build-scripts": "^1.1.0",

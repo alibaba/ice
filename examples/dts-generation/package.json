@@ -1,0 +1,20 @@
+{
+  "name": "dts-generation-example",
+  "description": "",
+  "dependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0"
+  },
+  "scripts": {
+    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
+    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod",
+    "test": "icejs test --jest-watchAll"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
