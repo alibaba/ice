@@ -61,5 +61,7 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
       filepath: path.resolve(runtimeDir, remoteEntry),
       publicPath: `/${runtimePublicPath}`,
     }]).after('HtmlWebpackPlugin');
+    // remove 404 htmlWebpackPlugin while AddAssetHtmlPlugin occurs errors with multi HtmlWebpackPlugin
+    config.plugins.delete('HtmlWebpackPlugin_404');
   });
 };

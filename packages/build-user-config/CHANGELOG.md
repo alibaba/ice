@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.5
+
+- [fix] prevent minimize `.scss` by default.
+- [fix] Regexp for runtime folder
+
 ## 1.1.4
 
 - [fix] handle unexpected merge with `devServer.allowedHosts`.
