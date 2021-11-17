@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.4
+
+- fix: every mpa page should redirect runApp file path
+
 ## 4.0.3
 
 - feat: not render tabbar in frm container
