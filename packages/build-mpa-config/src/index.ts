@@ -49,7 +49,6 @@ export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => 
     parsedEntries[entryName] = {
       ...entry,
       finalEntry,
-      shouldRedirectRunApp: isAppEntry,
       runAppPath,
       routesFilePath,
     };
@@ -70,15 +69,13 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   // add redirect entry path
   const redirectEntries: IGenerateResult[] = [];
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, finalEntry, shouldRedirectRunApp, runAppPath, routesFilePath } = parsedEntries[entryKey];
+    const { entryName, finalEntry, runAppPath, routesFilePath } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
-    if (shouldRedirectRunApp) {
-      redirectEntries.push({
-        entryPath: finalEntry,
-        runAppPath,
-        routesFilePath,
-      });
-    }
+    redirectEntries.push({
+      entryPath: finalEntry,
+      runAppPath,
+      routesFilePath,
+    });
     // get page paths for rule match
     matchStrs.push(formatPath(routesFilePath));
   });
