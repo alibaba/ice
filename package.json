@@ -18,8 +18,8 @@
     "version": "ts-node ./scripts/tag-version.ts && napi version -p packages/swc/npm -c packages/swc/package.json",
     "version:check": "ts-node ./scripts/version-check.ts",
     "publish": "npm run copy:swc && npm run generate:dts && ts-node ./scripts/publish-package.ts",
-    "publish:beta": "npm run copy:swc && && npm run generate:dts PUBLISH_TYPE=beta ts-node ./scripts/publishPackageWithDistTag.ts",
-    "publish:next": "npm run copy:swc && && npm run generate:dts PUBLISH_TYPE=next VERSION_PREFIX=rc ts-node ./scripts/publishPackageWithDistTag.ts",
+    "publish:beta": "npm run copy:swc && npm run generate:dts && PUBLISH_TYPE=beta ts-node ./scripts/publishPackageWithDistTag.ts",
+    "publish:next": "npm run copy:swc && npm run generate:dts && PUBLISH_TYPE=next VERSION_PREFIX=rc ts-node ./scripts/publishPackageWithDistTag.ts",
     "publish:stable": "npm run generate:dts && PUBLISH_TAG=release-1 ts-node ./scripts/publish-package.ts",
     "publish:stable-beta": "npm run generate:dts && PUBLISH_TAG=release-1 ts-node ./scripts/publish-beta-package.ts",
     "sync": "ts-node ./scripts/sync.ts",
@@ -74,7 +74,8 @@
     "simple-git": "^1.132.0",
     "ts-jest": "^26.0.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "@napi-rs/cli": "^1.1.0"
   },
   "dependencies": {
     "core-js": "^3.6.4"
