@@ -2,7 +2,8 @@
 
 ## 2.4.2
 
-- [fix] provide initial `pathname` with `location`. ([#4885](https://github.com/alibaba/ice/issues/4800))
+- [fix] provide initial `pathname` with `location`. ([#4885](https://github.com/alibaba/ice/issues/4885))
+- [fix] more elegant way to use `registerAppEnter` & `registerAppLeave`.
 
 ## 2.4.1
 
