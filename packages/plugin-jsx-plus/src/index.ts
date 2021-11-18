@@ -1,5 +1,4 @@
 import * as path from 'path';
-import jsxPlusPlugin from 'vite-plugin-jsx-plus';
 
 interface Json {
   [index: string]: unknown;
@@ -21,7 +20,7 @@ export default ({ context, onGetWebpackConfig, modifyUserConfig }) => {
   const { userConfig: { vite } } = context;
 
   if (vite) {
-    modifyUserConfig('vite.plugins', [jsxPlusPlugin()], { deepmerge: true });
+    modifyUserConfig('babelPlugins', babelPlugins, { deepmerge: true });
     return;
   }
 

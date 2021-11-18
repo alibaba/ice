@@ -32,10 +32,6 @@ module.exports = async (api) => {
   // modify default babel config when jsx runtime is enabled
   if (getValue('HAS_JSX_RUNTIME')) {
     modifyUserConfig('babelPresets', (userConfig.babelPresets || []).concat([['@babel/preset-react', { runtime: 'automatic'}]]));
-
-    if (userConfig.vite) {
-      modifyUserConfig('vite.esbuild', { jsxInject: 'import React from \'react\''}, { deepmerge: true });
-    }
   }
 
   // modify minify options

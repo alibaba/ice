@@ -5,7 +5,6 @@ import checkStoreExists from './utils/checkStoreExists';
 import { getAppStorePath } from './utils/getPath';
 import { getRouteFileType } from './utils/getFileType';
 import vitePluginPageRedirect from './vitePluginPageRedirect';
-import vitePluginImportRedirect from './vitePluginImportRedirect';
 
 const { name: pluginName } = require('../package.json');
 
@@ -80,13 +79,10 @@ export default async (api: any) => {
     routesPaths = [routes.routesPath];
   }
 
-  function getImportDeclarations() {
-    return api.getValue('importDeclarations');
-  }
   if (vite) {
     modifyUserConfig(
       'vite.plugins', 
-      [vitePluginPageRedirect(rootDir, routesPaths), vitePluginImportRedirect(getImportDeclarations)], 
+      [vitePluginPageRedirect(rootDir, routesPaths)],
       { deepmerge: true }
     );
   }
@@ -97,7 +93,7 @@ export default async (api: any) => {
         .rule('replace-router-path')
         // ensure that replace-router-path-loader is before babel-loader
         // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
-        .before('babel-loader')
+        .after('tsx')
         .test((filePath: string) => routesPaths.includes(filePath))
         .use('replace-router-path-loader')
         .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
