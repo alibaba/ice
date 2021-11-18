@@ -14,8 +14,8 @@ export default function formatRoutes(routes: IRouterConfig[], parentPath?: strin
     }
 
     if (item.children) {
-      routeParams.children = formatRoutes(item.children, item.path);
-      // Be cafeful that `children` takes priority!!!
+      routeParams.children = formatRoutes(item.children, routeParams.path || item.path);
+      // Be careful that `children` takes priority!!!
     } else if (item.component) {
       // copy by reference, for `component` is functional.
       const itemComponent = item.component as any;
