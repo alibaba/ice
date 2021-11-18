@@ -60,23 +60,25 @@ const module = ({
       return new Promise(resolve => {
         if (isInIcestark()) {
           if (localIcestarkType === 'normal') {
-            registerAppEnter(() => {
-              const mountNode = getMountNode();
+            // @ts-ignore remove this next time for https://github.com/ice-lab/icestark/pull/440
+            registerAppEnter((props) => {
+              const container = (props && props.container) || getMountNode();
               if (enterRegistration) {
-                enterRegistration(mountNode, App, resolve);
+                enterRegistration(container, App, resolve);
               } else {
-                ReactDOM.render(<App />, mountNode, () => {
+                ReactDOM.render(<App />, container, () => {
                   resolve(true);
                 });
               }
             });
             // make sure the unmount event is triggered
-            registerAppLeave(() => {
-              const mountNode = getMountNode();
+            // @ts-ignore remove this next time for https://github.com/ice-lab/icestark/pull/440
+            registerAppLeave((props) => {
+              const container = (props && props.container) || getMountNode();
               if (leaveRegistration) {
-                leaveRegistration(mountNode);
+                leaveRegistration(container);
               } else {
-                ReactDOM.unmountComponentAtNode(mountNode);
+                ReactDOM.unmountComponentAtNode(container);
               }
             });
           } else {
@@ -146,7 +148,7 @@ const module = ({
     };
 
     const frameworkRouter = (routes) => () => {
-      const [appPathname, setAppPathname] = useState('');
+      const [appPathname, setAppPathname] = useState(window.location.pathname);
       const [routeInfo, setRouteInfo] = useState({});
       const [appEnter, setAppEnter] = useState({});
       const [appLeave, setAppLeave] = useState({});
