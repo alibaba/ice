@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.6
+
+- [fix] formate `postcssOptions`
+
 ## 1.1.5
 
 - [fix] prevent minimize `.scss` by default.

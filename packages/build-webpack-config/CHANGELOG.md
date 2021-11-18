@@ -1,5 +1,9 @@
 # changelog
 
+## 1.0.4
+
+- [fix] lock postcss version for postcss-loader
+
 ## 1.0.3
 
 - [feat] add postcss-nested for css nesting rules

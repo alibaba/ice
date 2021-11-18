@@ -23,6 +23,9 @@ const configCSSRule = (config, style, loaders = []) => {
       config: false,
       // eslint-disable-next-line global-require
       ...(require('./postcss.config').default()),
+      // lock postcss version
+      // eslint-disable-next-line global-require
+      implementation: require('postcss'),
     }
   };
 
