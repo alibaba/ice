@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] error path pass to formatRoutes
+
 ## 2.0.2
 
 - [fix] never modified origin routes.
