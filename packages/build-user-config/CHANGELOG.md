@@ -2,7 +2,7 @@
 
 ## 1.1.6
 
-- [fix] formate `postcssOptions`
+- [fix] format `postcssOptions`
 
 ## 1.1.5
 
