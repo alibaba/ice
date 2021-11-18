@@ -148,7 +148,7 @@ const module = ({
     };
 
     const frameworkRouter = (routes) => () => {
-      const [appPathname, setAppPathname] = useState('');
+      const [appPathname, setAppPathname] = useState(window.location.pathname);
       const [routeInfo, setRouteInfo] = useState({});
       const [appEnter, setAppEnter] = useState({});
       const [appLeave, setAppLeave] = useState({});
