@@ -4,6 +4,7 @@
 
 - [fix] prevent minimize `.scss` by default.
 - [fix] Regexp for runtime folder
+- [fix] disable default file lint for hmr performance
 
 ## 1.1.4
 
