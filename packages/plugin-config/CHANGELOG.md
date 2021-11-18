@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] generic conflict with JSX
+
 ## 2.0.0
 
 - [feat] migrate runtime api

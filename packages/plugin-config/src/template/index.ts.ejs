@@ -12,7 +12,7 @@ interface IUserConfig {
   readonly [key: string]: any;
 }
 const config: Config = {
-  ...((<IUserConfig>userConfig).default || {}),
+  ...((userConfig as IUserConfig).default || {}),
   ...(userConfig[(globalThis as any).__app_mode__ || process.env.APP_MODE] || {}),
 };
 
