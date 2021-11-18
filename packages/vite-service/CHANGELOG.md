@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.3
+
+- [feat] support decorators-legacy as default parser
+
 ## 1.1.2
 
 - [feat] add lifecycle of `after.start.devServer`
