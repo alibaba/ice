@@ -2,7 +2,7 @@
 
 ## 2.0.3
 
-- [fix] error path pass to formatRoutes
+- [fix] nested router config
 
 ## 2.0.2
 
