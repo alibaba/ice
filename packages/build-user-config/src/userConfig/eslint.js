@@ -14,7 +14,7 @@ module.exports = (config, eslint, context, { log }) => {
     failOnError: true,
   };
 
-  if (!eslint) {
+  if (eslint === true) {
     enableESlint = true;
     // lint only changed files, skip lint on start
     eslintOptions.lintDirtyModulesOnly = true;
