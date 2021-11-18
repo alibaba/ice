@@ -176,7 +176,7 @@ export const wp2vite = (context: Context): InlineConfig => {
   };
   if (userConfig.eslint !== false) {
     let eslintOptions = { ignoreInitial: false };
-    if (!userConfig.eslint) {
+    if (userConfig.eslint === true) {
       // lint only changed files, skip lint on start
       eslintOptions.ignoreInitial = true;
     } else {
