@@ -3,7 +3,9 @@ import { createElement, ComponentType, Component, RaxElement } from 'rax';
 
 interface IRoute {
   source: string;
-  component: ComponentType,
+  component: () => ComponentType & {
+    __pageConfig: IRoute;
+  },
   pageSource: string;
 }
 
@@ -33,7 +35,6 @@ function miniappRenderer(
       path: pageSource || source,
       render() {
         // Add page config to page component
-        // @ts-ignore
         const Page = component();
         Page.__pageConfig = route;
         const appInstance = mount(getRenderApp(Page, runtime, {
