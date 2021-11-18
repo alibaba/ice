@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.2
+
+- [fix] more elegant way to use `registerAppEnter` & `registerAppLeave`.
+
 ## 2.4.1
 
 - [chore] slove typescript errors when enabling `tsChecker: true`. ([#4800](https://github.com/alibaba/ice/issues/4800))
