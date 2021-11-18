@@ -22,7 +22,7 @@
     "postinstall": "node ./bin/copy-dts-to-ice-temp.js"
   },
   "dependencies": {
-    "@builder/pack": "0.4.5-beta.1",
+    "@builder/pack": "^0.4.0",
     "build-scripts": "^1.1.0",
     "build-plugin-app-core": "2.0.3",
     "build-plugin-helmet": "1.0.2",

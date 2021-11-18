@@ -1192,6 +1192,17 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
+"@builder/pack@^0.4.0":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.5.tgz#356cf4eea6ac4207f5665dc09f3d9b52f9411166"
+  integrity sha512-pWm5zfFTMkSODPNbkTKMwi6m/hco1aKHQxE9WMOJ990gVjLYLi+EjEtbjfAc/i5z4tWtd3ZdydIphg8kCdXQRQ==
+  dependencies:
+    ansi-html "^0.0.7"
+    core-js-pure "^3.8.1"
+    error-stack-parser "^2.0.6"
+    html-entities "^2.1.0"
+    jest-worker "27.0.6"
+
 "@builder/swc-darwin-arm64@^0.1.0":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@builder/swc-darwin-arm64/-/swc-darwin-arm64-0.1.2.tgz#c6c11672e882d405d922aef0b8d4df99f9c1dd19"
