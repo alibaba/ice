@@ -1,19 +1,27 @@
 import formatRoutes from '../src/runtime/formatRoutes';
 import { IRouterConfig } from '../src/types';
 
-const mockComponent = () => {};
+let mockComponentA = null;
+let mockComponentB = null;
+let mockComponentC = null;
 
 describe('format-routes', () => {
+  beforeEach(() => {
+    mockComponentA = () => {}
+    mockComponentB = () => {}
+    mockComponentC = () => {}
+  });
+
   test('one level', () => {
     const routes: IRouterConfig[] = [
       {
         path: '/',
         exact: true,
-        component: mockComponent as any,
+        component: mockComponentA as any,
       },
       {
         path: '/test',
-        component: mockComponent as any,
+        component: mockComponentB as any,
       },
     ];
     const formatedRoutes = formatRoutes(routes);
@@ -23,11 +31,11 @@ describe('format-routes', () => {
     expect(formatedRoutes[1].path).toBe('/test');
 
     expect((formatedRoutes[0].component as any).pageConfig).toEqual({
-      componentName: 'mockComponent'
+      componentName: 'mockComponentA'
     });
 
-    expect((formatedRoutes[0].component as any).pageConfig).toEqual({
-      componentName: 'mockComponent'
+    expect((formatedRoutes[1].component as any).pageConfig).toEqual({
+      componentName: 'mockComponentB'
     });
 
   })
@@ -37,7 +45,7 @@ describe('format-routes', () => {
       {
         path: '/',
         exact: true,
-        component: mockComponent as any,
+        component: mockComponentA as any,
       },
       {
         path: '/test',
@@ -47,12 +55,12 @@ describe('format-routes', () => {
             path: '/plan',
             children: [{
               path: '/a',
-              component: mockComponent as any,
+              component: mockComponentB as any,
             }]
           },
           {
             path: '/',
-            component: mockComponent as any,
+            component: mockComponentC as any,
           },
         ],
       },
@@ -67,7 +75,7 @@ describe('format-routes', () => {
 
     expect(formatedRoutes[1].children[0].children[0].path).toBe('/test/plan/a');
     expect((formatedRoutes[1].children[0].children[0].component as any).pageConfig).toEqual({
-      componentName: 'mockComponent'
+      componentName: 'mockComponentB'
     });
 
     expect(formatedRoutes[1].children[1].children).toBeUndefined();
@@ -78,28 +86,29 @@ describe('format-routes', () => {
     const routes: IRouterConfig[] = [
       {
         path: '/test',
-        component: mockComponent as any,
+        component: mockComponentA as any,
         children: [
           {
             exact: true,
             path: '/plan',
-            component: mockComponent as any,
+            component: mockComponentB as any,
           },
           {
             path: '/',
-            component: mockComponent as any,
+            component: mockComponentC as any,
           },
         ],
       },
     ];
+
     const formatedRoutes = formatRoutes(routes);
 
     expect((formatedRoutes[0].component as any).pageConfig).toBeUndefined();
     expect((formatedRoutes[0].children[0].component as any).pageConfig).toEqual({
-      componentName: 'mockComponent'
+      componentName: 'mockComponentB'
     });
     expect((formatedRoutes[0].children[1].component as any).pageConfig).toEqual({
-      componentName: 'mockComponent'
+      componentName: 'mockComponentC'
     });
   })
 })
