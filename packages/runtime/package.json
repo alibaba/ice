@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "0.1.0",
+  "version": "0.1.1-beta.0",
   "description": "runtime dependencies for plugin runtime",
   "main": "lib/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.4"
+    "axios": "^0.21.4",
+    "path-to-regexp": "^1.8.0"
   }
 }
