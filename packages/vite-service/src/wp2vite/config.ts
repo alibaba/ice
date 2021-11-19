@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import { isObject, isArray, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
@@ -80,6 +81,26 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
   };
 };
 
+const mapWithBrowserField = (packageName: string, resolvePath: string): Record<string, string>=> {
+  const aliasMap = {};
+  // check field `package.exports`, make sure `${packageName}/package.json` can be resolved
+  try {
+    const packagePath = require.resolve(`${resolvePath}/package.json`);
+    const data = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+    
+    if (isObject(data.browser)) {
+      Object.keys(data.browser).forEach((requirePath) => {
+        const pathExtname = path.extname(requirePath);
+        const aliasKey = path.join(packageName, pathExtname ? requirePath.replace(pathExtname, '') : requirePath);
+        aliasMap[aliasKey] = path.join(resolvePath, data.browser[requirePath]);
+      });
+    }
+  } catch (err) {
+    console.error(`[Error] fail to resolve alias {${packageName}: ${resolvePath}}`, err);
+  }
+  return aliasMap;
+};
+
 /**
  * 常用简单配置转换
  */
@@ -95,10 +116,19 @@ const configMap: ConfigMap = {
       const { rootDir } = ctx;
       // webpack/hot is not necessary in mode vite
       const blackList = ['webpack/hot'];
+      const packagesWithBrowserField = ['react-dom'];
       const data: Record<string, any> = Object.keys(value).reduce(
         (acc, key) => {
-          if (!blackList.some((word) => value[key]?.includes(word)))
+          if (!blackList.some((word) => value[key]?.includes(word))) {
+            // TODO: if vite ssr disable resolve path with browser field
+            if (packagesWithBrowserField.includes(key)) {
+              const aliasMap = mapWithBrowserField(key, value[key]);
+              Object.keys(aliasMap).forEach((aliasKey) => {
+                acc[aliasKey] = aliasMap[aliasKey];
+              });
+            }
             acc[key] = value[key];
+          }
           return acc;
         },
         {}
