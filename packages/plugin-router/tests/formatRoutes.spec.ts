@@ -26,7 +26,6 @@ describe('format-routes', () => {
     ];
     const formatedRoutes = formatRoutes(routes);
 
-
     expect(formatedRoutes[0].path).toBe('/');
     expect(formatedRoutes[1].path).toBe('/test');
 
