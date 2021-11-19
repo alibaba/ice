@@ -81,7 +81,7 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
   };
 };
 
-const mapWithBrowserField = (packageName: string, resolvePath: string): Record<string, string>=> {
+const mapWithBrowserField = (packageName: string, resolvePath: string): Record<string, string> => {
   const aliasMap = {};
   // check field `package.exports`, make sure `${packageName}/package.json` can be resolved
   try {
