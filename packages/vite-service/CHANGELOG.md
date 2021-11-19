@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.4
+
+- [fix] resolve path with browser field when alias with absolute path
+
 ## 1.1.3
 
 - [feat] support decorators-legacy as default parser
