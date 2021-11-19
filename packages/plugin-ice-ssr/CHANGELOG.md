@@ -1,8 +1,13 @@
 # Changelog
 
+## 3.0.3
+
+- [fix] route path value may be undefined
+- [fix] `path-to-regexp` dependency may not be correct for the dependencies promotion
+
 ## 3.0.2
 
-- [fix] ssr can't work when using promissory routes
+- [fix] ssr can't work when using file-system routes
 
 ## 3.0.1
 
