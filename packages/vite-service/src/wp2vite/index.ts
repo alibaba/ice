@@ -121,6 +121,7 @@ const getPluginReact = (context: Context): PluginOption[] => {
       exclude: [/node_modules/, /[\\/]\.ice[\\/]/],
       fastRefresh,
       jsxRuntime: jsxRuntimeConfig ? 'automatic' : 'classic',
+      parserPlugins: ['decorators-legacy'],
       babel: {
         plugins: babelPlugins,
         // 仅用户配置的 babelPresets 生效
