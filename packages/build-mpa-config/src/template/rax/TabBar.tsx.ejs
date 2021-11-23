@@ -17,8 +17,8 @@ export default class TabBarWrapper extends Component {
     }
   }
 
-  if (!shouldRenderTabBar) return null;
   render() {
+    if (!shouldRenderTabBar) return null;
     return <Fragment>
       <% if (tabBarPath.indexOf('src') > -1) {%>
         <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
