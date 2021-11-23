@@ -15,5 +15,6 @@
   "dependencies": {
     "axios": "^0.21.4",
     "path-to-regexp": "^1.8.0"
-  }
+  },
+  "sideEffects": false
 }
