@@ -24,6 +24,7 @@ export default [
     component: Dashboard
   },
   {
+    path: '*',
     component: NotFound,
   }
 ];
