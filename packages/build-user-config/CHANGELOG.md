@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.7
+
+- [fix] undefined `postcssOptions.plugins`
+
 ## 1.1.6
 
 - [fix] format `postcssOptions`
