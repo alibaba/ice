@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-ssr",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "ssr plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -32,7 +32,7 @@
     "fs-extra": "^8.1.0",
     "html-minifier": "^4.0.0",
     "parseurl": "^1.3.3",
-    "path-to-regexp": "^1.7.0",
+    "@ice/runtime": "^0.1.0",
     "query-string": "^6.13.7"
   }
 }
