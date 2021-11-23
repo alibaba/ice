@@ -76,7 +76,10 @@ module.exports = (config, postcssOptions) => {
       }
     });
     // remove k-v plugins options
-    delete postcssOptions.plugins;
+    const originalPostcssOptions = {
+      ...postcssOptions,
+    };
+    delete originalPostcssOptions.plugins;
     // modify css rules
     styleRules.forEach((ruleName) => {
       if (checkPostcssLoader(config, ruleName)) {
@@ -87,7 +90,7 @@ module.exports = (config, postcssOptions) => {
             ...finalPostcssOptions,
             postcssOptions: {
               ...finalPostcssOptions.postcssOptions,
-              ...postcssOptions,
+              ...originalPostcssOptions,
               plugins: postcssPlugins,
             }
           };
