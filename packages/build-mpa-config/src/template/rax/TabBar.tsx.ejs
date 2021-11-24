@@ -16,8 +16,10 @@ export default class TabBarWrapper extends Component {
       (window as any).location.href = `./${pageName}.html`;
     }
   }
+
   render() {
-    return <Fragment x-if={shouldRenderTabBar}>
+    if (!shouldRenderTabBar) return null;
+    return <Fragment>
       <% if (tabBarPath.indexOf('src') > -1) {%>
         <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
           <TabBar config={<%- JSON.stringify(tabBarConfig) %>} currentPageName={currentPageName} />
