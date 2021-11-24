@@ -17,7 +17,7 @@ function miniappRenderer(
   initAppLifeCycles();
 
   const { app = {} } = appConfig;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = app;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary, rootId = 'root' } = app;
 
   ErrorBoundary = errorBoundary ? ErrorBoundary : null;
   const onError = onErrorBoundaryHander || onErrorBoundaryHandler;
@@ -37,13 +37,16 @@ function miniappRenderer(
         // Add page config to page component
         const Page = component();
         Page.__pageConfig = route;
+        const rootEl = document.createElement('div');
+        rootEl.setAttribute('id', rootId);
         const appInstance = mount(getRenderApp(Page, runtime, {
           ErrorBoundary,
           ErrorBoundaryFallback,
           onError,
-        }), document.body);
+        }), rootEl);
 
-        (document as any).__unmount = unmount(appInstance, document.body);
+        document.body.appendChild(rootEl);
+        (document as any).__unmount = unmount(appInstance, rootEl);
       },
       setDocument(value) {
         // eslint-disable-next-line no-global-assign
