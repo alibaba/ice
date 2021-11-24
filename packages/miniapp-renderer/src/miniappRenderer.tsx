@@ -37,6 +37,8 @@ function miniappRenderer(
         // Add page config to page component
         const Page = component();
         Page.__pageConfig = route;
+        // Deprecate in rax-app v4.0
+        // miniapp root element is the root node, which avoid developer render extra element to document.body, it will override the page component
         const rootEl = document.createElement('div');
         rootEl.setAttribute('id', rootId);
         const appInstance = mount(getRenderApp(Page, runtime, {
