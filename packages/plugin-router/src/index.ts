@@ -62,7 +62,9 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     config.resolve.alias.set(routerName, path.dirname(packagePath));
 
     // config historyApiFallback for router type browser
-    config.devServer.set('historyApiFallback', true);
+    if (!config.devServer.get('historyApiFallback')) {
+      config.devServer.set('historyApiFallback', true);
+    }
   });
 
   // copy types
