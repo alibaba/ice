@@ -3,7 +3,6 @@
   "references": [
     { "path": "packages/webpack-plugin-query-loader"},
     { "path": "packages/runtime" },
-    { "path": "packages/swc" },
     { "path": "packages/build-app-templates" },
     { "path": "packages/build-app-helpers" },
     { "path": "packages/plugin-fusion" },
