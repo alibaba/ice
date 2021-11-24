@@ -20,7 +20,7 @@ function decodeParam(val) {
 function matchPath(req, mockConfig) {
   const { method: reqMethod } = req;
   // compatible with http server
-  const reqPath = req.path || req.url;
+  const reqPath = req?._parsedUrl?.pathname || req.path || req.url;
   for (let m = 0; m < mockConfig.length; m += 1) {
     const mock = mockConfig[m];
     const { path: mockPath, method: mockMethod } = mock;
