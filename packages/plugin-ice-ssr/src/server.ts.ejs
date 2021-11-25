@@ -1,6 +1,6 @@
 import '@/app';
 import { join } from 'path';
-import * as pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from '@ice/runtime';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -57,7 +57,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   }
   const buildConfig = { loadableStatsPath, publicPath };
 
-  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+  const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
 
   // load module to run before createApp ready
   loadStaticModules(appConfig);

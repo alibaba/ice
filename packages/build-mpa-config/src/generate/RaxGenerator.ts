@@ -39,7 +39,7 @@ export default class RaxGenerator extends Base {
       if (content.tabBar) {
         this.runAppRenderData.tabBarPath = content.tabBar.custom ?
           relative(this.entryFolder, path.join(this.rootDir, 'src/components/CustomTabBar/index'))
-          : relative(this.entryFolder, path.join(this.targetDir, 'plugins/rax-app/TabBar'));
+          : relative(this.entryFolder, path.join(this.targetDir, 'plugins/app/TabBar'));
       }
     }
   }

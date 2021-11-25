@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.8
+
+- [fix] re-calculate webpack cache id when config `disableRuntime`
+
 ## 1.1.7
 
 - [fix] undefined `postcssOptions.plugins`

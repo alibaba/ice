@@ -1,4 +1,5 @@
 const path = require('path');
+const hash = require('object-hash');
 
 // built-in webpack 5 abilities
 module.exports = (config, api) => {
@@ -6,7 +7,7 @@ module.exports = (config, api) => {
   const { userConfig, rootDir, webpack } = context;
   // filesystem cache
   if (!process.env.DISABLE_FS_CACHE) {
-    const version = getValue('WEBPACK_CACHE_ID');
+    const version = getValue('WEBPACK_CACHE_ID') || hash(userConfig);
     const cacheConfig = {
       cache: {
         type: 'filesystem',

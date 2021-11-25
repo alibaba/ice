@@ -5044,9 +5044,9 @@ build-scripts-config@^3.0.0:
     webpack-simple-progress-plugin "0.0.4"
 
 build-scripts@^1.0.0, build-scripts@^1.0.1, build-scripts@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.2.0.tgz#9be18aa73d6a5f5111fe81043038aa75e52006a8"
-  integrity sha512-OkSCr4iIre4KcN8WOO46uY+mvZjmNUuonim3niMDY8jf4L117h23JATm/m0xLFxe3LJ2KXCscAKK6VKbU4I/ow==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.2.1.tgz#626bf4343c425124320bea0189bfdafa6501280e"
+  integrity sha512-qumrwcAO1SwhN23Nn98gkHCmZw+PZ4nGjQdBp2vfQSq8/rElqXBP4SlgfbX7RP0ZfRZdUXeUgfRegco48XnJ6g==
   dependencies:
     address "^1.1.0"
     camelcase "^5.3.1"
@@ -12935,7 +12935,7 @@ path-to-regexp@0.1.7:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
 
-path-to-regexp@^1.7.0:
+path-to-regexp@^1.7.0, path-to-regexp@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.8.0.tgz#887b3ba9d84393e87a0a0b9f4cb756198b53548a"
   integrity sha512-n43JRhlUKUAlibEJhPeir1ncUID16QnEjNpwzNdO3Lm4ywrBpBZ5oLD0I6br9evr1Y9JTqwRtAh7JLoOzAQdVA==
