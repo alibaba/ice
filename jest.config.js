@@ -9,30 +9,45 @@ module.exports = {
   moduleNameMapper,
   // 'testRunner': 'jest-circus/runner',
   'coverageDirectory': './coverage/',
-  'testEnvironment': 'node',
   'collectCoverage': true,
   'collectCoverageFrom': ['packages/*/lib/*.{js,jsx}'],
   'coveragePathIgnorePatterns': [
     '<rootDir>/node_modules/'
   ],
-  'transform': {
-    '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.tsx?$': 'ts-jest'
-  },
-  'roots': [
-    '<rootDir>/packages',
-    '<rootDir>/test',
-  ],
-  'testPathIgnorePatterns': [
-    '/node_modules/',
-    '/lib/',
-    'create-cli-utils/',
-  ],
   // copy from jest config
-  'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
-  'globals': {
-    'ts-jest': {
-      'tsconfig': 'tsconfig.settings.json'
-    }
-  }
+  projects: [
+    {
+        testMatch: ['<rootDir>/packages/plugin-router/tests/**/*.(spec|test).*'],
+        displayName: { name: 'PluginRouter', color: 'cyan' },
+        testEnvironment: 'node',
+        transform: {
+          '^.+\\.jsx?$': 'babel-jest',
+          '^.+\\.tsx?$': 'ts-jest'
+        },
+        globals: {
+            'ts-jest': {
+                tsconfig: 'tsconfig.settings.json',
+            },
+        },
+    },
+    {
+        'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
+        displayName: { name: 'Others', color: 'blue' },
+        testEnvironment: 'node',
+        transform: {
+          '^.+\\.jsx?$': 'babel-jest',
+          '^.+\\.tsx?$': 'ts-jest'
+        },
+        'roots': [
+          '<rootDir>/packages',
+          '<rootDir>/test',
+        ],
+        'testPathIgnorePatterns': [
+          '/node_modules/',
+          '/lib/',
+          'create-cli-utils/',
+          'plugin-router/'
+        ],
+    },
+],
 };
