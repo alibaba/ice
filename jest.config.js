@@ -15,26 +15,26 @@ module.exports = {
     '<rootDir>/node_modules/'
   ],
   // copy from jest config
-  projects: [
+  'projects': [
     {
-        testMatch: ['<rootDir>/packages/plugin-router/tests/**/*.(spec|test).*'],
-        displayName: { name: 'PluginRouter', color: 'cyan' },
-        testEnvironment: 'node',
-        transform: {
+        'testMatch': ['<rootDir>/packages/plugin-router/tests/**/*.(spec|test).*'],
+        'displayName': { 'name': 'PluginRouter', 'color': 'cyan' },
+        'testEnvironment': 'node',
+        'transform': {
           '^.+\\.jsx?$': 'babel-jest',
           '^.+\\.tsx?$': 'ts-jest'
         },
-        globals: {
+        'globals': {
             'ts-jest': {
-                tsconfig: 'tsconfig.settings.json',
+                'tsconfig': '<rootDir>/packages/plugin-router/tsconfig.json',
             },
         },
     },
     {
         'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
-        displayName: { name: 'Others', color: 'blue' },
-        testEnvironment: 'node',
-        transform: {
+        'displayName': { 'name': 'Others', 'color': 'blue' },
+        'testEnvironment': 'node',
+        'transform': {
           '^.+\\.jsx?$': 'babel-jest',
           '^.+\\.tsx?$': 'ts-jest'
         },
