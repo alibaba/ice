@@ -31,6 +31,9 @@ module.exports = {
     'create-cli-utils/'
   ],
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
+  // For ts-jest use rootDir's tsconfig.json, while unable to resolve references.
+  // The following strategy maybe not the best, but it works.
+  // https://github.com/kulshekhar/ts-jest/issues/1648
   'globals': {
     'ts-jest': {
         'tsconfig': 'tsconfig.settings.json',

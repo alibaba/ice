@@ -94,7 +94,7 @@ body {
   src: url('/assets/34032f039a2b3b449235ba9d307409ec.eot');
   src: url('/assets/34032f039a2b3b449235ba9d307409ec.eot?#iefix') format('embedded-opentype'),
     url('/assets/f7efc431f760b9e8a6125054c5f4a502.woff') format('woff'),
-    url('/assets/3a70f449494ab666efaf24b72d563431.ttf') format('truetype'), url('//at.alicdn.com/t/font_377048_kjcjjyweu4sra4i.svg#iconfont')
+    url('/assets/3a70f449494ab666efaf24b72d563431.ttf') format('truetype'), url('/assets/b1b72dfa538406f3897c40ab412b4183.svg#iconfont')
       format('svg');
 }
 ```
