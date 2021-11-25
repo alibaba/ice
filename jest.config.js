@@ -15,39 +15,25 @@ module.exports = {
     '<rootDir>/node_modules/'
   ],
   // copy from jest config
-  'projects': [
-    {
-        'testMatch': ['<rootDir>/packages/plugin-router/tests/**/*.(spec|test).*'],
-        'displayName': { 'name': 'PluginRouter', 'color': 'cyan' },
-        'testEnvironment': 'node',
-        'transform': {
-          '^.+\\.jsx?$': 'babel-jest',
-          '^.+\\.tsx?$': 'ts-jest'
-        },
-        'globals': {
-            'ts-jest': {
-                'tsconfig': '<rootDir>/packages/plugin-router/tsconfig.json',
-            },
-        },
+
+  'testEnvironment': 'node',
+  'transform': {
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.tsx?$': 'ts-jest'
+  },
+  'roots': [
+    '<rootDir>/packages',
+    '<rootDir>/test',
+  ],
+  'testPathIgnorePatterns': [
+    '/node_modules/',
+    '/lib/',
+    'create-cli-utils/'
+  ],
+  'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
+  'globals': {
+    'ts-jest': {
+        'tsconfig': 'tsconfig.settings.json',
     },
-    {
-        'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
-        'displayName': { 'name': 'Others', 'color': 'blue' },
-        'testEnvironment': 'node',
-        'transform': {
-          '^.+\\.jsx?$': 'babel-jest',
-          '^.+\\.tsx?$': 'ts-jest'
-        },
-        'roots': [
-          '<rootDir>/packages',
-          '<rootDir>/test',
-        ],
-        'testPathIgnorePatterns': [
-          '/node_modules/',
-          '/lib/',
-          'create-cli-utils/',
-          'plugin-router/'
-        ],
-    },
-],
+  },
 };

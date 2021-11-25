@@ -1,5 +1,5 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ExtractCssAssetsPlugin = require('../../../src/cjs');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+const ExtractCssAssetsPlugin = require('../../../src/index');
 
 module.exports = {
   entry: './index',
