@@ -1,5 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ExtractCssAssetsPlugin = require('../../../src/cjs');
+const ExtractCssAssetsPlugin = require('../../../src/index');
 
 module.exports = {
   entry: './index',
@@ -31,7 +31,7 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
-    new ExtractCssAssetsPlugin({
+    new ExtractCssAssetsPlugin.default({
       outputPath: 'cssassets/',
     }),
   ],
