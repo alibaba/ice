@@ -9,7 +9,7 @@ export default async function ssgRender(options) {
   const { htmlTemplate } = options;
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { loadableStatsPath };
-  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+  const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
   const flatRoutes = await getFlatRoutes(routes || []);
 
