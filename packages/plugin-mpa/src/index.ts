@@ -10,9 +10,7 @@ interface ITemplate {
 interface IMpaConfig {
   template?: ITemplate;
   openPage?: string;
-  rewrites?: {
-    [key: string]: string;
-  };
+  rewrites?: {[key: string]: string} | boolean;
 }
 
 const plugin: IPlugin = (api) => {
@@ -88,9 +86,9 @@ const plugin: IPlugin = (api) => {
     let finalMPAEntries = {};
     if (parsedEntries) {
       Object.keys(parsedEntries).forEach((entryKey) => {
-        const { finalEntry, shouldRedirectRunApp, runAppPath } = parsedEntries[entryKey];
+        const { finalEntry, runAppPath } = parsedEntries[entryKey];
         finalMPAEntries[entryKey] = finalEntry;
-        if (shouldRedirectRunApp) {
+        if (runAppPath) {
           redirectEntries.push({
             entryPath: finalEntry,
             runAppPath,
@@ -102,27 +100,31 @@ const plugin: IPlugin = (api) => {
     }
     // modify entry
     modifyUserConfig('entry', finalMPAEntries);
-    applyMethod('addImportDeclaration', {
-      multipleSource: {
-        runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
-          filename: entryPath,
-          value: runAppPath,
-          type: 'normal',
-        })),
-      },
-    });
+    if (redirectEntries.length > 0) {
+      applyMethod('addImportDeclaration', {
+        multipleSource: {
+          runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
+            filename: entryPath,
+            value: runAppPath,
+            type: 'normal',
+          })),
+        },
+      });
+    }
     // set page template
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
-
-      config.devServer.historyApiFallback({
-        rewrites: Object.keys(entries).map((pageName) => {
-          return {
-            from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
-            to: `/${pageName}.html`,
-          };
-        })
-      });
+      // disable mpa rewrite rules when config mpa.rewrites as false
+      if ((userConfig.mpa as IMpaConfig)?.rewrites !== false) {
+        config.devServer.historyApiFallback({
+          rewrites: Object.keys(entries).map((pageName) => {
+            return {
+              from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
+              to: `/${pageName}.html`,
+            };
+          })
+        });
+      }
     });
   }
 };

@@ -36,6 +36,14 @@ export default (opts: IOpts = {}) => {
     // Stage 3
     '@builder/pack/deps/@babel/plugin-syntax-dynamic-import',
     '@builder/pack/deps/@babel/plugin-syntax-import-meta',
+    // Note:
+    // 'loose' mode configuration must be the same for
+    // - @babel/plugin-proposal-class-properties
+    // - @babel/plugin-proposal-private-methods
+    // - @babel/plugin-proposal-private-property-in-object
+    ['@builder/pack/deps/@babel/plugin-proposal-class-properties', { loose: true }],
+    ['@builder/pack/deps/@babel/plugin-proposal-private-methods', { loose: true }],
+    ['@builder/pack/deps/@babel/plugin-proposal-private-property-in-object', { loose: true }],
     '@builder/pack/deps/@babel/plugin-proposal-json-strings',
   ];
 

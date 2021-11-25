@@ -16,24 +16,33 @@ module.exports = (config, postcssOptions) => {
         if (builtInOptions.config && builtInOptions.config.path) {
           try {
             const postcssFile = `${optionConfig.path}/defaultPostcssConfig`;
-            // eslint-disable-next-line
-            finalPostcssOptions = (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || {};
+            finalPostcssOptions = {
+              // eslint-disable-next-line
+              postcssOptions: (optionConfig.ctx ? require(postcssFile)(optionConfig.ctx) : require(postcssFile)) || {}
+            };
           } catch(err) {
             console.log('[Error] fail to load default postcss config');
           }
         } else {
           // compatible with rax config
-          finalPostcssOptions = builtInOptions || { plugins: []};
+          finalPostcssOptions = builtInOptions || {
+            postcssOptions: {
+              plugins: []
+            }
+          };
         }
       }
     }
-    if (!finalPostcssOptions.plugins) {
+    if (!finalPostcssOptions.postcssOptions) {
       // set default plugin value
-      finalPostcssOptions.plugins = [];
+      finalPostcssOptions.postcssOptions = {
+        plugins: [],
+      };
     }
 
     // merge plugins
-    const { plugins } = finalPostcssOptions;
+    const { plugins = [] } = finalPostcssOptions.postcssOptions;
+    const finalPlugins = [...plugins];
     Object.keys(postcssOptions.plugins || {}).forEach((pluginName) => {
       let pluginOptions = {};
       const targetIndex = plugins.findIndex((pluginConfig) => {
@@ -47,17 +56,17 @@ module.exports = (config, postcssOptions) => {
       if (targetIndex > -1) {
         if (options === false) {
           // delete builtIn plugin
-          finalPostcssOptions.plugins.splice(targetIndex, 1);
+          finalPlugins.splice(targetIndex, 1);
         } else {
           // shallow merge for options
           const mergedOptions = {...pluginOptions, ...options};
-          finalPostcssOptions.plugins.splice(targetIndex, 1, [pluginName, mergedOptions]);
+          finalPlugins.splice(targetIndex, 1, [pluginName, mergedOptions]);
         }
       } else {
-        finalPostcssOptions.plugins.push([pluginName, options]);
+        finalPlugins.push([pluginName, options]);
       }
     });
-    const postcssPlugins = finalPostcssOptions.plugins.map((pluginInfo) => {
+    const postcssPlugins = finalPlugins.map((pluginInfo) => {
       const [name, options] = Array.isArray(pluginInfo) ? pluginInfo : [pluginInfo];
       if (typeof name === 'string') {
         // eslint-disable-next-line
@@ -66,6 +75,11 @@ module.exports = (config, postcssOptions) => {
         return pluginInfo;
       }
     });
+    // remove k-v plugins options
+    const originalPostcssOptions = {
+      ...postcssOptions,
+    };
+    delete originalPostcssOptions.plugins;
     // modify css rules
     styleRules.forEach((ruleName) => {
       if (checkPostcssLoader(config, ruleName)) {
@@ -73,9 +87,10 @@ module.exports = (config, postcssOptions) => {
           // merge postcss-loader options
           return {
             ...restLoaderOptions,
+            ...finalPostcssOptions,
             postcssOptions: {
-              ...postcssOptions,
-              ...finalPostcssOptions,
+              ...finalPostcssOptions.postcssOptions,
+              ...originalPostcssOptions,
               plugins: postcssPlugins,
             }
           };

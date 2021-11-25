@@ -29,7 +29,7 @@ export default function Home(props) {
   return (
     <>
       <img src={svg} alt="logo"/>
-      <h2>Home Page...{props.count}</h2>
+      <h2 className="home-title">Home Page...{props.count}</h2>
       <Link to="/about">About</Link><br />
       <Link to="/dashboard">Dashboard</Link>
     </>

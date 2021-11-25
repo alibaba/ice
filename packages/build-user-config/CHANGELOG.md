@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.1.8
+
+- [fix] re-calculate webpack cache id when config `disableRuntime`
+
+## 1.1.7
+
+- [fix] undefined `postcssOptions.plugins`
+
+## 1.1.6
+
+- [fix] format `postcssOptions`
+
+## 1.1.5
+
+- [fix] prevent minimize `.scss` by default.
+- [fix] Regexp for runtime folder
+- [fix] disable default file lint for hmr performance
+
 ## 1.1.4
 
 - [fix] handle unexpected merge with `devServer.allowedHosts`.
