@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.5
+
+- fix: `TabBar` resolve path
+- chore: remove `x-if` in `TabBar`
+
 ## 4.0.4
 
 - fix: every mpa page should redirect runApp file path

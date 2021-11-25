@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.4
+
+- [fix] compatible with special charts in html content
+
 ## 3.0.3
 
 - [fix] route path value may be undefined

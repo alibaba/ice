@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- [fix] support config `devSever.historyApiFallback`
+
 ## 2.0.3
 
 - [fix] nested router config

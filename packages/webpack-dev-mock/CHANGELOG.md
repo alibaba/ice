@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+- [fix] match the correct pathname of request
+
 ## 1.3.1
 
 - [fix] update dependencies
