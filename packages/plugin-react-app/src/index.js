@@ -10,8 +10,8 @@ const remoteRuntime = require('./userConfig/remoteRuntime').default;
 const getInvalidMessage = require('./validateViteConfig').default;
 
 module.exports = async (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log } = api;
-  const { command, rootDir, userConfig, originalUserConfig } = context;
+  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log, onHook } = api;
+  const { command, commandArgs, rootDir, userConfig, originalUserConfig } = context;
   const mode = command === 'start' ? 'development' : 'production';
 
   const invalidMsg = getInvalidMessage(originalUserConfig);
@@ -23,8 +23,14 @@ module.exports = async (api) => {
     // transform vitePlugins to vite.plugins
     modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
   }
+  
   // register cli option
-  applyCliOption(api);
+  applyCliOption(api, { customOptionConfig: {
+    'build-speed': {
+      module: false,
+      commands: ['start', 'build'],
+    }
+  }});
 
   // register user config
   applyUserConfig(api, { customConfigs: getCustomConfigs(userConfig) });
@@ -66,5 +72,31 @@ module.exports = async (api) => {
 
   if (userConfig.remoteRuntime) {
     await remoteRuntime(api, userConfig.remoteRuntime);
+  }
+
+  if (commandArgs.buildSpeed) {
+    // eslint-disable-next-line global-require
+    const SpeedMeasurePlugin = require('@builder/pack/deps/speed-measure-webpack-plugin');
+    const smp = new SpeedMeasurePlugin({
+      // https://github.com/stephencookdev/speed-measure-webpack-plugin/issues/167
+      // ignore plugins with do not work properly with speed-measure-webpack-plugin
+      ignorePlugins: ['MiniCssExtractPlugin'],
+      loaderTopFiles: 10,
+    });
+
+    onHook(`before.${command}.load`, ({ webpackConfig: configArr }) => {
+      configArr.forEach((item) => {
+        const origConfig = item.chainConfig;
+        const wrappedConfig = smp.wrap(origConfig.toConfig());
+        item.chainConfig = new Proxy(origConfig, {
+          get(target, property) {
+            if (property === 'toConfig') {
+              return () => wrappedConfig;
+            }
+            return target[property];
+          },
+        });
+      });
+    });
   }
 };
