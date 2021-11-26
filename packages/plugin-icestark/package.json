@@ -23,7 +23,7 @@
     "cheerio": "^1.0.0-rc.10",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
-    "vite-plugin-index-html": "^0.1.3"
+    "vite-plugin-index-html": "^2.0.0"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
