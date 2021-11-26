@@ -5065,6 +5065,28 @@ build-scripts@^1.0.0, build-scripts@^1.0.1, build-scripts@^1.1.0:
     semver "^7.3.2"
     yargs-parser "^14.0.0"
 
+build-scripts@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.alibaba-inc.com/build-scripts/download/build-scripts-1.2.1.tgz#626bf4343c425124320bea0189bfdafa6501280e"
+  integrity sha1-Ymv0NDxCUSQyC+oBib/a+mUBKA4=
+  dependencies:
+    address "^1.1.0"
+    camelcase "^5.3.1"
+    chalk "^2.4.1"
+    chokidar "^3.3.1"
+    commander "^2.19.0"
+    deepmerge "^4.0.0"
+    detect-port "^1.3.0"
+    esbuild "^0.13.2"
+    fast-glob "^3.2.7"
+    fs-extra "^8.1.0"
+    inquirer "^6.5.1"
+    json5 "^2.1.3"
+    lodash "^4.17.15"
+    npmlog "^4.1.2"
+    semver "^7.3.2"
+    yargs-parser "^14.0.0"
+
 builtin-modules@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-3.2.0.tgz#45d5db99e7ee5e6bc4f362e008bf917ab5049887"
