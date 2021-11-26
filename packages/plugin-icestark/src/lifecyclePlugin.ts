@@ -2,10 +2,6 @@ import type { Plugin } from 'vite';
 import * as babel from '@babel/core';
 import type { ParserPlugin } from '@babel/parser';
 
-export interface Entries {
-  [index: string]: string | string[];
-}
-
 /**
  * Webpack's entry would be { index: ['react-dev-utils/webpackHotDevClient.js', '/src/app''] }
  * in dev mode.

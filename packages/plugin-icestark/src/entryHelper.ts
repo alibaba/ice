@@ -15,7 +15,7 @@
 export const getEntryFiles = (entries: object): string[] => {
   return Object.keys(entries)
     .reduce((pre, next) => {
-      // The type of `entries` is type ChainedMap, get values by values()
+      // The type of `entries` is ChainedMap, get values by values()
       const value = entries[next].values();
       return [
         ...pre,
