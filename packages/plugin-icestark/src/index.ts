@@ -5,8 +5,7 @@ import type { IPlugin, Json } from 'build-scripts';
 import htmlPlugin from 'vite-plugin-index-html';
 import checkEntryFile from './checkEntryFile';
 import lifecyclePlugin from './lifecyclePlugin';
-import getEntryFiles from './getEntryFiles';
-import type { Entries } from './lifecyclePlugin';
+import { getEntryForSPA } from './entryHelper';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
@@ -59,7 +58,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   applyMethod('addRenderFile', layoutSource, layoutPath);
 
   onGetWebpackConfig((config) => {
-    const entries = config.toConfig().entry as Entries;
+    const entries = config.entryPoints.entries();
 
     // Only micro-applications need to be compiled to specific format.
     if (appType === 'child' && vite) {
@@ -68,13 +67,14 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
         log.warn('[plugin-icestark]: MPA is not supported currently.');
       } else {
         // Get the last file as the actual entry
-        const entryFile = getEntryFiles(entries).slice(-1)[0];
+        const entryFile = getEntryForSPA(entries);
         modifyUserConfig('vite.plugins', [
           htmlPlugin({
-            input: entryFile,
-            template: path.resolve(rootDir, 'public/index.html')
+            entry: entryFile,
+            template: path.resolve(rootDir, 'public/index.html'),
+            preserveEntrySignatures: 'exports-only'
           }),
-          lifecyclePlugin(entries)
+          lifecyclePlugin(entryFile)
         ], { deepmerge: true });
       }
     }
@@ -111,11 +111,12 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
       // collect entry
       const entryList = [];
       Object.keys(entries).forEach((key) => {
+        const entryValues = entries[key].values();
         // only include entry path
-        for (let i = 0; i < entries[key].length; i += 1) {
+        for (let i = 0; i < entryValues.length; i += 1) {
           // filter node_modules file add by plugin
-          if (!/node_modules/.test(entries[key][i])) {
-            entryList.push(entries[key][i]);
+          if (!/node_modules/.test(entryValues[i])) {
+            entryList.push(entryValues[i]);
           }
         }
       });

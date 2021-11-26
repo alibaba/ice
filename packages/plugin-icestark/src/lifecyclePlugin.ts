@@ -1,7 +1,6 @@
 import type { Plugin } from 'vite';
 import * as babel from '@babel/core';
 import type { ParserPlugin } from '@babel/parser';
-import getEntryFiles from './getEntryFiles';
 
 export interface Entries {
   [index: string]: string | string[];
@@ -11,18 +10,14 @@ export interface Entries {
  * Webpack's entry would be { index: ['react-dev-utils/webpackHotDevClient.js', '/src/app''] }
  * in dev mode.
  */
-const lifecyclePlugin = (entries: Entries): Plugin => {
-  // Turn vite input to js files
-  const entryNames = getEntryFiles(entries)
-    // Remove webpack hot dev client in dev
-    .filter(entry => !entry.includes('react-dev-utils/webpackHotDevClient'));
+const lifecyclePlugin = (entry: string): Plugin => {
 
   return ({
     name: 'vite-plugin-icestark-lifecycle',
     enforce: 'pre',
 
     async transform(code, id) {
-      const isEntryFile = entryNames.some((name: string) => id.includes(name));
+      const isEntryFile = id.includes(entry);
 
       if (!isEntryFile) {
         return;
