@@ -81,6 +81,12 @@ module.exports = (config, postcssOptions, context) => {
       ...postcssOptions,
     };
     delete originalPostcssOptions.plugins;
+
+    // concat plugins from `build.json` when `postcss-loader` is v3.0.0
+    // postcss-loader v3.0.0 options => { plugins: [...] }
+    // postcss-loader v5.3.0 options => { postcssOptions: { plugins: [...] } }
+    finalPostcssOptions.plugins = (finalPostcssOptions.plugins || []).concat(postcssPlugins);
+
     // modify css rules
     styleRules.forEach((ruleName) => {
       if (checkPostcssLoader(config, ruleName)) {
