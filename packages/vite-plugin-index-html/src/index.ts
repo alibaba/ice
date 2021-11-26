@@ -1,7 +1,7 @@
 import { extname, resolve } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
-import type { OutputBundle, OutputAsset, OutputChunk } from 'rollup';
+import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
 import { isAbsoluteUrl, addTrailingSlash } from './utils';
 import minifyHtml from './minifyHtml';
 
@@ -25,6 +25,11 @@ export interface HtmlPluginOptions {
    * Default: `src/main.[j|t]s?[x]`
    */
   input?: string;
+
+  /**
+   * @alias input
+   */
+  entry?: string;
 
   /**
    * Pass a html-minifier options object to minify the output.
@@ -60,6 +65,12 @@ export interface HtmlPluginOptions {
    * Default: `auto`.
    */
   minify?: 'auto' | boolean | object;
+
+  /**
+   * Enable to preserve entry singatures. https://rollupjs.org/guide/en/#preserveentrysignatures
+   * Default: `false`.
+   */
+  preserveEntrySignatures?: PreserveEntrySignaturesOption | boolean;
 }
 
 export type OutputBundleExt =
@@ -77,8 +88,16 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
     }
   }
 
+  if (userOptions.entry) {
+    userOptions.input = userOptions.entry;
+  }
+
   if (userOptions.minify === undefined) {
     userOptions.minify = 'auto';
+  }
+
+  if (userOptions.preserveEntrySignatures === true) {
+    userOptions.preserveEntrySignatures = 'exports-only';
   }
 
   return {
@@ -89,11 +108,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         ...cfg.build,
         rollupOptions: {
           ...cfg?.build?.rollupOptions,
-          preserveEntrySignatures: 'exports-only',
-          output: {
-            ...cfg?.build?.rollupOptions?.output,
-            format: 'es',
-          },
+          preserveEntrySignatures: userOptions.preserveEntrySignatures as PreserveEntrySignaturesOption ??  false,
           input: userOptions.input,
         },
       };

@@ -1,6 +1,7 @@
 import type { Plugin } from 'vite';
 import * as babel from '@babel/core';
 import type { ParserPlugin } from '@babel/parser';
+import getEntryFiles from './getEntryFiles';
 
 export interface Entries {
   [index: string]: string | string[];
@@ -12,14 +13,7 @@ export interface Entries {
  */
 const lifecyclePlugin = (entries: Entries): Plugin => {
   // Turn vite input to js files
-  const entryNames = Object.keys(entries)
-    .reduce((pre, next) => {
-      return [
-        ...pre,
-        // @ts-ignore
-        ...(Array.isArray(entries[next]) ? entries[next] : [entries[next]])
-      ];
-    }, [])
+  const entryNames = getEntryFiles(entries)
     // Remove webpack hot dev client in dev
     .filter(entry => !entry.includes('react-dev-utils/webpackHotDevClient'));
 

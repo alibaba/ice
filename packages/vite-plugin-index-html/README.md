@@ -18,6 +18,7 @@ import './src/main.ts';
 
 - [x] 修改应用入口
 - [x] 支持 Minify
+- [x] 支持导出入口文件签名
 - [ ] 支持模板
 - [ ] 支持 MPA
 
@@ -74,6 +75,15 @@ template 地址，默认为 `./src/index.html`。
 类型：boolean | 'auto' | object
 
 object 详细配置参考 [html-minifier-terser](https://www.npmjs.com/package/html-minifier-terser)
+
+- `preserveEntrySignatures`
+
+是否保留入口文件签名。
+
+类型："strict" | "allow-extension" | "exports-only" | false
+
+更详细介绍参考 [rollup preserveEntrySignatures](https://rollupjs.org/guide/en/#preserveentrysignatures)。
+
 ## License
 
 MIT

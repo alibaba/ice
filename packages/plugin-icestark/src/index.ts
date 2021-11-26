@@ -5,15 +5,13 @@ import type { IPlugin, Json } from 'build-scripts';
 import htmlPlugin from 'vite-plugin-index-html';
 import checkEntryFile from './checkEntryFile';
 import lifecyclePlugin from './lifecyclePlugin';
-
-export interface Entries {
-  [index: string]: string | string[];
-}
+import getEntryFiles from './getEntryFiles';
+import type { Entries } from './lifecyclePlugin';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
-  const { vite } = userConfig;
+  const { vite, mpa } = userConfig;
 
   let appType = type;
 
@@ -66,21 +64,19 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     // Only micro-applications need to be compiled to specific format.
     if (appType === 'child' && vite) {
 
-      const input = Object.keys(entries).reduce((pre, next) => {
-        return {
-          ...pre,
-          [next]: Array.isArray(entries[next]) ? entries[next][0] : entries[next]
-        };
-      }, {});
-
-      modifyUserConfig('vite.plugins', [
-        htmlPlugin({
-          // @ts-ignore temporarily only support spa
-          input: input.index,
-          template: path.resolve(rootDir, 'public/index.html')
-        }),
-        lifecyclePlugin(entries)
-      ], { deepmerge: true });
+      if (mpa || Object.keys(entries).length > 1) {
+        log.warn('[plugin-icestark]: MPA is not supported currently.');
+      } else {
+        // Get the last file as the actual entry
+        const entryFile = getEntryFiles(entries).slice(-1)[0];
+        modifyUserConfig('vite.plugins', [
+          htmlPlugin({
+            input: entryFile,
+            template: path.resolve(rootDir, 'public/index.html')
+          }),
+          lifecyclePlugin(entries)
+        ], { deepmerge: true });
+      }
     }
 
     config
