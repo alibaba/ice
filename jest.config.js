@@ -36,7 +36,7 @@ module.exports = {
   // https://github.com/kulshekhar/ts-jest/issues/1648
   'globals': {
     'ts-jest': {
-        'tsconfig': 'tsconfig.settings.json',
+      'tsconfig': 'tsconfig.settings.json',
     },
   },
 };
