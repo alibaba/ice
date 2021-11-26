@@ -52,7 +52,7 @@ export default defineConfig({
 
 ## 参数
 
-- `input`
+- `entry`
 
 应用入口，默认为 `.src/main.j|ts?x`。
 
