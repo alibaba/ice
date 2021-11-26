@@ -100,15 +100,17 @@ const plugin: IPlugin = (api) => {
     }
     // modify entry
     modifyUserConfig('entry', finalMPAEntries);
-    applyMethod('addImportDeclaration', {
-      multipleSource: {
-        runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
-          filename: entryPath,
-          value: runAppPath,
-          type: 'normal',
-        })),
-      },
-    });
+    if (redirectEntries.length > 0) {
+      applyMethod('addImportDeclaration', {
+        multipleSource: {
+          runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
+            filename: entryPath,
+            value: runAppPath,
+            type: 'normal',
+          })),
+        },
+      });
+    }
     // set page template
     onGetWebpackConfig(config => {
       setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
