@@ -45,7 +45,7 @@ import htmlPlugin from 'vite-plugin-index-html';
 // vite.config.ts
 export default defineConfig({
   plugins: [vue(), htmlPlugin({
-    input: './src/main.ts'
+    entry: './src/main.ts'
   })]
 })
 ```
