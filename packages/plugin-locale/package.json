@@ -1,0 +1,32 @@
+{
+  "name": "build-plugin-ice-locale",
+  "version": "0.1.0-beta.0",
+  "description": "ICE locale build-scripts plugin",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/alibaba/ice#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "peerDependencies": {
+    "react": ">16.0.0",
+    "react-dom": ">16.0.0"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.2.1"
+  },
+  "files": [
+    "lib",
+    "template",
+    "src/runtime.tsx",
+    "!lib/**/*.map"
+  ],
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-locale"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  }
+}
