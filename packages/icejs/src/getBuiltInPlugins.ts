@@ -12,6 +12,7 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
     ['build-plugin-ice-store', 'store', true],
     ['build-plugin-ice-auth', 'auth', true],
     ['build-plugin-pwa', 'pwa', false],
+    ['build-plugin-ice-request', 'request', true],
   ];
 
   const checkPluginExist = (name: string) => {
@@ -73,13 +74,12 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-router',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
-    'build-plugin-ice-request',
     'build-plugin-helmet'
   ];
 
   // TODO: 类似字段的冲突检测看下统一放在哪里是不是更合适
   if (userConfig.mpa && userConfig.router === false) {
-    console.warn('Warning:', 'MPA 模式下无需配置 router: false 选项');
+    console.warn('Warning:', 'MPA 模式下 router: false 选项没有意义，建议移除该选项。');
   }
 
   if (!userConfig.mpa && userConfig.router === false) {
