@@ -161,7 +161,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
   };
 }
 
-const removeHtmlEntryScript = (html: string, entry: string) => {
+export const removeHtmlEntryScript = (html: string, entry: string) => {
   let _html = html;
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
 
