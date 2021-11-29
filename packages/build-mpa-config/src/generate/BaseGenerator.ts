@@ -87,6 +87,7 @@ export default class BaseGenerator {
       , (renderData) => {
         let { runtimeModules } = renderData;
         if (!routesFilePath) {
+          // MPA 某个 page 下面没有 routes.[j|t]s 文件，禁用 plugin-router 运行时能力
           runtimeModules = runtimeModules.filter(({ name }) => {
             return !this.disableRuntimeList.includes(name);
           });

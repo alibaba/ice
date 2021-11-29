@@ -222,7 +222,7 @@ class RuntimeModule {
   }
 
   public getAppComponent: GetAppComponent = () => {
-    const buildConfig = this.buildConfig;
+    // 表示是否启用 pluin-router runtime
     const hasRoutes = this.modifyRoutesRegistration.length > 0;
 
     if (hasRoutes) {
@@ -232,20 +232,19 @@ class RuntimeModule {
       // renderApp define by plugin-router
       return this.renderApp(routes, this.routesComponent);
     } else {
-      // 1. SPA + router: false 2. MPA + no routes.[j|t]s file
+      // 1. SPA + router: false 2. MPA + 对应 pages 文件下面没有 routes.[j|t]s 这个文件
+      // 这两种情况都是走 appConfig.app.renderComponent 渲染
       const renderComponent = this.appConfig.app?.renderComponent;
-      if (!buildConfig.mpa) {
-        if (!renderComponent) {
-          throw new Error('开启 router: false 后需要结合 app.renderComponent 渲染组件，请在 src/app 中补充相关逻辑');
-        }
-        if (this.appConfig.router) {
-          console.warn('[icejs]', '已通过 router: false 禁用路由，src/app router 配置失效，建议删除对应字段。');
-        }
-      }
-
       // default renderApp
-      return this.renderApp(this.wrapperPageRegistration.reduce((acc, curr) => {
-        return curr(acc);
+      return this.renderApp(this.wrapperPageRegistration.reduce((acc: any, curr: any) => {
+        const compose = curr(acc);
+        if (acc.pageConfig) {
+          compose.pageConfig = acc.pageConfig;
+        }
+        if (acc.getInitialProps) {
+          compose.getInitialProps = acc.getInitialProps;
+        }
+        return compose;
       }, renderComponent));
     }
   }

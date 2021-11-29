@@ -12,7 +12,7 @@ const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_M
 const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
-  const { onHook, context, setValue } = api;
+  const { onHook, context, setValue, onGetWebpackConfig } = api;
   const { command, userConfig, rootDir } = context;
   const { framework } = options;
 
@@ -42,7 +42,7 @@ export default (api, options) => {
 
   // Set temporary directory
   // eg: .ice or .rax
-  setTempDir(api, options);
+  const tempDir = setTempDir(api, options);
 
   // Set project type
   // eg: ts | js
@@ -65,6 +65,10 @@ export default (api, options) => {
 
   // add core template for framework
   renderDefaultTemplate(generator, { framework });
+
+  onGetWebpackConfig((config) => {
+    config.resolve.alias.set('$ice/ErrorBoundary', path.join(tempDir, 'core' ,'ErrorBoundary'));
+  });
 
   // watch src folder
   if (command === 'start') {

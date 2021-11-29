@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { validation } from '@builder/app-helpers';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 import vitePluginLazy from './vitePluginLazy';
@@ -8,16 +7,8 @@ import vitePluginLazy from './vitePluginLazy';
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
 const TEM_ROUTER_SETS = [TEM_ROUTER_COMPATIBLE];
 
-const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, registerUserConfig, log }) => {
+const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, applyMethod, log }) => {
   const { rootDir, userConfig, command } = context;
-
-  // register router in build.json
-  registerUserConfig({
-    name: 'router',
-    validation: (value) => {
-      return validation('router', value, 'object|boolean');
-    },
-  });
 
   // [enum] js or ts
   const projectType = getValue('PROJECT_TYPE');
@@ -54,9 +45,6 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
 
     // alias for runtime/history
     config.resolve.alias.set('$ice/history', path.join(iceTempPath, 'plugins/router/history.ts'));
-
-    // alias for runtime/ErrorBoundary
-    config.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
 
     // alias for react-router-dom
     const routerName = 'react-router-dom';
