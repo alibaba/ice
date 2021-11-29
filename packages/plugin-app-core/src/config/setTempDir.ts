@@ -16,6 +16,4 @@ export default (api, options) => {
 
   fse.ensureDirSync(tempPath);
   fse.emptyDirSync(tempPath);
-
-  return tempPath;
 };

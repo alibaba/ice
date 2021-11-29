@@ -118,7 +118,6 @@ class RuntimeModule {
       getRuntimeValue: this.getRuntimeValue,
     };
 
-    // TODO: router: false 并且没配置 renderComponent 也是 enable
     if (enabledRouter) {
       runtimeAPI = {
         ...runtimeAPI,

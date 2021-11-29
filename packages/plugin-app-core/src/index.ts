@@ -42,7 +42,7 @@ export default (api, options) => {
 
   // Set temporary directory
   // eg: .ice or .rax
-  const tempDir = setTempDir(api, options);
+  setTempDir(api, options);
 
   // Set project type
   // eg: ts | js
@@ -65,10 +65,6 @@ export default (api, options) => {
 
   // add core template for framework
   renderDefaultTemplate(generator, { framework });
-
-  onGetWebpackConfig((config) => {
-    config.resolve.alias.set('$ice/ErrorBoundary', path.join(tempDir, 'core' ,'ErrorBoundary'));
-  });
 
   // watch src folder
   if (command === 'start') {

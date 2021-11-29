@@ -77,7 +77,6 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-helmet'
   ];
 
-  // TODO: 类似字段的冲突检测看下统一放在哪里是不是更合适
   if (userConfig.mpa && userConfig.router === false) {
     console.warn('Warning:', 'MPA 模式下 router: false 选项没有意义，建议移除该选项。');
   }

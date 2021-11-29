@@ -1,4 +1,3 @@
-// TODO: support rax
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import * as queryString from 'query-string';
@@ -6,7 +5,7 @@ import * as queryString from 'query-string';
 import ErrorBoundary from '$ice/ErrorBoundary';
 
 export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRuntimeAPI, addProvider }) => {
-  const { app = {}, ddProvider: customAddProvider } = appConfig;
+  const { app = {}, addProvider: customAddProvider } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, renderComponent } = app;
 
   if (customAddProvider) {
