@@ -134,7 +134,7 @@ class RuntimeModule {
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
       return ({ children, ...rest }) => {
         const element = CurrentProvider
-          ? this.context.createElement(CurrentProvider, {...rest}, children)
+          ? this.context.createElement(CurrentProvider, { ...rest }, children)
           : children;
         return this.context.createElement(
           ProviderComponent,
@@ -183,7 +183,8 @@ class RuntimeModule {
   }
 
   private addProvider: AddProvider = (Provider) => {
-    this.AppProvider.push(Provider);
+    // must promise user's providers are wrapped by the plugins' providers
+    this.AppProvider.unshift(Provider);
   }
 
   private addDOMRender: AddDOMRender = (render) => {

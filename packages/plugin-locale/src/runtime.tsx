@@ -1,12 +1,23 @@
-export default ({ modifyRoutes, buildConfig }) => {
+import * as React from 'react';
+
+export default ({ modifyRoutes, buildConfig, addProvider }) => {
   const { locale: { defaultLocale, locales } } = buildConfig;
 
   modifyRoutes((routes) => {
-    console.log('addRoutesByLocales(routes, locales, defaultLocale)', addRoutesByLocales(routes, locales, defaultLocale));
     return addRoutesByLocales(routes, locales, defaultLocale);
-    return routes;
   });
+
+  addProvider(LocaleProvider);
 };
+
+function LocaleProvider({ children }) {
+  return (
+    <div>
+      This is Locale Provider
+      {children}
+    </div>
+  );
+}
 
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
   const modifiedRoutes = [...originRoutes];
@@ -16,7 +27,7 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
     const { path, redirect } = route;
     if (path && !redirect && typeof path === 'string') {
       prefixRouteLocales.forEach((prefixRouteLocale: string) => {
-        modifiedRoutes.unshift({ ...route, path: `/${prefixRouteLocale}` });
+        modifiedRoutes.push({ ...route, path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}` });
       });
     }
   });
