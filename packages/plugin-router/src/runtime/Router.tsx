@@ -13,6 +13,7 @@ import loadable from '@loadable/component';
 import { RoutesProps, RouterProps } from '../types/router';
 import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types/base';
 import { IRouterConfig } from '../types';
+import formatRoutes from './formatRoutes';
 
 function wrapperRoute(component, routerWrappers) {
   return (routerWrappers || []).reduce((acc, curr) => {
@@ -102,9 +103,10 @@ export function IceRouter(props: RouterProps) {
 }
 
 export function Routes({ routes, fallback }: RoutesProps) {
+  const newRoutes = formatRoutes(routes, '');
   return (
     <Switch>
-      {routes.map((route, id) => {
+      {newRoutes.map((route, id) => {
         const { children } = route;
 
         if (!children) {

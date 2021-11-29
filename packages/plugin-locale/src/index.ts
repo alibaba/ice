@@ -1,5 +1,13 @@
 import { IPluginAPI } from 'build-scripts';
 
-export default async function (api: IPluginAPI) {
-  console.log('api: ', api);
+interface PluginOptions {
+  locales: string[];
+  defaultLocale: string;
+}
+
+export default async function (
+  { context: { userConfig } }: IPluginAPI, 
+  pluginOptions: PluginOptions = { locales: ['zh-CN'], defaultLocale: 'zh-CN' }
+) {
+  console.log(pluginOptions);
 }

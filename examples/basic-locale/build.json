@@ -1,5 +1,14 @@
 {
   "plugins": [
-    "build-plugin-ice-locale"
+    [
+      "build-plugin-ice-locale",
+      {
+        "locales": [
+          "zh-CN",
+          "en-US"
+        ],
+        "defaultLocale": "zh-CN"
+      }
+    ]
   ]
 }

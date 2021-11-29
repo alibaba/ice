@@ -4,7 +4,7 @@ import ErrorBoundary from '$ice/ErrorBoundary';
 // @ts-ignore
 import defaultRoutes from '$ice/routes';
 import { IceRouter, Routes, parseRoutes } from './runtime/Router';
-import formatRoutes, { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
+import { wrapperPageWithCSR, wrapperPageWithSSR } from './runtime/formatRoutes';
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
@@ -25,7 +25,9 @@ const module = ({ setRenderApp, appConfig, modifyRoutes, wrapperPageComponent, m
 
   // plugin-router 内置确保了 defaultRoutes 最先被添加
   modifyRoutes(() => {
-    return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
+    // TODO: format routes in the src/runtime/Router.tsx
+    // return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
+    return appConfigRouter.routes || defaultRoutes;
   });
 
   // add default RoutesComponent

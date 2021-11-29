@@ -2,6 +2,7 @@ interface IBuildConfig {
   router?: object | boolean;
   store?: boolean;
   icestarkType?: 'es' | 'umd' | 'normal';
+  locale?: object;
   web?: object;
 }
 
@@ -25,6 +26,21 @@ function getBuildConfig(userConfig): IBuildConfig{
 
   // eslint-disable-next-line no-nested-ternary
   buildConfig.icestarkType = vite ? 'es' : (isIcestarkUMD ? 'umd' : 'normal');
+
+  let localeConfig;
+  if (plugins && Array.isArray(plugins)) {
+    plugins.forEach((plugin) => {
+      if (Array.isArray(plugin)) {
+        const [pluginName, pluginOptions = { locales: ['zh-CN'], defaultLocale: 'zh-CN' }] = plugin;
+        if (pluginName === 'build-plugin-ice-locale') {
+          localeConfig = pluginOptions;
+        }
+      }
+    });
+  }
+  if (localeConfig) {
+    buildConfig.locale = localeConfig;
+  }
 
   return buildConfig;
 }
