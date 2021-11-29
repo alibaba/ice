@@ -6,7 +6,7 @@ import formatRoutes from './runtime/formatRoutes';
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
-const module = ({ setRenderApp, appConfig, modifyRoutes, wrapperPageComponent, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
+const module = ({ setRenderApp, appConfig, modifyRoutes, modifyRoutesComponent, buildConfig, context, applyRuntimeAPI }) => {
   const { router: appConfigRouter = {} } = appConfig;
 
   modifyRoutes(() => {

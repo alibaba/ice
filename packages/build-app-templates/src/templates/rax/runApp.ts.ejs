@@ -40,6 +40,11 @@ if (!inMiniApp) {
   runtimeValue.tabBarConfig = <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %>;
 }
 <% } %>
+
+<% if(enableRouter){ %>
+  runtimeValue.enableRouter = true;
+<% } %>
+
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,

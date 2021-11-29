@@ -20,9 +20,14 @@ import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
-import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
+import { IAppConfig, IBuildConfig, IRuntimeValue } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+const runtimeValue: IRuntimeValue = {};
+
+<% if(enableRouter){ %>
+  runtimeValue.enableRouter = true;
+<% } %>
 
 // TODO: createBaseApp() 返回一个 createBaseApp，命名需要优化下
 const frameworkAppBase = createBaseApp({
@@ -34,6 +39,7 @@ const frameworkAppBase = createBaseApp({
     <% } %>
     getSearchParams,
   },
+  runtimeValue,
 });
 
 export function runApp(appConfig?: IAppConfig) {

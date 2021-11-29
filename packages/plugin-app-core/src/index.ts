@@ -135,6 +135,8 @@ function getDefaultRenderData(api, options) {
       isMPA: false,
       tabBarPath: '', // avoid ejs error
       routesFilePath: './staticConfig',
+      // MPA 下会覆盖
+      enableRouter: true,
     };
   } else {
     return {
@@ -142,6 +144,8 @@ function getDefaultRenderData(api, options) {
       isReact: true,
       isRax: false,
       ssr,
+      // MPA 下会覆盖
+      enableRouter: (!userConfig.mpa && userConfig.router !== false),
     };
   }
 }

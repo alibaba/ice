@@ -92,6 +92,7 @@ class RuntimeModule {
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
     this.context = context;
+    // Rax App 里的 app.json
     this.staticConfig = staticConfig;
     this.modifyDOMRender = null;
     this.apiRegistration = {};
@@ -104,7 +105,10 @@ class RuntimeModule {
   }
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
-    const enabledRouter = !this.appConfig.app?.renderComponent;
+    const enabledRouter = this.getRuntimeValue('enabledRouter');
+
+    console.log('loadModule enabledRouter', enabledRouter);
+
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       addDOMRender: this.addDOMRender,
@@ -221,18 +225,17 @@ class RuntimeModule {
   }
 
   public getAppComponent: GetAppComponent = () => {
-    // 表示是否启用 pluin-router runtime
-    const hasRoutes = this.modifyRoutesRegistration.length > 0;
+    // 表示是否启用 pluin-router runtime，何时不启用：1. SPA + router: false 2. MPA + 对应 pages 文件下面没有 routes.[j|t]s 这个文件
+    const enabledRouter = this.getRuntimeValue('enabledRouter');
 
-    if (hasRoutes) {
+    if (enabledRouter) {
       const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IPage, curr) => {
         return curr(acc);
       }, []));
       // renderApp define by plugin-router
       return this.renderApp(routes, this.routesComponent);
     } else {
-      // 1. SPA + router: false 2. MPA + 对应 pages 文件下面没有 routes.[j|t]s 这个文件
-      // 这两种情况都是走 appConfig.app.renderComponent 渲染
+      // 通过 appConfig.app.renderComponent 渲染
       const renderComponent = this.appConfig.app?.renderComponent;
       // default renderApp
       return this.renderApp(this.wrapperPageRegistration.reduce((acc: any, curr: any) => {

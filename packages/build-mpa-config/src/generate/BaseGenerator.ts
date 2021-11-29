@@ -46,11 +46,15 @@ export default class BaseGenerator {
     this.runAppPath = path.join(this.entryFolder, 'runApp');
   }
 
+  /**
+   * MPA 生成单个页面的 runApp.tsx
+   */
   public generateRunAppFile(userConfig) {
     const { framework } = this.options;
     const { applyMethod } = this.builtInMethods;
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     const routesFilePath = this.getRoutesFilePath();
+
     const renderData = {
       ...this.runAppRenderData,
       globalStyle: globalStyles.length && relative(this.entryFolder, path.join(this.rootDir, globalStyles[0])),
@@ -60,8 +64,10 @@ export default class BaseGenerator {
         ...applyMethod('getBuildConfig', userConfig),
         router: Boolean(routesFilePath),
       },
+      // TODO: 这个字段哪里用到了？
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       isMPA: true,
+      enableRouter: !!routesFilePath,
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
