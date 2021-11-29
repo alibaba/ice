@@ -1,36 +1,16 @@
+/* eslint-disable no-lonely-if */
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import * as queryString from 'query-string';
 // @ts-ignore
 import ErrorBoundary from '$ice/ErrorBoundary';
 
-export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRuntimeAPI, addProvider }) => {
+export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRuntimeAPI, getRuntimeValue, addProvider }) => {
   const { app = {}, addProvider: customAddProvider } = appConfig;
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, renderComponent } = app;
 
   if (customAddProvider) {
     addProvider(customAddProvider);
-  }
-
-  // MPA 下当前页面下是否有 routes 文件：routes.js / app.json
-  // TODO: 这个信息怎么取？this.modifyRoutesRegistration.length > 0 时机不对好像
-  const hasPageRoutesFile = false;
-  if (buildConfig.mpa && !hasPageRoutesFile) {
-    if (appConfig.router || !renderComponent) {
-      console.warn('[icejs]', '当前页面下没有 routes.[j|t]s 文件，路由功能已关闭');
-      console.warn('    ', '1. 定义  ');
-      console.warn('    ', '2. ');
-    }
-  }
-
-  if (!buildConfig.mpa && buildConfig.router === false) {
-    if (!renderComponent) {
-      throw new Error('已通过 router: false 禁用路由，需要结合 app.renderComponent 渲染应用，请在 src/app 中补充相关逻辑');
-    }
-    // TODO: appConfig.router 受 DEFAULT_APP_CONFIG 影响
-    if (appConfig.router) {
-      console.warn('[icejs]', '已通过 router: false 禁用路由，src/app router 配置失效，建议删除对应字段。');
-    }
   }
 
   const { parseSearchParams = true } = app;
@@ -42,7 +22,53 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
 
   wrapperPageComponent(wrapperPageWithErrorBoundary(ErrorBoundaryFallback, onErrorBoundaryHandler));
 
-  // setRenderApp();
+  const enableRouter = getRuntimeValue('enableRouter');
+  console.log('app-core plugin get enableRouter', enableRouter);
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (buildConfig.mpa) {
+      if (enableRouter) {
+        // MPA 启用路由
+        if (renderComponent) {
+          console.warn('[icejs]', '当前 MPA 页面已启用配置路由，app.renderComponent 将失效，建议移除 app.js 对应字段');
+        }
+        if (!app.router?.routes) {
+          // TODO: 数组为 0 考不考虑
+          throw new Error('当前 MPA 页面已启用配置路由但没有设置 routes 字段，请在 app.js 中引入 routes.js 并赋值给 router.routes 字段');
+        }
+        // TODO: 还有一种情况是 routes 配置了自定义的路由，而非 routes.js
+      } else {
+        // MPA 未启用路由
+        if (!renderComponent) {
+          throw new Error('当前 MPA 页面没有启用路由，需要结合 app.renderComponent 渲染应用，请在 app.js 中补充相关逻辑');
+        }
+        // TODO: appConfig.router 受 DEFAULT_APP_CONFIG 影响
+        if (appConfig.router) {
+          console.warn('[icejs]', '当前 MPA 页面没有启用路由，router 配置失效，建议移除 app.js 对应字段');
+        }
+      }
+    } else {
+      if (enableRouter) {
+        // SPA 启用路由
+        if (renderComponent) {
+          console.warn('[icejs]', '当前 SPA 应用已启用配置路由，app.renderComponent 将失效，建议移除 app.js 对应字段');
+        }
+        if (appConfig.router?.routes) {
+          // 手动配置了 routes 字段
+          console.warn('[icejs]', '当前 SPA 应用手动配置了 router.routes 字段，配置路由/文件约定路由可能失效');
+        }
+      } else {
+        // SPA 关闭路由
+        if (!renderComponent) {
+          throw new Error('当前 SPA 应用已通过 router: false 禁用路由，需要结合 app.renderComponent 渲染应用，请在 app.js 中补充相关逻辑');
+        }
+        // TODO: appConfig.router 受 DEFAULT_APP_CONFIG 影响
+        if (appConfig.router) {
+          console.warn('[icejs]', '当前 SPA 应用已通过 router: false 禁用路由，router 配置失效，建议移除 app.js 对应字段');
+        }
+      }
+    }
+  }
 };
 
 function wrapperPageWithSearchParams(applyRuntimeAPI) {
