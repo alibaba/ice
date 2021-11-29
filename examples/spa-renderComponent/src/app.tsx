@@ -1,12 +1,12 @@
-import React from 'react';
 import { runApp, IAppConfig } from 'ice';
+import Test from './Test';
 
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
-    renderComponent: () => <div>Hello</div>,
+    renderComponent: Test,
   },
-  router: {}
+  // router: {}
 };
 
 runApp(appConfig);
