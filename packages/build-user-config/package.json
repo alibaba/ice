@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "1.1.5",
+  "version": "1.1.8",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "fs-extra": "^8.1.0",
     "fork-ts-checker-webpack-plugin": "^5.0.5",
     "loader-utils": "^2.0.0",
+    "object-hash": "^2.2.0",
     "regenerator-runtime": "^0.13.3",
     "react-dev-utils": "^11.0.4",
     "webpack-dev-mock": "^1.0.1",

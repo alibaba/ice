@@ -1,93 +1,56 @@
 import type { Plugin } from 'vite';
 import { redirectImport, formatPath } from '@builder/app-helpers';
 import MagicString from 'magic-string';
-import * as path from 'path';
-import { isObject } from 'lodash';
+import { createFilter } from '@rollup/pluginutils';
 
-interface Option {
-  rootDir: string;
-  entries?: string | Record<string, string[]>
+interface SourceData {
+  filename: string;
+  value: string;
+  type?: 'normal' | 'default';
 }
 
-const getMpaRunAppPathsMap = (rootDir: string, list: string[]) => {
-  return list.reduce((acc, key) => {
-    acc[key] = path.resolve(rootDir, `.ice/entries/${key}/runApp`);
-    return acc;
-  }, {});
-};
+export interface ImportDeclarations {
+  name: string;
+  value: string;
+  type?: 'normal' | 'default';
+  alias?: string;
+  multipleSource?: SourceData[];
+}
 
-const getTransformedCode = async (code: string, id: string, tempPath: string) => {
-  const url = formatPath(path.relative(path.dirname(id), tempPath));
+interface Option {
+  source: string;
+  redirectImports: ImportDeclarations[];
+}
 
-  return await redirectImport(code, {
-    source: 'ice', redirectImports: [
-      {
-        name: 'runApp',
-        redirectPath: url,
-        default: false,
-      },
-      {
-        name: 'createStore',
-        redirectPath: '@ice/store',
-        default: false,
+export const importPlugin = ({ source, redirectImports }: Option): Plugin => {
+  const include = ['**/*.ts', '**/*.js', '**/*.tsx', '**/*.jsx'];
+  const exclude = 'node_modules/**';
+  const filter = createFilter(include, exclude);
+  let needSourcemap = false;
+
+  return {
+    name: 'plugin-import-redirect',
+    configResolved(resolvedConfig) {
+      needSourcemap = !!resolvedConfig.build.sourcemap;
+    },
+    enforce: 'post',
+    transform: async (code, id) => {
+      if (!code || !filter(id)) {
+        return null;
       }
-    ]
-  });
-};
-
-const pluginImportMPA = ({ rootDir, entries }: Option): Plugin => {
-  const entryList = Object.keys(entries);
-  const mpaRunAppPathsMap = getMpaRunAppPathsMap(rootDir, entryList);
-  let needSourcemap = false;
-  return {
-    name: 'vite-plugin-import-mpa',
-    configResolved(resolvedConfig) {
-      needSourcemap = !!resolvedConfig.build.sourcemap;
-    },
-    transform: async (code, id) => {
-      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
-
-      const relativePath = path.relative(rootDir, id).toLocaleLowerCase();
-      const name = entryList.find(pageName => relativePath.includes(pageName));
-      const iceTempPath = mpaRunAppPathsMap[name];
-
-      if (!iceTempPath) return;
-      const sourceCode = await getTransformedCode(code, id, iceTempPath);
+      const redirectCode = await redirectImport(code, { source, redirectImports: redirectImports.map((redirect) => {
+        const { name, value, type, alias, multipleSource = [] } = redirect;
+        const matchedSource = multipleSource.find(({ filename }) => formatPath(filename) === formatPath(id));
+        return {
+          name,
+          redirectPath: matchedSource ? matchedSource.value : (alias || value),
+          default: (matchedSource ? matchedSource.type : type) === 'default',
+        };
+      })});
       return {
-        map: needSourcemap ? (new MagicString(sourceCode)).generateMap({ hires: true }) : null,
-        code: sourceCode,
+        map: needSourcemap ? (new MagicString(redirectCode)).generateMap({ hires: true }) : null,
+        code: redirectCode,
       };
-    }
-  };
-};
-
-const pluginImportSPA = ({ rootDir }: Option): Plugin => {
-  let needSourcemap = false;
-  return {
-    name: 'vite-plugin-import-spa',
-    configResolved(resolvedConfig) {
-      needSourcemap = !!resolvedConfig.build.sourcemap;
     },
-    transform: async (code, id) => {
-      if (!/\.(?:[jt]sx?|[jt]s?)$/.test(id)) return;
-
-      const sourceCode = await getTransformedCode(code, id, path.resolve(rootDir, '.ice/core/runApp'));
-      return {
-        map: needSourcemap ? (new MagicString(sourceCode)).generateMap({ hires: true }) : null,
-        code: sourceCode,
-      };
-    }
   };
-};
-
-/**
- * @from import { runApp } from 'ice'
- * @to import { runApp } from '../.ice/core/runApp'
- * 
- * @tip both support spa and mpa
- * @variable runApp icestore
- */
-export const importPlugin = ({ rootDir, entries }: Option): Plugin => {
-  const isMpa = isObject(entries);
-  return isMpa ? pluginImportSPA({ rootDir }) : pluginImportMPA({ rootDir, entries });
 };

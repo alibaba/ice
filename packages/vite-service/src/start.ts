@@ -30,6 +30,9 @@ export async function viteStart(context: Context): Promise<StartResult> {
   let devServer: ViteDevServer;
   try {
     devServer = await createServer(devConfig);
+    applyHook(`after.${command}.devServer`, {
+      devServer
+    });
   } catch (err) {
     console.error('CONFIG', chalk.red('Failed to load vite config.'));
     await applyHook('error', { err });

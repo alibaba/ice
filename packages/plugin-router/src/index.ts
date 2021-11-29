@@ -60,10 +60,14 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
 
     // alias for react-router-dom
     const routerName = 'react-router-dom';
-    config.resolve.alias.set(routerName, require.resolve(routerName));
+    const packagePath = require.resolve(`${routerName}/package.json`);
+    // use react-router-dom path while react-router-dom has module field in package.json
+    config.resolve.alias.set(routerName, path.dirname(packagePath));
 
     // config historyApiFallback for router type browser
-    config.devServer.set('historyApiFallback', true);
+    if (!config.devServer.get('historyApiFallback')) {
+      config.devServer.set('historyApiFallback', true);
+    }
   });
 
   // copy types

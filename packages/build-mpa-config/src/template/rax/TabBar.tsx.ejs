@@ -1,11 +1,11 @@
 import { createElement, Component, Fragment } from 'rax';
-import { isNode } from 'universal-env';
+import { isNode, isWeb } from 'universal-env';
 import TabBar from  '<%= tabBarPath %>';
 
 const currentPageName = '<%= entryName %>';
 
-const isPHA = (window as any).pha;
-const isFRM = typeof my !== 'undefined' && my.isFRM === true;
+const isPHA = isWeb && (window as any).pha;
+const isFRM = isWeb && typeof my !== 'undefined' && my.isFRM === true;
 const shouldRenderTabBar = isNode || (!isPHA && !isFRM);
 
 export default class TabBarWrapper extends Component {
@@ -16,8 +16,10 @@ export default class TabBarWrapper extends Component {
       (window as any).location.href = `./${pageName}.html`;
     }
   }
+
   render() {
-    return <Fragment x-if={shouldRenderTabBar}>
+    if (!shouldRenderTabBar) return null;
+    return <Fragment>
       <% if (tabBarPath.indexOf('src') > -1) {%>
         <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
           <TabBar config={<%- JSON.stringify(tabBarConfig) %>} currentPageName={currentPageName} />

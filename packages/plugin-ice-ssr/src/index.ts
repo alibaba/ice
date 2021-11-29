@@ -210,8 +210,8 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
-    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
+    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' }).replace(/`/g, '&#x60;');
+    const newBundle = bundle.replace(/'global.__ICE_SERVER_HTML_TEMPLATE__'/, `\`${minifiedHtml}\``);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
 
     // @deprecated
