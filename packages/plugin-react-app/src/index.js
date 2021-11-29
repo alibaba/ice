@@ -10,7 +10,7 @@ const remoteRuntime = require('./userConfig/remoteRuntime').default;
 const getInvalidMessage = require('./validateViteConfig').default;
 
 module.exports = async (api) => {
-  const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log, onHook } = api;
+  const { applyMethod, onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log, onHook } = api;
   const { command, commandArgs, rootDir, userConfig, originalUserConfig } = context;
   const mode = command === 'start' ? 'development' : 'production';
 
@@ -73,7 +73,10 @@ module.exports = async (api) => {
   if (userConfig.remoteRuntime) {
     await remoteRuntime(api, userConfig.remoteRuntime);
   }
-
+  // add runtime plugin only --build-speed is configured in mode vite
+  if (!commandArgs.buildSpeed || !userConfig.vite) {
+    applyMethod('addDisableRuntimePlugin', 'build-plugin-react-app');
+  }
   if (commandArgs.buildSpeed) {
     // eslint-disable-next-line global-require
     const SpeedMeasurePlugin = require('@builder/pack/deps/speed-measure-webpack-plugin');

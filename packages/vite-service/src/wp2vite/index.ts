@@ -19,6 +19,7 @@ import {
   mockPlugin,
   ImportDeclarations,
 } from '../plugins';
+import { wrapPlugin, pluginBuildSpeed } from '../pluginBuildSpeed';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -173,6 +174,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
       ...getPluginReact(context),
+      commandArgs.buildSpeed ? pluginBuildSpeed() : null,
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
@@ -222,8 +224,10 @@ export const wp2vite = (context: Context): InlineConfig => {
     return entries;
   };
 
+  let finalViteConfig = null;
+
   if (!isBuild(command)) {
-    return all([
+    finalViteConfig = all([
       {
         optimizeDeps: {
           entries: getAnalysisEntries(),
@@ -235,7 +239,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       viteConfig,
     ], { arrayMerge });
   } else {
-    return all([{
+    finalViteConfig = all([{
       build: {
         commonjsOptions: {
           exclude: ['react-app-renderer', 'create-app-shared'],
@@ -243,4 +247,9 @@ export const wp2vite = (context: Context): InlineConfig => {
       },
     }, viteConfig], { arrayMerge });
   }
+
+  if (commandArgs.buildSpeed) {
+    finalViteConfig.plugins = finalViteConfig.plugins.map((plugin) => wrapPlugin(plugin));
+  }
+  return finalViteConfig;
 };
