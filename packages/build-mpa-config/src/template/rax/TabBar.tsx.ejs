@@ -2,12 +2,10 @@ import { createElement, Component, Fragment } from 'rax';
 import { isWeb } from 'universal-env';
 import TabBar from  '<%= tabBarPath %>';
 
-declare const my:any;
-
 const currentPageName = '<%= entryName %>';
 
 const isPHA = isWeb && (window as any).pha;
-const isFRM = isWeb && typeof my !== 'undefined' && my.isFRM === true;
+const isRaxWebview = isWeb && (window as any).__RAX_WEBVIEW === true;
 
 interface ITabItem {
   path?: string;
@@ -33,7 +31,7 @@ export default class TabBarWrapper extends Component {
   constructor(props) {
     super(props);
 
-    if (isPHA || isFRM) {
+    if (isPHA || isRaxWebview) {
       this.__shouldRenderTabBar = false;
     } else if (this.config.list) {
       this.__shouldRenderTabBar = this.config.list.includes(currentPageName);
