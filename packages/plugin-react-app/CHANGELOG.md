@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+- [feat] add runtime abilities: addProvider/WrapperErrorBoundary/WrapperCSR/WrapperSSR/WrapperSearchParams (move from plugin-router)
+- [feat] add runtime router options check and log warning
+
 ## 2.0.4
 
 - [fix] error occurred when config externals and remoteRuntime

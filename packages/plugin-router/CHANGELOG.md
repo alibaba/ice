@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- [chore] migrate wrapper ErrorBoundary/SearchParams/SSR/CSR to plugin-react-app
+
 ## 2.0.4
 
 - [fix] support config `devSever.historyApiFallback`
