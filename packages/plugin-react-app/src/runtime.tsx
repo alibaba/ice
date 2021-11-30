@@ -23,8 +23,6 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
   wrapperPageComponent(wrapperPageWithErrorBoundary(ErrorBoundaryFallback, onErrorBoundaryHandler));
 
   const enableRouter = getRuntimeValue('enableRouter');
-  console.log('app-core plugin get enableRouter', enableRouter);
-
   if (process.env.NODE_ENV !== 'production') {
     if (buildConfig.mpa) {
       if (enableRouter) {
@@ -32,7 +30,7 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
         if (renderComponent) {
           console.warn('[icejs]', '当前 MPA 页面已启用配置路由，app.renderComponent 将失效，建议移除 app.js 对应字段');
         }
-        if (!app.router?.routes) {
+        if (!appConfig.router?.routes) {
           // TODO: 数组为 0 考不考虑
           throw new Error('当前 MPA 页面已启用配置路由但没有设置 routes 字段，请在 app.js 中引入 routes.js 并赋值给 router.routes 字段');
         }

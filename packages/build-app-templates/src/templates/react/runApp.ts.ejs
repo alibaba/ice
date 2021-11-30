@@ -4,7 +4,7 @@ import {
   initAppLifeCycles,
   emitLifeCycles,
   getSearchParams,
-<% if (buildConfig.router !== false) {%>
+<% if (enableRouter !== false) {%>
   initHistory,
   createHistory,
 <% } %>
@@ -34,7 +34,7 @@ const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
   runtimeAPI: {
-    <% if (buildConfig.router !== false) {%>
+    <% if (enableRouter !== false) {%>
     createHistory,
     <% } %>
     getSearchParams,
@@ -49,7 +49,7 @@ export function runApp(appConfig?: IAppConfig) {
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
   if (process.env.__IS_SERVER__) return;
-  <% if (buildConfig.router !== false) {%>
+  <% if (enableRouter !== false) {%>
   // set History before GID
   initHistory && initHistory(appConfig as any);
   <% } %>

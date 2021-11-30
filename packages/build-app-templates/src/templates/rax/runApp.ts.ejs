@@ -3,7 +3,7 @@ import {
   createBaseApp,
   initAppLifeCycles,
   emitLifeCycles,
-<% if (buildConfig.router !== false) {%>
+<% if (enableRouter !== false) {%>
   initHistory,
   createHistory,
 <% } %>
@@ -49,7 +49,7 @@ const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
   runtimeAPI: {
-    <% if (buildConfig.router !== false) {%>
+    <% if (enableRouter !== false) {%>
     createHistory,
     <% } %>
   },
@@ -60,7 +60,7 @@ const frameworkAppBase = createBaseApp({
 const pageConfig = <%- JSON.stringify(pageConfig) %>;
 <% } %>
 
-export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
+export function runApp(appConfig?: IAppConfig, <% if (enableRouter !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
@@ -68,7 +68,7 @@ export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== fal
 
   if (process.env.__IS_SERVER__ || isNode) return;
 
-  <% if (buildConfig.router !== false) {%>
+  <% if (enableRouter !== false) {%>
   if (customStaticConfig) {
     staticConfig = customStaticConfig;
   }

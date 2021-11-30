@@ -62,11 +62,10 @@ export default class BaseGenerator {
       typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
-        router: Boolean(routesFilePath),
       },
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       isMPA: true,
-      enableRouter: !!routesFilePath,
+      enableRouter: Boolean(routesFilePath),
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
