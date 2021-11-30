@@ -31,19 +31,17 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
           console.warn('[icejs]', '当前 MPA 页面已启用配置路由，app.renderComponent 将失效，建议移除 app.js 对应字段');
         }
         if (!appConfig.router?.routes) {
-          // TODO: 数组为 0 考不考虑
           throw new Error('当前 MPA 页面已启用配置路由但没有设置 routes 字段，请在 app.js 中引入 routes.js 并赋值给 router.routes 字段');
         }
-        // TODO: 还有一种情况是 routes 配置了自定义的路由，而非 routes.js
       } else {
         // MPA 未启用路由
         if (!renderComponent) {
           throw new Error('当前 MPA 页面没有启用路由，需要结合 app.renderComponent 渲染应用，请在 app.js 中补充相关逻辑');
         }
         // TODO: appConfig.router 受 DEFAULT_APP_CONFIG 影响
-        if (appConfig.router) {
-          console.warn('[icejs]', '当前 MPA 页面没有启用路由，router 配置失效，建议移除 app.js 对应字段');
-        }
+        // if (appConfig.router) {
+        //   console.warn('[icejs]', '当前 MPA 页面没有启用路由，router 配置失效，建议移除 app.js 对应字段');
+        // }
       }
     } else {
       if (enableRouter) {
@@ -61,9 +59,9 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
           throw new Error('当前 SPA 应用已通过 router: false 禁用路由，需要结合 app.renderComponent 渲染应用，请在 app.js 中补充相关逻辑');
         }
         // TODO: appConfig.router 受 DEFAULT_APP_CONFIG 影响
-        if (appConfig.router) {
-          console.warn('[icejs]', '当前 SPA 应用已通过 router: false 禁用路由，router 配置失效，建议移除 app.js 对应字段');
-        }
+        // if (appConfig.router) {
+        //   console.warn('[icejs]', '当前 SPA 应用已通过 router: false 禁用路由，router 配置失效，建议移除 app.js 对应字段');
+        // }
       }
     }
   }
