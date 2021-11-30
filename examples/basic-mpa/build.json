@@ -1,5 +1,5 @@
 {
-  // "vite": true,
+  "vite": true,
   "mpa": {
     "openPage": "Dashboard",
     "template": {

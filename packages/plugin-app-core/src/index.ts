@@ -12,7 +12,7 @@ const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_M
 const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
-  const { onHook, context, setValue, onGetWebpackConfig } = api;
+  const { onHook, context, setValue } = api;
   const { command, userConfig, rootDir } = context;
   const { framework } = options;
 
