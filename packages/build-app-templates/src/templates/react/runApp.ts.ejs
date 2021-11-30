@@ -20,10 +20,10 @@ import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
-import { IAppConfig, IBuildConfig, IRuntimeValue } from '<%- typesPath  %>';
+import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
-const runtimeValue: IRuntimeValue = {};
+const runtimeValue: any = {};
 
 <% if(enableRouter){ %>
   runtimeValue.enableRouter = true;

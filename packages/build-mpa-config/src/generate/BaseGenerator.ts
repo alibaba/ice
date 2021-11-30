@@ -64,7 +64,6 @@ export default class BaseGenerator {
         ...applyMethod('getBuildConfig', userConfig),
         router: Boolean(routesFilePath),
       },
-      // TODO: 这个字段哪里用到了？
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       isMPA: true,
       enableRouter: !!routesFilePath,

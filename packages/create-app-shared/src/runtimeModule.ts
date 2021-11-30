@@ -105,10 +105,7 @@ class RuntimeModule {
   }
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
-    const enabledRouter = this.getRuntimeValue('enabledRouter');
-
-    console.log('loadModule enabledRouter', enabledRouter);
-
+    const enableRouter = this.getRuntimeValue('enableRouter');
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       addDOMRender: this.addDOMRender,
@@ -122,7 +119,7 @@ class RuntimeModule {
       getRuntimeValue: this.getRuntimeValue,
     };
 
-    if (enabledRouter) {
+    if (enableRouter) {
       runtimeAPI = {
         ...runtimeAPI,
         modifyRoutes:  this.modifyRoutes,
@@ -226,9 +223,9 @@ class RuntimeModule {
 
   public getAppComponent: GetAppComponent = () => {
     // 表示是否启用 pluin-router runtime，何时不启用：1. SPA + router: false 2. MPA + 对应 pages 文件下面没有 routes.[j|t]s 这个文件
-    const enabledRouter = this.getRuntimeValue('enabledRouter');
+    const enableRouter = this.getRuntimeValue('enableRouter');
 
-    if (enabledRouter) {
+    if (enableRouter) {
       const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IPage, curr) => {
         return curr(acc);
       }, []));
