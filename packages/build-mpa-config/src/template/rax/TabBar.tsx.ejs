@@ -5,7 +5,7 @@ import TabBar from  '<%= tabBarPath %>';
 const currentPageName = '<%= entryName %>';
 
 const isPHA = isWeb && (window as any).pha;
-const isRaxWebview = isWeb && (window as any).__RAX_WEBVIEW === true;
+const isRaxWebview = isWeb && (window as any).__RAX_WEBVIEW__ === true;
 
 interface ITabItem {
   path?: string;
