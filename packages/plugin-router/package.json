@@ -11,7 +11,7 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.0.2",
+    "@builder/app-helpers": "^2.4.1",
     "@builder/pack": "^0.4.0",
     "@types/react-router-dom": "^5.1.4",
     "fs-extra": "^8.1.0",

@@ -19,8 +19,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.0.0",
-    "@builder/app-templates": "^1.0.0",
+    "@builder/app-helpers": "^2.4.1",
+    "@builder/app-templates": "^1.0.2",
     "chokidar": "^3.4.1",
     "ejs": "^3.0.1",
     "fs-extra": "^8.1.0",

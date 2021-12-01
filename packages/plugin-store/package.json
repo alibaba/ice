@@ -24,7 +24,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.0.0",
+    "@builder/app-helpers": "^2.4.1",
     "@ice/store": "^2.0.0-3",
     "chalk": "^4.1.0",
     "enhanced-resolve": "^4.3.0",
