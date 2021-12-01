@@ -6,8 +6,8 @@ import * as queryString from 'query-string';
 import ErrorBoundary from '$ice/ErrorBoundary';
 
 export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRuntimeAPI, getRuntimeValue, addProvider }) => {
-  const { app = {}, addProvider: customAddProvider } = appConfig;
-  const { ErrorBoundaryFallback, onErrorBoundaryHandler, renderComponent } = app;
+  const { app = {} } = appConfig;
+  const { ErrorBoundaryFallback, onErrorBoundaryHandler, renderComponent, addProvider: customAddProvider } = app;
 
   if (customAddProvider) {
     addProvider(customAddProvider);

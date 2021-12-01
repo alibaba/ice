@@ -4,7 +4,6 @@
   "plugins": [
     "build-plugin-icestark",
     ["build-plugin-fusion", {
-      "themePackage": "@icedesign/theme",
       "themeConfig": {
         "nextPrefix": "next-fd-"
       }
