@@ -14,7 +14,7 @@ describe(`build ${example}`, () => {
     const res = await setupBrowser({ example });
     page = res.page;
     browser = res.browser;
-    expect((await page.$$text('.next-shell')).length).toBeGreaterThan(0);
+    expect((await page.$$('.next-fd-shell')).length).toBeGreaterThan(0);
   });
 
   afterAll(async () => {
@@ -31,7 +31,7 @@ describe(`start ${example}`, () => {
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
-    expect((await page.$$text('.next-shell')).length).toBeGreaterThan(0);
+    expect((await page.$$('.next-fd-shell')).length).toBeGreaterThan(0);
   }, 120000);
 
   afterAll(async () => {
