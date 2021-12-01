@@ -1,8 +1,13 @@
+import * as path from 'path';
 import { buildFixture, setupBrowser } from './utils/build';
 import { startFixture, setupStartBrowser } from './utils/start';
 import { IPage } from './utils/browser';
+import executeCommand from './utils/executeCommand';
 
 const example = 'icestark-layout';
+const rootDir = path.join(__dirname, `../examples/${example}`);
+
+executeCommand('npm install', rootDir);
 
 describe(`build ${example}`, () => {
   let page: IPage = null;
