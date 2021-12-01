@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- [fix] update dependencies version
+
 ## 2.0.3
 
 - [feat] format rax plugin name

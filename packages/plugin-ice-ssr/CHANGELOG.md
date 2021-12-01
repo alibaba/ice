@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.5
+
+- [fix] update dependencies version
+
 ## 3.0.4
 
 - [fix] compatible with special charts in html content

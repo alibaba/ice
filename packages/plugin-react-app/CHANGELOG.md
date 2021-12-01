@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.5
+
+- [fix] update dependencies version
+
 ## 2.0.4
 
 - [fix] error occurred when config externals and remoteRuntime
