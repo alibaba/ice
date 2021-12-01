@@ -6,7 +6,8 @@ export type OnError = (err: Error, componentStack: string) => void
 export interface Context {
   initialContext: InitialContext,
   initialData: { [k: string]: any },
-  pageInitialProps: { [k: string]: any }
+  pageInitialProps: { [k: string]: any },
+  enableRouter?: boolean,
 }
 
 export interface ServerContext {
