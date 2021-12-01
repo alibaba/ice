@@ -4,6 +4,7 @@ import { build } from 'build-scripts';
 import * as getPort from 'get-port';
 import Browser, { IPage } from './browser';
 import getBuiltInPlugins = require('../../packages/icejs/src/getBuiltInPlugins');
+import executeCommand from './executeCommand';
 
 interface ISetupBrowser {
   (options: {
@@ -25,6 +26,8 @@ export const buildFixture = function(example: string) {
     const processCwdSpy = jest.spyOn(process, 'cwd');
     processCwdSpy.mockReturnValue(rootDir);
     process.env.DISABLE_FS_CACHE = 'true';
+
+    executeCommand('npm install', rootDir);
     await build({
       args: {
         config: path.join(rootDir, 'build.json'),
