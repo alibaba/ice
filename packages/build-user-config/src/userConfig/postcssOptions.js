@@ -7,6 +7,8 @@ module.exports = (config, postcssOptions, context) => {
     return;
   }
 
+  const customPostcssOptions = { ...postcssOptions };
+
   const styleRules = [
     'css',
     'css-module',
@@ -56,7 +58,7 @@ module.exports = (config, postcssOptions, context) => {
 
     // merge plugins
     const finalPlugins = [...builtInPlugins];
-    Object.keys(postcssOptions.plugins || {}).forEach((pluginName) => {
+    Object.keys(customPostcssOptions.plugins || {}).forEach((pluginName) => {
       let pluginOptions = {};
       const targetIndex = builtInPlugins.findIndex((pluginConfig) => {
         const [name, options] = Array.isArray(pluginConfig)
@@ -67,7 +69,7 @@ module.exports = (config, postcssOptions, context) => {
         }
         return typeof name === 'string' && name.indexOf(pluginName) > -1;
       });
-      const options = postcssOptions.plugins[pluginName];
+      const options = customPostcssOptions.plugins[pluginName];
       if (targetIndex > -1) {
         if (options === false) {
           // delete builtIn plugin
@@ -81,7 +83,7 @@ module.exports = (config, postcssOptions, context) => {
         finalPlugins.push([pluginName, options]);
       }
     });
-    delete postcssOptions.plugins;
+    delete customPostcssOptions.plugins;
 
     const postcssPlugins = finalPlugins.map((pluginInfo) => {
       const [name, options] = Array.isArray(pluginInfo)
@@ -100,17 +102,18 @@ module.exports = (config, postcssOptions, context) => {
       // set final postcss options in v3
       finalPostcssOptions = {
         ...finalPostcssOptions,
-        ...postcssOptions,
+        ...customPostcssOptions,
         plugins: [...postcssPlugins],
       };
     } else {
       // set default value
-      postcssOptions.postcssOptions = postcssOptions.postcssOptions || {};
+      customPostcssOptions.postcssOptions =
+        customPostcssOptions.postcssOptions || {};
 
       // modify option name `exec` to `execute` in v5
-      if (postcssOptions.exec) {
-        postcssOptions.execute = postcssOptions.exec;
-        delete postcssOptions.exec;
+      if (customPostcssOptions.exec) {
+        customPostcssOptions.execute = customPostcssOptions.exec;
+        delete customPostcssOptions.exec;
       }
 
       const shouldMoveToPostcssOptionsKeys = [
@@ -123,21 +126,21 @@ module.exports = (config, postcssOptions, context) => {
       ];
 
       // move options to postcssOptions
-      Object.keys(postcssOptions || {}).forEach((optionName) => {
+      Object.keys(customPostcssOptions || {}).forEach((optionName) => {
         if (shouldMoveToPostcssOptionsKeys.includes(optionName)) {
-          postcssOptions.postcssOptions[optionName] =
-            postcssOptions[optionName];
-          delete postcssOptions[optionName];
+          customPostcssOptions.postcssOptions[optionName] =
+            customPostcssOptions[optionName];
+          delete customPostcssOptions[optionName];
         }
       });
 
       // set final postcss options in v5
       finalPostcssOptions = {
         ...finalPostcssOptions,
-        ...postcssOptions,
+        ...customPostcssOptions,
         postcssOptions: {
           ...finalPostcssOptions.postcssOptions,
-          ...postcssOptions.postcssOptions,
+          ...customPostcssOptions.postcssOptions,
           plugins: [...postcssPlugins],
         },
       };
