@@ -143,6 +143,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     const { bundleContent, loadableComponentExtractor } =
       reactAppRendererWithSSR(
         {
+          enableRouter: <%- enableRouter %>,
           initialContext,
           initialData,
           pageInitialProps,
