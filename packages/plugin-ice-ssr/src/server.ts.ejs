@@ -11,6 +11,7 @@ import { InitialContext, ServerContext } from 'react-app-renderer/lib/types';
 import { getAppConfig } from '../../core/appConfig';
 import loadStaticModules from '../../core/loadStaticModules';
 import { emitLifeCycles } from '../../core/publicAPI';
+import { setHistory } from '../../core/routerAPI';
 import app from '../../core/runApp';
 import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
@@ -67,13 +68,17 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   if (req) {
     const { search, hash, path, pathname } = parseurl(req);
     const parsedQuery = queryString.parse(search);
+    const history = {
+      location: { pathname, search, hash, state: null },
+    };
+    setHistory(history);
     initialContext = {
       req,
       res,
       pathname,
       query: parsedQuery,
       path,
-      location: { pathname, search, hash, state: null },
+      location: history.location,
     };
   }
 

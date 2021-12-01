@@ -48,11 +48,11 @@ export function runApp(appConfig?: IAppConfig) {
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
-  if (process.env.__IS_SERVER__) return;
   <% if (enableRouter !== false) {%>
   // set History before GID
   initHistory && initHistory(appConfig as any);
   <% } %>
+  if (process.env.__IS_SERVER__) return;
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
