@@ -1,5 +1,6 @@
 {
   // "vite": true,
   "router": false,
-  "plugins": []
+  "plugins": [],
+  "ssr": true
 }

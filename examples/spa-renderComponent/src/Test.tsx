@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { getSearchParams } from 'ice';
 
 export default function Test(props) {
   console.log('Test', props);
+  console.log('search params', getSearchParams());
   return <>Hello: {props.name}</>;
 }
 

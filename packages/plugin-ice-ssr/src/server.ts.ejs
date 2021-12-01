@@ -13,7 +13,11 @@ import loadStaticModules from '../../core/loadStaticModules';
 import { emitLifeCycles } from '../../core/publicAPI';
 import { setHistory } from '../../core/routerAPI';
 import app from '../../core/runApp';
+<% if (enableRouter) { %>
 import routes from '<%- routesPath %>/routes';
+<% } else { %>
+const routes = [];
+<% } %>
 import loadable from '@loadable/component';
 
 const chalk = require('chalk');
@@ -209,22 +213,34 @@ export function generateHtml({
 }
 
 export async function getComponentByPath(routes, currPath)  {
-  async function findMatchRoute(routeList) {
-    let matchedRoute = routeList.find(route => {
-      return matchPath(currPath, route);
-    });
-    if (matchedRoute?.component?.__LOADABLE__) {
-      matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+  <% if (enableRouter) { %>
+    async function findMatchRoute(routeList) {
+      let matchedRoute = routeList.find(route => {
+        return matchPath(currPath, route);
+      });
+      if (matchedRoute?.component?.__LOADABLE__) {
+        matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+      }
+      if (matchedRoute) {
+        return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
+      }
     }
-    if (matchedRoute) {
-      return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
+    const routeData = await findMatchRoute(routes)
+    return {
+      component: routeData?.component,
+      getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps
+    };
+  <% } else { %>
+    const matchedComponent = appConfig?.app?.renderComponent;
+
+    if (!matchedComponent) {
+      throw new Error('未指定需要渲染的页面组件!');
     }
-  }
-  const routeData = await findMatchRoute(routes)
-  return {
-    component: routeData?.component,
-    getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps
-  };
+    return {
+      component: matchedComponent,
+      getInitialProps: matchedComponent.getInitialProps
+    }
+  <% } %>
 }
 
 function logError(msg) {

@@ -67,7 +67,7 @@ export function runApp(appConfig?: IAppConfig, <% if (enableRouter !== false) {%
   loadStaticModules(appConfig as IAppConfig);
 
   <% if (typeof pageConfig !== 'undefined') { %>
-    if (appConfig?.app.renderComponent) {
+    if (appConfig?.app?.renderComponent) {
       appConfig.app.renderComponent.__pageConfig = pageConfig;
     }
   <% } %>
