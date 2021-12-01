@@ -7,7 +7,6 @@ const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     addProvider: ({ children }) => {
-      console.log('runnnn addProvider');
       return <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>;
     },
   },
