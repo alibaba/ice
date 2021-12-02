@@ -23,7 +23,7 @@ A universal framework based on React.js, [Docs](https://ice.work/).
 - 🐴 **Hooks**：Provide Hooks APIs such as useModel and useHistory, etc
 - 🐌 **Plugin system**：The plugin system provides rich features and allow the community to build reusable solutions
 - 🐘 **TypeScript**：Support TypeScript
-- 🐂 **Modern**：Support SPA、SSR、MPA and Micro-frontend
+- 🐂 **Modern**：Support SPA, SSR, MPA and Micro-frontend
 
 ## Quick start
 
