@@ -1,6 +1,6 @@
 {
   "name": "create-app-shared",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -19,6 +19,10 @@
       "weex": "./lib/weex/index.js",
       "kraken": "./lib/weex/index.js",
       "miniapp": "./lib/miniapp/index.js",
+      "wechat-miniprogram": "./lib/miniapp/index.js",
+      "bytedance-microapp": "./lib/miniapp/index.js",
+      "baidu-smartprogram": "./lib/miniapp/index.js",
+      "kuaishou-miniprogram": "./lib/miniapp/index.js",
       "default": "./lib/index.js"
     },
     "./*": "./*"
