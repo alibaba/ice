@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+- [Fix] avoid rootEl override `document.body`
+
 ## 0.2.1
 
 - [Refactor] miniapp page component
