@@ -31,4 +31,5 @@ export type WithPageLifeCycle = <P>(Component: React.ComponentClass<P>) => React
 
 export interface Context {
   createElement?: ReactCreateElement;
+  enableRouter?: boolean;
 }

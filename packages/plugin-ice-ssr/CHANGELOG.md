@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.5
+
+- [feat] support no router mode ssr
+
 ## 3.0.4
 
 - [fix] compatible with special charts in html content

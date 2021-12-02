@@ -66,7 +66,9 @@ export function runApp(appConfig?: IAppConfig, <% if (enableRouter !== false) {%
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
 
-  if (process.env.__IS_SERVER__ || isNode) return;
+  <% if (typeof pageConfig !== 'undefined' && !enableRouter) { %>
+    appConfig.app.renderComponent.__pageConfig = pageConfig;
+  <% } %>
 
   <% if (enableRouter !== false) {%>
   if (customStaticConfig) {
@@ -74,9 +76,9 @@ export function runApp(appConfig?: IAppConfig, <% if (enableRouter !== false) {%
   }
   // set History before GID
   initHistory && initHistory(appConfig as any, { staticConfig });
-  <% }  else if (typeof pageConfig !== 'undefined') { %>
-    appConfig.renderComponent.__pageConfig = pageConfig;
   <% } %>
+
+  if (process.env.__IS_SERVER__ || isNode) return;
 
   let renderer;
   if (inMiniApp) {
