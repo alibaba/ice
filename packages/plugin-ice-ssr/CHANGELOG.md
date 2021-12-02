@@ -3,6 +3,7 @@
 ## 3.0.5
 
 - [fix] update dependencies version
+- [feat] support no router mode ssr
 
 ## 3.0.4
 

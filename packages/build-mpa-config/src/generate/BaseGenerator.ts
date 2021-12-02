@@ -46,11 +46,15 @@ export default class BaseGenerator {
     this.runAppPath = path.join(this.entryFolder, 'runApp');
   }
 
+  /**
+   * MPA 生成单个页面的 runApp.tsx
+   */
   public generateRunAppFile(userConfig) {
     const { framework } = this.options;
     const { applyMethod } = this.builtInMethods;
     const globalStyles = globby.sync(['src/global.@(scss|less|css)'], { cwd: this.rootDir });
     const routesFilePath = this.getRoutesFilePath();
+
     const renderData = {
       ...this.runAppRenderData,
       globalStyle: globalStyles.length && relative(this.entryFolder, path.join(this.rootDir, globalStyles[0])),
@@ -58,10 +62,10 @@ export default class BaseGenerator {
       typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
-        router: Boolean(routesFilePath),
       },
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       isMPA: true,
+      enableRouter: Boolean(routesFilePath),
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
@@ -87,6 +91,7 @@ export default class BaseGenerator {
       , (renderData) => {
         let { runtimeModules } = renderData;
         if (!routesFilePath) {
+          // MPA 某个 page 下面没有 routes.[j|t]s 文件，禁用 plugin-router 运行时能力
           runtimeModules = runtimeModules.filter(({ name }) => {
             return !this.disableRuntimeList.includes(name);
           });

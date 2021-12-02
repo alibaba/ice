@@ -33,11 +33,13 @@ function renderInServer(context: Context, options: RenderOptions) {
 export default function reactAppRendererWithSSR(context: Context, options: RenderOptions) {
   const cloneOptions = deepClone(options);
   const { appConfig } = cloneOptions || {};
-  appConfig.router = appConfig.router || {};
-  if (appConfig.router.type !== 'browser') {
-    throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
+  if (context.enableRouter) {
+    appConfig.router = appConfig.router || {};
+    if (appConfig.router.type !== 'browser') {
+      throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
+    }
+    appConfig.router.type = 'static';
   }
-  appConfig.router.type = 'static';
   return renderInServer(context, cloneOptions);
 }
 

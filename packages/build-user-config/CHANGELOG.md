@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.9
+
+- [feat] compact compact postcss options in different version of postcss-loader
+
 ## 1.1.8
 
 - [fix] re-calculate webpack cache id when config `disableRuntime`
@@ -43,7 +47,6 @@
 - [feat] refactor config of eslint
 - [feat] support active minify in dev
 
-
 ## 1.0.2
 
 - [fix] add dependency of eslint-reporting-webpack-plugin
@@ -82,7 +85,7 @@
 
 ## 0.3.7
 
-- [feat] add `devServer.host` to https cert 
+- [feat] add `devServer.host` to https cert
 - [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
 - [fix] compatible with no loader specified when using `postcssrc: true` in ssr app
 

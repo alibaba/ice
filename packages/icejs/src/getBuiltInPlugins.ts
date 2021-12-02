@@ -12,6 +12,7 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
     ['build-plugin-ice-store', 'store', true],
     ['build-plugin-ice-auth', 'auth', true],
     ['build-plugin-pwa', 'pwa', false],
+    ['build-plugin-ice-request', 'request', true],
   ];
 
   const checkPluginExist = (name: string) => {
@@ -61,7 +62,7 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'framework': 'react',
     'alias': process.env.__FRAMEWORK_NAME__ || 'ice'
   } as Json;
-  const plugins: IPluginList = [
+  let plugins: IPluginList = [
     // common plugins
     ['build-plugin-app-core', coreOptions],
     'build-plugin-ice-logger',
@@ -73,9 +74,17 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-router',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
-    'build-plugin-ice-request',
     'build-plugin-helmet'
   ];
+
+  if (userConfig.mpa && userConfig.router === false) {
+    console.warn('Warning:', 'MPA 模式下 router: false 选项没有意义，建议移除该选项。');
+  }
+
+  if (!userConfig.mpa && userConfig.router === false) {
+    // SPA 并且设置了 router: false 则过滤 router 插件
+    plugins = plugins.filter((name) => name !== 'build-plugin-ice-router');
+  }
 
   const dynamicPlugins = getDynamicPlugins(userConfig);
 

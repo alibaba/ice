@@ -1,7 +1,11 @@
 # Changelog
 
-## 2.0.4
+## 2.1.0
 
+- [feat] register `router`&`request` to userConfig
+- [chore] pass `enableRouter` to generator
+- [feat] remove runtime addProvider and move to react-app/rax-app
+- [feat] add `mpa` to runtime buildConfig
 - [fix] update dependencies version
 
 ## 2.0.3
