@@ -3,7 +3,7 @@ import {
   createBaseApp,
   initAppLifeCycles,
   emitLifeCycles,
-<% if (buildConfig.router !== false) {%>
+<% if (enableRouter !== false) {%>
   initHistory,
   createHistory,
 <% } %>
@@ -40,11 +40,16 @@ if (!inMiniApp) {
   runtimeValue.tabBarConfig = <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %>;
 }
 <% } %>
+
+<% if(enableRouter){ %>
+  runtimeValue.enableRouter = true;
+<% } %>
+
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
   runtimeAPI: {
-    <% if (buildConfig.router !== false) {%>
+    <% if (enableRouter !== false) {%>
     createHistory,
     <% } %>
   },
@@ -55,23 +60,25 @@ const frameworkAppBase = createBaseApp({
 const pageConfig = <%- JSON.stringify(pageConfig) %>;
 <% } %>
 
-export function runApp(appConfig?: IAppConfig, <% if (buildConfig.router !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
+export function runApp(appConfig?: IAppConfig, <% if (enableRouter !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
 
-  if (process.env.__IS_SERVER__ || isNode) return;
+  <% if (typeof pageConfig !== 'undefined' && !enableRouter) { %>
+    appConfig.app.renderComponent.__pageConfig = pageConfig;
+  <% } %>
 
-  <% if (buildConfig.router !== false) {%>
+  <% if (enableRouter !== false) {%>
   if (customStaticConfig) {
     staticConfig = customStaticConfig;
   }
   // set History before GID
   initHistory && initHistory(appConfig as any, { staticConfig });
-  <% }  else if (typeof pageConfig !== 'undefined') { %>
-    appConfig.renderComponent.__pageConfig = pageConfig;
   <% } %>
+
+  if (process.env.__IS_SERVER__ || isNode) return;
 
   let renderer;
   if (inMiniApp) {

@@ -6,12 +6,9 @@ import { ConfigProvider } from '@alifd/next';
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
-    addProvider: ({ children }) => (
-      <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>
-    ),
-  },
-  logger: {
-    level: 'warn'
+    addProvider: ({ children }) => {
+      return <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>;
+    },
   },
   router: {
     type: 'browser',
