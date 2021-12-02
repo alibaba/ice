@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.0
+
+- [chore] remove `buildConfig.router` and add `enableRouter` to generator
+- [fix] `renderComponent` -> `app.renderComponent`
+
 ## 4.0.5
 
 - fix: `TabBar` resolve path
