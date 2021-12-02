@@ -2,8 +2,9 @@
 
 ## 3.0.5
 
-- [fix] update dependencies version
 - [feat] support no router mode ssr
+- [fix] update dependencies version
+- [fix] generate loadable-stats.json for server
 
 ## 3.0.4
 
