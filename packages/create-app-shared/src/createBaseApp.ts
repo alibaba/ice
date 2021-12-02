@@ -20,6 +20,7 @@ export default ({ loadRuntimeModules, createElement, runtimeAPI = {}, runtimeVal
     // Merge default appConfig to user appConfig
     appConfig = mergeDefaultConfig(DEFAULT_APP_CONFIG, appConfig) as T;
     (context as Context).createElement = createElement;
+    (context as Context).enableRouter = (runtimeValue as any).enableRouter;
 
     // Load runtime modules
     const runtime = new RuntimeModule(appConfig, buildConfig, context, staticConfig);

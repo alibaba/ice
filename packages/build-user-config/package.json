@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -25,6 +25,12 @@
     "@builder/swc-loader": "^1.0.0",
     "trusted-cert": "^1.0.0",
     "@builder/webpack-plugin-swc": "^1.0.0"
+  },
+  "devDependencies": {
+    "postcss-import": "^12.0.1",
+    "postcss-plugin-rpx2vw": "^0.0.2",
+    "postcss-preset-env": "^6.7.0",
+    "webpack-chain": "^6.5.1"
   },
   "files": [
     "lib",

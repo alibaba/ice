@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- [chore] use `runtimeValue.enableRouter` check router status
+- [feat] support pass pageConfig&getInitialProps when use renderComponent
+- [fix] `renderComponent` -> `app.renderComponent`
+
 ## 1.1.0
 
 - [feat] support runtime value
