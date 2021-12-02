@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.1
+
+- [feat] support frm mode
+
 ## 4.1.0
 
 - [chore] remove `buildConfig.router` and add `enableRouter` to generator
