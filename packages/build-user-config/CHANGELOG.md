@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.10
+
+- [feat] add https url list
+- [chore] enhance `applyCliOptions`
+
 ## 1.1.9
 
 - [feat] compact compact postcss options in different version of postcss-loader
