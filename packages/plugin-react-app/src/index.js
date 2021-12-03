@@ -44,8 +44,9 @@ module.exports = async (api) => {
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
-
-    chainConfig.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
+    if (iceTempPath) {
+      chainConfig.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
+    }
   });
 
   const taskName = 'web';
