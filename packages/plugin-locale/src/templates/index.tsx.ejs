@@ -1,0 +1,47 @@
+<% if(!hasJsxRuntime) { %>
+  import * as React from 'react';
+<% } %>
+import { FC, createContext, useState, useContext } from 'react';
+
+const Context = createContext<any>(null);
+
+interface Props {
+  value: string;
+}
+
+const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
+  const [locale, setLocale] = useState<string>(defaultLocale);
+  return (
+    <Context.Provider value={[locale, setLocale]}>
+      {children}
+    </Context.Provider>
+  )
+}
+
+const useLocale = (): [string, React.Dispatch<React.SetStateAction<string>>] => {
+  return useContext(Context)
+}
+
+const getLocale = (defaultLocale: string) => {
+  // TODO: get locale from cookie
+  return defaultLocale;
+}
+
+const getDefaultLocale = (): string => {
+  return '<%= defaultLocale %>'
+}
+
+const getAllLocales = (): string[] => {
+  return <%- JSON.stringify(locales) %>
+}
+
+const setLocale = () => {
+
+}
+
+export { 
+  useLocale, 
+  LocaleProvider,
+  getDefaultLocale,
+  getAllLocales,
+};

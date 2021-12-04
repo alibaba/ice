@@ -31,7 +31,7 @@ function getBuildConfig(userConfig): IBuildConfig{
   if (plugins && Array.isArray(plugins)) {
     plugins.forEach((plugin) => {
       if (Array.isArray(plugin)) {
-        const [pluginName, pluginOptions = { locales: ['zh-CN'], defaultLocale: 'zh-CN' }] = plugin;
+        const [pluginName, pluginOptions] = plugin;
         if (pluginName === 'build-plugin-ice-locale') {
           localeConfig = pluginOptions;
         }

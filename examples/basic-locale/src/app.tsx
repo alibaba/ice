@@ -1,4 +1,4 @@
-import { runApp, IAppConfig } from 'ice';
+import { runApp, IAppConfig, useLocale } from 'ice';
 import { IntlProvider } from 'react-intl';
 import { messages } from './locales';
 
@@ -8,10 +8,12 @@ const appConfig: IAppConfig = {
   },
   app: {
     addProvider: ({ children }) => {
+      // TODO: use the useLocale from ice
       const locale = 'en-US';
       const defaultLocale = 'zh-CN';
+      // const [locale] = getLocale();
       return (
-        <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={defaultLocale}>
+        <IntlProvider messages={messages[locale]} locale={locale}>
           {children}
         </IntlProvider>
       );
