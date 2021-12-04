@@ -1,7 +1,11 @@
 <% if(!hasJsxRuntime) { %>
   import * as React from 'react';
 <% } %>
-import { FC, createContext, useState, useContext } from 'react';
+import { FC, createContext, useContext, useState } from 'react';
+import { history } from 'create-app-shared';
+import Cookies from 'universal-cookie';
+
+const LOCALE_COOKIE_KEY = 'ice_locale';
 
 const Context = createContext<any>(null);
 
@@ -10,7 +14,14 @@ interface Props {
 }
 
 const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
-  const [locale, setLocale] = useState<string>(defaultLocale);
+  const [, setActiveLocale] = useState<string>(defaultLocale);
+  const locale = getLocale();
+
+  function setLocale(locale: string) {
+    setLocaleToCookies(locale);
+    redirect(locale);
+    setActiveLocale(locale);
+  }
   return (
     <Context.Provider value={[locale, setLocale]}>
       {children}
@@ -18,25 +29,58 @@ const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
   )
 }
 
-const useLocale = (): [string, React.Dispatch<React.SetStateAction<string>>] => {
+function useLocale(): [string, React.Dispatch<React.SetStateAction<string>>] {
   return useContext(Context)
 }
 
-const getLocale = (defaultLocale: string) => {
-  // TODO: get locale from cookie
-  return defaultLocale;
-}
-
-const getDefaultLocale = (): string => {
+function getDefaultLocale(): string {
   return '<%= defaultLocale %>'
 }
 
-const getAllLocales = (): string[] => {
+function getAllLocales(): string[] {
   return <%- JSON.stringify(locales) %>
 }
 
-const setLocale = () => {
+/**
+ * get current locale from url(location.pathname)
+ */
+function getLocale(): string {
+  const { location: { pathname } } = history;
+  const subRoutes = pathname.split('/').filter((item) => item);
+  const prefixRoute = subRoutes[0];
+  const locales = <%- JSON.stringify(locales) %> || [];
+  if (locales.includes(prefixRoute)) {
+    return prefixRoute;
+  }
 
+  return '<%= defaultLocale %>';
+}
+
+function setLocale(locale: string): void {
+  
+}
+
+function setLocaleToCookies(locale: string) {
+  const cookies = new Cookies();
+  cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
+}
+
+function redirect(locale: string) {
+  if (!history) {
+    console.error('history is null');
+  }
+
+  const { location: { pathname } } = history;
+  let subRoutes = pathname.split('/').filter((item: string) => item);
+
+  if (locale === '<%= defaultLocale %>') {
+    subRoutes = subRoutes.slice(1);
+  } else {
+    subRoutes[0] = locale;
+  }
+
+  const newPathname = subRoutes.join('/');
+  history.push(newPathname);
 }
 
 export { 
@@ -44,4 +88,6 @@ export {
   LocaleProvider,
   getDefaultLocale,
   getAllLocales,
+  getLocale,
+  setLocaleToCookies,
 };

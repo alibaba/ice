@@ -12,15 +12,6 @@ export default ({ modifyRoutes, buildConfig, addProvider }) => {
   addProvider(Provider(defaultLocale));
 };
 
-// function LocaleProvider({ children }) {
-//   return (
-//     <div>
-//       This is Locale Provider
-//       {children}
-//     </div>
-//   );
-// }
-
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
   const modifiedRoutes = [...originRoutes];
   // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
@@ -28,9 +19,9 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
 
   originRoutes.forEach((route) => {
     const { path, redirect } = route;
-    if (path && !redirect && typeof path === 'string') {
+    if(path && !redirect && typeof path === 'string') {
       prefixRouteLocales.forEach((prefixRouteLocale: string) => {
-        modifiedRoutes.push({ 
+        modifiedRoutes.unshift({ 
           ...route, 
           path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
         });
@@ -41,9 +32,8 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
   return modifiedRoutes;
 }
 
-function Provider(defaultLocale) {
+function Provider(defaultLocale: string) {
   return function({ children }) {
-    return <LocaleProvider value={defaultLocale}>212{children}</LocaleProvider>;
+    return <LocaleProvider value={defaultLocale}>{children}</LocaleProvider>;
   };
-
 }
