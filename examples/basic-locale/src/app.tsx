@@ -8,6 +8,8 @@ const appConfig: IAppConfig = {
   },
   app: {
     addProvider: ({ children }) => {
+      // TODO: remove eslint error
+      // eslint-disable-next-line
       const [locale] = useLocale();
       const defaultLocale = getDefaultLocale();
       return (
