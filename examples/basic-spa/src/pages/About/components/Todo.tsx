@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 
 class Todo extends PureComponent {
   componentDidMount() {
-    throw new Error('test error boundary');
+    throw new Error('Todo Error');
   }
 
   render() {

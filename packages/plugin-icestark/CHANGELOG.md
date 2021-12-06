@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- [feat] use `vite-plugin-index-html` as a substitute in Vite mode.
+
 ## 2.4.2
 
 - [fix] provide initial `pathname` with `location`. ([#4885](https://github.com/alibaba/ice/issues/4885))

@@ -1,5 +1,5 @@
 import * as pathToRegexp from 'path-to-regexp';
-import joinPath from '../joinPath';
+import joinPath from '../src/utils/joinPath';
 
 const joinTests: [string[], string][] = [
   [[], ''],

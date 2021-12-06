@@ -3,9 +3,9 @@ import Main from './index';
 
 const appConfig: IAppConfig = {
   app: {
-    rootId: 'ice-container'
+    rootId: 'ice-container',
+    renderComponent: Main,
   },
-  renderComponent: Main,
 };
 
 runApp(appConfig);

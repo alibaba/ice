@@ -13,6 +13,7 @@ module.exports = async (api) => {
   const { onGetWebpackConfig, context, registerTask, getValue, modifyUserConfig, log } = api;
   const { command, rootDir, userConfig, originalUserConfig } = context;
   const mode = command === 'start' ? 'development' : 'production';
+  const iceTempPath = getValue('TEMP_PATH');
 
   const invalidMsg = getInvalidMessage(originalUserConfig);
   if (invalidMsg) {
@@ -43,6 +44,9 @@ module.exports = async (api) => {
   onGetWebpackConfig(chainConfig => {
     // add resolve modules of project node_modules
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
+    if (iceTempPath) {
+      chainConfig.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
+    }
   });
 
   const taskName = 'web';

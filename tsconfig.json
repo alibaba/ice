@@ -23,6 +23,7 @@
     { "path": "packages/plugin-logger" },
     { "path": "packages/plugin-rematch" },
     { "path": "packages/plugin-store" },
+    { "path": "packages/vite-plugin-index-html" },
     { "path": "packages/plugin-icestark" },
     { "path": "packages/plugin-config" },
     { "path": "packages/plugin-mpa" },

@@ -41,6 +41,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@ice/spec": "^1.0.0",
+    "@napi-rs/cli": "^1.1.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/dts-bundle": "^0.0.32",
     "@types/jest": "^25.2.1",

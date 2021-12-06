@@ -2,16 +2,15 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
+import htmlPlugin from 'vite-plugin-index-html';
 import checkEntryFile from './checkEntryFile';
-import buildPlugin from './buildPlugin';
-import htmlPlugin from './htmlPlugin';
 import lifecyclePlugin from './lifecyclePlugin';
-import type { Entries } from './buildPlugin';
+import { getEntryForSPA } from './entryHelper';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
-  const { vite } = userConfig;
+  const { vite, mpa } = userConfig;
 
   let appType = type;
 
@@ -59,11 +58,25 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   applyMethod('addRenderFile', layoutSource, layoutPath);
 
   onGetWebpackConfig((config) => {
-    const entries = config.toConfig().entry as Entries;
+    const entries = config.entryPoints.entries();
 
     // Only micro-applications need to be compiled to specific format.
     if (appType === 'child' && vite) {
-      modifyUserConfig('vite.plugins', [buildPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
+
+      if (mpa || Object.keys(entries).length > 1) {
+        log.warn('[plugin-icestark]: MPA is not supported currently.');
+      } else {
+        // Get the last file as the actual entry
+        const entryFile = getEntryForSPA(entries);
+        modifyUserConfig('vite.plugins', [
+          htmlPlugin({
+            entry: entryFile,
+            template: path.resolve(rootDir, 'public/index.html'),
+            preserveEntrySignatures: 'exports-only'
+          }),
+          lifecyclePlugin(entryFile)
+        ], { deepmerge: true });
+      }
     }
 
     config
@@ -98,11 +111,12 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
       // collect entry
       const entryList = [];
       Object.keys(entries).forEach((key) => {
+        const entryValues = entries[key].values();
         // only include entry path
-        for (let i = 0; i < entries[key].length; i += 1) {
+        for (let i = 0; i < entryValues.length; i += 1) {
           // filter node_modules file add by plugin
-          if (!/node_modules/.test(entries[key][i])) {
-            entryList.push(entries[key][i]);
+          if (!/node_modules/.test(entryValues[i])) {
+            entryList.push(entryValues[i]);
           }
         }
       });
