@@ -4,6 +4,7 @@
 
 - [feat] add https url list
 - [chore] enhance `applyCliOptions`
+- [chore] RedirectPathLoader should include `.rax|.ice`
 
 ## 1.1.9
 
