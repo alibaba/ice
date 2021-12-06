@@ -30,7 +30,7 @@ module.exports = (config, compileDependencies) => {
       } else if (typeof dep === 'string') {
         // add default node_modules
         const matchStr = `node_modules/?.+${dep}/`;
-        return process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr;
+        return matchStr;
       }
       return false;
     }).filter(Boolean);
