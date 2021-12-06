@@ -86,7 +86,7 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
     multipleSource: {
       runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
         filename: entryPath,
-        value: runAppPath,
+        value: formatPath(runAppPath),
         type: 'normal',
       })),
     },
