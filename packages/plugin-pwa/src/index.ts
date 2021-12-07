@@ -8,7 +8,6 @@ import ManifestPlugin from './ManifestPlugin';
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options) => {
   const { command, rootDir, userConfig } = context;
-  console.log('register');
   // Register pwa in build.json
   registerUserConfig({
     name: 'pwa',
