@@ -1289,6 +1289,19 @@
     html-entities "^2.1.0"
     jest-worker "27.0.6"
 
+"@builder/pack@0.4.6-2":
+  version "0.4.6-2"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.6-2.tgz#f83fe61eab551c176a34150cb77ec7a2f6c4e2d7"
+  integrity sha512-rFOrECQifZqKFSvwR6mg7Tp/iDeD86WGTEGmuOzBzFhiAipME0lkQC9tG9EGXFi0mH+m75Dium5SGAai+pWZ0g==
+  dependencies:
+    ansi-html "^0.0.7"
+    ansi-html-community "^0.0.8"
+    chokidar "3.5.2"
+    core-js-pure "^3.8.1"
+    error-stack-parser "^2.0.6"
+    html-entities "^2.1.0"
+    jest-worker "27.0.6"
+
 "@builder/pack@^0.4.0":
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.5.tgz#356cf4eea6ac4207f5665dc09f3d9b52f9411166"

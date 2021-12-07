@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.10
+
+- [fix] add url fallback for webpackHotDevClient
+
 ## 1.1.9
 
 - [feat] compact compact postcss options in different version of postcss-loader

@@ -12,6 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@builder/pack": "0.4.6-1"
+    "@builder/pack": "0.4.6-2"
   }
 }

@@ -19,7 +19,7 @@
     "webpack-chain": "^6.4.0"
   },
   "dependencies": {
-    "@builder/pack": "0.4.6-1",
+    "@builder/pack": "0.4.6-2",
     "fs-extra": "^9.1.0"
   },
   "originTemplate": "build-plugin-template"
