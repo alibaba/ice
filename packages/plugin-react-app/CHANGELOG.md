@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+
+- [feat] pre bundle `webpack-dev-server`
+
 ## 2.1.1
 
 - [fix] avoid error when disableRuntime

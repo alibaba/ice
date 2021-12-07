@@ -12,8 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "raw-loader": "^4.0.2",
-    "url-loader": "^4.1.1",
-    "worker-loader": "^3.0.8"
+    "@builder/pack": "0.4.6-1"
   }
 }
