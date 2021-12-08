@@ -3,6 +3,7 @@
 ## 1.1.5
 
 - [fix] normalize path in case of win32 system
+- [fix] default value of rollupOptions.context for top-level this
 
 ## 1.1.4
 
