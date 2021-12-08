@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { getMpaEntries } from '@builder/app-helpers';
+import { getMpaEntries, formatPath } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
@@ -105,7 +105,7 @@ const plugin: IPlugin = (api) => {
         multipleSource: {
           runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
             filename: entryPath,
-            value: runAppPath,
+            value: formatPath(runAppPath),
             type: 'normal',
           })),
         },
