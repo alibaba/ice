@@ -69,9 +69,10 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
 
 function wrapperPageWithSearchParams(applyRuntimeAPI) {
   const WrapperPageFn = (PageComponent) => {
+    const { pageConfig } = PageComponent;
     const SearchParamsWrapper = (props) => {
       const searchParams = applyRuntimeAPI('getSearchParams');
-      return <PageComponent {...Object.assign({}, props, { searchParams })} />;
+      return <PageComponent {...Object.assign({}, props, { searchParams, pageConfig })} />;
     };
     return SearchParamsWrapper;
   };
