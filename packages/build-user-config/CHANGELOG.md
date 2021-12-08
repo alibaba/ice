@@ -2,6 +2,9 @@
 
 ## 1.1.10
 
+- [feat] add https url list
+- [chore] enhance `applyCliOptions`
+- [chore] RedirectPathLoader should include `.rax|.ice`
 - [fix] skip deps `filepath` in windows
 
 ## 1.1.9
