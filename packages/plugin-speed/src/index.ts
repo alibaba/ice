@@ -35,7 +35,7 @@ const plugin: IPlugin = ({ context, onHook, registerCliOption, applyMethod }) =>
   }
   // add runtime plugin only --build-speed is configured in mode vite
   if (!commandArgs.buildSpeed || !userConfig.vite) {
-    applyMethod('addDisableRuntimePlugin', 'build-plugin-react-app');
+    applyMethod('addDisableRuntimePlugin', 'build-plugin-speed');
   }
 };
 
