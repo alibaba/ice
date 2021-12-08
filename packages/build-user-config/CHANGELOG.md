@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.10
+
+- [fix] add url fallback for webpackHotDevClient
+- [fix] bump version of `@builder/pack`(^0.5.0)
+- [feat] add https url list
+- [chore] enhance `applyCliOptions`
+- [chore] RedirectPathLoader should include `.rax|.ice`
+- [fix] skip deps `filepath` in windows
+
+## 1.1.9
+
+- [feat] compact compact postcss options in different version of postcss-loader
+
 ## 1.1.8
 
 - [fix] re-calculate webpack cache id when config `disableRuntime`
@@ -43,7 +56,6 @@
 - [feat] refactor config of eslint
 - [feat] support active minify in dev
 
-
 ## 1.0.2
 
 - [fix] add dependency of eslint-reporting-webpack-plugin
@@ -82,7 +94,7 @@
 
 ## 0.3.7
 
-- [feat] add `devServer.host` to https cert 
+- [feat] add `devServer.host` to https cert
 - [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
 - [fix] compatible with no loader specified when using `postcssrc: true` in ssr app
 

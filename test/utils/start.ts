@@ -21,6 +21,7 @@ export const startFixture = async function (example: string) {
   const processCwdSpy = jest.spyOn(process, 'cwd');
   processCwdSpy.mockReturnValue(rootDir);
   process.env.DISABLE_FS_CACHE = 'true';
+
   const devServer = await start({
     args: {
       config: path.join(rootDir, 'build.json'),

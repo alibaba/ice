@@ -1,6 +1,6 @@
 {
   "name": "@builder/mpa-config",
-  "version": "4.0.5",
+  "version": "4.1.2",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -25,7 +25,7 @@
     "fs-extra": "^8.1.0",
     "loader-utils": "^2.0.0",
     "globby": "^11.0.2",
-    "@builder/app-templates": "^1.0.0"
+    "@builder/app-templates": "^1.1.0"
   },
   "devDependencies": {
     "build-scripts": "^1.1.0"

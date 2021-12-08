@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- [fix] bump version of `@builder/pack`(^0.5.0)
+
 ## 1.0.3
 
 - [fix] add `@babel/plugin-proposal-class-properties`

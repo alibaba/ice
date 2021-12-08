@@ -1,4 +1,5 @@
 {
+  // "router": false,
   "remoteRuntime": true,
   "polyfill": false,
   "ignoreHtmlTemplate": false,
