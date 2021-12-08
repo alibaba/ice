@@ -26,7 +26,7 @@ describe(`build ${example}`, () => {
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Dashboard Page...']);
 
     // pageConfig props
-    expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual('foo');
+    expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual(['foo']);
   });
 
   afterAll(async () => {
@@ -55,7 +55,7 @@ describe(`start ${example}`, () => {
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Dashboard Page...']);
 
     // pageConfig props
-    expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual('foo');
+    expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual(['foo']);
   });
 
   afterAll(async () => {
