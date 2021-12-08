@@ -3,6 +3,7 @@
 ## 2.1.2
 
 - [feat] pre bundle `webpack-dev-server`
+- [fix] bump version of `@builder/pack`(^0.5.0)
 
 ## 2.1.1
 

@@ -1313,6 +1313,19 @@
     html-entities "^2.1.0"
     jest-worker "27.0.6"
 
+"@builder/pack@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.5.0.tgz#c44ef30b1fa836c4eee5401e7e1243c3558ec385"
+  integrity sha512-3AaEOfDV3WIkfTf3y85MyopYI4hVjsWXuZzORR4+fV8xZx0b5YBhpaZiUXRbVcsnetQpwgffTfBNAqB4E6GSdA==
+  dependencies:
+    ansi-html "^0.0.7"
+    ansi-html-community "^0.0.8"
+    chokidar "3.5.2"
+    core-js-pure "^3.8.1"
+    error-stack-parser "^2.0.6"
+    html-entities "^2.1.0"
+    jest-worker "27.0.6"
+
 "@builder/swc-darwin-arm64@^0.1.0":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@builder/swc-darwin-arm64/-/swc-darwin-arm64-0.1.2.tgz#c6c11672e882d405d922aef0b8d4df99f9c1dd19"
