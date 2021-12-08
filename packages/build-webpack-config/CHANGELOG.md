@@ -1,5 +1,9 @@
 # changelog
 
+## 1.0.5
+
+- [fix] bump version of `@builder/pack`(^0.5.0)
+
 ## 1.0.4
 
 - [fix] lock postcss version for postcss-loader

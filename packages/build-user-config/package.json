@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "@builder/pack": "^0.4.0",
+    "@builder/pack": "^0.5.0",
     "@babel/helper-module-imports": "^7.13.12",
     "@builder/app-helpers": "^2.0.0",
     "core-js": "^3.3.1",
@@ -19,7 +19,6 @@
     "regenerator-runtime": "^0.13.3",
     "react-dev-utils": "^11.0.4",
     "webpack-dev-mock": "^1.0.1",
-    "webpack-dev-server": "^4.0.0",
     "@builder/swc": "^0.1.0",
     "@swc/helpers": "^0.2.12",
     "@builder/swc-loader": "^1.0.0",

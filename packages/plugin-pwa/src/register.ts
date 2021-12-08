@@ -1,4 +1,4 @@
-import { Workbox } from 'workbox-window';
+import { Workbox } from '@builder/pack/deps/workbox-window';
 
 declare const __ICE_PWA_SW__: string;
 declare const __ICE_START_URL__: string;

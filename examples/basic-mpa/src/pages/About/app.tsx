@@ -1,4 +1,3 @@
-import React from 'react';
 import { runApp, IAppConfig } from 'ice';
 import Index from './index';
 
