@@ -1276,32 +1276,6 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/pack@0.4.6-1":
-  version "0.4.6-1"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.6-1.tgz#73531cfe5ed4356552781e6ce9cab9ac4303fb87"
-  integrity sha512-z04kocW3c+kSFsstEa/DzLytohZ9dmOP87gAaZPt8MulZVZRJFjT/m2ztMrAuWJSXgYX+3VyAwgWydmC6+xOcQ==
-  dependencies:
-    ansi-html "^0.0.7"
-    ansi-html-community "^0.0.8"
-    chokidar "3.5.2"
-    core-js-pure "^3.8.1"
-    error-stack-parser "^2.0.6"
-    html-entities "^2.1.0"
-    jest-worker "27.0.6"
-
-"@builder/pack@0.4.6-2":
-  version "0.4.6-2"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.6-2.tgz#f83fe61eab551c176a34150cb77ec7a2f6c4e2d7"
-  integrity sha512-rFOrECQifZqKFSvwR6mg7Tp/iDeD86WGTEGmuOzBzFhiAipME0lkQC9tG9EGXFi0mH+m75Dium5SGAai+pWZ0g==
-  dependencies:
-    ansi-html "^0.0.7"
-    ansi-html-community "^0.0.8"
-    chokidar "3.5.2"
-    core-js-pure "^3.8.1"
-    error-stack-parser "^2.0.6"
-    html-entities "^2.1.0"
-    jest-worker "27.0.6"
-
 "@builder/pack@^0.4.0":
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.5.tgz#356cf4eea6ac4207f5665dc09f3d9b52f9411166"
@@ -5632,11 +5606,6 @@ commander@^8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
   integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
-
-common-tags@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
-  integrity sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -15864,15 +15833,6 @@ terser@^5.7.2:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/terser/-/terser-5.9.0.tgz#47d6e629a522963240f2b55fcaa3c99083d2c351"
   integrity sha512-h5hxa23sCdpzcye/7b8YqbE5OwKca/ni0RQz1uRX3tGh8haaGHqcuSqbGRybuAKNdntZ0mDgFNXPJ48xQ2RXKQ==
-  dependencies:
-    commander "^2.20.0"
-    source-map "~0.7.2"
-    source-map-support "~0.5.20"
-
-terser@^5.10.0:
-  version "5.10.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.10.0.tgz#b86390809c0389105eb0a0b62397563096ddafcc"
-  integrity sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==
   dependencies:
     commander "^2.20.0"
     source-map "~0.7.2"
