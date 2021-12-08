@@ -1,3 +1,5 @@
+const { formatPath } = require('@builder/app-helpers');
+
 const defaultCompileDependencies = [
   'ansi-regex',
   'ansi-styles',
@@ -6,7 +8,7 @@ const defaultCompileDependencies = [
   'react-dev-utils',
   'split-on-first',
   'strict-uri-encode',
-  'strip-ansi'
+  'strip-ansi',
 ];
 
 /**
@@ -17,7 +19,9 @@ const skipDependenciesRegx = [/core-js/, /@swc\/helpers/, /@babel\/runtime/];
 
 module.exports = (config, compileDependencies) => {
   const matchExclude = (filepath) => {
-    if (skipDependenciesRegx.some(regx => filepath.match(regx))) return true;
+    filepath = formatPath(filepath);
+
+    if (skipDependenciesRegx.some((regx) => filepath.match(regx))) return true;
 
     // compile build-plugin module for default
     const deps = [/build-plugin.*module/].concat(defaultCompileDependencies, compileDependencies).map(dep => {
@@ -26,7 +30,7 @@ module.exports = (config, compileDependencies) => {
       } else if (typeof dep === 'string') {
         // add default node_modules
         const matchStr = `node_modules/?.+${dep}/`;
-        return process.platform === 'win32' ? matchStr.replace(/\//g, '\\\\') : matchStr;
+        return matchStr;
       }
       return false;
     }).filter(Boolean);

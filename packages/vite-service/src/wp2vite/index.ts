@@ -240,6 +240,12 @@ export const wp2vite = (context: Context): InlineConfig => {
         commonjsOptions: {
           exclude: ['react-app-renderer', 'create-app-shared'],
         },
+        rollupOptions: {
+          // by default, the context of a module is set to be undefined,
+          // vite config the top-level this refer to globalThis, see https://github.com/vitejs/vite/pull/5312
+          // modify to globalThis when SSR
+          context: undefined,
+        },
       },
     }, viteConfig], { arrayMerge });
   }

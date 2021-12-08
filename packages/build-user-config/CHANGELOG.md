@@ -4,6 +4,10 @@
 
 - [fix] add url fallback for webpackHotDevClient
 - [fix] bump version of `@builder/pack`(^0.5.0)
+- [feat] add https url list
+- [chore] enhance `applyCliOptions`
+- [chore] RedirectPathLoader should include `.rax|.ice`
+- [fix] skip deps `filepath` in windows
 
 ## 1.1.9
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.5
+
+- [fix] default value of rollupOptions.context for top-level this
+
 ## 1.1.4
 
 - [fix] resolve path with browser field when alias with absolute path
