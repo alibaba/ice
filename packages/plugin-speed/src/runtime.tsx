@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useRef, FC } from 'react';
+import { useRef } from 'react';
+import type { FC } from 'react';
 
 const module = ({ addProvider }) => {
   // React Component for log vite time
