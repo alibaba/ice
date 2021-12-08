@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.2
+
+- [fix] assign `routesFilePath` in `RaxGenerator`
+
 ## 4.1.1
 
 - [feat] support frm mode
