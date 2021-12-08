@@ -71,7 +71,8 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-router',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
-    'build-plugin-helmet'
+    'build-plugin-helmet',
+    'build-plugin-speed',
   ];
 
   if (userConfig.mpa && userConfig.router === false) {

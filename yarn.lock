@@ -1276,17 +1276,6 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@builder/pack@^0.4.0":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.4.5.tgz#356cf4eea6ac4207f5665dc09f3d9b52f9411166"
-  integrity sha512-pWm5zfFTMkSODPNbkTKMwi6m/hco1aKHQxE9WMOJ990gVjLYLi+EjEtbjfAc/i5z4tWtd3ZdydIphg8kCdXQRQ==
-  dependencies:
-    ansi-html "^0.0.7"
-    core-js-pure "^3.8.1"
-    error-stack-parser "^2.0.6"
-    html-entities "^2.1.0"
-    jest-worker "27.0.6"
-
 "@builder/pack@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.5.0.tgz#c44ef30b1fa836c4eee5401e7e1243c3558ec385"
