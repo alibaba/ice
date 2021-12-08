@@ -8,7 +8,7 @@ const plugin: IPlugin = ({ context, onHook, registerCliOption, applyMethod }) =>
     commands: ['start', 'build'],
   });
 
-  if (commandArgs.buildSpeed) {
+  if (commandArgs.buildSpeed && !userConfig.vite) {
     // eslint-disable-next-line global-require
     const SpeedMeasurePlugin = require('@builder/pack/deps/speed-measure-webpack-plugin');
     const smp = new SpeedMeasurePlugin({
