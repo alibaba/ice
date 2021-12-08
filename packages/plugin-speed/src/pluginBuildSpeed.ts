@@ -46,7 +46,7 @@ class PluginSpeed {
         timeCost,
         msg: [
           `\nplugin name: ${chalk.bold(pluginName)}`,
-          `time cost: ${this.colors(timeCost.toFixed(2), timeCost)}`,
+          `time cost: ${this.colors(`${timeCost.toFixed(2)}ms`, timeCost)}`,
           `files that take the most time per plugin (TOP 5): ${ids.slice(0, 5).map((id) => `\n${id} (${this.colors(`${pluginData[id]}ms`, pluginData[id])})`)}`
         ].join('\n'),
       };

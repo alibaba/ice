@@ -13,7 +13,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/pack": "^0.5.0"
+    "@builder/pack": "^0.5.0",
+    "chalk": "^2.4.1"
   },
   "devDependencies": {
     "build-scripts": "^1.1.0"
