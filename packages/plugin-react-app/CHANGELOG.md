@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- [fix] avoid error when disableRuntime
+
 ## 2.1.0
 
 - [feat] add runtime abilities: addProvider/WrapperErrorBoundary/WrapperCSR/WrapperSSR/WrapperSearchParams (move from plugin-router)

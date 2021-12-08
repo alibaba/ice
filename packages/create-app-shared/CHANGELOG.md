@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- [fix] miniapp exports field
+
 ## 1.2.0
 
 - [chore] use `runtimeValue.enableRouter` check router status
