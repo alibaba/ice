@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.2
+
+- [fix] format path in case of win32 system
+- [fix] assign `routesFilePath` in `RaxGenerator`
+
 ## 4.1.1
 
 - [feat] support frm mode

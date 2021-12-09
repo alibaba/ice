@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.6
+
+- [fix] server-side render failed in production(always render `global.__ICE_SERVER_HTML_TEMPLATE__`)
+- [chore] remove `build/server/loadable-stats.json`
+
 ## 3.0.5
 
 - [fix] update dependencies version

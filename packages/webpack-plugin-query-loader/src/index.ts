@@ -18,22 +18,22 @@ class WebpackPluginQueryLoader implements WebpackPluginInstance {
   constructor(options: Options) {
     const defaultLoaderConfig = {
       raw: {
-        loader: require.resolve('raw-loader'),
+        loader: require.resolve('@builder/pack/deps/raw-loader'),
       },
       url: {
-        loader: require.resolve('url-loader'),
+        loader: require.resolve('@builder/pack/deps/url-loader'),
       },
       worker: {
-        loader: require.resolve('worker-loader'),
+        loader: require.resolve('@builder/pack/deps/worker-loader'),
       },
       sharedworker: {
-        loader: require.resolve('worker-loader'),
+        loader: require.resolve('@builder/pack/deps/worker-loader'),
         options: {
           worker: 'SharedWorker',
         },
       },
       'worker&inline': {
-        loader: require.resolve('worker-loader'),
+        loader: require.resolve('@builder/pack/deps/worker-loader'),
         options: {
           inline: 'fallback',
         },

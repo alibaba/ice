@@ -15,6 +15,7 @@
     { "path": "packages/webpack-plugin-extract-css-assets" },
     { "path": "packages/build-mpa-config" },
     { "path": "packages/plugin-moment-locales" },
+    { "path": "packages/plugin-speed" },
     { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-react-app" },
     { "path": "packages/plugin-router" },

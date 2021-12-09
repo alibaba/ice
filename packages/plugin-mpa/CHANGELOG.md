@@ -1,5 +1,9 @@
 # changelog
 
+## 2.0.4
+
+- [fix] format path in case of win32 system
+
 ## 2.0.3
 
 - [fix] update dependencies version

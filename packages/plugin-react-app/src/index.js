@@ -24,6 +24,7 @@ module.exports = async (api) => {
     // transform vitePlugins to vite.plugins
     modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
   }
+  
   // register cli option
   applyCliOption(api);
 
