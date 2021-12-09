@@ -1,6 +1,6 @@
 {
   "name": "@builder/babel-config",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Basic babel config for build-scripts",
   "main": "lib/index.js",
   "types": "types/index.d.ts",

@@ -15,7 +15,7 @@
     "!lib/**/*.map"
   ],
   "dependencies": {
-    "@builder/vite-service": "^1.1.5",
+    "@builder/vite-service": "^2.0.0",
     "build-scripts": "^1.1.0",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
