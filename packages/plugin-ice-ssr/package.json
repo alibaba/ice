@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@builder/app-helpers": "^2.4.1",
-    "@builder/webpack-config": "^1.0.4",
+    "@builder/webpack-config": "^2.0.0",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/webpack-plugin": "^5.14.0",
     "chalk": "^4.0.0",
