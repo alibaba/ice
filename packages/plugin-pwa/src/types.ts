@@ -1,4 +1,4 @@
-import { RuntimeCaching, ManifestEntry } from 'workbox-build';
+import type { RuntimeCachingEntry, ManifestEntry } from 'workbox-build';
 
 export interface Option {
   /**
@@ -25,7 +25,7 @@ export interface Option {
    * additional runtime caching strategies
    * @default []
    */
-  runtimeCaching?: RuntimeCaching[];
+  runtimeCaching?: RuntimeCachingEntry[];
   /**
    * whether to call skipWaiting immediately
    * @default true

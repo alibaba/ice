@@ -1,14 +1,14 @@
 const { certificateFor } = require('trusted-cert');
 const fs = require('fs');
 
-module.exports = async (config, https, context) => {
+module.exports = async (config, https, context, { getValue }) => {
   const { commandArgs }  = context;
   // Only generate https cert for web task
   if (config.get('name') !== 'web') return;
   let httpsConfig;
   if (https) {
     try {
-      const hosts = ['localhost'];
+      const hosts = ['localhost', ...(getValue('HTTPS_URL_LIST') || [])];
       const host = commandArgs.host || config.devServer.get('host');
       if (host && host !== 'localhost') hosts.push(host);
       const certInfo = await certificateFor(hosts, { silent: true });

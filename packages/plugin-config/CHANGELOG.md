@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] polyfill for globalThis
+
 ## 2.0.1
 
 - [fix] generic conflict with JSX

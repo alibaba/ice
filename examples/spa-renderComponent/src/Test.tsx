@@ -20,6 +20,7 @@ Test.pageConfig = {
   title: '哈哈'
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 Test.getInitialProps = async (ctx) => {
   return {
     name: 'React(getInitialProps)'
