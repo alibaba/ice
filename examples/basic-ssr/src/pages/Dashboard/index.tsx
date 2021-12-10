@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'ice';
 
 const Dashboard = (props) => {

@@ -15,9 +15,8 @@ const vitePluginSSR = (ssrEntry: string, rootDir: string): Plugin => {
       const vite = await createServer({
         resolve,
         root: rootDir,
-        // @ts-ignore
-        ssr: {
-          externals: ['prop-types']
+        optimizeDeps: {
+          entries: ssrEntry
         },
         server: {
           middlewareMode: 'ssr',

@@ -3,15 +3,18 @@
   "description": "",
   "dependencies": {
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-router-dom": "^6.0.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0"
+    "@types/react-dom": "^17.0.0",
+    "express": "^4.17.1"
   },
   "scripts": {
-    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
-    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
+    "dev": "node server",
+    "start": "icejs start --mode dev",
+    "build": "icejs build --mode prod"
   },
   "engines": {
     "node": ">=8.0.0"
