@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] unexpected entry with too long root dir.
+
 ## 2.0.0
 
 Breakchanges: `preserveEntrySignatures` no longer used as default to meet Vite's output format. You should configure `preserveEntrySignatures` explicitly to preserve entry signatures.

@@ -1,4 +1,4 @@
-import { extname, resolve } from 'path';
+import { extname, resolve, relative } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
@@ -6,6 +6,7 @@ import { isAbsoluteUrl, addTrailingSlash } from './utils';
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
+const rootDir = process.cwd();
 
 export interface HtmlPluginOptions {
   /**
@@ -148,7 +149,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         tag: 'script',
         attrs: {
           type: 'module',
-          src: userOptions.input,
+          src: getRelativedPath(userOptions.input),
         },
         injectTo: 'body',
       };
@@ -235,6 +236,13 @@ function getFiles(bundle: OutputBundle): OutputBundleExt[] {
 
 function toPublicPath(filename: string, config: ResolvedConfig) {
   return isAbsoluteUrl(filename) ? filename : addTrailingSlash(config.base) + filename;
+}
+
+function getRelativedPath(path: string): string {
+  if (path.includes(rootDir)) {
+    return `/${relative(rootDir, path)}`;
+  }
+  return path;
 }
 
 const headInjectRE = /<\/head>/;
