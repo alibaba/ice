@@ -1,6 +1,6 @@
 import * as path from 'path';
-import { IPlugin } from 'build-scripts';
-import * as WorkboxPlugin from 'workbox-webpack-plugin';
+import type { IPlugin } from 'build-scripts';
+import * as WorkboxPlugin from '@builder/pack/deps/workbox-webpack-plugin';
 import { Option } from './types';
 import defaultRuntimeCaching from './runtimeCaching';
 import hasWebManifest from './hasWebManifest';
@@ -8,7 +8,6 @@ import ManifestPlugin from './ManifestPlugin';
 
 const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig }, options) => {
   const { command, rootDir, userConfig } = context;
-
   // Register pwa in build.json
   registerUserConfig({
     name: 'pwa',
@@ -24,7 +23,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, log, registerUserConfig 
   const version = process.env.__FRAMEWORK_VERSION__;
 
   // If pwa no exists in userConfig.
-  if (Number(version[0]) > 1 && (!!userConfig.pwa || userConfig?.pwa === false )) {
+  if (Number(version[0]) > 1 && !userConfig.pwa) {
     return;
   }
 

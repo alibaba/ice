@@ -4,7 +4,7 @@ import {
   initAppLifeCycles,
   emitLifeCycles,
   getSearchParams,
-<% if (buildConfig.router !== false) {%>
+<% if (enableRouter !== false) {%>
   initHistory,
   createHistory,
 <% } %>
@@ -23,15 +23,23 @@ import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+const runtimeValue: any = {};
+
+<% if(enableRouter){ %>
+  runtimeValue.enableRouter = true;
+<% } %>
+
+// TODO: createBaseApp() 返回一个 createBaseApp，命名需要优化下
 const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
   runtimeAPI: {
-    <% if (buildConfig.router !== false) {%>
+    <% if (enableRouter !== false) {%>
     createHistory,
     <% } %>
     getSearchParams,
   },
+  runtimeValue,
 });
 
 export function runApp(appConfig?: IAppConfig) {
@@ -40,11 +48,11 @@ export function runApp(appConfig?: IAppConfig) {
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
   loadStaticModules(appConfig as IAppConfig);
-  if (process.env.__IS_SERVER__) return;
-  <% if (buildConfig.router !== false) {%>
+  <% if (enableRouter !== false) {%>
   // set History before GID
   initHistory && initHistory(appConfig as any);
   <% } %>
+  if (process.env.__IS_SERVER__) return;
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,

@@ -20,7 +20,8 @@ export default (config, polyfill, { userConfig }) => {
   } else {
     processPresetEnv(config, {
       useBuiltIns: polyfill,
-      corejs: 3,
+      // Set latest polyfills (until ECMAScript 2021). https://unpkg.alibaba-inc.com/browse/core-js-compat@3.18.3/modules-by-versions.json
+      corejs: '3.7',
     });
   }
 

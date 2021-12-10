@@ -1,5 +1,32 @@
 # Changelog
 
+## 4.1.2
+
+- [fix] format path in case of win32 system
+- [fix] assign `routesFilePath` in `RaxGenerator`
+
+## 4.1.1
+
+- [feat] support frm mode
+
+## 4.1.0
+
+- [chore] remove `buildConfig.router` and add `enableRouter` to generator
+- [fix] `renderComponent` -> `app.renderComponent`
+
+## 4.0.5
+
+- fix: `TabBar` resolve path
+- chore: remove `x-if` in `TabBar`
+
+## 4.0.4
+
+- fix: every mpa page should redirect runApp file path
+
+## 4.0.3
+
+- feat: not render tabbar in frm container
+
 ## 4.0.2
 
 - fix match rules for app.json

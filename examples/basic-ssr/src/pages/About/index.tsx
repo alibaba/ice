@@ -17,4 +17,8 @@ const About = (props) => {
   );
 };
 
+About.getInitialProps = async () => {
+  return { title: 'About Page...' };
+};
+
 export default About;

@@ -2,15 +2,14 @@ import '@/app';
 import { join } from 'path';
 import routes from '<%- routesPath %>/routes';
 import loadable from '@loadable/component';
-import * as pathToRegexp from 'path-to-regexp';
-
-const { renderPage } = require('./server');
+import { pathToRegexp } from '@ice/runtime';
+import { renderStatic } from './server';
 
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { loadableStatsPath };
-  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+  const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
   const flatRoutes = await getFlatRoutes(routes || []);
 
@@ -38,7 +37,7 @@ export default async function ssgRender(options) {
 async function getFlatRoutes(routes, parentPath = '') {
   return await routes.reduce(async (asyncPrev, route) => {
     let prev = await asyncPrev;
-    const { children, path: currentPath, redirect } = route;
+    const { children, path: currentPath = '', redirect } = route;
     if (children) {
       prev = prev.concat(await getFlatRoutes(children, currentPath));
     } else if (!redirect) {

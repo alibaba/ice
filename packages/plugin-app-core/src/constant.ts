@@ -16,6 +16,14 @@ export const USER_CONFIG = [
     validation: 'boolean'
   },
   {
+    name: 'request',
+    validation: 'boolean'
+  },
+  {
+    name: 'router',
+    validation: 'object|boolean'
+  },
+  {
     name: 'sourceDir',
     validation: 'string',
   },

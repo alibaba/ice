@@ -2,18 +2,23 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as fse from 'fs-extra';
 import type { IPlugin, Json } from 'build-scripts';
+import htmlPlugin from 'vite-plugin-index-html';
 import checkEntryFile from './checkEntryFile';
-import buildPlugin from './buildPlugin';
-import htmlPlugin from './htmlPlugin';
 import lifecyclePlugin from './lifecyclePlugin';
-import type { Entries } from './buildPlugin';
+import { getEntryForSPA } from './entryHelper';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
-  const { vite } = userConfig;
+  const { vite, mpa } = userConfig;
 
   let appType = type;
+
+  if (!type) {
+    log.warn(`
+    [plugin-icestark]: type should to be included, which we truly suggested. see https://ice.work/docs/guide/advanced/icestark/#type-1
+  `);
+  }
 
   if (umd || library) {
     if (appType === 'framework') {
@@ -53,11 +58,25 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   applyMethod('addRenderFile', layoutSource, layoutPath);
 
   onGetWebpackConfig((config) => {
-    const entries = config.toConfig().entry as Entries;
+    const entries = config.entryPoints.entries();
 
     // Only micro-applications need to be compiled to specific format.
     if (appType === 'child' && vite) {
-      modifyUserConfig('vite.plugins', [buildPlugin(entries), htmlPlugin(rootDir), lifecyclePlugin(entries)], { deepmerge: true });
+
+      if (mpa || Object.keys(entries).length > 1) {
+        log.warn('[plugin-icestark]: MPA is not supported currently.');
+      } else {
+        // Get the last file as the actual entry
+        const entryFile = getEntryForSPA(entries);
+        modifyUserConfig('vite.plugins', [
+          htmlPlugin({
+            entry: entryFile,
+            template: path.resolve(rootDir, 'public/index.html'),
+            preserveEntrySignatures: 'exports-only'
+          }),
+          lifecyclePlugin(entryFile)
+        ], { deepmerge: true });
+      }
     }
 
     config
@@ -92,11 +111,12 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
       // collect entry
       const entryList = [];
       Object.keys(entries).forEach((key) => {
+        const entryValues = entries[key].values();
         // only include entry path
-        for (let i = 0; i < entries[key].length; i += 1) {
+        for (let i = 0; i < entryValues.length; i += 1) {
           // filter node_modules file add by plugin
-          if (!/node_modules/.test(entries[key][i])) {
-            entryList.push(entries[key][i]);
+          if (!/node_modules/.test(entryValues[i])) {
+            entryList.push(entryValues[i]);
           }
         }
       });
@@ -123,9 +143,20 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     }
   });
 
-  await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(iceTempPath, 'types/icestark.ts'));
-  await fse.copy(path.join(__dirname, '..', 'src/types/base.ts'), path.join(iceTempPath, 'types/base.ts'));
-  applyMethod('addAppConfigTypes', { source: './types/icestark', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  const isVersion2 = Number(process.env.__FRAMEWORK_VERSION__[0]) > 1;
+
+  if (isVersion2) {
+    // copy type files to .ice/plugins/icestark
+    applyMethod('addPluginTemplate', {
+      template: path.join(__dirname, './types'),
+      targetDir: 'icestark/types',
+    });
+    applyMethod('addAppConfigTypes', { source: '../plugins/icestark/types', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  } else {
+    await fse.copy(path.join(__dirname, '..', 'src/types/index.ts'), path.join(iceTempPath, 'types/icestark.ts'));
+    await fse.copy(path.join(__dirname, '..', 'src/types/base.ts'), path.join(iceTempPath, 'types/base.ts'));
+    applyMethod('addAppConfigTypes', { source: './types/icestark', specifier: '{ IIceStark }', exportName: 'icestark?: IIceStark' });
+  }
 };
 
 export default plugin;

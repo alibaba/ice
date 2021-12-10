@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.1.1
+
+- [fix] bump version of `@builder/pack`(^0.5.0)
+
+## 2.1.0
+
+- [chore] migrate wrapper ErrorBoundary/SearchParams/SSR/CSR to plugin-react-app
+
+## 2.0.4
+
+- [fix] support config `devSever.historyApiFallback`
+
+## 2.0.3
+
+- [fix] nested router config
+
+## 2.0.2
+
+- [fix] never modified origin routes.
+- [fix] optimize alias for `react-router-dom`
+
 ## 2.0.1
 
 - [fix] bump version of `@builder/pack`

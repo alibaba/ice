@@ -57,29 +57,28 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       }
     }, commonOptions);
 
-    config.module
-      .rule('pre-compile-loader')
-      .test(/\.tsx?$/)
-      .enforce('pre')
-      .use('pre-compile-loader')
-      .loader(path.join(__dirname, '../Loaders/PreCompileLoader'))
-      .options({
-        jsc: {
-          transform: {
-            react: reactTransformConfig,
-          },
-        },
-      })
-      .end();
+    const tsOptions = merge({
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: true,
+          decorators: true,
+          dynamicImport: true
+        }
+      }
+    }, commonOptions);
 
-    config.module
-      .rule('swc')
-      .test(/\.(j|t)sx?$/)
-      .exclude.add(EXCLUDE_REGEX)
-      .end()
-      .use('swc-loader')
-      .loader(swcLoader)
-      .options(jsOptions)
-      .end();
+    ['jsx', 'tsx'].forEach((suffix) => {
+      const testRegx = new RegExp(`\\.${suffix}?$`);
+      config.module
+        .rule(`swc-${suffix}`)
+        .test(testRegx)
+        .exclude.add(EXCLUDE_REGEX)
+        .end()
+        .use('swc-loader')
+        .loader(swcLoader)
+        .options(suffix === 'jsx' ? jsOptions : tsOptions)
+        .end();
+    });
   }
 };

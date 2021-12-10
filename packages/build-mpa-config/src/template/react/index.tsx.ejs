@@ -12,7 +12,9 @@ const appConfig: IAppConfig = {
 import Page from '<%- resourcePath %>';
 
 const appConfig: IAppConfig = {
-  renderComponent: Page,
+  app: {
+    renderComponent: Page,
+  },
 };
 <% } %>
 

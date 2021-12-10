@@ -1,12 +1,52 @@
 # Changelog
 
+## 2.0.0
+
+- [fix] add url fallback for webpackHotDevClient
+- [fix] bump version of `@builder/pack`(^0.5.0)
+- [feat] add https url list
+- [chore] enhance `applyCliOptions`
+- [chore] RedirectPathLoader should include `.rax|.ice`
+- [fix] skip deps `filepath` in windows
+
+## 1.1.9
+
+- [feat] compact compact postcss options in different version of postcss-loader
+
+## 1.1.8
+
+- [fix] re-calculate webpack cache id when config `disableRuntime`
+
+## 1.1.7
+
+- [fix] undefined `postcssOptions.plugins`
+
+## 1.1.6
+
+- [fix] format `postcssOptions`
+
+## 1.1.5
+
+- [fix] prevent minimize `.scss` by default.
+- [fix] Regexp for runtime folder
+- [fix] disable default file lint for hmr performance
+
+## 1.1.4
+
+- [fix] handle unexpected merge with `devServer.allowedHosts`.
+- [fix] set `corejs: '3.7'` to meet the ECMAScript 2021 polyfills.
+
+## 1.1.3
+
+- [fix] error occurred when config sourceMap
+
 ## 1.1.2
 
 - [fix] remove unused package of `webpack-plugin-import`
 
 ## 1.1.1
 
-- [fix] OOM when use filesystem cache 
+- [fix] OOM when use filesystem cache
 
 ## 1.1.0
 
@@ -15,7 +55,6 @@
 - [fix] bump version of `@builder/pack`
 - [feat] refactor config of eslint
 - [feat] support active minify in dev
-
 
 ## 1.0.2
 
@@ -55,7 +94,7 @@
 
 ## 0.3.7
 
-- [feat] add `devServer.host` to https cert 
+- [feat] add `devServer.host` to https cert
 - [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
 - [fix] compatible with no loader specified when using `postcssrc: true` in ssr app
 

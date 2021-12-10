@@ -17,7 +17,8 @@ const routes: IRouterConfig[] = [
         exact: true,
         component: Dashboard,
         pageConfig: {
-          title: 'Dashboard Page'
+          title: 'Dashboard Page',
+          custom: 'foo',
         },
         wrappers: [wrapperPage]
       },

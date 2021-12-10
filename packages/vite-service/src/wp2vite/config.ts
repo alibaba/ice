@@ -1,7 +1,9 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import { isObject, isArray, set, get } from 'lodash';
 import { Context, ITaskConfig } from 'build-scripts';
 import { InlineConfig, BuildOptions } from 'vite';
+import type { ProcessOptions } from 'postcss';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -19,6 +21,10 @@ type ConfigMap = Record<string, string | string[] | {
 interface MinifierConfig {
   type: 'esbuild' | 'swc' | 'terser';
   options?: Record<string, any>;
+}
+
+interface PostcssOptions extends ProcessOptions {
+  plugins?: { [pluginName: string]: Record<string, any> };
 }
 
 /**
@@ -75,6 +81,26 @@ const transformPreProcess = (loaderName: string, rule: string): Transformer => {
   };
 };
 
+const mapWithBrowserField = (packageName: string, resolvePath: string): Record<string, string> => {
+  const aliasMap = {};
+  // check field `package.exports`, make sure `${packageName}/package.json` can be resolved
+  try {
+    const packagePath = require.resolve(`${resolvePath}/package.json`);
+    const data = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+    
+    if (isObject(data.browser)) {
+      Object.keys(data.browser).forEach((requirePath) => {
+        const pathExtname = path.extname(requirePath);
+        const aliasKey = path.join(packageName, pathExtname ? requirePath.replace(pathExtname, '') : requirePath);
+        aliasMap[aliasKey] = path.join(resolvePath, data.browser[requirePath]);
+      });
+    }
+  } catch (err) {
+    console.error(`[Error] fail to resolve alias {${packageName}: ${resolvePath}}`, err);
+  }
+  return aliasMap;
+};
+
 /**
  * 常用简单配置转换
  */
@@ -88,11 +114,21 @@ const configMap: ConfigMap = {
     name: 'resolve.alias',
     transform: (value, ctx) => {
       const { rootDir } = ctx;
-      const blackList = ['webpack/hot', 'node_modules'];
+      // webpack/hot is not necessary in mode vite
+      const blackList = ['webpack/hot'];
+      const packagesWithBrowserField = ['react-dom'];
       const data: Record<string, any> = Object.keys(value).reduce(
         (acc, key) => {
-          if (!blackList.some((word) => value[key]?.includes(word)))
+          if (!blackList.some((word) => value[key]?.includes(word))) {
+            // TODO: if vite ssr disable resolve path with browser field
+            if (packagesWithBrowserField.includes(key)) {
+              const aliasMap = mapWithBrowserField(key, value[key]);
+              Object.keys(aliasMap).forEach((aliasKey) => {
+                acc[aliasKey] = aliasMap[aliasKey];
+              });
+            }
             acc[key] = value[key];
+          }
           return acc;
         },
         {}
@@ -136,18 +172,39 @@ const configMap: ConfigMap = {
       }
     },
   },
-  'config.devtool': 'build.sourcemap',
+  'devtool': {
+    name: 'build.sourcemap',
+    transform: (devtool) => {
+      // build.sourcemap of support inline | hidden
+      if (devtool) {
+        const sourcemap = ['inline', 'hidden'].find((mapType) => {
+          return !!devtool.match(new RegExp(mapType));
+        });
+        return sourcemap || !!devtool;
+      }
+      return false;
+    },
+  },
   'devServer.watchOptions.static.watch': 'server.watch',
   'devServer.proxy': {
     name: 'server.proxy',
     transform: (value: Record<string, any>[]) => {
-      // vite proxy do not support config of onProxyRes, onError, logLevel
+      // vite proxy do not support config of onProxyRes, onError, logLevel, pathRewrite
       // transform devServer.proxy to server.proxy
       const proxyConfig = {};
-      (value || []).forEach(({ context, enable, onProxyRes, onError, ...rest }) => {
+      (value || []).forEach(({ context, enable, onProxyRes, onError, pathRewrite, ...rest }) => {
         if (enable !== false) {
           proxyConfig[context] = {
             ...rest,
+            rewrite: (requestPath: string) => {
+              if (pathRewrite && isObject(pathRewrite)) {
+                return Object.keys(pathRewrite).reduce((acc, rewriteRule) => {
+                  return acc.replace(new RegExp(rewriteRule), pathRewrite[rewriteRule]);
+                }, requestPath);
+              } else {
+                return requestPath;
+              }
+            },
             configure: (proxy, options) => {
               if (rest.configure) {
                 rest.configure(proxy, options);
@@ -197,7 +254,17 @@ const configMap: ConfigMap = {
   postcss: {
     name: 'css.postcss',
     transform: (e, { userConfig }) => {
-      return userConfig.postcssOptions;
+      if (userConfig?.postcssOptions) {
+        const postcssPlugins = (userConfig?.postcssOptions as PostcssOptions)?.plugins || {};
+        const normalizedPlugins = Object.keys(postcssPlugins)
+          .filter((pluginKey) => !!postcssPlugins[pluginKey])
+          // eslint-disable-next-line global-require,import/no-dynamic-require
+          .map(pluginKey => require(pluginKey)(postcssPlugins[pluginKey]));
+        return {
+          ...(userConfig?.postcssOptions as PostcssOptions),
+          plugins: normalizedPlugins.length > 0 ? normalizedPlugins : [],
+        };
+      }
     }
   },
   vendor: {

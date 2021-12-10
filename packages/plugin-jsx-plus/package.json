@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-jsx-plus",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "build plugin for jsx plus",
   "main": "lib/index.js",
   "scripts": {

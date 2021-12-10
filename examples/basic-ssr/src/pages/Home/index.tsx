@@ -4,7 +4,7 @@ import appStore from '@/store';
 import pageStore from './store';
 import styles from './index.module.scss';
 
-export default function Home(props) {
+function Home(props) {
   if (!process.env.__IS_SERVER__) {
     console.info('Home props', props);
   }
@@ -40,3 +40,24 @@ export default function Home(props) {
     </main>
   );
 }
+
+Home.getInitialProps = async () => {
+  // const res = await request('/profile');
+  const res = {
+    data: {
+      profile: {
+        id: 10001,
+        name: 'Jack Ma',
+        edu: 'Hangzhou Normal University',
+        address: 'Hangzhou'
+      },
+      title: 'Home Page...',
+      content: 'Home Content...',
+      description: 'Home Description...'
+    }
+  };
+
+  return { ...res.data, title: 'Home Page...' };
+};
+
+export default Home;

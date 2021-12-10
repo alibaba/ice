@@ -1,4 +1,5 @@
 const path = require('path');
+const hash = require('object-hash');
 
 // built-in webpack 5 abilities
 module.exports = (config, api) => {
@@ -6,7 +7,7 @@ module.exports = (config, api) => {
   const { userConfig, rootDir, webpack } = context;
   // filesystem cache
   if (!process.env.DISABLE_FS_CACHE) {
-    const version = getValue('WEBPACK_CACHE_ID');
+    const version = getValue('WEBPACK_CACHE_ID') || hash(userConfig);
     const cacheConfig = {
       cache: {
         type: 'filesystem',
@@ -45,6 +46,12 @@ module.exports = (config, api) => {
   // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
   // This is no longer the case. Verify if you need these module and configure a polyfill for it.
   config.resolve.alias.set('path', 'path-browserify');
+
+  config.resolve.merge({
+    fallback: {
+      url: '@builder/pack/deps/url'
+    },
+  });
 
   config.plugin('ProvidePlugin').use(webpack.ProvidePlugin, [{ process: 'process/browser'}]);
   // assetModuleFilename: 'assets/[hash][ext][query]',

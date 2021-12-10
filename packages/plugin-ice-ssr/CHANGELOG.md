@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.0.6
+
+- [fix] server-side render failed in production(always render `global.__ICE_SERVER_HTML_TEMPLATE__`)
+- [chore] remove `build/server/loadable-stats.json`
+
+## 3.0.5
+
+- [fix] update dependencies version
+- [feat] support no router mode ssr
+
+## 3.0.4
+
+- [fix] compatible with special charts in html content
+
+## 3.0.3
+
+- [fix] route path value may be undefined
+- [fix] `path-to-regexp` dependency may not be correct for the dependencies promotion
+
+## 3.0.2
+
+- [fix] ssr can't work when using file-system routes
+
 ## 3.0.1
 
 - [fix] redirectUrl is undefined

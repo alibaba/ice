@@ -39,7 +39,7 @@ export default class RaxGenerator extends Base {
       if (content.tabBar) {
         this.runAppRenderData.tabBarPath = content.tabBar.custom ?
           relative(this.entryFolder, path.join(this.rootDir, 'src/components/CustomTabBar/index'))
-          : relative(this.entryFolder, path.join(this.targetDir, 'plugins/rax-app/TabBar'));
+          : relative(this.entryFolder, path.join(this.targetDir, 'plugins/app/TabBar'));
       }
     }
   }
@@ -63,6 +63,6 @@ export default class RaxGenerator extends Base {
     const { pageEntry } = this.options;
     const originalEntryFolder = path.dirname(pageEntry);
     const appJSONPath = path.join(originalEntryFolder, 'app.json');
-    return fs.existsSync(appJSONPath) ? appJSONPath : '';
+    return this.routesFilePath = fs.existsSync(appJSONPath) ? appJSONPath : '';
   }
 }
