@@ -1,8 +1,0 @@
-/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/libswc_ecma_transforms_macros-1b439187642adbcf.dylib: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/common.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/fast.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/parallel.rs
-
-/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/swc_ecma_transforms_macros-1b439187642adbcf.d: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/common.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/fast.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/parallel.rs
-
-/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/lib.rs:
-/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/common.rs:
-/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/fast.rs:
-/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/swc_ecma_transforms_macros-0.3.0/src/parallel.rs:
