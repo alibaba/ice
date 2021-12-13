@@ -1,0 +1,11 @@
+/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/url-5787cbd0142e927b.rmeta: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/host.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/origin.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/parser.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/path_segments.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/slicing.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/quirks.rs
+
+/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/url-5787cbd0142e927b.d: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/host.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/origin.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/parser.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/path_segments.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/slicing.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/quirks.rs
+
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/lib.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/host.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/origin.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/parser.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/path_segments.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/slicing.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/url-2.2.2/src/quirks.rs:

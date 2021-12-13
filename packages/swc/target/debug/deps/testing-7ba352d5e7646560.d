@@ -1,0 +1,10 @@
+/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/testing-7ba352d5e7646560.rmeta: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/macros.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/diag_errors.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/output.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/paths.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/string_errors.rs
+
+/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/testing-7ba352d5e7646560.d: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/macros.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/diag_errors.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/output.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/paths.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/string_errors.rs
+
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/lib.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/macros.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/diag_errors.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/output.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/paths.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/testing-0.15.1/src/string_errors.rs:

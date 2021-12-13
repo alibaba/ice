@@ -1,0 +1,9 @@
+/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/libproc_macro_hack-e60526ed1d7248d2.dylib: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/quote.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/error.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/iter.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/parse.rs
+
+/Users/fushen/Documents/workplace/ice2.x/packages/swc/target/debug/deps/proc_macro_hack-e60526ed1d7248d2.d: /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/lib.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/quote.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/error.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/iter.rs /Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/parse.rs
+
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/lib.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/quote.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/error.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/iter.rs:
+/Users/fushen/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/proc-macro-hack-0.5.19/src/parse.rs:

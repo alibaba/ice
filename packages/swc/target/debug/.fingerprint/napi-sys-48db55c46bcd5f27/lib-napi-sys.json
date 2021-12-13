@@ -1,0 +1,1 @@
+{"rustc":9391426953291013824,"features":"[\"napi1\", \"napi2\", \"napi3\"]","target":16965349565933330777,"profile":8987646332441898785,"path":2986357810526468758,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/napi-sys-48db55c46bcd5f27/dep-lib-napi-sys"}}],"rustflags":[],"metadata":12012647757099773561,"config":2202906307356721367,"compile_kind":0}
