@@ -3,6 +3,9 @@ import { IPluginAPI } from 'build-scripts';
 import { Options } from './types';
 import { getModules } from './entryHelper';
 
+// eslint-disable-next-line
+const chalk = require('chalk');
+
 interface GetConfig {
   (api: Partial<IPluginAPI>, options?: Options): any;
 }
@@ -14,6 +17,10 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
 
   onGetWebpackConfig('icestark-module', (config) => {
     const entries = getModules(modules);
+
+    if (Object.keys(entries).length > 1 && filenameStrategy === 'index.module') {
+      throw Error(chalk.red('With several entries, filenameStrategy could not be set to the value \"index.module\", so just remove it.'));
+    }
 
     config.entryPoints.clear();
     Object.keys(entries).forEach(key => {

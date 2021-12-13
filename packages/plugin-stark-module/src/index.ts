@@ -74,6 +74,14 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
     ]])
     .end();
 
+  // Config dev server
+  baseConfig.devServer.before((app) => {
+    app.use((req, res, next) => {
+      res.set('Access-Control-Allow-Origin', '*');
+      next();
+    });
+  });
+
   // set umd
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 

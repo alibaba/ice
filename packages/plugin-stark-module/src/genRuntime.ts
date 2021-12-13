@@ -40,8 +40,19 @@ const genRuntimesConfig = (externals: Externals) => {
     }));
 };
 
+// If url was not provided, don't generate runtime.json
+const checkUrlExists = (externals: Externals) => {
+  return Object
+    .keys(externals)
+    .every(key => (externals[key] as Runtime)?.url);
+};
+
 const genRuntime = ({ context }: PartialPlugin, { moduleExternals, modules, outputDir, filenameStrategy }: Options) => {
   if (!moduleExternals) {
+    return;
+  }
+
+  if (!checkUrlExists(moduleExternals)) {
     return;
   }
 
