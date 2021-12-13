@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "1.1.10",
+  "version": "2.0.0",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "object-hash": "^2.2.0",
     "regenerator-runtime": "^0.13.3",
     "react-dev-utils": "^11.0.4",
-    "webpack-dev-mock": "^1.0.1",
+    "webpack-dev-mock": "^2.0.0",
     "@builder/swc": "^0.1.0",
     "@swc/helpers": "^0.2.12",
     "@builder/swc-loader": "^1.0.0",

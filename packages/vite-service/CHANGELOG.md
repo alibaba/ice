@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## 1.1.5
+## 2.0.0
 
 - [fix] normalize path in case of win32 system
 - [fix] default value of rollupOptions.context for top-level this
+- [fix] bump version of `webpack-dev-server`(^2.0.0)
 
 ## 1.1.4
 

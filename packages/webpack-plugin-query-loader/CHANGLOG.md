@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0
+## 2.0.0
 
 - [fix] use @builder/pack instead of webpack loaders
 
