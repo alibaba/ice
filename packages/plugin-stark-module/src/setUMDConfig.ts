@@ -19,7 +19,7 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     const entries = getModules(modules);
 
     if (Object.keys(entries).length > 1 && filenameStrategy === 'index.module') {
-      throw Error(chalk.red('With several entries, filenameStrategy could not be set to the value \"index.module\", so just remove it.'));
+      throw Error(chalk.red('With several entries, filenameStrategy could not be set to the value \'index.module\', so just remove it.'));
     }
 
     config.entryPoints.clear();
