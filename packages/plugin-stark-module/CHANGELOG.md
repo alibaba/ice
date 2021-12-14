@@ -1,8 +1,14 @@
 # Changelog
 
+## 2.2.4
+
+- [fix] when `url` configured, compile externals to `runtime.json`.
+- [fix] serve files without cors errors.
+- [fix] add dev log.
+
 ## 2.2.3
 
-- [fix] move `webpack-plugin-import` to dependencies
+- [fix] move `webpack-plugin-import` to dependencies.
 
 ## 2.2.2
 
