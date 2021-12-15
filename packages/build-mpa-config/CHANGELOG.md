@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.3
+
+- [fix] fix: format mpa `app.json` path in windows
+
 ## 4.1.2
 
 - [fix] format path in case of win32 system
