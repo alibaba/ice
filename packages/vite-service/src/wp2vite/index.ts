@@ -54,13 +54,15 @@ const getHtmlPlugin = (context: Context) => {
   }
 
   const isMpa = userConfig.mpa as boolean;
+  const ssr = userConfig.ssr as boolean;
 
   if (!isMpa) {
     return htmlPlugin({
       entry: userConfig.entry as string,    // webpack entry
       template: path.resolve(rootDir, 'public', 'index.html'),
       filename: 'index.html',
-      rootDir
+      rootDir,
+      ssr,
     });
   }
 
@@ -80,14 +82,16 @@ const getHtmlPlugin = (context: Context) => {
       return htmlPlugin({
         ...singlePage,
         entry: entries[entryName][0],    // webpack entry
-        rootDir
+        rootDir,
+        ssr,
       });
     }
 
     return htmlPlugin({
       ...singlePage,
       entry: entries[entryName][0],    // webpack entry
-      rootDir
+      rootDir,
+      ssr,
     });
   });
 

@@ -4,16 +4,18 @@ import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
+import type { IPlugin } from 'build-scripts';
 import generateStaticPages from './generateStaticPages';
+import vitePluginSSR from './vite/ssrPlugin';
 
-const plugin = async (api): Promise<void> => {
+const plugin: IPlugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
   const { outputDir, ssr } = userConfig;
 
-  const TEMP_PATH = getValue('TEMP_PATH');
+  const TEMP_PATH = getValue<string>('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
-  const buildDir = path.join(rootDir, outputDir);
+  const buildDir = path.join(rootDir, outputDir as string);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
   const serverFilePath = path.join(serverDir, serverFilename);
@@ -23,6 +25,11 @@ const plugin = async (api): Promise<void> => {
   const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
   const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
   applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '../..' });
+
+  if (userConfig.vite) {
+    modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry, rootDir)], { deepmerge: true });
+    return;
+  }
 
   const mode = command === 'start' ? 'development' : 'production';
 

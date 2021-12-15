@@ -1,3 +1,5 @@
+global.__IS_SERVER__ = true;
+
 import '@/app';
 import { join } from 'path';
 import { pathToRegexp } from '@ice/runtime';
@@ -19,9 +21,8 @@ import routes from '<%- routesPath %>/routes';
 const routes = [];
 <% } %>
 import loadable from '@loadable/component';
-
-const chalk = require('chalk');
-const parseurl = require('parseurl');
+import * as chalk from 'chalk';
+import parseurl from 'parseurl';
 
 const { createBaseApp, initAppLifeCycles } = app;
 
@@ -56,7 +57,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     publicPath,
   } = options;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' && loadableStatsPath !== false) {
     // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
@@ -201,9 +202,11 @@ export function generateHtml({
     window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
   </script>`);
   // inject assets
-  $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
-  $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
-  $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+  if (loadableComponentExtractor) {
+    $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+    $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+    $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+  }
   // inject tags to header
   $('head').append(`${helmet.title.toString()}`);
   $('head').append(`${helmet.meta.toString()}`);

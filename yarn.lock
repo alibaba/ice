@@ -3229,7 +3229,7 @@
     "@types/express-serve-static-core" "*"
     "@types/node" "*"
 
-"@types/connect@*":
+"@types/connect@*", "@types/connect@^3.4.35":
   version "3.4.35"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.35.tgz#5fcf6ae445e4021d1fc2219a4873cc73a3bb2ad1"
   integrity sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==
@@ -11423,10 +11423,10 @@ miniapp-builder-shared@^0.2.2:
     execa "^5.0.0"
     fs-extra "^8.0.1"
 
-miniapp-history@^0.1.0:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/miniapp-history/-/miniapp-history-0.1.5.tgz#13da3e156308f97681174ade746799737c8f83b3"
-  integrity sha512-dvuoJmPc/X7NDv9IZ3LmifIdhIRWe9X6efoDsaC/9qoL2f0I0eXSk2rslp/xR2lbjihxlm5sA5WJ94obOISbdA==
+miniapp-history@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/miniapp-history/-/miniapp-history-0.1.6.tgz#da893790a87a9f92c137b32bc2a90d45ad730f97"
+  integrity sha512-oNq4t5bhCwG2ryRkFIWLgchX/18Z6fdBdh1BetfkalChHN/zDypgoZuqA6Oilj+b/Jsx6j26CKPvMmnpBjD3sQ==
   dependencies:
     universal-env "^3.0.0"
 
@@ -13439,7 +13439,7 @@ postcss-values-parser@^2.0.0, postcss-values-parser@^2.0.1:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.5, postcss@^7.0.6, postcss@^7.0.7, postcss@^8.0.0, postcss@^8.1.2, postcss@^8.2.7, postcss@^8.3.5, postcss@^8.3.8:
+postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.5, postcss@^7.0.6, postcss@^7.0.7, postcss@^8.0.0, postcss@^8.1.2, postcss@^8.2.7, postcss@^8.3.11, postcss@^8.3.5:
   version "8.3.11"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.11.tgz#c3beca7ea811cd5e1c4a3ec6d2e7599ef1f8f858"
   integrity sha512-hCmlUAIlUiav8Xdqw3Io4LcpA1DOt7h3LSTAC4G6JGHFFaWzI6qvFt9oilvl8BmkbBRX1IhM90ZAmpk68zccQA==
@@ -14550,10 +14550,17 @@ rollup-plugin-visualizer@^5.5.2:
     source-map "^0.7.3"
     yargs "^16.2.0"
 
-rollup@^2.56.3, rollup@^2.57.0:
+rollup@^2.56.3:
   version "2.59.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.59.0.tgz#108c61b0fa0a37ebc8d1f164f281622056f0db59"
   integrity sha512-l7s90JQhCQ6JyZjKgo7Lq1dKh2RxatOM+Jr6a9F7WbS9WgKbocyUSeLmZl8evAse7y96Ae98L2k1cBOwWD8nHw==
+  optionalDependencies:
+    fsevents "~2.3.2"
+
+rollup@^2.59.0:
+  version "2.61.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.61.1.tgz#1a5491f84543cf9e4caf6c61222d9a3f8f2ba454"
+  integrity sha512-BbTXlEvB8d+XFbK/7E5doIcRtxWPRiqr0eb5vQ0+2paMM04Ye4PZY5nHOQef2ix24l/L0SpLd5hwcH15QHPdvA==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -16733,14 +16740,14 @@ vite-plugin-style-import@1.1.1:
     magic-string "^0.25.7"
 
 vite@^2.0.0, vite@^2.3.4, vite@^2.4.2, vite@^2.4.3, vite@^2.5.0, vite@^2.5.3, vite@^2.5.6, vite@^2.6.0:
-  version "2.6.14"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.6.14.tgz#35c09a15e4df823410819a2a239ab11efb186271"
-  integrity sha512-2HA9xGyi+EhY2MXo0+A2dRsqsAG3eFNEVIo12olkWhOmc8LfiM+eMdrXf+Ruje9gdXgvSqjLI9freec1RUM5EA==
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.2.tgz#f9937114cf2e730a7e2e4c4f8c26ed0ed1c3bb6b"
+  integrity sha512-wMffVVdKZRZP/HwW3yttKL8X+IJePz7bUcnGm0vqljffpVwHpjWC3duZtJQHAGvy+wrTjmwU7vkULpZ1dVXY6w==
   dependencies:
-    esbuild "^0.13.2"
-    postcss "^8.3.8"
+    esbuild "^0.13.12"
+    postcss "^8.3.11"
     resolve "^1.20.0"
-    rollup "^2.57.0"
+    rollup "^2.59.0"
   optionalDependencies:
     fsevents "~2.3.2"
 

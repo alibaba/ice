@@ -52,7 +52,7 @@ export function runApp(appConfig?: IAppConfig) {
   // set History before GID
   initHistory && initHistory(appConfig as any);
   <% } %>
-  if (process.env.__IS_SERVER__) return;
+  if (typeof global !== 'undefined' && (global as any).__IS_SERVER__ || process.env.__IS_SERVER__) return;
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,

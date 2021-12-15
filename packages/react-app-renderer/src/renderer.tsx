@@ -32,7 +32,8 @@ export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
   const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary, strict = false } = appConfig.app;
 
   function App() {
-    if (errorBoundary) {
+    // ErrorBoundary is missing in SSR
+    if (errorBoundary && ErrorBoundary) {
       rootApp = (
         <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>
           {rootApp}

@@ -8,7 +8,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "history": "^4.9.0",
-    "miniapp-history": "^0.1.0",
+    "miniapp-history": "^0.1.6",
     "query-string": "^6.13.1",
     "universal-env": "^3.0.0"
   },
