@@ -19,7 +19,6 @@ module.exports = (config, alias, context) => {
       aliasWithRoot[key] = resolvePath || path.resolve(rootDir, alias[key]);
     }
   });
-  console.log(aliasWithRoot);
   config.merge({
     resolve: {
       alias: aliasWithRoot,
