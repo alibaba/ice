@@ -2,6 +2,7 @@
 
 ## 2.0.1
 
+- [fix] redirect import with alias
 - [fix] build error in win32 system
 
 ## 2.0.0
