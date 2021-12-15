@@ -27,7 +27,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
   applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '../..' });
 
   if (userConfig.vite) {
-    modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry, rootDir)], { deepmerge: true });
+    modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry)], { deepmerge: true });
     return;
   }
 

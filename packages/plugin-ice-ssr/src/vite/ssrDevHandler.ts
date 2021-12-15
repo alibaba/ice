@@ -1,19 +1,12 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
 import type { ViteDevServer } from 'vite';
 import type { NextHandleFunction } from 'connect';
 
 interface SSROptions {
-  rootDir: string;
   ssrEntry: string;
 }
 
 const createSSRDevHandler = (server: ViteDevServer, options: SSROptions): NextHandleFunction => {
-  const { rootDir, ssrEntry } = options;
-  const getTemplate = async (url: string): Promise<string> => {
-    const template = fs.readFileSync(path.join(rootDir, 'public', 'index.html'), 'utf-8');
-    return  await server.transformIndexHtml(url, template);
-  };
+  const { ssrEntry } = options;
   const requestHandler: NextHandleFunction = async (req, res, next) => {
     // just do some filter already known
     if (req.method !== 'GET' || req.originalUrl === '/favicon.ico') {
@@ -21,7 +14,8 @@ const createSSRDevHandler = (server: ViteDevServer, options: SSROptions): NextHa
     }
     let htmlTemplate: string;
     try {
-      htmlTemplate = await getTemplate(req.originalUrl);
+      // html content will be provided by vite-plugin-html
+      htmlTemplate = await server.transformIndexHtml(req.originalUrl, '');
     } catch (err) {
       server.ssrFixStacktrace(err);
       // fallback

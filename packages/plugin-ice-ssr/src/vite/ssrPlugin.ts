@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite';
+import type { Plugin, UserConfig } from 'vite';
 import createSSRDevHandler from './ssrDevHandler';
 
 const invalidPackages = [
@@ -9,7 +9,7 @@ const invalidPackages = [
   'parseurl',
 ];
 
-const vitePluginSSR = (ssrEntry: string, rootDir: string): Plugin => {
+const vitePluginSSR = (ssrEntry: string): Plugin => {
   return {
     name: 'vite-plugin-ssr',
     enforce: 'pre',
@@ -18,9 +18,9 @@ const vitePluginSSR = (ssrEntry: string, rootDir: string): Plugin => {
         ssr: {
           // 添加 no external 配置，通过 ssrLoadModule 加载时不会默认使用 node_modules 源码
           // 配合预编译逻辑，将非标准包支持 node 环境下加载执行
-          noExternal: ['create-app-shared'],
+          noExternal: ['create-app-shared', 'react-app-renderer'],
         },
-      };
+      } as UserConfig;
     },
     configResolved(resolvedConfig) {
       resolvedConfig.resolve.alias.push({
@@ -33,7 +33,7 @@ const vitePluginSSR = (ssrEntry: string, rootDir: string): Plugin => {
       resolvedConfig.optimizeDeps.include.push(...invalidPackages);
     },
     configureServer: async (server) => {
-      const handler = createSSRDevHandler(server, { rootDir, ssrEntry});
+      const handler = createSSRDevHandler(server, { ssrEntry});
       return () => server.middlewares.use(handler);
     },
   };
