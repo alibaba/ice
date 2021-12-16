@@ -2,7 +2,7 @@ import { extname, resolve, relative } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
-import { isAbsoluteUrl, addTrailingSlash } from './utils';
+import { isAbsoluteUrl, addTrailingSlash, formatPath } from './utils';
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
@@ -164,6 +164,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 
 export const removeHtmlEntryScript = (html: string, entry: string) => {
   let _html = html;
+  const _entry = formatPath(entry);
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
 
   const commentScript = (script: string) => `<!-- removed by vite-plugin-index-html ${script} -->`;
@@ -172,7 +173,7 @@ export const removeHtmlEntryScript = (html: string, entry: string) => {
     matchs.forEach((matchStr) => {
       const [, src] = matchStr.match(scriptLooseRegex);
 
-      if (entry.includes(src)) {
+      if (_entry.includes(src)) {
         _html = _html.replace(matchStr, commentScript(matchStr));
         console.warn(`
           vite-plugin-index-html: ${matchStr} is removed, for the reason that entry file were configured.
@@ -242,7 +243,7 @@ function getRelativedPath(path: string): string {
   if (path.includes(rootDir)) {
     return `/${relative(rootDir, path)}`;
   }
-  return path;
+  return formatPath(path);
 }
 
 const headInjectRE = /<\/head>/;
