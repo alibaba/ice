@@ -24,3 +24,27 @@ export const addTrailingSlash = (str: string): string => {
 export const formatPath = (pathStr: string): string => {
   return process.platform === 'win32' ? pathStr.split(path.sep).join('/') : pathStr;
 };
+
+export const getTheFirstEntry = (entries: string | Record<string, string>) => {
+  if (typeof entries === 'string') {
+    return entries;
+  }
+
+  const theFirstKeyGotten = Object.keys(entries)[0];
+  return entries[theFirstKeyGotten];
+};
+
+/**
+ * Currently single entry is supported.
+ * @param entries
+ * @returns
+ */
+export const isSingleEntry = (entries: string | Record<string, string>) => {
+  if (
+    typeof entries === 'object'
+    && Object.keys(entries).length > 1
+  ) {
+    return false;
+  }
+  return true;
+};

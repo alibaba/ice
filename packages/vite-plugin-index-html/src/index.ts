@@ -2,11 +2,13 @@ import { extname, resolve, relative } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
-import { isAbsoluteUrl, addTrailingSlash, formatPath } from './utils';
+import { isAbsoluteUrl, addTrailingSlash, formatPath, getTheFirstEntry, isSingleEntry } from './utils';
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
 const rootDir = process.cwd();
+
+type Entry = string | Record<string, string>;
 
 export interface HtmlPluginOptions {
   /**
@@ -25,12 +27,12 @@ export interface HtmlPluginOptions {
    * Accept `.[j|t]s?[x]` as input, which works like webpack input.
    * Default: `src/main.[j|t]s?[x]`
    */
-  input?: string;
+  input?: Entry;
 
   /**
    * @alias input
    */
-  entry?: string;
+  entry?: Entry;
 
   /**
    * Pass a html-minifier options object to minify the output.
@@ -93,6 +95,11 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
     userOptions.input = userOptions.entry;
   }
 
+  if (!isSingleEntry(userOptions.input)) {
+    console.warn('vite-plugin-index-html: Multi entries are not supported currently');
+    return;
+  }
+
   if (userOptions.minify === undefined) {
     userOptions.minify = 'auto';
   }
@@ -129,7 +136,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
       const html = injectToHtml(
         removeHtmlEntryScript(
           parseTemplate(userOptions.template, userOptions.templateContent),
-          userOptions.input,
+          getTheFirstEntry(userOptions.input),
         ),
         htmlTags,
       );
@@ -149,12 +156,14 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         tag: 'script',
         attrs: {
           type: 'module',
-          src: getRelativedPath(userOptions.input),
+          src: getRelativedPath(
+            getTheFirstEntry(userOptions.input)
+          ),
         },
         injectTo: 'body',
       };
       const _html = injectToHtml(
-        removeHtmlEntryScript(html, userOptions.input),
+        removeHtmlEntryScript(html, getTheFirstEntry(userOptions.input)),
         [entryTag],
       );
       return await minifyHtml(_html, userOptions.minify === 'auto' ? false : userOptions.minify);
@@ -176,8 +185,8 @@ export const removeHtmlEntryScript = (html: string, entry: string) => {
       if (_entry.includes(src)) {
         _html = _html.replace(matchStr, commentScript(matchStr));
         console.warn(`
-          vite-plugin-index-html: ${matchStr} is removed, for the reason that entry file were configured.
-          And you can remove it from index.html.
+          vite-plugin-index-html: For the reason that entry was configured, ${matchStr} is deleted.
+          You may also delete it from the index.html.
         `);
       }
     });

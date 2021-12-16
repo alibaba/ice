@@ -3,6 +3,7 @@
 ## 2.0.1
 
 - [fix] unexpected entry with too long root dir.
+- [fix] support for Win32 platforms is provided.
 
 ## 2.0.0
 
