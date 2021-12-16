@@ -70,7 +70,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
         const entryFile = getEntryForSPA(entries);
         modifyUserConfig('vite.plugins', [
           htmlPlugin({
-            entry: entryFile,
+            entry: { index: entryFile },
             template: path.resolve(rootDir, 'public/index.html'),
             preserveEntrySignatures: 'exports-only'
           }),
