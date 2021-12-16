@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+
+- [fix] enhance alias for node_modules dependencies(`@builder/user-config^2.0.1`)
+
 ## 2.1.2
 
 - [feat] feat: support `props.pageConfig` for each page component
