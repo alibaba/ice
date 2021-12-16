@@ -33,4 +33,8 @@ module.exports = {
     module: false,
     commands: ['start'],
   },
+  'rootDir': {
+    module: false,
+    commands: ['start', 'build'],
+  }
 };

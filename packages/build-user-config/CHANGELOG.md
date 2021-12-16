@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [feat] support `rootDir` cli option
+
 ## 2.0.1
 
 - [fix] enhance alias for node_modules dependencies

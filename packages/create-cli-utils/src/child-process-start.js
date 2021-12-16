@@ -3,6 +3,7 @@ const detect = require('detect-port');
 const inquirer = require('inquirer');
 const parse = require('yargs-parser');
 const log = require('build-scripts/lib/utils/log');
+const { isAbsolute, join } = require('path');
 const BuildService = require('./buildService');
 
 const rawArgv = parse(process.argv.slice(2), {
@@ -36,10 +37,12 @@ module.exports = async (getBuiltInPlugins) => {
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
+    const { rootDir = process.cwd() } = rawArgv;
     const service = new BuildService({
       command: 'start',
       args: { ...rawArgv },
-      getBuiltInPlugins
+      getBuiltInPlugins,
+      rootDir: isAbsolute(rootDir) ? rootDir : join(process.cwd(), rootDir)
     });
     const devServer = await service.run({});
 

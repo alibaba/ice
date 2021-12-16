@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.2
+
+- [feat] pass `context.rootDir` to `viteConfig.root`
+
 ## 2.0.1
 
 - [fix] redirect import with alias
