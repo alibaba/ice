@@ -240,10 +240,11 @@ function toPublicPath(filename: string, config: ResolvedConfig) {
 }
 
 function getRelativedPath(path: string): string {
+  let _path = path;
   if (path.includes(rootDir)) {
-    return `/${relative(rootDir, path)}`;
+    _path = `/${relative(rootDir, path)}`;
   }
-  return formatPath(path);
+  return formatPath(_path);
 }
 
 const headInjectRE = /<\/head>/;
