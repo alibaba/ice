@@ -1,3 +1,4 @@
+import { formatPath } from '@builder/app-helpers';
 /*
 {
   index: [
@@ -17,9 +18,10 @@ export const getEntryFiles = (entries: object): string[] => {
     .reduce((pre, next) => {
       // The type of `entries` is ChainedMap, get values by values()
       const value = entries[next].values();
+      const formatedValue = formatPath((Array.isArray(value) ? value.slice(-1)[0] : value));
       return [
         ...pre,
-        ...(Array.isArray(value) ? value.slice(-1) : [value])
+        formatedValue
       ];
     }, []);
 };
@@ -28,9 +30,10 @@ export const getEntries = (entries: object) => {
   return Object.keys(entries)
     .reduce((pre, next) => {
       const value = entries[next].values();
+      const formatedValue = formatPath((Array.isArray(value) ? value.slice(-1)[0] : value));
       return {
         ...pre,
-        [next]: Array.isArray(value) ? value.slice(-1)[0] : value
+        [next]: formatedValue,
       };
     }, {});
 };
