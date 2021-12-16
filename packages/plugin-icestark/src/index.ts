@@ -5,7 +5,7 @@ import type { IPlugin, Json } from 'build-scripts';
 import htmlPlugin from 'vite-plugin-index-html';
 import checkEntryFile from './checkEntryFile';
 import lifecyclePlugin from './lifecyclePlugin';
-import { getEntryForSPA } from './entryHelper';
+import { getEntryFiles, getEntries } from './entryHelper';
 
 const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modifyUserConfig, context, log }, options = {}) => {
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
@@ -66,15 +66,14 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
       if (mpa || Object.keys(entries).length > 1) {
         log.warn('[plugin-icestark]: MPA is not supported currently.');
       } else {
-        // Get the last file as the actual entry
-        const entryFile = getEntryForSPA(entries);
         modifyUserConfig('vite.plugins', [
           htmlPlugin({
-            entry: { index: entryFile },
+            // @ts-ignore
+            entry: getEntries(entries),
             template: path.resolve(rootDir, 'public/index.html'),
             preserveEntrySignatures: 'exports-only'
           }),
-          lifecyclePlugin(entryFile)
+          lifecyclePlugin(getEntryFiles(entries))
         ], { deepmerge: true });
       }
     }

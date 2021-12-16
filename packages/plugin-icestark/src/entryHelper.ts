@@ -19,14 +19,18 @@ export const getEntryFiles = (entries: object): string[] => {
       const value = entries[next].values();
       return [
         ...pre,
-        ...(Array.isArray(value) ? value : [value])
+        ...(Array.isArray(value) ? value.slice(-1) : [value])
       ];
     }, []);
 };
 
-/**
- * Get the latest value when running spa
- */
-export const getEntryForSPA = (entries: object) => {
-  return getEntryFiles(entries).slice(-1)[0];
+export const getEntries = (entries: object) => {
+  return Object.keys(entries)
+    .reduce((pre, next) => {
+      const value = entries[next].values();
+      return {
+        ...pre,
+        [next]: Array.isArray(value) ? value.slice(-1)[0] : value
+      };
+    }, {});
 };
