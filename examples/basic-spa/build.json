@@ -3,6 +3,12 @@
   "remoteRuntime": true,
   "polyfill": false,
   "ignoreHtmlTemplate": false,
+  "alias": {
+    "@alifd/next": false,
+    "react": "react",
+    "@/": "src",
+    "@@/": "./src/"
+  },
   "plugins": [],
   "tsChecker": true,
   "sassLoaderOptions": {

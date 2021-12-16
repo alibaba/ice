@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.2
+
+- [fix] import redirection with alias
+
 ## 2.4.1
 
 - [fix] support override defaultValue

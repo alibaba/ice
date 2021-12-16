@@ -65,12 +65,14 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
     },
     resolveId(id) {
       if (id.includes('.html')) {
-        return id;
+        // win32 场景下在不进行 formatPath，返回的 id 类似 D:\workspace\project\index.html
+        // 代码 https://github.com/vitejs/vite/blob/3ceffcca66311f9a7d71612a596b84888c3f843b/packages/vite/src/node/plugins/html.ts#L472 处理后得到 ../../D:\workspace\project\index.html 导致报错，其中 config.root 为 D:/workspace/project
+        return formatPath(id);
       }
       return null;
     },
     load(id) {
-      if (id === absoluteHtmlPath) {
+      if (formatPath(id) === absoluteHtmlPath) {
         return html;
       }
       return null;
