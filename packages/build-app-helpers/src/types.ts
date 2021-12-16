@@ -40,6 +40,7 @@ export interface IRedirectImportOptions {
 
 export type RedirectImportType = {
   name?: string;
+  alias?: string;
   redirectPath: string;
   default: boolean;
 }

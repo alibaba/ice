@@ -191,9 +191,15 @@ const configMap: ConfigMap = {
     transform: (value: Record<string, any>[]) => {
       // vite proxy do not support config of onProxyRes, onError, logLevel, pathRewrite
       // transform devServer.proxy to server.proxy
+      let hasProxy = false;
       const proxyConfig = {};
       (value || []).forEach(({ context, enable, onProxyRes, onError, pathRewrite, ...rest }) => {
         if (enable !== false) {
+          if (!hasProxy) {
+            hasProxy = true;
+            console.log('Proxy setting detected. HTTPS will be downgraded to TLS only (HTTP/2 will be disabled)');
+          }
+
           proxyConfig[context] = {
             ...rest,
             rewrite: (requestPath: string) => {
@@ -215,7 +221,7 @@ const configMap: ConfigMap = {
           };
         }
       });
-      return proxyConfig;
+      return hasProxy ? proxyConfig : undefined;
     },
   },
   'devServer.https': 'server.https',

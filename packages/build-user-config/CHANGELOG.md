@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] enhance alias for node_modules dependencies
+
 ## 2.0.0
 
 - [fix] add url fallback for webpackHotDevClient
