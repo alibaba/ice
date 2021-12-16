@@ -3,7 +3,9 @@ import { createElement, ComponentType, Component, RaxElement } from 'rax';
 
 interface IRoute {
   source: string;
-  component: ComponentType,
+  component: () => ComponentType & {
+    __pageConfig: IRoute;
+  },
   pageSource: string;
 }
 
@@ -15,7 +17,7 @@ function miniappRenderer(
   initAppLifeCycles();
 
   const { app = {} } = appConfig;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary } = app;
+  const { ErrorBoundaryFallback, onErrorBoundaryHander, onErrorBoundaryHandler, errorBoundary, rootId = 'root' } = app;
 
   ErrorBoundary = errorBoundary ? ErrorBoundary : null;
   const onError = onErrorBoundaryHander || onErrorBoundaryHandler;
@@ -33,15 +35,20 @@ function miniappRenderer(
       path: pageSource || source,
       render() {
         // Add page config to page component
-        // @ts-ignore
-        component.__pageConfig = route;
-        const appInstance = mount(getRenderApp(component, runtime, {
+        const Page = component();
+        Page.__pageConfig = route;
+        // Deprecate in rax-app v4.0
+        // miniapp root element is the root node, which avoid developer render extra element to document.body, it will override the page component
+        const rootEl = document.createElement('div');
+        rootEl.setAttribute('id', rootId);
+        const appInstance = mount(getRenderApp(Page, runtime, {
           ErrorBoundary,
           ErrorBoundaryFallback,
           onError,
-        }), document.body);
+        }), rootEl);
 
-        (document as any).__unmount = unmount(appInstance, document.body);
+        document.body.appendChild(rootEl);
+        (document as any).__unmount = unmount(appInstance, rootEl);
       },
       setDocument(value) {
         // eslint-disable-next-line no-global-assign

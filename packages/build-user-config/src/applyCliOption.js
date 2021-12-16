@@ -13,18 +13,27 @@ module.exports = (api, options = {}) => {
   registerCliOption(optionKeys.map((optionKey) => {
     const { module, commands } = mergedOptionConfig[optionKey];
     const moduleName = module || optionKey;
-    const optionDefination = {
+    const optionDefinition = {
       name: optionKey,
       commands,
     };
+    let configFunc = null;
     if (module !== false) {
       try {
         // eslint-disable-next-line
-        optionDefination.configWebpack = require(path.isAbsolute(moduleName) ? moduleName : `./cliOption/${moduleName}`);
+        configFunc = require(path.isAbsolute(moduleName) ? moduleName : `./cliOption/${moduleName}`);
       } catch (err) {
         log.error(err);
       }
     }
-    return optionDefination;
+    return {
+      ...optionDefinition,
+      configWebpack: (chainConfig, configValue, context) => {
+        if (configFunc) {
+          // enhance api params
+          configFunc(chainConfig, configValue, context, api);
+        }
+      },
+    };
   }));
 };

@@ -7,6 +7,7 @@ import tsChecker from 'vite-plugin-ts-types';
 import { Context, ITaskConfig } from 'build-scripts';
 import type { TransformOptions } from '@babel/core';
 import eslintReport from 'vite-plugin-eslint-report';
+import { normalizePath } from 'vite';
 import type { InlineConfig, BuildOptions, PluginOption } from 'vite';
 import { recordMap } from './config';
 import {
@@ -209,14 +210,23 @@ export const wp2vite = (context: Context): InlineConfig => {
 
   // 依赖预构建解析入口
   const getAnalysisEntries = () => {
-    let _entry = userConfig.entry;
+    let appEntry = userConfig.entry;
     if (!userConfig.mpa) {
-      _entry = { index: [_entry] };
+      if (Array.isArray(appEntry)) {
+        appEntry = {
+          index: appEntry,
+        };
+      } else if (typeof appEntry === 'string') {
+        appEntry = {
+          index: [appEntry],
+        };
+      }
     }
-
-    const entries = Object.keys(_entry).map(e => {
-      const url = _entry[e][0];
-      return entryExts.exec(url) ? url : `${url}.*`;
+    const entries = Object.keys(appEntry).map(e => {
+      const url = appEntry[e][0];
+      // js entries is needed when analyze dependencies in pre build parse
+      // format path in case of win32 system
+      return normalizePath(entryExts.exec(url) ? url : `${url}.*`);
     });
 
     return entries;
@@ -239,6 +249,12 @@ export const wp2vite = (context: Context): InlineConfig => {
       build: {
         commonjsOptions: {
           exclude: ['react-app-renderer', 'create-app-shared'],
+        },
+        rollupOptions: {
+          // by default, the context of a module is set to be undefined,
+          // vite config the top-level this refer to globalThis, see https://github.com/vitejs/vite/pull/5312
+          // modify to globalThis when SSR
+          context: undefined,
         },
       },
     }, viteConfig], { arrayMerge });

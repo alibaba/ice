@@ -210,15 +210,10 @@ const plugin = async (api): Promise<void> => {
     const htmlFilePath = path.join(buildDir, 'index.html');
     const bundle = fse.readFileSync(serverFilePath, 'utf-8');
     const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' });
-    const newBundle = bundle.replace(/__ICE_SERVER_HTML_TEMPLATE__/, minifiedHtml);
+    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' }).replace(/`/g, '&#x60;');
+    // `"` in the regulation expression is to be compatible with the minifier(such as terser)
+    const newBundle = bundle.replace(/['"]global.__ICE_SERVER_HTML_TEMPLATE__['"]/, `\`${minifiedHtml}\``);
     fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
-
-    // @deprecated
-    // In the future, the loadable-stats.json file in the server dir will be removed because it will be used in anywhere.
-    // copy web loadable-stats.json to server directory in order to be compatible
-    const statsFileName = 'loadable-stats.json';
-    fse.copyFileSync(path.join(buildDir, statsFileName), path.join(serverDir, statsFileName));
   });
 };
 

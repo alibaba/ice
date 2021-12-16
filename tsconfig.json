@@ -3,7 +3,6 @@
   "references": [
     { "path": "packages/webpack-plugin-query-loader"},
     { "path": "packages/runtime" },
-    { "path": "packages/swc" },
     { "path": "packages/build-app-templates" },
     { "path": "packages/build-app-helpers" },
     { "path": "packages/plugin-fusion" },
@@ -16,6 +15,7 @@
     { "path": "packages/webpack-plugin-extract-css-assets" },
     { "path": "packages/build-mpa-config" },
     { "path": "packages/plugin-moment-locales" },
+    { "path": "packages/plugin-speed" },
     { "path": "packages/plugin-app-core" },
     { "path": "packages/plugin-react-app" },
     { "path": "packages/plugin-router" },
@@ -24,6 +24,7 @@
     { "path": "packages/plugin-logger" },
     { "path": "packages/plugin-rematch" },
     { "path": "packages/plugin-store" },
+    { "path": "packages/vite-plugin-index-html" },
     { "path": "packages/plugin-icestark" },
     { "path": "packages/plugin-config" },
     { "path": "packages/plugin-mpa" },

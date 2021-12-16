@@ -4,7 +4,6 @@ import { getNpmInfo } from 'ice-npm-utils';
 import * as semver from 'semver';
 
 const TARGET_DIRECTORY = join(__dirname, '../packages');
-const NATIVE_NPM_DIRECTORY = join(TARGET_DIRECTORY, 'swc/npm');
 
 export interface IPackageInfo {
   name: string;
@@ -49,11 +48,7 @@ export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
   } else {
     const packageFolders: string[] = readdirSync(TARGET_DIRECTORY)
       .filter((filename) => filename[0] !== '.')
-      .map((packageFolder) => join(TARGET_DIRECTORY, packageFolder))
-      .concat(
-        readdirSync(NATIVE_NPM_DIRECTORY)
-          .map((packageFolder) => join(NATIVE_NPM_DIRECTORY, packageFolder))
-      );
+      .map((packageFolder) => join(TARGET_DIRECTORY, packageFolder));
     console.log('[PUBLISH] Start check with following packages:');
     await Promise.all(packageFolders.map(async (packageFolder) => {
       const packageInfoPath = join(packageFolder, 'package.json');

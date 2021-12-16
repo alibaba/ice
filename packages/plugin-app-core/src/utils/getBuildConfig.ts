@@ -4,11 +4,15 @@ interface IBuildConfig {
   icestarkType?: 'es' | 'umd' | 'normal';
   locale?: object;
   web?: object;
+  mpa?: boolean;
 }
 
 function getBuildConfig(userConfig): IBuildConfig{
   const { plugins, vite } = userConfig;
-  const buildConfig: IBuildConfig = {};
+  const buildConfig: IBuildConfig = {
+    mpa: Boolean(userConfig.mpa),
+  };
+
   // filter userConfig
   ['router', 'store', 'web'].forEach((configKey) => {
     if (Object.prototype.hasOwnProperty.call(userConfig, configKey)) {

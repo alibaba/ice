@@ -6,6 +6,7 @@ module.exports = (config, value, context, api) => {
   if (value) {
     const importDeclarations = api.getValue('importDeclarations') || {};
     const framework = api.getValue('FRAMEWORK') === 'react' ? 'ice' : 'rax-app';
+    const tempFilePath = api.getValue('TEMP_PATH');
 
     if (swc) {
       const redirects = Object.keys(importDeclarations).map((name) => ({
@@ -16,7 +17,7 @@ module.exports = (config, value, context, api) => {
       config.module.rule('redirect-path-loader')
         // es-module-lexer couldn't parse jsx
         .after('tsx')
-        .test(filePath => filePath.includes(path.join(rootDir, 'src')) && filePath.match(/\.(j|t)sx?$/))
+        .test(filePath => needRedirectFilePath(filePath, { tempFilePath, rootDir }))
         .use('redirect-path-loader')
         .loader(require.resolve(path.join(__dirname, '../Loaders/RedirectPathLoader')))
         .options({
@@ -34,3 +35,8 @@ module.exports = (config, value, context, api) => {
     }
   }
 };
+
+function needRedirectFilePath(filePath, { tempFilePath, rootDir }) {
+  return [path.join(rootDir, 'src'), tempFilePath].some((rule) => filePath.includes(rule)) &&
+    filePath.match(/\.(j|t)sx?$/);
+}

@@ -86,7 +86,7 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
     multipleSource: {
       runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
         filename: entryPath,
-        value: runAppPath,
+        value: formatPath(runAppPath),
         type: 'normal',
       })),
     },
@@ -104,7 +104,7 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   // modify appJSON rules for mpa
   const matchInclude = (filepath: string) => {
     const matchReg = matchStrs.length ? new RegExp(matchStrs.join('|')) : null;
-    return matchReg && matchReg.test(filepath);
+    return matchReg && matchReg.test(formatPath(filepath));
   };
   config.module.rule('appJSON').include.add(matchInclude);
 };

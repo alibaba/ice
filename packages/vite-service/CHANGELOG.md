@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2.0.1
+
+- [fix] redirect import with alias
+- [fix] build error in win32 system
+
+## 2.0.0
+
+- [fix] normalize path in case of win32 system
+- [fix] default value of rollupOptions.context for top-level this
+- [fix] bump version of `webpack-dev-server`(^2.0.0)
+
 ## 1.1.4
 
 - [fix] resolve path with browser field when alias with absolute path

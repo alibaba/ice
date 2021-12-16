@@ -92,6 +92,7 @@ class RuntimeModule {
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
     this.context = context;
+    // Rax App 里的 app.json
     this.staticConfig = staticConfig;
     this.modifyDOMRender = null;
     this.apiRegistration = {};
@@ -104,7 +105,7 @@ class RuntimeModule {
   }
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
-    const enabledRouter = !this.appConfig.renderComponent;
+    const enableRouter = this.getRuntimeValue('enableRouter');
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       addDOMRender: this.addDOMRender,
@@ -117,7 +118,8 @@ class RuntimeModule {
       staticConfig: this.staticConfig,
       getRuntimeValue: this.getRuntimeValue,
     };
-    if (enabledRouter) {
+
+    if (enableRouter) {
       runtimeAPI = {
         ...runtimeAPI,
         modifyRoutes:  this.modifyRoutes,
@@ -173,10 +175,12 @@ class RuntimeModule {
     return this.internalValue[key];
   }
 
+  // plugin-router 会调用
   private setRenderApp: SetRenderApp = (renderRouter) => {
     this.renderApp = renderRouter;
   }
 
+  // plugin-icestark 会调用
   private wrapperRouterRender: WrapperRouterRender = (wrapper) => {
     // pass origin router render for custom requirement
     this.renderApp = wrapper(this.renderApp);
@@ -219,15 +223,30 @@ class RuntimeModule {
   }
 
   public getAppComponent: GetAppComponent = () => {
-    if (this.modifyRoutesRegistration.length > 0) {
+    // 表示是否启用 pluin-router runtime，何时不启用：1. SPA + router: false 2. MPA + 对应 pages 文件下面没有 routes.[j|t]s 这个文件
+    const enableRouter = this.getRuntimeValue('enableRouter');
+
+    if (enableRouter) {
       const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IPage, curr) => {
         return curr(acc);
       }, []));
+      // renderApp define by plugin-router
       return this.renderApp(routes, this.routesComponent);
+    } else {
+      // 通过 appConfig.app.renderComponent 渲染
+      const renderComponent = this.appConfig.app?.renderComponent;
+      // default renderApp
+      return this.renderApp(this.wrapperPageRegistration.reduce((acc: any, curr: any) => {
+        const compose = curr(acc);
+        if (acc.pageConfig) {
+          compose.pageConfig = acc.pageConfig;
+        }
+        if (acc.getInitialProps) {
+          compose.getInitialProps = acc.getInitialProps;
+        }
+        return compose;
+      }, renderComponent));
     }
-    return this.renderApp(this.wrapperPageRegistration.reduce((acc, curr) => {
-      return curr(acc);
-    }, this.appConfig.renderComponent));
   }
 }
 

@@ -40,6 +40,7 @@ export function getHookFiles() {
   });
 
   return [
+    ['webpack-dev-server', '@builder/pack/deps/webpack-dev-server'],
     ['webpack', '@builder/pack/deps/webpack/webpack-lib'],
     ['webpack/package', '@builder/pack/deps/webpack/package'],
     ['webpack/package.json', '@builder/pack/deps/webpack/package'],
