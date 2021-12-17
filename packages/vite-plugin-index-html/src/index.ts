@@ -99,8 +99,6 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
     return;
   }
 
-  userOptions.input = getEntryUrl(userOptions.input);
-
   if (userOptions.minify === undefined) {
     userOptions.minify = 'auto';
   }
@@ -137,7 +135,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
       const html = injectToHtml(
         removeHtmlEntryScript(
           parseTemplate(userOptions.template, userOptions.templateContent),
-          userOptions.input as string,
+          getEntryUrl(userOptions.input),
         ),
         htmlTags,
       );
@@ -159,13 +157,15 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
           type: 'module',
           src: getRelativedPath(
             viteConfig.root,
-            userOptions.input as string
+            getEntryUrl(userOptions.input)
           ),
         },
         injectTo: 'body',
       };
       const _html = injectToHtml(
-        removeHtmlEntryScript(html, userOptions.input as string),
+        removeHtmlEntryScript(
+          html,
+          getEntryUrl(userOptions.input)),
         [entryTag],
       );
       return await minifyHtml(_html, userOptions.minify === 'auto' ? false : userOptions.minify);
@@ -254,9 +254,9 @@ function getRelativedPath(rootDir: string, path: string): string {
   const _rootDir = formatPath(rootDir);
   let _path = formatPath(path);
   if (path.includes(_rootDir)) {
-    _path = `/${relative(_rootDir, path)}`;
+    _path = `/${relative(_rootDir, _path)}`;
   }
-  return _path;
+  return formatPath(_path);
 }
 
 const headInjectRE = /<\/head>/;
