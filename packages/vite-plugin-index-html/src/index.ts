@@ -2,7 +2,7 @@ import { extname, resolve, relative } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
-import { isAbsoluteUrl, addTrailingSlash, formatPath, getTheFirstEntry, isSingleEntry } from './utils';
+import { isAbsoluteUrl, addTrailingSlash, formatPath, getEntryUrl, isSingleEntry } from './utils';
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
@@ -96,9 +96,11 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
   }
 
   if (!isSingleEntry(userOptions.input)) {
-    console.warn('vite-plugin-index-html: Multi entries are not supported currently');
+    console.warn('vite-plugin-index-html: Multi entries are not supported currently. Use multi instance of vite-plugin-index-html instead for now!');
     return;
   }
+
+  userOptions.input = getEntryUrl(userOptions.input);
 
   if (userOptions.minify === undefined) {
     userOptions.minify = 'auto';
@@ -136,7 +138,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
       const html = injectToHtml(
         removeHtmlEntryScript(
           parseTemplate(userOptions.template, userOptions.templateContent),
-          getTheFirstEntry(userOptions.input),
+          userOptions.input as string,
         ),
         htmlTags,
       );
@@ -157,13 +159,13 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         attrs: {
           type: 'module',
           src: getRelativedPath(
-            getTheFirstEntry(userOptions.input)
+            userOptions.input as string
           ),
         },
         injectTo: 'body',
       };
       const _html = injectToHtml(
-        removeHtmlEntryScript(html, getTheFirstEntry(userOptions.input)),
+        removeHtmlEntryScript(html, userOptions.input as string),
         [entryTag],
       );
       return await minifyHtml(_html, userOptions.minify === 'auto' ? false : userOptions.minify);
@@ -249,11 +251,11 @@ function toPublicPath(filename: string, config: ResolvedConfig) {
 }
 
 function getRelativedPath(path: string): string {
-  let _path = path;
+  let _path = formatPath(path);
   if (path.includes(rootDir)) {
     _path = `/${relative(rootDir, path)}`;
   }
-  return formatPath(_path);
+  return _path;
 }
 
 const headInjectRE = /<\/head>/;

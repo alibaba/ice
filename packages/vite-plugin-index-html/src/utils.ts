@@ -25,7 +25,7 @@ export const formatPath = (pathStr: string): string => {
   return process.platform === 'win32' ? pathStr.split(path.sep).join('/') : pathStr;
 };
 
-export const getTheFirstEntry = (entries: string | Record<string, string>) => {
+export const getEntryUrl = (entries: string | Record<string, string>) => {
   if (typeof entries === 'string') {
     return entries;
   }
