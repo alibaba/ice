@@ -1,4 +1,4 @@
-import { extname, resolve, relative } from 'path';
+import { extname, resolve, posix } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
@@ -254,9 +254,9 @@ function getRelativedPath(rootDir: string, path: string): string {
   const _rootDir = formatPath(rootDir);
   let _path = formatPath(path);
   if (path.includes(_rootDir)) {
-    _path = `/${relative(_rootDir, _path)}`;
+    _path = `/${posix.relative(_rootDir, _path)}`;
   }
-  return formatPath(_path);
+  return _path;
 }
 
 const headInjectRE = /<\/head>/;
