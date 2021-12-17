@@ -6,7 +6,7 @@ import { isAbsoluteUrl, addTrailingSlash, formatPath, getEntryUrl, isSingleEntry
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
-const rootDir = process.cwd();
+const rootDir = formatPath(process.cwd());
 
 type Entry = string | Record<string, string>;
 
