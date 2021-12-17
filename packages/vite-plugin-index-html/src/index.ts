@@ -6,7 +6,6 @@ import { isAbsoluteUrl, addTrailingSlash, formatPath, getEntryUrl, isSingleEntry
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
-const rootDir = formatPath(process.cwd());
 
 type Entry = string | Record<string, string>;
 
@@ -159,6 +158,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         attrs: {
           type: 'module',
           src: getRelativedPath(
+            viteConfig.root,
             userOptions.input as string
           ),
         },
@@ -250,10 +250,11 @@ function toPublicPath(filename: string, config: ResolvedConfig) {
   return isAbsoluteUrl(filename) ? filename : addTrailingSlash(config.base) + filename;
 }
 
-function getRelativedPath(path: string): string {
+function getRelativedPath(rootDir: string, path: string): string {
+  const _rootDir = formatPath(rootDir);
   let _path = formatPath(path);
-  if (path.includes(rootDir)) {
-    _path = `/${relative(rootDir, path)}`;
+  if (path.includes(_rootDir)) {
+    _path = `/${relative(_rootDir, path)}`;
   }
   return _path;
 }
