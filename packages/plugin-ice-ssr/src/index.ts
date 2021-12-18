@@ -12,6 +12,7 @@ const plugin = async (api): Promise<void> => {
   const { outputDir, ssr } = userConfig;
 
   const TEMP_PATH = getValue('TEMP_PATH');
+
   // Note: Compatible plugins to modify configuration
   const buildDir = path.join(rootDir, outputDir);
   const serverDir = path.join(buildDir, 'server');
@@ -22,7 +23,11 @@ const plugin = async (api): Promise<void> => {
   const templatePath = path.join(__dirname, '../src/server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
   const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
-  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '../..' });
+  applyMethod(
+    'addRenderFile', 
+    templatePath, 
+    ssrEntry, 
+    { outputDir, routesPath: routesFileExists ? '@' : '../..' });
 
   const mode = command === 'start' ? 'development' : 'production';
 

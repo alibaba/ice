@@ -10,5 +10,6 @@
         "defaultLocale": "zh-CN"
       }
     ]
-  ]
+  ],
+  "ssr": "static"
 }

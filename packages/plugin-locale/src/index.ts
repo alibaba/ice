@@ -14,6 +14,12 @@ export default async function (
 
   const iceTemp = getValue<string>('TEMP_PATH');
 
+  applyMethod('modifyRenderData', (originRenderData) => {
+    console.log('originRenderData===>', originRenderData);
+
+    return { ...originRenderData, locales, defaultLocale };
+  });
+
   // copy templates to .ice/locale dir
   const templatesDir = path.join(__dirname, 'templates');
   applyMethod('addPluginTemplate', templatesDir, { locales, defaultLocale });

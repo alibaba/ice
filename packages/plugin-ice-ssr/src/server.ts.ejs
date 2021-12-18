@@ -60,8 +60,11 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
-  const buildConfig = { loadableStatsPath, publicPath };
-
+  const buildConfig = { 
+    loadableStatsPath, 
+    publicPath, 
+    locale: { defaultLocale: '<%- defaultLocale %>', locales: <%- JSON.stringify(locales) %> },
+  }
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
 
   // load module to run before createApp ready
@@ -171,7 +174,8 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
       htmlTemplateContent,
       error,
     });
-    logError('[SSR] generate html template error' + error.message);
+    logError('[SSR] generate html template error message: ' + error.message);
+    logError('[SSR] generate html template error stack: ' + error.stack);
   }
 
   return { html, error, redirectUrl: initialContext.url };

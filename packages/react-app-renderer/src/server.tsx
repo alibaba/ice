@@ -47,11 +47,17 @@ function deepClone(config) {
   if(typeof config !== 'object' || config === null) {
     return config;
   }
-  const ret = {};
-  Object.getOwnPropertyNames(config).forEach((key: string) => {
-    if (Object.prototype.hasOwnProperty.call(config, key)) {
-      ret[key] = deepClone(config[key]);
-    }
-  });
-  return ret;
+
+  if (Array.isArray(config)) {
+    return config.slice();
+  } else {
+    const ret = {};
+    Object.getOwnPropertyNames(config).forEach((key: string) => {
+      if (Object.prototype.hasOwnProperty.call(config, key)) {
+        ret[key] = deepClone(config[key]);
+      }
+    });
+    return ret;
+  }
+  
 }

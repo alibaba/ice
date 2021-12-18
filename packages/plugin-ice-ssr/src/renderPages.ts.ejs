@@ -11,6 +11,12 @@ export default async function ssgRender(options) {
   const buildConfig = { loadableStatsPath };
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
+
+  let allRoutes = routes;
+  if (<%- JSON.stringify(locales) %>.length > 0 && '<%- defaultLocale %>') {
+    allRoutes = addRoutesByLocales(routes, <%- JSON.stringify(locales) %>, '<%- defaultLocale %>');
+  }
+
   const flatRoutes = await getFlatRoutes(routes || []);
 
   for (const flatRoute of flatRoutes) {
@@ -62,4 +68,24 @@ async function getFlatRoutes(routes, parentPath = '') {
     }
     return prev;
   }, Promise.resolve([]));
+}
+
+function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
+  const modifiedRoutes = [...originRoutes];
+  // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
+  const prefixRouteLocales = locales.filter(locale => locale !== defaultLocale);
+
+  originRoutes.forEach((route) => {
+    const { path, redirect } = route;
+    if(path && !redirect && typeof path === 'string') {
+      prefixRouteLocales.forEach((prefixRouteLocale: string) => {
+        modifiedRoutes.unshift({ 
+          ...route, 
+          path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
+        });
+      });
+    }
+  });
+
+  return modifiedRoutes;
 }
