@@ -38,7 +38,6 @@ interface GenerateHtml {
   error?: Error;
 }
 
-
 const serverRender = async (context: ServerContext, opts = {}) => {
   let options;
   if (context.req) {
@@ -78,7 +77,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     const history = {
       location: { pathname, search, hash, state: null },
     };
-    setHistory(history);
+    // setHistory(history);
     initialContext = {
       req,
       res,
@@ -116,7 +115,12 @@ const serverRender = async (context: ServerContext, opts = {}) => {
 export async function renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig }) {
   let error;
   let html = htmlTemplateContent;
+
   try {
+    // update history in sever side
+    const history = { location: initialContext.location };
+    setHistory(history);
+
     // get initial data
     if (!initialData) {
       const getInitialData = appConfig.app && appConfig.app.getInitialData;
@@ -142,7 +146,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     }
 
     // generate bundle content and register global variables in html
-    console.log('[SSR]', 'generating html content');
+    console.log('[SSR]', 'generating html content', initialContext.pathname);
     const { bundleContent, loadableComponentExtractor } =
       reactAppRendererWithSSR(
         {
@@ -194,7 +198,7 @@ export function generateHtml({
   if (error) {
     $('head').append(`
       <script>
-        window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
+        window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.stack : error).replace(/\"/g, '\'')}";
       </script>`)
     return $.html();
   }

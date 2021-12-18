@@ -8,7 +8,10 @@ import { renderStatic } from './server';
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
-  const buildConfig = { loadableStatsPath };
+  const buildConfig = { 
+    loadableStatsPath,
+    locale: { defaultLocale: '<%- defaultLocale %>', locales: <%- JSON.stringify(locales) %> },
+  };
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
 
@@ -17,7 +20,7 @@ export default async function ssgRender(options) {
     allRoutes = addRoutesByLocales(routes, <%- JSON.stringify(locales) %>, '<%- defaultLocale %>');
   }
 
-  const flatRoutes = await getFlatRoutes(routes || []);
+  const flatRoutes = await getFlatRoutes(allRoutes);
 
   for (const flatRoute of flatRoutes) {
     const { path = '', getInitialProps, ...rest } = flatRoute;
@@ -41,8 +44,12 @@ export default async function ssgRender(options) {
 };
 
 async function getFlatRoutes(routes, parentPath = '') {
-  return await routes.reduce(async (asyncPrev, route) => {
+  return await routes.reduce(async (asyncPrev, originRoute) => {
     let prev = await asyncPrev;
+
+    // must clone new object to avoid using the same route
+    const route = { ...originRoute };
+
     const { children, path: currentPath = '', redirect } = route;
     if (children) {
       prev = prev.concat(await getFlatRoutes(children, currentPath));
@@ -72,6 +79,7 @@ async function getFlatRoutes(routes, parentPath = '') {
 
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
   const modifiedRoutes = [...originRoutes];
+
   // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
   const prefixRouteLocales = locales.filter(locale => locale !== defaultLocale);
 

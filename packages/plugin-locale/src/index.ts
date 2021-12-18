@@ -15,8 +15,6 @@ export default async function (
   const iceTemp = getValue<string>('TEMP_PATH');
 
   applyMethod('modifyRenderData', (originRenderData) => {
-    console.log('originRenderData===>', originRenderData);
-
     return { ...originRenderData, locales, defaultLocale };
   });
 
