@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
 import { build } from 'vite';
 import type { InlineConfig, Plugin } from 'vite';
 import { all } from 'deepmerge';

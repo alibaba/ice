@@ -34,10 +34,10 @@
     "html-minifier": "^4.0.0",
     "parseurl": "^1.3.3",
     "@ice/runtime": "^0.1.0",
-    "query-string": "^6.13.7"
+    "query-string": "^6.13.7",
+    "vite": "^2.0.0"
   },
   "devDependencies": {
-    "vite": "^2.0.0",
     "@types/connect": "^3.4.35"
   }
 }
