@@ -42,7 +42,7 @@ const arrayMerge = (destinationArray: any[], sourceArray: any[]) => {
 const isBuild = (command: string) => command === 'build';
 
 const getHtmlPlugin = (context: Context) => {
-  const { getValue, userConfig, rootDir } = context;
+  const { getValue, userConfig, rootDir, command } = context;
   type Opt = {
     template: string
     filename: string
@@ -63,6 +63,7 @@ const getHtmlPlugin = (context: Context) => {
       filename: 'index.html',
       rootDir,
       ssr,
+      command,
     });
   }
 
@@ -84,6 +85,7 @@ const getHtmlPlugin = (context: Context) => {
         entry: entries[entryName][0],    // webpack entry
         rootDir,
         ssr,
+        command,
       });
     }
 
@@ -92,6 +94,7 @@ const getHtmlPlugin = (context: Context) => {
       entry: entries[entryName][0],    // webpack entry
       rootDir,
       ssr,
+      command,
     });
   });
 
@@ -239,6 +242,7 @@ export const wp2vite = (context: Context): InlineConfig => {
   if (!isBuild(command)) {
     return all([
       {
+        mode: 'development',
         optimizeDeps: {
           entries: getAnalysisEntries(),
           // vite 无法分析 link 的依赖，需要手动加入以下依赖，防止 ice 维护时报错

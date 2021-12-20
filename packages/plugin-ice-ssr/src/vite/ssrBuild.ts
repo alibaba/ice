@@ -18,7 +18,8 @@ const ssrBuild = async (prodConfig: InlineConfig, buildOptions: Options): Promis
     prodConfig.build?.outDir ?? path.resolve(process.cwd(), 'build');
   const buildConfig = all(
     [prodConfig, {
-      publicDir: false, // No need to copy public files to SSR directory
+      // No need to copy public files to SSR directory
+      publicDir: false,
       build: {
         minify: false,
         outDir: path.resolve(distDir, 'server'),

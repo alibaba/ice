@@ -34,11 +34,11 @@ interface Option {
   rootDir: string
   templateParameters?: object
   ssr?: boolean;
+  command?: string;
 }
 
-export const htmlPlugin = ({ filename, template, entry, rootDir, templateParameters = {}, ssr }: Option): Plugin => {
+export const htmlPlugin = ({ filename, template, entry, rootDir, templateParameters = {}, ssr, command }: Option): Plugin => {
   const pageName = filename.replace('.html', '');
-  let isDev: boolean;
 
   const getEntry = () => {
     let entryPath: string = entry;
@@ -62,7 +62,6 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
     name: `vite-plugin-html-${pageName}`,
     enforce: 'pre',
     config(cfg) {
-      isDev = cfg.mode !== 'development';
       cfg.build = set(cfg.build, `rollupOptions.input.${pageName}`, absoluteHtmlPath);
     },
     resolveId(id) {
@@ -102,7 +101,7 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
     }
   };
   // ssr 在 dev 阶段由中间件进行 html 返回
-  if (ssr && isDev) {
+  if (ssr && command === 'start') {
     plugin.transformIndexHtml = () => {
       return html;
     };
