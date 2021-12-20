@@ -38,7 +38,6 @@ const ssrBuild = async (prodConfig: InlineConfig, buildOptions: Options): Promis
               preventAssignment: true,
               values: {
                 'process.env.__IS_SERVER__': true,
-                // 'global.__ICE_SERVER_HTML_TEMPLATE__': indexHtmlTemplate,
               },
             }),
           ],
