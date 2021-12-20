@@ -1,12 +1,13 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
 import type { IPlugin } from 'build-scripts';
 import generateStaticPages from './generateStaticPages';
 import vitePluginSSR from './vite/ssrPlugin';
+import ssrBuild from './vite/ssrBuild';
+import replaceHtmlContent from './replaceHtmlContent';
 
 const plugin: IPlugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
@@ -28,6 +29,9 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
   if (userConfig.vite) {
     modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry)], { deepmerge: true });
+    onHook('after.build.compile', ({ config }) => {
+      ssrBuild(config, { ssrEntry });
+    });
     return;
   }
 
@@ -215,12 +219,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
   onHook(`after.${command}.compile`, () => {
     const htmlFilePath = path.join(buildDir, 'index.html');
-    const bundle = fse.readFileSync(serverFilePath, 'utf-8');
-    const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' }).replace(/`/g, '&#x60;');
-    // `"` in the regulation expression is to be compatible with the minifier(such as terser)
-    const newBundle = bundle.replace(/['"]global.__ICE_SERVER_HTML_TEMPLATE__['"]/, `\`${minifiedHtml}\``);
-    fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
+    replaceHtmlContent(htmlFilePath, serverFilePath);
   });
 };
 
