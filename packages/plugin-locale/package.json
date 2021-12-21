@@ -10,14 +10,17 @@
     "lib": "lib"
   },
   "dependencies": {
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "cookie": "^0.4.1",
+    "accept-language-parser": "^1.5.0"
   },
   "peerDependencies": {
     "react": ">16.0.0",
     "react-dom": ">16.0.0"
   },
   "devDependencies": {
-    "build-scripts": "^1.2.1"
+    "build-scripts": "^1.2.1",
+    "@types/accept-language-parser": "^1.5.3"
   },
   "files": [
     "lib",

@@ -3107,6 +3107,11 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
+"@types/accept-language-parser@^1.5.3":
+  version "1.5.3"
+  resolved "https://rg.cnpmjs.org/@types/accept-language-parser/download/@types/accept-language-parser-1.5.3.tgz#462f65a7d3900d0390415fa774e060c601519bdd"
+  integrity sha512-S8oM29O6nnRC3/+rwYV7GBYIIgNIZ52PCxqBG7OuItq9oATnYWy8FfeLKwvq5F7pIYjeeBSCI7y+l+Z9UEQpVQ==
+
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.0", "@types/babel__core@^7.1.7":
   version "7.1.17"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.17.tgz#f50ac9d20d64153b510578d84f9643f9a3afbe64"
@@ -3874,6 +3879,11 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
+
+accept-language-parser@^1.5.0:
+  version "1.5.0"
+  resolved "https://rg.cnpmjs.org/accept-language-parser/download/accept-language-parser-1.5.0.tgz#8877c54040a8dcb59e0a07d9c1fde42298334791"
+  integrity sha1-iHfFQECo3LWeCgfZwf3kIpgzR5E=
 
 accepts@^1.3.7, accepts@~1.3.7:
   version "1.3.7"
@@ -5789,7 +5799,7 @@ cookie@0.4.0:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
 
-cookie@^0.4.0:
+cookie@0.4.1, cookie@^0.4.0, cookie@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npm.alibaba-inc.com/cookie/download/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
   integrity sha1-r9cT/ibr0hupXOth+agRblClN9E=

@@ -125,7 +125,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     if (!initialData) {
       const getInitialData = appConfig.app && appConfig.app.getInitialData;
       if (getInitialData) {
-        console.log('[SSR]', 'getting initial data of app');
+        console.log('[SSR]', 'getting initial data of app', initialContext.pathname);
         initialData = await getInitialData(initialContext);
       }
     }
@@ -141,7 +141,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     }
     let pageInitialProps = {};
     if (getInitialProps) {
-      console.log('[SSR]', 'getting initial props of page component');
+      console.log('[SSR]', 'getting initial props of page component', initialContext.pathname);
       pageInitialProps = await getInitialProps(initialContext);
     }
 

@@ -5,7 +5,7 @@ import { FC, createContext, useContext, useState } from 'react';
 import { history } from 'create-app-shared';
 import Cookies from 'universal-cookie';
 
-const LOCALE_COOKIE_KEY = 'ice_locale';
+const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
 
 const Context = createContext<any>(null);
 
@@ -46,7 +46,7 @@ function getAllLocales(): string[] {
  */
 function getLocale(): string {
   const { location: { pathname } } = history;
-  const subRoutes = pathname.split('/').filter((item) => item);
+  const subRoutes = pathname.split('/').filter((item: string) => item);
   const prefixRoute = subRoutes[0];
   const locales = <%- JSON.stringify(locales) %> || [];
   if (locales.includes(prefixRoute)) {
