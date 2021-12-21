@@ -114,4 +114,10 @@ export default class BaseGenerator {
   public getRoutesFilePath() :string {
     throw new Error('Method not implemented.');
   }
+
+  public addDisableRuntime = (pluginName: string) => {
+    if (!this.disableRuntimeList.includes(pluginName)) {
+      this.disableRuntimeList.push(pluginName);
+    }
+  }
 }

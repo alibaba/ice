@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [chore] bump version of `es-module-lexer`
+
 ## 1.0.2
 
 - [fix] deprecate check of `pkg.componentConfig`

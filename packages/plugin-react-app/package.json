@@ -21,7 +21,7 @@
     "chalk": "^4.0.0",
     "debug": "^4.1.1",
     "deepmerge": "^4.2.2",
-    "es-module-lexer": "^0.4.1",
+    "es-module-lexer": "^0.9.0",
     "esbuild": "^0.13.12",
     "events": "^3.3.0",
     "fast-glob": "^3.2.5",

@@ -26,6 +26,8 @@
     "@babel/traverse": "^7.12.12",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.20",
-    "es-module-lexer": "^0.7.1"
+    "esbuild": "^0.13.12",
+    "es-module-lexer": "^0.9.0",
+    "fast-glob": "^3.2.7"
   }
 }
