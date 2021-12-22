@@ -32,9 +32,5 @@ module.exports = {
   'debug-runtime': {
     module: false,
     commands: ['start'],
-  },
-  'rootDir': {
-    module: false,
-    commands: ['start', 'build'],
   }
 };

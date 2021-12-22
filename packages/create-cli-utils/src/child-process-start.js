@@ -34,15 +34,17 @@ module.exports = async (getBuiltInPlugins) => {
   process.env.NODE_ENV = 'development';
   rawArgv.port = parseInt(newPort, 10);
 
+  const { rootDir = process.cwd() } = rawArgv;
+
+  delete rawArgv.rootDir;
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    const { rootDir = process.cwd() } = rawArgv;
     const service = new BuildService({
       command: 'start',
       args: { ...rawArgv },
       getBuiltInPlugins,
-      rootDir: isAbsolute(rootDir) ? rootDir : join(process.cwd(), rootDir)
+      rootDir: isAbsolute(rootDir) ? rootDir : join(process.cwd(), rootDir),
     });
     const devServer = await service.run({});
 

@@ -9,15 +9,18 @@ module.exports = async (getBuiltInPlugins) => {
   const rawArgv = parse(process.argv.slice(2), {
     configuration: { 'strip-dashed': true },
   });
+
+  const { rootDir = process.cwd() } = rawArgv;
+
+  delete rawArgv.rootDir;
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    const { rootDir = process.cwd() } = rawArgv;
     const service = new BuildServer({
       command: 'build',
       args: { ...rawArgv },
       getBuiltInPlugins,
-      rootDir: isAbsolute(rootDir) ? rootDir : join(process.cwd(), rootDir)
+      rootDir: isAbsolute(rootDir) ? rootDir : join(process.cwd(), rootDir),
     });
     await service.run({});
   } catch (err) {
