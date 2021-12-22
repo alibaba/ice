@@ -2,6 +2,7 @@
 
 ## 2.0.2
 
+- [feat] pass `context.rootDir` to `viteConfig.root`
 - [fix] add proxy listeners if exists
 
 ## 2.0.1

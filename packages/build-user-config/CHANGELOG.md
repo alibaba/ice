@@ -3,6 +3,7 @@
 ## 2.0.3
 
 - [fix] lazy import is invalid with swc
+- [feat] support `rootDir` cli option
 
 ## 2.0.2
 
