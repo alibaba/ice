@@ -1,8 +1,6 @@
 {
-  "sourcemap": true,
-  "router": {
-    "lazy": true
-  },
+  "minify": false,
+  "vite": true,
   "plugins": [
     "build-plugin-icestark"
   ]

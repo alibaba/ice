@@ -9,11 +9,19 @@ export const USER_CONFIG = [
   },
   {
     name: 'ssr',
-    validation: 'boolean'
+    validation: 'boolean|string'
   },
   {
     name: 'auth',
     validation: 'boolean'
+  },
+  {
+    name: 'request',
+    validation: 'boolean'
+  },
+  {
+    name: 'router',
+    validation: 'object|boolean'
   },
   {
     name: 'sourceDir',

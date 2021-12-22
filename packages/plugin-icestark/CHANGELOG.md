@@ -1,5 +1,40 @@
 # Changelog
 
+## 2.5.0
+
+- [feat] use `vite-plugin-index-html` as a substitute in Vite mode.
+
+## 2.4.2
+
+- [fix] provide initial `pathname` with `location`. ([#4885](https://github.com/alibaba/ice/issues/4885))
+- [fix] more elegant way to use `registerAppEnter` & `registerAppLeave`.
+
+## 2.4.1
+
+- [chore] solve typescript errors when enabling `tsChecker: true`. ([#4800](https://github.com/alibaba/ice/issues/4800))
+- [fix] avoid RootApp re-rendering when route changes. ([#427](https://github.com/ice-lab/icestark/issues/427))
+- [chore] provide more prompt information.
+
+## 2.4.0
+
+- [feat] an extra `type` option is configured to distinguish between framework and child. Util now, `type` in `appconfig.icestark` is deprecated.
+- [feat] append icestark lifecycles automatically using babel parser.
+
+## 2.3.0
+
+- [feat] migrate runtime api
+- [feat] upgrade build-scripts
+- [feat] support es module out of box
+
+## 2.2.1
+
+- [fix] move all identifiers to visitor to avoid wrong execution results.
+
+# 2.2.0
+
+- [feat] support setting custom lifecycles. ([#337](https://github.com/ice-lab/icestark/issues/337))
+- [fix] append lifecycles for other framework.
+
 # 2.1.0
 
 - [fix] get rendering container through `props` instead of `getMountNode`. ([#227](https://github.com/ice-lab/icestark/issues/227))

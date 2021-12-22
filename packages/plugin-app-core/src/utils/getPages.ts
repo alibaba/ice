@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 
-function getPages(rootDir: string, srcDir: string): string[] {
-  const pagesPath = path.join(rootDir, srcDir, 'pages');
+function getPages(srcPath: string): string[] {
+  const pagesPath = path.join(srcPath, 'pages');
   return fse.existsSync(pagesPath) ? fse.readdirSync(pagesPath)
     .filter((page) => {
       // filter .xxx and _xxx

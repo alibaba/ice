@@ -1,0 +1,16 @@
+import { lazy as reactLazy } from 'react';
+
+export function lazy(dynamicImport, isRouteComponent?: boolean): any {
+  if (isRouteComponent) {
+    return {
+    <% if(ssr){ %>
+      __LOADABLE__: true,
+    <% } else { %>
+      __LAZY__: true,
+    <% } %>
+      dynamicImport,
+    };
+  } else {
+    return reactLazy(dynamicImport);
+  }
+}

@@ -1,6 +1,14 @@
 {
-  "modularImportRuntime": true,
+  // "router": false,
+  "remoteRuntime": true,
+  "polyfill": false,
   "ignoreHtmlTemplate": false,
+  "alias": {
+    "@alifd/next": false,
+    "react": "react",
+    "@/": "src",
+    "@@/": "./src/"
+  },
   "plugins": [],
   "tsChecker": true,
   "devServer": {
@@ -11,30 +19,20 @@
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },
+  "browserslist": {
+    "chrome": 58
+  },
   "modeConfig": {
     "prod": {
-      "ignoreHtmlTemplate": true
+      "ignoreHtmlTemplate": false
     }
   },
-  "esbuild": {},
+  "minify": "esbuild",
   "eslint": {
     "disable": false,
     "quiet": true
   },
-  "postcssOptions": {
-    "plugins": {
-      "postcss-preset-env": {
-        "browsers": [
-          "chrome 68"
-        ]
-      }
-    }
-  },
-  "terserOptions": {
-    "compress": {
-      "unused": true
-    }
-  },
+  "dropLogLevel": "warn",
   "webpackPlugins": {
     "MiniCssExtractPlugin": {
       "options": {

@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as hbs from 'handlebars';
 
 interface compileParams {
-  template: string,
+  template: string;
   templatePath?: string;
   outputPath: string;
   params?: object;

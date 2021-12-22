@@ -1,6 +1,6 @@
 {
   "name": "webpack-dev-mock",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Webpack devserver middleware mock server",
   "main": "lib/index.js",
   "scripts": {
@@ -13,22 +13,26 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/webpack-dev-mock"
   },
   "dependencies": {
-    "@builder/babel-preset-ice": "^1.0.0",
+    "@builder/babel-config": "^2.0.0",
     "@babel/parser": "^7.12.11",
     "@babel/traverse": "^7.12.12",
     "@babel/register": "^7.12.10",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
-    "chokidar": "^2.0.4",
+    "chokidar": "^3.5.2",
     "debug": "^3.1.0",
     "express-http-proxy": "^1.2.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.4",
     "multer": "^1.4.2",
-    "path-to-regexp": "^6.0.0",
+    "path-to-regexp": "^1.7.0",
     "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
     "express": "^4.16.3"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

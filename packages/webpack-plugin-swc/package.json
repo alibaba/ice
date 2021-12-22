@@ -1,0 +1,32 @@
+{
+  "name": "@builder/webpack-plugin-swc",
+  "version": "1.0.0",
+  "description": "swc module loader for webpack",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib",
+    "src",
+    "!lib/**/*.map"
+  ],
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-ice-ssr"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@builder/swc": "^0.1.0",
+    "webpack-sources": "^2.0.0"
+  },
+  "devDependencies": {
+    "webpack": ">=4.0.0"
+  }
+}

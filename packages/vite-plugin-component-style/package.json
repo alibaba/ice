@@ -1,0 +1,21 @@
+{
+  "name": "vite-plugin-component-style",
+  "version": "1.0.2",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rollup/pluginutils": "^4.1.1",
+    "es-module-lexer": "^0.4.1",
+    "find-up": "^5.0.0",
+    "fs-extra": "^10.0.0",
+    "magic-string": "^0.25.7"
+  },
+  "devDependencies": {
+    "vite": "^2.6.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "example-disable-runtime",
+  "description": "",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "scripts": {
+    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
+    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

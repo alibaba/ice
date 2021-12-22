@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as process from 'process';
-import { build } from '@alib/build-scripts';
+import { build } from 'build-scripts';
 import * as getPort from 'get-port';
 import Browser, { IPage } from './browser';
 import getBuiltInPlugins = require('../../packages/icejs/src/getBuiltInPlugins');
@@ -24,6 +24,8 @@ export const buildFixture = function(example: string) {
     const rootDir = path.join(__dirname, `../../examples/${example}`);
     const processCwdSpy = jest.spyOn(process, 'cwd');
     processCwdSpy.mockReturnValue(rootDir);
+    process.env.DISABLE_FS_CACHE = 'true';
+
     await build({
       args: {
         config: path.join(rootDir, 'build.json'),

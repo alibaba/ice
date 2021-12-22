@@ -1,6 +1,8 @@
 import * as path from 'path';
 import { formatPath, checkExportDefaultDeclarationExists } from '@builder/app-helpers';
-import generateEntry from './generateEntry';
+import { IPluginAPI } from 'build-scripts';
+import generateEntry from './generate';
+import { FrameworkType, IGenerateResult } from './types';
 
 interface IEntries {
   entryName: string;
@@ -11,11 +13,12 @@ interface IEntries {
 
 interface IConfigOptions {
   type?: string;
-  framework?: string;
+  framework?: FrameworkType;
   entries?: IEntries[];
   targetDir?: string;
 }
-export const generateMPAEntries = (api, options: IConfigOptions) => {
+
+export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => {
   const { context } = api;
   const { framework = 'rax', targetDir = '' } = options;
   let { entries } = options;
@@ -31,16 +34,23 @@ export const generateMPAEntries = (api, options: IConfigOptions) => {
   entries.forEach((entry) => {
     const { entryName, entryPath, ...pageConfig } = entry;
     const { source } = pageConfig;
-    const useOriginEntry = /app(\.(t|j)sx?)?$/.test(entryPath);
-    // icejs will config entry by api modifyUserConfig
-    // when the entry has no export default declaration or is app.ts, do not generate entry
-    const finalEntry = !useOriginEntry && checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source)) ?
-      generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName, pageConfig }) :
-      entryPath;
+    const isAppEntry = /app(\.(t|j)sx?)?$/.test(entryPath);
+    // when the entry has no export default declaration, do not generate any files
+    let finalEntry = entryPath;
+    let runAppPath = null;
+    let routesFilePath;
+    if (isAppEntry || checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source))) {
+      const result = generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName, pageConfig, isAppEntry });
+      finalEntry = result.entryPath;
+      runAppPath = result.runAppPath;
+      routesFilePath = result.routesFilePath;
+    }
 
     parsedEntries[entryName] = {
       ...entry,
       finalEntry,
+      runAppPath,
+      routesFilePath,
     };
   });
   return parsedEntries;
@@ -50,26 +60,39 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   if (!options) {
     throw new Error('There need pass options param to setMPAConfig method');
   }
-  const { type = 'web' } = options;
   const parsedEntries = generateMPAEntries(api, options);
 
-  // do not splitChunks when mpa
-  config.optimization.splitChunks({ cacheGroups: {} });
   // clear entry points
   config.entryPoints.clear();
   // add mpa entries
   const matchStrs = [];
-
+  // add redirect entry path
+  const redirectEntries: IGenerateResult[] = [];
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, source, finalEntry } = parsedEntries[entryKey];
+    const { entryName, finalEntry, runAppPath, routesFilePath } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
-
+    if (runAppPath) {
+      redirectEntries.push({
+        entryPath: finalEntry,
+        runAppPath,
+        routesFilePath,
+      });
+    }
     // get page paths for rule match
-    const matchStr = `src/${source}`;
-    matchStrs.push(formatPath(matchStr));
+    matchStrs.push(formatPath(routesFilePath));
   });
 
-  if (type === 'web' && config.plugins.has('document')) {
+  api.applyMethod('addImportDeclaration', {
+    multipleSource: {
+      runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
+        filename: entryPath,
+        value: formatPath(runAppPath),
+        type: 'normal',
+      })),
+    },
+  });
+
+  if (config.plugins.has('document')) {
     config.plugin('document').tap(args => {
       return [{
         ...args[0],
@@ -79,13 +102,11 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   }
 
   // modify appJSON rules for mpa
-  if (config.module.rules.get('appJSON')) {
-    const matchInclude = (filepath: string) => {
-      const matchReg = matchStrs.length ? new RegExp(matchStrs.join('|')) : null;
-      return matchReg && matchReg.test(filepath);
-    };
-    config.module.rule('appJSON').include.add(matchInclude);
-  }
+  const matchInclude = (filepath: string) => {
+    const matchReg = matchStrs.length ? new RegExp(matchStrs.join('|')) : null;
+    return matchReg && matchReg.test(formatPath(filepath));
+  };
+  config.module.rule('appJSON').include.add(matchInclude);
 };
 
 export default setMPAConfig;

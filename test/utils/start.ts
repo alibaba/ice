@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { start } from '@alib/build-scripts';
+import { start } from 'build-scripts';
 import * as getPort from 'get-port';
 import Browser, { IPage } from './browser';
 import { Server } from 'http';
@@ -20,7 +20,9 @@ export const startFixture = async function (example: string) {
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   const processCwdSpy = jest.spyOn(process, 'cwd');
   processCwdSpy.mockReturnValue(rootDir);
-  const devServer: Server = await start({
+  process.env.DISABLE_FS_CACHE = 'true';
+
+  const devServer = await start({
     args: {
       config: path.join(rootDir, 'build.json'),
       port,
@@ -30,7 +32,7 @@ export const startFixture = async function (example: string) {
     getBuiltInPlugins: (userConfig) => {
       return getBuiltInPlugins(userConfig).concat(require.resolve('./test-plugin'));
     },
-  });
+  }) as any as Server;
   return {
     port,
     devServer

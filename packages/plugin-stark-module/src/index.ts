@@ -1,14 +1,27 @@
-import { IPlugin, IUserConfig } from '@alib/build-scripts';
+import { IPlugin, IUserConfig } from 'build-scripts';
 import { getWebpackConfig } from 'build-scripts-config';
+import * as WebpackPluginImport from 'webpack-plugin-import';
 import { Options } from './types';
 import setUMDConfig from './setUMDConfig';
 import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
 
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
+// TODO: remove this line next update
+// @ts-ignore
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options: Options = {} ) => {
   const { command, userConfig, webpack, commandArgs } = context;
-  const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
+  const { minify: outerMinify, sourceMap: outerSourceMap, outputDir: outerOutputDir  } = (userConfig || {}) as IUserConfig;
+
+  const hasOutputDirRegistered = hasRegistration('outputDir', 'userConfig');
+  if (!hasOutputDirRegistered) {
+    registerUserConfig({
+      name: 'outputDir',
+      validation: 'string',
+    });
+  }
+
+  options.outputDir = options.outputDir ?? (outerOutputDir as string);
 
   const {
     moduleExternals,
@@ -48,6 +61,17 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   };
   baseConfig.plugin('DefinePlugin')
     .use((webpack as any).DefinePlugin, [defineVariables])
+    .end();
+
+  // register webpack-plugin-import
+  // https://github.com/alibaba/ice/tree/master/packages/webpack-plugin-import
+  baseConfig.plugin('WebpackPluginImport')
+    .use(WebpackPluginImport, [[
+      {
+        libraryName: /@ali\/ice-.*/,
+        stylePath: 'style.js',
+      },
+    ]])
     .end();
 
   // set umd

@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires:0 */
-import { pathToRegexp } from 'path-to-regexp';
+import * as pathToRegexp from 'path-to-regexp';
 
 function decodeParam(val) {
   if (typeof val !== 'string' || val.length === 0) {
@@ -18,8 +18,9 @@ function decodeParam(val) {
 }
 
 function matchPath(req, mockConfig) {
-  const { path: reqPath, method: reqMethod } = req;
-
+  const { method: reqMethod } = req;
+  // compatible with http server
+  const reqPath = req?._parsedUrl?.pathname || req.path || req.url;
   for (let m = 0; m < mockConfig.length; m += 1) {
     const mock = mockConfig[m];
     const { path: mockPath, method: mockMethod } = mock;

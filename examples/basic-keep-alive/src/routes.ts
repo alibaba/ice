@@ -12,6 +12,9 @@ export default [
         path: '/',
         exact: true,
         component: Dashboard,
+        pageConfig: {
+          keepAlive: false,
+        }
       },
       {
         path: '/about',

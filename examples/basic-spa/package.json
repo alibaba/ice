@@ -10,9 +10,12 @@
     "@types/react-dom": "^16.9.4"
   },
   "scripts": {
-    "start": "icejs start --mode dev",
-    "build": "icejs build --mode prod",
+    "start": "../../packages/icejs/bin/ice-cli.js start --mode dev",
+    "build": "../../packages/icejs/bin/ice-cli.js build --mode prod",
     "test": "icejs test --jest-watchAll"
+  },
+  "peerDependencies": {
+    "react-router-dom": "^5.0.0"
   },
   "engines": {
     "node": ">=8.0.0"

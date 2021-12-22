@@ -1,11 +1,26 @@
+const { getHookFiles } = require('./packages/icejs/lib/require-hook');
+
+const moduleNameMapper = getHookFiles().reduce((mapper, [id, value]) => {
+  mapper[`^${id}$`] = value;
+  return mapper;
+}, {});
+
 module.exports = {
+  moduleNameMapper,
+  // 'testRunner': 'jest-circus/runner',
   'coverageDirectory': './coverage/',
-  'testEnvironment': 'node',
   'collectCoverage': true,
   'collectCoverageFrom': ['packages/*/lib/*.{js,jsx}'],
   'coveragePathIgnorePatterns': [
     '<rootDir>/node_modules/'
   ],
+  // copy from jest config
+
+  'testEnvironment': 'node',
+  'transform': {
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.tsx?$': 'ts-jest'
+  },
   'roots': [
     '<rootDir>/packages',
     '<rootDir>/test',
@@ -15,5 +30,13 @@ module.exports = {
     '/lib/',
     'create-cli-utils/'
   ],
-  'preset': 'ts-jest'
+  'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
+  // For ts-jest use rootDir's tsconfig.json, while unable to resolve references.
+  // The following strategy maybe not the best, but it works.
+  // https://github.com/kulshekhar/ts-jest/issues/1648
+  'globals': {
+    'ts-jest': {
+      'tsconfig': 'tsconfig.settings.json',
+    },
+  },
 };

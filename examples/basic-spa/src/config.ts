@@ -1,6 +1,5 @@
 // config runtime APP_MODE
 // @ts-ignore
-window.__app_mode__ = 'build';
 
 const config = {
   dev: {

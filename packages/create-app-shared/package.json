@@ -1,6 +1,6 @@
 {
   "name": "create-app-shared",
-  "version": "0.2.5",
+  "version": "1.2.1",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -12,12 +12,28 @@
     "query-string": "^6.13.1",
     "universal-env": "^3.0.0"
   },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "web": "./lib/web/index.js",
+      "weex": "./lib/weex/index.js",
+      "kraken": "./lib/weex/index.js",
+      "miniapp": "./lib/miniapp/index.js",
+      "wechat-miniprogram": "./lib/miniapp/index.js",
+      "bytedance-microapp": "./lib/miniapp/index.js",
+      "baidu-smartprogram": "./lib/miniapp/index.js",
+      "kuaishou-miniprogram": "./lib/miniapp/index.js",
+      "default": "./lib/index.js"
+    },
+    "./*": "./*"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
     "type": "http",
@@ -28,5 +44,9 @@
   },
   "bugs": {
     "url": "https://github.com/alibaba/ice/issues"
+  },
+  "devDependencies": {
+    "@types/rax": "^1.0.6",
+    "react": "^17.0.2"
   }
 }

@@ -1,3 +1,5 @@
+import { AppConfig } from './types';
+
 export const SHOW = 'show';
 export const HIDE = 'hide';
 export const LAUNCH = 'launch';
@@ -10,4 +12,13 @@ export const UNHANDLED_REJECTION = 'unhandledrejection';
 export const MINIAPP_PAGE_LIFECYCLE = {
   [SHOW]: 'miniapp_pageshow',
   [HIDE]: 'miniapp_pagehide'
+};
+
+export const DEFAULT_APP_CONFIG: AppConfig = {
+  app: {
+    rootId: 'root'
+  },
+  router: {
+    type: 'hash'
+  }
 };

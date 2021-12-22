@@ -1,6 +1,6 @@
 {
   "name": "webpack-plugin-import",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"test\"",
@@ -18,5 +18,9 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

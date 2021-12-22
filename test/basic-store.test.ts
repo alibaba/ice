@@ -19,8 +19,6 @@ test('open /', async () => {
 
 test('open /about', async () => {
   await page.push('#/about');
-  // lazy load
-  expect(await page.html()).toContain('loading...');
   // wait for render
   await page.waitForFunction(`document.getElementsByTagName('strong').length > 1`);
   expect(await page.$$text('h2')).toStrictEqual(['Header', 'About Page']);

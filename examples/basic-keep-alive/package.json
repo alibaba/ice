@@ -2,7 +2,6 @@
   "name": "exmaple-basic-keep-alive",
   "description": "",
   "dependencies": {
-    "ice.js": "^1.0.11",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },

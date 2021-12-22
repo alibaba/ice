@@ -15,9 +15,13 @@ module.exports = (config, outputDir, context) => {
   // copy public folder to outputDir
   // copy-webpack-plugin patterns must be an array
   if (config.plugins.get('CopyWebpackPlugin')) {
-    config.plugin('CopyWebpackPlugin').tap(([args]) => [[{
-      ...(args[0] || {}),
-      to: outputPath,
-    }]]);
+    config.plugin('CopyWebpackPlugin').tap(([{ patterns, ...restOptions }]) => {
+      const [firstPattern, ...rest] = patterns;
+      firstPattern.to = outputPath;
+      return [{
+        patterns: [firstPattern, ...rest],
+        ...restOptions,
+      }];
+    });
   }
 };

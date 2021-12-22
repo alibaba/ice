@@ -2,9 +2,11 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { getRenderApp } from './renderer';
+import type { Context, RenderOptions } from './types';
 
-function renderInServer(context, options) {
-  const { appConfig, buildConfig = {}, staticConfig = {}, createBaseApp, emitLifeCycles } = options;
+function renderInServer(context: Context, options: RenderOptions) {
+  const { appConfig, buildConfig = {}, appLifecycle } = options;
+  const { createBaseApp, emitLifeCycles } = appLifecycle;
   const { runtime, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
 
   const { loadableStatsPath, publicPath } = buildConfig;
@@ -12,11 +14,6 @@ function renderInServer(context, options) {
   options.appConfig = modifiedAppConfig;
   // Emit app launch cycle
   emitLifeCycles();
-  const isMobile = Object.keys(staticConfig).length;
-  if (isMobile) {
-    // TODO: ssr is not support in mobile mode
-    return { bundleContent: '' };
-  }
 
   const App = getRenderApp(runtime, options);
 
@@ -33,14 +30,16 @@ function renderInServer(context, options) {
   };
 }
 
-export default function reactAppRendererWithSSR(context, options) {
+export default function reactAppRendererWithSSR(context: Context, options: RenderOptions) {
   const cloneOptions = deepClone(options);
   const { appConfig } = cloneOptions || {};
-  appConfig.router = appConfig.router || {};
-  if (appConfig.router.type !== 'browser') {
-    throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
+  if (context.enableRouter) {
+    appConfig.router = appConfig.router || {};
+    if (appConfig.router.type !== 'browser') {
+      throw new Error('[SSR]: Only support BrowserRouter when using SSR. You should set the router type to "browser". For more detail, please visit https://ice.work/docs/guide/basic/router');
+    }
+    appConfig.router.type = 'static';
   }
-  appConfig.router.type = 'static';
   return renderInServer(context, cloneOptions);
 }
 
