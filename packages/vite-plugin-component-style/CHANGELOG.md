@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [fix] style import for multiple components with `stylePath`
+
 ## 1.0.2
 
 - [fix] deprecate check of `pkg.componentConfig`
