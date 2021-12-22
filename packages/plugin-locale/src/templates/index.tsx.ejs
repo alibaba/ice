@@ -14,8 +14,7 @@ interface Props {
 }
 
 const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
-  const [, setActiveLocale] = useState<string>(defaultLocale);
-  const locale = getLocale();
+  const [activeLocale, setActiveLocale] = useState<string>(() => getLocale());
 
   function setLocale(locale: string) {
     setLocaleToCookies(locale);
@@ -23,7 +22,7 @@ const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
     setActiveLocale(locale);
   }
   return (
-    <Context.Provider value={[locale, setLocale]}>
+    <Context.Provider value={[activeLocale, setLocale]}>
       {children}
     </Context.Provider>
   )
@@ -46,11 +45,11 @@ function getAllLocales(): string[] {
  */
 function getLocale(): string {
   const { location: { pathname } } = history;
-  const subRoutes = pathname.split('/').filter((item: string) => item);
-  const prefixRoute = subRoutes[0];
+  const subPathnames = pathname.split('/').filter((item: string) => item);
+  const prefixPathname = subPathnames[0];
   const locales = <%- JSON.stringify(locales) %> || [];
-  if (locales.includes(prefixRoute)) {
-    return prefixRoute;
+  if (locales.includes(prefixPathname)) {
+    return prefixPathname;
   }
 
   return '<%= defaultLocale %>';
@@ -67,15 +66,15 @@ function redirect(locale: string) {
   }
 
   const { location: { pathname } } = history;
-  let subRoutes = pathname.split('/').filter((item: string) => item);
+  let subPathnames = pathname.split('/').filter((item: string) => item);
 
   if (locale === '<%= defaultLocale %>') {
-    subRoutes = subRoutes.slice(1);
+    subPathnames = subPathnames.slice(1);
   } else {
-    subRoutes[0] = locale;
+    subPathnames[0] = locale;
   }
 
-  const newPathname = subRoutes.join('/');
+  const newPathname = subPathnames.join('/') || '/';
   history.push(newPathname);
 }
 
