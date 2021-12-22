@@ -1,11 +1,13 @@
-import { extname, resolve } from 'path';
+import { extname, resolve, posix } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
-import { isAbsoluteUrl, addTrailingSlash } from './utils';
+import { isAbsoluteUrl, addTrailingSlash, formatPath, getEntryUrl, isSingleEntry } from './utils';
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
+
+type Entry = string | Record<string, string>;
 
 export interface HtmlPluginOptions {
   /**
@@ -24,12 +26,12 @@ export interface HtmlPluginOptions {
    * Accept `.[j|t]s?[x]` as input, which works like webpack input.
    * Default: `src/main.[j|t]s?[x]`
    */
-  input?: string;
+  input?: Entry;
 
   /**
    * @alias input
    */
-  entry?: string;
+  entry?: Entry;
 
   /**
    * Pass a html-minifier options object to minify the output.
@@ -92,6 +94,11 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
     userOptions.input = userOptions.entry;
   }
 
+  if (!isSingleEntry(userOptions.input)) {
+    console.warn('vite-plugin-index-html: Multi entries are not supported currently. Use multi instance of vite-plugin-index-html instead for now!');
+    return;
+  }
+
   if (userOptions.minify === undefined) {
     userOptions.minify = 'auto';
   }
@@ -128,7 +135,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
       const html = injectToHtml(
         removeHtmlEntryScript(
           parseTemplate(userOptions.template, userOptions.templateContent),
-          userOptions.input,
+          getEntryUrl(userOptions.input),
         ),
         htmlTags,
       );
@@ -148,12 +155,17 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         tag: 'script',
         attrs: {
           type: 'module',
-          src: userOptions.input,
+          src: getRelativedPath(
+            viteConfig.root,
+            getEntryUrl(userOptions.input)
+          ),
         },
         injectTo: 'body',
       };
       const _html = injectToHtml(
-        removeHtmlEntryScript(html, userOptions.input),
+        removeHtmlEntryScript(
+          html,
+          getEntryUrl(userOptions.input)),
         [entryTag],
       );
       return await minifyHtml(_html, userOptions.minify === 'auto' ? false : userOptions.minify);
@@ -163,6 +175,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 
 export const removeHtmlEntryScript = (html: string, entry: string) => {
   let _html = html;
+  const _entry = formatPath(entry);
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
 
   const commentScript = (script: string) => `<!-- removed by vite-plugin-index-html ${script} -->`;
@@ -171,11 +184,11 @@ export const removeHtmlEntryScript = (html: string, entry: string) => {
     matchs.forEach((matchStr) => {
       const [, src] = matchStr.match(scriptLooseRegex);
 
-      if (entry.includes(src)) {
+      if (_entry.includes(src)) {
         _html = _html.replace(matchStr, commentScript(matchStr));
         console.warn(`
-          vite-plugin-index-html: ${matchStr} is removed, for the reason that entry file were configured.
-          And you can remove it from index.html.
+          vite-plugin-index-html: For the reason that entry was configured, ${matchStr} is deleted.
+          You may also delete it from the index.html.
         `);
       }
     });
@@ -235,6 +248,15 @@ function getFiles(bundle: OutputBundle): OutputBundleExt[] {
 
 function toPublicPath(filename: string, config: ResolvedConfig) {
   return isAbsoluteUrl(filename) ? filename : addTrailingSlash(config.base) + filename;
+}
+
+function getRelativedPath(rootDir: string, path: string): string {
+  const _rootDir = formatPath(rootDir);
+  let _path = formatPath(path);
+  if (path.includes(_rootDir)) {
+    _path = `/${posix.relative(_rootDir, _path)}`;
+  }
+  return _path;
 }
 
 const headInjectRE = /<\/head>/;
