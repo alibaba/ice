@@ -30,7 +30,10 @@ const routes: IRouterConfig[] = [
       {
         path: '/a.html',
         exact: true,
-        component: Home
+        component: Home,
+        getInitialProps: async () => {
+          return { count: 1 };
+        },
       },
       {
         path: '/',
