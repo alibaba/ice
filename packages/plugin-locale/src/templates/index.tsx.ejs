@@ -56,10 +56,6 @@ function getLocale(): string {
   return '<%= defaultLocale %>';
 }
 
-function setLocale(locale: string): void {
-  
-}
-
 function setLocaleToCookies(locale: string) {
   const cookies = new Cookies();
   cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });

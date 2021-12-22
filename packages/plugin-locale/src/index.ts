@@ -3,14 +3,14 @@ import * as path from 'path';
 import { parse as cookieParse } from 'cookie';
 import { pick as acceptLanguagePick } from 'accept-language-parser';
 import { LocaleConfig } from './types';
-
-const LOCALE_COOKIE_KEY = 'ice_locale';
+import { LOCALE_COOKIE_KEY } from './constants';
 
 export default async function (
-  { onGetWebpackConfig, getValue, applyMethod }: IPluginAPI, 
+  { onGetWebpackConfig, getValue, applyMethod, context }: IPluginAPI, 
   localeConfig: LocaleConfig,
 ) {
   const { locales, defaultLocale } = localeConfig;
+  const { userConfig: { ssr } } = context;
 
   const iceTemp = getValue<string>('TEMP_PATH');
 
@@ -53,18 +53,20 @@ export default async function (
       }
     }
 
-    if (onBeforeSetupMiddleware) {
-      config.merge({
-        devServer: {
-          onBeforeSetupMiddleware: devServerBefore,
-        }
-      });
-    } else {
-      config.merge({
-        devServer: {
-          before: devServerBefore,
-        }
-      });
+    if (ssr) {      
+      if (onBeforeSetupMiddleware) {
+        config.merge({
+          devServer: {
+            onBeforeSetupMiddleware: devServerBefore,
+          }
+        });
+      } else {
+        config.merge({
+          devServer: {
+            before: devServerBefore,
+          }
+        });
+      }
     }
   });
 
@@ -75,8 +77,8 @@ export default async function (
 
 function getDetectedLocale(localeConfig: LocaleConfig, requestHeader: Record<string, any>) {
   const detectedLocale = getLocaleFromCookie(localeConfig, requestHeader) || 
-  getAcceptPreferredLocale(localeConfig, requestHeader) ||
-  localeConfig.defaultLocale;
+    getAcceptPreferredLocale(localeConfig, requestHeader) ||
+    localeConfig.defaultLocale;
 
   return detectedLocale;
 }
@@ -103,7 +105,7 @@ function getRedirectUrl(req: any, locale: { default: string, detected: string })
   const { pathname, search } = parsedUrl;
   const isRootPath = pathname === '/';
   if (isRootPath && locale.default !== locale.detected) {
-    return `${pathname}${locale.detected}${search}`;
+    return `${pathname}${locale.detected}${search || ''}`;
   }
 
   return undefined;

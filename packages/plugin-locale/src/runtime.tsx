@@ -1,15 +1,31 @@
 import * as React from 'react';
-// @ts-ignore
+import Cookies from 'universal-cookie';
 import { LocaleProvider } from '$ice/locale';
+import { LOCALE_COOKIE_KEY } from './constants';
+import { LocaleConfig } from './types';
 
-export default ({ modifyRoutes, buildConfig, addProvider }) => {
-  const { locale: { defaultLocale, locales } } = buildConfig;
+export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
+  const { locale: localeConfig } = buildConfig;
+  const { defaultLocale, locales } = localeConfig;
+  const { router: appConfigRouter = {} } = appConfig;
+  const { history } = appConfigRouter;
 
   modifyRoutes((routes) => {
     return addRoutesByLocales(routes, locales, defaultLocale);
   });
 
   addProvider(Provider(defaultLocale));
+
+  if (!process.env.__IS_SERVER__) {
+    // CSR auto redirect to detected locale url
+    const detectedLocale = getDetectedLocale(localeConfig);
+    const redirectUrl = getRedirectUrl(defaultLocale, detectedLocale);
+
+    if (redirectUrl) {
+      console.log(`[icejs locale plugin]: redirect to ${redirectUrl}`);
+      history.push(redirectUrl);
+    }
+  }
 };
 
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
@@ -34,6 +50,43 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
 
 function Provider(defaultLocale: string) {
   return function({ children }) {
-    return <LocaleProvider value={defaultLocale}>{children}</LocaleProvider>;
+    return (
+      <LocaleProvider value={defaultLocale}>
+        {children}
+      </LocaleProvider>
+    );
   };
+}
+
+function getDetectedLocale(localeConfig: LocaleConfig) {
+  const detectedLocale = getLocaleFromCookie(localeConfig) ||
+    getAcceptPreferredLocale(localeConfig) ||
+    localeConfig.defaultLocale;
+
+  return detectedLocale;
+}
+
+function getLocaleFromCookie(localConfig: LocaleConfig) {
+  const cookies = new Cookies();
+  const iceLocale = cookies.get(LOCALE_COOKIE_KEY);
+  
+  return iceLocale
+    ? localConfig.locales.find(locale => iceLocale === locale)
+    : undefined;
+}
+
+function getAcceptPreferredLocale(localConfig: LocaleConfig) {
+  const acceptLanguages = window.navigator.languages;
+
+  return acceptLanguages.find(acceptLanguage => localConfig.locales.includes(acceptLanguage));
+}
+
+function getRedirectUrl(defaultLocale: string, detectedLocale: string) {
+  const { pathname, search } = window.location;
+  const isRootPath = pathname === '/';
+  if (isRootPath && defaultLocale !== detectedLocale) {
+    return `${pathname}${detectedLocale}${search}`;
+  }
+
+  return undefined;
 }
