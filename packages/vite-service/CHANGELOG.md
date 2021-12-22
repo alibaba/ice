@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.2
+
+- [fix] add proxy listeners if exists
+
 ## 2.0.1
 
 - [fix] redirect import with alias
