@@ -24,6 +24,11 @@ const routes: IRouterConfig[] = [
         component: About
       },
       {
+        path: '/a.html',
+        exact: true,
+        component: Home
+      },
+      {
         path: '/',
         exact: true,
         component: Home

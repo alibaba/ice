@@ -26,6 +26,11 @@ describe(`build ${example}`, () => {
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Dashboard Page...']);
   });
 
+  test('open /a.html', async () => {
+    await page.push('#/a.html');
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
+  });
+
   afterAll(async () => {
     await browser.close();
   });
@@ -42,6 +47,11 @@ describe(`start ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
   }, 120000);
+
+  test('open /a.html', async () => {
+    await page.push('#/a.html');
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
+  });
 
   afterAll(async () => {
     await browser.close();
