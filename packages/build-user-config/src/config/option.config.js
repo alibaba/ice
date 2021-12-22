@@ -32,5 +32,5 @@ module.exports = {
   'debug-runtime': {
     module: false,
     commands: ['start'],
-  }
+  },
 };
