@@ -1,8 +1,13 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] lazy import is invalid with swc
+- [feat] support `rootDir` cli option
+
 ## 2.0.2
 
-- [feat] support `rootDir` cli option
+- [fix] compatible with alias which config with exists relative file path
 
 ## 2.0.1
 
