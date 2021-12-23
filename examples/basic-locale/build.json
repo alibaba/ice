@@ -11,5 +11,6 @@
       }
     ]
   ],
+  "ssr": false,
   "minify": false
 }

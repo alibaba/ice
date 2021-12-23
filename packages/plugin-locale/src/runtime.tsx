@@ -2,25 +2,25 @@ import * as React from 'react';
 import Cookies from 'universal-cookie';
 import { LocaleProvider } from '$ice/locale';
 import { LOCALE_COOKIE_KEY } from './constants';
-import { LocaleConfig } from './types';
+import { getLocaleData } from './getLocaleData';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { locale: localeConfig } = buildConfig;
-  const { defaultLocale, locales } = localeConfig;
+  const { defaultLocale, locales, localeRoute } = localeConfig;
   const { router: appConfigRouter = {} } = appConfig;
   const { history } = appConfigRouter;
 
-  modifyRoutes((routes) => {
-    return addRoutesByLocales(routes, locales, defaultLocale);
-  });
+  if (localeRoute !== false) {
+    modifyRoutes((routes) => {
+      return addRoutesByLocales(routes, locales, defaultLocale);
+    });
+  }
 
   addProvider(Provider(defaultLocale));
 
   if (!process.env.__IS_SERVER__) {
-    // CSR auto redirect to detected locale url
-    const detectedLocale = getDetectedLocale(localeConfig);
-    const redirectUrl = getRedirectUrl(defaultLocale, detectedLocale);
-
+    const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, localeConfig });
+    setInitICELocaleToCookie(detectedLocale);
     if (redirectUrl) {
       console.log(`[icejs locale plugin]: redirect to ${redirectUrl}`);
       history.push(redirectUrl);
@@ -58,35 +58,43 @@ function Provider(defaultLocale: string) {
   };
 }
 
-function getDetectedLocale(localeConfig: LocaleConfig) {
-  const detectedLocale = getLocaleFromCookie(localeConfig) ||
-    getAcceptPreferredLocale(localeConfig) ||
-    localeConfig.defaultLocale;
+// function getDetectedLocale(localeConfig: LocaleConfig) {
+//   const detectedLocale = getLocaleFromCookie(localeConfig) ||
+//     getAcceptPreferredLocale(localeConfig) ||
+//     localeConfig.defaultLocale;
 
-  return detectedLocale;
-}
+//   return detectedLocale;
+// }
 
-function getLocaleFromCookie(localConfig: LocaleConfig) {
+// function getLocaleFromCookie(localConfig: LocaleConfig) {
+//   const cookies = new Cookies();
+//   const iceLocale = cookies.get(LOCALE_COOKIE_KEY);
+  
+//   return iceLocale
+//     ? localConfig.locales.find(locale => iceLocale === locale)
+//     : undefined;
+// }
+
+// function getAcceptPreferredLocale(localConfig: LocaleConfig) {
+//   const acceptLanguages = window.navigator.languages;
+
+//   return acceptLanguages.find(acceptLanguage => localConfig.locales.includes(acceptLanguage));
+// }
+
+// function getRedirectUrl(defaultLocale: string, detectedLocale: string) {
+//   const { pathname, search } = window.location;
+//   const isRootPath = pathname === '/';
+//   if (isRootPath && defaultLocale !== detectedLocale) {
+//     return `${pathname}${detectedLocale}${search}`;
+//   }
+
+//   return undefined;
+// }
+
+function setInitICELocaleToCookie(locale: string) {
   const cookies = new Cookies();
   const iceLocale = cookies.get(LOCALE_COOKIE_KEY);
-  
-  return iceLocale
-    ? localConfig.locales.find(locale => iceLocale === locale)
-    : undefined;
-}
-
-function getAcceptPreferredLocale(localConfig: LocaleConfig) {
-  const acceptLanguages = window.navigator.languages;
-
-  return acceptLanguages.find(acceptLanguage => localConfig.locales.includes(acceptLanguage));
-}
-
-function getRedirectUrl(defaultLocale: string, detectedLocale: string) {
-  const { pathname, search } = window.location;
-  const isRootPath = pathname === '/';
-  if (isRootPath && defaultLocale !== detectedLocale) {
-    return `${pathname}${detectedLocale}${search}`;
+  if (!iceLocale) {
+    cookies.set(LOCALE_COOKIE_KEY, locale);
   }
-
-  return undefined;
 }

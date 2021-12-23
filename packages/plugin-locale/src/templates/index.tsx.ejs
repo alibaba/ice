@@ -41,18 +41,28 @@ function getAllLocales(): string[] {
 }
 
 /**
- * get current locale from url(location.pathname)
+ * 获取当前页面的语言
  */
 function getLocale(): string {
-  const { location: { pathname } } = history;
-  const subPathnames = pathname.split('/').filter((item: string) => item);
-  const prefixPathname = subPathnames[0];
-  const locales = <%- JSON.stringify(locales) %> || [];
-  if (locales.includes(prefixPathname)) {
-    return prefixPathname;
+  if (history === null) {
+    return '';
   }
-
-  return '<%= defaultLocale %>';
+  <% if (localeRoute === false) {%>
+    const cookies = new Cookies();
+    return cookies.get(LOCALE_COOKIE_KEY);
+  <% } else { %>
+    const { location: { pathname } } = history;
+    const pathnameParts = pathname.split('/').filter(pathnamePart => pathnamePart);
+    let currentLocale: string = '<%= defaultLocale %>';
+    // eslint-disable-next-line no-restricted-syntax
+    for (const locale of <%- JSON.stringify(locales) %>) {
+      if (pathnameParts[0] === locale) {
+        currentLocale = locale;
+        break;
+      }
+    }
+    return currentLocale;
+  <% } %>
 }
 
 function setLocaleToCookies(locale: string) {

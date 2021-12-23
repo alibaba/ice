@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "lib",
+    "esModuleInterop": true,
      "paths": {
       "$ice/locale": ["./src/_locale"]
     }
