@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- [fix] adapt with static export
+
 ## 1.2.1
 
 - [fix] miniapp exports field

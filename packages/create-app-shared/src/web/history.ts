@@ -1,11 +1,12 @@
 import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from 'history';
+import { isNode } from 'universal-env';
 import type { CreateHistory, InitHistory } from '../createInitHistory';
 import createInitHistory from '../createInitHistory';
 import { setHistory } from '../storage';
 
 const createHistory: CreateHistory = ({ type, basename, location }) => {
   let history: History;
-  if (process.env.__IS_SERVER__) {
+  if (process.env.__IS_SERVER__ || isNode) {
     history = createMemoryHistory();
     (history as any).location = location;
   } else if (type === 'hash') {
