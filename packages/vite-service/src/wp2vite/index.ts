@@ -153,6 +153,7 @@ export const wp2vite = (context: Context): InlineConfig => {
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     configFile: false,
+    root: rootDir,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
       userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),

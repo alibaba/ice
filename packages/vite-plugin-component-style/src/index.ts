@@ -67,12 +67,14 @@ export default (): Plugin => {
                 str().prependRight(se, `;\nimport "${normalizePath(styleFilePath)}"`);
               }
             }
-            return {
-              map: needSourcemap ? str().generateMap({ hires: true }) : null,
-              code: str().toString(),
-            };
           }
         }
+      }
+      if (s) {
+        return {
+          map: needSourcemap ? str().generateMap({ hires: true }) : null,
+          code: str().toString(),
+        };
       }
     }
   };
