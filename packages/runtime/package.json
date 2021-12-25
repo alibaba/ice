@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "runtime dependencies for plugin runtime",
   "main": "lib/index.js",
   "scripts": {
@@ -14,7 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.4",
-    "path-to-regexp": "^1.8.0"
+    "create-app-shared": "^1.2.1",
+    "path-to-regexp": "^1.8.0",
+    "react-app-renderer": "^3.0.2"
   },
   "sideEffects": false
 }

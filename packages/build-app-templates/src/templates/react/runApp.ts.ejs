@@ -1,15 +1,6 @@
 import { createElement } from 'react';
-import {
-  createBaseApp,
-  initAppLifeCycles,
-  emitLifeCycles,
-  getSearchParams,
-<% if (enableRouter !== false) {%>
-  initHistory,
-  createHistory,
-<% } %>
-} from 'create-app-shared';
-import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
+import { createAppShared, reactAppRenderer } from '@ice/runtime';
+import type { RenderAppConfig } from '@ice/runtime';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
@@ -21,6 +12,19 @@ import loadRuntimeModules from './loadRuntimeModules';
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
 import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
+
+const {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+  getSearchParams,
+<% if (enableRouter !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} = createAppShared;
+
+console.log('fsfdfs', reactAppRenderer)
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const runtimeValue: any = {};

@@ -1,13 +1,5 @@
 import { createElement } from 'rax';
-import {
-  createBaseApp,
-  initAppLifeCycles,
-  emitLifeCycles,
-<% if (enableRouter !== false) {%>
-  initHistory,
-  createHistory,
-<% } %>
-} from 'create-app-shared';
+import { createAppShared, reactAppRenderer } from '@ice/runtime';
 
 <% if (tabBarPath) {%>
 import TabBar from '<%- tabBarPath %>';
@@ -27,6 +19,16 @@ import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
 import { IAppConfig, IBuildConfig, IStaticConfig, IRuntimeValue } from '<%- typesPath  %>';
 import { mount, unmount } from '<%- relativeCorePath %>/render';
 import defaultStaticConfig from '<%- relativeCorePath %>/staticConfig';
+
+const {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+<% if (enableRouter !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} = createAppShared;
 
 let staticConfig: IStaticConfig = defaultStaticConfig;
 

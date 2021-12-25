@@ -1,9 +1,11 @@
 import { withRouter } from 'react-router';
-import {
+import { createAppShared } from '@ice/runtime';
+
+const {
   history,
   getHistory,
   setHistory,
-} from 'create-app-shared';
+} = createAppShared;
 
 // router api
 export {

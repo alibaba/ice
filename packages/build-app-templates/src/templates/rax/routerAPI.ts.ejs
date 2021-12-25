@@ -1,9 +1,11 @@
 import { withRouter } from 'rax-use-router';
-import {
+import { createAppShared } from '@ice/runtime';
+
+const {
   history,
   getHistory,
-  setHistory,
-} from 'create-app-shared';
+  setHistory
+} = createAppShared;
 
 // router api
 export {
