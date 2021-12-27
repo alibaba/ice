@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.22
+
+- [fix] remove alias config of `~` for vite
+
+## 0.1.21
+
+- [feat] option `disableModularImport` for disable modular import of `@alifd/next`
+
+## 0.1.20
+
+- [fix] icon path in win32
+
+## 0.1.19
+
+- [fix] theme icon in vite mode
+
+## 0.1.18
+
+- [feat] support style import in mode vite
+
 ## 0.1.17
 
 - [fix] compatible with umd and other targets.

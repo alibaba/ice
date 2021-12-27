@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.2.1
+
+- [fix] miniapp exports field
+
+## 1.2.0
+
+- [chore] use `runtimeValue.enableRouter` check router status
+- [feat] support pass pageConfig&getInitialProps when use renderComponent
+- [fix] `renderComponent` -> `app.renderComponent`
+
+## 1.1.0
+
+- [feat] support runtime value
+- [feat] getSearchParams for miniapp
+
+## 1.0.2
+
+- [fix] set history when call createHistory in runtime plugins
+
+## 1.0.1
+
+- [fix] set history value after initHistory
+
+## 1.0.0
+
+- [feat] refactor exports APIs
+- [feat] add exports field
+- [feat] add `setHistory` API
+- [fix] extract the logic of creating history from `createBaseApp`.
+
 ## 0.2.6
 
 - [feat] support onPageNotFound app lifecycle

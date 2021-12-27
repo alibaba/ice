@@ -12,7 +12,7 @@ export default [
       {
         path: '/dashboard',
         exact: true,
-        component: Dashboard
+        component: Dashboard,
       },
       {
         path: '/home',
@@ -22,7 +22,7 @@ export default [
       {
         path: '/about',
         exact: true,
-        component: About
+        component: About,
       },
       {
         path: '/',

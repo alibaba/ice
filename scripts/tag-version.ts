@@ -15,9 +15,7 @@ function updatePackageVersion(publishPackages: IPackageInfo[]) {
       const dependenceVersion = publishPackages[i].publishVersion;
 
       if (packageInfo.dependencies && packageInfo.dependencies[dependenceName]) {
-        if (!semver.satisfies(dependenceVersion, packageInfo.dependencies[dependenceName])) {
-          packageInfo.dependencies[dependenceName] = `${getVersionPrefix(packageInfo.dependencies[dependenceName])}${dependenceVersion}`;
-        }
+        packageInfo.dependencies[dependenceName] = `${getVersionPrefix(packageInfo.dependencies[dependenceName])}${dependenceVersion}`;
       } else if (packageInfo.devDependencies && packageInfo.devDependencies[dependenceName]) {
         if (!semver.satisfies(dependenceVersion, packageInfo.devDependencies[dependenceName])) {
           packageInfo.devDependencies[dependenceName] = `${getVersionPrefix(packageInfo.devDependencies[dependenceName])}${dependenceVersion}`;

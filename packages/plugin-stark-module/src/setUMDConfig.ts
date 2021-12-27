@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { IPluginAPI } from '@alib/build-scripts';
+import { IPluginAPI } from 'build-scripts';
 import { Options } from './types';
 import { getModules } from './entryHelper';
 
@@ -41,6 +41,7 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     // set umd
     const output = path.resolve(rootDir, firstLevelDir);
     const formattedSecondaryDir = formatSecondaryDir(secondaryDir);
+
     config.output
       .path(output)
       // set output to outputDir/[name]

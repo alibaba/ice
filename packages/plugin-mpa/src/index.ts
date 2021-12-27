@@ -1,22 +1,20 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { getMpaEntries } from '@builder/app-helpers';
+import { getMpaEntries, formatPath } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
-import { IPlugin } from '@alib/build-scripts';
+import { IPlugin } from 'build-scripts';
 
 interface ITemplate {
-  [key: string]: string[]
+  [key: string]: string[];
 }
 interface IMpaConfig {
   template?: ITemplate;
   openPage?: string;
-  rewrites?: {
-    [key: string]: string
-  }
+  rewrites?: {[key: string]: string} | boolean;
 }
 
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue } = api;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue, applyMethod } = api;
   const { rootDir, userConfig, commandArgs } = context;
   const { mpa } = userConfig;
 
@@ -57,7 +55,7 @@ const plugin: IPlugin = (api) => {
     } else {
       log.info('使用多页面模式 \n', JSON.stringify(entries));
     }
-    
+
     const mpaRewrites = (mpa as IMpaConfig)?.rewrites || {};
     let serverPath: string;
     if (commandArgs.mpaEntry) {
@@ -77,19 +75,9 @@ const plugin: IPlugin = (api) => {
       serverPath = mpaRewrites[pageNameLowerCase] || pageNameLowerCase;
     }
     setValue('SERVER_PATH', serverPath);
-    // set page template
-    onGetWebpackConfig(config => {
-      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config);
-      config.devServer.historyApiFallback({
-        rewrites: Object.keys(entries).map((pageName) => {
-          return {
-            from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
-            to: `/${pageName}.html`,
-          };
-        }),
-      });
-    });
+
     let parsedEntries = null;
+    const redirectEntries = [];
     // compatible with undefined TEMP_PATH
     // if disableRuntime is true, do not generate mpa entries
     if (getValue('TEMP_PATH')) {
@@ -98,17 +86,50 @@ const plugin: IPlugin = (api) => {
     let finalMPAEntries = {};
     if (parsedEntries) {
       Object.keys(parsedEntries).forEach((entryKey) => {
-        finalMPAEntries[entryKey] = parsedEntries[entryKey].finalEntry;
+        const { finalEntry, runAppPath } = parsedEntries[entryKey];
+        finalMPAEntries[entryKey] = finalEntry;
+        if (runAppPath) {
+          redirectEntries.push({
+            entryPath: finalEntry,
+            runAppPath,
+          });
+        }
       });
     } else {
       finalMPAEntries = entries;
     }
     // modify entry
     modifyUserConfig('entry', finalMPAEntries);
+    if (redirectEntries.length > 0) {
+      applyMethod('addImportDeclaration', {
+        multipleSource: {
+          runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
+            filename: entryPath,
+            value: formatPath(runAppPath),
+            type: 'normal',
+          })),
+        },
+      });
+    }
+    // set page template
+    onGetWebpackConfig(config => {
+      setPageTemplate(rootDir, entries, (mpa as any).template || {}, config, setValue);
+      // disable mpa rewrite rules when config mpa.rewrites as false
+      if ((userConfig.mpa as IMpaConfig)?.rewrites !== false) {
+        config.devServer.historyApiFallback({
+          rewrites: Object.keys(entries).map((pageName) => {
+            return {
+              from: new RegExp(`^/${mpaRewrites[pageName] || pageName}/*`),
+              to: `/${pageName}.html`,
+            };
+          })
+        });
+      }
+    });
   }
 };
 
-function setPageTemplate(rootDir, entries, template = {}, config) {
+function setPageTemplate(rootDir, entries, template = {}, config, setValue) {
   const templateNames = Object.keys(template);
   const entryNames = {};
 
@@ -118,6 +139,8 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
       entryNames[key] = templateName;
     });
   });
+
+  const pages = {};
 
   const defaultEntryNames = Object.keys(entries);
   defaultEntryNames.forEach(defaultEntryName => {
@@ -131,21 +154,25 @@ function setPageTemplate(rootDir, entries, template = {}, config) {
           (htmlPluginOption as any).template = entryTemplate;
         }
       }
-      
+
       config.plugin(htmlPluginKey).tap(([args]) => {
         (htmlPluginOption as any).templateParameters = {
           ...(args.templateParameters || {}),
           pageName: defaultEntryName,
         };
-        return [
-          {
-            ...args,
-            ...htmlPluginOption,
-          }
-        ];
+
+        const item = {
+          ...args,
+          ...htmlPluginOption,
+        };
+
+        pages[defaultEntryName] = item;
+        return [item];
       });
     }
   });
+
+  setValue('MPA_PAGES', pages);
 }
 
 export default plugin;

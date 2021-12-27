@@ -1,12 +1,112 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] lazy import is invalid with swc
+
+## 2.0.2
+
+- [fix] compatible with alias which config with exists relative file path
+
+## 2.0.1
+
+- [fix] enhance alias for node_modules dependencies
+
+## 2.0.0
+
+- [fix] add url fallback for webpackHotDevClient
+- [fix] bump version of `@builder/pack`(^0.5.0)
+- [feat] add https url list
+- [chore] enhance `applyCliOptions`
+- [chore] RedirectPathLoader should include `.rax|.ice`
+- [fix] skip deps `filepath` in windows
+
+## 1.1.9
+
+- [feat] compact compact postcss options in different version of postcss-loader
+
+## 1.1.8
+
+- [fix] re-calculate webpack cache id when config `disableRuntime`
+
+## 1.1.7
+
+- [fix] undefined `postcssOptions.plugins`
+
+## 1.1.6
+
+- [fix] format `postcssOptions`
+
+## 1.1.5
+
+- [fix] prevent minimize `.scss` by default.
+- [fix] Regexp for runtime folder
+- [fix] disable default file lint for hmr performance
+
+## 1.1.4
+
+- [fix] handle unexpected merge with `devServer.allowedHosts`.
+- [fix] set `corejs: '3.7'` to meet the ECMAScript 2021 polyfills.
+
+## 1.1.3
+
+- [fix] error occurred when config sourceMap
+
+## 1.1.2
+
+- [fix] remove unused package of `webpack-plugin-import`
+
+## 1.1.1
+
+- [fix] OOM when use filesystem cache
+
+## 1.1.0
+
+- [feat] get webpack cache version by `WEBPACK_CACHE_ID`
+- [fix] use eslint-webpack-plugin instead of eslint-reporting-webpack-plugin
+- [fix] bump version of `@builder/pack`
+- [feat] refactor config of eslint
+- [feat] support active minify in dev
+
+## 1.0.2
+
+- [fix] add dependency of eslint-reporting-webpack-plugin
+
+## 1.0.1
+
+- [chore] use @builder/swc instead of @swc/core
+
+## 1.0.0
+
+- [feat] pre build dependencies and refactor config for webpack 5
+
+## 0.3.13
+
+- [fix] SourceMapDevtoolPlugin will block the builder when chunk name includes `:`
+
+## 0.3.12
+
+- [fix] order of core-js modules
+
+## 0.3.11
+
+- [fix] only pass modules to css module rule
+
+## 0.3.10
+
+- [feat] support global style rule custom `postcssOptions`
+
+## 0.3.9
+
+- [fix] polyfill loader include rules in windows
+
 ## 0.3.8
 
 - [feat] support global rules of rax-app
 
 ## 0.3.7
 
-- [feat] add `devServer.host` to https cert 
+- [feat] add `devServer.host` to https cert
 - [chore] `tabItem.path` => `tabItem.pageName`/ `tabItem.name` => `tabItem.text`
 - [fix] compatible with no loader specified when using `postcssrc: true` in ssr app
 

@@ -1,5 +1,7 @@
 module.exports = (config, cssLoaderOptions) => {
   if (cssLoaderOptions) {
+    const {modules, ...restOptions} = cssLoaderOptions;
+
     [
       'scss',
       'scss-module',
@@ -12,12 +14,14 @@ module.exports = (config, cssLoaderOptions) => {
       'less-global',
     ].forEach(rule => {
       if (config.module.rules.get(rule)) {
+        const isCSSModule = /-module$/.test(rule);
+
         config.module
           .rule(rule)
           .use('css-loader')
           .tap((options) => ({
             ...options,
-            ...cssLoaderOptions,
+            ...(isCSSModule ? cssLoaderOptions : restOptions),
           }));
       }
     });

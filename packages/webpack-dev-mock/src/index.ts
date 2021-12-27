@@ -198,8 +198,11 @@ function createHandler(method, path, handler) {
         multer().any()(req, res, () => {
           handler(req, res, next);
         });
-      } else {
+      } else if (res.json) {
         res.json(handler);
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(handler));
       }
     }
   };

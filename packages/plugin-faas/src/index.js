@@ -7,11 +7,14 @@ module.exports = async ({ context, onGetWebpackConfig }) => {
 
   onGetWebpackConfig((config) => {
     if (command === 'start') {
-      const originalDevServeBefore = config.devServer.get('before');
+      const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
 
       config.merge({ devServer: {
-        writeToDisk: true,
-        before(app, server) {
+        devMiddleware: {
+          writeToDisk: true,
+        },
+        onBeforeSetupMiddleware(server) {
+          const { app } = server;
           // eslint-disable-next-line react-hooks/rules-of-hooks
           app.use(useExpressDevPack({
             functionDir: rootDir,
@@ -25,7 +28,7 @@ module.exports = async ({ context, onGetWebpackConfig }) => {
           }));
 
           if (typeof originalDevServeBefore === 'function') {
-            originalDevServeBefore(app, server);
+            originalDevServeBefore(server);
           }
         },
       }});

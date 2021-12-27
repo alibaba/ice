@@ -2,8 +2,9 @@
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 const parse = require('yargs-parser');
-const { start } = require('@alib/build-scripts');
-const log = require('@alib/build-scripts/lib/utils/log');
+const log = require('build-scripts/lib/utils/log');
+const { isAbsolute, join } = require('path');
+const BuildService = require('./buildService');
 
 const rawArgv = parse(process.argv.slice(2), {
   configuration: { 'strip-dashed': true }
@@ -33,17 +34,25 @@ module.exports = async (getBuiltInPlugins) => {
   process.env.NODE_ENV = 'development';
   rawArgv.port = parseInt(newPort, 10);
 
+  const { rootDir = process.cwd() } = rawArgv;
+
+  delete rawArgv.rootDir;
   // ignore _ in rawArgv
   delete rawArgv._;
   try {
-    const devServer = await start({
+    const service = new BuildService({
+      command: 'start',
       args: { ...rawArgv },
-      getBuiltInPlugins
+      getBuiltInPlugins,
+      rootDir: isAbsolute(rootDir) ? rootDir : join(process.cwd(), rootDir),
     });
+    const devServer = await service.run({});
 
-    ['SIGINT', 'SIGTERM'].forEach(function(sig) {
-      process.on(sig, function() {
-        devServer.close();
+    ['SIGINT', 'SIGTERM'].forEach(function (sig) {
+      process.on(sig, function () {
+        if (devServer) {
+          devServer.close();
+        }
         process.exit(0);
       });
     });

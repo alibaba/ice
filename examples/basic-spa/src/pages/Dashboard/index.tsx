@@ -20,18 +20,17 @@ const Bar = () => {
 
 const Dashboard = (props) => {
   console.log('props:', props);
+  const { pageConfig } = props;
+
   return (
     <>
       <h2>Dashboard Page...</h2>
+      <span id="J_pageConfig-custom">{pageConfig.custom}</span>
       <Foo />
       <Bar />
       <Link to="/about">About</Link>
     </>
   );
-};
-
-Dashboard.pageConfig = {
-  title: 'Dashboard Page'
 };
 
 export default Dashboard;

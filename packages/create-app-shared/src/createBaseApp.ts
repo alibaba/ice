@@ -1,19 +1,9 @@
-import { History } from 'history';
 import RuntimeModule from './runtimeModule';
-import { createHistory } from './history';
-import { isMiniAppPlatform } from './env';
+import { DEFAULT_APP_CONFIG } from './constants';
 import collectAppLifeCycle from './collectAppLifeCycle';
+import type { AppConfig, BuildConfig, Context } from './types';
 
-const DEFAULE_APP_CONFIG = {
-  app: {
-    rootId: 'root'
-  },
-  router: {
-    type: 'hash'
-  }
-};
-
-function mergeDefaultConfig(defaultConfig, config) {
+function mergeDefaultConfig(defaultConfig: AppConfig, config: AppConfig) {
   Object.keys(defaultConfig).forEach(key => {
     if (typeof config[key] === 'object' && config[key] !== null) {
       config[key] = mergeDefaultConfig(defaultConfig[key], config[key]);
@@ -24,32 +14,30 @@ function mergeDefaultConfig(defaultConfig, config) {
   return config;
 }
 
-export default ({ loadRuntimeModules, createElement, initHistory = true }) => {
-  const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
+export default ({ loadRuntimeModules, createElement, runtimeAPI = {}, runtimeValue = {} }) => {
+  const createBaseApp = <T = AppConfig, P = BuildConfig, S = Context>(appConfig: T, buildConfig: P, context: S, staticConfig?: any) => {
 
     // Merge default appConfig to user appConfig
-    appConfig = mergeDefaultConfig(DEFAULE_APP_CONFIG, appConfig);
-
-    // Set history
-    let history: History;
-    if (!isMiniAppPlatform && initHistory) {
-      const { router } = appConfig;
-      const { type, basename, history: customHistory } = router;
-      const location = context.initialContext ? context.initialContext.location : null;
-      history = createHistory({ type, basename, location, customHistory });
-      appConfig.router.history = history;
-    }
-
-    context.createElement = createElement;
+    appConfig = mergeDefaultConfig(DEFAULT_APP_CONFIG, appConfig) as T;
+    (context as Context).createElement = createElement;
+    (context as Context).enableRouter = (runtimeValue as any).enableRouter;
 
     // Load runtime modules
-    const runtime = new RuntimeModule(appConfig, buildConfig, context);
+    const runtime = new RuntimeModule(appConfig, buildConfig, context, staticConfig);
+    Object.keys(runtimeAPI).forEach((apiKey: string) => {
+      runtime.registerRuntimeAPI(apiKey, runtimeAPI[apiKey]);
+    });
+
+    // Assign runtime plugin internal value
+    Object.keys(runtimeValue).forEach((key: string) => {
+      runtime.setRuntimeValue(key, runtimeValue[key]);
+    });
+
     loadRuntimeModules(runtime);
 
     // Collect app lifeCyle
     collectAppLifeCycle(appConfig);
     return {
-      history,
       runtime,
       appConfig
     };

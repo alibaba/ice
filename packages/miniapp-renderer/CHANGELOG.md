@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.2
+
+- [Fix] avoid rootEl override `document.body`
+
+## 0.2.1
+
+- [Refactor] miniapp page component
+
+## 0.1.15
+
+- [Chore] use `pageSource` as the render unique path when `route.pageSource` existed
+
 ## 0.1.14
 
 - [Feat] support plugin situation without global getApp

@@ -1,5 +1,4 @@
 {
   "plugins": [],
-  "ssr": true,
-  "modularImportRuntime": true
+  "ssr": true
 }

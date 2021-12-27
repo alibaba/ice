@@ -6,12 +6,9 @@ import { ConfigProvider } from '@alifd/next';
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
-    addProvider: ({ children }) => (
-      <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>
-    ),
-  },
-  logger: {
-    level: 'warn'
+    addProvider: ({ children }) => {
+      return <ConfigProvider prefix="next-fd-">{children}</ConfigProvider>;
+    },
   },
   router: {
     type: 'browser',
@@ -26,9 +23,10 @@ const appConfig: IAppConfig = {
             {
               path: '/seller',
               title: '商家平台',
+              // loadScriptMode: 'import',
               url: [
-                '//ice.alicdn.com/icestark/child-seller-react/index.js',
-                '//ice.alicdn.com/icestark/child-seller-react/index.css',
+                'https://iceworks.oss-cn-hangzhou.aliyuncs.com/icestark/child-seller-react/build/js/index.js',
+                'https://iceworks.oss-cn-hangzhou.aliyuncs.com/icestark/child-seller-react/build/css/index.css',
                 // '//127.0.0.1:3444/js/index.js',
                 // '//127.0.0.1:3444/css/index.css',
               ],
@@ -37,8 +35,8 @@ const appConfig: IAppConfig = {
               path: '/waiter',
               title: '小二平台',
               url: [
-                '//ice.alicdn.com/icestark/child-waiter-vue/app.js',
-                '//ice.alicdn.com/icestark/child-waiter-vue/app.css',
+                'https://iceworks.oss-cn-hangzhou.aliyuncs.com/icestark/child-waiter-vue/dist/js/app.js',
+                'https://iceworks.oss-cn-hangzhou.aliyuncs.com/icestark/child-waiter-vue/dist/css/app.css',
                 // '//localhost:8080/app.js',
                 // '//localhost:8080/css/app.css',
               ],

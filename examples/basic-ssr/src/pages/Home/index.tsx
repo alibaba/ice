@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, logger, Head, store as appStore } from 'ice';
+import { Link, Head } from 'ice';
+import appStore from '@/store';
 import pageStore from './store';
 import styles from './index.module.scss';
 
-export default function Home(props) {
+function Home(props) {
   if (!process.env.__IS_SERVER__) {
-    logger.info('Home props', props);
+    console.info('Home props', props);
   }
 
   const [dataSource, setData] = useState<number[]>([]);
@@ -19,7 +20,7 @@ export default function Home(props) {
   const [counterState] = pageStore.useModel('counter');
 
   return (
-    <main>
+    <main className={styles.main}>
       <Head>
         <meta charSet="utf-8" />
         <title>{props.title}</title>
@@ -48,13 +49,15 @@ Home.getInitialProps = async () => {
         id: 10001,
         name: 'Jack Ma',
         edu: 'Hangzhou Normal University',
-        address: 'Hangzhou',
+        address: 'Hangzhou'
       },
       title: 'Home Page...',
       content: 'Home Content...',
-      description: 'Home Description...',
-    },
+      description: 'Home Description...'
+    }
   };
 
   return { ...res.data, title: 'Home Page...' };
 };
+
+export default Home;

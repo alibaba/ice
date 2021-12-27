@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, store as appStore } from 'ice';
-import { store as pageStore } from 'ice/Home';
+import { Link } from 'ice';
+import appStore from '@/store';
+import pageStore from './store';
 
 export default () => {
   const [counterState, counterActions] = appStore.useModel('counter');
@@ -30,6 +31,7 @@ export default () => {
         <span>{counterState.count}</span>
         <button type="button" id="decrement" onClick={counterActions.decrementAsync}>-</button>
       </div>
+      <div>countHistory：{counterState.countHistory}</div>
 
       <Link to="/about">about</Link>
     </>

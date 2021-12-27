@@ -61,19 +61,19 @@ export default async function create(dirPath: string, templateName: string, dirn
 async function selectTemplate(): Promise<string> {
   const templates: ITemplate[] = [{
     npmName: '@alifd/scaffold-simple',
-    description: 'Simple TypeScript template.',
+    description: 'TypeScript + No UI Components',
+  }, {
+    npmName: '@icedesign/ice-antd-scaffold',
+    description: 'TypeScript + Ant Design',
   }, {
     npmName: '@alifd/scaffold-lite',
-    description: 'Lightweight TypeScript template with fusion design components',
+    description: 'TypeScript + Fusion Design',
+  },  {
+    npmName: '@alifd/fusion-design-pro',
+    description: 'TypeScript + Fusion Design Pro ',
   }, {
     npmName: '@alifd/scaffold-lite-js',
-    description: 'Lightweight JavaScript template with fusion design components',
-  }, {
-    npmName: '@alifd/fusion-design-pro',
-    description: 'Fusion Design Pro TypeScript template.',
-  }, {
-    npmName: '@alifd/fusion-design-pro-js',
-    description: 'Fusion Design Pro JavaScript template.',
+    description: 'JavaScript + Fusion Design',
   }, {
     npmName: 'build-plugin-template',
     description: 'ice.js plugin development template.'

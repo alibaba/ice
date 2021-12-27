@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [feat] migrate plugin api and refactor runtime folder
+
 ## 1.7.8
 
 - [feat] provide types lint
