@@ -1,0 +1,171 @@
+import * as path from 'path';
+import * as fs from 'fs-extra';
+import * as glob from 'fast-glob';
+import { init, parse } from 'es-module-lexer';
+import { transform } from 'esbuild';
+import type { Loader } from 'esbuild';
+
+type CheckMap = Record<string, boolean>;
+interface Options {
+  rootDir: string;
+  parallel?: number;
+  analyzeRelativeImport?: boolean;
+  // webpack mode
+  webpackAlias?: Record<string, string>;
+  // vite mode, provide by vite.createResolver
+  resolver?: (filePath: string) => string;
+}
+
+const runtimePlugins = {
+  'build-plugin-ice-request': ['request', 'useRequest'],
+  'build-plugin-ice-auth': ['useAuth', 'withAuth'],
+};
+
+export async function globSourceFile(sourceDir: string): Promise<string[]> {
+  return await glob('**/*.{js,ts,jsx,tsx}', {
+    cwd: sourceDir,
+    ignore: [
+      '**/node_modules/**',
+      'src/apis/**',
+      '**/__tests__/**',
+    ],
+    absolute: true,
+  });
+}
+
+function addLastSlash(filePath: string) {
+  return filePath.endsWith('/') ? filePath : `${filePath}/`;
+}
+
+export function getAliasedPath(filePath: string, options: {rootDir: string, webpackAlias: Record<string, string>}) {
+  const { webpackAlias, rootDir } = options;
+  let aliasedPath = filePath;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const aliasKey of Object.keys(webpackAlias || {})) {
+    const isStrict = aliasKey.endsWith('$');
+    const strictKey = isStrict ? aliasKey.slice(0, -1) : aliasKey;
+    const aliasValue = webpackAlias[aliasKey];
+    
+    if (aliasValue.match(/.(j|t)s(x)?$/)) {
+      if (aliasedPath === strictKey) {
+        aliasedPath = aliasValue;
+        break;
+      }
+    } else {
+      // case: { xyz: '/some/dir' }, { xyz$: '/some/dir' }
+      // import xyz from 'xyz';   // resolved as '/some/dir'
+      if (aliasedPath === strictKey) {
+        aliasedPath = aliasValue;
+        break;
+      } else if (isStrict) {
+        // case: { xyz$: '/some/dir' }
+        // import xyz from 'xyz/file.js'; // resolved as /abc/node_modules/xyz/file.js
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      // case: { xyz: '/some/dir' }
+      // import xyz from 'xyz/file.js'; // resolved as /some/dir/file.js
+      const slashedKey = addLastSlash(strictKey);
+      if (aliasedPath.startsWith(slashedKey)) {
+        aliasedPath = aliasedPath.replace(new RegExp(`^${slashedKey}`), addLastSlash(aliasValue));
+        break;
+      }
+    }
+  }
+  if (!path.isAbsolute(aliasedPath)) {
+    try {
+      // 检测是否可以在 node_modules 下找到依赖，如果可以直接使用该依赖
+      aliasedPath = require.resolve(aliasedPath, { paths: [rootDir]});
+    } catch (e) {
+      // ignore errors
+      aliasedPath = path.resolve(rootDir, aliasedPath); 
+    }
+  }
+  // filter path with node_modules
+  if (aliasedPath.includes('node_modules')) {
+    return '';
+  } else if (!path.extname(aliasedPath)) {
+    // get index file of 
+    const basename = path.basename(aliasedPath);
+    const patterns = [`${basename}.{js,ts,jsx,tsx}`, `${basename}/index.{js,ts,jsx,tsx}`];
+    
+    return glob.sync(patterns, {
+      cwd: path.dirname(aliasedPath),
+      absolute: true,
+    })[0];
+  }
+  return aliasedPath;
+}
+
+export default async function analyzeRuntime(files: string[], options: Options): Promise<CheckMap> {
+  const { analyzeRelativeImport, rootDir, webpackAlias, resolver, parallel } = options;
+  const parallelNum = parallel ?? 10;
+  const sourceFiles = [...files];
+  let initd = false;
+  const checkMap: CheckMap = {};
+  // init check map
+  const checkPlugins = Object.keys(runtimePlugins);
+  checkPlugins.forEach((pluginName) => {
+    checkMap[pluginName] = false;
+  });
+
+  async function analyzeFile(filePath: string) {
+    let source = fs.readFileSync(filePath, 'utf-8');
+    const lang = path.extname(filePath).slice(1);
+    let loader: Loader = 'jsx';
+    if (lang === 'ts' || lang === 'tsx') {
+      loader = lang;
+    }
+    try {
+      // transform content first since es-module-lexer can't handle ts file
+      source = (await transform(source, { loader })).code;
+      if (!initd) {
+        await init;
+        initd = true;
+      }
+      const imports = parse(source)[0];
+      await Promise.all(imports.map((importSpecifier) => {
+        return (async () => {
+          const importName = importSpecifier.n;
+          // filter source code
+          if (importName === 'ice') {
+            const importStr = source.substring(importSpecifier.ss, importSpecifier.se);
+            checkPlugins.forEach((pluginName) => {
+              const apiList: string[] = runtimePlugins[pluginName];
+              if (apiList.some((apiName) => importStr.includes(apiName))) {
+                checkMap[pluginName] = true;
+              }
+            });
+          } else if (analyzeRelativeImport) {
+            let importPath = importName;
+            if (!path.isAbsolute(importPath)) {
+              if (webpackAlias) {
+                importPath = getAliasedPath(importPath, { rootDir, webpackAlias });
+              } else if (resolver) {
+                importPath = resolver(importPath);
+              } else {
+                throw new Error('config webpackAlias in webpack mode or resolver in vite mode when need to analyze relative import');
+              }
+            }
+            if (importPath && !sourceFiles.includes(importPath) && fs.existsSync(importPath)) {
+              await analyzeFile(importPath);
+            }
+          }
+        })();
+      }));
+    } catch (err) {
+      // ignore error
+    }
+  }
+
+  for (
+    let i = 0;
+    i * parallelNum < sourceFiles.length && checkPlugins.some((pluginName) => checkMap[pluginName] === false);
+    i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await Promise.all(sourceFiles.slice(i * parallelNum, parallelNum).map((filePath) => {
+      return analyzeFile(filePath);
+    }));
+  }
+  return checkMap;
+}
