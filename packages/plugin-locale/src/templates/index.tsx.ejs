@@ -1,7 +1,7 @@
 <% if(!hasJsxRuntime) { %>
   import * as React from 'react';
 <% } %>
-import { FC, createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { history } from 'create-app-shared';
 import Cookies from 'universal-cookie';
 
@@ -9,18 +9,14 @@ const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
 
 const Context = createContext<any>(null);
 
-interface Props {
-  value: string;
-}
-
-const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
+export const LocaleProvider = ({ children }) => {
   const [activeLocale, setActiveLocale] = useState<string>(() => getLocale());
 
   function setLocale(locale: string) {
     setLocaleToCookies(locale);
-    redirect(locale);
     setActiveLocale(locale);
   }
+
   return (
     <Context.Provider value={[activeLocale, setLocale]}>
       {children}
@@ -28,71 +24,48 @@ const LocaleProvider: FC<Props> = ({ value: defaultLocale, children }) => {
   )
 }
 
-function useLocale(): [string, React.Dispatch<React.SetStateAction<string>>] {
+export function useLocale(): [string, React.Dispatch<React.SetStateAction<string>>] {
   return useContext(Context)
 }
 
-function getDefaultLocale(): string {
+export function getDefaultLocale(): string {
   return '<%= defaultLocale %>'
 }
 
-function getAllLocales(): string[] {
+export function getAllLocales(): string[] {
   return <%- JSON.stringify(locales) %>
 }
 
-/**
- * 获取当前页面的语言
- */
-function getLocale(): string {
+function getDetectedLocaleFromPath(locales: string[]) {
   if (history === null) {
-    return '';
+    console.log('history is null, can\'t get current locale from pathname');
+    return;
   }
-  <% if (localeRoute === false) {%>
-    const cookies = new Cookies();
-    return cookies.get(LOCALE_COOKIE_KEY);
-  <% } else { %>
-    const { location: { pathname } } = history;
-    const pathnameParts = pathname.split('/').filter(pathnamePart => pathnamePart);
-    let currentLocale: string = '<%= defaultLocale %>';
-    // eslint-disable-next-line no-restricted-syntax
-    for (const locale of <%- JSON.stringify(locales) %>) {
-      if (pathnameParts[0] === locale) {
-        currentLocale = locale;
-        break;
-      }
+  const { location: { pathname } } = history;
+  const pathnameParts = pathname.split('/').filter(pathnamePart => pathnamePart);
+
+  let detectedLocale: string | undefined;
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const locale of locales) {
+    if (pathnameParts[0] === locale) {
+      detectedLocale = locale;
+      break;
     }
-    return currentLocale;
-  <% } %>
+  }
+
+  return detectedLocale;
+}
+
+export function getLocale(): string {
+  return new Cookies().get(LOCALE_COOKIE_KEY) ||
+    <% if (localeRoute !== false) {%>
+      getDetectedLocaleFromPath(<%- JSON.stringify(locales) %>) ||
+    <% } %>
+    '<%= defaultLocale %>'
 }
 
 function setLocaleToCookies(locale: string) {
   const cookies = new Cookies();
   cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
 }
-
-function redirect(locale: string) {
-  if (!history) {
-    console.error('history is null');
-  }
-
-  const { location: { pathname } } = history;
-  let subPathnames = pathname.split('/').filter((item: string) => item);
-
-  if (locale === '<%= defaultLocale %>') {
-    subPathnames = subPathnames.slice(1);
-  } else {
-    subPathnames[0] = locale;
-  }
-
-  const newPathname = subPathnames.join('/') || '/';
-  history.push(newPathname);
-}
-
-export { 
-  useLocale, 
-  LocaleProvider,
-  getDefaultLocale,
-  getAllLocales,
-  getLocale,
-  setLocaleToCookies,
-};

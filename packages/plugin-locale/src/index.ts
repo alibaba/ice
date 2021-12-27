@@ -2,22 +2,15 @@ import { IPluginAPI } from 'build-scripts';
 import path from 'path';
 import { LocaleConfig } from './types';
 import { LOCALE_COOKIE_KEY } from './constants';
-import { getLocaleData } from './getLocaleData';
+import { getLocaleData } from './utils/getLocaleData';
 
 export default async function (
   { onGetWebpackConfig, getValue, applyMethod, context }: IPluginAPI, 
   localeConfig: LocaleConfig,
 ) {
-  const { locales, defaultLocale, localeRoute = true } = localeConfig;
+  checkLocaleConfig(localeConfig);
 
-  if (!locales) {
-    console.error(`[build-plugin-ice-locale] locales should be array but received ${typeof locales}`);
-    process.exit(1);
-  }
-  if (!defaultLocale) {
-    console.error(`[build-plugin-ice-locale] defaultLocale should be string but received ${typeof defaultLocale}`);
-    process.exit(1);
-  }
+  const { locales, defaultLocale, localeRoute = true } = localeConfig;
 
   const { userConfig: { ssr } } = context;
 
@@ -55,7 +48,7 @@ export default async function (
         const { headers, _parsedUrl } = req;
         const { redirectUrl } = getLocaleData({ headers, url: _parsedUrl, localeConfig });
         if (redirectUrl) {
-          res.redirect(302, redirectUrl);
+          res.redirect(307, redirectUrl);
         } else {
           next();
         }
@@ -86,4 +79,16 @@ export default async function (
   // export API
   // import { useLocale } from 'ice';
   applyMethod('addExport', { source: './plugins/locale', importSource: '$$ice/plugins/locale', exportMembers: ['useLocale'] }); 
+}
+
+function checkLocaleConfig(localeConfig: LocaleConfig) {
+  const { locales, defaultLocale } = localeConfig;
+  if (!locales) {
+    console.error(`[build-plugin-ice-locale] locales should be array but received ${typeof locales}`);
+    process.exit(1);
+  }
+  if (!defaultLocale) {
+    console.error(`[build-plugin-ice-locale] defaultLocale should be string but received ${typeof defaultLocale}`);
+    process.exit(1);
+  }
 }

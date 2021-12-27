@@ -1,14 +1,18 @@
 import * as React from 'react';
+import { History } from 'history';
 import Cookies from 'universal-cookie';
-import { LocaleProvider } from '$ice/locale';
+import { LocaleProvider, getLocale } from '$ice/locale';
 import { LOCALE_COOKIE_KEY } from './constants';
-import { getLocaleData } from './getLocaleData';
+import { getLocaleData } from './utils/getLocaleData';
+import { LocaleConfig } from './types';
+import normalizeLocalePath from './utils/normalizeLocalePath';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { locale: localeConfig } = buildConfig;
   const { defaultLocale, locales, localeRoute } = localeConfig;
   const { router: appConfigRouter = {} } = appConfig;
   const { history } = appConfigRouter;
+  const originHistory = { ...history };
 
   if (localeRoute !== false) {
     modifyRoutes((routes) => {
@@ -16,16 +20,19 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
     });
   }
 
-  addProvider(Provider(defaultLocale));
+  addProvider(Provider());
 
   if (!process.env.__IS_SERVER__) {
+    // CSR redirect to new locale path
     const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, localeConfig });
     setInitICELocaleToCookie(detectedLocale);
     if (redirectUrl) {
       console.log(`[icejs locale plugin]: redirect to ${redirectUrl}`);
-      history.push(redirectUrl);
+      originHistory.push(redirectUrl);
     }
   }
+
+  modifyHistory(history, localeConfig);
 };
 
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
@@ -48,48 +55,15 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
   return modifiedRoutes;
 }
 
-function Provider(defaultLocale: string) {
+function Provider() {
   return function({ children }) {
     return (
-      <LocaleProvider value={defaultLocale}>
+      <LocaleProvider>
         {children}
       </LocaleProvider>
     );
   };
 }
-
-// function getDetectedLocale(localeConfig: LocaleConfig) {
-//   const detectedLocale = getLocaleFromCookie(localeConfig) ||
-//     getAcceptPreferredLocale(localeConfig) ||
-//     localeConfig.defaultLocale;
-
-//   return detectedLocale;
-// }
-
-// function getLocaleFromCookie(localConfig: LocaleConfig) {
-//   const cookies = new Cookies();
-//   const iceLocale = cookies.get(LOCALE_COOKIE_KEY);
-  
-//   return iceLocale
-//     ? localConfig.locales.find(locale => iceLocale === locale)
-//     : undefined;
-// }
-
-// function getAcceptPreferredLocale(localConfig: LocaleConfig) {
-//   const acceptLanguages = window.navigator.languages;
-
-//   return acceptLanguages.find(acceptLanguage => localConfig.locales.includes(acceptLanguage));
-// }
-
-// function getRedirectUrl(defaultLocale: string, detectedLocale: string) {
-//   const { pathname, search } = window.location;
-//   const isRootPath = pathname === '/';
-//   if (isRootPath && defaultLocale !== detectedLocale) {
-//     return `${pathname}${detectedLocale}${search}`;
-//   }
-
-//   return undefined;
-// }
 
 function setInitICELocaleToCookie(locale: string) {
   const cookies = new Cookies();
@@ -97,4 +71,36 @@ function setInitICELocaleToCookie(locale: string) {
   if (!iceLocale) {
     cookies.set(LOCALE_COOKIE_KEY, locale);
   }
+}
+
+function modifyHistory(history: History, localeConfig: LocaleConfig) {
+  const originHistory = { ...history };
+  const { localeRoute, defaultLocale } = localeConfig;
+
+  if (localeRoute === false) {
+    return;
+  }
+
+  function getLocalePath(
+    pathname: string, 
+    locale: string,
+  ) {
+    const localePathResult = normalizeLocalePath(pathname, localeConfig);
+    if (locale === defaultLocale) {
+      return localePathResult.pathname;
+    }
+    return `/${locale}${localePathResult.pathname}`;
+  }
+
+  history.push = function(path: string, state?: unknown) {
+    const locale = getLocale();
+    const localePath = getLocalePath(path, locale);
+    originHistory.push(localePath, state);
+  };
+
+  history.replace = function(path: string, state?: unknown) {
+    const locale = getLocale();
+    const localePath = getLocalePath(path, locale);
+    originHistory.replace(localePath, state);
+  };
 }

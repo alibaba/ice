@@ -1,10 +1,12 @@
 import { FormattedMessage } from 'react-intl';
-import { useLocale, getAllLocales } from 'ice';
+import { useLocale, getAllLocales, Link, useLocation } from 'ice';
 
 export default function LocaleSwitcher() {
+  const location = useLocation();
+
   const [activeLocale, setLocale] = useLocale();
   const allLocales = getAllLocales();
-  console.log('activeLocale==>', activeLocale);
+  console.log('activeLocale==>', activeLocale, 'location.pathname', location.pathname);
   const otherLocales = allLocales.filter((locale) => activeLocale !== locale);
   return (
     <div>
@@ -14,8 +16,8 @@ export default function LocaleSwitcher() {
           otherLocales.map((locale: string) => {
             return (
               <li key={locale}>
-                {/* <Link to="/en-US">{locale}</Link> */}
-                <div onClick={() => setLocale(locale)}>{locale}</div>
+                {/* <Link to="/" onClick={() => setLocale(locale)}>{locale}</Link> */}
+                <Link to={location.pathname} onClick={() => setLocale(locale)}>{locale}</Link>
               </li>
             );
           })

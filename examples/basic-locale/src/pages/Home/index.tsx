@@ -1,4 +1,4 @@
-import { useLocale, getAllLocales, getDefaultLocale } from 'ice';
+import { useLocale, getAllLocales, getDefaultLocale, Link } from 'ice';
 import { FormattedMessage } from 'react-intl';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 
@@ -12,6 +12,7 @@ function Home() {
       <div><FormattedMessage id="configuredLocales" />: {JSON.stringify(allLocales)}</div>
       <div><FormattedMessage id="defaultLocale" />: {defaultLocale}</div>
       <div><FormattedMessage id="currentLocale" />: {locale}</div>
+      <Link to="/about">About</Link>
       <LocaleSwitcher />
     </div>
   );

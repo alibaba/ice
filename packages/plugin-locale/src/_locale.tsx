@@ -1,5 +1,9 @@
 import * as React from 'react';
 
-export const LocaleProvider = ({ value, children }) => {
-  return (<div />);
+export const LocaleProvider = ({ children }) => {
+  return (<div>{children}</div>);
 };
+
+export function getLocale() {
+  return '';
+}

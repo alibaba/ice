@@ -1,7 +1,7 @@
 import { pick as acceptLanguagePick } from 'accept-language-parser';
 import Cookies from 'universal-cookie';
-import { LOCALE_COOKIE_KEY } from './constants';
-import { LocaleConfig } from './types';
+import { LOCALE_COOKIE_KEY } from '../constants';
+import { LocaleConfig } from '../types';
 
 interface UrlObject {
   pathname: string;
@@ -47,8 +47,8 @@ function getDetectedLocale(
   const { defaultLocale, locales } = localeConfig;
 
   const detectedLocale = 
-      getLocaleFromCookie(localeConfig, cookies) || 
-      getPreferredLocale(localeConfig, headers) || 
+      getLocaleFromCookie(locales, cookies) || 
+      getPreferredLocale(locales, headers) || 
       (localeConfig.localeRoute === false ? undefined : getDetectedLocaleFromPath(pathname, locales)) ||
       defaultLocale;
 
@@ -75,19 +75,19 @@ function getRedirectUrl(
   }
 }
 
-function getLocaleFromCookie(localeConfig: LocaleConfig, cookies: Record<string, string>) {
+function getLocaleFromCookie(locales: string[], cookies: Record<string, string>) {
   const iceLocale = cookies[LOCALE_COOKIE_KEY];
 
-  return localeConfig.locales.find(locale => iceLocale === locale);
+  return locales.find(locale => iceLocale === locale);
 }
 
-function getPreferredLocale(localeConfig: LocaleConfig, headers?: { [key: string]: string }) {
+function getPreferredLocale(locales: string[], headers?: { [key: string]: string }) {
   if (typeof window === 'undefined') {
     const acceptLanguageValue = headers?.['accept-language'];
-    return acceptLanguagePick(localeConfig.locales, acceptLanguageValue);
+    return acceptLanguagePick(locales, acceptLanguageValue);
   } else {
     const acceptLanguages = window.navigator.languages;
-    return acceptLanguages.find(acceptLanguage => localeConfig.locales.includes(acceptLanguage));
+    return acceptLanguages.find(acceptLanguage => locales.includes(acceptLanguage));
   }
 }
 

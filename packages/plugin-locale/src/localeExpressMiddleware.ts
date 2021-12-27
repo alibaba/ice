@@ -1,4 +1,4 @@
-import { getLocaleData } from './getLocaleData';
+import { getLocaleData } from './utils/getLocaleData';
 
 export function localeExpressMiddleware(req, res, next) {
   // const localeData = getLocaleData();
