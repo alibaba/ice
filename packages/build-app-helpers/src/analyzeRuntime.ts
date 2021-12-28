@@ -6,14 +6,15 @@ import { transform } from 'esbuild';
 import type { Loader } from 'esbuild';
 
 type CheckMap = Record<string, boolean>;
+type WebpackAlias = Record<string, string>;
+type ViteAlias = {find: string | RegExp, replacement: string}[];
 interface Options {
   rootDir: string;
   parallel?: number;
   analyzeRelativeImport?: boolean;
+  mode?: 'webpack' | 'vite';
   // webpack mode
-  webpackAlias?: Record<string, string>;
-  // vite mode, provide by vite.createResolver
-  resolver?: (filePath: string) => string;
+  alias?: WebpackAlias | ViteAlias;
 }
 
 const runtimePlugins = {
@@ -37,14 +38,13 @@ function addLastSlash(filePath: string) {
   return filePath.endsWith('/') ? filePath : `${filePath}/`;
 }
 
-export function getAliasedPath(filePath: string, options: {rootDir: string, webpackAlias: Record<string, string>}) {
-  const { webpackAlias, rootDir } = options;
+function getWebpackAliasedPath(filePath: string, alias: WebpackAlias): string {
   let aliasedPath = filePath;
   // eslint-disable-next-line no-restricted-syntax
-  for (const aliasKey of Object.keys(webpackAlias || {})) {
+  for (const aliasKey of Object.keys(alias || {})) {
     const isStrict = aliasKey.endsWith('$');
     const strictKey = isStrict ? aliasKey.slice(0, -1) : aliasKey;
-    const aliasValue = webpackAlias[aliasKey];
+    const aliasValue = alias[aliasKey];
     
     if (aliasValue.match(/.(j|t)s(x)?$/)) {
       if (aliasedPath === strictKey) {
@@ -72,6 +72,29 @@ export function getAliasedPath(filePath: string, options: {rootDir: string, webp
       }
     }
   }
+  return aliasedPath;
+}
+
+function getViteAliasedPath(filePath: string, alias: ViteAlias): string {
+  // apply aliases
+  let aliasedPath = filePath;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const { find, replacement } of (alias || [])) {
+    const matches =
+      typeof find === 'string' ? aliasedPath.startsWith(find) : find.test(aliasedPath);
+    if (matches) {
+      aliasedPath = aliasedPath.replace(find, replacement);
+      break;
+    }
+  }
+  return aliasedPath;
+}
+
+export function getImportPath(filePath: string, options: Pick<Options, 'alias'|'rootDir'|'mode'>) {
+  const { alias, rootDir, mode } = options;
+  let aliasedPath = mode === 'webpack'
+    ? getWebpackAliasedPath(filePath, alias as WebpackAlias)
+    : getViteAliasedPath(filePath, alias as ViteAlias);
   if (!path.isAbsolute(aliasedPath)) {
     try {
       // 检测是否可以在 node_modules 下找到依赖，如果可以直接使用该依赖
@@ -98,7 +121,7 @@ export function getAliasedPath(filePath: string, options: {rootDir: string, webp
 }
 
 export default async function analyzeRuntime(files: string[], options: Options): Promise<CheckMap> {
-  const { analyzeRelativeImport, rootDir, webpackAlias, resolver, parallel } = options;
+  const { analyzeRelativeImport, rootDir, alias, mode = 'webpack', parallel } = options;
   const parallelNum = parallel ?? 10;
   const sourceFiles = [...files];
   let initd = false;
@@ -139,13 +162,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
           } else if (analyzeRelativeImport) {
             let importPath = importName;
             if (!path.isAbsolute(importPath)) {
-              if (webpackAlias) {
-                importPath = getAliasedPath(importPath, { rootDir, webpackAlias });
-              } else if (resolver) {
-                importPath = resolver(importPath);
-              } else {
-                throw new Error('config webpackAlias in webpack mode or resolver in vite mode when need to analyze relative import');
-              }
+              importPath = getImportPath(importPath, { rootDir, alias, mode });
             }
             if (importPath && !sourceFiles.includes(importPath) && fs.existsSync(importPath)) {
               await analyzeFile(importPath);

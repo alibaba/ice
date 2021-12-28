@@ -1,5 +1,5 @@
 import path = require('path');
-import analyzeRuntime, { globSourceFile, getAliasedPath } from '../analyzeRuntime';
+import analyzeRuntime, { globSourceFile, getImportPath } from '../analyzeRuntime';
 
 describe('get source file', () => {
   const rootDir = path.join(__dirname, './fixtures/analyzeRuntime/');
@@ -11,35 +11,68 @@ describe('get source file', () => {
 
 describe('get aliased path', () => {
   const rootDir = path.join(__dirname, './fixtures/analyzeRuntime/');
-  it('{ ice: \'./runApp\' }', () => {
-    const aliasedPath = getAliasedPath('ice', {
+  it('webpack alias: { ice: \'./runApp\' }', () => {
+    const aliasedPath = getImportPath('ice', {
       rootDir,
-      webpackAlias: { ice: './runApp' }
+      alias: { ice: './runApp' },
+      mode: 'webpack',
     });
     // file not exists throw error
     expect(aliasedPath).toBe(undefined);
   });
 
-  it('{ ice: \'react\' }', () => {
-    const aliasedPath = getAliasedPath('ice', {
+  it('webpack alias: { ice: \'react\' }', () => {
+    const aliasedPath = getImportPath('ice', {
       rootDir,
-      webpackAlias: { ice: 'react' }
+      alias: { ice: 'react' },
+      mode: 'webpack',
     });
     expect(aliasedPath).toBe('');
   });
 
-  it('{ @: \'rootDir\' }', () => {
-    const aliasedPath = getAliasedPath('@/page', {
+  it('webpack alias: { @: \'rootDir\' }', () => {
+    const aliasedPath = getImportPath('@/page', {
       rootDir,
-      webpackAlias: { '@': rootDir }
+      alias: { '@': rootDir },
+      mode: 'webpack',
     });
     expect(aliasedPath).toBe(path.join(rootDir, 'page/index.js'));
   });
 
-  it('{ @$: \'rootDir\' }', () => {
-    const aliasedPath = getAliasedPath('@/page', {
+  it('webpack alias: { @$: \'rootDir\' }', () => {
+    const aliasedPath = getImportPath('@/page', {
       rootDir,
-      webpackAlias: { '@$': rootDir }
+      alias: { '@$': rootDir },
+      mode: 'webpack',
+    });
+    // without match any alias rule, throw error
+    expect(aliasedPath).toBe(undefined);
+  });
+
+  it('vite alias: [{find: \'ice\', replacement: \'react\'}]', () => {
+    const aliasedPath = getImportPath('ice', {
+      rootDir,
+      alias: [{ find: 'ice', replacement: 'react' }],
+      mode: 'vite',
+    });
+    // filter node_modules dependencies
+    expect(aliasedPath).toBe('');
+  });
+
+  it('vite alias: [{find: \'@\', replacement: \'rootDir\'}]', () => {
+    const aliasedPath = getImportPath('@/page', {
+      rootDir,
+      alias: [{ find: '@', replacement: rootDir }],
+      mode: 'vite',
+    });
+    expect(aliasedPath).toBe(path.join(rootDir, 'page/index.js'));
+  });
+
+  it('vite alias: [{find: \/@$\/, replacement: \'rootDir\'}]', () => {
+    const aliasedPath = getImportPath('@/page', {
+      rootDir,
+      alias: [{ find: /@$/, replacement: rootDir }],
+      mode: 'vite',
     });
     // without match any alias rule, throw error
     expect(aliasedPath).toBe(undefined);
@@ -61,7 +94,7 @@ describe('Analyze Runtime', () => {
   it('analyze relative import', async () => {
     const checkMap = await analyzeRuntime(
       [entryFile],
-      { rootDir, analyzeRelativeImport: true, webpackAlias: { '@': path.join(rootDir)} }
+      { rootDir, analyzeRelativeImport: true, alias: { '@': path.join(rootDir)} }
     );
     expect(checkMap).toStrictEqual({
       'build-plugin-ice-request': true,
