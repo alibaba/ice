@@ -1,18 +1,18 @@
 import path = require('path');
-import analyzeRuntime, { globSourceFile, getImportPath } from '../analyzeRuntime';
+import analyzeRuntime, { globSourceFiles, getImportPath } from '../analyzeRuntime';
 
 describe('get source file', () => {
   const rootDir = path.join(__dirname, './fixtures/analyzeRuntime/');
   it('glob js/ts files', async () => {
-    const files = await globSourceFile(rootDir);
-    expect(files.length).toBe(3);
+    const files = await globSourceFiles(rootDir);
+    expect(files.length).toBe(4);
   });
 });
 
 describe('get aliased path', () => {
   const rootDir = path.join(__dirname, './fixtures/analyzeRuntime/');
   it('webpack alias: { ice: \'./runApp\' }', () => {
-    const aliasedPath = getImportPath('ice', {
+    const aliasedPath = getImportPath('ice', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: { ice: './runApp' },
       mode: 'webpack',
@@ -21,8 +21,28 @@ describe('get aliased path', () => {
     expect(aliasedPath).toBe(undefined);
   });
 
+  it('get relative path with mode webpack', () => {
+    const aliasedPath = getImportPath('./store', path.join(rootDir, 'page/index.js'), {
+      rootDir,
+      alias: {},
+      mode: 'webpack',
+    });
+    // file not exists throw error
+    expect(aliasedPath).toBe(path.join(rootDir, 'page/store.js'));
+  });
+
+  it('get relative path with mode vite', () => {
+    const aliasedPath = getImportPath('./store', path.join(rootDir, 'page/index.js'), {
+      rootDir,
+      alias: {},
+      mode: 'vite',
+    });
+    // file not exists throw error
+    expect(aliasedPath).toBe(path.join(rootDir, 'page/store.js'));
+  });
+
   it('webpack alias: { ice: \'react\' }', () => {
-    const aliasedPath = getImportPath('ice', {
+    const aliasedPath = getImportPath('ice', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: { ice: 'react' },
       mode: 'webpack',
@@ -31,7 +51,7 @@ describe('get aliased path', () => {
   });
 
   it('webpack alias: { @: \'rootDir\' }', () => {
-    const aliasedPath = getImportPath('@/page', {
+    const aliasedPath = getImportPath('@/page', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: { '@': rootDir },
       mode: 'webpack',
@@ -40,7 +60,7 @@ describe('get aliased path', () => {
   });
 
   it('webpack alias: { @$: \'rootDir\' }', () => {
-    const aliasedPath = getImportPath('@/page', {
+    const aliasedPath = getImportPath('@/page', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: { '@$': rootDir },
       mode: 'webpack',
@@ -50,7 +70,7 @@ describe('get aliased path', () => {
   });
 
   it('vite alias: [{find: \'ice\', replacement: \'react\'}]', () => {
-    const aliasedPath = getImportPath('ice', {
+    const aliasedPath = getImportPath('ice', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: [{ find: 'ice', replacement: 'react' }],
       mode: 'vite',
@@ -60,7 +80,7 @@ describe('get aliased path', () => {
   });
 
   it('vite alias: [{find: \'@\', replacement: \'rootDir\'}]', () => {
-    const aliasedPath = getImportPath('@/page', {
+    const aliasedPath = getImportPath('@/page', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: [{ find: '@', replacement: rootDir }],
       mode: 'vite',
@@ -69,7 +89,7 @@ describe('get aliased path', () => {
   });
 
   it('vite alias: [{find: \/@$\/, replacement: \'rootDir\'}]', () => {
-    const aliasedPath = getImportPath('@/page', {
+    const aliasedPath = getImportPath('@/page', path.join(rootDir, 'index.js'), {
       rootDir,
       alias: [{ find: /@$/, replacement: rootDir }],
       mode: 'vite',
@@ -94,11 +114,12 @@ describe('Analyze Runtime', () => {
   it('analyze relative import', async () => {
     const checkMap = await analyzeRuntime(
       [entryFile],
-      { rootDir, analyzeRelativeImport: true, alias: { '@': path.join(rootDir)} }
+      { rootDir, analyzeRelativeImport: true, alias: { '@': path.join(rootDir)}, customRuntimeRules: { 'build-plugin-ice-store': ['createStore']} }
     );
     expect(checkMap).toStrictEqual({
       'build-plugin-ice-request': true,
       'build-plugin-ice-auth': true,
+      'build-plugin-ice-store': true,
     });
   });
 });

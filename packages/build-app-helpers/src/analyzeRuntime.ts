@@ -15,14 +15,15 @@ interface Options {
   mode?: 'webpack' | 'vite';
   // webpack mode
   alias?: WebpackAlias | ViteAlias;
+  customRuntimeRules?: Record<string, string[]>
 }
 
-const runtimePlugins = {
+const defaultRuntimeRules = {
   'build-plugin-ice-request': ['request', 'useRequest'],
   'build-plugin-ice-auth': ['useAuth', 'withAuth'],
 };
 
-export async function globSourceFile(sourceDir: string): Promise<string[]> {
+export async function globSourceFiles(sourceDir: string): Promise<string[]> {
   return await glob('**/*.{js,ts,jsx,tsx}', {
     cwd: sourceDir,
     ignore: [
@@ -90,18 +91,18 @@ function getViteAliasedPath(filePath: string, alias: ViteAlias): string {
   return aliasedPath;
 }
 
-export function getImportPath(filePath: string, options: Pick<Options, 'alias'|'rootDir'|'mode'>) {
+export function getImportPath(importSpecifier: string, importer: string, options: Pick<Options, 'alias'|'rootDir'|'mode'>) {
   const { alias, rootDir, mode } = options;
   let aliasedPath = mode === 'webpack'
-    ? getWebpackAliasedPath(filePath, alias as WebpackAlias)
-    : getViteAliasedPath(filePath, alias as ViteAlias);
+    ? getWebpackAliasedPath(importSpecifier, alias as WebpackAlias)
+    : getViteAliasedPath(importSpecifier, alias as ViteAlias);
   if (!path.isAbsolute(aliasedPath)) {
     try {
       // 检测是否可以在 node_modules 下找到依赖，如果可以直接使用该依赖
       aliasedPath = require.resolve(aliasedPath, { paths: [rootDir]});
     } catch (e) {
       // ignore errors
-      aliasedPath = path.resolve(rootDir, aliasedPath); 
+      aliasedPath = path.resolve(path.dirname(importer), aliasedPath);
     }
   }
   // filter path with node_modules
@@ -121,13 +122,14 @@ export function getImportPath(filePath: string, options: Pick<Options, 'alias'|'
 }
 
 export default async function analyzeRuntime(files: string[], options: Options): Promise<CheckMap> {
-  const { analyzeRelativeImport, rootDir, alias, mode = 'webpack', parallel } = options;
+  const { analyzeRelativeImport, rootDir, alias, mode = 'webpack', parallel, customRuntimeRules = {} } = options;
   const parallelNum = parallel ?? 10;
   const sourceFiles = [...files];
   let initd = false;
   const checkMap: CheckMap = {};
+  const runtimeRules = { ...defaultRuntimeRules, ...customRuntimeRules };
   // init check map
-  const checkPlugins = Object.keys(runtimePlugins);
+  const checkPlugins = Object.keys(runtimeRules);
   checkPlugins.forEach((pluginName) => {
     checkMap[pluginName] = false;
   });
@@ -154,7 +156,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
           if (importName === 'ice') {
             const importStr = source.substring(importSpecifier.ss, importSpecifier.se);
             checkPlugins.forEach((pluginName) => {
-              const apiList: string[] = runtimePlugins[pluginName];
+              const apiList: string[] = runtimeRules[pluginName];
               if (apiList.some((apiName) => importStr.includes(apiName))) {
                 checkMap[pluginName] = true;
               }
@@ -162,7 +164,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
           } else if (analyzeRelativeImport) {
             let importPath = importName;
             if (!path.isAbsolute(importPath)) {
-              importPath = getImportPath(importPath, { rootDir, alias, mode });
+              importPath = getImportPath(importPath, filePath, { rootDir, alias, mode });
             }
             if (importPath && !sourceFiles.includes(importPath) && fs.existsSync(importPath)) {
               await analyzeFile(importPath);

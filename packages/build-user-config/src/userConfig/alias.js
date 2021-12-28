@@ -10,8 +10,11 @@ module.exports = (config, alias, context) => {
       let resolvePath = '';
       try {
         // 检测是否可以在 node_modules 下找到依赖，如果可以直接使用该依赖
-        if (require.resolve(alias[key], { paths: [rootDir]})) {
+        resolvePath = require.resolve(alias[key], { paths: [rootDir]});
+        if (resolvePath.includes('node_modules')) {
           resolvePath = alias[key];
+        } else {
+          resolvePath = '';
         }
       } catch (e) {
         // ignore errors

@@ -4,8 +4,6 @@ import RaxGenerator from './RaxGenerator';
 import { IGeneratorOptions, IGenerateResult } from '../types';
 
 function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenerateResult {
-  const { onHook, context } = api;
-  const { command } = context;
   const { framework, pageEntry, isAppEntry } = options;
   let generator;
   if (framework === 'react') {
@@ -15,7 +13,10 @@ function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenera
   }
 
   const { context: { userConfig } } = api;
-  onHook(`before.${command}.run`, () => {
+  // 在分析运行时依赖的场景下，不能直接执行 generator
+  // 需要在分析完成并执行 disableRuntimePlugins 逻辑后，再执行生成
+  const generateTasks = [];
+  generateTasks.push(() => {
     generator.generateRunAppFile(userConfig);
   });
 
@@ -23,16 +24,19 @@ function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenera
   if (isAppEntry) {
     return {
       generator,
+      generateTasks,
       entryPath: pageEntry,
       runAppPath: generator.runAppPath,
       routesFilePath: generator.routesFilePath,
     };
   }
-  onHook(`before.${command}.run`, () => {
+  generateTasks.push(() => {
     generator.generateEntryFile();
   });
+
   return {
     generator,
+    generateTasks,
     entryPath: generator.entryPath,
     runAppPath: generator.runAppPath,
     routesFilePath: generator.routesFilePath,
