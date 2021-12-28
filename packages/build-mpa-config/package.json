@@ -1,6 +1,6 @@
 {
   "name": "@builder/mpa-config",
-  "version": "4.1.4",
+  "version": "4.1.4-beta.1",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",

@@ -4,7 +4,7 @@ import RaxGenerator from './RaxGenerator';
 import { IGeneratorOptions, IGenerateResult } from '../types';
 
 function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenerateResult {
-  const { framework } = options;
+  const { framework, pageEntry, shouldGenerateEntry } = options;
   let generator;
   if (framework === 'react') {
     generator = new ReactGenerator(api, options);
@@ -14,6 +14,15 @@ function generatePageFiles(api: IPluginAPI, options: IGeneratorOptions): IGenera
 
   const { context: { userConfig } } = api;
   generator.generateRunAppFile(userConfig);
+
+  // Do not modify the page entry when developer custom render
+  if (shouldGenerateEntry) {
+    return {
+      entryPath: pageEntry,
+      runAppPath: generator.runAppPath,
+      routesFilePath: generator.routesFilePath,
+    };
+  }
 
   generator.generateEntryFile();
   return {
