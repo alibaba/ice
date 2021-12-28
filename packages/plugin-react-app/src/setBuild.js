@@ -7,7 +7,7 @@ module.exports = (api) => {
   const { context, onHook, onGetWebpackConfig, applyMethod } = api;
   const { userConfig, rootDir } = context;
 
-  if (userConfig.optimizeRuntime && !userConfig.mpa) {
+  if (userConfig.optimizeRuntime && !userConfig.mpa && !userConfig.disableRuntime) {
     // analyze source folder when SPA
     onHook('before.build.load', async () => {
       const sourceFiles = await globSourceFiles(path.join(rootDir, 'src'));
