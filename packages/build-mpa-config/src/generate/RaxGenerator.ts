@@ -14,11 +14,10 @@ export default class RaxGenerator extends Base {
 
   private injectTabBar() {
     const { getValue } = this.builtInMethods;
-    const { isAppEntry } = this.options;
     const routePath = this.getRoutesFilePath();
     const tabBarConfig = getValue('staticConfig').tabBar;
 
-    if (routePath && isAppEntry) {
+    if (routePath) {
       // Read app.json
       const routesInfo = fs.readJSONSync(routePath);
       if (routesInfo.tabBar) {

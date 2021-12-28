@@ -34,13 +34,12 @@ export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => 
   entries.forEach((entry) => {
     const { entryName, entryPath, ...pageConfig } = entry;
     const { source } = pageConfig;
-    const isAppEntry = /app(\.(t|j)sx?)?$/.test(entryPath);
     // when the entry has no export default declaration, do not generate any files
     let finalEntry = entryPath;
     let runAppPath = null;
     let routesFilePath;
-    if (isAppEntry || checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source))) {
-      const result = generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName, pageConfig, isAppEntry });
+    if (checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source))) {
+      const result = generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName, pageConfig });
       finalEntry = result.entryPath;
       runAppPath = result.runAppPath;
       routesFilePath = result.routesFilePath;
