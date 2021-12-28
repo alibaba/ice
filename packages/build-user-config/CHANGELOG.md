@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.3
+
+- [fix] lazy import is invalid with swc
+
+## 2.0.2
+
+- [fix] compatible with alias which config with exists relative file path
+
 ## 2.0.1
 
 - [fix] enhance alias for node_modules dependencies

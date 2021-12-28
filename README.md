@@ -306,6 +306,13 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
+        <a href=https://github.com/zhyupe>
+            <img src=https://avatars.githubusercontent.com/u/2197479?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=zhyupe/>
+            <br />
+            <sub style="font-size:14px"><b>zhyupe</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 90.0; height: 90.0">
         <a href=https://github.com/datou0412>
             <img src=https://avatars.githubusercontent.com/u/5847142?v=4 width="60;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=二凢/>
             <br />

@@ -36,7 +36,9 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       },
       module: {
         type: 'commonjs',
-        noInterop: false
+        noInterop: false,
+        // webpack will evaluate dynamic import, so there need preserve it
+        ignoreDynamic: true
       },
       env: {
         loose: true,
