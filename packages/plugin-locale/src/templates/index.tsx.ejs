@@ -2,9 +2,11 @@
   import * as React from 'react';
 <% } %>
 import { createContext, useContext, useState } from 'react';
-import { history } from 'create-app-shared';
 import Cookies from 'universal-cookie';
+<% if (localeRoute !== false) {%>
+import { history } from 'create-app-shared';
 import getDetectedLocaleFromPathname from './utils/getDetectedLocaleFromPathname';
+<% } %>
 
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
 const localeConfig = <%- JSON.stringify(localeConfig) %>;
@@ -40,6 +42,7 @@ export function getAllLocales(): string[] {
   return locales
 }
 
+<% if (localeRoute !== false) {%>
 function getDetectedLocaleFromPath(locales: string[]) {
   if (history === null) {
     console.log('history is null, can\'t get current locale from pathname');
@@ -49,6 +52,7 @@ function getDetectedLocaleFromPath(locales: string[]) {
 
   return getDetectedLocaleFromPathname(pathname, locales);
 }
+<% } %>
 
 export function getLocale(): string {
   return new Cookies().get(LOCALE_COOKIE_KEY) ||

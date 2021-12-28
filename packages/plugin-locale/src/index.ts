@@ -12,7 +12,7 @@ export default async function (
 
   const { locales, defaultLocale, localeRoute = true } = localeConfig;
 
-  const { userConfig: { ssr }, command } = context;
+  const { userConfig: { ssr } } = context;
 
   const iceTemp = getValue<string>('TEMP_PATH');
   const localesTempDir = path.join(iceTemp, 'plugins', 'locale');
@@ -77,8 +77,14 @@ export default async function (
   });
 
   // export API
-  // import { useLocale } from 'ice';
-  applyMethod('addExport', { source: './plugins/locale', importSource: '$$ice/plugins/locale', exportMembers: ['useLocale'] }); 
+  // import { useLocale, getAllLocales, getDefaultLocale, getLocale } from 'ice';
+  applyMethod(
+    'addExport', 
+    { 
+      source: './plugins/locale', 
+      importSource: '$$ice/plugins/locale',
+      exportMembers: ['useLocale', 'getAllLocales', 'getDefaultLocale', 'getLocale']
+    }); 
 }
 
 function checkLocaleConfig(localeConfig: LocaleConfig) {
