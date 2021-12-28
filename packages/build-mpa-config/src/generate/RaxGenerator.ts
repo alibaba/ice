@@ -4,13 +4,17 @@ import Base from './BaseGenerator';
 import relative from '../relative';
 
 export default class RaxGenerator extends Base {
-  public disableRuntimeList = ['build-plugin-rax-router']
-
   constructor(api, options) {
     super(api, options);
     this.addRunAppRenderData();
     this.injectTabBar();
+    this.routesFilePath = this.getRoutesFilePath();
+    if (!this.routesFilePath) {
+      this.addDisableRuntime(this.routerPluginName);
+    }
   }
+
+  public routerPluginName = 'build-plugin-rax-router';
 
   private injectTabBar() {
     const { getValue } = this.builtInMethods;

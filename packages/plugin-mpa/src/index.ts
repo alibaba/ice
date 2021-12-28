@@ -84,7 +84,7 @@ const plugin: IPlugin = (api) => {
     // if disableRuntime is true, do not generate mpa entries
     if (getValue('TEMP_PATH')) {
       parsedEntries = generateMPAEntries(api, {
-        executeGenerateTasks: command === 'build' && !userConfig.optimizeRuntime,
+        executeGenerateTasks: command !== 'build' || !userConfig.optimizeRuntime,
         entries: mpaEntries,
         framework: 'react',
         targetDir: getValue('TEMP_PATH'),

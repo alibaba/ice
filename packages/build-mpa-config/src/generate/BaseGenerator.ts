@@ -26,7 +26,7 @@ export default class BaseGenerator {
 
   public routesFilePath: string;
 
-  public disableRuntimeList: string[];
+  public disableRuntimeList: string[] = [];
 
   public runAppRenderData: IRunAppRenderData = {};
 
@@ -44,7 +44,6 @@ export default class BaseGenerator {
     this.entryFolder = path.join(targetDir, 'entries', entryName);
     this.entryPath = path.join(this.entryFolder, 'index.tsx');
     this.runAppPath = path.join(this.entryFolder, 'runApp');
-    this.routesFilePath = this.getRoutesFilePath();
     this.runAppRenderData = {
       typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
     };
@@ -99,6 +98,7 @@ export default class BaseGenerator {
           });
           return {
             ...renderData,
+            ...this.runAppRenderData,
             relativeTypePath: relative(this.entryFolder, path.join(this.targetDir, 'type')),
             runtimeModules: runtimeModules.map(({ path: pluginPath, staticModule, absoluteModulePath }) => {
               pluginPath = relative(this.entryFolder, absoluteModulePath);
