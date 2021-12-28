@@ -6,14 +6,14 @@ import type { ParserPlugin } from '@babel/parser';
  * Webpack's entry would be { index: ['react-dev-utils/webpackHotDevClient.js', '/src/app''] }
  * in dev mode.
  */
-const lifecyclePlugin = (entry: string): Plugin => {
+const lifecyclePlugin = (entries: string[]): Plugin => {
 
   return ({
     name: 'vite-plugin-icestark-lifecycle',
     enforce: 'pre',
 
     async transform(code, id) {
-      const isEntryFile = id.includes(entry);
+      const isEntryFile = entries.some(entry => id.includes(entry));
 
       if (!isEntryFile) {
         return;
