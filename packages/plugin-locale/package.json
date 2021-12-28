@@ -5,14 +5,18 @@
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
+  "files": [
+    "lib",
+    "template",
+    "src",
+    "!lib/**/*.map"
+  ],
   "main": "lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
   "dependencies": {
     "universal-cookie": "^4.0.4",
     "cookie": "^0.4.1",
-    "accept-language-parser": "^1.5.0"
+    "accept-language-parser": "^1.5.0",
+    "fs-extra": "^10.0.0"
   },
   "peerDependencies": {
     "react": ">16.0.0",
@@ -22,12 +26,6 @@
     "build-scripts": "^1.2.1",
     "@types/accept-language-parser": "^1.5.3"
   },
-  "files": [
-    "lib",
-    "template",
-    "src/runtime.tsx",
-    "!lib/**/*.map"
-  ],
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-locale"

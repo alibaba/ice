@@ -23,7 +23,6 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   addProvider(Provider());
 
   if (!process.env.__IS_SERVER__) {
-    // CSR redirect to new locale path
     const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, localeConfig });
     setInitICELocaleToCookie(detectedLocale);
     if (redirectUrl) {
@@ -89,7 +88,7 @@ function modifyHistory(history: History, localeConfig: LocaleConfig) {
     if (locale === defaultLocale) {
       return localePathResult.pathname;
     }
-    return `/${locale}${localePathResult.pathname}`;
+    return `/${locale}${localePathResult.pathname === '/' ? '' : localePathResult.pathname}`;
   }
 
   history.push = function(path: string, state?: unknown) {

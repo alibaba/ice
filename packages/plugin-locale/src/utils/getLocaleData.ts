@@ -2,6 +2,7 @@ import { pick as acceptLanguagePick } from 'accept-language-parser';
 import Cookies from 'universal-cookie';
 import { LOCALE_COOKIE_KEY } from '../constants';
 import { LocaleConfig } from '../types';
+import getDetectedLocaleFromPathname from './getDetectedLocaleFromPathname';
 
 interface UrlObject {
   pathname: string;
@@ -49,7 +50,7 @@ function getDetectedLocale(
   const detectedLocale = 
       getLocaleFromCookie(locales, cookies) || 
       getPreferredLocale(locales, headers) || 
-      (localeConfig.localeRoute === false ? undefined : getDetectedLocaleFromPath(pathname, locales)) ||
+      (localeConfig.localeRoute === false ? undefined : getDetectedLocaleFromPathname(pathname, locales)) ||
       defaultLocale;
 
   return detectedLocale;
@@ -89,23 +90,4 @@ function getPreferredLocale(locales: string[], headers?: { [key: string]: string
     const acceptLanguages = window.navigator.languages;
     return acceptLanguages.find(acceptLanguage => locales.includes(acceptLanguage));
   }
-}
-
-/**
- * 开启国际化路由时，通过 pathname 获取当前语言
- */
-function getDetectedLocaleFromPath(pathname: string, locales: string[]) {
-  const pathnameParts = pathname.split('/').filter(pathnamePart => pathnamePart);
-
-  let detectedLocale: string | undefined;
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const locale of locales) {
-    if (pathnameParts[0] === locale) {
-      detectedLocale = locale;
-      break;
-    }
-  }
-
-  return detectedLocale;
 }

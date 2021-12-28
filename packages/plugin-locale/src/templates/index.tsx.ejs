@@ -4,6 +4,7 @@
 import { createContext, useContext, useState } from 'react';
 import { history } from 'create-app-shared';
 import Cookies from 'universal-cookie';
+import getDetectedLocaleFromPathname from './utils/getDetectedLocaleFromPathname';
 
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
 
@@ -42,19 +43,8 @@ function getDetectedLocaleFromPath(locales: string[]) {
     return;
   }
   const { location: { pathname } } = history;
-  const pathnameParts = pathname.split('/').filter(pathnamePart => pathnamePart);
 
-  let detectedLocale: string | undefined;
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const locale of locales) {
-    if (pathnameParts[0] === locale) {
-      detectedLocale = locale;
-      break;
-    }
-  }
-
-  return detectedLocale;
+  return getDetectedLocaleFromPathname(pathname, locales);
 }
 
 export function getLocale(): string {

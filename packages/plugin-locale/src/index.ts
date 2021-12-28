@@ -1,5 +1,6 @@
 import { IPluginAPI } from 'build-scripts';
 import path from 'path';
+import fse from 'fs-extra';
 import { LocaleConfig } from './types';
 import { LOCALE_COOKIE_KEY } from './constants';
 import { getLocaleData } from './utils/getLocaleData';
@@ -15,6 +16,7 @@ export default async function (
   const { userConfig: { ssr } } = context;
 
   const iceTemp = getValue<string>('TEMP_PATH');
+  const localesTempDir = path.join(iceTemp, 'plugins', 'locale');
 
   applyMethod('modifyRenderData', (originRenderData) => {
     return { ...originRenderData, locales, defaultLocale };
@@ -28,8 +30,14 @@ export default async function (
     { locales, defaultLocale, LOCALE_COOKIE_KEY, localeRoute }
   );
 
+  applyMethod(
+    'addRenderFile',
+    path.join(__dirname, '../src/utils/getDetectedLocaleFromPathname.ts'),
+    path.join(localesTempDir, 'utils', 'getDetectedLocaleFromPathname.ts'),
+  );
+
   onGetWebpackConfig((config) => {
-    config.resolve.alias.set('$ice/locale', path.join(iceTemp, 'plugins', 'locale', 'index.tsx'));
+    config.resolve.alias.set('$ice/locale', path.join(localesTempDir, 'index.tsx'));
 
     const onBeforeSetupMiddleware = config.devServer.get('onBeforeSetupMiddleware'); // webpack 5
     const originalDevServeBefore = onBeforeSetupMiddleware || config.devServer.get('before');

@@ -6,7 +6,6 @@ export default function LocaleSwitcher() {
 
   const [activeLocale, setLocale] = useLocale();
   const allLocales = getAllLocales();
-  console.log('activeLocale==>', activeLocale, 'location.pathname', location.pathname);
   const otherLocales = allLocales.filter((locale) => activeLocale !== locale);
   return (
     <div>
@@ -16,7 +15,6 @@ export default function LocaleSwitcher() {
           otherLocales.map((locale: string) => {
             return (
               <li key={locale}>
-                {/* <Link to="/" onClick={() => setLocale(locale)}>{locale}</Link> */}
                 <Link to={location.pathname} onClick={() => setLocale(locale)}>{locale}</Link>
               </li>
             );
