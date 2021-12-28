@@ -1,0 +1,23 @@
+import { getLocaleData } from './utils/getLocaleData';
+
+export function expressLocaleMiddleware(req, res, next) {
+  const { headers, _parsedUrl } = req;
+  const { redirectUrl } = getLocaleData({ headers, url: _parsedUrl, localeConfig: <%- JSON.stringify(localeConfig) %> });
+
+  if (redirectUrl) {
+    res.redirect(307, redirectUrl);
+  } else {
+    next();
+  }
+}
+
+export async function koaLocaleMiddleware(ctx, next) {
+  const { req, res } = ctx;
+  const { headers, _parsedUrl } = req;
+  const { redirectUrl } = getLocaleData({ headers, url: _parsedUrl, localeConfig: <%- JSON.stringify(localeConfig) %> });
+
+  if (redirectUrl) {
+    res.redirect(307, redirectUrl);
+  }
+  await next();
+}

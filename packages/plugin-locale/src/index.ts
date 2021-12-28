@@ -1,9 +1,8 @@
 import { IPluginAPI } from 'build-scripts';
 import path from 'path';
-import fse from 'fs-extra';
 import { LocaleConfig } from './types';
 import { LOCALE_COOKIE_KEY } from './constants';
-import { getLocaleData } from './utils/getLocaleData';
+import { expressLocaleMiddleware } from './localeMiddleware';
 
 export default async function (
   { onGetWebpackConfig, getValue, applyMethod, context }: IPluginAPI, 
@@ -13,7 +12,7 @@ export default async function (
 
   const { locales, defaultLocale, localeRoute = true } = localeConfig;
 
-  const { userConfig: { ssr } } = context;
+  const { userConfig: { ssr }, command } = context;
 
   const iceTemp = getValue<string>('TEMP_PATH');
   const localesTempDir = path.join(iceTemp, 'plugins', 'locale');
@@ -23,17 +22,18 @@ export default async function (
   });
 
   // copy templates to .ice/locale dir
-  const templatesDir = path.join(__dirname, 'templates');
   applyMethod(
     'addPluginTemplate', 
-    templatesDir, 
-    { locales, defaultLocale, LOCALE_COOKIE_KEY, localeRoute }
+    path.join(__dirname, 'templates'), 
+    { LOCALE_COOKIE_KEY, localeConfig, localeRoute }
   );
-
   applyMethod(
-    'addRenderFile',
-    path.join(__dirname, '../src/utils/getDetectedLocaleFromPathname.ts'),
-    path.join(localesTempDir, 'utils', 'getDetectedLocaleFromPathname.ts'),
+    'addPluginTemplate',
+    {
+      template: path.join(__dirname, '../src/utils'),
+      targetDir: 'locale/utils',
+    },
+    { LOCALE_COOKIE_KEY, localeConfig, localeRoute }
   );
 
   onGetWebpackConfig((config) => {
@@ -52,15 +52,7 @@ export default async function (
       }
 
       const pattern = /^\/?((?!\.(js|css|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf|ico)).)*$/;
-      app.get(pattern, function(req, res, next) {
-        const { headers, _parsedUrl } = req;
-        const { redirectUrl } = getLocaleData({ headers, url: _parsedUrl, localeConfig });
-        if (redirectUrl) {
-          res.redirect(307, redirectUrl);
-        } else {
-          next();
-        }
-      });
+      app.get(pattern, expressLocaleMiddleware(localeConfig));
 
       if (typeof originalDevServeBefore === 'function') {
         originalDevServeBefore(...args);

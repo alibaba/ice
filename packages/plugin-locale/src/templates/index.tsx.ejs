@@ -7,6 +7,9 @@ import Cookies from 'universal-cookie';
 import getDetectedLocaleFromPathname from './utils/getDetectedLocaleFromPathname';
 
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
+const localeConfig = <%- JSON.stringify(localeConfig) %>;
+
+const { defaultLocale, locales } = localeConfig;
 
 const Context = createContext<any>(null);
 
@@ -30,11 +33,11 @@ export function useLocale(): [string, React.Dispatch<React.SetStateAction<string
 }
 
 export function getDefaultLocale(): string {
-  return '<%= defaultLocale %>'
+  return defaultLocale
 }
 
 export function getAllLocales(): string[] {
-  return <%- JSON.stringify(locales) %>
+  return locales
 }
 
 function getDetectedLocaleFromPath(locales: string[]) {
@@ -50,9 +53,9 @@ function getDetectedLocaleFromPath(locales: string[]) {
 export function getLocale(): string {
   return new Cookies().get(LOCALE_COOKIE_KEY) ||
     <% if (localeRoute !== false) {%>
-      getDetectedLocaleFromPath(<%- JSON.stringify(locales) %>) ||
+      getDetectedLocaleFromPath(locales) ||
     <% } %>
-    '<%= defaultLocale %>'
+    defaultLocale
 }
 
 function setLocaleToCookies(locale: string) {
