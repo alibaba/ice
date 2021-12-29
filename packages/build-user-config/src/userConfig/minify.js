@@ -21,7 +21,8 @@ const TERSER_DEFAULT_OPTIONS = {
 
 module.exports = (config, minify, context, { log }) => {
   const { command, taskName } = context;
-  const includedInMinifyTasks = minify === true && (minify.activeInDev || []).includes(taskName);
+  // When minify is true, all tasks need be minified
+  const includedInMinifyTasks = minify === true || (minify.activeInDev || []).includes(taskName);
   if ( minify && (command === 'build' || includedInMinifyTasks)) {
     const minifierConfig = minify.type ? minify : { type: typeof minify === 'boolean' ? 'terser' : minify };
     const { type, options } = minifierConfig;

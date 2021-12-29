@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- [fix] `minify: true` is invalid
+
 ## 2.0.3
 
 - [fix] lazy import is invalid with swc
