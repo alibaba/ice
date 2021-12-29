@@ -3,7 +3,6 @@ import { lazy } from 'ice';
 const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 
-
 export default [
   {
     path: '/',
