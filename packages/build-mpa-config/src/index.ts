@@ -116,6 +116,7 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
 
   if (config.plugins.has('document')) {
     const filteredEntries = { ...parsedEntries };
+    // remove property which is unnecessary for plugin document
     delete filteredEntries.generator;
     delete filteredEntries.generateTasks;
     config.plugin('document').tap(args => {

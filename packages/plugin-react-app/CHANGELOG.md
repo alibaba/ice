@@ -1,7 +1,8 @@
 # Changelog
 
-## 2.1.5
+## 2.2.0
 
+- [feat] optimize runtime when build
 - [chore] bump version of `es-module-lexer`
 
 ## 2.1.4

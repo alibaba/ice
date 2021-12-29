@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.3
+
+- [fix] pass vite config for lifecycle hooks
+
 ## 2.0.2
 
 - [feat] pass `context.rootDir` to `viteConfig.root`

@@ -79,6 +79,7 @@ export default class BaseGenerator {
     const { applyMethod } = this.builtInMethods;
     const routesFilePath = this.getRoutesFilePath();
     const renderData = {
+      ...this.runAppRenderData,
       runAppPath: './runApp',
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       resourcePath: relative(this.entryFolder, path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry),

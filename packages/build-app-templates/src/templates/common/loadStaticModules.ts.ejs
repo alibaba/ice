@@ -3,7 +3,7 @@
   <% runtimeModules.filter((moduleInfo) => moduleInfo.staticModule).forEach((runtimeModule, index) => { %>
     <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %>
 <% } %>
-import { IAppConfig } from '<%- typesPath %>';
+import type { IAppConfig } from '<%- typesPath %>';
 
 function loadStaticModules(appConfig: IAppConfig) {
   <% if (moduleNames.length) {%>

@@ -102,7 +102,7 @@ export function getImportPath(importSpecifier: string, importer: string, options
       aliasedPath = require.resolve(aliasedPath, { paths: [rootDir]});
     } catch (e) {
       // ignore errors
-      aliasedPath = path.resolve(path.dirname(importer), aliasedPath);
+      aliasedPath = path.resolve(path.dirname(importer), aliasedPath); 
     }
   }
   // filter path with node_modules
@@ -173,18 +173,28 @@ export default async function analyzeRuntime(files: string[], options: Options):
         })();
       }));
     } catch (err) {
-      // ignore error
+      console.log('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
+      throw err;
     }
   }
 
-  for (
-    let i = 0;
-    i * parallelNum < sourceFiles.length && checkPlugins.some((pluginName) => checkMap[pluginName] === false);
-    i++) {
-    // eslint-disable-next-line no-await-in-loop
-    await Promise.all(sourceFiles.slice(i * parallelNum, parallelNum).map((filePath) => {
-      return analyzeFile(filePath);
-    }));
+  try {
+    for (
+      let i = 0;
+      i * parallelNum < sourceFiles.length && checkPlugins.some((pluginName) => checkMap[pluginName] === false);
+      i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.all(sourceFiles.slice(i * parallelNum, parallelNum).map((filePath) => {
+        return analyzeFile(filePath);
+      }));
+    }
+  } catch(err) {
+    // 如果发生错误，兜底启用所有自动检测的运行时插件，防止错误地移除
+    checkPlugins.forEach((pluginName) => {
+      checkMap[pluginName] = true;
+    });
+    return checkMap;
   }
+  
   return checkMap;
 }
