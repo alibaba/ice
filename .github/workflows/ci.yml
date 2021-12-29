@@ -1,5 +1,8 @@
 name: CI
 
+env:
+  NODE_OPTIONS: --max-old-space-size=6144
+
 on: [push]
 
 jobs:
