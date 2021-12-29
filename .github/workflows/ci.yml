@@ -26,6 +26,7 @@ jobs:
       - run: npm run version:check
       - run: npm run coverage
         env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
           ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
           CI: true
