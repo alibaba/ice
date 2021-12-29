@@ -7,8 +7,5 @@
     "paths": {
       "$ice/authStore": ["./src/_authStore"]
     }
-  },
-  "exclude": [
-    "template/*"
-  ]
+  }
 }

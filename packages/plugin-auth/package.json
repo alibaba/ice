@@ -16,9 +16,8 @@
     "react-dom": ">16.0.0"
   },
   "files": [
+    "src",
     "lib",
-    "template",
-    "src/runtime.tsx",
     "!lib/**/*.map"
   ],
   "repository": {

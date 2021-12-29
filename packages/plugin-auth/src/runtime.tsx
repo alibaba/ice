@@ -1,6 +1,5 @@
 import * as React from 'react';
-// @ts-ignore
-import { Provider, useAuth, IAuth } from '$ice/auth';
+import { Provider, useAuth, IAuth } from './runtime/Auth';
 
 const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
