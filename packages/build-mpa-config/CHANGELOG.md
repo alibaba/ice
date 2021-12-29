@@ -1,9 +1,5 @@
 # Changelog
 
-## 4.1.4
-
-- [fix] remove `app.ts` check
-
 ## 4.1.3
 
 - [fix] fix: format mpa `app.json` path in windows

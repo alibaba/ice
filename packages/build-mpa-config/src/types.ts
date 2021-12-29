@@ -4,7 +4,7 @@ export interface IGeneratorOptions {
   pageEntry: string;
   framework: FrameworkType;
   pageConfig?: any;
-  shouldGenerateEntry: boolean;
+  isAppEntry: boolean;
 }
 
 export interface IGenerateResult {
