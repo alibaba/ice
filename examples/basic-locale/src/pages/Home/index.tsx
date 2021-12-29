@@ -1,4 +1,4 @@
-import { useLocale, getAllLocales, getDefaultLocale, Link } from 'ice';
+import { useLocale, getAllLocales, getDefaultLocale, Link, getLocale } from 'ice';
 import { FormattedMessage } from 'react-intl';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 
@@ -17,5 +17,9 @@ function Home() {
     </div>
   );
 }
+
+Home.getInitialProps = function (ctx) {
+  console.log('ctx===>', getLocale());
+};
 
 export default Home;
