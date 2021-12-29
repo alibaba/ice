@@ -1,14 +1,12 @@
 import * as React from 'react';
 // @ts-ignore
-import { Provider, withAuth, IAuth } from '$ice/auth';
+import { Provider, useAuth, IAuth } from '$ice/auth';
 
 const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
 
   const AuthWrappedComponent = (props) => {
-    // filter setAuth
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { auth, setAuth, ...rest } = props;
+    const [ auth ] = useAuth();
     const pageConfigAuth = pageConfig.auth;
 
     if (pageConfigAuth && !Array.isArray(pageConfigAuth)) {
@@ -25,15 +23,15 @@ const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
     if (!hasAuth) {
       if (authConfig.NoAuthFallback) {
         if (typeof authConfig.NoAuthFallback === 'function') {
-          return <authConfig.NoAuthFallback />;
+          return <authConfig.NoAuthFallback {...Object.assign({}, props, {pageConfig})} />;
         }
         return authConfig.NoAuthFallback;
       }
-      return null;
+      return <>No Auth</>;
     }
-    return <PageComponent {...rest} />;
+    return <PageComponent {...props} />;
   };
-  return withAuth(AuthWrappedComponent);
+  return AuthWrappedComponent;
 };
 
 export default ({ context, appConfig, addProvider, wrapperPageComponent }) => {
