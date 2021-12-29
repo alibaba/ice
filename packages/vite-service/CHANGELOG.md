@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.3
+
+- [fix] open both `about:blank` page and `localhost:3333` page
+- [fix] `after.start.devServer` callback function has been called before the devServer is ready
+
 ## 2.0.2
 
 - [feat] pass `context.rootDir` to `viteConfig.root`
