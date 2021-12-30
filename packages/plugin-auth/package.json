@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-auth",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -16,9 +16,8 @@
     "react-dom": ">16.0.0"
   },
   "files": [
+    "src",
     "lib",
-    "template",
-    "src/runtime.tsx",
     "!lib/**/*.map"
   ],
   "repository": {

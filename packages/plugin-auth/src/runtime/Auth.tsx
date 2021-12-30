@@ -1,6 +1,4 @@
-<% if(!hasJsxRuntime) { %>
-  import * as React from 'react';
-<% } %>
+import * as React from 'react';
 import { FC, createContext, useState, useContext } from 'react';
 import { ContextType, AuthType, IAuth } from './types';
 
@@ -38,9 +36,9 @@ function withAuth<Props extends InjectProps>(Component: React.ComponentType<Prop
     const [auth, setAuth] = useAuth();
     const WrappedComponent = Component as React.ComponentType<OriginalProps>;
     return <WrappedComponent {...props} auth={auth} setAuth={setAuth} />;
-  }
+  };
   return AuthWrapped;
-};
+}
 
 export { useAuth, withAuth, Provider };
 
