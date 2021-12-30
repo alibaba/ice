@@ -1,9 +1,7 @@
+import * as chalk from 'chalk';
 import type { IOnHookCallbackArg } from 'build-scripts';
 import { getModules } from './entryHelper';
 import type { Options } from './types';
-
-// eslint-disable-next-line
-const chalk = require('chalk');
 
 const removeRelativePath = (path: string) => {
   return path.replace(/^[./]*/, '');

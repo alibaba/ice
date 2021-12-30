@@ -1,10 +1,8 @@
 import * as path from 'path';
+import * as chalk from 'chalk';
 import { compileTemplate } from './hbsHelpler';
 import { PartialPlugin, Externals, Runtime, Options, Depth } from './types';
 import { getModules } from './entryHelper';
-
-// eslint-disable-next-line
-const chalk = require('chalk');
 
 const any2ArrayAny= <T>(any: T) => Array.isArray(any) ? any : [any];
 

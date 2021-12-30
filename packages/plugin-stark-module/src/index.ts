@@ -76,7 +76,10 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
     .end();
 
   // Config dev server
-  baseConfig.devServer.before((app) => {
+  const beforeMiddleware = baseConfig.devServer.get('onBeforeSetupMiddleware') ? 'onBeforeSetupMiddleware' : 'before';
+
+  baseConfig.devServer[beforeMiddleware](server => {
+    const app = server?.app ?? server;
     app.use((req, res, next) => {
       res.set('Access-Control-Allow-Origin', '*');
       next();

@@ -1,10 +1,8 @@
 import * as path from 'path';
+import * as chalk from 'chalk';
 import { IPluginAPI } from 'build-scripts';
 import { Options } from './types';
 import { getModules } from './entryHelper';
-
-// eslint-disable-next-line
-const chalk = require('chalk');
 
 interface GetConfig {
   (api: Partial<IPluginAPI>, options?: Options): any;
