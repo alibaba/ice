@@ -1,8 +1,8 @@
-import { extname, resolve, posix } from 'path';
+import { extname, resolve } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
-import { isAbsoluteUrl, addTrailingSlash, formatPath, getEntryUrl, isSingleEntry } from './utils';
+import { isAbsoluteUrl, addTrailingSlash, formatPath, getEntryUrl, isSingleEntry, getRelativePath } from './utils';
 import minifyHtml from './minifyHtml';
 
 const scriptLooseRegex = /<script\s[^>]*src=['"]?([^'"]*)['"]?[^>]*>*<\/script>/;
@@ -155,7 +155,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
         tag: 'script',
         attrs: {
           type: 'module',
-          src: getRelativedPath(
+          src: getRelativePath(
             viteConfig.root,
             getEntryUrl(userOptions.input)
           ),
@@ -175,10 +175,14 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 
 export const removeHtmlEntryScript = (html: string, entry: string) => {
   let _html = html;
-  const _entry = formatPath(entry);
+  let _entry = formatPath(entry);
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
 
   const commentScript = (script: string) => `<!-- removed by vite-plugin-index-html ${script} -->`;
+
+  if (!_entry.startsWith('./') && !_entry.startsWith('/')) {
+    _entry = `./${_entry}`;
+  }
 
   if (matchs) {
     matchs.forEach((matchStr) => {
@@ -248,15 +252,6 @@ function getFiles(bundle: OutputBundle): OutputBundleExt[] {
 
 function toPublicPath(filename: string, config: ResolvedConfig) {
   return isAbsoluteUrl(filename) ? filename : addTrailingSlash(config.base) + filename;
-}
-
-function getRelativedPath(rootDir: string, path: string): string {
-  const _rootDir = formatPath(rootDir);
-  let _path = formatPath(path);
-  if (path.includes(_rootDir)) {
-    _path = `/${posix.relative(_rootDir, _path)}`;
-  }
-  return _path;
 }
 
 const headInjectRE = /<\/head>/;
