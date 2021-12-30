@@ -29,6 +29,11 @@ describe(`build ${example}`, () => {
     expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual(['foo']);
   });
 
+  test('open /a.html', async () => {
+    await page.push('#/a.html');
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
+  });
+
   afterAll(async () => {
     await browser.close();
   });
@@ -56,6 +61,11 @@ describe(`start ${example}`, () => {
 
     // pageConfig props
     expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual(['foo']);
+  });
+
+  test('open /a.html', async () => {
+    await page.push('#/a.html');
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
   });
 
   afterAll(async () => {
