@@ -1509,7 +1509,7 @@
     stylelint-order "^4.0.0"
     stylelint-scss "^3.14.2"
 
-"@ice/stark-app@^1.2.0":
+"@ice/stark-app@^1.2.0", "@ice/stark-app@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@ice/stark-app/-/stark-app-1.5.0.tgz#cb79e4d135c1f3ada455793b4b7ae325d1b8eb03"
   integrity sha512-9fuCri48eZj6TnfPkCju4vVLhGurz+mt6lFx4JQFHhnRBQ5MuiBqRZg5F/3vdnJ7dAYQJlCXmHlQtBHok82z+g==
@@ -1518,6 +1518,17 @@
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@ice/stark/-/stark-2.7.0.tgz#f1d33a2f7e2844f6d13dc763a3f5859b5f0dd71c"
   integrity sha512-/+Tuv7XNxEVaH2IoceuozzuxEl/PJoclHrAiDkJgzaH6MTexlfXrW2yiMQsSqEIT+a8MwX/ACTDWdUAFFvdjPA==
+  dependencies:
+    "@ice/sandbox" "^1.0.4"
+    lodash.isempty "^4.4.0"
+    lodash.isequal "^4.5.0"
+    path-to-regexp "^1.7.0"
+    url-parse "^1.1.9"
+
+"@ice/stark@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@ice/stark/-/stark-2.7.1.tgz#0e755720f25972af4d751db76d945dc237520513"
+  integrity sha512-5Psfg20VhdhvvWYpXw6NwzPiUw9J8SRoA99bQl0MBROR6RChObiMzGCnc1D6evFMvMa2SNaNnAg1dOoWgX8FHQ==
   dependencies:
     "@ice/sandbox" "^1.0.4"
     lodash.isempty "^4.4.0"
@@ -13778,15 +13789,14 @@ rax@^1.0.0:
     rax-create-factory "^1.0.0"
     rax-is-valid-element "^1.0.0"
 
-react-activation@^0.7.0:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/react-activation/-/react-activation-0.7.4.tgz#c65f8617f089527c0b976f51580d9587b2eb667d"
-  integrity sha512-go/UEuRW03jOaFM3NUc1doByzUBbrCyIHGEFNJ0tAqA2AKzmMyh0Ru8XVEY3PB1/ev9dYgRWfAiXeqyKn1kavg==
+react-activation@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/react-activation/-/react-activation-0.9.7.tgz#946afb2f1b8f7bf1eb9730fa102307606393bc52"
+  integrity sha512-8hI8D2vhvsyA6kpWwZwTTItu6j/JlucaMNdPdtS7GIjElwrhW8J9USX4YFoSf299jPQaQJ3bZdi+LYlIdfpGug==
   dependencies:
     create-react-context "^0.3.0"
     hoist-non-react-statics "^3.3.0"
-    jsx-ast-utils "^2.2.1"
-    react-node-key "^0.2.0"
+    react-node-key "^0.3.1"
     szfe-tools "^0.0.0-beta.7"
 
 react-dev-utils@^11.0.0, react-dev-utils@^11.0.4:
@@ -13868,10 +13878,10 @@ react-is@^17.0.1, react-is@^17.0.2:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-node-key@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-node-key/-/react-node-key-0.2.0.tgz#c937390208de87a0361bce87b507ccef35fb0f35"
-  integrity sha512-fC5ZVz3TwhSY0o1hw08R/V/Ze/exfhaeDllRucuvEH2Xj1qT4Y4IoSr93BftcVJHJFt3fmmTCV/mGk+LX5x20w==
+react-node-key@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-node-key/-/react-node-key-0.3.1.tgz#0ab6654a5ffcf208a3233d8631d9bbf98a89f5b5"
+  integrity sha512-PPMeZiDD5Od4cnEamiDZUifVgK7DKhan2NeYZPCmH5xsaeKDc+UrcQJK21CelLcyaMjPiQz1cxAR2hD4AB9I7g==
   dependencies:
     jsx-ast-utils "^2.2.1"
     szfe-tools "^0.0.0-beta.7"

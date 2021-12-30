@@ -19,6 +19,7 @@
     "@babel/core": "^7.15.5",
     "@babel/types": "^7.11.5",
     "@builder/app-helpers": "^2.4.2",
+    "@ice/runtime": "^0.1.1",
     "@ice/stark": "^2.0.0",
     "@ice/stark-app": "^1.2.0",
     "cheerio": "^1.0.0-rc.10",

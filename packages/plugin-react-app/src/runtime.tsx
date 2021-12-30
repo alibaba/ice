@@ -1,7 +1,7 @@
 /* eslint-disable no-lonely-if */
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import * as queryString from 'query-string';
+import { queryString } from '@ice/runtime';
 // @ts-ignore
 import ErrorBoundary from '$ice/ErrorBoundary';
 

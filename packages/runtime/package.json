@@ -13,9 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ice/stark": "^2.7.1",
+    "@ice/stark-app": "^1.5.0",
     "axios": "^0.21.4",
     "create-app-shared": "^1.2.1",
     "path-to-regexp": "^1.8.0",
+    "query-string": "^7.0.1",
+    "react-activation": "^0.9.7",
     "react-app-renderer": "^3.0.2"
   },
   "sideEffects": false
