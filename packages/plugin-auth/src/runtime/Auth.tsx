@@ -4,7 +4,7 @@ import { ContextType, AuthType, IAuth } from './types';
 
 const Context = createContext<any>(null);
 
-interface Props {
+interface ProviderProps {
   value: AuthType;
 }
 
@@ -13,12 +13,12 @@ interface InjectProps {
   useAuth: ContextType[1];
 }
 
-const Provider: FC<Props> = ({ value = {}, children }) => {
+const Provider: FC<ProviderProps> = ({ value = {}, children }) => {
   const [state, setState] = useState<AuthType>(value);
-  const updateState: InjectProps['useAuth'] = (value = {}) => {
+  const updateState: InjectProps['useAuth'] = (newState = {}) => {
     setState({
       ...state,
-      ...value,
+      ...newState,
     });
   };
   return <Context.Provider value={[state, updateState]}>{children}</Context.Provider>;
