@@ -1,5 +1,4 @@
 {
   "plugins": [
-    "build-plugin-ice-auth"
   ]
 }
