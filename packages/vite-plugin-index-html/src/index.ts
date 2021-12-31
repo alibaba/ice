@@ -1,4 +1,4 @@
-import { extname, resolve } from 'path';
+import { extname, resolve, normalize, join } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
@@ -175,20 +175,18 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 
 export const removeHtmlEntryScript = (html: string, entry: string) => {
   let _html = html;
-  let _entry = formatPath(entry);
+  const _entry = join(process.cwd(), formatPath(entry));
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
 
   const commentScript = (script: string) => `<!-- removed by vite-plugin-index-html ${script} -->`;
 
-  if (!_entry.startsWith('./') && !_entry.startsWith('/')) {
-    _entry = `./${_entry}`;
-  }
-
   if (matchs) {
     matchs.forEach((matchStr) => {
       const [, src] = matchStr.match(scriptLooseRegex);
+      // change `./src/index.js` to `src/index.js`
+      const normalizedSrc = normalize(src);
 
-      if (_entry.includes(src)) {
+      if (_entry.includes(normalizedSrc)) {
         _html = _html.replace(matchStr, commentScript(matchStr));
         console.warn(`
           vite-plugin-index-html: For the reason that entry was configured, ${matchStr} is deleted.
