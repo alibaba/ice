@@ -75,21 +75,6 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
     ]])
     .end();
 
-  // Config dev server
-  const beforeMiddleware = baseConfig.devServer.get('onBeforeSetupMiddleware') ? 'onBeforeSetupMiddleware' : 'before';
-
-  baseConfig.merge({
-    devServer: {
-      [beforeMiddleware](server) {
-        const app = server?.app ?? server;
-        app.use((req, res, next) => {
-          res.set('Access-Control-Allow-Origin', '*');
-          next();
-        });
-      },
-    }
-  });
-
   // set umd
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 
