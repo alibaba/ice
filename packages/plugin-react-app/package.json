@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "lib/index.js",
@@ -33,7 +33,7 @@
     "process": "^0.11.10",
     "query-loader-webpack-plugin": "^2.0.0",
     "query-string": "^7.0.1",
-    "react-app-renderer": "^3.0.2",
+    "react-app-renderer": "^3.1.0",
     "react-dev-utils": "^11.0.0",
     "react-refresh": "^0.10.0",
     "react-router": "^5.2.1",

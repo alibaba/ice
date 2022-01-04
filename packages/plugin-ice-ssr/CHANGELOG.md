@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+- [feat] support SSR in mode Vite
+
 ## 3.0.6
 
 - [fix] server-side render failed in production(always render `global.__ICE_SERVER_HTML_TEMPLATE__`)
