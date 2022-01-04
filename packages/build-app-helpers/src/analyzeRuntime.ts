@@ -137,16 +137,18 @@ export default async function analyzeRuntime(files: string[], options: Options):
   async function analyzeFile(filePath: string) {
     let source = fs.readFileSync(filePath, 'utf-8');
     const lang = path.extname(filePath).slice(1);
-    let loader: Loader = 'jsx';
+    let loader: Loader;
     if (lang === 'ts' || lang === 'tsx') {
       loader = lang;
     }
     try {
-      // transform content first since es-module-lexer can't handle ts file
-      source = (await transform(source, { loader })).code;
-      if (!initd) {
-        await init;
-        initd = true;
+      if (loader) {
+        // transform content first since es-module-lexer can't handle ts file
+        source = (await transform(source, { loader })).code;
+        if (!initd) {
+          await init;
+          initd = true;
+        }
       }
       const imports = parse(source)[0];
       await Promise.all(imports.map((importSpecifier) => {

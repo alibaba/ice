@@ -93,7 +93,6 @@ export default class BaseGenerator {
       applyMethod('addRenderFile', getTemplate(templateName), path.join(this.entryFolder, templateName)
         , (renderData) => {
           let { runtimeModules } = renderData;
-          // MPA 某个 page 下面没有 routes.[j|t]s 文件，默认禁用 plugin-router 运行时能力
           runtimeModules = runtimeModules.filter(({ name }) => {
             return !this.disableRuntimeList.includes(name);
           });
