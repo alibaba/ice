@@ -125,7 +125,6 @@ export default async function analyzeRuntime(files: string[], options: Options):
   const { analyzeRelativeImport, rootDir, alias, mode = 'webpack', parallel, customRuntimeRules = {} } = options;
   const parallelNum = parallel ?? 10;
   const sourceFiles = [...files];
-  let initd = false;
   const checkMap: CheckMap = {};
   const runtimeRules = { ...defaultRuntimeRules, ...customRuntimeRules };
   // init check map
@@ -145,11 +144,8 @@ export default async function analyzeRuntime(files: string[], options: Options):
       if (loader) {
         // transform content first since es-module-lexer can't handle ts file
         source = (await transform(source, { loader })).code;
-        if (!initd) {
-          await init;
-          initd = true;
-        }
       }
+      await init;
       const imports = parse(source)[0];
       await Promise.all(imports.map((importSpecifier) => {
         return (async () => {
