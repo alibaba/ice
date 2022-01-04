@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-locale",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0",
   "description": "ICE locale build-scripts plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
