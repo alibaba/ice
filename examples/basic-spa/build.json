@@ -11,6 +11,11 @@
   },
   "plugins": [],
   "tsChecker": true,
+  "devServer": {
+    "historyApiFallback": {
+      "disableDotRule": true
+    }
+  },
   "sassLoaderOptions": {
     "prependData": ".test{color:red}"
   },

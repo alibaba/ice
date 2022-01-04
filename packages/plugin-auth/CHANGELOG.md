@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1
+
+- [feat] pass page props to NoAuthFallback
+- [chore] optimize unless withAuth
+
 ## 2.0.0
 
 - [feat] migrate runtime api
