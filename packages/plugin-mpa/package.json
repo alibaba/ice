@@ -24,8 +24,8 @@
     "build-scripts": "^1.1.0"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.4.1",
-    "@builder/mpa-config": "^4.1.2",
+    "@builder/app-helpers": "^2.5.0",
+    "@builder/mpa-config": "^4.2.0",
     "fs-extra": "^8.1.0"
   }
 }
