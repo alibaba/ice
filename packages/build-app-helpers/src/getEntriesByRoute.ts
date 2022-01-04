@@ -36,7 +36,10 @@ export default (
 };
 
 function getEntry(route: IRoute, rootDir: string): IEntry | void {
-  const { source, name, pageSource } = route;
+  const { source, name, pageSource, url } = route;
+  if (url) {
+    return;
+  }
   let entryName: string;
   if (name) {
     entryName = name;

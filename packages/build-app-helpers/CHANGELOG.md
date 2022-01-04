@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.2
+
+- [fix] support remote route
+
 ## 2.4.1
 
 - [fix] support override defaultValue

@@ -26,6 +26,10 @@ export default function (target, { appJsonPath, appJsonContent }: IOptions) {
   }
 
   const routes = staticConfig.routes.filter((route) => {
+    // It means the route is a remote page
+    if (route.url) {
+      return false;
+    }
     if (Array.isArray(route.targets) && !route.targets.includes(target)) {
       return false;
     }
