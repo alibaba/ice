@@ -1,8 +1,13 @@
 # CHANGELOG
 
-## 2.0.3
+## 2.0.4
 
 - [fix] pass vite config for lifecycle hooks
+
+## 2.0.3
+
+- [fix] open both `about:blank` page and `localhost:3333` page
+- [fix] `after.start.devServer` callback function has been called before the devServer is ready
 
 ## 2.0.2
 

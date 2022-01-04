@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- [fix] circular dependence of lazy when run test
+
 ## 2.1.0
 
 - [feat] register `router`&`request` to userConfig
