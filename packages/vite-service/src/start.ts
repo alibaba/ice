@@ -27,20 +27,36 @@ export async function viteStart(context: Context): Promise<StartResult> {
     config: devConfig,
   });
 
-  let devServer: ViteDevServer;
   try {
-    devServer = await createServer(devConfig);
+    const devServer = await createServer(devConfig);
+
+    await devServer.listen();
+
     applyHook(`after.${command}.devServer`, {
-      devServer
+      devServer,
+      url: generateDevServerUrl(devConfig),
     });
+
+    devServer.printUrls();
+
+    return devServer;
   } catch (err) {
     console.error('CONFIG', chalk.red('Failed to load vite config.'));
     await applyHook('error', { err });
     throw err;
   }
+}
 
-  const viteServer = await devServer.listen();
-  devServer.printUrls();
+function generateDevServerUrl(devConfig) {
+  const { server: { port, https, host } } = devConfig;
+  const protocol = https ? 'https' : 'http';
+  return `${protocol}://${resolveHostname(host)}:${port}`;
+}
 
-  return viteServer;
+// Reference: https://github.com/vitejs/vite/blob/7e3e84e1b733f4cb0cba3bd69f28a5671b52261c/packages/vite/src/node/utils.ts#L580
+function resolveHostname(host: string) {
+  if (host === '0.0.0.0' || host === '::' || host === '127.0.0.1') {
+    return 'localhost';
+  }
+  return host;
 }
