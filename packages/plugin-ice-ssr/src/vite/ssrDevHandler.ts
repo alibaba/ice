@@ -30,7 +30,11 @@ const createSSRDevHandler = (server: ViteDevServer, options: SSROptions): NextHa
       const { error, html, redirectUrl } = await render({ req, res }, { htmlTemplate, loadableStatsPath: false });
       req.url = url;
       if (redirectUrl) {
-        // TODO redirect
+        console.log('[SSR]', `Redirect to the new path ${redirectUrl}`);
+        res.writeHead(302, {
+          Location: redirectUrl
+        });
+        res.end();
       } else {
         if (error) {
           server.ssrFixStacktrace(error as Error);
@@ -40,12 +44,7 @@ const createSSRDevHandler = (server: ViteDevServer, options: SSROptions): NextHa
         res.end(html);
       }
     } catch (err) {
-      // fallback to CSR
-      // res.setHeader('Content-Type', 'text/html');
-      // res.end(htmlTemplate);
-
       server.ssrFixStacktrace(err);
-      // next(err);
     }
   };
 
