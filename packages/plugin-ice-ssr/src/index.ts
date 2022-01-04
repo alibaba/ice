@@ -206,7 +206,7 @@ const plugin = async (api): Promise<void> => {
 
       onHook('after.build.compile', async () => {
         await generateStaticPages(buildDir, ssgBundlePath);
-        // await fse.remove(ssgBundlePath);
+        await fse.remove(ssgBundlePath);
       });
     }
   });

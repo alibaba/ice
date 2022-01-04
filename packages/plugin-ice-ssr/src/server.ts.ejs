@@ -80,7 +80,6 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     const history = {
       location: { pathname, search, hash, state: null },
     };
-    // setHistory(history);
     initialContext = {
       req,
       res,
@@ -201,7 +200,7 @@ export function generateHtml({
   if (error) {
     $('head').append(`
       <script>
-        window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.stack : error).replace(/\"/g, '\'')}";
+        window.__ICE_SSR_ERROR__ = "${(error instanceof Error ? error.message : error).replace(/\"/g, '\'')}";
       </script>`)
     return $.html();
   }

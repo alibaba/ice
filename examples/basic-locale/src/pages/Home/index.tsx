@@ -19,7 +19,7 @@ function Home() {
 }
 
 Home.getInitialProps = function (ctx) {
-  console.log('ctx===>', getLocale());
+  console.log('getLocale in getInitialProps', getLocale());
 };
 
 export default Home;

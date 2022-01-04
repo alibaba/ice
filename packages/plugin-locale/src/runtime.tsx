@@ -11,7 +11,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { locale: localeConfig } = buildConfig;
   const { defaultLocale, locales, localeRoute } = localeConfig;
   const { router: appConfigRouter = {} } = appConfig;
-  const { history } = appConfigRouter;
+  const { history = {} } = appConfigRouter;
   const originHistory = { ...history };
 
   if (localeRoute !== false) {
@@ -31,7 +31,9 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
     }
   }
 
-  modifyHistory(history, localeConfig);
+  if (localeRoute !== false) {
+    modifyHistory(history, localeConfig);
+  }
 };
 
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
@@ -74,11 +76,7 @@ function setInitICELocaleToCookie(locale: string) {
 
 function modifyHistory(history: History, localeConfig: LocaleConfig) {
   const originHistory = { ...history };
-  const { localeRoute, defaultLocale } = localeConfig;
-
-  if (localeRoute === false) {
-    return;
-  }
+  const { defaultLocale } = localeConfig;
 
   function getLocalePath(
     pathname: string, 

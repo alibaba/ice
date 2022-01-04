@@ -33,7 +33,6 @@ export default async function (
       template: path.join(__dirname, '../src/utils'),
       targetDir: 'locale/utils',
     },
-    { LOCALE_COOKIE_KEY, localeConfig, localeRoute }
   );
 
   onGetWebpackConfig((config) => {

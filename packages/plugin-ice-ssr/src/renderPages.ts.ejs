@@ -16,7 +16,7 @@ export default async function ssgRender(options) {
   const pagesData = [];
 
   let allRoutes = routes;
-  if (<%- JSON.stringify(locales) %>.length > 0 && '<%- defaultLocale %>') {
+  if (buildConfig.locale.locales?.length > 0 && buildConfig.locale.defaultLocale) {
     allRoutes = addRoutesByLocales(routes, <%- JSON.stringify(locales) %>, '<%- defaultLocale %>');
   }
 
