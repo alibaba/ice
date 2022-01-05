@@ -35,9 +35,6 @@ const vitePluginSSR = (ssrEntry: string): Plugin => {
         find: /universal-env$/,
         replacement: '@uni/env',
       });
-      resolvedConfig.optimizeDeps.include = resolvedConfig.optimizeDeps.include || [];
-      // pre-build invalid package for ssr render
-      resolvedConfig.optimizeDeps.include.push(...invalidPackages);
     },
     configureServer: async (server) => {
       const handler = createSSRDevHandler(server, { ssrEntry});
