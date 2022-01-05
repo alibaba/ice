@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "build-scripts": "^1.2.1",
-    "@types/accept-language-parser": "^1.5.3"
+    "@types/accept-language-parser": "^1.5.3",
+    "@types/history": "^4.7.5"
   },
   "repository": {
     "type": "http",
