@@ -94,18 +94,6 @@ const getHtmlPlugin = (context: Context) => {
   return mpaHtmlPlugins;
 };
 
-const getOpen = (context: Context) => {
-  const { getValue } = context;
-  // if spa : SERVER_PATH is undefined
-  let page: string = getValue('SERVER_PATH');
-
-  if (page && !page.startsWith('/')) {
-    page = `/${page}`;
-  }
-
-  return page ?? true;
-};
-
 type BabelPreset = [string, Record<string, any>];
 
 const getPluginReact = (context: Context): PluginOption[] => {
@@ -153,6 +141,7 @@ export const wp2vite = (context: Context): InlineConfig => {
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     configFile: false,
+    root: rootDir,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
       userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
@@ -203,7 +192,6 @@ export const wp2vite = (context: Context): InlineConfig => {
     port: commandArgs.port || 3333,
     host: commandArgs.host || '0.0.0.0',
     https: commandArgs.https || false,
-    open: getOpen(context)
   };
 
   const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;

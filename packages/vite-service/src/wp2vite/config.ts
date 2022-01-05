@@ -215,8 +215,12 @@ const configMap: ConfigMap = {
               if (rest.configure) {
                 rest.configure(proxy, options);
               }
-              proxy.on('proxyRes', onProxyRes);
-              proxy.on('error', onError);
+              if (onProxyRes) {
+                proxy.on('proxyRes', onProxyRes);
+              }
+              if (onError) {
+                proxy.on('error', onError);
+              }
             },
           };
         }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4
+
+- [fix] lazy import is invalid with swc(`@builder/user-config^2.0.3`)
+
 ## 2.1.3
 
 - [fix] enhance alias for node_modules dependencies(`@builder/user-config^2.0.1`)

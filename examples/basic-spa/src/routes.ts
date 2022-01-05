@@ -28,6 +28,14 @@ const routes: IRouterConfig[] = [
         component: About
       },
       {
+        path: '/a.html',
+        exact: true,
+        component: Home,
+        getInitialProps: async () => {
+          return { count: 1 };
+        },
+      },
+      {
         path: '/',
         exact: true,
         component: Home,
