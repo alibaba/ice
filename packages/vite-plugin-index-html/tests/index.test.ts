@@ -16,7 +16,7 @@ describe('vite-plugin-index-html', () => {
     </html>
     `
 
-    expect(removeHtmlEntryScript(html, '/icestark-demo/ice-vite/child/src/app')).toBe(html)
+    expect(removeHtmlEntryScript('/Users/ice', html, '/icestark-demo/ice-vite/child/src/app')).toBe(html)
   })
 
   test('remove-html-entry-script-vite/src-irregular', () => {
@@ -35,10 +35,13 @@ describe('vite-plugin-index-html', () => {
     </html>
     `
     const result = html.replace('<script type="module" src="/src/main.tsx"></script>', '<!-- removed by vite-plugin-index-html <script type="module" src="/src/main.tsx"></script> -->');
-    
-    expect(removeHtmlEntryScript(html, '/icestark-demo/src/main.tsx')).toBe(result)
-    expect(removeHtmlEntryScript(html, 'icestark-demo/src/main.tsx')).toBe(result)
-    expect(removeHtmlEntryScript(html, './icestark-demo/src/main.tsx')).toBe(result)
+
+    expect(removeHtmlEntryScript('/Users/ice', html, '/icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, 'icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, './icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, '/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, './src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, 'src/main.tsx')).toBe(result)
   })
 
   test('remove-html-entry-script-vite/src-relative-A', () => {
@@ -58,9 +61,12 @@ describe('vite-plugin-index-html', () => {
     `
     const result = html.replace('<script type="module" src="./src/main.tsx"></script>', '<!-- removed by vite-plugin-index-html <script type="module" src="./src/main.tsx"></script> -->');
 
-    expect(removeHtmlEntryScript(html, '/icestark-demo/src/main.tsx')).toBe(result)
-    expect(removeHtmlEntryScript(html, 'icestark-demo/src/main.tsx')).toBe(result)
-    expect(removeHtmlEntryScript(html, './icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, '/icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, 'icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, './icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, '/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, './src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, 'src/main.tsx')).toBe(result)
   })
 
   test('remove-html-entry-script-vite/src-relative-B', () => {
@@ -80,8 +86,11 @@ describe('vite-plugin-index-html', () => {
     `
     const result = html.replace('<script type="module" src="src/main.tsx"></script>', '<!-- removed by vite-plugin-index-html <script type="module" src="src/main.tsx"></script> -->');
 
-    expect(removeHtmlEntryScript(html, '/icestark-demo/src/main.tsx')).toBe(result)
-    expect(removeHtmlEntryScript(html, 'icestark-demo/src/main.tsx')).toBe(result)
-    expect(removeHtmlEntryScript(html, './icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, '/icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, 'icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, './icestark-demo/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, '/src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, './src/main.tsx')).toBe(result)
+    expect(removeHtmlEntryScript('/Users/ice', html, 'src/main.tsx')).toBe(result)
   })
 });
