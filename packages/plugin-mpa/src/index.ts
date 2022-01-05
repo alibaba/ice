@@ -102,39 +102,42 @@ const plugin: IPlugin = (api) => {
           });
         }
       });
-      onHook('before.build.load', async (options) => {
-        await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
-          const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
-          if (generator && userConfig.optimizeRuntime) {
-            const { viteConfig, webpackConfig } = options as any;
-            let alias;
-            let mode: Mode = 'webpack';
-            if (viteConfig) {
-              alias = viteConfig?.resolve?.alias;
-              mode = 'vite';
-            } else if (webpackConfig) {
-              alias = webpackConfig?.[0].chainConfig?.toConfig?.()?.resolve?.alias;
-            }
-            const runtimeUsedMap = await analyzeRuntime([entryPath], {
-              // SPA 下有目录规范上更加精准的判断， MPA 通过 createStore 引入进行判断
-              customRuntimeRules: { 'build-plugin-ice-store': ['createStore'] },
-              rootDir,
-              mode,
-              alias,
-              analyzeRelativeImport: true,
-            });
-            Object.keys(runtimeUsedMap).forEach((pluginName) => {
-              const isUsed = runtimeUsedMap[pluginName];
-              if (!isUsed) {
-                generator.addDisableRuntime(pluginName);
+      if (userConfig.optimizeRuntime) {
+        onHook('before.build.load', async (options) => {
+          await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
+            const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
+            // 仅针对使用了运行时能力的入口进行分析
+            if (generator) {
+              const { viteConfig, webpackConfig } = options as any;
+              let alias;
+              let mode: Mode = 'webpack';
+              if (viteConfig) {
+                alias = viteConfig?.resolve?.alias;
+                mode = 'vite';
+              } else if (webpackConfig) {
+                alias = webpackConfig?.[0].chainConfig?.toConfig?.()?.resolve?.alias;
               }
-            });
-            (generateTasks || []).forEach((generateTask) => {
-              generateTask();
-            });
-          }
-        }));
-      });
+              const runtimeUsedMap = await analyzeRuntime([entryPath], {
+                // SPA 下有目录规范上更加精准的判断， MPA 通过 createStore 引入进行判断
+                customRuntimeRules: { 'build-plugin-ice-store': ['createStore'] },
+                rootDir,
+                mode,
+                alias,
+                analyzeRelativeImport: true,
+              });
+              Object.keys(runtimeUsedMap).forEach((pluginName) => {
+                const isUsed = runtimeUsedMap[pluginName];
+                if (!isUsed) {
+                  generator.addDisableRuntime(pluginName);
+                }
+              });
+              (generateTasks || []).forEach((generateTask) => {
+                generateTask();
+              });
+            }
+          }));
+        });
+      }
     } else {
       finalMPAEntries = entries;
     }
