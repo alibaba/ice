@@ -1,5 +1,13 @@
 {
   "vite": true,
+  "plugins": [
+    [
+      "build-plugin-icestark",
+      {
+        "type": "child"
+      }
+    ]
+  ],
   "mpa": {
     "openPage": "Dashboard",
     "template": {

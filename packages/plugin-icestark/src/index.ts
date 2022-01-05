@@ -63,19 +63,34 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     // Only micro-applications need to be compiled to specific format.
     if (appType === 'child' && vite) {
 
-      if (mpa || Object.keys(entries).length > 1) {
-        log.warn('[plugin-icestark]: MPA is not supported currently.');
-      } else {
-        modifyUserConfig('vite.plugins', [
+      modifyUserConfig('vite.plugins', [
+        Object.keys(entries).map(entryKey => [
           htmlPlugin({
             // @ts-ignore
             entry: getEntries(entries),
             template: path.resolve(rootDir, 'public/index.html'),
-            preserveEntrySignatures: 'exports-only'
+            preserveEntrySignatures: 'exports-only',
+            filename: `${entryKey}.html`
           }),
-          lifecyclePlugin(getEntryFiles(entries))
-        ], { deepmerge: true });
-      }
+          // lifecyclePlugin(getEntryFiles({
+          //   [entryKey]: entries[entryKey]
+          // }))
+        ])
+      ], { deepmerge: true });
+
+      // if (mpa || Object.keys(entries).length > 1) {
+      //   log.warn('[plugin-icestark]: MPA is not supported currently.');
+      // } else {
+      //   modifyUserConfig('vite.plugins', [
+      //     htmlPlugin({
+      //       // @ts-ignore
+      //       entry: getEntries(entries),
+      //       template: path.resolve(rootDir, 'public/index.html'),
+      //       preserveEntrySignatures: 'exports-only'
+      //     }),
+      //     lifecyclePlugin(getEntryFiles(entries))
+      //   ], { deepmerge: true });
+      // }
     }
 
     config

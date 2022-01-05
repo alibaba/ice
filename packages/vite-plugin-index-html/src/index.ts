@@ -20,7 +20,7 @@ export interface HtmlPluginOptions {
    * The file to write the html to. Also you can specify a subdirectory here.
    * Default: `index.html`
    */
-  filename?: string;
+  filename?: string | Function;
 
   /**
    * Accept `.[j|t]s?[x]` as input, which works like webpack input.
@@ -107,6 +107,10 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
     userOptions.preserveEntrySignatures = 'exports-only';
   }
 
+  if (userOptions.filename === undefined) {
+    userOptions.filename = 'index.html';
+  }
+
   return {
     name: 'vite-plugin-html',
     config(cfg) {
@@ -142,11 +146,13 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 
       const htmlAfterMinification = await minifyHtml(html, userOptions.minify === 'auto' ? true : userOptions.minify);
 
+      const htmlFileName = typeof userOptions.filename === 'function' ? userOptions.filename() : userOptions.filename;
+
       this.emitFile({
         type: 'asset',
         source: htmlAfterMinification,
         name: 'html',
-        fileName: 'index.html',
+        fileName: htmlFileName,
       });
     },
 
