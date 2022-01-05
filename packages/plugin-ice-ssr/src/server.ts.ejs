@@ -1,5 +1,6 @@
 import '@/app';
 import { join } from 'path';
+import React from 'react';
 import { pathToRegexp } from '@ice/runtime';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
@@ -59,12 +60,14 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
-  const buildConfig = { 
+  const buildConfig = {
     loadableStatsPath, 
     publicPath, 
     locale: { 
       defaultLocale: '<%- typeof defaultLocale === 'undefined' ? '' : defaultLocale %>', 
-      locales: <%- JSON.stringify(typeof defaultLocale === 'undefined' ? [] : locales) %> 
+      locales: <%- JSON.stringify(typeof defaultLocale === 'undefined' ? [] : locales) %>,
+      i18nRouting: <%- typeof i18nRouting === 'undefined' ? true : i18nRouting %>,
+      redirect: <%- typeof redirect === 'undefined' ? false : redirect %> 
     },
   }
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
@@ -114,7 +117,23 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
 }
 
-export async function renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig }) {
+export async function renderStatic(
+  { 
+    htmlTemplateContent, 
+    initialContext, 
+    buildConfig,
+    initialData, 
+    component,
+    getInitialProps
+ }: {
+    htmlTemplateContent: string;
+    initialContext: Record<string, any>;
+    buildConfig: Record<string, any>;
+    initialData?: Record<string, any>;
+    component?: React.ReactNode;
+    getInitialProps?: Function;
+ }
+ ) {
   let error;
   let html = htmlTemplateContent;
 
@@ -136,7 +155,14 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     setInitialData(initialData);
 
     // get page initial props
-    let { component, getInitialProps } = await getComponentByPath(routes, initialContext.pathname);
+    if (!component) {
+      const result = await getComponentByPath(
+        routes,
+        initialContext.pathname
+      );
+      component = result.component;
+      getInitialProps = result.getInitialProps;
+    }
     if (component && component.load) {
       const loadedPageComponent = await component.load();
       component = loadedPageComponent.default;

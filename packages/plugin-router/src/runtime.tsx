@@ -2,6 +2,7 @@ import * as React from 'react';
 // @ts-ignore
 import defaultRoutes from '$ice/routes';
 import { IceRouter, Routes, parseRoutes } from './runtime/Router';
+import formatRoutes from './runtime/formatRoutes';
 import { RouteItemProps } from './types/base';
 import { IRouterConfig } from './types';
 
@@ -9,7 +10,7 @@ const module = ({ setRenderApp, appConfig, modifyRoutes, modifyRoutesComponent, 
   const { router: appConfigRouter = {} } = appConfig;
 
   modifyRoutes(() => {
-    return appConfigRouter.routes || defaultRoutes;
+    return formatRoutes(appConfigRouter.routes || defaultRoutes, '');
   });
 
   // add default RoutesComponent

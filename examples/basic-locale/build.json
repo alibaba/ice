@@ -11,6 +11,5 @@
       }
     ]
   ],
-  "ssr": "static",
-  "minify": false
+  "ssr": "static"
 }

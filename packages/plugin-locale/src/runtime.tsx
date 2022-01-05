@@ -9,13 +9,14 @@ import normalizeLocalePath from './utils/normalizeLocalePath';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { locale: localeConfig } = buildConfig;
-  const { defaultLocale, locales, localeRoute } = localeConfig;
+  const { defaultLocale, locales, i18nRouting } = localeConfig;
   const { router: appConfigRouter = {} } = appConfig;
   const { history = {} } = appConfigRouter;
   const originHistory = { ...history };
 
-  if (localeRoute !== false) {
+  if (i18nRouting !== false) {
     modifyRoutes((routes) => {
+      // 该 routes 值是被 formatRoutes 方法处理后返回的结果
       return addRoutesByLocales(routes, locales, defaultLocale);
     });
   }
@@ -31,27 +32,54 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
     }
   }
 
-  if (localeRoute !== false) {
+  if (i18nRouting !== false) {
     modifyHistory(history, localeConfig);
   }
 };
 
 function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
-  const modifiedRoutes = [...originRoutes];
   // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
   const prefixRouteLocales = locales.filter(locale => locale !== defaultLocale);
 
-  originRoutes.forEach((route) => {
-    const { path, redirect } = route;
-    if(path && !redirect && typeof path === 'string') {
-      prefixRouteLocales.forEach((prefixRouteLocale: string) => {
-        modifiedRoutes.unshift({ 
-          ...route, 
+  if (!prefixRouteLocales.length) {
+    return originRoutes;
+  }
+  const modifiedRoutes = [...originRoutes];
+
+  prefixRouteLocales.forEach((prefixRouteLocale: string) => {
+    originRoutes.forEach((originRoute) => {
+      const { children, path } = originRoute;
+      if (!children) {
+        modifiedRoutes.unshift({
+          ...originRoute,
           path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
         });
-      });
-    }
+      } else {
+        modifiedRoutes.unshift({
+          ...originRoute,
+          path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
+          children: children.map((childRoute) => {
+            const { path: childRoutePath } = childRoute;
+            return {
+              ...childRoute,
+              path: `/${prefixRouteLocale}${childRoutePath[0] === '/' ? childRoutePath :`/${childRoutePath}`}`,
+            };
+          })
+        });
+      }
+    });
   });
+  // originRoutes.forEach((route) => {
+  //   const { path, redirect } = route;
+  //   if(path && !redirect && typeof path === 'string') {
+  //     prefixRouteLocales.forEach((prefixRouteLocale: string) => {
+  //       modifiedRoutes.unshift({ 
+  //         ...route, 
+  //         path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
+  //       });
+  //     });
+  //   }
+  // });
 
   return modifiedRoutes;
 }

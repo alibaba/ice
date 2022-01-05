@@ -50,25 +50,25 @@ function getDetectedLocale(
   const detectedLocale = 
       getLocaleFromCookie(locales, cookies) || 
       getPreferredLocale(locales, headers) || 
-      (localeConfig.localeRoute === false ? undefined : getDetectedLocaleFromPathname(pathname, locales)) ||
+      (localeConfig.i18nRouting === false ? undefined : getDetectedLocaleFromPathname(pathname, locales)) ||
       defaultLocale;
 
   return detectedLocale;
 }
 
 /**
- * 开启自动重定向选项时(localeRedirect: true)时，获取下一个要跳转的 url
+ * 开启自动重定向选项时(redirect: true)时，获取下一个要跳转的 url
  * 仅在 pathname 为 `/` 时重定向
  */
 function getRedirectUrl(
   pathname: string, 
   localeConfig: LocaleConfig & { detectedLocale: string },
 ) {
-  const { localeRedirect, defaultLocale, detectedLocale, localeRoute } = localeConfig;
+  const { redirect, defaultLocale, detectedLocale, i18nRouting } = localeConfig;
   const isRootPath = pathname === '/';
   if (
-    localeRedirect === true && 
-    localeRoute !== false && 
+    redirect === true && 
+    i18nRouting !== false && 
     isRootPath && 
     defaultLocale !== detectedLocale
   ) {

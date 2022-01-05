@@ -10,20 +10,25 @@ export default async function ssgRender(options) {
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { 
     loadableStatsPath,
-    locale: { defaultLocale: '<%- defaultLocale %>', locales: <%- JSON.stringify(locales) %> },
+    locale: { 
+      defaultLocale: '<%- typeof defaultLocale === 'undefined' ? '' : defaultLocale %>', 
+      locales: <%- JSON.stringify(typeof defaultLocale === 'undefined' ? [] : locales) %>,
+      i18nRouting: <%- typeof i18nRouting === 'undefined' ? true : i18nRouting %>,
+      redirect: <%- typeof redirect === 'undefined' ? false : redirect %> 
+    },
   };
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
 
   let allRoutes = routes;
   if (buildConfig.locale.locales?.length > 0 && buildConfig.locale.defaultLocale) {
-    allRoutes = addRoutesByLocales(routes, <%- JSON.stringify(locales) %>, '<%- defaultLocale %>');
+    allRoutes = addRoutesByLocales(routes, buildConfig.locale.locales, buildConfig.locale.defaultLocale);
   }
 
   const flatRoutes = await getFlatRoutes(allRoutes);
 
   for (const flatRoute of flatRoutes) {
-    const { path = '', getInitialProps, ...rest } = flatRoute;
+    const { path = '', getInitialProps, component, ...rest } = flatRoute;
 
     const keys = [];
     pathToRegexp(path, keys);
@@ -33,9 +38,15 @@ export default async function ssgRender(options) {
     }
 
     const initialContext = { pathname: path, location: { pathname: path } };
-    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext });
+    const { html } = await renderStatic({ 
+      htmlTemplateContent, 
+      buildConfig,
+      initialContext,
+      getInitialProps: getInitialProps || component?.getInitialProps,
+      component,
+     });
 
-    delete rest.component;
+    delete flatRoute.component;
     delete rest.routeWrappers;
     pagesData.push({ html, path, ...rest });
   }

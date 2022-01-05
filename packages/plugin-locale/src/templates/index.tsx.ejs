@@ -3,7 +3,7 @@
 <% } %>
 import { createContext, useContext, useState } from 'react';
 import Cookies from 'universal-cookie';
-<% if (localeRoute !== false) {%>
+<% if (i18nRouting !== false) {%>
 import { history } from 'create-app-shared';
 import getDetectedLocaleFromPathname from './utils/getDetectedLocaleFromPathname';
 <% } %>
@@ -42,7 +42,7 @@ export function getAllLocales(): string[] {
   return locales
 }
 
-<% if (localeRoute !== false) {%>
+<% if (i18nRouting !== false) {%>
 function getDetectedLocaleFromPath(locales: string[]) {
   if (history === null) {
     console.log('history is null, can\'t get current locale from pathname');
@@ -56,7 +56,7 @@ function getDetectedLocaleFromPath(locales: string[]) {
 
 export function getLocale(): string {
   return new Cookies().get(LOCALE_COOKIE_KEY) ||
-    <% if (localeRoute !== false) {%>
+    <% if (i18nRouting !== false) {%>
       getDetectedLocaleFromPath(locales) ||
     <% } %>
     defaultLocale

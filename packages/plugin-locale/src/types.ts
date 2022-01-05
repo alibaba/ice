@@ -1,6 +1,6 @@
 export interface LocaleConfig {
   locales: string[];
   defaultLocale: string;
-  localeRedirect?: true;
-  localeRoute?: false;
+  redirect?: true;
+  i18nRouting?: false;
 }

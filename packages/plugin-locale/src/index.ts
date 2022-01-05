@@ -10,7 +10,7 @@ export default async function (
 ) {
   checkLocaleConfig(localeConfig);
 
-  const { locales, defaultLocale, localeRoute = true } = localeConfig;
+  const { i18nRouting = true } = localeConfig;
 
   const { userConfig: { ssr } } = context;
 
@@ -18,14 +18,14 @@ export default async function (
   const localesTempDir = path.join(iceTemp, 'plugins', 'locale');
 
   applyMethod('modifyRenderData', (originRenderData) => {
-    return { ...originRenderData, locales, defaultLocale };
+    return { ...originRenderData, ...localeConfig };
   });
 
   // copy templates to .ice/locale dir
   applyMethod(
     'addPluginTemplate', 
     path.join(__dirname, 'templates'), 
-    { LOCALE_COOKIE_KEY, localeConfig, localeRoute }
+    { LOCALE_COOKIE_KEY, localeConfig, i18nRouting }
   );
   applyMethod(
     'addPluginTemplate',
