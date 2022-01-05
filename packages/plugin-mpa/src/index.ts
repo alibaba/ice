@@ -93,7 +93,7 @@ const plugin: IPlugin = (api) => {
     let finalMPAEntries = {};
     if (parsedEntries) {
       Object.keys(parsedEntries).forEach((entryKey) => {
-        const { finalEntry, runAppPath, generator, generateTasks, entryPath } = parsedEntries[entryKey];
+        const { finalEntry, runAppPath } = parsedEntries[entryKey];
         finalMPAEntries[entryKey] = finalEntry;
         if (runAppPath) {
           redirectEntries.push({
@@ -101,8 +101,11 @@ const plugin: IPlugin = (api) => {
             runAppPath,
           });
         }
-        if (generator && userConfig.optimizeRuntime) {
-          onHook('before.build.load', async (options) => {
+      });
+      onHook('before.build.load', async (options) => {
+        await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
+          const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
+          if (generator && userConfig.optimizeRuntime) {
             const { viteConfig, webpackConfig } = options as any;
             let alias;
             let mode: Mode = 'webpack';
@@ -129,8 +132,8 @@ const plugin: IPlugin = (api) => {
             (generateTasks || []).forEach((generateTask) => {
               generateTask();
             });
-          });
-        }
+          }
+        }));
       });
     } else {
       finalMPAEntries = entries;
