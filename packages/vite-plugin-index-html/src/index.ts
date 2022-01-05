@@ -134,6 +134,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 
       const html = injectToHtml(
         removeHtmlEntryScript(
+          viteConfig.root,
           parseTemplate(userOptions.template, userOptions.templateContent),
           getEntryUrl(userOptions.input),
         ),
@@ -164,6 +165,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
       };
       const _html = injectToHtml(
         removeHtmlEntryScript(
+          viteConfig.root,
           html,
           getEntryUrl(userOptions.input)),
         [entryTag],
@@ -173,9 +175,14 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
   };
 }
 
-export const removeHtmlEntryScript = (html: string, entry: string) => {
+export const removeHtmlEntryScript = (rootDir: string, html: string, entry: string) => {
   let _html = html;
-  const _entry = join(process.cwd(), formatPath(entry));
+  const _entry = formatPath(
+    entry.includes(rootDir)
+      ? entry
+      : join(rootDir, entry)
+  );
+
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
 
   const commentScript = (script: string) => `<!-- removed by vite-plugin-index-html ${script} -->`;

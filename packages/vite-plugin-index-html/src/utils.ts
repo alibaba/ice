@@ -1,6 +1,4 @@
-import * as path from 'path';
-
-const { posix } = path;
+import { posix, sep } from 'path';
 
 /**
  * Check if link is absolute url
@@ -24,7 +22,7 @@ export const addTrailingSlash = (str: string): string => {
  * @returns
  */
 export const formatPath = (pathStr: string): string => {
-  return process.platform === 'win32' ? pathStr.split(path.sep).join('/') : pathStr;
+  return process.platform === 'win32' ? pathStr.split(sep).join('/') : pathStr;
 };
 
 export const getEntryUrl = (entries: string | Record<string, string>) => {

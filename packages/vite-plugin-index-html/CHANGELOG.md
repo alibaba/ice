@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] be compatible for input like `src/main`. Closes #5049
+
 ## 2.0.1
 
 - [fix] unexpected entry with too long root dir.
