@@ -18,7 +18,7 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
     wrapperPageComponent(wrapperPageWithProps(applyRuntimeAPI));
   }
 
-  wrapperPageComponent(typeof global !== 'undefined' && (global as any).__IS_SERVER__ || process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR());
+  wrapperPageComponent((typeof global !== 'undefined' && (global as any).__IS_SERVER__) || process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR());
 
   wrapperPageComponent(wrapperPageWithErrorBoundary(ErrorBoundaryFallback, onErrorBoundaryHandler));
 

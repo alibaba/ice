@@ -5,7 +5,7 @@ import { setHistory } from '../storage';
 
 const createHistory: CreateHistory = ({ type, basename, location }) => {
   let history: History;
-  if (typeof global !== 'undefined' && (global as any).__IS_SERVER__ || process.env.__IS_SERVER__) {
+  if ((typeof global !== 'undefined' && (global as any).__IS_SERVER__) || process.env.__IS_SERVER__) {
     history = createMemoryHistory();
     (history as any).location = location;
   } else if (type === 'hash') {

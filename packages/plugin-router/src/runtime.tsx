@@ -30,7 +30,7 @@ const module = ({ setRenderApp, appConfig, modifyRoutes, modifyRoutesComponent, 
     if (!routerProps.history) {
       routerProps.history = applyRuntimeAPI('createHistory', { type: appConfigRouter.type, basename: appConfigRouter.basename });
     }
-    if (typeof global !== 'undefined' && (global as any).__IS_SERVER__ || process.env.__IS_SERVER__) {
+    if ((typeof global !== 'undefined' && (global as any).__IS_SERVER__) || process.env.__IS_SERVER__) {
       const { initialContext = {} } = context;
       routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
     }
