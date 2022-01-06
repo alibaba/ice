@@ -12,5 +12,6 @@
       }
     ]
   ],
-  "vite": true
+  "vite": false,
+  "ssr": "static"
 }

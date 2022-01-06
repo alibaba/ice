@@ -102,7 +102,6 @@ export function IceRouter(props: RouterProps) {
 }
 
 export function Routes({ routes, fallback }: RoutesProps) {
-  console.log('router===>', routes);
   return (
     <Switch>
       {routes.map((route, id) => {
