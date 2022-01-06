@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as pathToRegexp from 'path-to-regexp';
+import * as createAppShared from 'create-app-shared';
 import reactAppRenderer, { getInitialData } from 'react-app-renderer';
 import KeepAlive, { AliveScope } from 'react-activation';
 import useBaseRequest from '@ahooksjs/use-request';
@@ -7,8 +8,11 @@ import loadable from '@loadable/component';
 
 import axiosUtils from './axiosUtils';
 
+export {
+  createAppShared
+};
+
 // for core
-export * as createAppShared from 'create-app-shared';
 
 export type { RenderAppConfig } from 'react-app-renderer';
 
