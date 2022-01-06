@@ -9,9 +9,11 @@ export async function viteStart(context: Context): Promise<StartResult> {
   const { applyHook, command, commandArgs } = context;
 
   const configArr = context.getWebpackConfig();
+  const devConfig = configArr.length > 0 ? wp2vite(context) : {};
   await applyHook(`before.${command}.load`, {
     args: commandArgs,
     webpackConfig: configArr,
+    viteConfig: devConfig,
   });
 
   if (!configArr.length) {
@@ -19,8 +21,6 @@ export async function viteStart(context: Context): Promise<StartResult> {
     await applyHook('error', { err: new Error(errorMsg) });
     return;
   }
-
-  const devConfig = wp2vite(context);
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,

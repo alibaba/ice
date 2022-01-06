@@ -1,10 +1,8 @@
 import * as path from 'path';
+import * as chalk from 'chalk';
 import { compileTemplate } from './hbsHelpler';
 import { PartialPlugin, Externals, Runtime, Options, Depth } from './types';
 import { getModules } from './entryHelper';
-
-// eslint-disable-next-line
-const chalk = require('chalk');
 
 const any2ArrayAny= <T>(any: T) => Array.isArray(any) ? any : [any];
 
@@ -40,8 +38,19 @@ const genRuntimesConfig = (externals: Externals) => {
     }));
 };
 
+// If url was not provided, don't generate runtime.json
+const checkUrlExists = (externals: Externals) => {
+  return Object
+    .keys(externals)
+    .every(key => (externals[key] as Runtime)?.url);
+};
+
 const genRuntime = ({ context }: PartialPlugin, { moduleExternals, modules, outputDir, filenameStrategy }: Options) => {
   if (!moduleExternals) {
+    return;
+  }
+
+  if (!checkUrlExists(moduleExternals)) {
     return;
   }
 

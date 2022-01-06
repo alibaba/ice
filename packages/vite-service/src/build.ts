@@ -9,9 +9,14 @@ export async function viteBuild(context: any): Promise<BuildResult> {
   const { applyHook, command, commandArgs } = context;
 
   const configArr = context.getWebpackConfig();
-  await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr });
+  const prodConfig = configArr.length > 0 ? wp2vite(context) : {};
+  await applyHook(`before.${command}.load`, { args: commandArgs, webpackConfig: configArr, viteConfig: prodConfig });
 
-  const prodConfig = wp2vite(context);
+  if (!configArr.length) {
+    const errorMsg = 'No config found.';
+    await applyHook('error', { err: new Error(errorMsg) });
+    return;
+  }
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,
