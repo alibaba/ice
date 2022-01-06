@@ -6,6 +6,7 @@ import setUMDConfig from './setUMDConfig';
 import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
+import setDevLog from './setDevLog';
 
 // TODO: remove this line next update
 // @ts-ignore
@@ -89,8 +90,12 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
   registerTask('icestark-module', baseConfig);
 
   // generate runtime.json
-  onHook(`after.${command}.compile`, () => {
+  onHook(`after.${command}.compile`, (args) => {
     genRuntime({ context }, options as any as Options);
+
+    if (command === 'start') {
+      setDevLog(args, options);
+    }
   });
 };
 
