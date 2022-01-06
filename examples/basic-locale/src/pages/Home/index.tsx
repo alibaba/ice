@@ -18,7 +18,7 @@ function Home() {
   );
 }
 
-Home.getInitialProps = function (ctx) {
+Home.getInitialProps = function () {
   console.log('getLocale in getInitialProps', getLocale());
 };
 
