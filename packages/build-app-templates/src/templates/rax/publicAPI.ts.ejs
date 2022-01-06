@@ -1,9 +1,5 @@
 import { useEffect } from 'rax';
-import { createAppShared } from '@ice/runtime';
-import { getInitialData } from 'rax-app-renderer';
-import ErrorBoundary from './ErrorBoundary';
-
-const {
+import {
   createUsePageLifeCycle,
   withPageLifeCycle,
   emitLifeCycles,
@@ -11,7 +7,10 @@ const {
   addNativeEventListener,
   removeNativeEventListener,
   getSearchParams,
-} = createAppShared;
+} from 'create-app-shared';
+
+import { getInitialData } from 'rax-app-renderer';
+import ErrorBoundary from './ErrorBoundary';
 
 const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
 
