@@ -1,6 +1,20 @@
 /* eslint @typescript-eslint/no-empty-interface: 0 */
-import useBaseRequest from '@ahooksjs/use-request';
-import type { BaseOptions, BasePaginatedOptions, BaseResult, CombineService, LoadMoreFormatReturn, LoadMoreOptions, LoadMoreOptionsWithFormat, LoadMoreParams, OptionsWithFormat, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams } from '@ahooksjs/use-request/lib/types';
+import { useBaseRequest } from '@ice/runtime';
+import type {
+  BaseOptions,
+  BasePaginatedOptions,
+  BaseResult,
+  CombineService,
+  LoadMoreFormatReturn,
+  LoadMoreOptions,
+  LoadMoreOptionsWithFormat,
+  LoadMoreParams,
+  OptionsWithFormat,
+  PaginatedFormatReturn,
+  PaginatedOptionsWithFormat,
+  PaginatedParams,
+} from '@ice/runtime';
+
 import request from './request';
 
 type OmitBaseResult<R, P extends any[]> = Omit<BaseResult<R, P>, 'run'>;
