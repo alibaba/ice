@@ -49,12 +49,12 @@ export const isSingleEntry = (entries: string | Record<string, string>) => {
   return true;
 };
 
-export function getRelativePath(rootDir: string, _path: string): string {
-  const _rootDir = formatPath(rootDir);
-  let relativePath = formatPath(_path);
+export function getRelativePath(rootDir: string, path: string): string {
+  const formatedRootDir = formatPath(rootDir);
+  let relativePath = formatPath(path);
 
-  if (_path.includes(_rootDir)) {
-    relativePath = `/${posix.relative(_rootDir, relativePath)}`;
+  if (relativePath.includes(formatedRootDir)) {
+    relativePath = `/${posix.relative(formatedRootDir, relativePath)}`;
   }
   return relativePath;
 }

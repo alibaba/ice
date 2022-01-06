@@ -2,7 +2,7 @@
 
 ## 2.0.2
 
-- [fix] be compatible for input like `src/main`. Closes #5049
+- [fix] be compatible for input like `src/main`. ([#5049](https://github.com/alibaba/ice/pull/5095))
 
 ## 2.0.1
 

@@ -1,4 +1,4 @@
-import { extname, resolve, normalize, join } from 'path';
+import { extname, resolve, normalize, join, isAbsolute } from 'path';
 import { readFileSync, pathExists } from 'fs-extra';
 import type { Plugin, ResolvedConfig, HtmlTagDescriptor } from 'vite';
 import type { OutputBundle, OutputAsset, OutputChunk, PreserveEntrySignaturesOption } from 'rollup';
@@ -178,9 +178,7 @@ export default function htmlPlugin(userOptions?: HtmlPluginOptions): Plugin {
 export const removeHtmlEntryScript = (rootDir: string, html: string, entry: string) => {
   let _html = html;
   const _entry = formatPath(
-    entry.includes(rootDir)
-      ? entry
-      : join(rootDir, entry)
+    isAbsolute(entry) ? entry : join(rootDir, entry)
   );
 
   const matchs = html.match(new RegExp(scriptLooseRegex, 'g'));
