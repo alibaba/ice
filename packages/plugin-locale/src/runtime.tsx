@@ -69,17 +69,6 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
       }
     });
   });
-  // originRoutes.forEach((route) => {
-  //   const { path, redirect } = route;
-  //   if(path && !redirect && typeof path === 'string') {
-  //     prefixRouteLocales.forEach((prefixRouteLocale: string) => {
-  //       modifiedRoutes.unshift({ 
-  //         ...route, 
-  //         path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
-  //       });
-  //     });
-  //   }
-  // });
 
   return modifiedRoutes;
 }
