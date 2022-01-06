@@ -33,7 +33,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   }
 
   if (i18nRouting !== false) {
-    modifyHistory(history, localeConfig);
+    modifyHistory(history, localeConfig, basename);
   }
 };
 
@@ -85,7 +85,7 @@ function setInitICELocaleToCookie(locale: string) {
   }
 }
 
-function modifyHistory(history: History, localeConfig: LocaleConfig) {
+function modifyHistory(history: History, localeConfig: LocaleConfig, basename?: string) {
   const originHistory = { ...history };
   const { defaultLocale } = localeConfig;
 
@@ -93,7 +93,8 @@ function modifyHistory(history: History, localeConfig: LocaleConfig) {
     pathname: string, 
     locale: string,
   ) {
-    const localePathResult = normalizeLocalePath(pathname, localeConfig);
+    const localePathResult = normalizeLocalePath(pathname, localeConfig, basename);
+
     if (locale === defaultLocale) {
       return localePathResult.pathname;
     }

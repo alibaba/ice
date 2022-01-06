@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import { LOCALE_COOKIE_KEY } from '../constants';
 import { LocaleConfig } from '../types';
 import getDetectedLocaleFromPathname from './getDetectedLocaleFromPathname';
+import replaceBasename from './replaceBasename';
 
 interface UrlObject {
   pathname: string;
@@ -60,7 +61,7 @@ function getDetectedLocale(
 
 /**
  * 开启自动重定向选项时(redirect: true)时，获取下一个要跳转的 url
- * 仅在 pathname 为 `/` 时重定向
+ * 仅在 pathname 为 `/` 或者 `/${basename}` 时重定向
  */
 function getRedirectUrl(
   pathname: string, 
@@ -68,14 +69,15 @@ function getRedirectUrl(
   basename?: string,
 ) {
   const { redirect, defaultLocale, detectedLocale, i18nRouting } = localeConfig;
-  const isRootPath = replaceBasename(pathname, basename) === '/';
+  const normalizedPathname = replaceBasename(pathname, basename);
+  const isRootPath = normalizedPathname === '/';
   if (
     redirect === true && 
     i18nRouting !== false && 
     isRootPath && 
     defaultLocale !== detectedLocale
   ) {
-    return `${pathname}${detectedLocale}`;
+    return `/${detectedLocale}`;
   }
 }
 
@@ -92,14 +94,5 @@ function getPreferredLocale(locales: string[], headers?: { [key: string]: string
   } else {
     const acceptLanguages = window.navigator.languages;
     return acceptLanguages.find(acceptLanguage => locales.includes(acceptLanguage));
-  }
-}
-
-function replaceBasename(pathname: string, basename?: string) {
-  if (!basename) {
-    return pathname;
-  }
-  if (pathname.startsWith(basename)) {
-    return pathname.substr(basename.length);
   }
 }
