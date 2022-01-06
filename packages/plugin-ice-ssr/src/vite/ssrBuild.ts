@@ -6,6 +6,8 @@ import replaceHtmlContent from '../replaceHtmlContent';
 
 interface Options {
   ssrEntry: string;
+  ssgEntry: string;
+  ssr: string;
 }
 // simple array merge for config merge
 const arrayMerge = (destinationArray: any[], sourceArray: any[]) => {
@@ -13,9 +15,10 @@ const arrayMerge = (destinationArray: any[], sourceArray: any[]) => {
 };
 
 const ssrBuild = async (prodConfig: InlineConfig, buildOptions: Options): Promise<void>=> {
-  const { ssrEntry } = buildOptions;
+  const { ssrEntry, ssr, ssgEntry } = buildOptions;
   const distDir =
     prodConfig.build?.outDir ?? path.resolve(process.cwd(), 'build');
+  const entry = ssr === 'static' ? ssgEntry : ssrEntry;
   const buildConfig = all(
     [prodConfig, {
       // No need to copy public files to SSR directory
@@ -23,11 +26,11 @@ const ssrBuild = async (prodConfig: InlineConfig, buildOptions: Options): Promis
       build: {
         minify: false,
         outDir: path.resolve(distDir, 'server'),
-        ssr: ssrEntry,
+        ssr: entry,
         emptyOutDir: false,
         rollupOptions: {
           input: {
-            index: ssrEntry
+            index: entry
           },
           output: {
             entryFileNames: '[name].js',

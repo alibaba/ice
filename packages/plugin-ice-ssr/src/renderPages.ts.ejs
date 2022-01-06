@@ -1,14 +1,25 @@
 import '@/app';
 import { join } from 'path';
+<% if (enableRouter) { %>
 import routes from '<%- routesPath %>/routes';
+<% } %>
+<% if (!disableLoadable) { %>
 import loadable from '@loadable/component';
+<% } %>
 import { pathToRegexp } from '@ice/runtime';
 import { renderStatic } from './server';
 
+<% if (!enableRouter) { %>
+const routes = [];
+<% } %>
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
+  <% if (!disableLoadable) { %>
   const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { loadableStatsPath };
+  <% } else { %>
+  const buildConfig = {};
+  <% } %>
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
   const flatRoutes = await getFlatRoutes(routes || []);
@@ -17,7 +28,7 @@ export default async function ssgRender(options) {
     const { path = '', getInitialProps, ...rest } = flatRoute;
 
     const keys = [];
-    pathToRegexp(path, keys);
+    (pathToRegexp.default || pathToRegexp)(path, keys);
     if (keys.length > 0) {
       // don't render and export static page when the route is dynamic, e.g.: /news/:id, /*
       continue;

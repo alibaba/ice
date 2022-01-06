@@ -22,15 +22,27 @@ const plugin: IPlugin = async (api): Promise<void> => {
   const serverFilePath = path.join(serverDir, serverFilename);
 
   // render server entry
-  const templatePath = path.join(__dirname, '../src/server.ts.ejs');
+  const templatePath = path.join(__dirname, './server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
+  const ssgEntry = path.join(TEMP_PATH, 'plugins/ssr/renderPage.ts');
   const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
-  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '../..' });
+  const renderProps = {
+    outputDir,
+    routesPath: routesFileExists ? '@' : '../..',
+    disableLoadable: !!userConfig.vite,
+  };
+  applyMethod('addRenderFile', templatePath, ssrEntry, renderProps);
+  if (ssr === 'static') {
+    applyMethod('addRenderFile', path.join(__dirname, './renderPages.ts.ejs'), ssgEntry, renderProps);
+  }
 
   if (userConfig.vite) {
     modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry)], { deepmerge: true });
-    onHook('after.build.compile', ({ config }) => {
-      ssrBuild(config, { ssrEntry });
+    onHook('after.build.compile', async ({ config }) => {
+      await ssrBuild(config, { ssrEntry, ssgEntry, ssr: ssr as string });
+      if (ssr === 'static') {
+        await generateStaticPages(buildDir, serverFilePath);
+      }
     });
     return;
   }
@@ -195,20 +207,8 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
     if (command === 'build' && ssr === 'static') {
       // SSG, pre-render page in production
-      const ssgTemplatePath = path.join(__dirname, './renderPages.ts.ejs');
-      const ssgEntryPath = path.join(TEMP_PATH, 'plugins/ssr/renderPages.ts');
       const ssgBundlePath = path.join(serverDir, 'renderPages.js');
-      applyMethod(
-        'addRenderFile',
-        ssgTemplatePath,
-        ssgEntryPath,
-        {
-          outputDir,
-          routesPath: routesFileExists ? '@' : '.',
-        }
-      );
-
-      config.entry('renderPages').add(ssgEntryPath);
+      config.entry('renderPages').add(ssgEntry);
 
       onHook('after.build.compile', async () => {
         await generateStaticPages(buildDir, ssgBundlePath);

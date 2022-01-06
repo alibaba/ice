@@ -92,7 +92,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   }
   const pageData = pagesData.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
     try {
-      const regexp = pathToRegexp(path, [], { end, strict, sensitive });
+      const regexp = (pathToRegexp.default || pathToRegexp)(path, [], { end, strict, sensitive });
       return regexp.test(initialContext.pathname);
     } catch (e) {
       return false;
