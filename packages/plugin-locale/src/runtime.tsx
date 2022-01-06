@@ -58,13 +58,7 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
         modifiedRoutes.unshift({
           ...originRoute,
           path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
-          children: children.map((childRoute) => {
-            const { path: childRoutePath } = childRoute;
-            return {
-              ...childRoute,
-              path: `/${prefixRouteLocale}${childRoutePath[0] === '/' ? childRoutePath :`/${childRoutePath}`}`,
-            };
-          })
+          children: addRoutesByLocales(children, locales, defaultLocale),
         });
       }
     });

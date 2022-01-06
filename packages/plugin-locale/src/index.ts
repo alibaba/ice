@@ -18,7 +18,7 @@ export default async function (
   const localesTempDir = path.join(iceTemp, 'plugins', 'locale');
 
   applyMethod('modifyRenderData', (originRenderData) => {
-    return { ...originRenderData, ...localeConfig };
+    return { ...originRenderData, locale: { ...localeConfig } };
   });
 
   // copy templates to .ice/locale dir
