@@ -1,5 +1,5 @@
 import { IPlugin, IUserConfig } from 'build-scripts';
-import { getWebpackConfig } from 'build-scripts-config';
+import getWebpackConfig from '@builder/webpack-config';
 import * as WebpackPluginImport from 'webpack-plugin-import';
 import { Options } from './types';
 import setUMDConfig from './setUMDConfig';
