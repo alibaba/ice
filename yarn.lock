@@ -4893,7 +4893,7 @@ build-scripts-config@^3.0.0:
     webpack-filter-warnings-plugin "^1.2.1"
     webpack-simple-progress-plugin "0.0.4"
 
-build-scripts@^1.0.0, build-scripts@^1.0.1, build-scripts@^1.1.0:
+build-scripts@^1.0.0, build-scripts@^1.0.1, build-scripts@^1.1.0, build-scripts@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/build-scripts/-/build-scripts-1.2.1.tgz#626bf4343c425124320bea0189bfdafa6501280e"
   integrity sha512-qumrwcAO1SwhN23Nn98gkHCmZw+PZ4nGjQdBp2vfQSq8/rElqXBP4SlgfbX7RP0ZfRZdUXeUgfRegco48XnJ6g==
@@ -6813,11 +6813,6 @@ es-abstract@^1.17.2, es-abstract@^1.18.5, es-abstract@^1.19.0, es-abstract@^1.19
     string.prototype.trimend "^1.0.4"
     string.prototype.trimstart "^1.0.4"
     unbox-primitive "^1.0.1"
-
-es-module-lexer@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.4.1.tgz#dda8c6a14d8f340a24e34331e0fab0cb50438e0e"
-  integrity sha512-ooYciCUtfw6/d2w56UVeqHPcoCFAiJdz5XOkYpv/Txl1HMUozpXjz/2RIQgqwKdXNDPSF1W7mJCFse3G+HDyAA==
 
 es-module-lexer@^0.7.1:
   version "0.7.1"

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-react-app",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "The basic webpack configuration for ice project",
   "author": "ice-admin@alibaba-inc.com",
   "main": "lib/index.js",
@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/app-helpers": "^2.4.2",
+    "@builder/app-helpers": "^2.5.0",
     "@builder/jest-config": "^2.0.0",
     "@builder/pack": "^0.5.0",
     "@builder/user-config": "^2.0.3",
@@ -21,7 +21,7 @@
     "chalk": "^4.0.0",
     "debug": "^4.1.1",
     "deepmerge": "^4.2.2",
-    "es-module-lexer": "^0.4.1",
+    "es-module-lexer": "^0.9.0",
     "esbuild": "^0.13.12",
     "events": "^3.3.0",
     "fast-glob": "^3.2.5",
@@ -38,7 +38,7 @@
     "react-refresh": "^0.10.0",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.1.2",
-    "vite-plugin-component-style": "^1.0.3",
+    "vite-plugin-component-style": "^1.0.4",
     "webpack-plugin-import": "^0.3.0"
   },
   "devDependencies": {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0
+
+- [feat] optimize runtime when build
+- [chore] bump version of `es-module-lexer`
+
 ## 2.1.4
 
 - [fix] lazy import is invalid with swc(`@builder/user-config^2.0.3`)
