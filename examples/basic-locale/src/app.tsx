@@ -19,7 +19,8 @@ function LocaleProvider({ children }) {
 
 const appConfig: IAppConfig = {
   router: {
-    type: 'browser'
+    type: 'browser',
+    basename: '/seller'
   },
   app: {
     addProvider: ({ children }) => {

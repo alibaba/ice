@@ -10,7 +10,7 @@ export default async function (
 ) {
   checkLocaleConfig(localeConfig);
 
-  const { i18nRouting = true } = localeConfig;
+  const { i18nRouting = true, redirect = false } = localeConfig;
 
   const { userConfig: { ssr } } = context;
 
@@ -58,7 +58,7 @@ export default async function (
       }
     }
 
-    if (ssr) {      
+    if (ssr && redirect) {
       if (onBeforeSetupMiddleware) {
         config.merge({
           devServer: {

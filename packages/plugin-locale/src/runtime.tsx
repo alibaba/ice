@@ -3,7 +3,7 @@ import { History } from 'history';
 import Cookies from 'universal-cookie';
 import { LocaleProvider, getLocale } from '$ice/locale';
 import { LOCALE_COOKIE_KEY } from './constants';
-import { getLocaleData } from './utils/getLocaleData';
+import getLocaleData from './utils/getLocaleData';
 import { LocaleConfig } from './types';
 import normalizeLocalePath from './utils/normalizeLocalePath';
 
@@ -11,7 +11,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { locale: localeConfig } = buildConfig;
   const { defaultLocale, locales, i18nRouting } = localeConfig;
   const { router: appConfigRouter = {} } = appConfig;
-  const { history = {} } = appConfigRouter;
+  const { history = {}, basename } = appConfigRouter;
   const originHistory = { ...history };
 
   if (i18nRouting !== false) {
@@ -24,7 +24,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   addProvider(Provider());
 
   if (!process.env.__IS_SERVER__) {
-    const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, localeConfig });
+    const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, localeConfig, basename });
     setInitICELocaleToCookie(detectedLocale);
     if (redirectUrl) {
       console.log(`[icejs locale plugin]: redirect to ${redirectUrl}`);

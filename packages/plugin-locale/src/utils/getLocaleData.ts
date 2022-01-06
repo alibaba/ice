@@ -9,18 +9,20 @@ interface UrlObject {
   search: string;
 }
 
-export function getLocaleData({
+export default function getLocaleData({
   url,
   localeConfig,
-  headers
+  headers,
+  basename,
 }: {
   url: UrlObject,
   localeConfig: LocaleConfig,
   headers?: Record<string, string>,
+  basename?: string,
 }) {
   const { pathname } = url;
   const detectedLocale = getDetectedLocale({ pathname, headers, localeConfig });
-  const redirectUrl = getRedirectUrl(url.pathname, {...localeConfig, detectedLocale });
+  const redirectUrl = getRedirectUrl(url.pathname, {...localeConfig, detectedLocale }, basename);
 
   return {
     detectedLocale,
@@ -63,9 +65,10 @@ function getDetectedLocale(
 function getRedirectUrl(
   pathname: string, 
   localeConfig: LocaleConfig & { detectedLocale: string },
+  basename?: string,
 ) {
   const { redirect, defaultLocale, detectedLocale, i18nRouting } = localeConfig;
-  const isRootPath = pathname === '/';
+  const isRootPath = replaceBasename(pathname, basename) === '/';
   if (
     redirect === true && 
     i18nRouting !== false && 
@@ -89,5 +92,14 @@ function getPreferredLocale(locales: string[], headers?: { [key: string]: string
   } else {
     const acceptLanguages = window.navigator.languages;
     return acceptLanguages.find(acceptLanguage => locales.includes(acceptLanguage));
+  }
+}
+
+function replaceBasename(pathname: string, basename?: string) {
+  if (!basename) {
+    return pathname;
+  }
+  if (pathname.startsWith(basename)) {
+    return pathname.substr(basename.length);
   }
 }
