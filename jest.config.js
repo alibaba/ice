@@ -30,9 +30,6 @@ module.exports = {
     '/lib/',
     'create-cli-utils/'
   ],
-  'transformIgnorePatterns': [
-    '<rootDir>/node_modules/'
-  ],
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
   // For ts-jest use rootDir's tsconfig.json, while unable to resolve references.
   // The following strategy maybe not the best, but it works.

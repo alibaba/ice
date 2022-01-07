@@ -1,8 +1,6 @@
 import axios from 'axios';
 import * as pathToRegexp from 'path-to-regexp';
 import * as createAppShared from 'create-app-shared';
-import * as iceStark from '@ice/stark';
-import * as icestarkApp from '@ice/stark-app';
 import * as queryString from 'query-string';
 import reactAppRenderer, { getInitialData } from 'react-app-renderer';
 import KeepAlive, { AliveScope } from 'react-activation';
@@ -14,12 +12,6 @@ import axiosUtils from './axiosUtils';
 // create-app-shared
 export {
   createAppShared
-};
-
-// @ice/stark
-export {
-  iceStark,
-  icestarkApp,
 };
 
 // query-string

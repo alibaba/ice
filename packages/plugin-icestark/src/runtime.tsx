@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { useEffect, useState, useMemo, memo } from 'react';
 import * as ReactDOM from 'react-dom';
-import { iceStark, icestarkApp } from '@ice/runtime';
+import { AppRouter, AppRoute } from '@ice/stark';
+import {
+  isInIcestark,
+  getMountNode,
+  registerAppEnter,
+  registerAppLeave,
+  getBasename, } from '@ice/stark-app';
 // @ts-ignore
 import type { AppConfig } from '@ice/runtime';
 import { IceRouter } from '$ice/Router';
@@ -9,16 +15,6 @@ import { IceRouter } from '$ice/Router';
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
 import { IPrivateIceStark, IIceStark, IStarkAppConfig } from './types';
-
-const { AppRouter, AppRoute } = iceStark;
-
-const {
-  isInIcestark,
-  getMountNode,
-  registerAppEnter,
-  registerAppLeave,
-  getBasename,
-} = icestarkApp;
 
 const module = ({
   appConfig,
