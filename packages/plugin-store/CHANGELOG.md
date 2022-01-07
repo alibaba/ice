@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.7
+
+- [fix] get alias from userConfig object directly
+
 ## 2.0.6
 
 - [fix] update dependencies version
