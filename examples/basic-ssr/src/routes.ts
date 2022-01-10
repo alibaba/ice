@@ -13,47 +13,16 @@ export default [
         path: '/dashboard',
         exact: true,
         component: Dashboard,
-        getInitialProps: async (ctx) => {
-          console.log('Dashboard ctx', ctx);
-
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({ title: 'Dashboard Page xxxx...' });
-            }, 1 * 1000);
-          });
-          // return { title: 'Dashboard Page...' }
-        }
       },
       {
         path: '/home',
         exact: true,
-        component: Home,
-        getInitialProps: async () => {
-          // const res = await request('/profile');
-          const res = {
-            data: {
-              profile: {
-                id: 10001,
-                name: 'Jack Ma',
-                edu: 'Hangzhou Normal University',
-                address: 'Hangzhou'
-              },
-              title: 'Home Page...',
-              content: 'Home Content...',
-              description: 'Home Description...'
-            }
-          };
-
-          return { ...res.data, title: 'Home Page...' };
-        }
+        component: Home
       },
       {
         path: '/about',
         exact: true,
         component: About,
-        getInitialProps: async () => {
-          return { title: 'About Page...' };
-        }
       },
       {
         path: '/',

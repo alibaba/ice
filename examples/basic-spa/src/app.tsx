@@ -1,5 +1,5 @@
 import React from 'react';
-import { runApp, APP_MODE, IAppConfig, logger } from 'ice';
+import { runApp, APP_MODE, IAppConfig, logger, history, getHistory } from 'ice';
 
 console.log('APP_MODE', APP_MODE);
 logger.info('APP_MODE', APP_MODE);
@@ -10,6 +10,7 @@ const appConfig: IAppConfig = {
     rootId: 'ice-container',
     errorBoundary: true,
     parseSearchParams: true,
+    // renderComponent: () => <>HELLO</>,
     getInitialData: async() => {
       // const result = await request('/repo');
       const result = {
@@ -22,6 +23,8 @@ const appConfig: IAppConfig = {
       return result;
     },
     onShow() {
+      console.log('getHistory ==>', getHistory());
+      console.log('history ==>', history);
       console.log('app show...');
     },
     onHide() {
@@ -31,7 +34,8 @@ const appConfig: IAppConfig = {
   router: {
     basename: '/ice',
     type: 'hash',
-    fallback: <div>加载中...</div>
+    fallback: <div>加载中...</div>,
+    // routes: [{path: '/home', component: () => <>He</>}]
   },
   request: {
     timeout: 5000,

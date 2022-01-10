@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-app-core",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "the core plugin for icejs and raxjs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -19,8 +19,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.0.0",
-    "chalk": "^4.0.0",
+    "@builder/app-helpers": "^2.4.1",
+    "@builder/app-templates": "^1.1.0",
     "chokidar": "^3.4.1",
     "ejs": "^3.0.1",
     "fs-extra": "^8.1.0",
@@ -28,13 +28,15 @@
     "history": "^4.9.0",
     "lodash.debounce": "^4.0.8",
     "miniapp-builder-shared": "^0.2.2",
-    "prettier": "^2.0.2",
-    "query-string": "^6.13.1",
-    "@builder/app-templates": "^1.0.0"
+    "object-hash": "^2.2.0",
+    "prettier": "^2.0.2"
   },
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-app-core"
   },
-  "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
+  "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498",
+  "devDependencies": {
+    "@types/object-hash": "^2.2.1"
+  }
 }

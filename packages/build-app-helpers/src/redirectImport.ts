@@ -82,9 +82,10 @@ export default async function redirectImport(code: string, options: IRedirectImp
 }
 
 function generateImport(redirectImportInfo: RedirectImportType): string {
-  const { name, redirectPath, default: exportDefault } = redirectImportInfo;
+  const { name, redirectPath, alias, default: exportDefault } = redirectImportInfo;
+  const importSpecifier = alias ? `${alias} as ${name}` : name;
   if (exportDefault) {
-    return `import ${name} from '${redirectPath}'`;
+    return `import ${importSpecifier} from '${redirectPath}'`;
   }
-  return `import { ${name} } from '${redirectPath}'`;
+  return `import { ${importSpecifier} } from '${redirectPath}'`;
 }

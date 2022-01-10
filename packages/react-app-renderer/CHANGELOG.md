@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2
+
+- [fix]: `renderComponent` -> `app.renderComponent`
+
+## 3.0.1
+
+- [fix] build with es module
+
 ## 3.0.0
 
 - [feat] remove miniapp render

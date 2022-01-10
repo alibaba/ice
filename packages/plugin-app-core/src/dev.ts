@@ -29,7 +29,7 @@ export default (api, options: any = {}) => {
   }]);
 
   // rerender when global style file added or removed
-  watchEvents.push([/src\/global.(scss|less|css)/, async (event: string) => {
+  watchEvents.push([/src\/global.(scss|less|styl|css)/, async (event: string) => {
     if (event === 'unlink' || event === 'add') {
       await render();
     }

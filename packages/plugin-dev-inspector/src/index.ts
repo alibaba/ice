@@ -27,34 +27,44 @@ const plugin: IPlugin = ({ onGetWebpackConfig }) => {
     const onBeforeSetupMiddleware = config.devServer.get('onBeforeSetupMiddleware');
     const originalDevServeBefore = onBeforeSetupMiddleware || config.devServer.get('before');
 
-    config.merge({
-      devServer: {
-        onBeforeSetupMiddleware(...args: any[]) {
-          const [server] = args;
-          let app;
-          if (onBeforeSetupMiddleware) {
-            app = server.app;
-          } else {
-            app = server;
-          }
-          app.get('/vscode/goto', (req, res) => {
-            try {
-              const { query } = req;
-              const { file, line, column } = query;
-              spawn('code', ['--goto', `${root}/${file}:${line}:${column}`], { stdio: 'inherit' });
-              res.json({ success: true });
-            } catch (e) {
-              const message = `build-plugin-dev-inspector call VS Code failed: ${e}`;
-              console.log(message);
-              res.json({ success: false, message });
-            }
-          });
-          if (typeof originalDevServeBefore === 'function') {
-            originalDevServeBefore(...args);
-          }
-        },
+    const devServerBefore = (...args: any[]) => {
+      const [server] = args;
+      let app;
+      if (onBeforeSetupMiddleware) {
+        app = server.app;
+      } else {
+        app = server;
       }
-    });
+      app.get('/vscode/goto', (req, res) => {
+        try {
+          const { query } = req;
+          const { file, line, column } = query;
+          spawn('code', ['--goto', `${root}/${file}:${line}:${column}`], { stdio: 'inherit' });
+          res.json({ success: true });
+        } catch (e) {
+          const message = `build-plugin-dev-inspector call VS Code failed: ${e}`;
+          console.log(message);
+          res.json({ success: false, message });
+        }
+      });
+      if (typeof originalDevServeBefore === 'function') {
+        originalDevServeBefore(...args);
+      }
+    };
+    if (onBeforeSetupMiddleware) {
+      // webpack-dev-server v5
+      config.merge({
+        devServer: {
+          onBeforeSetupMiddleware: devServerBefore,
+        }
+      });
+    } else {
+      config.merge({
+        devServer: {
+          before: devServerBefore,
+        }
+      });
+    }
   });
 };
 

@@ -3,10 +3,15 @@ const { merge } = require('@builder/pack/deps/lodash');
 
 const EXCLUDE_REGEX = /node_modules/;
 
+let logged = false;
+
 module.exports = (config, swcOptions, context, { log, getValue }) => {
   const { rootDir } = context;
   if (swcOptions) {
-    log.info('[swc]', 'swc enabled, configurations about babel will be ignored');
+    if (!logged) {
+      logged = true;
+      log.info('[swc]', 'swc enabled, configurations about babel will be ignored');
+    }
     ['jsx', 'tsx'].forEach((rule) => {
       if (config.module.rules.get(rule)) {
         // add include rule while source file will never matched
@@ -16,19 +21,24 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       }
     });
     const swcLoader = require.resolve('@builder/swc-loader');
-    const reactRuntimeConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic' } : {};
+    let reactTransformConfig = getValue('REACT_TRANSFORM_CONFIG');
+    if (!reactTransformConfig) {
+      reactTransformConfig = getValue('HAS_JSX_RUNTIME') ? { runtime: 'automatic' } : {};
+    }
     // add swc rule
     const commonOptions = {
       jsc: {
         transform: {
-          react: reactRuntimeConfig,
+          react: reactTransformConfig,
           legacyDecorator: true
         },
         externalHelpers: true
       },
       module: {
         type: 'commonjs',
-        noInterop: false
+        noInterop: false,
+        // webpack will evaluate dynamic import, so there need preserve it
+        ignoreDynamic: true
       },
       env: {
         loose: true,
@@ -49,29 +59,28 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
       }
     }, commonOptions);
 
-    config.module
-      .rule('pre-compile-loader')
-      .test(/\.tsx?$/)
-      .enforce('pre')
-      .use('pre-compile-loader')
-      .loader(path.join(__dirname, '../Loaders/PreCompileLoader'))
-      .options({
-        jsc: {
-          transform: {
-            react: reactRuntimeConfig,
-          },
-        },
-      })
-      .end();
+    const tsOptions = merge({
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: true,
+          decorators: true,
+          dynamicImport: true
+        }
+      }
+    }, commonOptions);
 
-    config.module
-      .rule('swc')
-      .test(/\.(j|t)sx?$/)
-      .exclude.add(EXCLUDE_REGEX)
-      .end()
-      .use('swc-loader')
-      .loader(swcLoader)
-      .options(jsOptions)
-      .end();
+    ['jsx', 'tsx'].forEach((suffix) => {
+      const testRegx = new RegExp(`\\.${suffix}?$`);
+      config.module
+        .rule(`swc-${suffix}`)
+        .test(testRegx)
+        .exclude.add(EXCLUDE_REGEX)
+        .end()
+        .use('swc-loader')
+        .loader(swcLoader)
+        .options(suffix === 'jsx' ? jsOptions : tsOptions)
+        .end();
+    });
   }
 };

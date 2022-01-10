@@ -17,7 +17,8 @@ const routes: IRouterConfig[] = [
         exact: true,
         component: Dashboard,
         pageConfig: {
-          title: 'Dashboard Page'
+          title: 'Dashboard Page',
+          custom: 'foo',
         },
         wrappers: [wrapperPage]
       },
@@ -25,6 +26,14 @@ const routes: IRouterConfig[] = [
         path: '/about',
         exact: true,
         component: About
+      },
+      {
+        path: '/a.html',
+        exact: true,
+        component: Home,
+        getInitialProps: async () => {
+          return { count: 1 };
+        },
       },
       {
         path: '/',

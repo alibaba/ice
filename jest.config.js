@@ -9,12 +9,14 @@ module.exports = {
   moduleNameMapper,
   // 'testRunner': 'jest-circus/runner',
   'coverageDirectory': './coverage/',
-  'testEnvironment': 'node',
   'collectCoverage': true,
   'collectCoverageFrom': ['packages/*/lib/*.{js,jsx}'],
   'coveragePathIgnorePatterns': [
     '<rootDir>/node_modules/'
   ],
+  // copy from jest config
+
+  'testEnvironment': 'node',
   'transform': {
     '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.tsx?$': 'ts-jest'
@@ -26,8 +28,15 @@ module.exports = {
   'testPathIgnorePatterns': [
     '/node_modules/',
     '/lib/',
-    'create-cli-utils/',
+    'create-cli-utils/'
   ],
-  // copy from jest config
   'testMatch': [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
+  // For ts-jest use rootDir's tsconfig.json, while unable to resolve references.
+  // The following strategy maybe not the best, but it works.
+  // https://github.com/kulshekhar/ts-jest/issues/1648
+  'globals': {
+    'ts-jest': {
+      'tsconfig': 'tsconfig.settings.json',
+    },
+  },
 };

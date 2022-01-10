@@ -1,5 +1,31 @@
 # Changelog
 
+## 2.1.1
+
+- [fix] circular dependence of lazy when run test
+
+## 2.1.0
+
+- [feat] register `router`&`request` to userConfig
+- [chore] pass `enableRouter` to generator
+- [feat] remove runtime addProvider and move to react-app/rax-app
+- [feat] add `mpa` to runtime buildConfig
+- [fix] update dependencies version
+
+## 2.0.3
+
+- [feat] format rax plugin name
+
+## 2.0.2
+
+- [feat] support load `styl` style
+- [fix] ts type of renderComponent
+
+## 2.0.1
+
+- [feat] set `WEBPACK_CACHE_ID` value
+- [fix] modify types template for rax
+
 ## 2.0.0
 
 - [feat] support `store.disableResetPageState`, deprecate `store.resetPageStore`

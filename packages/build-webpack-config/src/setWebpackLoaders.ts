@@ -19,9 +19,13 @@ const configCSSRule = (config, style, loaders = []) => {
     },
   };
   const postcssOpts = {
+    // lock postcss version
+    // eslint-disable-next-line global-require
+    implementation: require('postcss'),
     postcssOptions: {
+      config: false,
       // eslint-disable-next-line global-require
-      ...(require('./postcss.config').default()),
+      ...(require('./postcss.config').default()),  
     }
   };
 
@@ -64,9 +68,16 @@ const configCSSRule = (config, style, loaders = []) => {
 
 // config assets rules
 const configAssetsRule = (config: ITaskConfig['chainConfig'], type, testReg, loaderOpts = {}) => {
-  config.module.rule(type).test(testReg).set('type', 'asset/inline').set('generator', {
-    dataUrl: loaderOpts
-  });
+  config.module.rule(type).test(testReg)
+    .set('type', 'asset')
+    .set('generator', {
+      dataUrl: loaderOpts,
+    })
+    .set('parser', {
+      dataUrlCondition: {
+        maxSize: 8 * 1024 // 8kb
+      }
+    });
 };
 
 export default (config) => {

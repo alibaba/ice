@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as hash from 'object-hash';
 import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
 import { TEMP_PATH } from './constant';
@@ -7,15 +8,12 @@ import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setR
 import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
-const chalk = require('chalk');
-// eslint-disable-next-line
 const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP, BYTEDANCE_MICROAPP } } = require('miniapp-builder-shared');
 const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
   const { command, userConfig, rootDir } = context;
-  const { targets = ['web'] } = userConfig;
   const { framework } = options;
 
   // Set framework field
@@ -39,8 +37,8 @@ export default (api, options) => {
   // Set jsx runtime value
   setValue('HAS_JSX_RUNTIME', hasJsxRuntime);
 
-  // Check target
-  checkTargets(targets);
+  // Set webpack cache id
+  setValue('WEBPACK_CACHE_ID', hash({ ...userConfig, hasJsxRuntime }));
 
   // Set temporary directory
   // eg: .ice or .rax
@@ -62,6 +60,7 @@ export default (api, options) => {
 
   // register api method
   const generator = initGenerator(api, { ...options, hasJsxRuntime });
+
   setRegisterMethod(api, { generator });
 
   // add core template for framework
@@ -124,7 +123,6 @@ function getDefaultRenderData(api, options) {
     framework,
     buildConfig: getBuildConfig(userConfig),
     hasJsxRuntime,
-    errorBoundary: true,
     relativeCorePath: '.',
     typesPath: '../types',
   };
@@ -134,7 +132,11 @@ function getDefaultRenderData(api, options) {
       isReact: false,
       isRax: true,
       isMiniapp,
+      isMPA: false,
+      tabBarPath: '', // avoid ejs error
       routesFilePath: './staticConfig',
+      // MPA 下会覆盖
+      enableRouter: true,
     };
   } else {
     return {
@@ -142,45 +144,8 @@ function getDefaultRenderData(api, options) {
       isReact: true,
       isRax: false,
       ssr,
+      // MPA 下会覆盖
+      enableRouter: (!userConfig.mpa && userConfig.router !== false),
     };
   }
-}
-
-function checkTargets(targets) {
-  let hasError = false;
-
-  if (Object.prototype.toString.call(targets) === '[object Object]') {
-    hasError = true;
-  }
-
-  if (typeof targets === 'string') {
-    hasError = true;
-  }
-
-  if (Array.isArray(targets) && !matchTargets(targets)) {
-    hasError = true;
-  }
-
-  if (hasError) {
-    const msg = `
-  targets must be the array type in build.json.
-
-    e.g. { "targets": ["miniapp", "wechat-miniprogram"] }
-
-  if you want to describes the browserslist environments for your project.
-  you should set browserslist in build.json.
-
-    e.g. { "browserslist": { "chrome": "58", "ie": 11 } }
-`;
-    console.log();
-    console.log(chalk.red(msg));
-    console.log();
-    process.exit(1);
-  }
-}
-
-function matchTargets(targets) {
-  return targets.every(target => {
-    return ['web', 'weex', 'kraken', MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP].includes(target);
-  });
 }

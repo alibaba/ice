@@ -1,8 +1,29 @@
 # Changelog
 
+## 2.2.4
+
+- [fix] when `url` configured, compile externals to `runtime.json`.
+- [fix] add dev log.
+
+## 2.2.3
+
+- [fix] move `webpack-plugin-import` to dependencies.
+
+## 2.2.2
+
+- [fix] avoid undefined error when providing empty options.
+
+## 2.2.1
+
+- [fix] remove default value of root's config to avoid changing the default behavior.
+
+## 2.2.0
+
+- [feat] allow to register `outputDir` in root.
+
 ## 2.1.0
 
-- [feat] upgrade build-scripts
+- [feat] update `build-script` to 1.x.
 
 ## 2.0.3
 
@@ -13,6 +34,7 @@
 - [fix] update `build-scripts-config` to solve lessOption compatible error. ([#4217](https://github.com/alibaba/ice/issues/4217))
 
 ## 2.0.1
+
 - [fix] set `devServer.contentBase` the right way.
 
 ## 2.0.0

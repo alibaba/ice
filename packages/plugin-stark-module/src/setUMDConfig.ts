@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as chalk from 'chalk';
 import { IPluginAPI } from 'build-scripts';
 import { Options } from './types';
 import { getModules } from './entryHelper';
@@ -15,6 +16,10 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
   onGetWebpackConfig('icestark-module', (config) => {
     const entries = getModules(modules);
 
+    if (Object.keys(entries).length > 1 && filenameStrategy === 'index.module') {
+      throw Error(chalk.red('With several entries, filenameStrategy could not be set to the value \'index.module\', so just remove it.'));
+    }
+
     config.entryPoints.clear();
     Object.keys(entries).forEach(key => {
       config
@@ -25,6 +30,7 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
     config.optimization.splitChunks({ cacheGroups: {} });
     // set umd
     const output = path.resolve(rootDir, outputDir ?? 'dist');
+
     config.output
       .path(output)
       // set output to outputDir/[name]

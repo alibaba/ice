@@ -38,12 +38,14 @@ export interface IBuildConfig {
   store?: boolean | IStoreConfig;
   icestarkType?: 'es' | 'umd' | 'normal';
   web?: object;
+  mpa?: boolean;
 }
 
 export interface IApp {
   rootId?: string;
   mountNode?: HTMLElement;
   addProvider?: ({ children }: { children: FrameworkNode }) => FrameworkElement;
+  renderComponent?: FrameworkComponentType;
   getInitialData?: (ctx?: IContext) => Promise<any>;
   errorBoundary?: boolean;
   ErrorBoundaryFallback?: FrameworkComponentType,
@@ -71,10 +73,17 @@ export interface IRouter {
 }
 <% } %>
 
+<% if (isRax) {%>
+export interface IRuntimeValue {
+  [key: string]: unknown;
+}
+<% } %>
+
 export interface IAppConfig {
-  app?: IApp,
+  app?: IApp;
+  renderComponent?: FrameworkElement;
   <% if (isRax) {%>
-  router?: IRouter
+  router?: IRouter;
   <% } %>
   <% if (appConfigTypesImports) { %>
     <%- appConfigTypesExports %>

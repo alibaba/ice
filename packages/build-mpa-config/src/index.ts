@@ -38,17 +38,19 @@ export const generateMPAEntries = (api: IPluginAPI, options: IConfigOptions) => 
     // when the entry has no export default declaration, do not generate any files
     let finalEntry = entryPath;
     let runAppPath = null;
+    let routesFilePath;
     if (isAppEntry || checkExportDefaultDeclarationExists(path.join(rootDir, 'src', source))) {
       const result = generateEntry(api, { framework, targetDir, pageEntry: entryPath, entryName, pageConfig, isAppEntry });
       finalEntry = result.entryPath;
       runAppPath = result.runAppPath;
+      routesFilePath = result.routesFilePath;
     }
 
     parsedEntries[entryName] = {
       ...entry,
       finalEntry,
-      shouldRedirectRunApp: isAppEntry,
       runAppPath,
+      routesFilePath,
     };
   });
   return parsedEntries;
@@ -67,24 +69,24 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   // add redirect entry path
   const redirectEntries: IGenerateResult[] = [];
   Object.keys(parsedEntries).forEach((entryKey) => {
-    const { entryName, source, finalEntry, shouldRedirectRunApp, runAppPath } = parsedEntries[entryKey];
+    const { entryName, finalEntry, runAppPath, routesFilePath } = parsedEntries[entryKey];
     config.entry(entryName).add(finalEntry);
-    if (shouldRedirectRunApp) {
+    if (runAppPath) {
       redirectEntries.push({
         entryPath: finalEntry,
         runAppPath,
+        routesFilePath,
       });
     }
     // get page paths for rule match
-    const matchStr = `src/${source}`;
-    matchStrs.push(formatPath(matchStr));
+    matchStrs.push(formatPath(routesFilePath));
   });
 
   api.applyMethod('addImportDeclaration', {
     multipleSource: {
       runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
         filename: entryPath,
-        value: runAppPath,
+        value: formatPath(runAppPath),
         type: 'normal',
       })),
     },
@@ -102,7 +104,7 @@ const setMPAConfig = (api, config, options: IConfigOptions) => {
   // modify appJSON rules for mpa
   const matchInclude = (filepath: string) => {
     const matchReg = matchStrs.length ? new RegExp(matchStrs.join('|')) : null;
-    return matchReg && matchReg.test(filepath);
+    return matchReg && matchReg.test(formatPath(filepath));
   };
   config.module.rule('appJSON').include.add(matchInclude);
 };

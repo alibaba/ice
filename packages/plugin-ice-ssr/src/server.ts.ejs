@@ -1,6 +1,6 @@
 import '@/app';
 import { join } from 'path';
-import * as pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from '@ice/runtime';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -11,8 +11,13 @@ import { InitialContext, ServerContext } from 'react-app-renderer/lib/types';
 import { getAppConfig } from '../../core/appConfig';
 import loadStaticModules from '../../core/loadStaticModules';
 import { emitLifeCycles } from '../../core/publicAPI';
+import { setHistory } from '../../core/routerAPI';
 import app from '../../core/runApp';
+<% if (enableRouter) { %>
 import routes from '<%- routesPath %>/routes';
+<% } else { %>
+const routes = [];
+<% } %>
 import loadable from '@loadable/component';
 
 const chalk = require('chalk');
@@ -57,7 +62,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   }
   const buildConfig = { loadableStatsPath, publicPath };
 
-  const htmlTemplateContent = htmlTemplate || `__ICE_SERVER_HTML_TEMPLATE__`;
+  const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
 
   // load module to run before createApp ready
   loadStaticModules(appConfig);
@@ -67,13 +72,17 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   if (req) {
     const { search, hash, path, pathname } = parseurl(req);
     const parsedQuery = queryString.parse(search);
+    const history = {
+      location: { pathname, search, hash, state: null },
+    };
+    setHistory(history);
     initialContext = {
       req,
       res,
       pathname,
       query: parsedQuery,
       path,
-      location: { pathname, search, hash, state: null },
+      location: history.location,
     };
   }
 
@@ -134,6 +143,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     const { bundleContent, loadableComponentExtractor } =
       reactAppRendererWithSSR(
         {
+          enableRouter: <%- enableRouter %>,
           initialContext,
           initialData,
           pageInitialProps,
@@ -164,7 +174,7 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     logError('[SSR] generate html template error' + error.message);
   }
 
-  return { html, error, redirectUrl: initialContext.redirectUrl };
+  return { html, error, redirectUrl: initialContext.url };
 }
 
 export function generateHtml({
@@ -204,22 +214,34 @@ export function generateHtml({
 }
 
 export async function getComponentByPath(routes, currPath)  {
-  async function findMatchRoute(routeList) {
-    let matchedRoute = routeList.find(route => {
-      return matchPath(currPath, route);
-    });
-    if (matchedRoute?.component?.__LOADABLE__) {
-      matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+  <% if (enableRouter) { %>
+    async function findMatchRoute(routeList) {
+      let matchedRoute = routeList.find(route => {
+        return matchPath(currPath, route);
+      });
+      if (matchedRoute?.component?.__LOADABLE__) {
+        matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
+      }
+      if (matchedRoute) {
+        return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
+      }
     }
-    if (matchedRoute) {
-      return matchedRoute.children ? await findMatchRoute(matchedRoute.children) : matchedRoute;
+    const routeData = await findMatchRoute(routes)
+    return {
+      component: routeData?.component,
+      getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps
+    };
+  <% } else { %>
+    const matchedComponent = appConfig?.app?.renderComponent;
+
+    if (!matchedComponent) {
+      throw new Error('未指定需要渲染的页面组件!');
     }
-  }
-  const routeData = await findMatchRoute(routes)
-  return {
-    component: routeData?.component,
-    getInitialProps: routeData?.getInitialProps
-  };
+    return {
+      component: matchedComponent,
+      getInitialProps: matchedComponent.getInitialProps
+    }
+  <% } %>
 }
 
 function logError(msg) {

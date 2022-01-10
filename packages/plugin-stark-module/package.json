@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-stark-module",
-  "version": "2.1.0",
+  "version": "2.2.4",
   "description": "build-scripts plugin for build stark module",
   "main": "lib/index.js",
   "files": [
@@ -11,7 +11,6 @@
     "!lib/**/*.map"
   ],
   "scripts": {
-    "clean": "rimraf lib",
     "start": "tsc -w",
     "test": "jest",
     "coverage": "codecov"
@@ -25,26 +24,13 @@
   "devDependencies": {
     "build-scripts": "^1.1.0",
     "@types/fs-extra": "^8.1.0",
-    "@types/jest": "^25.2.1",
-    "@types/webpack-chain": "^5.2.0",
-    "execa": "^5.0.0",
-    "jest": "^25.4.0",
-    "rimraf": "^3.0.2",
-    "ts-jest": "^25.4.0",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.0.0",
-    "webpack-plugin-import": "^0.2.7"
-  },
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true,
-    "preset": "ts-jest"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "build-scripts-config": "^3.0.0",
     "fs-extra": "^9.0.0",
     "chalk": "^4.1.0",
     "handlebars": "^4.7.6",
-    "webpack-chain": "^6.4.0"
+    "webpack-plugin-import": "^0.2.7"
   }
 }

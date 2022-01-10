@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 const Child = () => {
   function getData() {
-    throw new Error('test Error');
+    throw new Error('Child Error');
   }
 
   useEffect(() => {

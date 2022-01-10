@@ -1,14 +1,18 @@
 import { runApp } from '<%- runAppPath %>';
 import { IAppConfig } from '<%- typesPath %>';
 <% if (routesFilePath) {%>
+import staticConfig from '<%- routesFilePath %>';
+
 const appConfig: IAppConfig = {};
 
-runApp(appConfig);
+runApp(appConfig, staticConfig);
 <% } else { %>
 import Page from '<%- resourcePath %>';
 
 const appConfig: IAppConfig = {
-  renderComponent: Page,
+  app: {
+    renderComponent: Page,
+  },
 };
 
 runApp(appConfig);

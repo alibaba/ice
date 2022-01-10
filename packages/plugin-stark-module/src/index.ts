@@ -6,10 +6,23 @@ import setUMDConfig from './setUMDConfig';
 import genRuntime from './genRuntime';
 import setExternals from './setExternals';
 import appendLifecycle from './appendLifecycle';
+import setDevLog from './setDevLog';
 
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, options) => {
+// TODO: remove this line next update
+// @ts-ignore
+const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options: Options = {} ) => {
   const { command, userConfig, webpack, commandArgs } = context;
-  const { minify: outerMinify, sourceMap: outerSourceMap } = (userConfig || {}) as IUserConfig;
+  const { minify: outerMinify, sourceMap: outerSourceMap, outputDir: outerOutputDir  } = (userConfig || {}) as IUserConfig;
+
+  const hasOutputDirRegistered = hasRegistration('outputDir', 'userConfig');
+  if (!hasOutputDirRegistered) {
+    registerUserConfig({
+      name: 'outputDir',
+      validation: 'string',
+    });
+  }
+
+  options.outputDir = options.outputDir ?? (outerOutputDir as string);
 
   const {
     moduleExternals,
@@ -77,8 +90,12 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook }, 
   registerTask('icestark-module', baseConfig);
 
   // generate runtime.json
-  onHook(`after.${command}.compile`, () => {
+  onHook(`after.${command}.compile`, (args) => {
     genRuntime({ context }, options as any as Options);
+
+    if (command === 'start') {
+      setDevLog(args, options);
+    }
   });
 };
 

@@ -16,6 +16,14 @@ export const USER_CONFIG = [
     validation: 'boolean'
   },
   {
+    name: 'request',
+    validation: 'boolean'
+  },
+  {
+    name: 'router',
+    validation: 'object|boolean'
+  },
+  {
     name: 'sourceDir',
     validation: 'string',
   },
@@ -24,13 +32,6 @@ export const USER_CONFIG = [
     name: 'generateRuntime',
     validation: 'boolean',
     defaultValue: false,
-  },
-  {
-    name: 'webpack5',
-    validation: (val) => {
-      return validation('webpack5', val, 'object|boolean');
-    },
-    defaultValue: true,
   }
 ];
 

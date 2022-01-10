@@ -1,5 +1,21 @@
 # changelog
 
+## 2.0.4
+
+- [fix] format path in case of win32 system
+
+## 2.0.3
+
+- [fix] update dependencies version
+
+## 2.0.2
+
+- [fix] compatible with the situation when config both `disableRuntime` and `mpa`
+
+## 2.0.1
+
+- [feat] support disable rewrite rules for FaaS render
+
 ## 2.0.0
 
 - [feat] upgrade build-scripts

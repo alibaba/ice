@@ -16,8 +16,13 @@ interface IDOMRender {
 interface APIRegistration {
   [key: string]: Function;
 }
+interface InternalValue {
+  [key: string]: any;
+}
 
 type RegisterRuntimeAPI = (key: string, api: Function) => void;
+type SetRuntimeValue = (key: string, value: unknown) => void;
+type GetRuntimeValue = <T extends unknown>(key: string) => T;
 type ApplyRuntimeAPI = <T extends unknown>(key: string, ...args: any) => T;
 type IWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props>)
 type IRenderApp = (page?: IPage | React.ComponentType, PageComponent?: IPageComponent) => React.ComponentType;
@@ -33,6 +38,7 @@ type ModifyRoutesComponent = (modify: (routesComponent: IPageComponent) => IPage
 type CommonJsRuntime = { default: RuntimePlugin };
 
 type GetAppComponent = () => React.ComponentType;
+type GetWrapperPageRegistration = () => IWrapper<any>[];
 
 interface RuntimeAPI {
   setRenderApp?: SetRenderApp,
@@ -47,6 +53,7 @@ interface RuntimeAPI {
   buildConfig: BuildConfig,
   context: Context,
   staticConfig: any,
+  getRuntimeValue: GetRuntimeValue,
 }
 
 export interface RuntimePlugin {
@@ -76,6 +83,8 @@ class RuntimeModule {
 
   private apiRegistration: APIRegistration;
 
+  private internalValue: InternalValue;
+
   public modifyDOMRender: IDOMRender;
 
   constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context, staticConfig?: any) {
@@ -83,9 +92,11 @@ class RuntimeModule {
     this.appConfig = appConfig;
     this.buildConfig = buildConfig;
     this.context = context;
+    // Rax App 里的 app.json
     this.staticConfig = staticConfig;
     this.modifyDOMRender = null;
     this.apiRegistration = {};
+    this.internalValue = {};
 
     this.renderApp = (AppComponent: React.ComponentType) => AppComponent;
     this.routesComponent = false;
@@ -94,7 +105,7 @@ class RuntimeModule {
   }
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
-    const enabledRouter = !this.appConfig.renderComponent;
+    const enableRouter = this.getRuntimeValue('enableRouter');
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       addDOMRender: this.addDOMRender,
@@ -105,8 +116,10 @@ class RuntimeModule {
       context: this.context,
       setRenderApp: this.setRenderApp,
       staticConfig: this.staticConfig,
+      getRuntimeValue: this.getRuntimeValue,
     };
-    if (enabledRouter) {
+
+    if (enableRouter) {
       runtimeAPI = {
         ...runtimeAPI,
         modifyRoutes:  this.modifyRoutes,
@@ -150,10 +163,24 @@ class RuntimeModule {
     }
   }
 
+  public setRuntimeValue: SetRuntimeValue = (key, value) => {
+    if (Object.prototype.hasOwnProperty.call(this.internalValue, key)) {
+      console.warn(`internal value ${key} had already been registered`);
+    } else {
+      this.internalValue[key] = value;
+    }
+  }
+
+  public getRuntimeValue: GetRuntimeValue = (key) => {
+    return this.internalValue[key];
+  }
+
+  // plugin-router 会调用
   private setRenderApp: SetRenderApp = (renderRouter) => {
     this.renderApp = renderRouter;
   }
 
+  // plugin-icestark 会调用
   private wrapperRouterRender: WrapperRouterRender = (wrapper) => {
     // pass origin router render for custom requirement
     this.renderApp = wrapper(this.renderApp);
@@ -190,16 +217,35 @@ class RuntimeModule {
     });
   }
 
+  public getWrapperPageRegistration: GetWrapperPageRegistration = () => {
+    return this.wrapperPageRegistration;
+  }
+
   public getAppComponent: GetAppComponent = () => {
-    if (this.modifyRoutesRegistration.length > 0) {
+    // 表示是否启用 pluin-router runtime，何时不启用：1. SPA + router: false 2. MPA + 对应 pages 文件下面没有 routes.[j|t]s 这个文件
+    const enableRouter = this.getRuntimeValue('enableRouter');
+
+    if (enableRouter) {
       const routes = this.wrapperRoutes(this.modifyRoutesRegistration.reduce((acc: IPage, curr) => {
         return curr(acc);
       }, []));
+      // renderApp define by plugin-router
       return this.renderApp(routes, this.routesComponent);
+    } else {
+      // 通过 appConfig.app.renderComponent 渲染
+      const renderComponent = this.appConfig.app?.renderComponent;
+      // default renderApp
+      return this.renderApp(this.wrapperPageRegistration.reduce((acc: any, curr: any) => {
+        const compose = curr(acc);
+        if (acc.pageConfig) {
+          compose.pageConfig = acc.pageConfig;
+        }
+        if (acc.getInitialProps) {
+          compose.getInitialProps = acc.getInitialProps;
+        }
+        return compose;
+      }, renderComponent));
     }
-    return this.renderApp(this.wrapperPageRegistration.reduce((acc, curr) => {
-      return curr(acc);
-    }, this.appConfig.renderComponent));
   }
 }
 

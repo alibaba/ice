@@ -1,0 +1,7 @@
+{
+  // "vite": true,
+  "store": true,
+  "router": false,
+  "plugins": [],
+  "ssr": true
+}

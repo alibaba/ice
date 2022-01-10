@@ -28,7 +28,11 @@ export function getHookFiles() {
     'webpack/lib/node/NodeEnvironmentPlugin',
     'webpack/lib/BasicEvaluatedExpression',
     'webpack/lib/ModuleFilenameHelpers',
-    'webpack/lib/GraphHelpers'
+    'webpack/lib/GraphHelpers',
+    'webpack/lib/ExternalsPlugin',
+    'webpack/lib/web/FetchCompileAsyncWasmPlugin',
+    'webpack/lib/web/FetchCompileWasmPlugin',
+    'webpack/lib/ProgressPlugin',
   ];
   const pluginMap = webpackPlugins.map((pluginPath) => {
     const pluginName = getFileName(pluginPath);
@@ -36,6 +40,7 @@ export function getHookFiles() {
   });
 
   return [
+    ['webpack-dev-server', '@builder/pack/deps/webpack-dev-server'],
     ['webpack', '@builder/pack/deps/webpack/webpack-lib'],
     ['webpack/package', '@builder/pack/deps/webpack/package'],
     ['webpack/package.json', '@builder/pack/deps/webpack/package'],

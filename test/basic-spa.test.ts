@@ -24,6 +24,14 @@ describe(`build ${example}`, () => {
     // wait for render
     await page.waitForFunction(`document.getElementsByTagName('h2').length > 1`);
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Dashboard Page...']);
+
+    // pageConfig props
+    expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual(['foo']);
+  });
+
+  test('open /a.html', async () => {
+    await page.push('#/a.html');
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
   });
 
   afterAll(async () => {
@@ -42,6 +50,23 @@ describe(`start ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
   }, 120000);
+
+  test('open /dashboard', async () => {
+    await page.push('#/dashboard');
+    // lazy load
+    expect(await page.html()).toContain('加载中...');
+    // wait for render
+    await page.waitForFunction(`document.getElementsByTagName('h2').length > 1`);
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Dashboard Page...']);
+
+    // pageConfig props
+    expect(await page.$$text('#J_pageConfig-custom')).toStrictEqual(['foo']);
+  });
+
+  test('open /a.html', async () => {
+    await page.push('#/a.html');
+    expect(await page.$$text('h2')).toStrictEqual(['SPA', 'Home Page...1']);
+  });
 
   afterAll(async () => {
     await browser.close();
