@@ -26,6 +26,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
   const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
   const ssgEntry = path.join(TEMP_PATH, 'plugins/ssr/renderPage.ts');
   const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
+  applyMethod('addRenderFile', path.join(__dirname, './env.ts'), path.join(TEMP_PATH, 'plugins/ssr/env.ts'));
   const renderProps = {
     outputDir,
     routesPath: routesFileExists ? '@' : '../..',

@@ -1,0 +1,1 @@
+global.__IS_SERVER__ = true;
