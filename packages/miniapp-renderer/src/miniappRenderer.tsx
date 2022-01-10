@@ -40,7 +40,8 @@ function miniappRenderer(
 
     document.body.appendChild(rootEl);
     (document as any).__unmount = unmount(appInstance, rootEl);
-  }
+  };
+
   (window as any).__setDocument = function(value) {
     // eslint-disable-next-line no-global-assign
     document = value;
@@ -54,7 +55,7 @@ function miniappRenderer(
         dispatchDocumentModify.call(MiniAppGlobalInstance, value);
       }
     }
-  }
+  };
 }
 
 function wrapperPage(component, pageWrappers) {
