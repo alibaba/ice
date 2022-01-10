@@ -5,7 +5,7 @@ import { setHistory } from '../storage';
 import type { CreateHistory, InitHistory } from '../createInitHistory';
 
 const createHistory: CreateHistory = ({ routes }) => {
-  if ((typeof global !== 'undefined' && (global as any).__IS_SERVER__) || process.env.__IS_SERVER__) {
+  if (process.env.__IS_SERVER__) {
     // miniapp is not support ssr
     return null;
   }

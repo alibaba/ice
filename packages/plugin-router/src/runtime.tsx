@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { isServer } from '@ice/runtime';
 // @ts-ignore
 import defaultRoutes from '$ice/routes';
 import { IceRouter, Routes, parseRoutes } from './runtime/Router';
@@ -30,7 +31,7 @@ const module = ({ setRenderApp, appConfig, modifyRoutes, modifyRoutesComponent, 
     if (!routerProps.history) {
       routerProps.history = applyRuntimeAPI('createHistory', { type: appConfigRouter.type, basename: appConfigRouter.basename });
     }
-    if ((typeof global !== 'undefined' && (global as any).__IS_SERVER__) || process.env.__IS_SERVER__) {
+    if (isServer) {
       const { initialContext = {} } = context;
       routerProps = Object.assign({}, routerProps, { location: initialContext.location, context: initialContext });
     }

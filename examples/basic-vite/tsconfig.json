@@ -32,12 +32,6 @@
       ],
       "ice": [
         ".ice/index.ts"
-      ],
-      "ice/*": [
-        ".ice/pages/*"
-      ],
-      "$store": [
-        "src/store1.ts"
       ]
     }
   }
