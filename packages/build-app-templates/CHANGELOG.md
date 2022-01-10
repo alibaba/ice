@@ -2,7 +2,7 @@
 
 ## 1.1.1
 
-- [feat] support server check by `global.__IS_SERVER__`
+- [feat] support server check by `isServer` imported from `@ice/runtime`
 
 ## 1.1.0
 
