@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- [chore] bump version of `es-module-lexer`
+
 ## 1.0.3
 
 - [fix] style import for multiple components with `stylePath`
