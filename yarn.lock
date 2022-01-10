@@ -4902,6 +4902,23 @@ build-plugin-ice-router@2.1.1:
     react-dom "^16.12.0"
     react-router-dom "^5.1.2"
 
+build-plugin-ice-ssr@3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/build-plugin-ice-ssr/-/build-plugin-ice-ssr-3.0.6.tgz#3732efb078f97a04d801f0cb1e42adcd5c29daa2"
+  integrity sha512-TehAHJ2vV/Bp3ebIwdMKeGFhMbn596Kd+S7/hvlo9ZXPZzPZ6yb/mgtO7C3ckEjoiHuICHwf8R5n2f7u84eI3w==
+  dependencies:
+    "@builder/app-helpers" "^2.4.1"
+    "@builder/webpack-config" "^2.0.0"
+    "@ice/runtime" "^0.1.0"
+    "@loadable/babel-plugin" "^5.13.2"
+    "@loadable/webpack-plugin" "^5.14.0"
+    chalk "^4.0.0"
+    cheerio "^1.0.0-rc.3"
+    fs-extra "^8.1.0"
+    html-minifier "^4.0.0"
+    parseurl "^1.3.3"
+    query-string "^6.13.7"
+
 build-plugin-react-app@2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/build-plugin-react-app/-/build-plugin-react-app-2.1.4.tgz#c5a952c92332c5316952971dd7a0cabbf22fce83"

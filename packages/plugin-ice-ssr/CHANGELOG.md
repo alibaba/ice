@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.7
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 3.0.6
 
 - [fix] server-side render failed in production(always render `global.__ICE_SERVER_HTML_TEMPLATE__`)

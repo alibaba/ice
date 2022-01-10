@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.7
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 2.0.6
 
 - [fix] update dependencies version
