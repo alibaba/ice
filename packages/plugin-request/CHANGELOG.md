@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 2.0.0
 
 - [feat] migrate plugin api and refactor runtime folder

@@ -1,5 +1,9 @@
 # Changelog
 
+# 2.1.5
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 2.1.4
 
 - [fix] lazy import is invalid with swc(`@builder/user-config^2.0.3`)

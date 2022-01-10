@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { useEffect, useState, useMemo, memo } from 'react';
 import * as ReactDOM from 'react-dom';
-import { AppRouter, AppRoute } from '@ice/stark';
+import { AppConfig, AppRouter, AppRoute } from '@ice/stark';
 import {
   isInIcestark,
   getMountNode,
   registerAppEnter,
   registerAppLeave,
-  getBasename, } from '@ice/stark-app';
+  getBasename,
+} from '@ice/stark-app';
 // @ts-ignore
-import type { AppConfig } from '@ice/runtime';
 import { IceRouter } from '$ice/Router';
 // @ts-ignore
 import DefaultLayout from '$ice/Layout';

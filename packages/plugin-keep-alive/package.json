@@ -11,7 +11,7 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "@ice/runtime": "^0.1.1"
+    "react-activation": "^0.7.0"
   },
   "files": [
     "lib",

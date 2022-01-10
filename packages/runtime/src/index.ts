@@ -39,9 +39,6 @@ export {
   AliveScope
 };
 
-// for plugn-icestark
-export type { AppConfig } from '@ice/stark';
-
 /* for plugin-request  */
 export type {
   BaseOptions,
