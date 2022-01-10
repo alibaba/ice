@@ -13,4 +13,4 @@ export {
   useLocation,
   useParams,
   useRouteMatch
-} from '@ice/runtime';
+} from '@ice/runtime/lib/reactRouterDom';

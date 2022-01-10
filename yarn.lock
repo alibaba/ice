@@ -4878,6 +4878,63 @@ buffer@^5.2.1, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
+build-plugin-ice-request@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/build-plugin-ice-request/-/build-plugin-ice-request-2.0.0.tgz#712bad6248f983c327f05d707af169e79f0877d3"
+  integrity sha512-trQpBmAVd6oYOwAGfn3X5Agl90BIA1lqNwVcWtR0yoJNJ3TtVIDRdRj8KnsAgeKu4k09pdl0B3VczGDBD7J8Rw==
+  dependencies:
+    "@ahooksjs/use-request" "^2.0.0"
+    "@ice/runtime" "^0.1.0"
+    fs-extra "^8.1.0"
+
+build-plugin-ice-router@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/build-plugin-ice-router/-/build-plugin-ice-router-2.1.1.tgz#b5a124b0fc5552c53f0c7ec1613e459dd3f6dc89"
+  integrity sha512-bJMfAxfBpW9NuiVVv1ce3x2bDdkG4hlnfxy0TcMZW4ICB/3mWBI4xUP75Q3KRnTURpvm+lyGaNbtJizgId7l9g==
+  dependencies:
+    "@builder/app-helpers" "^2.4.1"
+    "@builder/pack" "^0.5.0"
+    "@types/react-router-dom" "^5.1.4"
+    fs-extra "^8.1.0"
+    glob "^7.1.6"
+    history "^4.10.1"
+    react "^16.12.0"
+    react-dom "^16.12.0"
+    react-router-dom "^5.1.2"
+
+build-plugin-react-app@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/build-plugin-react-app/-/build-plugin-react-app-2.1.4.tgz#c5a952c92332c5316952971dd7a0cabbf22fce83"
+  integrity sha512-XNjXgeRTXATAF+OLB8FqXarfhE099K2ldUbEu3dLyIXPWN3nZQ4YCpf7N0RdTb3UgV0RHSBB7q2R8PuIa5taRg==
+  dependencies:
+    "@builder/app-helpers" "^2.4.2"
+    "@builder/jest-config" "^2.0.0"
+    "@builder/pack" "^0.5.0"
+    "@builder/user-config" "^2.0.3"
+    "@builder/webpack-config" "^2.0.0"
+    chalk "^4.0.0"
+    debug "^4.1.1"
+    deepmerge "^4.2.2"
+    es-module-lexer "^0.4.1"
+    esbuild "^0.13.12"
+    events "^3.3.0"
+    fast-glob "^3.2.5"
+    find-up "^5.0.0"
+    fs-extra "^8.1.0"
+    node-notifier "^10.0.0"
+    path-browserify "^1.0.1"
+    path-exists "^4.0.0"
+    process "^0.11.10"
+    query-loader-webpack-plugin "^2.0.0"
+    query-string "^7.0.1"
+    react-app-renderer "^3.0.2"
+    react-dev-utils "^11.0.0"
+    react-refresh "^0.10.0"
+    react-router "^5.2.1"
+    react-router-dom "^5.1.2"
+    vite-plugin-component-style "^1.0.3"
+    webpack-plugin-import "^0.3.0"
+
 build-scripts-config@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/build-scripts-config/-/build-scripts-config-3.0.3.tgz#bd97743a87f7f19fc36e799a2de06168352cd046"
@@ -13798,6 +13855,17 @@ rax@^1.0.0:
     rax-create-factory "^1.0.0"
     rax-is-valid-element "^1.0.0"
 
+react-activation@^0.7.0:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/react-activation/-/react-activation-0.7.4.tgz#c65f8617f089527c0b976f51580d9587b2eb667d"
+  integrity sha512-go/UEuRW03jOaFM3NUc1doByzUBbrCyIHGEFNJ0tAqA2AKzmMyh0Ru8XVEY3PB1/ev9dYgRWfAiXeqyKn1kavg==
+  dependencies:
+    create-react-context "^0.3.0"
+    hoist-non-react-statics "^3.3.0"
+    jsx-ast-utils "^2.2.1"
+    react-node-key "^0.2.0"
+    szfe-tools "^0.0.0-beta.7"
+
 react-activation@^0.9.7:
   version "0.9.7"
   resolved "https://registry.yarnpkg.com/react-activation/-/react-activation-0.9.7.tgz#946afb2f1b8f7bf1eb9730fa102307606393bc52"
@@ -13886,6 +13954,14 @@ react-is@^17.0.1, react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-node-key@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-node-key/-/react-node-key-0.2.0.tgz#c937390208de87a0361bce87b507ccef35fb0f35"
+  integrity sha512-fC5ZVz3TwhSY0o1hw08R/V/Ze/exfhaeDllRucuvEH2Xj1qT4Y4IoSr93BftcVJHJFt3fmmTCV/mGk+LX5x20w==
+  dependencies:
+    jsx-ast-utils "^2.2.1"
+    szfe-tools "^0.0.0-beta.7"
 
 react-node-key@^0.3.1:
   version "0.3.1"

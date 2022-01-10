@@ -1,6 +1,7 @@
 import { createElement } from 'react';
-import { createAppShared, reactAppRenderer } from '@ice/runtime';
-import type { RenderAppConfig } from '@ice/runtime';
+import { createAppShared } from '@ice/runtime/lib/createAppShared';
+import { reactAppRenderer } from '@ice/runtime/lib/reactAppRenderer';
+import type { RenderAppConfig } from '@ice/runtime/lib/reactAppRenderer';
 
 <% if (globalStyle) {%>
   // eslint-disable-next-line
