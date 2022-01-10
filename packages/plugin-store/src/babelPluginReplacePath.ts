@@ -88,10 +88,6 @@ interface IGetConfigRoutePathParams {
 //  case3: { "@": "./src", "@/pages": "./src/pages" }
 function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): string {
   let aliasPath = '';
-  // use default alias
-  if (!Object.keys(alias).length) {
-    alias['@'] = 'src';
-  }
   // use custom alias
   Object.keys(alias).forEach(currKey => {
     if (value.startsWith(currKey)) {
@@ -129,12 +125,14 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDi
     if (/src\/pages\/\w+(.tsx|.jsx?)$/.test(value)) {
       return newValue;
     } else {
-      const [, , pageName] = matchedPagePath.split('/');
+      const pagePathParts = matchedPagePath.split('/');
+      const pageName = pagePathParts[pagePathParts.length - 1];
       newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx') : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
-    const [, , pageName] = matchedPagePath.split('/');
+    const pagePathParts = matchedPagePath.split('/');
+    const pageName = pagePathParts[pagePathParts.length - 1];
     const newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'Layout') : '';
     return newValue;
   }

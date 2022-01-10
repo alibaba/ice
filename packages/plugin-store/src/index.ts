@@ -86,49 +86,46 @@ export default async (api: any) => {
       { deepmerge: true }
     );
   }
+  const options = {
+    tempDir,
+    applyMethod,
+    routesPaths,
+    rootDir, 
+    srcPath
+  } as any;
 
-  onGetWebpackConfig((config: any) => {
-    const alias = config.resolve.alias;
+  onHook('before.start.run', ({ config }) => {
+    const webWebpackConfig = config.find(item => item.name === 'web') || { };
+    options.alias = webWebpackConfig?.resolve?.alias || { '@': srcPath };
+  });
 
-    if (swc) {
+  if (swc) {
+    onGetWebpackConfig((config: any) => {
       config.module
         .rule('replace-router-path')
-      // ensure that replace-router-path-loader is before babel-loader
-      // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
+        // ensure that replace-router-path-loader is before babel-loader
+        // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
         .after('tsx')
         .test((filePath: string) => routesPaths.includes(filePath))
         .use('replace-router-path-loader')
         .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
-        .options({
-          alias,
-          tempDir,
-          applyMethod,
-          routesPaths,
-          rootDir,
-          srcPath
-        });
-    } else {
-      const replacePathBabelPlugin = [
-        require.resolve('./babelPluginReplacePath'),
-        {
-          routesPaths,
-          alias,
-          applyMethod,
-          tempDir,
-          rootDir
-        }
-      ];
-      const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
-      if (loadableBabelPluginIndex > -1) {
+        .options(options);
+    });
+  } else {
+    const replacePathBabelPlugin = [
+      require.resolve('./babelPluginReplacePath'),
+      options
+    ];
+    const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
+    if (loadableBabelPluginIndex > -1) {
       // ensure ReplacePathBabelPlugin is before @loadable/babel-plugin
       // @loadable/babel-plugin will transform the router paths which babelPluginReplacePath couldn't transform
-        babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
-      } else {
-        babelPlugins.push(replacePathBabelPlugin);
-      }
-      modifyUserConfig('babelPlugins', [...babelPlugins]);
+      babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
+    } else {
+      babelPlugins.push(replacePathBabelPlugin);
     }
-  });
+    modifyUserConfig('babelPlugins', [...babelPlugins]);
+  }
 
   onGetWebpackConfig((config: any) => {
     config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
