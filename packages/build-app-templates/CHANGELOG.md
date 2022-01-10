@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- [fix] `appConfig` need a default value
+
 ## 1.1.0
 
 - [chore] use `enableRouter` replace `buildConfig.router`
