@@ -84,6 +84,7 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
 
           if (req.url === `/${filename}`) {
             try {
+              res.setHeader('Content-Type','text/html');
               res.end(await server.transformIndexHtml(req.url, html));
             } catch (e) {
               return next(e);

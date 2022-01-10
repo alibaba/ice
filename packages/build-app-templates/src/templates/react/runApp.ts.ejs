@@ -7,7 +7,7 @@ import type { RenderAppConfig } from '@ice/runtime/lib/reactAppRenderer';
   // eslint-disable-next-line
   import '<%= globalStyle %>'
 <% } %>
-import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
+import loadStaticModules from './loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
