@@ -3,6 +3,21 @@
   "version": "0.1.2",
   "description": "runtime dependencies for plugin runtime",
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./axios": "./lib/axios.js",
+    "./axiosUtils": "./lib/axiosUtils.js",
+    "./createAppShared": "./lib/createAppShared.js",
+    "./history": "./lib/history.js",
+    "./iceStore": "./lib/iceStore.js",
+    "./loadable": "./lib/loadable.js",
+    "./pathToRegexp": "./lib/pathToRegexp.js",
+    "./queryString": "./lib/queryString.js",
+    "./reactAppRenderer": "./lib/reactAppRenderer.js",
+    "./reactRouter": "./lib/reactRouter.js",
+    "./reactRouterDom": "./lib/reactRouterDom.js",
+    "./useRequest": "./lib/useRequest.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
