@@ -39,6 +39,8 @@ const plugin: IPlugin = async (api): Promise<void> => {
   if (userConfig.vite) {
     modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry)], { deepmerge: true });
     onHook('after.build.compile', async ({ config }) => {
+      // dev 阶段直接使用 ssrLoadModule 实时加载并执行
+      // build 服务未实现类似 ssrLoadModule 的能力，需要将 server 源码进行打包
       await ssrBuild(config, { ssrEntry, ssgEntry, ssr: ssr as string });
       if (ssr === 'static') {
         await generateStaticPages(buildDir, serverFilePath);
