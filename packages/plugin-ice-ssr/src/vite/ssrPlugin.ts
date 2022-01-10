@@ -15,7 +15,7 @@ const externalPackages = [
   'lodash.isfunction',
 ];
 
-const vitePluginSSR = (ssrEntry: string): Plugin => {
+const vitePluginSSRServer = (ssrEntry: string): Plugin => {
   return {
     name: 'vite-plugin-ssr',
     enforce: 'pre',
@@ -45,4 +45,4 @@ const vitePluginSSR = (ssrEntry: string): Plugin => {
   };
 };
 
-export default vitePluginSSR;
+export default vitePluginSSRServer;
