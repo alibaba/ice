@@ -1,12 +1,11 @@
 import { createBrowserHistory, createHashHistory, createMemoryHistory, History } from 'history';
-import { isServer } from '@ice/runtime';
 import type { CreateHistory, InitHistory } from '../createInitHistory';
 import createInitHistory from '../createInitHistory';
 import { setHistory } from '../storage';
 
 const createHistory: CreateHistory = ({ type, basename, location }) => {
   let history: History;
-  if (isServer) {
+  if (process.env.__IS_SERVER__) {
     history = createMemoryHistory();
     (history as any).location = location;
   } else if (type === 'hash') {
