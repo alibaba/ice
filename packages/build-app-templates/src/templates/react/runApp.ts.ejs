@@ -42,7 +42,7 @@ const frameworkAppBase = createBaseApp({
   runtimeValue,
 });
 
-export function runApp(appConfig?: IAppConfig) {
+export function runApp(appConfig: IAppConfig = {}) {
   // store appConfig in case of server side render
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);

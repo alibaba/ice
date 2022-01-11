@@ -1,6 +1,6 @@
 {
   "name": "@builder/app-helpers",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "build helpers for app framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -26,6 +26,7 @@
     "@babel/traverse": "^7.12.12",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.20",
-    "es-module-lexer": "^0.7.1"
+    "es-module-lexer": "^0.7.1",
+    "@babel/runtime": "^7.16.7"
   }
 }
