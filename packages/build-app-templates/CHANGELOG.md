@@ -3,6 +3,7 @@
 ## 1.1.1
 
 - [fix] `appConfig` need a default value
+- [fix] rax runApp template export `getSearchParams` method
 
 ## 1.1.0
 
