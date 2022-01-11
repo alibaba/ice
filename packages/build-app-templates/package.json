@@ -10,7 +10,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "create-app-shared": "^1.2.0"
+    "create-app-shared": "^1.2.1"
   },
   "files": [
     "lib",

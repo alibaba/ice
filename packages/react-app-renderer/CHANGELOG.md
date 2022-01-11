@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.3
+
+- [fix] compatible with SSR render when loadableStatsPath and ErrorBoundary is missing
+
 ## 3.0.2
 
 - [fix]: `renderComponent` -> `app.renderComponent`

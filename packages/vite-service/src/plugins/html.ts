@@ -33,9 +33,11 @@ interface Option {
   entry: string
   rootDir: string
   templateParameters?: object
+  ssr?: boolean;
+  command?: string;
 }
 
-export const htmlPlugin = ({ filename, template, entry, rootDir, templateParameters = {} }: Option): Plugin => {
+export const htmlPlugin = ({ filename, template, entry, rootDir, templateParameters = {}, ssr, command }: Option): Plugin => {
   const pageName = filename.replace('.html', '');
 
   const getEntry = () => {
@@ -55,7 +57,8 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
   // vite will get relative path by `path.posix.relative(config.root, id)`
   // path.posix.relative will get error path when pass relative path of index html
   const absoluteHtmlPath = formatPath(path.join(rootDir, filename));
-  return {
+  
+  const plugin: Plugin = {
     name: `vite-plugin-html-${pageName}`,
     enforce: 'pre',
     config(cfg) {
@@ -76,24 +79,34 @@ export const htmlPlugin = ({ filename, template, entry, rootDir, templateParamet
       return null;
     },
     configureServer(server: ViteDevServer) {
-      return () => {
-        server.middlewares.use(async (req, res, next) => {
-          if (!req.url?.endsWith('.html') && req.url !== '/') {
-            return next();
-          }
-
-          if (req.url === `/${filename}`) {
-            try {
-              res.setHeader('Content-Type','text/html');
-              res.end(await server.transformIndexHtml(req.url, html));
-            } catch (e) {
-              return next(e);
+      if (!ssr) {
+        return () => {
+          server.middlewares.use(async (req, res, next) => {
+            if (!req.url?.endsWith('.html') && req.url !== '/') {
+              return next();
             }
-          }
-
-          next();
-        });
-      };
+  
+            if (req.url === `/${filename}`) {
+              try {
+                res.setHeader('Content-Type','text/html');
+                res.end(await server.transformIndexHtml(req.url, html));
+              } catch (e) {
+                return next(e);
+              }
+            }
+  
+            next();
+          });
+        };  
+      }
     }
   };
+  // ssr 在 dev 阶段由中间件进行 html 返回
+  if (ssr && command === 'start') {
+    plugin.transformIndexHtml = () => {
+      return html;
+    };
+  }
+
+  return plugin;
 };
