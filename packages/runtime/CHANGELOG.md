@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- [feat] export `isServer`
+
 ## 0.1.1
 
 - [feat] add `path-to-regexp@1.x` dependency

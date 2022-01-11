@@ -3,6 +3,7 @@
 ## 2.2.0
 
 - [feat] optimize runtime when build
+- [feat] support server check by `isServer` imported from `@ice/runtime`
 - [chore] bump version of `es-module-lexer`
 
 ## 2.1.4

@@ -10,6 +10,7 @@ import {
   RouteComponentProps
 } from 'react-router-dom';
 import loadable from '@loadable/component';
+import { isServer } from '@ice/runtime';
 import { RoutesProps, RouterProps } from '../types/router';
 import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types/base';
 import { IRouterConfig } from '../types';
@@ -117,7 +118,7 @@ export function Routes({ routes, fallback }: RoutesProps) {
               // React does not currently support Suspense when components are being server-side rendered
               // process.env.__IS_SERVER__: React.RenderToString()
               // window.__ICE_SSR_ENABLED__: React.hydrate()
-              const RenderComponent = process.env.__IS_SERVER__ || (window as any).__ICE_SSR_ENABLED__
+              const RenderComponent = isServer || (window as any).__ICE_SSR_ENABLED__
                 ? (props: RouteComponentProps) => <RouteComponent {...props} />
                 : (props: RouteComponentProps) => {
                   return (

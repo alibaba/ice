@@ -1,6 +1,7 @@
 /* eslint-disable no-lonely-if */
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { isServer } from '@ice/runtime';
 import * as queryString from 'query-string';
 // @ts-ignore
 import ErrorBoundary from '$ice/ErrorBoundary';
@@ -18,7 +19,7 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
     wrapperPageComponent(wrapperPageWithProps(applyRuntimeAPI));
   }
 
-  wrapperPageComponent(process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR());
+  wrapperPageComponent(isServer ? wrapperPageWithSSR(context) : wrapperPageWithCSR());
 
   wrapperPageComponent(wrapperPageWithErrorBoundary(ErrorBoundaryFallback, onErrorBoundaryHandler));
 

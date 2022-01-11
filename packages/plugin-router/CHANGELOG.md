@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+
+- [feat] support server check by `isServer` imported from `@ice/runtime`
+
 ## 2.1.1
 
 - [fix] bump version of `@builder/pack`(^0.5.0)

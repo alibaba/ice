@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- [feat] support server check by `isServer` imported from `@ice/runtime`
+
 ## 1.1.0
 
 - [chore] use `enableRouter` replace `buildConfig.router`

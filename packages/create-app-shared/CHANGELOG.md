@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- [feat] support server check by `isServer` imported from `@ice/runtime`
+
 ## 1.2.1
 
 - [fix] miniapp exports field

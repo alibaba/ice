@@ -1,7 +1,9 @@
 # CHANGELOG
 
-## 2.0.4
+## 2.1.0
 
+- [feat] refactor html plugin for SSR render when development
+- [fix] lifecycle arguments for `after.build.compile`
 - [fix] pass vite config for lifecycle hooks
 
 ## 2.0.3
