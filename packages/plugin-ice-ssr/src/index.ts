@@ -40,6 +40,18 @@ const plugin: IPlugin = async (api): Promise<void> => {
   }
 
   if (userConfig.vite) {
+
+    // vite 模式下直接使用 process.env.__IS_SERVER__ 的变量，如果注册即便是将会进行字符串替换
+    if (command === 'start') {
+      onGetWebpackConfig((config) => {
+        config
+          .plugin('DefinePlugin')
+          .tap(([args]) => {
+            delete args['process.env.__IS_SERVER__'];
+            return [args];
+          });
+      });
+    }
     modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry)], { deepmerge: true });
     onHook('after.build.compile', async ({ config }) => {
       // dev 阶段直接使用 ssrLoadModule 实时加载并执行
