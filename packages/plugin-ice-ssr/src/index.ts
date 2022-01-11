@@ -31,6 +31,8 @@ const plugin: IPlugin = async (api): Promise<void> => {
     outputDir,
     routesPath: routesFileExists ? '@' : '../..',
     disableLoadable: !!userConfig.vite,
+    // 仅在 vite 的 dev 模式下，需要指定 env，build 阶段 process.env.__IS_SERVER__ 会被替换成布尔值
+    importEnv: !!userConfig.vite && command !== 'build',
   };
   applyMethod('addRenderFile', templatePath, ssrEntry, renderProps);
   if (ssr === 'static') {
