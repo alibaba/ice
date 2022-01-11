@@ -10,8 +10,6 @@ import {
 <% } %>
 } from 'create-app-shared';
 import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
-import { isServer } from '@ice/runtime';
-
 <% if (globalStyle) {%>
   // eslint-disable-next-line
   import '<%= globalStyle %>'
@@ -53,7 +51,7 @@ export function runApp(appConfig?: IAppConfig) {
   // set History before GID
   initHistory && initHistory(appConfig as any);
   <% } %>
-  if (isServer) return;
+  if (process.env.__IS_SERVER__) return;
   reactAppRenderer({
     appConfig: appConfig as RenderAppConfig,
     buildConfig,
