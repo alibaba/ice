@@ -18,6 +18,7 @@ module.exports = (api, { webpackConfig }) => {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
     'process.env.APP_MODE': JSON.stringify(appMode),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
+    'process.env.__IS_SERVER__': false,
   };
 
   // set alias for webpack/hot while webpack has been prepacked
