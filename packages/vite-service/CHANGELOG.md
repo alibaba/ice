@@ -5,6 +5,7 @@
 - [feat] refactor html plugin for SSR render when development
 - [fix] lifecycle arguments for `after.build.compile`
 - [fix] pass vite config for lifecycle hooks
+- [fix] fail to open browser in mpa
 
 ## 2.0.3
 
