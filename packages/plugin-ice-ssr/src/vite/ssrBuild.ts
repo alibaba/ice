@@ -23,6 +23,9 @@ const ssrBuild = async (prodConfig: InlineConfig, buildOptions: Options): Promis
     [prodConfig, {
       // No need to copy public files to SSR directory
       publicDir: false,
+      define: {
+        'process.env.__IS_SERVER__': true,
+      },
       build: {
         minify: false,
         outDir: path.resolve(distDir, 'server'),
@@ -36,15 +39,6 @@ const ssrBuild = async (prodConfig: InlineConfig, buildOptions: Options): Promis
             entryFileNames: '[name].js',
             chunkFileNames: '[name].js',
           },
-          plugins: [
-            // eslint-disable-next-line global-require
-            require('@rollup/plugin-replace')({
-              preventAssignment: true,
-              values: {
-                'process.env.__IS_SERVER__': true,
-              },
-            }),
-          ],
         },
       },
     }], { arrayMerge }

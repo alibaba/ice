@@ -27,7 +27,6 @@
     "@builder/webpack-config": "^2.0.0",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/webpack-plugin": "^5.14.0",
-    "@rollup/plugin-replace": "^3.0.0",
     "chalk": "^4.0.0",
     "cheerio": "^1.0.0-rc.3",
     "deepmerge": "^4.2.2",
