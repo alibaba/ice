@@ -125,14 +125,18 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDi
     if (/src\/pages\/\w+(.tsx|.jsx?)$/.test(value)) {
       return newValue;
     } else {
-      // matchedPagePath 值示例：/example/src/pages/Home
+      // matchedPagePath 值示例：
+      // relativePath: ./pages/Home
+      // alias: /example/src/pages/Home
       const pagePathParts = matchedPagePath.split('/');
       const pageName = pagePathParts[pagePathParts.length - 1];
       newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx') : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
-    // matchedPagePath 值示例：/example/src/pages/Home/Layout
+    // matchedPagePath 值示例：
+    // relativePath: ./pages/Home/Layout
+    // alias: /example/src/pages/Home/Layout
     const pagePathParts = matchedPagePath.split('/');
     const pageName = pagePathParts[pagePathParts.length - 2];
     const newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'Layout') : '';

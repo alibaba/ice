@@ -88,7 +88,7 @@ export default async (api: any) => {
     routesPaths = [routes.routesPath];
   }
 
-  // redirect route path to ice temp(./ice/pages/Home/index.tsx)
+  // redirect route path to ice temp(.ice/pages/Home/index.tsx)
   if (vite) {
     modifyUserConfig(
       'vite.plugins', 
@@ -96,14 +96,14 @@ export default async (api: any) => {
       { deepmerge: true }
     );
   } else {
-    const defaultAlias = { '@': srcPath };
+    const defaultAlias = {};
     const options: IReplaceRouterPathOptions = {
       tempDir,
       applyMethod,
       routesPaths,
       rootDir, 
       srcPath,
-      alias: defaultAlias
+      alias: defaultAlias,
     };
     onHook(`before.${command}.run`, ({ config }) => {
       const webWebpackConfig = Array.isArray(config) ? (config.find(item => item.name === 'web') || {}) : config;
