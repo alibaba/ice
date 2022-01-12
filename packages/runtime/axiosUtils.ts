@@ -4,7 +4,7 @@
  * @param {Object} val The value to test
  * @returns {boolean} True if value is an Array, otherwise false
  */
-function isArray(val: any[]) {
+export function isArray(val: any[]) {
   return toString.call(val) === '[object Array]';
 }
 
@@ -35,7 +35,7 @@ function isPlainObject(val: object) {
  * @param {Object|Array} obj The object to iterate
  * @param {Function} fn The callback to invoke for each item
  */
-function forEach(obj: any, fn: Function) {
+export function forEach(obj: any, fn: Function) {
   // Don't bother if no value provided
   if (obj === null || typeof obj === 'undefined') {
     return;
@@ -79,7 +79,7 @@ function forEach(obj: any, fn: Function) {
  * @param {Object} obj1 Object to merge
  * @returns {Object} Result of all merge properties
  */
-function merge(...args: object[]): object {
+export function merge(...args: object[]): object {
   const result = {};
   function assignValue(val: any, key: string) {
     if (isPlainObject(result[key]) && isPlainObject(val)) {
@@ -98,9 +98,3 @@ function merge(...args: object[]): object {
   }
   return result;
 }
-
-export default {
-  forEach,
-  merge,
-  isArray,
-};
