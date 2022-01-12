@@ -28,21 +28,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ahooksjs/use-request": "^2.0.0",
-    "@ice/stark": "^2.7.1",
-    "@ice/stark-app": "^1.5.0",
-    "@ice/store": "^2.0.0-3",
+    "@ahooksjs/use-request": "2.8.15",
+    "@ice/store": "2.0.0-3",
     "@loadable/component": "5.14.1",
-    "axios": "^0.21.4",
+    "axios": "0.21.4",
     "create-app-shared": "^1.2.1",
-    "history": "4",
-    "path-to-regexp": "^1.8.0",
-    "query-string": "^7.0.1",
-    "react-activation": "^0.9.7",
+    "history": "4.10.1",
+    "path-to-regexp": "1.8.0",
+    "query-string": "7.0.1",
     "react-app-renderer": "^3.0.2",
-    "react-helmet": "^6.1.0",
-    "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0"
+    "react-router": "5.2.1",
+    "react-router-dom": "5.2.1"
   },
   "sideEffects": false
 }
