@@ -1,8 +1,11 @@
 # Changelog
 
-## 2.4.4
+## 2.5.0
 
 - [chore] revert `@babel/plugin-transform-runtime` helpers value
+- [chore] bump version of `es-module-lexer`
+- [feat] support scan source code of import statement
+
 
 ## 2.4.3
 

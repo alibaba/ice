@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- [feat] support `--force` to empty cache folder
+
 ## 2.0.5
 
 - [fix] `process.env.__IS_SERVER__` default value is `false`

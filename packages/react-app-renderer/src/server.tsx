@@ -16,18 +16,24 @@ function renderInServer(context: Context, options: RenderOptions) {
   emitLifeCycles();
 
   const App = getRenderApp(runtime, options);
-
-  const webExtractor = new ChunkExtractor({
-    statsFile: loadableStatsPath,
-    entrypoints: ['index'],
-    publicPath
-  });
-  const jsx = webExtractor.collectChunks(<App />);
-
-  return {
-    bundleContent: ReactDOMServer.renderToString(jsx),
-    loadableComponentExtractor: webExtractor
-  };
+  
+  if (loadableStatsPath) {
+    const webExtractor = new ChunkExtractor({
+      statsFile: loadableStatsPath,
+      entrypoints: ['index'],
+      publicPath
+    });
+    const jsx = webExtractor.collectChunks(<App />);
+  
+    return {
+      bundleContent: ReactDOMServer.renderToString(jsx),
+      loadableComponentExtractor: webExtractor
+    };
+  } else {
+    return {
+      bundleContent: ReactDOMServer.renderToString(<App />)
+    };
+  }
 }
 
 export default function reactAppRendererWithSSR(context: Context, options: RenderOptions) {

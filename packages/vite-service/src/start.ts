@@ -9,9 +9,11 @@ export async function viteStart(context: Context): Promise<StartResult> {
   const { applyHook, command, commandArgs } = context;
 
   const configArr = context.getWebpackConfig();
+  const devConfig = configArr.length > 0 ? wp2vite(context) : {};
   await applyHook(`before.${command}.load`, {
     args: commandArgs,
     webpackConfig: configArr,
+    viteConfig: devConfig,
   });
 
   if (!configArr.length) {
@@ -19,8 +21,6 @@ export async function viteStart(context: Context): Promise<StartResult> {
     await applyHook('error', { err: new Error(errorMsg) });
     return;
   }
-
-  const devConfig = wp2vite(context);
 
   await applyHook(`before.${command}.run`, {
     args: commandArgs,
@@ -50,7 +50,7 @@ export async function viteStart(context: Context): Promise<StartResult> {
 function generateDevServerUrl(devConfig) {
   const { server: { port, https, host } } = devConfig;
   const protocol = https ? 'https' : 'http';
-  return `${protocol}://${resolveHostname(host)}:${port}`;
+  return `${protocol}://${resolveHostname(host)}:${port}/`;
 }
 
 // Reference: https://github.com/vitejs/vite/blob/7e3e84e1b733f4cb0cba3bd69f28a5671b52261c/packages/vite/src/node/utils.ts#L580

@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-component-style",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@rollup/pluginutils": "^4.1.1",
-    "es-module-lexer": "^0.4.1",
+    "es-module-lexer": "^0.9.0",
     "find-up": "^5.0.0",
     "fs-extra": "^10.0.0",
     "magic-string": "^0.25.7"
