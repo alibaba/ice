@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    [
+      "build-plugin-ice-i18n",
+      {
+        "locales": [
+          "zh-CN",
+          "en-US"
+        ],
+        "defaultLocale": "zh-CN",
+        "redirect": false,
+        "i18nRouting": true
+      }
+    ]
+  ],
+  "vite": false,
+  "ssr": "static"
+}

@@ -14,18 +14,24 @@ const routes = [];
 <% } %>
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
-  <% if (!disableLoadable) { %>
-  const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
-  const buildConfig = { loadableStatsPath };
-  <% } else { %>
-  const buildConfig = {};
-  <% } %>
+  const buildConfig = { 
+    i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
+    <% if (!disableLoadable) { %>
+      loadableStatsPath: join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json'),
+    <% } %>
+  };
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
-  const flatRoutes = await getFlatRoutes(routes || []);
+
+  let allRoutes = routes;
+  if (buildConfig.i18n.locales?.length > 0 && buildConfig.i18n.defaultLocale) {
+    allRoutes = addRoutesByLocales(routes, buildConfig.i18n.locales, buildConfig.i18n.defaultLocale);
+  }
+
+  const flatRoutes = await getFlatRoutes(allRoutes);
 
   for (const flatRoute of flatRoutes) {
-    const { path = '', getInitialProps, ...rest } = flatRoute;
+    const { path = '', getInitialProps, component, ...rest } = flatRoute;
 
     const keys = [];
     (pathToRegexp.default || pathToRegexp)(path, keys);
@@ -35,9 +41,15 @@ export default async function ssgRender(options) {
     }
 
     const initialContext = { pathname: path, location: { pathname: path } };
-    const { html } = await renderStatic({ htmlTemplateContent, buildConfig, initialContext });
+    const { html } = await renderStatic({ 
+      htmlTemplateContent, 
+      buildConfig,
+      initialContext,
+      getInitialProps: getInitialProps || component?.getInitialProps,
+      component,
+     });
 
-    delete rest.component;
+    delete flatRoute.component;
     delete rest.routeWrappers;
     pagesData.push({ html, path, ...rest });
   }
@@ -46,8 +58,12 @@ export default async function ssgRender(options) {
 };
 
 async function getFlatRoutes(routes, parentPath = '') {
-  return await routes.reduce(async (asyncPrev, route) => {
+  return await routes.reduce(async (asyncPrev, originRoute) => {
     let prev = await asyncPrev;
+
+    // must clone new object to avoid using the same route
+    const route = { ...originRoute };
+
     const { children, path: currentPath = '', redirect } = route;
     if (children) {
       prev = prev.concat(await getFlatRoutes(children, currentPath));
@@ -73,4 +89,25 @@ async function getFlatRoutes(routes, parentPath = '') {
     }
     return prev;
   }, Promise.resolve([]));
+}
+
+function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
+  const modifiedRoutes = [...originRoutes];
+
+  // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
+  const prefixRouteLocales = locales.filter(locale => locale !== defaultLocale);
+
+  originRoutes.forEach((route) => {
+    const { path, redirect } = route;
+    if(path && !redirect && typeof path === 'string') {
+      prefixRouteLocales.forEach((prefixRouteLocale: string) => {
+        modifiedRoutes.unshift({ 
+          ...route, 
+          path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
+        });
+      });
+    }
+  });
+
+  return modifiedRoutes;
 }
