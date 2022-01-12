@@ -55,7 +55,7 @@ function getDetectedLocale(
   const detectedLocale = 
       getLocaleFromCookie(locales, cookies) || 
       getPreferredLocale(locales, headers) || 
-      (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename })) ||
+      (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename, defaultLocale })) ||
       defaultLocale;
 
   return detectedLocale;

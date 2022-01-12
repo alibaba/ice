@@ -49,11 +49,11 @@ export function getDefaultLocale(): string {
  * 获取所有配置的国际化语言
  */
 export function getAllLocales(): string[] {
-  return locales
+  return locales;
 }
 
 <% if (i18nRouting !== false) {%>
-function getDetectedLocaleFromPath(locales: string[]) {
+function getDetectedLocaleFromPath(locales: string[], defaultLocale: string) {
   const appConfig = getAppConfig();
   if (history === null) {
     console.log('history is null, can\'t get current locale from pathname');
@@ -61,7 +61,7 @@ function getDetectedLocaleFromPath(locales: string[]) {
   }
   const { location: { pathname } } = history;
 
-  return getDetectedLocaleFromPathname({ pathname, locales, basename: appConfig?.router?.basename });
+  return getDetectedLocaleFromPathname({ pathname, locales, defaultLocale, basename: appConfig?.router?.basename });
 }
 <% } %>
 
@@ -70,10 +70,10 @@ function getDetectedLocaleFromPath(locales: string[]) {
  */
 export function getLocale(): string {
   return (
-    new Cookies().get(LOCALE_COOKIE_KEY) ||
     <% if (i18nRouting !== false) {%>
-    getDetectedLocaleFromPath(locales) ||
+    getDetectedLocaleFromPath(locales, defaultLocale) ||
     <% } %>
+    new Cookies().get(LOCALE_COOKIE_KEY) ||
     defaultLocale
   )
 }
@@ -81,4 +81,8 @@ export function getLocale(): string {
 function setLocaleToCookies(locale: string) {
   const cookies = new Cookies();
   cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
+}
+
+export function getLocaleFromCookies() {
+  return new Cookies().get(LOCALE_COOKIE_KEY);
 }

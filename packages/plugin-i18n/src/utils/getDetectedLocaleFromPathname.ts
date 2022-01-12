@@ -7,16 +7,18 @@ function getDetectedLocaleFromPathname(
   { 
     pathname, 
     locales,
+    defaultLocale,
     basename,
   }: { 
     pathname: string;
     locales: string[];
+    defaultLocale: string;
     basename?: string;
   }) {
   const normalizedPathname = replaceBasename(pathname, basename);
   const pathnameParts = normalizedPathname.split('/').filter(pathnamePart => pathnamePart);
 
-  let detectedLocale: string | undefined;
+  let detectedLocale = defaultLocale;
 
   // eslint-disable-next-line no-restricted-syntax
   for (const locale of locales) {

@@ -14,16 +14,12 @@ const routes = [];
 <% } %>
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
-  <% if (!disableLoadable) { %>
   const buildConfig = { 
-    loadableStatsPath: join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json'),
     i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
+    <% if (!disableLoadable) { %>
+      loadableStatsPath: join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json'),
+    <% } %>
   };
-  <% } else { %>
-  const buildConfig = {
-    i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
-  };
-  <% } %>
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
 

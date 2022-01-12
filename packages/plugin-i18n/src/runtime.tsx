@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { History } from 'history';
 import Cookies from 'universal-cookie';
-import { I18nProvider, getLocale } from '$ice/i18n';
+import { I18nProvider, getLocaleFromCookies } from '$ice/i18n';
 import { LOCALE_COOKIE_KEY } from './constants';
 import getLocaleData from './utils/getLocaleData';
 import { I18nConfig } from './types';
@@ -23,7 +23,6 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
 
   addProvider(Provider());
 
-  // CSR
   if (!process.env.__IS_SERVER__) {
     const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, i18nConfig, basename });
   
@@ -105,13 +104,13 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
   }
 
   history.push = function(path: string, state?: unknown) {
-    const locale = getLocale();
+    const locale = getLocaleFromCookies() || defaultLocale;
     const localePath = getLocalePath(path, locale);
     originHistory.push(localePath, state);
   };
 
   history.replace = function(path: string, state?: unknown) {
-    const locale = getLocale();
+    const locale = getLocaleFromCookies() || defaultLocale;
     const localePath = getLocalePath(path, locale);
     originHistory.replace(localePath, state);
   };
