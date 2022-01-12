@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 <% if (i18nRouting !== false) {%>
 import { history } from 'create-app-shared';
 import getDetectedLocaleFromPathname from './utils/getDetectedLocaleFromPathname';
+import { getAppConfig } from '../../core/appConfig';
 <% } %>
 
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
@@ -43,21 +44,23 @@ export function getAllLocales(): string[] {
 }
 
 <% if (i18nRouting !== false) {%>
-function getDetectedLocaleFromPath(locales: string[]) {
+function getDetectedLocaleFromPath(locales: string[], basename?: string) {
   if (history === null) {
     console.log('history is null, can\'t get current locale from pathname');
     return;
   }
   const { location: { pathname } } = history;
 
-  return getDetectedLocaleFromPathname(pathname, locales);
+  return getDetectedLocaleFromPathname(pathname, locales, basename);
 }
 <% } %>
 
 export function getLocale(): string {
+  const appConfig = getAppConfig();
+
   return new Cookies().get(LOCALE_COOKIE_KEY) ||
     <% if (i18nRouting !== false) {%>
-      getDetectedLocaleFromPath(locales) ||
+      getDetectedLocaleFromPath(locales, appConfig?.router?.basename) ||
     <% } %>
     defaultLocale
 }

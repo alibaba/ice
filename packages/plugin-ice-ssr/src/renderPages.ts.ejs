@@ -15,11 +15,13 @@ const routes = [];
 export default async function ssgRender(options) {
   const { htmlTemplate } = options;
   <% if (!disableLoadable) { %>
-  const loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   const buildConfig = { 
-    loadableStatsPath,
+    loadableStatsPath: join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json'),
     locale: <%- JSON.stringify(typeof locale === 'undefined' ? {} : locale) %>,
   };
+  <% } else { %>
+  const buildConfig = {};
+  <% } %>
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];
 

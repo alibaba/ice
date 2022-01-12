@@ -22,8 +22,8 @@ export default function getLocaleData({
   basename?: string,
 }) {
   const { pathname } = url;
-  const detectedLocale = getDetectedLocale({ pathname, headers, localeConfig });
-  const redirectUrl = getRedirectUrl(url.pathname, {...localeConfig, detectedLocale }, basename);
+  const detectedLocale = getDetectedLocale({ pathname, headers, localeConfig, basename });
+  const redirectUrl = getRedirectUrl(url.pathname, { ...localeConfig, detectedLocale }, basename);
 
   return {
     detectedLocale,
@@ -36,10 +36,12 @@ function getDetectedLocale(
     pathname, 
     localeConfig,
     headers,
+    basename,
   }: { 
     pathname: string, 
     localeConfig: LocaleConfig,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    basename?: string,
   }) {
   let cookies;
   if (typeof window === 'undefined') {
@@ -53,7 +55,7 @@ function getDetectedLocale(
   const detectedLocale = 
       getLocaleFromCookie(locales, cookies) || 
       getPreferredLocale(locales, headers) || 
-      (localeConfig.i18nRouting === false ? undefined : getDetectedLocaleFromPathname(pathname, locales)) ||
+      (localeConfig.i18nRouting === false ? undefined : getDetectedLocaleFromPathname(pathname, locales, basename)) ||
       defaultLocale;
 
   return detectedLocale;

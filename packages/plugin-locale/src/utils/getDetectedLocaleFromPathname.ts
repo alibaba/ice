@@ -1,8 +1,11 @@
+import replaceBasename from './replaceBasename';
+
 /**
  * 开启国际化路由时，通过 pathname 获取当前语言
  */
-function getDetectedLocaleFromPathname(pathname: string, locales: string[]) {
-  const pathnameParts = pathname.split('/').filter(pathnamePart => pathnamePart);
+function getDetectedLocaleFromPathname(pathname: string, locales: string[], basename?: string) {
+  const normalizedPathname = replaceBasename(pathname, basename);
+  const pathnameParts = normalizedPathname.split('/').filter(pathnamePart => pathnamePart);
 
   let detectedLocale: string | undefined;
 

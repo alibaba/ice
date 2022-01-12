@@ -20,7 +20,7 @@ function LocaleProvider({ children }) {
 const appConfig: IAppConfig = {
   router: {
     type: 'browser',
-    basename: '/ice'
+    // basename: '/ice'
   },
   app: {
     addProvider: ({ children }) => {
