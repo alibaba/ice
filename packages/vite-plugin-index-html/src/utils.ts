@@ -1,4 +1,4 @@
-import * as path from 'path';
+import { posix, sep } from 'path';
 
 /**
  * Check if link is absolute url
@@ -22,7 +22,7 @@ export const addTrailingSlash = (str: string): string => {
  * @returns
  */
 export const formatPath = (pathStr: string): string => {
-  return process.platform === 'win32' ? pathStr.split(path.sep).join('/') : pathStr;
+  return process.platform === 'win32' ? pathStr.split(sep).join('/') : pathStr;
 };
 
 export const getEntryUrl = (entries: string | Record<string, string>) => {
@@ -48,3 +48,13 @@ export const isSingleEntry = (entries: string | Record<string, string>) => {
   }
   return true;
 };
+
+export function getRelativePath(rootDir: string, path: string): string {
+  const formatedRootDir = formatPath(rootDir);
+  let relativePath = formatPath(path);
+
+  if (relativePath.includes(formatedRootDir)) {
+    relativePath = `/${posix.relative(formatedRootDir, relativePath)}`;
+  }
+  return relativePath;
+}
