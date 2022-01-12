@@ -20,7 +20,9 @@ export default async function ssgRender(options) {
     i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
   };
   <% } else { %>
-  const buildConfig = {};
+  const buildConfig = {
+    i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
+  };
   <% } %>
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
   const pagesData = [];

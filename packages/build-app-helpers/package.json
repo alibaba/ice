@@ -24,7 +24,6 @@
     "@babel/parser": "^7.12.11",
     "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/traverse": "^7.12.12",
-    "cookie": "0.4.1",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.20",
     "esbuild": "^0.13.12",
