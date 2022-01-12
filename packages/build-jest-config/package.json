@@ -18,7 +18,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/build-jest-config"
   },
   "dependencies": {
-    "@builder/pack": "^0.5.0",
+    "@builder/pack": "^0.5.3-beta.4",
     "@builder/babel-config": "^2.0.0",
     "identity-obj-proxy": "^3.0.0",
     "regenerator-runtime": "^0.13.3",

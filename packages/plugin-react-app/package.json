@@ -15,7 +15,7 @@
   "dependencies": {
     "@builder/app-helpers": "^2.4.2",
     "@builder/jest-config": "^2.0.0",
-    "@builder/pack": "^0.5.0",
+    "@builder/pack": "^0.5.3-beta.4",
     "@builder/user-config": "^2.0.3",
     "@builder/webpack-config": "^2.0.0",
     "chalk": "^4.0.0",
@@ -34,7 +34,6 @@
     "query-loader-webpack-plugin": "^2.0.0",
     "query-string": "^7.0.1",
     "react-app-renderer": "^3.0.2",
-    "react-dev-utils": "^11.0.0",
     "react-refresh": "^0.10.0",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.1.2",
