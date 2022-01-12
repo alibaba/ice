@@ -38,9 +38,6 @@ async function loader(content: string, sourceMap: SourceMap) {
         // ./pages/Home/index[.js|.jsx|.tsx] -> ./pages/Home
         originSourcePath = path.dirname(originSourcePath);
       }
-      if (!Object.keys(alias).length) {
-        alias['@'] = 'src';
-      }
       let matchAliasKey = '';
       Object.keys(alias).forEach((aliasKey: string) => {
         if (new RegExp(aliasKey).test(originSourcePath)) {
