@@ -1,6 +1,7 @@
-import { axios } from '@ice/runtime/lib/axios';
-import axiosUtils from '@ice/runtime/lib/axiosUtils';
-import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from '@ice/runtime/lib/axios';
+// @
+import { axios } from '@ice/runtime/axios';
+import axiosUtils from '@ice/runtime/axiosUtils';
+import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from '@ice/runtime/axios';
 import createAxiosInstance from './createAxiosInstance';
 
 interface IRequestConfig extends AxiosRequestConfig {

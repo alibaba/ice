@@ -3,4 +3,4 @@ export {
   createBrowserHistory,
   createHashHistory,
   createMemoryHistory
-} from '@ice/runtime/lib/history';
+} from '@ice/runtime/history';

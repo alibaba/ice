@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-empty-interface: 0 */
-import { useBaseRequest } from '@ice/runtime/lib/useRequest';
+import { useBaseRequest } from '@ice/runtime/useRequest';
 import type {
   BaseOptions,
   BasePaginatedOptions,
@@ -13,7 +13,7 @@ import type {
   PaginatedFormatReturn,
   PaginatedOptionsWithFormat,
   PaginatedParams,
-} from '@ice/runtime/lib/useRequest';
+} from '@ice/runtime/useRequest';
 
 import request from './request';
 

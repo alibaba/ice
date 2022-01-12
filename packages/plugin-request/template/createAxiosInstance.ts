@@ -1,4 +1,4 @@
-import { axios } from '@ice/runtime/lib/axios';
+import { axios } from '@ice/runtime/axios';
 
 // https://github.com/axios/axios#request-config
 const DEFAULE_CONFIG = {};

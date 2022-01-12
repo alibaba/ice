@@ -8,7 +8,8 @@ import {
   Route,
   Redirect,
   RouteComponentProps
-} from '@ice/runtime/lib/reactRouterDom';
+  // @ts-ignore
+} from '@ice/runtime/reactRouterDom';
 import loadable from '@loadable/component';
 import { RoutesProps, RouterProps } from '../types/router';
 import { IRouteWrapper, IDynamicImportComponent, RouteItemProps } from '../types/base';

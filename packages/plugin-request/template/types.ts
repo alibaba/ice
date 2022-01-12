@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosResponse, AxiosError } from '@ice/runtime/lib/axios';
+import type { AxiosRequestConfig, AxiosResponse, AxiosError } from '@ice/runtime/axios';
 
 export interface IInterceptorRequest <T = AxiosRequestConfig> {
   onConfig?: (config: T) => T | Promise<T>;
