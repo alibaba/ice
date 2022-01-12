@@ -1,8 +1,15 @@
+interface I18nConfig {
+  locales: string[];
+  defaultLocale: string;
+  redirect?: true;
+  i18nRouting?: false;
+}
+
 interface IBuildConfig {
   router?: object | boolean;
   store?: boolean;
   icestarkType?: 'es' | 'umd' | 'normal';
-  locale?: object;
+  i18n?: I18nConfig;
   web?: object;
   mpa?: boolean;
 }
@@ -31,19 +38,19 @@ function getBuildConfig(userConfig): IBuildConfig{
   // eslint-disable-next-line no-nested-ternary
   buildConfig.icestarkType = vite ? 'es' : (isIcestarkUMD ? 'umd' : 'normal');
 
-  let localeConfig;
+  let i18nConfig;
   if (plugins && Array.isArray(plugins)) {
     plugins.forEach((plugin) => {
       if (Array.isArray(plugin)) {
         const [pluginName, pluginOptions] = plugin;
-        if (pluginName === 'build-plugin-ice-locale') {
-          localeConfig = pluginOptions;
+        if (pluginName === 'build-plugin-ice-i18n') {
+          i18nConfig = pluginOptions;
         }
       }
     });
   }
-  if (localeConfig) {
-    buildConfig.locale = localeConfig;
+  if (i18nConfig) {
+    buildConfig.i18n = i18nConfig;
   }
 
   return buildConfig;

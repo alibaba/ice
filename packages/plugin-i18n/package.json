@@ -1,7 +1,7 @@
 {
-  "name": "build-plugin-ice-locale",
+  "name": "build-plugin-ice-i18n",
   "version": "0.1.0",
-  "description": "ICE locale build-scripts plugin",
+  "description": "ICE i18n build-scripts plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-locale"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-i18n"
   },
   "bugs": {
     "url": "https://github.com/alibaba/ice/issues"

@@ -1,14 +1,15 @@
 {
   "plugins": [
     [
-      "build-plugin-ice-locale",
+      "build-plugin-ice-i18n",
       {
         "locales": [
           "zh-CN",
           "en-US"
         ],
         "defaultLocale": "zh-CN",
-        "redirect": true
+        "redirect": false,
+        "i18nRouting": true
       }
     ]
   ],

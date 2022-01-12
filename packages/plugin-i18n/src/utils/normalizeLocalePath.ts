@@ -1,13 +1,13 @@
-import { LocaleConfig } from '../types';
+import { I18nConfig } from '../types';
 import replaceBasename from './replaceBasename';
 
 function normalizeLocalePath(
   pathname: string,
-  localeConfig: LocaleConfig,
+  i18nConfig: I18nConfig,
   basename?: string,
 ) {
   pathname = replaceBasename(pathname, basename);
-  const { defaultLocale, locales } = localeConfig;
+  const { defaultLocale, locales } = i18nConfig;
   const subPaths = pathname.split('/');
   let detectedLocale = defaultLocale;
 

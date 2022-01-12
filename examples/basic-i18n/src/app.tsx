@@ -1,19 +1,19 @@
 import { runApp, IAppConfig, useLocale, getDefaultLocale } from 'ice';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import { messages } from './locales';
 
-function LocaleProvider({ children }) {
+function IntlProvider({ children }) {
   const [locale] = useLocale();
   const defaultLocale = getDefaultLocale();
 
   return (
-    <IntlProvider 
+    <ReactIntlProvider 
       messages={messages[locale]} 
       locale={locale}
       defaultLocale={defaultLocale}
     >
       {children}
-    </IntlProvider>
+    </ReactIntlProvider>
   );
 }
 
@@ -25,7 +25,7 @@ const appConfig: IAppConfig = {
   app: {
     addProvider: ({ children }) => {
       return (
-        <LocaleProvider>{children}</LocaleProvider>
+        <IntlProvider>{children}</IntlProvider>
       );
     }
   }

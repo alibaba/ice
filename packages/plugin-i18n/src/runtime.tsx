@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { History } from 'history';
 import Cookies from 'universal-cookie';
-import { LocaleProvider, getLocale } from '$ice/locale';
+import { I18nProvider, getLocale } from '$ice/i18n';
 import { LOCALE_COOKIE_KEY } from './constants';
 import getLocaleData from './utils/getLocaleData';
-import { LocaleConfig } from './types';
+import { I18nConfig } from './types';
 import normalizeLocalePath from './utils/normalizeLocalePath';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
-  const { locale: localeConfig } = buildConfig;
-  const { defaultLocale, locales, i18nRouting } = localeConfig;
+  const { i18n: i18nConfig } = buildConfig;
+  const { defaultLocale, locales, i18nRouting } = i18nConfig;
   const { router: appConfigRouter = {} } = appConfig;
   const { history = {}, basename } = appConfigRouter;
   const originHistory = { ...history };
@@ -23,9 +23,12 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
 
   addProvider(Provider());
 
+  // CSR
   if (!process.env.__IS_SERVER__) {
-    const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, localeConfig, basename });
+    const { redirectUrl, detectedLocale } = getLocaleData({ url: window.location, i18nConfig, basename });
+  
     setInitICELocaleToCookie(detectedLocale);
+  
     if (redirectUrl) {
       console.log(`[icejs locale plugin]: redirect to ${redirectUrl}`);
       originHistory.push(redirectUrl);
@@ -33,7 +36,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   }
 
   if (i18nRouting !== false) {
-    modifyHistory(history, localeConfig, basename);
+    modifyHistory(history, i18nConfig, basename);
   }
 };
 
@@ -70,9 +73,9 @@ function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocal
 function Provider() {
   return function({ children }) {
     return (
-      <LocaleProvider>
+      <I18nProvider>
         {children}
-      </LocaleProvider>
+      </I18nProvider>
     );
   };
 }
@@ -85,15 +88,15 @@ function setInitICELocaleToCookie(locale: string) {
   }
 }
 
-function modifyHistory(history: History, localeConfig: LocaleConfig, basename?: string) {
+function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: string) {
   const originHistory = { ...history };
-  const { defaultLocale } = localeConfig;
+  const { defaultLocale } = i18nConfig;
 
   function getLocalePath(
     pathname: string, 
     locale: string,
   ) {
-    const localePathResult = normalizeLocalePath(pathname, localeConfig, basename);
+    const localePathResult = normalizeLocalePath(pathname, i18nConfig, basename);
 
     if (locale === defaultLocale) {
       return localePathResult.pathname;

@@ -1,7 +1,7 @@
 import { pick as acceptLanguagePick } from 'accept-language-parser';
 import Cookies from 'universal-cookie';
 import { LOCALE_COOKIE_KEY } from '../constants';
-import { LocaleConfig } from '../types';
+import { I18nConfig } from '../types';
 import getDetectedLocaleFromPathname from './getDetectedLocaleFromPathname';
 import replaceBasename from './replaceBasename';
 
@@ -12,18 +12,18 @@ interface UrlObject {
 
 export default function getLocaleData({
   url,
-  localeConfig,
+  i18nConfig,
   headers,
   basename,
 }: {
   url: UrlObject,
-  localeConfig: LocaleConfig,
+  i18nConfig: I18nConfig,
   headers?: Record<string, string>,
   basename?: string,
 }) {
   const { pathname } = url;
-  const detectedLocale = getDetectedLocale({ pathname, headers, localeConfig, basename });
-  const redirectUrl = getRedirectUrl(url.pathname, { ...localeConfig, detectedLocale }, basename);
+  const detectedLocale = getDetectedLocale({ pathname, headers, i18nConfig, basename });
+  const redirectUrl = getRedirectUrl(url.pathname, { ...i18nConfig, detectedLocale }, basename);
 
   return {
     detectedLocale,
@@ -34,12 +34,12 @@ export default function getLocaleData({
 function getDetectedLocale(
   { 
     pathname, 
-    localeConfig,
+    i18nConfig,
     headers,
     basename,
   }: { 
     pathname: string, 
-    localeConfig: LocaleConfig,
+    i18nConfig: I18nConfig,
     headers?: Record<string, string>,
     basename?: string,
   }) {
@@ -50,12 +50,12 @@ function getDetectedLocale(
     cookies = (new Cookies()).getAll();
   }
   
-  const { defaultLocale, locales } = localeConfig;
+  const { defaultLocale, locales, i18nRouting } = i18nConfig;
 
   const detectedLocale = 
       getLocaleFromCookie(locales, cookies) || 
       getPreferredLocale(locales, headers) || 
-      (localeConfig.i18nRouting === false ? undefined : getDetectedLocaleFromPathname(pathname, locales, basename)) ||
+      (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename })) ||
       defaultLocale;
 
   return detectedLocale;
@@ -67,10 +67,10 @@ function getDetectedLocale(
  */
 function getRedirectUrl(
   pathname: string, 
-  localeConfig: LocaleConfig & { detectedLocale: string },
+  i18nConfig: I18nConfig & { detectedLocale: string },
   basename?: string,
 ) {
-  const { redirect, defaultLocale, detectedLocale, i18nRouting } = localeConfig;
+  const { redirect, defaultLocale, detectedLocale, i18nRouting } = i18nConfig;
   const normalizedPathname = replaceBasename(pathname, basename);
   const isRootPath = normalizedPathname === '/';
   if (

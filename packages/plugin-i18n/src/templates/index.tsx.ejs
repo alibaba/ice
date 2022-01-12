@@ -10,13 +10,13 @@ import { getAppConfig } from '../../core/appConfig';
 <% } %>
 
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
-const localeConfig = <%- JSON.stringify(localeConfig) %>;
+const i18nConfig = <%- JSON.stringify(i18nConfig) %>;
 
-const { defaultLocale, locales } = localeConfig;
+const { defaultLocale, locales } = i18nConfig;
 
 const Context = createContext<any>(null);
 
-export const LocaleProvider = ({ children }) => {
+export const I18nProvider = ({ children }) => {
   const [activeLocale, setActiveLocale] = useState<string>(() => getLocale());
 
   function setLocale(locale: string) {
@@ -31,38 +31,51 @@ export const LocaleProvider = ({ children }) => {
   )
 }
 
+/**
+ * 在组件中获取和修改语言的 Hook
+ */
 export function useLocale(): [string, React.Dispatch<React.SetStateAction<string>>] {
   return useContext(Context)
 }
 
+/**
+ * 获取配置的默认语言
+ */
 export function getDefaultLocale(): string {
   return defaultLocale
 }
 
+/**
+ * 获取所有配置的国际化语言
+ */
 export function getAllLocales(): string[] {
   return locales
 }
 
 <% if (i18nRouting !== false) {%>
-function getDetectedLocaleFromPath(locales: string[], basename?: string) {
+function getDetectedLocaleFromPath(locales: string[]) {
+  const appConfig = getAppConfig();
   if (history === null) {
     console.log('history is null, can\'t get current locale from pathname');
     return;
   }
   const { location: { pathname } } = history;
 
-  return getDetectedLocaleFromPathname(pathname, locales, basename);
+  return getDetectedLocaleFromPathname({ pathname, locales, basename: appConfig?.router?.basename });
 }
 <% } %>
 
+/**
+ * 获取当前页面的国际化语言
+ */
 export function getLocale(): string {
-  const appConfig = getAppConfig();
-
-  return new Cookies().get(LOCALE_COOKIE_KEY) ||
+  return (
+    new Cookies().get(LOCALE_COOKIE_KEY) ||
     <% if (i18nRouting !== false) {%>
-      getDetectedLocaleFromPath(locales, appConfig?.router?.basename) ||
+    getDetectedLocaleFromPath(locales) ||
     <% } %>
     defaultLocale
+  )
 }
 
 function setLocaleToCookies(locale: string) {

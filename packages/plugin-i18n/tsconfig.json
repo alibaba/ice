@@ -6,7 +6,7 @@
     "outDir": "lib",
     "esModuleInterop": true,
      "paths": {
-      "$ice/locale": ["./src/_locale"]
+      "$ice/i18n": ["./src/_i18n"]
     }
   }
 }

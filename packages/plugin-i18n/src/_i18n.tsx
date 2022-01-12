@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const LocaleProvider = ({ children }) => {
+export const I18nProvider = ({ children }) => {
   return (<div>{children}</div>);
 };
 

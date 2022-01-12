@@ -65,7 +65,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   const buildConfig = {
     loadableStatsPath, 
     publicPath, 
-    locale: <%- JSON.stringify(typeof locale === 'undefined' ? {} : locale) %>,
+    i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
   }
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
 

@@ -1,4 +1,4 @@
-# build-plugin-ice-locale
+# build-plugin-ice-i18n
 
 ## 0.1.0
 

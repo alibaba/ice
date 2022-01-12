@@ -17,7 +17,7 @@ export default async function ssgRender(options) {
   <% if (!disableLoadable) { %>
   const buildConfig = { 
     loadableStatsPath: join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json'),
-    locale: <%- JSON.stringify(typeof locale === 'undefined' ? {} : locale) %>,
+    i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
   };
   <% } else { %>
   const buildConfig = {};
@@ -26,8 +26,8 @@ export default async function ssgRender(options) {
   const pagesData = [];
 
   let allRoutes = routes;
-  if (buildConfig.locale.locales?.length > 0 && buildConfig.locale.defaultLocale) {
-    allRoutes = addRoutesByLocales(routes, buildConfig.locale.locales, buildConfig.locale.defaultLocale);
+  if (buildConfig.i18n.locales?.length > 0 && buildConfig.i18n.defaultLocale) {
+    allRoutes = addRoutesByLocales(routes, buildConfig.i18n.locales, buildConfig.i18n.defaultLocale);
   }
 
   const flatRoutes = await getFlatRoutes(allRoutes);
