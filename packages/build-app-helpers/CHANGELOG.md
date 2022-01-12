@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.5.0
+
+- [chore] bump version of `es-module-lexer`
+- [feat] support scan source code of import statement
+
+## 2.4.3
+
+- [chore] not inline @babel/runtime/helpers code
+
 ## 2.4.2
 
 - [fix] import redirection with alias

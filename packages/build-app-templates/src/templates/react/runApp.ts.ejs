@@ -10,12 +10,11 @@ import {
 <% } %>
 } from 'create-app-shared';
 import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
-
 <% if (globalStyle) {%>
   // eslint-disable-next-line
   import '<%= globalStyle %>'
 <% } %>
-import loadStaticModules from '<%- relativeCorePath %>/loadStaticModules';
+import loadStaticModules from './loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 
 import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
@@ -42,7 +41,7 @@ const frameworkAppBase = createBaseApp({
   runtimeValue,
 });
 
-export function runApp(appConfig?: IAppConfig) {
+export function runApp(appConfig: IAppConfig = {}) {
   // store appConfig in case of server side render
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
