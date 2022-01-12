@@ -11,7 +11,7 @@ export default function(config) {
         const targetPlugin = formatPath('@babel/plugin-transform-runtime');
         const pluginOptions = {
           corejs: false,
-          helpers: true,
+          helpers: false,
           regenerator: true,
           useESModules: false,
         };
