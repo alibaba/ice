@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.4
+
+- [chore] revert `@babel/plugin-transform-runtime` helpers value
+
 ## 2.4.3
 
 - [chore] not inline @babel/runtime/helpers code
