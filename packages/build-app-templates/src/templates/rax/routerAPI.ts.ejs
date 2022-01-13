@@ -10,11 +10,7 @@ import {
 
 const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
 
-let withRouter = raxWithRouter;
-
-if (inMiniApp) {
-  withRouter = miniappCreateWithRouter({ createElement });
-}
+const withRouter = inMiniApp ? miniappCreateWithRouter({ createElement }) : raxWithRouter;
 
 // router api
 export {
