@@ -1,3 +1,4 @@
+export declare const miniappEnhanceWithRouter;
 export { addAppLifeCycle } from '../appLifeCycles';
 export { withPageLifeCycle, createUsePageLifeCycle } from '../pageLifeCycles';
 export { default as emitLifeCycles } from '../emitLifeCycles';

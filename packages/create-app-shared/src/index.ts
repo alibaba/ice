@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import { isMiniAppPlatform, isWeex, isKraken } from './env';
-import miniappWithRouter from './miniapp/enhanceWithRouter';
+import miniappEnhanceWithRouter from './miniapp/enhanceWithRouter';
 import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle as defaultWithPageLifeCycle, createUsePageLifeCycle as defaultCreateUsePageLifeCycle } from './pageLifeCycles';
 import { withPageLifeCycle as miniappWithPageLifeCycle, createUsePageLifeCycle as miniappCreateUsePageLifeCycle } from './miniapp/pageLifeCycles';
@@ -23,14 +23,12 @@ import type { WithPageLifeCycle, CreateUsePageLifeCycle } from './types';
 
 let initAppLifeCycles: () => void;
 let createHistory: unknown;
-let withRouter: unknown;
 let initHistory: InitHistory;
 let emitLifeCycles: () => void;
 let withPageLifeCycle: WithPageLifeCycle;
 let createUsePageLifeCycle: CreateUsePageLifeCycle;
 
 if (isMiniAppPlatform) {
-  withRouter = miniappWithRouter;
   createHistory = createMiniappHistory;
   initAppLifeCycles = initMiniappLifeCycles;
   initHistory = initMiniappHistory;
@@ -58,7 +56,7 @@ export * from './nativeEventListener';
 export {
   initAppLifeCycles,
   createHistory,
-  withRouter,
+  miniappEnhanceWithRouter,
   addAppLifeCycle,
   withPageLifeCycle,
   createUsePageLifeCycle,

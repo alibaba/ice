@@ -1,4 +1,4 @@
-export { default as withRouter } from './enhanceWithRouter';
+export { default as miniappEnhanceWithRouter } from './enhanceWithRouter';
 export { addAppLifeCycle } from '../appLifeCycles';
 export { withPageLifeCycle, createUsePageLifeCycle } from './pageLifeCycles';
 export { default as emitLifeCycles } from './emitLifeCycles';

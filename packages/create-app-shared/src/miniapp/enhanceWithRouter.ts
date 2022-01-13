@@ -1,7 +1,5 @@
-import { ReactCreateElement } from '../types';
-
-function enhanceWithRouter({ createElement }: { createElement: ReactCreateElement }) {
-  const withRouter = (Component: React.ComponentType) => {
+function enhanceWithRouter({ createElement }) {
+  const withRouter = (Component) => {
     function Wrapper(props: any) {
       const history = window.history;
       return createElement(Component, Object.assign({}, props, {
