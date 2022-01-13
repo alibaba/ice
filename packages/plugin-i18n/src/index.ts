@@ -5,14 +5,12 @@ import { LOCALE_COOKIE_KEY } from './constants';
 import { expressI18nMiddleware } from './middleware';
 
 export default async function (
-  { onGetWebpackConfig, getValue, applyMethod, context }: IPluginAPI, 
+  { onGetWebpackConfig, getValue, applyMethod }: IPluginAPI, 
   i18nConfig: I18nConfig,
 ) {
   checkI18nConfig(i18nConfig);
 
-  const { i18nRouting = true, redirect = false } = i18nConfig;
-
-  const { userConfig: { ssr } } = context;
+  const { i18nRouting = true } = i18nConfig;
 
   const iceTemp = getValue<string>('TEMP_PATH');
   const i18nTempDir = path.join(iceTemp, 'plugins', 'i18n');
@@ -37,42 +35,6 @@ export default async function (
 
   onGetWebpackConfig((config) => {
     config.resolve.alias.set('$ice/i18n', path.join(i18nTempDir, 'index.tsx'));
-
-    const onBeforeSetupMiddleware = config.devServer.get('onBeforeSetupMiddleware'); // webpack 5
-    const originalDevServeBefore = onBeforeSetupMiddleware || config.devServer.get('before');
-
-    function devServerBefore(...args: any[]) {
-      const [devServer] = args;
-      let app;
-      if (onBeforeSetupMiddleware) {
-        app = devServer.app;
-      } else {
-        app = devServer;
-      }
-
-      const pattern = /^\/?((?!\.(js|css|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf|ico)).)*$/;
-      app.get(pattern, expressI18nMiddleware(i18nConfig));
-
-      if (typeof originalDevServeBefore === 'function') {
-        originalDevServeBefore(...args);
-      }
-    }
-
-    if (ssr && redirect) {
-      if (onBeforeSetupMiddleware) {
-        config.merge({
-          devServer: {
-            onBeforeSetupMiddleware: devServerBefore,
-          }
-        });
-      } else {
-        config.merge({
-          devServer: {
-            before: devServerBefore,
-          }
-        });
-      }
-    }
   });
 
   // export API

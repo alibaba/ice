@@ -8,5 +8,6 @@
      "paths": {
       "$ice/i18n": ["./src/_i18n"]
     }
-  }
+  },
+  "exclude": ["__tests__"]
 }
