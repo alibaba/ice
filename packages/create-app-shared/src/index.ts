@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import { isMiniAppPlatform, isWeex, isKraken } from './env';
-import miniappEnhanceWithRouter from './miniapp/enhanceWithRouter';
+import miniappCreateWithRouter from './miniapp/miniappCreateWithRouter';
 import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle as defaultWithPageLifeCycle, createUsePageLifeCycle as defaultCreateUsePageLifeCycle } from './pageLifeCycles';
 import { withPageLifeCycle as miniappWithPageLifeCycle, createUsePageLifeCycle as miniappCreateUsePageLifeCycle } from './miniapp/pageLifeCycles';
@@ -56,7 +56,7 @@ export * from './nativeEventListener';
 export {
   initAppLifeCycles,
   createHistory,
-  miniappEnhanceWithRouter,
+  miniappCreateWithRouter,
   addAppLifeCycle,
   withPageLifeCycle,
   createUsePageLifeCycle,

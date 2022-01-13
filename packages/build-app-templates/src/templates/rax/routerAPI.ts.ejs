@@ -5,7 +5,7 @@ import {
   history,
   getHistory,
   setHistory,
-  miniappEnhanceWithRouter,
+  miniappCreateWithRouter,
 } from 'create-app-shared';
 
 const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
@@ -13,7 +13,7 @@ const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || is
 let withRouter = raxWithRouter;
 
 if (inMiniApp) {
-  withRouter = miniappEnhanceWithRouter({ createElement });
+  withRouter = miniappCreateWithRouter({ createElement });
 }
 
 // router api

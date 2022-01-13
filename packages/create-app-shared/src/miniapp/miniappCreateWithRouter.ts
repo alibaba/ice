@@ -1,4 +1,4 @@
-function enhanceWithRouter({ createElement }) {
+function miniappCreateWithRouter({ createElement }) {
   const withRouter = (Component) => {
     function Wrapper(props: any) {
       const history = window.history;
@@ -15,4 +15,4 @@ function enhanceWithRouter({ createElement }) {
   return withRouter;
 }
 
-export default enhanceWithRouter;
+export default miniappCreateWithRouter;
