@@ -1,6 +1,6 @@
 // @
 import { axios } from '@ice/runtime/axios';
-import axiosUtils from '@ice/runtime/axiosUtils';
+import * as axiosUtils from '@ice/runtime/axiosUtils';
 import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from '@ice/runtime/axios';
 import createAxiosInstance from './createAxiosInstance';
 
