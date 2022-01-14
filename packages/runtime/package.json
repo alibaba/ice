@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
-    "!*.map"
+    "*.js",
+    "*.d.ts"
   ],
   "author": "",
   "license": "ISC",
