@@ -10,8 +10,8 @@ export default function getRedirectIndexRoute(originRoutes: any[], i18nConfig: I
   function walkRoute(routes: any[]) {
     // eslint-disable-next-line no-restricted-syntax
     for (const route of routes) {
-      const { path, exact, children, ...rest } = route;
-      if (path === '/' || !exact) {
+      const { path, children, ...rest } = route;
+      if (path === '/') {
         if (children) {
           const result = walkRoute(children);
           if (result) {
@@ -25,6 +25,7 @@ export default function getRedirectIndexRoute(originRoutes: any[], i18nConfig: I
         } else {
           return {
             ...route,
+            exact: true,
             component: (props: any) => (
               <IndexComponent 
                 {...props} 

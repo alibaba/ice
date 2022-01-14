@@ -25,7 +25,7 @@ describe('add-routes-by-locales', () => {
     ];
     const expectedRoutes = [
       {
-        path: '/en-US/',
+        path: '/en-US',
         exact: true,
         component: ComponentA,
       },
@@ -49,11 +49,11 @@ describe('add-routes-by-locales', () => {
     expect(resultRoutes).toEqual(expectedRoutes);
   })
 
-  test('two level', () => {
+  test('two levels', () => {
     const routes = [
       {
         path: '/',
-        layout: Layout,
+        component: Layout,
         children: [
           {
             exact: true,
@@ -70,8 +70,8 @@ describe('add-routes-by-locales', () => {
     ];
     const expectedRoutes = [
       {
-        path: '/en-US/',
-        layout: Layout,
+        path: '/en-US',
+        component: Layout,
         children: [
           {
             exact: true,
@@ -87,7 +87,7 @@ describe('add-routes-by-locales', () => {
       },
       {
         path: '/',
-        layout: Layout,
+        component: Layout,
         children: [
           {
             exact: true,
@@ -107,7 +107,93 @@ describe('add-routes-by-locales', () => {
     expect(resultRoutes).toEqual(expectedRoutes);
   })
 
-  test('multi level', () => {
-    
+  test('multi levels', () => {
+    const routes = [
+      {
+        path: '/',
+        component: Layout,
+        children: [
+          {
+            path: '/a',
+            children: [
+              {
+                exact: true,
+                path: '/a/about',
+                component: ComponentA,
+              }
+            ]
+          },
+          {
+            path: '/',
+            exact: true,
+            children: [
+              {
+                exact: true,
+                path: '/',
+                component: ComponentB,
+              }
+            ]
+          },
+        ]
+      },
+    ];
+    const expectedRoutes = [
+      {
+        path: '/en-US',
+        component: Layout,
+        children: [
+          {
+            path: '/en-US/a',
+            children: [
+              {
+                exact: true,
+                component: ComponentA,
+                path: '/en-US/a/about'
+              }
+            ]
+          },
+          {
+            path: '/en-US',
+            exact: true,
+            children: [
+              {
+                exact: true,
+                component: ComponentB,
+                path: '/en-US'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        path: '/',
+        component: Layout,
+        children: [
+          {
+            path: '/a',
+            children: [
+              {
+                exact: true,
+                path: '/a/about',
+                component: ComponentA,
+              }
+            ]
+          },
+          {
+            path: '/',
+            exact: true,
+            children: [
+              {
+                exact: true,
+                path: '/',
+                component: ComponentB,
+              }
+            ]
+          },
+        ]
+      },
+    ];
+    const resultRoutes = addRoutesByLocales(routes, i18nConfig);
+    expect(resultRoutes).toEqual(expectedRoutes);
   })
 })

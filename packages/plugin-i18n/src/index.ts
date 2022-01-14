@@ -2,7 +2,6 @@ import { IPluginAPI } from 'build-scripts';
 import path from 'path';
 import { I18nConfig } from './types';
 import { LOCALE_COOKIE_KEY } from './constants';
-import { expressI18nMiddleware } from './middleware';
 
 export default async function (
   { onGetWebpackConfig, getValue, applyMethod }: IPluginAPI, 

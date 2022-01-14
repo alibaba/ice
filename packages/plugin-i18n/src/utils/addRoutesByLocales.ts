@@ -23,12 +23,12 @@ function addRoutesByLocales(originRoutes: any[], i18nConfig: I18nConfig) {
         if (!children) {
           return {
             ...route,
-            path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
+            path: `/${prefixRouteLocale}${path === '/' ? '' : `${path[0] === '/' ? '' : '/'}${path}`}`,
           };
         } else {
           return {
             ...route,
-            path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,
+            path: `/${prefixRouteLocale}${path === '/' ? '' : `${path[0] === '/' ? '' : '/'}${path}`}`,
             children: addRoutesByLocale(children),
           };
         }
