@@ -8,7 +8,6 @@ import {
   Route,
   Redirect,
   RouteComponentProps
-  // @ts-ignore
 } from '@ice/runtime/reactRouterDom';
 import loadable from '@loadable/component';
 import { RoutesProps, RouterProps } from '../types/router';

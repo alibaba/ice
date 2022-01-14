@@ -1,4 +1,3 @@
-// @
 import { axios } from '@ice/runtime/axios';
 import * as axiosUtils from '@ice/runtime/axiosUtils';
 import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from '@ice/runtime/axios';
