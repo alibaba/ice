@@ -6,7 +6,7 @@ import routes from '<%- routesPath %>/routes';
 <% if (!disableLoadable) { %>
 import loadable from '@loadable/component';
 <% } %>
-import { pathToRegexp } from '@ice/runtime';
+import { pathToRegexp } from '@ice/runtime/pathToRegexp';
 import { renderStatic } from './server';
 
 <% if (!enableRouter) { %>
