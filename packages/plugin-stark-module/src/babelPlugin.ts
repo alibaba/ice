@@ -24,6 +24,7 @@ export default (api: any, { entries }: { entries: string[] }) => {
           const { body } = node;
 
           let reactdomStatement = false;
+          let reactStatement = false;
           let mountExportStatement = false;
           let unmountExportStatement = false;
 
@@ -44,6 +45,24 @@ export default (api: any, { entries }: { entries: string[] }) => {
                 // 如果没有默认导入 ReactDOM，则添加一个 default 导入
                 if (!reactDomDefaultExport) {
                   item.specifiers.push(t.importDefaultSpecifier(t.identifier('ReactDOM')));
+                }
+
+              }
+
+              if (t.isStringLiteral(item.source, { value: 'react' })) {
+                // 代码 import 了 'react-dom'
+                reactStatement = true;
+                // 判断 ReactDOM 是否通过 import ReactDOM from 'react-dom' 的方式引入, 可能的方式有
+                // import { render } from 'react-dom';
+                // import ReactDOM, { render } from 'react-dom';
+                const reactDefaultExport = item.specifiers.some(value => {
+                  // 有默认导入 default ReactDOM
+                  return t.isImportDefaultSpecifier(value) && t.isIdentifier(value.local, { name: 'React' });
+                });
+  
+                // 如果没有默认导入 ReactDOM，则添加一个 default 导入
+                if (!reactDefaultExport) {
+                  item.specifiers.push(t.importDefaultSpecifier(t.identifier('React')));
                 }
 
               }
@@ -72,6 +91,15 @@ export default (api: any, { entries }: { entries: string[] }) => {
               t.importDeclaration([
                 t.importDefaultSpecifier(t.identifier('ReactDOM')),
               ], t.stringLiteral('react-dom'))
+            );
+          }
+
+          // append react
+          if (!reactdomStatement) {
+            body.push(
+              t.importDeclaration([
+                t.importDefaultSpecifier(t.identifier('React')),
+              ], t.stringLiteral('react'))
             );
           }
 
