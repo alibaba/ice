@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 import { createAppShared } from '@ice/runtime/createAppShared';
-import reactAppRenderer, { RenderAppConfig } from '@ice/runtime/reactAppRenderer';
+import { reactAppRenderer, RenderAppConfig } from '@ice/runtime/reactAppRenderer';
 <% if (globalStyle) {%>
   // eslint-disable-next-line
   import '<%= globalStyle %>'
@@ -21,7 +21,7 @@ const {
   initHistory,
   createHistory,
 <% } %>
-} from 'create-app-shared';
+} = createAppShared;
 
 const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
 const runtimeValue: any = {};
