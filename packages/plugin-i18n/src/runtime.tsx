@@ -69,12 +69,9 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
   const { defaultLocale } = i18nConfig;
 
   function getLocalePath(
-    path: string | Location, 
+    path: string, 
     locale: string,
   ) {
-    if (typeof path === 'object') {
-      path = path.pathname;
-    }
     const localePathResult = normalizeLocalePath(path, i18nConfig, basename);
     const { pathname } = localePathResult;
     if (locale === defaultLocale) {
@@ -89,7 +86,7 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
     originHistory.push(localePath, state);
   };
 
-  history.replace = function(path: string | Location, state?: unknown) {
+  history.replace = function(path: string, state?: unknown) {
     const locale = getLocaleFromCookies() || defaultLocale;
     const localePath = getLocalePath(path, locale);
     originHistory.replace(localePath, state);
