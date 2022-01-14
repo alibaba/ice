@@ -95,7 +95,7 @@ export default (api: any, { entries }: { entries: string[] }) => {
           }
 
           // append react
-          if (!reactdomStatement) {
+          if (!reactStatement) {
             body.push(
               t.importDeclaration([
                 t.importDefaultSpecifier(t.identifier('React')),
