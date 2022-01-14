@@ -56,7 +56,9 @@ export function getAllLocales(): string[] {
 function getDetectedLocaleFromPath(locales: string[], defaultLocale: string) {
   const appConfig = getAppConfig();
   if (history === null) {
-    console.log('history is null, can\'t get current locale from pathname');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('history is null, can\'t get current locale from pathname');
+    }
     return;
   }
   const { location: { pathname } } = history;

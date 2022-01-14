@@ -17,9 +17,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
 
   if (i18nRouting !== false) {
     modifyRoutes((routes) => {
-      // 该 routes 值是被 formatRoutes 方法处理后返回的结果
-      console.log('[build-plugin-ice-i18n] originRoutes: ', routes);
-  
+      // routes 值是被 formatRoutes 方法处理后返回的结果  
       const modifiedRoutes = addRoutesByLocales(routes, i18nConfig);
 
       if (redirect === true) {
@@ -28,8 +26,10 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
           modifiedRoutes.unshift(newIndexComponent);
         }
       }
-
-      console.log('[build-plugin-ice-i18n] modifiedRoutes: ', modifiedRoutes);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[build-plugin-ice-i18n] originRoutes: ', routes);
+        console.log('[build-plugin-ice-i18n] modifiedRoutes: ', modifiedRoutes);
+      }
       return modifiedRoutes;
     });
   }
