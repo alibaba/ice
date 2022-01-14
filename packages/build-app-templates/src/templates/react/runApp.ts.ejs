@@ -1,8 +1,15 @@
 import { createElement } from 'react';
-import { createAppShared } from '@ice/runtime/createAppShared';
-import { reactAppRenderer } from '@ice/runtime/reactAppRenderer';
-import type { RenderAppConfig } from '@ice/runtime/reactAppRenderer';
-
+import {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+  getSearchParams,
+<% if (enableRouter !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} from 'create-app-shared';
+import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
 <% if (globalStyle) {%>
   // eslint-disable-next-line
   import '<%= globalStyle %>'
@@ -45,7 +52,7 @@ const frameworkAppBase = createBaseApp({
   runtimeValue,
 });
 
-export function runApp(appConfig?: IAppConfig) {
+export function runApp(appConfig: IAppConfig = {}) {
   // store appConfig in case of server side render
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);

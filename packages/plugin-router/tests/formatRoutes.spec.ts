@@ -81,7 +81,7 @@ describe('format-routes', () => {
 
   })
 
-  test('childrens priority', () => {
+  test('children priority', () => {
     const routes: IRouterConfig[] = [
       {
         path: '/test',
@@ -109,5 +109,31 @@ describe('format-routes', () => {
     expect((formatedRoutes[0].children[1].component as any).pageConfig).toEqual({
       componentName: 'mockComponentC'
     });
+  })
+
+  test('call formatRoutes function more than one times with the same routes', () => {
+    const routes: IRouterConfig[] = [
+      {
+        path: '/test',
+        component: mockComponentA as any,
+        children: [
+          {
+            exact: true,
+            path: '/plan',
+            component: mockComponentB as any,
+          },
+          {
+            path: '/',
+            component: mockComponentC as any,
+          },
+        ],
+      },
+    ];
+
+    const formattedRoutes = formatRoutes(routes);
+    const anotherFormattedRoutes = formatRoutes(routes);
+
+    expect(formattedRoutes[0].children[0].path).toBe('/test/plan');
+    expect(anotherFormattedRoutes[0].children[0].path).toBe('/test/plan');
   })
 })

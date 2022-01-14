@@ -1,3 +1,6 @@
+<% if (importEnv) { %>
+import './env';
+<% } %>
 import '@/app';
 import { join } from 'path';
 import { pathToRegexp } from '@ice/runtime/pathToRegexp';
@@ -19,9 +22,8 @@ import routes from '<%- routesPath %>/routes';
 const routes = [];
 <% } %>
 import loadable from '@loadable/component';
-
-const chalk = require('chalk');
-const parseurl = require('parseurl');
+import * as chalk from 'chalk';
+import parseurl from 'parseurl';
 
 const { createBaseApp, initAppLifeCycles } = app;
 
@@ -37,7 +39,6 @@ interface GenerateHtml {
   initialData?: any;
   error?: Error;
 }
-
 
 const serverRender = async (context: ServerContext, opts = {}) => {
   let options;
@@ -56,12 +57,15 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     publicPath,
   } = options;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' && loadableStatsPath !== false) {
     // loadable-stats.json will be generated to the build dir in development
     loadableStatsPath = join(process.cwd(), '<%- outputDir %>', 'loadable-stats.json');
   }
-  const buildConfig = { loadableStatsPath, publicPath };
-
+  const buildConfig = {
+    loadableStatsPath, 
+    publicPath, 
+    i18n: <%- JSON.stringify(typeof i18n === 'undefined' ? {} : i18n) %>,
+  }
   const htmlTemplateContent = htmlTemplate || 'global.__ICE_SERVER_HTML_TEMPLATE__';
 
   // load module to run before createApp ready
@@ -75,7 +79,6 @@ const serverRender = async (context: ServerContext, opts = {}) => {
     const history = {
       location: { pathname, search, hash, state: null },
     };
-    setHistory(history);
     initialContext = {
       req,
       res,
@@ -91,7 +94,7 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   }
   const pageData = pagesData.find(({ path, exact: end = false, strict = false, sensitive = false }) => {
     try {
-      const regexp = pathToRegexp(path, [], { end, strict, sensitive });
+      const regexp = (pathToRegexp.default || pathToRegexp)(path, [], { end, strict, sensitive });
       return regexp.test(initialContext.pathname);
     } catch (e) {
       return false;
@@ -110,15 +113,36 @@ const serverRender = async (context: ServerContext, opts = {}) => {
   return renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig });
 }
 
-export async function renderStatic({ htmlTemplateContent, initialContext, initialData, buildConfig }) {
+export async function renderStatic(
+  { 
+    htmlTemplateContent, 
+    initialContext, 
+    buildConfig,
+    initialData, 
+    component,
+    getInitialProps
+ }: {
+    htmlTemplateContent: string;
+    initialContext: Record<string, any>;
+    buildConfig: Record<string, any>;
+    initialData?: Record<string, any>;
+    component?: any;
+    getInitialProps?: Function;
+ }
+ ) {
   let error;
   let html = htmlTemplateContent;
+
   try {
+    // update history in sever side
+    const history = { location: initialContext.location };
+    setHistory(history);
+
     // get initial data
     if (!initialData) {
       const getInitialData = appConfig.app && appConfig.app.getInitialData;
       if (getInitialData) {
-        console.log('[SSR]', 'getting initial data of app');
+        console.log('[SSR]', 'getting initial data of app', initialContext.pathname);
         initialData = await getInitialData(initialContext);
       }
     }
@@ -127,19 +151,26 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
     setInitialData(initialData);
 
     // get page initial props
-    let { component, getInitialProps } = await getComponentByPath(routes, initialContext.pathname);
+    if (!component) {
+      const result = await getComponentByPath(
+        routes,
+        initialContext.pathname
+      );
+      component = result.component;
+      getInitialProps = result.getInitialProps;
+    }
     if (component && component.load) {
       const loadedPageComponent = await component.load();
       component = loadedPageComponent.default;
     }
     let pageInitialProps = {};
     if (getInitialProps) {
-      console.log('[SSR]', 'getting initial props of page component');
+      console.log('[SSR]', 'getting initial props of page component', initialContext.pathname);
       pageInitialProps = await getInitialProps(initialContext);
     }
 
     // generate bundle content and register global variables in html
-    console.log('[SSR]', 'generating html content');
+    console.log('[SSR]', 'generating html content', initialContext.pathname);
     const { bundleContent, loadableComponentExtractor } =
       reactAppRendererWithSSR(
         {
@@ -171,7 +202,8 @@ export async function renderStatic({ htmlTemplateContent, initialContext, initia
       htmlTemplateContent,
       error,
     });
-    logError('[SSR] generate html template error' + error.message);
+    logError('[SSR] generate html template error message: ' + error.message);
+    logError('[SSR] generate html template error stack: ' + error.stack);
   }
 
   return { html, error, redirectUrl: initialContext.url };
@@ -201,9 +233,11 @@ export function generateHtml({
     window.__ICE_PAGE_PROPS__=${JSON.stringify(pageInitialProps)};
   </script>`);
   // inject assets
-  $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
-  $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
-  $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+  if (loadableComponentExtractor) {
+    $('head').append(`${loadableComponentExtractor.getLinkTags()}`);
+    $('head').append(`${loadableComponentExtractor.getStyleTags()}`);
+    $('body').append(`${loadableComponentExtractor.getScriptTags()}`);
+  }
   // inject tags to header
   $('head').append(`${helmet.title.toString()}`);
   $('head').append(`${helmet.meta.toString()}`);

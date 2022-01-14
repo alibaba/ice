@@ -71,7 +71,7 @@ export default class BaseGenerator {
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
-    this.generateLoadRuntimeModules();
+    this.generateRuntimeModules();
   }
 
   public generateEntryFile() {
@@ -87,7 +87,7 @@ export default class BaseGenerator {
     applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
 
-  public generateLoadRuntimeModules() {
+  public generateRuntimeModules() {
     const { applyMethod } = this.builtInMethods;
     ['loadRuntimeModules.ts', 'loadStaticModules.ts'].forEach((templateName) => {
       applyMethod('addRenderFile', getTemplate(templateName), path.join(this.entryFolder, templateName)

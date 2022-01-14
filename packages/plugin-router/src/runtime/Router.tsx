@@ -107,7 +107,6 @@ export function Routes({ routes, fallback }: RoutesProps) {
     <Switch>
       {routes.map((route, id) => {
         const { children } = route;
-
         if (!children) {
           if (route.redirect) {
             const { redirect, ...others } = route;
