@@ -35,7 +35,7 @@ function getDetectedLocale(
   { 
     pathname, 
     i18nConfig,
-    headers,
+    headers = {},
     basename,
   }: { 
     pathname: string, 
