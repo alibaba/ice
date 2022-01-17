@@ -3,6 +3,7 @@ import {
   createBaseApp,
   initAppLifeCycles,
   emitLifeCycles,
+  getSearchParams,
 <% if (enableRouter !== false) {%>
   initHistory,
   createHistory,
@@ -49,6 +50,7 @@ const frameworkAppBase = createBaseApp({
   loadRuntimeModules,
   createElement,
   runtimeAPI: {
+    getSearchParams,
     <% if (enableRouter !== false) {%>
     createHistory,
     <% } %>
@@ -60,7 +62,7 @@ const frameworkAppBase = createBaseApp({
 const pageConfig = <%- JSON.stringify(pageConfig) %>;
 <% } %>
 
-export function runApp(appConfig?: IAppConfig, <% if (enableRouter !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
+export function runApp(appConfig: IAppConfig = {}, <% if (enableRouter !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
   // server bundle will to get appConfig after run runApp
   setAppConfig(appConfig as IAppConfig);
   // load static modules before init runtime such as request
