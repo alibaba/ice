@@ -5,7 +5,9 @@ type VoidFunction = () => void;
 
 type App = Partial<{
   rootId: string,
-  renderComponent?: ComponentType,
+  renderComponent?: ComponentType & {
+    __pageConfig?: unknown;
+  },
 } & Record<'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick', VoidFunction>>;
 
 export interface AppConfig {
