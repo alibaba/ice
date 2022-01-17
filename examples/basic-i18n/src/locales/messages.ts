@@ -9,6 +9,7 @@ export const messages = {
     configuredLocales: 'Configured locales',
     localeSwitcher: 'Locale Switcher',
     basicLayout: 'BasicLayout',
+    notFound: 'Not Found',
   },
   [LOCALES.ZH_CN]: {
     homeTitle: '首页',
@@ -17,6 +18,7 @@ export const messages = {
     defaultLocale: '默认语言',
     configuredLocales: '配置的语言',
     localeSwitcher: '语言切换',
-    basicLayout: '主布局'
+    basicLayout: '主布局',
+    notFound: '未找到页面'
   },
 };

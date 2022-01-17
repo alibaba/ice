@@ -2,6 +2,7 @@ import { IRouterConfig } from 'ice';
 import BasicLayout from '@/layouts/BasicLayout';
 import Home from '@/pages/Home';
 import About from '@/pages/About';
+import NotFound from '@/pages/NotFound';
 
 const routerConfig: IRouterConfig[] = [
   {
@@ -18,6 +19,9 @@ const routerConfig: IRouterConfig[] = [
         exact: true,
         component: Home,
       },
+      {
+        component: NotFound,
+      }
     ]
   },
 ];
