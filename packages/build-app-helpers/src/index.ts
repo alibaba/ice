@@ -8,6 +8,7 @@ export { default as injectTransformRuntime } from './injectTransformRuntime';
 export { default as checkExportDefaultDeclarationExists } from './checkExportDefaultDeclarationExists';
 export { default as getSassImplementation } from './getSassImplementation';
 export { default as getLessImplementation } from './getLessImplementation';
+export { default as getPostcssImplementation } from './getPostcssImplementation';
 export { default as redirectImport } from './redirectImport';
 export { default as analyzeRuntime } from './analyzeRuntime';
 export { globSourceFiles } from './analyzeRuntime';

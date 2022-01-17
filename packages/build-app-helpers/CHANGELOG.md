@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1
+
+- [feat] new API of getPostcssImplementation
+
 ## 2.5.0
 
 - [chore] revert `@babel/plugin-transform-runtime` helpers value
