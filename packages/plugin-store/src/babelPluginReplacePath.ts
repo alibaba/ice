@@ -87,31 +87,33 @@ interface IGetConfigRoutePathParams {
 //  case2: { "@src": "./src", "@pages": "./src/pages" }
 //  case3: { "@": "./src", "@/pages": "./src/pages" }
 function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): string {
-  let aliasPath = '';
-  // use custom alias
+  let srcRelativePath = '';
+
   Object.keys(alias).forEach(currKey => {
     if (value.startsWith(currKey)) {
       const [, ...args] = value.split(currKey);
-      const currAliasPath = applyMethod('formatPath', path.join(alias[currKey], ...args));
-      if (currAliasPath.includes('src/pages')) {
-        aliasPath = currAliasPath;
+      const absolutePagePath = applyMethod('formatPath', path.join(alias[currKey], ...args));
+      if (absolutePagePath.includes('src/pages')) {
+        srcRelativePath = path.relative(process.cwd(), absolutePagePath);
       }
     }
   });
-  return aliasPath;
+
+  return srcRelativePath;
 }
 
 /**
  * 匹配配置式路由下使用的相对路径并返回相对的 src 的相对路径
  */
 function matchRelativePath(routesPath: string, value: string, applyMethod: Function): string {
-  let relativePath = '';
+  let srcRelativePath = '';
   if (/^(\.\/|\.{2}\/)/.test(value)) {
-    relativePath = applyMethod('formatPath',
+    srcRelativePath = applyMethod(
+      'formatPath',
       path.relative(process.cwd(), path.join(routesPath, '..', value))
     );
   }
-  return relativePath;
+  return srcRelativePath;
 }
 
 /**
@@ -126,19 +128,14 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDi
       return newValue;
     } else {
       // matchedPagePath 值示例：
-      // relativePath: ./pages/Home
-      // alias: /example/src/pages/Home
-      const pagePathParts = matchedPagePath.split('/');
-      const pageName = pagePathParts[pagePathParts.length - 1];
+      // relativePath: src/pages/Home
+      const [, , pageName] = matchedPagePath.split('/');
       newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx') : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
-    // matchedPagePath 值示例：
-    // relativePath: ./pages/Home/Layout
-    // alias: /example/src/pages/Home/Layout
-    const pagePathParts = matchedPagePath.split('/');
-    const pageName = pagePathParts[pagePathParts.length - 2];
+    // matchedPagePath 值示例：src/pages/Home/Layout
+    const [, , pageName] = matchedPagePath.split('/');
     const newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'Layout') : '';
     return newValue;
   }
