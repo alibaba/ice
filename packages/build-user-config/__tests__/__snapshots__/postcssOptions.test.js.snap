@@ -1,44 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`merge postcss options when postcss-loader is v3 should convert default options in rax correctly 1`] = `
-Object {
-  "plugins": Array [
-    [Function],
-    [Function],
-    [Function],
-  ],
-  "sourceMap": true,
-}
-`;
-
-exports[`merge postcss options when postcss-loader is v3 should convert root options correctly 1`] = `
-Object {
-  "config": Object {},
-  "exec": true,
-  "parser": "sugarss",
-  "plugins": Array [
-    [Function],
-    [Function],
-    [Function],
-  ],
-  "sourceMap": false,
-  "stringifier": "midas",
-  "syntax": "sugarss",
-}
-`;
-
-exports[`merge postcss options when postcss-loader is v3 should merge plugin correctly 1`] = `
-Object {
-  "plugins": Array [
-    [Function],
-    [Function],
-  ],
-  "sourceMap": true,
-}
-`;
-
 exports[`merge postcss options when postcss-loader is v5 should convert default options in rax correctly 1`] = `
 Object {
+  "implementation": [Function],
   "postcssOptions": Object {
     "plugins": Array [
       [Function],
@@ -52,8 +16,9 @@ Object {
 
 exports[`merge postcss options when postcss-loader is v5 should convert root options correctly 1`] = `
 Object {
-  "execute": true,
+  "implementation": [Function],
   "postcssOptions": Object {
+    "exec": true,
     "map": false,
     "parser": "sugarss",
     "plugins": Array [
@@ -61,15 +26,17 @@ Object {
       [Function],
       [Function],
     ],
+    "sourceMap": false,
     "stringifier": "midas",
     "syntax": "sugarss",
   },
-  "sourceMap": false,
+  "sourceMap": true,
 }
 `;
 
 exports[`merge postcss options when postcss-loader is v5 should merge plugin correctly 1`] = `
 Object {
+  "implementation": [Function],
   "postcssOptions": Object {
     "plugins": Array [
       [Function],
