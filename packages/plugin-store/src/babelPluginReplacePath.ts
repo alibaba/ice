@@ -86,7 +86,18 @@ interface IGetConfigRoutePathParams {
 //  case1: { "@": "./src", "@pages": "./src/pages" }
 //  case2: { "@src": "./src", "@pages": "./src/pages" }
 //  case3: { "@": "./src", "@/pages": "./src/pages" }
-function matchAliasPath({ alias, value, applyMethod, rootDir }: {alias: IAlias; value: string; applyMethod: Function; rootDir: string;}): string {
+function matchAliasPath(
+  { 
+    alias, 
+    value,
+    applyMethod,
+    rootDir,
+  }: { 
+    alias: IAlias;
+    value: string; 
+    applyMethod: Function;
+    rootDir: string;
+  }): string {
   let srcRelativePath = '';
 
   Object.keys(alias).forEach(currKey => {
@@ -105,7 +116,17 @@ function matchAliasPath({ alias, value, applyMethod, rootDir }: {alias: IAlias; 
 /**
  * 匹配配置式路由下使用的相对路径并返回相对的 src 的相对路径
  */
-function matchRelativePath({ routesPath, value, applyMethod, rootDir }: {routesPath: string; value: string; applyMethod: Function, rootDir: string }): string {
+function matchRelativePath(
+  { routesPath,
+    value,
+    applyMethod,
+    rootDir,
+  }: { 
+    routesPath: string;
+    value: string;
+    applyMethod: Function;
+    rootDir: string;
+  }): string {
   let srcRelativePath = '';
   if (/^(\.\/|\.{2}\/)/.test(value)) {
     srcRelativePath = applyMethod(
