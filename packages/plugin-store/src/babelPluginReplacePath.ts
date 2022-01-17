@@ -127,14 +127,13 @@ function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDi
     if (/src\/pages\/\w+(.tsx|.jsx?)$/.test(value)) {
       return newValue;
     } else {
-      // matchedPagePath 值示例：
-      // relativePath: src/pages/Home
+      // matchedPagePath 示例值: src/pages/Home
       const [, , pageName] = matchedPagePath.split('/');
       newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx') : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
-    // matchedPagePath 值示例：src/pages/Home/Layout
+    // matchedPagePath 示例值：src/pages/Home/Layout
     const [, , pageName] = matchedPagePath.split('/');
     const newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'Layout') : '';
     return newValue;
