@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3
+
+- [fix] `__pageConfig` types for rax MPA
+
 ## 1.2.2
 
 - [fix] miniapp withRouter
