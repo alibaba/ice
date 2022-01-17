@@ -3,6 +3,7 @@
 ## 3.1.0
 
 - [feat] support SSR in mode Vite
+- [feat] support i18n generation
 
 ## 3.0.6
 

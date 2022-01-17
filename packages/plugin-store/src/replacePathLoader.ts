@@ -48,9 +48,13 @@ async function loader(content: string, sourceMap: SourceMap) {
       let absoluteSourcePath: string;
       if (matchAliasKey) {
         // handle alias path
-        const matchAliasPath: string = alias[matchAliasKey]; // .src/*
-        const replaceWithAliasPath = originSourcePath.replace(RegExp(matchAliasKey), matchAliasPath.replace(/\*/g, ''));
-        absoluteSourcePath = path.join(rootDir, replaceWithAliasPath);
+        const matchAliasPath: string = alias[matchAliasKey];
+        if (originSourcePath === matchAliasKey) {
+          absoluteSourcePath = matchAliasPath;
+        } else if (originSourcePath.startsWith(addLastSlash(matchAliasKey))) {
+          // e.g.: @/pages/Home -> /users/src/pages/Home
+          absoluteSourcePath = originSourcePath.replace(RegExp(`^${matchAliasKey}`), matchAliasPath);
+        }
       } else {
         // handle relative path
         const currentRoutesDir = path.dirname(currentRoutesPath);
@@ -81,4 +85,8 @@ function generateRedirectPath({ tempDir, pageName, rootDir }) {
   }
   const pagePath = path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx');
   return formatPath(pagePath);
+}
+
+function addLastSlash(filePath: string) {
+  return filePath.endsWith('/') ? filePath : `${filePath}/`;
 }

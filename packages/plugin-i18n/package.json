@@ -19,7 +19,8 @@
   },
   "peerDependencies": {
     "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
+    "react-dom": ">=16.0.0",
+    "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
     "build-scripts": "^1.2.1",

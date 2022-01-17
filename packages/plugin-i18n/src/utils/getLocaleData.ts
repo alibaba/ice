@@ -21,9 +21,9 @@ export default function getLocaleData({
   headers?: Record<string, string>,
   basename?: string,
 }) {
-  const { pathname } = url;
+  const pathname = url.pathname || '/';
   const detectedLocale = getDetectedLocale({ pathname, headers, i18nConfig, basename });
-  const redirectUrl = getRedirectUrl(url.pathname, { ...i18nConfig, detectedLocale }, basename);
+  const redirectUrl = getRedirectUrl(pathname, { ...i18nConfig, detectedLocale }, basename);
 
   return {
     detectedLocale,
@@ -35,7 +35,7 @@ function getDetectedLocale(
   { 
     pathname, 
     i18nConfig,
-    headers,
+    headers = {},
     basename,
   }: { 
     pathname: string, 

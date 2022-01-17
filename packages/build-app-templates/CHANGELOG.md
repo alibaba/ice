@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3
+
+- [fix] relative path of `loadStaticModules`
+
+## 1.1.2
+
+- [fix] rax routerAPI template
+
 ## 1.1.1
 
 - [fix] `appConfig` need a default value

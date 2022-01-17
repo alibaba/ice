@@ -2,7 +2,7 @@ import * as path from 'path';
 import { buildFixture, setupBrowser } from './utils/build';
 import { IPage } from './utils/browser';
 
-const example = 'basic-mpa';
+const example = 'basic-mpa-webpack';
 let page: IPage = null;
 let browser = null;
 

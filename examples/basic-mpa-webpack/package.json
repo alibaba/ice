@@ -1,5 +1,5 @@
 {
-  "name": "exmaple-basic-mpa",
+  "name": "basic-mpa-webpack",
   "description": "",
   "dependencies": {
     "react": "^16.4.1",
