@@ -3,6 +3,7 @@
 ## 2.1.0
 
 - [feat] support `--force` to empty cache folder
+- [fix] swc use esm type
 
 ## 2.0.5
 
