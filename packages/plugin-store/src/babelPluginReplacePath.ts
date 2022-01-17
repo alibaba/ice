@@ -86,7 +86,7 @@ interface IGetConfigRoutePathParams {
 //  case1: { "@": "./src", "@pages": "./src/pages" }
 //  case2: { "@src": "./src", "@pages": "./src/pages" }
 //  case3: { "@": "./src", "@/pages": "./src/pages" }
-function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): string {
+function matchAliasPath({ alias, value, applyMethod, rootDir }: {alias: IAlias; value: string; applyMethod: Function; rootDir: string;}): string {
   let srcRelativePath = '';
 
   Object.keys(alias).forEach(currKey => {
@@ -94,7 +94,7 @@ function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): st
       const [, ...args] = value.split(currKey);
       const absolutePagePath = applyMethod('formatPath', path.join(alias[currKey], ...args));
       if (absolutePagePath.includes('src/pages')) {
-        srcRelativePath = path.relative(process.cwd(), absolutePagePath);
+        srcRelativePath = path.relative(rootDir, absolutePagePath);
       }
     }
   });
@@ -105,12 +105,12 @@ function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): st
 /**
  * 匹配配置式路由下使用的相对路径并返回相对的 src 的相对路径
  */
-function matchRelativePath(routesPath: string, value: string, applyMethod: Function): string {
+function matchRelativePath({ routesPath, value, applyMethod, rootDir }: {routesPath: string; value: string; applyMethod: Function, rootDir: string }): string {
   let srcRelativePath = '';
   if (/^(\.\/|\.{2}\/)/.test(value)) {
     srcRelativePath = applyMethod(
       'formatPath',
-      path.relative(process.cwd(), path.join(routesPath, '..', value))
+      path.relative(rootDir, path.join(routesPath, '..', value))
     );
   }
   return srcRelativePath;
@@ -120,7 +120,7 @@ function matchRelativePath(routesPath: string, value: string, applyMethod: Funct
  * 格式化路由的替换路径值
  */
 function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDir }: IGetConfigRoutePathParams): string {
-  const matchedPagePath = matchRelativePath(routesPath, value, applyMethod) || matchAliasPath(alias, value, applyMethod);
+  const matchedPagePath = matchRelativePath({routesPath, value, applyMethod, rootDir}) || matchAliasPath({alias, value, applyMethod, rootDir});
   if (matchedPagePath && pagePathRegExp.test(matchedPagePath)) {
     let newValue = '';
     // Note：过滤掉 pages 目录下的单文件形式
