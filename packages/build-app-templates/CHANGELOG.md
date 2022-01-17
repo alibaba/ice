@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- [fix] rax routerAPI template
+
 ## 1.1.1
 
 - [fix] `appConfig` need a default value
