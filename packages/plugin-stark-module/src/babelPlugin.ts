@@ -37,9 +37,12 @@ export default (api: any, { entries }: { entries: string[] }) => {
                 // 判断 ReactDOM 是否通过 import ReactDOM from 'react-dom' 的方式引入, 可能的方式有
                 // import { render } from 'react-dom';
                 // import ReactDOM, { render } from 'react-dom';
+                // import * as ReactDOM from 'react-dom';
                 const reactDomDefaultExport = item.specifiers.some(value => {
-                  // 有默认导入 default ReactDOM
-                  return t.isImportDefaultSpecifier(value) && t.isIdentifier(value.local, { name: 'ReactDOM' });
+                  return (
+                    // The former is `import ReactDOM from 'react-dom'`, the latter is `import * as ReactDOM from 'react-dom`;
+                    t.isImportDefaultSpecifier(value) || t.isImportNamespaceSpecifier(value)
+                  ) && t.isIdentifier(value.local, { name: 'ReactDOM' });
                 });
   
                 // 如果没有默认导入 ReactDOM，则添加一个 default 导入
@@ -50,14 +53,12 @@ export default (api: any, { entries }: { entries: string[] }) => {
               }
 
               if (t.isStringLiteral(item.source, { value: 'react' })) {
-                // 代码 import 了 'react-dom'
                 reactStatement = true;
-                // 判断 ReactDOM 是否通过 import ReactDOM from 'react-dom' 的方式引入, 可能的方式有
-                // import { render } from 'react-dom';
-                // import ReactDOM, { render } from 'react-dom';
                 const reactDefaultExport = item.specifiers.some(value => {
-                  // 有默认导入 default ReactDOM
-                  return t.isImportDefaultSpecifier(value) && t.isIdentifier(value.local, { name: 'React' });
+                  return (
+                    // The former is `import ReactDOM from 'react-dom'`, the latter is `import * as ReactDOM from 'react-dom`;
+                    t.isImportDefaultSpecifier(value) || t.isImportNamespaceSpecifier(value)
+                  ) && t.isIdentifier(value.local, { name: 'React' });
                 });
   
                 // 如果没有默认导入 ReactDOM，则添加一个 default 导入

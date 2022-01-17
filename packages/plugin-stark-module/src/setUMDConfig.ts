@@ -40,9 +40,23 @@ const getConfig: GetConfig = ({ context, onGetWebpackConfig }, { modules, output
 
     config.plugin('MiniCssExtractPlugin').tap(([args]) => [{ ...args, filename: filenameStrategy ? `${filenameStrategy}.css` : './[name]/index.css' }]);
 
-    // hack with multi publicpath
-    config.devServer.contentBase(output);
-    config.devServer.writeToDisk(true);
+    const devMiddleware = config.devServer.get('devMiddleware');
+
+    if (devMiddleware) {
+      config.devServer.set('devMiddleware', {
+        ...devMiddleware,
+        writeToDisk: true,
+      });
+
+      config.devServer.set('static', {
+        ...config.devServer.get('static'),
+        directory: output,
+      });
+
+    } else {
+      config.devServer.contentBase(output);
+      config.devServer.writeToDisk(true);
+    }
   });
 };
 
