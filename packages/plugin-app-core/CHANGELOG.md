@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+
+- [fix] filter runtime modules after file generation
+
 ## 2.1.2
 
 - [fix] add buildConfig of i18n
