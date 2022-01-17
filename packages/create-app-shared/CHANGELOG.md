@@ -2,6 +2,7 @@
 
 ## 1.2.3
 
+- [fix] revert AppProvider
 - [fix] `__pageConfig` types for rax MPA
 
 ## 1.2.2
