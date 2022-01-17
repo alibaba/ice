@@ -6,7 +6,12 @@ type VoidFunction = () => void;
 type App = Partial<{
   rootId: string,
   renderComponent?: ComponentType & {
-    __pageConfig?: unknown;
+    __pageConfig?: {
+      source?: string;
+      path?: string;
+      name?: string;
+      [key:string]: any;
+    };
   },
 } & Record<'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick', VoidFunction>>;
 
