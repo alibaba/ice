@@ -8,8 +8,7 @@
           "en-US"
         ],
         "defaultLocale": "zh-CN",
-        "redirect": false,
-        "i18nRouting": true
+        "redirect": true
       }
     ]
   ],

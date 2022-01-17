@@ -1,8 +1,12 @@
 # Changelog
 
-## 1.2.2
+## 1.2.3
 
 - [fix] revert AppProvider
+
+## 1.2.2
+
+- [fix] miniapp withRouter
 
 ## 1.2.1
 

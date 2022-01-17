@@ -1,5 +1,5 @@
 {
-  "name": "basic-mpa-swc",
+  "name": "basic-mpa-vite",
   "description": "",
   "dependencies": {
     "react": "^16.4.1",

@@ -4,6 +4,7 @@
 
 - [feat] optimize runtime when build
 - [chore] bump version of `es-module-lexer`
+- [fix] adapt swc rule name
 
 ## 2.1.4
 
