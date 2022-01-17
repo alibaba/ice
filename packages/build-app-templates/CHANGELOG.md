@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- [fix] relative path of `loadStaticModules`
+
 ## 1.1.2
 
 - [fix] rax routerAPI template
