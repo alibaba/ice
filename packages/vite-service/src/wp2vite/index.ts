@@ -19,6 +19,7 @@ import {
   ignoreHtmlPlugin,
   mockPlugin,
   ImportDeclarations,
+  cssChunk,
 } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
@@ -163,6 +164,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
       ...getPluginReact(context),
+      cssChunk(),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
