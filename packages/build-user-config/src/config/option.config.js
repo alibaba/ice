@@ -1,4 +1,7 @@
 module.exports = {
+  force: {
+    commands: ['start', 'build'],
+  },
   https: {
     commands: ['start'],
   },

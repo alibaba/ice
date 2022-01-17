@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.0
+
+- [feat] support disable runtime before render template
+- [fix] file path render in ejs template
+
 ## 4.1.3
 
 - [fix] fix: format mpa `app.json` path in windows

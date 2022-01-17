@@ -26,7 +26,7 @@ export default class BaseGenerator {
 
   public routesFilePath: string;
 
-  public disableRuntimeList: string[];
+  public disableRuntimeList: string[] = [];
 
   public runAppRenderData: IRunAppRenderData = {};
 
@@ -44,6 +44,9 @@ export default class BaseGenerator {
     this.entryFolder = path.join(targetDir, 'entries', entryName);
     this.entryPath = path.join(this.entryFolder, 'index.tsx');
     this.runAppPath = path.join(this.entryFolder, 'runApp');
+    this.runAppRenderData = {
+      typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
+    };
   }
 
   /**
@@ -59,7 +62,6 @@ export default class BaseGenerator {
       ...this.runAppRenderData,
       globalStyle: globalStyles.length && relative(this.entryFolder, path.join(this.rootDir, globalStyles[0])),
       relativeCorePath: relative(this.entryFolder, path.join(this.targetDir, 'core')),
-      typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       buildConfig: {
         ...applyMethod('getBuildConfig', userConfig),
       },
@@ -69,7 +71,7 @@ export default class BaseGenerator {
     };
 
     applyMethod('addRenderFile', getTemplate('runApp.ts', framework), `${this.runAppPath}.ts`, renderData);
-    this.generateLoadRuntimeModules(routesFilePath);
+    this.generateRuntimeModules();
   }
 
   public generateEntryFile() {
@@ -77,41 +79,46 @@ export default class BaseGenerator {
     const { applyMethod } = this.builtInMethods;
     const routesFilePath = this.getRoutesFilePath();
     const renderData = {
+      ...this.runAppRenderData,
       runAppPath: './runApp',
-      typesPath: relative(this.entryFolder, path.join(this.targetDir, 'types')),
       routesFilePath: routesFilePath && relative(this.entryFolder, routesFilePath),
       resourcePath: relative(this.entryFolder, path.extname(pageEntry) ? pageEntry.split('.').slice(0, -1).join('.') : pageEntry),
     };
     applyMethod('addRenderFile', path.join(__dirname, `../template/${framework}/index.tsx.ejs`), this.entryPath, renderData);
   }
 
-  public generateLoadRuntimeModules(routesFilePath: string) {
+  public generateRuntimeModules() {
     const { applyMethod } = this.builtInMethods;
-    applyMethod('addRenderFile', getTemplate('loadRuntimeModules.ts'), path.join(this.entryFolder, 'loadRuntimeModules.ts')
-      , (renderData) => {
-        let { runtimeModules } = renderData;
-        if (!routesFilePath) {
-          // MPA 某个 page 下面没有 routes.[j|t]s 文件，禁用 plugin-router 运行时能力
+    ['loadRuntimeModules.ts', 'loadStaticModules.ts'].forEach((templateName) => {
+      applyMethod('addRenderFile', getTemplate(templateName), path.join(this.entryFolder, templateName)
+        , (renderData) => {
+          let { runtimeModules } = renderData;
           runtimeModules = runtimeModules.filter(({ name }) => {
             return !this.disableRuntimeList.includes(name);
           });
-        }
-        return {
-          ...renderData,
-          runtimeModules: runtimeModules.map(({ path: pluginPath, staticModule, absoluteModulePath }) => {
-            if (!staticModule) {
+          return {
+            ...renderData,
+            ...this.runAppRenderData,
+            relativeTypePath: relative(this.entryFolder, path.join(this.targetDir, 'type')),
+            runtimeModules: runtimeModules.map(({ path: pluginPath, staticModule, absoluteModulePath }) => {
               pluginPath = relative(this.entryFolder, absoluteModulePath);
-            }
-            return {
-              path: pluginPath,
-              staticModule,
-            };
-          }),
-        };
-      });
+              return {
+                path: pluginPath,
+                staticModule,
+              };
+            }),
+          };
+        });
+    });
   }
 
   public getRoutesFilePath() :string {
     throw new Error('Method not implemented.');
+  }
+
+  public addDisableRuntime = (pluginName: string) => {
+    if (!this.disableRuntimeList.includes(pluginName)) {
+      this.disableRuntimeList.push(pluginName);
+    }
   }
 }

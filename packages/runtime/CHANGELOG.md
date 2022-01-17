@@ -2,7 +2,7 @@
 
 ## 0.1.1
 
-- [feat] add `path-to-regexp@1.x` dependency
+- [feat] add path-to-regexp@1.x dependency
 
 ## 0.1.0
 

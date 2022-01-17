@@ -86,54 +86,75 @@ interface IGetConfigRoutePathParams {
 //  case1: { "@": "./src", "@pages": "./src/pages" }
 //  case2: { "@src": "./src", "@pages": "./src/pages" }
 //  case3: { "@": "./src", "@/pages": "./src/pages" }
-function matchAliasPath(alias: IAlias, value: string, applyMethod: Function): string {
-  let aliasPath = '';
-  // use default alias
-  if (!Object.keys(alias).length) {
-    alias['@'] = 'src';
-  }
-  // use custom alias
+function matchAliasPath(
+  { 
+    alias, 
+    value,
+    applyMethod,
+    rootDir,
+  }: { 
+    alias: IAlias;
+    value: string; 
+    applyMethod: Function;
+    rootDir: string;
+  }): string {
+  let srcRelativePath = '';
+
   Object.keys(alias).forEach(currKey => {
     if (value.startsWith(currKey)) {
       const [, ...args] = value.split(currKey);
-      const currAliasPath = applyMethod('formatPath', path.join(alias[currKey], ...args));
-      if (currAliasPath.includes('src/pages')) {
-        aliasPath = currAliasPath;
+      const absolutePagePath = applyMethod('formatPath', path.join(alias[currKey], ...args));
+      if (absolutePagePath.includes('src/pages')) {
+        srcRelativePath = path.relative(rootDir, absolutePagePath);
       }
     }
   });
-  return aliasPath;
+
+  return srcRelativePath;
 }
 
 /**
  * 匹配配置式路由下使用的相对路径并返回相对的 src 的相对路径
  */
-function matchRelativePath(routesPath: string, value: string, applyMethod: Function): string {
-  let relativePath = '';
+function matchRelativePath(
+  { routesPath,
+    value,
+    applyMethod,
+    rootDir,
+  }: { 
+    routesPath: string;
+    value: string;
+    applyMethod: Function;
+    rootDir: string;
+  }): string {
+  let srcRelativePath = '';
   if (/^(\.\/|\.{2}\/)/.test(value)) {
-    relativePath = applyMethod('formatPath',
-      path.relative(process.cwd(), path.join(routesPath, '..', value))
+    srcRelativePath = applyMethod(
+      'formatPath',
+      path.relative(rootDir, path.join(routesPath, '..', value))
     );
   }
-  return relativePath;
+  return srcRelativePath;
 }
 
 /**
  * 格式化路由的替换路径值
  */
 function formatPagePath({ routesPath, value, alias, tempDir, applyMethod, rootDir }: IGetConfigRoutePathParams): string {
-  const matchedPagePath = matchRelativePath(routesPath, value, applyMethod) || matchAliasPath(alias, value, applyMethod);
+  const matchedPagePath = matchRelativePath({routesPath, value, applyMethod, rootDir}) || matchAliasPath({alias, value, applyMethod, rootDir});
   if (matchedPagePath && pagePathRegExp.test(matchedPagePath)) {
     let newValue = '';
     // Note：过滤掉 pages 目录下的单文件形式
     if (/src\/pages\/\w+(.tsx|.jsx?)$/.test(value)) {
       return newValue;
     } else {
+      // matchedPagePath 示例值: src/pages/Home
       const [, , pageName] = matchedPagePath.split('/');
       newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'index.tsx') : '';
     }
     return newValue;
   } else if (matchedPagePath && layoutPathRegExp.test(matchedPagePath)) {
+    // matchedPagePath 示例值：src/pages/Home/Layout
     const [, , pageName] = matchedPagePath.split('/');
     const newValue = pageName ? path.join(rootDir, tempDir, 'pages', pageName, 'Layout') : '';
     return newValue;
