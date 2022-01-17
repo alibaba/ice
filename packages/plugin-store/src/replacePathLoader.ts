@@ -49,8 +49,10 @@ async function loader(content: string, sourceMap: SourceMap) {
       if (matchAliasKey) {
         // handle alias path
         const matchAliasPath: string = alias[matchAliasKey];
-        const slashAliasKey = addLastSlash(matchAliasKey);
-        if (originSourcePath.startsWith(slashAliasKey)) {
+        if (originSourcePath === matchAliasKey) {
+          absoluteSourcePath = matchAliasPath;
+        } else if (originSourcePath.startsWith(addLastSlash(matchAliasKey))) {
+          // e.g.: @/pages/Home -> /users/src/pages/Home
           absoluteSourcePath = originSourcePath.replace(RegExp(`^${matchAliasKey}`), matchAliasPath);
         }
       } else {
