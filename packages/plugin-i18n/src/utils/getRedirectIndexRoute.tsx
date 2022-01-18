@@ -4,7 +4,7 @@ import { I18nConfig } from '../types';
 import getLocaleData from './getLocaleData';
 
 /**
- * 在开启路由重定向时，生成根路由 redirect 组件
+ * 在开启路由重定向时，生成根路由 Redirect 组件
  */
 export default function getRedirectIndexRoute(originRoutes: any[], i18nConfig: I18nConfig, basename?: string) {
   function walkRoute(routes: any[]) {
