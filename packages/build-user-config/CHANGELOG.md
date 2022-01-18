@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- [fix] revert postcss options merge
+
 ## 2.1.0
 
 - [feat] support `--force` to empty cache folder
