@@ -1,5 +1,29 @@
-import * as createAppShared from 'create-app-shared';
 // create-app-shared
+
+import {
+  withPageLifeCycle,
+  createUsePageLifeCycle,
+  emitLifeCycles,
+  createBaseApp,
+  getSearchParams,
+  history,
+  getHistory,
+  setHistory,
+  initHistory,
+  initAppLifeCycles,
+  createHistory
+} from 'create-app-shared';
+
 export {
-  createAppShared
+  withPageLifeCycle,
+  createUsePageLifeCycle,
+  emitLifeCycles,
+  createBaseApp,
+  getSearchParams,
+  history,
+  getHistory,
+  setHistory,
+  initHistory,
+  initAppLifeCycles,
+  createHistory
 };

@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
-import { createAppShared } from '@ice/runtime/createAppShared';
-import { getInitialData } from '@ice/runtime/reactAppRenderer';
-
-import ErrorBoundary from './ErrorBoundary';
-
-const {
+import {
   withPageLifeCycle,
   createUsePageLifeCycle,
   emitLifeCycles,
   createBaseApp,
   getSearchParams,
-} = createAppShared;
+ } from '@ice/runtime/createAppShared';
+import { getInitialData } from '@ice/runtime/reactAppRenderer';
+
+import ErrorBoundary from './ErrorBoundary';
 
 const { usePageShow, usePageHide } = createUsePageLifeCycle({ useEffect });
 
