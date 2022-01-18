@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1
+
+- [fix] slice error for array of source files
+
 ## 2.5.0
 
 - [chore] revert `@babel/plugin-transform-runtime` helpers value

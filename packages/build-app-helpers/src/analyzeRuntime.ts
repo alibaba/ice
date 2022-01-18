@@ -182,7 +182,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
       i * parallelNum < sourceFiles.length && checkPlugins.some((pluginName) => checkMap[pluginName] === false);
       i++) {
       // eslint-disable-next-line no-await-in-loop
-      await Promise.all(sourceFiles.slice(i * parallelNum, parallelNum).map((filePath) => {
+      await Promise.all(sourceFiles.slice(i * parallelNum, i * parallelNum + parallelNum).map((filePath) => {
         return analyzeFile(filePath);
       }));
     }
