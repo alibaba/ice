@@ -1,6 +1,6 @@
 {
   "name": "@builder/user-config",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "dependencies": {
     "@builder/pack": "^0.5.3-beta.4",
     "@babel/helper-module-imports": "^7.13.12",
-    "@builder/app-helpers": "^2.4.2",
+    "@builder/app-helpers": "^2.5.0",
     "core-js": "^3.3.1",
     "deepmerge": "^4.2.2",
     "eslint-webpack-plugin": "^3.0.1",

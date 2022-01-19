@@ -1,5 +1,9 @@
 # changelog
 
+## 2.1.0
+
+- [feat] optimize runtime when build
+
 ## 2.0.4
 
 - [fix] format path in case of win32 system

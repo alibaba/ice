@@ -5,13 +5,21 @@ import Base from './BaseGenerator';
 import relative from '../relative';
 
 export default class ReactGenerator extends Base {
-  public disableRuntimeList = ['build-plugin-ice-router']
+  constructor(api, options) {
+    super(api, options);
+    this.routesFilePath = this.getRoutesFilePath();
+    if (!this.routesFilePath) {
+      this.addDisableRuntime(this.routerPluginName);
+    }
+  }
+
+  public routerPluginName = 'build-plugin-ice-router';
 
   public getRoutesFilePath(): string {
     if (this.routesFilePath !== undefined) return this.routesFilePath;
     const { pageEntry } = this.options;
     const originalEntryFolder = path.dirname(pageEntry);
     const targetExt = ['ts', 'tsx', 'js', 'jsx'].find((ext) => fs.existsSync(path.join(originalEntryFolder, `routes.${ext}`)));
-    return this.routesFilePath = targetExt ? relative(this.entryFolder, path.join(originalEntryFolder, 'routes')) : '';
+    return targetExt ? relative(this.entryFolder, path.join(originalEntryFolder, 'routes')) : '';
   }
 }
