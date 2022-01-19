@@ -62,7 +62,7 @@ function getDetectedLocale(
 }
 
 /**
- * 开启自动重定向选项时(redirect: true)时，获取下一个要跳转的 url
+ * 开启自动重定向选项时(autoRedirect: true)时，获取下一个要跳转的 url
  * 仅在 pathname 为 `/` 或者 `/${basename}` 时重定向
  */
 function getRedirectUrl(
@@ -70,11 +70,11 @@ function getRedirectUrl(
   i18nConfig: I18nConfig & { detectedLocale: string },
   basename?: string,
 ) {
-  const { redirect, defaultLocale, detectedLocale, i18nRouting } = i18nConfig;
+  const { autoRedirect, defaultLocale, detectedLocale, i18nRouting } = i18nConfig;
   const normalizedPathname = replaceBasename(pathname, basename);
   const isRootPath = normalizedPathname === '/';
   if (
-    redirect === true && 
+    autoRedirect === true && 
     i18nRouting !== false && 
     isRootPath && 
     defaultLocale !== detectedLocale

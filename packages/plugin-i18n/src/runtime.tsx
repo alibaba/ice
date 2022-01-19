@@ -11,7 +11,7 @@ import getRedirectIndexRoute from './utils/getRedirectIndexRoute';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { i18n: i18nConfig } = buildConfig;
-  const { i18nRouting, redirect } = i18nConfig;
+  const { i18nRouting, autoRedirect } = i18nConfig;
   const { router: appConfigRouter = {} } = appConfig;
   const { history = {}, basename } = appConfigRouter;
 
@@ -20,7 +20,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
       // routes 值是被 formatRoutes 方法处理后返回的结果  
       const modifiedRoutes = addRoutesByLocales(routes, i18nConfig);
 
-      if (redirect === true) {
+      if (autoRedirect === true) {
         const newIndexComponent = getRedirectIndexRoute(modifiedRoutes, i18nConfig, basename);
         if (newIndexComponent) {
           modifiedRoutes.unshift(newIndexComponent);
