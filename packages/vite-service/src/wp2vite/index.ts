@@ -164,7 +164,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
       ...getPluginReact(context),
-      cssChunk(),
+      userConfig.cssChunkNames && cssChunk(userConfig.cssChunkNames as string),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {

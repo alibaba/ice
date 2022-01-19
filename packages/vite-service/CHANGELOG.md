@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.4
+
+- [feat] plugin for rename main css chunk name
+
 ## 2.0.3
 
 - [fix] open both `about:blank` page and `localhost:3333` page

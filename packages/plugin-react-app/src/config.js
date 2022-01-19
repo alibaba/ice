@@ -7,6 +7,11 @@ module.exports = function() {
       validation: 'boolean|object'
     },
     {
+      name: 'cssChunkNames',
+      defaultValue: '',
+      validation: 'string|object',
+    },
+    {
       name: 'vitePlugins',
       defaultValue: [],
       validation: 'array',
