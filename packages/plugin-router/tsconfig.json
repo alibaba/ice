@@ -10,6 +10,6 @@
   },
   "exclude": [
     "templates",
-    "tests"
+    "__tests__"
   ]
 }
