@@ -8,7 +8,6 @@ import { pathToRegexp } from '@ice/runtime/pathToRegexp';
 import { queryString } from '@ice/runtime/queryString';
 import { reactAppRenderer, getInitialData } from '@ice/runtime/reactAppRenderer';
 import { useBaseRequest } from '@ice/runtime/useRequest';
-import * as reactRouter from '@ice/runtime/reactRouter';
 import * as reactRouterDOM from '@ice/runtime/reactRouterDom';
 
 const isFunction = (fn: unknown) => {
@@ -64,14 +63,8 @@ describe('ice-untime', () => {
     expect(isFunction(useBaseRequest)).toBe(true);
   });
 
-  test('reactRouter', () => {
-    expect(isFunction(reactRouter.withRouter)).toBe(true);
-    // @ts-ignore for testing
-    expect(reactRouter.useHistory).toBe(undefined);
-  });
-
   test('reactRouterDom', () => {
-    expect(Object.keys(reactRouterDOM).length).toBe(14);
+    expect(Object.keys(reactRouterDOM).length).toBe(15);
     expect(isFunction(reactRouterDOM.useHistory)).toBe(true);
   });
 

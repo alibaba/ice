@@ -9,5 +9,4 @@ export * from './pathToRegexp';
 export * from './queryString';
 export * from './reactAppRenderer';
 export * from './reactRouterDom';
-export * from './reactRouter';
 export * from './useRequest';

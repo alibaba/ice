@@ -15,7 +15,7 @@ export {
 
   // static method
   // export withrouter API from the create-app-shared
-  // withRouter,
+  withRouter,
   matchPath,
   generatePath,
 
