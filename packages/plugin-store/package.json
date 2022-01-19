@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-store",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "builtin `@ice/store` in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@builder/app-helpers": "^2.5.0",
-    "@ice/runtime": "^0.1.1",
+    "@ice/runtime": "^0.1.2",
     "@ice/store": "^2.0.0-3",
     "chalk": "^4.1.0",
     "enhanced-resolve": "^4.3.0",

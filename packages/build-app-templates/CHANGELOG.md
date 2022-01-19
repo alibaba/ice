@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 1.1.3
 
 - [fix] relative path of `loadStaticModules`

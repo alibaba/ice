@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.8
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 2.0.7
 
 - [fix] get alias from webpack config instead of userConfig object

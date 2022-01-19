@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.1
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 3.1.0
 
 - [feat] support SSR in mode Vite

@@ -1,10 +1,13 @@
 # Changelog
 
+## 2.2.1
+
+- [chore] move runtime's dependencies to `@ice/runtime`
+
 ## 2.2.0
 
 - [feat] optimize runtime when build
 - [chore] bump version of `es-module-lexer`
-- [chore] move runtime's dependencies to `@ice/runtime`
 - [fix] adapt swc rule name
 
 ## 2.1.4
