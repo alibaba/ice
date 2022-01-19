@@ -32,7 +32,7 @@
     "build-plugin-ice-mpa": "2.1.0",
     "build-plugin-ice-request": "2.0.1",
     "build-plugin-ice-router": "2.1.2",
-    "build-plugin-ice-ssr": "3.1.0",
+    "build-plugin-ice-ssr": "3.1.1",
     "build-plugin-ice-store": "2.0.7",
     "build-plugin-react-app": "2.2.0",
     "build-plugin-pwa": "1.1.0",

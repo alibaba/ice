@@ -4,4 +4,7 @@
     "module": "esnext",
     "moduleResolution": "node"
   },
+  "exclude": [
+    "__tests__/*"
+  ]
 }

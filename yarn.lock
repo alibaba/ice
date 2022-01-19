@@ -4889,29 +4889,73 @@ buffer@^5.2.1, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-build-plugin-ice-request@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/build-plugin-ice-request/-/build-plugin-ice-request-2.0.0.tgz#712bad6248f983c327f05d707af169e79f0877d3"
-  integrity sha512-trQpBmAVd6oYOwAGfn3X5Agl90BIA1lqNwVcWtR0yoJNJ3TtVIDRdRj8KnsAgeKu4k09pdl0B3VczGDBD7J8Rw==
+build-plugin-ice-ssr@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/build-plugin-ice-ssr/-/build-plugin-ice-ssr-3.1.0.tgz#452e83dd19f2ff0575cf9349d82c3babd499b13d"
+  integrity sha512-lzRQY2qpcbUZaFwceu+3UoTI9ibIw6JXBF/aFBUb/JcxXF8QRZKnAFLZd8kgzCil0k2Q1QZ2aVOORYSFbPU3Lw==
   dependencies:
-    "@ahooksjs/use-request" "^2.0.0"
+    "@builder/app-helpers" "^2.5.0"
+    "@builder/webpack-config" "^2.0.0"
     "@ice/runtime" "^0.1.0"
+    "@loadable/babel-plugin" "^5.13.2"
+    "@loadable/webpack-plugin" "^5.14.0"
+    chalk "^4.0.0"
+    cheerio "^1.0.0-rc.3"
+    deepmerge "^4.2.2"
     fs-extra "^8.1.0"
+    html-minifier "^4.0.0"
+    parseurl "^1.3.3"
+    query-string "^6.13.7"
+    vite "^2.0.0"
 
-build-plugin-ice-router@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/build-plugin-ice-router/-/build-plugin-ice-router-2.1.1.tgz#b5a124b0fc5552c53f0c7ec1613e459dd3f6dc89"
-  integrity sha512-bJMfAxfBpW9NuiVVv1ce3x2bDdkG4hlnfxy0TcMZW4ICB/3mWBI4xUP75Q3KRnTURpvm+lyGaNbtJizgId7l9g==
+build-plugin-ice-store@2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/build-plugin-ice-store/-/build-plugin-ice-store-2.0.7.tgz#210c963745b1b8e24e0f193523750a3253ae555a"
+  integrity sha512-aRAP30ZrgZU32rDyO6hPjHUY+2MJ1vUOIFli8eHkmjsb7BY/MaMwgpA1kerdWGJOTqPIRnpIRfQttD1Xymo+Qg==
   dependencies:
-    "@builder/app-helpers" "^2.4.1"
-    "@builder/pack" "^0.5.0"
-    "@types/react-router-dom" "^5.1.4"
+    "@builder/app-helpers" "^2.5.0"
+    "@ice/store" "^2.0.0-3"
+    chalk "^4.1.0"
+    enhanced-resolve "^4.3.0"
+    es-module-lexer "^0.9.3"
     fs-extra "^8.1.0"
-    glob "^7.1.6"
-    history "^4.10.1"
-    react "^16.12.0"
-    react-dom "^16.12.0"
+    fs-readdir-recursive "^1.1.0"
+    globby "^11.0.1"
+    loader-utils "^2.0.0"
+    magic-string "^0.25.7"
+
+build-plugin-react-app@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/build-plugin-react-app/-/build-plugin-react-app-2.2.0.tgz#e1d03cd140a008e02b80b1be9ecc0fe01b3573e6"
+  integrity sha512-DJ7KfihyrwpnjX00AjlwV6xHkwMQQ/cwFBjp2wzL13fHS/llHZokzidsaTwpHOYcr13mQ9rsX5C56ueqeqYdiQ==
+  dependencies:
+    "@builder/app-helpers" "^2.5.0"
+    "@builder/jest-config" "^2.0.0"
+    "@builder/pack" "^0.5.0"
+    "@builder/user-config" "^2.1.0"
+    "@builder/webpack-config" "^2.0.0"
+    chalk "^4.0.0"
+    debug "^4.1.1"
+    deepmerge "^4.2.2"
+    es-module-lexer "^0.9.0"
+    esbuild "^0.13.12"
+    events "^3.3.0"
+    fast-glob "^3.2.5"
+    find-up "^5.0.0"
+    fs-extra "^8.1.0"
+    node-notifier "^10.0.0"
+    path-browserify "^1.0.1"
+    path-exists "^4.0.0"
+    process "^0.11.10"
+    query-loader-webpack-plugin "^2.0.0"
+    query-string "^7.0.1"
+    react-app-renderer "^3.1.0"
+    react-dev-utils "^11.0.0"
+    react-refresh "^0.10.0"
+    react-router "^5.2.1"
     react-router-dom "^5.1.2"
+    vite-plugin-component-style "^1.0.4"
+    webpack-plugin-import "^0.3.0"
 
 build-scripts-config@^3.0.0:
   version "3.0.3"
@@ -8796,11 +8840,6 @@ ignore@^4.0.3, ignore@^4.0.6:
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
 ignore@^5.0.4, ignore@^5.1.1, ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
-  integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
-
-ignore@^5.1.8:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
