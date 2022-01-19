@@ -1,8 +1,8 @@
-import {
+import type {
   RouteProps as DefaultRouteProps,
   RouteComponentProps,
 } from 'react-router-dom';
-import { History } from 'history';
+import type { History } from '@ice/runtime/history';
 import { RouteItemProps, IModifyRoutes } from './base';
 
 export interface IAppRouterProps {

@@ -1,4 +1,4 @@
-import { History } from 'history';
+import { History } from '@ice/runtime/history';
 import { IgnoreOptions } from './collector';
 import { IRouterConfig } from '.';
 import { RouteItemProps } from './base';

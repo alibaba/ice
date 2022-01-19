@@ -2,7 +2,6 @@ import * as path from 'path';
 import { IRouterOptions } from './types/router';
 import walker from './collector/walker';
 import vitePluginLazy from './vitePluginLazy';
-import { findPkgInCurrentDir } from './utils/findPkgInCurrentDir';
 
 // compatible with $ice/routes
 const TEM_ROUTER_COMPATIBLE = '$ice/routes';
@@ -49,14 +48,10 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
 
     // alias for react-router-dom
     const packageName = 'react-router-dom';
-    const [routerDOMExist, routerDOMPath] = findPkgInCurrentDir('react-router-dom', rootDir);
-
-    if (routerDOMExist) {
-      // use react-router-dom path while react-router-dom has module field in package.json
-      config.resolve.alias.set(packageName, path.dirname(routerDOMPath));
-    } else {
-      config.resolve.alias.set(packageName, '@ice/runtime/reactRouterDom');
-    }
+    const packagePath = require.resolve(`${packageName}/package.json`, {
+      paths: [rootDir, __dirname]
+    });
+    config.resolve.alias.set(packageName, path.dirname(packagePath));
 
     // config historyApiFallback for router type browser
     if (!config.devServer.get('historyApiFallback')) {

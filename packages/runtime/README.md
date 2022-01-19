@@ -26,7 +26,6 @@ import { axios } from '@ice/runtime/axios';
   "./pathToRegexp": "./lib/pathToRegexp.js",
   "./queryString": "./lib/queryString.js",
   "./reactAppRenderer": "./lib/reactAppRenderer.js",
-  "./reactRouterDom": "./lib/reactRouterDom.js",
   "./useRequest": "./lib/useRequest.js"
 }
 ```
