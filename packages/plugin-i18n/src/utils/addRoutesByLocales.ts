@@ -19,7 +19,9 @@ function addRoutesByLocales(originRoutes: any[], i18nConfig: I18nConfig) {
   prefixRouteLocales.forEach((prefixRouteLocale: string) => {
     function addRoutesByLocale(routes) {
       const result = routes.map((route) => {
-        const { children, path } = route;
+        // path 设置默认值为空字符串是为了适配 NoMatch(NotFound) 组件
+        // example: https://v5.reactrouter.com/web/example/no-match
+        const { children, path = '' } = route;
         if (!children) {
           return {
             ...route,

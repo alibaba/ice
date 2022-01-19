@@ -2,6 +2,8 @@
 
 ## 0.1.1
 
+- fix: fail to redirect to another route in CSR
+- fix: fail to render NoMatch component which has no specified path
 - chore: rename `redirect` to `autoRedirect`
 
 ## 0.1.0

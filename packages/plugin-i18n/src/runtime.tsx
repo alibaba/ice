@@ -69,10 +69,10 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
   const { defaultLocale } = i18nConfig;
 
   function getLocalePath(
-    path: string, 
+    originPathname: string, 
     locale: string,
   ) {
-    const localePathResult = normalizeLocalePath(path, i18nConfig, basename);
+    const localePathResult = normalizeLocalePath(originPathname, i18nConfig, basename);
     const { pathname } = localePathResult;
     if (locale === defaultLocale) {
       return pathname;
@@ -80,15 +80,28 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
     return `/${locale}${pathname === '/' ? '' : pathname}`;
   }
 
-  history.push = function(path: string, state?: unknown) {
+  function getPathname(path: string | Location): string {
+    if (isLocationObject(path)) {
+      return path.pathname;
+    }
+    return path;
+  }
+
+  history.push = function(path: string | Location, state?: unknown) {
     const locale = getLocaleFromCookies() || defaultLocale;
-    const localePath = getLocalePath(path, locale);
+    const pathname = getPathname(path);
+    const localePath = getLocalePath(pathname, locale);
     originHistory.push(localePath, state);
   };
 
-  history.replace = function(path: string, state?: unknown) {
+  history.replace = function(path: string | Location, state?: unknown) {
     const locale = getLocaleFromCookies() || defaultLocale;
-    const localePath = getLocalePath(path, locale);
+    const pathname = getPathname(path);
+    const localePath = getLocalePath(pathname, locale);
     originHistory.replace(localePath, state);
   };
+}
+
+function isLocationObject(path: Location | string): path is Location {
+  return typeof path === 'object';
 }
