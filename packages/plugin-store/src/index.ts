@@ -8,12 +8,21 @@ import vitePluginPageRedirect from './vitePluginPageRedirect';
 
 const { name: pluginName } = require('../package.json');
 
+interface IReplaceRouterPathOptions {
+  tempDir: string,
+  applyMethod: (...args: string[]) => void,
+  routesPaths: string,
+  rootDir:string, 
+  srcPath: string,
+  alias: Record<string, string>,
+}
+
 export default async (api: any) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
-  const { rootDir, userConfig } = context;
+  const { rootDir, userConfig, command } = context;
 
   // get mpa entries in src/pages
-  const { mpa: isMpa, entry, store, swc, alias, vite, router, babelPlugins = [] } = userConfig;
+  const { mpa: isMpa, entry, store, swc, vite, router, babelPlugins = [] } = userConfig;
 
   const tempPath = getValue('TEMP_PATH');
   const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
@@ -79,53 +88,55 @@ export default async (api: any) => {
     routesPaths = [routes.routesPath];
   }
 
+  // redirect route path to ice temp(.ice/pages/Home/index.tsx)
   if (vite) {
     modifyUserConfig(
       'vite.plugins', 
       [vitePluginPageRedirect(rootDir, routesPaths)],
       { deepmerge: true }
     );
-  }
+  } else {
+    const defaultAlias = {};
+    const options: IReplaceRouterPathOptions = {
+      tempDir,
+      applyMethod,
+      routesPaths,
+      rootDir, 
+      srcPath,
+      alias: defaultAlias,
+    };
+    onHook(`before.${command}.run`, ({ config }) => {
+      const webWebpackConfig = Array.isArray(config) ? (config.find(item => item.name === 'web') || {}) : config;
+      options.alias = webWebpackConfig?.resolve?.alias || defaultAlias;
+    });
 
-  if (swc) {
-    onGetWebpackConfig((config: any) => {
-      config.module
-        .rule('replace-router-path')
+    if (swc) {
+      onGetWebpackConfig((config: any) => {
+        config.module
+          .rule('replace-router-path')
         // ensure that replace-router-path-loader is before babel-loader
         // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
-        .after('tsx')
-        .test((filePath: string) => routesPaths.includes(filePath))
-        .use('replace-router-path-loader')
-        .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
-        .options({
-          alias,
-          tempDir,
-          applyMethod,
-          routesPaths,
-          rootDir,
-          srcPath
-        });
-    });
-  } else {
-    const replacePathBabelPlugin = [
-      require.resolve('./babelPluginReplacePath'),
-      {
-        routesPaths,
-        alias,
-        applyMethod,
-        tempDir,
-        rootDir
-      }
-    ];
-    const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
-    if (loadableBabelPluginIndex > -1) {
+          .after('tsx')
+          .test((filePath: string) => routesPaths.includes(filePath))
+          .use('replace-router-path-loader')
+          .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
+          .options(options);
+      });
+    } else {
+      const replacePathBabelPlugin = [
+        require.resolve('./babelPluginReplacePath'),
+        options
+      ];
+      const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
+      if (loadableBabelPluginIndex > -1) {
       // ensure ReplacePathBabelPlugin is before @loadable/babel-plugin
       // @loadable/babel-plugin will transform the router paths which babelPluginReplacePath couldn't transform
-      babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
-    } else {
-      babelPlugins.push(replacePathBabelPlugin);
+        babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
+      } else {
+        babelPlugins.push(replacePathBabelPlugin);
+      }
+      modifyUserConfig('babelPlugins', [...babelPlugins]);
     }
-    modifyUserConfig('babelPlugins', [...babelPlugins]);
   }
 
   onGetWebpackConfig((config: any) => {

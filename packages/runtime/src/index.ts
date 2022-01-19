@@ -5,5 +5,5 @@ import axiosUtils from './axiosUtils';
 export {
   axios,
   axiosUtils,
-  pathToRegexp
+  pathToRegexp,
 };

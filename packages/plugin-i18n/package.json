@@ -1,0 +1,37 @@
+{
+  "name": "build-plugin-ice-i18n",
+  "version": "0.1.1",
+  "description": "ICE i18n build-scripts plugin",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://github.com/alibaba/ice#readme",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "template",
+    "src",
+    "!lib/**/*.map"
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "universal-cookie": "^4.0.4",
+    "accept-language-parser": "^1.5.0",
+    "fs-extra": "^10.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0",
+    "react-router-dom": "^5.0.0"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.2.1",
+    "@types/accept-language-parser": "^1.5.3",
+    "@types/history": "^4.7.5"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-i18n"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  }
+}

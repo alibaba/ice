@@ -154,10 +154,6 @@ export default class Generator {
 
   public render = () => {
     this.rerender = true;
-    const plugins = this.plugins.filter((plugin) => {
-      return !this.disableRuntimePlugins.includes(plugin.name);
-    });
-
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
       if (typeof currentValue === 'function') {
         return currentValue(previousValue);
@@ -165,7 +161,11 @@ export default class Generator {
       return previousValue;
     }, this.parseRenderData());
 
-    this.renderData.runtimeModules = getRuntimeModules(plugins, this.targetDir, !!this.renderData.hasJsxRuntime);
+    // 生成所有运行时插件，在 load 阶段判断是否需要加载，确保 index 中的 exports 路径永远可以获取引用
+    this.renderData.runtimeModules = getRuntimeModules(this.plugins, this.targetDir, !!this.renderData.hasJsxRuntime)
+      .filter((plugin) => {
+        return !this.disableRuntimePlugins.includes(plugin.name);
+      });
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);

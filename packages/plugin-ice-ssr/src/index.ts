@@ -1,28 +1,68 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { minify } from 'html-minifier';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
+import type { IPlugin } from 'build-scripts';
 import generateStaticPages from './generateStaticPages';
+import vitePluginSSR from './vite/ssrPlugin';
+import ssrBuild from './vite/ssrBuild';
+import replaceHtmlContent from './replaceHtmlContent';
 
-const plugin = async (api): Promise<void> => {
+const plugin: IPlugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
   const { outputDir, ssr } = userConfig;
 
-  const TEMP_PATH = getValue('TEMP_PATH');
+  const TEMP_PATH = getValue<string>('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
-  const buildDir = path.join(rootDir, outputDir);
+  const buildDir = path.join(rootDir, outputDir as string);
   const serverDir = path.join(buildDir, 'server');
   const serverFilename = 'index.js';
   const serverFilePath = path.join(serverDir, serverFilename);
 
   // render server entry
-  const templatePath = path.join(__dirname, '../src/server.ts.ejs');
+  const templatePath = path.join(__dirname, './server.ts.ejs');
   const ssrEntry = path.join(TEMP_PATH, 'plugins/ssr/server.ts');
+  const ssgEntry = path.join(TEMP_PATH, 'plugins/ssr/renderPage.ts');
   const routesFileExists = Boolean(applyMethod('getSourceFile', 'src/routes', rootDir));
-  applyMethod('addRenderFile', templatePath, ssrEntry, { outputDir, routesPath: routesFileExists ? '@' : '../..' });
+  applyMethod('addRenderFile', path.join(__dirname, '../src/env.ts'), path.join(TEMP_PATH, 'plugins/ssr/env.ts'));
+  const renderProps = {
+    outputDir,
+    routesPath: routesFileExists ? '@' : '../..',
+    disableLoadable: !!userConfig.vite,
+    // 仅在 vite 的 dev 模式下，需要指定 env，build 阶段 process.env.__IS_SERVER__ 会被替换成布尔值
+    importEnv: !!userConfig.vite && command !== 'build',
+  };
+  applyMethod('addRenderFile', templatePath, ssrEntry, renderProps);
+  if (ssr === 'static') {
+    applyMethod('addRenderFile', path.join(__dirname, './renderPages.ts.ejs'), ssgEntry, renderProps);
+  }
+
+  if (userConfig.vite) {
+
+    // vite 模式下直接使用 process.env.__IS_SERVER__ 的变量，如果注册即便是将会进行字符串替换
+    if (command === 'start') {
+      onGetWebpackConfig((config) => {
+        config
+          .plugin('DefinePlugin')
+          .tap(([args]) => {
+            delete args['process.env.__IS_SERVER__'];
+            return [args];
+          });
+      });
+    }
+    modifyUserConfig('vite.plugins', [vitePluginSSR(ssrEntry)], { deepmerge: true });
+    onHook('after.build.compile', async ({ config }) => {
+      // dev 阶段直接使用 ssrLoadModule 实时加载并执行
+      // build 服务未实现类似 ssrLoadModule 的能力，需要将 server 源码进行打包
+      await ssrBuild(config, { ssrEntry, ssgEntry, ssr: ssr as string });
+      if (ssr === 'static') {
+        await generateStaticPages(buildDir, serverFilePath);
+      }
+    });
+    return;
+  }
 
   const mode = command === 'start' ? 'development' : 'production';
 
@@ -184,20 +224,8 @@ const plugin = async (api): Promise<void> => {
 
     if (command === 'build' && ssr === 'static') {
       // SSG, pre-render page in production
-      const ssgTemplatePath = path.join(__dirname, './renderPages.ts.ejs');
-      const ssgEntryPath = path.join(TEMP_PATH, 'plugins/ssr/renderPages.ts');
       const ssgBundlePath = path.join(serverDir, 'renderPages.js');
-      applyMethod(
-        'addRenderFile',
-        ssgTemplatePath,
-        ssgEntryPath,
-        {
-          outputDir,
-          routesPath: routesFileExists ? '@' : '.',
-        }
-      );
-
-      config.entry('renderPages').add(ssgEntryPath);
+      config.entry('renderPages').add(ssgEntry);
 
       onHook('after.build.compile', async () => {
         await generateStaticPages(buildDir, ssgBundlePath);
@@ -208,12 +236,7 @@ const plugin = async (api): Promise<void> => {
 
   onHook(`after.${command}.compile`, () => {
     const htmlFilePath = path.join(buildDir, 'index.html');
-    const bundle = fse.readFileSync(serverFilePath, 'utf-8');
-    const html = fse.readFileSync(htmlFilePath, 'utf-8');
-    const minifiedHtml = minify(html, { collapseWhitespace: true, quoteCharacter: '\'' }).replace(/`/g, '&#x60;');
-    // `"` in the regulation expression is to be compatible with the minifier(such as terser)
-    const newBundle = bundle.replace(/['"]global.__ICE_SERVER_HTML_TEMPLATE__['"]/, `\`${minifiedHtml}\``);
-    fse.writeFileSync(serverFilePath, newBundle, 'utf-8');
+    replaceHtmlContent(htmlFilePath, serverFilePath);
   });
 };
 

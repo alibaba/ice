@@ -34,7 +34,9 @@ module.exports = (config, value, context) => {
           },
         },
       };
-      config.module.rule('swc').use('swc-loader').tap((options) => deepmerge(options || {}, refreshOptions));
+      ['jsx', 'tsx'].forEach((ruleName) => {
+        config.module.rule(`swc-${ruleName}`).use('swc-loader').tap((options) => deepmerge(options || {}, refreshOptions));
+      });
     }
   }
 };

@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-intl": "^5.22.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0"
+  },
+  "scripts": {
+    "start": "RUNTIME_DEBUG=true ../../packages/icejs/bin/ice-cli.js start",
+    "build": "../../packages/icejs/bin/ice-cli.js build"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

@@ -1,8 +1,14 @@
 # Changelog
 
-## 2.1.5
+## 2.2.1
 
 - [fix] support userConfig `cssChunkNames`
+
+## 2.2.0
+
+- [feat] optimize runtime when build
+- [chore] bump version of `es-module-lexer`
+- [fix] adapt swc rule name
 
 ## 2.1.4
 

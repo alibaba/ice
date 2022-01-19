@@ -59,6 +59,11 @@ module.exports = function() {
       defaultValue: true,
       validation: 'boolean',
       configWebpack: require('./userConfig/fastRefresh'),
-    }
+    },
+    {
+      name: 'optimizeRuntime',
+      defaultValue: true,
+      validation: 'boolean',
+    },
   ];
 };
