@@ -11,7 +11,7 @@ import getRedirectIndexRoute from './utils/getRedirectIndexRoute';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { i18n: i18nConfig } = buildConfig;
-  const { i18nRouting, redirect } = i18nConfig;
+  const { i18nRouting, autoRedirect } = i18nConfig;
   const { router: appConfigRouter = {} } = appConfig;
   const { history = {}, basename } = appConfigRouter;
 
@@ -20,7 +20,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
       // routes 值是被 formatRoutes 方法处理后返回的结果  
       const modifiedRoutes = addRoutesByLocales(routes, i18nConfig);
 
-      if (redirect === true) {
+      if (autoRedirect === true) {
         const newIndexComponent = getRedirectIndexRoute(modifiedRoutes, i18nConfig, basename);
         if (newIndexComponent) {
           modifiedRoutes.unshift(newIndexComponent);
@@ -69,10 +69,10 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
   const { defaultLocale } = i18nConfig;
 
   function getLocalePath(
-    path: string, 
+    originPathname: string, 
     locale: string,
   ) {
-    const localePathResult = normalizeLocalePath(path, i18nConfig, basename);
+    const localePathResult = normalizeLocalePath(originPathname, i18nConfig, basename);
     const { pathname } = localePathResult;
     if (locale === defaultLocale) {
       return pathname;
@@ -80,15 +80,28 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
     return `/${locale}${pathname === '/' ? '' : pathname}`;
   }
 
-  history.push = function(path: string, state?: unknown) {
+  function getPathname(path: string | Location): string {
+    if (isLocationObject(path)) {
+      return path.pathname;
+    }
+    return path;
+  }
+
+  history.push = function(path: string | Location, state?: unknown) {
     const locale = getLocaleFromCookies() || defaultLocale;
-    const localePath = getLocalePath(path, locale);
+    const pathname = getPathname(path);
+    const localePath = getLocalePath(pathname, locale);
     originHistory.push(localePath, state);
   };
 
-  history.replace = function(path: string, state?: unknown) {
+  history.replace = function(path: string | Location, state?: unknown) {
     const locale = getLocaleFromCookies() || defaultLocale;
-    const localePath = getLocalePath(path, locale);
+    const pathname = getPathname(path);
+    const localePath = getLocalePath(pathname, locale);
     originHistory.replace(localePath, state);
   };
+}
+
+function isLocationObject(path: Location | string): path is Location {
+  return typeof path === 'object';
 }
