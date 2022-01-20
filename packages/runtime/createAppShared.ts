@@ -11,7 +11,12 @@ import {
   setHistory,
   initHistory,
   initAppLifeCycles,
-  createHistory
+  createHistory,
+  // for rax only
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+  miniappCreateWithRouter,
 } from 'create-app-shared';
 
 export {
@@ -25,5 +30,10 @@ export {
   setHistory,
   initHistory,
   initAppLifeCycles,
-  createHistory
+  createHistory,
+  // for rax
+  registerNativeEventListeners,
+  addNativeEventListener,
+  removeNativeEventListener,
+  miniappCreateWithRouter,
 };

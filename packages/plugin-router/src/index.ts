@@ -49,7 +49,9 @@ const plugin = ({ context, onGetWebpackConfig, modifyUserConfig, getValue, apply
     // alias for react-router-dom
     const packageName = 'react-router-dom';
     const packagePath = require.resolve(`${packageName}/package.json`, {
-      paths: [rootDir, __dirname]
+      paths: [
+        rootDir, // Firstly resolve package in rootDir
+        path.join(__dirname, '..')] // Else, use built in
     });
     config.resolve.alias.set(packageName, path.dirname(packagePath));
 

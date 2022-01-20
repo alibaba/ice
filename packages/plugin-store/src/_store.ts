@@ -1,4 +1,5 @@
-import { createStore, IcestoreDispatch, IcestoreRootState } from '@ice/store';
+import { createStore } from '@ice/runtime/iceStore';
+import type { IcestoreDispatch, IcestoreRootState } from '@ice/runtime/iceStore';
 
 const models = {};
 

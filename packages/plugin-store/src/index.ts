@@ -52,10 +52,10 @@ export default async (api: any) => {
   const appStoreFile = applyMethod('formatPath', getAppStorePath(srcPath));
 
   applyMethod('addExport', {
-    source: '@ice/store',
+    source: '@ice/runtime/iceStore',
     specifier: '{ createStore }',
     exportName: 'createStore',
-    importSource: '@ice/store',
+    importSource: '@ice/runtime/iceStore',
     exportMembers: ['createStore'],
   });
 

@@ -26,7 +26,6 @@
   "dependencies": {
     "@builder/app-helpers": "^2.5.0",
     "@ice/runtime": "^0.1.2",
-    "@ice/store": "^2.0.0-3",
     "chalk": "^4.1.0",
     "enhanced-resolve": "^4.3.0",
     "es-module-lexer": "^0.9.3",

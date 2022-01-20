@@ -9,7 +9,8 @@ import {
   createHistory,
 <% } %>
 } from '@ice/runtime/createAppShared';
-import { reactAppRenderer, RenderAppConfig } from '@ice/runtime/reactAppRenderer';
+import { reactAppRenderer } from '@ice/runtime/reactAppRenderer';
+import type { RenderAppConfig } from '@ice/runtime/reactAppRenderer';
 <% if (globalStyle) {%>
   // eslint-disable-next-line
   import '<%= globalStyle %>'

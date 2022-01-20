@@ -1,4 +1,4 @@
-/* for plugin-request  */
+// @ahooksjs/use-request@2.8.15
 import useBaseRequest from '@ahooksjs/use-request';
 
 export {

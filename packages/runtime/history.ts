@@ -1,4 +1,4 @@
-// https://github.com/ReactTraining/history/blob/master/modules/index.js
+// history@4.10.1
 export {
   createBrowserHistory,
   createHashHistory,

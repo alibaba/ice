@@ -10,8 +10,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "@ice/runtime": "^0.1.2",
-    "create-app-shared": "^1.2.3"
+    "@ice/runtime": "^0.1.2"
   },
   "files": [
     "lib",
