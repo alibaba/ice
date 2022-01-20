@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@ahooksjs/use-request@2.8.15", "@ahooksjs/use-request@^2.0.0":
+"@ahooksjs/use-request@2.8.15":
   version "2.8.15"
   resolved "https://registry.yarnpkg.com/@ahooksjs/use-request/-/use-request-2.8.15.tgz#daa32a8395ba75e8deb9f4fde4e221a4a8f525db"
   integrity sha512-xhVaM4fyIiAMdVFuuU5i3CFUdFa/IblF+fvITVMFaUEO3w/V5tVCAF6WIA3T03n1/RPuzRkA7Ao1PFtSGtGelw==
@@ -1541,17 +1541,6 @@
   version "2.0.0-3"
   resolved "https://registry.yarnpkg.com/@ice/store/-/store-2.0.0-3.tgz#5051fb23676379b001e1d27c94b184620ab90b62"
   integrity sha512-Df+NHe16jgzR1oU7gJsBSQb/lew3IDkwYKx8N/M1C0jy20+VmX9RvrshIQEKAXo+pYykW/HH/09OjR3raBf5Ng==
-  dependencies:
-    immer "^9.0.6"
-    lodash.isfunction "^3.0.9"
-    react-redux "^7.2.0"
-    redux "^4.0.5"
-    redux-thunk "^2.3.0"
-
-"@ice/store@^2.0.0-3":
-  version "2.0.0-4"
-  resolved "https://registry.yarnpkg.com/@ice/store/-/store-2.0.0-4.tgz#e4ec6be7708c38dbac8df1269e6ec93bd971c329"
-  integrity sha512-iwv8VbVt7MY0UBbekxS2RyAnYwg4bfxQ3l7NvE+tDdyTUQXABvnQz+F2uxDYi95ZYH67Hq28erIZ7VRGsDUKNg==
   dependencies:
     immer "^9.0.6"
     lodash.isfunction "^3.0.9"
@@ -4888,55 +4877,6 @@ buffer@^5.2.1, buffer@^5.5.0:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
-
-build-plugin-ice-store@2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/build-plugin-ice-store/-/build-plugin-ice-store-2.0.7.tgz#210c963745b1b8e24e0f193523750a3253ae555a"
-  integrity sha512-aRAP30ZrgZU32rDyO6hPjHUY+2MJ1vUOIFli8eHkmjsb7BY/MaMwgpA1kerdWGJOTqPIRnpIRfQttD1Xymo+Qg==
-  dependencies:
-    "@builder/app-helpers" "^2.5.0"
-    "@ice/store" "^2.0.0-3"
-    chalk "^4.1.0"
-    enhanced-resolve "^4.3.0"
-    es-module-lexer "^0.9.3"
-    fs-extra "^8.1.0"
-    fs-readdir-recursive "^1.1.0"
-    globby "^11.0.1"
-    loader-utils "^2.0.0"
-    magic-string "^0.25.7"
-
-build-plugin-react-app@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/build-plugin-react-app/-/build-plugin-react-app-2.2.0.tgz#e1d03cd140a008e02b80b1be9ecc0fe01b3573e6"
-  integrity sha512-DJ7KfihyrwpnjX00AjlwV6xHkwMQQ/cwFBjp2wzL13fHS/llHZokzidsaTwpHOYcr13mQ9rsX5C56ueqeqYdiQ==
-  dependencies:
-    "@builder/app-helpers" "^2.5.0"
-    "@builder/jest-config" "^2.0.0"
-    "@builder/pack" "^0.5.0"
-    "@builder/user-config" "^2.1.0"
-    "@builder/webpack-config" "^2.0.0"
-    chalk "^4.0.0"
-    debug "^4.1.1"
-    deepmerge "^4.2.2"
-    es-module-lexer "^0.9.0"
-    esbuild "^0.13.12"
-    events "^3.3.0"
-    fast-glob "^3.2.5"
-    find-up "^5.0.0"
-    fs-extra "^8.1.0"
-    node-notifier "^10.0.0"
-    path-browserify "^1.0.1"
-    path-exists "^4.0.0"
-    process "^0.11.10"
-    query-loader-webpack-plugin "^2.0.0"
-    query-string "^7.0.1"
-    react-app-renderer "^3.1.0"
-    react-dev-utils "^11.0.0"
-    react-refresh "^0.10.0"
-    react-router "^5.2.1"
-    react-router-dom "^5.1.2"
-    vite-plugin-component-style "^1.0.4"
-    webpack-plugin-import "^0.3.0"
 
 build-scripts-config@^3.0.0:
   version "3.0.3"
@@ -8527,7 +8467,7 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
-history@4.10.1, history@^4.10.1, history@^4.9.0:
+history@4.10.1, history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/history/-/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
   integrity sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew==
@@ -13701,16 +13641,6 @@ query-string@^6.13.1, query-string@^6.13.7, query-string@^6.13.8:
     split-on-first "^1.0.0"
     strict-uri-encode "^2.0.0"
 
-query-string@^7.0.1:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-7.1.0.tgz#96b88f27b39794f97b8c8ccd060bc900495078ef"
-  integrity sha512-wnJ8covk+S9isYR5JIXPt93kFUmI2fQ4R/8130fuq+qwLiGVTurg7Klodgfw4NSz/oe7xnyi09y3lSrogUeM3g==
-  dependencies:
-    decode-uri-component "^0.2.0"
-    filter-obj "^1.1.0"
-    split-on-first "^1.0.0"
-    strict-uri-encode "^2.0.0"
-
 querystring@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.1.tgz#40d77615bb09d16902a85c3e38aa8b5ed761c2dd"
@@ -13917,19 +13847,6 @@ react-refresh@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
-
-react-router-dom@5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.2.1.tgz#34af8b551a4ce17487d3f80e651b91651978dff6"
-  integrity sha512-xhFFkBGVcIVPbWM2KEYzED+nuHQPmulVa7sqIs3ESxzYd1pYg8N8rxPnQ4T2o1zu/2QeDUWcaqST131SO1LR3w==
-  dependencies:
-    "@babel/runtime" "^7.12.13"
-    history "^4.9.0"
-    loose-envify "^1.3.1"
-    prop-types "^15.6.2"
-    react-router "5.2.1"
-    tiny-invariant "^1.0.2"
-    tiny-warning "^1.0.0"
 
 react-router-dom@^5.1.2:
   version "5.3.0"
