@@ -33,8 +33,3 @@ import { axios } from '@ice/runtime/axios';
 但是 [类型问题暂时不好解决](https://www.typescriptlang.org/docs/handbook/esm-node.html)。
 
 2. 所以目前的办法是把所有文件打包至与 package.json 同级的目录，则可以使用上面的用法，类型也没有问题
-
-
-## reslove
-
-对于存在多实例会有错误的 Package，比如场景：运行时 runtime 依赖 `reactRouterDOM` 安装在 `@ice/runtime` 下，若用户需要自定义 `reactRouterDOM` 的版本，则需要 reslove 到用户安装的版本。
