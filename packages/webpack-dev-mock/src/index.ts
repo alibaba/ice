@@ -26,7 +26,6 @@ const winPath = function(path) {
 let error = null;
 const cwd = process.cwd();
 const mockDir = winPath(path.join(cwd, 'mock'));
-let revertRequireHook: () => void;
 
 function getConfig(rootDir: string, ignore: IIgnoreFolders) {
   // get mock files
@@ -39,7 +38,7 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
   }, []);
   const onlySet = new Set([...requireDeps, ...mockFiles]);
   // add require hook to transform [j/t]s file
-  revertRequireHook = addRequireHook(
+  const revertRequireHook = addRequireHook(
     (source) => transformSync(source, esbuildPreset).code,
     {
       exts: ['.js', '.ts'],
@@ -70,6 +69,8 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
       }
     }
   });
+  // revert require hook after requiring all mock files
+  revertRequireHook();
   return mockConfig;
 }
 
@@ -113,7 +114,6 @@ function realApplyMock(app, ignore: IIgnoreFolders) {
     const parsedMockConfig = [];
 
     const config = getConfig(cwd, ignore);
-    revertRequireHook();
     Object.keys(config).forEach(key => {
       const handler = config[key];
       assert(
