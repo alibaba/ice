@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- [feat] support env variables
+
 ## 2.1.0
 
 - [feat] support `--force` to empty cache folder

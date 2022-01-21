@@ -48,6 +48,26 @@ module.exports = async (api) => {
     if (iceTempPath) {
       chainConfig.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
     }
+
+    let publicPath = chainConfig.output.get('publicPath');
+    // add last slash
+    if (publicPath && !publicPath.endsWith('/')) {
+      publicPath = `${publicPath}/`;
+    }
+    process.env.CDN_PATH = publicPath;
+    chainConfig.plugin('DefinePlugin').tap((args) => [
+      Object.assign({}, ...args, {
+        // keep the same name in build-plugin-def
+        'process.env.CDN_PATH': JSON.stringify(publicPath),
+      }),
+    ]);
+    chainConfig.plugin('HtmlWebpackPlugin').tap(([args]) => {
+      args.templateParameters = {
+        ...(args.templateParameters || {}),
+        CDN_PATH: process.env.CDN_PATH,
+      };
+      return [args];
+    });
   });
 
   const taskName = 'web';

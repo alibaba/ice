@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+- [feat] define variables of `CDN_PATH`
+
 ## 2.2.0
 
 - [feat] optimize runtime when build

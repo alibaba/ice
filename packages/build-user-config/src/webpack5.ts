@@ -1,8 +1,10 @@
-const path = require('path');
-const hash = require('object-hash');
+import * as path from 'path';
+import * as hash from 'object-hash';
+import type { IPluginAPI } from 'build-scripts';
+import type WebpackChain = require('webpack-chain');
 
 // built-in webpack 5 abilities
-module.exports = (config, api) => {
+export default (config: WebpackChain, api: IPluginAPI) => {
   const { context, getValue } = api;
   const { userConfig, rootDir, webpack } = context;
   // filesystem cache
@@ -25,7 +27,7 @@ module.exports = (config, api) => {
     // eslint-disable-next-line global-require
     if (require('../package.json').__npminstall_done) {
       const nodeModulesPath = path.join(rootDir, 'node_modules');
-      cacheConfig.snapshot = {
+      (cacheConfig as any).snapshot = {
         immutablePaths: [nodeModulesPath],
       };
     }
@@ -38,7 +40,7 @@ module.exports = (config, api) => {
         // 缓存日志
         infrastructureLogging: {
           ...defaultLogging,
-          ...userConfig.logging,
+          ...userConfig.logging as Record<string, string>,
         }
       }: { infrastructureLogging : defaultLogging }),
     });
