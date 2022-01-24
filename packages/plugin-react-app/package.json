@@ -16,7 +16,7 @@
     "@builder/app-helpers": "^2.5.0",
     "@builder/jest-config": "^2.0.0",
     "@builder/pack": "^0.5.0",
-    "@builder/user-config": "^2.1.0",
+    "@builder/user-config": "^2.2.0",
     "@builder/webpack-config": "^2.0.0",
     "chalk": "^4.0.0",
     "debug": "^4.1.1",
