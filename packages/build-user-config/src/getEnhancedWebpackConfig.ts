@@ -22,7 +22,7 @@ export default (api: IPluginAPI, { webpackConfig }) => {
   // in case of registerUserConfig will be execute before onGetWebpackConfig
   // default value for DefinePlugin
   const defineVariables = {
-    'process.env': clientEnv.stringified,
+    ...clientEnv.stringified,
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
     'process.env.APP_MODE': JSON.stringify(appMode),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
