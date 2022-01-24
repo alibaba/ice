@@ -35,7 +35,8 @@ function loadEnvironment(envDir: string, mode: string) {
       for (const [key, value] of Object.entries(parsed)) {
         if (env[key] === undefined) {
           env[key] = value;
-        } else if (key === 'NODE_ENV') {
+        }
+        if (key === 'NODE_ENV') {
           // support NODE_ENV override in .env file, in case of need a custom build mode for develop
           process.env.NODE_ENV = value;
         }
