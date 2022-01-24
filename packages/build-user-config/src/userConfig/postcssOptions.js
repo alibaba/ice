@@ -2,7 +2,7 @@ const checkPostcssLoader = (config, ruleName) =>
   config.module.rules.has(ruleName) &&
   config.module.rule(ruleName).uses.has('postcss-loader');
 
-module.exports = (config, postcssOptions) => {
+module.exports = (config, postcssOptions, { rootDir }) => {
   if (postcssOptions) {
     const styleRules = [
       'css',
@@ -92,8 +92,9 @@ module.exports = (config, postcssOptions) => {
         ? pluginInfo
         : [pluginInfo];
       if (typeof name === 'string') {
+        const resolvePath = require.resolve(name, { paths: [rootDir] });
         // eslint-disable-next-line
-        return require(name)(options);
+        return require(resolvePath)(options);
       } else {
         return pluginInfo;
       }
