@@ -1,12 +1,12 @@
 {
   "name": "@builder/user-config",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Includes methods which are releated to set base user config for framework",
   "homepage": "",
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "@builder/pack": "^0.5.3-beta.4",
+    "@builder/pack": "^0.6.0",
     "@babel/helper-module-imports": "^7.13.12",
     "@builder/app-helpers": "^2.5.0",
     "core-js": "^3.3.1",

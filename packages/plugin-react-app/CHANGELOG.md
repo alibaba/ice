@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.1
+
+- [fix] bump version of `@builder/pack`(^0.6.0)
+- [fix] remove `webpackHotDevClient`
+
 ## 2.2.0
 
 - [feat] optimize runtime when build

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.1
+
+- [fix] compatible with the latest API of `webpack-dev-server`
+
 ## 3.1.0
 
 - [feat] support SSR in mode Vite
