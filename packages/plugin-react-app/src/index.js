@@ -61,13 +61,15 @@ module.exports = async (api) => {
         'process.env.CDN_PATH': JSON.stringify(publicPath),
       }),
     ]);
-    chainConfig.plugin('HtmlWebpackPlugin').tap(([args]) => {
-      args.templateParameters = {
-        ...(args.templateParameters || {}),
-        CDN_PATH: process.env.CDN_PATH,
-      };
-      return [args];
-    });
+    if (chainConfig.plugins.get('HtmlWebpackPlugin')) {
+      chainConfig.plugin('HtmlWebpackPlugin').tap(([args]) => {
+        args.templateParameters = {
+          ...(args.templateParameters || {}),
+          CDN_PATH: process.env.CDN_PATH,
+        };
+        return [args];
+      });
+    }
   });
 
   const taskName = 'web';
