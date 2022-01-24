@@ -2,7 +2,7 @@ const checkPostcssLoader = (config, ruleName) =>
   config.module.rules.has(ruleName) &&
   config.module.rule(ruleName).uses.has('postcss-loader');
 
-module.exports = (config, postcssOptions, { rootDir }) => {
+module.exports = (config, postcssOptions, { rootDir = '' } = {}) => {
   if (postcssOptions) {
     const styleRules = [
       'css',
