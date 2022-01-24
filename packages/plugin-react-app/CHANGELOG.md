@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+- [fix] `vitePlugins` only take effect when `vite` is true
+
 ## 2.2.0
 
 - [feat] optimize runtime when build
