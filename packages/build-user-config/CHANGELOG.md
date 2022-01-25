@@ -3,6 +3,9 @@
 ## 2.2.0
 
 - [feat] support env variables
+- [feat] compatible with the latest API of `webpack-dev-server`
+- [fix] bump version of `@builder/pack`(^0.6.0)
+- [fix] remove default fallback for `url`
 
 ## 2.1.0
 

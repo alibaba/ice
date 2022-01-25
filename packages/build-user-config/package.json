@@ -6,9 +6,9 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
+    "@builder/pack": "^0.6.0",
     "@babel/helper-module-imports": "^7.13.12",
     "@builder/app-helpers": "^2.5.0",
-    "@builder/pack": "^0.5.0",
     "@builder/swc": "^0.1.0",
     "@builder/swc-loader": "^1.0.0",
     "@builder/webpack-plugin-swc": "^1.0.0",
@@ -22,7 +22,6 @@
     "fs-extra": "^8.1.0",
     "loader-utils": "^2.0.0",
     "object-hash": "^2.2.0",
-    "react-dev-utils": "^11.0.4",
     "regenerator-runtime": "^0.13.3",
     "trusted-cert": "^1.0.0",
     "webpack-dev-mock": "^2.0.0"

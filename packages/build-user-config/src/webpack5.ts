@@ -49,12 +49,6 @@ export default (config: WebpackChain, api: IPluginAPI) => {
   // This is no longer the case. Verify if you need these module and configure a polyfill for it.
   config.resolve.alias.set('path', 'path-browserify');
 
-  config.resolve.merge({
-    fallback: {
-      url: '@builder/pack/deps/url'
-    },
-  });
-
   config.plugin('ProvidePlugin').use(webpack.ProvidePlugin, [{ process: 'process/browser'}]);
   // assetModuleFilename: 'assets/[hash][ext][query]',
   config.output.merge({
