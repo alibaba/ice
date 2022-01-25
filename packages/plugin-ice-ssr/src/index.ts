@@ -189,11 +189,12 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
       let serverReady = false;
       let httpResponseQueue = [];
-      const originalDevServeBefore = config.devServer.get('onBeforeSetupMiddleware');
-      config.devServer.set('onBeforeSetupMiddleware', (server) => {
+      const setupMiddlewares = config.devServer.get('setupMiddlewares');
+      config.devServer.set('setupMiddlewares', (originalMiddlewares, server) => {
         const { app } = server;
-        if (typeof originalDevServeBefore === 'function') {
-          originalDevServeBefore(server);
+        let middlewares = originalMiddlewares;
+        if (typeof setupMiddlewares === 'function') {
+          middlewares = setupMiddlewares(originalMiddlewares, server);
         }
         let compilerDoneCount = 0;
         server.compiler.compilers.forEach((compiler) => {
@@ -219,6 +220,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
             httpResponseQueue.push([req, res]);
           }
         });
+        return middlewares;
       });
     }
 

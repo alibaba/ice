@@ -2,6 +2,8 @@
 
 ## 2.2.1
 
+- [fix] bump version of `@builder/pack`(^0.6.0)
+- [fix] remove `webpackHotDevClient`
 - [fix] `vitePlugins` only take effect when `vite` is true
 
 ## 2.2.0
