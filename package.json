@@ -63,6 +63,7 @@
     "jest": "^26.0.0",
     "pify": "^4.0.1",
     "puppeteer": "^10.4.0",
+    "react-test-renderer": "^16.13.1",
     "rimraf": "^3.0.0",
     "semver": "^7.3.2",
     "ts-jest": "^26.0.0",
