@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+
+- [fix] bump version of `@builder/pack`(^0.6.0)
+
 ## 2.1.1
 
 - [fix] bump version of `@builder/pack`(^0.5.0)
