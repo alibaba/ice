@@ -19,7 +19,12 @@ function App() {
         <p x-if={titleState.title} className="header">{titleState.title}</p>
 
         <div className="body">
-          <button type="button" onClick={() => { setCount((e: number) => e + 1); }}>
+          <button
+            type="button"
+            onClick={() => {
+              setCount((e: number) => e + 1);
+            }}
+          >
             🪂 Click me : {count}
           </button>
 
