@@ -11,7 +11,6 @@ import { run } from './shell';
   const filePatten = '*/src/**/!(*.ts|*.tsx|*.rs)';
   console.log(`[COPY]: ${filePatten}`);
   const cwd = path.join(process.cwd(), 'packages');
-  console.log('glob', glob);
   const files = glob.sync(filePatten, { cwd, nodir: true });
   /* eslint no-restricted-syntax:0 */
   for (const file of files) {
