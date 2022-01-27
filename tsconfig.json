@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/plugin-app"},
+    { "path": "packages/icejs" }
+  ]
+}

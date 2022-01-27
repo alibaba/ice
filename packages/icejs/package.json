@@ -1,0 +1,11 @@
+{
+  "name": "icejs",
+  "version": "3.0.0",
+  "description": "ice",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ice-admin",
+  "license": "MIT"
+}
