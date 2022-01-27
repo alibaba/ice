@@ -1,6 +1,6 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
-import * as semver from 'semver';
+import fse from 'fs-extra';
+import semver from 'semver';
 import type { IPackageInfo } from './getPackageInfos';
 import { getPackageInfos, getVersionPrefix } from './getPackageInfos';
 
@@ -24,7 +24,7 @@ function updatePackageVersion(publishPackages: IPackageInfo[]) {
       }
     }
     console.log(`[VERSION] update package ${name} with version ${publishVersion}`);
-    fs.writeFileSync(path.join(directory, 'package.json'), JSON.stringify(packageInfo, null, 2));
+    fse.writeFileSync(path.join(directory, 'package.json'), JSON.stringify(packageInfo, null, 2));
   });
 }
 

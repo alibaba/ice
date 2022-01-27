@@ -1,8 +1,6 @@
 import { execaCommand } from 'execa';
 import getPackages from './getPackages';
-
-// eslint-disable-next-line
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 (async () => {
   const { packageDirs } = await getPackages();
