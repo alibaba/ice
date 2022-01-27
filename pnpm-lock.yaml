@@ -6,7 +6,6 @@ importers:
     specifiers:
       '@applint/spec': ^1.0.1
       '@commitlint/cli': ^16.1.0
-      '@types/cross-spawn': ^6.0.2
       '@types/eslint': ^8.4.1
       '@types/fs-extra': ^9.0.13
       '@types/glob': ^7.2.0
@@ -37,7 +36,6 @@ importers:
     devDependencies:
       '@applint/spec': 1.0.1_df4e92b56166aa6123b396ff358723e0
       '@commitlint/cli': 16.1.0_@types+node@17.0.12
-      '@types/cross-spawn': 6.0.2
       '@types/eslint': 8.4.1
       '@types/fs-extra': 9.0.13
       '@types/glob': 7.2.0
@@ -1002,12 +1000,6 @@ packages:
     resolution: {integrity: sha512-K2waXdXBi2302XUdcHcR1jCeU0LL4TD9HRs/gk0N2Xvrht+G/BfJa4QObBQZfhMdxiCpV3COl5Nfq4uKTeTnJA==}
     dependencies:
       '@babel/types': 7.16.8
-    dev: true
-
-  /@types/cross-spawn/6.0.2:
-    resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
-    dependencies:
-      '@types/node': 17.0.12
     dev: true
 
   /@types/eslint/8.4.1:
