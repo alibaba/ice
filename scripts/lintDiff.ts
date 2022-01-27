@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { ESLint } from 'eslint';
 import chalk from 'chalk';
 
-const GIT_DIFF = 'git diff --diff-filter=ACMR --name-only';
+const GIT_DIFF = 'git diff --cached --diff-filter=ACMR --name-only';
 
 (async () => {
   const linter = new ESLint();
