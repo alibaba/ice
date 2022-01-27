@@ -1,0 +1,15 @@
+{
+  "name": "plugin-app",
+  "version": "1.0.0",
+  "description": "plugin app",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ice-admin",
+  "files": [
+    "runtime",
+    "lib"
+  ],
+  "license": "MIT"
+}
