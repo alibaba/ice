@@ -7,7 +7,6 @@ function App() {
   const [count, setCount] = useState<number>(0);
   const [titleState] = store.useModel('title');
 
-
   return (
     <div className="App">
       <Head>
@@ -20,7 +19,7 @@ function App() {
         <p x-if={titleState.title} className="header">{titleState.title}</p>
 
         <div className="body">
-          <button type="button" onClick={() => setCount((e: number) => e + 1)}>
+          <button type="button" onClick={() => { setCount((e: number) => e + 1); }}>
             🪂 Click me : {count}
           </button>
 
