@@ -25,6 +25,12 @@ const GIT_DIFF = 'git diff --cached --diff-filter=ACMR --name-only';
   const lintResults = await linter.lintFiles(lintFileList);
   const Formatter = await linter.loadFormatter();
   console.log(Formatter.format(lintResults));
+  const error = ESLint.getErrorResults(lintResults);
+  if (error.length > 0) {
+    process.exit(1);
+  } else {
+    console.log(chalk.green('lint successfully.'));
+  }
 })().catch((error) => {
   console.trace(error);
   process.exit(1);
