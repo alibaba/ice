@@ -10,6 +10,7 @@
     "build": "esmo ./scripts/build.ts",
     "clean": "rimraf packages/*/lib",
     "dependency:check": "esmo ./scripts/dependencyCheck.ts",
+    "version": "esmo ./scripts/tagVersion.ts",
     "version:check": "esmo ./scripts/versionCheck.ts",
     "lint:diff": "esmo ./scripts/lintDiff.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
