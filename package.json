@@ -22,7 +22,6 @@
   "devDependencies": {
     "@applint/spec": "^1.0.1",
     "@commitlint/cli": "^16.1.0",
-    "@types/cross-spawn": "^6.0.2",
     "@types/eslint": "^8.4.1",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
