@@ -2,11 +2,11 @@
  * Scripts to check unpublished version and run publish
  */
 import * as path from 'path';
-import * as fs from 'fs-extra';
+import fse from 'fs-extra';
 import { spawnSync } from 'child_process';
-import { setPublishedPackages } from './published-info';
-import type { IPackageInfo } from './getPackageInfos';
+import { setPublishedPackages } from './publishedInfo';
 import { getPackageInfos, getVersionPrefix } from './getPackageInfos';
+import type { IPackageInfo } from './getPackageInfos';
 
 const PUBLISH_TYPE = process.env.PUBLISH_TYPE || 'beta';
 const VERSION_PREFIX = process.env.VERSION_PREFIX || PUBLISH_TYPE;
@@ -53,7 +53,7 @@ function updatePackageJson(packageInfos: ITagPackageInfo[]): void {
     const { directory, distTagVersion } = packageInfo;
 
     const packageFile = path.join(directory, 'package.json');
-    const packageData = fs.readJsonSync(packageFile);
+    const packageData = fse.readJsonSync(packageFile);
 
     packageData.version = distTagVersion;
 
@@ -68,7 +68,7 @@ function updatePackageJson(packageInfos: ITagPackageInfo[]): void {
       }
     }
 
-    fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
+    fse.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
   });
 }
 
@@ -87,8 +87,8 @@ function publish(pkg: string, distTagVersion: string, directory: string, tag: st
 console.log(`[PUBLISH ${PUBLISH_TYPE.toUpperCase()}] Start:`);
 getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
   const shouldPublishPackages = packageInfos
-    .filter((packageInfo) => packageInfo.shouldPublish)
-    .map((packageInfo) => getVersionInfo(packageInfo, PUBLISH_TYPE));
+    .filter(packageInfo => packageInfo.shouldPublish)
+    .map(packageInfo => getVersionInfo(packageInfo, PUBLISH_TYPE));
 
   updatePackageJson(shouldPublishPackages);
 

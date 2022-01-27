@@ -1,9 +1,9 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { getNpmInfo } from 'ice-npm-utils';
-import * as semver from 'semver';
+import semver from 'semver';
 
-const TARGET_DIRECTORY = join(__dirname, '../packages');
+const TARGET_DIRECTORY = join(process.cwd(), 'packages');
 
 export interface IPackageInfo {
   name: string;

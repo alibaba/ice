@@ -1,10 +1,7 @@
 /* eslint no-restricted-syntax:0, no-await-in-loop:0, no-restricted-syntax:0 */
 import * as path from 'path';
-import * as fse from 'fs-extra';
-import * as _glob from 'glob';
-import * as pify from 'pify';
-
-const glob = pify(_glob);
+import fse from 'fs-extra';
+import glob from 'glob';
 
 export default async function getPackages() {
   const packageNames = [];
@@ -13,7 +10,7 @@ export default async function getPackages() {
   const rootPkgContent = fse.readJSONSync(rootPkgPath);
 
   for (const workspace of rootPkgContent.workspaces || []) {
-    const dirs = await glob(workspace);
+    const dirs = glob.sync(workspace);
     for (const dir of dirs) {
       if (fse.existsSync(path.resolve(dir, 'package.json'))) {
         const pkgContent = fse.readJSONSync(path.resolve(dir, 'package.json'));
