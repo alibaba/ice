@@ -5,7 +5,7 @@ export default {
     status,
     data: {
       group: 'ice.js',
-      url: 'https://github.com/ice-lab/ice.js'
-    }
+      url: 'https://github.com/ice-lab/ice.js',
+    },
   },
 };

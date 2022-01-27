@@ -10,14 +10,14 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['packages/*/lib/*.{js,jsx}'],
   coveragePathIgnorePatterns: [
-    '<rootDir>/node_modules/'
+    '<rootDir>/node_modules/',
   ],
   // copy from jest config
 
   testEnvironment: 'node',
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
   },
   roots: [
     '<rootDir>/packages',
@@ -26,7 +26,7 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/lib/',
-    'create-cli-utils/'
+    'create-cli-utils/',
   ],
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
   // For ts-jest use rootDir's tsconfig.json, while unable to resolve references.

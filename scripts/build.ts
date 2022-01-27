@@ -6,6 +6,7 @@ import { run } from './shell';
 (async () => {
   await run('npm run clean');
 
+
   const fileParten = '*/src/**/!(*.ts|*.tsx|*.rs)';
   console.log(`[COPY]: ${fileParten}`);
 

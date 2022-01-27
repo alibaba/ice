@@ -5,7 +5,8 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { setPublishedPackages } from './published-info';
-import { IPackageInfo, getPackageInfos, getVersionPrefix } from './getPackageInfos';
+import type { IPackageInfo } from './getPackageInfos';
+import { getPackageInfos, getVersionPrefix } from './getPackageInfos';
 
 const PUBLISH_TYPE = process.env.PUBLISH_TYPE || 'beta';
 const VERSION_PREFIX = process.env.VERSION_PREFIX || PUBLISH_TYPE;
@@ -27,7 +28,7 @@ function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo
       'show', name, 'dist-tags',
       '--json',
     ], {
-      encoding: 'utf-8'
+      encoding: 'utf-8',
     });
 
     let distTags = {};

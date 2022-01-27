@@ -18,16 +18,23 @@ jobs:
       - name: Echo branch name
         run: echo ${BRANCH_NAME}
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
+      - name: Cache .pnpm-store
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Install pnpm
+        run: npm i pnpm -g
       - run: npm run setup
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
       - run: npm run version:check
-      - run: npm run coverage
         env:
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
           ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
