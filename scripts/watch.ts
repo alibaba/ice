@@ -23,8 +23,8 @@ import { run } from './shell';
   watcher
     .on('all', (event, filePath) => {
       const availableEvents = ['add', 'change'];
-      if (availableEvents.includes(event)
-        && filePath.match(/.+[\\/]src[\\/].+\.(?!ts$|tsx$|rs$)/)) {
+      if (availableEvents.includes(event) &&
+        filePath.match(/.+[\\/]src[\\/].+\.(?!ts$|tsx$|rs$)/)) {
         console.log('non-ts change detected:', filePath);
         copyOneFile(path.relative(cwd, filePath), cwd);
       }

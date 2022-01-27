@@ -1,4 +1,4 @@
-const { getESLintConfig } = require('@iceworks/spec');
+const { getESLintConfig } = require('@applint/spec');
 
 const commonRules = {
   'react/jsx-filename-extension': 0,
@@ -15,13 +15,10 @@ const commonRules = {
   'jsx-a11y/html-has-lang': 0,
   'react/static-property-placement': 0,
   'no-multiple-empty-lines': 1,
-  'react/jsx-no-bind': 0
+  'react/jsx-no-bind': 0,
 };
 
-const jsRules = getESLintConfig('react', {
-  rules: commonRules
-});
-const tsRules = getESLintConfig('react-ts', {
+module.exports = getESLintConfig('react-ts', {
   rules: {
     ...commonRules,
     '@typescript-eslint/ban-types': 0,
@@ -31,24 +28,11 @@ const tsRules = getESLintConfig('react-ts', {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/prefer-for-of': 0,
+    'id-length': 0,
     'no-use-before-define': 0,
     'no-unused-vars': 0,
     '@typescript-eslint/no-unused-vars': 1,
     '@typescript-eslint/ban-ts-ignore': 0,
-  }
-});
-
-delete tsRules.root;
-
-module.exports = {
-  ...jsRules,
-  overrides: [
-    {
-      ...tsRules,
-      files: ['**/*.ts', '**/*.tsx'],
-    },
-  ],
-  env: {
-    jest: true,
   },
-};
+});

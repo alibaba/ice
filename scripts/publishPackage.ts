@@ -3,7 +3,8 @@
  */
 import { spawnSync } from 'child_process';
 import { setPublishedPackages } from './published-info';
-import { IPackageInfo, getPackageInfos } from './getPackageInfos';
+import type { IPackageInfo } from './getPackageInfos';
+import { getPackageInfos } from './getPackageInfos';
 
 const publishTag = process.env.PUBLISH_TAG || '';
 

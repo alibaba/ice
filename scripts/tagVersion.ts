@@ -1,7 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
-import { getPackageInfos, IPackageInfo, getVersionPrefix } from './getPackageInfos';
+import type { IPackageInfo } from './getPackageInfos';
+import { getPackageInfos, getVersionPrefix } from './getPackageInfos';
 
 console.log('[VERSION] tag versions');
 

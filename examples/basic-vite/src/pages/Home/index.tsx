@@ -7,6 +7,7 @@ function App() {
   const [count, setCount] = useState<number>(0);
   const [titleState] = store.useModel('title');
 
+
   return (
     <div className="App">
       <Head>

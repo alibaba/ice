@@ -1,10 +1,10 @@
 export default {
   state: {
-    title: '🚀 Vite + Icejs'
+    title: '🚀 Vite + Icejs',
   },
   reducers: {
     update(prevState, payload) {
       return { title: payload };
     },
-  }
+  },
 };

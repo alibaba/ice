@@ -25,7 +25,7 @@ function checkBuildSuccess(directory: string, mainFile: string): boolean {
   return isExist;
 }
 
-function checkVersionExists(pkg: string, version: string, distTag: string): Promise<boolean> {
+async function checkVersionExists(pkg: string, version: string, distTag: string): Promise<boolean> {
   const tag = distTag || 'latest';
   return getNpmInfo(pkg).then((data) => {
     if (!data['dist-tags'] || (!data['dist-tags'][tag] && !data['dist-tags'].latest)) {
@@ -70,7 +70,7 @@ export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
             // If localVersion not exist, publish it
             shouldPublish:
               checkBuildSuccess(packageFolder, packageInfo.main) &&
-              !await checkVersionExists(packageName, publishVersion, distTag)
+              !await checkVersionExists(packageName, publishVersion, distTag),
           });
         } catch (e) {
           console.log(`[ERROR] get ${packageName} information failed: `, e);

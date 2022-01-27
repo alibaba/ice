@@ -1,5 +1,6 @@
 import * as semver from 'semver';
-import { getPackageInfos, IPackageInfo } from './getPackageInfos';
+import type { IPackageInfo } from './getPackageInfos';
+import { getPackageInfos } from './getPackageInfos';
 
 function checkPackageVersion(publishPackages: IPackageInfo[]) {
   publishPackages.forEach((publishPackage: IPackageInfo) => {

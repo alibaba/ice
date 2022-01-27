@@ -9,7 +9,7 @@ const chalk = require('chalk');
   packageDirs.forEach((pkgDir) => {
     execaCommand(`dependency-check ${pkgDir} --missing`, {
       cwd: pkgDir,
-      stdio: 'inherit'
+      stdio: 'inherit',
     });
   });
 })().catch((e) => {
