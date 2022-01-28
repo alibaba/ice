@@ -1,0 +1,11 @@
+{
+  "name": "basic-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "../../packages/icejs/bin/ice-cli.js start",
+    "build": "../../packages/icejs/bin/ice-cli.js build"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT"
+}
