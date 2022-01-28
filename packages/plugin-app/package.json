@@ -1,15 +1,23 @@
 {
-  "name": "plugin-app",
+  "name": "build-plugin-app",
   "version": "1.0.0",
   "description": "plugin app",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "@builder/pack": "^0.6.0",
+    "@builder/webpack-config": "^2.0.0",
+    "events": "^3.3.0"
+  },
   "author": "ice-admin",
   "files": [
     "runtime",
     "lib"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "build-scripts": "^1.2.1"
+  }
 }

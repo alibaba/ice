@@ -7,5 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ice-admin",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@builder/pack": "^0.6.0",
+    "build-plugin-app": "^1.0.0",
+    "build-scripts": "^1.2.1",
+    "chalk": "^4.0.0",
+    "create-cli-utils": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=12.22.0",
+    "npm": ">=3.0.0"
+  }
 }
