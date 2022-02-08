@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.23
+
+- [feat] update postcss version
+
 ## 0.1.22
 
 - [fix] remove alias config of `~` for vite
