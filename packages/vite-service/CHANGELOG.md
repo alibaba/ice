@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.1
+
+- [fix] use `--disable-mock` command to escape MockPlugin
+
 ## 2.1.0
 
 - [feat] refactor html plugin for SSR render when development
