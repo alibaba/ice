@@ -10,7 +10,7 @@ function getClientEnvironment(customEnv: Record<string, string>) {
     }, {});
 
   const stringified = Object.keys(raw).reduce((env, key) => {
-    const stringifiedKey = key.startsWith('process.env.') ? 'key' : `process.env.${key}`;
+    const stringifiedKey = key.startsWith('process.env.') ? key : `process.env.${key}`;
     env[stringifiedKey] = JSON.stringify(raw[key]);
     return env;
   }, {});
