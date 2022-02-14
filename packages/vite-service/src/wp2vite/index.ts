@@ -22,6 +22,8 @@ import {
   cssChunk,
 } from '../plugins';
 
+import type { ChunkName } from '../plugins';
+
 type Option = BuildOptions & InlineConfig;
 
 const getAnalyzer = (config: ITaskConfig['chainConfig']) => {
@@ -171,7 +173,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
       ...getPluginReact(context),
-      userConfig.cssChunkNames && cssChunk(userConfig.cssChunkNames as string),
+      userConfig.cssChunkNames && cssChunk(userConfig.cssChunkNames as ChunkName),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {

@@ -10,6 +10,8 @@ export interface EmittedAsset {
   type: 'asset';
 }
 
+export type ChunkName = string | Record<string, string>;
+
 function parseCssName(name: string, index: number) {
   let cssName = name.replace(path.extname(name), '');
   if (index > 0) {
@@ -21,8 +23,6 @@ function parseCssName(name: string, index: number) {
 const addTrailingSlash = (str: string): string => {
   return str[str.length - 1] === '/' ? str : `${str}/`;
 };
-
-type ChunkName = string | Record<string, string>;
 
 export const cssChunk = (chunkName: ChunkName): Plugin => {
   let viteManifestPlugin: Plugin;
