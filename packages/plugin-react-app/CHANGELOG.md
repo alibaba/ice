@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- [chore] bump version of `esbuild`(0.14.14)
+
 ## 2.2.1
 
 - [fix] bump version of `@builder/pack`(^0.6.0)

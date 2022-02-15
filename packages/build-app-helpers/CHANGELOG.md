@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2
+
+- [chore] bump version of `esbuild`(0.14.14)
+
 ## 2.5.1
 
 - [fix] slice error for array of source files

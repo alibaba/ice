@@ -11,7 +11,7 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.4.1",
+    "@builder/app-helpers": "^2.5.2",
     "@builder/pack": "^0.6.0",
     "@types/react-router-dom": "^5.1.4",
     "@ice/runtime": "^0.1.1",
