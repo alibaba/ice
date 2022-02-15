@@ -2,6 +2,7 @@
 
 ## 2.1.1
 
+- [fix] arguments of plugin-history may be `undefined` in case of `plugin-router` being deactivated
 - [fix] use `--disable-mock` command to escape MockPlugin
 
 ## 2.1.0
