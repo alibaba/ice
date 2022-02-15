@@ -152,7 +152,7 @@ export const wp2vite = (context: Context): InlineConfig => {
     root: rootDir,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
-      userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
+      !commandArgs?.disableMock && userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
       getAnalyzer(config),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
