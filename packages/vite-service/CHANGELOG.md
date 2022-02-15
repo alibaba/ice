@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.1
+
+- [fix] arguments of plugin-history may be `undefined` in case of `plugin-router` being deactivated.
+
 ## 2.1.0
 
 - [feat] refactor html plugin for SSR render when development
