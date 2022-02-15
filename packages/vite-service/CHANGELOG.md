@@ -3,6 +3,7 @@
 ## 2.1.1
 
 - [feat] plugin for rename main css chunk name
+- [fix] use `--disable-mock` command to escape MockPlugin
 
 ## 2.1.0
 
