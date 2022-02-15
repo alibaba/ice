@@ -7,8 +7,11 @@ import * as bodyParser from 'body-parser';
 import * as chokidar from 'chokidar';
 import * as multer from 'multer';
 import * as debounce from 'lodash.debounce';
+import { addHook as addRequireHook } from 'pirates';
+import { transformSync } from 'esbuild';
 import analyzeDenpendencies from './analyzeMockDeps';
 import matchPath from './matchPath';
+import esbuildPreset from './esbuildPresetNode';
 
 type IIgnoreFolders = string[];
 
@@ -33,17 +36,17 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
   const requireDeps = mockFiles.reduce((pre, curr) => {
     return pre.concat(analyzeDenpendencies(curr));
   }, []);
-  const onlySet = Array.from(new Set([...requireDeps, ...mockFiles]));
-  // set @babel/register for node's require
-  // eslint-disable-next-line global-require
-  require('@babel/register')({
-    presets: [require.resolve('./babelPresetNode')],
-    ignore: [/node_modules/],
-    only: onlySet,
-    extensions: ['.js', '.ts'],
-    babelrc: false,
-    cache: false,
-  });
+  const onlySet = new Set([...requireDeps, ...mockFiles]);
+  // add require hook to transform [j/t]s file
+  const revertRequireHook = addRequireHook(
+    (source) => transformSync(source, esbuildPreset).code,
+    {
+      exts: ['.js', '.ts'],
+      matcher: (filename: string) =>
+        !filename.includes('node_modules') && onlySet.has(filename),
+    }
+  );
+  
   const mockConfig = {};
   mockFiles.forEach(mockFile => {
     if (fse.existsSync(mockFile)) {
@@ -66,6 +69,8 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
       }
     }
   });
+  // revert require hook after requiring all mock files
+  revertRequireHook();
   return mockConfig;
 }
 
