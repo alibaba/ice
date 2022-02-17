@@ -2,6 +2,7 @@
 
 ## 2.1.1
 
+- [feat] plugin for rename main css chunk name
 - [fix] arguments of plugin-history may be `undefined` in case of `plugin-router` being deactivated
 - [fix] use `--disable-mock` command to escape MockPlugin
 
