@@ -19,7 +19,10 @@ import {
   ignoreHtmlPlugin,
   mockPlugin,
   ImportDeclarations,
+  cssChunk,
 } from '../plugins';
+
+import type { ChunkName } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -171,6 +174,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
       ...getPluginReact(context),
+      userConfig.cssChunkNames && cssChunk(userConfig.cssChunkNames as ChunkName),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
