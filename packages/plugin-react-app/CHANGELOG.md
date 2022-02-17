@@ -2,6 +2,7 @@
 
 ## 2.2.1
 
+- [feat] define variables of `CDN_PATH`
 - [fix] support userConfig `cssChunkNames`
 - [fix] bump version of `@builder/pack`(^0.6.0)
 - [fix] remove `webpackHotDevClient`

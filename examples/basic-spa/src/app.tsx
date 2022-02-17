@@ -3,6 +3,7 @@ import { runApp, APP_MODE, IAppConfig, logger, history, getHistory } from 'ice';
 
 console.log('APP_MODE', APP_MODE);
 logger.info('APP_MODE', APP_MODE);
+console.log(process.env.ICE_ROOT);
 logger.debug('test');
 
 const appConfig: IAppConfig = {
