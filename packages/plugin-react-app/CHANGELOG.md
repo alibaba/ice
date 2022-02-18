@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+- [feat] update `esbuild` from 0.13 to 0.14
+
 ## 2.2.0
 
 - [feat] optimize runtime when build

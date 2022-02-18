@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+
+- [feat] update `esbuild` from 0.13 to 0.14
+
 ## 2.5.1
 
 - [fix] slice error for array of source files
@@ -9,7 +13,6 @@
 - [chore] revert `@babel/plugin-transform-runtime` helpers value
 - [chore] bump version of `es-module-lexer`
 - [feat] support scan source code of import statement
-
 
 ## 2.4.3
 
