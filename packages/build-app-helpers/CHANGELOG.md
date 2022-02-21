@@ -1,8 +1,8 @@
 # Changelog
 
-## 2.6.0
+## 2.5.2
 
-- [feat] update `esbuild` from 0.13 to 0.14
+- [chore] bump version of `esbuild`(0.14.14)
 
 ## 2.5.1
 

@@ -1,8 +1,11 @@
 # Changelog
 
-## 2.3.0
+## 2.2.1
 
-- [feat] update `esbuild` from 0.13 to 0.14
+- [chore] bump version of `esbuild`(0.14.14)
+- [fix] bump version of `@builder/pack`(^0.6.0)
+- [fix] remove `webpackHotDevClient`
+- [fix] `vitePlugins` only take effect when `vite` is true
 
 ## 2.2.0
 

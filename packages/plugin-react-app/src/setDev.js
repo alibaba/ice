@@ -1,6 +1,6 @@
 const chalk = require('chalk');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const openBrowser = require('react-dev-utils/openBrowser');
+const formatWebpackMessages = require('@builder/pack/deps/react-dev-utils/formatWebpackMessages');
+const openBrowser = require('@builder/pack/deps/react-dev-utils/openBrowser');
 const logWebpackConfig = require('./utils/logWebpackConfig');
 
 module.exports = (api) => {
