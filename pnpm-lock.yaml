@@ -85,7 +85,7 @@ importers:
       '@types/ejs': ^3.1.0
       '@types/lodash.debounce': ^4.0.6
       address: ^1.1.2
-      build-scripts: ^2.0.0-1
+      build-scripts: ^2.0.0-3
       consola: ^2.15.3
       ejs: ^3.1.6
       fast-glob: ^3.2.11
@@ -108,20 +108,20 @@ importers:
     devDependencies:
       '@types/ejs': 3.1.0
       '@types/lodash.debounce': 4.0.6
-      build-scripts: 2.0.0-1
+      build-scripts: 2.0.0-3
       webpack: 5.69.1
 
   packages/icejs:
     specifiers:
       '@builder/pack': ^0.6.0
       build-plugin-app: ^1.0.0
-      build-scripts: ^2.0.0-1
+      build-scripts: ^2.0.0-3
       chalk: ^4.0.0
       create-cli-utils: ^1.0.3
     dependencies:
       '@builder/pack': 0.6.0
       build-plugin-app: link:../plugin-app
-      build-scripts: 2.0.0-1
+      build-scripts: 2.0.0-3
       chalk: 4.1.2
       create-cli-utils: 1.0.3_eslint@8.7.0
 
@@ -129,14 +129,14 @@ importers:
     specifiers:
       '@builder/pack': ^0.6.0
       '@builder/webpack-config': ^2.0.0
-      build-scripts: ^2.0.0-1
+      build-scripts: ^2.0.0-3
       events: ^3.3.0
     dependencies:
       '@builder/pack': 0.6.0
       '@builder/webpack-config': 2.0.0
       events: 3.3.0
     devDependencies:
-      build-scripts: 2.0.0-1
+      build-scripts: 2.0.0-3
 
 packages:
 
@@ -2369,13 +2369,14 @@ packages:
       yargs-parser: 14.0.0
     dev: false
 
-  /build-scripts/2.0.0-1:
-    resolution: {integrity: sha512-G1tWyxAozY3bUHRwilVpw/A7kgO9f2J/l/KSQA0csME1szqUcQlzKb5Pk5eGiIiUv4dypw93RT3hUpTNlWA5vg==}
+  /build-scripts/2.0.0-3:
+    resolution: {integrity: sha512-Dk/JQLCDxaLhaGjUmulUYNfwozhfpz+hKwkwX0pKexvDI3anFLfsfHBYJQ7P6H8x1iHzcRANaQJKu0t3O19Y/Q==}
     dependencies:
       '@jest/test-result': 27.4.6
       '@jest/types': 27.4.2
       camelcase: 5.3.1
       commander: 2.20.3
+      consola: 2.15.3
       deepmerge: 4.2.2
       esbuild: 0.14.14
       fast-glob: 3.2.11
@@ -2698,7 +2699,6 @@ packages:
 
   /consola/2.15.3:
     resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==}
-    dev: false
 
   /console-control-strings/1.1.0:
     resolution: {integrity: sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=}
