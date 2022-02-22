@@ -11,7 +11,7 @@ async function createService(rootDir: string, command: CommandName, commandArgs:
   const routeManifest = {};
   const generator = new Generator({
     rootDir,
-    targetDir: './ice',
+    targetDir: './.ice',
      // TODO get default Data
     defaultData: {},
   });
