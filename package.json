@@ -5,7 +5,7 @@
   ],
   "description": "A universal framework based on React",
   "scripts": {
-    "setup": "rm -rf node_modules && pnpm install && pnpm run build",
+    "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run build",
     "watch": "esmo ./scripts/watch.ts",
     "build": "esmo ./scripts/build.ts",
     "clean": "rimraf packages/*/lib",

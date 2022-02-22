@@ -1,8 +1,7 @@
 import * as path from 'path';
 import getWebpackConfig from '@builder/webpack-config';
-import type { IPlugin } from 'build-scripts';
 
-const plugin: IPlugin = ({ registerTask, context }) => {
+const plugin = ({ registerTask, context }) => {
   const { command, rootDir } = context;
   const mode = command === 'start' ? 'development' : 'production';
   const webpackConfig = getWebpackConfig(mode);

@@ -11,9 +11,12 @@
   "dependencies": {
     "@builder/pack": "^0.6.0",
     "build-plugin-app": "^1.0.0",
-    "build-scripts": "^1.2.1",
+    "build-scripts": "^2.0.0-1",
     "chalk": "^4.0.0",
     "create-cli-utils": "^1.0.3"
+  },
+  "resolutions": {
+    "webpack": "^4.0.0"
   },
   "engines": {
     "node": ">=12.22.0",
