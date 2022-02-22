@@ -1,0 +1,18 @@
+.container {
+  position: relative;
+  top: 2px;
+}
+
+.container img {
+  margin-right: 5px;
+}
+
+.webpack {
+  height: 18px;
+}
+
+.vite {
+  height: 16px;
+  position: relative;
+  top: -2px;
+}

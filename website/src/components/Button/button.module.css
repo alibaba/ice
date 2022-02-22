@@ -1,0 +1,40 @@
+.button {
+  border-radius: 28.8px;
+  border: 0.9px solid #E2E2E2;
+  padding: 13px 25px;
+  font-size: 16px;
+  color: #000;
+  font-weight: 600;
+  outline: none;
+  min-width: 155px;
+  max-height: 52px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--ifm-color-title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all .3s ease;
+}
+
+.primary {
+  color: #fff;
+  border-width: 0;
+  background: linear-gradient(90deg, #1395FE 4.83%, #1E72FF 94.74%);
+  box-shadow: 0px 5px 6px rgba(0, 87, 255, 0.26);
+  border-radius: 28.8px;
+  transition: all .3s ease;
+}
+
+.button:hover {
+  color: #000;
+  background-color: #fff;
+  text-decoration: none;
+  opacity: .9;
+}
+
+.primary:hover {
+  color: #fff;
+  text-decoration: none;
+  opacity: .8;
+}

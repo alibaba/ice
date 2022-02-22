@@ -1,0 +1,122 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.splash {
+  display: grid;
+  overflow: hidden;
+  align-items: center;
+  min-height: calc(100vh - var(--ifm-navbar-height));
+  grid-template-areas: 'b a';
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  padding: 24px;
+  max-width: 1200px;
+
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-color-content-secondary);
+}
+
+.title-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+.title {
+  color: var(--ifm-color-title);
+  font-size: 40px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 34px;
+  color: #878787;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.githubStars {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.img-container {
+  display: flex;
+  flex: 1;
+  margin: 45px;
+}
+
+.img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+@media (max-width: 900px) {
+  .splash {
+    grid-template-areas: 'a' 'b';
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .title-container {
+    margin-top: 100px;
+  }
+
+  .subtitle {
+    text-align: center;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+
+  .githubStars {
+    justify-content: center;
+  }
+
+  .img-container {
+    justify-content: center;
+    align-items: center;
+    margin: 70px;
+  }
+
+  .img {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 510px) {
+  .buttons {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  .buttons a {
+    width: calc(100% - 32px);
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .img-container {
+    margin-top: 50px;
+    margin: 20px;
+  }
+}
