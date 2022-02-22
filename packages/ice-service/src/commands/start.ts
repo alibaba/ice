@@ -2,6 +2,7 @@ import WebpackDevServer from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
 import { getWebpackConfig } from '@builder/webpack-config';
 import defaultsDeep from 'lodash.defaultsdeep';
+import { join } from 'path';
 import webpackCompiler from '../service/webpackCompiler';
 import prepareURLs from '../utils/prepareURLs';
 import type { IFrameworkConfig } from '@builder/webpack-config';
@@ -9,19 +10,24 @@ import type { IFrameworkConfig } from '@builder/webpack-config';
 type DevServerConfig = Record<string, any>;
 // TODO config type of ice.js
 const start = async (context: Context<any>) => {
-  const { getConfig, applyHook, commandArgs, command } = context;
-  const config = getConfig() as IFrameworkConfig[];
+  const { getConfig, applyHook, commandArgs, command, rootDir } = context;
 
-  if (!config.length) {
-    const errMsg = 'Task config is not found';
-    await applyHook('error', { err: new Error(errMsg) });
-    return;
-  }
+  const config: IFrameworkConfig = {
+    entry: './src/app.js',
+    outputDir: join(rootDir, './build'),
+  };
+  // const config = getConfig() as IFrameworkConfig[];
+  // if (!config.length) {
+  //   const errMsg = 'Task config is not found';
+  //   await applyHook('error', { err: new Error(errMsg) });
+  //   return;
+  // }
 
   // transform config to webpack config
   const webpackConfig = getWebpackConfig({
-    dir: process.cwd(),
-    frameworkConfig: config[0],
+    dir: rootDir,
+    // frameworkConfig: config[0],
+    frameworkConfig: config,
   });
 
   let devServerConfig: DevServerConfig = {
