@@ -11,7 +11,7 @@
   "dependencies": {
     "@builder/pack": "^0.6.0",
     "build-plugin-app": "^1.0.0",
-    "build-scripts": "^2.0.0-1",
+    "build-scripts": "^2.0.0-3",
     "chalk": "^4.0.0",
     "create-cli-utils": "^1.0.3"
   },
