@@ -71,15 +71,11 @@ async function createService(rootDir: string, command: CommandName, commandArgs:
   // render template before webpack compile
   generator.render();
 
-  return {
-    run: async () => {
-      if (command === 'start') {
-        return await start(ctx);
-      } else if (command === 'build') {
-        return await build(ctx);
-      }
-    },
-  };
+  if (command === 'start') {
+    await start(ctx);
+  } else if (command === 'build') {
+    await build(ctx);
+  }
 }
 
 export default createService;
