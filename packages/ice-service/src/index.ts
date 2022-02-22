@@ -34,9 +34,9 @@ async function createService(rootDir: string, command: CommandName, commandArgs:
   generator.render();
 
   if (command === 'start') {
-    start(ctx);
+    await start(ctx);
   } else if (command === 'build') {
-    build(ctx);
+    await build(ctx);
   }
 }
 

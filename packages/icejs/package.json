@@ -4,16 +4,20 @@
   "description": "ice",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ice-admin",
   "license": "MIT",
   "dependencies": {
     "@builder/pack": "^0.6.0",
+    "@ice/service": "^1.0.0",
     "build-plugin-app": "^1.0.0",
     "build-scripts": "^2.0.0-3",
     "chalk": "^4.0.0",
-    "create-cli-utils": "^1.0.3"
+    "commander": "^9.0.0",
+    "create-cli-utils": "^1.0.3",
+    "fs-extra": "^10.0.0",
+    "semver": "^7.3.5",
+    "yargs-parser": "^21.0.0"
   },
   "resolutions": {
     "webpack": "^4.0.0"
