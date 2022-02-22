@@ -113,7 +113,7 @@ export default class Generator {
 
   private plugins: any[];
 
-  public constructor({ rootDir, targetDir, defaultData, plugins }) {
+  public constructor({ rootDir, targetDir, defaultData }) {
     this.rootDir = rootDir;
     this.targetDir = targetDir;
     this.renderData = defaultData;
@@ -122,9 +122,13 @@ export default class Generator {
     this.showPrettierError = true;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
-    this.plugins = plugins;
     this.disableRuntimePlugins = [];
     this.generateAPI = ['addExport', 'addExportTypes', 'addConfigTypes'];
+    this.plugins = [];
+  }
+
+  public setPlugins(plugins: any) {
+    this.plugins = plugins;
   }
 
   public debounceRender = debounce(() => {
