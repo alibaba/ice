@@ -1,0 +1,7 @@
+{
+  "name": "@builder/webpack-config",
+  "version": "3.0.0",
+  "devDependencies": {
+    "webpack": "^5.69.1"
+  }
+}
