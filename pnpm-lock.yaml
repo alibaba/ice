@@ -80,36 +80,11 @@ importers:
       '@types/react': 17.0.38
       '@types/react-dom': 17.0.11
 
-  packages/ice-service:
+  packages/build-webpack-config:
     specifiers:
-      '@types/ejs': ^3.1.0
-      '@types/lodash.debounce': ^4.0.6
-      address: ^1.1.2
-      build-scripts: ^2.0.0-5
-      consola: ^2.15.3
-      ejs: ^3.1.6
-      fast-glob: ^3.2.11
-      find-up: ^5.0.0
-      fs-extra: ^10.0.0
-      lodash.debounce: ^4.0.8
-      prettier: ^2.5.1
       webpack: ^5.69.1
-      webpack-dev-server: ^4.7.4
-    dependencies:
-      address: 1.1.2
-      consola: 2.15.3
-      ejs: 3.1.6
-      fast-glob: 3.2.11
-      find-up: 5.0.0
-      fs-extra: 10.0.0
-      lodash.debounce: 4.0.8
-      prettier: 2.5.1
-      webpack-dev-server: 4.7.4_webpack@5.69.1
     devDependencies:
-      '@types/ejs': 3.1.0
-      '@types/lodash.debounce': 4.0.6
-      build-scripts: 2.0.0-5
-      webpack: 5.69.1
+      webpack: registry.npm.alibaba-inc.com/webpack/5.69.1
 
   packages/icejs:
     specifiers:
@@ -1124,7 +1099,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       callsites: 3.1.0
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
       source-map: 0.6.1
     dev: true
 
@@ -1142,7 +1117,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/test-result': 27.4.6
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
       jest-haste-map: 27.4.6
       jest-runtime: 27.4.6
     transitivePeerDependencies:
@@ -1501,14 +1476,6 @@ packages:
     resolution: {integrity: sha512-T8Yc9wt/5LbJyCaLiHPReJa0kApcIgJ7Bn735GjItUfh08Z1pJvu8QZqb9s+mMvKV6WUQRV7K2R46YbjMXTTJw==}
     dependencies:
       '@types/yargs-parser': 20.2.1
-
-  /@types/yauzl/2.9.2:
-    resolution: {integrity: sha512-8uALY5LTvSuHgloDVUvWP3pIauILm+8/0pDMokuDYIoNsOkSwd5AiHBTSEJjKTDcZr5z8UpgOWZkxBF4iJftoA==}
-    requiresBuild: true
-    dependencies:
-      '@types/node': 17.0.13
-    dev: true
-    optional: true
 
   /@typescript-eslint/eslint-plugin/5.10.1_eslint@8.7.0+typescript@4.5.5:
     resolution: {integrity: sha512-xN3CYqFlyE/qOcy978/L0xLR2HlcAGIyIK5sMOasxaaAPfQRj/MmMV6OC3I7NZO84oEUdWCOju34Z9W8E0pFDQ==}
@@ -2129,7 +2096,7 @@ packages:
       babel-plugin-istanbul: 6.1.1
       babel-preset-jest: 27.4.0_@babel+core@7.16.12
       chalk: 4.1.2
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
       slash: 3.0.0
     transitivePeerDependencies:
       - supports-color
@@ -2515,7 +2482,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: registry.npm.alibaba-inc.com/fsevents/2.3.2
     dev: false
 
   /chokidar/3.5.3:
@@ -2530,7 +2497,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: registry.npm.alibaba-inc.com/fsevents/2.3.2
 
   /chownr/1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
@@ -3233,15 +3200,6 @@ packages:
     resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
     dev: false
 
-  /errno/0.1.8:
-    resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      prr: 1.0.1
-    dev: false
-    optional: true
-
   /error-ex/1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
     dependencies:
@@ -3296,193 +3254,6 @@ packages:
     resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
     dev: false
 
-  /esbuild-android-arm64/0.13.15:
-    resolution: {integrity: sha512-m602nft/XXeO8YQPUDVoHfjyRVPdPgjyyXOxZ44MK/agewFFkPa8tUo6lAzSWh5Ui5PB4KR9UIFTSBKh/RrCmg==}
-    cpu: [arm64]
-    os: [android]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-android-arm64/0.14.14:
-    resolution: {integrity: sha512-be/Uw6DdpQiPfula1J4bdmA+wtZ6T3BRCZsDMFB5X+k0Gp8TIh9UvmAcqvKNnbRAafSaXG3jPCeXxDKqnc8hFQ==}
-    cpu: [arm64]
-    os: [android]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-darwin-64/0.13.15:
-    resolution: {integrity: sha512-ihOQRGs2yyp7t5bArCwnvn2Atr6X4axqPpEdCFPVp7iUj4cVSdisgvEKdNR7yH3JDjW6aQDw40iQFoTqejqxvQ==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-darwin-64/0.14.14:
-    resolution: {integrity: sha512-BEexYmjWafcISK8cT6O98E3TfcLuZL8DKuubry6G54n2+bD4GkoRD6HYUOnCkfl2p7jodA+s4369IjSFSWjtHg==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-darwin-arm64/0.13.15:
-    resolution: {integrity: sha512-i1FZssTVxUqNlJ6cBTj5YQj4imWy3m49RZRnHhLpefFIh0To05ow9DTrXROTE1urGTQCloFUXTX8QfGJy1P8dQ==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-darwin-arm64/0.14.14:
-    resolution: {integrity: sha512-tnBKm41pDOB1GtZ8q/w26gZlLLRzVmP8fdsduYjvM+yFD7E2DLG4KbPAqFMWm4Md9B+DitBglP57FY7AznxbTg==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-freebsd-64/0.13.15:
-    resolution: {integrity: sha512-G3dLBXUI6lC6Z09/x+WtXBXbOYQZ0E8TDBqvn7aMaOCzryJs8LyVXKY4CPnHFXZAbSwkCbqiPuSQ1+HhrNk7EA==}
-    cpu: [x64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-freebsd-64/0.14.14:
-    resolution: {integrity: sha512-Q9Rx6sgArOHalQtNwAaIzJ6dnQ8A+I7f/RsQsdkS3JrdzmnlFo8JEVofTmwVQLoIop7OKUqIVOGP4PoQcwfVMA==}
-    cpu: [x64]
-    os: [freebsd]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-freebsd-arm64/0.13.15:
-    resolution: {integrity: sha512-KJx0fzEDf1uhNOZQStV4ujg30WlnwqUASaGSFPhznLM/bbheu9HhqZ6mJJZM32lkyfGJikw0jg7v3S0oAvtvQQ==}
-    cpu: [arm64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-freebsd-arm64/0.14.14:
-    resolution: {integrity: sha512-TJvq0OpLM7BkTczlyPIphcvnwrQwQDG1HqxzoYePWn26SMUAlt6wrLnEvxdbXAvNvDLVzG83kA+JimjK7aRNBA==}
-    cpu: [arm64]
-    os: [freebsd]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-32/0.13.15:
-    resolution: {integrity: sha512-ZvTBPk0YWCLMCXiFmD5EUtB30zIPvC5Itxz0mdTu/xZBbbHJftQgLWY49wEPSn2T/TxahYCRDWun5smRa0Tu+g==}
-    cpu: [ia32]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-linux-32/0.14.14:
-    resolution: {integrity: sha512-h/CrK9Baimt5VRbu8gqibWV7e1P9l+mkanQgyOgv0Ng3jHT1NVFC9e6rb1zbDdaJVmuhWX5xVliUA5bDDCcJeg==}
-    cpu: [ia32]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-64/0.13.15:
-    resolution: {integrity: sha512-eCKzkNSLywNeQTRBxJRQ0jxRCl2YWdMB3+PkWFo2BBQYC5mISLIVIjThNtn6HUNqua1pnvgP5xX0nHbZbPj5oA==}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-linux-64/0.14.14:
-    resolution: {integrity: sha512-IC+wAiIg/egp5OhQp4W44D9PcBOH1b621iRn1OXmlLzij9a/6BGr9NMIL4CRwz4j2kp3WNZu5sT473tYdynOuQ==}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-arm/0.13.15:
-    resolution: {integrity: sha512-wUHttDi/ol0tD8ZgUMDH8Ef7IbDX+/UsWJOXaAyTdkT7Yy9ZBqPg8bgB/Dn3CZ9SBpNieozrPRHm0BGww7W/jA==}
-    cpu: [arm]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-linux-arm/0.14.14:
-    resolution: {integrity: sha512-gxpOaHOPwp7zSmcKYsHrtxabScMqaTzfSQioAMUaB047YiMuDBzqVcKBG8OuESrYkGrL9DDljXr/mQNg7pbdaQ==}
-    cpu: [arm]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-arm64/0.13.15:
-    resolution: {integrity: sha512-bYpuUlN6qYU9slzr/ltyLTR9YTBS7qUDymO8SV7kjeNext61OdmqFAzuVZom+OLW1HPHseBfJ/JfdSlx8oTUoA==}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-linux-arm64/0.14.14:
-    resolution: {integrity: sha512-6QVul3RI4M5/VxVIRF/I5F+7BaxzR3DfNGoqEVSCZqUbgzHExPn+LXr5ly1C7af2Kw4AHpo+wDqx8A4ziP9avw==}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-mips64le/0.13.15:
-    resolution: {integrity: sha512-KlVjIG828uFPyJkO/8gKwy9RbXhCEUeFsCGOJBepUlpa7G8/SeZgncUEz/tOOUJTcWMTmFMtdd3GElGyAtbSWg==}
-    cpu: [mips64el]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-linux-mips64le/0.14.14:
-    resolution: {integrity: sha512-4Jl5/+xoINKbA4cesH3f4R+q0vltAztZ6Jm8YycS8lNhN1pgZJBDxWfI6HUMIAdkKlIpR1PIkA9aXQgZ8sxFAg==}
-    cpu: [mips64el]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-ppc64le/0.13.15:
-    resolution: {integrity: sha512-h6gYF+OsaqEuBjeesTBtUPw0bmiDu7eAeuc2OEH9S6mV9/jPhPdhOWzdeshb0BskRZxPhxPOjqZ+/OqLcxQwEQ==}
-    cpu: [ppc64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-linux-ppc64le/0.14.14:
-    resolution: {integrity: sha512-BitW37GxeebKxqYNl4SVuSdnIJAzH830Lr6Mkq3pBHXtzQay0vK+IeOR/Ele1GtNVJ+/f8wYM53tcThkv5SC5w==}
-    cpu: [ppc64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-linux-s390x/0.14.14:
-    resolution: {integrity: sha512-vLj6p76HOZG3wfuTr5MyO3qW5iu8YdhUNxuY+tx846rPo7GcKtYSPMusQjeVEfZlJpSYoR+yrNBBxq+qVF9zrw==}
-    cpu: [s390x]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-netbsd-64/0.13.15:
-    resolution: {integrity: sha512-3+yE9emwoevLMyvu+iR3rsa+Xwhie7ZEHMGDQ6dkqP/ndFzRHkobHUKTe+NCApSqG5ce2z4rFu+NX/UHnxlh3w==}
-    cpu: [x64]
-    os: [netbsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-netbsd-64/0.14.14:
-    resolution: {integrity: sha512-fn8looXPQhpVqUyCBWUuPjesH+yGIyfbIQrLKG05rr1Kgm3rZD/gaYrd3Wpmf5syVZx70pKZPvdHp8OTA+y7cQ==}
-    cpu: [x64]
-    os: [netbsd]
-    requiresBuild: true
-    optional: true
-
   /esbuild-node-loader/0.6.4_typescript@4.5.5:
     resolution: {integrity: sha512-7Esvc3CWHf+DcXHX+VdIl91s4hPs83wV/DqDbjrR2q5gKjnR4O7NCX2Hw7QVYd8h5Pzc7fIV2z12SMqAcHIyJg==}
     peerDependencies:
@@ -3492,21 +3263,6 @@ packages:
       typescript: 4.5.5
     dev: true
 
-  /esbuild-openbsd-64/0.13.15:
-    resolution: {integrity: sha512-wTfvtwYJYAFL1fSs8yHIdf5GEE4NkbtbXtjLWjM3Cw8mmQKqsg8kTiqJ9NJQe5NX/5Qlo7Xd9r1yKMMkHllp5g==}
-    cpu: [x64]
-    os: [openbsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-openbsd-64/0.14.14:
-    resolution: {integrity: sha512-HdAnJ399pPff3SKbd8g+P4o5znseni5u5n5rJ6Z7ouqOdgbOwHe2ofZbMow17WMdNtz1IyOZk2Wo9Ve6/lZ4Rg==}
-    cpu: [x64]
-    os: [openbsd]
-    requiresBuild: true
-    optional: true
-
   /esbuild-register/3.3.2_esbuild@0.14.14:
     resolution: {integrity: sha512-jceAtTO6zxPmCfSD5cBb3rgIK1vmuqCKYwgylHiS1BF4pq0jJiJb4K2QMuqF4BEw7XDBRatYzip0upyTzfkgsQ==}
     peerDependencies:
@@ -3515,113 +3271,53 @@ packages:
       esbuild: 0.14.14
     dev: true
 
-  /esbuild-sunos-64/0.13.15:
-    resolution: {integrity: sha512-lbivT9Bx3t1iWWrSnGyBP9ODriEvWDRiweAs69vI+miJoeKwHWOComSRukttbuzjZ8r1q0mQJ8Z7yUsDJ3hKdw==}
-    cpu: [x64]
-    os: [sunos]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-sunos-64/0.14.14:
-    resolution: {integrity: sha512-bmDHa99ulsGnYlh/xjBEfxoGuC8CEG5OWvlgD+pF7bKKiVTbtxqVCvOGEZeoDXB+ja6AvHIbPxrEE32J+m5nqQ==}
-    cpu: [x64]
-    os: [sunos]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-windows-32/0.13.15:
-    resolution: {integrity: sha512-fDMEf2g3SsJ599MBr50cY5ve5lP1wyVwTe6aLJsM01KtxyKkB4UT+fc5MXQFn3RLrAIAZOG+tHC+yXObpSn7Nw==}
-    cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-windows-32/0.14.14:
-    resolution: {integrity: sha512-6tVooQcxJCNenPp5GHZBs/RLu31q4B+BuF4MEoRxswT+Eq2JGF0ZWDRQwNKB8QVIo3t6Svc5wNGez+CwKNQjBg==}
-    cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-windows-64/0.13.15:
-    resolution: {integrity: sha512-9aMsPRGDWCd3bGjUIKG/ZOJPKsiztlxl/Q3C1XDswO6eNX/Jtwu4M+jb6YDH9hRSUflQWX0XKAfWzgy5Wk54JQ==}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-windows-64/0.14.14:
-    resolution: {integrity: sha512-kl3BdPXh0/RD/dad41dtzj2itMUR4C6nQbXQCyYHHo4zoUoeIXhpCrSl7BAW1nv5EFL8stT1V+TQVXGZca5A2A==}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    optional: true
-
-  /esbuild-windows-arm64/0.13.15:
-    resolution: {integrity: sha512-zzvyCVVpbwQQATaf3IG8mu1IwGEiDxKkYUdA4FpoCHi1KtPa13jeScYDjlW0Qh+ebWzpKfR2ZwvqAQkSWNcKjA==}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /esbuild-windows-arm64/0.14.14:
-    resolution: {integrity: sha512-dCm1wTOm6HIisLanmybvRKvaXZZo4yEVrHh1dY0v582GThXJOzuXGja1HIQgV09RpSHYRL3m4KoUBL00l6SWEg==}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    optional: true
-
   /esbuild/0.13.15:
     resolution: {integrity: sha512-raCxt02HBKv8RJxE8vkTSCXGIyKHdEdGfUmiYb8wnabnaEmHzyW7DCHb5tEN0xU8ryqg5xw54mcwnYkC4x3AIw==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      esbuild-android-arm64: 0.13.15
-      esbuild-darwin-64: 0.13.15
-      esbuild-darwin-arm64: 0.13.15
-      esbuild-freebsd-64: 0.13.15
-      esbuild-freebsd-arm64: 0.13.15
-      esbuild-linux-32: 0.13.15
-      esbuild-linux-64: 0.13.15
-      esbuild-linux-arm: 0.13.15
-      esbuild-linux-arm64: 0.13.15
-      esbuild-linux-mips64le: 0.13.15
-      esbuild-linux-ppc64le: 0.13.15
-      esbuild-netbsd-64: 0.13.15
-      esbuild-openbsd-64: 0.13.15
-      esbuild-sunos-64: 0.13.15
-      esbuild-windows-32: 0.13.15
-      esbuild-windows-64: 0.13.15
-      esbuild-windows-arm64: 0.13.15
-    dev: false
+      esbuild-android-arm64: registry.npm.alibaba-inc.com/esbuild-android-arm64/0.13.15
+      esbuild-darwin-64: registry.npm.alibaba-inc.com/esbuild-darwin-64/0.13.15
+      esbuild-darwin-arm64: registry.npm.alibaba-inc.com/esbuild-darwin-arm64/0.13.15
+      esbuild-freebsd-64: registry.npm.alibaba-inc.com/esbuild-freebsd-64/0.13.15
+      esbuild-freebsd-arm64: registry.npm.alibaba-inc.com/esbuild-freebsd-arm64/0.13.15
+      esbuild-linux-32: registry.npm.alibaba-inc.com/esbuild-linux-32/0.13.15
+      esbuild-linux-64: registry.npm.alibaba-inc.com/esbuild-linux-64/0.13.15
+      esbuild-linux-arm: registry.npm.alibaba-inc.com/esbuild-linux-arm/0.13.15
+      esbuild-linux-arm64: registry.npm.alibaba-inc.com/esbuild-linux-arm64/0.13.15
+      esbuild-linux-mips64le: registry.npm.alibaba-inc.com/esbuild-linux-mips64le/0.13.15
+      esbuild-linux-ppc64le: registry.npm.alibaba-inc.com/esbuild-linux-ppc64le/0.13.15
+      esbuild-netbsd-64: registry.npm.alibaba-inc.com/esbuild-netbsd-64/0.13.15
+      esbuild-openbsd-64: registry.npm.alibaba-inc.com/esbuild-openbsd-64/0.13.15
+      esbuild-sunos-64: registry.npm.alibaba-inc.com/esbuild-sunos-64/0.13.15
+      esbuild-windows-32: registry.npm.alibaba-inc.com/esbuild-windows-32/0.13.15
+      esbuild-windows-64: registry.npm.alibaba-inc.com/esbuild-windows-64/0.13.15
+      esbuild-windows-arm64: registry.npm.alibaba-inc.com/esbuild-windows-arm64/0.13.15
 
   /esbuild/0.14.14:
     resolution: {integrity: sha512-aiK4ddv+uui0k52OqSHu4xxu+SzOim7Rlz4i25pMEiC8rlnGU0HJ9r+ZMfdWL5bzifg+nhnn7x4NSWTeehYblg==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      esbuild-android-arm64: 0.14.14
-      esbuild-darwin-64: 0.14.14
-      esbuild-darwin-arm64: 0.14.14
-      esbuild-freebsd-64: 0.14.14
-      esbuild-freebsd-arm64: 0.14.14
-      esbuild-linux-32: 0.14.14
-      esbuild-linux-64: 0.14.14
-      esbuild-linux-arm: 0.14.14
-      esbuild-linux-arm64: 0.14.14
-      esbuild-linux-mips64le: 0.14.14
-      esbuild-linux-ppc64le: 0.14.14
-      esbuild-linux-s390x: 0.14.14
-      esbuild-netbsd-64: 0.14.14
-      esbuild-openbsd-64: 0.14.14
-      esbuild-sunos-64: 0.14.14
-      esbuild-windows-32: 0.14.14
-      esbuild-windows-64: 0.14.14
-      esbuild-windows-arm64: 0.14.14
+      esbuild-android-arm64: registry.npm.alibaba-inc.com/esbuild-android-arm64/0.14.14
+      esbuild-darwin-64: registry.npm.alibaba-inc.com/esbuild-darwin-64/0.14.14
+      esbuild-darwin-arm64: registry.npm.alibaba-inc.com/esbuild-darwin-arm64/0.14.14
+      esbuild-freebsd-64: registry.npm.alibaba-inc.com/esbuild-freebsd-64/0.14.14
+      esbuild-freebsd-arm64: registry.npm.alibaba-inc.com/esbuild-freebsd-arm64/0.14.14
+      esbuild-linux-32: registry.npm.alibaba-inc.com/esbuild-linux-32/0.14.14
+      esbuild-linux-64: registry.npm.alibaba-inc.com/esbuild-linux-64/0.14.14
+      esbuild-linux-arm: registry.npm.alibaba-inc.com/esbuild-linux-arm/0.14.14
+      esbuild-linux-arm64: registry.npm.alibaba-inc.com/esbuild-linux-arm64/0.14.14
+      esbuild-linux-mips64le: registry.npm.alibaba-inc.com/esbuild-linux-mips64le/0.14.14
+      esbuild-linux-ppc64le: registry.npm.alibaba-inc.com/esbuild-linux-ppc64le/0.14.14
+      esbuild-linux-s390x: registry.npm.alibaba-inc.com/esbuild-linux-s390x/0.14.14
+      esbuild-netbsd-64: registry.npm.alibaba-inc.com/esbuild-netbsd-64/0.14.14
+      esbuild-openbsd-64: registry.npm.alibaba-inc.com/esbuild-openbsd-64/0.14.14
+      esbuild-sunos-64: registry.npm.alibaba-inc.com/esbuild-sunos-64/0.14.14
+      esbuild-windows-32: registry.npm.alibaba-inc.com/esbuild-windows-32/0.14.14
+      esbuild-windows-64: registry.npm.alibaba-inc.com/esbuild-windows-64/0.14.14
+      esbuild-windows-arm64: registry.npm.alibaba-inc.com/esbuild-windows-arm64/0.14.14
+    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -3654,7 +3350,7 @@ packages:
       esutils: 2.0.3
       optionator: 0.8.3
     optionalDependencies:
-      source-map: 0.6.1
+      source-map: registry.npm.alibaba-inc.com/source-map/0.6.1
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
@@ -4023,7 +3719,7 @@ packages:
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
-      '@types/yauzl': 2.9.2
+      '@types/yauzl': registry.npm.alibaba-inc.com/@types/yauzl/2.9.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4128,7 +3824,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       commondir: 1.0.1
-      make-dir: 2.1.0
+      make-dir: registry.npm.alibaba-inc.com/make-dir/2.1.0
       pkg-dir: 3.0.0
     dev: false
 
@@ -4225,7 +3921,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       at-least-node: 1.0.0
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
       jsonfile: 6.1.0
       universalify: 2.0.0
     dev: false
@@ -4243,13 +3939,6 @@ packages:
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=}
-
-  /fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    optional: true
 
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
@@ -4658,14 +4347,6 @@ packages:
   /ignore/5.2.0:
     resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
     engines: {node: '>= 4'}
-
-  /image-size/0.5.5:
-    resolution: {integrity: sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=}
-    engines: {node: '>=0.10.0'}
-    hasBin: true
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -5264,7 +4945,7 @@ packages:
       micromatch: 4.0.4
       walker: 1.0.8
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: registry.npm.alibaba-inc.com/fsevents/2.3.2
     dev: true
 
   /jest-jasmine2/27.4.6:
@@ -5444,7 +5125,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@types/node': 17.0.13
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
     dev: true
 
   /jest-snapshot/27.4.6:
@@ -5658,14 +5339,14 @@ packages:
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
 
   /jsonfile/6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.9
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
 
   /jsonparse/1.3.1:
     resolution: {integrity: sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=}
@@ -5720,13 +5401,13 @@ packages:
       parse-node-version: 1.0.1
       tslib: 2.3.1
     optionalDependencies:
-      errno: 0.1.8
-      graceful-fs: 4.2.9
-      image-size: 0.5.5
-      make-dir: 2.1.0
-      mime: 1.6.0
-      needle: 2.9.1
-      source-map: 0.6.1
+      errno: registry.npm.alibaba-inc.com/errno/0.1.8
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
+      image-size: registry.npm.alibaba-inc.com/image-size/0.5.5
+      make-dir: registry.npm.alibaba-inc.com/make-dir/2.1.0
+      mime: registry.npm.alibaba-inc.com/mime/1.6.0
+      needle: registry.npm.alibaba-inc.com/needle/2.9.1
+      source-map: registry.npm.alibaba-inc.com/source-map/0.6.1
     dev: false
 
   /leven/3.1.0:
@@ -5944,13 +5625,6 @@ packages:
     dependencies:
       mime-db: 1.51.0
 
-  /mime/1.6.0:
-    resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
-    engines: {node: '>=4'}
-    hasBin: true
-    requiresBuild: true
-    dev: false
-
   /mimic-fn/1.2.0:
     resolution: {integrity: sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ==}
     engines: {node: '>=4'}
@@ -6073,27 +5747,6 @@ packages:
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
-    dev: true
-
-  /needle/2.9.1:
-    resolution: {integrity: sha512-6R9fqJ5Zcmf+uYaFgdIHmLwNldn5HbK8L5ybn7Uz+ylX/rnOsSp1AHcvQSrCaFN+qNM1wpymHqD7mVasEOlHGQ==}
-    engines: {node: '>= 4.4.x'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      debug: 3.2.7
-      iconv-lite: 0.4.24
-      sax: 1.2.4
-    dev: false
-    optional: true
-
-  /negotiator/0.6.3:
-    resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
-    engines: {node: '>= 0.6'}
-    dev: false
-
-  /neo-async/2.6.2:
-    resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
   /node-fetch/2.6.7:
@@ -6967,7 +6620,7 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: registry.npm.alibaba-inc.com/fsevents/2.3.2
     dev: false
 
   /run-async/2.4.1:
@@ -8019,7 +7672,7 @@ packages:
       resolve: 1.22.0
       rollup: 2.66.1
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: registry.npm.alibaba-inc.com/fsevents/2.3.2
     dev: false
 
   /w3c-hr-time/1.0.2:
@@ -8486,3 +8139,1038 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/@types/eslint-scope/3.7.3:
+    resolution: {integrity: sha512-PB3ldyrcnAicT35TWPs5IcwKD8S333HMaa2VVv4+wdvebJkjWuW/xESoB8IwRcog8HYVYamb1g/R31Qv5Bx03g==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@types/eslint-scope/download/@types/eslint-scope-3.7.3.tgz}
+    name: '@types/eslint-scope'
+    version: 3.7.3
+    dependencies:
+      '@types/eslint': registry.npm.alibaba-inc.com/@types/eslint/8.4.1
+      '@types/estree': registry.npm.alibaba-inc.com/@types/estree/0.0.51
+    dev: true
+
+  registry.npm.alibaba-inc.com/@types/eslint/8.4.1:
+    resolution: {integrity: sha512-GE44+DNEyxxh2Kc6ro/VkIj+9ma0pO0bwv9+uHSyBrikYOHr8zYcdPvnBOp1aw8s+CjRvuSx7CyWqRrNFQ59mA==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@types/eslint/download/@types/eslint-8.4.1.tgz}
+    name: '@types/eslint'
+    version: 8.4.1
+    dependencies:
+      '@types/estree': registry.npm.alibaba-inc.com/@types/estree/0.0.51
+      '@types/json-schema': registry.npm.alibaba-inc.com/@types/json-schema/7.0.9
+    dev: true
+
+  registry.npm.alibaba-inc.com/@types/estree/0.0.51:
+    resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@types/estree/download/@types/estree-0.0.51.tgz}
+    name: '@types/estree'
+    version: 0.0.51
+    dev: true
+
+  registry.npm.alibaba-inc.com/@types/json-schema/7.0.9:
+    resolution: {integrity: sha1-l+3JA36gw4WFMgsolk3eOznkZg0=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@types/json-schema/download/@types/json-schema-7.0.9.tgz}
+    name: '@types/json-schema'
+    version: 7.0.9
+    dev: true
+
+  registry.npm.alibaba-inc.com/@types/node/17.0.13:
+    resolution: {integrity: sha512-Y86MAxASe25hNzlDbsviXl8jQHb0RDvKt4c40ZJQ1Don0AAL0STLZSs4N+6gLEO55pedy7r2cLwS+ZDxPm/2Bw==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@types/node/download/@types/node-17.0.13.tgz}
+    name: '@types/node'
+    version: 17.0.13
+    dev: true
+
+  registry.npm.alibaba-inc.com/@types/yauzl/2.9.2:
+    resolution: {integrity: sha1-xI5dVq/xREQJ45+hZLC01FUqe3o=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@types/yauzl/download/@types/yauzl-2.9.2.tgz}
+    name: '@types/yauzl'
+    version: 2.9.2
+    requiresBuild: true
+    dependencies:
+      '@types/node': 17.0.13
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1:
+    resolution: {integrity: sha1-K/12fq4aaZb0Mv9+jX/HVnnAtqc=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/ast/download/@webassemblyjs/ast-1.11.1.tgz}
+    name: '@webassemblyjs/ast'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/helper-numbers': registry.npm.alibaba-inc.com/@webassemblyjs/helper-numbers/1.11.1
+      '@webassemblyjs/helper-wasm-bytecode': registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/floating-point-hex-parser/1.11.1:
+    resolution: {integrity: sha1-9sYacF8P16auyqToGY8j2dwXnk8=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.11.1.tgz}
+    name: '@webassemblyjs/floating-point-hex-parser'
+    version: 1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/helper-api-error/1.11.1:
+    resolution: {integrity: sha1-GmMZLYeI5cASgAump6RscFKI/RY=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.11.1.tgz}
+    name: '@webassemblyjs/helper-api-error'
+    version: 1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/1.11.1:
+    resolution: {integrity: sha1-gyqQDrREiEzemnytRn+BUA9eWrU=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.11.1.tgz}
+    name: '@webassemblyjs/helper-buffer'
+    version: 1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/helper-numbers/1.11.1:
+    resolution: {integrity: sha1-ZNgdohn7u6HjvRv8dPboxOEKYq4=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/helper-numbers/download/@webassemblyjs/helper-numbers-1.11.1.tgz}
+    name: '@webassemblyjs/helper-numbers'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/floating-point-hex-parser': registry.npm.alibaba-inc.com/@webassemblyjs/floating-point-hex-parser/1.11.1
+      '@webassemblyjs/helper-api-error': registry.npm.alibaba-inc.com/@webassemblyjs/helper-api-error/1.11.1
+      '@xtuc/long': registry.npm.alibaba-inc.com/@xtuc/long/4.2.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/1.11.1:
+    resolution: {integrity: sha1-8ygkHkHnsZnQsgwY6IQpxEMyleE=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.11.1.tgz}
+    name: '@webassemblyjs/helper-wasm-bytecode'
+    version: 1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-section/1.11.1:
+    resolution: {integrity: sha1-Ie4GWntjXzGec48N1zv72igcCXo=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.11.1.tgz}
+    name: '@webassemblyjs/helper-wasm-section'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@webassemblyjs/helper-buffer': registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/1.11.1
+      '@webassemblyjs/helper-wasm-bytecode': registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/1.11.1
+      '@webassemblyjs/wasm-gen': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/ieee754/1.11.1:
+    resolution: {integrity: sha1-ljkp6bvQVwnn4SJDoJkYCBKZJhQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.11.1.tgz}
+    name: '@webassemblyjs/ieee754'
+    version: 1.11.1
+    dependencies:
+      '@xtuc/ieee754': registry.npm.alibaba-inc.com/@xtuc/ieee754/1.2.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/leb128/1.11.1:
+    resolution: {integrity: sha1-zoFLRVdOk9drrh+yZEq5zdlSeqU=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.11.1.tgz}
+    name: '@webassemblyjs/leb128'
+    version: 1.11.1
+    dependencies:
+      '@xtuc/long': registry.npm.alibaba-inc.com/@xtuc/long/4.2.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/utf8/1.11.1:
+    resolution: {integrity: sha1-0fi3ZDaefG5rrjUOhU3smlnwo/8=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.11.1.tgz}
+    name: '@webassemblyjs/utf8'
+    version: 1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/wasm-edit/1.11.1:
+    resolution: {integrity: sha1-rSBuv0v5WgWM6YgKjAksXeyBk9Y=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.11.1.tgz}
+    name: '@webassemblyjs/wasm-edit'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@webassemblyjs/helper-buffer': registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/1.11.1
+      '@webassemblyjs/helper-wasm-bytecode': registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/1.11.1
+      '@webassemblyjs/helper-wasm-section': registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-section/1.11.1
+      '@webassemblyjs/wasm-gen': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/1.11.1
+      '@webassemblyjs/wasm-opt': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-opt/1.11.1
+      '@webassemblyjs/wasm-parser': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/1.11.1
+      '@webassemblyjs/wast-printer': registry.npm.alibaba-inc.com/@webassemblyjs/wast-printer/1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/1.11.1:
+    resolution: {integrity: sha1-hsXqMEhJdZt9iMR6MvTwOa48j3Y=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.11.1.tgz}
+    name: '@webassemblyjs/wasm-gen'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@webassemblyjs/helper-wasm-bytecode': registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/1.11.1
+      '@webassemblyjs/ieee754': registry.npm.alibaba-inc.com/@webassemblyjs/ieee754/1.11.1
+      '@webassemblyjs/leb128': registry.npm.alibaba-inc.com/@webassemblyjs/leb128/1.11.1
+      '@webassemblyjs/utf8': registry.npm.alibaba-inc.com/@webassemblyjs/utf8/1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/wasm-opt/1.11.1:
+    resolution: {integrity: sha1-ZXtMIgL0zzs0X4pMZGHIwkGJhfI=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.11.1.tgz}
+    name: '@webassemblyjs/wasm-opt'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@webassemblyjs/helper-buffer': registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/1.11.1
+      '@webassemblyjs/wasm-gen': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/1.11.1
+      '@webassemblyjs/wasm-parser': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/1.11.1:
+    resolution: {integrity: sha1-hspzRTT0F+m9PGfHocddi+QfsZk=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.11.1.tgz}
+    name: '@webassemblyjs/wasm-parser'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@webassemblyjs/helper-api-error': registry.npm.alibaba-inc.com/@webassemblyjs/helper-api-error/1.11.1
+      '@webassemblyjs/helper-wasm-bytecode': registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/1.11.1
+      '@webassemblyjs/ieee754': registry.npm.alibaba-inc.com/@webassemblyjs/ieee754/1.11.1
+      '@webassemblyjs/leb128': registry.npm.alibaba-inc.com/@webassemblyjs/leb128/1.11.1
+      '@webassemblyjs/utf8': registry.npm.alibaba-inc.com/@webassemblyjs/utf8/1.11.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/@webassemblyjs/wast-printer/1.11.1:
+    resolution: {integrity: sha1-0Mc77ajuxUJvEK6O9VzuXnCEwvA=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.11.1.tgz}
+    name: '@webassemblyjs/wast-printer'
+    version: 1.11.1
+    dependencies:
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@xtuc/long': registry.npm.alibaba-inc.com/@xtuc/long/4.2.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/@xtuc/ieee754/1.2.0:
+    resolution: {integrity: sha1-7vAUoxRa5Hehy8AM0eVSM23Ot5A=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz}
+    name: '@xtuc/ieee754'
+    version: 1.2.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/@xtuc/long/4.2.2:
+    resolution: {integrity: sha1-0pHGpOl5ibXGHZrPOWrk/hM6cY0=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/@xtuc/long/download/@xtuc/long-4.2.2.tgz}
+    name: '@xtuc/long'
+    version: 4.2.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/acorn-import-assertions/1.8.0_acorn@8.7.0:
+    resolution: {integrity: sha1-uitZOc5iwjjbbZPYHJsRGym4Vek=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/acorn-import-assertions/download/acorn-import-assertions-1.8.0.tgz}
+    id: registry.npm.alibaba-inc.com/acorn-import-assertions/1.8.0
+    name: acorn-import-assertions
+    version: 1.8.0
+    peerDependencies:
+      acorn: ^8
+    dependencies:
+      acorn: registry.npm.alibaba-inc.com/acorn/8.7.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/acorn/8.7.0:
+    resolution: {integrity: sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/acorn/download/acorn-8.7.0.tgz}
+    name: acorn
+    version: 8.7.0
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+    dev: true
+
+  registry.npm.alibaba-inc.com/ajv-keywords/3.5.2_ajv@6.12.6:
+    resolution: {integrity: sha1-MfKdpatuANHC0yms97WSlhTVAU0=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/ajv-keywords/download/ajv-keywords-3.5.2.tgz}
+    id: registry.npm.alibaba-inc.com/ajv-keywords/3.5.2
+    name: ajv-keywords
+    version: 3.5.2
+    peerDependencies:
+      ajv: ^6.9.1
+    dependencies:
+      ajv: registry.npm.alibaba-inc.com/ajv/6.12.6
+    dev: true
+
+  registry.npm.alibaba-inc.com/ajv/6.12.6:
+    resolution: {integrity: sha1-uvWmLoArB9l3A0WG+MO69a3ybfQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/ajv/download/ajv-6.12.6.tgz}
+    name: ajv
+    version: 6.12.6
+    dependencies:
+      fast-deep-equal: registry.npm.alibaba-inc.com/fast-deep-equal/3.1.3
+      fast-json-stable-stringify: registry.npm.alibaba-inc.com/fast-json-stable-stringify/2.1.0
+      json-schema-traverse: registry.npm.alibaba-inc.com/json-schema-traverse/0.4.1
+      uri-js: registry.npm.alibaba-inc.com/uri-js/4.4.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/browserslist/4.19.1:
+    resolution: {integrity: sha512-u2tbbG5PdKRTUoctO3NBD8FQ5HdPh1ZXPHzp1rwaa5jTc+RV9/+RlWiAIKmjRPQF+xbGM9Kklj5bZQFa2s/38A==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/browserslist/download/browserslist-4.19.1.tgz}
+    name: browserslist
+    version: 4.19.1
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+    dependencies:
+      caniuse-lite: registry.npm.alibaba-inc.com/caniuse-lite/1.0.30001303
+      electron-to-chromium: registry.npm.alibaba-inc.com/electron-to-chromium/1.4.56
+      escalade: registry.npm.alibaba-inc.com/escalade/3.1.1
+      node-releases: registry.npm.alibaba-inc.com/node-releases/2.0.1
+      picocolors: registry.npm.alibaba-inc.com/picocolors/1.0.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/buffer-from/1.1.2:
+    resolution: {integrity: sha1-KxRqb9cugLT1XSVfNe1Zo6mkG9U=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/buffer-from/download/buffer-from-1.1.2.tgz}
+    name: buffer-from
+    version: 1.1.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/caniuse-lite/1.0.30001303:
+    resolution: {integrity: sha512-/Mqc1oESndUNszJP0kx0UaQU9kEv9nNtJ7Kn8AdA0mNnH8eR1cj0kG+NbNuC1Wq/b21eA8prhKRA3bbkjONegQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/caniuse-lite/download/caniuse-lite-1.0.30001303.tgz}
+    name: caniuse-lite
+    version: 1.0.30001303
+    dev: true
+
+  registry.npm.alibaba-inc.com/chrome-trace-event/1.0.3:
+    resolution: {integrity: sha1-EBXs7UdB4V0GZkqVfbv1DQQeJqw=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/chrome-trace-event/download/chrome-trace-event-1.0.3.tgz}
+    name: chrome-trace-event
+    version: 1.0.3
+    engines: {node: '>=6.0'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/commander/2.20.3:
+    resolution: {integrity: sha1-/UhehMA+tIgcIHIrpIA16FMa6zM=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/commander/download/commander-2.20.3.tgz}
+    name: commander
+    version: 2.20.3
+    dev: true
+
+  registry.npm.alibaba-inc.com/electron-to-chromium/1.4.56:
+    resolution: {integrity: sha512-0k/S0FQqRRpJbX7YUjwCcLZ8D42RqGKtaiq90adXBOYgTIWwLA/g3toO8k9yEpqU8iC4QyaWYYWSTBIna8WV4g==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/electron-to-chromium/download/electron-to-chromium-1.4.56.tgz}
+    name: electron-to-chromium
+    version: 1.4.56
+    dev: true
+
+  registry.npm.alibaba-inc.com/enhanced-resolve/5.9.0:
+    resolution: {integrity: sha512-weDYmzbBygL7HzGGS26M3hGQx68vehdEg6VUmqSOaFzXExFqlnKuSvsEJCVGQHScS8CQMbrAqftT+AzzHNt/YA==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/enhanced-resolve/download/enhanced-resolve-5.9.0.tgz}
+    name: enhanced-resolve
+    version: 5.9.0
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
+      tapable: registry.npm.alibaba-inc.com/tapable/2.2.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/errno/0.1.8:
+    resolution: {integrity: sha1-i7Ppx9Rjvkl2/4iPdrSAnrwugR8=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/errno/download/errno-0.1.8.tgz}
+    name: errno
+    version: 0.1.8
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      prr: 1.0.1
+    dev: false
+    optional: true
+
+  registry.npm.alibaba-inc.com/es-module-lexer/0.9.3:
+    resolution: {integrity: sha1-bxPbAMw4QXE32vdDZvU1yOtDjxk=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/es-module-lexer/download/es-module-lexer-0.9.3.tgz}
+    name: es-module-lexer
+    version: 0.9.3
+    dev: true
+
+  registry.npm.alibaba-inc.com/esbuild-android-arm64/0.13.15:
+    resolution: {integrity: sha1-P8P/C6t2/jXdI3R2tdKzK7IKPUQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-android-arm64/download/esbuild-android-arm64-0.13.15.tgz}
+    name: esbuild-android-arm64
+    version: 0.13.15
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-android-arm64/0.14.14:
+    resolution: {integrity: sha512-be/Uw6DdpQiPfula1J4bdmA+wtZ6T3BRCZsDMFB5X+k0Gp8TIh9UvmAcqvKNnbRAafSaXG3jPCeXxDKqnc8hFQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-android-arm64/download/esbuild-android-arm64-0.14.14.tgz}
+    name: esbuild-android-arm64
+    version: 0.14.14
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-darwin-64/0.13.15:
+    resolution: {integrity: sha1-jpFpwWuvRE6s7GDQmyTRGyVajnI=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-darwin-64/download/esbuild-darwin-64-0.13.15.tgz}
+    name: esbuild-darwin-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-darwin-64/0.14.14:
+    resolution: {integrity: sha512-BEexYmjWafcISK8cT6O98E3TfcLuZL8DKuubry6G54n2+bD4GkoRD6HYUOnCkfl2p7jodA+s4369IjSFSWjtHg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-darwin-64/download/esbuild-darwin-64-0.14.14.tgz}
+    name: esbuild-darwin-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-darwin-arm64/0.13.15:
+    resolution: {integrity: sha1-Gwf4k7YyEU+AXhiN38pBsrd4Ipo=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-darwin-arm64/download/esbuild-darwin-arm64-0.13.15.tgz}
+    name: esbuild-darwin-arm64
+    version: 0.13.15
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-darwin-arm64/0.14.14:
+    resolution: {integrity: sha512-tnBKm41pDOB1GtZ8q/w26gZlLLRzVmP8fdsduYjvM+yFD7E2DLG4KbPAqFMWm4Md9B+DitBglP57FY7AznxbTg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-darwin-arm64/download/esbuild-darwin-arm64-0.14.14.tgz}
+    name: esbuild-darwin-arm64
+    version: 0.14.14
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-freebsd-64/0.13.15:
+    resolution: {integrity: sha1-C4t+yhaQyOyUx1aAw4wHJpwfSoU=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-freebsd-64/download/esbuild-freebsd-64-0.13.15.tgz}
+    name: esbuild-freebsd-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [freebsd]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-freebsd-64/0.14.14:
+    resolution: {integrity: sha512-Q9Rx6sgArOHalQtNwAaIzJ6dnQ8A+I7f/RsQsdkS3JrdzmnlFo8JEVofTmwVQLoIop7OKUqIVOGP4PoQcwfVMA==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-freebsd-64/download/esbuild-freebsd-64-0.14.14.tgz}
+    name: esbuild-freebsd-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-freebsd-arm64/0.13.15:
+    resolution: {integrity: sha1-LhpsaWv9zSCplXi3Y1C0HbGTTlI=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-freebsd-arm64/download/esbuild-freebsd-arm64-0.13.15.tgz}
+    name: esbuild-freebsd-arm64
+    version: 0.13.15
+    cpu: [arm64]
+    os: [freebsd]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-freebsd-arm64/0.14.14:
+    resolution: {integrity: sha512-TJvq0OpLM7BkTczlyPIphcvnwrQwQDG1HqxzoYePWn26SMUAlt6wrLnEvxdbXAvNvDLVzG83kA+JimjK7aRNBA==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-freebsd-arm64/download/esbuild-freebsd-arm64-0.14.14.tgz}
+    name: esbuild-freebsd-arm64
+    version: 0.14.14
+    cpu: [arm64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-32/0.13.15:
+    resolution: {integrity: sha1-b9OfNvxm3UW2tfUVcox7vrw0Kmk=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-32/download/esbuild-linux-32-0.13.15.tgz}
+    name: esbuild-linux-32
+    version: 0.13.15
+    cpu: [ia32]
+    os: [linux]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-32/0.14.14:
+    resolution: {integrity: sha512-h/CrK9Baimt5VRbu8gqibWV7e1P9l+mkanQgyOgv0Ng3jHT1NVFC9e6rb1zbDdaJVmuhWX5xVliUA5bDDCcJeg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-32/download/esbuild-linux-32-0.14.14.tgz}
+    name: esbuild-linux-32
+    version: 0.14.14
+    cpu: [ia32]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-64/0.13.15:
+    resolution: {integrity: sha1-nLjkvNdXTmeUbk7l8fHhI4a7bdM=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-64/download/esbuild-linux-64-0.13.15.tgz}
+    name: esbuild-linux-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-64/0.14.14:
+    resolution: {integrity: sha512-IC+wAiIg/egp5OhQp4W44D9PcBOH1b621iRn1OXmlLzij9a/6BGr9NMIL4CRwz4j2kp3WNZu5sT473tYdynOuQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-64/download/esbuild-linux-64-0.14.14.tgz}
+    name: esbuild-linux-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-arm/0.13.15:
+    resolution: {integrity: sha1-igDpnmoMbJprfzNIQTZNiitK7P4=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-arm/download/esbuild-linux-arm-0.13.15.tgz}
+    name: esbuild-linux-arm
+    version: 0.13.15
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-arm/0.14.14:
+    resolution: {integrity: sha512-gxpOaHOPwp7zSmcKYsHrtxabScMqaTzfSQioAMUaB047YiMuDBzqVcKBG8OuESrYkGrL9DDljXr/mQNg7pbdaQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-arm/download/esbuild-linux-arm-0.14.14.tgz}
+    name: esbuild-linux-arm
+    version: 0.14.14
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-arm64/0.13.15:
+    resolution: {integrity: sha1-OJGqNwTsV5obktKlhhIuW2or+6E=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-arm64/download/esbuild-linux-arm64-0.13.15.tgz}
+    name: esbuild-linux-arm64
+    version: 0.13.15
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-arm64/0.14.14:
+    resolution: {integrity: sha512-6QVul3RI4M5/VxVIRF/I5F+7BaxzR3DfNGoqEVSCZqUbgzHExPn+LXr5ly1C7af2Kw4AHpo+wDqx8A4ziP9avw==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-arm64/download/esbuild-linux-arm64-0.14.14.tgz}
+    name: esbuild-linux-arm64
+    version: 0.14.14
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-mips64le/0.13.15:
+    resolution: {integrity: sha1-NrB8xHw9IeSNs7sfTZ749Grq1Pc=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-mips64le/download/esbuild-linux-mips64le-0.13.15.tgz}
+    name: esbuild-linux-mips64le
+    version: 0.13.15
+    cpu: [mips64el]
+    os: [linux]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-mips64le/0.14.14:
+    resolution: {integrity: sha512-4Jl5/+xoINKbA4cesH3f4R+q0vltAztZ6Jm8YycS8lNhN1pgZJBDxWfI6HUMIAdkKlIpR1PIkA9aXQgZ8sxFAg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-mips64le/download/esbuild-linux-mips64le-0.14.14.tgz}
+    name: esbuild-linux-mips64le
+    version: 0.14.14
+    cpu: [mips64el]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-ppc64le/0.13.15:
+    resolution: {integrity: sha1-9+a7pAuaEeudyuWwFVDqBGcO2tI=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-ppc64le/download/esbuild-linux-ppc64le-0.13.15.tgz}
+    name: esbuild-linux-ppc64le
+    version: 0.13.15
+    cpu: [ppc64]
+    os: [linux]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-ppc64le/0.14.14:
+    resolution: {integrity: sha512-BitW37GxeebKxqYNl4SVuSdnIJAzH830Lr6Mkq3pBHXtzQay0vK+IeOR/Ele1GtNVJ+/f8wYM53tcThkv5SC5w==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-ppc64le/download/esbuild-linux-ppc64le-0.14.14.tgz}
+    name: esbuild-linux-ppc64le
+    version: 0.14.14
+    cpu: [ppc64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-linux-s390x/0.14.14:
+    resolution: {integrity: sha512-vLj6p76HOZG3wfuTr5MyO3qW5iu8YdhUNxuY+tx846rPo7GcKtYSPMusQjeVEfZlJpSYoR+yrNBBxq+qVF9zrw==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-linux-s390x/download/esbuild-linux-s390x-0.14.14.tgz}
+    name: esbuild-linux-s390x
+    version: 0.14.14
+    cpu: [s390x]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-netbsd-64/0.13.15:
+    resolution: {integrity: sha1-ov7cVJwrYp1YCnMthAcSsI1EADg=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-netbsd-64/download/esbuild-netbsd-64-0.13.15.tgz}
+    name: esbuild-netbsd-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [netbsd]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-netbsd-64/0.14.14:
+    resolution: {integrity: sha512-fn8looXPQhpVqUyCBWUuPjesH+yGIyfbIQrLKG05rr1Kgm3rZD/gaYrd3Wpmf5syVZx70pKZPvdHp8OTA+y7cQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-netbsd-64/download/esbuild-netbsd-64-0.14.14.tgz}
+    name: esbuild-netbsd-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [netbsd]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-openbsd-64/0.13.15:
+    resolution: {integrity: sha1-siwOWAbTofvwMlhyA3+IUwawXNc=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-openbsd-64/download/esbuild-openbsd-64-0.13.15.tgz}
+    name: esbuild-openbsd-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [openbsd]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-openbsd-64/0.14.14:
+    resolution: {integrity: sha512-HdAnJ399pPff3SKbd8g+P4o5znseni5u5n5rJ6Z7ouqOdgbOwHe2ofZbMow17WMdNtz1IyOZk2Wo9Ve6/lZ4Rg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-openbsd-64/download/esbuild-openbsd-64-0.14.14.tgz}
+    name: esbuild-openbsd-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [openbsd]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-sunos-64/0.13.15:
+    resolution: {integrity: sha1-0LZFSog3XujTlk2u/1XIXJHHzvQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-sunos-64/download/esbuild-sunos-64-0.13.15.tgz}
+    name: esbuild-sunos-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [sunos]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-sunos-64/0.14.14:
+    resolution: {integrity: sha512-bmDHa99ulsGnYlh/xjBEfxoGuC8CEG5OWvlgD+pF7bKKiVTbtxqVCvOGEZeoDXB+ja6AvHIbPxrEE32J+m5nqQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-sunos-64/download/esbuild-sunos-64-0.14.14.tgz}
+    name: esbuild-sunos-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [sunos]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-windows-32/0.13.15:
+    resolution: {integrity: sha1-yW0Lm7tS8zAzIlgu+OSEfFrTdac=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-windows-32/download/esbuild-windows-32-0.13.15.tgz}
+    name: esbuild-windows-32
+    version: 0.13.15
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-windows-32/0.14.14:
+    resolution: {integrity: sha512-6tVooQcxJCNenPp5GHZBs/RLu31q4B+BuF4MEoRxswT+Eq2JGF0ZWDRQwNKB8QVIo3t6Svc5wNGez+CwKNQjBg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-windows-32/download/esbuild-windows-32-0.14.14.tgz}
+    name: esbuild-windows-32
+    version: 0.14.14
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-windows-64/0.13.15:
+    resolution: {integrity: sha1-H3nLmx4bsC+yXNQUy5DU6iiSwpQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-windows-64/download/esbuild-windows-64-0.13.15.tgz}
+    name: esbuild-windows-64
+    version: 0.13.15
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-windows-64/0.14.14:
+    resolution: {integrity: sha512-kl3BdPXh0/RD/dad41dtzj2itMUR4C6nQbXQCyYHHo4zoUoeIXhpCrSl7BAW1nv5EFL8stT1V+TQVXGZca5A2A==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-windows-64/download/esbuild-windows-64-0.14.14.tgz}
+    name: esbuild-windows-64
+    version: 0.14.14
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-windows-arm64/0.13.15:
+    resolution: {integrity: sha1-SCFzBwgQ3yKnUsaGUJw3DDvjs8M=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-windows-arm64/download/esbuild-windows-arm64-0.13.15.tgz}
+    name: esbuild-windows-arm64
+    version: 0.13.15
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/esbuild-windows-arm64/0.14.14:
+    resolution: {integrity: sha512-dCm1wTOm6HIisLanmybvRKvaXZZo4yEVrHh1dY0v582GThXJOzuXGja1HIQgV09RpSHYRL3m4KoUBL00l6SWEg==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esbuild-windows-arm64/download/esbuild-windows-arm64-0.14.14.tgz}
+    name: esbuild-windows-arm64
+    version: 0.14.14
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/escalade/3.1.1:
+    resolution: {integrity: sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/escalade/download/escalade-3.1.1.tgz}
+    name: escalade
+    version: 3.1.1
+    engines: {node: '>=6'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/eslint-scope/5.1.1:
+    resolution: {integrity: sha1-54blmmbLkrP2wfsNUIqrF0hI9Iw=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/eslint-scope/download/eslint-scope-5.1.1.tgz}
+    name: eslint-scope
+    version: 5.1.1
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      esrecurse: registry.npm.alibaba-inc.com/esrecurse/4.3.0
+      estraverse: registry.npm.alibaba-inc.com/estraverse/4.3.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/esrecurse/4.3.0:
+    resolution: {integrity: sha1-eteWTWeauyi+5yzsY3WLHF0smSE=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/esrecurse/download/esrecurse-4.3.0.tgz}
+    name: esrecurse
+    version: 4.3.0
+    engines: {node: '>=4.0'}
+    dependencies:
+      estraverse: registry.npm.alibaba-inc.com/estraverse/5.3.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/estraverse/4.3.0:
+    resolution: {integrity: sha1-OYrT88WiSUi+dyXoPRGn3ijNvR0=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/estraverse/download/estraverse-4.3.0.tgz}
+    name: estraverse
+    version: 4.3.0
+    engines: {node: '>=4.0'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/estraverse/5.3.0:
+    resolution: {integrity: sha1-LupSkHAvJquP5TcDcP+GyWXSESM=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/estraverse/download/estraverse-5.3.0.tgz}
+    name: estraverse
+    version: 5.3.0
+    engines: {node: '>=4.0'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/events/3.3.0:
+    resolution: {integrity: sha1-Mala0Kkk4tLEGagTrrLE6HjqdAA=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/events/download/events-3.3.0.tgz}
+    name: events
+    version: 3.3.0
+    engines: {node: '>=0.8.x'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/fast-deep-equal/3.1.3:
+    resolution: {integrity: sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/fast-deep-equal/download/fast-deep-equal-3.1.3.tgz}
+    name: fast-deep-equal
+    version: 3.1.3
+    dev: true
+
+  registry.npm.alibaba-inc.com/fast-json-stable-stringify/2.1.0:
+    resolution: {integrity: sha1-h0v2nG9ATCtdmcSBNBOZ/VWJJjM=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/fast-json-stable-stringify/download/fast-json-stable-stringify-2.1.0.tgz}
+    name: fast-json-stable-stringify
+    version: 2.1.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/fsevents/2.3.2:
+    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/fsevents/download/fsevents-2.3.2.tgz}
+    name: fsevents
+    version: 2.3.2
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    optional: true
+
+  registry.npm.alibaba-inc.com/glob-to-regexp/0.4.1:
+    resolution: {integrity: sha1-x1KXCHyFG5pXi9IX3VmpL1n+VG4=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/glob-to-regexp/download/glob-to-regexp-0.4.1.tgz}
+    name: glob-to-regexp
+    version: 0.4.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/graceful-fs/4.2.9:
+    resolution: {integrity: sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/graceful-fs/download/graceful-fs-4.2.9.tgz}
+    name: graceful-fs
+    version: 4.2.9
+
+  registry.npm.alibaba-inc.com/has-flag/4.0.0:
+    resolution: {integrity: sha1-lEdx/ZyByBJlxNaUGGDaBrtZR5s=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/has-flag/download/has-flag-4.0.0.tgz}
+    name: has-flag
+    version: 4.0.0
+    engines: {node: '>=8'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/image-size/0.5.5:
+    resolution: {integrity: sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/image-size/download/image-size-0.5.5.tgz}
+    name: image-size
+    version: 0.5.5
+    engines: {node: '>=0.10.0'}
+    hasBin: true
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  registry.npm.alibaba-inc.com/jest-worker/27.4.6:
+    resolution: {integrity: sha512-gHWJF/6Xi5CTG5QCvROr6GcmpIqNYpDJyc8A1h/DyXqH1tD6SnRCM0d3U5msV31D2LB/U+E0M+W4oyvKV44oNw==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/jest-worker/download/jest-worker-27.4.6.tgz}
+    name: jest-worker
+    version: 27.4.6
+    engines: {node: '>= 10.13.0'}
+    dependencies:
+      '@types/node': registry.npm.alibaba-inc.com/@types/node/17.0.13
+      merge-stream: registry.npm.alibaba-inc.com/merge-stream/2.0.0
+      supports-color: registry.npm.alibaba-inc.com/supports-color/8.1.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/json-parse-better-errors/1.0.2:
+    resolution: {integrity: sha1-u4Z8+zRQ5pEHwTHRxRS6s9yLyqk=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/json-parse-better-errors/download/json-parse-better-errors-1.0.2.tgz}
+    name: json-parse-better-errors
+    version: 1.0.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/json-schema-traverse/0.4.1:
+    resolution: {integrity: sha1-afaofZUTq4u4/mO9sJecRI5oRmA=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/json-schema-traverse/download/json-schema-traverse-0.4.1.tgz}
+    name: json-schema-traverse
+    version: 0.4.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/loader-runner/4.2.0:
+    resolution: {integrity: sha1-1wIjgNZtFMX7HUlriYZOvP1Hg4Q=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/loader-runner/download/loader-runner-4.2.0.tgz}
+    name: loader-runner
+    version: 4.2.0
+    engines: {node: '>=6.11.5'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/make-dir/2.1.0:
+    resolution: {integrity: sha1-XwMQ4YuL6JjMBwCSlaMK5B6R5vU=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/make-dir/download/make-dir-2.1.0.tgz}
+    name: make-dir
+    version: 2.1.0
+    engines: {node: '>=6'}
+    dependencies:
+      pify: 4.0.1
+      semver: 5.7.1
+    dev: false
+
+  registry.npm.alibaba-inc.com/merge-stream/2.0.0:
+    resolution: {integrity: sha1-UoI2KaFN0AyXcPtq1H3GMQ8sH2A=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/merge-stream/download/merge-stream-2.0.0.tgz}
+    name: merge-stream
+    version: 2.0.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/mime-db/1.51.0:
+    resolution: {integrity: sha1-2f9iRRhZsYNC2WCFDcPPt35j+ww=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/mime-db/download/mime-db-1.51.0.tgz}
+    name: mime-db
+    version: 1.51.0
+    engines: {node: '>= 0.6'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/mime-types/2.1.34:
+    resolution: {integrity: sha1-WnEvnsFQNRGpRYA2QPr+CdN5PCQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/mime-types/download/mime-types-2.1.34.tgz}
+    name: mime-types
+    version: 2.1.34
+    engines: {node: '>= 0.6'}
+    dependencies:
+      mime-db: registry.npm.alibaba-inc.com/mime-db/1.51.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/mime/1.6.0:
+    resolution: {integrity: sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/mime/download/mime-1.6.0.tgz}
+    name: mime
+    version: 1.6.0
+    engines: {node: '>=4'}
+    hasBin: true
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  registry.npm.alibaba-inc.com/needle/2.9.1:
+    resolution: {integrity: sha1-ItHf++NJDCuD4wH3cJtnNs2PJoQ=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/needle/download/needle-2.9.1.tgz}
+    name: needle
+    version: 2.9.1
+    engines: {node: '>= 4.4.x'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      debug: 3.2.7
+      iconv-lite: 0.4.24
+      sax: 1.2.4
+    dev: false
+    optional: true
+
+  registry.npm.alibaba-inc.com/neo-async/2.6.2:
+    resolution: {integrity: sha1-tKr7k+OustgXTKU88WOrfXMIMF8=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/neo-async/download/neo-async-2.6.2.tgz}
+    name: neo-async
+    version: 2.6.2
+    dev: true
+
+  registry.npm.alibaba-inc.com/node-releases/2.0.1:
+    resolution: {integrity: sha1-PR05XyBPHy8ppUNYuftnh2WtL8U=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/node-releases/download/node-releases-2.0.1.tgz}
+    name: node-releases
+    version: 2.0.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/picocolors/1.0.0:
+    resolution: {integrity: sha1-y1vcdP8/UYkiNur3nWi8RFZKuBw=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/picocolors/download/picocolors-1.0.0.tgz}
+    name: picocolors
+    version: 1.0.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/punycode/2.1.1:
+    resolution: {integrity: sha1-tYsBCsQMIsVldhbI0sLALHv0eew=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/punycode/download/punycode-2.1.1.tgz}
+    name: punycode
+    version: 2.1.1
+    engines: {node: '>=6'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/randombytes/2.1.0:
+    resolution: {integrity: sha1-32+ENy8CcNxlzfYpE0mrekc9Tyo=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/randombytes/download/randombytes-2.1.0.tgz}
+    name: randombytes
+    version: 2.1.0
+    dependencies:
+      safe-buffer: registry.npm.alibaba-inc.com/safe-buffer/5.2.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/safe-buffer/5.2.1:
+    resolution: {integrity: sha1-Hq+fqb2x/dTsdfWPnNtOa3gn7sY=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/safe-buffer/download/safe-buffer-5.2.1.tgz}
+    name: safe-buffer
+    version: 5.2.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/schema-utils/3.1.1:
+    resolution: {integrity: sha1-vHTEtraZXB2I92qLd76nIZ4MgoE=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/schema-utils/download/schema-utils-3.1.1.tgz}
+    name: schema-utils
+    version: 3.1.1
+    engines: {node: '>= 10.13.0'}
+    dependencies:
+      '@types/json-schema': registry.npm.alibaba-inc.com/@types/json-schema/7.0.9
+      ajv: registry.npm.alibaba-inc.com/ajv/6.12.6
+      ajv-keywords: registry.npm.alibaba-inc.com/ajv-keywords/3.5.2_ajv@6.12.6
+    dev: true
+
+  registry.npm.alibaba-inc.com/serialize-javascript/6.0.0:
+    resolution: {integrity: sha1-765diPRdeSQUHai1w6en5mP+/rg=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/serialize-javascript/download/serialize-javascript-6.0.0.tgz}
+    name: serialize-javascript
+    version: 6.0.0
+    dependencies:
+      randombytes: registry.npm.alibaba-inc.com/randombytes/2.1.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/source-map-support/0.5.21:
+    resolution: {integrity: sha1-BP58f54e0tZiIzwoyys1ufY/bk8=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/source-map-support/download/source-map-support-0.5.21.tgz}
+    name: source-map-support
+    version: 0.5.21
+    dependencies:
+      buffer-from: registry.npm.alibaba-inc.com/buffer-from/1.1.2
+      source-map: registry.npm.alibaba-inc.com/source-map/0.6.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/source-map/0.6.1:
+    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/source-map/download/source-map-0.6.1.tgz}
+    name: source-map
+    version: 0.6.1
+    engines: {node: '>=0.10.0'}
+    requiresBuild: true
+
+  registry.npm.alibaba-inc.com/source-map/0.7.3:
+    resolution: {integrity: sha1-UwL4FpAxc1ImVECS5kmB91F1A4M=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/source-map/download/source-map-0.7.3.tgz}
+    name: source-map
+    version: 0.7.3
+    engines: {node: '>= 8'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/supports-color/8.1.1:
+    resolution: {integrity: sha1-zW/BfihQDP9WwbhsCn/UpUpzAFw=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/supports-color/download/supports-color-8.1.1.tgz}
+    name: supports-color
+    version: 8.1.1
+    engines: {node: '>=10'}
+    dependencies:
+      has-flag: registry.npm.alibaba-inc.com/has-flag/4.0.0
+    dev: true
+
+  registry.npm.alibaba-inc.com/tapable/2.2.1:
+    resolution: {integrity: sha1-GWenPvQGCoLxKrlq+G1S/bdu7KA=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/tapable/download/tapable-2.2.1.tgz}
+    name: tapable
+    version: 2.2.1
+    engines: {node: '>=6'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/terser-webpack-plugin/5.3.1_acorn@8.7.0+webpack@5.69.1:
+    resolution: {integrity: sha512-GvlZdT6wPQKbDNW/GDQzZFg/j4vKU96yl2q6mcUkzKOgW4gwf1Z8cZToUCrz31XHlPWH8MVb1r2tFtdDtTGJ7g==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/terser-webpack-plugin/download/terser-webpack-plugin-5.3.1.tgz}
+    id: registry.npm.alibaba-inc.com/terser-webpack-plugin/5.3.1
+    name: terser-webpack-plugin
+    version: 5.3.1
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      '@swc/core': '*'
+      esbuild: '*'
+      uglify-js: '*'
+      webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      esbuild:
+        optional: true
+      uglify-js:
+        optional: true
+    dependencies:
+      jest-worker: registry.npm.alibaba-inc.com/jest-worker/27.4.6
+      schema-utils: registry.npm.alibaba-inc.com/schema-utils/3.1.1
+      serialize-javascript: registry.npm.alibaba-inc.com/serialize-javascript/6.0.0
+      source-map: registry.npm.alibaba-inc.com/source-map/0.6.1
+      terser: registry.npm.alibaba-inc.com/terser/5.10.0_acorn@8.7.0
+      webpack: registry.npm.alibaba-inc.com/webpack/5.69.1
+    transitivePeerDependencies:
+      - acorn
+    dev: true
+
+  registry.npm.alibaba-inc.com/terser/5.10.0_acorn@8.7.0:
+    resolution: {integrity: sha1-uGOQgJwDiRBesKC2I5dWMJbdr8w=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/terser/download/terser-5.10.0.tgz}
+    id: registry.npm.alibaba-inc.com/terser/5.10.0
+    name: terser
+    version: 5.10.0
+    engines: {node: '>=10'}
+    hasBin: true
+    peerDependencies:
+      acorn: ^8.5.0
+    peerDependenciesMeta:
+      acorn:
+        optional: true
+    dependencies:
+      acorn: registry.npm.alibaba-inc.com/acorn/8.7.0
+      commander: registry.npm.alibaba-inc.com/commander/2.20.3
+      source-map: registry.npm.alibaba-inc.com/source-map/0.7.3
+      source-map-support: registry.npm.alibaba-inc.com/source-map-support/0.5.21
+    dev: true
+
+  registry.npm.alibaba-inc.com/uri-js/4.4.1:
+    resolution: {integrity: sha1-mxpSWVIlhZ5V9mnZKPiMbFfyp34=, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/uri-js/download/uri-js-4.4.1.tgz}
+    name: uri-js
+    version: 4.4.1
+    dependencies:
+      punycode: registry.npm.alibaba-inc.com/punycode/2.1.1
+    dev: true
+
+  registry.npm.alibaba-inc.com/watchpack/2.3.1:
+    resolution: {integrity: sha512-x0t0JuydIo8qCNctdDrn1OzH/qDzk2+rdCOC3YzumZ42fiMqmQ7T3xQurykYMhYfHaPHTp4ZxAx2NfUo1K6QaA==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/watchpack/download/watchpack-2.3.1.tgz}
+    name: watchpack
+    version: 2.3.1
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      glob-to-regexp: registry.npm.alibaba-inc.com/glob-to-regexp/0.4.1
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
+    dev: true
+
+  registry.npm.alibaba-inc.com/webpack-sources/3.2.3:
+    resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/webpack-sources/download/webpack-sources-3.2.3.tgz}
+    name: webpack-sources
+    version: 3.2.3
+    engines: {node: '>=10.13.0'}
+    dev: true
+
+  registry.npm.alibaba-inc.com/webpack/5.69.1:
+    resolution: {integrity: sha512-+VyvOSJXZMT2V5vLzOnDuMz5GxEqLk7hKWQ56YxPW/PQRUuKimPqmEIJOx8jHYeyo65pKbapbW464mvsKbaj4A==, registry: https://registry.antfin-inc.com/, tarball: https://registry.npm.alibaba-inc.com/webpack/download/webpack-5.69.1.tgz}
+    name: webpack
+    version: 5.69.1
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+    dependencies:
+      '@types/eslint-scope': registry.npm.alibaba-inc.com/@types/eslint-scope/3.7.3
+      '@types/estree': registry.npm.alibaba-inc.com/@types/estree/0.0.51
+      '@webassemblyjs/ast': registry.npm.alibaba-inc.com/@webassemblyjs/ast/1.11.1
+      '@webassemblyjs/wasm-edit': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-edit/1.11.1
+      '@webassemblyjs/wasm-parser': registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/1.11.1
+      acorn: registry.npm.alibaba-inc.com/acorn/8.7.0
+      acorn-import-assertions: registry.npm.alibaba-inc.com/acorn-import-assertions/1.8.0_acorn@8.7.0
+      browserslist: registry.npm.alibaba-inc.com/browserslist/4.19.1
+      chrome-trace-event: registry.npm.alibaba-inc.com/chrome-trace-event/1.0.3
+      enhanced-resolve: registry.npm.alibaba-inc.com/enhanced-resolve/5.9.0
+      es-module-lexer: registry.npm.alibaba-inc.com/es-module-lexer/0.9.3
+      eslint-scope: registry.npm.alibaba-inc.com/eslint-scope/5.1.1
+      events: registry.npm.alibaba-inc.com/events/3.3.0
+      glob-to-regexp: registry.npm.alibaba-inc.com/glob-to-regexp/0.4.1
+      graceful-fs: registry.npm.alibaba-inc.com/graceful-fs/4.2.9
+      json-parse-better-errors: registry.npm.alibaba-inc.com/json-parse-better-errors/1.0.2
+      loader-runner: registry.npm.alibaba-inc.com/loader-runner/4.2.0
+      mime-types: registry.npm.alibaba-inc.com/mime-types/2.1.34
+      neo-async: registry.npm.alibaba-inc.com/neo-async/2.6.2
+      schema-utils: registry.npm.alibaba-inc.com/schema-utils/3.1.1
+      tapable: registry.npm.alibaba-inc.com/tapable/2.2.1
+      terser-webpack-plugin: registry.npm.alibaba-inc.com/terser-webpack-plugin/5.3.1_acorn@8.7.0+webpack@5.69.1
+      watchpack: registry.npm.alibaba-inc.com/watchpack/2.3.1
+      webpack-sources: registry.npm.alibaba-inc.com/webpack-sources/3.2.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+    dev: true

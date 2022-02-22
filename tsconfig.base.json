@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
+    "module": "ES2020",
     "jsx": "react",
     "experimentalDecorators": true,
+    "moduleResolution": "Node",
     "declaration": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
     "allowJs": true
   }
 }
