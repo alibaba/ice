@@ -18,6 +18,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "build-scripts": "^1.2.1"
+    "build-scripts": "^2.0.0-1"
   }
 }
