@@ -10,6 +10,7 @@
     "@builder/pack": "^0.6.0",
     "@builder/swc-loader": "^1.0.1",
     "@ice/service": "^1.0.0",
+    "browserslist": "^4.19.3",
     "events": "^3.3.0"
   },
   "author": "ice-admin",
