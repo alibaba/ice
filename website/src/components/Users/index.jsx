@@ -14,12 +14,12 @@ const data = [
   {
     name: '新华智云',
     image: 'https://img.alicdn.com/tfs/TB1jFDwiamWBuNjy1XaXXXCbXXa-284-56.png',
-    fill: true
+    fill: true,
   },
   {
     name: '口碑',
     image: 'https://img.alicdn.com/tfs/TB147fnikSWBuNjSszdXXbeSpXa-180-68.png',
-    fill: true
+    fill: true,
   },
   {
     name: '钉钉',
@@ -40,12 +40,12 @@ const data = [
   {
     name: '闲鱼',
     image: 'https://img.alicdn.com/tfs/TB1DPSIibGYBuNjy0FoXXciBFXa-128-60.png',
-    fill: true
+    fill: true,
   },
   {
     name: '阿里云',
     image: 'https://img.alicdn.com/tfs/TB1y9TNioR1BeNjy0FmXXb0wVXa-254-74.png',
-    fill: true
+    fill: true,
   },
   {
     name: '优酷',
@@ -54,7 +54,7 @@ const data = [
   {
     name: '阿里通信',
     image: 'https://img.alicdn.com/tfs/TB1EkveieuSBuNjSsziXXbq8pXa-240-78.png',
-    fill: true
+    fill: true,
   },
 ];
 
@@ -71,7 +71,7 @@ function Users() {
     >
       {data.map((item, index) => (
         <div key={index} className={styles.logo}>
-          <img alt={item.name} src={item.image} className={item.fill && styles.fill}></img>
+          <img alt={item.name} src={item.image} className={item.fill && styles.fill} />
         </div>
       ))}
     </AreaWrapper>

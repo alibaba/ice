@@ -15,13 +15,13 @@ module.exports = {
       type: 'category',
       label: '基础指南',
       collapsed: false,
-      items: getDocsFromDir('guide/basic')
+      items: getDocsFromDir('guide/basic'),
     },
     {
       type: 'category',
       label: '进阶指南',
       collapsed: false,
-      items: getDocsFromDir('guide/advanced')
+      items: getDocsFromDir('guide/advanced'),
     },
   ],
   plugin: [
@@ -29,13 +29,13 @@ module.exports = {
       type: 'category',
       label: '插件开发',
       collapsed: false,
-      items: getDocsFromDir('plugin/develop')
+      items: getDocsFromDir('plugin/develop'),
     },
     {
       type: 'category',
       label: '官方插件',
       collapsed: false,
-      items: getDocsFromDir('plugin/list')
+      items: getDocsFromDir('plugin/list'),
     },
   ],
   examples: getDocsFromDir('examples'),

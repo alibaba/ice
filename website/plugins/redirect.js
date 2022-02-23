@@ -1,8 +1,8 @@
 module.exports = function (context, options) {
   return {
     name: 'docusaurus-redirect-plugin',
-    async contentLoaded({content, actions}) {
-      const {createData, addRoute} = actions;
+    async contentLoaded({ content, actions }) {
+      const { createData, addRoute } = actions;
 
       const routes = [
         {
@@ -51,7 +51,7 @@ module.exports = function (context, options) {
           exact: true,
         });
       });
-  
+
       addRoute({
         path: '/component',
         component: '@site/src/components/Redirect',
@@ -87,7 +87,6 @@ module.exports = function (context, options) {
           redirectConfig: redirectConfigPath,
         },
       });
-
     },
   };
-}
+};

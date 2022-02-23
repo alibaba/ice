@@ -34,7 +34,7 @@ function Ecology() {
     <AreaWrapper title={'领域解决方案'} decs={'面向不同业务领域沉淀了多种解决方案'} contentStyle={styles.container}>
       {data.map((item, index) => (
         <a key={index} className={styles.card} href={item.link} target="_blank">
-          <img src={item.image}></img>
+          <img src={item.image} />
           <div className={styles.content}>
             <h3>{item.title}</h3>
             <div>

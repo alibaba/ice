@@ -48,7 +48,7 @@ function Feature() {
           <div className={styles.content}>
             <h3>{item.title}</h3>
             <span>{item.decs}</span>
-            <div style={{ flex: 1 }}></div>
+            <div style={{ flex: 1 }} />
             <p>{'Documentation >'}</p>
           </div>
         </a>

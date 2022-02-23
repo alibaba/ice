@@ -17,12 +17,12 @@ module.exports = {
     {
       position: 'right',
       label: '插件',
-      to: '/docs/plugin/develop/start'
+      to: '/docs/plugin/develop/start',
     },
     {
       position: 'right',
       label: '示例',
-      to: '/docs/examples/antd'
+      to: '/docs/examples/antd',
     },
     {
       label: '生态',

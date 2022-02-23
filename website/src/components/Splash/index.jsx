@@ -20,7 +20,7 @@ function Splash() {
               width="170"
               height="30"
               title="GitHub"
-            ></iframe>
+            />
           </div>
           <div className={styles.buttons}>
             <Button url={'/docs/guide/start'}>快速开始</Button>
