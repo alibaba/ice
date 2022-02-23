@@ -1,21 +1,29 @@
 import * as path from 'path';
-import getWebpackConfig from '@builder/webpack-config';
+import type { IFrameworkPlugin } from '@ice/service';
 
-const plugin = ({ registerTask, context }) => {
+const plugin: IFrameworkPlugin = ({ registerTask, context }) => {
   const { command, rootDir } = context;
   const mode = command === 'start' ? 'development' : 'production';
-  const webpackConfig = getWebpackConfig(mode);
-  // set alias for webpack/hot while webpack has been prepacked
-  webpackConfig.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
-  // TODO: remove after refactor
-  webpackConfig.entry('index').add(path.join(rootDir, 'src/app'));
-  webpackConfig.resolve.merge({
-    fallback: {
-      // add events fallback for webpack/hot/emitter
-      events: require.resolve('events'),
-    },
-  });
-  registerTask('web', webpackConfig);
+  console.log(1231212312);
+
+  const loaders = getBaseLoaders();
+  // TODO: config types
+  registerTask('web', {
+    entry: path.join(rootDir, 'src/app.tsx'),
+    mode,
+    loaders,
+   });
 };
+
+function getBaseLoaders() {
+  return [
+    {
+      test: /\.(js|jsx|tsx)$/,
+      use: [
+        require.resolve('@builder/swc-loader'),
+      ],
+    },
+  ];
+}
 
 export default plugin;

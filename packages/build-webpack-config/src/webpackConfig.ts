@@ -2,17 +2,18 @@ import type { Configuration } from 'webpack';
 import type { IFrameworkConfig } from './frameworkConfig';
 
 interface GetWebpackConfigOptions {
-  dir: string;
+  rootDir: string;
   frameworkConfig: IFrameworkConfig;
 }
 
-export function getWebpackConfig({ dir, frameworkConfig }: GetWebpackConfigOptions): Configuration {
+export function getWebpackConfig({ rootDir, frameworkConfig }: GetWebpackConfigOptions): Configuration {
   const {
     entry,
     externals,
-    publicPath,
+    publicPath = '/',
     outputDir,
-    sourceMap,
+    loaders,
+    mode,
   } = frameworkConfig;
 
   return {
@@ -22,6 +23,9 @@ export function getWebpackConfig({ dir, frameworkConfig }: GetWebpackConfigOptio
       publicPath,
       path: outputDir,
     },
-    // devtool: typeof sourceMap === 'string' ? sourceMap :
+    module: {
+      rules: loaders,
+    },
+    mode,
   };
 }

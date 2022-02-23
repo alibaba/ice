@@ -2,31 +2,38 @@ import WebpackDevServer from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
 import { getWebpackConfig } from '@builder/webpack-config';
 import defaultsDeep from 'lodash.defaultsdeep';
-import { join } from 'path';
 import webpackCompiler from '../service/webpackCompiler';
 import prepareURLs from '../utils/prepareURLs';
 import type { IFrameworkConfig } from '@builder/webpack-config';
+
+interface IWebTaskConfig {
+  name: string;
+  config: IFrameworkConfig;
+}
 
 type DevServerConfig = Record<string, any>;
 // TODO config type of ice.js
 const start = async (context: Context<any>) => {
   const { getConfig, applyHook, commandArgs, command, rootDir } = context;
 
-  const config: IFrameworkConfig = {
-    entry: './src/app.js',
-    outputDir: join(rootDir, './build'),
-  };
-  // const config = getConfig() as IFrameworkConfig[];
-  // if (!config.length) {
-  //   const errMsg = 'Task config is not found';
-  //   await applyHook('error', { err: new Error(errMsg) });
-  //   return;
-  // }
+  // FIXME: getConfig -> getConfigs, because getConfig will return an array
+  const configs = getConfig();
+  if (!configs.length) {
+    const errMsg = 'Task config is not found';
+    await applyHook('error', { err: new Error(errMsg) });
+    return;
+  }
+  const webConfig = configs.find(({ name }) => name === 'web');
+  if (!webConfig) {
+    const errMsg = 'Web task config is not found';
+    await applyHook('error', { err: new Error(errMsg) });
+    return;
+  }
+  const { config } = webConfig as IWebTaskConfig;
 
   // transform config to webpack config
   const webpackConfig = getWebpackConfig({
-    dir: rootDir,
-    // frameworkConfig: config[0],
+    rootDir,
     frameworkConfig: config,
   });
 
