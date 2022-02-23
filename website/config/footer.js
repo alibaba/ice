@@ -23,8 +23,8 @@ module.exports = {
         },
         {
           label: 'GitHub Issue',
-          href: 'https://github.com/alibaba/ice/issues'
-        }
+          href: 'https://github.com/alibaba/ice/issues',
+        },
       ],
     },
     {
@@ -66,9 +66,9 @@ module.exports = {
         {
           label: 'Midway',
           href: 'https://midwayjs.org/',
-        }
+        },
       ],
     },
   ],
   copyright: `Copyright © ${new Date().getFullYear()} 飞冰（ICE）. Built with Docusaurus.`,
-}
+};

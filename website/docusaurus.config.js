@@ -46,18 +46,18 @@ const config = {
     ],
   ],
   plugins: [
-    require.resolve("./plugins/redirect.js"),
-  ]
+    require.resolve('./plugins/redirect.js'),
+  ],
 };
 
 if (process.env.USE_LOCAL_SEARCH) {
   // 内部站点无法使用 algolia
   delete config.themeConfig.algolia;
   config.plugins.push([
-    require.resolve("@easyops-cn/docusaurus-search-local"),
+    require.resolve('@easyops-cn/docusaurus-search-local'),
     {
       hashed: true,
-      language: ["en", "zh"],
+      language: ['en', 'zh'],
     },
   ]);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './badge.module.css'
+import styles from './badge.module.css';
 
 function Badge({ type = 'error', text }) {
   return (
