@@ -6,5 +6,6 @@
     { "path": "packages/plugin-app"},
     { "path": "packages/plugin-core"},
     { "path": "packages/icejs" },
+    { "path": "packages/plugin-router" }
   ]
 }

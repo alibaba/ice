@@ -1,11 +1,11 @@
 {
-  "name": "build-plugin-router",
-  "version": "1.0.0",
+  "name": "build-plugin-ice-router",
+  "version": "3.0.0",
   "description": "plugin router",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
-    "./runtime": "./runtime/index.ts"
+    "./runtime": "./runtime/*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -31,7 +31,7 @@ function getRuntimeModules(plugins: Plugin[]) {
           name: pkgInfo.name as string,
         };
       } catch (error) {
-        console.log(`ERROR: fail to load package.json of plugin ${name}`);
+        console.log(`ERROR: fail to load package.json of plugin ${path.basename(packageDir)}`);
       }
     }
     return false;
