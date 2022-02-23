@@ -3,6 +3,11 @@
   "version": "3.0.0",
   "main": "./lib/index.js",
   "exports": "./lib/index.js",
+  "dependencies": {
+    "@builder/pack": "^0.6.0",
+    "@builder/swc-loader": "^1.0.1",
+    "browserslist": "^4.19.3"
+  },
   "devDependencies": {
     "webpack": "^5.69.1"
   },
