@@ -4,12 +4,11 @@ import type { IFrameworkPlugin } from '@ice/service';
 const plugin: IFrameworkPlugin = ({ registerTask, context }) => {
   const { command, rootDir } = context;
   const mode = command === 'start' ? 'development' : 'production';
-  console.log(1231212312);
 
   const loaders = getBaseLoaders();
-  // TODO: config types
+
   registerTask('web', {
-    entry: path.join(rootDir, 'src/app.tsx'),
+    entry: path.join(rootDir, 'src/app'),
     mode,
     loaders,
    });
