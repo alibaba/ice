@@ -14,6 +14,8 @@ export function getWebpackConfig({ rootDir, frameworkConfig }: GetWebpackConfigO
     outputDir,
     loaders,
     mode,
+    alias = {},
+    plugins = [],
   } = frameworkConfig;
 
   return {
@@ -26,6 +28,11 @@ export function getWebpackConfig({ rootDir, frameworkConfig }: GetWebpackConfigO
     module: {
       rules: loaders,
     },
+    resolve: {
+      alias,
+      extensions: ['.ts', '.tsx', '.jsx', '...'],
+    },
     mode,
+    plugins,
   };
 }
