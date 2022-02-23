@@ -85,7 +85,7 @@ importers:
       '@types/ejs': ^3.1.0
       '@types/lodash.debounce': ^4.0.6
       address: ^1.1.2
-      build-scripts: ^2.0.0-3
+      build-scripts: ^2.0.0-5
       consola: ^2.15.3
       ejs: ^3.1.6
       fast-glob: ^3.2.11
@@ -108,20 +108,20 @@ importers:
     devDependencies:
       '@types/ejs': 3.1.0
       '@types/lodash.debounce': 4.0.6
-      build-scripts: 2.0.0-3
+      build-scripts: 2.0.0-5
       webpack: 5.69.1
 
   packages/icejs:
     specifiers:
       '@builder/pack': ^0.6.0
       build-plugin-app: ^1.0.0
-      build-scripts: ^2.0.0-3
+      build-scripts: ^2.0.0-5
       chalk: ^4.0.0
       create-cli-utils: ^1.0.3
     dependencies:
       '@builder/pack': 0.6.0
       build-plugin-app: link:../plugin-app
-      build-scripts: 2.0.0-3
+      build-scripts: 2.0.0-5
       chalk: 4.1.2
       create-cli-utils: 1.0.3_eslint@8.7.0
 
@@ -129,14 +129,14 @@ importers:
     specifiers:
       '@builder/pack': ^0.6.0
       '@builder/webpack-config': ^2.0.0
-      build-scripts: ^2.0.0-3
+      build-scripts: ^2.0.0-5
       events: ^3.3.0
     dependencies:
       '@builder/pack': 0.6.0
       '@builder/webpack-config': 2.0.0
       events: 3.3.0
     devDependencies:
-      build-scripts: 2.0.0-3
+      build-scripts: 2.0.0-5
 
 packages:
 
@@ -2377,8 +2377,8 @@ packages:
       yargs-parser: 14.0.0
     dev: false
 
-  /build-scripts/2.0.0-3:
-    resolution: {integrity: sha512-Dk/JQLCDxaLhaGjUmulUYNfwozhfpz+hKwkwX0pKexvDI3anFLfsfHBYJQ7P6H8x1iHzcRANaQJKu0t3O19Y/Q==}
+  /build-scripts/2.0.0-5:
+    resolution: {integrity: sha512-uUDc9qRt18RxtENodjDdQnEg/f8z7636ryynTfz+TW3Mg+aNGJ1Kismc+kY1r41dOBl+iXWCAeRCOw9q7X+Vlg==}
     dependencies:
       '@jest/test-result': 27.4.6
       '@jest/types': 27.4.2
