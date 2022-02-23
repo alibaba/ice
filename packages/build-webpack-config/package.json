@@ -1,0 +1,14 @@
+{
+  "name": "@builder/webpack-config",
+  "version": "3.0.0",
+  "main": "./lib/index.js",
+  "exports": "./lib/index.js",
+  "devDependencies": {
+    "webpack": "^5.69.1"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ],
+  "types": "./lib/index.d.ts"
+}
