@@ -39,7 +39,8 @@ const checkNodeVersion = require('./checkNodeVersion');
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory')
     .action(async () => {
-      await createService(rootDir, 'build', argv);
+      const service = await createService(rootDir, 'build', argv);
+      service.run();
     });
 
   program
@@ -51,7 +52,8 @@ const checkNodeVersion = require('./checkNodeVersion');
     .option('-p, --port <port>', 'dev server port')
     .option('--rootDir <rootDir>', 'project root directory')
     .action(async () => {
-      await createService(rootDir, 'start', argv);
+      const service = await createService(rootDir, 'start', argv);
+      const devServer = await service.run();
     });
 
   program
