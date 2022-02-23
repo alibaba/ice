@@ -180,9 +180,6 @@ importers:
     devDependencies:
       '@ice/service': link:../ice-service
 
-  packages/plugin-store:
-    specifiers: {}
-
 packages:
 
   /@ampproject/remapping/2.1.2:
