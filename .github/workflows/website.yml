@@ -2,7 +2,9 @@ name: Build Website
 on:
   push:
     paths:
-    - 'website/**'
+      - 'website/**'
+    branches:
+      - master
 
 # 任务
 jobs:
