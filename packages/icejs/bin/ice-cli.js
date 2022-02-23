@@ -15,18 +15,19 @@ const { program } = require('commander');
 const createService = require('@ice/service').default;
 const parse = require('yargs-parser');
 const checkNodeVersion = require('./checkNodeVersion');
+const { getBuiltInPlugins } = require('../lib');
 
 (async function () {
   const icejsPackageInfo = JSON.parse(await fs.readFile(path.join(__dirname, '../package.json'), 'utf-8'));
   checkNodeVersion(icejsPackageInfo.engines.node, icejsPackageInfo.name);
 
   const rootDir = process.cwd();
-  const argv = parse(
+  const commandArgs = parse(
     process.argv.slice(2), {
     configuration: { 'strip-dashed': true },
   });
   // ignore `_` in argv
-  delete argv._;
+  delete commandArgs._;
 
   program
     .version(icejsPackageInfo.version)
@@ -39,7 +40,7 @@ const checkNodeVersion = require('./checkNodeVersion');
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory')
     .action(async () => {
-      const service = await createService(rootDir, 'build', argv);
+      const service = await createService({ rootDir, command: 'build', commandArgs, getBuiltInPlugins });
       service.run();
     });
 
@@ -52,7 +53,7 @@ const checkNodeVersion = require('./checkNodeVersion');
     .option('-p, --port <port>', 'dev server port')
     .option('--rootDir <rootDir>', 'project root directory')
     .action(async () => {
-      const service = await createService(rootDir, 'start', argv);
+      const service = await createService({ rootDir, command: 'start', commandArgs, getBuiltInPlugins });
       const devServer = await service.run();
     });
 
@@ -62,7 +63,7 @@ const checkNodeVersion = require('./checkNodeVersion');
     .allowUnknownOption() // allow jest config
     .option('--config <config>', 'use custom config')
     .action(async () => {
-      await createService(rootDir, 'test', argv);
+      await createService({ rootDir, command: 'test', commandArgs, getBuiltInPlugins });
     });
 
   program.parse(process.argv);

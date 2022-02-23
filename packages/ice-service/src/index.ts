@@ -1,13 +1,15 @@
 import { Context } from 'build-scripts';
 import type webpack from 'webpack';
-import type { CommandArgs, CommandName, IPluginAPI } from 'build-scripts';
+import type { CommandArgs, CommandName, IPluginAPI, IGetBuiltInPlugins } from 'build-scripts';
 import Generator from './service/runtimeGenerator';
 import preCompile from './service/preCompile';
 import start from './commands/start';
 import build from './commands/build';
 import type { ExportData } from './service/runtimeGenerator';
+import type { IFrameworkConfig } from '@builder/webpack-config';
 
 type AddExport = (exportData: ExportData) => void;
+
 interface ExtendsPluginAPI {
   context: {
     // TODO define routeManifest
@@ -22,16 +24,19 @@ interface ExtendsPluginAPI {
     addRenderTemplate: Generator['addTemplateFiles'];
   };
 }
-// TODO import from @builder/webpack-config
-interface FrameworkConfig {
-  entry: string;
+
+export interface IFrameworkPlugin<T = undefined> {
+  (api: IPluginAPI<IFrameworkConfig, ExtendsPluginAPI>, options?: T): Promise<void> | void;
 }
 
-export interface FrameworkPlugin<T = undefined> {
-  (api: IPluginAPI<FrameworkConfig, ExtendsPluginAPI>, options?: T): Promise<void> | void;
+interface CreateServiceOptions {
+  rootDir: string;
+  command: CommandName;
+  commandArgs: CommandArgs;
+  getBuiltInPlugins: IGetBuiltInPlugins;
 }
 
-async function createService(rootDir: string, command: CommandName, commandArgs: CommandArgs) {
+async function createService({ rootDir, command, commandArgs, getBuiltInPlugins }: CreateServiceOptions) {
   // TODO pre compile
   preCompile();
   const routeManifest = {};
@@ -64,13 +69,11 @@ async function createService(rootDir: string, command: CommandName, commandArgs:
         routeManifest,
       },
     },
-    getBuiltInPlugins: () => {
-      return [];
-    },
+    getBuiltInPlugins,
   });
   await ctx.resolveConfig();
   generator.setPlugins(ctx.getAllPlugin());
-  ctx.setup();
+  await ctx.setup();
   // render template before webpack compile
   generator.render();
 

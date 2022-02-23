@@ -39,7 +39,7 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
     .map(([name]) => name);
 };
 
-const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
+export const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   // enable webpack 5 by default
   hijackWebpack();
   // eslint-disable-next-line
@@ -78,5 +78,3 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
 
   return plugins.concat(dynamicPlugins);
 };
-
-export default getBuiltInPlugins;

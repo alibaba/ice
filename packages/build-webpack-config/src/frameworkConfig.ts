@@ -1,6 +1,8 @@
-import type { EntryObject } from 'webpack';
+import type { Compiler, EntryObject, RuleSetRule, WebpackPluginInstance } from 'webpack';
 
 export interface IFrameworkConfig {
+  mode?: 'none' | 'development' | 'production';
+
   entry?: string | string[] | EntryObject;
 
   outputDir?: string;
@@ -16,4 +18,11 @@ export interface IFrameworkConfig {
   publicPath?: string;
 
   devPublicPath?: string;
+
+  loaders?: (RuleSetRule | '...')[];
+
+  plugins?: (
+		| ((this: Compiler, compiler: Compiler) => void)
+		| WebpackPluginInstance
+	)[];
 }
