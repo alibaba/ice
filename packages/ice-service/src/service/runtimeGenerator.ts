@@ -42,7 +42,7 @@ type RenderTemplate = [string, string, ExtraData];
 
 const RENDER_WAIT = 150;
 
-function generateExports(exportList: ExportData[]) {
+function generateExports(exportList: ExportData[], isTypes: boolean) {
   const importStatements = [];
   const exportStatements = [];
   exportList.forEach(data => {
@@ -51,7 +51,7 @@ function generateExports(exportList: ExportData[]) {
       let exportStr = exportName;
       if (source) {
         const symbol = source.includes('types') ? ';' : ',';
-        importStatements.push(`import ${specifier || exportName} from '${source}';`);
+        importStatements.push(`import ${isTypes ? 'type ' : ''}${specifier || exportName} from '${source}';`);
         exportStr = `${exportName}${symbol}`;
       }
       exportStatements.push(exportStr);
@@ -109,7 +109,7 @@ export default class Generator {
 
   private disableRuntimePlugins: string[];
 
-  private generateAPI: string[];
+  private contentTypes: string[];
 
   private plugins: any[];
 
@@ -123,7 +123,7 @@ export default class Generator {
     this.renderTemplates = [];
     this.renderDataRegistration = [];
     this.disableRuntimePlugins = [];
-    this.generateAPI = ['addExport', 'addExportTypes', 'addConfigTypes'];
+    this.contentTypes = ['framework', 'frameworkTypes', 'configTypes'];
     this.plugins = [];
   }
 
@@ -147,7 +147,7 @@ export default class Generator {
   };
 
   public addContent(apiName: string, ...args: any) {
-    if (!this.generateAPI.includes(apiName)) {
+    if (!this.contentTypes.includes(apiName)) {
       throw new Error(`invalid API ${apiName}`);
     }
     const [data, position] = args;
@@ -164,7 +164,8 @@ export default class Generator {
 
   private getExportStr(registerKey: string, dataKeys: string[]) {
     const exportList = this.contentRegistration[registerKey] || [];
-    const { importStr, exportStr } = generateExports(exportList);
+    const isTypes = registerKey.endsWith('Types');
+    const { importStr, exportStr } = generateExports(exportList, isTypes);
     const [importStrKey, exportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
@@ -176,9 +177,11 @@ export default class Generator {
     const staticConfig = fg.sync(['src/manifest.json'], { cwd: this.rootDir });
     const globalStyles = fg.sync(['src/global.@(scss|less|styl|css)'], { cwd: this.rootDir, absolute: true });
     let exportsData = {};
-    this.generateAPI.forEach(item => {
-      const data = this.getExportStr(item, [`${item}Imports`, `${item}Exports`]);
-      exportsData = Object.assign({}, exportsData, data);
+    this.contentTypes.forEach(item => {
+      const data = this.getExportStr(item, ['imports', 'exports']);
+      exportsData = Object.assign({}, exportsData, {
+        [`${item}`]: data,
+      });
     });
 
     return {
@@ -205,7 +208,7 @@ export default class Generator {
       }
       return previousValue;
     }, this.parseRenderData());
-
+    console.log('renderData', this.renderData);
     // 生成所有运行时插件，在 load 阶段判断是否需要加载，确保 index 中的 exports 路径永远可以获取引用
     this.renderData.runtimeModules = getRuntimeModules(this.plugins)
       .filter((plugin) => {

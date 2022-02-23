@@ -13,6 +13,9 @@
     "browserslist": "^4.19.3",
     "events": "^3.3.0"
   },
+  "exports": {
+    "./runtime": "./runtime/index.ts"
+  },
   "author": "ice-admin",
   "files": [
     "runtime",
