@@ -1,9 +1,13 @@
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
-function App() {
-  return (
-    <div>App</div>
-  );
-}
+// function App() {
+//   return (
+//     <div>Ap3333p</div>
+//   );
+// }
 
-ReactDOM.render(<App />, document.getElementById('ice-container'));
+// ReactDOM.render(<App />, document.getElementById('ice-container'));
+
+import { runApp } from 'ice';
+
+runApp({})

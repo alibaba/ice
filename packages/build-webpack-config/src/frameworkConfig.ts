@@ -1,15 +1,11 @@
-import type { Compiler, EntryObject, RuleSetRule, WebpackPluginInstance } from 'webpack';
+import type { RuleSetRule } from 'webpack';
 
 export interface IFrameworkConfig {
-  mode?: 'none' | 'development' | 'production';
-
-  entry?: string | string[] | EntryObject;
+  mode: 'none' | 'development' | 'production';
 
   outputDir?: string;
 
   externals?: Record<string, string | string[]>;
-
-  vendor?: boolean;
 
   outputAssetsPath?: Record<string, string>;
 
@@ -17,14 +13,11 @@ export interface IFrameworkConfig {
 
   publicPath?: string;
 
-  devPublicPath?: string;
-
   loaders?: (RuleSetRule | '...')[];
 
   alias?: Record<string, any>;
 
-  plugins?: (
-		| ((this: Compiler, compiler: Compiler) => void)
-		| WebpackPluginInstance
-	)[];
+  hash?: boolean;
+
+  devServer?: Record<string, any>;
 }

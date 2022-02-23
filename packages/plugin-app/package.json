@@ -6,13 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@builder/pack": "^0.6.0",
-    "@builder/swc-loader": "^1.0.1",
-    "@ice/service": "^1.0.0",
-    "browserslist": "^4.19.3",
-    "events": "^3.3.0"
-  },
   "exports": {
     ".": "./lib/index.js",
     "./runtime": "./runtime/index.ts"
@@ -24,6 +17,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "build-scripts": "^2.0.0-5"
+    "@ice/service": "^1.0.0"
   }
 }
