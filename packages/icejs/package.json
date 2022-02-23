@@ -4,8 +4,7 @@
   "description": "ice",
   "main": "./lib/index.js",
   "exports": "./lib/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "ice-admin",
   "license": "MIT",
   "dependencies": {
