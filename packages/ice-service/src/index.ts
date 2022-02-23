@@ -64,6 +64,9 @@ async function createService(rootDir: string, command: CommandName, commandArgs:
         routeManifest,
       },
     },
+    getBuiltInPlugins: () => {
+      return [];
+    },
   });
   await ctx.resolveConfig();
   generator.setPlugins(ctx.getAllPlugin());
