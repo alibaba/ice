@@ -40,3 +40,7 @@ examples/*/.ice
 build
 dist
 .history
+
+# website
+.docusaurus
+.cache-loader
