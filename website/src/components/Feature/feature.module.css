@@ -1,0 +1,105 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.container {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(3, calc((100% - 28px - 28px) / 3));
+  gap: 28px;
+  min-width: 100%;
+  margin-bottom: 40px;
+}
+
+.card {
+  position: relative;
+  background: var(--ifm-color-background);
+  border-radius: 7px;
+  box-shadow: 0px 9px 33px rgba(0, 0, 0, 0.05);
+  height: 220px;
+  display: flex;
+  z-index: 1;
+  color: var(--ifm-color-title);
+}
+
+.card:hover {
+  color: #fff;
+  transition: all .3s ease;
+  box-shadow: 0px 5px 6px rgba(0, 87, 255, 0.260635);
+  text-decoration: none;
+}
+
+.card:after {
+  z-index: 2;
+  opacity: 0;
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  background: linear-gradient(121.13deg, #1395FE 50.91%, #1E72FF 119.06%);
+  transition: all .3s ease;
+}
+
+.card:hover:after {
+  opacity: 1;
+  color: #fff;
+  text-decoration: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+  margin: 40px 30px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.card h3 {
+  font-size: 21px;
+  margin-bottom: 14px;
+}
+
+.card span {
+  font-size: 14px;
+  opacity: .85;
+}
+
+.card p {
+  font-size: 16px;
+  background: linear-gradient(90deg, #1395FE 4.83%, #1E72FF 94.74%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.card:hover p {
+  font-size: 16px;
+  background: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0
+}
+
+@media (max-width: 1366px) {
+  .container {
+    grid-template-columns: repeat(2, calc((100% - 28px) / 2));
+  }
+}
+
+@media (max-width: 560px) {
+  .container {
+    grid-template-columns: repeat(1, 100%);
+  }
+
+  .card {
+    height: 200px;
+  }
+}

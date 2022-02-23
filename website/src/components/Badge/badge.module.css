@@ -1,0 +1,16 @@
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 5px;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 0 0 1px #fff;
+  border-radius: 1px;
+  vertical-align: top;
+  color: #FFF;
+  border-radius: 4px;
+}
+
+.error {
+  background-color: #ff4d4f;
+}
