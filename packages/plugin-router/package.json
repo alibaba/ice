@@ -1,7 +1,7 @@
 {
-  "name": "build-plugin-app",
+  "name": "build-plugin-router",
   "version": "1.0.0",
-  "description": "plugin app",
+  "description": "plugin router",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
