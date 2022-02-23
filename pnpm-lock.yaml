@@ -176,12 +176,6 @@ importers:
     devDependencies:
       '@ice/service': link:../ice-service
 
-  packages/plugin-router:
-    specifiers:
-      '@ice/service': ^1.0.0
-    devDependencies:
-      '@ice/service': link:../ice-service
-
 packages:
 
   /@ampproject/remapping/2.1.2:
