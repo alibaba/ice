@@ -11,6 +11,7 @@
     "@builder/pack": "^0.6.0",
     "@ice/service": "^1.0.0",
     "build-plugin-app": "^1.0.0",
+    "build-plugin-ice-router": "^3.0.0",
     "build-plugin-runtime": "^1.0.0",
     "build-scripts": "^2.0.0-5",
     "chalk": "^4.0.0",

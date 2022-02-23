@@ -1,12 +1,12 @@
 import type { FrameworkPlugin } from '@ice/service';
 
-const plugin: FrameworkPlugin = ({ registerTask, context }) => {
+const plugin: FrameworkPlugin = ({ onGetConfig, context }) => {
   const { command } = context;
-  const mode = command === 'start' ? 'development' : 'production';
-
-  registerTask('web', {
-    mode,
-   });
+  // FIXME: types need to return config
+  // onGetConfig('web', (config) => {
+  //   config.mode = 'production';
+  //   return config
+  // })
 };
 
 export default plugin;

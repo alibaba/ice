@@ -145,6 +145,7 @@ importers:
       '@builder/pack': ^0.6.0
       '@ice/service': ^1.0.0
       build-plugin-app: ^1.0.0
+      build-plugin-ice-router: ^3.0.0
       build-plugin-runtime: ^1.0.0
       build-scripts: ^2.0.0-5
       chalk: ^4.0.0
@@ -156,6 +157,7 @@ importers:
       '@builder/pack': 0.6.0
       '@ice/service': link:../ice-service
       build-plugin-app: link:../plugin-app
+      build-plugin-ice-router: link:../plugin-router
       build-plugin-runtime: link:../plugin-core
       build-scripts: 2.0.0-5
       chalk: 4.1.2
@@ -2292,13 +2294,13 @@ packages:
     resolution: {integrity: sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==}
     engines: {node: '>= 8.10.0'}
     dependencies:
-      anymatch: 3.1.2
-      braces: 3.0.2
-      glob-parent: 5.1.2
-      is-binary-path: 2.1.0
-      is-glob: 4.0.3
-      normalize-path: 3.0.0
-      readdirp: 3.6.0
+      anymatch: registry.npmjs.org/anymatch/3.1.2
+      braces: registry.npmjs.org/braces/3.0.2
+      glob-parent: registry.npmjs.org/glob-parent/5.1.2
+      is-binary-path: registry.npmjs.org/is-binary-path/2.1.0
+      is-glob: registry.npmjs.org/is-glob/4.0.3
+      normalize-path: registry.npmjs.org/normalize-path/3.0.0
+      readdirp: registry.npmjs.org/readdirp/3.6.0
     optionalDependencies:
       fsevents: registry.npmjs.org/fsevents/2.3.2
     dev: false
