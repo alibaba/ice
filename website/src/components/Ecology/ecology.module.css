@@ -1,0 +1,89 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+.container {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(2, calc((100% - 24px) / 2));
+  gap: 24px;
+  min-width: 100%;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: transparent;
+  border-radius: 7px;
+  border: 1px solid var(--ifm-color-border-color);
+  height: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--ifm-color-title);
+  overflow: hidden;
+  transition: all .25s ease;
+}
+
+.card:hover {
+  cursor: pointer;
+  text-decoration: none;
+  opacity: 0.76;
+  color: inherit;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  overflow: hidden;
+}
+
+.content div {
+  height: 80px;
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.card span {
+  font-size: 14px;
+  opacity: 0.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.card img {
+  width: 40%;
+  height: auto;
+}
+
+@media (max-width: 1366px) {
+  .container {
+    grid-template-columns: repeat(1, 100%);
+  }
+
+  .card img {
+    width: 30%;
+    height: auto;
+  }
+}
+
+@media (max-width: 1050px) {
+  .wrapper {
+    padding: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .card {
+    height: 240px;
+  }
+}
