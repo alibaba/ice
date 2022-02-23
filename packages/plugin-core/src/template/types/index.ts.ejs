@@ -1,0 +1,20 @@
+<%- configTypes.imports %>
+
+export interface App {
+  rootId?: string;
+  mountNode?: HTMLElement;
+}
+<% if (configTypes.imports) {%>
+interface ExtendsAppConfig {
+  <% if (configTypes.imports) { %>
+    <%- configTypes.exports %>
+  <% } %>
+};
+export type AppConfig = Omit<ExtendsAppConfig, 'app'> & {
+  app?: App & ('app' extends keyof ExtendsAppConfig ? ExtendsAppConfig['app'] : {});
+}
+<% } else { %>
+export interface AppConfig {
+  app?: App;
+}
+<% } %>

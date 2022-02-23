@@ -25,7 +25,7 @@ interface ExtendsPluginAPI {
   };
 }
 
-export interface IFrameworkPlugin<T = undefined> {
+export interface FrameworkPlugin<T = undefined> {
   (api: IPluginAPI<IFrameworkConfig, ExtendsPluginAPI>, options?: T): Promise<void> | void;
 }
 
@@ -48,10 +48,10 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
   });
   const generatorAPI = {
     addExport: (exportData: ExportData) => {
-      generator.addExport('export', exportData);
+      generator.addExport('framework', exportData);
     },
     addExportTypes: (exportData: ExportData) => {
-      generator.addExport('exportTypes', exportData);
+      generator.addExport('frameworkTypes', exportData);
     },
     addConfigTypes: (exportData: ExportData) => {
       generator.addExport('configTypes', exportData);

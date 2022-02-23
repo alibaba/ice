@@ -1,0 +1,8 @@
+<%- framework.imports %>
+
+<% if (framework.exports) { %>
+  export {
+    <%- framework.exports %>
+  }
+<% } %>
+export * from './core/runApp';

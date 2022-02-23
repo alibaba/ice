@@ -1,10 +1,10 @@
 import * as path from 'path';
-import type { IFrameworkPlugin } from '@ice/service';
+import type { FrameworkPlugin } from '@ice/service';
 import { merge } from '@builder/pack/deps/lodash';
 
 type JSXSuffix = 'jsx' | 'tsx';
 
-const plugin: IFrameworkPlugin = ({ registerTask, context }) => {
+const plugin: FrameworkPlugin = ({ registerTask, context }) => {
   const { command, rootDir } = context;
   const mode = command === 'start' ? 'development' : 'production';
 
