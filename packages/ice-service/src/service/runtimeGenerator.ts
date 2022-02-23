@@ -177,7 +177,7 @@ export default class Generator {
     const globalStyles = fg.sync(['src/global.@(scss|less|styl|css)'], { cwd: this.rootDir, absolute: true });
     let exportsData = {};
     this.generateAPI.forEach(item => {
-      const data = this.getExportStr(item, [`${item}.imports`, `${item}.exports`]);
+      const data = this.getExportStr(item, [`${item}Imports`, `${item}Exports`]);
       exportsData = Object.assign({}, exportsData, data);
     });
 
