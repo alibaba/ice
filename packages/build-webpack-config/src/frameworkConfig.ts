@@ -21,7 +21,7 @@ export interface IFrameworkConfig {
 
   loaders?: (RuleSetRule | '...')[];
 
-  alias: Record<string, any>;
+  alias?: Record<string, any>;
 
   plugins?: (
 		| ((this: Compiler, compiler: Compiler) => void)

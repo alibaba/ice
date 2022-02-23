@@ -12,13 +12,13 @@ const plugin: IFrameworkPlugin = ({ registerTask, context }) => {
     entry: path.join(rootDir, 'src/app'),
     mode,
     loaders: [
-      ['jsx', 'tsx'].map((suffix: JSXSuffix) => ({
+      ...(['jsx', 'tsx'].map((suffix: JSXSuffix) => ({
         test: new RegExp(`\\.${suffix}?$`),
         use: {
           loader: require.resolve('@builder/swc-loader'),
           options: getSwcLoaderOptions(suffix),
-      },
-      })),
+        },
+      }))),
     ],
    });
 };
@@ -48,6 +48,7 @@ function getSwcLoaderOptions(suffix: JSXSuffix) {
     },
     env: {
       loose: true,
+      targets: 'last 2 versions',
     },
     ...swcOptions,
   };
@@ -82,6 +83,22 @@ function getSwcLoaderOptions(suffix: JSXSuffix) {
     return tsOptions;
   }
   return commonOptions;
+}
+
+function hasJsxRuntime(rootDir: string) {
+  try {
+    // auto detect of jsx runtime
+    // eslint-disable-next-line
+    const tsConfig = require(path.join(rootDir, 'tsconfig.json'));
+    if (tsConfig?.compilerOptions?.jsx !== 'react-jsx') {
+      return false;
+    }
+    // ensure react/jsx-runtime
+    require.resolve('react/jsx-runtime');
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 export default plugin;
