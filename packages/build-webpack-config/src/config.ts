@@ -1,6 +1,8 @@
-import type { RuleSetRule } from 'webpack';
+import { type RuleSetRule } from 'webpack';
+import { type Middleware } from 'webpack-dev-server';
+import type Server from 'webpack-dev-server';
 
-export interface IFrameworkConfig {
+export interface Config {
   mode: 'none' | 'development' | 'production';
 
   outputDir?: string;
@@ -13,11 +15,15 @@ export interface IFrameworkConfig {
 
   publicPath?: string;
 
+  devPublicPath?: string;
+
   loaders?: (RuleSetRule | '...')[];
 
   alias?: Record<string, any>;
 
   hash?: boolean;
 
-  devServer?: Record<string, any>;
+  middlewares?:
+    | ((middlewares: Middleware[], devServer: Server) => Middleware[])
+    | undefined;
 }
