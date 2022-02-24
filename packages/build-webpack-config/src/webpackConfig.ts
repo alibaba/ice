@@ -22,6 +22,7 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     loaders = [],
     alias = {},
     sourceMap,
+    middlewares,
   } = config;
 
   return {
@@ -71,6 +72,7 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
           next();
         });
       },
+      setupMiddlewares: middlewares,
     },
   };
 };
