@@ -66,16 +66,20 @@ importers:
 
   examples/basic-project:
     specifiers:
+      '@ice/runtime': ^1.0.0
       '@types/react': ^17.0.39
       '@types/react-dom': ^17.0.11
       react: ^17.0.2
       react-dom: ^17.0.2
+      regenerator-runtime: ^0.13.9
     dependencies:
+      '@ice/runtime': link:../../packages/runtime
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.11
+      regenerator-runtime: 0.13.9
 
   examples/basic-vite:
     specifiers:
@@ -174,9 +178,37 @@ importers:
 
   packages/plugin-core:
     specifiers:
+      '@ice/runtime': ^1.0.0
       '@ice/service': ^1.0.0
     devDependencies:
+      '@ice/runtime': link:../runtime
       '@ice/service': link:../ice-service
+
+  packages/plugin-router:
+    specifiers:
+      '@ice/service': ^1.0.0
+      '@ice/types': ^1.0.0
+    devDependencies:
+      '@ice/service': link:../ice-service
+      '@ice/types': link:../types
+
+  packages/runtime:
+    specifiers:
+      '@ice/types': ^1.0.0
+      react: ^17.0.2
+      react-dom: ^17.0.0
+    devDependencies:
+      '@ice/types': link:../types
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+
+  packages/types:
+    specifiers:
+      build-scripts: ^2.0.0-5
+      react: ^17.0.2
+    devDependencies:
+      build-scripts: 2.0.0-5
+      react: 17.0.2
 
 packages:
 
@@ -6089,7 +6121,6 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
-    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -6297,7 +6328,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    dev: false
 
   /schema-utils/3.1.1:
     resolution: {integrity: sha512-Y5PQxS4ITlC+EahLuXaY86TXfR7Dc5lw294alXOq86JAHCihAIZfqv8nNCWvaEJvaC51uN9hbLGeV0cFBdH+Fw==}

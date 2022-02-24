@@ -27,7 +27,7 @@ function getRuntimeModules(plugins: Plugin[]) {
         const pkgInfo = fse.readJSONSync(pkgPath);
         return {
           staticModule: !!pkgInfo?.pluginConfig?.staticModule,
-          path: `${pkgInfo.name}/runtime`,
+          path: `${packageDir}/runtime`,
           name: pkgInfo.name as string,
         };
       } catch (error) {

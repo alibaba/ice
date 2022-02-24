@@ -17,6 +17,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@ice/service": "^1.0.0"
+    "@ice/service": "^1.0.0",
+    "@ice/types": "^1.0.0"
   }
 }

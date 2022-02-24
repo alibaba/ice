@@ -1,14 +1,10 @@
 <% const moduleNames = []; %>
 <% if (runtimeModules.length) {%>
   <% runtimeModules.filter((moduleInfo) => !moduleInfo.staticModule).forEach((runtimeModule, index) => { %>
-    <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %>
-<% } %>
+    <% moduleNames.push('module' + index) %>import module<%= index %> from '<%= runtimeModule.path %>';<% }) %><% } %>
+import type { Runtime } from '@ice/runtime';
 
-interface IRuntime<T> {
-  loadModule: (module: { default: T } | T) => void;
-}
-
-function loadRuntimeModules(runtime) {
+function loadRuntimeModules(runtime: Runtime) {
   <% if (moduleNames.length) {%>
     <% moduleNames.forEach((name) => { %>runtime.loadModule(<%= name%>);<% }) %>
   <% } %>
