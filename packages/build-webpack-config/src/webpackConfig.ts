@@ -1,22 +1,29 @@
 import type { Configuration } from 'webpack';
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import * as path from 'path';
-import type { IFrameworkConfig } from './frameworkConfig';
+import type { Config } from './config';
 import swcPlugin from './swcPlugin';
+
+const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|[/\\]\.ice[/\\]|[/\\]\.rax[/\\]/;
 
 interface GetWebpackConfigOptions {
   rootDir: string;
-  frameworkConfig: IFrameworkConfig;
+  config: Config;
 }
+type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration & { devServer?: DevServerConfiguration };
 
-export function getWebpackConfig({ rootDir, frameworkConfig }: GetWebpackConfigOptions): Configuration {
+export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
   const {
     mode,
     externals = {},
     publicPath = '/',
+    devPublicPath = '/',
     outputDir = path.join(rootDir, 'build'),
     loaders = [],
+    alias = {},
     sourceMap,
-  } = frameworkConfig;
+    middlewares,
+  } = config;
 
   return {
     mode,
@@ -34,9 +41,38 @@ export function getWebpackConfig({ rootDir, frameworkConfig }: GetWebpackConfigO
     resolve: {
       alias: {
         ice: path.join(rootDir, '.ice', 'index.ts'),
+        ...alias,
       },
       extensions: ['.ts', '.tsx', '.jsx', '...'],
     },
-    plugins: [swcPlugin({ rootDir, sourceMap })],
+    plugins: [
+      swcPlugin({ rootDir, sourceMap }),
+    ],
+    devServer: {
+      allowedHosts: 'all',
+      hot: true,
+      compress: true,
+      webSocketServer: 'ws',
+      devMiddleware: {
+        publicPath: devPublicPath,
+      },
+      static: {
+        watch: {
+          ignored: watchIgnoredRegexp,
+        },
+      },
+      client: {
+        overlay: false,
+        logging: 'info',
+      },
+      onBeforeSetupMiddleware({ app }) {
+        app.use((req, res, next) => {
+          // set cros for all served files
+          res.set('Access-Control-Allow-Origin', '*');
+          next();
+        });
+      },
+      setupMiddlewares: middlewares,
+    },
   };
-}
+};

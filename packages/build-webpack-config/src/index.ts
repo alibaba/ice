@@ -1,2 +1,2 @@
 export * from './webpackConfig';
-export * from './frameworkConfig';
+export * from './config';

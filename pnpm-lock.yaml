@@ -101,11 +101,13 @@ importers:
       browserslist: ^4.19.3
       unplugin: ^0.3.2
       webpack: ^5.69.1
+      webpack-dev-server: ^4.7.4
     dependencies:
       '@builder/pack': 0.6.0
       '@builder/swc': 0.1.3
       browserslist: 4.19.3
       unplugin: 0.3.2_webpack@5.69.1
+      webpack-dev-server: 4.7.4_webpack@5.69.1
     devDependencies:
       webpack: 5.69.1
 
@@ -201,22 +203,6 @@ importers:
       react-dom: ^17.0.0
     devDependencies:
       '@ice/types': link:../types
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-
-  packages/types:
-    specifiers:
-      build-scripts: ^2.0.0-5
-      react: ^17.0.2
-    devDependencies:
-      build-scripts: 2.0.0-5
-      react: 17.0.2
-
-  packages/runtime:
-    specifiers:
-      react: ^17.0.2
-      react-dom: ^17.0.0
-    devDependencies:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
 

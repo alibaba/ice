@@ -6,7 +6,7 @@ import preCompile from './service/preCompile';
 import start from './commands/start';
 import build from './commands/build';
 import type { ExportData } from './service/runtimeGenerator';
-import type { IFrameworkConfig } from '@builder/webpack-config';
+import type { Config } from '@builder/webpack-config';
 
 type AddExport = (exportData: ExportData) => void;
 
@@ -26,7 +26,7 @@ interface ExtendsPluginAPI {
 }
 
 export interface FrameworkPlugin<T = undefined> {
-  (api: IPluginAPI<IFrameworkConfig, ExtendsPluginAPI>, options?: T): Promise<void> | void;
+  (api: IPluginAPI<Config, ExtendsPluginAPI>, options?: T): Promise<void> | void;
 }
 
 interface CreateServiceOptions {
