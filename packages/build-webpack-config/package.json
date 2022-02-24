@@ -11,7 +11,8 @@
     "webpack-dev-server": "^4.7.4"
   },
   "devDependencies": {
-    "webpack": "^5.69.1"
+    "webpack": "^5.69.1",
+    "webpack-dev-server": "^4.7.4"
   },
   "files": [
     "lib",
