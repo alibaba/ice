@@ -17,7 +17,8 @@ const unplugin = createUnplugin((options: Options) => {
   return {
     name: 'swc-plugin',
     async transform(source: string, id: string) {
-      if (/node_modules/.test(id)) {
+      // TODO specific runtime plugin name
+      if (/node_modules/.test(id) && !/[\\/]runtime[\\/]/.test(id)) {
         return;
       }
       const initOptions = {

@@ -8,6 +8,10 @@
   },
   "author": "ICE",
   "license": "MIT",
+  "exports": {
+    ".": "./lib/index.js",
+    "./runtime": "./lib/runtime.js"
+  },
   "devDependencies": {
     "build-scripts": "^2.0.0-5",
     "react": "^17.0.2"

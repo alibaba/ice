@@ -66,16 +66,20 @@ importers:
 
   examples/basic-project:
     specifiers:
+      '@ice/runtime': ^1.0.0
       '@types/react': ^17.0.39
       '@types/react-dom': ^17.0.11
       react: ^17.0.2
       react-dom: ^17.0.2
+      regenerator-runtime: ^0.13.9
     dependencies:
+      '@ice/runtime': link:../../packages/runtime
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.11
+      regenerator-runtime: 0.13.9
 
   examples/basic-vite:
     specifiers:
@@ -178,15 +182,37 @@ importers:
 
   packages/plugin-core:
     specifiers:
+      '@ice/runtime': ^1.0.0
       '@ice/service': ^1.0.0
     devDependencies:
+      '@ice/runtime': link:../runtime
       '@ice/service': link:../ice-service
 
   packages/plugin-router:
     specifiers:
       '@ice/service': ^1.0.0
+      '@ice/types': ^1.0.0
     devDependencies:
       '@ice/service': link:../ice-service
+      '@ice/types': link:../types
+
+  packages/runtime:
+    specifiers:
+      '@ice/types': ^1.0.0
+      react: ^17.0.2
+      react-dom: ^17.0.0
+    devDependencies:
+      '@ice/types': link:../types
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+
+  packages/types:
+    specifiers:
+      build-scripts: ^2.0.0-5
+      react: ^17.0.2
+    devDependencies:
+      build-scripts: 2.0.0-5
+      react: 17.0.2
 
   packages/runtime:
     specifiers:

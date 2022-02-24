@@ -125,6 +125,8 @@ export default class Generator {
     this.disableRuntimePlugins = [];
     this.contentTypes = ['framework', 'frameworkTypes', 'configTypes'];
     this.plugins = [];
+    // empty .ice before render
+    fse.emptyDirSync(path.join(rootDir, targetDir));
   }
 
   public setPlugins(plugins: any) {
@@ -208,7 +210,6 @@ export default class Generator {
       }
       return previousValue;
     }, this.parseRenderData());
-    console.log('renderData', this.renderData);
     // 生成所有运行时插件，在 load 阶段判断是否需要加载，确保 index 中的 exports 路径永远可以获取引用
     this.renderData.runtimeModules = getRuntimeModules(this.plugins)
       .filter((plugin) => {
