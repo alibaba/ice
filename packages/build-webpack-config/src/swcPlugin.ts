@@ -2,14 +2,14 @@ import { createUnplugin } from 'unplugin';
 import { transform } from '@builder/swc';
 import * as path from 'path';
 import { merge } from '@builder/pack/deps/lodash';
-import type { IFrameworkConfig } from './frameworkConfig';
+import type { Config } from './config';
 
 type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
   rootDir: string;
 
-  sourceMap?: IFrameworkConfig['sourceMap'];
+  sourceMap?: Config['sourceMap'];
 }
 
 const unplugin = createUnplugin((options: Options) => {

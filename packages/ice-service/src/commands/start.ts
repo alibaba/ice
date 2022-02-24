@@ -4,11 +4,11 @@ import { getWebpackConfig } from '@builder/webpack-config';
 import defaultsDeep from 'lodash.defaultsdeep';
 import webpackCompiler from '../service/webpackCompiler';
 import prepareURLs from '../utils/prepareURLs';
-import type { IFrameworkConfig } from '@builder/webpack-config';
+import type { Config } from '@builder/webpack-config';
 
 interface IWebTaskConfig {
   name: string;
-  config: IFrameworkConfig;
+  config: Config;
 }
 
 type DevServerConfig = Record<string, any>;
@@ -34,7 +34,7 @@ const start = async (context: Context<any>) => {
   // transform config to webpack config
   const webpackConfig = getWebpackConfig({
     rootDir,
-    frameworkConfig: config,
+    config,
   });
 
   let devServerConfig: DevServerConfig = {
