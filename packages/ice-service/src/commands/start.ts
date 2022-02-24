@@ -60,7 +60,7 @@ const start = async (context: Context<any>) => {
     command,
     applyHook,
   });
-  const devServer = new WebpackDevServer(compiler, devServerConfig);
+  const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {
     applyHook('after.start.devServer', {
       urls, devServer,
