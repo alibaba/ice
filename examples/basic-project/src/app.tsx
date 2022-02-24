@@ -1,3 +1,3 @@
 import { runApp } from 'ice';
 
-runApp({})
+runApp({});
