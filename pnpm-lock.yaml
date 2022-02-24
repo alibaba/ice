@@ -94,11 +94,13 @@ importers:
     specifiers:
       '@builder/pack': ^0.6.0
       '@builder/swc': ^0.1.3
+      browserslist: ^4.19.3
       unplugin: ^0.3.2
       webpack: ^5.69.1
     dependencies:
       '@builder/pack': 0.6.0
       '@builder/swc': 0.1.3
+      browserslist: 4.19.3
       unplugin: 0.3.2_webpack@5.69.1
     devDependencies:
       webpack: 5.69.1
@@ -183,6 +185,22 @@ importers:
       '@ice/service': ^1.0.0
     devDependencies:
       '@ice/service': link:../ice-service
+
+  packages/runtime:
+    specifiers:
+      react: ^17.0.2
+      react-dom: ^17.0.0
+    devDependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+
+  packages/types:
+    specifiers:
+      build-scripts: ^2.0.0-5
+      react: ^17.0.2
+    devDependencies:
+      build-scripts: 2.0.0-5
+      react: 17.0.2
 
 packages:
 
@@ -2235,7 +2253,6 @@ packages:
       escalade: 3.1.1
       node-releases: 2.0.2
       picocolors: 1.0.0
-    dev: true
 
   /bs-logger/0.2.6:
     resolution: {integrity: sha512-pd8DCoxmbgc7hyPKOvxtqNcjYoOsABPQdcCUjGp3d42VR2CX1ORhk2A87oqqu5R1kk+76nsxZupkmyd+MVtCog==}
@@ -2334,7 +2351,6 @@ packages:
 
   /caniuse-lite/1.0.30001312:
     resolution: {integrity: sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ==, registry: https://registry.yarnpkg.com/, tarball: https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz}
-    dev: true
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -2913,7 +2929,6 @@ packages:
 
   /electron-to-chromium/1.4.71:
     resolution: {integrity: sha512-Hk61vXXKRb2cd3znPE9F+2pLWdIOmP7GjiTj45y6L3W/lO+hSnUSUhq+6lEaERWBdZOHbk2s3YV5c9xVl3boVw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.71.tgz}
-    dev: true
 
   /emittery/0.8.1:
     resolution: {integrity: sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==}
@@ -3193,7 +3208,6 @@ packages:
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz}
     engines: {node: '>=6'}
-    dev: true
 
   /escape-html/1.0.3:
     resolution: {integrity: sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=}
@@ -5527,7 +5541,6 @@ packages:
 
   /node-releases/2.0.2:
     resolution: {integrity: sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz}
-    dev: true
 
   /normalize-package-data/2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
@@ -6094,7 +6107,6 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
-    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -6301,7 +6313,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    dev: false
 
   /schema-utils/3.1.1:
     resolution: {integrity: sha512-Y5PQxS4ITlC+EahLuXaY86TXfR7Dc5lw294alXOq86JAHCihAIZfqv8nNCWvaEJvaC51uN9hbLGeV0cFBdH+Fw==}
