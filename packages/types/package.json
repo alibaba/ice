@@ -1,0 +1,15 @@
+{
+  "name": "@ice/types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ICE",
+  "license": "MIT",
+  "devDependencies": {
+    "build-scripts": "^2.0.0-5",
+    "react": "^17.0.2"
+  }
+}

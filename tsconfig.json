@@ -1,6 +1,8 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/types" },
+    { "path": "packages/runtime" },
     { "path": "packages/build-webpack-config" },
     { "path": "packages/ice-service"},
     { "path": "packages/plugin-app"},
