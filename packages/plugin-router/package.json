@@ -1,11 +1,11 @@
 {
-  "name": "build-plugin-app",
-  "version": "1.0.0",
-  "description": "plugin app",
+  "name": "build-plugin-ice-router",
+  "version": "3.0.0",
+  "description": "plugin router",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
-    "./runtime": "./runtime/index.ts"
+    "./runtime": "./runtime/*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,12 +16,8 @@
     "lib"
   ],
   "license": "MIT",
-  "dependencies": {
-    "esbuild": "^0.14.23",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
   "devDependencies": {
-    "@ice/service": "^1.0.0"
+    "@ice/service": "^1.0.0",
+    "@ice/types": "^1.0.0"
   }
 }

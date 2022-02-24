@@ -1,22 +1,41 @@
-import * as path from 'path';
-import getWebpackConfig from '@builder/webpack-config';
-import type { IPlugin } from 'build-scripts';
+import type { FrameworkPlugin } from '@ice/service';
+import { setupRenderServer } from './ssr/server';
+import { buildServerEntry } from './ssr/build';
 
-const plugin: IPlugin = ({ registerTask, context }) => {
+const plugin: FrameworkPlugin = ({ registerTask, context, onHook }) => {
   const { command, rootDir } = context;
   const mode = command === 'start' ? 'development' : 'production';
-  const webpackConfig = getWebpackConfig(mode);
-  // set alias for webpack/hot while webpack has been prepacked
-  webpackConfig.resolve.alias.set('webpack/hot', '@builder/pack/deps/webpack/hot');
-  // TODO: remove after refactor
-  webpackConfig.entry('index').add(path.join(rootDir, 'src/app'));
-  webpackConfig.resolve.merge({
-    fallback: {
-      // add events fallback for webpack/hot/emitter
-      events: require.resolve('events'),
-    },
+
+  // mock routeManifest
+  const routeManifest = {
+    '/': '/src/pages/index',
+  };
+
+  onHook(`before.${command}.run`, async () => {
+    // TODO: watch file changes and rebuild
+    await buildServerEntry({
+      rootDir,
+    });
   });
-  registerTask('web', webpackConfig);
+
+  registerTask('web', {
+    mode,
+    middlewares: (middlewares, devServer) => {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+
+      middlewares.push({
+        name: 'document-render-server',
+        middleware: setupRenderServer({
+          rootDir,
+          routeManifest,
+        }),
+      });
+
+      return middlewares;
+    },
+   });
 };
 
 export default plugin;

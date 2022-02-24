@@ -39,7 +39,7 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
     .map(([name]) => name);
 };
 
-const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
+export const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   // enable webpack 5 by default
   hijackWebpack();
   // eslint-disable-next-line
@@ -56,10 +56,10 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
 
     // react base plugin
     require.resolve('build-plugin-app'),
-
+    require.resolve('build-plugin-runtime'),
+    require.resolve('build-plugin-ice-router'),
     // for ice/react plugins
-    /* 'build-plugin-ice-router',
-    'build-plugin-ice-config',
+    /* 'build-plugin-ice-config',
     'build-plugin-ice-mpa',
     'build-plugin-helmet',
     'build-plugin-speed', */
@@ -78,5 +78,3 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
 
   return plugins.concat(dynamicPlugins);
 };
-
-export default getBuiltInPlugins;
