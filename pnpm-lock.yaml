@@ -214,22 +214,6 @@ importers:
       build-scripts: 2.0.0-5
       react: 17.0.2
 
-  packages/runtime:
-    specifiers:
-      react: ^17.0.2
-      react-dom: ^17.0.0
-    devDependencies:
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-
-  packages/types:
-    specifiers:
-      build-scripts: ^2.0.0-5
-      react: ^17.0.2
-    devDependencies:
-      build-scripts: 2.0.0-5
-      react: 17.0.2
-
 packages:
 
   /@ampproject/remapping/2.1.2:
