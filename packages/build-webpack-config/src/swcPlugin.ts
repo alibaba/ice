@@ -24,13 +24,13 @@ const unplugin = createUnplugin((options: Options) => {
         filename: id,
         sourceMaps: !!sourceMap,
       };
-      let loaderOptions = {};
+      let transformOptions = {};
       if (/\\.jsx?$/.test(id)) {
-        loaderOptions = getSwcLoaderOptions('jsx', rootDir);
+        transformOptions = getSwcTransformOptions('jsx', rootDir);
       } else if (/\\.tsx?$/.test(id)) {
-        loaderOptions = getSwcLoaderOptions('tsx', rootDir);
+        transformOptions = getSwcTransformOptions('tsx', rootDir);
       }
-      const programmaticOptions = Object.assign({}, loaderOptions, initOptions);
+      const programmaticOptions = Object.assign({}, transformOptions, initOptions);
       const output = await transform(source, programmaticOptions);
       const { code, map } = output;
 
@@ -39,7 +39,7 @@ const unplugin = createUnplugin((options: Options) => {
   };
 });
 
-function getSwcLoaderOptions(suffix: JSXSuffix, rootDir: string) {
+function getSwcTransformOptions(suffix: JSXSuffix, rootDir: string) {
   const reactTransformConfig = hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {};
 
   const commonOptions = {
