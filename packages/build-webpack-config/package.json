@@ -6,7 +6,8 @@
   "dependencies": {
     "@builder/pack": "^0.6.0",
     "unplugin": "^0.3.2",
-    "@builder/swc": "^0.1.3"
+    "@builder/swc": "^0.1.3",
+    "browserslist": "^4.19.3"
   },
   "devDependencies": {
     "webpack": "^5.69.1"
