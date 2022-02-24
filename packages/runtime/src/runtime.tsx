@@ -1,60 +1,22 @@
 import * as React from 'react';
 import type { ComponentType } from 'react';
-
-type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
-type App = Partial<{
-  rootId: string;
-  strict: boolean;
-  renderComponent: ComponentType;
-} & Record<AppLifecycle, VoidFunction>>;
-interface AppConfig extends Record<string, any> {
-  app?: App;
-}
-// simplify page item type while it has been defined in plugin-router
-interface DOMRender {
-  ({ App, appMountNode }: { App: React.ComponentType; appMountNode?: HTMLElement }): void;
-}
-interface RenderOptions {
-  routeManifest?: Record<string, any>;
-  pageWrappers?: PageWrapper<any>[];
-  renderComponent?: ComponentType;
-}
-type PageWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => ComponentType<Props>);
-type RenderApp = (options: RenderOptions) => ComponentType;
-type SetRenderApp = (renderApp: RenderApp) => void;
-type AddProvider = (Provider: React.ComponentType) => void;
-type AddDOMRender = (domRender: DOMRender) => void;
-type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;
-interface CommonJsRuntime {
-  default: RuntimePlugin;
-}
-type GetAppComponent = () => ComponentType;
-type GetWrapperPageRegistration = () => PageWrapper<any>[];
-interface BuildConfig extends Record<string, any> {
-  ssr: boolean;
-  target: string[];
-}
-interface Context {
-  appManifest: Record<string, any>;
-  routeManifest: Record<string, any>;
-  initialContext: Record<string, any>;
-  initialData: any;
-  enableRouter: boolean;
-}
-export interface RuntimeAPI {
-  setRenderApp: SetRenderApp;
-  addProvider: AddProvider;
-  addDOMRender: AddDOMRender;
-  wrapperPageComponent: WrapperPageComponent;
-  appConfig: AppConfig;
-  buildConfig: BuildConfig;
-  context: Context;
-}
-export interface RuntimePlugin {
-  (
-    apis: RuntimeAPI
-  ): void;
-}
+import type {
+  AppConfig,
+  BuildConfig,
+  PageWrapper,
+  DOMRender,
+  Context,
+  RenderApp,
+  RuntimePlugin,
+  CommonJsRuntime,
+  RuntimeAPI,
+  SetRenderApp,
+  AddProvider,
+  AddDOMRender,
+  WrapperPageComponent,
+  GetWrapperPageRegistration,
+  GetAppComponent,
+} from '@ice/types/lib/runtime';
 
 class Runtime {
   private appConfig: AppConfig;
@@ -65,7 +27,7 @@ class Runtime {
 
   private renderApp: RenderApp;
 
-  private AppProvider: React.ComponentType[];
+  private AppProvider: ComponentType[];
 
   private wrapperPageRegistration: PageWrapper<any>[];
 
@@ -110,8 +72,8 @@ class Runtime {
     });
   }
 
-  private setRenderApp: SetRenderApp = (renderRouter) => {
-    this.renderApp = renderRouter;
+  private setRenderApp: SetRenderApp = (renderApp) => {
+    this.renderApp = renderApp;
   };
 
   private addProvider: AddProvider = (Provider) => {
