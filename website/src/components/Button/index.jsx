@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './button.module.css'
+import styles from './button.module.css';
 
 function Button({ primary = true, url, children }) {
   return (

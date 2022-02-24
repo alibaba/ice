@@ -1,1 +1,1 @@
-export default () => 'ice';
+export * from './getBuiltInPlugins';

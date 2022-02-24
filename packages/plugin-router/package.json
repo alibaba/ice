@@ -1,0 +1,23 @@
+{
+  "name": "build-plugin-ice-router",
+  "version": "3.0.0",
+  "description": "plugin router",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./runtime": "./runtime/*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ice-admin",
+  "files": [
+    "runtime",
+    "lib"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@ice/service": "^1.0.0",
+    "@ice/types": "^1.0.0"
+  }
+}
