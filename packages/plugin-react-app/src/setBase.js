@@ -6,9 +6,10 @@ const WebpackPluginQueryLoader = require('query-loader-webpack-plugin').default;
 const { getFilePath, getWebOutputPath } = require('./utils');
 
 module.exports = (api, { target, webpackConfig }) => {
-  const { context, modifyUserConfig } = api;
+  const { context, modifyUserConfig, getValue } = api;
   const { rootDir, userConfig } = context;
   const outputPath = getWebOutputPath(context, { target });
+  const clientEnv = getValue('CLIENT_ENV');
   webpackConfig
   // SimpleProgressPlugin
     .plugin('SimpleProgressPlugin')
@@ -30,6 +31,8 @@ module.exports = (api, { target, webpackConfig }) => {
         inject: true,
         templateParameters: {
           NODE_ENV: process.env.NODE_ENV,
+          // add template params for html webpack plugin
+          ...(clientEnv || {}),
         },
         favicon: getFilePath([
           path.join(rootDir, 'public/favicon.ico'),

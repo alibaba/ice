@@ -5415,6 +5415,16 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
+dotenv-expand@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-6.0.1.tgz#233328515e4b71091a6513e2ffe7e9a24b49bb0c"
+  integrity sha512-GNHcCOyRKLCXWnH3L/+sJ04PQxxgTOZDCPuQQnqkqPMGIilyoxHZ2JUNmh2VWKCfzVKH/AZsqcbuSYlDDVb/xw==
+
+dotenv@^14.2.0:
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.2.0.tgz#7e77fd5dd6cff5942c4496e1acf2d0f37a9e67aa"
+  integrity sha512-05POuPJyPpO6jqzTNweQFfAyMSD4qa4lvsMOWyTRTdpHKy6nnnN+IYWaXF+lHivhBH/ufDKlR4IWCAN3oPnHuw==
+
 driver-server@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/driver-server/-/driver-server-1.0.0.tgz#2fa67991d2aafa66dd808b1a1989b18125bb38c0"

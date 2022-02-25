@@ -5,3 +5,4 @@ export * from './polyfill';
 export * from './html';
 export * from './ignoreHtml';
 export * from './mock';
+export * from './cssChunk';
