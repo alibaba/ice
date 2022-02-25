@@ -50,6 +50,11 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     ],
     devServer: {
       allowedHosts: 'all',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': '*',
+      },
       hot: true,
       compress: true,
       webSocketServer: 'ws',
@@ -64,13 +69,6 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
       client: {
         overlay: false,
         logging: 'info',
-      },
-      onBeforeSetupMiddleware({ app }) {
-        app.use((req, res, next) => {
-          // set cros for all served files
-          res.set('Access-Control-Allow-Origin', '*');
-          next();
-        });
       },
       setupMiddlewares: middlewares,
     },

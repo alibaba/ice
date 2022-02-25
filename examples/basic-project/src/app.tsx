@@ -1,4 +1,8 @@
 import * as React from 'react';
 import { runApp } from 'ice';
 
-runApp({});
+runApp({
+  app: {
+    renderComponent: () => <><h2>Simple App</h2></>,
+  },
+});

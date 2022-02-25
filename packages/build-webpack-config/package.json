@@ -3,6 +3,9 @@
   "version": "3.0.0",
   "main": "./lib/index.js",
   "exports": "./lib/index.js",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
   "dependencies": {
     "@builder/pack": "^0.6.0",
     "@builder/swc": "^0.1.3",

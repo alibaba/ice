@@ -8,6 +8,9 @@
   },
   "author": "ICE",
   "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
   "devDependencies": {
     "@ice/types": "^1.0.0",
     "react": "^17.0.2",

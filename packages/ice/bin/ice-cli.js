@@ -12,14 +12,14 @@
 const fs = require('fs/promises');
 const path = require('path');
 const { program } = require('commander');
-const createService = require('@ice/service').default;
+const createService = require('../lib').default;
 const parse = require('yargs-parser');
 const checkNodeVersion = require('./checkNodeVersion');
-const { getBuiltInPlugins } = require('../lib');
+const { getBuiltInPlugins } = require('../lib/getBuiltInPlugins');
 
 (async function () {
-  const icejsPackageInfo = JSON.parse(await fs.readFile(path.join(__dirname, '../package.json'), 'utf-8'));
-  checkNodeVersion(icejsPackageInfo.engines.node, icejsPackageInfo.name);
+  const icePackageInfo = JSON.parse(await fs.readFile(path.join(__dirname, '../package.json'), 'utf-8'));
+  checkNodeVersion(icePackageInfo.engines.node, icePackageInfo.name);
 
   const rootDir = process.cwd();
   const commandArgs = parse(
@@ -30,7 +30,7 @@ const { getBuiltInPlugins } = require('../lib');
   delete commandArgs._;
 
   program
-    .version(icejsPackageInfo.version)
+    .version(icePackageInfo.version)
     .usage('<command> [options]');
 
   program

@@ -1,6 +1,6 @@
 {
-  "name": "build-plugin-ice-router",
-  "version": "3.0.0",
+  "name": "@ice/plugin-router",
+  "version": "1.0.0",
   "description": "plugin router",
   "main": "lib/index.js",
   "exports": {
@@ -16,8 +16,10 @@
     "lib"
   ],
   "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
   "devDependencies": {
-    "@ice/service": "^1.0.0",
     "@ice/types": "^1.0.0"
   }
 }

@@ -3,7 +3,7 @@
 const chalk = require('chalk');
 const semver = require('semver');
 
-module.exports = function (requireNodeVersion, frameworkName = 'ice.js') {
+module.exports = function (requireNodeVersion, frameworkName = 'ice') {
   if (!semver.satisfies(process.version, requireNodeVersion)) {
     console.log();
     console.log(chalk.red(`  You are using Node ${process.version}`));

@@ -1,5 +1,5 @@
 {
-  "name": "build-plugin-app",
+  "name": "@ice/plugin-app",
   "version": "1.0.0",
   "description": "plugin app",
   "main": "lib/index.js",
@@ -16,6 +16,9 @@
     "lib"
   ],
   "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
   "dependencies": {
     "esbuild": "^0.14.23",
     "react": "^17.0.2",
