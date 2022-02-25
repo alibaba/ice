@@ -142,7 +142,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
     }
   });
 
-  const isVersion2 = Number(process.env.__FRAMEWORK_VERSION__[0]) > 1;
+  const isVersion2 = !!process.env.__FRAMEWORK_VERSION__ && Number(process.env.__FRAMEWORK_VERSION__[0]) > 1;
 
   if (isVersion2) {
     // copy type files to .ice/plugins/icestark
