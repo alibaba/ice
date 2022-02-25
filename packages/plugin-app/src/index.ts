@@ -1,8 +1,8 @@
-import type { FrameworkPlugin } from '@ice/service';
+import type { Plugin } from '@ice/types';
 import { setupRenderServer } from './ssr/server';
 import { buildServerEntry } from './ssr/build';
 
-const plugin: FrameworkPlugin = ({ registerTask, context, onHook }) => {
+const plugin: Plugin = ({ registerTask, context, onHook }) => {
   const { command, rootDir } = context;
   const mode = command === 'start' ? 'development' : 'production';
 

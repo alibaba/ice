@@ -1,33 +1,11 @@
 import { Context } from 'build-scripts';
-import type webpack from 'webpack';
-import type { CommandArgs, CommandName, IPluginAPI, IGetBuiltInPlugins } from 'build-scripts';
 import Generator from './service/runtimeGenerator';
 import preCompile from './service/preCompile';
 import start from './commands/start';
 import build from './commands/build';
-import type { ExportData } from './service/runtimeGenerator';
-import type { Config } from '@builder/webpack-config';
-
-type AddExport = (exportData: ExportData) => void;
-
-interface ExtendsPluginAPI {
-  context: {
-    // TODO define routeManifest
-    routeManifest: any;
-    webpack?: typeof webpack;
-  };
-  generator: {
-    addExport: AddExport;
-    addExportTypes: AddExport;
-    addConfigTypes: AddExport;
-    addRenderFile: Generator['addRenderFile'];
-    addRenderTemplate: Generator['addTemplateFiles'];
-  };
-}
-
-export interface FrameworkPlugin<T = undefined> {
-  (api: IPluginAPI<Config, ExtendsPluginAPI>, options?: T): Promise<void> | void;
-}
+import type { CommandArgs, CommandName, IGetBuiltInPlugins } from 'build-scripts';
+import type { ExportData } from '@ice/types/lib/generator';
+import type { ExtendsPluginAPI } from '@ice/types/lib/plugin';
 
 interface CreateServiceOptions {
   rootDir: string;

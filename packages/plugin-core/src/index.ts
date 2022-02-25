@@ -1,7 +1,7 @@
 import * as path from 'path';
-import type { FrameworkPlugin } from '@ice/service';
+import type { Plugin } from '@ice/types';
 
-const plugin: FrameworkPlugin = ({ generator }) => {
+const plugin: Plugin = ({ generator }) => {
   const templatePath = path.join(__dirname, '../template/');
   generator.addRenderTemplate(templatePath);
   // generator.addExport({ source: 'react-redux', specifier: '{ connect }', exportName: 'connect' });
