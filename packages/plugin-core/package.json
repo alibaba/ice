@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@ice/service": "^1.0.0",
+    "@ice/types": "^1.0.0",
     "@ice/runtime": "^1.0.0"
   },
   "author": "",

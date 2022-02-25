@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "esModuleInterop": true
   },
   "include": ["src"]
 }

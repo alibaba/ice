@@ -4,7 +4,7 @@ import { getWebpackConfig } from '@builder/webpack-config';
 import defaultsDeep from 'lodash.defaultsdeep';
 import webpackCompiler from '../service/webpackCompiler';
 import prepareURLs from '../utils/prepareURLs';
-import type { Config } from '@builder/webpack-config';
+import type { Config } from '@ice/types';
 
 interface IWebTaskConfig {
   name: string;

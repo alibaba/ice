@@ -1,6 +1,6 @@
-import type { FrameworkPlugin } from '@ice/service';
+import type { Plugin } from '@ice/types';
 
-const plugin: FrameworkPlugin = ({ onGetConfig }) => {
+const plugin: Plugin = ({ onGetConfig }) => {
   // FIXME: types need to return config
   // @ts-expect-error
   onGetConfig('web', (config) => {

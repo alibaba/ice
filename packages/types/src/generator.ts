@@ -1,0 +1,35 @@
+export interface ExportData {
+  specifier?: string;
+  importSource?: string;
+  exportMembers?: string[];
+  source: string;
+  exportName: string;
+}
+export type RenderData = Record<string, unknown>;
+type RenderDataFunction = (renderDataFunction: RenderData) => RenderData;
+interface TemplateOptions {
+  template: string;
+  targetDir: string;
+}
+export type ExtraData = RenderData | RenderDataFunction;
+export type RenderTemplate = [string, string, ExtraData];
+export interface RenderDataRegistration {
+  (renderDataFunction: RenderData): RenderData;
+}
+export interface Registration {
+  [key: string]: any[];
+}
+
+export type SetPlugins = (plugins: any) => void;
+export type AddExport = (registerKey: string, exportData: ExportData | ExportData[]) => void;
+export type RemoveExport = (registerKey: string, removeExportName: string | string[]) => void;
+export type AddContent = (apiName: string, ...args: any) => void;
+export type GetExportStr = (registerKey: string, dataKeys: string[]) => { [x: string]: string };
+export type ParseRenderData = () => Record<string, unknown>;
+export type GenerateImportStr = (apiName: string) => string;
+export type Render = () => void;
+export type ModifyRenderData = (registration: RenderDataRegistration) => void;
+export type AddRenderFile = (templatePath: string, targetPath: string, extraData: ExtraData) => void;
+export type AddTemplateFiles = (templateOptions: string | TemplateOptions, extraData?: ExtraData) => void;
+export type RenderFile = (templatePath: string, targetDir: string, extraData?: ExtraData) => void;
+export type AddDisableRuntimePlugin = (pluginName: string) => void;

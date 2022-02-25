@@ -10,10 +10,23 @@
   "license": "MIT",
   "exports": {
     ".": "./lib/index.js",
-    "./runtime": "./lib/runtime.js"
+    "./runtime": {
+      "import": "./lib/runtime.js",
+      "types": "./lib/runtime.d.ts"
+    },
+    "./plugin": {
+      "import": "./lib/plugin.js",
+      "types": "./lib/plugin.d.ts"
+    },
+    "./generator": {
+      "import": "./lib/generator.js",
+      "types": "./lib/generator.d.ts"
+    }
   },
   "devDependencies": {
     "build-scripts": "^2.0.0-5",
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "webpack": "^5.69.1",
+    "webpack-dev-server": "^4.7.4"
   }
 }

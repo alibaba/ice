@@ -7,38 +7,26 @@ import * as prettier from 'prettier';
 import debounce from 'lodash.debounce';
 import getRuntimeModules from '../utils/getRuntimeModules';
 import formatPath from '../utils/formatPath';
-
-export interface ExportData {
-  specifier?: string;
-  importSource?: string;
-  exportMembers?: string[];
-  source: string;
-  exportName: string;
-}
-
-type RenderDataFunction = (renderDataFunction: RenderData) => RenderData;
-type RenderData = Record<string, unknown>;
-
-type ExtraData = RenderData | RenderDataFunction;
-
-interface Registration {
-  [key: string]: any[];
-}
-
-interface RenderFile {
-  (templatePath: string, targetDir: string, extraData?: ExtraData): void;
-}
-
-interface RenderDataRegistration {
-  (renderDataFunction: RenderData): RenderData;
-}
-
-interface TemplateOptions {
-  template: string;
-  targetDir: string;
-}
-
-type RenderTemplate = [string, string, ExtraData];
+import type {
+  SetPlugins,
+  AddExport,
+  RemoveExport,
+  AddContent,
+  GetExportStr,
+  ParseRenderData,
+  GenerateImportStr,
+  Render,
+  RenderFile,
+  ModifyRenderData,
+  AddRenderFile,
+  AddTemplateFiles,
+  AddDisableRuntimePlugin,
+  RenderDataRegistration,
+  RenderTemplate,
+  RenderData,
+  ExportData,
+  Registration,
+} from '@ice/types/lib/generator';
 
 const RENDER_WAIT = 150;
 
@@ -129,26 +117,26 @@ export default class Generator {
     fse.emptyDirSync(path.join(rootDir, targetDir));
   }
 
-  public setPlugins(plugins: any) {
+  public setPlugins: SetPlugins = (plugins) => {
     this.plugins = plugins;
-  }
+  };
 
-  public debounceRender = debounce(() => {
+  private debounceRender = debounce(() => {
     this.render();
   }, RENDER_WAIT);
 
-  public addExport = (registerKey: string, exportData: ExportData | ExportData[]) => {
+  public addExport: AddExport = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
     this.addContent(registerKey, exportData);
   };
 
-  public removeExport = (registerKey: string, removeExportName: string | string[]) => {
+  public removeExport: RemoveExport = (registerKey, removeExportName) => {
     const exportList = this.contentRegistration[registerKey] || [];
     this.contentRegistration[registerKey] = removeExportData(exportList, removeExportName);
   };
 
-  public addContent(apiName: string, ...args: any) {
+  public addContent: AddContent = (apiName, ...args) => {
     if (!this.contentTypes.includes(apiName)) {
       throw new Error(`invalid API ${apiName}`);
     }
@@ -162,9 +150,9 @@ export default class Generator {
     }
     const content = Array.isArray(data) ? data : [data];
     this.contentRegistration[registerKey].push(...content);
-  }
+  };
 
-  private getExportStr(registerKey: string, dataKeys: string[]) {
+  private getExportStr: GetExportStr = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
     const isTypes = registerKey.endsWith('Types');
     const { importStr, exportStr } = generateExports(exportList, isTypes);
@@ -173,9 +161,9 @@ export default class Generator {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
     };
-  }
+  };
 
-  public parseRenderData(): RenderData {
+  public parseRenderData: ParseRenderData = () => {
     const staticConfig = fg.sync(['src/manifest.json'], { cwd: this.rootDir });
     const globalStyles = fg.sync(['src/global.@(scss|less|styl|css)'], { cwd: this.rootDir, absolute: true });
     let exportsData = {};
@@ -192,17 +180,17 @@ export default class Generator {
       staticConfig: staticConfig.length && staticConfig[0],
       globalStyle: globalStyles.length && formatPath(path.relative(path.join(this.targetDir, 'core'), globalStyles[0])),
     };
-  }
+  };
 
-  public generateImportStr(apiName: string) {
+  public generateImportStr: GenerateImportStr = (apiName) => {
     const imports = this.contentRegistration[apiName] || [];
     return imports.map(({ source, specifier }) => {
       return specifier
         ? `import ${specifier} from '${source}';` : `import '${source}'`;
     }).join('\n');
-  }
+  };
 
-  public render = () => {
+  public render: Render = () => {
     this.rerender = true;
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
       if (typeof currentValue === 'function') {
@@ -221,7 +209,7 @@ export default class Generator {
     });
   };
 
-  public addRenderFile = (templatePath: string, targetPath: string, extraData: ExtraData = {}) => {
+  public addRenderFile: AddRenderFile = (templatePath, targetPath, extraData = {}) => {
     // check target path if it is already been registered
     const renderIndex = this.renderTemplates.findIndex(([, templateTarget]) => templateTarget === targetPath);
     if (renderIndex > -1) {
@@ -239,7 +227,7 @@ export default class Generator {
     }
   };
 
-  public addTemplateFiles = (templateOptions: string | TemplateOptions, extraData: ExtraData = {}) => {
+  public addTemplateFiles: AddTemplateFiles = (templateOptions, extraData = {}) => {
     const { template, targetDir } = typeof templateOptions === 'string' ? { template: templateOptions, targetDir: '' } : templateOptions;
     const templates = path.extname(template)
       ? [template]
@@ -256,12 +244,12 @@ export default class Generator {
     }
   };
 
-  public modifyRenderData(registration: RenderDataRegistration) {
+  public modifyRenderData: ModifyRenderData = (registration) => {
     this.renderDataRegistration.push(registration);
     if (this.rerender) {
       this.debounceRender();
     }
-  }
+  };
 
   public renderFile: RenderFile = (templatePath, targetPath, extraData = {}) => {
     const renderExt = '.ejs';
@@ -297,7 +285,7 @@ export default class Generator {
     }
   };
 
-  public addDisableRuntimePlugin = (pluginName: string) => {
+  public addDisableRuntimePlugin: AddDisableRuntimePlugin = (pluginName) => {
     if (!this.disableRuntimePlugins.includes(pluginName)) {
       this.disableRuntimePlugins.push(pluginName);
     }
