@@ -20,6 +20,9 @@
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
   "devDependencies": {
     "@applint/spec": "^1.0.1",
     "@commitlint/cli": "^16.1.0",

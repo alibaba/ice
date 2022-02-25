@@ -4,10 +4,8 @@
     { "path": "packages/types" },
     { "path": "packages/runtime" },
     { "path": "packages/build-webpack-config" },
-    { "path": "packages/ice-service"},
     { "path": "packages/plugin-app"},
-    { "path": "packages/plugin-core"},
-    { "path": "packages/icejs" },
+    { "path": "packages/ice" },
     { "path": "packages/plugin-router" }
   ]
 }

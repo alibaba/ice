@@ -55,24 +55,14 @@ export const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     // 'build-plugin-ice-logger',
 
     // react base plugin
-    require.resolve('build-plugin-app'),
-    require.resolve('build-plugin-runtime'),
-    require.resolve('build-plugin-ice-router'),
+    require.resolve('@ice/plugin-app'),
+    require.resolve('@ice/plugin-router'),
     // for ice/react plugins
     /* 'build-plugin-ice-config',
     'build-plugin-ice-mpa',
     'build-plugin-helmet',
     'build-plugin-speed', */
   ];
-
-  if (userConfig.mpa && userConfig.router === false) {
-    console.warn('Warning:', 'MPA 模式下 router: false 选项没有意义，建议移除该选项。');
-  }
-
-  if (!userConfig.mpa && userConfig.router === false) {
-    // SPA 并且设置了 router: false 则过滤 router 插件
-    plugins = plugins.filter((name) => name !== 'build-plugin-ice-router');
-  }
 
   const dynamicPlugins = getDynamicPlugins(userConfig);
 

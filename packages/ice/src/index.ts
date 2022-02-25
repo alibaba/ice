@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Context } from 'build-scripts';
 import Generator from './service/runtimeGenerator';
 import preCompile from './service/preCompile';
@@ -24,6 +25,9 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
      // TODO get default Data
     defaultData: {},
   });
+  // add default template of ice
+  const templatePath = path.join(__dirname, '../template/');
+  generator.addTemplateFiles(templatePath);
   const generatorAPI = {
     addExport: (exportData: ExportData) => {
       generator.addExport('framework', exportData);

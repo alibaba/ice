@@ -3,6 +3,6 @@ import { runApp } from 'ice';
 
 runApp({
   app: {
-    renderComponent: () => <>Simple App</>,
+    renderComponent: () => <><h2>Simple App</h2></>,
   },
 });
