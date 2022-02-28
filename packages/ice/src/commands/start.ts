@@ -13,7 +13,7 @@ interface IWebTaskConfig {
 
 type DevServerConfig = Record<string, any>;
 // TODO config type of ice.js
-const start = async (context: Context<any>) => {
+const start = async (context: Context<Config>) => {
   const { getConfig, applyHook, commandArgs, command, rootDir } = context;
 
   // FIXME: getConfig -> getConfigs, because getConfig will return an array

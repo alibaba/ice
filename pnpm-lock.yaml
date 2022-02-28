@@ -19,6 +19,7 @@ importers:
       esno: ^0.14.0
       execa: ^6.0.0
       fs-extra: ^10.0.0
+      get-port: ^5.1.1
       glob: ^7.2.0
       husky: ^7.0.4
       ice-npm-utils: ^3.0.1
@@ -49,6 +50,7 @@ importers:
       esno: 0.14.1
       execa: 6.1.0
       fs-extra: 10.0.1
+      get-port: 5.1.1
       glob: 7.2.0
       husky: 7.0.4
       ice-npm-utils: 3.0.1
@@ -3752,6 +3754,11 @@ packages:
   /get-package-type/0.1.0:
     resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
     engines: {node: '>=8.0.0'}
+    dev: true
+
+  /get-port/5.1.1:
+    resolution: {integrity: sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==}
+    engines: {node: '>=8'}
     dev: true
 
   /get-stdin/8.0.0:

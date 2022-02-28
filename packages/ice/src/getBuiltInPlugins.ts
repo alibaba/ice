@@ -1,6 +1,6 @@
 import type { IGetBuiltInPlugins, IPluginList, IUserConfig, Json } from 'build-scripts';
+import consola from 'consola';
 import { hijackWebpack } from './requireHook';
-import chalk from 'chalk';
 
 const getDynamicPlugins = (userConfig: IUserConfig) => {
   const { plugins } = userConfig;
@@ -28,9 +28,9 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
     .filter(([pluginName, configKey, defaultValue]) => {
       const exist = checkPluginExist(pluginName);
       if (exist) {
-        console.log('');
-        console.log(chalk.magenta(`The ${pluginName} has been built in. Please remove it from build.json.`));
-        console.log('');
+        consola.warn('');
+        consola.warn(`The ${pluginName} has been built in. Please remove it from build.json.`);
+        consola.warn('');
       } else {
         return Object.prototype.hasOwnProperty.call(userConfig, configKey) ? userConfig[configKey] : defaultValue;
       }

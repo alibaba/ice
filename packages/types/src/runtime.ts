@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-
+type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
   rootId: string;

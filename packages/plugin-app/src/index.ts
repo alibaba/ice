@@ -1,6 +1,9 @@
+import * as path from 'path';
+import * as fs from 'fs';
 import type { Plugin } from '@ice/types';
 import { setupRenderServer } from './ssr/server';
 import { buildServerEntry } from './ssr/build';
+import renderDocument from './ssr/renderDocument';
 
 const plugin: Plugin = ({ registerTask, context, onHook }) => {
   const { command, rootDir } = context;
@@ -16,6 +19,11 @@ const plugin: Plugin = ({ registerTask, context, onHook }) => {
     await buildServerEntry({
       rootDir,
     });
+    if (command === 'build') {
+      // generator html to outputDir
+      const htmlContent = renderDocument({ rootDir, documentPath: 'build/document.js' });
+      fs.writeFileSync(path.join(rootDir, 'build/index.html'), htmlContent);
+    }
   });
 
   registerTask('web', {

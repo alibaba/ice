@@ -253,6 +253,7 @@ export default class Generator {
 
   public renderFile: RenderFile = (templatePath, targetPath, extraData = {}) => {
     const renderExt = '.ejs';
+    const realTargetPath = path.isAbsolute(targetPath) ? targetPath : path.join(this.rootDir, targetPath);
     if (path.extname(templatePath) === '.ejs') {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
       let renderData = { ...this.renderData };
@@ -276,12 +277,10 @@ export default class Generator {
           this.showPrettierError = false;
         }
       }
-      const realTargetPath = targetPath.replace(renderExt, '');
-      fse.ensureDirSync(path.dirname(realTargetPath));
-      fse.writeFileSync(realTargetPath, content, 'utf-8');
+      fse.writeFileSync(realTargetPath.replace(renderExt, ''), content, 'utf-8');
     } else {
-      fse.ensureDirSync(path.dirname(targetPath));
-      fse.copyFileSync(templatePath, targetPath);
+      fse.ensureDirSync(path.dirname(realTargetPath));
+      fse.copyFileSync(templatePath, realTargetPath);
     }
   };
 

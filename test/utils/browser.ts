@@ -4,7 +4,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 
-export interface IPage extends puppeteer.Page {
+export interface Page extends puppeteer.Page {
   html?: () => Promise<string>;
   $text?: (selector: string, trim?: boolean) => Promise<string|null>;
   $$text?: (selector: string, trim?: boolean) => Promise<(string|null)[]>;
@@ -13,7 +13,7 @@ export interface IPage extends puppeteer.Page {
   push?: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
 }
 
-interface IBrowserOptions {
+interface BrowserOptions {
   cwd?: string;
   port?: number;
   server?: http.Server;
@@ -24,7 +24,7 @@ export default class Browser {
   private browser: puppeteer.Browser;
   private baseUrl: string;
 
-  constructor (options: IBrowserOptions) {
+  constructor (options: BrowserOptions) {
     const { server } = options;
     if (server) {
       this.server = server;
@@ -81,13 +81,19 @@ export default class Browser {
   async close () {
     if (!this.browser) { return }
     await this.browser.close();
-    this.server.close();
+    // @ts-ignore
+    if (this.server.stop) {
+      // @ts-ignore
+      this.server.stop();
+    } else {
+      this.server.close();
+    }
   }
 
   async page (url: string) {
     this.baseUrl = url;
     if (!this.browser) { throw new Error('Please call start() before page(url)'); }
-    const page: IPage = await this.browser.newPage();
+    const page: Page = await this.browser.newPage();
     await page.goto(url);
     page.push = (url, options) => page.goto(`${this.baseUrl}${url}`, options);
     page.html = () =>

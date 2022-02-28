@@ -6,7 +6,7 @@ import type { Urls } from '../utils/prepareURLs';
 import formatWebpackMessages from '../utils/formatWebpackMessages';
 
 async function webpackCompiler(options: {
-  config: Configuration;
+  config: Configuration | Configuration[];
   command: string;
   commandArgs: CommandArgs;
   applyHook: (key: string, opts?: {}) => Promise<void>;
@@ -19,7 +19,7 @@ async function webpackCompiler(options: {
   });
   let compiler: Compiler;
   try {
-    compiler = webpack(config);
+    compiler = webpack(config as Configuration);
   } catch (err) {
     consola.error('Failed to compile.');
     consola.log('');

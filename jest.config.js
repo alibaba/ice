@@ -1,11 +1,12 @@
-/* const { getHookFiles } = require('./packages/icejs/lib/require-hook');
+const { getHookFiles } = require('./packages/ice/lib/requireHook');
 
 const moduleNameMapper = getHookFiles().reduce((mapper, [id, value]) => {
   mapper[`^${id}$`] = value;
   return mapper;
-}, {}); */
+}, {});
 
 module.exports = {
+  moduleNameMapper,
   coverageDirectory: './coverage/',
   collectCoverage: true,
   collectCoverageFrom: ['packages/*/lib/*.{js,jsx}'],

@@ -1,20 +1,20 @@
 import * as path from 'path';
 import * as process from 'process';
-import { build } from 'build-scripts';
 import * as getPort from 'get-port';
-import Browser, { IPage } from './browser';
-import getBuiltInPlugins = require('../../packages/icejs/src/getBuiltInPlugins');
+import Browser, { Page } from './browser';
+import { getBuiltInPlugins } from '../../packages/ice/src/getBuiltInPlugins';
+import createService from '../../packages/ice';
 
-interface ISetupBrowser {
+interface SetupBrowser {
   (options: {
     example: string;
     outputDir?: string;
     defaultHtml?: string;
-  }): Promise<IReturn>;
+  }): Promise<ReturnValue>;
 }
 
-interface IReturn {
-  page: IPage;
+interface ReturnValue {
+  page: Page;
   browser: Browser;
 }
 
@@ -22,23 +22,13 @@ interface IReturn {
 export const buildFixture = function(example: string) {
   test(`setup ${example}`, async () => {
     const rootDir = path.join(__dirname, `../../examples/${example}`);
-    const processCwdSpy = jest.spyOn(process, 'cwd');
-    processCwdSpy.mockReturnValue(rootDir);
     process.env.DISABLE_FS_CACHE = 'true';
-
-    await build({
-      args: {
-        config: path.join(rootDir, 'build.json'),
-      },
-      rootDir,
-      getBuiltInPlugins: (userConfig) => {
-        return getBuiltInPlugins(userConfig).concat(require.resolve('./test-plugin'));
-      },
-    });
+    const service = await createService({ rootDir, command: 'build', commandArgs: {}, getBuiltInPlugins });
+    await service.run();
   }, 120000);
 }
 
-export const setupBrowser: ISetupBrowser = async (options) => {
+export const setupBrowser: SetupBrowser = async (options) => {
   const { example, outputDir = 'build', defaultHtml = 'index.html' } = options;
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   const port = await getPort();

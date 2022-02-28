@@ -1,7 +1,4 @@
-
-import * as path from 'path';
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
+import renderDocument from './renderDocument';
 
 export function setupRenderServer(options: any) {
   const {
@@ -15,10 +12,7 @@ export function setupRenderServer(options: any) {
     }
 
     // TODO: disable cache
-    const document = path.resolve(rootDir, 'build/document.js');
-    const Document = require(document).default;
-
-    const html = ReactDOMServer.renderToString(<Document />);
+    const html = renderDocument({ rootDir, documentPath: 'build/document.js' });
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);
