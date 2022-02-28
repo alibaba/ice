@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.2
+
+- [fix] be compatible for input like `src/main`. ([#5049](https://github.com/alibaba/ice/pull/5095))
+
+## 2.0.1
+
+- [fix] unexpected entry with too long root dir.
+- [fix] support for Win32 platforms is provided.
+
 ## 2.0.0
 
 Breakchanges: `preserveEntrySignatures` no longer used as default to meet Vite's output format. You should configure `preserveEntrySignatures` explicitly to preserve entry signatures.

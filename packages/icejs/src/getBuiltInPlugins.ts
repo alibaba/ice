@@ -1,5 +1,4 @@
 import { IGetBuiltInPlugins, IPluginList, IUserConfig, Json } from 'build-scripts';
-import { init } from '@builder/pack/deps/webpack/webpack';
 import { hijackWebpack } from './require-hook';
 
 // eslint-disable-next-line
@@ -45,8 +44,6 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   // enable webpack 5 by default
-  const useWebpack5 = true;
-  init(useWebpack5);
   hijackWebpack();
 
   if (userConfig.disableRuntime) {
@@ -74,7 +71,8 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-router',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
-    'build-plugin-helmet'
+    'build-plugin-helmet',
+    'build-plugin-speed',
   ];
 
   if (userConfig.mpa && userConfig.router === false) {

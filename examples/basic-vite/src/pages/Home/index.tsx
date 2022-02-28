@@ -1,3 +1,4 @@
+import { Head } from 'ice';
 import { useState } from 'react';
 import store from './store';
 import './index.css';
@@ -8,6 +9,12 @@ function App() {
 
   return (
     <div className="App">
+      <Head>
+        <meta charSet="utf-8" />
+        <title>Home title</title>
+        <meta name="keywords" content="About Keywords" />
+        <meta name="description" content="About Description" />
+      </Head>
       <header className="App-header">
         <p x-if={titleState.title} className="header">{titleState.title}</p>
 

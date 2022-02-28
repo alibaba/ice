@@ -43,7 +43,8 @@ export const importPlugin = ({ source, redirectImports }: Option): Plugin => {
         const matchedSource = multipleSource.find(({ filename }) => formatPath(filename) === formatPath(id));
         return {
           name,
-          redirectPath: matchedSource ? matchedSource.value : (alias || value),
+          alias,
+          redirectPath: matchedSource ? matchedSource.value : value,
           default: (matchedSource ? matchedSource.type : type) === 'default',
         };
       })});

@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/aria-role: 0 */
 import React from 'react';
-import { useAuth, withAuth } from 'ice';
+import { Link, useAuth, withAuth } from 'ice';
 import Auth from '@/components/Auth';
 
 const Demo1 = withAuth(({ auth }) => {
@@ -63,10 +63,12 @@ const Demo2 = () => {
   );
 };
 
-const HomePage = () => {
+const HomePage = (props) => {
+  console.log('home page props', props);
   return (
     <div>
       <h2>Home Page</h2>
+      <Link to="/about">Go To About</Link><br />
       <Demo1 />
       <Demo2 />
     </div>
@@ -75,7 +77,7 @@ const HomePage = () => {
 
 HomePage.pageConfig = {
   title: 'test',
-  auth: ['admin'],
+  auth: ['guest'],
 };
 
 export default HomePage;

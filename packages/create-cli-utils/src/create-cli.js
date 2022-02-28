@@ -26,6 +26,7 @@ module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo, ex
     .description('build project')
     .allowUnknownOption()
     .option('--config <config>', 'use custom config')
+    .option('--rootDir <rootDir>', 'project root directory')
     .action(async function() {
       await build(getBuiltInPlugins);
     });
@@ -37,6 +38,7 @@ module.exports = async (getBuiltInPlugins, forkChildProcessPath, packageInfo, ex
     .option('--config <config>', 'use custom config')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
     .option('-p, --port <port>', 'dev server port')
+    .option('--rootDir <rootDir>', 'project root directory')
     .action(async function() {
       await start(getBuiltInPlugins, forkChildProcessPath);
     });

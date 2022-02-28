@@ -9,3 +9,5 @@ export { default as checkExportDefaultDeclarationExists } from './checkExportDef
 export { default as getSassImplementation } from './getSassImplementation';
 export { default as getLessImplementation } from './getLessImplementation';
 export { default as redirectImport } from './redirectImport';
+export { default as analyzeRuntime } from './analyzeRuntime';
+export { globSourceFiles } from './analyzeRuntime';

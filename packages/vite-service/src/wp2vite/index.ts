@@ -7,6 +7,7 @@ import tsChecker from 'vite-plugin-ts-types';
 import { Context, ITaskConfig } from 'build-scripts';
 import type { TransformOptions } from '@babel/core';
 import eslintReport from 'vite-plugin-eslint-report';
+import { normalizePath } from 'vite';
 import type { InlineConfig, BuildOptions, PluginOption } from 'vite';
 import { recordMap } from './config';
 import {
@@ -41,7 +42,7 @@ const arrayMerge = (destinationArray: any[], sourceArray: any[]) => {
 const isBuild = (command: string) => command === 'build';
 
 const getHtmlPlugin = (context: Context) => {
-  const { getValue, userConfig, rootDir } = context;
+  const { getValue, userConfig, rootDir, command } = context;
   type Opt = {
     template: string
     filename: string
@@ -53,13 +54,16 @@ const getHtmlPlugin = (context: Context) => {
   }
 
   const isMpa = userConfig.mpa as boolean;
+  const ssr = userConfig.ssr as boolean;
 
   if (!isMpa) {
     return htmlPlugin({
       entry: userConfig.entry as string,    // webpack entry
       template: path.resolve(rootDir, 'public', 'index.html'),
       filename: 'index.html',
-      rootDir
+      rootDir,
+      ssr,
+      command,
     });
   }
 
@@ -79,30 +83,22 @@ const getHtmlPlugin = (context: Context) => {
       return htmlPlugin({
         ...singlePage,
         entry: entries[entryName][0],    // webpack entry
-        rootDir
+        rootDir,
+        ssr,
+        command,
       });
     }
 
     return htmlPlugin({
       ...singlePage,
       entry: entries[entryName][0],    // webpack entry
-      rootDir
+      rootDir,
+      ssr,
+      command,
     });
   });
 
   return mpaHtmlPlugins;
-};
-
-const getOpen = (context: Context) => {
-  const { getValue } = context;
-  // if spa : SERVER_PATH is undefined
-  let page: string = getValue('SERVER_PATH');
-
-  if (page && !page.startsWith('/')) {
-    page = `/${page}`;
-  }
-
-  return page ?? true;
 };
 
 type BabelPreset = [string, Record<string, any>];
@@ -152,6 +148,7 @@ export const wp2vite = (context: Context): InlineConfig => {
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     configFile: false,
+    root: rootDir,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
       userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
@@ -202,21 +199,29 @@ export const wp2vite = (context: Context): InlineConfig => {
     port: commandArgs.port || 3333,
     host: commandArgs.host || '0.0.0.0',
     https: commandArgs.https || false,
-    open: getOpen(context)
   };
 
   const entryExts = /(\.ts|\.tsx|\.js|\.jsx)$/i;
 
   // 依赖预构建解析入口
   const getAnalysisEntries = () => {
-    let _entry = userConfig.entry;
+    let appEntry = userConfig.entry;
     if (!userConfig.mpa) {
-      _entry = { index: [_entry] };
+      if (Array.isArray(appEntry)) {
+        appEntry = {
+          index: appEntry,
+        };
+      } else if (typeof appEntry === 'string') {
+        appEntry = {
+          index: [appEntry],
+        };
+      }
     }
-
-    const entries = Object.keys(_entry).map(e => {
-      const url = _entry[e][0];
-      return entryExts.exec(url) ? url : `${url}.*`;
+    const entries = Object.keys(appEntry).map(e => {
+      const url = appEntry[e][0];
+      // js entries is needed when analyze dependencies in pre build parse
+      // format path in case of win32 system
+      return normalizePath(entryExts.exec(url) ? url : `${url}.*`);
     });
 
     return entries;
@@ -225,6 +230,7 @@ export const wp2vite = (context: Context): InlineConfig => {
   if (!isBuild(command)) {
     return all([
       {
+        mode: 'development',
         optimizeDeps: {
           entries: getAnalysisEntries(),
           // vite 无法分析 link 的依赖，需要手动加入以下依赖，防止 ice 维护时报错
@@ -239,6 +245,12 @@ export const wp2vite = (context: Context): InlineConfig => {
       build: {
         commonjsOptions: {
           exclude: ['react-app-renderer', 'create-app-shared'],
+        },
+        rollupOptions: {
+          // by default, the context of a module is set to be undefined,
+          // vite config the top-level this refer to globalThis, see https://github.com/vitejs/vite/pull/5312
+          // modify to globalThis when SSR
+          context: undefined,
         },
       },
     }, viteConfig], { arrayMerge });

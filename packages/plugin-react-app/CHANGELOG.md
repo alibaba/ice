@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.2.0
+
+- [feat] optimize runtime when build
+- [chore] bump version of `es-module-lexer`
+- [fix] adapt swc rule name
+
+## 2.1.4
+
+- [fix] lazy import is invalid with swc(`@builder/user-config^2.0.3`)
+
+## 2.1.3
+
+- [fix] enhance alias for node_modules dependencies(`@builder/user-config^2.0.1`)
+
+## 2.1.2
+
+- [feat] feat: support `props.pageConfig` for each page component
+- [feat] pre bundle `webpack-dev-server`
+- [fix] bump version of `@builder/pack`(^0.5.0)
+- [fix] bump version of `@builder/user-config`, `query-loader-webpack-plugin`, `@builder/webpack-config`
+
 ## 2.1.1
 
 - [fix] avoid error when disableRuntime

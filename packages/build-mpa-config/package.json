@@ -1,6 +1,6 @@
 {
   "name": "@builder/mpa-config",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -21,11 +21,11 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.0.0",
+    "@builder/app-helpers": "^2.5.0",
     "fs-extra": "^8.1.0",
     "loader-utils": "^2.0.0",
     "globby": "^11.0.2",
-    "@builder/app-templates": "^1.1.0"
+    "@builder/app-templates": "^1.1.3"
   },
   "devDependencies": {
     "build-scripts": "^1.1.0"

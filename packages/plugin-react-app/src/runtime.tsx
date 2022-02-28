@@ -15,7 +15,7 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
 
   const { parseSearchParams = true } = app;
   if (parseSearchParams) {
-    wrapperPageComponent(wrapperPageWithSearchParams(applyRuntimeAPI));
+    wrapperPageComponent(wrapperPageWithProps(applyRuntimeAPI));
   }
 
   wrapperPageComponent(process.env.__IS_SERVER__ ? wrapperPageWithSSR(context) : wrapperPageWithCSR());
@@ -67,13 +67,14 @@ export default ({ appConfig, wrapperPageComponent, buildConfig, context, applyRu
   }
 };
 
-function wrapperPageWithSearchParams(applyRuntimeAPI) {
+function wrapperPageWithProps(applyRuntimeAPI) {
   const WrapperPageFn = (PageComponent) => {
-    const SearchParamsWrapper = (props) => {
+    const { pageConfig } = PageComponent;
+    const PagePropsWrapper = (props) => {
       const searchParams = applyRuntimeAPI('getSearchParams');
-      return <PageComponent {...Object.assign({}, props, { searchParams })} />;
+      return <PageComponent {...Object.assign({}, props, { searchParams, pageConfig })} />;
     };
-    return SearchParamsWrapper;
+    return PagePropsWrapper;
   };
   return WrapperPageFn;
 }

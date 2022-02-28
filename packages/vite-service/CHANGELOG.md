@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## 2.1.0
+
+- [feat] refactor html plugin for SSR render when development
+- [fix] lifecycle arguments for `after.build.compile`
+- [fix] pass vite config for lifecycle hooks
+- [fix] fail to open browser in mpa
+
+## 2.0.3
+
+- [fix] open both `about:blank` page and `localhost:3333` page
+- [fix] `after.start.devServer` callback function has been called before the devServer is ready
+
+## 2.0.2
+
+- [feat] pass `context.rootDir` to `viteConfig.root`
+- [fix] add proxy listeners if exists
+
+## 2.0.1
+
+- [fix] redirect import with alias
+- [fix] build error in win32 system
+
+## 2.0.0
+
+- [fix] normalize path in case of win32 system
+- [fix] default value of rollupOptions.context for top-level this
+- [fix] bump version of `webpack-dev-server`(^2.0.0)
+
 ## 1.1.4
 
 - [fix] resolve path with browser field when alias with absolute path

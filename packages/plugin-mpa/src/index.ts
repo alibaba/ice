@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { getMpaEntries } from '@builder/app-helpers';
+import { getMpaEntries, formatPath, analyzeRuntime } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
@@ -13,9 +13,11 @@ interface IMpaConfig {
   rewrites?: {[key: string]: string} | boolean;
 }
 
+type Mode = 'webpack' | 'vite';
+
 const plugin: IPlugin = (api) => {
-  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue, applyMethod } = api;
-  const { rootDir, userConfig, commandArgs } = context;
+  const { context, registerUserConfig, registerCliOption, modifyUserConfig, onGetWebpackConfig, log, setValue, getValue, applyMethod, onHook } = api;
+  const { rootDir, userConfig, commandArgs, command } = context;
   const { mpa } = userConfig;
 
   // register mpa in build.json
@@ -81,7 +83,12 @@ const plugin: IPlugin = (api) => {
     // compatible with undefined TEMP_PATH
     // if disableRuntime is true, do not generate mpa entries
     if (getValue('TEMP_PATH')) {
-      parsedEntries = generateMPAEntries(api, { entries: mpaEntries, framework: 'react', targetDir: getValue('TEMP_PATH') });
+      parsedEntries = generateMPAEntries(api, {
+        executeGenerateTasks: command !== 'build' || !userConfig.optimizeRuntime,
+        entries: mpaEntries,
+        framework: 'react',
+        targetDir: getValue('TEMP_PATH'),
+      });
     }
     let finalMPAEntries = {};
     if (parsedEntries) {
@@ -95,6 +102,42 @@ const plugin: IPlugin = (api) => {
           });
         }
       });
+      if (userConfig.optimizeRuntime) {
+        onHook('before.build.load', async (options) => {
+          await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
+            const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
+            // 仅针对使用了运行时能力的入口进行分析
+            if (generator) {
+              const { viteConfig, webpackConfig } = options as any;
+              let alias;
+              let mode: Mode = 'webpack';
+              if (viteConfig) {
+                alias = viteConfig?.resolve?.alias;
+                mode = 'vite';
+              } else if (webpackConfig) {
+                alias = webpackConfig?.[0].chainConfig?.toConfig?.()?.resolve?.alias;
+              }
+              const runtimeUsedMap = await analyzeRuntime([entryPath], {
+                // SPA 下有目录规范上更加精准的判断， MPA 通过 createStore 引入进行判断
+                customRuntimeRules: { 'build-plugin-ice-store': ['createStore'] },
+                rootDir,
+                mode,
+                alias,
+                analyzeRelativeImport: true,
+              });
+              Object.keys(runtimeUsedMap).forEach((pluginName) => {
+                const isUsed = runtimeUsedMap[pluginName];
+                if (!isUsed) {
+                  generator.addDisableRuntime(pluginName);
+                }
+              });
+              (generateTasks || []).forEach((generateTask) => {
+                generateTask();
+              });
+            }
+          }));
+        });
+      }
     } else {
       finalMPAEntries = entries;
     }
@@ -105,7 +148,7 @@ const plugin: IPlugin = (api) => {
         multipleSource: {
           runApp: redirectEntries.map(({ entryPath, runAppPath }) => ({
             filename: entryPath,
-            value: runAppPath,
+            value: formatPath(runAppPath),
             type: 'normal',
           })),
         },

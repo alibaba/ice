@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- [fix] bump version of `@builder/babel-config`(^2.0.0)
+
 ## 1.3.2
 
 - [fix] match the correct pathname of request

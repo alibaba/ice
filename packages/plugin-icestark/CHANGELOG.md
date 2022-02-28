@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1
+
+- [fix] output of assets should be prefixed `index` instead of `app`, which break changed by version 2.5.0.
+
 ## 2.5.0
 
 - [feat] use `vite-plugin-index-html` as a substitute in Vite mode.

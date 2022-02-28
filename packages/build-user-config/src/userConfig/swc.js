@@ -32,11 +32,13 @@ module.exports = (config, swcOptions, context, { log, getValue }) => {
           react: reactTransformConfig,
           legacyDecorator: true
         },
-        externalHelpers: true
+        externalHelpers: false
       },
       module: {
-        type: 'commonjs',
-        noInterop: false
+        type: 'es6',
+        noInterop: false,
+        // webpack will evaluate dynamic import, so there need preserve it
+        ignoreDynamic: true
       },
       env: {
         loose: true,
