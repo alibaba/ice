@@ -75,4 +75,14 @@ describe('Get entries by route info', () => {
       __pageHeader: true,
     }])
   });
+
+  it('should ignore routes which have url prop', () => {
+    const route = {
+      source: 'pages/Home/index',
+      pageSource: 'pages/Home/index',
+      url: 'https://example.com/remote'
+    };
+    const entries = getEntriesByRoute(route, '');
+    expect(entries).toStrictEqual([]);
+  });
 });
