@@ -1,4 +1,4 @@
-import renderDocument from './renderDocument';
+import renderDocument from './renderDocument.js';
 
 export function setupRenderServer(options: any) {
   const {

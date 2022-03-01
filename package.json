@@ -15,8 +15,8 @@
     "lint:diff": "esmo ./scripts/lintDiff.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest --forceExit --ci",
-    "test:watch": "jest --watch"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit --ci --config ./jest.config.mjs",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --config ./jest.config.mjs"
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
@@ -32,6 +32,7 @@
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.13",
     "@types/semver": "^7.3.9",
+    "build-scripts": "^2.0.0-7",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "dependency-check": "^4.1.0",
@@ -39,7 +40,7 @@
     "esno": "^0.14.0",
     "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
-    "get-port": "^5.1.1",
+    "get-port": "^6.1.2",
     "glob": "^7.2.0",
     "husky": "^7.0.4",
     "ice-npm-utils": "^3.0.1",

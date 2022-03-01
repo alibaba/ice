@@ -1,10 +1,12 @@
 import WebpackDevServer from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
 import { getWebpackConfig } from '@builder/webpack-config';
-import defaultsDeep from 'lodash.defaultsdeep';
-import webpackCompiler from '../service/webpackCompiler';
-import prepareURLs from '../utils/prepareURLs';
+import lodash from '@builder/pack/deps/lodash/lodash.js';
+import webpackCompiler from '../service/webpackCompiler.js';
+import prepareURLs from '../utils/prepareURLs.js';
 import type { Config } from '@ice/types';
+
+const { defaultsDeep } = lodash;
 
 interface IWebTaskConfig {
   name: string;

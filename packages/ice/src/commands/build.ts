@@ -1,10 +1,10 @@
 import consola from 'consola';
 import type { Context } from 'build-scripts';
 import type { StatsError } from 'webpack';
+import webpackCompiler from '../service/webpackCompiler.js';
+import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { getWebpackConfig } from '@builder/webpack-config';
 import type { Config } from '@ice/types';
-import webpackCompiler from '../service/webpackCompiler';
-import formatWebpackMessages from '../utils/formatWebpackMessages';
 
 const build = async (context: Context<Config>) => {
   const { getConfig, applyHook, commandArgs, command, rootDir } = context;

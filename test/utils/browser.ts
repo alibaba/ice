@@ -1,8 +1,8 @@
-import * as http from 'http';
-import * as url from 'url';
-import * as fse from 'fs-extra';
-import * as path from 'path';
-import * as puppeteer from 'puppeteer';
+import http from 'http';
+import url from 'url';
+import fse from 'fs-extra';
+import path from 'path';
+import puppeteer from 'puppeteer';
 
 export interface Page extends puppeteer.Page {
   html?: () => Promise<string>;

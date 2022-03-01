@@ -22,5 +22,5 @@
     "lib",
     "!lib/**/*.map"
   ],
-  "types": "./lib/index.d.ts"
+  "type": "module"
 }

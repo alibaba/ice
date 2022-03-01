@@ -1,7 +1,10 @@
-import * as path from 'path';
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
+import path from 'path';
+import { createRequire } from 'module';
+import React from 'react';
 import type { ComponentType } from 'react';
+import ReactDOMServer from 'react-dom/server.js';
+
+const require = createRequire(import.meta.url);
 
 interface Options {
   rootDir: string;

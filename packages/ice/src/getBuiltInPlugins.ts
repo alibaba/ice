@@ -1,6 +1,13 @@
-import type { IGetBuiltInPlugins, IPluginList, IUserConfig, Json } from 'build-scripts';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 import consola from 'consola';
-import { hijackWebpack } from './requireHook';
+import fse from 'fs-extra';
+import { hijackWebpack } from './requireHook.js';
+import type { IGetBuiltInPlugins, IPluginList, IUserConfig, Json } from 'build-scripts';
+
+const require = createRequire(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const getDynamicPlugins = (userConfig: IUserConfig) => {
   const { plugins } = userConfig;
@@ -39,11 +46,11 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
     .map(([name]) => name);
 };
 
-export const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
+const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   // enable webpack 5 by default
   hijackWebpack();
   // eslint-disable-next-line
-  const pkg = require('../package.json');
+  const pkg = fse.readJSONSync(path.resolve(__dirname, '../package.json'));
   process.env.__FRAMEWORK_VERSION__ = pkg.version;
   const coreOptions = {
     framework: 'react',
@@ -68,3 +75,5 @@ export const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
 
   return plugins.concat(dynamicPlugins);
 };
+
+export default getBuiltInPlugins;

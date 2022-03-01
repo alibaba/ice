@@ -1,4 +1,4 @@
-import Runtime from './runtime';
+import Runtime from './runtime.js';
 
 export {
   Runtime,

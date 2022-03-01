@@ -1,8 +1,8 @@
-import * as path from 'path';
-import swcPlugin from './swcPlugin';
+import path from 'path';
 import type { Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
+import swcPlugin from './swcPlugin.js';
 
 const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|[/\\]\.ice[/\\]|[/\\]\.rax[/\\]/;
 

@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0, no-shadow: 0 */
 import glob from 'glob';
 import fse from 'fs-extra';
-import * as path from 'path';
+import path from 'path';
 import * as chokidar from 'chokidar';
 import { run } from './shell';
 

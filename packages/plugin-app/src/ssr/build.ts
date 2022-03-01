@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as esbuild from 'esbuild';
+import path from 'path';
+import esbuild from 'esbuild';
 
 export async function buildServerEntry(options: any): Promise<esbuild.BuildResult> {
   const { rootDir } = options;

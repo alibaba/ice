@@ -2,8 +2,8 @@
   "name": "basic-project",
   "version": "1.0.0",
   "scripts": {
-    "start": "../../packages/ice/bin/ice-cli.js start",
-    "build": "../../packages/ice/bin/ice-cli.js build"
+    "start": "../../packages/ice/bin/ice-cli.mjs start",
+    "build": "../../packages/ice/bin/ice-cli.mjs build"
   },
   "description": "",
   "author": "",

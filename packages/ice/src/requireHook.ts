@@ -3,6 +3,11 @@
 // sync injects a hook for webpack and webpack/... requires to use the internal ncc webpack version
 // this is in order for userland plugins to attach to the same webpack instance as next.js
 // the individual compiled modules are as defined for the compilation in bundles/webpack/packages/*
+
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 export function getFileName(filePath: string) {
   return filePath.split('/').slice(-1)[0];
 }

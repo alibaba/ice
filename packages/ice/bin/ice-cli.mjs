@@ -1,21 +1,14 @@
 #!/usr/bin/env node
-// import fs from 'fs/promises';
-// import path from 'path';
-// import { fileURLToPath } from 'url';
-// import { program } from 'commander';
-// import createService from '@ice/service';
-// import parse from 'yargs-parser';
-// import checkNodeVersion from './checkNodeVersion.mjs';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { program } from 'commander';
+import parse from 'yargs-parser';
+import createService from '../lib/index.js';
+import checkNodeVersion from './checkNodeVersion.mjs';
+import getBuiltInPlugins from '../lib/getBuiltInPlugins.js';
 
-// const __dirname = fileURLToPath(import.meta.url);
-
-const fs = require('fs/promises');
-const path = require('path');
-const { program } = require('commander');
-const createService = require('../lib').default;
-const parse = require('yargs-parser');
-const checkNodeVersion = require('./checkNodeVersion');
-const { getBuiltInPlugins } = require('../lib/getBuiltInPlugins');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 (async function () {
   const icePackageInfo = JSON.parse(await fs.readFile(path.join(__dirname, '../package.json'), 'utf-8'));

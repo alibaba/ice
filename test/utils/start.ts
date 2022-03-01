@@ -1,9 +1,12 @@
-import * as path from 'path';
-import * as getPort from 'get-port';
+import path from 'path';
+import getPort from 'get-port';
 import Browser, { Page } from './browser';
 import { Server } from 'http';
-import { getBuiltInPlugins } from '../../packages/ice/src/getBuiltInPlugins';
-import createService from '../../packages/ice';
+import getBuiltInPlugins from '../../packages/ice/lib/getBuiltInPlugins.js';
+import createService from '../../packages/ice/lib/index.js';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface SetupBrowser {
   (options: { port: number; defaultPath?: string; server: Server; }): Promise<ReturnValue>;

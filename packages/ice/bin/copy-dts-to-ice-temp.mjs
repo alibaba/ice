@@ -1,11 +1,8 @@
-// import path from 'path';
-// import fs from 'fs';
-// import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-// const __dirname = fileURLToPath(import.meta.url);
-
-const path = require('path');
-const fs = require('fs');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 (function () {
   const projectRootDir = process.env.INIT_CWD; // the original working directory that npm was executed from
