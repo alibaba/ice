@@ -1,7 +1,7 @@
 /**
  * Scripts to check unpublished version and run publish
  */
-import * as path from 'path';
+import path from 'path';
 import fse from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { setPublishedPackages } from './publishedInfo';

@@ -27,9 +27,10 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
-    "build-scripts": "^2.0.0-5",
+    "build-scripts": "^2.0.0-7",
     "react": "^17.0.2",
     "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4"
-  }
+  },
+  "type": "module"
 }

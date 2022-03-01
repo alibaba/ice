@@ -1,7 +1,4 @@
-
-import * as path from 'path';
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
+import renderDocument from './renderDocument.js';
 
 export function setupRenderServer(options: any) {
   const {

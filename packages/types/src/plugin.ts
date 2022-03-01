@@ -1,7 +1,7 @@
-import type { Config } from './config';
 import type webpack from 'webpack';
 import type { IPluginAPI } from 'build-scripts';
-import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator';
+import type { Config } from './config.js';
+import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js';
 
 type AddExport = (exportData: ExportData) => void;
 

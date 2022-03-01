@@ -1,8 +1,10 @@
 import { createUnplugin } from 'unplugin';
 import { transform } from '@builder/swc';
-import * as path from 'path';
-import { merge } from '@builder/pack/deps/lodash';
+import path from 'path';
+import lodash from '@builder/pack/deps/lodash/lodash.js';
 import type { Config } from '@ice/types';
+
+const { merge } = lodash;
 
 type JSXSuffix = 'jsx' | 'tsx';
 

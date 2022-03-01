@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import type { Runtime } from '@ice/runtime';
 
 export function getRenderApp(runtime: Runtime) {

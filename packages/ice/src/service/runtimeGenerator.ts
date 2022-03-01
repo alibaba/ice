@@ -1,12 +1,12 @@
-import * as path from 'path';
-import * as fse from 'fs-extra';
+import path from 'path';
+import fse from 'fs-extra';
 import consola from 'consola';
 import fg from 'fast-glob';
-import * as ejs from 'ejs';
-import * as prettier from 'prettier';
-import debounce from 'lodash.debounce';
-import getRuntimeModules from '../utils/getRuntimeModules';
-import formatPath from '../utils/formatPath';
+import ejs from 'ejs';
+import prettier from 'prettier';
+import lodash from '@builder/pack/deps/lodash/lodash.js';
+import getRuntimeModules from '../utils/getRuntimeModules.js';
+import formatPath from '../utils/formatPath.js';
 import type {
   SetPlugins,
   AddExport,
@@ -26,7 +26,9 @@ import type {
   RenderData,
   ExportData,
   Registration,
-} from '@ice/types/lib/generator';
+} from '@ice/types/lib/generator.js';
+
+const { debounce } = lodash;
 
 const RENDER_WAIT = 150;
 

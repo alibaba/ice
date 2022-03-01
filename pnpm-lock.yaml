@@ -12,6 +12,7 @@ importers:
       '@types/jest': ^27.4.0
       '@types/node': ^17.0.13
       '@types/semver': ^7.3.9
+      build-scripts: ^2.0.0-7
       chalk: ^4.1.2
       chokidar: ^3.5.3
       dependency-check: ^4.1.0
@@ -19,6 +20,7 @@ importers:
       esno: ^0.14.0
       execa: ^6.0.0
       fs-extra: ^10.0.0
+      get-port: ^6.1.2
       glob: ^7.2.0
       husky: ^7.0.4
       ice-npm-utils: ^3.0.1
@@ -42,6 +44,7 @@ importers:
       '@types/jest': 27.4.0
       '@types/node': 17.0.19
       '@types/semver': 7.3.9
+      build-scripts: 2.0.0-7
       chalk: 4.1.2
       chokidar: 3.5.3
       dependency-check: 4.1.0
@@ -49,6 +52,7 @@ importers:
       esno: 0.14.1
       execa: 6.1.0
       fs-extra: 10.0.1
+      get-port: 6.1.2
       glob: 7.2.0
       husky: 7.0.4
       ice-npm-utils: 3.0.1
@@ -108,7 +112,7 @@ importers:
       '@ice/plugin-router': ^1.0.0
       '@ice/types': ^1.0.0
       address: ^1.1.2
-      build-scripts: ^2.0.0-5
+      build-scripts: ^2.0.0-7
       chalk: ^4.0.0
       commander: ^9.0.0
       consola: ^2.15.3
@@ -116,8 +120,6 @@ importers:
       fast-glob: ^3.2.11
       find-up: ^5.0.0
       fs-extra: ^10.0.0
-      lodash.debounce: ^4.0.8
-      lodash.defaultsdeep: ^4.6.1
       prettier: ^2.5.1
       semver: ^7.3.5
       webpack: ^5.0.0
@@ -129,7 +131,7 @@ importers:
       '@ice/plugin-app': link:../plugin-app
       '@ice/plugin-router': link:../plugin-router
       address: 1.1.2
-      build-scripts: 2.0.0-5
+      build-scripts: 2.0.0-7
       chalk: 4.1.2
       commander: 9.0.0
       consola: 2.15.3
@@ -137,8 +139,6 @@ importers:
       fast-glob: 3.2.11
       find-up: 5.0.0
       fs-extra: 10.0.1
-      lodash.debounce: 4.0.8
-      lodash.defaultsdeep: registry.npmjs.org/lodash.defaultsdeep/4.6.1
       prettier: 2.5.1
       semver: 7.3.5
       webpack-dev-server: 4.7.4_webpack@5.69.1
@@ -150,6 +150,8 @@ importers:
   packages/plugin-app:
     specifiers:
       '@ice/types': ^1.0.0
+      '@types/react': ^17.0.39
+      '@types/react-dom': ^17.0.11
       esbuild: ^0.14.23
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -159,6 +161,8 @@ importers:
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@ice/types': link:../types
+      '@types/react': 17.0.39
+      '@types/react-dom': 17.0.11
 
   packages/plugin-router:
     specifiers:
@@ -178,12 +182,12 @@ importers:
 
   packages/types:
     specifiers:
-      build-scripts: ^2.0.0-5
+      build-scripts: ^2.0.0-7
       react: ^17.0.2
       webpack: ^5.69.1
       webpack-dev-server: ^4.7.4
     devDependencies:
-      build-scripts: 2.0.0-5
+      build-scripts: 2.0.0-7
       react: 17.0.2
       webpack: 5.69.1
       webpack-dev-server: 4.7.4_webpack@5.69.1
@@ -2224,8 +2228,9 @@ packages:
       ieee754: 1.2.1
     dev: true
 
-  /build-scripts/2.0.0-5:
-    resolution: {integrity: sha512-uUDc9qRt18RxtENodjDdQnEg/f8z7636ryynTfz+TW3Mg+aNGJ1Kismc+kY1r41dOBl+iXWCAeRCOw9q7X+Vlg==}
+  /build-scripts/2.0.0-7:
+    resolution: {integrity: sha512-/NREA3dw/rXd8C8dr2G1FsVMhupcKrKRS3e/rYXbRroUpZtRLQK51hH7Ngr6ZAgE2JpRrWUo2UgZ5Bx988J5ig==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       '@jest/test-result': 27.5.1
       '@jest/types': 27.5.1
@@ -3751,6 +3756,11 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: true
 
+  /get-port/6.1.2:
+    resolution: {integrity: sha512-BrGGraKm2uPqurfGVj/z97/zv8dPleC6x9JBNRTrDNtCkkRF4rPwrQXFgL7+I+q8QSdU4ntLQX2D7KIxSy8nGw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: true
+
   /get-stdin/8.0.0:
     resolution: {integrity: sha512-sY22aA6xchAzprjyqmSEQv4UbAAzRN0L2dQB0NlN5acTTK9Don6nhoc3eAbUnpZiCANAMfd/+40kVdKfFygohg==}
     engines: {node: '>=10'}
@@ -5136,14 +5146,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
-
-  /lodash.debounce/4.0.8:
-    resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
-    dev: false
-
-  /lodash.defaultsdeep/4.6.1:
-    resolution: {integrity: sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==}
-    dev: false
 
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}

@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import fse from 'fs-extra';
 import semver from 'semver';
 import type { IPackageInfo } from './getPackageInfos';

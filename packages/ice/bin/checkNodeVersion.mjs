@@ -1,9 +1,7 @@
-// import chalk from 'chalk';
-// import semver from 'semver';
-const chalk = require('chalk');
-const semver = require('semver');
+import chalk from 'chalk';
+import semver from 'semver';
 
-module.exports = function (requireNodeVersion, frameworkName = 'ice') {
+export default function (requireNodeVersion, frameworkName = 'ice') {
   if (!semver.satisfies(process.version, requireNodeVersion)) {
     console.log();
     console.log(chalk.red(`  You are using Node ${process.version}`));
@@ -12,4 +10,4 @@ module.exports = function (requireNodeVersion, frameworkName = 'ice') {
     console.log();
     process.exit(1);
   }
-};
+}
