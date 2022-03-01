@@ -1,7 +1,6 @@
-import { Runtime } from '@ice/runtime';
+import { Runtime, renderRouter, render } from '@ice/runtime';
 import loadStaticModules from './loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
-import { render } from './render';
 import type { AppConfig } from './types';
 
 export function runApp(config: AppConfig = {}) {
@@ -18,8 +17,14 @@ export function runApp(config: AppConfig = {}) {
     ssr: false,
   };
   // TODO create context
-  const context = {};
+  const context = {
+    // routeManifest: {},
+  };
+
   const runtime = new Runtime(appConfig, buildConfig, context);
+
+  runtime.setRenderApp(renderRouter);
+
   loadRuntimeModules(runtime);
   render(runtime);
 }

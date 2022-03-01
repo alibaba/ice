@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { ComponentType } from 'react';
 import type {
   AppConfig,
@@ -16,7 +16,7 @@ import type {
   WrapperPageComponent,
   GetWrapperPageRegistration,
   GetAppComponent,
-} from '@ice/types/lib/runtime.js';
+} from '@ice/types/esm/runtime.js';
 
 class Runtime {
   private appConfig: AppConfig;
@@ -72,10 +72,6 @@ class Runtime {
     });
   }
 
-  private setRenderApp: SetRenderApp = (renderApp) => {
-    this.renderApp = renderApp;
-  };
-
   private addProvider: AddProvider = (Provider) => {
     // must promise user's providers are wrapped by the plugins' providers
     this.AppProvider.unshift(Provider);
@@ -91,6 +87,10 @@ class Runtime {
 
   public getWrapperPageRegistration: GetWrapperPageRegistration = () => {
     return this.wrapperPageRegistration;
+  };
+
+  public setRenderApp: SetRenderApp = (renderApp) => {
+    this.renderApp = renderApp;
   };
 
   public getAppComponent: GetAppComponent = () => {

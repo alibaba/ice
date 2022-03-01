@@ -13,7 +13,7 @@ export interface AppConfig extends Record<string, any> {
 export interface DOMRender {
   ({ App, appMountNode }: { App: React.ComponentType; appMountNode?: HTMLElement }): void;
 }
-interface RenderOptions {
+export interface RenderOptions {
   routeManifest?: Record<string, any>;
   pageWrappers?: PageWrapper<any>[];
   renderComponent?: ComponentType;

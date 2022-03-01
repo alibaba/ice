@@ -1,11 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import type { Runtime } from '@ice/runtime';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import type Runtime from './runtime.js';
 
-export function getRenderApp(runtime: Runtime) {
+function getRenderApp(runtime: Runtime) {
   const appConfig = runtime.getAppConfig();
   const { strict = false } = appConfig.app;
   const AppProvider = runtime.composeAppProvider();
+
   const AppComponent = runtime.getAppComponent();
 
   function App() {
@@ -35,7 +36,7 @@ function getAppMountNode(runtime: Runtime): HTMLElement {
   return rootId ? document.getElementById(rootId) : document.getElementById('ice-container');
 }
 
-export async function render(runtime: Runtime) {
+export default async function render(runtime: Runtime) {
   // TODO app lifecycle
   const App = getRenderApp(runtime);
   const appMountNode = getAppMountNode(runtime);

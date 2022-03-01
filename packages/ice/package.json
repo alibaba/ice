@@ -2,10 +2,15 @@
   "name": "@ice/cli",
   "version": "3.0.0",
   "description": "provide scripts and configuration used by web framework ice",
-  "main": "./lib/index.js",
-  "exports": "./lib/index.js",
+  "type": "module",
+  "main": "./esm/index.js",
+  "exports": "./esm/index.js",
   "bin": {
     "ice": "./bin/ice-cli.mjs"
+  },
+  "engines": {
+    "node": ">=12.22.0",
+    "npm": ">=3.0.0"
   },
   "scripts": {},
   "author": "ice-admin",
@@ -35,10 +40,5 @@
   "devDependencies": {
     "@ice/types": "^1.0.0",
     "webpack": "^5.0.0"
-  },
-  "engines": {
-    "node": ">=12.22.0",
-    "npm": ">=3.0.0"
-  },
-  "type": "module"
+  }
 }

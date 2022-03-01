@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 import type { Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
@@ -48,6 +48,7 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     plugins: [
       swcPlugin({ rootDir, sourceMap }),
     ],
+    devtool: 'source-map',
     devServer: {
       allowedHosts: 'all',
       headers: {

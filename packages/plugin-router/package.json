@@ -2,18 +2,16 @@
   "name": "@ice/plugin-router",
   "version": "1.0.0",
   "description": "plugin router",
-  "main": "lib/index.js",
+  "type": "module",
+  "main": "./esm/index.js",
   "exports": {
-    ".": "./lib/index.js",
+    ".": "./esm/index.js",
     "./runtime": "./runtime/*"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ice-admin",
   "files": [
     "runtime",
-    "lib"
+    "esm"
   ],
   "license": "MIT",
   "repository": "ice-lab/ice-next",
@@ -21,6 +19,5 @@
   "homepage": "https://next.ice.work",
   "devDependencies": {
     "@ice/types": "^1.0.0"
-  },
-  "type": "module"
+  }
 }

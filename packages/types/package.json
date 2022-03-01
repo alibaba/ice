@@ -2,27 +2,25 @@
   "name": "@ice/types",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "module",
+  "main": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./runtime": {
+      "import": "./esm/runtime.js",
+      "types": "./esm/runtime.d.ts"
+    },
+    "./plugin": {
+      "import": "./esm/plugin.js",
+      "types": "./esm/plugin.d.ts"
+    },
+    "./generator": {
+      "import": "./esm/generator.js",
+      "types": "./esm/generator.d.ts"
+    }
   },
   "author": "ICE",
   "license": "MIT",
-  "exports": {
-    ".": "./lib/index.js",
-    "./runtime": {
-      "import": "./lib/runtime.js",
-      "types": "./lib/runtime.d.ts"
-    },
-    "./plugin": {
-      "import": "./lib/plugin.js",
-      "types": "./lib/plugin.d.ts"
-    },
-    "./generator": {
-      "import": "./lib/generator.js",
-      "types": "./lib/generator.d.ts"
-    }
-  },
   "repository": "ice-lab/ice-next",
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
@@ -31,6 +29,5 @@
     "react": "^17.0.2",
     "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4"
-  },
-  "type": "module"
+  }
 }

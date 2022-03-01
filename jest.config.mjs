@@ -1,4 +1,4 @@
-import { getHookFiles } from './packages/ice/lib/requireHook.js';
+import { getHookFiles } from './packages/ice/esm/requireHook.js';
 
 const moduleNameMapper = getHookFiles().reduce((mapper, [id, value]) => {
   mapper[`^${id}$`] = value;
@@ -9,7 +9,7 @@ export default {
   moduleNameMapper,
   coverageDirectory: './coverage/',
   collectCoverage: true,
-  collectCoverageFrom: ['packages/*/lib/*.{js,jsx}'],
+  collectCoverageFrom: ['packages/*/esm/*.{js,jsx}'],
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
   ],
@@ -24,7 +24,7 @@ export default {
   ],
   testPathIgnorePatterns: [
     '/node_modules/',
-    '/lib/',
+    '/esm/',
     'create-cli-utils/',
   ],
   extensionsToTreatAsEsm: ['.ts'],

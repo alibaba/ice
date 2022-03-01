@@ -26,7 +26,7 @@ import type {
   RenderData,
   ExportData,
   Registration,
-} from '@ice/types/lib/generator.js';
+} from '@ice/types/esm/generator.js';
 
 const { debounce } = lodash;
 
