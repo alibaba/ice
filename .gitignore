@@ -33,6 +33,7 @@ coverage
 
 # Packages
 packages/*/lib/
+packages/*/esm/
 
 # temp folder .ice
 examples/*/.ice

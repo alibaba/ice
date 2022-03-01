@@ -2,18 +2,16 @@
   "name": "@ice/plugin-app",
   "version": "1.0.0",
   "description": "plugin app",
-  "main": "lib/index.js",
+  "type": "module",
+  "main": "./esm/index.js",
   "exports": {
-    ".": "./lib/index.js",
+    ".": "./esm/index.js",
     "./runtime": "./runtime/index.ts"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ice-admin",
   "files": [
     "runtime",
-    "lib"
+    "esm"
   ],
   "license": "MIT",
   "repository": "ice-lab/ice-next",
@@ -28,6 +26,5 @@
     "@ice/types": "^1.0.0",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11"
-  },
-  "type": "module"
+  }
 }

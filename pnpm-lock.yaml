@@ -175,6 +175,9 @@ importers:
       '@ice/types': ^1.0.0
       react: ^17.0.2
       react-dom: ^17.0.0
+      regenerator-runtime: ^0.13.9
+    dependencies:
+      regenerator-runtime: 0.13.9
     devDependencies:
       '@ice/types': link:../types
       react: 17.0.2
@@ -6048,7 +6051,6 @@ packages:
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
-    dev: true
 
   /regexp.prototype.flags/1.4.1:
     resolution: {integrity: sha512-pMR7hBVUUGI7PMA37m2ofIdQCsomVnas+Jn5UPGAHQ+/LlwKm/aTLJHdasmHRzlfeZwHiAOaRSo2rbBDm3nNUQ==}

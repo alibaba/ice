@@ -4,9 +4,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { program } from 'commander';
 import parse from 'yargs-parser';
-import createService from '../lib/index.js';
+import createService from '../esm/index.js';
 import checkNodeVersion from './checkNodeVersion.mjs';
-import getBuiltInPlugins from '../lib/getBuiltInPlugins.js';
+import getBuiltInPlugins from '../esm/getBuiltInPlugins.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

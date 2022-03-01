@@ -1,11 +1,16 @@
 {
   "name": "@builder/webpack-config",
   "version": "3.0.0",
-  "main": "./lib/index.js",
-  "exports": "./lib/index.js",
   "repository": "ice-lab/ice-next",
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
+  "type": "module",
+  "main": "./esm/index.js",
+  "exports": "./esm/index.js",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
   "dependencies": {
     "@builder/pack": "^0.6.0",
     "@builder/swc": "^0.1.3",
@@ -17,10 +22,5 @@
     "@ice/types": "^1.0.0",
     "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4"
-  },
-  "files": [
-    "lib",
-    "!lib/**/*.map"
-  ],
-  "type": "module"
+  }
 }

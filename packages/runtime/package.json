@@ -2,10 +2,12 @@
   "name": "@ice/runtime",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "type": "module",
+  "main": "./esm/index.js",
+  "exports": "./esm/index.js",
+  "files": [
+    "esm"
+  ],
   "author": "ICE",
   "license": "MIT",
   "repository": "ice-lab/ice-next",
@@ -16,5 +18,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.0"
   },
-  "type": "module"
+  "dependencies": {
+    "regenerator-runtime": "^0.13.9"
+  }
 }
