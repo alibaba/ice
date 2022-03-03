@@ -105,10 +105,10 @@ export default class Generator {
 
   private plugins: any[];
 
-  public constructor({ rootDir, targetDir, defaultData }) {
+  public constructor({ rootDir, targetDir, defaultRenderData }) {
     this.rootDir = rootDir;
     this.targetDir = targetDir;
-    this.renderData = defaultData;
+    this.renderData = defaultRenderData;
     this.contentRegistration = {};
     this.rerender = false;
     this.showPrettierError = true;

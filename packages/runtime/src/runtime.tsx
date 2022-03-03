@@ -16,7 +16,7 @@ import type {
   WrapperPageComponent,
   GetWrapperPageRegistration,
   GetAppComponent,
-} from '@ice/types/esm/runtime.js';
+} from './types.js';
 
 class Runtime {
   private appConfig: AppConfig;
@@ -94,14 +94,10 @@ class Runtime {
   };
 
   public getAppComponent: GetAppComponent = () => {
-    const { enableRouter, routeManifest } = this.context;
-    const renderComponent = this.appConfig.app?.renderComponent;
-    return this.renderApp(enableRouter ? {
-      routeManifest,
+    return this.renderApp({
+      context: this.context,
+      appConfig: this.appConfig,
       pageWrappers: this.wrapperPageRegistration,
-    } : {
-      pageWrappers: this.wrapperPageRegistration,
-      renderComponent,
     });
   };
 }

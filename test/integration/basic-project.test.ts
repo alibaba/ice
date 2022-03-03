@@ -14,7 +14,7 @@ describe(`build ${example}`, () => {
     const res = await setupBrowser({ example });
     page = res.page;
     browser = res.browser;
-    expect(await page.$$text('h2')).toStrictEqual(['Simple App']);
+    expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
   });
 
   afterAll(async () => {
@@ -31,7 +31,7 @@ describe(`start ${example}`, () => {
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
-    expect(await page.$$text('h2')).toStrictEqual(['Simple App']);
+    expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
   }, 120000);
 
   afterAll(async () => {

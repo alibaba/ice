@@ -9,7 +9,7 @@
     "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run build",
     "watch": "esmo ./scripts/watch.ts",
     "build": "esmo ./scripts/build.ts",
-    "clean": "rimraf packages/*/lib",
+    "clean": "rimraf packages/*/esm",
     "dependency:check": "esmo ./scripts/dependencyCheck.ts",
     "version": "esmo ./scripts/tagVersion.ts",
     "version:check": "esmo ./scripts/versionCheck.ts",

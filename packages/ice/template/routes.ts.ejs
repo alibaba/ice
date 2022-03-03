@@ -1,0 +1,17 @@
+import * as React from 'react';
+<% routes.forEach((routeItem, index) => { %>
+// import <%= routeItem.componentName %> from '<%= routeItem.filepath %>';
+const <%= routeItem.componentName %> = React.lazy(() => import(/* webpackChunkName: "<%= routeItem.chunkName %>" */ '<%= routeItem.filepath %>'));
+<% }) %>
+
+const routes = [
+  <% routes.forEach((routeItem, index) => { %>
+    {
+      path: '<%= routeItem.path %>',
+      component: <%= routeItem.componentName %>,
+      exact: true,
+    }
+  <% }) %>
+];
+
+export default routes;

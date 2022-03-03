@@ -36,6 +36,6 @@ import { run } from './shell';
 
 async function copyOneFile(file, cwd) {
   const from = path.join(cwd, file);
-  const to = path.join(cwd, file.replace(/\/src\//, '/lib/'));
+  const to = path.join(cwd, file.replace(/\/src\//, '/esm/'));
   await fse.copy(from, to);
 }

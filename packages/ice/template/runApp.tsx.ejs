@@ -1,29 +1,39 @@
-import { Runtime, renderRouter, render } from '@ice/runtime';
+import * as React from 'react';
+import { Runtime, App, render } from '@ice/runtime';
+import type { BuildConfig } from '@ice/runtime';
 import loadStaticModules from './loadStaticModules';
 import loadRuntimeModules from './loadRuntimeModules';
 import type { AppConfig } from './types';
+import routes from './routes';
 
 export function runApp(config: AppConfig = {}) {
   const appConfig = {
     ...config,
     app: {
       rootId: 'root',
+      strict: true,
       ...(config?.app || {}),
     },
+    router: {
+      type: 'hash',
+      ...(config?.router || {}),
+    }
   };
   loadStaticModules(appConfig);
   // TODO generate buildConfig
-  const buildConfig = {
+  const buildConfig: BuildConfig = {
     ssr: false,
   };
   // TODO create context
-  const context = {
-    // routeManifest: {},
+  const context: Context = {
+    routes,
   };
 
   const runtime = new Runtime(appConfig, buildConfig, context);
 
-  runtime.setRenderApp(renderRouter);
+  runtime.setRenderApp((args) => {
+    return <App {...args} />;
+  });
 
   loadRuntimeModules(runtime);
   render(runtime);

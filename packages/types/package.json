@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "exports": {
     ".": "./esm/index.js",
     "./runtime": {
@@ -25,7 +26,8 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
-    "build-scripts": "^2.0.0-9",
+    "@ice/runtime": "^1.0.0",
+    "build-scripts": "^2.0.0-7",
     "react": "^17.0.2",
     "unplugin": "^0.3.2",
     "webpack": "^5.69.1",
