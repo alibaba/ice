@@ -3,7 +3,7 @@ import type { Context } from 'build-scripts';
 import type { StatsError } from 'webpack';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { getWebpackConfig } from '@builder/webpack-config';
+import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import type { Config } from '@ice/types';
 
 const build = async (context: Context<any>) => {
@@ -14,13 +14,22 @@ const build = async (context: Context<any>) => {
     await applyHook('error', { err: new Error(errMsg) });
     return;
   }
+  // transform config to webpack config
+  const webpackConfig = configs.map((task) => {
+    return getWebpackConfig({
+      rootDir,
+      config: task.config,
+    });
+  });
+  const transformPlugins = getTransformPlugins(rootDir, configs.find(({ name }) => name === 'web').config);
   const compiler = await webpackCompiler({
     config: {},
     commandArgs,
     command,
     applyHook,
+    transformPlugins,
   });
-  const result = await new Promise((resolve, reject): void => {
+  await new Promise((resolve, reject): void => {
     let messages: { errors: string[]; warnings: string[] };
     compiler.run((err, stats) => {
       if (err) {
@@ -48,7 +57,6 @@ const build = async (context: Context<any>) => {
       }
     });
   });
-  await applyHook('after.build.compile', result);
   return compiler;
 };
 

@@ -32,7 +32,7 @@
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.13",
     "@types/semver": "^7.3.9",
-    "build-scripts": "^2.0.0-7",
+    "build-scripts": "^2.0.0-9",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "dependency-check": "^4.1.0",

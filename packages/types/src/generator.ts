@@ -1,10 +1,10 @@
 export interface ExportData {
-  specifier?: string;
-  importSource?: string;
-  exportMembers?: string[];
+  specifier: string | string[];
   source: string;
-  exportName: string;
+  type?: boolean;
+  exportAlias?: Record<string, string>;
 }
+
 export type RenderData = Record<string, unknown>;
 type RenderDataFunction = (renderDataFunction: RenderData) => RenderData;
 interface TemplateOptions {
@@ -22,7 +22,7 @@ export interface Registration {
 
 export type SetPlugins = (plugins: any) => void;
 export type AddExport = (registerKey: string, exportData: ExportData | ExportData[]) => void;
-export type RemoveExport = (registerKey: string, removeExportName: string | string[]) => void;
+export type RemoveExport = (registerKey: string, removeSource: string | string[]) => void;
 export type AddContent = (apiName: string, ...args: any) => void;
 export type GetExportStr = (registerKey: string, dataKeys: string[]) => { [x: string]: string };
 export type ParseRenderData = () => Record<string, unknown>;

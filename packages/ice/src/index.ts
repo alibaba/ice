@@ -1,9 +1,11 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Context } from 'build-scripts';
+import consola from 'consola';
 import type { CommandArgs, CommandName, IGetBuiltInPlugins } from 'build-scripts';
 import Generator from './service/runtimeGenerator.js';
 import preCompile from './service/preCompile.js';
+import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
 import type { ExportData } from '@ice/types/esm/generator.js';
@@ -44,12 +46,17 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
   };
+  const { addWatchEvent, removeWatchEvent } = createWatch(path.join(rootDir, 'src'), command);
   const ctx = new Context<any, ExtendsPluginAPI>({
     rootDir,
     command,
     commandArgs,
     extendsPluginAPI: {
       generator: generatorAPI,
+      watch: {
+        addEvent: addWatchEvent,
+        removeEvent: removeWatchEvent,
+      },
       context: {
         routeManifest,
       },
@@ -60,7 +67,9 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
   generator.setPlugins(ctx.getAllPlugin());
   await ctx.setup();
   // render template before webpack compile
+  const renderStart = new Date().getTime();
   generator.render();
+  consola.debug('template render cost:', new Date().getTime() - renderStart);
 
   if (command === 'start') {
     await start(ctx);
