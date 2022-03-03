@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "types": "./esm/index.d.ts",
   "main": "./esm/index.js",
   "exports": "./esm/index.js",
   "files": [
@@ -14,11 +15,11 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
-    "@ice/types": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.0"
   },
   "dependencies": {
+    "react-router-dom": "^6.2.2",
     "regenerator-runtime": "^0.13.9"
   }
 }

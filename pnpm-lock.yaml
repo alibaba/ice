@@ -110,11 +110,12 @@ importers:
       '@builder/webpack-config': ^3.0.0
       '@ice/plugin-app': ^1.0.0
       '@ice/plugin-router': ^1.0.0
+      '@ice/runtime': ^1.0.0
       '@ice/types': ^1.0.0
       '@types/ejs': ^3.1.0
       '@types/lodash.debounce': ^4.0.6
       address: ^1.1.2
-      build-scripts: ^2.0.0-9
+      build-scripts: ^2.0.0-7
       chalk: ^4.0.0
       chokidar: ^3.5.3
       commander: ^9.0.0
@@ -134,6 +135,7 @@ importers:
       '@builder/webpack-config': link:../build-webpack-config
       '@ice/plugin-app': link:../plugin-app
       '@ice/plugin-router': link:../plugin-router
+      '@ice/runtime': link:../runtime
       address: 1.1.2
       build-scripts: 2.0.0-9
       chalk: 4.1.2
@@ -182,25 +184,27 @@ importers:
 
   packages/runtime:
     specifiers:
-      '@ice/types': ^1.0.0
       react: ^17.0.2
       react-dom: ^17.0.0
+      react-router-dom: ^6.2.2
       regenerator-runtime: ^0.13.9
     dependencies:
+      react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
       regenerator-runtime: 0.13.9
     devDependencies:
-      '@ice/types': link:../types
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
 
   packages/types:
     specifiers:
-      build-scripts: ^2.0.0-9
+      '@ice/runtime': ^1.0.0
+      build-scripts: ^2.0.0-7
       react: ^17.0.2
       unplugin: ^0.3.2
       webpack: ^5.69.1
       webpack-dev-server: ^4.7.4
     devDependencies:
+      '@ice/runtime': link:../runtime
       build-scripts: 2.0.0-9
       react: 17.0.2
       unplugin: 0.3.2_webpack@5.69.1
@@ -700,7 +704,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
-    dev: true
 
   /@babel/template/7.16.7:
     resolution: {integrity: sha512-I8j/x8kHUrbYRTUxXrrMbfCa7jxkE7tZre39x3kjr9hvI82cK1FfqLygotcWN5kdPGWcLdWMHpSBavse5tWw3w==}
@@ -3977,6 +3980,12 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
+  /history/5.3.0:
+    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
+    dependencies:
+      '@babel/runtime': 7.17.2
+    dev: false
+
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
@@ -6005,6 +6014,27 @@ packages:
 
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
+
+  /react-router-dom/6.2.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-AtYEsAST7bDD4dLSQHDnk/qxWLJdad5t1HFa1qJyUrCeGgEuCSw0VB/27ARbF9Fi/W5598ujvJOm3ujUCVzuYQ==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      history: 5.3.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-router: 6.2.2_react@17.0.2
+    dev: false
+
+  /react-router/6.2.2_react@17.0.2:
+    resolution: {integrity: sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      history: 5.3.0
+      react: 17.0.2
+    dev: false
 
   /react/17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}

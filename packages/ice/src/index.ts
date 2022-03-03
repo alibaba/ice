@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { Context } from 'build-scripts';
 import consola from 'consola';
@@ -9,7 +9,7 @@ import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
 import type { ExportData } from '@ice/types/esm/generator.js';
-import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
+import type { ExtendsPluginAPI, Routes } from '@ice/types/esm/plugin.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,12 +23,22 @@ interface CreateServiceOptions {
 async function createService({ rootDir, command, commandArgs, getBuiltInPlugins }: CreateServiceOptions) {
   // TODO pre compile
   preCompile();
-  const routeManifest = {};
+
+  // TODO: watch and generate routeManifest
+  const routes: Routes = [{
+    path: '/*',
+    filepath: path.join(rootDir, 'src/pages/home'),
+    chunkName: 'home',
+    componentName: 'Home',
+  }];
+
   const generator = new Generator({
     rootDir,
     targetDir: './.ice',
-     // TODO get default Data
-    defaultData: {},
+    // TODO get default Data
+    defaultRenderData: {
+      routes,
+    },
   });
   // add default template of ice
   const templatePath = path.join(__dirname, '../template/');
@@ -58,7 +68,7 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
         removeEvent: removeWatchEvent,
       },
       context: {
-        routeManifest,
+        routes,
       },
     },
     getBuiltInPlugins,

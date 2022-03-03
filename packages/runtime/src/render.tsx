@@ -2,34 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import type Runtime from './runtime.js';
 
-function getRenderApp(runtime: Runtime) {
-  const appConfig = runtime.getAppConfig();
-  const { strict = false } = appConfig.app;
-  const AppProvider = runtime.composeAppProvider();
-
-  const AppComponent = runtime.getAppComponent();
-
-  function App() {
-    let rootApp = <AppComponent />;
-    if (AppProvider) {
-      rootApp = (
-        <AppProvider>
-          {rootApp}
-        </AppProvider>
-      );
-    }
-    if (strict) {
-      rootApp = (
-        <React.StrictMode>
-          {rootApp}
-        </React.StrictMode>
-      );
-    }
-    return rootApp;
-  }
-  return App;
-}
-
 function getAppMountNode(runtime: Runtime): HTMLElement {
   const appConfig = runtime.getAppConfig();
   const { rootId } = appConfig.app;
@@ -37,12 +9,21 @@ function getAppMountNode(runtime: Runtime): HTMLElement {
 }
 
 export default async function render(runtime: Runtime) {
-  // TODO app lifecycle
-  const App = getRenderApp(runtime);
+  const AppProvider = runtime.composeAppProvider();
+  const AppComponent = runtime.getAppComponent();
+
+  const AppWrapper = () => {
+    return AppProvider ? (
+      <AppProvider>
+        { AppComponent }
+      </AppProvider>
+    ) : AppComponent;
+  };
+
   const appMountNode = getAppMountNode(runtime);
   if (runtime?.modifyDOMRender) {
-    runtime?.modifyDOMRender?.({ App, appMountNode });
+    runtime?.modifyDOMRender?.({ App: AppWrapper, appMountNode });
   } else {
-    ReactDOM.render(<App />, appMountNode);
+    ReactDOM.render(<AppWrapper />, appMountNode);
   }
 }
