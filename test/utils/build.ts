@@ -2,8 +2,8 @@ import path from 'path';
 import process from 'process';
 import getPort from 'get-port';
 import Browser, { Page } from './browser';
-import getBuiltInPlugins from '../../packages/ice/esm/getBuiltInPlugins.js';
-import createService from '../../packages/ice/esm/index.js';
+import getBuiltInPlugins from '../../packages/ice/src/getBuiltInPlugins';
+import createService from '../../packages/ice/src';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

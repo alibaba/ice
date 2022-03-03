@@ -1,6 +1,6 @@
-import { createUnplugin } from 'unplugin';
 import { transform } from '@builder/swc';
 import path from 'path';
+import type { UnpluginOptions } from 'unplugin';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
 import type { Config } from '@ice/types';
 
@@ -10,11 +10,10 @@ type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
   rootDir: string;
-
   sourceMap?: Config['sourceMap'];
 }
 
-const unplugin = createUnplugin((options: Options) => {
+const swcPlugin = (options: Options): UnpluginOptions => {
   const { rootDir, sourceMap } = options;
   return {
     name: 'swc-plugin',
@@ -40,7 +39,7 @@ const unplugin = createUnplugin((options: Options) => {
       return { code, map };
     },
   };
-});
+};
 
 function getSwcTransformOptions(suffix: JSXSuffix, rootDir: string) {
   const reactTransformConfig = hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {};
@@ -113,6 +112,4 @@ function hasJsxRuntime(rootDir: string) {
   }
 }
 
-const webpackPlugin = unplugin.webpack;
-
-export default webpackPlugin;
+export default swcPlugin;

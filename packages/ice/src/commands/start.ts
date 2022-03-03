@@ -1,6 +1,6 @@
 import WebpackDevServer from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
-import { getWebpackConfig } from '@builder/webpack-config';
+import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import prepareURLs from '../utils/prepareURLs.js';
@@ -54,13 +54,14 @@ const start = async (context: Context<Config>) => {
     devServerConfig.host,
     devServerConfig.port,
   );
-
+  const transformPlugins = getTransformPlugins(rootDir, config);
   const compiler = await webpackCompiler({
     config: webpackConfig,
     urls,
     commandArgs,
     command,
     applyHook,
+    transformPlugins,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {

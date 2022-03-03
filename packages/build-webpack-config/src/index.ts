@@ -2,7 +2,8 @@ import * as path from 'path';
 import type { Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
-import swcPlugin from './swcPlugin.js';
+import { createUnplugin } from 'unplugin';
+import getTransformPlugins from './plugins/index.js';
 
 const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|[/\\]\.ice[/\\]|[/\\]\.rax[/\\]/;
 
@@ -12,7 +13,7 @@ interface GetWebpackConfigOptions {
 }
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration & { devServer?: DevServerConfiguration };
 
-export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
+const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
   const {
     mode,
     externals = {},
@@ -25,6 +26,8 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     middlewares,
   } = config;
 
+  // create plugins
+  const webpackPlugins = getTransformPlugins(rootDir, config).map((plugin) => createUnplugin(() => plugin).webpack());
   return {
     mode,
     entry: path.join(rootDir, 'src/app'),
@@ -46,9 +49,9 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
       extensions: ['.ts', '.tsx', '.jsx', '...'],
     },
     plugins: [
-      swcPlugin({ rootDir, sourceMap }),
+      ...webpackPlugins,
     ],
-    devtool: 'source-map',
+    devtool: typeof sourceMap === 'string' ? sourceMap : (sourceMap && 'cheap-module-source-map'),
     devServer: {
       allowedHosts: 'all',
       headers: {
@@ -74,4 +77,9 @@ export const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
       setupMiddlewares: middlewares,
     },
   };
+};
+
+export {
+  getWebpackConfig,
+  getTransformPlugins,
 };

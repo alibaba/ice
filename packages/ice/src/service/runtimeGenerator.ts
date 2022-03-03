@@ -32,22 +32,22 @@ const { debounce } = lodash;
 
 const RENDER_WAIT = 150;
 
-function generateExports(exportList: ExportData[], isTypes: boolean) {
+export function generateExports(exportList: ExportData[]) {
   const importStatements = [];
-  const exportStatements = [];
+  let exportStatements = [];
   exportList.forEach(data => {
-    const { specifier, source, exportName } = data;
-    if (exportName) {
-      let exportStr = exportName;
-      if (source) {
-        const symbol = source.includes('types') ? ';' : ',';
-        importStatements.push(`import ${isTypes ? 'type ' : ''}${specifier || exportName} from '${source}';`);
-        exportStr = `${exportName}${symbol}`;
+    const { specifier, source, exportAlias, type } = data;
+    const isDefaultImport = !Array.isArray(specifier);
+    const specifiers = isDefaultImport ? [specifier] : specifier;
+    const symbol = type ? ';' : ',';
+    importStatements.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifier.join(', ')} }`} from '${source}';`);
+    exportStatements = specifiers.map((specifierStr) => {
+      if (exportAlias && exportAlias[specifierStr]) {
+        return `${exportAlias[specifierStr]}: ${specifierStr}${symbol}`;
+      } else {
+        return `${specifierStr}${symbol}`;
       }
-      exportStatements.push(exportStr);
-    } else if (source) {
-      importStatements.push(`export ${specifier || '*'} from '${source}';`);
-    }
+    });
   });
   return {
     importStr: importStatements.join('\n'),
@@ -55,27 +55,29 @@ function generateExports(exportList: ExportData[], isTypes: boolean) {
   };
 }
 
-function checkExportData(currentList: ExportData[], exportData: ExportData | ExportData[], apiName: string) {
+export function checkExportData(currentList: ExportData[], exportData: ExportData | ExportData[], apiName: string) {
   (Array.isArray(exportData) ? exportData : [exportData]).forEach((data) => {
-    currentList.forEach(({ specifier, exportName }) => {
+    const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
+      return data?.exportAlias?.[specifierStr] || specifierStr;
+    });
+    currentList.forEach(({ specifier, exportAlias }) => {
       // check exportName and specifier
-      if (specifier || exportName) {
-        const defaultSpecifierName = specifier || exportName;
-        if ((exportName && exportName === data.exportName) || defaultSpecifierName === data.specifier) {
-          throw new Error(`duplicate export data added by ${apiName},
-            ${data.exportName ? `exportName: ${data.exportName}, ` : ''}specifier: ${data.specifier}
-          `);
-        }
+      const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
+        return exportAlias?.[specifierStr] || specifierStr;
+      });
+      if (currentExportNames.some((name) => exportNames.includes(name))) {
+        consola.error('specifier:', specifier, 'exportAlias:', exportAlias);
+        consola.error('duplicate with', data);
+        throw new Error(`duplicate export data added by ${apiName}`);
       }
     });
   });
 }
 
-function removeExportData(exportList: ExportData[], removeExportName: string | string[]) {
-  const removeExportNames = Array.isArray(removeExportName) ? removeExportName : [removeExportName];
-  return exportList.filter(({ exportName, specifier }) => {
-    const needRemove = removeExportNames.includes(exportName) ||
-      !exportName && removeExportNames.includes(specifier);
+export function removeExportData(exportList: ExportData[], removeSource: string | string[]) {
+  const removeSourceNames = Array.isArray(removeSource) ? removeSource : [removeSource];
+  return exportList.filter(({ source }) => {
+    const needRemove = removeSourceNames.includes(source);
     return !needRemove;
   });
 }
@@ -130,12 +132,16 @@ export default class Generator {
   public addExport: AddExport = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
+    // remove export before add
+    this.removeExport(
+      registerKey,
+      Array.isArray(exportData) ? exportData.map((data) => data.source) : exportData.source);
     this.addContent(registerKey, exportData);
   };
 
-  public removeExport: RemoveExport = (registerKey, removeExportName) => {
+  public removeExport: RemoveExport = (registerKey, removeSource) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    this.contentRegistration[registerKey] = removeExportData(exportList, removeExportName);
+    this.contentRegistration[registerKey] = removeExportData(exportList, removeSource);
   };
 
   public addContent: AddContent = (apiName, ...args) => {
@@ -156,8 +162,7 @@ export default class Generator {
 
   private getExportStr: GetExportStr = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    const isTypes = registerKey.endsWith('Types');
-    const { importStr, exportStr } = generateExports(exportList, isTypes);
+    const { importStr, exportStr } = generateExports(exportList);
     const [importStrKey, exportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,

@@ -12,7 +12,7 @@ importers:
       '@types/jest': ^27.4.0
       '@types/node': ^17.0.13
       '@types/semver': ^7.3.9
-      build-scripts: ^2.0.0-7
+      build-scripts: ^2.0.0-9
       chalk: ^4.1.2
       chokidar: ^3.5.3
       dependency-check: ^4.1.0
@@ -44,7 +44,7 @@ importers:
       '@types/jest': 27.4.0
       '@types/node': 17.0.19
       '@types/semver': 7.3.9
-      build-scripts: 2.0.0-7
+      build-scripts: 2.0.0-9
       chalk: 4.1.2
       chokidar: 3.5.3
       dependency-check: 4.1.0
@@ -111,9 +111,12 @@ importers:
       '@ice/plugin-app': ^1.0.0
       '@ice/plugin-router': ^1.0.0
       '@ice/types': ^1.0.0
+      '@types/ejs': ^3.1.0
+      '@types/lodash.debounce': ^4.0.6
       address: ^1.1.2
-      build-scripts: ^2.0.0-7
+      build-scripts: ^2.0.0-9
       chalk: ^4.0.0
+      chokidar: ^3.5.3
       commander: ^9.0.0
       consola: ^2.15.3
       ejs: ^3.1.6
@@ -122,6 +125,7 @@ importers:
       fs-extra: ^10.0.0
       prettier: ^2.5.1
       semver: ^7.3.5
+      unplugin: ^0.3.2
       webpack: ^5.0.0
       webpack-dev-server: ^4.7.4
       yargs-parser: ^21.0.0
@@ -131,7 +135,7 @@ importers:
       '@ice/plugin-app': link:../plugin-app
       '@ice/plugin-router': link:../plugin-router
       address: 1.1.2
-      build-scripts: 2.0.0-7
+      build-scripts: 2.0.0-9
       chalk: 4.1.2
       commander: 9.0.0
       consola: 2.15.3
@@ -145,6 +149,10 @@ importers:
       yargs-parser: 21.0.0
     devDependencies:
       '@ice/types': link:../types
+      '@types/ejs': 3.1.0
+      '@types/lodash.debounce': 4.0.6
+      chokidar: 3.5.3
+      unplugin: 0.3.2_webpack@5.69.1
       webpack: 5.69.1
 
   packages/plugin-app:
@@ -155,10 +163,12 @@ importers:
       esbuild: ^0.14.23
       react: ^17.0.2
       react-dom: ^17.0.2
+      unplugin: ^0.3.2
     dependencies:
       esbuild: 0.14.23
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      unplugin: 0.3.2_esbuild@0.14.23
     devDependencies:
       '@ice/types': link:../types
       '@types/react': 17.0.39
@@ -185,13 +195,15 @@ importers:
 
   packages/types:
     specifiers:
-      build-scripts: ^2.0.0-7
+      build-scripts: ^2.0.0-9
       react: ^17.0.2
+      unplugin: ^0.3.2
       webpack: ^5.69.1
       webpack-dev-server: ^4.7.4
     devDependencies:
-      build-scripts: 2.0.0-7
+      build-scripts: 2.0.0-9
       react: 17.0.2
+      unplugin: 0.3.2_webpack@5.69.1
       webpack: 5.69.1
       webpack-dev-server: 4.7.4_webpack@5.69.1
 
@@ -1319,6 +1331,10 @@ packages:
     dependencies:
       '@types/node': 17.0.19
 
+  /@types/ejs/3.1.0:
+    resolution: {integrity: sha512-DCg+Ka+uDQ31lJ/UtEXVlaeV3d6t81gifaVWKJy4MYVVgvJttyX/viREy+If7fz+tK/gVxTGMtyrFPnm4gjrVA==}
+    dev: true
+
   /@types/eslint-scope/3.7.3:
     resolution: {integrity: sha512-PB3ldyrcnAicT35TWPs5IcwKD8S333HMaa2VVv4+wdvebJkjWuW/xESoB8IwRcog8HYVYamb1g/R31Qv5Bx03g==}
     dependencies:
@@ -1401,6 +1417,16 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
+    dev: true
+
+  /@types/lodash.debounce/4.0.6:
+    resolution: {integrity: sha512-4WTmnnhCfDvvuLMaF3KV4Qfki93KebocUF45msxhYyjMttZDQYzHkO639ohhk8+oco2cluAFL3t5+Jn4mleylQ==}
+    dependencies:
+      '@types/lodash': 4.14.179
+    dev: true
+
+  /@types/lodash/4.14.179:
+    resolution: {integrity: sha512-uwc1x90yCKqGcIOAT6DwOSuxnrAbpkdPsUOZtwrXb4D/6wZs+6qG7QnIawDuZWg0sWpxl+ltIKCaLoMlna678w==}
     dev: true
 
   /@types/mime/1.3.2:
@@ -2231,8 +2257,8 @@ packages:
       ieee754: 1.2.1
     dev: true
 
-  /build-scripts/2.0.0-7:
-    resolution: {integrity: sha512-/NREA3dw/rXd8C8dr2G1FsVMhupcKrKRS3e/rYXbRroUpZtRLQK51hH7Ngr6ZAgE2JpRrWUo2UgZ5Bx988J5ig==}
+  /build-scripts/2.0.0-9:
+    resolution: {integrity: sha512-pF9vj2dvu1hnyLYjPeTVNouysHkGZnCwzigAOcC+s2Gamwb7dJeAswd5aeJG26R9zOk/jUkdj2ndSp4BPEqQkg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       '@jest/test-result': 27.5.1
@@ -7006,6 +7032,27 @@ packages:
     resolution: {integrity: sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=}
     engines: {node: '>= 0.8'}
 
+  /unplugin/0.3.2_esbuild@0.14.23:
+    resolution: {integrity: sha512-5d0DMYNKZU+S9eZUiBfw6Co32eRg8myUgBPoWSqG/wDFCUE/WznfSsJnZWi1P9l69x4uLJqt2qVq1xW/AsXFrw==}
+    peerDependencies:
+      esbuild: '>=0.13'
+      rollup: ^2.50.0
+      vite: ^2.3.0
+      webpack: 4 || 5
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
+      rollup:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+    dependencies:
+      esbuild: 0.14.23
+      webpack-virtual-modules: 0.4.3
+    dev: false
+
   /unplugin/0.3.2_webpack@5.69.1:
     resolution: {integrity: sha512-5d0DMYNKZU+S9eZUiBfw6Co32eRg8myUgBPoWSqG/wDFCUE/WznfSsJnZWi1P9l69x4uLJqt2qVq1xW/AsXFrw==}
     peerDependencies:
@@ -7025,7 +7072,6 @@ packages:
     dependencies:
       webpack: 5.69.1
       webpack-virtual-modules: 0.4.3
-    dev: false
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -7207,7 +7253,6 @@ packages:
 
   /webpack-virtual-modules/0.4.3:
     resolution: {integrity: sha512-5NUqC2JquIL2pBAAo/VfBP6KuGkHIZQXW/lNKupLPfhViwh8wNsu0BObtl09yuKZszeEUfbXz8xhrHvSG16Nqw==}
-    dev: false
 
   /webpack/5.69.1:
     resolution: {integrity: sha512-+VyvOSJXZMT2V5vLzOnDuMz5GxEqLk7hKWQ56YxPW/PQRUuKimPqmEIJOx8jHYeyo65pKbapbW464mvsKbaj4A==}
