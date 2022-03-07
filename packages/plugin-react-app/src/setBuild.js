@@ -4,8 +4,13 @@ const { analyzeRuntime, analyzeAuth, globSourceFiles } = require('@builder/app-h
 const { getWebOutputPath, logWebpackConfig } = require('./utils');
 
 module.exports = (api) => {
-  const { context, onHook, onGetWebpackConfig, applyMethod } = api;
+  const { context, onHook, onGetWebpackConfig, applyMethod, log } = api;
   const { userConfig, rootDir } = context;
+
+  function disableRuntimePlugin(pluginName) {
+    applyMethod('addDisableRuntimePlugin', pluginName);
+    log.info('[analyze]' ,`${pluginName} removed after runtime analyse`);
+  }
 
   if (userConfig.optimizeRuntime && !userConfig.mpa && !userConfig.disableRuntime) {
     // analyze source folder when SPA
@@ -20,13 +25,13 @@ module.exports = (api) => {
               const appEntry = path.join(rootDir, 'src/app');
               const hasAuthConfig = analyzeAuth(appEntry);
               if (!hasAuthConfig) {
-                applyMethod('addDisableRuntimePlugin', pluginName);
+                disableRuntimePlugin(pluginName);
               }
             } catch (e) {
               console.log('[Error] errors occurred with analyze runApp');
             }  
           } else {
-            applyMethod('addDisableRuntimePlugin', pluginName);
+            disableRuntimePlugin(pluginName);
           }
         }
       });

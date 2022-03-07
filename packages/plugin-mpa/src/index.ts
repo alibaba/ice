@@ -107,6 +107,10 @@ const plugin: IPlugin = (api) => {
           await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
             const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
             // 仅针对使用了运行时能力的入口进行分析
+            function addDisableRuntime(pluginName: string) {
+              generator.addDisableRuntime(pluginName);
+              log.info('[analyze]' ,`${pluginName} removed after runtime analyse`);
+            }
             if (generator) {
               const { viteConfig, webpackConfig } = options as any;
               let alias;
@@ -132,13 +136,13 @@ const plugin: IPlugin = (api) => {
                     try {
                       const hasAuthConfig = analyzeAuth(entryPath);
                       if (!hasAuthConfig) {
-                        generator.addDisableRuntime(pluginName);
+                        addDisableRuntime(pluginName);
                       }
                     } catch (e) {
                       console.log('[Error] errors occurred with analyze runApp');
                     }  
                   } else {
-                    generator.addDisableRuntime(pluginName);
+                    addDisableRuntime(pluginName);
                   }
                 }
               });
