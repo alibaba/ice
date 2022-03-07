@@ -1,3 +1,4 @@
+import { createRequire } from 'module';
 import * as path from 'path';
 import consola from 'consola';
 import type { Context } from 'build-scripts';
@@ -8,10 +9,12 @@ import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import type { Config } from '@ice/types';
 import { config } from 'process';
 
-const build = async (context: Context<any>) => {
-  const { getConfig, applyHook, commandArgs, command } = context;
-  const config = getConfig();
-  if (!config.length) {
+const require = createRequire(import.meta.url);
+
+const build = async (context: Context<Config>) => {
+  const { getConfig, applyHook, commandArgs, command, rootDir } = context;
+  const configs = getConfig();
+  if (!configs.length) {
     const errMsg = 'Task config is not found';
     await applyHook('error', { err: new Error(errMsg) });
     return;
