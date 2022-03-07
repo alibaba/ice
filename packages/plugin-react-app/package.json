@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/app-helpers": "^2.5.0",
+    "@builder/app-helpers": "^2.5.2",
     "@builder/jest-config": "^2.0.1",
     "@builder/pack": "^0.6.0",
     "@builder/user-config": "^2.2.0",
@@ -22,7 +22,7 @@
     "debug": "^4.1.1",
     "deepmerge": "^4.2.2",
     "es-module-lexer": "^0.9.0",
-    "esbuild": "^0.13.12",
+    "esbuild": "^0.14.22",
     "events": "^3.3.0",
     "fast-glob": "^3.2.5",
     "find-up": "^5.0.0",
