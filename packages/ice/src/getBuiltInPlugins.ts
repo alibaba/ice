@@ -64,6 +64,7 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     // react base plugin
     require.resolve('@ice/plugin-app'),
     require.resolve('@ice/plugin-router'),
+    require.resolve('@ice/plugin-auth'),
     // for ice/react plugins
     /* 'build-plugin-ice-config',
     'build-plugin-ice-mpa',

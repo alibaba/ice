@@ -1,20 +1,19 @@
-import type { ComponentType } from 'react';
-import { RouterProps } from 'react-router-dom';
+import type { ComponentType, ReactNode } from 'react';
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
-  rootId: string;
-  strict: boolean;
+  rootId?: string;
+  strict?: boolean;
+  addProvider?: ({ children }: { children: ReactNode }) => ReactNode;
+  getInitialData?: (ctx?: any) => Promise<any>;
 } & Record<AppLifecycle, VoidFunction>>;
 
-interface Router {
-  type: 'hash' | 'browser';
-  basename: string;
-}
-
 export interface AppConfig extends Record<string, any> {
-  app: App;
-  router: Router;
+  app?: App;
+  router?: {
+    type: 'hash' | 'browser';
+    basename?: string;
+  };
 }
 // simplify page item type while it has been defined in plugin-router
 export interface DOMRender {
@@ -47,10 +46,17 @@ export interface BuildConfig extends Record<string, any> {
   target?: string[];
 }
 
+// getInitialData: (ctx: InitialContext) => {}
+export interface InitialContext {
+  pathname: string;
+  path: string;
+  query: Record<string, any>;
+  ssrError?: any;
+}
+
 export interface Context {
   appManifest?: Record<string, any>;
   routes?: Routes;
-  initialContext?: Record<string, any>;
   initialData?: any;
 }
 export interface RuntimeAPI {

@@ -30,7 +30,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
   const webpackPlugins = getTransformPlugins(rootDir, config).map((plugin) => createUnplugin(() => plugin).webpack());
   return {
     mode,
-    entry: path.join(rootDir, 'src/app'),
+    entry: path.join(rootDir, '.ice/entry.client'),
     externals,
     output: {
       publicPath,
@@ -44,6 +44,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     resolve: {
       alias: {
         ice: path.join(rootDir, '.ice', 'index.ts'),
+        '@': path.join(rootDir, 'src'),
         ...alias,
       },
       extensions: ['.ts', '.tsx', '.jsx', '...'],

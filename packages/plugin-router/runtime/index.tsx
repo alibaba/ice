@@ -5,6 +5,7 @@ const runtime: RuntimePlugin = ({ setRenderApp }) => {
   // setRenderApp(({ renderComponent }) => {
   //   return renderComponent || (() => <>empty content</>);
   // });
+
 };
 
 export default runtime;
