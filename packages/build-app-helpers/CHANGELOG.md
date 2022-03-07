@@ -2,7 +2,7 @@
 
 ## 2.5.2
 
-- [fix] remove runtime analyze for `build-plugin-ice-auth`
+- [fix] detect app.ts for runtime analyze
 
 ## 2.5.1
 

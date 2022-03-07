@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/app-helpers": "^2.5.0",
+    "@builder/app-helpers": "^2.5.2",
     "@builder/jest-config": "^2.0.1",
     "@builder/pack": "^0.6.0",
     "@builder/user-config": "^2.2.0",

@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
-const { analyzeRuntime, globSourceFiles } = require('@builder/app-helpers');
+const { analyzeRuntime, analyzeAuth, globSourceFiles } = require('@builder/app-helpers');
 const { getWebOutputPath, logWebpackConfig } = require('./utils');
 
 module.exports = (api) => {
@@ -15,7 +15,19 @@ module.exports = (api) => {
       Object.keys(runtimeUsedMap).forEach((pluginName) => {
         const isUsed = runtimeUsedMap[pluginName];
         if (!isUsed) {
-          applyMethod('addDisableRuntimePlugin', pluginName);
+          if (pluginName === 'build-plugin-ice-auth') {
+            try {
+              const appEntry = path.join(rootDir, 'src/app');
+              const hasAuthConfig = analyzeAuth(appEntry);
+              if (!hasAuthConfig) {
+                applyMethod('addDisableRuntimePlugin', pluginName);
+              }
+            } catch (e) {
+              console.log('[Error] errors occurred with analyze runApp');
+            }  
+          } else {
+            applyMethod('addDisableRuntimePlugin', pluginName);
+          }
         }
       });
     });

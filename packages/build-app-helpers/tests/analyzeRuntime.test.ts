@@ -1,5 +1,5 @@
 import path = require('path');
-import analyzeRuntime, { globSourceFiles, getImportPath } from '../analyzeRuntime';
+import analyzeRuntime, { globSourceFiles, getImportPath } from '../src/analyzeRuntime';
 
 describe('get source file', () => {
   const rootDir = path.join(__dirname, './fixtures/analyzeRuntime/');

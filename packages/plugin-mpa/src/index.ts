@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { getMpaEntries, formatPath, analyzeRuntime } from '@builder/app-helpers';
+import { getMpaEntries, formatPath, analyzeRuntime, analyzeAuth } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
@@ -128,7 +128,18 @@ const plugin: IPlugin = (api) => {
               Object.keys(runtimeUsedMap).forEach((pluginName) => {
                 const isUsed = runtimeUsedMap[pluginName];
                 if (!isUsed) {
-                  generator.addDisableRuntime(pluginName);
+                  if (pluginName === 'build-plugin-ice-auth') {
+                    try {
+                      const hasAuthConfig = analyzeAuth(entryPath);
+                      if (!hasAuthConfig) {
+                        generator.addDisableRuntime(pluginName);
+                      }
+                    } catch (e) {
+                      console.log('[Error] errors occurred with analyze runApp');
+                    }  
+                  } else {
+                    generator.addDisableRuntime(pluginName);
+                  }
                 }
               });
               (generateTasks || []).forEach((generateTask) => {

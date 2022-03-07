@@ -7,6 +7,7 @@
 - [fix] bump version of `@builder/pack`(^0.6.0)
 - [fix] remove `webpackHotDevClient`
 - [fix] `vitePlugins` only take effect when `vite` is true
+- [fix] additional analyze for auth
 
 ## 2.2.0
 

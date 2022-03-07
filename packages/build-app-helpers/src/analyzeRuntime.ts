@@ -20,6 +20,7 @@ interface Options {
 
 const defaultRuntimeRules = {
   'build-plugin-ice-request': ['request', 'useRequest'],
+  'build-plugin-ice-auth': ['useAuth', 'withAuth'],
 };
 
 export async function globSourceFiles(sourceDir: string): Promise<string[]> {

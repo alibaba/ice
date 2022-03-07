@@ -1,4 +1,4 @@
-import getEntriesByRoute from "../getEntriesByRoute";
+import getEntriesByRoute from "../src/getEntriesByRoute";
 
 describe('Get entries by route info', () => {
   it('should get entry by normal route', () => {
