@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2
+
+- [fix] remove runtime analyze for `build-plugin-ice-auth`
+
 ## 2.5.1
 
 - [fix] slice error for array of source files
