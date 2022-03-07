@@ -1,3 +1,4 @@
+import { createRequire } from 'module';
 import * as path from 'path';
 import consola from 'consola';
 import type { Context } from 'build-scripts';
@@ -7,6 +8,8 @@ import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import type { Config } from '@ice/types';
 import { config } from 'process';
+
+const require = createRequire(import.meta.url);
 
 const build = async (context: Context<Config>) => {
   const { getConfig, applyHook, commandArgs, command, rootDir } = context;
