@@ -109,7 +109,7 @@ importers:
       '@builder/pack': ^0.6.0
       '@builder/webpack-config': ^3.0.0
       '@ice/plugin-app': ^1.0.0
-      '@ice/plugin-auth': workspace:^1.0.0
+      '@ice/plugin-auth': ^1.0.0
       '@ice/plugin-router': ^1.0.0
       '@ice/runtime': ^1.0.0
       '@ice/types': ^1.0.0
@@ -180,7 +180,7 @@ importers:
 
   packages/plugin-auth:
     specifiers:
-      '@ice/types': workspace:^1.0.0
+      '@ice/types': ^1.0.0
     dependencies:
       '@ice/types': link:../types
 
