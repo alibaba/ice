@@ -28,6 +28,17 @@ export async function buildEntry(options: Options): Promise<esbuild.BuildResult>
     // FIXME: react imported by plugin cannot be external
     external: ['./node_modules/*', 'react'],
     plugins: [
+      // FIXME: alias for auth is not work
+      {
+        name: 'auth-alias',
+        setup(build) {
+          build.onResolve({ filter: /^@ice\/plugin-auth\/runtime\/Auth/ }, (args) => {
+            return {
+              path: path.join(alias['@ice/plugin-auth/runtime'], 'Auth.tsx'),
+            };
+          });
+        },
+      },
       {
         name: 'esbuild-alias',
         setup(build) {
