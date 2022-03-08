@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Runtime from './runtime.js';
-import App from './App.js';
 import serverRender from './serverRender.js';
-import type { BuildConfig, Context, AppConfig } from './types';
+import type { AppContext, AppConfig } from './types';
 
 export default async function runServerApp(config: AppConfig, runtimeModules, routes, Document, requestContext) {
   const appConfig: AppConfig = {
@@ -18,25 +17,21 @@ export default async function runServerApp(config: AppConfig, runtimeModules, ro
     },
   };
 
-  // loadStaticModules(appConfig);
-
-  // TODO generate buildConfig
-  const buildConfig: BuildConfig = {};
-
-  // TODO getInitialData in server side
-
-  const context: Context = {
+  const appContext: AppContext = {
     routes,
+    appConfig,
+    initialData: null,
+    document: Document,
   };
 
-  const runtime = new Runtime(appConfig, buildConfig, context);
-  runtime.setRenderApp((args) => {
-    return <App {...args} />;
-  });
+  if (appConfig?.app?.getInitialData) {
+    appContext.initialData = await appConfig.app.getInitialData(requestContext);
+  }
 
+  const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {
     runtime.loadModule(m);
   });
 
-  return serverRender(requestContext, runtime, Document);
+  return serverRender(runtime, requestContext);
 }

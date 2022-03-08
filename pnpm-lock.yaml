@@ -70,6 +70,7 @@ importers:
 
   examples/basic-project:
     specifiers:
+      '@ice/plugin-auth': 1.0.0
       '@ice/runtime': ^1.0.0
       '@types/react': ^17.0.39
       '@types/react-dom': ^17.0.11
@@ -81,6 +82,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
+      '@ice/plugin-auth': link:../../packages/plugin-auth
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.11
       regenerator-runtime: 0.13.9
