@@ -81,9 +81,11 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
   }
 
+  const outputDir = path.join(rootDir, 'build');
+
   registerTask('web', {
     mode,
-    outputDir: path.join(rootDir, 'build'),
+    outputDir,
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
@@ -96,7 +98,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          outDir,
+          outDir: outputDir,
           routeManifest,
         }),
       });

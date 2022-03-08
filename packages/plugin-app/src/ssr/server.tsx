@@ -18,7 +18,7 @@ export function setupRenderServer(options: Options) {
       return;
     }
 
-    const entryPath = path.resolve(rootDir, 'build/server/entry.mjs');
+    const entryPath = path.resolve(outDir, 'entry.mjs');
     const serverEntry = await import(entryPath);
 
     // TODO: disable cache
