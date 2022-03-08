@@ -1,9 +1,9 @@
 import * as React from 'react';
 import type { RuntimePlugin } from '@ice/types';
 import { AuthProvider, useAuth } from './Auth';
-import type { IAuth } from './types';
+import type { AuthConfig } from './types';
 
-const wrapperComponentFn = (authConfig: IAuth) => (PageComponent) => {
+const wrapperComponentFn = (authConfig: AuthConfig) => (PageComponent) => {
   const { pageConfig = {} } = PageComponent;
 
   const AuthWrappedComponent = (props) => {

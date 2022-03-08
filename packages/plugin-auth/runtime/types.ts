@@ -1,4 +1,4 @@
-export interface IAuth {
+export interface AuthConfig {
   NoAuthFallback?: React.ReactNode;
 }
 

@@ -7,7 +7,6 @@ import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import type { Config } from '@ice/types';
-import { config } from 'process';
 
 const require = createRequire(import.meta.url);
 
