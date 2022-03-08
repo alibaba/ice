@@ -27,9 +27,9 @@ export default function AppRouter(props: RenderOptions) {
                   key={index}
                   path={route.path}
                   element={
-                    <React.Suspense fallback={<>loading chunk....</>}>
-                      <PageComponent />
-                    </React.Suspense>
+                    // <React.Suspense fallback={<>loading chunk....</>}>
+                    <PageComponent />
+                    // </React.Suspense>
                   }
                 />
               );
@@ -42,9 +42,9 @@ export default function AppRouter(props: RenderOptions) {
     // routes.length === 1
     const PageComponent = routes[0].component;
     return (
-      <React.Suspense fallback={<>loading chunk....</>}>
-        <PageComponent />
-      </React.Suspense>
+      // <React.Suspense fallback={<>loading chunk....</>}>
+      <PageComponent />
+      // </React.Suspense>
     );
   }
 }

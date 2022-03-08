@@ -17,11 +17,14 @@ export async function buildEntry(options: Options): Promise<esbuild.BuildResult>
   const resolveFilter = new RegExp(`^(${aliasKey.map((str) => {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }).join('|')})$`);
+
   return esbuild.build({
     outdir: path.join(rootDir, outdir),
     entryPoints: [entry],
     bundle: true,
     platform: 'node',
+    format: 'esm',
+    outExtension: { '.js': '.mjs' },
     external: ['./node_modules/*'],
     plugins: [
       {

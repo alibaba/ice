@@ -1,4 +1,4 @@
-import renderDocument from './renderDocument.js';
+import path from 'path';
 
 export function setupRenderServer(options: any) {
   const {
@@ -6,16 +6,19 @@ export function setupRenderServer(options: any) {
     routeManifest,
   } = options;
 
-  return (req, res) => {
+  return async (req, res) => {
     if (!routeManifest[req.path]) {
       return;
     }
 
-    // TODO: disable cache
-    const document = path.resolve(rootDir, 'build/document.js');
-    const Document = require(document).default;
+    const entryPath = path.resolve(rootDir, 'build/server/entry.mjs');
+    const serverEntry = await import(entryPath);
 
-    const html = ReactDOMServer.renderToString(<Document />);
+    // TODO: disable cache
+    const html = await serverEntry.render({
+      req,
+      res,
+    });
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);
