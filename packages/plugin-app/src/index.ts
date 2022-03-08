@@ -28,12 +28,12 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   let outDir;
 
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ getTransformPlugins, config }) => {
-    outDir = config.outputDir;
+    outDir = config.outputDir || 'build';
     config.isServer = true;
     // TODO: watch file changes and rebuild
     await buildEntry({
-      outDir,
-      entry: path.join(rootDir, 'src/document.tsx'),
+      outDir: path.join(outDir, 'server'),
+      entry: path.join(rootDir, '.ice/entry.server'),
       // alias will be formatted as Record<string, string>
       // TODO consider with alias to false
       alias: config.alias,
@@ -42,8 +42,10 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
     if (command === 'build') {
       // generator html to outputDir
-      const htmlContent = renderDocument(path.join(config.outputDir, 'document.js'));
-      fs.writeFileSync(path.join(config.outputDir, 'index.html'), htmlContent);
+      const entryPath = path.resolve(outDir, 'server/entry.mjs');
+      const serverEntry = await import(entryPath);
+      const htmlContent = await serverEntry.render();
+      fs.writeFileSync(path.join(outDir, 'index.html'), htmlContent);
     }
   });
 
@@ -81,11 +83,9 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
   }
 
-  const outputDir = path.join(rootDir, 'build');
-
   registerTask('web', {
     mode,
-    outputDir,
+    outputDir: outDir,
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
@@ -98,7 +98,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          outDir: outputDir,
+          outDir: outDir,
           routeManifest,
         }),
       });
