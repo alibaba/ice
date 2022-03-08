@@ -1,21 +1,36 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server.js';
+import App from './App.js';
+import DefaultAppRouter from './AppRouter.js';
 
-export default async function render(requestContext, runtime, Document) {
+export default async function render(runtime, requestContext) {
+  const appContext = runtime.getAppContext();
+  const {
+    appConfig,
+    document: Document,
+  } = appContext;
+
   const documentHtml = ReactDOMServer.renderToString(<Document />);
 
-  const AppProvider = runtime.composeAppProvider();
-  const AppComponent = runtime.getAppComponent();
+  const { strict } = appConfig.app;
 
-  const AppWrapper = () => {
-    return AppProvider ? (
-      <AppProvider>
-        { AppComponent }
-      </AppProvider>
-    ) : AppComponent;
-  };
+  const StrictMode = strict ? React.StrictMode : React.Fragment;
+  const AppProvider = runtime.composeAppProvider() || React.Fragment;
 
-  const pageHtml = ReactDOMServer.renderToString(<AppWrapper />);
+  let AppRouter = runtime.getAppRouter();
+  if (!AppRouter) {
+    AppRouter = DefaultAppRouter;
+  }
+
+  const pageHtml = ReactDOMServer.renderToString(
+    <StrictMode>
+      <App
+        AppProvider={AppProvider}
+        AppRouter={AppRouter}
+        appContext={appContext}
+      />
+    </StrictMode>,
+  );
 
   const html = documentHtml.replace('<!--app-html-->', pageHtml);
 
