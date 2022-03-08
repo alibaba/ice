@@ -29,7 +29,7 @@ export type ParseRenderData = () => Record<string, unknown>;
 export type GenerateImportStr = (apiName: string) => string;
 export type Render = () => void;
 export type ModifyRenderData = (registration: RenderDataRegistration) => void;
-export type AddRenderFile = (templatePath: string, targetPath: string, extraData: ExtraData) => void;
+export type AddRenderFile = (templatePath: string, targetPath: string, extraData?: ExtraData) => void;
 export type AddTemplateFiles = (templateOptions: string | TemplateOptions, extraData?: ExtraData) => void;
 export type RenderFile = (templatePath: string, targetDir: string, extraData?: ExtraData) => void;
 export type AddDisableRuntimePlugin = (pluginName: string) => void;

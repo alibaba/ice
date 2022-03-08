@@ -21,14 +21,14 @@ export default function AppRouter(props: RenderOptions) {
         <Routes>
           {
             routes.map((route, index) => {
-              const RouteComponent = route.component;
+              const PageComponent = route.component;
               return (
                 <Route
                   key={index}
                   path={route.path}
                   element={
                     <React.Suspense fallback={<>loading chunk....</>}>
-                      <RouteComponent />
+                      <PageComponent />
                     </React.Suspense>
                   }
                 />

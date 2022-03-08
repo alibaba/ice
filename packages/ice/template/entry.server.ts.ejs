@@ -1,0 +1,8 @@
+import { runServerApp } from '@ice/runtime';
+import appConfig from '@/app';
+import runtimeModules from './runtimeModules';
+import routes from './routes';
+
+export async function render() {
+  return await runServerApp(appConfig, runtimeModules, routes);
+}
