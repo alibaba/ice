@@ -1,4 +1,6 @@
 import type { ComponentType, ReactNode } from 'react';
+import type { Renderer } from 'react-dom';
+
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
@@ -15,10 +17,10 @@ export interface AppConfig extends Record<string, any> {
     basename?: string;
   };
 }
-// simplify page item type while it has been defined in plugin-router
-export interface DOMRender {
-  ({ App, appMountNode }: { App: React.ComponentType; appMountNode?: HTMLElement }): void;
-}
+
+export {
+  Renderer,
+};
 
 export interface RouteItem {
   path: string;
@@ -28,23 +30,11 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
-export type Routes = RouteItem[];
-export interface RenderOptions {
-  context: Context;
-  appConfig: AppConfig;
-  pageWrappers?: PageWrapper<any>[];
-}
 export type PageWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => ComponentType<Props>);
-export type RenderApp = (options: RenderOptions) => JSX.Element;
-export type SetRenderApp = (renderApp: RenderApp) => void;
+export type SetAppRouter = (AppRouter: React.ComponentType) => void;
 export type AddProvider = (Provider: React.ComponentType) => void;
-export type AddDOMRender = (domRender: DOMRender) => void;
+export type SetRender = (render: Renderer) => void;
 export type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;
-
-export interface BuildConfig extends Record<string, any> {
-  ssr?: boolean;
-  target?: string[];
-}
 
 // getInitialData: (ctx: InitialContext) => {}
 export interface InitialContext {
@@ -54,19 +44,20 @@ export interface InitialContext {
   ssrError?: any;
 }
 
-export interface Context {
+export interface AppContext {
+  // todo: 这是啥
   appManifest?: Record<string, any>;
-  routes?: Routes;
+  routes?: RouteItem[];
   initialData?: any;
-}
-export interface RuntimeAPI {
-  setRenderApp: SetRenderApp;
-  addProvider: AddProvider;
-  addDOMRender: AddDOMRender;
-  wrapperPageComponent: WrapperPageComponent;
   appConfig: AppConfig;
-  buildConfig: BuildConfig;
-  context: Context;
+}
+
+export interface RuntimeAPI {
+  setAppRouter: SetAppRouter;
+  addProvider: AddProvider;
+  setRender: SetRender;
+  wrapperPageComponent: WrapperPageComponent;
+  appContext: AppContext;
 }
 
 export interface RuntimePlugin {
@@ -79,5 +70,4 @@ export interface CommonJsRuntime {
   default: RuntimePlugin;
 }
 
-export type GetAppComponent = () => JSX.Element;
 export type GetWrapperPageRegistration = () => PageWrapper<any>[];

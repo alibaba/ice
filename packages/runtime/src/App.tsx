@@ -1,18 +1,25 @@
 import * as React from 'react';
-import type { RenderOptions } from './types';
+import type { ComponentType } from 'react';
+import type { AppContext } from './types';
 import AppErrorBoundary from './AppErrorBoundary.js';
-import AppRouter from './AppRouter.js';
+import { AppContextProvider } from './AppContext.js';
 
-export default function App(props: RenderOptions) {
-  const { context, appConfig } = props;
-  const { strict } = appConfig.app || {};
-  const StrictMode = strict ? React.StrictMode : React.Fragment;
+interface Props {
+  appContext: AppContext;
+  AppProvider: ComponentType;
+  AppRouter: ComponentType;
+}
+
+export default function App(props: Props) {
+  const { appContext, AppProvider, AppRouter } = props;
 
   return (
-    <StrictMode>
-      <AppErrorBoundary>
-        <AppRouter {...props} />
-      </AppErrorBoundary>
-    </StrictMode>
+    <AppErrorBoundary>
+      <AppContextProvider value={appContext}>
+        <AppProvider>
+          <AppRouter />
+        </AppProvider>
+      </AppContextProvider>
+    </AppErrorBoundary>
   );
 }

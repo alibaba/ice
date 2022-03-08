@@ -5,6 +5,8 @@ import type { ContextType, AuthType } from './types';
 
 const Context = createContext<any>(null);
 
+Context.displayName = 'AuthContext';
+
 interface ProviderProps {
   value: AuthType;
 }

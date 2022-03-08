@@ -1,14 +1,14 @@
 import * as React from 'react';
-import type { Context } from './types';
+import type { AppContext } from './types';
 
 interface Props {
-  context: Context;
+  appContext: AppContext;
   // pageWrappers: React.ComponentType<any>[];
   PageComponent: React.ComponentType<any>;
 }
 
 export default function RouteItem(props: Props) {
-  const { context, PageComponent } = props;
+  const { appContext, PageComponent } = props;
   // const Wrapper = pageWrappers[0];
 
   return (
