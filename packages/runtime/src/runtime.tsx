@@ -1,59 +1,52 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import type { ComponentType } from 'react';
 import type {
-  AppConfig,
-  BuildConfig,
   PageWrapper,
-  DOMRender,
-  Context,
-  RenderApp,
+  Renderer,
+  AppContext,
   RuntimePlugin,
   CommonJsRuntime,
   RuntimeAPI,
-  SetRenderApp,
+  SetAppRouter,
   AddProvider,
-  AddDOMRender,
+  SetRender,
   WrapperPageComponent,
   GetWrapperPageRegistration,
-  GetAppComponent,
 } from './types.js';
 
 class Runtime {
-  private appConfig: AppConfig;
+  private appContext: AppContext;
 
-  private buildConfig: BuildConfig;
-
-  private context: Context;
-
-  private renderApp: RenderApp;
+  private AppRouter: ComponentType;
 
   private AppProvider: ComponentType[];
 
   private wrapperPageRegistration: PageWrapper<any>[];
 
-  public modifyDOMRender: DOMRender;
+  private render: Renderer;
 
-  public constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context) {
+  public constructor(appContext: AppContext) {
     this.AppProvider = [];
-    this.appConfig = appConfig;
-    this.buildConfig = buildConfig;
-    this.context = context;
-    this.modifyDOMRender = null;
-    this.renderApp = () => null;
+    this.appContext = appContext;
+    this.render = ReactDOM.render;
+    this.AppRouter = null;
     this.wrapperPageRegistration = [];
   }
 
-  public getAppConfig = () => this.appConfig;
+  public getAppContext = () => this.appContext;
+
+  public getRender = () => this.render;
+
+  public getAppRouter = () => this.AppRouter;
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
-      appConfig: this.appConfig,
       addProvider: this.addProvider,
-      addDOMRender: this.addDOMRender,
+      setRender: this.setRender,
       wrapperPageComponent: this.wrapperPageComponent,
-      buildConfig: this.buildConfig,
-      context: this.context,
-      setRenderApp: this.setRenderApp,
+      appContext: this.appContext,
+      setAppRouter: this.setAppRouter,
     };
 
     const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
@@ -77,8 +70,8 @@ class Runtime {
     this.AppProvider.unshift(Provider);
   };
 
-  private addDOMRender: AddDOMRender = (render) => {
-    this.modifyDOMRender = render;
+  private setRender: SetRender = (render) => {
+    this.render = render;
   };
 
   private wrapperPageComponent: WrapperPageComponent = (wrapperPage) => {
@@ -89,16 +82,9 @@ class Runtime {
     return this.wrapperPageRegistration;
   };
 
-  public setRenderApp: SetRenderApp = (renderApp) => {
-    this.renderApp = renderApp;
-  };
-
-  public getAppComponent: GetAppComponent = () => {
-    return this.renderApp({
-      context: this.context,
-      appConfig: this.appConfig,
-      pageWrappers: this.wrapperPageRegistration,
-    });
+  // for plugin-icestark
+  private setAppRouter: SetAppRouter = (AppRouter) => {
+    this.AppRouter = AppRouter;
   };
 }
 

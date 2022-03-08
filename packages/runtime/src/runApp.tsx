@@ -1,9 +1,6 @@
-
-import * as React from 'react';
 import Runtime from './runtime.js';
-import App from './App.js';
 import render from './render.js';
-import type { BuildConfig, Context, InitialContext, AppConfig } from './types';
+import type { AppContext, InitialContext, AppConfig } from './types';
 
 export default async function runApp(config: AppConfig, runtimeModules, routes) {
   const appConfig: AppConfig = {
@@ -19,18 +16,15 @@ export default async function runApp(config: AppConfig, runtimeModules, routes) 
     },
   };
 
-  // loadStaticModules(appConfig);
-
-  // TODO generate buildConfig
-  const buildConfig: BuildConfig = {};
-
-  const context: Context = {
+  const appContext: AppContext = {
     routes,
+    appConfig,
+    initialData: null,
   };
 
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {
-    context.initialData = (window as any).__ICE_APP_DATA__;
+    appContext.initialData = (window as any).__ICE_APP_DATA__;
     // context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
   } else if (appConfig?.app?.getInitialData) {
     const { href, origin, pathname, search } = window.location;
@@ -44,14 +38,10 @@ export default async function runApp(config: AppConfig, runtimeModules, routes) 
       query,
       ssrError,
     };
-    context.initialData = await appConfig.app.getInitialData(initialContext);
+    appContext.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
-  const runtime = new Runtime(appConfig, buildConfig, context);
-  runtime.setRenderApp((args) => {
-    return <App {...args} />;
-  });
-
+  const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {
     runtime.loadModule(m);
   });
