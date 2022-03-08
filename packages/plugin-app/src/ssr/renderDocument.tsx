@@ -6,15 +6,8 @@ import ReactDOMServer from 'react-dom/server.js';
 
 const require = createRequire(import.meta.url);
 
-interface Options {
-  rootDir: string;
-  documentPath: string;
-}
-
-const renderDocument = (options: Options): string => {
-  const { rootDir, documentPath } = options;
-  const document = path.resolve(rootDir, documentPath);
-  const Document = require(document).default as ComponentType;
+const renderDocument = (documentPath: string): string => {
+  const Document = require(documentPath).default as ComponentType;
 
   return ReactDOMServer.renderToString(<Document />);
 };

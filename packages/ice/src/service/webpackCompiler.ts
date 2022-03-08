@@ -1,28 +1,32 @@
 import webpack from 'webpack';
 import consola from 'consola';
+import formatWebpackMessages from '../utils/formatWebpackMessages.js';
+import { getWebpackConfig } from '@builder/webpack-config';
 import type { CommandArgs } from 'build-scripts';
 import type { Compiler, Configuration } from 'webpack';
 import type { UnpluginOptions } from 'unplugin';
 import type { Urls } from '@ice/types/esm/plugin.js';
-import formatWebpackMessages from '../utils/formatWebpackMessages.js';
+import type { Config } from '@ice/types';
 
 async function webpackCompiler(options: {
-  config: Configuration | Configuration[];
+  config: Config;
   command: string;
   commandArgs: CommandArgs;
   applyHook: (key: string, opts?: {}) => Promise<void>;
+  rootDir: string;
   urls?: Urls;
-  transformPlugins?: UnpluginOptions[];
+  getTransformPlugins?: (config: Config) => UnpluginOptions[];
 }) {
-  const { config, urls, applyHook, command, commandArgs, transformPlugins } = options;
+  const { rootDir, config, urls, applyHook, command, commandArgs, getTransformPlugins } = options;
   await applyHook(`before.${command}.run`, {
     commandArgs,
     config,
-    transformPlugins,
+    getTransformPlugins,
   });
   let compiler: Compiler;
   try {
-    compiler = webpack(config as Configuration);
+    const webpackConfig = getWebpackConfig({ rootDir, config });
+    compiler = webpack(webpackConfig as Configuration);
   } catch (err) {
     consola.error('Failed to compile.');
     consola.log('');
@@ -36,11 +40,13 @@ async function webpackCompiler(options: {
       all: false,
       warnings: true,
       errors: true,
+      timings: true,
+      assets: true,
     });
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
-      consola.success('Compiled successfully');
+      consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);
       isFirstCompile = false;
     }
     if (messages.errors.length) {
@@ -61,6 +67,7 @@ async function webpackCompiler(options: {
       isSuccessful,
       isFirstCompile,
       urls,
+      messages,
     });
   });
 

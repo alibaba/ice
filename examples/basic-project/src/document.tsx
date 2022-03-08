@@ -1,5 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
+// import { Script } from 'ice';
 
 function Document() {
   return (
@@ -13,6 +14,7 @@ function Document() {
       <body>
         <div id="root"></div>
         <script src="./main.js"></script>
+        <link href="./home.css" rel="stylesheet" />
       </body>
     </html>
   );

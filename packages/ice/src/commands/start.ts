@@ -1,6 +1,7 @@
 import { createRequire } from 'module';
 import * as path from 'path';
 import WebpackDevServer from 'webpack-dev-server';
+import type { Configuration } from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
 import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
@@ -16,8 +17,6 @@ interface IWebTaskConfig {
   config: Config;
 }
 
-type DevServerConfig = Record<string, any>;
-// TODO config type of ice.js
 const start = async (context: Context<Config>) => {
   const { getConfig, applyHook, commandArgs, command, rootDir } = context;
 
@@ -47,9 +46,10 @@ const start = async (context: Context<Config>) => {
   const webpackConfig = getWebpackConfig({
     rootDir,
     config,
+    commandArgs,
   });
 
-  let devServerConfig: DevServerConfig = {
+  let devServerConfig: Configuration = {
     port: commandArgs.port || 3333,
     host: commandArgs.host || '0.0.0.0',
     https: commandArgs.https || false,
@@ -62,21 +62,23 @@ const start = async (context: Context<Config>) => {
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
-    devServerConfig.port,
+    devServerConfig.port as number,
   );
-  const transformPlugins = getTransformPlugins(rootDir, config);
+
   const compiler = await webpackCompiler({
-    config: webpackConfig,
+    rootDir,
+    config,
     urls,
     commandArgs,
     command,
     applyHook,
-    transformPlugins,
+    getTransformPlugins: (config) => getTransformPlugins(rootDir, config),
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {
     applyHook('after.start.devServer', {
-      urls, devServer,
+      urls,
+      devServer,
     });
   });
   return devServer;

@@ -4,21 +4,20 @@ import { createUnplugin } from 'unplugin';
 import type { UnpluginOptions } from 'unplugin';
 
 interface Options {
-  rootDir: string;
   entry: string;
-  outdir: string;
+  outDir: string;
   alias?: Record<string, string>;
   plugins?: UnpluginOptions[];
 }
 
 export async function buildEntry(options: Options): Promise<esbuild.BuildResult> {
-  const { rootDir, alias = {}, plugins = [], outdir, entry } = options;
+  const { alias = {}, plugins = [], outDir, entry } = options;
   const aliasKey = Object.keys(alias);
   const resolveFilter = new RegExp(`^(${aliasKey.map((str) => {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }).join('|')})$`);
   return esbuild.build({
-    outdir: path.join(rootDir, outdir),
+    outdir: outDir,
     entryPoints: [entry],
     bundle: true,
     platform: 'node',
