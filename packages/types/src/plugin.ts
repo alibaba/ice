@@ -23,12 +23,13 @@ export interface Urls {
 
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
-  config: Configuration | Configuration[];
-  transformPlugins?: UnpluginOptions[];
+  config: Config;
+  getTransformPlugins?: (config: Config) => UnpluginOptions[];
 }
 
 interface AfterCommandCompileOptions {
   stats: Stats;
+  messages: { warnings: any[]; errors: any[] };
   isSuccessful: Boolean;
   isFirstCompile: Boolean;
   urls: Urls;

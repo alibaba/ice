@@ -1,6 +1,12 @@
 import path from 'path';
 
-export function setupRenderServer(options: any) {
+interface Options {
+  rootDir: string;
+  // TODO: type
+  routeManifest: any;
+}
+
+export function setupRenderServer(options: Options) {
   const {
     rootDir,
     routeManifest,

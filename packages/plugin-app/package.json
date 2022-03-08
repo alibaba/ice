@@ -18,7 +18,10 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "dependencies": {
+    "chalk": "^4.0.0",
+    "cross-spawn": "^7.0.3",
     "esbuild": "^0.14.23",
+    "open": "^8.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "unplugin": "^0.3.2"

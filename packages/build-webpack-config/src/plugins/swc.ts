@@ -10,29 +10,39 @@ type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
   rootDir: string;
+  mode: 'development' | 'production' | 'none';
+  isServer?: boolean;
   sourceMap?: Config['sourceMap'];
 }
 
 const swcPlugin = (options: Options): UnpluginOptions => {
-  const { rootDir, sourceMap } = options;
+  const { rootDir, sourceMap, mode, isServer } = options;
+  const dev = mode !== 'production';
+
   return {
     name: 'swc-plugin',
     async transform(source: string, id: string) {
       // TODO specific runtime plugin name
-      if (/node_modules/.test(id) && !/[\\/]runtime[\\/]/.test(id)) {
+      if ((/node_modules/.test(id) && !/[\\/]runtime[\\/]/.test(id))) {
         return;
       }
-      const initOptions = {
+
+      const suffix = (['jsx', 'tsx'] as JSXSuffix[]).find(suffix => new RegExp(`\\.${suffix}?$`).test(id));
+      if (!suffix) {
+        return;
+      }
+
+      const programmaticOptions = {
         filename: id,
         sourceMaps: !!sourceMap,
+        ...getSwcTransformOptions({ suffix, rootDir, dev, isServer }),
       };
-      let transformOptions = {};
-      if (/\\.jsx?$/.test(id)) {
-        transformOptions = getSwcTransformOptions('jsx', rootDir);
-      } else if (/\\.tsx?$/.test(id)) {
-        transformOptions = getSwcTransformOptions('tsx', rootDir);
+      // auto detect development mode
+      if (mode && programmaticOptions.jsc && programmaticOptions.jsc.transform &&
+              programmaticOptions.jsc.transform.react &&
+              !Object.prototype.hasOwnProperty.call(programmaticOptions.jsc.transform.react, 'development')) {
+        programmaticOptions.jsc.transform.react.development = mode === 'development';
       }
-      const programmaticOptions = Object.assign({}, transformOptions, initOptions);
       const output = await transform(source, programmaticOptions);
       const { code, map } = output;
 
@@ -41,8 +51,21 @@ const swcPlugin = (options: Options): UnpluginOptions => {
   };
 };
 
-function getSwcTransformOptions(suffix: JSXSuffix, rootDir: string) {
-  const reactTransformConfig = hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {};
+function getSwcTransformOptions({
+  suffix,
+  rootDir,
+  dev,
+  isServer,
+}: {
+    suffix: JSXSuffix;
+    rootDir: string;
+    dev: boolean;
+    isServer?: boolean;
+  }) {
+  const baseReactTransformConfig = {
+    refresh: dev && !isServer,
+   };
+  const reactTransformConfig = merge(baseReactTransformConfig, hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {});
 
   const commonOptions = {
     jsc: {

@@ -48,7 +48,7 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
   // enable webpack 5 by default
-  hijackWebpack();
+  // hijackWebpack();
   // eslint-disable-next-line
   const pkg = fse.readJSONSync(path.resolve(__dirname, '../package.json'));
   process.env.__FRAMEWORK_VERSION__ = pkg.version;
