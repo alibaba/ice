@@ -22,10 +22,11 @@ export async function buildEntry(options: Options): Promise<esbuild.BuildResult>
     outdir: path.join(rootDir, outdir),
     entryPoints: [entry],
     bundle: true,
-    platform: 'node',
+    // platform: 'node',
     format: 'esm',
     outExtension: { '.js': '.mjs' },
-    external: ['./node_modules/*'],
+    // FIXME: react imported by plugin cannot be external
+    external: ['./node_modules/*', 'react'],
     plugins: [
       {
         name: 'esbuild-alias',
