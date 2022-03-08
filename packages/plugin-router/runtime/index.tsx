@@ -1,11 +1,7 @@
 import React from 'react';
 import type { RuntimePlugin } from '@ice/types';
 
-const runtime: RuntimePlugin = ({ setRenderApp }) => {
-  // setRenderApp(({ renderComponent }) => {
-  //   return renderComponent || (() => <>empty content</>);
-  // });
-
+const runtime: RuntimePlugin = ({ appContext }) => {
 };
 
 export default runtime;

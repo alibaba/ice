@@ -1,7 +1,9 @@
+import { useAppContext } from '@ice/runtime';
 <%- framework.imports %>
 
 <% if (framework.exports) { %>
   export {
+    useAppContext,
     <%- framework.exports %>
   }
 <% } %>

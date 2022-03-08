@@ -35,9 +35,9 @@ const wrapperComponentFn = (authConfig: AuthConfig) => (PageComponent) => {
   return AuthWrappedComponent;
 };
 
-const runtime: RuntimePlugin = ({ context, appConfig, addProvider, wrapperPageComponent }) => {
-  const initialData = context && context.initialData ? context.initialData : {};
-  const initialAuth = initialData.auth || {};
+const runtime: RuntimePlugin = ({ appContext, addProvider, wrapperPageComponent }) => {
+  const { appConfig, initialData = {} } = appContext;
+  const initialAuth = initialData?.auth || {};
   const authConfig = appConfig.auth || {};
 
   // TODO: React Devtools 里多一层
