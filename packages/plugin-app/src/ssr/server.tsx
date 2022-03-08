@@ -1,8 +1,15 @@
 import path from 'path';
+import renderDocument from './renderDocument.js';
 
-export function setupRenderServer(options: any) {
+interface Options {
+  outDir: string;
+  // TODO: type
+  routeManifest: any;
+}
+
+export function setupRenderServer(options: Options) {
   const {
-    rootDir,
+    outDir,
     routeManifest,
   } = options;
 
@@ -15,10 +22,7 @@ export function setupRenderServer(options: any) {
     const serverEntry = await import(entryPath);
 
     // TODO: disable cache
-    const html = await serverEntry.render({
-      req,
-      res,
-    });
+    const html = renderDocument(path.join(outDir, 'document.js'));
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);

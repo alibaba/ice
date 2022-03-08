@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 (async function () {
   const icePackageInfo = JSON.parse(await fs.readFile(path.join(__dirname, '../package.json'), 'utf-8'));
   checkNodeVersion(icePackageInfo.engines.node, icePackageInfo.name);
-
+  process.env.__ICE_VERSION__ = icePackageInfo.version;
   const rootDir = process.cwd();
   const commandArgs = parse(
     process.argv.slice(2), {
