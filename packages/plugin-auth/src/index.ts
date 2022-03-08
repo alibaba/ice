@@ -12,11 +12,11 @@ const plugin: Plugin = ({ generator }) => {
   //   auth?: IAuth;
   // }
   generator.addConfigTypes({
-    specifier: ['IAuth'],
+    specifier: ['AuthConfig'],
     source: '@ice/plugin-auth/runtime/types',
     type: true,
     exportAlias: {
-      IAuth: 'auth?',
+      AuthConfig: 'auth?',
     },
   });
 };

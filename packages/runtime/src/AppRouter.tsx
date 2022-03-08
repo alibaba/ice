@@ -27,9 +27,9 @@ export default function AppRouter(props: RenderOptions) {
                   key={index}
                   path={route.path}
                   element={
-                    // <React.Suspense fallback={<>loading chunk....</>}>
-                    <PageComponent />
-                    // </React.Suspense>
+                    <React.Suspense fallback={<>loading chunk....</>}>
+                      <PageComponent />
+                    </React.Suspense>
                   }
                 />
               );

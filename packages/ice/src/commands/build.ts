@@ -11,6 +11,8 @@ import { config } from 'process';
 
 const require = createRequire(import.meta.url);
 
+const require = createRequire(import.meta.url);
+
 const build = async (context: Context<Config>) => {
   const { getConfig, applyHook, commandArgs, command, rootDir } = context;
   const configs = getConfig();
