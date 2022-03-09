@@ -28,7 +28,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   let outDir;
 
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ getTransformPlugins, config }) => {
-    outDir = config.outputDir || 'build';
+    outDir = config.outputDir || path.join(rootDir, 'build');
     config.isServer = true;
     // TODO: watch file changes and rebuild
     await buildEntry({
