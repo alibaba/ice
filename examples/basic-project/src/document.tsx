@@ -14,7 +14,7 @@ function Document() {
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: '<!--app-html-->' }}></div>
         <script src="./main.js"></script>
-        <link href="./home.css" rel="stylesheet" />
+        <link href="./main.css" rel="stylesheet" />
       </body>
     </html>
   );
