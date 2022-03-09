@@ -28,16 +28,9 @@ export const buildFixture = function(example: string) {
     const processCwdSpy = jest.spyOn(process, 'cwd');
     processCwdSpy.mockReturnValue(rootDir);
     process.env.DISABLE_FS_CACHE = 'true';
-
-    await build({
-      args: {
-        config: path.join(rootDir, 'build.json'),
-      },
-      rootDir,
-      getBuiltInPlugins: (userConfig) => {
-        return getBuiltInPlugins(userConfig).concat(require.resolve('./test-plugin'));
-      },
-    });
+    process.env.JEST_TEST = 'true';
+    const service = await createService({ rootDir, command: 'build', commandArgs: {}, getBuiltInPlugins });
+    await service.run();
   }, 120000);
 }
 

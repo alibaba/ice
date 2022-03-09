@@ -25,7 +25,8 @@ export async function buildEntry(options: Options): Promise<esbuild.BuildResult>
     format: 'esm',
     outExtension: { '.js': '.mjs' },
     // FIXME: react imported by plugin cannot be external
-    external: ['./node_modules/*', 'react'],
+    // FIXME: output in JEST will use require
+    external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     plugins: [
       // FIXME: alias for auth is not work
       {
