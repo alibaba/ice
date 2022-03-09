@@ -23,6 +23,8 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   // mock routeManifest
   const routeManifest = {
     '/': '/src/pages/index',
+    '/about': '/src/pages/about',
+    '/home': '/src/pages/home',
   };
 
   let outDir;

@@ -11,7 +11,7 @@ export default async function runApp(config: AppConfig, runtimeModules, routes) 
       ...(config?.app || {}),
     },
     router: {
-      type: 'hash',
+      type: 'browser',
       ...(config?.router || {}),
     },
   };
