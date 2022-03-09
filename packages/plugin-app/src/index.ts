@@ -46,7 +46,11 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       // generator html to outputDir
       const entryPath = path.resolve(outDir, 'server/entry.mjs');
       const serverEntry = await import(entryPath);
-      const htmlContent = await serverEntry.render();
+      const htmlContent = await serverEntry.render({
+        req: {
+          url: '/',
+        },
+      });
       fs.writeFileSync(path.join(outDir, 'index.html'), htmlContent);
     }
   });
