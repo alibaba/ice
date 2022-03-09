@@ -10,4 +10,5 @@ export { default as getSassImplementation } from './getSassImplementation';
 export { default as getLessImplementation } from './getLessImplementation';
 export { default as redirectImport } from './redirectImport';
 export { default as analyzeRuntime } from './analyzeRuntime';
+export { default as analyzeAuth } from './analyzeAuth';
 export { globSourceFiles } from './analyzeRuntime';

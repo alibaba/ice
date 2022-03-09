@@ -1,4 +1,4 @@
-import redirectImport from "../redirectImport";
+import redirectImport from "../src/redirectImport";
 
 describe('Redirect import', () => {
   it('should remove original import with only one import', async (done) => {

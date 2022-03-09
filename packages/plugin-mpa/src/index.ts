@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { getMpaEntries, formatPath, analyzeRuntime } from '@builder/app-helpers';
+import { getMpaEntries, formatPath, analyzeRuntime, analyzeAuth } from '@builder/app-helpers';
 import { generateMPAEntries } from '@builder/mpa-config';
 import { IPlugin } from 'build-scripts';
 
@@ -107,6 +107,10 @@ const plugin: IPlugin = (api) => {
           await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
             const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
             // 仅针对使用了运行时能力的入口进行分析
+            function addDisableRuntime(pluginName: string) {
+              generator.addDisableRuntime(pluginName);
+              log.info('[analyze]' ,`${pluginName} removed after runtime analyse`);
+            }
             if (generator) {
               const { viteConfig, webpackConfig } = options as any;
               let alias;
@@ -128,7 +132,18 @@ const plugin: IPlugin = (api) => {
               Object.keys(runtimeUsedMap).forEach((pluginName) => {
                 const isUsed = runtimeUsedMap[pluginName];
                 if (!isUsed) {
-                  generator.addDisableRuntime(pluginName);
+                  if (pluginName === 'build-plugin-ice-auth') {
+                    try {
+                      const hasAuthConfig = analyzeAuth(entryPath);
+                      if (!hasAuthConfig) {
+                        addDisableRuntime(pluginName);
+                      }
+                    } catch (e) {
+                      console.log('[Error] errors occurred with analyze runApp');
+                    }  
+                  } else {
+                    addDisableRuntime(pluginName);
+                  }
                 }
               });
               (generateTasks || []).forEach((generateTask) => {

@@ -2,6 +2,7 @@
 
 ## 2.5.2
 
+- [fix] detect app.ts for runtime analyze
 - [chore] bump version of `esbuild`(0.14.14)
 
 ## 2.5.1
