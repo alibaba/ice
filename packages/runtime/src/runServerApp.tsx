@@ -3,7 +3,19 @@ import Runtime from './runtime.js';
 import serverRender from './serverRender.js';
 import type { AppContext, AppConfig } from './types';
 
-export default async function runServerApp(appConfig, runtimeModules, routes) {
+export default async function runServerApp(config: AppConfig, runtimeModules, routes, Document, requestContext) {
+  const appConfig: AppConfig = {
+    ...config,
+    app: {
+      rootId: 'root',
+      strict: true,
+      ...(config?.app || {}),
+    },
+    router: {
+      type: 'browser',
+      ...(config?.router || {}),
+    },
+  };
 
   const appContext: AppContext = {
     routes,

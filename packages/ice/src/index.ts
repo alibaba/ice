@@ -25,12 +25,26 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
   preCompile();
 
   // TODO: watch and generate routeManifest
-  const routes: Routes = [{
-    path: '/*',
+  const routes: Routes = [
+    {
+    path: '/home',
     filepath: path.join(rootDir, 'src/pages/home'),
     chunkName: 'home',
     componentName: 'Home',
-  }];
+  },
+  {
+    path: '/about',
+    filepath: path.join(rootDir, 'src/pages/about'),
+    chunkName: 'about',
+    componentName: 'About',
+  },
+  {
+    path: '/',
+    filepath: path.join(rootDir, 'src/pages/home'),
+    chunkName: 'home',
+    componentName: 'Index',
+  },
+];
 
   const generator = new Generator({
     rootDir,

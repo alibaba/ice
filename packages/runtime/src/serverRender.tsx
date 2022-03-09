@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server.js';
+import { StaticRouter } from 'react-router-dom/server.js';
 import App from './App.js';
 import DefaultAppRouter from './AppRouter.js';
 
-export default async function render(runtime, requestContext) {
+export default async function serverRender(runtime, requestContext) {
   const appContext = runtime.getAppContext();
   const {
     appConfig,
@@ -19,7 +20,12 @@ export default async function render(runtime, requestContext) {
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
-    AppRouter = DefaultAppRouter;
+    const { req } = requestContext;
+    AppRouter = () => (
+      <StaticRouter location={req.url}>
+        <DefaultAppRouter />
+      </StaticRouter>
+    );
   }
 
   const pageHtml = ReactDOMServer.renderToString(
