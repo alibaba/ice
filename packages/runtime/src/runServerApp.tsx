@@ -12,7 +12,7 @@ export default async function runServerApp(config: AppConfig, runtimeModules, ro
       ...(config?.app || {}),
     },
     router: {
-      type: 'hash',
+      type: 'browser',
       ...(config?.router || {}),
     },
   };
