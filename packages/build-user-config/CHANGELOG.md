@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- [fix] compatible with rax-app devServer when config `webpack5`
+
 ## 2.2.1
 
 - [fix] compatible with dev server
