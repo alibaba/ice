@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+- [fix] compatible with dev server
+
 ## 2.2.0
 
 - [feat] support env variables
