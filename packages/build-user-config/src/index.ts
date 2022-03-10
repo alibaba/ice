@@ -1,6 +1,7 @@
+import getEnhancedWebpackConfig from './getEnhancedWebpackConfig';
+
 const applyCliOption = require('./applyCliOption');
 const applyUserConfig = require('./applyUserConfig');
-const getEnhancedWebpackConfig = require('./getEnhancedWebpackConfig');
 const baseUserConfig = require('./config/user.config.js');
 const generateDefaultConfig = require('./utils/generateDefaultConfig');
 

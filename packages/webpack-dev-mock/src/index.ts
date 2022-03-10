@@ -7,7 +7,7 @@ import * as bodyParser from 'body-parser';
 import * as chokidar from 'chokidar';
 import * as multer from 'multer';
 import * as debounce from 'lodash.debounce';
-import analyzeDenpendencies from './analyzeMockDeps';
+import { register } from 'esbuild-register/dist/node';
 import matchPath from './matchPath';
 
 type IIgnoreFolders = string[];
@@ -30,20 +30,11 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
     cwd: rootDir,
     ignore,
   }).map(file => path.join(rootDir, file));
-  const requireDeps = mockFiles.reduce((pre, curr) => {
-    return pre.concat(analyzeDenpendencies(curr));
-  }, []);
-  const onlySet = Array.from(new Set([...requireDeps, ...mockFiles]));
-  // set @babel/register for node's require
-  // eslint-disable-next-line global-require
-  require('@babel/register')({
-    presets: [require.resolve('./babelPresetNode')],
-    ignore: [/node_modules/],
-    only: onlySet,
-    extensions: ['.js', '.ts'],
-    babelrc: false,
-    cache: false,
+  const { unregister } = register({
+    target: ['node12'],
+    hookIgnoreNodeModules: true,
   });
+  
   const mockConfig = {};
   mockFiles.forEach(mockFile => {
     if (fse.existsSync(mockFile)) {
@@ -66,6 +57,8 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
       }
     }
   });
+  // revert require hook after requiring all mock files
+  unregister();
   return mockConfig;
 }
 

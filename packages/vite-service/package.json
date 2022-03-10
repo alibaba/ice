@@ -1,6 +1,6 @@
 {
   "name": "@builder/vite-service",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "vite implementation",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -22,7 +22,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.5.0",
+    "@builder/app-helpers": "^2.5.2",
     "@rollup/pluginutils": "^4.1.1",
     "@vitejs/plugin-legacy": "^1.5.0",
     "@vitejs/plugin-react": "^1.0.7",

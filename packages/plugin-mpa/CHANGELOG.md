@@ -1,5 +1,9 @@
 # changelog
 
+## 2.1.1
+
+- [fix] additional analyze for auth
+
 ## 2.1.0
 
 - [feat] optimize runtime when build
