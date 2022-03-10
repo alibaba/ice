@@ -15,6 +15,8 @@ module.exports = (config, mock, context) => {
         let app;
         if (appOrMiddlewares.get) {
           app = appOrMiddlewares;
+        } else if (appOrMiddlewares.app) {
+          app = appOrMiddlewares.app;
         } else {
           app = server.app;
           middlewares = appOrMiddlewares;
