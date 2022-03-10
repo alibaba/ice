@@ -104,7 +104,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          outDir: outDir,
+          outDir,
           routeManifest,
         }),
       });
