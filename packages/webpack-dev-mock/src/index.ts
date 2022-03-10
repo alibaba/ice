@@ -7,11 +7,8 @@ import * as bodyParser from 'body-parser';
 import * as chokidar from 'chokidar';
 import * as multer from 'multer';
 import * as debounce from 'lodash.debounce';
-import { addHook as addRequireHook } from 'pirates';
-import { transformSync } from 'esbuild';
-import analyzeDenpendencies from './analyzeMockDeps';
+import { register } from 'esbuild-register/dist/node';
 import matchPath from './matchPath';
-import esbuildPreset from './esbuildPresetNode';
 
 type IIgnoreFolders = string[];
 
@@ -33,19 +30,10 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
     cwd: rootDir,
     ignore,
   }).map(file => path.join(rootDir, file));
-  const requireDeps = mockFiles.reduce((pre, curr) => {
-    return pre.concat(analyzeDenpendencies(curr));
-  }, []);
-  const onlySet = new Set([...requireDeps, ...mockFiles]);
-  // add require hook to transform [j/t]s file
-  const revertRequireHook = addRequireHook(
-    (source) => transformSync(source, esbuildPreset).code,
-    {
-      exts: ['.js', '.ts'],
-      matcher: (filename: string) =>
-        !filename.includes('node_modules') && onlySet.has(filename),
-    }
-  );
+  const { unregister } = register({
+    target: ['node12'],
+    hookIgnoreNodeModules: true,
+  });
   
   const mockConfig = {};
   mockFiles.forEach(mockFile => {
@@ -70,7 +58,7 @@ function getConfig(rootDir: string, ignore: IIgnoreFolders) {
     }
   });
   // revert require hook after requiring all mock files
-  revertRequireHook();
+  unregister();
   return mockConfig;
 }
 
