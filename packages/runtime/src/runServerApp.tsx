@@ -3,7 +3,14 @@ import Runtime from './runtime.js';
 import serverRender from './serverRender.js';
 import type { AppContext, AppConfig } from './types';
 
-export default async function runServerApp(config: AppConfig, runtimeModules, routes, Document, requestContext) {
+export default async function runServerApp(
+    config: AppConfig,
+    runtimeModules,
+    routes,
+    Document,
+    requestContext,
+    documentOnly: boolean,
+  ) {
   const appConfig: AppConfig = {
     ...config,
     app: {
@@ -33,5 +40,5 @@ export default async function runServerApp(config: AppConfig, runtimeModules, ro
     runtime.loadModule(m);
   });
 
-  return serverRender(runtime, requestContext);
+  return serverRender(runtime, requestContext, documentOnly);
 }

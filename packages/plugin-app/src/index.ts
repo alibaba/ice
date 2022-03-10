@@ -1,10 +1,10 @@
 import path from 'path';
-import fs from 'fs';
 import chalk from 'chalk';
 import openBrowser from './utils/openBrowser.js';
 import type { Plugin } from '@ice/types';
 import { setupRenderServer } from './ssr/server.js';
 import { buildEntry } from './ssr/build.js';
+import generateHtml from './ssr/generateHtml.js';
 
 // TODO: register more cli options
 const cliOptions = [
@@ -43,15 +43,8 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
 
     if (command === 'build') {
-      // generator html to outputDir
       const entryPath = path.resolve(outDir, 'server/entry.mjs');
-      const serverEntry = await import(entryPath);
-      const htmlContent = await serverEntry.render({
-        req: {
-          url: '/',
-        },
-      });
-      fs.writeFileSync(path.join(outDir, 'index.html'), htmlContent);
+      await generateHtml(entryPath, outDir, routeManifest);
     }
   });
 
@@ -104,7 +97,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          outDir: outDir,
+          entry: path.resolve(outDir, 'server/entry.mjs'),
           routeManifest,
         }),
       });
