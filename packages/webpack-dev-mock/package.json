@@ -19,14 +19,13 @@
     "chalk": "^2.4.1",
     "chokidar": "^3.5.2",
     "debug": "^3.1.0",
-    "esbuild": "^0.14.11",
+    "esbuild-register": "^3.3.2",
     "express-http-proxy": "^1.2.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.4",
     "lodash.debounce": "^4.0.8",
     "multer": "^1.4.2",
-    "path-to-regexp": "^1.7.0",
-    "pirates": "^4.0.4"
+    "path-to-regexp": "^1.7.0"
   },
   "devDependencies": {
     "express": "^4.16.3"
