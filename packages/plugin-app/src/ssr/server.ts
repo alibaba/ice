@@ -1,15 +1,13 @@
-import path from 'path';
-
 interface Options {
-  outDir: string;
   // TODO: type
   routeManifest: any;
+  entry: string;
 }
 
 export function setupRenderServer(options: Options) {
   const {
-    outDir,
     routeManifest,
+    entry,
   } = options;
 
   return async (req, res) => {
@@ -17,8 +15,7 @@ export function setupRenderServer(options: Options) {
       return;
     }
 
-    const entryPath = path.resolve(outDir, 'server/entry.mjs');
-    const serverEntry = await import(entryPath);
+    const serverEntry = await import(entry);
 
     // TODO: disable cache
     const html = await serverEntry.render({

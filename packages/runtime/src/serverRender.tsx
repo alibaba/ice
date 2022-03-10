@@ -1,17 +1,23 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server.js';
 import { StaticRouter } from 'react-router-dom/server.js';
+import type Runtime from './runtime.js';
 import App from './App.js';
 import DefaultAppRouter from './AppRouter.js';
 
-export default async function serverRender(runtime, requestContext) {
+export default async function serverRender(
+  runtime: Runtime,
+  requestContext,
+  documentOnly: boolean,
+) {
   const appContext = runtime.getAppContext();
-  const {
-    appConfig,
-    document: Document,
-  } = appContext;
+  const { appConfig, document: Document } = appContext;
 
   const documentHtml = ReactDOMServer.renderToString(<Document />);
+
+  if (documentOnly) {
+    return documentHtml;
+  }
 
   const { strict } = appConfig.app;
 
