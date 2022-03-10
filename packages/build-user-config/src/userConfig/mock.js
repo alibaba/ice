@@ -5,8 +5,11 @@ module.exports = (config, mock, context) => {
   const { commandArgs, command, webpack } = context;
   const isWebpack4 = /^4\./.test(webpack.version);
   if (!commandArgs.disableMock && command === 'start' && mock) {
+    // __FRAMEWORK_VERSION__ only defined in ice.js
+    // FIXME: remove process.env.__FRAMEWORK_VERSION__ when rax-app update @builder/pack
+    const hookName = process.env.__FRAMEWORK_VERSION__ ? 'setupMiddlewares' : 'onBeforeSetupMiddleware';
     // Compat with webpack4
-    const beforeHookName = isWebpack4 ? 'before' : 'setupMiddlewares';
+    const beforeHookName = isWebpack4 ? 'before' : hookName;
     const originalDevServeBefore = config.devServer.get(beforeHookName);
     // replace devServer before function
     config.merge({ devServer: {
