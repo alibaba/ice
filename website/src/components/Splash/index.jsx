@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../Button';
-import styles from './splash.module.css';
 import splash from '../../../static/img/splash.png';
+import styles from './splash.module.css';
 
 function Splash() {
   return (

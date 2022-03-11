@@ -1,38 +1,23 @@
-import { createRequire } from 'module';
-import * as path from 'path';
 import consola from 'consola';
 import type { Context } from 'build-scripts';
 import type { StatsError } from 'webpack';
+import type { Config } from '@ice/types';
+import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { getTransformPlugins } from '@builder/webpack-config';
-import type { Config } from '@ice/types';
+import type { ContextConfig } from '../utils/getContextConfig.js';
 
-const require = createRequire(import.meta.url);
-
-const build = async (context: Context<Config>) => {
-  const { getConfig, applyHook, commandArgs, command, rootDir } = context;
-  const configs = getConfig();
-  if (!configs.length) {
-    const errMsg = 'Task config is not found';
-    await applyHook('error', { err: new Error(errMsg) });
-    return;
-  }
-
-  const { config } = configs.find(({ name }) => name === 'web');
-  config.alias = {
-    ...config.alias,
-    '@ice/plugin-auth/runtime': path.join(require.resolve('@ice/plugin-auth'), '../../runtime'),
-  };
+const build = async (context: Context<Config>, contextConfig: ContextConfig[], esbuildCompile: EsbuildCompile) => {
+  const { applyHook, commandArgs, command, rootDir } = context;
+  const webConfig = contextConfig.find(({ name }) => name === 'web');
   const compiler = await webpackCompiler({
     rootDir,
-    config,
+    webpackConfigs: contextConfig.map(({ webpackConfig }) => webpackConfig),
+    taskConfig: webConfig.taskConfig,
     commandArgs,
     command,
     applyHook,
-    getTransformPlugins: (config) => {
- return getTransformPlugins(rootDir, config);
-},
+    esbuildCompile,
   });
   await new Promise((resolve, reject): void => {
     let messages: { errors: string[]; warnings: string[] };

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './ecology.module.css';
 import AreaWrapper from '../AreaWrapper';
+import styles from './ecology.module.css';
 
 const data = [
   {

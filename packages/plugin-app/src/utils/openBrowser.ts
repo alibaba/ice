@@ -7,11 +7,11 @@
  */
 
 import path from 'path';
-import chalk from 'chalk';
 import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+import chalk from 'chalk';
 import spawn from 'cross-spawn';
 import open from 'open';
-import { fileURLToPath } from 'url';
 
 // https://github.com/sindresorhus/open#app
 let OSX_CHROME = 'google chrome';

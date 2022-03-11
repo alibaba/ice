@@ -1,5 +1,5 @@
-import glob from 'glob';
 import path from 'path';
+import glob from 'glob';
 import fse from 'fs-extra';
 import { run } from './shell';
 

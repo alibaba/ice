@@ -5,8 +5,6 @@ import fg from 'fast-glob';
 import ejs from 'ejs';
 import prettier from 'prettier';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
-import getRuntimeModules from '../utils/getRuntimeModules.js';
-import formatPath from '../utils/formatPath.js';
 import type {
   SetPlugins,
   AddExport,
@@ -27,6 +25,8 @@ import type {
   ExportData,
   Registration,
 } from '@ice/types/esm/generator.js';
+import getRuntimeModules from '../utils/getRuntimeModules.js';
+import formatPath from '../utils/formatPath.js';
 
 const { debounce } = lodash;
 

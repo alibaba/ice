@@ -1,9 +1,8 @@
 import path from 'path';
 import chalk from 'chalk';
-import openBrowser from './utils/openBrowser.js';
 import type { Plugin } from '@ice/types';
+import openBrowser from './utils/openBrowser.js';
 import { setupRenderServer } from './ssr/server.js';
-import { buildServerEntry } from './ssr/build.js';
 import generateHtml from './ssr/generateHtml.js';
 
 // TODO: register more cli options
@@ -27,22 +26,22 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     '/home': '/src/pages/home',
   };
 
-  let outDir;
+  let outDir: string;
 
-  onHook(`before.${command as 'start' | 'build'}.run`, async ({ getTransformPlugins, config }) => {
-    outDir = config.outputDir || path.join(rootDir, 'build');
-    config.isServer = true;
+  onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
+    outDir = taskConfig.outputDir || path.join(rootDir, 'build');
     // TODO: watch file changes and rebuild
-    await buildServerEntry({
-      outDir: path.join(outDir, 'server'),
-      entry: path.join(rootDir, '.ice/entry.server'),
-      // alias will be formatted as Record<string, string>
-      // TODO consider with alias to false
-      alias: config.alias,
-      plugins: getTransformPlugins(config),
-    });
+    await esbuildCompile({
+      entryPoints: [path.join(rootDir, '.ice/entry.server')],
+      outdir: path.join(outDir, 'server'),
+      // platform: 'node',
+      format: 'esm',
+      outExtension: { '.js': '.mjs' },
+      external: ['./node_modules/*', 'react'],
+    }, { isServer: true });
 
     if (command === 'build') {
+      // generator html to outputDir
       const entryPath = path.resolve(outDir, 'server/entry.mjs');
       await generateHtml(entryPath, outDir, routeManifest);
     }

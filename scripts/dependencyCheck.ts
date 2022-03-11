@@ -1,6 +1,6 @@
 import { execaCommand } from 'execa';
-import getPackages from './getPackages';
 import chalk from 'chalk';
+import getPackages from './getPackages';
 
 (async () => {
   const { packageDirs } = await getPackages();
