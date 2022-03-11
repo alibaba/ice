@@ -1,53 +1,20 @@
-import { createRequire } from 'module';
-import * as path from 'path';
 import WebpackDevServer from 'webpack-dev-server';
 import type { Configuration } from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
-import { getWebpackConfig, getTransformPlugins } from '@builder/webpack-config';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
+import type { Config } from '@ice/types';
+import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import prepareURLs from '../utils/prepareURLs.js';
-import type { Config } from '@ice/types';
+import type { ContextConfig } from '../utils/getContextConfig.js';
 
-const require = createRequire(import.meta.url);
 const { defaultsDeep } = lodash;
 
-interface IWebTaskConfig {
-  name: string;
-  config: Config;
-}
+const start = async (context: Context<Config>, contextConfig: ContextConfig[], esbuildCompile: EsbuildCompile) => {
+  const { applyHook, commandArgs, command, rootDir } = context;
 
-const start = async (context: Context<Config>) => {
-  const { getConfig, applyHook, commandArgs, command, rootDir } = context;
-
-  // FIXME: getConfig -> getConfigs, because getConfig will return an array
-  const configs = getConfig();
-  if (!configs.length) {
-    const errMsg = 'Task config is not found';
-    await applyHook('error', { err: new Error(errMsg) });
-    return;
-  }
-  const webConfig = configs.find(({ name }) => name === 'web');
-  if (!webConfig) {
-    const errMsg = 'Web task config is not found';
-    await applyHook('error', { err: new Error(errMsg) });
-    return;
-  }
-  const { config } = webConfig as IWebTaskConfig;
-  config.alias = {
-    ...config.alias,
-    // TODO: 放在各自插件里还是放在 ice 里？
-    // TODO: make pkg.json exports works; build 复用逻辑
-    // '@ice/plugin-auth/runtime': require.resolve('@ice/plugin-auth/runtime'),
-    '@ice/plugin-auth/runtime': path.join(require.resolve('@ice/plugin-auth'), '../../runtime'),
-  };
-
-  // transform config to webpack config
-  const webpackConfig = getWebpackConfig({
-    rootDir,
-    config,
-    commandArgs,
-  });
+  // TODO: task includes miniapp / kraken / pha
+  const { webpackConfig, taskConfig } = contextConfig.find(({ name }) => name === 'web');
 
   let devServerConfig: Configuration = {
     port: commandArgs.port || 3333,
@@ -64,15 +31,15 @@ const start = async (context: Context<Config>) => {
     devServerConfig.host,
     devServerConfig.port as number,
   );
-
   const compiler = await webpackCompiler({
     rootDir,
-    config,
+    webpackConfigs: contextConfig.map(({ webpackConfig }) => webpackConfig),
+    taskConfig,
     urls,
     commandArgs,
     command,
     applyHook,
-    getTransformPlugins: (config) => getTransformPlugins(rootDir, config),
+    esbuildCompile,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {

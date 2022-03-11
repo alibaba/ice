@@ -1,10 +1,9 @@
 import path from 'path';
 import chalk from 'chalk';
-import openBrowser from './utils/openBrowser.js';
 import type { Plugin } from '@ice/types';
+import openBrowser from './utils/openBrowser.js';
 import { setupRenderServer } from './ssr/server.js';
-import { buildEntry } from './ssr/build.js';
-import generateHtml from './ssr/generateHtml.js';
+import renderDocument from './ssr/renderDocument.js';
 
 // TODO: register more cli options
 const cliOptions = [
@@ -27,24 +26,22 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     '/home': '/src/pages/home',
   };
 
-  let outDir;
+  let outDir: string;
 
-  onHook(`before.${command as 'start' | 'build'}.run`, async ({ getTransformPlugins, config }) => {
-    outDir = config.outputDir || path.join(rootDir, 'build');
-    config.isServer = true;
+  onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
+    outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
-    await buildEntry({
-      outDir: path.join(outDir, 'server'),
-      entry: path.join(rootDir, '.ice/entry.server'),
-      // alias will be formatted as Record<string, string>
-      // TODO consider with alias to false
-      alias: config.alias,
-      plugins: getTransformPlugins(config),
-    });
+    await esbuildCompile({
+      entryPoints: [path.join(rootDir, 'src/document.tsx')],
+      outdir: outDir,
+      platform: 'node',
+      external: ['./node_modules/*'],
+    }, { isServer: true });
 
     if (command === 'build') {
-      const entryPath = path.resolve(outDir, 'server/entry.mjs');
-      await generateHtml(entryPath, outDir, routeManifest);
+      // generator html to outputDir
+      const htmlContent = renderDocument(path.join(taskConfig.outputDir, 'document.js'));
+      fs.writeFileSync(path.join(taskConfig.outputDir, 'index.html'), htmlContent);
     }
   });
 

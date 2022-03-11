@@ -15,6 +15,7 @@ const commonRules = {
   'react/static-property-placement': 0,
   'no-multiple-empty-lines': 1,
   'react/jsx-no-bind': 0,
+  'import/order': 1,
 };
 
 module.exports = getESLintConfig('react-ts', {

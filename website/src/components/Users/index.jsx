@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './users.module.css';
 import AreaWrapper from '../AreaWrapper';
+import styles from './users.module.css';
 
 const data = [
   {

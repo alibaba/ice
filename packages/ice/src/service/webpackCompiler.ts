@@ -1,32 +1,31 @@
 import webpack from 'webpack';
 import consola from 'consola';
-import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { getWebpackConfig } from '@builder/webpack-config';
 import type { CommandArgs } from 'build-scripts';
 import type { Compiler, Configuration } from 'webpack';
-import type { UnpluginOptions } from 'unplugin';
-import type { Urls } from '@ice/types/esm/plugin.js';
+import type { Urls, EsbuildCompile } from '@ice/types/esm/plugin.js';
 import type { Config } from '@ice/types';
+import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 
 async function webpackCompiler(options: {
-  config: Config;
+  webpackConfigs: Configuration | Configuration[];
+  taskConfig: Config;
   command: string;
   commandArgs: CommandArgs;
   applyHook: (key: string, opts?: {}) => Promise<void>;
   rootDir: string;
   urls?: Urls;
-  getTransformPlugins?: (config: Config) => UnpluginOptions[];
+  esbuildCompile: EsbuildCompile;
 }) {
-  const { rootDir, config, urls, applyHook, command, commandArgs, getTransformPlugins } = options;
+  const { taskConfig, urls, applyHook, command, commandArgs, esbuildCompile, webpackConfigs } = options;
   await applyHook(`before.${command}.run`, {
     commandArgs,
-    config,
-    getTransformPlugins,
+    taskConfig,
+    webpackConfigs,
+    esbuildCompile,
   });
   let compiler: Compiler;
   try {
-    const webpackConfig = getWebpackConfig({ rootDir, config });
-    compiler = webpack(webpackConfig as Configuration);
+    compiler = webpack(webpackConfigs as Configuration);
   } catch (err) {
     consola.error('Failed to compile.');
     consola.log('');
