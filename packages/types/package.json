@@ -29,10 +29,10 @@
     "build-scripts": "^2.0.0-9",
     "esbuild": "^0.14.23",
     "@ice/runtime": "^1.0.0",
+    "@ice/route-manifest": "^1.0.0",
     "react": "^17.0.2",
     "unplugin": "^0.3.2",
     "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4"
-  },
-  "type": "module"
+  }
 }

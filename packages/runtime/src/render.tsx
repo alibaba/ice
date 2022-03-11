@@ -19,6 +19,7 @@ export default async function render(runtime: Runtime) {
   const isSSR = true;
   const render = isSSR ? ReactDOM.hydrate : runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
+  const PageWrappers = runtime.getWrapperPageRegistration();
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
@@ -31,9 +32,6 @@ export default async function render(runtime: Runtime) {
     );
   }
 
-  if (appConfig.app?.getInitialData) {
-  }
-
   const appMountNode = getAppMountNode(rootId);
 
   // default ReactDOM.render
@@ -41,6 +39,7 @@ export default async function render(runtime: Runtime) {
     <StrictMode>
       <App
         AppProvider={AppProvider}
+        PageWrappers={PageWrappers}
         AppRouter={AppRouter}
         appContext={appContext}
       />

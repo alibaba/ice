@@ -24,12 +24,13 @@ export default {
   },
   roots: [
     '<rootDir>/packages',
-    '<rootDir>/test',
+    '<rootDir>/tests',
   ],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/esm/',
     'create-cli-utils/',
+    '/tests/fixtures/'
   ],
   extensionsToTreatAsEsm: ['.ts'],
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],

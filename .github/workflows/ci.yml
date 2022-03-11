@@ -33,7 +33,7 @@ jobs:
       - run: npm run setup
       - run: npm run dependency:check
       - run: npm run lint
-      - run: npm run test
+      - run: npm run test:ci
       - run: npm run version:check
         env:
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}

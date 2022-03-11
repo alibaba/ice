@@ -25,14 +25,21 @@ export {
 export interface RouteItem {
   path: string;
   component: ComponentType;
+  componentName: string;
+  index?: false;
   exact?: boolean;
   strict?: boolean;
   children?: RouteItem[];
 }
 
-export type PageWrapper<InjectProps> = (<Props>(Component: React.ComponentType<Props & InjectProps>) => ComponentType<Props>);
-export type SetAppRouter = (AppRouter: React.ComponentType) => void;
-export type AddProvider = (Provider: React.ComponentType) => void;
+export interface PageConfig {
+  title?: string;
+  auth?: string[];
+}
+
+export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
+export type SetAppRouter = (AppRouter: ComponentType) => void;
+export type AddProvider = (Provider: ComponentType) => void;
 export type SetRender = (render: Renderer) => void;
 export type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;
 
