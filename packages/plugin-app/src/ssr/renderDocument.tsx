@@ -1,4 +1,3 @@
-import path from 'path';
 import { createRequire } from 'module';
 import React from 'react';
 import type { ComponentType } from 'react';

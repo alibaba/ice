@@ -3,13 +3,14 @@ import { fileURLToPath } from 'url';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName, IGetBuiltInPlugins } from 'build-scripts';
+import type { ExportData } from '@ice/types/esm/generator.js';
+import type { ExtendsPluginAPI, Routes } from '@ice/types/esm/plugin.js';
 import Generator from './service/runtimeGenerator.js';
-import preCompile from './service/preCompile.js';
+import { createEsbuildCompiler } from './service/compile.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
-import type { ExportData } from '@ice/types/esm/generator.js';
-import type { ExtendsPluginAPI, Routes } from '@ice/types/esm/plugin.js';
+import getContextConfig from './utils/getContextConfig.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,9 +22,6 @@ interface CreateServiceOptions {
 }
 
 async function createService({ rootDir, command, commandArgs, getBuiltInPlugins }: CreateServiceOptions) {
-  // TODO pre compile
-  preCompile();
-
   // TODO: watch and generate routeManifest
   const routes: Routes = [{
     path: '/*',
@@ -81,12 +79,19 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
   generator.render();
   consola.debug('template render cost:', new Date().getTime() - renderStart);
 
+  const contextConfig = getContextConfig(ctx);
+  const webTask = contextConfig.find(({ name }) => name === 'web');
+  const esbuildCompile = createEsbuildCompiler({
+    alias: webTask.webpackConfig.resolve.alias as Record<string, string>,
+    getTransformPlugins: webTask.getTransformPlugins,
+  });
+
   return {
     run: async () => {
       if (command === 'start') {
-        return await start(ctx);
+        return await start(ctx, contextConfig, esbuildCompile);
       } else if (command === 'build') {
-        return await build(ctx);
+        return await build(ctx, contextConfig, esbuildCompile);
       }
     },
   };

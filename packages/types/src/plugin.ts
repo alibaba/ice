@@ -2,12 +2,13 @@ import type webpack from 'webpack';
 import type { IPluginAPI, CommandArgs } from 'build-scripts';
 import type { Configuration, Stats } from 'webpack';
 import type WebpackDevServer from 'webpack-dev-server';
-import type { UnpluginOptions } from 'unplugin';
+import type { BuildOptions, BuildResult } from 'esbuild';
 import type { Config } from './config.js';
 import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js';
 
 type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
+export type EsbuildCompile = (buildOptions: BuildOptions, customConfig?: Partial<Config>) => Promise<BuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
   event: (eventName: EventName, filePath: string) => void,
@@ -23,8 +24,9 @@ export interface Urls {
 
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
-  config: Config;
-  getTransformPlugins?: (config: Config) => UnpluginOptions[];
+  webpackConfigs: Configuration | Configuration[];
+  taskConfig: Config;
+  esbuildCompile: EsbuildCompile;
 }
 
 interface AfterCommandCompileOptions {
