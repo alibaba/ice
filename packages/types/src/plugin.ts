@@ -3,6 +3,7 @@ import type { IPluginAPI, CommandArgs } from 'build-scripts';
 import type { Configuration, Stats } from 'webpack';
 import type WebpackDevServer from 'webpack-dev-server';
 import type { BuildOptions, BuildResult } from 'esbuild';
+import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from './config.js';
 import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js';
 
@@ -51,18 +52,10 @@ export interface HookLifecycle {
 export type ApplyHook = <T extends keyof HookLifecycle>(lifecycle: T, args: HookLifecycle[T]) => void;
 type OnHook = <T extends keyof HookLifecycle>(lifecycle: T, callback: (args: HookLifecycle[T]) => void) => void;
 
-export interface RouteItem {
-  path: string;
-  filepath: string;
-  chunkName: string;
-  componentName: string;
-}
-
-export type Routes = RouteItem[];
+export type Routes = NestedRouteManifest[];
 
 export interface ExtendsPluginAPI {
   context: {
-    routes: Routes;
     webpack?: typeof webpack;
   };
   generator: {

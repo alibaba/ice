@@ -11,13 +11,11 @@ export default async function render(runtime: Runtime) {
   const StrictMode = strict ? React.StrictMode : React.Fragment;
   const render = runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
+  const PageWrappers = runtime.getWrapperPageRegistration();
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     AppRouter = DefaultAppRouter;
-  }
-
-  if (appConfig.app?.getInitialData) {
   }
 
   const appMountNode = getAppMountNode(rootId);
@@ -27,6 +25,7 @@ export default async function render(runtime: Runtime) {
     <StrictMode>
       <App
         AppProvider={AppProvider}
+        PageWrappers={PageWrappers}
         AppRouter={AppRouter}
         appContext={appContext}
       />

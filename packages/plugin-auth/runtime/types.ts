@@ -1,5 +1,5 @@
 export interface AuthConfig {
-  NoAuthFallback?: React.ReactNode;
+  NoAuthFallback?: React.ComponentType;
 }
 
 export type AuthType = Record<string, boolean>;

@@ -16,7 +16,8 @@
     "lint:diff": "esmo ./scripts/lintDiff.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit --ci --config ./jest.config.mjs",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit --config ./jest.config.mjs",
+    "test:ci": "npm run test -- --ci",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --config ./jest.config.mjs"
   },
   "author": "ice-admin@alibaba-inc.com",

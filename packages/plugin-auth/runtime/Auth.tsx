@@ -1,31 +1,17 @@
 import * as React from 'react';
-import { createContext, useState, useContext } from 'react';
-import type { FC } from 'react';
-import type { ContextType, AuthType } from './types';
+import { createContext, useContext } from 'react';
+import type { ContextType } from './types';
 
 const Context = createContext<any>(null);
 
 Context.displayName = 'AuthContext';
 
-interface ProviderProps {
-  value: AuthType;
-}
+const AuthProvider = Context.Provider;
 
 interface InjectProps {
   auth: ContextType[0];
   useAuth: ContextType[1];
 }
-
-const AuthProvider: FC<ProviderProps> = ({ value = {}, children }) => {
-  const [state, setState] = useState<AuthType>(value);
-  const updateState: InjectProps['useAuth'] = (newState = {}) => {
-    setState({
-      ...state,
-      ...newState,
-    });
-  };
-  return <Context.Provider value={[state, updateState]}>{children}</Context.Provider>;
-};
 
 const useAuth = (): ContextType => {
   const value = useContext(Context);
@@ -43,4 +29,9 @@ function withAuth<Props extends InjectProps>(Component: React.ComponentType<Prop
   return AuthWrapped;
 }
 
-export { useAuth, withAuth, AuthProvider };
+export {
+  useAuth,
+  withAuth,
+  AuthProvider,
+  InjectProps,
+};

@@ -24,6 +24,7 @@
     "@ice/plugin-app": "^1.0.0",
     "@ice/plugin-auth": "^1.0.0",
     "@ice/plugin-router": "^1.0.0",
+    "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
     "address": "^1.1.2",
     "build-scripts": "^2.0.0-7",
