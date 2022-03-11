@@ -10,7 +10,7 @@ interface Options {
   plugins?: UnpluginOptions[];
 }
 
-export async function buildEntry(options: Options): Promise<esbuild.BuildResult> {
+export async function buildServerEntry(options: Options): Promise<esbuild.BuildResult> {
   const { alias = {}, plugins = [], outDir, entry } = options;
   const aliasKey = Object.keys(alias);
   const resolveFilter = new RegExp(`^(${aliasKey.map((str) => {

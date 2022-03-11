@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import openBrowser from './utils/openBrowser.js';
 import type { Plugin } from '@ice/types';
 import { setupRenderServer } from './ssr/server.js';
-import { buildEntry } from './ssr/build.js';
+import { buildServerEntry } from './ssr/build.js';
 import generateHtml from './ssr/generateHtml.js';
 
 // TODO: register more cli options
@@ -33,7 +33,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     outDir = config.outputDir || path.join(rootDir, 'build');
     config.isServer = true;
     // TODO: watch file changes and rebuild
-    await buildEntry({
+    await buildServerEntry({
       outDir: path.join(outDir, 'server'),
       entry: path.join(rootDir, '.ice/entry.server'),
       // alias will be formatted as Record<string, string>
