@@ -37,6 +37,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       // platform: 'node',
       format: 'esm',
       outExtension: { '.js': '.mjs' },
+      // FIXME: https://github.com/ice-lab/ice-next/issues/27
       external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
 
