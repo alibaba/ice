@@ -26,7 +26,8 @@ const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
   }
 
   if (routes.length === 1 && !routes[0].children) {
-    return routes[0].component;
+    const Page = routes[0].component;
+    return <Page />;
   }
 
   const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
