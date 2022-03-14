@@ -7,5 +7,5 @@ import Document from '@/document';
 const routes = <%- routesStr %>;
 
 export async function render(requestContext, documentOnly = false) {
-  return await runServerApp(appConfig, runtimeModules, routes, Document, requestContext, documentOnly);
+  return await runServerApp(requestContext, appConfig, runtimeModules, routes, Document, documentOnly);
 }

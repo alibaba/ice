@@ -4,11 +4,11 @@ import serverRender from './serverRender.js';
 import type { AppContext, AppConfig } from './types';
 
 export default async function runServerApp(
+    requestContext,
     config: AppConfig,
     runtimeModules,
     routes,
     Document,
-    requestContext,
     documentOnly: boolean,
   ) {
   const appConfig: AppConfig = {
