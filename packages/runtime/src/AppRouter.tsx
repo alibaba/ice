@@ -12,10 +12,12 @@ import type { PageWrapper, RouteItem } from './types';
 
 interface AppRouterProps {
   PageWrappers?: PageWrapper<any>[];
+  Router?: React.ComponentType;
+  routerProps?: object;
 }
 
 const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
-  const { PageWrappers } = props;
+  const { PageWrappers, Router, routerProps = {} } = props;
   const appContext = useAppContext();
   const { routes } = appContext;
 
@@ -32,7 +34,7 @@ const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
 
   const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
   return (
-    <Router>
+    <Router {...routerProps}>
       <App routes={routes} PageWrappers={PageWrappers} />
     </Router>
   );
