@@ -1,0 +1,30 @@
+{
+  "name": "build-plugin-dev-inspector",
+  "version": "0.1.2",
+  "description": "devtool for inspecting react components and jump to local IDE for ice.js and rax-app",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib",
+    "src",
+    "!lib/**/*.map"
+  ],
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-dev-inspector"
+  },
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/generator": "^7.11.6",
+    "@babel/parser": "^7.11.5",
+    "@babel/traverse": "^7.11.5",
+    "inspector-dom": "^0.1.1",
+    "loader-utils": "^2.0.0"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.1.0"
+  }
+}

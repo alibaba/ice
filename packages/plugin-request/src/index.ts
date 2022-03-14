@@ -1,23 +1,31 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
 
 export default async function (api) {
   const { getValue, applyMethod, onGetWebpackConfig } = api;
   const templatePath = path.join(__dirname, '..', 'template');
-  const distPath = path.join(getValue('TEMP_PATH'), 'request');
+  const distPath = path.join(getValue('TEMP_PATH'), 'plugins' ,'request');
 
-  // move template to .ice/request
-  await fse.copy(templatePath, distPath);
-  await fse.copy(path.join(__dirname, 'types'), path.join(distPath, 'types'));
+  applyMethod('addPluginTemplate', templatePath);
 
   // .ice/index.ts:
   // export * from './request';
   // export * from './useRequest';
-  applyMethod('addExport', { source: './request/request', exportName: 'request' });
-  applyMethod('addExport', { source: './request/useRequest', exportName: 'useRequest' });
+  applyMethod('addExport', {
+    source: './plugins/request/request',
+    exportName: 'request',
+    importSource: '$$ice/plugins/request/request',
+    exportDefault: 'request',
+  });
+
+  applyMethod('addExport', {
+    source: './plugins/request/useRequest',
+    exportName: 'useRequest',
+    importSource: '$$ice/plugins/request/useRequest',
+    exportDefault: 'useRequest',
+  });
 
   // add iceTypes exports
-  applyMethod('addAppConfigTypes', { source: './request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
+  applyMethod('addAppConfigTypes', { source: '../plugins/request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
 
   onGetWebpackConfig((config) => {
     // add alias for runtime.ts use $ice/createAxiosInstance

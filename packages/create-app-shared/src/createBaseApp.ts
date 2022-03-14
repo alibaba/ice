@@ -1,46 +1,43 @@
 import RuntimeModule from './runtimeModule';
-import { createHistory } from './history';
-import { isMiniAppPlatform } from './env';
+import { DEFAULT_APP_CONFIG } from './constants';
 import collectAppLifeCycle from './collectAppLifeCycle';
+import type { AppConfig, BuildConfig, Context } from './types';
 
-// eslint-disable-next-line
-const deepmerge = require('deepmerge');
+function mergeDefaultConfig(defaultConfig: AppConfig, config: AppConfig) {
+  Object.keys(defaultConfig).forEach(key => {
+    if (typeof config[key] === 'object' && config[key] !== null) {
+      config[key] = mergeDefaultConfig(defaultConfig[key], config[key]);
+    } else if (!Object.prototype.hasOwnProperty.call(config, key)) {
+      config[key] = defaultConfig[key];
+    }
+  });
+  return config;
+}
 
-const DEFAULE_APP_CONFIG = {
-  app: {
-    rootId: 'root'
-  },
-  router: {
-    type: 'hash'
-  }
-};
-
-export default ({ loadRuntimeModules, createElement }) => {
-  const createBaseApp = (appConfig, buildConfig, context: any = {}) => {
+export default ({ loadRuntimeModules, createElement, runtimeAPI = {}, runtimeValue = {} }) => {
+  const createBaseApp = <T = AppConfig, P = BuildConfig, S = Context>(appConfig: T, buildConfig: P, context: S, staticConfig?: any) => {
 
     // Merge default appConfig to user appConfig
-    appConfig = deepmerge(DEFAULE_APP_CONFIG, appConfig);
-
-    // Set history
-    let history = {};
-    if (!isMiniAppPlatform) {
-      const { router } = appConfig;
-      const { type, basename } = router;
-      history = createHistory({ type, basename });
-      appConfig.router.history = history;
-    }
-
-    context.createElement = createElement;
+    appConfig = mergeDefaultConfig(DEFAULT_APP_CONFIG, appConfig) as T;
+    (context as Context).createElement = createElement;
+    (context as Context).enableRouter = (runtimeValue as any).enableRouter;
 
     // Load runtime modules
-    const runtime = new RuntimeModule(appConfig, buildConfig, context);
+    const runtime = new RuntimeModule(appConfig, buildConfig, context, staticConfig);
+    Object.keys(runtimeAPI).forEach((apiKey: string) => {
+      runtime.registerRuntimeAPI(apiKey, runtimeAPI[apiKey]);
+    });
+
+    // Assign runtime plugin internal value
+    Object.keys(runtimeValue).forEach((key: string) => {
+      runtime.setRuntimeValue(key, runtimeValue[key]);
+    });
+
     loadRuntimeModules(runtime);
 
     // Collect app lifeCyle
     collectAppLifeCycle(appConfig);
-
     return {
-      history,
       runtime,
       appConfig
     };

@@ -3,7 +3,7 @@ const getLoadScriptsCode = require('./getLoadScriptsCode');
 
 const parseArray = (url) => (Array.isArray(url) ? url : [url]);
 
-module.exports = ({ onGetWebpackConfig, log, context, ...restApi }, pluginOptions = {}) => {
+module.exports = ({ onGetWebpackConfig, log, context, getAllTask, ...restApi }, pluginOptions = {}) => {
   const { command } = context;
   const { assets } = pluginOptions;
   if (assets) {
@@ -24,13 +24,22 @@ module.exports = ({ onGetWebpackConfig, log, context, ...restApi }, pluginOption
         assetsUrls[env] = assetsUrls[env].concat(parseArray(assets));
       }
     });
-    onGetWebpackConfig((config) => {
-      config.plugin('loadUrlWrapCodePlugin').tap(([options]) => [
-        { ...options,
-          addCodeBefore: `window.assetsUrls = ${JSON.stringify(assetsUrls[command])};
-            ${options.addCodeBefore || ''}`,
-        },
-      ]);
-    });
+    const taskNames = getAllTask();
+    // compatible with dist output of component dev
+    const ignoreTasks = ['component-dist'];
+    taskNames.forEach((taskName) => {
+      onGetWebpackConfig(taskName, (config) => {
+        if (ignoreTasks.includes(taskName)) {
+          config.plugins.delete('loadUrlWrapCodePlugin');
+        } else {
+          config.plugin('loadUrlWrapCodePlugin').tap(([options]) => [
+            { ...options,
+              addCodeBefore: `window.assetsUrls = ${JSON.stringify(assetsUrls[command])};
+                ${options.addCodeBefore || ''}`,
+            },
+          ]);
+        }
+      });
+    }); 
   }
 };

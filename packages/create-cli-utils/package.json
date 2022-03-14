@@ -1,6 +1,6 @@
 {
   "name": "create-cli-utils",
-  "version": "0.1.5",
+  "version": "1.0.3",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -11,10 +11,12 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "dependencies": {
-    "@alib/build-scripts": "^0.1.24",
+    "@builder/vite-service": "^2.0.2",
+    "build-scripts": "^1.1.0",
     "chalk": "^4.1.0",
     "chokidar": "^3.3.1",
     "commander": "^5.0.0",
@@ -24,8 +26,8 @@
     "yargs-parser": "^18.1.2"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-cli-utils"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

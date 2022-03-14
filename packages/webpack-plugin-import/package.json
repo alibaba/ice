@@ -1,0 +1,26 @@
+{
+  "name": "webpack-plugin-import",
+  "version": "0.3.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\"",
+    "test:server": "node ./tests/index.js"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/webpack-plugin-import"
+  },
+  "keywords": [],
+  "author": "ICE Team",
+  "license": "MIT",
+  "dependencies": {
+    "loader-utils": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
+}

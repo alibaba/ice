@@ -1,12 +1,15 @@
-import React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as React from 'react';
+import { isInIcestark } from '@ice/stark-app';
 import { runApp, IAppConfig } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
-    rootId: 'ice-container'
+    rootId: 'ice-container',
   },
   router: {
-    fallback: <div>加载中...</div>
+    fallback: <div>加载中...</div>,
+    type: 'browser'
   },
   logger: {
     level: 'warn'
@@ -16,4 +19,14 @@ const appConfig: IAppConfig = {
   },
 };
 
-runApp(appConfig);
+if (!isInIcestark()) {
+  runApp(appConfig);
+}
+
+export function mount () {
+  runApp(appConfig);
+}
+
+export function unmount(props) {
+  ReactDOM.unmountComponentAtNode(props.container);
+}

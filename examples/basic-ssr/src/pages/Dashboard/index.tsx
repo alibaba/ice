@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, logger } from 'ice';
+import { Link } from 'ice';
 
 const Dashboard = (props) => {
-  logger.info('Dashboard props', props);
+  console.info('Dashboard props', props);
   return (
     <>
       <h2>{props.title}</h2>
@@ -11,13 +11,14 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.getInitialProps = async () => {
+Dashboard.getInitialProps = async (ctx) => {
+  console.log('Dashboard ctx', ctx);
+
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ title: 'Dashboard Page xxxx...' });
     }, 1 * 1000);
   });
-  // return { title: 'Dashboard Page...' }
 };
 
 export default Dashboard;

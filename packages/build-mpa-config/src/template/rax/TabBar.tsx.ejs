@@ -1,0 +1,63 @@
+import { createElement, Component, Fragment } from 'rax';
+import { isWeb } from 'universal-env';
+import TabBar from  '<%= tabBarPath %>';
+
+const currentPageName = '<%= entryName %>';
+
+const isPHA = isWeb && (window as any).pha;
+const isRaxWebview = isWeb && (window as any).__RAX_WEBVIEW__ === true;
+
+interface ITabItem {
+  path?: string;
+  pageName?: string;
+  name?: string;
+  icon?: string;
+  activeIcon?: string;
+}
+
+interface ITabBarConfig {
+  textColor?: string;
+  selectedColor?: string;
+  backgroundColor?: string;
+  items?: ITabItem[];
+  list?: string[];
+  [key: string]: unknown;
+}
+
+export default class TabBarWrapper extends Component {
+  __shouldRenderTabBar = false;
+  config: ITabBarConfig = <%- JSON.stringify(tabBarConfig) %>
+
+  constructor(props) {
+    super(props);
+
+    if (isPHA || isRaxWebview) {
+      this.__shouldRenderTabBar = false;
+    } else if (this.config.list) {
+      this.__shouldRenderTabBar = this.config.list.includes(currentPageName);
+    } else {
+      this.__shouldRenderTabBar = this.config.items.some(item => item.pageName === currentPageName);
+    }
+  }
+
+  handleTabItemClick = ({ path, pageName }) => {
+    if (path) {
+      (window as any).location.href = path;
+    } else {
+      (window as any).location.href = `/${pageName}.html`;
+    }
+  }
+
+  render() {
+    if (!this.__shouldRenderTabBar) return null;
+    return <Fragment>
+      <% if (tabBarPath.indexOf('src') > -1) {%>
+        <div style={{ position: "fixed", bottom: 0, width: "750rpx", zIndex: 999 }}>
+          <TabBar config={this.config} currentPageName={currentPageName} />
+        </div>
+      <% } else { %>
+        <TabBar config={this.config} onClick={this.handleTabItemClick} currentPageName={currentPageName} />
+        <% } %>
+      </Fragment>;
+  }
+};

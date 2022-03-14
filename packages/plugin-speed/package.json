@@ -1,0 +1,31 @@
+{
+  "name": "build-plugin-speed",
+  "version": "1.0.1",
+  "description": "plugin for log out build speed",
+  "author": "ice-admin@alibaba-inc.com",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "plugin",
+    "react"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@builder/pack": "^0.6.0",
+    "chalk": "^2.4.1"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.1.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-vite"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map",
+    "src/runtime.tsx"
+  ]
+}

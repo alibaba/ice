@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState, useMemo, memo } from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppConfig, AppRouter, AppRoute } from '@ice/stark';
 import {
@@ -8,66 +9,134 @@ import {
   registerAppLeave,
   getBasename,
 } from '@ice/stark-app';
+// @ts-ignore
 import { IceRouter } from '$ice/Router';
+// @ts-ignore
 import DefaultLayout from '$ice/Layout';
 import removeRootLayout from './runtime/removeLayout';
-import { IIceStark } from './types';
+import { IPrivateIceStark, IIceStark, IStarkAppConfig } from './types';
 
-const { useEffect, useState } = React;
-
-const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, createHistory }) => {
+const module = ({
+  appConfig,
+  addDOMRender,
+  buildConfig,
+  setRenderApp,
+  setRenderRouter,
+  wrapperRouterRender,
+  modifyRoutes,
+  applyRuntimeAPI,
+  createHistory,
+  wrapperPageComponent,
+  wrapperRouteComponent
+}) => {
   const { icestark, router } = appConfig;
-  const { type: appType, registerAppEnter: enterRegistration, registerAppLeave: leaveRegistration } = (icestark || {}) as IIceStark;
+  const {
+    type: appType = process.env.__ICESTARK_TYPE__,
+    registerAppEnter: enterRegistration,
+    registerAppLeave: leaveRegistration,
+    getApps,
+    $$props
+  } = (icestark || {}) as IPrivateIceStark;
   const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
+  // compatible with deprecated runtime API
+  const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
+  const createAppHistory = createHistory || ((options: any) => applyRuntimeAPI('createHistory', options));
+  const setRenderComponent = setRenderApp || setRenderRouter;
 
   if (runtimeModifyRoutes) {
     modifyRoutes(runtimeModifyRoutes);
   }
+
   if (appType === 'child') {
-    const history = createHistory({ type, basename: getBasename() });
+    const { icestarkUMD, icestarkType } = buildConfig;
+
+    const localIcestarkType = icestarkType || (icestarkUMD ? 'umd' : 'normal');
+
+    const childBasename = isInIcestark() ? getBasename() : basename;
+
+    const history = createAppHistory({ type, basename: childBasename });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
-          registerAppEnter(() => {
-            const mountNode = getMountNode();
-            if (enterRegistration) {
-              enterRegistration(mountNode, App, resolve);
-            } else {
-              ReactDOM.render(<App />, mountNode, resolve);
+          if (localIcestarkType === 'normal') {
+            // @ts-ignore remove this next time for https://github.com/ice-lab/icestark/pull/440
+            registerAppEnter((props) => {
+              const container = (props && props.container) || getMountNode();
+              if (enterRegistration) {
+                enterRegistration(container, App, resolve);
+              } else {
+                ReactDOM.render(<App />, container, () => {
+                  resolve(true);
+                });
+              }
+            });
+            // make sure the unmount event is triggered
+            // @ts-ignore remove this next time for https://github.com/ice-lab/icestark/pull/440
+            registerAppLeave((props) => {
+              const container = (props && props.container) || getMountNode();
+              if (leaveRegistration) {
+                leaveRegistration(container);
+              } else {
+                ReactDOM.unmountComponentAtNode(container);
+              }
+            });
+          } else {
+            let { container } = $$props ?? {};
+            if (!container) {
+              container = getMountNode() as HTMLElement;
             }
-          });
-          // make sure the unmount event is triggered
-          registerAppLeave(() => {
-            const mountNode = getMountNode();
-            if (leaveRegistration) {
-              leaveRegistration(mountNode);
-            } else {
-              ReactDOM.unmountComponentAtNode(mountNode);
-            }
-          });
+            ReactDOM.render(<App />, container, () => {
+              resolve(true);
+            });
+          }
         } else {
-          ReactDOM.render(<App />, appMountNode, resolve);
+          ReactDOM.render(<App />, appMountNode, () => {
+            resolve(true);
+          });
         }
       });
     });
-    setRenderRouter((routes) => () => {
-      const routerProps = {
-        type,
-        routes,
-        basename: getBasename(),
-        history,
-        fallback
+
+    const wrapperPageFn = (PageComponent) => (props) => {
+      const { customProps = {} } = $$props ?? {};
+
+      const combinedProps = {
+        ...props,
+        frameworkProps: customProps,
       };
-      return <IceRouter {...routerProps} />;
-    });
-  } else if (appType === 'framework') {
-    const { getApps, appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
+
+      return <PageComponent { ...combinedProps } />;
+    };
+
+    // get props by props
+    wrapperComponent(wrapperPageFn);
+
+    const routerProps = {
+      type,
+      basename: childBasename,
+      history,
+      fallback
+    };
+
+    // compatible with the case which lock icejs version
+    if (wrapperRouterRender && !!process.env.__FRAMEWORK_VERSION__) {
+      wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
+        return originRender(routes, RoutesComponent, routerProps);
+      });
+    } else {
+      setRenderComponent((routes) => () => {
+        return <IceRouter {...routerProps} routes={routes} />;
+      });
+    }
+  } else if (appType === 'framework' && getApps) {
+    const { appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
+
     if (removeRoutesLayout) {
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(createHistory({ type, basename }));
+      const [routerHistory] = useState(createAppHistory({ type, basename }));
       const routerProps = {
         type,
         routes,
@@ -79,14 +148,14 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
     };
 
     const frameworkRouter = (routes) => () => {
-      const [appPathname, setAppPathname] = useState('');
+      const [appPathname, setAppPathname] = useState(window.location.pathname);
       const [routeInfo, setRouteInfo] = useState({});
       const [appEnter, setAppEnter] = useState({});
       const [appLeave, setAppLeave] = useState({});
 
-      const [apps, setApps] = useState(null);
-      const BasicLayout = Layout || DefaultLayout;
-      const RenderAppRoute = CustomAppRoute || AppRoute;
+      const [apps, setApps] = useState<IStarkAppConfig[] | null>(null);
+      const BasicLayout = Layout || DefaultLayout || ((props) => (<>{props.children}</>));
+      const RenderAppRoute = (CustomAppRoute || AppRoute) as typeof AppRoute;
 
       useEffect(() => {
         (async () => {
@@ -117,6 +186,12 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
         updateApps: setApps,
       };
 
+      // RootApp will re-render on every AppRoute's update if RootApp were matched.
+      const MemoRootApp = useMemo(
+        () => memo(() => <RootApp routes={routes} />),
+        []
+      );
+
       return (
         <BasicLayout {...appInfo}>
           {apps && (
@@ -138,7 +213,7 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
                 <RenderAppRoute
                   path="/"
                   render={() => {
-                    return <RootApp routes={routes} />;
+                    return <MemoRootApp />;
                   }}
                 />
               )}
@@ -147,7 +222,14 @@ const module = ({ appConfig, addDOMRender, setRenderRouter, modifyRoutes, create
         </BasicLayout>
       );
     };
-    setRenderRouter(frameworkRouter);
+    setRenderComponent(frameworkRouter);
+  }
+
+  if (appType === 'framework' && !getApps) {
+    console.warn(`
+      [plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app; If not，please make sure appConfgi.icestark.type exist.
+      see https://ice.work/docs/guide/advanced/icestark/
+    `);
   }
 };
 

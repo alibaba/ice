@@ -1,15 +1,37 @@
+const { validation } = require('@builder/app-helpers');
+
 export const USER_CONFIG = [
   {
     name: 'store',
-    validation: 'boolean'
+    validation: (val) => {
+      return validation('store', val, 'object|boolean');
+    }
   },
   {
     name: 'ssr',
+    validation: 'boolean|string'
+  },
+  {
+    name: 'auth',
     validation: 'boolean'
   },
   {
-    name: 'targets',
-    validation: 'array'
+    name: 'request',
+    validation: 'boolean'
+  },
+  {
+    name: 'router',
+    validation: 'object|boolean'
+  },
+  {
+    name: 'sourceDir',
+    validation: 'string',
+  },
+  {
+    // add generateRuntime in case of runtimes do not pass the ts checker
+    name: 'generateRuntime',
+    validation: 'boolean',
+    defaultValue: false,
   }
 ];
 

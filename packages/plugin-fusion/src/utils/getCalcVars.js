@@ -1,6 +1,6 @@
 const path = require('path');
 const resolveSassImport = require('resolve-sass-import');
-const nodeSass = require('node-sass');
+const { getSassImplementation } = require('@builder/app-helpers');
 
 // regex for match sass variables like:
 // $color-calculate-xxxx: transparentize($search-simple-dark-bg-color, 1 - $search-simple-dark-bg-opacity) !default;
@@ -45,6 +45,8 @@ ${calcSass.join('\n')}
 ${calcKeys.map((key) => {
     return `.${key}{color: $${key};}`;
   }).join('\n')}`;
+
+    const nodeSass = getSassImplementation();
     // compile sass content to css
     const cssContent = nodeSass.renderSync({
       data: sassContent,
@@ -54,9 +56,10 @@ ${calcKeys.map((key) => {
     const calcVars = {};
     const calcCss = cssContent.match(CSS_REGEX);
     if (calcCss) {
+      // parse `.color-calculate-mask-background{color: #000}` as `calcVars['calculate-color-mask-background'] = '#000'`
       calcCss.forEach((item) => {
         const [key, value] = item.split('{');
-        calcVars[key.replace(/\.|\{/g, '').trim()] = value.replace(/;|\}/g, '').trim();
+        calcVars[key.replace(/\.|\{/g, '').trim()] = value.replace(/;|\}/g, '').replace('color:', '').trim();
       });
     }
     return calcVars;

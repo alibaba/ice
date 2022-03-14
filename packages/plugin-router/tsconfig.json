@@ -9,6 +9,7 @@
     },
   },
   "exclude": [
-    "templates"
+    "templates",
+    "tests"
   ]
 }

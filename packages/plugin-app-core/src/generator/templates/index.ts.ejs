@@ -1,0 +1,15 @@
+<%- imports %>
+
+<% if (exports) { %>
+  export {
+    <%- exports %>
+  }
+<% } %>
+
+export * from './core/routerAPI';
+export * from './core/publicAPI';
+<% if (isReact) {%>
+export { lazy } from './core/lazy';
+<% } %>
+export * from './core/runApp';
+export * from './types';

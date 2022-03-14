@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-antd",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "build-scripts plugin for antd",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,16 @@
   },
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-antd"
+  },
   "dependencies": {
-    "babel-plugin-import": "^1.11.2"
-  }
+    "babel-plugin-import": "^1.11.2",
+    "vite-plugin-style-import": "1.1.1"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

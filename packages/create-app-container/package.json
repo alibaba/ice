@@ -11,14 +11,15 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "dependencies": {
     "universal-env": "^3.0.0"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-app-container"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

@@ -22,6 +22,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
+    "types": ["node", "jest"],
     "paths": {
       "@/*": ["./src/*"],
       "ice": [".ice/index.ts"],

@@ -1,0 +1,120 @@
+import { createElement } from 'rax';
+import {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+  getSearchParams,
+<% if (enableRouter !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} from 'create-app-shared';
+
+<% if (tabBarPath) {%>
+import TabBar from '<%- tabBarPath %>';
+<% } %>
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb, isNode } from 'universal-env';
+import miniappRenderer from 'miniapp-renderer';
+import raxAppRenderer, { RenderAppConfig }  from 'rax-app-renderer';
+<% if (globalStyle) {%>
+// eslint-disable-next-line
+import '<%= globalStyle %>';
+<% } %>
+import loadStaticModules from './loadStaticModules';
+import loadRuntimeModules from './loadRuntimeModules';
+
+import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
+import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
+import { IAppConfig, IBuildConfig, IStaticConfig, IRuntimeValue } from '<%- typesPath  %>';
+import { mount, unmount } from '<%- relativeCorePath %>/render';
+import defaultStaticConfig from '<%- relativeCorePath %>/staticConfig';
+
+let staticConfig: IStaticConfig = defaultStaticConfig;
+
+const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
+const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+const runtimeValue: IRuntimeValue = {};
+
+<% if (tabBarPath) {%>
+if (!inMiniApp) {
+  runtimeValue.TabBar = TabBar;
+  runtimeValue.tabBarConfig = <%- isMPA ? JSON.stringify('') : 'staticConfig?.tabBar' %>;
+}
+<% } %>
+
+<% if(enableRouter){ %>
+  runtimeValue.enableRouter = true;
+<% } %>
+
+const frameworkAppBase = createBaseApp({
+  loadRuntimeModules,
+  createElement,
+  runtimeAPI: {
+    getSearchParams,
+    <% if (enableRouter !== false) {%>
+    createHistory,
+    <% } %>
+  },
+  runtimeValue,
+});
+
+<% if (typeof pageConfig !== 'undefined') {%>
+const pageConfig = <%- JSON.stringify(pageConfig) %>;
+<% } %>
+
+export function runApp(appConfig: IAppConfig = {}, <% if (enableRouter !== false) {%>customStaticConfig?: IStaticConfig<% } %>) {
+  // server bundle will to get appConfig after run runApp
+  setAppConfig(appConfig as IAppConfig);
+  // load static modules before init runtime such as request
+  loadStaticModules(appConfig as IAppConfig);
+
+  <% if (typeof pageConfig !== 'undefined' && !enableRouter) { %>
+    appConfig.app.renderComponent.__pageConfig = pageConfig;
+  <% } %>
+
+  <% if (enableRouter !== false) {%>
+  if (customStaticConfig) {
+    staticConfig = customStaticConfig;
+  }
+  // set History before GID
+  initHistory && initHistory(appConfig as any, { staticConfig });
+  <% } %>
+
+  if (process.env.__IS_SERVER__ || isNode) return;
+
+  let renderer;
+  if (inMiniApp) {
+    renderer = miniappRenderer;
+  } else {
+    renderer = raxAppRenderer;
+  }
+  renderer({
+    appConfig: appConfig as RenderAppConfig,
+    buildConfig,
+    staticConfig,
+    ErrorBoundary,
+    appLifecycle: {
+      createBaseApp: frameworkAppBase,
+      initAppLifeCycles,
+      emitLifeCycles,
+    },
+    <% if (typeof pageConfig !== 'undefined') {%>
+    pageConfig,
+    <% } %>
+    <% if (tabBarPath && isMPA) {%>
+    TabBar,
+    <% } %>
+  }, {
+    mount,
+    unmount,
+  });
+};
+
+export default {
+  createBaseApp: frameworkAppBase,
+  staticConfig,
+  <% if (typeof pageConfig !== 'undefined') {%>
+  pageConfig,
+  <% } %>
+  enableRouter: <%- enableRouter %>,
+}

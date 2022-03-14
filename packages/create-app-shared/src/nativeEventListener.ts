@@ -4,9 +4,9 @@ export function registerNativeEventListeners(Klass, events) {
 }
 
 export function addNativeEventListener(eventName, callback) {
-  window.addEventListener(eventName, callback);
+  document.addEventListener(eventName, callback);
 }
 
-export function removeNativeEventListener(evetName, callback) {
-  window.removeEventListener(evetName, callback);
+export function removeNativeEventListener(eventName, callback) {
+  document.removeEventListener(eventName, callback);
 }

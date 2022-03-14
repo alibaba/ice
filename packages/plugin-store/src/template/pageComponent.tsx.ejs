@@ -1,29 +1,34 @@
-
-<% if (isRax) {%>
-  import { createElement } from 'rax';
-<% } else { %>
-  import * as React from 'react';
+<% if(!hasJsxRuntime) { %>
+import * as React from 'react';
 <% } %>
 
-<% if(hasPageStore) { %>
-  <%- pageStoreImport %>
-<% } %>
+<%- pageStoreImport %>
 
 <%- pageComponentImport %>
 
 const PageComponentName = <%= pageComponentExport %>;
 
-<% if(hasPageStore) { %>
+<% if(storeFileExists) { %>
   const PageProvider = store.Provider;
-  const StoreWrapperedPage = (props) => {
+<% if(!disableResetPageState) { %>
+    const initialStates = store.getState();
+<% } %>
+  const StoreWrappedPage = (props) => {
     return (
+<% if (!disableResetPageState) { %>
+      <PageProvider initialStates={initialStates}>
+<% } else { %>
       <PageProvider>
+<% } %>
         <PageComponentName {...props} />
       </PageProvider>
     )
   }
-  (StoreWrapperedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
-  export default StoreWrapperedPage;
+
+  (StoreWrappedPage as any).pageConfig = (PageComponentName as any).pageConfig || {} as any;
+  (StoreWrappedPage as any).getInitialProps = (PageComponentName as any).getInitialProps;
+
+  export default StoreWrappedPage;
   export { store };
 <% } else { %>
   export default PageComponentName;

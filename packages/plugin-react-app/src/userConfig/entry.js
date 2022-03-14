@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
 
 const resolveEntryPath = (entry, rootDir) => {
   if (typeof entry === 'string') {
@@ -11,21 +11,10 @@ const resolveEntryPath = (entry, rootDir) => {
   return '';
 };
 
-const addHotDevClient = (entry) => {
-  const webpackDevClientEntry = require.resolve('react-dev-utils/webpackHotDevClient');
-  const hotEntries = {};
-
-  Object.keys(entry).forEach((key) => {
-    hotEntries[key] = [webpackDevClientEntry, ...entry[key]];
-  });
-
-  return hotEntries;
-};
-
 // entry: string | array
 // entry : { [name]: string | array }
 module.exports = (config, value, context) => {
-  const { rootDir, command, userConfig, commandArgs } = context;
+  const { rootDir, command, userConfig } = context;
 
   const ignoreHtmlTemplate = command === 'build' && userConfig.ignoreHtmlTemplate;
   let entry;
@@ -79,15 +68,17 @@ module.exports = (config, value, context) => {
   });
   // ignore html which will generate by htmlPlugin
   if (config.plugins.get('CopyWebpackPlugin')) {
-    config.plugin('CopyWebpackPlugin').tap(([args]) => [[{
-      ...(args[0] || {}),
-      ignore: ignoreFiles,
-    }]]);
-  }
-
-  // add webpackHotDevClient when execute command is start and enable HMR
-  if (!commandArgs.disableReload && command === 'start') {
-    entry = addHotDevClient(entry);
+    config.plugin('CopyWebpackPlugin').tap(([{ patterns, ...restOptions }]) => {
+      const [firstPattern, ...rest] = patterns;
+      firstPattern.globOptions = {
+        ...(firstPattern.globOptions || {}),
+        ignore: ignoreFiles.map((ignoreFile) => `**/public/${ignoreFile}`),
+      };
+      return [{
+        patterns: [firstPattern, ...rest],
+        ...restOptions,
+      }];
+    });
   }
   // remove default entry then add new enrty to webpack config
   config.entryPoints.clear();

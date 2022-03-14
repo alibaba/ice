@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-jsx-plus",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "build plugin for jsx plus",
   "main": "lib/index.js",
   "scripts": {
@@ -11,6 +11,10 @@
   ],
   "author": "tony7lee",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-jsx-plus"
+  },
   "dependencies": {
     "babel-plugin-transform-jsx-class": "^0.1.2",
     "babel-plugin-transform-jsx-condition": "^0.1.2",
@@ -20,5 +24,9 @@
     "babel-plugin-transform-jsx-slot": "^0.1.1",
     "babel-runtime-jsx-plus": "^0.1.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

@@ -1,15 +1,8 @@
-import { AppConfig } from '@ice/stark';
+import { CompatibleAppConfig } from '@ice/stark/lib/AppRoute';
+import { AppRouterProps } from '@ice/stark/lib/AppRouter';
 
-export interface IAppRouter {
-  ErrorComponent?: React.ComponentType;
-  LoadingComponent?: React.ComponentType;
-  NotFoundComponent?: React.ComponentType;
-  shouldAssetsRemove?: (
-    assetUrl?: string,
-    element?: HTMLElement | HTMLLinkElement | HTMLStyleElement | HTMLScriptElement,
-  ) => boolean;
-}
+export type IAppRouter = Omit<AppRouterProps, 'onRouteChange' | 'onAppEnter' | 'onAppLeave'>;
 
 export interface IGetApps {
-  (): AppConfig[] | Promise<AppConfig[]>;
+  (): CompatibleAppConfig[] | Promise<CompatibleAppConfig[]>;
 }

@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-mpa",
-  "version": "1.7.1",
+  "version": "2.1.1",
   "description": "enable mpa project for icejs framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -10,19 +10,22 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-mpa"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24"
+    "build-scripts": "^1.1.0"
   },
   "dependencies": {
+    "@builder/app-helpers": "^2.5.2",
+    "@builder/mpa-config": "^4.2.0",
     "fs-extra": "^8.1.0"
   }
 }

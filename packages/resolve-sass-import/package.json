@@ -1,0 +1,26 @@
+{
+  "name": "resolve-sass-import",
+  "version": "0.1.1",
+  "description": "resolve sass import",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "keywords": [
+    "sass"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/resolve-sass-import"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "loader-utils": "^1.2.3",
+    "resolve": "^1.19.0"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
+}

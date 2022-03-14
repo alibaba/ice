@@ -1,22 +1,22 @@
 import React from 'react';
-import { Link, usePageShow, usePageHide, helpers, logger, config, getInitialData } from 'ice';
+import { Link, usePageShow, usePageHide, config, getInitialData } from 'ice';
+import svg from '@/svg-test.svg';
 
-logger.debug('helpers from ice', helpers.urlParse);
-logger.debug('logger from ice', logger.debug);
+console.debug('console from ice', console.debug);
 
-logger.info('=== info ===');
-logger.warn('=== warn ===');
-logger.error('=== error ===');
-logger.debug('=== debug ===');
-logger.trace('=== trace ===');
+console.info('=== info ===');
+console.warn('=== warn ===');
+console.error('=== error ===');
+console.debug('=== debug ===');
+console.trace('=== trace ===');
 
 console.log('getInitialData outside=====>:', getInitialData());
 
 export default function Home(props) {
   console.log('getInitialData inside=====>:', getInitialData());
 
-  logger.info('Home props', props);
-  logger.info('render home config.appId', config.appId);
+  console.info('Home props', props);
+  console.info('render home config.appId', config.appId);
 
   usePageShow(() => {
     console.log('page show....');
@@ -28,17 +28,10 @@ export default function Home(props) {
 
   return (
     <>
-      <h2>Home Page...{props.count}</h2>
+      <img src={svg} alt="logo"/>
+      <h2 className="home-title">Home Page...{props.count}</h2>
       <Link to="/about">About</Link><br />
       <Link to="/dashboard">Dashboard</Link>
     </>
   );
 }
-
-Home.getInitialProps = async () => {
-  return { count: 1 };
-};
-
-Home.pageConfig = {
-  title: 'Home Page'
-};

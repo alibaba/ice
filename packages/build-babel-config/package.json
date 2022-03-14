@@ -1,0 +1,27 @@
+{
+  "name": "@builder/babel-config",
+  "version": "2.0.1",
+  "description": "Basic babel config for build-scripts",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "plugin",
+    "react"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-babel-config"
+  },
+  "dependencies": {
+    "@builder/pack": "^0.6.0"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
+}

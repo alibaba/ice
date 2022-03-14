@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-moment-locales",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "build-scripts plugins for moment locale",
   "main": "lib/index.js",
   "scripts": {
@@ -10,6 +10,22 @@
     "build-scripts",
     "build-plugin"
   ],
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-moment-locales"
+  },
   "author": "ICE Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@rollup/pluginutils": "^4.1.1",
+    "magic-string": "^0.25.7"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.1.0",
+    "vite": "^2.0.0"
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

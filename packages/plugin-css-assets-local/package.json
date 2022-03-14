@@ -8,7 +8,15 @@
   },
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-css-assets-local"
+  },
   "dependencies": {
     "extract-css-assets-webpack-plugin": "^0.2.5"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

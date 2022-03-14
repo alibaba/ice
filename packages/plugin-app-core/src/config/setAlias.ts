@@ -15,10 +15,11 @@ export default (api, options: IOptions) => {
   const aliasMap = [
     [`${alias}$`, path.join(tempPath, 'index.ts')],
     [`${alias}`, path.join(tempPath, 'pages') ],
-    ['alias', path.join(tempPath)],
     ['@', path.join(rootDir, 'src')],
+    // add alias for modular import
+    [`$$${alias}`, tempPath],
+    ['$$framework', tempPath],
   ];
-
 
   onGetWebpackConfig((config: any) => {
     // eslint-disable-next-line
@@ -41,6 +42,7 @@ export default (api, options: IOptions) => {
         ['rax', rootDir]
       ];
     }
+
     basicDependencies.forEach((dep: string[] | string): void => {
       const [depName, searchFolder] = Array.isArray(dep) ? dep : [dep];
       const aliasPath = searchFolder

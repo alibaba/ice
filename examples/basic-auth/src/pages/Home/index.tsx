@@ -1,27 +1,22 @@
 /* eslint jsx-a11y/aria-role: 0 */
 import React from 'react';
-import { useAuth, withAuth } from 'ice';
+import { Link, useAuth, withAuth } from 'ice';
 import Auth from '@/components/Auth';
 
-@withAuth
-class Demo1 extends React.PureComponent {
-  public render() {
-    const {auth} = this.props;
-    return (
+const Demo1 = withAuth(({ auth }) => {
+  return (
+    <div>
+      <h3>Class 组件演示：</h3>
       <div>
-        <h3>Class 组件演示：</h3>
-        <div>
-          <span>权限列表：</span>
-          <code>{JSON.stringify(auth)}</code>
-        </div>
+        <span>权限列表：</span>
+        <code>{JSON.stringify(auth)}</code>
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
 
 const Demo2 = () => {
   const [auth, setAuth]= useAuth();
-
   function addAuth() {
     setAuth({
       deleteRepo: true
@@ -68,10 +63,12 @@ const Demo2 = () => {
   );
 };
 
-const HomePage = () => {
+const HomePage = (props) => {
+  console.log('home page props', props);
   return (
     <div>
       <h2>Home Page</h2>
+      <Link to="/about">Go To About</Link><br />
       <Demo1 />
       <Demo2 />
     </div>
@@ -79,7 +76,8 @@ const HomePage = () => {
 };
 
 HomePage.pageConfig = {
-  auth: ['admin']
+  title: 'test',
+  auth: ['guest'],
 };
 
 export default HomePage;

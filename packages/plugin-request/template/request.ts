@@ -1,20 +1,28 @@
-import { AxiosRequestConfig } from 'axios';
-import * as utils from 'axios/lib/utils';
+import { axios, axiosUtils } from '@ice/runtime';
+import type { AxiosRequestConfig, CancelTokenStatic, CancelStatic } from 'axios';
 import createAxiosInstance from './createAxiosInstance';
 
+interface IRequestConfig extends AxiosRequestConfig {
+  instanceName?: string;
+  withFullResponse?: boolean;
+}
+
 export interface IRequestProps {
-  get: <T = any>(url: string, config?: AxiosRequestConfig) => Promise<T>;
-  delete: <T = any>(url: string, config?: AxiosRequestConfig) => Promise<T>;
-  head: <T = any>(url: string, config?: AxiosRequestConfig) => Promise<T>;
-  options: <T = any>(url: string, config?: AxiosRequestConfig) => Promise<T>;
-  post: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => Promise<T>;
-  put: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => Promise<T>;
-  patch: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => Promise<T>;
+  get: <T = any>(url: string, config?: IRequestConfig) => Promise<T>;
+  delete: <T = any>(url: string, config?: IRequestConfig) => Promise<T>;
+  head: <T = any>(url: string, config?: IRequestConfig) => Promise<T>;
+  options: <T = any>(url: string, config?: IRequestConfig) => Promise<T>;
+  post: <T = any>(url: string, data?: any, config?: IRequestConfig) => Promise<T>;
+  put: <T = any>(url: string, data?: any, config?: IRequestConfig) => Promise<T>;
+  patch: <T = any>(url: string, data?: any, config?: IRequestConfig) => Promise<T>;
 }
 
 interface IRequest extends IRequestProps {
-  <T = any>(options: AxiosRequestConfig): Promise<T>;
-  <T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  <T = any>(options: IRequestConfig): Promise<T>;
+  <T = any>(url: string, config?: IRequestConfig): Promise<T>;
+  Cancel: CancelStatic;
+  CancelToken: CancelTokenStatic;
+  isCancel(value: any): boolean;
 }
 
 /**
@@ -41,23 +49,26 @@ const request = async function <T = any>(options): Promise<T> {
 };
 
 // Provide aliases for supported request methods
-utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+axiosUtils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   request[method] = function <T = any>(url, config) {
-    return request<T>(utils.merge(config || {}, {
+    return request<T>(axiosUtils.merge(config || {}, {
       method,
       url
     }));
   };
 });
 
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+axiosUtils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   request[method] = function <T = any>(url, data, config) {
-    return request<T>(utils.merge(config || {}, {
+    return request<T>(axiosUtils.merge(config || {}, {
       method,
       url,
       data
     }));
   };
 });
+
+request.CancelToken = axios.CancelToken;
+request.isCancel = axios.isCancel;
 
 export default request as IRequest;

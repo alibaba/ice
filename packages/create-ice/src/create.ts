@@ -1,5 +1,6 @@
 import * as inquirer from 'inquirer';
 import * as fs from 'fs-extra';
+import { checkAliInternal } from 'ice-npm-utils';
 import { downloadAndGenerateProject, checkEmpty } from '@iceworks/generate-project';
 
 // eslint-disable-next-line
@@ -30,6 +31,7 @@ export default async function create(dirPath: string, templateName: string, dirn
   }
 
   await downloadAndGenerateProject(dirPath, templateName);
+  const isAliInternal = await checkAliInternal();
 
   console.log();
   console.log('Initialize project successfully.');
@@ -37,8 +39,17 @@ export default async function create(dirPath: string, templateName: string, dirn
   console.log('Starts the development server.');
   console.log();
   console.log(chalk.cyan(`    cd ${dirname}`));
-  console.log(chalk.cyan('    npm install'));
-  console.log(chalk.cyan('    npm start'));
+
+  if (isAliInternal) {
+    console.log(chalk.cyan('    tnpm install'));
+    console.log(chalk.cyan('    tnpm start'));
+    console.log(chalk.cyan('Detected that you are an Alibaba user, DEF plugin has been added!'));
+  } else {
+    console.log(chalk.cyan('    npm install'));
+    console.log(chalk.cyan('    npm start'));
+  }
+
+  console.log(chalk.cyan('\n\nWe have prepared develop toolkit for you. \nSee: https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks'));
   console.log();
 }
 
@@ -50,25 +61,19 @@ export default async function create(dirPath: string, templateName: string, dirn
 async function selectTemplate(): Promise<string> {
   const templates: ITemplate[] = [{
     npmName: '@alifd/scaffold-simple',
-    description: 'Simple TypeScript template.',
+    description: 'TypeScript + No UI Components',
+  }, {
+    npmName: '@icedesign/ice-antd-scaffold',
+    description: 'TypeScript + Ant Design',
   }, {
     npmName: '@alifd/scaffold-lite',
-    description: 'Lightweight TypeScript template with fusion design components',
+    description: 'TypeScript + Fusion Design',
+  },  {
+    npmName: '@alifd/fusion-design-pro',
+    description: 'TypeScript + Fusion Design Pro ',
   }, {
     npmName: '@alifd/scaffold-lite-js',
-    description: 'Lightweight JavaScript template with fusion design components',
-  }, {
-    npmName: '@alifd/fusion-design-pro',
-    description: 'Fusion Design Pro TypeScript template.',
-  }, {
-    npmName: '@alifd/fusion-design-pro-js',
-    description: 'Fusion Design Pro JavaScript template.',
-  }, {
-    npmName: '@miniprogram-materials/scaffolds-app-js',
-    description: 'Lightweight JavaScript template with Mini Program.',
-  }, {
-    npmName: '@miniprogram-materials/scaffolds-app-ts',
-    description: 'Lightweight TypeScript template with Mini Program.',
+    description: 'JavaScript + Fusion Design',
   }, {
     npmName: 'build-plugin-template',
     description: 'ice.js plugin development template.'
@@ -78,6 +83,7 @@ async function selectTemplate(): Promise<string> {
   const answer = await inquirer.prompt({
     type: 'list',
     name: 'template',
+    loop: false,
     message: 'Please select a template',
     default: defaultTemplate,
     choices: templates.map(item => {

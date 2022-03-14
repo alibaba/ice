@@ -1,4 +1,0 @@
-{
-  "targets": ["web", "weex", "kraken"],
-  "inlineStyle": true
-}

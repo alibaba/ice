@@ -1,0 +1,21 @@
+import { isMiniApp, isWeChatMiniProgram, isByteDanceMicroApp, isBaiduSmartProgram, isKuaiShouMiniProgram, isWeb } from 'universal-env';
+import { createElement } from 'rax';
+import { withRouter as raxWithRouter } from 'rax-use-router';
+import {
+  history,
+  getHistory,
+  setHistory,
+  miniappCreateWithRouter,
+} from 'create-app-shared';
+
+const inMiniApp = (isMiniApp || isWeChatMiniProgram || isByteDanceMicroApp || isBaiduSmartProgram || isKuaiShouMiniProgram) && !isWeb;
+
+const withRouter = inMiniApp ? miniappCreateWithRouter({ createElement }) : raxWithRouter;
+
+// router api
+export {
+  withRouter,
+  history,
+  getHistory,
+  setHistory,
+};

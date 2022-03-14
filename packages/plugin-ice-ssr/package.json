@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-ssr",
-  "version": "1.7.4",
+  "version": "3.1.1",
   "description": "ssr plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -12,21 +12,32 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "!lib/**/*.map"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-ice-ssr"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "build-scripts-config": "^0.1.6",
+    "@builder/app-helpers": "^2.5.2",
+    "@builder/webpack-config": "^2.0.1",
+    "@loadable/babel-plugin": "^5.13.2",
+    "@loadable/webpack-plugin": "^5.14.0",
     "chalk": "^4.0.0",
     "cheerio": "^1.0.0-rc.3",
-    "ejs": "^3.0.1",
+    "deepmerge": "^4.2.2",
     "fs-extra": "^8.1.0",
-    "html-minifier": "^4.0.0"
+    "html-minifier": "^4.0.0",
+    "parseurl": "^1.3.3",
+    "@ice/runtime": "^0.1.0",
+    "query-string": "^6.13.7",
+    "vite": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/connect": "^3.4.35"
   }
 }

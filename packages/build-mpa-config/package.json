@@ -1,6 +1,6 @@
 {
-  "name": "build-mpa-config",
-  "version": "1.0.2-0",
+  "name": "@builder/mpa-config",
+  "version": "4.2.0",
   "description": "enable mpa project for framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -10,17 +10,24 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-mpa-config"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@builder/app-helpers": "^2.5.0",
     "fs-extra": "^8.1.0",
-    "loader-utils": "^2.0.0"
+    "loader-utils": "^2.0.0",
+    "globby": "^11.0.2",
+    "@builder/app-templates": "^1.1.3"
+  },
+  "devDependencies": {
+    "build-scripts": "^1.1.0"
   }
 }

@@ -1,9 +1,10 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import getSourceFile from './getSourceFile';
 
 interface IParams {
   rootDir: string;
-  tempDir: string;
+  tempPath: string;
   configPath: string;
   projectType: string;
   isMpa: boolean;
@@ -15,10 +16,10 @@ interface IResult {
   isConfigRoutes: boolean;
 }
 
-function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa, srcDir }: IParams): IResult {
+function getRoutes({ rootDir, tempPath, configPath, projectType, isMpa, srcDir }: IParams): IResult {
   // if is mpa use empty router file
   if (isMpa) {
-    const routesTempPath = path.join(tempDir, 'routes.ts');
+    const routesTempPath = path.join(tempPath, 'routes.ts');
     fse.writeFileSync(routesTempPath, 'export default [];', 'utf-8');
     configPath = routesTempPath;
     return {
@@ -29,7 +30,7 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa, srcDir }:
 
   const routesPath = configPath
     ? path.join(rootDir, configPath)
-    : path.join(rootDir, srcDir, `/routes.${projectType}`);
+    : getSourceFile(`${srcDir}/routes`, rootDir);
 
   // 配置式路由
   const configPathExists = fse.existsSync(routesPath);
@@ -42,7 +43,7 @@ function getRoutes({ rootDir, tempDir, configPath, projectType, isMpa, srcDir }:
 
   // 约定式路由
   return {
-    routesPath: path.join(tempDir, `routes.${projectType}`),
+    routesPath: path.join(tempPath, `routes.${projectType}`),
     isConfigRoutes: false
   };
 }

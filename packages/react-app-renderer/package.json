@@ -1,6 +1,6 @@
 {
   "name": "react-app-renderer",
-  "version": "0.1.10",
+  "version": "3.1.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -10,20 +10,25 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "sideEffects": false,
   "dependencies": {
+    "@loadable/component": "^5.14.1",
+    "@loadable/server": "^5.14.0",
     "create-app-container": "^0.1.2",
-    "create-use-router": "^0.1.1"
+    "query-string": "^6.13.7"
   },
   "devDependencies": {
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "create-app-shared": "^1.0.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/react-app-renderer"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

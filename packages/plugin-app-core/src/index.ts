@@ -1,26 +1,44 @@
-
 import * as path from 'path';
+import * as hash from 'object-hash';
+import { getFrameworkTemplateDir, getCommonTemplateDir } from '@builder/app-templates';
 import Generator from './generator';
-import getRuntimeModules from './utils/getRuntimeModules';
 import { TEMP_PATH } from './constant';
 import dev from './dev';
 import { setAlias, setProjectType, setEntry, setTempDir, setRegisterMethod, setRegisterUserConfig } from './config';
+import getBuildConfig from './utils/getBuildConfig';
 
 // eslint-disable-next-line
-const chalk = require('chalk');
+const { constants: { MINIAPP, WECHAT_MINIPROGRAM, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM, QUICKAPP, BYTEDANCE_MICROAPP } } = require('miniapp-builder-shared');
+const miniappPlatforms = [ MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP, BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM ];
 
 export default (api, options) => {
   const { onHook, context, setValue } = api;
-  const { command, userConfig } = context;
-  const { targets = ['web'] } = userConfig;
+  const { command, userConfig, rootDir } = context;
   const { framework } = options;
 
   // Set framework field
   setValue('FRAMEWORK', framework);
 
+  const hasJsxRuntime = (() => {
+    try {
+      // auto detect of jsx runtime
+      // eslint-disable-next-line
+      const tsConfig = require(path.join(rootDir, 'tsconfig.json'));
+      if (tsConfig?.compilerOptions?.jsx !== 'react-jsx') {
+        return false;
+      }
+      // ensure react/jsx-runtime
+      require.resolve('react/jsx-runtime');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
+  // Set jsx runtime value
+  setValue('HAS_JSX_RUNTIME', hasJsxRuntime);
 
-  // Check target
-  checkTargets(targets);
+  // Set webpack cache id
+  setValue('WEBPACK_CACHE_ID', hash({ ...userConfig, hasJsxRuntime }));
 
   // Set temporary directory
   // eg: .ice or .rax
@@ -41,81 +59,93 @@ export default (api, options) => {
   setRegisterUserConfig(api);
 
   // register api method
-  const generator = initGenerator(api, options);
+  const generator = initGenerator(api, { ...options, hasJsxRuntime });
+
   setRegisterMethod(api, { generator });
+
+  // add core template for framework
+  renderDefaultTemplate(generator, { framework });
 
   // watch src folder
   if (command === 'start') {
     dev(api, { render: generator.render });
   }
 
-  onHook(`before.${command}.run`, async () => {
-    await generator.render();
+  onHook(`before.${command}.run`, () => {
+    generator.render();
   });
 };
 
+function renderDefaultTemplate(generator: Generator, { framework }) {
+  const templateRoot = path.join(__dirname, './generator/templates');
+
+  const templates = [{
+    dir: getFrameworkTemplateDir(framework),
+    target: 'core',
+  }, {
+    dir: getCommonTemplateDir(),
+    target: 'core',
+  }, {
+    dir:  path.join(templateRoot, 'types'),
+    target: 'types',
+  }, {
+    path: path.join(templateRoot, './index.ts.ejs'),
+  }];
+  templates.forEach(({ dir, target, path: filePath }) => {
+    generator.addTemplateFiles({
+      template: dir || filePath,
+      targetDir: target || '',
+    });
+  });
+}
 
 function initGenerator(api, options) {
   const { getAllPlugin, context, log, getValue } = api;
-  const { userConfig, rootDir } = context;
-  const { framework } = options;
+  const { rootDir } = context;
   const plugins = getAllPlugin();
-  const templatesDir = path.join(__dirname, './generator/templates');
-  const { targets = [] } = userConfig;
-  const isMiniapp = targets.includes('miniapp') || targets.includes('wechat-miniprogram');
+  const targetDir = getValue(TEMP_PATH);
   return new Generator({
     rootDir,
-    targetDir: getValue(TEMP_PATH),
-    templatesDir,
-    appTemplateDir: path.join(templatesDir, `./app/${framework}`),
-    commonTemplateDir: path.join(templatesDir, './common'),
-    defaultData: {
-      framework,
-      isReact: framework === 'react',
-      isRax: framework === 'rax',
+    targetDir,
+    defaultData: getDefaultRenderData(api, options),
+    log,
+    plugins,
+  });
+}
+
+function getDefaultRenderData(api, options) {
+  const { context } = api;
+  const { userConfig } = context;
+  const { framework, hasJsxRuntime } = options;
+  const { targets = [], ssr = false } = userConfig;
+  const isMiniapp = targets.some((target: string) => miniappPlatforms.includes(target));
+  const renderData = {
+    framework,
+    buildConfig: getBuildConfig(userConfig),
+    hasJsxRuntime,
+    relativeCorePath: '.',
+    typesPath: '../types',
+  };
+  if (framework === 'rax') {
+    return {
+      ...renderData,
+      isReact: false,
+      isRax: true,
       isMiniapp,
-      runtimeModules: getRuntimeModules(plugins),
-      buildConfig: JSON.stringify(userConfig)
-    },
-    log
-  });
-}
-
-function checkTargets(targets) {
-  let hasError = false;
-
-  if (Object.prototype.toString.call(targets) === '[object Object]') {
-    hasError = true;
+      isMPA: false,
+      tabBarPath: '', // avoid ejs error
+      routesFilePath: './staticConfig',
+      // MPA 下会覆盖
+      enableRouter: true,
+    };
+  } else {
+    return {
+      ...renderData,
+      isReact: true,
+      isRax: false,
+      ssr,
+      // MPA 下会覆盖
+      enableRouter: (!userConfig.mpa && userConfig.router !== false),
+    };
   }
-
-  if (typeof targets === 'string') {
-    hasError = true;
-  }
-
-  if (Array.isArray(targets) && !matchTargets(targets)) {
-    hasError = true;
-  }
-
-  if (hasError) {
-    const msg = `
-  targets must be the array type in build.json.
-
-    e.g. { "targets": ["miniapp", "wechat-miniprogram"] }
-
-  if you want to describes the browserslist environments for your project.
-  you should set browserslist in build.json.
-
-    e.g. { "browserslist": { "chrome": "58", "ie": 11 } }
-`;
-    console.log();
-    console.log(chalk.red(msg));
-    console.log();
-    process.exit(1);
-  }
-}
-
-function matchTargets(targets) {
-  return targets.every(target => {
-    return ['web', 'miniapp', 'wechat-miniprogram', 'weex', 'kraken', 'bytedance-microapp', 'quickapp'].includes(target);
-  });
 }

@@ -1,0 +1,53 @@
+{
+  "name": "build-plugin-theme",
+  "version": "0.1.1",
+  "description": "multi themes",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "files": [
+    "lib",
+    "template",
+    "src/runtime.tsx",
+    "!lib/**/*.map"
+  ],
+  "author": "ice-admin@alibaba-inc.com",
+  "license": "MIT",
+  "dependencies": {
+    "@builder/pack": "^0.6.0",
+    "fs-extra": "^9.0.0",
+    "less": "^4.1.1",
+    "lodash": "^4.17.21",
+    "postcss": "^8.3.5",
+    "postcss-import": "^14.0.2",
+    "postcss-less": "^4.0.1",
+    "postcss-loader": "^6.1.1",
+    "postcss-scss": "^3.0.5",
+    "postcss-value-parser": "^4.1.0",
+    "resolve": "^1.20.0",
+    "webpack-chain": "^6.4.0",
+    "webpack-sources": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "@types/jest": "^25.2.1",
+    "@types/less": "^3.0.3",
+    "@types/lodash": "^4.14.170",
+    "@types/postcss-import": "^12.0.1",
+    "@types/resolve": "^1.20.1",
+    "@types/webpack-sources": "^2.1.0",
+    "build-scripts": "^1.1.0",
+    "jest": "^25.4.0",
+    "ts-jest": "^25.4.0",
+    "typescript": "^4.0.0"
+  },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "preset": "ts-jest"
+  }
+}

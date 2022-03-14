@@ -1,6 +1,6 @@
 {
   "name": "create-ice",
-  "version": "1.7.2",
+  "version": "1.7.5",
   "description": "npm init ice",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -15,7 +15,8 @@
   },
   "files": [
     "lib",
-    "bin"
+    "bin",
+    "!lib/**/*.map"
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
@@ -25,11 +26,12 @@
     "chalk": "^4.0.0",
     "commander": "^6.0.0",
     "fs-extra": "^8.1.0",
+    "ice-npm-utils": "^2.0.1",
     "inquirer": "^7.0.4"
   },
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-ice"
   },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498"
 }

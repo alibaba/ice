@@ -1,0 +1,70 @@
+import { createElement } from 'react';
+import {
+  createBaseApp,
+  initAppLifeCycles,
+  emitLifeCycles,
+  getSearchParams,
+<% if (enableRouter !== false) {%>
+  initHistory,
+  createHistory,
+<% } %>
+} from 'create-app-shared';
+import reactAppRenderer, { RenderAppConfig } from 'react-app-renderer';
+<% if (globalStyle) {%>
+  // eslint-disable-next-line
+  import '<%= globalStyle %>'
+<% } %>
+import loadStaticModules from './loadStaticModules';
+import loadRuntimeModules from './loadRuntimeModules';
+
+import { setAppConfig } from '<%- relativeCorePath %>/appConfig';
+import ErrorBoundary from '<%- relativeCorePath %>/ErrorBoundary';
+import { IAppConfig, IBuildConfig } from '<%- typesPath  %>';
+
+const buildConfig: IBuildConfig = <%- JSON.stringify(buildConfig) %>;
+const runtimeValue: any = {};
+
+<% if(enableRouter){ %>
+  runtimeValue.enableRouter = true;
+<% } %>
+
+// TODO: createBaseApp() 返回一个 createBaseApp，命名需要优化下
+const frameworkAppBase = createBaseApp({
+  loadRuntimeModules,
+  createElement,
+  runtimeAPI: {
+    <% if (enableRouter !== false) {%>
+    createHistory,
+    <% } %>
+    getSearchParams,
+  },
+  runtimeValue,
+});
+
+export function runApp(appConfig: IAppConfig = {}) {
+  // store appConfig in case of server side render
+  // server bundle will to get appConfig after run runApp
+  setAppConfig(appConfig as IAppConfig);
+  // load static modules before init runtime such as request
+  loadStaticModules(appConfig as IAppConfig);
+  <% if (enableRouter !== false) {%>
+  // set History before GID
+  initHistory && initHistory(appConfig as any);
+  <% } %>
+  if (process.env.__IS_SERVER__) return;
+  reactAppRenderer({
+    appConfig: appConfig as RenderAppConfig,
+    buildConfig,
+    ErrorBoundary,
+    appLifecycle: {
+      createBaseApp: frameworkAppBase,
+      initAppLifeCycles,
+      emitLifeCycles,
+    },
+  });
+};
+
+export default {
+  createBaseApp: frameworkAppBase,
+  initAppLifeCycles,
+}

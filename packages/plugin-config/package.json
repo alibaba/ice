@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-config",
-  "version": "1.7.1",
+  "version": "2.0.2",
   "description": "Define application config in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -12,21 +12,19 @@
   },
   "files": [
     "lib",
-    "config"
+    "config",
+    "!lib/**/*.map"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-config"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "gitHead": "07ac7bb07162aac8c90778dd1de4a2060f8df498",
-  "dependencies": {
-    "fs-extra": "^8.1.0"
-  },
   "devDependencies": {
-    "@alib/build-scripts": "^0.1.24",
+    "build-scripts": "^1.1.0",
     "@types/fs-extra": "^8.1.0"
   }
 }

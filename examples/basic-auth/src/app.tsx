@@ -1,12 +1,12 @@
 import React from 'react';
-import { runApp, IAppConfig } from 'ice';
+import { runApp, IAppConfig, Link } from 'ice';
 
 const appConfig: IAppConfig = {
   app: {
     getInitialData: async () => {
       // 模拟服务端返回的数据
       const data = {
-        role: 'admin',
+        role: 'guest',
         starPermission: true,
         followPermission: true
       };
@@ -25,8 +25,16 @@ const appConfig: IAppConfig = {
   },
   auth: {
     // 可选的，设置无权限时的展示组件，默认为 null
-    NoAuthFallback: () => <div>没有权限...</div>,
-  }
+    NoAuthFallback: (props) => {
+      console.log('NoAuthFallback props', props);
+      return (
+        <div>
+          没有权限...
+          <Link to="/">返回首页</Link>
+        </div>
+      );
+    }
+  },
 };
 
 runApp(appConfig);

@@ -1,13 +1,13 @@
-import { lazy } from 'ice';
+import { lazy, IRouterConfig } from 'ice';
 import Layout from '@/layouts';
+import Home from '@/pages/Home';
 import wrapperPage from '@/components/WrapperPage';
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 const Notfound = lazy(() => import('@/pages/NotFound'));
 
-export default [
+const routes: IRouterConfig[] = [
   {
     path: '/',
     component: Layout,
@@ -16,6 +16,10 @@ export default [
         path: '/dashboard',
         exact: true,
         component: Dashboard,
+        pageConfig: {
+          title: 'Dashboard Page',
+          custom: 'foo',
+        },
         wrappers: [wrapperPage]
       },
       {
@@ -24,9 +28,23 @@ export default [
         component: About
       },
       {
+        path: '/a.html',
+        exact: true,
+        component: Home,
+        getInitialProps: async () => {
+          return { count: 1 };
+        },
+      },
+      {
         path: '/',
         exact: true,
-        component: Home
+        component: Home,
+        getInitialProps: async () => {
+          return { count: 1 };
+        },
+        pageConfig: {
+          title: 'Home Page'
+        }
       },
       {
         path: '*',
@@ -35,3 +53,5 @@ export default [
     ]
   }
 ];
+
+export default routes;

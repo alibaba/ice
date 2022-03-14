@@ -1,0 +1,24 @@
+const themesData = window.__themesData__
+// Append Style fn
+let style;
+function appendStyle(styles = '') {
+  if (style) style.remove();
+  style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (style.styleSheet) {
+    // This is required for IE8 and below.
+    style.styleSheet.cssText = styles;
+  } else {
+    style.appendChild(document.createTextNode(styles));
+  }
+  // Append style to the head element
+  document.getElementsByTagName('head')[0].appendChild(style);
+}
+// Change theme fn
+function handleTheme(currentTheme) {
+  // Get current theme
+  const theme = themesData[currentTheme];
+  appendStyle(theme);
+}
+window.__handleTheme__ = handleTheme;

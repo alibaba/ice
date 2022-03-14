@@ -1,3 +1,4 @@
+// @ts-ignore
 import AppStore from '$store';
 
 export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
@@ -7,11 +8,7 @@ export default ({ addProvider, appConfig, context: { initialData = {} as any, cr
 
     let initialStates = {};
 
-    if (storeConfig.getInitialStates) {
-      // @deprecated
-      console.warn('Detected that you are using store.getInitialStates, please use app.getInitialData method, Visit https://ice.work/docs/guide/basic/store.');
-      initialStates = storeConfig.getInitialStates(initialData);
-    } else if (initialData.initialStates) {
+    if (initialData.initialStates) {
       initialStates = initialData.initialStates;
     } else if (storeConfig.initialStates) {
       initialStates = storeConfig.initialStates;
@@ -22,7 +19,7 @@ export default ({ addProvider, appConfig, context: { initialData = {} as any, cr
       children
     });
   };
-  if (AppStore && AppStore.Provider) {
+  if (AppStore && Object.prototype.hasOwnProperty.call(AppStore, 'Provider')) {
     addProvider(StoreProvider);
   }
 };

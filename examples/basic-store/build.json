@@ -3,5 +3,9 @@
   "router": {
     "lazy": false
   },
-  "tsChecker": true
+  "store": {
+    "disableResetPageState": true
+  },
+  "tsChecker": true,
+  "swc": false
 }

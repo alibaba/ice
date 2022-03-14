@@ -12,17 +12,21 @@ export default [
       {
         path: '/dashboard',
         exact: true,
-        component: Dashboard
+        component: Dashboard,
       },
       {
-        path: '/',
+        path: '/home',
         exact: true,
         component: Home
       },
       {
         path: '/about',
         exact: true,
-        component: About
+        component: About,
+      },
+      {
+        path: '/',
+        redirect: '/home'
       },
       {
         path: '*',

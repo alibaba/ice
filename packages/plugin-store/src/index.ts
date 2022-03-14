@@ -1,120 +1,171 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
+import * as chalk from 'chalk';
 import Generator from './generator';
+import checkStoreExists from './utils/checkStoreExists';
+import { getAppStorePath } from './utils/getPath';
+import { getRouteFileType } from './utils/getFileType';
+import vitePluginPageRedirect from './vitePluginPageRedirect';
 
-export default async (api) => {
+const { name: pluginName } = require('../package.json');
+
+interface IReplaceRouterPathOptions {
+  tempDir: string,
+  applyMethod: (...args: string[]) => void,
+  routesPaths: string,
+  rootDir:string, 
+  srcPath: string,
+  alias: Record<string, string>,
+}
+
+export default async (api: any) => {
   const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
-  const { rootDir, userConfig } = context;
+  const { rootDir, userConfig, command } = context;
 
-  const targetPath = getValue('TEMP_PATH');
-  const tempDir = (path.basename(targetPath) || '').split('.')[1];
-  const templatePath = path.join(__dirname, 'template');
-  const appStoreTemplatePath = path.join(templatePath, 'appStore.ts.ejs');
-  const pageStoreTemplatePath = path.join(templatePath, 'pageStore.ts.ejs');
-  const pageStoresTemplatePath = path.join(templatePath, 'pageStores.ts.ejs');
-  const typesTemplatePath = path.join(templatePath, 'types.ts.ejs');
-  const projectType = getValue('PROJECT_TYPE');
+  // get mpa entries in src/pages
+  const { mpa: isMpa, entry, store, swc, vite, router, babelPlugins = [] } = userConfig;
 
-  const appStoreFile = applyMethod('formatPath', path.join(rootDir, 'src', `store.${projectType}`));
-  const existsAppStoreFile = fse.pathExistsSync(appStoreFile);
+  const tempPath = getValue('TEMP_PATH');
+  const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
+  const srcPath = path.join(rootDir, srcDir);
+  const tempDir = (path.basename(tempPath) || '');  // .ice
+  const pagesName: string[] = applyMethod('getPages', srcPath);
 
-  applyMethod('addExport', { source: '@ice/store', specifier: '{ createStore }', exportName: 'createStore' });
+  const storeExists = checkStoreExists(srcPath, pagesName);
 
-  if (!existsAppStoreFile) {
-    // set IStore to IAppConfig
-    applyMethod('addAppConfigTypes', { source: './store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  if (!storeExists) {
+    onHook('before.start.run', () => {
+      applyMethod('watchFileChange', /store.*/, (event: string, filePath: string) => {
+        if (event === 'add') {
+          // restart WDS
+          console.log('\n');
+          console.log(chalk.magenta(`${filePath} has been created`));
+          console.log(chalk.magenta('restart dev server'));
+          process.send({ type: 'RESTART_DEV' });
+        }
+      });
+    });
+
+    applyMethod('addDisableRuntimePlugin', pluginName);
+    return;
   }
 
-  const { mpa: isMpa, entry } = userConfig;
-  const srcDir = applyMethod('getSourceDir', entry);
+  const appStoreFile = applyMethod('formatPath', getAppStorePath(srcPath));
 
-  // Get framework from plugin-core
-  const framework = getValue('FRAMEWORK');
-  const isRax = framework === 'rax';
+  applyMethod('addExport', {
+    source: '@ice/store',
+    specifier: '{ createStore }',
+    exportName: 'createStore',
+    importSource: '@ice/store',
+    exportMembers: ['createStore'],
+  });
 
-  if (isRax) {
-    onGetWebpackConfig(config => {
-      config.module.rule('appJSON')
-        .test(/app\.json$/)
-        .use('page-source-loader')
-        .loader(require.resolve('./pageSourceLoader'))
-        .options({
-          targetPath
-        });
+  if (!appStoreFile) {
+    // set IStore to IAppConfig
+    applyMethod('addAppConfigTypes', { source: '../plugins/store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
+  }
 
-      // Set alias to run @ice/store
-      config.resolve.alias
-        .set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'))
-        .set('react-redux', require.resolve('rax-redux'))
-        .set('react', path.join(rootDir, 'node_modules', 'rax/lib/compat'));;
+  // add babel plugins for ice lazy
+  const { configPath } = router || {};
+  // TODO: remove PROJECT_TYPE
+  const projectType = getValue('PROJECT_TYPE');
+
+  let routesPaths;
+  if (isMpa) {
+    routesPaths = pagesName.map((pageName: string) => {
+      const pagePath = path.join(rootDir, 'src', 'pages', pageName);
+      const routesFileType = getRouteFileType(pagePath);
+      return path.join(pagePath, `routes${routesFileType}`);
     });
   } else {
-    // add babel plugins for ice lazy
-    const { configPath } = userConfig.router || {};
-
-    let { routesPath } = applyMethod('getRoutes', {
+    const routes = applyMethod('getRoutes', {
       rootDir,
-      tempDir: targetPath,
+      tempPath,
       configPath,
       projectType,
       isMpa,
       srcDir
     });
-
-    if (isMpa) {
-      const routesFile = `routes.${projectType}`;
-      const pagesPath = path.join(rootDir, 'src', 'pages');
-      const pages = applyMethod('getPages', rootDir, srcDir);
-      const pagesRoutePath = pages.map(pageName => {
-        return path.join(pagesPath, pageName, routesFile);
-      });
-      routesPath = pagesRoutePath;
-    }
-    modifyUserConfig('babelPlugins',
-      [
-        ...(userConfig.babelPlugins as [] || []),
-        [
-          require.resolve('./babelPluginReplacePath'),
-          {
-            routesPath,
-            alias: userConfig.alias,
-            applyMethod,
-            tempDir
-          }
-        ]
-      ]
-    );
-
-    onGetWebpackConfig(config => {
-      config.module.rule('appJSON')
-        .test(/app\.json$/)
-        .use('page-source-loader')
-        .loader(require.resolve('./pageSourceLoader'))
-        .options({
-          targetPath
-        });
-      config.resolve.alias.set('$store', existsAppStoreFile ? appStoreFile : path.join(targetPath, 'store', 'index.ts'));
-    });
+    routesPaths = [routes.routesPath];
   }
 
+  // redirect route path to ice temp(.ice/pages/Home/index.tsx)
+  if (vite) {
+    modifyUserConfig(
+      'vite.plugins', 
+      [vitePluginPageRedirect(rootDir, routesPaths)],
+      { deepmerge: true }
+    );
+  } else {
+    const defaultAlias = {};
+    const options: IReplaceRouterPathOptions = {
+      tempDir,
+      applyMethod,
+      routesPaths,
+      rootDir, 
+      srcPath,
+      alias: defaultAlias,
+    };
+    onHook(`before.${command}.run`, ({ config }) => {
+      const webWebpackConfig = Array.isArray(config) ? (config.find(item => item.name === 'web') || {}) : config;
+      options.alias = webWebpackConfig?.resolve?.alias || defaultAlias;
+    });
+
+    if (swc) {
+      onGetWebpackConfig((config: any) => {
+        config.module
+          .rule('replace-router-path')
+        // ensure that replace-router-path-loader is before babel-loader
+        // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
+          .after('tsx')
+          .test((filePath: string) => routesPaths.includes(filePath))
+          .use('replace-router-path-loader')
+          .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
+          .options(options);
+      });
+    } else {
+      const replacePathBabelPlugin = [
+        require.resolve('./babelPluginReplacePath'),
+        options
+      ];
+      const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
+      if (loadableBabelPluginIndex > -1) {
+      // ensure ReplacePathBabelPlugin is before @loadable/babel-plugin
+      // @loadable/babel-plugin will transform the router paths which babelPluginReplacePath couldn't transform
+        babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
+      } else {
+        babelPlugins.push(replacePathBabelPlugin);
+      }
+      modifyUserConfig('babelPlugins', [...babelPlugins]);
+    }
+  }
+
+  onGetWebpackConfig((config: any) => {
+    config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
+
+    if (config.get('cache')) {
+      config.merge({
+        cache: {
+          type: 'filesystem',
+          version: `${getValue('WEBPACK_CACHE_ID')}&store=true`
+        }
+      });
+    }
+  });
+
   const gen = new Generator({
-    appStoreTemplatePath,
-    pageStoreTemplatePath,
-    pageStoresTemplatePath,
-    typesTemplatePath,
-    targetPath,
-    rootDir,
+    tempPath,
     applyMethod,
-    projectType,
-    isRax,
-    srcDir
+    srcPath,
+    disableResetPageState: !!store?.disableResetPageState
   });
 
   gen.render();
-  onHook('before.start.run', async () => {
-    applyMethod('watchFileChange', /models\/.*|model.*|pages\/\w+\/index(.jsx?|.tsx)/, () => {
-      gen.render();
+
+  onHook('before.start.run', () => {
+    applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, (event: string) => {
+      if (event === 'add' || event === 'unlink') {
+        gen.render(true);
+      }
     });
   });
 };
-

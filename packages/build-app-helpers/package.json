@@ -1,6 +1,6 @@
 {
-  "name": "build-app-helpers",
-  "version": "1.0.0-0",
+  "name": "@builder/app-helpers",
+  "version": "2.5.2",
   "description": "build helpers for app framework",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -10,17 +10,25 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "!lib/**/*.map"
   ],
   "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/ice.git"
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/build-app-helpers"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@babel/parser": "^7.12.11",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/traverse": "^7.12.12",
+    "@babel/types": "^7.17.0",
     "fs-extra": "^8.1.0",
-    "loader-utils": "^2.0.0"
+    "lodash": "^4.17.20",
+    "esbuild": "^0.14.22",
+    "es-module-lexer": "^0.9.0",
+    "fast-glob": "^3.2.7"
   }
 }

@@ -1,23 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as ReactDOMServer from 'react-dom/server';
-import { createNavigation } from 'create-app-container';
-import { createUseRouter } from 'create-use-router';
+import * as queryString from 'query-string';
+import { loadableReady } from '@loadable/component';
+import type { RuntimeModule } from 'create-app-shared';
+import type { RenderOptions } from './types';
 
-const { createElement, useEffect, useState, Fragment, useLayoutEffect } = React;
+let __initialData__: any;
 
-const useRouter = createUseRouter({ useState, useLayoutEffect });
-const AppNavigation = createNavigation({ createElement, useEffect, useState, Fragment });
-
-export function reactAppRendererWithSSR(context, options) {
-  const { appConfig } = options || {};
-  appConfig.router.type = 'static';
-  return _renderApp(context, options);
-}
-
-let __initialData__;
-
-export function setInitialData(initialData) {
+export function setInitialData(initialData: any) {
   __initialData__ = initialData;
 }
 
@@ -25,136 +15,101 @@ export function getInitialData() {
   return __initialData__;
 }
 
-export async function reactAppRenderer(options) {
-  const { appConfig, setAppConfig, loadStaticModules } = options || {};
-
-  setAppConfig(appConfig);
-
-  loadStaticModules(appConfig);
-
-  if (process.env.__IS_SERVER__) return;
-
-  let initialData = {};
-  let pageInitialProps = {};
-
-  // ssr enabled and the server has returned data
-  if ((window as any).__ICE_APP_DATA__) {
-    initialData = (window as any).__ICE_APP_DATA__;
-    pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
-  } else {
-    // ssr not enabled, or SSR is enabled but the server does not return data
-    // eslint-disable-next-line
-    if (appConfig.app && appConfig.app.getInitialData) {
-      initialData = await appConfig.app.getInitialData();
-    }
-  }
-
-  // set InitialData, can get the return value through getInitialData method
-  setInitialData(initialData);
-
-  const context = { initialData, pageInitialProps };
-  _renderApp(context, options);
-}
-
-function _renderApp(context, options) {
-  const { appConfig, staticConfig = {}, buildConfig = {}, createBaseApp, emitLifeCycles } = options;
-  const { runtime, history, appConfig: modifiedAppConfig } = createBaseApp(appConfig, buildConfig, context);
-
-  options.appConfig = modifiedAppConfig;
-
-  // Emit app launch cycle
-  emitLifeCycles();
-
-  const isMobile = Object.keys(staticConfig).length;
-  if (isMobile) {
-    return _renderMobile({ runtime, history }, options);
-  } else {
-    return _render({ runtime }, options);
-  }
-}
-
-function _render({ runtime }, options) {
-  const { ErrorBoundary, appConfig = {} } = options;
-  const { ErrorBoundaryFallback, onErrorBoundaryHander, errorBoundary } = appConfig.app;
+export function getRenderApp(runtime: RuntimeModule, options: RenderOptions) {
+  const { ErrorBoundary, appConfig = { app: {} } } = options;
   const AppProvider = runtime?.composeAppProvider?.();
-  const AppRouter = runtime?.getAppRouter?.();
-  const { rootId, mountNode } = appConfig.app;
+  const AppComponent = runtime?.getAppComponent?.();
+
+  let rootApp = <AppComponent />;
+  if (AppProvider) {
+    rootApp = (
+      <AppProvider>
+        {rootApp}
+      </AppProvider>
+    );
+  }
+
+  const { ErrorBoundaryFallback, onErrorBoundaryHandler, errorBoundary, strict = false } = appConfig.app;
 
   function App() {
-    const appRouter = <AppRouter />;
-    const rootApp = AppProvider ? <AppProvider>{appRouter}</AppProvider> : appRouter;
-    if (errorBoundary) {
-      return (
-        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHander}>
+    // ErrorBoundary is missing in SSR
+    if (errorBoundary && ErrorBoundary) {
+      rootApp = (
+        <ErrorBoundary Fallback={ErrorBoundaryFallback} onError={onErrorBoundaryHandler}>
           {rootApp}
         </ErrorBoundary>
       );
     }
+    if (strict) {
+      rootApp = (
+        <React.StrictMode>
+          {rootApp}
+        </React.StrictMode>
+      );
+    }
     return rootApp;
   }
+  return App;
+}
 
-  if (process.env.__IS_SERVER__) {
-    return ReactDOMServer.renderToString(<App />);
+export async function reactAppRenderer(options: RenderOptions) {
+  const { appConfig, buildConfig = {}, appLifecycle } = options;
+  const { createBaseApp, emitLifeCycles, initAppLifeCycles } = appLifecycle;
+  const context: any = {};
+
+  // ssr enabled and the server has returned data
+  if ((window as any).__ICE_APP_DATA__) {
+    context.initialData = (window as any).__ICE_APP_DATA__;
+    context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
+  } else if (appConfig?.app?.getInitialData) {
+    const { href, origin, pathname, search } = window.location;
+    const path = href.replace(origin, '');
+    const query = queryString.parse(search);
+    const ssrError = (window as any).__ICE_SSR_ERROR__;
+    const initialContext = {
+      pathname,
+      path,
+      query,
+      ssrError
+    };
+    context.initialData = await appConfig.app.getInitialData(initialContext);
   }
+
+  const { runtime, appConfig: modifiedAppConfig } = createBaseApp<any>(appConfig, buildConfig, context);
+  // init app life cycles after app runtime created
+  initAppLifeCycles();
+
+  // set InitialData, can get the return value through getInitialData method
+  setInitialData(context.initialData);
+  // emit app launch cycle
+  emitLifeCycles();
+
+  return _render(runtime, {
+    ...options,
+    appConfig: modifiedAppConfig,
+  });
+}
+
+function _render(runtime: RuntimeModule, options: RenderOptions) {
+  const { appConfig = {} } = options;
+  const { rootId, mountNode } = appConfig.app;
+  const App = getRenderApp(runtime, options);
 
   const appMountNode = _getAppMountNode(mountNode, rootId);
   if (runtime?.modifyDOMRender) {
     return runtime?.modifyDOMRender?.({ App, appMountNode });
   }
 
-  return ReactDOM[(window as any).__ICE_SSR_ENABLED__ ? 'hydrate' : 'render'](<App />, appMountNode);
-}
-
-function _renderMobile({ runtime, history }, options) {
-  const { staticConfig, appConfig = {} } = options;
-  const { routes } = staticConfig;
-  const { rootId, mountNode } = appConfig.app;
-  const appMountNode = _getAppMountNode(mountNode, rootId);
-
-  return _matchInitialComponent(history.location.pathname, routes)
-    .then(InitialComponent => {
-      const App = () => {
-        const { component } = useRouter({ routes, history, InitialComponent });
-        return createElement(
-          AppNavigation,
-          {
-            staticConfig,
-            component,
-            history,
-            location: history.location,
-            routes
-          }
-        );
-      };
-
-      const AppProvider = runtime?.composeAppProvider?.();
-
-      const Root = () => {
-        if (AppProvider) {
-          return createElement(AppProvider, null, createElement(App));
-        }
-        return createElement(App);
-      };
-
-      const appInstance = createElement(Root);
-
-      ReactDOM.render(appInstance, appMountNode);
+  // add process.env.SSR for tree-shaking
+  if ((window as any).__ICE_SSR_ENABLED__ && process.env.SSR) {
+    loadableReady(() => {
+      ReactDOM.hydrate(<App />, appMountNode);
     });
-}
-
-function _matchInitialComponent(fullpath, routes) {
-  let initialComponent = null;
-  for (let i = 0, l = routes.length; i < l; i++) {
-    if (fullpath === routes[i].path || routes[i].regexp && routes[i].regexp.test(fullpath)) {
-      initialComponent = routes[i].component;
-      if (typeof initialComponent === 'function') initialComponent = initialComponent();
-      break;
-    }
+  } else {
+    ReactDOM.render(<App />, appMountNode);
   }
-
-  return Promise.resolve(initialComponent);
 }
 
-function _getAppMountNode(mountNode, rootId) {
+function _getAppMountNode(mountNode: HTMLElement, rootId: string) {
   return mountNode || document.getElementById(rootId) || document.getElementById('ice-container');
 }

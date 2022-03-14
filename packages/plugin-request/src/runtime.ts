@@ -1,3 +1,4 @@
+// @ts-ignore
 import createAxiosInstance from '$ice/createAxiosInstance';
 
 const module = ({ appConfig }) => {
@@ -17,7 +18,7 @@ const module = ({ appConfig }) => {
       const axiosInstance = createAxiosInstance().default;
       setAxiosInstance(requestConfig, axiosInstance);
     }
-  };
+  }
 };
 
 /**

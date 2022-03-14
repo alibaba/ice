@@ -29,12 +29,17 @@ coverage
 .tmp
 *.swp
 *.dia~
+*.temp.json
 
 # Packages
 packages/*/lib/
 
 # temp folder .ice
 examples/*/.ice
-examples/*/.rax
+
+# temp file of test
+packages/webpack-plugin-extract-css-assets/test/actual/*
 
 build
+dist
+.history

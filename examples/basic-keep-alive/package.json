@@ -1,0 +1,20 @@
+{
+  "name": "exmaple-basic-keep-alive",
+  "description": "",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "scripts": {
+    "start": "icejs start --mode dev",
+    "build": "icejs build --mode prod",
+    "test": "icejs test --jest-watchAll"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

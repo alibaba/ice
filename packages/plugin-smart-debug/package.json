@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-smart-debug",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -8,8 +8,16 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-smart-debug"
+  },
   "dependencies": {
-    "build-plugin-load-assets": "^0.1.0",
+    "build-plugin-load-assets": "^0.1.3",
     "build-plugin-wrap-code": "^0.1.0"
-  }
+  },
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ]
 }

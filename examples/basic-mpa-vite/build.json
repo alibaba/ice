@@ -1,0 +1,17 @@
+{
+  "vite": true,
+  "mpa": {
+    "openPage": "Dashboard",
+    "template": {
+      "web.html": ["Dashboard", "Home"]
+    },
+    "rewrites": {
+      "dashboard": "site/dashboard"
+    }
+  },
+  "devServer": {
+    "devMiddleware": {
+      "writeToDisk": true
+    }
+  }
+}

@@ -1,0 +1,21 @@
+import { runApp } from '<%- runAppPath %>';
+import type { IAppConfig } from '<%- typesPath %>';
+<% if (routesFilePath) {%>
+import routes from '<%- routesFilePath %>';
+
+const appConfig: IAppConfig = {
+  router: {
+    routes
+  },
+};
+<% } else { %>
+import Page from '<%- resourcePath %>';
+
+const appConfig: IAppConfig = {
+  app: {
+    renderComponent: Page,
+  },
+};
+<% } %>
+
+runApp(appConfig);

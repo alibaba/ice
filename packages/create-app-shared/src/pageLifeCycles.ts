@@ -1,11 +1,12 @@
-import { isMiniAppPlatform } from './env';
+import * as React from 'react';
 import { SHOW, HIDE } from './constants';
 import router from './router';
+import type { UseEffect, Listener } from './types';
 
 // visibleListeners => { [pathname]: { show: [], hide: [] } }
 const visibleListeners = {};
 
-function addPageLifeCycle(cycle, callback) {
+function addPageLifeCycle(cycle: string, callback: Listener) {
   const pathname = router.current.pathname;
   if (!visibleListeners[pathname]) {
     visibleListeners[pathname] = {
@@ -16,7 +17,7 @@ function addPageLifeCycle(cycle, callback) {
   visibleListeners[pathname][cycle].push(callback);
 }
 
-export function emit(cycle: any, pathname?: string, ...args) {
+export function emit(cycle: string, pathname?: string, ...args: any) {
   // Ensure queue exists
   if (visibleListeners[pathname] && visibleListeners[pathname][cycle]) {
     for (let i = 0, l = visibleListeners[pathname][cycle].length; i < l; i++) {
@@ -25,8 +26,8 @@ export function emit(cycle: any, pathname?: string, ...args) {
   }
 }
 
-function createPageLifeCycle(useEffect) {
-  return (cycle, callback) => {
+function createPageLifeCycle(useEffect: UseEffect) {
+  return (cycle: string, callback: Listener) => {
     useEffect(() => {
       // When component did mount, it will trigger usePageShow callback
       if (cycle === SHOW) {
@@ -49,15 +50,19 @@ function createPageLifeCycle(useEffect) {
   };
 }
 
-export function withPageLifeCycle(Component) {
+export function withPageLifeCycle<P>(Component: React.ComponentClass<P>) {
   class Wrapper extends Component {
-    constructor(...args) {
-      super(...args);
+    private onShow: () => void;
+
+    private onHide: () => void;
+
+    private pathname: string;
+
+    constructor(props: P, context?: any) {
+      super(props, context);
       if (this.onShow) {
-        if (!isMiniAppPlatform) {
-          // In MiniApp platform show event will trigger after addPageLifeCycle, so it needn't be execute in constructor
-          this.onShow();
-        }
+        // trigger onShow after addPageLifeCycle
+        this.onShow();
         addPageLifeCycle(SHOW, this.onShow.bind(this));
       }
       if (this.onHide) {
@@ -67,31 +72,22 @@ export function withPageLifeCycle(Component) {
       this.pathname = router.current.pathname;
     }
 
-    private componentWillUnmount() {
+    public componentWillUnmount() {
+      // eslint-disable-next-line no-unused-expressions
+      super.componentWillUnmount?.();
       visibleListeners[this.pathname] = null;
     }
   }
   Wrapper.displayName = `withPageLifeCycle(${  Component.displayName || Component.name  })`;
-  return Wrapper as any;
-}
-
-if (isMiniAppPlatform) {
-  // eslint-disable-next-line
-  window.addEventListener('pageshow', () => {
-    emit(SHOW, (window as any).__pageId);
-  });
-  // eslint-disable-next-line
-  window.addEventListener('pagehide', () => {
-    emit(HIDE, (window as any).__pageId);
-  });
+  return Wrapper as React.ComponentClass;
 }
 
 export function createUsePageLifeCycle({ useEffect }) {
-  const usePageShow = (callback) => {
+  const usePageShow = (callback: Listener) => {
     createPageLifeCycle(useEffect)(SHOW, callback);
   };
 
-  const usePageHide = (callback) => {
+  const usePageHide = (callback: Listener) => {
     createPageLifeCycle(useEffect)(HIDE, callback);
   };
 
