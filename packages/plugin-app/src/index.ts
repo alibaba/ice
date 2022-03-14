@@ -37,7 +37,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       // platform: 'node',
       format: 'esm',
       outExtension: { '.js': '.mjs' },
-      external: ['./node_modules/*', 'react'],
+      external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
 
     if (command === 'build') {
