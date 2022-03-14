@@ -28,7 +28,7 @@ export default async function serverRender(
   if (!AppRouter) {
     const { req } = requestContext;
     AppRouter = () =>
-      <DefaultAppRouter Router={(props) => <StaticRouter location={req.url}>{props.children}</StaticRouter>} />;
+      <DefaultAppRouter Router={StaticRouter} routerProps={{ location: req.url }} />;
   }
 
   const PageWrappers = runtime.getWrapperPageRegistration();

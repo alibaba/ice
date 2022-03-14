@@ -1,10 +1,4 @@
-interface Options {
-  // TODO: type
-  routeManifest: any;
-  entry: string;
-}
-
-export function setupRenderServer(options: Options) {
+export function setupRenderServer(options) {
   const {
     routeManifest,
     entry,
