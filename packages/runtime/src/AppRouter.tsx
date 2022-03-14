@@ -24,9 +24,9 @@ const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
   if (!routes || routes.length === 0) {
     throw new Error('Please add routes(like pages/index.tsx) to your app.');
   }
+
   if (routes.length === 1 && !routes[0].children) {
-    const Page = routes[0].component;
-    return <React.Suspense fallback={<>loading chunk....</>}><Page /></React.Suspense>;
+    return routes[0].component;
   }
 
   const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
