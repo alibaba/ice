@@ -32,10 +32,12 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
     await esbuildCompile({
-      entryPoints: [path.join(rootDir, 'src/document.tsx')],
-      outdir: outDir,
-      platform: 'node',
-      external: ['./node_modules/*'],
+      entryPoints: [path.join(rootDir, '.ice/entry.server')],
+      outdir: path.join(outDir, 'server'),
+      // platform: 'node',
+      format: 'esm',
+      outExtension: { '.js': '.mjs' },
+      external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
 
     if (command === 'build') {
