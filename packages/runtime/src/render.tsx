@@ -1,16 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { HashRouter, BrowserRouter, matchRoutes } from 'react-router-dom';
 import type Runtime from './runtime.js';
 import App from './App.js';
 import DefaultAppRouter from './AppRouter.js';
-import {
-  HashRouter,
-  BrowserRouter,
-} from 'react-router-dom';
 
 export default async function render(runtime: Runtime) {
   const appContext = runtime.getAppContext();
-  const { appConfig } = appContext;
+  const { appConfig, routes } = appContext;
   const { rootId, strict } = appConfig.app;
 
   const StrictMode = strict ? React.StrictMode : React.Fragment;
@@ -23,14 +20,18 @@ export default async function render(runtime: Runtime) {
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
-    const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
-
-    AppRouter = () => (
-      <Router>
-        <DefaultAppRouter />
-      </Router>
-    );
+    if (routes.length === 1 && !routes[0].children) {
+      AppRouter = routes[0].component;
+    } else {
+      const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
+      AppRouter = () => (
+        <DefaultAppRouter Router={(props) => <Router>{props.children}</Router>} />
+      );
+    }
   }
+
+  const matchedRoutes = matchRoutes(routes, window.location);
+  await loadRouteModules(matchedRoutes);
 
   const appMountNode = getAppMountNode(rootId);
 
@@ -49,4 +50,11 @@ export default async function render(runtime: Runtime) {
 
 function getAppMountNode(rootId: string): HTMLElement {
   return rootId ? document.getElementById(rootId) : document.getElementById('ice-container');
+}
+
+async function loadRouteModules(matchedRoutes) {
+  for (let i = 0, n = matchedRoutes.length; i < n; i++) {
+    const { route } = matchedRoutes[i];
+    route.component = (await route.load()).default;
+  }
 }
