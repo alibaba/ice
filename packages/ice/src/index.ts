@@ -4,13 +4,14 @@ import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName, IGetBuiltInPlugins } from 'build-scripts';
 import type { ExportData } from '@ice/types/esm/generator.js';
-import type { ExtendsPluginAPI, Routes } from '@ice/types/esm/plugin.js';
+import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import Generator from './service/runtimeGenerator.js';
 import { createEsbuildCompiler } from './service/compile.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
 import getContextConfig from './utils/getContextConfig.js';
+import { generateRoutesRenderData } from './routes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,39 +23,38 @@ interface CreateServiceOptions {
 }
 
 async function createService({ rootDir, command, commandArgs, getBuiltInPlugins }: CreateServiceOptions) {
-  // TODO: watch and generate routeManifest
-  const routes: Routes = [
-    {
-    path: '/home',
-    filepath: path.join(rootDir, 'src/pages/home'),
-    chunkName: 'home',
-    componentName: 'Home',
-  },
-  {
-    path: '/about',
-    filepath: path.join(rootDir, 'src/pages/about'),
-    chunkName: 'about',
-    componentName: 'About',
-  },
-  {
-    path: '/',
-    filepath: path.join(rootDir, 'src/pages/home'),
-    chunkName: 'home',
-    componentName: 'Index',
-  },
-];
+  const { addWatchEvent, removeWatchEvent } = createWatch(path.join(rootDir, 'src'), command);
+  const srcDir = path.join(rootDir, 'src');
+  const tmpDirName = '.ice';
 
+  const routesRenderData = generateRoutesRenderData(rootDir);
   const generator = new Generator({
     rootDir,
-    targetDir: './.ice',
+    targetDir: tmpDirName,
     // TODO get default Data
     defaultRenderData: {
-      routes,
+      ...routesRenderData,
     },
   });
-  // add default template of ice
+
+    // add default template of ice
   const templatePath = path.join(__dirname, '../template/');
   generator.addTemplateFiles(templatePath);
+
+  addWatchEvent([
+    srcDir,
+    (eventName) => {
+      if (eventName === 'add' || eventName === 'unlink') {
+        // TODO: only watch src/layout.tsx and src/pages/**
+        const routesRenderData = generateRoutesRenderData(rootDir);
+        generator.renderFile(
+          path.join(templatePath, 'routes.ts.ejs'),
+          path.join(rootDir, tmpDirName, 'routes.ts'),
+          { ...routesRenderData },
+        );
+      }
+    },
+  ]);
   const generatorAPI = {
     addExport: (exportData: ExportData) => {
       generator.addExport('framework', exportData);
@@ -68,7 +68,6 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
   };
-  const { addWatchEvent, removeWatchEvent } = createWatch(path.join(rootDir, 'src'), command);
   const ctx = new Context<any, ExtendsPluginAPI>({
     rootDir,
     command,
@@ -79,9 +78,7 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
         addEvent: addWatchEvent,
         removeEvent: removeWatchEvent,
       },
-      context: {
-        routes,
-      },
+      context: {},
     },
     getBuiltInPlugins,
   });
@@ -110,5 +107,6 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
     },
   };
 }
+
 
 export default createService;

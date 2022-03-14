@@ -34,12 +34,15 @@ export default async function serverRender(
     );
   }
 
+  const PageWrappers = runtime.getWrapperPageRegistration();
+
   const pageHtml = ReactDOMServer.renderToString(
     <StrictMode>
       <App
         AppProvider={AppProvider}
         AppRouter={AppRouter}
         appContext={appContext}
+        PageWrappers={PageWrappers}
       />
     </StrictMode>,
   );

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateRouteManifest function layout-routes 1`] = `
+Array [
+  Object {
+    "componentName": "PagesBlogIndex",
+    "file": "pages/blog/index.tsx",
+    "id": "pages/blog/index",
+    "index": true,
+    "parentId": undefined,
+    "path": "/blog",
+  },
+  Object {
+    "componentName": "PagesBlog$id",
+    "file": "pages/blog/$id.tsx",
+    "id": "pages/blog/$id",
+    "index": undefined,
+    "parentId": undefined,
+    "path": "/blog/:id",
+  },
+  Object {
+    "componentName": "PagesAbout",
+    "file": "pages/about.tsx",
+    "id": "pages/about",
+    "index": undefined,
+    "parentId": undefined,
+    "path": "/about",
+  },
+  Object {
+    "componentName": "PagesIndex",
+    "file": "pages/index.tsx",
+    "id": "pages/index",
+    "index": true,
+    "parentId": undefined,
+    "path": undefined,
+  },
+]
+`;

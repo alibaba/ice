@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { useAppContext } from 'ice';
-import './home.css';
+import { Link } from 'ice';
 
 export default function About() {
-  const appContext = useAppContext();
-
-  console.log('About Page: appContext', appContext);
-
-  return <><h2>About Page</h2></>;
+  return <><h2>About Page</h2><Link to="/">home</Link></>;
 }
+
+About.pageConfig = {
+  auth: ['guest'],
+};
