@@ -7,9 +7,11 @@ if (!projectRootDir) {
   return;
 }
 
-const iceTempDir = path.join(projectRootDir, '.ice');
+const framework = process.env.__FRAMEWORK_NAME__ || 'ice';
+
+const iceTempDir = path.join(projectRootDir, `.${framework}`);
 const iceTempDtsBundlePath = path.join(iceTempDir, 'index.d.ts');
-const dtsBundlePath = path.join(__dirname, '..', 'lib', 'ice.d.ts');
+const dtsBundlePath = path.join(__dirname, '..', 'lib', `${framework}.d.ts`);
 
 if (fs.existsSync(dtsBundlePath)) {
   if (!fs.existsSync(iceTempDir)) {
