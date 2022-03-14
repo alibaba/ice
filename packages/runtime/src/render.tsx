@@ -20,14 +20,10 @@ export default async function render(runtime: Runtime) {
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
-    if (routes.length === 1 && !routes[0].children) {
-      AppRouter = routes[0].component;
-    } else {
-      const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
-      AppRouter = () => (
-        <DefaultAppRouter Router={(props) => <Router>{props.children}</Router>} />
-      );
-    }
+    const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
+    AppRouter = () => (
+      <DefaultAppRouter Router={(props) => <Router>{props.children}</Router>} />
+    );
   }
 
   const matchedRoutes = matchRoutes(routes, window.location);
