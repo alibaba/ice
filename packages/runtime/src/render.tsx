@@ -27,7 +27,7 @@ export default async function render(runtime: Runtime) {
   }
 
   const matchedRoutes = matchRoutes(routes, window.location);
-  await loadRouteModules(matchedRoutes);
+  await loadRouteChunks(matchedRoutes);
 
   const appMountNode = getAppMountNode(rootId);
 
@@ -48,7 +48,7 @@ function getAppMountNode(rootId: string): HTMLElement {
   return rootId ? document.getElementById(rootId) : document.getElementById('ice-container');
 }
 
-async function loadRouteModules(matchedRoutes) {
+async function loadRouteChunks(matchedRoutes) {
   for (let i = 0, n = matchedRoutes.length; i < n; i++) {
     const { route } = matchedRoutes[i];
     route.component = (await route.load()).default;
