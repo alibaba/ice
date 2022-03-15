@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Runtime from './runtime.js';
 import serverRender from './serverRender.js';
 import type { AppContext, AppConfig } from './types';

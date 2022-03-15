@@ -80,3 +80,7 @@ export interface CommonJsRuntime {
 }
 
 export type GetWrapperPageRegistration = () => PageWrapper<any>[];
+
+export interface AppRouterProps {
+  PageWrappers?: PageWrapper<any>[];
+}

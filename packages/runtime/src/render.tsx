@@ -20,6 +20,7 @@ export default async function render(runtime: Runtime) {
     AppRouter = () => (
       <DefaultAppRouter Router={Router} />
     );
+    runtime.setAppRouter(AppRouter);
   }
 
   const matchedRoutes = matchRoutes(routes, window.location);
@@ -31,7 +32,6 @@ export default async function render(runtime: Runtime) {
   render((
     <App
       runtime={runtime}
-      AppRouter={AppRouter}
     />
   ), appMountNode);
 }
