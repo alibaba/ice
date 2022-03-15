@@ -64,7 +64,7 @@ function updateRouteElement(routes: RouteItem[], PageWrappers?: PageWrapper<any>
         </React.Suspense>
       );
     } else {
-      element = 'Render error.';
+      element = 'Page Component is not found.';
     }
 
     const route: RouteObject = {
