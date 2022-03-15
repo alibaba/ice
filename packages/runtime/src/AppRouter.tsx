@@ -57,8 +57,19 @@ function updateRouteElement(routes: RouteItem[], PageWrappers?: PageWrapper<any>
     const element = (
       <React.Suspense fallback={<>loading chunk....</>}>
         <RouteWrapper PageComponent={PageComponent} PageWrappers={PageWrappers} />
-      </React.Suspense>
-    );
+      );
+    } else if (load) {
+      const LazyComponent = React.lazy(load);
+
+      element = (
+        <React.Suspense fallback={<>loading chunk....</>}>
+          <RouteWrapper PageComponent={LazyComponent} PageWrappers={PageWrappers} />
+        </React.Suspense>
+      );
+    } else {
+      element = 'Page Component is not found.';
+    }
+
     const route: RouteObject = {
       path,
       element: element,
