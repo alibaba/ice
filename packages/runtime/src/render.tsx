@@ -20,10 +20,7 @@ export default async function render(runtime: Runtime) {
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
-    AppRouter = () => (
-      <DefaultAppRouter Router={Router} />
-    );
-    runtime.setAppRouter(AppRouter);
+    runtime.setAppRouter(() => <DefaultAppRouter Router={Router} />);
   }
 
   const matchedRoutes = matchRoutes(routes, window.location);
