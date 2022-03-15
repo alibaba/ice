@@ -8,8 +8,9 @@ export function generateRoutesRenderData(rootDir: string) {
 
   const componentsImportStr = generateComponentsImportStr(routeManifest);
   const routesStr = generateRoutesStr(routes);
+  const asyncRoutesStr = generateRoutesStr(routes, true);
 
-  return { componentsImportStr, routesStr };
+  return { componentsImportStr, routesStr, asyncRoutesStr };
 }
 
 function generateComponentsImportStr(routeManifest: RouteManifest) {
@@ -18,27 +19,37 @@ function generateComponentsImportStr(routeManifest: RouteManifest) {
       let { file, componentName } = routeManifest[id];
       const fileExtname = path.extname(file);
       file = file.replace(new RegExp(`${fileExtname}$`), '');
-      return `${prev}const ${componentName} = React.lazy(() => import(/* webpackChunkName: "${componentName}" */ '@/${file}'))\n`;
+      return `${prev}import ${componentName} from '@/${file}'; \n`;
   }, '');
 }
 
-function generateRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
-  const str = generateNestRoutesStr(nestRouteManifest);
+function generateRoutesStr(nestRouteManifest: NestedRouteManifest[], async?: boolean) {
+  const str = generateNestRoutesStr(nestRouteManifest, async);
   return `[${str}]`;
 }
 
-function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
+function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[], async?: boolean) {
   return nestRouteManifest.reduce((prev, route) => {
-    const { children, path, index, componentName } = route;
+    const { children, path: routePath, index, componentName, file } = route;
+
+    let componentKV;
+    if (async) {
+      const fileExtname = path.extname(file);
+      const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
+      componentKV = `load: () => import(/* webpackChunkName: "${componentName}" */ '@/${componentFile}')`;
+    } else {
+      componentKV = `component: ${componentName}`;
+    }
+
     let str = `{
-      path: '${path || ''}',
-      component: ${componentName},
+      path: '${routePath || ''}',
+      ${componentKV},
       componentName: '${componentName}',
       index: ${index},
       exact: true,
     `;
     if (children) {
-      str += `children: [${generateNestRoutesStr(children)}],`;
+      str += `children: [${generateNestRoutesStr(children, async)}],`;
     }
     str += '},';
     prev += str;

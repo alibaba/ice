@@ -1,10 +1,9 @@
 import path from 'path';
-import fs from 'fs';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/types';
 import openBrowser from './utils/openBrowser.js';
 import { setupRenderServer } from './ssr/server.js';
-import renderDocument from './ssr/renderDocument.js';
+import generateHtml from './ssr/generateHtml.js';
 
 // TODO: register more cli options
 const cliOptions = [
@@ -20,27 +19,30 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   registerCliOption(cliOptions);
 
-  // mock routeManifest
+  // TODO: get from routeManifest
   const routeManifest = {
     '/': '/src/pages/index',
+    '/about': '/src/pages/about',
+    '/home': '/src/pages/home',
   };
 
-  let outDir: string;
-
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
-    outDir = taskConfig.outputDir;
+    const outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
     await esbuildCompile({
-      entryPoints: [path.join(rootDir, 'src/document.tsx')],
-      outdir: outDir,
-      platform: 'node',
-      external: ['./node_modules/*'],
+      entryPoints: [path.join(rootDir, '.ice/entry.server')],
+      outdir: path.join(outDir, 'server'),
+      // platform: 'node',
+      format: 'esm',
+      outExtension: { '.js': '.mjs' },
+      // FIXME: https://github.com/ice-lab/ice-next/issues/27
+      external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
 
     if (command === 'build') {
       // generator html to outputDir
-      const htmlContent = renderDocument(path.join(taskConfig.outputDir, 'document.js'));
-      fs.writeFileSync(path.join(taskConfig.outputDir, 'index.html'), htmlContent);
+      const entryPath = path.resolve(outDir, 'server/entry.mjs');
+      await generateHtml(entryPath, outDir, routeManifest);
     }
   });
 
@@ -78,9 +80,10 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
   }
 
+  const outputDir = path.join(rootDir, 'build');
   registerTask('web', {
     mode,
-    outputDir: path.join(rootDir, 'build'),
+    outputDir,
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
@@ -93,7 +96,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          outDir,
+          entry: path.resolve(outputDir, 'server/entry.mjs'),
           routeManifest,
         }),
       });

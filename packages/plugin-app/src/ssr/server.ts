@@ -1,25 +1,21 @@
-import path from 'path';
-import renderDocument from './renderDocument.js';
-
-interface Options {
-  outDir: string;
-  // TODO: type
-  routeManifest: any;
-}
-
-export function setupRenderServer(options: Options) {
+export function setupRenderServer(options) {
   const {
-    outDir,
     routeManifest,
+    entry,
   } = options;
 
-  return (req, res) => {
+  return async (req, res) => {
     if (!routeManifest[req.path]) {
       return;
     }
 
+    const serverEntry = await import(entry);
+
     // TODO: disable cache
-    const html = renderDocument(path.join(outDir, 'document.js'));
+    const html = await serverEntry.render({
+      req,
+      res,
+    });
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);

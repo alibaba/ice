@@ -12,7 +12,7 @@ function Document() {
         <title>ICE Demo</title>
       </head>
       <body>
-        <div id="root"></div>
+        <div id="root" dangerouslySetInnerHTML={{ __html: '<!--app-html-->' }}></div>
         <script src="./main.js"></script>
       </body>
     </html>

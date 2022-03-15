@@ -90,10 +90,15 @@ export default class Browser {
     }
   }
 
-  async page (url: string) {
+  async page (url: string, disableJS?: boolean) {
     this.baseUrl = url;
     if (!this.browser) { throw new Error('Please call start() before page(url)'); }
     const page: Page = await this.browser.newPage();
+
+    if (disableJS) {
+      page.setJavaScriptEnabled(false);
+    }
+
     await page.goto(url);
     page.push = (url, options) => page.goto(`${this.baseUrl}${url}`, options);
     page.html = () =>

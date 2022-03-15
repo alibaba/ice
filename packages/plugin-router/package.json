@@ -19,6 +19,5 @@
   "homepage": "https://next.ice.work",
   "devDependencies": {
     "@ice/types": "^1.0.0"
-  },
-  "type": "module"
+  }
 }

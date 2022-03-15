@@ -57,6 +57,7 @@ export interface AppContext {
   routes?: RouteItem[];
   initialData?: any;
   appConfig: AppConfig;
+  document?: ComponentType;
 }
 
 export interface RuntimeAPI {
