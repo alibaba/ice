@@ -39,7 +39,7 @@ export interface PageConfig {
 }
 
 export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
-export type SetAppRouter = (AppRouter: ComponentType) => void;
+export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
 export type AddProvider = (Provider: ComponentType) => void;
 export type SetRender = (render: Renderer) => void;
 export type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;

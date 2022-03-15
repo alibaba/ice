@@ -3,7 +3,8 @@ import * as ReactDOM from 'react-dom';
 import { HashRouter, BrowserRouter, matchRoutes } from 'react-router-dom';
 import type Runtime from './runtime.js';
 import App from './App.js';
-import DefaultAppRouter from './AppRouter.js';
+import AppRoutes from './AppRoutes.js';
+import type { AppRouterProps } from './types';
 
 export default async function render(runtime: Runtime) {
   const appContext = runtime.getAppContext();
@@ -17,7 +18,11 @@ export default async function render(runtime: Runtime) {
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
-    runtime.setAppRouter(() => <DefaultAppRouter Router={Router} />);
+    runtime.setAppRouter((props: AppRouterProps) => (
+      <Router>
+        <AppRoutes PageWrappers={props.PageWrappers} />
+      </Router>
+    ));
   }
 
   const matchedRoutes = matchRoutes(routes, window.location);
