@@ -20,9 +20,7 @@ export default async function serverRender(
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     const { req } = requestContext;
-    AppRouter = () =>
-      <DefaultAppRouter Router={StaticRouter} routerProps={{ location: req.url }} />;
-    runtime.setAppRouter(AppRouter);
+    runtime.setAppRouter(() => <DefaultAppRouter Router={StaticRouter} routerProps={{ location: req.url }} />);
   }
 
   const pageHtml = ReactDOMServer.renderToString(
