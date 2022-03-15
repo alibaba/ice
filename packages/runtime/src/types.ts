@@ -29,6 +29,7 @@ export interface RouteItem {
   index?: false;
   exact?: boolean;
   strict?: boolean;
+  load?: () => Promise<{ default: ComponentType<any> }>;
   children?: RouteItem[];
 }
 

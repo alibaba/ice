@@ -27,9 +27,11 @@ const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
     return <Page />;
   }
 
+  const newRoutes = updateRouteElement(routes, PageWrappers);
+
   return (
     <Router {...routerProps}>
-      <App routes={routes} PageWrappers={PageWrappers} />
+      <App routes={newRoutes} />
     </Router>
   );
 };
@@ -37,30 +39,44 @@ const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
 export default AppRouter;
 
 interface AppProps extends AppRouterProps {
-  routes: RouteItem[];
+  routes: RouteObject[];
 }
 
-function App({ routes, PageWrappers }: AppProps) {
-  const newRoutes = updateRouteElement(routes, PageWrappers);
-  const element = useRoutes(newRoutes);
+function App({ routes }: AppProps) {
+  const element = useRoutes(routes);
   return element;
 }
 
 function updateRouteElement(routes: RouteItem[], PageWrappers?: PageWrapper<any>[]) {
-  return routes.map(({ path, component: PageComponent, children, index }: RouteItem) => {
-    const element = (
-      // <React.Suspense fallback={<>loading chunk....</>}>
-      <RouteWrapper PageComponent={PageComponent} PageWrappers={PageWrappers} />
-      // </React.Suspense>
-    );
+  return routes.map(({ path, component: PageComponent, children, index, load }: RouteItem) => {
+    let element;
+
+    if (PageComponent) {
+      element = (
+        <RouteWrapper PageComponent={PageComponent} PageWrappers={PageWrappers} />
+      );
+    } else if (load) {
+      const LazyComponent = React.lazy(load);
+
+      element = (
+        <React.Suspense fallback={<>loading chunk....</>}>
+          <RouteWrapper PageComponent={LazyComponent} PageWrappers={PageWrappers} />
+        </React.Suspense>
+      );
+    } else {
+      element = 'Render error.';
+    }
+
     const route: RouteObject = {
       path,
       element: element,
       index,
     };
+
     if (children) {
       route.children = updateRouteElement(children, PageWrappers);
     }
+
     return route;
   });
 }
