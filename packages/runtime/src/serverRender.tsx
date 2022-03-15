@@ -22,12 +22,12 @@ export default async function serverRender(
     const { req } = requestContext;
     AppRouter = () =>
       <DefaultAppRouter Router={StaticRouter} routerProps={{ location: req.url }} />;
+    runtime.setAppRouter(AppRouter);
   }
 
   const pageHtml = ReactDOMServer.renderToString(
     <App
       runtime={runtime}
-      AppRouter={AppRouter}
     />,
   );
 

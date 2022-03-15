@@ -1,18 +1,14 @@
 import * as React from 'react';
-import type { ComponentType } from 'react';
-import type { AppContext, PageWrapper } from './types';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { AppContextProvider } from './AppContext.js';
-import type AppRouter from './AppRouter';
 import type Runtime from './runtime.js';
 
 interface Props {
   runtime: Runtime;
-  AppRouter: typeof AppRouter;
 }
 
 export default function App(props: Props) {
-  const { runtime, AppRouter } = props;
+  const { runtime } = props;
 
   const appContext = runtime.getAppContext();
   const { appConfig } = appContext;
@@ -21,6 +17,7 @@ export default function App(props: Props) {
 
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
   const PageWrappers = runtime.getWrapperPageRegistration();
+  const AppRouter = runtime.getAppRouter();
 
   return (
     <StrictMode>
