@@ -19,17 +19,15 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   registerCliOption(cliOptions);
 
-  // mock routeManifest
+  // TODO: get from routeManifest
   const routeManifest = {
     '/': '/src/pages/index',
     '/about': '/src/pages/about',
     '/home': '/src/pages/home',
   };
 
-  let outDir: string;
-
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
-    outDir = taskConfig.outputDir;
+    const outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
     await esbuildCompile({
       entryPoints: [path.join(rootDir, '.ice/entry.server')],
@@ -82,9 +80,10 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
   }
 
+  const outputDir = path.join(rootDir, 'build');
   registerTask('web', {
     mode,
-    outputDir: outDir,
+    outputDir,
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
@@ -97,7 +96,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          outDir,
+          entry: path.resolve(outputDir, 'server/entry.mjs'),
           routeManifest,
         }),
       });
