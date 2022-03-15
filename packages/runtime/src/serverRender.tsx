@@ -8,21 +8,14 @@ import DefaultAppRouter from './AppRouter.js';
 export default async function serverRender(
   runtime: Runtime,
   requestContext,
+  Document,
   documentOnly: boolean,
 ) {
-  const appContext = runtime.getAppContext();
-  const { appConfig, document: Document } = appContext;
-
   const documentHtml = ReactDOMServer.renderToString(<Document />);
 
   if (documentOnly) {
     return documentHtml;
   }
-
-  const { strict } = appConfig.app;
-
-  const StrictMode = strict ? React.StrictMode : React.Fragment;
-  const AppProvider = runtime.composeAppProvider() || React.Fragment;
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
@@ -31,17 +24,11 @@ export default async function serverRender(
       <DefaultAppRouter Router={StaticRouter} routerProps={{ location: req.url }} />;
   }
 
-  const PageWrappers = runtime.getWrapperPageRegistration();
-
   const pageHtml = ReactDOMServer.renderToString(
-    <StrictMode>
-      <App
-        AppProvider={AppProvider}
-        AppRouter={AppRouter}
-        appContext={appContext}
-        PageWrappers={PageWrappers}
-      />
-    </StrictMode>,
+    <App
+      runtime={runtime}
+      AppRouter={AppRouter}
+    />,
   );
 
   const html = documentHtml.replace('<!--app-html-->', pageHtml);
