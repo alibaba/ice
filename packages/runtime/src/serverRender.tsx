@@ -3,7 +3,8 @@ import * as ReactDOMServer from 'react-dom/server.js';
 import { StaticRouter } from 'react-router-dom/server.js';
 import type Runtime from './runtime.js';
 import App from './App.js';
-import DefaultAppRouter from './AppRouter.js';
+import AppRoutes from './AppRoutes.js';
+import type { AppRouterProps } from './types';
 
 export default async function serverRender(
   runtime: Runtime,
@@ -20,7 +21,11 @@ export default async function serverRender(
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     const { req } = requestContext;
-    runtime.setAppRouter(() => <DefaultAppRouter Router={StaticRouter} routerProps={{ location: req.url }} />);
+    runtime.setAppRouter((props: AppRouterProps) => (
+      <StaticRouter location={req.url}>
+        <AppRoutes PageWrappers={props.PageWrappers} />
+      </StaticRouter>
+    ));
   }
 
   const pageHtml = ReactDOMServer.renderToString(
