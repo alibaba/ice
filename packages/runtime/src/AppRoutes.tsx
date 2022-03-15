@@ -25,11 +25,11 @@ const AppRouters: React.ComponentType<AppRoutersProps> = (props) => {
 
 export default AppRouters;
 
-interface AppProps extends AppRoutersProps {
+interface RoutesProps extends AppRoutersProps {
   routes: RouteObject[];
 }
 
-function Routes({ routes }: AppProps) {
+function Routes({ routes }: RoutesProps) {
   const element = useRoutes(routes);
   return element;
 }
