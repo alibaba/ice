@@ -10,16 +10,12 @@ import {
 
 export default async function render(runtime: Runtime) {
   const appContext = runtime.getAppContext();
-  const { appConfig } = appContext;
-  const { rootId, strict } = appConfig.app;
-
-  const StrictMode = strict ? React.StrictMode : React.Fragment;
+  const { appConfig, routes } = appContext;
+  const { rootId } = appConfig.app;
 
   // TODO: set ssr by process env
   const isSSR = true;
   const render = isSSR ? ReactDOM.hydrate : runtime.getRender();
-  const AppProvider = runtime.composeAppProvider() || React.Fragment;
-  const PageWrappers = runtime.getWrapperPageRegistration();
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
@@ -36,14 +32,10 @@ export default async function render(runtime: Runtime) {
 
   // default ReactDOM.render
   render((
-    <StrictMode>
-      <App
-        AppProvider={AppProvider}
-        PageWrappers={PageWrappers}
-        AppRouter={AppRouter}
-        appContext={appContext}
-      />
-    </StrictMode>
+    <App
+      runtime={runtime}
+      AppRouter={AppRouter}
+    />
   ), appMountNode);
 }
 

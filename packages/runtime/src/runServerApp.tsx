@@ -40,5 +40,5 @@ export default async function runServerApp(
     runtime.loadModule(m);
   });
 
-  return serverRender(runtime, requestContext, documentOnly);
+  return serverRender(runtime, requestContext, Document, documentOnly);
 }
