@@ -272,15 +272,17 @@ export default class Generator {
         };
       }
       let content = ejs.render(templateContent, renderData);
-      try {
-        content = prettier.format(content, {
-          parser: 'typescript',
-          singleQuote: true,
-        });
-      } catch (error) {
-        if (this.showPrettierError) {
-          consola.warn(`Prettier format error: ${error.message}`);
-          this.showPrettierError = false;
+      if (templatePath.indexOf('.ts') > -1) {
+        try {
+          content = prettier.format(content, {
+            parser: 'typescript',
+            singleQuote: true,
+          });
+        } catch (error) {
+          if (this.showPrettierError) {
+            consola.warn(`Prettier format error: ${error.message}`);
+            this.showPrettierError = false;
+          }
         }
       }
       const realTargetPath = targetPath.replace(renderExt, '');
