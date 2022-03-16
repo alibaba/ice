@@ -14,10 +14,7 @@ const AppRouters: React.ComponentType<AppRoutersProps> = (props) => {
   const appContext = useAppContext();
   const { routes } = appContext;
 
-  console.log('renderAppRoutes', props);
-
   const newRoutes = updateRouteElement(routes, PageWrappers);
-
   return (
     <Routes routes={newRoutes} />
   );
@@ -56,7 +53,7 @@ function updateRouteElement(routes: RouteItem[], PageWrappers?: PageWrapper<any>
 
     const route: RouteObject = {
       path,
-      element: element,
+      element,
       index,
     };
 
