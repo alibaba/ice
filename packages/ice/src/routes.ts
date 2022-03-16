@@ -10,7 +10,7 @@ export function generateRoutesRenderData(rootDir: string) {
   const routesStr = generateRoutesStr(routes);
   const asyncRoutesStr = generateRoutesStr(routes, true);
 
-  return { componentsImportStr, routesStr, asyncRoutesStr };
+  return { componentsImportStr, routesStr, asyncRoutesStr, routes };
 }
 
 function generateComponentsImportStr(routeManifest: RouteManifest) {
