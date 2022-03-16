@@ -13,12 +13,13 @@ import type {
   SetRender,
   WrapperPageComponent,
   GetWrapperPageRegistration,
+  AppRouterProps,
 } from './types.js';
 
 class Runtime {
   private appContext: AppContext;
 
-  private AppRouter: ComponentType;
+  private AppRouter: ComponentType<AppRouterProps>;
 
   private AppProvider: ComponentType[];
 
@@ -83,7 +84,7 @@ class Runtime {
   };
 
   // for plugin-icestark
-  private setAppRouter: SetAppRouter = (AppRouter) => {
+  public setAppRouter: SetAppRouter = (AppRouter) => {
     this.AppRouter = AppRouter;
   };
 }

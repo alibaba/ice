@@ -1,27 +1,45 @@
 import * as React from 'react';
-import type { ComponentType } from 'react';
-import type { AppContext, PageWrapper } from './types';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { AppContextProvider } from './AppContext.js';
-import type AppRouter from './AppRouter';
+import type Runtime from './runtime.js';
 
 interface Props {
-  appContext: AppContext;
-  AppProvider: ComponentType;
-  AppRouter: typeof AppRouter;
-  PageWrappers: PageWrapper<any>[];
+  runtime: Runtime;
 }
 
 export default function App(props: Props) {
-  const { appContext, AppProvider, AppRouter, PageWrappers } = props;
+  const { runtime } = props;
+
+  const appContext = runtime.getAppContext();
+  const { appConfig, routes } = appContext;
+  const { strict } = appConfig.app;
+  const StrictMode = strict ? React.StrictMode : React.Fragment;
+
+  const AppProvider = runtime.composeAppProvider() || React.Fragment;
+  const PageWrappers = runtime.getWrapperPageRegistration();
+  const AppRouter = runtime.getAppRouter();
+
+  if (!routes || routes.length === 0) {
+    throw new Error('Please add routes(like pages/index.tsx) to your app.');
+  }
+
+  let element;
+  if (routes.length === 1 && !routes[0].children) {
+    const Page = routes[0].component;
+    element = <Page />;
+  } else {
+    element = <AppRouter PageWrappers={PageWrappers} />;
+  }
 
   return (
-    <AppErrorBoundary>
-      <AppContextProvider value={appContext}>
-        <AppProvider>
-          <AppRouter PageWrappers={PageWrappers} />
-        </AppProvider>
-      </AppContextProvider>
-    </AppErrorBoundary>
+    <StrictMode>
+      <AppErrorBoundary>
+        <AppContextProvider value={appContext}>
+          <AppProvider>
+            {element}
+          </AppProvider>
+        </AppContextProvider>
+      </AppErrorBoundary>
+    </StrictMode>
   );
 }

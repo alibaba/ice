@@ -3,27 +3,27 @@ import * as ReactDOM from 'react-dom';
 import { HashRouter, BrowserRouter, matchRoutes } from 'react-router-dom';
 import type Runtime from './runtime.js';
 import App from './App.js';
-import DefaultAppRouter from './AppRouter.js';
+import AppRoutes from './AppRoutes.js';
+import type { AppRouterProps } from './types';
 
 export default async function render(runtime: Runtime) {
   const appContext = runtime.getAppContext();
   const { appConfig, routes } = appContext;
-  const { rootId, strict } = appConfig.app;
-
-  const StrictMode = strict ? React.StrictMode : React.Fragment;
+  const { rootId } = appConfig.app;
 
   // TODO: set ssr by process env
   const isSSR = true;
   const render = isSSR ? ReactDOM.hydrate : runtime.getRender();
-  const AppProvider = runtime.composeAppProvider() || React.Fragment;
-  const PageWrappers = runtime.getWrapperPageRegistration();
 
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     const Router = appConfig.router.type === 'hash' ? HashRouter : BrowserRouter;
-    AppRouter = () => (
-      <DefaultAppRouter Router={Router} />
+    AppRouter = (props: AppRouterProps) => (
+      <Router>
+        <AppRoutes PageWrappers={props.PageWrappers} />
+      </Router>
     );
+    runtime.setAppRouter(AppRouter);
   }
 
   const matchedRoutes = matchRoutes(routes, window.location);
@@ -33,14 +33,9 @@ export default async function render(runtime: Runtime) {
 
   // default ReactDOM.render
   render((
-    <StrictMode>
-      <App
-        AppProvider={AppProvider}
-        PageWrappers={PageWrappers}
-        AppRouter={AppRouter}
-        appContext={appContext}
-      />
-    </StrictMode>
+    <App
+      runtime={runtime}
+    />
   ), appMountNode);
 }
 
