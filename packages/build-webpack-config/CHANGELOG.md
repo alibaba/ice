@@ -1,9 +1,5 @@
 # changelog
 
-## 2.0.2
-
-- [feat] support css modules `:global` selector
-
 ## 2.0.1
 
 - [fix] bump version of `@builder/pack`(^0.6.0)
