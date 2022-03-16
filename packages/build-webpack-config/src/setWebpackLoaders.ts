@@ -15,6 +15,8 @@ const configCSSRule = (config, style, loaders = []) => {
   const cssModuleLoaderOpts = {
     ...cssLoaderOpts,
     modules: {
+      mode: 'local',
+      exportGlobals: true,
       localIdentName: '[folder]--[local]--[hash:base64:7]',
     },
   };
@@ -25,7 +27,7 @@ const configCSSRule = (config, style, loaders = []) => {
     postcssOptions: {
       config: false,
       // eslint-disable-next-line global-require
-      ...(require('./postcss.config').default()),  
+      ...(require('./postcss.config').default()),
     }
   };
 
