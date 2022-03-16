@@ -37,7 +37,7 @@ const module = ({
     getApps,
     $$props
   } = (icestark || {}) as IPrivateIceStark;
-  const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback } = router;
+  const { type, basename, modifyRoutes: runtimeModifyRoutes, fallback, history: customHistory } = router;
   // compatible with deprecated runtime API
   const wrapperComponent = wrapperPageComponent || wrapperRouteComponent;
   const createAppHistory = createHistory || ((options: any) => applyRuntimeAPI('createHistory', options));
@@ -54,7 +54,7 @@ const module = ({
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
-    const history = createAppHistory({ type, basename: childBasename });
+    const history = createAppHistory({ type, basename: childBasename, customHistory });
 
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
@@ -136,7 +136,7 @@ const module = ({
       modifyRoutes(removeRootLayout);
     }
     const RootApp = ({ routes }) => {
-      const [routerHistory] = useState(createAppHistory({ type, basename }));
+      const [routerHistory] = useState(createAppHistory({ type, basename, customHistory }));
       const routerProps = {
         type,
         routes,
