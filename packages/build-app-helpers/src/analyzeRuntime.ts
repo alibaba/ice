@@ -175,7 +175,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
         })();
       }));
     } catch (err) {
-      console.log('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
+      console.log('[WARN]', `optimize runtime failed when analyze ${filePath}`);
       throw err;
     }
   }
