@@ -5,6 +5,7 @@ import type Runtime from './runtime.js';
 import App from './App.js';
 import AppRoutes from './AppRoutes.js';
 import type { AppRouterProps } from './types';
+import { DocumentContextProvider } from './DocumentContext.js';
 
 export default async function serverRender(
   runtime: Runtime,
@@ -12,12 +13,35 @@ export default async function serverRender(
   Document,
   documentOnly: boolean,
 ) {
-  const documentHtml = ReactDOMServer.renderToString(<Document />);
+  const appContext = runtime.getAppContext();
+  const { appConfig } = appContext;
 
-  if (documentOnly) {
-    return documentHtml;
+  let pageHtml = '';
+
+  if (!documentOnly) {
+    pageHtml = renderPage(requestContext, runtime);
   }
 
+  const documentContext = {
+    title: appConfig.title,
+    scripts: [
+      {
+        src: './main.js',
+      },
+    ],
+    html: pageHtml,
+  };
+
+  const html = ReactDOMServer.renderToString(
+    <DocumentContextProvider value={documentContext}>
+      <Document />
+    </DocumentContextProvider>,
+  );
+
+  return html;
+}
+
+function renderPage(requestContext, runtime) {
   let AppRouter = runtime.getAppRouter();
   if (!AppRouter) {
     const { req } = requestContext;
@@ -35,7 +59,5 @@ export default async function serverRender(
     />,
   );
 
-  const html = documentHtml.replace('<!--app-html-->', pageHtml);
-
-  return html;
+  return pageHtml;
 }

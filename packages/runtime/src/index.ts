@@ -9,6 +9,12 @@ import runApp from './runApp.js';
 import runServerApp from './runServerApp.js';
 import { useAppContext } from './AppContext.js';
 import {
+  Meta,
+  Links,
+  Scripts,
+  Root,
+} from './Document.js';
+import {
   RuntimePlugin,
   AppContext,
   AppConfig,
@@ -24,6 +30,10 @@ export {
   useAppContext,
   Link,
   Outlet,
+  Meta,
+  Links,
+  Scripts,
+  Root,
 
   // types
   RuntimePlugin,
