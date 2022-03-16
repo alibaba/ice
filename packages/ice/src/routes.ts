@@ -9,7 +9,7 @@ export function generateRoutesRenderData(rootDir: string) {
   const componentsImportStr = generateComponentsImportStr(routeManifest);
   const routesStr = generateRoutesStr(routes);
 
-  return { componentsImportStr, routesStr, asyncRoutesStr, routes };
+  return { componentsImportStr, routesStr, asyncRoutesStr };
 }
 
 function generateComponentsImportStr(routeManifest: RouteManifest) {
