@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.3
+
+- [fix] filter js/ts file when analyze
+
 ## 2.5.2
 
 - [fix] detect app.ts for runtime analyze

@@ -164,14 +164,18 @@ export default async function analyzeRuntime(files: string[], options: Options):
             if (!path.isAbsolute(importPath)) {
               importPath = getImportPath(importPath, filePath, { rootDir, alias, mode });
             }
-            if (importPath && !sourceFiles.includes(importPath) && fs.existsSync(importPath)) {
+            if (importPath
+              && !sourceFiles.includes(importPath)
+              && fs.existsSync(importPath)
+              && importPath.match(/\.(j|t)sx?$/)
+            ) {
               await analyzeFile(importPath);
             }
           }
         })();
       }));
     } catch (err) {
-      console.log('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
+      console.log('[WARN]', `optimize runtime failed when analyze ${filePath}`);
       throw err;
     }
   }
