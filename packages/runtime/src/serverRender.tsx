@@ -49,11 +49,9 @@ function renderApp(requestContext, runtime) {
     runtime.setAppRouter(AppRouter);
   }
 
-  const pageHtml = ReactDOMServer.renderToString(
+  const html = ReactDOMServer.renderToString(
     <App runtime={runtime} />,
   );
-
-  const html = documentHtml.replace('<!--app-html-->', pageHtml);
 
   return html;
 }

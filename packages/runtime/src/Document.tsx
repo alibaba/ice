@@ -3,50 +3,33 @@ import { useDocumentContext } from './DocumentContext.js';
 
 export function Meta() {
   const { matches, routeData } = useDocumentContext();
-  let metas = [];
+  let meta = [];
 
   matches.forEach(match => {
-    const { route } = match;
-    const { componentName } = route;
-
-    const customMetas = routeData?.[componentName]?.pageConfig?.metas;
-
-    // custom scripts
-    if (customMetas) {
-      metas = metas.concat(customMetas);
-    }
+    const { componentName } = match.route;
+    const pageMeta = routeData?.[componentName]?.pageConfig?.meta;
+    meta = pageMeta ? meta.concat(pageMeta) : meta;
   });
 
   return (
     <>
-      {metas && metas.map(meta => <meta {...meta} />)}
+      {meta.map(([name, value]) => <meta key={name} name={name} content={value} />)}
     </>
   );
 }
 
 export function Links() {
   const { matches, routeData } = useDocumentContext();
-  const links = [];
+  // get block custom links
+  let links = getLinks(matches, routeData, true);
 
   matches.forEach(match => {
-    const { route } = match;
-    const { componentName } = route;
-    const customLinks = routeData?.[componentName]?.pageConfig?.links;
-
-    // custom scripts
-    if (customLinks) {
-      customLinks.forEach((link) => {
-        const { block, ...props } = link;
-        if (block) {
-          links.push(props);
-        }
-      });
-    }
-
-    // pages bundles
+    const { componentName } = match.route;
     links.push({
+      rel: 'stylesheet',
+      type: 'text/css',
       // TODO: get from build manifest
-      src: `./${componentName}.css`,
+      href: `./${componentName}.css`,
     });
   });
 
@@ -57,24 +40,33 @@ export function Links() {
   );
 }
 
-export function Scripts() {
-  const { matches, routeData } = useDocumentContext();
-  const scripts = [];
+function getLinks(matches, routeData, isBlock) {
+  const result = [];
 
   matches.forEach(match => {
-    const { route } = match;
-    const { componentName } = route;
+    const { componentName } = match.route;
+    const pageLinks = routeData?.[componentName]?.pageConfig?.links;
+
+    pageLinks && pageLinks.forEach((link) => {
+      const { block, ...linkInfo } = link;
+      if (block === isBlock) {
+        result.push(linkInfo);
+      }
+    });
+  });
+
+  return result;
+}
+
+export function Scripts() {
+  const { matches, routeData } = useDocumentContext();
+  let scripts = [];
+
+  matches.forEach(match => {
+    const { componentName } = match.route;
     const customScripts = routeData?.[componentName]?.pageConfig?.scripts;
 
-    // custom scripts
-    if (customScripts) {
-      customScripts.forEach((script) => {
-        const { block, ...props } = script;
-        if (block) {
-          scripts.push(props);
-        }
-      });
-    }
+    scripts = customScripts ? scripts.concat(customScripts) : scripts;
 
     // pages bundles
     scripts.push({
@@ -83,13 +75,19 @@ export function Scripts() {
     });
   });
 
+  const deferLinks = getLinks(matches, routeData, false);
+
   return (
     <>
       {
-        scripts.map(script => <script key={script.src} {...script} />)
+        scripts.map(script => {
+          const { block, ...props } = script;
+          return <script key={script.src} async={block === false} {...props} />;
+        })
       }
       {/* main entry */}
       <script src="./main.js" />
+      {deferLinks && deferLinks.map(link => <link key={link.href} {...link} />)}
     </>
   );
 }
