@@ -39,11 +39,11 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
 
-    if (command === 'build') {
-      // generator html to outputDir
-      const htmlContent = renderDocument(path.join(taskConfig.outputDir, 'document.js'));
-      fs.writeFileSync(path.join(taskConfig.outputDir, 'index.html'), htmlContent);
-    }
+    // if (command === 'build') {
+    //   // generator html to outputDir
+    //   const entryPath = path.resolve(outDir, 'server/entry.mjs');
+    //   await generateHtml(entryPath, outDir, routeManifest);
+    // }
   });
 
   onHook('after.start.compile', ({ urls, stats, messages }) => {
