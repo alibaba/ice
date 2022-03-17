@@ -126,6 +126,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
   const parallelNum = parallel ?? 10;
   const sourceFiles = [...files];
   const checkMap: CheckMap = {};
+  const analyzedSet = new Set<string>();
   const runtimeRules = { ...defaultRuntimeRules, ...customRuntimeRules };
   // init check map
   const checkPlugins = Object.keys(runtimeRules);
@@ -134,6 +135,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
   });
 
   async function analyzeFile(filePath: string) {
+    analyzedSet.add(filePath);
     let source = fs.readFileSync(filePath, 'utf-8');
     const lang = path.extname(filePath).slice(1);
     let loader: Loader;
@@ -165,7 +167,7 @@ export default async function analyzeRuntime(files: string[], options: Options):
               importPath = getImportPath(importPath, filePath, { rootDir, alias, mode });
             }
             if (importPath
-              && !sourceFiles.includes(importPath)
+              && !analyzedSet.has(importPath)
               && fs.existsSync(importPath)
               && importPath.match(/\.(j|t)sx?$/)
             ) {
