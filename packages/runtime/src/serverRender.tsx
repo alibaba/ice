@@ -12,13 +12,33 @@ export default async function serverRender(
   Document,
   documentOnly: boolean,
 ) {
-  const documentHtml = ReactDOMServer.renderToString(<Document />);
+  const appContext = runtime.getAppContext();
+  const { routeData, matches } = appContext;
 
-  if (documentOnly) {
-    return documentHtml;
+  let html = '';
+
+  if (!documentOnly) {
+    html = renderApp(requestContext, runtime);
   }
 
+  const documentContext = {
+    matches,
+    routeData,
+    html,
+  };
+
+  const result = ReactDOMServer.renderToString(
+    <DocumentContextProvider value={documentContext}>
+      <Document />
+    </DocumentContextProvider>,
+  );
+
+  return result;
+}
+
+function renderApp(requestContext, runtime) {
   let AppRouter = runtime.getAppRouter();
+
   if (!AppRouter) {
     const { req } = requestContext;
     AppRouter = (props: AppRouterProps) => (
@@ -30,9 +50,7 @@ export default async function serverRender(
   }
 
   const pageHtml = ReactDOMServer.renderToString(
-    <App
-      runtime={runtime}
-    />,
+    <App runtime={runtime} />,
   );
 
   const html = documentHtml.replace('<!--app-html-->', pageHtml);

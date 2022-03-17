@@ -27,7 +27,7 @@ export default async function runApp(config: AppConfig, runtimeModules, routes) 
     appContext.initialData = (window as any).__ICE_APP_DATA__;
     // context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
   } else if (appConfig?.app?.getInitialData) {
-    const { href, origin, pathname, search } = window.location;
+    const { href, origin, pathname } = window.location;
     const path = href.replace(origin, '');
     // const query = queryString.parse(search);
     const query = {};

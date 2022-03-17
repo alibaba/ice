@@ -25,7 +25,7 @@ export default function App(props: Props) {
 
   let element;
   if (routes.length === 1 && !routes[0].children) {
-    const Page = routes[0].component;
+    const Page = routes[0].component.default;
     element = <Page />;
   } else {
     element = <AppRouter PageWrappers={PageWrappers} />;

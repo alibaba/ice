@@ -18,7 +18,7 @@ function generateComponentsImportStr(routeManifest: RouteManifest) {
       let { file, componentName } = routeManifest[id];
       const fileExtname = path.extname(file);
       file = file.replace(new RegExp(`${fileExtname}$`), '');
-      return `${prev}const ${componentName} = React.lazy(() => import(/* webpackChunkName: "${componentName}" */ '@/${file}'))\n`;
+      return `${prev}import * as ${componentName} from '@/${file}'; \n`;
   }, '');
 }
 

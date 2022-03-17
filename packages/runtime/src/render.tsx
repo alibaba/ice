@@ -45,6 +45,6 @@ function getAppMountNode(rootId: string): HTMLElement {
 async function loadRouteChunks(matchedRoutes) {
   for (let i = 0, n = matchedRoutes.length; i < n; i++) {
     const { route } = matchedRoutes[i];
-    route.component = (await route.load()).default;
+    route.component = await route.load();
   }
 }
