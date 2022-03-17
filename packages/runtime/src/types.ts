@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { Renderer } from 'react-dom';
+import type { Params } from 'react-router-dom';
 
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
@@ -9,6 +10,12 @@ type App = Partial<{
   addProvider?: ({ children }: { children: ReactNode }) => ReactNode;
   getInitialData?: (ctx?: any) => Promise<any>;
 } & Record<AppLifecycle, VoidFunction>>;
+
+interface Page {
+  default: ComponentType<any>;
+  getPageConfig?: Function;
+  getInitialData?: (ctx?: any) => Promise<any>;
+}
 
 export interface AppConfig extends Record<string, any> {
   app?: App;
@@ -24,13 +31,19 @@ export {
 
 export interface RouteItem {
   path: string;
-  component: ComponentType;
+  component: Page;
   componentName: string;
   index?: false;
   exact?: boolean;
   strict?: boolean;
   load?: () => Promise<{ default: ComponentType<any> }>;
   children?: RouteItem[];
+}
+
+export interface RouteMatch<RouteItem> {
+  params: Params;
+  pathname: string;
+  route: RouteItem;
 }
 
 export interface PageConfig {
@@ -52,13 +65,18 @@ export interface InitialContext {
   ssrError?: any;
 }
 
+export interface RouteData {
+  [componentName: string]: any;
+}
+
 export interface AppContext {
   // todo: 这是啥
   appManifest?: Record<string, any>;
   routes?: RouteItem[];
   initialData?: any;
   appConfig: AppConfig;
-  document?: ComponentType;
+  routeData?: RouteData;
+  matches?: RouteMatch<RouteItem>[];
 }
 
 export interface RuntimeAPI {

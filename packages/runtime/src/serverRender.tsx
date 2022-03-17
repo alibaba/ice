@@ -14,35 +14,32 @@ export default async function serverRender(
   documentOnly: boolean,
 ) {
   const appContext = runtime.getAppContext();
-  const { appConfig } = appContext;
+  const { routeData, matches } = appContext;
 
-  let pageHtml = '';
+  let html = '';
 
   if (!documentOnly) {
-    pageHtml = renderPage(requestContext, runtime);
+    html = renderApp(requestContext, runtime);
   }
 
   const documentContext = {
-    title: appConfig.title,
-    scripts: [
-      {
-        src: './main.js',
-      },
-    ],
-    html: pageHtml,
+    matches,
+    routeData,
+    html,
   };
 
-  const html = ReactDOMServer.renderToString(
+  const result = ReactDOMServer.renderToString(
     <DocumentContextProvider value={documentContext}>
       <Document />
     </DocumentContextProvider>,
   );
 
-  return html;
+  return result;
 }
 
-function renderPage(requestContext, runtime) {
+function renderApp(requestContext, runtime) {
   let AppRouter = runtime.getAppRouter();
+
   if (!AppRouter) {
     const { req } = requestContext;
     AppRouter = (props: AppRouterProps) => (
@@ -54,9 +51,7 @@ function renderPage(requestContext, runtime) {
   }
 
   const pageHtml = ReactDOMServer.renderToString(
-    <App
-      runtime={runtime}
-    />,
+    <App runtime={runtime} />,
   );
 
   return pageHtml;

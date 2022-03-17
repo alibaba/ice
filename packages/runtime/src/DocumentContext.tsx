@@ -1,16 +1,10 @@
 import * as React from 'react';
-
-interface Meta {
-  name: string;
-  value: string;
-}
+import type { RouteItem, RouteMatch, RouteData } from './types';
 
 interface DocumentContext {
-  title?: string;
-  metas?: Meta[];
-  links?: any[];
-  scripts?: any[];
   html?: string;
+  matches?: RouteMatch<RouteItem>[];
+  routeData?: RouteData;
 }
 
 const Context = React.createContext<DocumentContext>(null);

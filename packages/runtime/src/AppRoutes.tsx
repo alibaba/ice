@@ -32,12 +32,12 @@ function Routes({ routes }: RoutesProps) {
 }
 
 function updateRouteElement(routes: RouteItem[], PageWrappers?: PageWrapper<any>[]) {
-  return routes.map(({ path, component: PageComponent, children, index, load }: RouteItem) => {
+  return routes.map(({ path, component: pageComponent, children, index, load }: RouteItem) => {
     let element;
 
-    if (PageComponent) {
+    if (pageComponent) {
       element = (
-        <RouteWrapper PageComponent={PageComponent} PageWrappers={PageWrappers} />
+        <RouteWrapper PageComponent={pageComponent.default} PageWrappers={PageWrappers} />
       );
     } else if (load) {
       const LazyComponent = React.lazy(load);
