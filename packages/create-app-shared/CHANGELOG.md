@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4
+
+- [fix] support history for custom configuration
+
 ## 1.2.3
 
 - [fix] revert AppProvider
