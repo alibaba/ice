@@ -77,6 +77,7 @@ export interface AppContext {
   appConfig: AppConfig;
   routeData?: RouteData;
   matches?: RouteMatch<RouteItem>[];
+  assets?: any;
 }
 
 export interface RuntimeAPI {

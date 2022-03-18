@@ -36,6 +36,8 @@ interface AfterCommandCompileOptions {
   isSuccessful: Boolean;
   isFirstCompile: Boolean;
   urls: Urls;
+  taskConfig: Config;
+  esbuildCompile: EsbuildCompile;
 }
 
 export interface HookLifecycle {

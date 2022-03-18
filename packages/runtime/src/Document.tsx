@@ -33,18 +33,28 @@ export function Title() {
 }
 
 export function Links() {
-  const { matches, routeData } = useDocumentContext();
+  const { matches, routeData, assets } = useDocumentContext();
   // get block custom links
   let links = getLinks(matches, routeData, true);
 
   matches.forEach(match => {
     const { componentName } = match.route;
-    links.push({
-      rel: 'stylesheet',
-      type: 'text/css',
-      // TODO: get from build manifest
-      href: `./${componentName}.css`,
-    });
+
+    if (assets[componentName] && assets[componentName].links) {
+      assets[componentName].links.forEach((link) => {
+        links.push({
+          rel: 'stylesheet',
+          type: 'text/css',
+          href: link,
+        });
+      });
+    }
+    // links.push({
+    //   rel: 'stylesheet',
+    //   type: 'text/css',
+    //   // TODO: get from build manifest
+    //   href: `./${componentName}.css`,
+    // });
   });
 
   return (
@@ -73,7 +83,7 @@ function getLinks(matches, routeData, isBlock) {
 }
 
 export function Scripts() {
-  const { matches, routeData } = useDocumentContext();
+  const { matches, routeData, assets } = useDocumentContext();
   let scripts = [];
 
   matches.forEach(match => {
@@ -82,11 +92,13 @@ export function Scripts() {
 
     scripts = customScripts ? scripts.concat(customScripts) : scripts;
 
-    // pages bundles
-    scripts.push({
-      // TODO: get from build manifest
-      src: `./${componentName}.js`,
-    });
+    if (assets[componentName] && assets[componentName].scripts) {
+      assets[componentName].scripts.forEach((script) => {
+        scripts.push({
+          src: script,
+        });
+      });
+    }
   });
 
   const deferLinks = getLinks(matches, routeData, false);

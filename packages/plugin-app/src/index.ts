@@ -19,14 +19,8 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   registerCliOption(cliOptions);
 
-  // TODO: get from routeManifest
-  const routeManifest = {
-    '/': '/src/pages/index',
-    '/about': '/src/pages/about',
-    '/home': '/src/pages/home',
-  };
-
-  onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
+  // server entry must build after client task, because it needs assets manifest
+  onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile, taskConfig }) => {
     const outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
     await esbuildCompile({
@@ -38,12 +32,13 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       // FIXME: https://github.com/ice-lab/ice-next/issues/27
       external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
+  });
 
-    if (command === 'build') {
-      // generator html to outputDir
-      const entryPath = path.resolve(outDir, 'server/entry.mjs');
-      await generateHtml(entryPath, outDir, routeManifest);
-    }
+  // generator html
+  onHook('after.build.compile', async ({ taskConfig }) => {
+    const { outputDir } = taskConfig;
+    const entryPath = path.resolve(outputDir, 'server/entry.mjs');
+    await generateHtml(rootDir, outputDir, entryPath);
   });
 
   onHook('after.start.compile', ({ urls, stats, messages }) => {
@@ -75,8 +70,13 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   });
 
   if (!commandArgs.disableOpen) {
-    onHook('after.start.devServer', ({ urls }: any) => {
-      openBrowser(urls.localUrlForBrowser);
+    let hasOpen = false;
+    // assets manifest will generate after client compile
+    onHook('after.start.compile', ({ urls }: any) => {
+      if (!hasOpen) {
+        openBrowser(urls.localUrlForBrowser);
+        hasOpen = true;
+      }
     });
   }
 
