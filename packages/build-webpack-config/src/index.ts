@@ -12,7 +12,7 @@ import type { Config } from '@ice/types';
 import type { CommandArgs } from 'build-scripts';
 import { createUnplugin } from 'unplugin';
 import getTransformPlugins from './plugins/index.js';
-import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+// import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
 const require = createRequire(import.meta.url);
 
@@ -143,7 +143,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
     performance: false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
-      new WebpackManifestPlugin({}),
+      // new WebpackManifestPlugin({}),
        ...webpackPlugins,
       new MiniCssExtractPlugin({
         filename: '[name].css',
