@@ -5,6 +5,7 @@ interface DocumentContext {
   html?: string;
   matches?: RouteMatch<RouteItem>[];
   routeData?: RouteData;
+  assets?: any;
 }
 
 const Context = React.createContext<DocumentContext>(null);

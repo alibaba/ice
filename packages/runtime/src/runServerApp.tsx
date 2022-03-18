@@ -3,14 +3,17 @@ import serverRender from './serverRender.js';
 import type { AppContext, AppConfig } from './types';
 import matchRoutes from './matchRoutes.js';
 
-export default async function runServerApp(
+export default async function runServerApp(options) {
+  const {
     requestContext,
-    config: AppConfig,
+    appConfig: config,
     runtimeModules,
     routes,
     Document,
-    documentOnly: boolean,
-  ) {
+    documentOnly,
+    assetsManifest,
+  } = options;
+
   // TODO: move this to defineAppConfig
   const appConfig: AppConfig = {
     ...config,
@@ -30,11 +33,17 @@ export default async function runServerApp(
   const matches = matchRoutes(routes, path);
   const routeData = await getRouteData(requestContext, matches);
 
+  const assets = {};
+  formatAssetsManifest(assetsManifest, routes, assets);
+
+  console.log(assets);
+
   const appContext: AppContext = {
     matches,
     routeData,
     routes,
     appConfig,
+    assets,
     initialData: null,
   };
 
@@ -87,4 +96,28 @@ async function getRouteData(requestContext, matches) {
   }
 
   return routeData;
+}
+
+// TODO: format when generate
+function formatAssetsManifest(assets, routes, result) {
+  for (let i = 0, len = routes.length; i < len; i++) {
+    const route = routes[i];
+    const { componentName } = route;
+
+    if (assets[`${componentName}.js`]) {
+      result[componentName] = {
+        links: [],
+        scripts: [],
+      };
+      result[componentName].scripts.push(assets[`${componentName}.js`]);
+    }
+
+    if (assets[`${componentName}.css`]) {
+      result[componentName].links.push(assets[`${componentName}.css`]);
+    }
+
+    if (route.children) {
+      formatAssetsManifest(assets, route.children, result);
+    }
+  }
 }

@@ -67,6 +67,8 @@ async function webpackCompiler(options: {
       isFirstCompile,
       urls,
       messages,
+      taskConfig,
+      esbuildCompile,
     });
   });
 

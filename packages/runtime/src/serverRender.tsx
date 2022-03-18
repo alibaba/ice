@@ -13,7 +13,7 @@ export default async function serverRender(
   documentOnly: boolean,
 ) {
   const appContext = runtime.getAppContext();
-  const { routeData, matches } = appContext;
+  const { routeData, matches, assets } = appContext;
 
   let html = '';
 
@@ -22,6 +22,7 @@ export default async function serverRender(
   }
 
   const documentContext = {
+    assets,
     matches,
     routeData,
     html,

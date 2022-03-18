@@ -11,8 +11,8 @@ import type { Configuration as DevServerConfiguration } from 'webpack-dev-server
 import type { Config } from '@ice/types';
 import type { CommandArgs } from 'build-scripts';
 import { createUnplugin } from 'unplugin';
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 import getTransformPlugins from './plugins/index.js';
-// import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
 const require = createRequire(import.meta.url);
 
@@ -143,13 +143,17 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
     performance: false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
-      // new WebpackManifestPlugin({}),
        ...webpackPlugins,
       new MiniCssExtractPlugin({
         filename: '[name].css',
       }),
       new webpack.DefinePlugin(defineVariables),
       new webpack.ProvidePlugin({ process: 'process/browser' }),
+      // TODO: generate dependence info
+      new WebpackManifestPlugin({
+        fileName: 'assets-manifest.json',
+        writeToFileEmit: true,
+      }),
       dev && new ReactRefreshWebpackPlugin({ esModule: true, forceEnable: true }),
     ].filter(Boolean),
     devServer: {
