@@ -10,6 +10,7 @@ import runServerApp from './runServerApp.js';
 import { useAppContext } from './AppContext.js';
 import {
   Meta,
+  Title,
   Links,
   Scripts,
   Root,
@@ -31,6 +32,7 @@ export {
   Link,
   Outlet,
   Meta,
+  Title,
   Links,
   Scripts,
   Root,
