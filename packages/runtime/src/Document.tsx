@@ -18,6 +18,20 @@ export function Meta() {
   );
 }
 
+export function Title() {
+  const { matches, routeData } = useDocumentContext();
+  let title;
+
+  matches.forEach(match => {
+    const { componentName } = match.route;
+    title = routeData?.[componentName]?.pageConfig?.title;
+  });
+
+  return (
+    <title>{title}</title>
+  );
+}
+
 export function Links() {
   const { matches, routeData } = useDocumentContext();
   // get block custom links
