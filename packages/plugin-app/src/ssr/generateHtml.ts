@@ -8,6 +8,7 @@ export default async function generateHTML(entry: string, outDir, routeManifest)
     const htmlContent = await serverEntry.render({
       req: {
         url: routePath,
+        path: routePath,
       },
     });
 
