@@ -2,14 +2,8 @@ import * as React from 'react';
 import { useDocumentContext } from './DocumentContext.js';
 
 export function Meta() {
-  const { matches, routeData } = useDocumentContext();
-  let meta = [];
-
-  matches.forEach(match => {
-    const { componentName } = match.route;
-    const pageMeta = routeData?.[componentName]?.pageConfig?.meta;
-    meta = pageMeta ? meta.concat(pageMeta) : meta;
-  });
+  const { pageConfig } = useDocumentContext();
+  const { meta = [] } = pageConfig;
 
   return (
     <>
@@ -19,13 +13,8 @@ export function Meta() {
 }
 
 export function Title() {
-  const { matches, routeData } = useDocumentContext();
-  let title;
-
-  matches.forEach(match => {
-    const { componentName } = match.route;
-    title = routeData?.[componentName]?.pageConfig?.title;
-  });
+  const { pageConfig } = useDocumentContext();
+  const { title = '' } = pageConfig;
 
   return (
     <title>{title}</title>
@@ -33,87 +22,61 @@ export function Title() {
 }
 
 export function Links() {
-  const { matches, routeData, assets } = useDocumentContext();
-  // get block custom links
-  let links = getLinks(matches, routeData, true);
+  const { pageConfig, pageAssets } = useDocumentContext();
+  const { links: customLinks = [] } = pageConfig;
+  const { links = [] } = pageAssets;
 
-  matches.forEach(match => {
-    const { componentName } = match.route;
-
-    if (assets[componentName] && assets[componentName].links) {
-      assets[componentName].links.forEach((link) => {
-        links.push({
-          rel: 'stylesheet',
-          type: 'text/css',
-          href: link,
-        });
-      });
-    }
-    // links.push({
-    //   rel: 'stylesheet',
-    //   type: 'text/css',
-    //   // TODO: get from build manifest
-    //   href: `./${componentName}.css`,
-    // });
-  });
-
-  return (
-    <>
-      {links && links.map(link => <link key={link.href} {...link} />)}
-    </>
-  );
-}
-
-function getLinks(matches, routeData, isBlock) {
-  const result = [];
-
-  matches.forEach(match => {
-    const { componentName } = match.route;
-    const pageLinks = routeData?.[componentName]?.pageConfig?.links;
-
-    pageLinks && pageLinks.forEach((link) => {
-      const { block, ...linkInfo } = link;
-      if (block === isBlock) {
-        result.push(linkInfo);
-      }
-    });
-  });
-
-  return result;
-}
-
-export function Scripts() {
-  const { matches, routeData, assets } = useDocumentContext();
-  let scripts = [];
-
-  matches.forEach(match => {
-    const { componentName } = match.route;
-    const customScripts = routeData?.[componentName]?.pageConfig?.scripts;
-
-    scripts = customScripts ? scripts.concat(customScripts) : scripts;
-
-    if (assets[componentName] && assets[componentName].scripts) {
-      assets[componentName].scripts.forEach((script) => {
-        scripts.push({
-          src: script,
-        });
-      });
-    }
-  });
-
-  const deferLinks = getLinks(matches, routeData, false);
+  const blockLinks = customLinks.filter((link) => link.block);
 
   return (
     <>
       {
-        scripts.map(script => {
+        blockLinks.map(link => {
+          const { block, ...props } = link;
+          return <script key={link.href} {...props} />;
+        })
+      }
+      {links.map(link => <link key={link.href} {...link} />)}
+    </>
+  );
+}
+
+export function Scripts() {
+  const { pageConfig, pageAssets } = useDocumentContext();
+  const { links: customLinks = [], scripts: customScripts = [] } = pageConfig;
+  const { scripts = [] } = pageAssets;
+
+  const blockScripts = customScripts.filter(script => script.block);
+  const deferredScripts = customScripts.filter(script => !script.block);
+  const deferredLinks = customLinks.filter(link => !link.block);
+
+  return (
+    <>
+      {
+        blockScripts.map(script => {
           const { block, ...props } = script;
-          return <script key={script.src} async={block === false} {...props} />;
+          return <script key={script.src} {...props} />;
+        })
+      }
+      {
+        scripts.map(script => {
+          return <script key={script.src} {...script} />;
         })
       }
       {/* main entry */}
       <script src="./main.js" />
-      {deferLinks && deferLinks.map(link => <link key={link.href} {...link} />)}
+      {
+        deferredLinks.map(link => {
+          const { block, ...props } = link;
+          return <script key={link.href} {...props} />;
+        })
+      }
+      {
+        deferredScripts.map(script => {
+          const { block, ...props } = script;
+          return <script key={script.src} deffer="true" {...props} />;
+        })
+      }
     </>
   );
 }

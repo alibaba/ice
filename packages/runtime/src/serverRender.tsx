@@ -6,6 +6,8 @@ import App from './App.js';
 import AppRoutes from './AppRoutes.js';
 import type { AppRouterProps } from './types';
 import { DocumentContextProvider } from './DocumentContext.js';
+import { mergePageConfig } from './pageConfig.js';
+import { mergePageAssets } from './pageAssets.js';
 
 export default async function serverRender(
   runtime: Runtime,
@@ -14,7 +16,7 @@ export default async function serverRender(
   documentOnly: boolean,
 ) {
   const appContext = runtime.getAppContext();
-  const { routeData, matches, assets } = appContext;
+  const { matches, routeData, routeAssets } = appContext;
 
   let html = '';
 
@@ -22,10 +24,12 @@ export default async function serverRender(
     html = renderApp(requestContext, runtime);
   }
 
+  const pageConfig = mergePageConfig(matches, routeData);
+  const pageAssets = mergePageAssets(matches, routeAssets);
+
   const documentContext = {
-    assets,
-    matches,
-    routeData,
+    pageConfig,
+    pageAssets,
     html,
   };
 

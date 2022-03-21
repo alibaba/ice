@@ -30,7 +30,7 @@ function generateRoutesStr(nestRouteManifest: NestedRouteManifest[], async?: boo
 
 function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[], async?: boolean) {
   return nestRouteManifest.reduce((prev, route) => {
-    const { children, path: routePath, index, componentName, file } = route;
+    const { id, children, path: routePath, index, componentName, file } = route;
 
     let componentKV;
     if (async) {
@@ -47,6 +47,7 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[], async?:
       componentName: '${componentName}',
       index: ${index},
       exact: true,
+      id: '${id}',
     `;
     if (children) {
       str += `children: [${generateNestRoutesStr(children, async)}],`;
