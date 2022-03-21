@@ -2,7 +2,8 @@ import type { AppConfig } from 'ice';
 
 const appConfig: AppConfig = {
   app: {
-    getInitialData: async (ctx) => {
+    getInitialData: async () => {
+      // console.log(ctx);
       return {
         auth: {
           admin: true,
