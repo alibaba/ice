@@ -1,11 +1,9 @@
 import * as React from 'react';
-import type { RouteItem, RouteMatch, RouteData } from './types';
 
 interface DocumentContext {
   html?: string;
-  matches?: RouteMatch<RouteItem>[];
-  routeData?: RouteData;
-  assets?: any;
+  pageAssets?: any;
+  pageConfig?: any;
 }
 
 const Context = React.createContext<DocumentContext>(null);

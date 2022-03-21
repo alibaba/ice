@@ -30,6 +30,7 @@ export {
 };
 
 export interface RouteItem {
+  id: string;
   path: string;
   component: Page;
   componentName: string;
@@ -75,6 +76,7 @@ export interface AppContext {
   initialData?: any;
   appConfig: AppConfig;
   routeData?: RouteData;
+  routeAssets?: any;
   matches?: RouteMatch<RouteItem>[];
   assets?: any;
 }

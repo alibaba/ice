@@ -2,6 +2,7 @@ import Runtime from './runtime.js';
 import serverRender from './serverRender.js';
 import type { AppContext, AppConfig } from './types';
 import matchRoutes from './matchRoutes.js';
+import getRouteData from './routeData.js';
 
 export default async function runServerApp(options) {
   const {
@@ -30,20 +31,17 @@ export default async function runServerApp(options) {
 
   const { req } = requestContext;
   const { path } = req;
+
   const matches = matchRoutes(routes, path);
   const routeData = await getRouteData(requestContext, matches);
-
-  const assets = {};
-  formatAssetsManifest(assetsManifest, routes, assets);
-
-  console.log(assets);
+  const routeAssets = getRouteAssets(assetsManifest, routes);
 
   const appContext: AppContext = {
     matches,
-    routeData,
     routes,
+    routeData,
+    routeAssets,
     appConfig,
-    assets,
     initialData: null,
   };
 
@@ -59,65 +57,36 @@ export default async function runServerApp(options) {
   return serverRender(runtime, requestContext, Document, documentOnly);
 }
 
-/**
- * prepare data for matched routes
- * @param requestContext
- * @param matches
- * @returns
- */
-async function getRouteData(requestContext, matches) {
-  const routeData = {};
-
-  const matchedCount = matches.length;
-
-  for (let i = 0; i < matchedCount; i++) {
-    const match = matches[i];
-    const { route } = match;
-    const { component, componentName } = route;
-
-    const { getInitialData, getPageConfig } = component;
-    let initialData;
-    let pageConfig;
-
-    if (getInitialData) {
-      initialData = await getInitialData(requestContext);
-    }
-
-    if (getPageConfig) {
-      pageConfig = getPageConfig({
-        initialData,
-      });
-    }
-
-    routeData[componentName] = {
-      initialData,
-      pageConfig,
-    };
-  }
-
-  return routeData;
-}
-
 // TODO: format when generate
-function formatAssetsManifest(assets, routes, result) {
+function getRouteAssets(assets, routes) {
+  const result = {};
+
   for (let i = 0, len = routes.length; i < len; i++) {
     const route = routes[i];
-    const { componentName } = route;
+    const { componentName, id } = route;
 
+    const links = [];
+    const scripts = [];
+
+    // TODO: should return chunk info
     if (assets[`${componentName}.js`]) {
-      result[componentName] = {
-        links: [],
-        scripts: [],
-      };
-      result[componentName].scripts.push(assets[`${componentName}.js`]);
+      scripts.push(assets[`${componentName}.js`]);
     }
 
     if (assets[`${componentName}.css`]) {
-      result[componentName].links.push(assets[`${componentName}.css`]);
+      links.push(assets[`${componentName}.css`]);
     }
 
+    result[id] = {
+      links,
+      scripts,
+    };
+
     if (route.children) {
-      formatAssetsManifest(assets, route.children, result);
+      const childResult = getRouteAssets(assets, route.children);
+      Object.assign(result, childResult);
     }
   }
+
+  return result;
 }

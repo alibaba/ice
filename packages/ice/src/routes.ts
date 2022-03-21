@@ -29,13 +29,24 @@ function generateRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
 
 function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
   return nestRouteManifest.reduce((prev, route) => {
-    const { children, path, index, componentName } = route;
+    const { id, children, path: routePath, index, componentName, file } = route;
+
+    let componentKV;
+    if (async) {
+      const fileExtname = path.extname(file);
+      const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
+      componentKV = `load: () => import(/* webpackChunkName: "${componentName}" */ '@/${componentFile}')`;
+    } else {
+      componentKV = `component: ${componentName}`;
+    }
+
     let str = `{
       path: '${path || ''}',
       component: ${componentName},
       componentName: '${componentName}',
       index: ${index},
       exact: true,
+      id: '${id}',
     `;
     if (children) {
       str += `children: [${generateNestRoutesStr(children)}],`;
