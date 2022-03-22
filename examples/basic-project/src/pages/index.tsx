@@ -14,9 +14,6 @@ export function getPageConfig() {
     scripts: [
       { src: 'https://g.alicdn.com/alilog/mlog/aplus_v2.js', block: true },
     ],
+    auth: ['admin'],
   };
 }
-
-Home.pageConfig = {
-  auth: ['admin'],
-};
