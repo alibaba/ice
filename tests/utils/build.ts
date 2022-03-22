@@ -30,7 +30,6 @@ export const buildFixture = function(example: string) {
     const service = await createService({ rootDir, command: 'build', commandArgs: {}, getBuiltInPlugins });
     const { compiler } = await service.run();
     await new Promise((resolve) => {
-      // @ts-ignore
       compiler.hooks.done.tap('done',() => {
         resolve(true);
       })
