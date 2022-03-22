@@ -48,7 +48,15 @@ export interface RouteMatch<RouteItem> {
 
 export interface PageConfig {
   title?: string;
+  meta?: any[];
+  links?: any[];
+  scripts?: any[];
   auth?: string[];
+}
+
+export interface PageAssets {
+  links?: any[];
+  scripts?: any[];
 }
 
 export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
