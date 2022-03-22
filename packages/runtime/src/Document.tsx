@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDocumentContext } from './DocumentContext.js';
 
 export function Meta() {
-  const { pageConfig } = useDocumentContext();
+  const { pageConfig = {} } = useDocumentContext();
   const { meta = [] } = pageConfig;
 
   return (
@@ -13,7 +13,7 @@ export function Meta() {
 }
 
 export function Title() {
-  const { pageConfig } = useDocumentContext();
+  const { pageConfig = {} } = useDocumentContext();
   const { title = '' } = pageConfig;
 
   return (
@@ -22,7 +22,7 @@ export function Title() {
 }
 
 export function Links() {
-  const { pageConfig, pageAssets } = useDocumentContext();
+  const { pageConfig = {}, pageAssets = {} } = useDocumentContext();
   const { links: customLinks = [] } = pageConfig;
   const { links = [] } = pageAssets;
 
@@ -42,7 +42,7 @@ export function Links() {
 }
 
 export function Scripts() {
-  const { pageConfig, pageAssets } = useDocumentContext();
+  const { pageConfig = {}, pageAssets = {} } = useDocumentContext();
   const { links: customLinks = [], scripts: customScripts = [] } = pageConfig;
   const { scripts = [] } = pageAssets;
 
