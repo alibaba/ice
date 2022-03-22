@@ -17,7 +17,8 @@ export default async function generateHTML(rootDir, outDir, entry: string) {
     }
   });
 
-  paths.forEach(async (routePath) => {
+  for (let i = 0, n = paths.length; i < n; i++) {
+    const routePath = paths[i];
     const htmlContent = await serverEntry.render({
       req: {
         url: routePath,
@@ -27,5 +28,5 @@ export default async function generateHTML(rootDir, outDir, entry: string) {
 
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
     fs.writeFileSync(path.join(outDir, fileName), htmlContent);
-  });
+  }
 }
