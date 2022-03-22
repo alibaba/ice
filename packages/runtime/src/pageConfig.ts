@@ -1,19 +1,14 @@
 /**
- * merge page config for matched route
+ * get page config for matched route
  * @param matches
  * @param routeData
  * @returns
  */
-export function mergePageConfig(matches, routeData) {
-  const result = {};
+export function getPageConfig(matches, routeData) {
+  const lastIndex = matches.length - 1;
+  const page = matches[lastIndex];
+  const { id } = page.route;
+  const pageConfig = routeData?.[id]?.pageConfig;
 
-  matches.forEach(match => {
-    const { id } = match.route;
-    const pageConfig = routeData?.[id]?.pageConfig;
-
-    // TODO: should concat meta/links/scripts
-    Object.assign(result, pageConfig);
-  });
-
-  return result;
+  return pageConfig;
 }

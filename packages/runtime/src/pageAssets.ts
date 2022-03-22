@@ -4,7 +4,7 @@
  * @param routeAssets
  * @returns
  */
-export function mergePageAssets(matches, routeAssets) {
+export function getPageAssets(matches, routeAssets) {
   const links = [];
   const scripts = [];
 
