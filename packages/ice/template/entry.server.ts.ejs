@@ -3,6 +3,7 @@ import appConfig from '@/app';
 import runtimeModules from './runtimeModules';
 import Document from '@/document';
 import routes from './routes.server';
+import assetsManifest from '../build/assets-manifest.json';
 
 export async function render(requestContext, documentOnly = false) {
   return await runServerApp({
@@ -10,7 +11,7 @@ export async function render(requestContext, documentOnly = false) {
     appConfig: appConfig,
     runtimeModules: runtimeModules,
     routes: routes,
-    assetsManifest: {},
+    assetsManifest: assetsManifest,
     Document: Document,
     documentOnly: documentOnly,
   });
