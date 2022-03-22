@@ -4,14 +4,12 @@ import { AuthProvider, useAuth } from './Auth';
 import type { InjectProps } from './Auth';
 import type { AuthConfig, AuthType } from './types';
 
-const wrapperComponentFn = (authConfig: AuthConfig): PageWrapper<any> => {
+// TODO: 类型完善
+const wrapperComponentFn = (authConfig: AuthConfig, usePageContext: any): PageWrapper<any> => {
   return (PageComponent) => {
-    // TODO: 类型完善
-    // @ts-expect-error
-    const { pageConfig = {} } = PageComponent;
-
     const AuthWrappedComponent = (props) => {
       const [auth] = useAuth();
+      const { pageConfig = {} } = usePageContext();
       const pageConfigAuth = pageConfig.auth;
 
       if (pageConfigAuth && !Array.isArray(pageConfigAuth)) {
@@ -38,7 +36,7 @@ const wrapperComponentFn = (authConfig: AuthConfig): PageWrapper<any> => {
   };
 };
 
-const runtime: RuntimePlugin = ({ appContext, addProvider, wrapperPageComponent }) => {
+const runtime: RuntimePlugin = ({ appContext, usePageContext, addProvider, wrapperPageComponent }) => {
   const { appConfig, initialData = {} } = appContext;
   const initialAuth = initialData?.auth || {};
   const authConfig = appConfig.auth || {};
@@ -59,7 +57,7 @@ const runtime: RuntimePlugin = ({ appContext, addProvider, wrapperPageComponent 
   addProvider(AuthProviderWrapper);
 
   wrapperPageComponent(
-    wrapperComponentFn(authConfig),
+    wrapperComponentFn(authConfig, usePageContext),
   );
 };
 

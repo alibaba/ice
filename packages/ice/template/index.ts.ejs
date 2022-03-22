@@ -1,13 +1,4 @@
-import { 
-  useAppContext,
-  Link,
-  Outlet,
-  Meta,
-  Title,
-  Links,
-  Scripts,
-  Root,
-} from '@ice/runtime';
+import { useAppContext, Link, Outlet, defineAppConfig } from '@ice/runtime';
 <%- framework.imports %>
 
 <% if (framework.exports) { %>
@@ -15,11 +6,7 @@ import {
     useAppContext,
     Link,
     Outlet,
-    Meta,
-    Title,
-    Links,
-    Scripts,
-    Root,
+    defineAppConfig,
     <%- framework.exports %>
   }
 <% } %>

@@ -10,3 +10,9 @@ export function getPageConfig() {
     auth: ['guest'],
   };
 }
+
+export function getInitialData() {
+  return {
+    name: 'about',
+  };
+}

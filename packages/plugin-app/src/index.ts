@@ -19,8 +19,13 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   registerCliOption(cliOptions);
 
-  // server entry must build after client task, because it needs assets manifest
-  onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile, taskConfig }) => {
+  // TODO: get from routeManifest
+  const routeManifest = {
+    '/': '/src/pages/index',
+    '/about': '/src/pages/about',
+  };
+
+  onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
     const outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
     await esbuildCompile({

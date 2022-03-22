@@ -1,41 +1,36 @@
+import * as React from 'react';
+import * as ReactDOMServer from 'react-dom/server.js';
+import type { Location, To } from 'history';
+import { Action, createPath, parsePath } from 'history';
+import { createSearchParams, matchRoutes } from 'react-router-dom';
 import Runtime from './runtime.js';
-import serverRender from './serverRender.js';
-import type { AppContext, AppConfig } from './types';
-import matchRoutes from './matchRoutes.js';
-import getRouteData from './routeData.js';
+import App from './App.js';
+import { loadRouteModules } from './routes.js';
+import { getCurrentPageData, loadPageData } from './transition.js';
+import type { AppContext, AppConfig, RouteItem, ServerContext, InitialContext } from './types';
 
-export default async function runServerApp(options) {
-  const {
-    requestContext,
-    appConfig: config,
-    runtimeModules,
-    routes,
-    Document,
-    documentOnly,
-    assetsManifest,
-  } = options;
+export default async function runServerApp(
+  serverContext: ServerContext,
+  appConfig: AppConfig,
+  runtimeModules,
+  routes: RouteItem[],
+  Document,
+  documentOnly: boolean,
+): Promise<string> {
+  const routeModules = await loadRouteModules(routes);
+  const { req } = serverContext;
+  // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
+  const locationProps = parsePath(req.url);
 
-  // TODO: move this to defineAppConfig
-  const appConfig: AppConfig = {
-    ...config,
-    app: {
-      rootId: 'root',
-      strict: true,
-      ...(config?.app || {}),
-    },
-    router: {
-      type: 'browser',
-      ...(config?.router || {}),
-    },
+  const location: Location = {
+    pathname: locationProps.pathname || '/',
+    search: locationProps.search || '',
+    hash: locationProps.hash || '',
+    state: null,
+    key: 'default',
   };
-
-  const { req } = requestContext;
-  const { path } = req;
-
-  const matches = matchRoutes(routes, path);
-  const routeData = await getRouteData(requestContext, matches);
-  const routeAssets = getRouteAssets(assetsManifest, routes);
-
+  const matches = matchRoutes(routes, location);
+  const pageDataResults = await loadPageData({ matches, location, routeModules });
   const appContext: AppContext = {
     matches,
     routes,
@@ -43,10 +38,20 @@ export default async function runServerApp(options) {
     routeAssets,
     appConfig,
     initialData: null,
+    document: Document,
+    routeModules,
+    pageData: getCurrentPageData(pageDataResults),
+  };
+
+  const initialContext: InitialContext = {
+    ...serverContext,
+    pathname: location.pathname,
+    query: Object.fromEntries(createSearchParams(location.search)),
+    path: req.url,
   };
 
   if (appConfig?.app?.getInitialData) {
-    appContext.initialData = await appConfig.app.getInitialData(requestContext);
+    appContext.initialData = await appConfig.app.getInitialData(initialContext);
   }
 
   const runtime = new Runtime(appContext);
@@ -54,39 +59,83 @@ export default async function runServerApp(options) {
     runtime.loadModule(m);
   });
 
-  return serverRender(runtime, requestContext, Document, documentOnly);
+  return render(runtime, location, Document, documentOnly);
 }
 
-// TODO: format when generate
-function getRouteAssets(assets, routes) {
-  const result = {};
+async function render(
+  runtime: Runtime,
+  location: Location,
+  Document,
+  documentOnly: boolean,
+) {
+  const documentHtml = ReactDOMServer.renderToString(<Document />);
 
-  for (let i = 0, len = routes.length; i < len; i++) {
-    const route = routes[i];
-    const { componentName, id } = route;
-
-    const links = [];
-    const scripts = [];
-
-    // TODO: should return chunk info
-    if (assets[`${componentName}.js`]) {
-      scripts.push(assets[`${componentName}.js`]);
-    }
-
-    if (assets[`${componentName}.css`]) {
-      links.push(assets[`${componentName}.css`]);
-    }
-
-    result[id] = {
-      links,
-      scripts,
-    };
-
-    if (route.children) {
-      const childResult = getRouteAssets(assets, route.children);
-      Object.assign(result, childResult);
-    }
+  if (documentOnly) {
+    return documentHtml;
   }
 
-  return result;
+ const staticNavigator = createStaticNavigator();
+
+  const pageHtml = ReactDOMServer.renderToString(
+    <App
+      action={Action.Pop}
+      runtime={runtime}
+      location={location}
+      navigator={staticNavigator}
+      static
+    />,
+  );
+
+  const html = documentHtml.replace('<!--app-html-->', pageHtml);
+
+  return html;
+}
+
+
+function createStaticNavigator() {
+  return {
+    createHref(to: To) {
+      return typeof to === 'string' ? to : createPath(to);
+    },
+    push(to: To) {
+      throw new Error(
+        'You cannot use navigator.push() on the server because it is a stateless ' +
+          'environment. This error was probably triggered when you did a ' +
+          `\`navigate(${JSON.stringify(to)})\` somewhere in your app.`,
+      );
+    },
+    replace(to: To) {
+      throw new Error(
+        'You cannot use navigator.replace() on the server because it is a stateless ' +
+          'environment. This error was probably triggered when you did a ' +
+          `\`navigate(${JSON.stringify(to)}, { replace: true })\` somewhere ` +
+          'in your app.',
+      );
+    },
+    go(delta: number) {
+      throw new Error(
+        'You cannot use navigator.go() on the server because it is a stateless ' +
+          'environment. This error was probably triggered when you did a ' +
+          `\`navigate(${delta})\` somewhere in your app.`,
+      );
+    },
+    back() {
+      throw new Error(
+        'You cannot use navigator.back() on the server because it is a stateless ' +
+          'environment.',
+      );
+    },
+    forward() {
+      throw new Error(
+        'You cannot use navigator.forward() on the server because it is a stateless ' +
+          'environment.',
+      );
+    },
+    block() {
+      throw new Error(
+        'You cannot use navigator.block() on the server because it is a stateless ' +
+          'environment.',
+      );
+    },
+  };
 }

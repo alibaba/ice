@@ -11,7 +11,7 @@ import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
 import getContextConfig from './utils/getContextConfig.js';
-import { generateRoutesRenderData } from './routes.js';
+import { generateRoutesStr } from './routes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,13 +27,13 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
   const srcDir = path.join(rootDir, 'src');
   const tmpDirName = '.ice';
 
-  const routesRenderData = generateRoutesRenderData(rootDir);
+  const routesStr = generateRoutesStr(rootDir);
   const generator = new Generator({
     rootDir,
     targetDir: tmpDirName,
     // TODO get default Data
     defaultRenderData: {
-      ...routesRenderData,
+      routesStr,
     },
   });
 
@@ -46,11 +46,11 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
     (eventName) => {
       if (eventName === 'add' || eventName === 'unlink') {
         // TODO: only watch src/layout.tsx and src/pages/**
-        const routesRenderData = generateRoutesRenderData(rootDir);
+        const routesStr = generateRoutesStr(rootDir);
         generator.renderFile(
           path.join(templatePath, 'routes.ts.ejs'),
           path.join(rootDir, tmpDirName, 'routes.ts'),
-          { ...routesRenderData },
+          { routesStr },
         );
       }
     },
