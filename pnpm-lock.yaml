@@ -70,6 +70,7 @@ importers:
 
   examples/basic-project:
     specifiers:
+      '@ice/cli': file:../../packages/ice
       '@ice/runtime': ^1.0.0
       '@types/react': ^17.0.39
       '@types/react-dom': ^17.0.11
@@ -78,6 +79,7 @@ importers:
       react-dom: ^17.0.2
       regenerator-runtime: ^0.13.9
     dependencies:
+      '@ice/cli': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -138,7 +140,6 @@ importers:
       '@builder/webpack-config': ^3.0.0
       '@ice/plugin-app': ^1.0.0
       '@ice/plugin-auth': ^1.0.0
-      '@ice/plugin-router': ^1.0.0
       '@ice/route-manifest': ^1.0.0
       '@ice/runtime': ^1.0.0
       '@ice/types': ^1.0.0
@@ -167,7 +168,6 @@ importers:
       '@builder/webpack-config': link:../build-webpack-config
       '@ice/plugin-app': link:../plugin-app
       '@ice/plugin-auth': link:../plugin-auth
-      '@ice/plugin-router': link:../plugin-router
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
       address: 1.1.2
@@ -222,12 +222,6 @@ importers:
     dependencies:
       '@ice/types': link:../types
 
-  packages/plugin-router:
-    specifiers:
-      '@ice/types': ^1.0.0
-    devDependencies:
-      '@ice/types': link:../types
-
   packages/route-manifest:
     specifiers:
       minimatch: ^5.0.1
@@ -236,11 +230,13 @@ importers:
 
   packages/runtime:
     specifiers:
+      history: ^5.3.0
       react: ^17.0.2
       react-dom: ^17.0.2
       react-router-dom: ^6.2.2
       regenerator-runtime: ^0.13.9
     dependencies:
+      history: 5.3.0
       react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
       regenerator-runtime: 0.13.9
     devDependencies:

@@ -2,13 +2,14 @@
   "name": "basic-project",
   "version": "1.0.0",
   "scripts": {
-    "start": "../../packages/ice/bin/ice-cli.mjs start",
-    "build": "../../packages/ice/bin/ice-cli.mjs build"
+    "start": "ice start",
+    "build": "ice build"
   },
   "description": "",
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@ice/cli": "file:../../packages/ice",
     "@ice/runtime": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

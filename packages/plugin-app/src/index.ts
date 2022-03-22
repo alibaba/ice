@@ -23,7 +23,6 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   const routeManifest = {
     '/': '/src/pages/index',
     '/about': '/src/pages/about',
-    '/home': '/src/pages/home',
   };
 
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {

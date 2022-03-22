@@ -2,7 +2,7 @@ import { runServerApp } from '@ice/runtime';
 import appConfig from '@/app';
 import runtimeModules from './runtimeModules';
 import Document from '@/document';
-import routes from './routes.server';
+import routes from './routes';
 
 export async function render(requestContext, documentOnly = false) {
   return await runServerApp(requestContext, appConfig, runtimeModules, routes, Document, documentOnly);

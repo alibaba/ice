@@ -4,8 +4,7 @@ import {
 } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
-import render from './render.js';
-import runApp from './runApp.js';
+import runBrowserApp from './runBrowserApp.js';
 import runServerApp from './runServerApp.js';
 import { useAppContext } from './AppContext.js';
 import {
@@ -14,17 +13,17 @@ import {
   AppConfig,
   PageWrapper,
 } from './types.js';
+import defineAppConfig from './defineAppConfig.js';
 
 export {
   Runtime,
   App,
-  render,
-  runApp,
+  runBrowserApp,
   runServerApp,
   useAppContext,
   Link,
   Outlet,
-
+  defineAppConfig,
   // types
   RuntimePlugin,
   AppContext,
