@@ -48,7 +48,7 @@ const start = async (context: Context<Config>, contextConfig: ContextConfig[], e
       devServer,
     });
   });
-  return devServer;
+  return { compiler, devServer };
 };
 
 export default start;

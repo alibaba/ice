@@ -29,7 +29,16 @@ export const startFixture = async function (example: string) {
     port,
     disableOpen: true,
   }, getBuiltInPlugins });
-  const devServer = await service.run() as unknown as Server;
+  // @ts-ignore
+  const { compiler, devServer } = await service.run() as unknown as Server;
+
+  // const  = await service.run();
+  await new Promise((resolve) => {
+    // @ts-ignore
+    compiler.hooks.done.tap('done',() => {
+      resolve(true);
+    })
+  });
 
   const devServer = await start({
     args: {
