@@ -47,7 +47,7 @@ const build = async (context: Context<Config>, contextConfig: ContextConfig[], e
       }
     });
   });
-  return compiler;
+  return { compiler };
 };
 
 export default build;
