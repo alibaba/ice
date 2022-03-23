@@ -12,7 +12,7 @@ import {
   Title,
   Links,
   Scripts,
-  Root,
+  Main,
 } from './Document.js';
 import {
   RuntimePlugin,
@@ -34,7 +34,7 @@ export {
   Title,
   Links,
   Scripts,
-  Root,
+  Main,
   defineAppConfig,
   // types
   RuntimePlugin,

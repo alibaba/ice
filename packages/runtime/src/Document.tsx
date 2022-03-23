@@ -81,9 +81,9 @@ export function Scripts() {
   );
 }
 
-export function Root() {
+export function Main() {
   const { html } = useDocumentContext();
 
   // eslint-disable-next-line react/self-closing-comp
-  return <div id="root" dangerouslySetInnerHTML={{ __html: html || '' }}></div>;
+  return <div id="ice-container" dangerouslySetInnerHTML={{ __html: html || '' }}></div>;
 }
