@@ -2,7 +2,7 @@ import type { AppConfig } from './types';
 
 const defaultAppConfig: AppConfig = {
   app: {
-    rootId: 'root',
+    rootId: 'ice-container',
     strict: true,
   },
   router: {

@@ -12,7 +12,7 @@ import {
   Title,
   Links,
   Scripts,
-  Root,
+  Main,
 } from './Document.js';
 import {
   RuntimePlugin,
@@ -30,6 +30,11 @@ export {
   useAppContext,
   Link,
   Outlet,
+  Meta,
+  Title,
+  Links,
+  Scripts,
+  Main,
   defineAppConfig,
   // types
   RuntimePlugin,

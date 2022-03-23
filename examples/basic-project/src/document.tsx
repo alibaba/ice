@@ -1,6 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
-import { Meta, Title, Links, Root, Scripts } from 'ice';
+import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
   return (
@@ -14,8 +14,8 @@ function Document() {
         <Links />
       </head>
       <body>
-        <div id="root" dangerouslySetInnerHTML={{ __html: '<!--app-html-->' }}></div>
-        <script src="./main.js"></script>
+        <Main />
+        <Scripts />
       </body>
     </html>
   );
