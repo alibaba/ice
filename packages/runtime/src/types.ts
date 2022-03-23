@@ -68,12 +68,6 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
-export interface RouteMatch<RouteItem> {
-  params: Params;
-  pathname: string;
-  route: RouteItem;
-}
-
 export interface PageConfig {
   title?: string;
   meta?: any[];

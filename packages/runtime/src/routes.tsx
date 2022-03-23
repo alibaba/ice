@@ -37,6 +37,44 @@ export async function loadRouteModules(routes: RouteItem[]) {
 }
 
 /**
+* get data for matched routes
+* @param requestContext
+* @param matches
+* @returns
+*/
+export async function loadRouteData(matches, routeModules, requestContext) {
+  if (!matches) {
+    return null;
+  }
+
+  // use the last matched route as the page entry
+  const last = matches.length - 1;
+  const { route } = matches[last];
+  const { id } = route;
+
+  const routeModule = routeModules[id];
+
+  const { getInitialData, getPageConfig } = routeModule;
+  let initialData;
+  let pageConfig;
+
+  if (getInitialData) {
+    initialData = await getInitialData(requestContext);
+  }
+
+  if (getPageConfig) {
+    pageConfig = getPageConfig({
+      initialData,
+    });
+  }
+
+  return {
+    initialData,
+    pageConfig,
+  };
+}
+
+/**
  * Create routes which will be consumed by react-router-dom
  */
 export function createRoutes(routes: RouteItem[], routeModules: RouteModules, PageWrappers?: PageWrapper<any>[]) {

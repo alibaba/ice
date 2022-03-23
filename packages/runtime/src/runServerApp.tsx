@@ -5,9 +5,10 @@ import { Action, createPath, parsePath } from 'history';
 import { createSearchParams, matchRoutes } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
-import { loadRouteModules } from './routes.js';
-import { getCurrentPageData, loadPageData } from './transition.js';
-import type { AppContext, InitialContext } from './types';
+import { DocumentContextProvider } from './Document.js';
+import { loadRouteModules, loadRouteData } from './routes.js';
+import { getPageAssets, getEntryAssets } from './assets.js';
+import type { AppContext, InitialContext, RouteItem } from './types';
 
 export default async function runServerApp(options): Promise<string> {
   const {
@@ -19,16 +20,6 @@ export default async function runServerApp(options): Promise<string> {
     documentOnly,
     assetsManifest,
   } = options;
-
-export default async function runServerApp(
-  serverContext: ServerContext,
-  appConfig: AppConfig,
-  runtimeModules,
-  routes: RouteItem[],
-  Document,
-  documentOnly: boolean,
-): Promise<string> {
-  const routeModules = await loadRouteModules(routes);
 
   const { req } = requestContext;
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
@@ -42,8 +33,9 @@ export default async function runServerApp(
     key: 'default',
   };
 
-  const { req } = requestContext;
-  const { path } = req;
+  const matches = matchRoutes(routes, location);
+  const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
+  const pageData = await loadRouteData(matches, routeModules, requestContext);
 
   const initialContext: InitialContext = {
     ...requestContext,
@@ -62,7 +54,9 @@ export default async function runServerApp(
     routes,
     routeData,
     appConfig,
-    initialData: null,
+    initialData,
+    pageData,
+    routeModules,
     assetsManifest,
   };
 
@@ -75,5 +69,106 @@ export default async function runServerApp(
     runtime.loadModule(m);
   });
 
-  return serverRender(runtime, requestContext, Document, documentOnly);
+  const html = render(runtime, location, Document, documentOnly);
+  return html;
+}
+
+async function render(
+  runtime: Runtime,
+  location: Location,
+  Document,
+  documentOnly: boolean,
+) {
+  const appContext = runtime.getAppContext();
+  const { matches, pageData, assetsManifest } = appContext;
+
+  let html = '';
+
+  if (!documentOnly) {
+    html = renderApp(runtime, location);
+  }
+
+  const { pageConfig } = pageData;
+
+  const pageAssets = getPageAssets(matches, assetsManifest);
+  const entryAssets = getEntryAssets(assetsManifest);
+
+  const documentContext = {
+    pageConfig,
+    pageAssets,
+    entryAssets,
+    html,
+  };
+
+  const result = ReactDOMServer.renderToString(
+    <DocumentContextProvider value={documentContext}>
+      <Document />
+    </DocumentContextProvider>,
+  );
+
+  return result;
+}
+
+function renderApp(runtime, location) {
+  const staticNavigator = createStaticNavigator();
+
+  const html = ReactDOMServer.renderToString(
+    <App
+      action={Action.Pop}
+      runtime={runtime}
+      location={location}
+      navigator={staticNavigator}
+      static
+    />,
+  );
+
+  return html;
+}
+
+function createStaticNavigator() {
+  return {
+    createHref(to: To) {
+      return typeof to === 'string' ? to : createPath(to);
+    },
+    push(to: To) {
+      throw new Error(
+        'You cannot use navigator.push() on the server because it is a stateless ' +
+          'environment. This error was probably triggered when you did a ' +
+          `\`navigate(${JSON.stringify(to)})\` somewhere in your app.`,
+      );
+    },
+    replace(to: To) {
+      throw new Error(
+        'You cannot use navigator.replace() on the server because it is a stateless ' +
+          'environment. This error was probably triggered when you did a ' +
+          `\`navigate(${JSON.stringify(to)}, { replace: true })\` somewhere ` +
+          'in your app.',
+      );
+    },
+    go(delta: number) {
+      throw new Error(
+        'You cannot use navigator.go() on the server because it is a stateless ' +
+          'environment. This error was probably triggered when you did a ' +
+          `\`navigate(${delta})\` somewhere in your app.`,
+      );
+    },
+    back() {
+      throw new Error(
+        'You cannot use navigator.back() on the server because it is a stateless ' +
+          'environment.',
+      );
+    },
+    forward() {
+      throw new Error(
+        'You cannot use navigator.forward() on the server because it is a stateless ' +
+          'environment.',
+      );
+    },
+    block() {
+      throw new Error(
+        'You cannot use navigator.block() on the server because it is a stateless ' +
+          'environment.',
+      );
+    },
+  };
 }
