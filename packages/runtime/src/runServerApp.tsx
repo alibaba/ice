@@ -4,13 +4,11 @@ import type { Location, To } from 'history';
 import { Action, createPath, parsePath } from 'history';
 import { createSearchParams, matchRoutes } from 'react-router-dom';
 import Runtime from './runtime.js';
-import { DocumentContextProvider } from './DocumentContext.js';
-import { getPageAssets } from './pageAssets.js';
-
 import App from './App.js';
-import { loadRouteModules } from './routes.js';
-import { getCurrentPageData, loadPageData } from './transition.js';
-import type { AppContext, InitialContext } from './types';
+import { DocumentContextProvider } from './Document.js';
+import { loadRouteModules, loadRouteData } from './routes.js';
+import { getPageAssets, getEntryAssets } from './assets.js';
+import type { AppContext, InitialContext, RouteItem } from './types';
 
 export default async function runServerApp(options): Promise<string> {
   const {
@@ -22,8 +20,6 @@ export default async function runServerApp(options): Promise<string> {
     documentOnly,
     assetsManifest,
   } = options;
-
-  const routeModules = await loadRouteModules(routes);
 
   const { req } = requestContext;
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
@@ -38,8 +34,8 @@ export default async function runServerApp(options): Promise<string> {
   };
 
   const matches = matchRoutes(routes, location);
-  const pageDataResults = await loadPageData({ matches, location, routeModules });
-  const pageData = await getCurrentPageData(pageDataResults);
+  const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
+  const pageData = await loadRouteData(matches, routeModules, requestContext);
 
   const initialContext: InitialContext = {
     ...requestContext,
@@ -58,9 +54,9 @@ export default async function runServerApp(options): Promise<string> {
     routes,
     appConfig,
     initialData,
-    assetsManifest,
-    routeModules,
     pageData,
+    routeModules,
+    assetsManifest,
   };
 
   const runtime = new Runtime(appContext);
@@ -88,11 +84,11 @@ async function render(
   }
 
   const { pageConfig } = pageData;
+
   const pageAssets = getPageAssets(matches, assetsManifest);
-  const entryAssets = assetsManifest.bundles.main;
+  const entryAssets = getEntryAssets(assetsManifest);
 
   const documentContext = {
-    publicPath: assetsManifest.publicPath,
     pageConfig,
     pageAssets,
     entryAssets,

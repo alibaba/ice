@@ -1,5 +1,23 @@
 import * as React from 'react';
-import { useDocumentContext } from './DocumentContext.js';
+import type { PageConfig } from './types';
+
+interface DocumentContext {
+  html?: string;
+  entryAssets?: string[];
+  pageAssets?: string[];
+  pageConfig?: PageConfig;
+}
+
+const Context = React.createContext<DocumentContext>(null);
+
+Context.displayName = 'DocumentContext';
+
+export const useDocumentContext = () => {
+  const value = React.useContext(Context);
+  return value;
+};
+
+export const DocumentContextProvider = Context.Provider;
 
 export function Meta() {
   const { pageConfig = {} } = useDocumentContext();
@@ -22,7 +40,7 @@ export function Title() {
 }
 
 export function Links() {
-  const { pageConfig = {}, pageAssets, entryAssets, publicPath } = useDocumentContext();
+  const { pageConfig = {}, pageAssets, entryAssets } = useDocumentContext();
   const { links: customLinks = [] } = pageConfig;
 
   const blockLinks = customLinks.filter((link) => link.block);
@@ -37,13 +55,13 @@ export function Links() {
           return <script key={link.href} {...props} />;
         })
       }
-      {styles.map(style => <link key={style} rel="stylesheet" type="text/css" href={`${publicPath}${style}`} />)}
+      {styles.map(style => <link key={style} rel="stylesheet" type="text/css" href={style} />)}
     </>
   );
 }
 
 export function Scripts() {
-  const { pageConfig = {}, pageAssets, entryAssets, publicPath } = useDocumentContext();
+  const { pageConfig = {}, pageAssets, entryAssets } = useDocumentContext();
   const { links: customLinks = [], scripts: customScripts = [] } = pageConfig;
 
   const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
@@ -62,7 +80,7 @@ export function Scripts() {
       }
       {
         scripts.map(script => {
-          return <script key={script} src={`${publicPath}${script}`} />;
+          return <script key={script} src={script} />;
         })
       }
       {

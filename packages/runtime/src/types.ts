@@ -2,7 +2,6 @@ import type { Action, Location } from 'history';
 import type { Navigator } from 'react-router-dom';
 import type { ComponentType, ReactNode } from 'react';
 import type { Renderer } from 'react-dom';
-import type { Params, RouteObject } from 'react-router-dom';
 import type { usePageContext } from './PageContext';
 
 type VoidFunction = () => void;
@@ -60,12 +59,6 @@ export interface RouteItem {
   load?: () => Promise<PageComponent>;
   pageConfig?: PageConfig;
   children?: RouteItem[];
-}
-
-export interface RouteMatch<RouteItem> {
-  params: Params;
-  pathname: string;
-  route: RouteItem;
 }
 
 export interface PageConfig {
