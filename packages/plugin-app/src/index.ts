@@ -75,12 +75,10 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   });
 
   if (!commandArgs.disableOpen) {
-    let hasOpen = false;
     // assets manifest will generate after client compile
-    onHook('after.start.compile', ({ urls }: any) => {
-      if (!hasOpen) {
+    onHook('after.start.compile', ({ urls, isFirstCompile }: any) => {
+      if (isFirstCompile) {
         openBrowser(urls.localUrlForBrowser);
-        hasOpen = true;
       }
     });
   }
