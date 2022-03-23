@@ -6,12 +6,12 @@ import routes from './routes';
 
 export async function render(requestContext, documentOnly = false) {
   return await runServerApp({
-    requestContext: requestContext,
-    appConfig: appConfig,
-    runtimeModules: runtimeModules,
-    routes: routes,
-    assetsManifest: assetsManifest,
-    Document: Document,
-    documentOnly: documentOnly,
+    requestContext,
+    runtimeModules,
+    appConfig,
+    routes,
+    assetsManifest,
+    Document,
+    documentOnly,
   });
 }

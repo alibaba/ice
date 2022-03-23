@@ -7,7 +7,18 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import { loadRouteModules } from './routes.js';
 import { getCurrentPageData, loadPageData } from './transition.js';
-import type { AppContext, AppConfig, RouteItem, ServerContext, InitialContext } from './types';
+import type { AppContext, InitialContext } from './types';
+
+export default async function runServerApp(options): Promise<string> {
+  const {
+    requestContext,
+    appConfig,
+    runtimeModules,
+    routes,
+    Document,
+    documentOnly,
+    assetsManifest,
+  } = options;
 
 export default async function runServerApp(
   serverContext: ServerContext,
@@ -18,7 +29,8 @@ export default async function runServerApp(
   documentOnly: boolean,
 ): Promise<string> {
   const routeModules = await loadRouteModules(routes);
-  const { req } = serverContext;
+
+  const { req } = requestContext;
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
   const locationProps = parsePath(req.url);
 
@@ -33,8 +45,17 @@ export default async function runServerApp(
   const { req } = requestContext;
   const { path } = req;
 
-  const matches = matchRoutes(routes, path);
-  const routeData = await getRouteData(requestContext, matches);
+  const initialContext: InitialContext = {
+    ...requestContext,
+    pathname: location.pathname,
+    query: Object.fromEntries(createSearchParams(location.search)),
+    path: req.url,
+  };
+
+  let initialData;
+  if (appConfig?.app?.getInitialData) {
+    initialData = await appConfig.app.getInitialData(initialContext);
+  }
 
   const appContext: AppContext = {
     matches,
