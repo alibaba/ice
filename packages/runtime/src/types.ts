@@ -86,18 +86,19 @@ export interface RouteModules {
   [routeId: string]: PageComponent;
 }
 
-export interface RouteData {
-  [componentName: string]: any;
+export interface AssetsManifest {
+  publicPath?: string;
+  bundles?: string[];
 }
-
 export interface AppContext {
-  // todo: 这是啥
-  appManifest?: Record<string, any>;
   routeModules: RouteModules;
   appConfig: AppConfig;
-  routeData?: RouteData;
-  assetsManifest?: any;
-  matches?: RouteMatch<RouteItem>[];
+  assetsManifest?: AssetsManifest;
+  // TODO: fix the type
+  matches?: any;
+  pageData: PageData;
+  routes?: RouteItem[];
+  initialData?: InitialData;
 }
 
 export interface PageData {

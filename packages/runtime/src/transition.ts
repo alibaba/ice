@@ -1,7 +1,7 @@
 // Based on https://github.com/remix-run/remix/blob/main/packages/remix-react/transition.ts
 import type { Location } from 'history';
 import { matchRoutes } from 'react-router-dom';
-import { loadRouteModules, loadRouteData } from './routes.js';
+import { loadRouteModules, loadPageData } from './routes.js';
 import type { PageData, RouteItem, RouteModules } from './types';
 
 interface TransitionState {
@@ -40,7 +40,7 @@ export function createTransitionManager(options: TransitionOptions) {
     }
 
     const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
-    const pageData = await loadRouteData(matches, routeModules, {});
+    const pageData = await loadPageData(matches, routeModules, {});
 
     update({
       location,
