@@ -23,7 +23,7 @@ export default class AssetsManifestPlugin {
     this.fileName = options.fileName || 'assets-manifest.json';
   }
 
-  public createAssets(compilation: any, assets: any) {
+  public createAssets(compilation: any) {
     const bundles = {};
 
     const entrypoints = compilation.entrypoints.values();
@@ -63,8 +63,8 @@ export default class AssetsManifestPlugin {
           name: pluginName,
           stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
         },
-        (assets: any) => {
-          this.createAssets(compilation, assets);
+        () => {
+          this.createAssets(compilation);
         },
       );
     });
