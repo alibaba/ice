@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { dirname, resolve } from 'path';
-import webpack, { type Compiler } from 'webpack';
+import webpack from 'webpack';
+import type { Compiler, Compilation } from 'webpack';
 
 const pluginName = 'AssetsManifestPlugin';
 
@@ -23,7 +24,7 @@ export default class AssetsManifestPlugin {
     this.fileName = options.fileName || 'assets-manifest.json';
   }
 
-  public createAssets(compilation: any) {
+  public createAssets(compilation: Compilation) {
     const bundles = {};
 
     const entrypoints = compilation.entrypoints.values();
