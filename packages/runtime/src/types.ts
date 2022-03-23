@@ -68,6 +68,20 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
+export interface RouteMatch<RouteItem> {
+  params: Params;
+  pathname: string;
+  route: RouteItem;
+}
+
+export interface PageConfig {
+  title?: string;
+  meta?: any[];
+  links?: any[];
+  scripts?: any[];
+  auth?: string[];
+}
+
 export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
 export type AddProvider = (Provider: ComponentType) => void;
@@ -87,10 +101,9 @@ export interface AppContext {
   appManifest?: Record<string, any>;
   routeModules: RouteModules;
   appConfig: AppConfig;
-  pageData: PageData;
-  routes?: RouteItem[];
-  initialData?: InitialData;
-  document?: ComponentType;
+  routeData?: RouteData;
+  assetsManifest?: any;
+  matches?: RouteMatch<RouteItem>[];
 }
 
 export interface PageData {

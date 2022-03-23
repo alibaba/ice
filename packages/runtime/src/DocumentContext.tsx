@@ -1,9 +1,11 @@
 import * as React from 'react';
-import type { PageConfig, PageAssets } from './types';
+import type { PageConfig } from './types';
 interface DocumentContext {
   html?: string;
-  pageAssets?: PageAssets;
+  entryAssets?: string[];
+  pageAssets?: string[];
   pageConfig?: PageConfig;
+  publicPath?: string;
 }
 
 const Context = React.createContext<DocumentContext>(null);
