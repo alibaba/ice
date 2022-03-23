@@ -7,7 +7,6 @@
     { "path": "packages/build-webpack-config" },
     { "path": "packages/plugin-app"},
     { "path": "packages/ice" },
-    { "path": "packages/plugin-router" },
     { "path": "packages/plugin-auth" }
   ]
 }

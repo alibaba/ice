@@ -1,9 +1,9 @@
-import type { AppConfig } from 'ice';
+import { defineAppConfig } from 'ice';
 
-const appConfig: AppConfig = {
+export default defineAppConfig({
   app: {
-    getInitialData: async () => {
-      // console.log(ctx);
+    // @ts-expect-error loss tslib dependency
+    getInitialData: async (ctx) => {
       return {
         auth: {
           admin: true,
@@ -11,5 +11,4 @@ const appConfig: AppConfig = {
       };
     },
   },
-};
-export default appConfig;
+});

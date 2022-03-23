@@ -1,6 +1,9 @@
+import type { Action, Location } from 'history';
+import type { Navigator } from 'react-router-dom';
 import type { ComponentType, ReactNode } from 'react';
 import type { Renderer } from 'react-dom';
-import type { Params } from 'react-router-dom';
+import type { Params, RouteObject } from 'react-router-dom';
+import type { usePageContext } from './PageContext';
 
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
@@ -8,14 +11,8 @@ type App = Partial<{
   rootId?: string;
   strict?: boolean;
   addProvider?: ({ children }: { children: ReactNode }) => ReactNode;
-  getInitialData?: (ctx?: any) => Promise<any>;
+  getInitialData?: (ctx?: InitialContext) => Promise<any>;
 } & Record<AppLifecycle, VoidFunction>>;
-
-interface Page {
-  default: ComponentType<any>;
-  getPageConfig?: Function;
-  getInitialData?: (ctx?: any) => Promise<any>;
-}
 
 export interface AppConfig extends Record<string, any> {
   app?: App;
@@ -29,15 +26,39 @@ export {
   Renderer,
 };
 
+export interface PageConfig {
+  auth?: string[];
+}
+
+export interface ServerContext {
+  req?: Request;
+  res?: Response;
+}
+
+export interface InitialContext extends ServerContext {
+  pathname: string;
+  path: string;
+  query: Record<string, any>;
+  ssrError?: any;
+}
+
+type InitialData = any;
+export interface PageComponent {
+  default: ComponentType<any>;
+  getInitialData?: (ctx: InitialContext) => any;
+  getPageConfig?: (props: { initialData: InitialData }) => PageConfig;
+}
+
 export interface RouteItem {
   id: string;
   path: string;
-  component: Page;
+  element: ReactNode;
   componentName: string;
   index?: false;
   exact?: boolean;
   strict?: boolean;
-  load?: () => Promise<{ default: ComponentType<any> }>;
+  load?: () => Promise<PageComponent>;
+  pageConfig?: PageConfig;
   children?: RouteItem[];
 }
 
@@ -61,12 +82,8 @@ export type AddProvider = (Provider: ComponentType) => void;
 export type SetRender = (render: Renderer) => void;
 export type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;
 
-// getInitialData: (ctx: InitialContext) => {}
-export interface InitialContext {
-  pathname: string;
-  path: string;
-  query: Record<string, any>;
-  ssrError?: any;
+export interface RouteModules {
+  [routeId: string]: PageComponent;
 }
 
 export interface RouteData {
@@ -76,20 +93,28 @@ export interface RouteData {
 export interface AppContext {
   // todo: 这是啥
   appManifest?: Record<string, any>;
-  routes?: RouteItem[];
-  initialData?: any;
+  routeModules: RouteModules;
   appConfig: AppConfig;
   routeData?: RouteData;
   assetsManifest?: any;
-  matches?: RouteMatch<RouteItem>[];
+  matches?: any;
+  pageData: PageData;
+  routes?: RouteItem[];
+  initialData?: InitialData;
+  document?: ComponentType;
 }
 
+export interface PageData {
+  pageConfig?: PageConfig;
+  initialData?: InitialData;
+}
 export interface RuntimeAPI {
   setAppRouter: SetAppRouter;
   addProvider: AddProvider;
   setRender: SetRender;
   wrapperPageComponent: WrapperPageComponent;
   appContext: AppContext;
+  usePageContext: typeof usePageContext;
 }
 
 export interface RuntimePlugin {
@@ -105,5 +130,13 @@ export interface CommonJsRuntime {
 export type GetWrapperPageRegistration = () => PageWrapper<any>[];
 
 export interface AppRouterProps {
-  PageWrappers?: PageWrapper<any>[];
+  action: Action;
+  location: Location;
+  navigator: Navigator;
+  routes: RouteItem[];
+  static?: boolean;
+}
+
+export interface AppRouteProps {
+  routes: RouteItem[];
 }

@@ -20,6 +20,11 @@ export function createEsbuildCompiler(options: {
     const buildResult = await esbuild.build({
       bundle: true,
       ...buildOptions,
+      // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
+      // in esm, this in the global should be undefined. Set the following config to avoid warning
+      define: {
+        this: undefined,
+      },
       plugins: [
         {
           name: 'esbuild-alias',
