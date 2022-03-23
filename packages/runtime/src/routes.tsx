@@ -37,12 +37,12 @@ export async function loadRouteModules(routes: RouteItem[]) {
 }
 
 /**
-* get data for matched routes
+* get data for the matched page
 * @param requestContext
 * @param matches
 * @returns
 */
-export async function loadRouteData(matches, routeModules, requestContext) {
+export async function loadPageData(matches, routeModules, requestContext) {
   if (!matches) {
     return null;
   }

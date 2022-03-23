@@ -6,7 +6,7 @@ import { createSearchParams, matchRoutes } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules, loadRouteData } from './routes.js';
+import { loadRouteModules, loadPageData } from './routes.js';
 import { getPageAssets, getEntryAssets } from './assets.js';
 import type { AppContext, InitialContext, RouteItem } from './types';
 
@@ -35,7 +35,7 @@ export default async function runServerApp(options): Promise<string> {
 
   const matches = matchRoutes(routes, location);
   const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
-  const pageData = await loadRouteData(matches, routeModules, requestContext);
+  const pageData = await loadPageData(matches, routeModules, requestContext);
 
   const initialContext: InitialContext = {
     ...requestContext,
