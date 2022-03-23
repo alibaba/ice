@@ -4,23 +4,23 @@ import { Page } from '../utils/browser';
 
 const example = 'basic-project';
 
-// describe(`build ${example}`, () => {
-//   let page: Page = null;
-//   let browser = null;
+describe(`build ${example}`, () => {
+  let page: Page = null;
+  let browser = null;
 
-//   buildFixture(example);
+  buildFixture(example);
 
-//   test('open /', async () => {
-//     const res = await setupBrowser({ example });
-//     page = res.page;
-//     browser = res.browser;
-//     expect(await page.content()).toStrictEqual(['Home Page']);
-//   });
+  test('open /', async () => {
+    const res = await setupBrowser({ example });
+    page = res.page;
+    browser = res.browser;
+    expect(await page.content()).toStrictEqual(['Home Page']);
+  });
 
-//   afterAll(async () => {
-//     await browser.close();
-//   });
-// });
+  afterAll(async () => {
+    await browser.close();
+  });
+});
 
 describe(`start ${example}`, () => {
   let page: Page = null;
