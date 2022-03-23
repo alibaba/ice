@@ -22,11 +22,12 @@ export function Title() {
 }
 
 export function Links() {
-  const { pageConfig = {}, pageAssets = {} } = useDocumentContext();
+  const { pageConfig = {}, pageAssets, entryAssets, publicPath } = useDocumentContext();
   const { links: customLinks = [] } = pageConfig;
-  const { links = [] } = pageAssets;
 
   const blockLinks = customLinks.filter((link) => link.block);
+
+  const styles = pageAssets.concat(entryAssets).filter(path => path.indexOf('.css') > -1);
 
   return (
     <>
@@ -36,15 +37,16 @@ export function Links() {
           return <script key={link.href} {...props} />;
         })
       }
-      {links.map(link => <link key={link.href} {...link} />)}
+      {styles.map(style => <link key={style} rel="stylesheet" type="text/css" href={`${publicPath}${style}`} />)}
     </>
   );
 }
 
 export function Scripts() {
-  const { pageConfig = {}, pageAssets = {} } = useDocumentContext();
+  const { pageConfig = {}, pageAssets, entryAssets, publicPath } = useDocumentContext();
   const { links: customLinks = [], scripts: customScripts = [] } = pageConfig;
-  const { scripts = [] } = pageAssets;
+
+  const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
 
   const blockScripts = customScripts.filter(script => script.block);
   const deferredScripts = customScripts.filter(script => !script.block);
@@ -60,11 +62,9 @@ export function Scripts() {
       }
       {
         scripts.map(script => {
-          return <script key={script.src} {...script} />;
+          return <script key={script} src={`${publicPath}${script}`} />;
         })
       }
-      {/* main entry */}
-      <script src="./main.js" />
       {
         deferredLinks.map(link => {
           const { block, ...props } = link;

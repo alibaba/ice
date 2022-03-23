@@ -16,7 +16,7 @@ export default async function serverRender(
   documentOnly: boolean,
 ) {
   const appContext = runtime.getAppContext();
-  const { matches, routeData, routeAssets } = appContext;
+  const { matches, routeData, assetsManifest } = appContext;
 
   let html = '';
 
@@ -25,11 +25,14 @@ export default async function serverRender(
   }
 
   const pageConfig = getPageConfig(matches, routeData);
-  const pageAssets = getPageAssets(matches, routeAssets);
+  const pageAssets = getPageAssets(matches, assetsManifest);
+  const entryAssets = getEntryAssets(assetsManifest);
 
   const documentContext = {
+    publicPath: assetsManifest.publicPath,
     pageConfig,
     pageAssets,
+    entryAssets,
     html,
   };
 
@@ -60,4 +63,9 @@ function renderApp(requestContext, runtime) {
   );
 
   return html;
+}
+
+function getEntryAssets(assetsManifest) {
+  const { bundles } = assetsManifest;
+  return bundles['main'];
 }

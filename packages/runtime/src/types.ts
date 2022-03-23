@@ -55,11 +55,6 @@ export interface PageConfig {
   auth?: string[];
 }
 
-export interface PageAssets {
-  links?: any[];
-  scripts?: any[];
-}
-
 export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
 export type AddProvider = (Provider: ComponentType) => void;
@@ -85,9 +80,8 @@ export interface AppContext {
   initialData?: any;
   appConfig: AppConfig;
   routeData?: RouteData;
-  routeAssets?: any;
+  assetsManifest?: any;
   matches?: RouteMatch<RouteItem>[];
-  assets?: any;
 }
 
 export interface RuntimeAPI {

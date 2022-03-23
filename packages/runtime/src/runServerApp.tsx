@@ -34,15 +34,14 @@ export default async function runServerApp(options) {
 
   const matches = matchRoutes(routes, path);
   const routeData = await getRouteData(requestContext, matches);
-  const routeAssets = getRouteAssets(assetsManifest, routes);
 
   const appContext: AppContext = {
     matches,
     routes,
     routeData,
-    routeAssets,
     appConfig,
     initialData: null,
+    assetsManifest,
   };
 
   if (appConfig?.app?.getInitialData) {
@@ -55,38 +54,4 @@ export default async function runServerApp(options) {
   });
 
   return serverRender(runtime, requestContext, Document, documentOnly);
-}
-
-// TODO: format when generate
-function getRouteAssets(assets, routes) {
-  const result = {};
-
-  for (let i = 0, len = routes.length; i < len; i++) {
-    const route = routes[i];
-    const { componentName, id } = route;
-
-    const links = [];
-    const scripts = [];
-
-    // TODO: should return chunk info
-    if (assets[`${componentName}.js`]) {
-      scripts.push(assets[`${componentName}.js`]);
-    }
-
-    if (assets[`${componentName}.css`]) {
-      links.push(assets[`${componentName}.css`]);
-    }
-
-    result[id] = {
-      links,
-      scripts,
-    };
-
-    if (route.children) {
-      const childResult = getRouteAssets(assets, route.children);
-      Object.assign(result, childResult);
-    }
-  }
-
-  return result;
 }
