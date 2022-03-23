@@ -14,7 +14,7 @@ describe(`build ${example}`, () => {
     const res = await setupBrowser({ example });
     page = res.page;
     browser = res.browser;
-    expect(await page.content()).toStrictEqual(['Home Page']);
+    expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
   });
 
   afterAll(async () => {
