@@ -5,11 +5,11 @@ import Document from '@/document';
 import assetsManifest from '../build/assets-manifest.json';
 import routes from './routes';
 
-export async function render(serverContext, documentOnly = false) {
+export async function render(requestContext, documentOnly = false) {
   return await runServerApp({
-    serverContext,
-    appConfig,
+    requestContext,
     runtimeModules,
+    appConfig,
     routes,
     assetsManifest,
     Document,

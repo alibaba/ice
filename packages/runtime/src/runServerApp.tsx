@@ -14,7 +14,7 @@ import type { AppContext, InitialContext } from './types';
 
 export default async function runServerApp(options): Promise<string> {
   const {
-    serverContext,
+    requestContext,
     appConfig,
     runtimeModules,
     routes,
@@ -25,7 +25,7 @@ export default async function runServerApp(options): Promise<string> {
 
   const routeModules = await loadRouteModules(routes);
 
-  const { req } = serverContext;
+  const { req } = requestContext;
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
   const locationProps = parsePath(req.url);
 
@@ -42,7 +42,7 @@ export default async function runServerApp(options): Promise<string> {
   const pageData = await getCurrentPageData(pageDataResults);
 
   const initialContext: InitialContext = {
-    ...serverContext,
+    ...requestContext,
     pathname: location.pathname,
     query: Object.fromEntries(createSearchParams(location.search)),
     path: req.url,
