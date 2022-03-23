@@ -32,6 +32,7 @@ export const startFixture = async function (example: string) {
 
   // @ts-ignore
   const { compiler, devServer } = await service.run();
+  // wait generate assets manifest
   await new Promise((resolve) => {
     compiler.hooks.done.tap('done',() => {
       resolve(true);
