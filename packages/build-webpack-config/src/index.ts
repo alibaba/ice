@@ -52,7 +52,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
 
   const webpackConfig: WebpackConfig = {
     mode,
-    entry: path.join(rootDir, '.ice/entry.browser'),
+    entry: path.join(rootDir, '.ice/entry.client'),
     externals,
     output: {
       publicPath,
