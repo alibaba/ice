@@ -30,12 +30,7 @@ export const buildFixture = function(example: string) {
     process.env.DISABLE_FS_CACHE = 'true';
     process.env.JEST_TEST = 'true';
     const service = await createService({ rootDir, command: 'build', commandArgs: {}, getBuiltInPlugins });
-    const { compiler } = await service.run();
-    await new Promise((resolve) => {
-      compiler.hooks.done.tap('done',() => {
-        resolve(true);
-      })
-    });
+    await service.run();
   }, 120000);
 }
 
