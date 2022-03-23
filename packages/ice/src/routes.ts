@@ -23,7 +23,6 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
       index: ${index},
       id: '${id}',
       exact: true,
-      id: '${id}',
     `;
     if (children) {
       str += `children: [${generateNestRoutesStr(children)}],`;
