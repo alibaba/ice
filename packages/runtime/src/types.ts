@@ -1,5 +1,5 @@
 import type { Action, Location } from 'history';
-import type { Navigator } from 'react-router-dom';
+import type { Navigator, Params } from 'react-router-dom';
 import type { ComponentType, ReactNode } from 'react';
 import type { Renderer } from 'react-dom';
 import type { usePageContext } from './PageContext';
@@ -30,10 +30,6 @@ export interface AppConfig extends Record<string, any> {
 export {
   Renderer,
 };
-
-export interface PageConfig {
-  auth?: string[];
-}
 
 export interface ServerContext {
   req?: Request;
@@ -94,8 +90,7 @@ export interface AppContext {
   routeModules: RouteModules;
   appConfig: AppConfig;
   assetsManifest?: AssetsManifest;
-  // TODO: fix the type
-  matches?: any;
+  matches?: RouteMatch[];
   pageData: PageData;
   routes?: RouteItem[];
   initialData?: InitialData;
@@ -105,6 +100,7 @@ export interface PageData {
   pageConfig?: PageConfig;
   initialData?: InitialData;
 }
+
 export interface RuntimeAPI {
   setAppRouter: SetAppRouter;
   addProvider: AddProvider;
@@ -136,4 +132,24 @@ export interface AppRouterProps {
 
 export interface AppRouteProps {
   routes: RouteItem[];
+}
+
+// rewrite the `RouteMatch` type which is referenced by the react-router-dom
+export interface RouteMatch {
+    /**
+     * The names and values of dynamic parameters in the URL.
+     */
+    params: Params;
+    /**
+     * The portion of the URL pathname that was matched.
+     */
+    pathname: string;
+    /**
+     * The portion of the URL pathname that was matched before child routes.
+     */
+    pathnameBase: string;
+    /**
+     * The route object that was used to match.
+     */
+    route: RouteItem;
 }
