@@ -1,7 +1,6 @@
 // Based on https://github.com/remix-run/remix/blob/main/packages/remix-react/transition.ts
 import type { Location } from 'history';
-import { matchRoutes } from 'react-router-dom';
-import { loadRouteModules, loadPageData } from './routes.js';
+import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
 import type { PageData, RouteItem, RouteModules } from './types';
 
 interface TransitionState {

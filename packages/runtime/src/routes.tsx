@@ -1,6 +1,9 @@
 import React from 'react';
+import type { Location } from 'history';
+import type { RouteObject } from 'react-router-dom';
+import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import PageWrapper from './PageWrapper.js';
-import type { RouteItem, RouteModules, PageWrapper as IPageWrapper } from './types';
+import type { RouteItem, RouteModules, PageWrapper as IPageWrapper, RouteMatch } from './types';
 import { useAppContext } from './AppContext.js';
 
 export async function loadRouteModule(route: RouteItem, routeModulesCache: RouteModules) {
@@ -119,4 +122,20 @@ function RouteComponent({ id, ...props }: { id: string }) {
     }
   }
   return <Component {...props} />;
+}
+
+export function matchRoutes(
+  routes: RouteItem[],
+  location: Partial<Location> | string,
+  basename?: string,
+): RouteMatch[] | null {
+  let matches = originMatchRoutes(routes as unknown as RouteObject[], location, basename);
+  if (!matches) return null;
+
+  return matches.map(({ params, pathname, pathnameBase, route }) => ({
+    params,
+    pathname,
+    route: route as unknown as RouteItem,
+    pathnameBase,
+  }));
 }
