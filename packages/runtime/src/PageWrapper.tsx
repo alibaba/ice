@@ -8,7 +8,7 @@ interface Props {
   PageWrappers?: PageWrapper<any>[];
 }
 
-export default function RouteWrapper(props: Props) {
+export default function PageWrapper(props: Props) {
   const { PageComponent, PageWrappers } = props;
   const { pageData } = useAppContext();
 
