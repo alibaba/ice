@@ -15,6 +15,9 @@ export default function Home() {
 
 export function getPageConfig() {
   return {
+    // scripts: [
+    //   { src: 'https://g.alicdn.com/alilog/mlog/aplus_v2.js', block: true },
+    // ],
     auth: ['admin'],
   };
 }
