@@ -1,6 +1,6 @@
 import React from 'react';
-import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, PageWrapper } from './types';
+import PageWrapper from './PageWrapper.js';
+import type { RouteItem, RouteModules, PageWrapper as IPageWrapper } from './types';
 import { useAppContext } from './AppContext.js';
 
 export async function loadRouteModule(route: RouteItem, routeModulesCache: RouteModules) {
@@ -77,7 +77,7 @@ export async function loadPageData(matches, routeModules, requestContext) {
 /**
  * Create routes which will be consumed by react-router-dom
  */
-export function createRoutes(routes: RouteItem[], routeModules: RouteModules, PageWrappers?: PageWrapper<any>[]) {
+export function createRoutes(routes: RouteItem[], routeModules: RouteModules, PageWrappers?: IPageWrapper<any>[]) {
   return routes.map((routeItem: RouteItem) => {
     let { path, children, index, id, element, ...rest } = routeItem;
     const idParts = id.split('/');
@@ -86,7 +86,7 @@ export function createRoutes(routes: RouteItem[], routeModules: RouteModules, Pa
     element = isLayout ? (
       <RouteComponent id={id} />
     ) : (
-      <RouteWrapper
+      <PageWrapper
         PageComponent={(...props) => <RouteComponent id={id} {...props} />}
         PageWrappers={PageWrappers}
       />
