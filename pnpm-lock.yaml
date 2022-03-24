@@ -111,7 +111,6 @@ importers:
       unplugin: ^0.3.2
       webpack: ^5.69.1
       webpack-dev-server: ^4.7.4
-      webpack-manifest-plugin: ^5.0.0
     dependencies:
       '@builder/pack': 0.6.0
       '@builder/swc': 0.1.3
@@ -129,7 +128,6 @@ importers:
       react-refresh: 0.11.0
       sass: 1.49.9
       unplugin: 0.3.2_webpack@5.69.1
-      webpack-manifest-plugin: 5.0.0_webpack@5.69.1
     devDependencies:
       '@ice/types': link:../types
       build-scripts: 2.0.0-9
@@ -6790,10 +6788,6 @@ packages:
       sort-object-keys: 1.1.3
     dev: true
 
-  /source-list-map/2.0.1:
-    resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
-    dev: false
-
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -7727,25 +7721,6 @@ packages:
       - debug
       - supports-color
       - utf-8-validate
-
-  /webpack-manifest-plugin/5.0.0_webpack@5.69.1:
-    resolution: {integrity: sha512-8RQfMAdc5Uw3QbCQ/CBV/AXqOR8mt03B6GJmRbhWopE8GzRfEpn+k0ZuWywxW+5QZsffhmFDY1J6ohqJo+eMuw==}
-    engines: {node: '>=12.22.0'}
-    peerDependencies:
-      webpack: ^5.47.0
-    dependencies:
-      tapable: 2.2.1
-      webpack: 5.69.1_@swc+core@1.2.146
-      webpack-sources: 2.3.1
-    dev: false
-
-  /webpack-sources/2.3.1:
-    resolution: {integrity: sha512-y9EI9AO42JjEcrTJFOYmVywVZdKVUfOvDUPsJea5GIr1JOEGFVqwlY2K098fFoIjOkDzHn2AjRvM8dsBZu+gCA==}
-    engines: {node: '>=10.13.0'}
-    dependencies:
-      source-list-map: 2.0.1
-      source-map: 0.6.1
-    dev: false
 
   /webpack-sources/3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
