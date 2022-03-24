@@ -5,6 +5,7 @@ import { generateRouteManifest } from '@ice/route-manifest';
 export default async function generateHTML(rootDir, outDir, entry: string) {
   const serverEntry = await import(entry);
 
+  // TODO: get route manifest from context
   const routeManifests = generateRouteManifest(rootDir);
 
   // get all route path
