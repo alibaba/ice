@@ -59,6 +59,7 @@ export interface RouteItem {
 
 export interface PageConfig {
   title?: string;
+  // TODO: fix type
   meta?: any[];
   links?: any[];
   scripts?: any[];
@@ -129,20 +130,20 @@ export interface AppRouteProps {
 
 // rewrite the `RouteMatch` type which is referenced by the react-router-dom
 export interface RouteMatch {
-    /**
-     * The names and values of dynamic parameters in the URL.
-     */
-    params: Params;
-    /**
-     * The portion of the URL pathname that was matched.
-     */
-    pathname: string;
-    /**
-     * The portion of the URL pathname that was matched before child routes.
-     */
-    pathnameBase: string;
-    /**
-     * The route object that was used to match.
-     */
-    route: RouteItem;
+  /**
+   * The names and values of dynamic parameters in the URL.
+   */
+  params: Params;
+  /**
+   * The portion of the URL pathname that was matched.
+   */
+  pathname: string;
+  /**
+   * The portion of the URL pathname that was matched before child routes.
+   */
+  pathnameBase: string;
+  /**
+   * The route object that was used to match.
+   */
+  route: RouteItem;
 }
