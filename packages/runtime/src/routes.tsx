@@ -46,7 +46,7 @@ export async function loadRouteModules(routes: RouteItem[]) {
 * @returns
 */
 export async function loadPageData(matches, routeModules, requestContext) {
-  if (!matches) {
+  if (!matches || !matches.length) {
     return null;
   }
 
@@ -128,9 +128,9 @@ export function matchRoutes(
   routes: RouteItem[],
   location: Partial<Location> | string,
   basename?: string,
-): RouteMatch[] | null {
+): RouteMatch[] {
   let matches = originMatchRoutes(routes as unknown as RouteObject[], location, basename);
-  if (!matches) return null;
+  if (!matches) return [];
 
   return matches.map(({ params, pathname, pathnameBase, route }) => ({
     params,
