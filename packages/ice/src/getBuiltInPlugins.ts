@@ -10,6 +10,7 @@ import { builtInPlugins } from './constant.js';
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// avoid multi wabpack
 hijackWebpack();
 
 const getDynamicPlugins = (userConfig: IUserConfig) => {

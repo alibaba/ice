@@ -11,8 +11,8 @@ import type { Configuration as DevServerConfiguration } from 'webpack-dev-server
 import type { Config } from '@ice/types';
 import type { CommandArgs } from 'build-scripts';
 import { createUnplugin } from 'unplugin';
-import AssetsManifestPlugin from './plugins/AssetsManifestPlugin.js';
-import getTransformPlugins from './plugins/index.js';
+import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
+import getTransformPlugins from './unPlugins/index.js';
 
 const require = createRequire(import.meta.url);
 
