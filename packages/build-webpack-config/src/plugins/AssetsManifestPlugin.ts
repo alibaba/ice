@@ -19,9 +19,11 @@ function getEntrypointFiles(entrypoint: any): string[] {
 
 export default class AssetsManifestPlugin {
   private fileName: string;
+  private outputDir: string;
 
   public constructor(options) {
     this.fileName = options.fileName || 'assets-manifest.json';
+    this.outputDir = options.outputDir;
   }
 
   public createAssets(compilation: Compilation) {
@@ -48,7 +50,8 @@ export default class AssetsManifestPlugin {
       bundles,
     };
 
-    const manifestFileName = resolve(compilation.outputOptions?.path || './', this.fileName);
+    const outputDir = this.outputDir || './';
+    const manifestFileName = resolve(outputDir, this.fileName);
 
     const output = JSON.stringify(manifest, null, 2);
 

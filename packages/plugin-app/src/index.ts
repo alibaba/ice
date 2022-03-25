@@ -41,9 +41,11 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   // generator html
   onHook('after.build.compile', async ({ taskConfig }) => {
-    const { outputDir } = taskConfig;
-    const entryPath = path.resolve(outputDir, 'server/entry.mjs');
-    await generateHtml(rootDir, outputDir, entryPath);
+    await generateHtml({
+      outDir: taskConfig.outputDir,
+      entry: path.resolve(outputDir, 'server/entry.mjs'),
+      routeManifest: path.resolve(rootDir, '.ice/route-manifest.json'),
+    });
   });
 
   onHook('after.start.compile', ({ urls, stats, messages }) => {
@@ -100,7 +102,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
         name: 'document-render-server',
         middleware: setupRenderServer({
           entry: path.resolve(outputDir, 'server/entry.mjs'),
-          rootDir,
+          routeManifest: path.resolve(rootDir, '.ice/route-manifest.json'),
         }),
       });
 

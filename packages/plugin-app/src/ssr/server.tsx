@@ -1,14 +1,13 @@
+import * as fs from 'fs';
 import { matchRoutes } from 'react-router-dom';
-import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
 
 export function setupRenderServer(options) {
-  const { rootDir, entry } = options;
-
-  // TODO: get route manifest from context
-  const routeManifests = generateRouteManifest(rootDir);
-  const routes = formatNestedRouteManifest(routeManifests);
+  const { entry, routeManifest } = options;
 
   return async (req, res) => {
+    // Read the latest routes info.
+    const routes = JSON.parse(fs.readFileSync(routeManifest, 'utf8'));
+
     // If not match pages routes, hand over to webpack dev server for processing
     let matches = matchRoutes(routes, req.path);
     if (!matches) return;
