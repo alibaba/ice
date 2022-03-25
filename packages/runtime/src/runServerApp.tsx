@@ -14,15 +14,17 @@ interface RunServerAppOptions {
   requestContext: ServerContext;
   appConfig: AppConfig;
   routes: RouteItem[];
+  Document: React.ComponentType<any>;
   documentOnly: boolean;
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
   assetsManifest: AssetsManifest;
 }
 
-async function runServerApp(Document: React.ComponentType<any>, options: RunServerAppOptions): Promise<string> {
+async function runServerApp(options: RunServerAppOptions): Promise<string> {
   const {
     appConfig,
     assetsManifest,
+    Document,
     documentOnly,
     requestContext,
     runtimeModules,
