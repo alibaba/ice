@@ -23,7 +23,7 @@ export default class AssetsManifestPlugin {
 
   public constructor(options) {
     this.fileName = options.fileName || 'assets-manifest.json';
-    this.outputDir = options.outputDir;
+    this.outputDir = options.outputDir || './';
   }
 
   public createAssets(compilation: Compilation) {
@@ -50,8 +50,7 @@ export default class AssetsManifestPlugin {
       bundles,
     };
 
-    const outputDir = this.outputDir || './';
-    const manifestFileName = resolve(outputDir, this.fileName);
+    const manifestFileName = resolve(this.outputDir, this.fileName);
 
     const output = JSON.stringify(manifest, null, 2);
 

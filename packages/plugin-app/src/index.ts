@@ -19,13 +19,16 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   registerCliOption(cliOptions);
 
+  const outputDir = path.join(rootDir, 'build');
+  const serverEntry = path.join(outputDir, 'server/entry.mjs');
+  const routeManifest = path.join(rootDir, '.ice/route-manifest.json');
+
   // server entry must build after client task, because it needs assets manifest
   onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile, taskConfig }) => {
-    const outDir = taskConfig.outputDir;
     // TODO: watch file changes and rebuild
     await esbuildCompile({
       entryPoints: [path.join(rootDir, '.ice/entry.server')],
-      outdir: path.join(outDir, 'server'),
+      outdir: path.join(outputDir, 'server'),
       // platform: 'node',
       format: 'esm',
       outExtension: { '.js': '.mjs' },
@@ -35,11 +38,11 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   });
 
   // generator html
-  onHook('after.build.compile', async ({ taskConfig }) => {
+  onHook('after.build.compile', async () => {
     await generateHtml({
-      outDir: taskConfig.outputDir,
-      entry: path.resolve(outputDir, 'server/entry.mjs'),
-      routeManifest: path.resolve(rootDir, '.ice/route-manifest.json'),
+      outDir: outputDir,
+      entry: serverEntry,
+      routeManifest,
     });
   });
 
@@ -80,7 +83,6 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
   }
 
-  const outputDir = path.join(rootDir, 'build');
   registerTask('web', {
     mode,
     outputDir,
@@ -96,8 +98,8 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          entry: path.resolve(outputDir, 'server/entry.mjs'),
-          routeManifest: path.resolve(rootDir, '.ice/route-manifest.json'),
+          entry: serverEntry,
+          routeManifest,
         }),
       });
 
