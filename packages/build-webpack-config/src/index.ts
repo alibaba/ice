@@ -151,6 +151,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
       new webpack.ProvidePlugin({ process: 'process/browser' }),
       new AssetsManifestPlugin({
         fileName: 'assets-manifest.json',
+        outputDir: path.join(rootDir, '.ice'),
       }),
       dev && new ReactRefreshWebpackPlugin({ esModule: true, forceEnable: true }),
     ].filter(Boolean),
