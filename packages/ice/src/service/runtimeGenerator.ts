@@ -261,7 +261,9 @@ export default class Generator {
   public renderFile: RenderFile = (templatePath, targetPath, extraData = {}) => {
     const renderExt = '.ejs';
     const realTargetPath = path.isAbsolute(targetPath) ? targetPath : path.join(this.rootDir, targetPath);
-    if (path.extname(templatePath) === '.ejs') {
+    // example: templatePath = 'routes.ts.ejs'
+    const { name, ext } = path.parse(templatePath);
+    if (ext === renderExt) {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
       let renderData = { ...this.renderData };
       if (typeof extraData === 'function') {
@@ -273,7 +275,8 @@ export default class Generator {
         };
       }
       let content = ejs.render(templateContent, renderData);
-      if (templatePath.indexOf('.ts') > -1) {
+      // example: name = 'routes.ts'
+      if (path.extname(name) === '.ts') {
         try {
           content = prettier.format(content, {
             parser: 'typescript',
